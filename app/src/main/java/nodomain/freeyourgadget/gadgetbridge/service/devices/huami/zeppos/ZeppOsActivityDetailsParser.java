@@ -70,25 +70,21 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         this.activityTrack.setName(createActivityName(summary));
     }
 
+    /**
+     * Sequence of TLVs, encoded in
+     * <a href="https://www.oss.com/asn1/resources/asn1-made-simple/asn1-quick-reference/basic-encoding-rules.html">ASN.1 BER</a>
+     */
     @Override
     public ZeppOsActivityTrack parse(final byte[] bytes) throws GBException {
         final ByteBuffer buf = ByteBuffer.wrap(bytes)
                 .order(ByteOrder.LITTLE_ENDIAN);
 
         // Keep track of unknown type codes so we can print them without spamming the logs
-        final Map<Byte, Integer> unknownTypeCodes = new HashMap<>();
+        final Map<Integer, Integer> unknownTypeCodes = new HashMap<>();
 
         while (buf.position() < buf.limit()) {
-            byte typeCode = buf.get();
-            // FIXME: This is probably not right, but type 31 makes the parser get out of sync otherwise
-            if (typeCode == 31) {
-                typeCode = buf.get();
-            }
-            byte lengthByte = buf.get();
-            if (lengthByte == -127) {
-                lengthByte = buf.get();
-            }
-            final int length = lengthByte & 0xff;
+            final int typeCode = consumeTag(buf);
+            final int length = consumeLength(buf);
             final int initialPosition = buf.position();
 
             final Type type = Type.fromCode(typeCode);
@@ -156,7 +152,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         }
 
         if (!unknownTypeCodes.isEmpty()) {
-            for (final Map.Entry<Byte, Integer> e : unknownTypeCodes.entrySet()) {
+            for (final Map.Entry<Integer, Integer> e : unknownTypeCodes.entrySet()) {
                 LOG.warn("Unknown type code {} seen {} times", String.format("0x%X", e.getKey()), e.getValue());
             }
         }
@@ -164,20 +160,53 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         return this.activityTrack;
     }
 
-    private boolean isValidLength(final Type type, final int length) {
-        switch (type) {
-            case GPS_COORDS:
-                // Support both old format (20 bytes) and new Balance 2 format (28 bytes)
-                return length == 20 || length == 28;
-            case GPS_DELTA:
-                // Support both old format (8 bytes) and new Balance 2 format (16 bytes)
-                return length == 8 || length == 16;
-            case ALTITUDE:
-                // Support both old format (6 bytes) and new Balance 2 format (7 bytes)
-                return length == 6 || length == 7;
-            default:
-                return length == type.getExpectedLength();
+    private static int consumeTag(final ByteBuffer buf) {
+        final int first = buf.get() & 0xFF;
+
+        if ((first & 0x1F) != 0x1F) {
+            // single-byte tag
+            return first;
         }
+
+        // multi-byte tag
+        int tag = first;
+        while (buf.hasRemaining()) {
+            int b = buf.get() & 0xFF;
+            tag = (tag << 8) | b;
+            if ((b & 0x80) == 0) break; // continuation bit cleared
+        }
+        return tag;
+    }
+
+    private static int consumeLength(final ByteBuffer buf) {
+        final int first = buf.get() & 0xFF;
+        if ((first & 0x80) == 0) {
+            // short form
+            return first;
+        }
+
+        // long form
+        final int numBytes = first & 0x7F;
+        if (numBytes == 0 || numBytes > 4) {
+            throw new IllegalStateException("Unsupported length encoding: " + numBytes);
+        }
+        int value = 0;
+        for (int i = 0; i < numBytes; i++) {
+            value = (value << 8) | (buf.get() & 0xFF);
+        }
+        return value;
+    }
+
+    private boolean isValidLength(final Type type, final int length) {
+        return switch (type) {
+            // Support both old format (20 bytes) and new Balance 2 format (28 bytes)
+            case GPS_COORDS -> length == 20 || length == 28;
+            // Support both old format (8 bytes) and new Balance 2 format (16 bytes)
+            case GPS_DELTA -> length == 8 || length == 16;
+            // Support both old format (6 bytes) and new Balance 2 format (7 bytes)
+            case ALTITUDE -> length == 6 || length == 7;
+            default -> length == type.getExpectedLength();
+        };
     }
 
     private void consumeTimestamp(final ByteBuffer buf) {
@@ -196,7 +225,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         buf.get(new byte[6]); // ?
         this.longitude = buf.getInt();
         this.latitude = buf.getInt();
-        
+
         // Handle different formats
         if (length == 20) {
             // Old format: skip remaining 6 bytes
@@ -291,7 +320,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
     private void consumeAltitude(final ByteBuffer buf, final int length) {
         consumeTimestampOffset(buf);
         final int altitudeRaw = buf.getInt();
-        
+
         // Check for Balance 2 format with validity flag
         final double newAltitude;
         if (length == 7) {
@@ -453,7 +482,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
             return this.expectedLength;
         }
 
-        public static Type fromCode(final byte code) {
+        public static Type fromCode(final int code) {
             for (final Type type : values()) {
                 if (type.getCode() == code) {
                     return type;
