@@ -40,13 +40,35 @@ public class FitDeveloperData extends RecordData {
     }
 
     @Nullable
-    public Integer getDeveloperId() {
-        return (Integer) getFieldByNumber(0);
+    public Number[] getDeveloperId() {
+        final Object object = getFieldByNumber(0);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
-    public Integer getApplicationId() {
-        return (Integer) getFieldByNumber(1);
+    public Number[] getApplicationId() {
+        final Object object = getFieldByNumber(1);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
@@ -72,13 +94,13 @@ public class FitDeveloperData extends RecordData {
             super(207);
         }
 
-        public Builder setDeveloperId(final Integer value) {
-            setFieldByNumber(0, value);
+        public Builder setDeveloperId(final Number[] value) {
+            setFieldByNumber(0, (Object[]) value);
             return this;
         }
 
-        public Builder setApplicationId(final Integer value) {
-            setFieldByNumber(1, value);
+        public Builder setApplicationId(final Number[] value) {
+            setFieldByNumber(1, (Object[]) value);
             return this;
         }
 

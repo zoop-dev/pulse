@@ -245,99 +245,33 @@ public class FitRecord extends RecordData {
     }
 
     @Nullable
-    public Number[] getAvgTotalHemoglobinConc() {
-        final Object object = getFieldByNumber(54);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+    public Float getAvgTotalHemoglobinConc() {
+        return (Float) getFieldByNumber(54);
     }
 
     @Nullable
-    public Number[] getMinTotalHemoglobinConc() {
-        final Object object = getFieldByNumber(55);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+    public Float getMinTotalHemoglobinConc() {
+        return (Float) getFieldByNumber(55);
     }
 
     @Nullable
-    public Number[] getMaxTotalHemoglobinConc() {
-        final Object object = getFieldByNumber(56);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+    public Float getMaxTotalHemoglobinConc() {
+        return (Float) getFieldByNumber(56);
     }
 
     @Nullable
-    public Number[] getAvgSaturatedHemoglobinPercent() {
-        final Object object = getFieldByNumber(57);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+    public Float getAvgSaturatedHemoglobinPercent() {
+        return (Float) getFieldByNumber(57);
     }
 
     @Nullable
-    public Number[] getMinSaturatedHemoglobinPercent() {
-        final Object object = getFieldByNumber(58);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+    public Float getMinSaturatedHemoglobinPercent() {
+        return (Float) getFieldByNumber(58);
     }
 
     @Nullable
-    public Number[] getMaxSaturatedHemoglobinPercent() {
-        final Object object = getFieldByNumber(59);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+    public Float getMaxSaturatedHemoglobinPercent() {
+        return (Float) getFieldByNumber(59);
     }
 
     @Nullable
@@ -792,33 +726,33 @@ public class FitRecord extends RecordData {
             return this;
         }
 
-        public Builder setAvgTotalHemoglobinConc(final Number[] value) {
-            setFieldByNumber(54, (Object[]) value);
+        public Builder setAvgTotalHemoglobinConc(final Float value) {
+            setFieldByNumber(54, value);
             return this;
         }
 
-        public Builder setMinTotalHemoglobinConc(final Number[] value) {
-            setFieldByNumber(55, (Object[]) value);
+        public Builder setMinTotalHemoglobinConc(final Float value) {
+            setFieldByNumber(55, value);
             return this;
         }
 
-        public Builder setMaxTotalHemoglobinConc(final Number[] value) {
-            setFieldByNumber(56, (Object[]) value);
+        public Builder setMaxTotalHemoglobinConc(final Float value) {
+            setFieldByNumber(56, value);
             return this;
         }
 
-        public Builder setAvgSaturatedHemoglobinPercent(final Number[] value) {
-            setFieldByNumber(57, (Object[]) value);
+        public Builder setAvgSaturatedHemoglobinPercent(final Float value) {
+            setFieldByNumber(57, value);
             return this;
         }
 
-        public Builder setMinSaturatedHemoglobinPercent(final Number[] value) {
-            setFieldByNumber(58, (Object[]) value);
+        public Builder setMinSaturatedHemoglobinPercent(final Float value) {
+            setFieldByNumber(58, value);
             return this;
         }
 
-        public Builder setMaxSaturatedHemoglobinPercent(final Number[] value) {
-            setFieldByNumber(59, (Object[]) value);
+        public Builder setMaxSaturatedHemoglobinPercent(final Float value) {
+            setFieldByNumber(59, value);
             return this;
         }
 

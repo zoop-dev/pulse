@@ -1,3 +1,19 @@
+/*  Copyright (C) 2024-2025 Daniele Gobbetti, José Rebelo, Thomas Kuehne
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -6,6 +22,9 @@ import static org.hamcrest.Matchers.is;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.Parameter;
 import java.math.BigInteger;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
@@ -356,7 +375,7 @@ public class GarminSupportTest extends TestBase {
 
         FitFile fitFile = FitFile.parseIncoming(fileContents);
         Assert.assertEquals(expectedOutput, fitFile.toString());
-
+        getAllFitFieldValues(fitFile);
     }
 
     @Test
@@ -374,6 +393,7 @@ public class GarminSupportTest extends TestBase {
 
         FitFile fitFile = FitFile.parseIncoming(fileContents);
         Assert.assertEquals(expectedOutput, fitFile.toString());
+        getAllFitFieldValues(fitFile);
     }
 
     @Test
@@ -994,7 +1014,7 @@ public class GarminSupportTest extends TestBase {
                         "FitTrainingSettings{target_distance=1.0, target_speed=1.0, target_time=1, precise_target_speed=1.0}, " +
                         "FitGoals{sport=1, sub_sport=1, start_date=1127433599, end_date=1127433599, type=distance, value=1, repeat=1, target_value=1, recurrence=1, recurrence_value=1, enabled=1, source=community, message_index=1}, " +
                         "FitSession{2025-09-22 01:59:59.000, event=3, event_type=1, start_time=1127433599, start_latitude=8.381903171539307E-8, start_longitude=8.381903171539307E-8, sport=1, sub_sport=1, total_elapsed_time=1000, total_timer_time=1000, total_distance=100, total_cycles=1, total_calories=1, total_fat_calories=1, avg_speed=1.0, max_speed=1.0, average_heart_rate=1, max_heart_rate=1, avg_cadence=1, max_cadence=1, avg_power=1, max_power=1, total_ascent=1, total_descent=1, total_training_effect=1.0, first_lap_index=1, num_laps=1, event_group=1, trigger=1, nec_latitude=8.381903171539307E-8, nec_longitude=8.381903171539307E-8, swc_latitude=8.381903171539307E-8, swc_longitude=8.381903171539307E-8, num_lengths=1, normalized_power=1, training_stress_score=1.0, intensity_factor=1.0, left_right_balance=1, end_latitude=8.381903171539307E-8, end_longitude=8.381903171539307E-8, avg_stroke_count=10, avg_stroke_distance=1.0, swim_stroke=1, pool_length=1.0, threshold_power=1, pool_length_unit=1, num_active_lengths=1, total_work=1, avg_altitude=1.0, max_altitude=1.0, gps_accuracy=1, avg_grade=1.0, avg_pos_grade=1.0, avg_neg_grade=1.0, max_pos_grade=1.0, max_neg_grade=1.0, avg_temperature=1, max_temperature=1, total_moving_time=1.0, avg_pos_vertical_speed=1.0, avg_neg_vertical_speed=1.0, max_pos_vertical_speed=1.0, max_neg_vertical_speed=1.0, min_heart_rate=1, avg_lap_time=1.0, best_lap_index=1, min_altitude=1.0, player_score=1, opponent_score=1, opponent_name=a, max_ball_speed=1.0, avg_ball_speed=1.0, avg_vertical_oscillation=1.0, avg_stance_time_percent=1.0, avg_stance_time=1.0, avg_fractional_cadence=1.0, max_fractional_cadence=1.0, total_fractional_cycles=1.0, avg_left_torque_effectiveness=1.0, avg_right_torque_effectiveness=1.0, avg_left_pedal_smoothness=1.0, avg_right_pedal_smoothness=1.0, avg_combined_pedal_smoothness=1.0, sport_profile_name=a, sport_index=1, stand_time=1000, stand_count=1, avg_left_pco=1, avg_right_pco=1, enhanced_avg_speed=1.0, enhanced_max_speed=1.0, enhanced_avg_altitude=1.0, enhanced_min_altitude=1.0, enhanced_max_altitude=1.0, avg_lev_motor_power=1, max_lev_motor_power=1, lev_battery_consumption=1.0, avg_vertical_ratio=1.0, avg_stance_time_balance=1.0, avg_step_length=1.0, total_anaerobic_training_effect=1.0, avg_vam=1.0, avg_depth=1.0, max_depth=1.0, surface_interval=1, start_cns=1, end_cns=1, start_n2=1, end_n2=1, avg_respiration_rate=1, max_respiration_rate=1, min_respiration_rate=1, min_temperature=1, o2_toxicity=1, dive_number=1, training_load_peak=1.0, enhanced_avg_respiration_rate=1.0, enhanced_max_respiration_rate=1.0, enhanced_min_respiration_rate=1.0, total_grit=1.0, total_flow=1.0, jump_count=1, avg_grit=1.0, avg_flow=1.0, workout_feel=1, workout_rpe=1, avg_spo2=1, avg_stress=1, hrv_sdrr=1, hrv_rmssd=1, total_fractional_ascent=1.0, total_fractional_descent=1.0, avg_core_temperature=1.0, min_core_temperature=1.0, max_core_temperature=1.0, timestamp=1758499199, message_index=1}, " +
-                        "FitLap{2025-09-22 01:59:59.000, event=3, event_type=1, start_time=1127433599, start_lat=8.381903171539307E-8, start_long=8.381903171539307E-8, end_lat=8.381903171539307E-8, end_long=8.381903171539307E-8, total_elapsed_time=1.0, total_timer_time=1.0, total_distance=1.0, total_cycles=1, total_calories=1, total_fat_calories=1, avg_speed=1.0, max_speed=1.0, avg_heart_rate=1, max_heart_rate=1, avg_cadence=1, max_cadence=1, avg_power=1, max_power=1, total_ascent=1, total_descent=1, intensity=1, lap_trigger=1, sport=1, event_group=1, num_lengths=1, normalized_power=1, left_right_balance=1, first_length_index=1, avg_stroke_distance=100, swim_style=BACKSTROKE, sub_sport=1, num_active_lengths=1, total_work=1, avg_altitude=1.0, max_altitude=1.0, gps_accuracy=1, avg_grade=1.0, avg_pos_grade=1.0, avg_neg_grade=1.0, max_pos_grade=1.0, max_neg_grade=1.0, avg_temperature=1, max_temperature=1, total_moving_time=1.0, avg_pos_vertical_speed=1.0, avg_neg_vertical_speed=1.0, max_pos_vertical_speed=1.0, max_neg_vertical_speed=1.0, repetition_num=1, min_altitude=1.0, min_heart_rate=1, wkt_step_index=1, opponent_score=1, avg_vertical_oscillation=1.0, avg_stance_time_percen=1.0, avg_stance_time=1.0, avg_fractional_cadence=1.0, max_fractional_cadence=1.0, total_fractional_cycles=1.0, player_score=1, avg_left_torque_effectiveness=1.0, avg_right_torque_effectiveness=1.0, avg_left_pedal_smoothness=1.0, avg_right_pedal_smoothness=1.0, avg_combined_pedal_smoothness=1.0, time_standing=1.0, stand_count=1, avg_left_pco=1, avg_right_pco=1, enhanced_avg_speed=10.0, enhanced_max_speed=10.0, enhanced_avg_altitude=1.0, enhanced_min_altitude=1.0, enhanced_max_altitude=1.0, avg_lev_motor_power=1, max_lev_motor_power=1, lev_battery_consumption=1.0, avg_vertical_ratio=1.0, avg_stance_time_balance=1.0, avg_step_length=1.0, avg_vam=1.0, avg_depth=1.0, max_depth=1.0, min_temperature=1, enhanced_avg_respiration_rate=1.0, enhanced_max_respiration_rate=1.0, avg_respiration_rate=1, max_respiration_rate=1, total_grit=1.0, total_flow=1.0, jump_count=1, avg_grit=1.0, avg_flow=1.0, total_fractional_ascent=1.0, total_fractional_descent=1.0, avg_core_temperature=1.0, min_core_temperature=1.0, max_core_temperature=1.0, timestamp=1758499199, message_index=1}, " +
+                        "FitLap{2025-09-22 01:59:59.000, event=3, event_type=1, start_time=1127433599, start_lat=8.381903171539307E-8, start_long=8.381903171539307E-8, end_lat=8.381903171539307E-8, end_long=8.381903171539307E-8, total_elapsed_time=1.0, total_timer_time=1.0, total_distance=1.0, total_cycles=1, total_calories=1, total_fat_calories=1, avg_speed=1.0, max_speed=1.0, avg_heart_rate=1, max_heart_rate=1, avg_cadence=1, max_cadence=1, avg_power=1, max_power=1, total_ascent=1, total_descent=1, intensity=1, lap_trigger=1, sport=1, event_group=1, num_lengths=1, normalized_power=1, left_right_balance=1, first_length_index=1, avg_stroke_distance=100, swim_style=BACKSTROKE, sub_sport=1, num_active_lengths=1, total_work=1, avg_altitude=1.0, max_altitude=1.0, gps_accuracy=1, avg_grade=1.0, avg_pos_grade=1.0, avg_neg_grade=1.0, max_pos_grade=1.0, max_neg_grade=1.0, avg_temperature=1, max_temperature=1, total_moving_time=1.0, avg_pos_vertical_speed=1.0, avg_neg_vertical_speed=1.0, max_pos_vertical_speed=1.0, max_neg_vertical_speed=1.0, repetition_num=1, min_altitude=1.0, min_heart_rate=1, wkt_step_index=1, opponent_score=1, avg_vertical_oscillation=1.0, avg_stance_time_percent=1.0, avg_stance_time=1.0, avg_fractional_cadence=1.0, max_fractional_cadence=1.0, total_fractional_cycles=1.0, player_score=1, avg_left_torque_effectiveness=1.0, avg_right_torque_effectiveness=1.0, avg_left_pedal_smoothness=1.0, avg_right_pedal_smoothness=1.0, avg_combined_pedal_smoothness=1.0, time_standing=1.0, stand_count=1, avg_left_pco=1, avg_right_pco=1, enhanced_avg_speed=10.0, enhanced_max_speed=10.0, enhanced_avg_altitude=1.0, enhanced_min_altitude=1.0, enhanced_max_altitude=1.0, avg_lev_motor_power=1, max_lev_motor_power=1, lev_battery_consumption=1.0, avg_vertical_ratio=1.0, avg_stance_time_balance=1.0, avg_step_length=1.0, avg_vam=1.0, avg_depth=1.0, max_depth=1.0, min_temperature=1, enhanced_avg_respiration_rate=1.0, enhanced_max_respiration_rate=1.0, avg_respiration_rate=1, max_respiration_rate=1, total_grit=1.0, total_flow=1.0, jump_count=1, avg_grit=1.0, avg_flow=1.0, total_fractional_ascent=1.0, total_fractional_descent=1.0, avg_core_temperature=1.0, min_core_temperature=1.0, max_core_temperature=1.0, timestamp=1758499199, message_index=1}, " +
                         "FitRecord{2025-09-22 01:59:59.000, latitude=8.381903171539307E-8, longitude=8.381903171539307E-8, altitude=1.0, heart_rate=1, cadence=1, distance=1.0, speed=1.0, power=1, grade=1.0, resistance=1, time_from_course=1.0, cycle_length=1.0, temperature=1, cycles=1, total_cycles=1, compressed_accumulated_power=1, accumulated_power=1, left_right_balance=1, gps_accuracy=1, vertical_speed=1.0, calories=1, oscillation=1.0, stance_time_percent=1.0, stance_time=1.0, activity=1, left_torque_effectiveness=1.0, right_torque_effectiveness=1.0, left_pedal_smoothness=1.0, right_pedal_smoothness=1.0, combined_pedal_smoothness=1.0, time128=1.0, stroke_type=1, zone=1, ball_speed=1.0, cadence256=1.0, fractional_cadence=1.0, avg_total_hemoglobin_conc=1.0, min_total_hemoglobin_conc=1.0, max_total_hemoglobin_conc=1.0, avg_saturated_hemoglobin_percent=1.0, min_saturated_hemoglobin_percent=1.0, max_saturated_hemoglobin_percent=1.0, device_index=1, left_pco=1, right_pco=1, enhanced_speed=1.0, enhanced_altitude=1.0, battery_soc=1.0, motor_power=1, vertical_ratio=1.0, stance_time_balance=1.0, step_length=1.0, cycle_length16=1.0, absolute_pressure=1, depth=1.0, next_stop_depth=1.0, next_stop_time=1, time_to_surface=1, ndl_time=1, cns_load=1, n2_load=1, respiration_rate=1, enhanced_respiration_rate=100, grit=1.0, flow=1.0, current_stress=1.0, ebike_travel_rang=1, ebike_battery_level=1, ebike_assist_mode=1, ebike_assist_level_percent=1, air_time_remaining=1, pressure_sac=1.0, volume_sac=1.0, rmv=1.0, ascent_rate=1.0, po2=1.0, core_temperature=1.0, timestamp=1758499199}, " +
                         "FitEvent{2025-09-22 01:59:59.000, event=3, event_type=1, data16=1, data=1, event_group=1, score=1, opponent_score=1, front_gear_num=1, front_gear=1, rear_gear_num=1, rear_gear=1, device_index=1, activity_type=1, start_timestamp=1127433599, radar_threat_level_max=1, radar_threat_count=1, radar_threat_avg_approach_speed=1.0, radar_threat_max_approach_speed=1.0, timestamp=1758499199}, " +
                         "FitDeviceInfo{2025-09-22 01:59:59.000, device_index=1, device_type=1, manufacturer=1, serial_number=1, product=1, software_version=100, hardware_version=1, cum_operating_time=1, battery_voltage=1.0, battery_status=1, sensor_position=1, descriptor=a, ant_transmission_type=1, ant_device_number=1, ant_network=1, source_type=1, product_name=a, battery_level=1, timestamp=1758499199}, " +
@@ -1109,8 +1129,49 @@ public class GarminSupportTest extends TestBase {
             String expected = expectedOutput.replace("}, Fit", "},\nFit").replace("}, RecordData{", "},\nRecordData{");
             String actual = fitFile.toString().replace("}, Fit", "},\nFit").replace("}, RecordData{", "},\nRecordData{");
             assertThat(actual, is(expected));
+            getAllFitFieldValues(fitFile);
         } finally {
             TimeZone.setDefault(defaultTimeZone);
+        }
+    }
+
+    // try to retrieve the value of each message's fields
+    private static void getAllFitFieldValues(FitFile fitFile) {
+        List<RecordData> records = fitFile.getRecords();
+        if (records == null || records.isEmpty()) {
+            return;
+        }
+
+        for (int recordIndex = 0; recordIndex < records.size(); recordIndex++) {
+            RecordData record = records.get(recordIndex);
+            Class<?> recordClass = record.getClass();
+            Method[] methods = recordClass.getDeclaredMethods();
+            for (Method method : methods) {
+                String name = method.getName();
+                if (!name.startsWith("get")) {
+                    continue;
+                }
+                int modifiers = method.getModifiers();
+                if (!Modifier.isPublic(modifiers) || Modifier.isStatic(modifiers)) {
+                    continue;
+                }
+                Parameter[] parameters = method.getParameters();
+                if (parameters.length != 0) {
+                    continue;
+                }
+
+                try {
+                    method.invoke(record);
+                } catch (Exception e) {
+                    String message = name + " failed for " + record;
+                    if ("FitRecord".equals(recordClass.getSimpleName()) && "getLatitude".equals(name)){
+                        // TODO GarminSupportTest.TestFitFileDevelopersField -> FitRecord / getLatitude
+                        // FIXME java.lang.ClassCastException: class java.lang.Integer cannot be cast to class java.lang.Double
+                        continue;
+                    }
+                    throw new AssertionError(message, e);
+                }
+            }
         }
     }
 }

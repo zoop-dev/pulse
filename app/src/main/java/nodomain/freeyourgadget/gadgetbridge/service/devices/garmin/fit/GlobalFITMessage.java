@@ -444,9 +444,9 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(74, BaseType.UINT16, "opponent_score"),
             new FieldDefinitionPrimitive(75, BaseType.UINT16, "stroke_count", FieldDefinitionFactory.FIELD.ARRAY),
             new FieldDefinitionPrimitive(76, BaseType.UINT16, "zone_count", FieldDefinitionFactory.FIELD.ARRAY),
-            new FieldDefinitionPrimitive(77, BaseType.UINT16, "avg_vertical_oscillation", FieldDefinitionFactory.FIELD.ARRAY, 10, 0), // mm
-            new FieldDefinitionPrimitive(78, BaseType.UINT16, "avg_stance_time_percen", FieldDefinitionFactory.FIELD.ARRAY, 100, 0), // %
-            new FieldDefinitionPrimitive(79, BaseType.UINT16, "avg_stance_time", FieldDefinitionFactory.FIELD.ARRAY, 10, 0), // ms
+            new FieldDefinitionPrimitive(77, BaseType.UINT16, "avg_vertical_oscillation", 10, 0), // mm
+            new FieldDefinitionPrimitive(78, BaseType.UINT16, "avg_stance_time_percent", 100, 0), // %
+            new FieldDefinitionPrimitive(79, BaseType.UINT16, "avg_stance_time", 10, 0), // ms
             new FieldDefinitionPrimitive(80, BaseType.UINT8, "avg_fractional_cadence", 128, 0), // rpm
             new FieldDefinitionPrimitive(81, BaseType.UINT8, "max_fractional_cadence", 128, 0), // rpm
             new FieldDefinitionPrimitive(82, BaseType.UINT8, "total_fractional_cycles", 128, 0), // cycles
@@ -546,12 +546,12 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(51, BaseType.UINT16, "ball_speed", 100, 0), // m/s
             new FieldDefinitionPrimitive(52, BaseType.UINT16, "cadence256", 256, 0), // RPM
             new FieldDefinitionPrimitive(53, BaseType.UINT8, "fractional_cadence", 128, 0), // rpm
-            new FieldDefinitionPrimitive(54, BaseType.UINT16, "avg_total_hemoglobin_conc", FieldDefinitionFactory.FIELD.ARRAY,100, 0), // g/dL
-            new FieldDefinitionPrimitive(55, BaseType.UINT16, "min_total_hemoglobin_conc", FieldDefinitionFactory.FIELD.ARRAY,100, 0), // g/dL
-            new FieldDefinitionPrimitive(56, BaseType.UINT16, "max_total_hemoglobin_conc", FieldDefinitionFactory.FIELD.ARRAY,100, 0), // g/dL
-            new FieldDefinitionPrimitive(57, BaseType.UINT16, "avg_saturated_hemoglobin_percent", FieldDefinitionFactory.FIELD.ARRAY,10, 0), // %
-            new FieldDefinitionPrimitive(58, BaseType.UINT16, "min_saturated_hemoglobin_percent", FieldDefinitionFactory.FIELD.ARRAY,10, 0), // %
-            new FieldDefinitionPrimitive(59, BaseType.UINT16, "max_saturated_hemoglobin_percent", FieldDefinitionFactory.FIELD.ARRAY,10, 0), // %
+            new FieldDefinitionPrimitive(54, BaseType.UINT16, "avg_total_hemoglobin_conc", 100, 0), // g/dL
+            new FieldDefinitionPrimitive(55, BaseType.UINT16, "min_total_hemoglobin_conc", 100, 0), // g/dL
+            new FieldDefinitionPrimitive(56, BaseType.UINT16, "max_total_hemoglobin_conc", 100, 0), // g/dL
+            new FieldDefinitionPrimitive(57, BaseType.UINT16, "avg_saturated_hemoglobin_percent", 10, 0), // %
+            new FieldDefinitionPrimitive(58, BaseType.UINT16, "min_saturated_hemoglobin_percent", 10, 0), // %
+            new FieldDefinitionPrimitive(59, BaseType.UINT16, "max_saturated_hemoglobin_percent", 10, 0), // %
             new FieldDefinitionPrimitive(62, BaseType.UINT8, "device_index"),
             new FieldDefinitionPrimitive(67, BaseType.SINT8, "left_pco"), // mm
             new FieldDefinitionPrimitive(68, BaseType.SINT8, "right_pco"), // mm
@@ -1338,8 +1338,8 @@ public class GlobalFITMessage {
     ));
 
     public static GlobalFITMessage DEVELOPER_DATA = new GlobalFITMessage(207, "DEVELOPER_DATA", Arrays.asList(
-            new FieldDefinitionPrimitive(0, BaseType.BASE_TYPE_BYTE, 16, "developer_id"),
-            new FieldDefinitionPrimitive(1, BaseType.BASE_TYPE_BYTE, 16, "application_id"),
+            new FieldDefinitionPrimitive(0, BaseType.BASE_TYPE_BYTE, 16, "developer_id", FieldDefinitionFactory.FIELD.ARRAY, 1, 0),
+            new FieldDefinitionPrimitive(1, BaseType.BASE_TYPE_BYTE, 16, "application_id", FieldDefinitionFactory.FIELD.ARRAY, 1, 0),
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "manufacturer_id"),
             new FieldDefinitionPrimitive(3, BaseType.UINT8, "developer_data_index"),
             new FieldDefinitionPrimitive(4, BaseType.UINT32, "application_version")

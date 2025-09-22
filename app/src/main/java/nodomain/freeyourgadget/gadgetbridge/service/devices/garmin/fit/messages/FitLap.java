@@ -422,51 +422,18 @@ public class FitLap extends RecordData {
     }
 
     @Nullable
-    public Number[] getAvgVerticalOscillation() {
-        final Object object = getFieldByNumber(77);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+    public Float getAvgVerticalOscillation() {
+        return (Float) getFieldByNumber(77);
     }
 
     @Nullable
-    public Number[] getAvgStanceTimePercen() {
-        final Object object = getFieldByNumber(78);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+    public Float getAvgStanceTimePercent() {
+        return (Float) getFieldByNumber(78);
     }
 
     @Nullable
-    public Number[] getAvgStanceTime() {
-        final Object object = getFieldByNumber(79);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+    public Float getAvgStanceTime() {
+        return (Float) getFieldByNumber(79);
     }
 
     @Nullable
@@ -1148,18 +1115,18 @@ public class FitLap extends RecordData {
             return this;
         }
 
-        public Builder setAvgVerticalOscillation(final Number[] value) {
-            setFieldByNumber(77, (Object[]) value);
+        public Builder setAvgVerticalOscillation(final Float value) {
+            setFieldByNumber(77, value);
             return this;
         }
 
-        public Builder setAvgStanceTimePercen(final Number[] value) {
-            setFieldByNumber(78, (Object[]) value);
+        public Builder setAvgStanceTimePercent(final Float value) {
+            setFieldByNumber(78, value);
             return this;
         }
 
-        public Builder setAvgStanceTime(final Number[] value) {
-            setFieldByNumber(79, (Object[]) value);
+        public Builder setAvgStanceTime(final Float value) {
+            setFieldByNumber(79, value);
             return this;
         }
 
