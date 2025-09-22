@@ -88,6 +88,8 @@ import org.slf4j.LoggerFactory
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.PrintWriter
+import java.io.StringWriter
 import java.nio.charset.StandardCharsets
 import java.util.Locale
 import java.util.concurrent.TimeUnit
@@ -172,8 +174,18 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
                         dbHandler.daoSession.baseActivitySummaryDao.load(workoutId)
                     }
                     gbDevice = getGBDevice(summary.device)
-                    val parsedWorkout = gbDevice!!.deviceCoordinator.getActivitySummaryParser(gbDevice, requireContext())
-                        .parseWorkout(summary, true)
+                    val parsedWorkout = try {
+                        gbDevice!!.deviceCoordinator.getActivitySummaryParser(gbDevice, requireContext())
+                            .parseWorkout(summary, true)
+                    } catch (e: Exception) {
+                        // Do not break completely - use any previously processed data
+                        GB.toast(requireContext(), "Error while loading workout", Toast.LENGTH_SHORT, GB.ERROR, e)
+                        Workout(
+                            summary,
+                            ActivitySummaryData.fromJson(summary.summaryData),
+                            mutableListOf()
+                        )
+                    }
                     if (parsedWorkout.charts.isEmpty()) {
                         try {
                             val trackFile = ActivitySummaryUtils.getTrackFile(parsedWorkout.summary)
@@ -211,7 +223,9 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
                 }
             } catch (e: Exception) {
                 LOG.error("Error loading workout data", e)
-                showError("Failed to load workout: ${e.localizedMessage}")
+                val sw = StringWriter()
+                e.printStackTrace(PrintWriter(sw))
+                showError("Failed to load workout: $sw")
             }
         }
     }
