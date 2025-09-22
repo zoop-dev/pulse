@@ -265,7 +265,7 @@ public class IGPSportDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     LOG.error("Unknown general operation received");
             }
         } catch (InvalidProtocolBufferException e) {
-            throw new RuntimeException(e);
+            LOG.error("Failed to parse protobuf packet" + e);
         }
     }
 

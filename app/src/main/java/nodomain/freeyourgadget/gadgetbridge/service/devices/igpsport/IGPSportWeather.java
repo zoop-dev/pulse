@@ -16,6 +16,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.igpsport;
 
+import android.widget.Toast;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -28,8 +33,10 @@ import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Back;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Common;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class IGPSportWeather {
+    Logger LOG = LoggerFactory.getLogger(IGPSportWeather.class);
     IGPSportDeviceSupport support;
     public IGPSportWeather(IGPSportDeviceSupport support) {
         this.support = support;
@@ -37,6 +44,7 @@ public class IGPSportWeather {
 
     // A static map to hold the conversion logic from OWM to QWeather.
     private static final Map<Integer, Integer> codeMap = new HashMap<>();
+
 
     // Static initializer block to populate the map with conversion data.
     static {
@@ -193,7 +201,7 @@ public class IGPSportWeather {
             builder.queue();
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            LOG.error("Failed to encode weather " + e);
         }
     }
 

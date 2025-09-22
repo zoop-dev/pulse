@@ -54,7 +54,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.notifications.GBProgressNotific
 
 public class IGPSportDownloadManager {
 
-        Logger LOG = LoggerFactory.getLogger(nodomain.freeyourgadget.gadgetbridge.service.devices.igpsport.IGPSportDownloadManager.class);
+        Logger LOG = LoggerFactory.getLogger(IGPSportDownloadManager.class);
         private IGPSportDeviceSupport support = null;
         private List<FileInfo> avaliableActivityFiles = new ArrayList<>();
         private ByteArrayOutputStream recievingDataBuffer;
@@ -151,7 +151,7 @@ public class IGPSportDownloadManager {
             try {
                 recievingDataBuffer.write(data);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                LOG.error("Failed to add data to buffer" + e);
             }
 
             if (firstChunk) {
@@ -166,7 +166,7 @@ public class IGPSportDownloadManager {
                 downloadInProgress = false;
 
                 File dir;
-                File outputFile;
+                File outputFile = null;
 
                 try {
                     dir = support.getWritableExportDirectory();
@@ -180,7 +180,7 @@ public class IGPSportDownloadManager {
                     outputFile.setLastModified(garminTimestampToJavaMillis(downloadingFile.getGarminTimeStamp()));
                     filesToProcess.add(outputFile);
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    LOG.error("Failed to save fit file to: " + outputFile.getAbsolutePath() + e);
                 }
 
                 syncNextFile();

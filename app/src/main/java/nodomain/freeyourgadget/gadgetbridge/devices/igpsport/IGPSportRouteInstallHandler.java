@@ -148,7 +148,7 @@ public class IGPSportRouteInstallHandler implements InstallHandler {
                 R.string.installhandler_firmware_name,
                 mContext.getString(coordinator.getDeviceNameResource()),
                 mContext.getString(R.string.kind_gpx_route),
-                "test" //FIXME
+                filename
         );
         return new GenericItem(firmwareName);
     }
