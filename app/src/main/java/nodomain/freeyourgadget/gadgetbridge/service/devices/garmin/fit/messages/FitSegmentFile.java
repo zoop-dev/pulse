@@ -55,23 +55,67 @@ public class FitSegmentFile extends RecordData {
     }
 
     @Nullable
-    public Integer getLeaderType() {
-        return (Integer) getFieldByNumber(7);
+    public Number[] getLeaderType() {
+        final Object object = getFieldByNumber(7);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
-    public Long getLeaderGroupPrimaryKey() {
-        return (Long) getFieldByNumber(8);
+    public Number[] getLeaderGroupPrimaryKey() {
+        final Object object = getFieldByNumber(8);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
-    public Long getLeaderActivityId() {
-        return (Long) getFieldByNumber(9);
+    public Number[] getLeaderActivityId() {
+        final Object object = getFieldByNumber(9);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
-    public String getLeaderActivityIdString() {
-        return (String) getFieldByNumber(10);
+    public Number[] getLeaderActivityIdString() {
+        final Object object = getFieldByNumber(10);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
@@ -107,23 +151,23 @@ public class FitSegmentFile extends RecordData {
             return this;
         }
 
-        public Builder setLeaderType(final Integer value) {
-            setFieldByNumber(7, value);
+        public Builder setLeaderType(final Number[] value) {
+            setFieldByNumber(7, (Object[]) value);
             return this;
         }
 
-        public Builder setLeaderGroupPrimaryKey(final Long value) {
-            setFieldByNumber(8, value);
+        public Builder setLeaderGroupPrimaryKey(final Number[] value) {
+            setFieldByNumber(8, (Object[]) value);
             return this;
         }
 
-        public Builder setLeaderActivityId(final Long value) {
-            setFieldByNumber(9, value);
+        public Builder setLeaderActivityId(final Number[] value) {
+            setFieldByNumber(9, (Object[]) value);
             return this;
         }
 
-        public Builder setLeaderActivityIdString(final String value) {
-            setFieldByNumber(10, value);
+        public Builder setLeaderActivityIdString(final Number[] value) {
+            setFieldByNumber(10, (Object[]) value);
             return this;
         }
 

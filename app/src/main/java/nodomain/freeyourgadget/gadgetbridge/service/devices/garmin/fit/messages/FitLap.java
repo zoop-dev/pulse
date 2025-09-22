@@ -598,43 +598,131 @@ public class FitLap extends RecordData {
     }
 
     @Nullable
-    public Integer getAvgLeftPowerPhase() {
-        return (Integer) getFieldByNumber(102);
+    public Number[] getAvgLeftPowerPhase() {
+        final Object object = getFieldByNumber(102);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
-    public Integer getAvgLeftPowerPhasePeak() {
-        return (Integer) getFieldByNumber(103);
+    public Number[] getAvgLeftPowerPhasePeak() {
+        final Object object = getFieldByNumber(103);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
-    public Integer getAvgRightPowerPhase() {
-        return (Integer) getFieldByNumber(104);
+    public Number[] getAvgRightPowerPhase() {
+        final Object object = getFieldByNumber(104);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
-    public Integer getAvgRightPowerPhasePeak() {
-        return (Integer) getFieldByNumber(105);
+    public Number[] getAvgRightPowerPhasePeak() {
+        final Object object = getFieldByNumber(105);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
-    public Integer getAvgPowerPosition() {
-        return (Integer) getFieldByNumber(106);
+    public Number[] getAvgPowerPosition() {
+        final Object object = getFieldByNumber(106);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
-    public Integer getMaxPowerPosition() {
-        return (Integer) getFieldByNumber(107);
+    public Number[] getMaxPowerPosition() {
+        final Object object = getFieldByNumber(107);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
-    public Integer getAvgCadencePosition() {
-        return (Integer) getFieldByNumber(108);
+    public Number[] getAvgCadencePosition() {
+        final Object object = getFieldByNumber(108);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
-    public Integer getMaxCadencePosition() {
-        return (Integer) getFieldByNumber(109);
+    public Number[] getMaxCadencePosition() {
+        final Object object = getFieldByNumber(109);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
@@ -1225,43 +1313,43 @@ public class FitLap extends RecordData {
             return this;
         }
 
-        public Builder setAvgLeftPowerPhase(final Integer value) {
-            setFieldByNumber(102, value);
+        public Builder setAvgLeftPowerPhase(final Number[] value) {
+            setFieldByNumber(102, (Object[]) value);
             return this;
         }
 
-        public Builder setAvgLeftPowerPhasePeak(final Integer value) {
-            setFieldByNumber(103, value);
+        public Builder setAvgLeftPowerPhasePeak(final Number[] value) {
+            setFieldByNumber(103, (Object[]) value);
             return this;
         }
 
-        public Builder setAvgRightPowerPhase(final Integer value) {
-            setFieldByNumber(104, value);
+        public Builder setAvgRightPowerPhase(final Number[] value) {
+            setFieldByNumber(104, (Object[]) value);
             return this;
         }
 
-        public Builder setAvgRightPowerPhasePeak(final Integer value) {
-            setFieldByNumber(105, value);
+        public Builder setAvgRightPowerPhasePeak(final Number[] value) {
+            setFieldByNumber(105, (Object[]) value);
             return this;
         }
 
-        public Builder setAvgPowerPosition(final Integer value) {
-            setFieldByNumber(106, value);
+        public Builder setAvgPowerPosition(final Number[] value) {
+            setFieldByNumber(106, (Object[]) value);
             return this;
         }
 
-        public Builder setMaxPowerPosition(final Integer value) {
-            setFieldByNumber(107, value);
+        public Builder setMaxPowerPosition(final Number[] value) {
+            setFieldByNumber(107, (Object[]) value);
             return this;
         }
 
-        public Builder setAvgCadencePosition(final Integer value) {
-            setFieldByNumber(108, value);
+        public Builder setAvgCadencePosition(final Number[] value) {
+            setFieldByNumber(108, (Object[]) value);
             return this;
         }
 
-        public Builder setMaxCadencePosition(final Integer value) {
-            setFieldByNumber(109, value);
+        public Builder setMaxCadencePosition(final Number[] value) {
+            setFieldByNumber(109, (Object[]) value);
             return this;
         }
 

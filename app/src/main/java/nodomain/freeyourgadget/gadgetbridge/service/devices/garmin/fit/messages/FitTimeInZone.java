@@ -66,18 +66,51 @@ public class FitTimeInZone extends RecordData {
     }
 
     @Nullable
-    public Double getTimeInSpeedZone() {
-        return (Double) getFieldByNumber(3);
+    public Number[] getTimeInSpeedZone() {
+        final Object object = getFieldByNumber(3);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
-    public Double getTimeInCadenceZone() {
-        return (Double) getFieldByNumber(4);
+    public Number[] getTimeInCadenceZone() {
+        final Object object = getFieldByNumber(4);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
-    public Double getTimeInPowerZone() {
-        return (Double) getFieldByNumber(5);
+    public Number[] getTimeInPowerZone() {
+        final Object object = getFieldByNumber(5);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
@@ -97,18 +130,51 @@ public class FitTimeInZone extends RecordData {
     }
 
     @Nullable
-    public Float getSpeedZoneHighBoundary() {
-        return (Float) getFieldByNumber(7);
+    public Number[] getSpeedZoneHighBoundary() {
+        final Object object = getFieldByNumber(7);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
-    public Integer getCadenceZoneHighBoundary() {
-        return (Integer) getFieldByNumber(8);
+    public Number[] getCadenceZoneHighBoundary() {
+        final Object object = getFieldByNumber(8);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
-    public Integer getPowerZoneHighBoundary() {
-        return (Integer) getFieldByNumber(9);
+    public Number[] getPowerZoneHighBoundary() {
+        final Object object = getFieldByNumber(9);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
@@ -169,18 +235,18 @@ public class FitTimeInZone extends RecordData {
             return this;
         }
 
-        public Builder setTimeInSpeedZone(final Double value) {
-            setFieldByNumber(3, value);
+        public Builder setTimeInSpeedZone(final Number[] value) {
+            setFieldByNumber(3, (Object[]) value);
             return this;
         }
 
-        public Builder setTimeInCadenceZone(final Double value) {
-            setFieldByNumber(4, value);
+        public Builder setTimeInCadenceZone(final Number[] value) {
+            setFieldByNumber(4, (Object[]) value);
             return this;
         }
 
-        public Builder setTimeInPowerZone(final Double value) {
-            setFieldByNumber(5, value);
+        public Builder setTimeInPowerZone(final Number[] value) {
+            setFieldByNumber(5, (Object[]) value);
             return this;
         }
 
@@ -189,18 +255,18 @@ public class FitTimeInZone extends RecordData {
             return this;
         }
 
-        public Builder setSpeedZoneHighBoundary(final Float value) {
-            setFieldByNumber(7, value);
+        public Builder setSpeedZoneHighBoundary(final Number[] value) {
+            setFieldByNumber(7, (Object[]) value);
             return this;
         }
 
-        public Builder setCadenceZoneHighBoundary(final Integer value) {
-            setFieldByNumber(8, value);
+        public Builder setCadenceZoneHighBoundary(final Number[] value) {
+            setFieldByNumber(8, (Object[]) value);
             return this;
         }
 
-        public Builder setPowerZoneHighBoundary(final Integer value) {
-            setFieldByNumber(9, value);
+        public Builder setPowerZoneHighBoundary(final Number[] value) {
+            setFieldByNumber(9, (Object[]) value);
             return this;
         }
 

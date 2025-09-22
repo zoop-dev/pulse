@@ -50,18 +50,51 @@ public class FitDeviceSettings extends RecordData {
     }
 
     @Nullable
-    public Long getTimeOffset() {
-        return (Long) getFieldByNumber(2);
+    public Number[] getTimeOffset() {
+        final Object object = getFieldByNumber(2);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
-    public Integer getTimeMode() {
-        return (Integer) getFieldByNumber(4);
+    public Number[] getTimeMode() {
+        final Object object = getFieldByNumber(4);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
-    public Integer getTimeZoneOffset() {
-        return (Integer) getFieldByNumber(5);
+    public Number[] getTimeZoneOffset() {
+        final Object object = getFieldByNumber(5);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
@@ -164,8 +197,19 @@ public class FitDeviceSettings extends RecordData {
     }
 
     @Nullable
-    public Integer getDefaultPage() {
-        return (Integer) getFieldByNumber(57);
+    public Number[] getDefaultPage() {
+        final Object object = getFieldByNumber(57);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
@@ -252,18 +296,18 @@ public class FitDeviceSettings extends RecordData {
             return this;
         }
 
-        public Builder setTimeOffset(final Long value) {
-            setFieldByNumber(2, value);
+        public Builder setTimeOffset(final Number[] value) {
+            setFieldByNumber(2, (Object[]) value);
             return this;
         }
 
-        public Builder setTimeMode(final Integer value) {
-            setFieldByNumber(4, value);
+        public Builder setTimeMode(final Number[] value) {
+            setFieldByNumber(4, (Object[]) value);
             return this;
         }
 
-        public Builder setTimeZoneOffset(final Integer value) {
-            setFieldByNumber(5, value);
+        public Builder setTimeZoneOffset(final Number[] value) {
+            setFieldByNumber(5, (Object[]) value);
             return this;
         }
 
@@ -322,8 +366,8 @@ public class FitDeviceSettings extends RecordData {
             return this;
         }
 
-        public Builder setDefaultPage(final Integer value) {
-            setFieldByNumber(57, value);
+        public Builder setDefaultPage(final Number[] value) {
+            setFieldByNumber(57, (Object[]) value);
             return this;
         }
 

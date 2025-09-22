@@ -84,8 +84,19 @@ public class FitRecord extends RecordData {
     }
 
     @Nullable
-    public Integer getCompressedSpeedDistance() {
-        return (Integer) getFieldByNumber(8);
+    public Number[] getCompressedSpeedDistance() {
+        final Object object = getFieldByNumber(8);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
@@ -576,8 +587,8 @@ public class FitRecord extends RecordData {
             return this;
         }
 
-        public Builder setCompressedSpeedDistance(final Integer value) {
-            setFieldByNumber(8, value);
+        public Builder setCompressedSpeedDistance(final Number[] value) {
+            setFieldByNumber(8, (Object[]) value);
             return this;
         }
 

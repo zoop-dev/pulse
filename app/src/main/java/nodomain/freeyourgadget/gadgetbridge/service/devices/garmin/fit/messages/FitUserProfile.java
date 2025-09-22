@@ -142,8 +142,19 @@ public class FitUserProfile extends RecordData {
     }
 
     @Nullable
-    public Integer getGlobalId() {
-        return (Integer) getFieldByNumber(23);
+    public Number[] getGlobalId() {
+        final Object object = getFieldByNumber(23);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
@@ -314,8 +325,8 @@ public class FitUserProfile extends RecordData {
             return this;
         }
 
-        public Builder setGlobalId(final Integer value) {
-            setFieldByNumber(23, value);
+        public Builder setGlobalId(final Number[] value) {
+            setFieldByNumber(23, (Object[]) value);
             return this;
         }
 
