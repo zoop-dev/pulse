@@ -3927,4 +3927,9 @@
     <string name="workout_lap">Runde</string>
     <string name="lap_time">Zeit</string>
     <string name="hr_measurement_continuous">Kontinuierlich</string>
+    <string name="map_theme_biker">Motorradfahrer</string>
+    <string name="map_theme_indigo">Indigo</string>
+    <string name="stroke_rate">Schlagfrequenz</string>
+    <string name="jump_rope_longest_streak">Längste Seilsprung-Serie</string>
+    <string name="jump_rope_interruptions">Seilsprung-Unterbrechungen</string>
 </resources>
