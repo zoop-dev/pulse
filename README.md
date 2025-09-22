@@ -4,8 +4,8 @@ Gadgetbridge is hosted on [codeberg.org](https://codeberg.org/Freeyourgadget/Gad
 Gadgetbridge
 ============
 
-Gadgetbridge is an Android (5.0+) application which will allow you to use your
-Pebble, Mi Band, Amazfit Bip and HPlus device (and more) without the vendor's closed source application
+Gadgetbridge is an Android application which will allow you to use your
+Bluetooth gadgets (mostly wearables like smart watches, but many more) without the vendor's closed source application
 and without the need to create an account and transmit any of your data to the
 vendor's servers.
 
