@@ -26,6 +26,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
 /**
  * WARNING: This class was auto-generated, please avoid modifying it directly.
  * See {@link nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen}
+ *
  * @noinspection unused
  */
 public class FitGpsMetadata extends RecordData {
@@ -75,9 +76,13 @@ public class FitGpsMetadata extends RecordData {
 
     @Nullable
     public Number[] getVelocity() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(7);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(7);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];

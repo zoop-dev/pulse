@@ -27,6 +27,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefi
 /**
  * WARNING: This class was auto-generated, please avoid modifying it directly.
  * See {@link nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen}
+ *
  * @noinspection unused
  */
 public class FitHrvSummary extends RecordData {

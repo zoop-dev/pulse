@@ -27,6 +27,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefi
 /**
  * WARNING: This class was auto-generated, please avoid modifying it directly.
  * See {@link nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen}
+ *
  * @noinspection unused
  */
 public class FitLap extends RecordData {
@@ -296,9 +297,13 @@ public class FitLap extends RecordData {
 
     @Nullable
     public Number[] getTimeInHrZone() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(57);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(57);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -308,9 +313,13 @@ public class FitLap extends RecordData {
 
     @Nullable
     public Number[] getTimeInSpeedZone() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(58);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(58);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -320,9 +329,13 @@ public class FitLap extends RecordData {
 
     @Nullable
     public Number[] getTimeInCadenceZone() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(59);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(59);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -332,9 +345,13 @@ public class FitLap extends RecordData {
 
     @Nullable
     public Number[] getTimeInPowerZone() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(60);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(60);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -374,9 +391,13 @@ public class FitLap extends RecordData {
 
     @Nullable
     public Number[] getStrokeCount() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(75);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(75);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -386,9 +407,13 @@ public class FitLap extends RecordData {
 
     @Nullable
     public Number[] getZoneCount() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(76);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(76);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -398,9 +423,13 @@ public class FitLap extends RecordData {
 
     @Nullable
     public Number[] getAvgVerticalOscillation() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(77);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(77);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -410,9 +439,13 @@ public class FitLap extends RecordData {
 
     @Nullable
     public Number[] getAvgStanceTimePercen() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(78);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(78);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -422,9 +455,13 @@ public class FitLap extends RecordData {
 
     @Nullable
     public Number[] getAvgStanceTime() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(79);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(79);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -454,9 +491,13 @@ public class FitLap extends RecordData {
 
     @Nullable
     public Number[] getAvgTotalHemoglobinConc() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(84);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(84);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -466,9 +507,13 @@ public class FitLap extends RecordData {
 
     @Nullable
     public Number[] getMinTotalHemoglobinConc() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(85);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(85);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -478,9 +523,13 @@ public class FitLap extends RecordData {
 
     @Nullable
     public Number[] getMaxTotalHemoglobinConc() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(86);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(86);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -490,9 +539,13 @@ public class FitLap extends RecordData {
 
     @Nullable
     public Number[] getAvgSaturatedHemoglobinPercent() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(87);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(87);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -502,9 +555,13 @@ public class FitLap extends RecordData {
 
     @Nullable
     public Number[] getMinSaturatedHemoglobinPercent() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(88);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(88);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -514,9 +571,13 @@ public class FitLap extends RecordData {
 
     @Nullable
     public Number[] getMaxSaturatedHemoglobinPercent() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(89);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(89);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];

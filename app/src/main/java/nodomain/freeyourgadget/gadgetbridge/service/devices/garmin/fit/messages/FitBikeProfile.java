@@ -26,6 +26,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
 /**
  * WARNING: This class was auto-generated, please avoid modifying it directly.
  * See {@link nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen}
+ *
  * @noinspection unused
  */
 public class FitBikeProfile extends RecordData {
@@ -175,9 +176,13 @@ public class FitBikeProfile extends RecordData {
 
     @Nullable
     public Number[] getFrontGear() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(39);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(39);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -192,9 +197,13 @@ public class FitBikeProfile extends RecordData {
 
     @Nullable
     public Number[] getRearGear() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(41);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(41);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];

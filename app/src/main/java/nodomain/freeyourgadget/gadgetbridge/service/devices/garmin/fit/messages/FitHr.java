@@ -26,6 +26,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
 /**
  * WARNING: This class was auto-generated, please avoid modifying it directly.
  * See {@link nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen}
+ *
  * @noinspection unused
  */
 public class FitHr extends RecordData {
@@ -50,9 +51,13 @@ public class FitHr extends RecordData {
 
     @Nullable
     public Number[] getFilteredBpm() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(6);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(6);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -62,9 +67,13 @@ public class FitHr extends RecordData {
 
     @Nullable
     public Number[] getEventTimestamp() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(9);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(9);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -74,9 +83,13 @@ public class FitHr extends RecordData {
 
     @Nullable
     public Number[] getEventTimestamp12() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(10);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(10);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];

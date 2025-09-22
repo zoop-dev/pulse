@@ -26,6 +26,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
 /**
  * WARNING: This class was auto-generated, please avoid modifying it directly.
  * See {@link nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen}
+ *
  * @noinspection unused
  */
 public class FitAntTx extends RecordData {
@@ -50,9 +51,13 @@ public class FitAntTx extends RecordData {
 
     @Nullable
     public Number[] getMesgData() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(2);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(2);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];
@@ -67,9 +72,13 @@ public class FitAntTx extends RecordData {
 
     @Nullable
     public Number[] getData() {
-        final Object[] objectsArray = (Object[]) getFieldByNumber(4);
-        if (objectsArray == null)
+        final Object object = getFieldByNumber(4);
+        if (object == null)
             return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
         final Number[] ret = new Number[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
             ret[i] = (Number) objectsArray[i];

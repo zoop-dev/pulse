@@ -14,10 +14,10 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,10 +41,31 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefi
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 
 /**
+ * This class is only used to generate code, and will not be packaged in the final apk
+ *
  * @noinspection ReadWriteStringCanBeUsed
- */ // This class is only used to generate code, and will not be packaged in the final apk
-@RequiresApi(api = Build.VERSION_CODES.O)
+ */
+@RequiresApi(api = Build.VERSION_CODES.CUR_DEVELOPMENT)
 public class FitCodeGen {
+    private static final String COPYRIGHT_HEADER = """
+            /*  Copyright (C) 2025 Freeyourgadget
+            
+                This file is part of Gadgetbridge.
+            
+                Gadgetbridge is free software: you can redistribute it and/or modify
+                it under the terms of the GNU Affero General Public License as published
+                by the Free Software Foundation, either version 3 of the License, or
+                (at your option) any later version.
+            
+                Gadgetbridge is distributed in the hope that it will be useful,
+                but WITHOUT ANY WARRANTY; without even the implied warranty of
+                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+                GNU Affero General Public License for more details.
+            
+                You should have received a copy of the GNU Affero General Public License
+                along with this program.  If not, see <https://www.gnu.org/licenses/>. */
+            """;
+
     public static void main(final String[] args) throws Exception {
         // To run this in Android Studio, right click and select "Run 'FitCodeGen.main()' with Coverage"
         // for some reason, the classpath is broken otherwise.
@@ -52,235 +73,261 @@ public class FitCodeGen {
     }
 
     public void generate() throws IOException {
+        generateFitRecordDataFactory();
+
+        for (final GlobalFITMessage value : GlobalFITMessage.KNOWN_MESSAGES.values()) {
+            generateFitMessageClassFile(value);
+        }
+    }
+
+    private void generateFitRecordDataFactory() throws IOException {
         final File factoryFile = new File("app/src/main/java/nodomain/freeyourgadget/gadgetbridge/service/devices/garmin/fit/messages/FitRecordDataFactory.java");
 
-        final StringBuilder sbFactory = new StringBuilder();
-        String header = getHeader(factoryFile);
-        if (!header.isEmpty()) {
-            sbFactory.append(header);
-            sbFactory.append("\n");
-        }
-
-        sbFactory.append("package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages;\n");
-        sbFactory.append("\n");
-        sbFactory.append("import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;\n");
-        sbFactory.append("import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;\n");
-        sbFactory.append("import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;\n");
-        sbFactory.append("\n");
-        sbFactory.append("/**\n");
-        sbFactory.append(" * WARNING: This class was auto-generated, please avoid modifying it directly.\n");
-        sbFactory.append(" * See {@link ").append(getClass().getCanonicalName()).append("}\n");
-        sbFactory.append(" */\n");
-        sbFactory.append("public class FitRecordDataFactory {\n");
-        sbFactory.append("    private FitRecordDataFactory() {\n");
-        sbFactory.append("        // use create\n");
-        sbFactory.append("    }\n");
-        sbFactory.append("\n");
-        sbFactory.append("    public static RecordData create(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {\n");
-        sbFactory.append("        return switch (recordDefinition.getGlobalFITMessage().getNumber()) {\n");
-
-        final ArrayList<GlobalFITMessage> globalFITMessages = new ArrayList<>(GlobalFITMessage.KNOWN_MESSAGES.values());
-        Collections.sort(globalFITMessages, Comparator.comparingInt(GlobalFITMessage::getNumber));
+        final List<String> switchCases = new ArrayList<>();
+        final List<GlobalFITMessage> globalFITMessages = new ArrayList<>(GlobalFITMessage.KNOWN_MESSAGES.values());
+        globalFITMessages.sort(Comparator.comparingInt(GlobalFITMessage::getNumber));
 
         for (final GlobalFITMessage value : globalFITMessages) {
             final String className = "Fit" + capitalize(toCamelCase(value.name()));
-            sbFactory.append("            case ").append(value.getNumber()).append(" -> ")
-                    .append("new ").append(className).append("(recordDefinition, recordHeader);\n");
-
-            process(value);
+            switchCases.add("            case %d -> new %s(recordDefinition, recordHeader);".formatted(value.getNumber(), className));
         }
-        sbFactory.append("             default -> new RecordData(recordDefinition, recordHeader);\n");
-        sbFactory.append("        };\n");
-        sbFactory.append("    }\n");
-        sbFactory.append("}\n");
 
-        FileUtils.copyStringToFile(sbFactory.toString(), factoryFile, "replace");
+        final String template = """
+                ${copyrightHeader}
+                package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages;
+                
+                import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
+                import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
+                import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
+                
+                /**
+                 * WARNING: This class was auto-generated, please avoid modifying it directly.
+                 * See {@link ${generatorClass}}
+                 */
+                public class FitRecordDataFactory {
+                    private FitRecordDataFactory() {
+                        // use create
+                    }
+                
+                    public static RecordData create(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+                        return switch (recordDefinition.getGlobalFITMessage().getNumber()) {
+                ${switchCases}
+                             default -> new RecordData(recordDefinition, recordHeader);
+                        };
+                    }
+                }
+                """;
+        final String existingHeader = getHeader(factoryFile);
+
+        final String result = template
+                .replace("${copyrightHeader}", existingHeader.isEmpty() ? COPYRIGHT_HEADER.trim() : existingHeader + "\n")
+                .replace("${generatorClass}", Objects.requireNonNull(getClass().getCanonicalName()))
+                .replace("${switchCases}", String.join("\n", switchCases));
+
+        FileUtils.copyStringToFile(result, factoryFile, "replace");
     }
 
-    public void process(final GlobalFITMessage globalFITMessage) throws IOException {
+    public void generateFitMessageClassFile(final GlobalFITMessage globalFITMessage) throws IOException {
         final String className = "Fit" + capitalize(toCamelCase(globalFITMessage.name()));
-        final File outputFile = new File("app/src/main/java/nodomain/freeyourgadget/gadgetbridge/service/devices/garmin/fit/messages/" + className + ".java");
+        final File outputFile = new File(
+                "app/src/main/java/nodomain/freeyourgadget/gadgetbridge/service/devices/garmin/fit/messages/",
+                className + ".java"
+        );
 
-        final List<String> imports = new ArrayList<>();
-        imports.add(Nullable.class.getCanonicalName());
-        imports.add(FitRecordDataBuilder.class.getCanonicalName());
-        imports.add(RecordData.class.getCanonicalName());
-        imports.add(RecordDefinition.class.getCanonicalName());
-        imports.add(RecordHeader.class.getCanonicalName());
-        //imports.add(GBToStringBuilder.class.getCanonicalName());
+        //
+        // Collect all imports
+        //
+        final List<String> imports = new ArrayList<>(List.of(
+                Nullable.class.getCanonicalName(),
+                FitRecordDataBuilder.class.getCanonicalName(),
+                RecordData.class.getCanonicalName(),
+                RecordDefinition.class.getCanonicalName(),
+                RecordHeader.class.getCanonicalName()
+        ));
         imports.addAll(getImports(outputFile));
 
-        Collections.sort(imports);
-
-        final Set<String> uniqueImports = new LinkedHashSet<>(imports);
-
+        //
+        // Add field-specific imports
+        //
         for (final GlobalFITMessage.FieldDefinitionPrimitive primitive : globalFITMessage.getFieldDefinitionPrimitives()) {
             final Class<?> fieldType = getFieldType(primitive);
             if (!Objects.requireNonNull(fieldType.getCanonicalName()).startsWith("java.lang")) {
-                imports.add(fieldType.getCanonicalName());
+                if (fieldType.isArray()) {
+                    imports.add(fieldType.getCanonicalName().replace("[]", ""));
+                } else {
+                    imports.add(fieldType.getCanonicalName());
+                }
             }
         }
 
+        //
+        // Deduplicate + sort imports
+        //
+        final Set<String> uniqueImports = new TreeSet<>(imports);
+
+        //
+        // Copyright header + package
+        //
         final StringBuilder sb = new StringBuilder();
         String header = getHeader(outputFile);
-        if (!header.isEmpty()) {
-            sb.append(header);
-            sb.append("\n");
-        } else {
-            sb.append("""
-                /*  Copyright (C) 2025 Freeyourgadget
-                
-                    This file is part of Gadgetbridge.
-                
-                    Gadgetbridge is free software: you can redistribute it and/or modify
-                    it under the terms of the GNU Affero General Public License as published
-                    by the Free Software Foundation, either version 3 of the License, or
-                    (at your option) any later version.
-                
-                    Gadgetbridge is distributed in the hope that it will be useful,
-                    but WITHOUT ANY WARRANTY; without even the implied warranty of
-                    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-                    GNU Affero General Public License for more details.
-                
-                    You should have received a copy of the GNU Affero General Public License
-                    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-                """);
-        }
-        sb.append("package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages;");
-        sb.append("\n");
+        sb.append(header.isEmpty() ? COPYRIGHT_HEADER : header + "\n");
+        sb.append("package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages;\n\n");
 
-        sb.append("\n");
-        boolean anyImport = false;
-        for (final String i : uniqueImports) {
-            if (i.startsWith("androidx")) {
-                sb.append("import ").append(i).append(";\n");
-                anyImport = true;
+        //
+        // Imports, grouped by prefix
+        //
+        final List<String> importOrder = List.of("androidx", "java.", "nodomain.freeyourgadget");
+        for (final String prefix : importOrder) {
+            boolean wroteAny = false;
+            for (final String i : uniqueImports) {
+                if (i.startsWith(prefix)) {
+                    sb.append("import ").append(i).append(";\n");
+                    wroteAny = true;
+                }
+            }
+            if (wroteAny) {
+                sb.append("\n"); // only add blank line if group was non-empty
             }
         }
 
-        if (anyImport) {
-            sb.append("\n");
-            anyImport = false;
-        }
-        for (final String i : uniqueImports) {
-            if (i.startsWith("java.")) {
+        //
+        // Imports - rest
+        //
+        boolean wroteOthers = false;
+        for (String i : uniqueImports) {
+            if (importOrder.stream().noneMatch(i::startsWith)) {
                 sb.append("import ").append(i).append(";\n");
-                anyImport = true;
+                wroteOthers = true;
             }
         }
-
-        if (anyImport) {
-            sb.append("\n");
-            anyImport = false;
-        }
-        for (final String i : uniqueImports) {
-            if (i.startsWith("nodomain.freeyourgadget") && !i.startsWith("java.")) {
-                sb.append("import ").append(i).append(";\n");
-                anyImport = true;
-            }
-        }
-
-        if (anyImport) {
-            sb.append("\n");
-            anyImport = false;
-        }
-        for (final String i : uniqueImports) {
-            if (!i.startsWith("androidx") && !i.startsWith("nodomain.freeyourgadget") && !i.startsWith("java.")) {
-                sb.append("import ").append(i).append(";\n");
-                anyImport = true;
-            }
-        }
-
-        if (anyImport) {
+        if (wroteOthers) {
             sb.append("\n");
         }
-        sb.append("/**\n");
-        sb.append(" * WARNING: This class was auto-generated, please avoid modifying it directly.\n");
-        sb.append(" * See {@link ").append(getClass().getCanonicalName()).append("}\n");
-        sb.append(" * @noinspection unused\n");
-        sb.append(" */\n");
-        sb.append("public class ").append(className).append(" extends RecordData {\n");
-        sb.append("    public ").append(className).append("(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {\n");
-        sb.append("        super(recordDefinition, recordHeader);\n");
-        sb.append("\n");
-        sb.append("        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();\n");
-        sb.append("        if (globalNumber != ").append(globalFITMessage.getNumber()).append(") {\n");
-        sb.append("            throw new IllegalArgumentException(\"").append(className).append(" expects global messages of \" + ").append(globalFITMessage.getNumber()).append(" + \", got \" + globalNumber);\n");
-        sb.append("        }\n");
-        sb.append("    }\n");
 
+        //
+        // Class javadoc + constructor
+        //
+        sb.append("""
+                /**
+                 * WARNING: This class was auto-generated, please avoid modifying it directly.
+                 * See {@link ${classCanonicalName}}
+                 *
+                 * @noinspection unused
+                 */
+                public class ${className} extends RecordData {
+                    public ${className}(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+                        super(recordDefinition, recordHeader);
+                
+                        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
+                        if (globalNumber != ${globalNumber}) {
+                            throw new IllegalArgumentException("${className} expects global messages of " + ${globalNumber} + ", got " + globalNumber);
+                        }
+                    }
+                """
+                .replace("${classCanonicalName}", Objects.requireNonNull(getClass().getCanonicalName()))
+                .replace("${className}", className)
+                .replace("${globalNumber}", String.valueOf(globalFITMessage.getNumber()))
+        );
+
+        //
+        // Field accessors
+        //
         for (final GlobalFITMessage.FieldDefinitionPrimitive primitive : globalFITMessage.getFieldDefinitionPrimitives()) {
             final Class<?> fieldType = getFieldType(primitive);
-            final String fieldTypeName = fieldType.getSimpleName();
-            sb.append("\n");
-            sb.append("    @Nullable\n");
-            sb.append("    public ").append(fieldTypeName).append(method(" get", primitive)).append("() {\n");
-            if (fieldTypeName.endsWith("[]")) {
-                // Special case for arrays, since these are decoded in RecordData and we can't easily decode them with the correct type
-                // FIXME this should be refactored...
-                final String simpleTypeName = fieldTypeName.replace("[]", "");
-                sb.append("        final Object[] objectsArray = (Object[]) getFieldByNumber(").append(primitive.getNumber()).append(");\n");
-                sb.append("        if (objectsArray == null)\n");
-                sb.append("            return null;\n");
-                sb.append("        final ").append(fieldTypeName).append(" ret = new ").append(simpleTypeName).append("[objectsArray.length];\n");
-                sb.append("        for (int i = 0; i < objectsArray.length; i++) {\n");
-                sb.append("            ret[i] = (").append(simpleTypeName).append(") objectsArray[i];\n");
-                sb.append("        }\n");
-                sb.append("        return ret;\n");
+            final String fieldTypeName;
+            final String accessorTemplate;
+            if (fieldType.isArray()) {
+                fieldTypeName = fieldType.getSimpleName().replace("[]", "");
+                accessorTemplate = """
+                        
+                            @Nullable
+                            public ${fieldType}[] ${getterName}() {
+                                final Object object = getFieldByNumber(${primitiveNumber});
+                                if (object == null)
+                                    return null;
+                                if (!object.getClass().isArray()) {
+                                    return new ${fieldType}[]{(${fieldType}) object};
+                                }
+                                final Object[] objectsArray = (Object[]) object;
+                                final ${fieldType}[] ret = new ${fieldType}[objectsArray.length];
+                                for (int i = 0; i < objectsArray.length; i++) {
+                                    ret[i] = (${fieldType}) objectsArray[i];
+                                }
+                                return ret;
+                            }
+                        """;
             } else {
-                sb.append("        return (").append(fieldTypeName).append(") getFieldByNumber(").append(primitive.getNumber()).append(");\n");
+                fieldTypeName = fieldType.getSimpleName();
+                accessorTemplate = """
+                        
+                            @Nullable
+                            public ${fieldType} ${getterName}() {
+                                return (${fieldType}) getFieldByNumber(${primitiveNumber});
+                            }
+                        """;
             }
-            sb.append("    }\n");
-        }
 
-        //sb.append("\n");
-        //sb.append("    @NonNull\n");
-        //sb.append("    @Override\n");
-        //sb.append("    public String toString() {\n");
-        //sb.append("        return new GBToStringBuilder(this)\n");
-        //for (final GlobalFITMessage.FieldDefinitionPrimitive primitive : globalFITMessage.getFieldDefinitionPrimitives()) {
-        //    sb.append("                .append(\"").append(primitive.getName()).append("\",").append(method(" get", primitive)).append("())\n");
-        //}
-        //sb.append("                .build();\n");
-        //sb.append("    }\n");
+            sb.append(
+                    accessorTemplate
+                            .replace("${fieldType}", fieldTypeName)
+                            .replace("${getterName}", method("get", primitive))
+                            .replace("${primitiveNumber}", String.valueOf(primitive.getNumber()))
+            );
+        }
 
         //
         // Builder
         //
-
-        sb.append("\n");
-        sb.append("    /**\n");
-        sb.append("     * @noinspection unused\n");
-        sb.append("     */\n");
-        sb.append("    public static class Builder extends FitRecordDataBuilder {\n");
-        sb.append("        public Builder() {\n");
-        sb.append("            super(").append(globalFITMessage.getNumber()).append(");\n");
-        sb.append("        }\n");
+        sb.append("""
+                
+                    /**
+                     * @noinspection unused
+                     */
+                    public static class Builder extends FitRecordDataBuilder {
+                        public Builder() {
+                            super(${globalNumber});
+                        }
+                """
+                .replace("${globalNumber}", String.valueOf(globalFITMessage.getNumber()))
+        );
 
         for (final GlobalFITMessage.FieldDefinitionPrimitive primitive : globalFITMessage.getFieldDefinitionPrimitives()) {
             final Class<?> fieldType = getFieldType(primitive);
             final String fieldTypeName = fieldType.getSimpleName();
-            sb.append("\n");
-            sb.append("        public Builder").append(method(" set", primitive)).append("(final ").append(fieldTypeName).append(" value) {\n");
-            sb.append("            setFieldByNumber(").append(primitive.getNumber()).append(", ").append(fieldType.isArray() ? "(Object[]) " : "").append("value);\n");
-            sb.append("            return this;\n");
-            sb.append("        }\n");
-        }
-        sb.append("\n");
-        sb.append("        @Override\n");
-        sb.append("        public ").append(className).append(" build() {\n");
-        sb.append("            return (").append(className).append(") super.build();\n");
-        sb.append("        }\n");
-        sb.append("    }\n");
 
+            sb.append("""
+                    
+                            public Builder ${setterName}(final ${fieldType} value) {
+                                setFieldByNumber(${primitiveNumber}, ${castIfArray}value);
+                                return this;
+                            }
+                    """
+                    .replace("${setterName}", method("set", primitive))
+                    .replace("${fieldType}", fieldTypeName)
+                    .replace("${primitiveNumber}", String.valueOf(primitive.getNumber()))
+                    .replace("${castIfArray}", fieldType.isArray() ? "(Object[]) " : "")
+            );
+        }
+
+        sb.append("""
+                
+                        @Override
+                        public ${className} build() {
+                            return (${className}) super.build();
+                        }
+                    }
+                """
+                .replace("${className}", className)
+        );
+
+        //
+        // Preserve manual changes if any
+        //
         if (outputFile.exists()) {
-            // Keep manual changes if any
             final String fileContents = new String(Files.readAllBytes(outputFile.toPath()), StandardCharsets.UTF_8);
             final int manualChangesIndex = fileContents.indexOf("// manual changes below");
             if (manualChangesIndex > 0) {
-                sb.append("\n");
-                sb.append("    ");
-                sb.append(fileContents.substring(manualChangesIndex));
+                sb.append("\n    ").append(fileContents.substring(manualChangesIndex));
             } else {
                 sb.append("}\n");
             }
@@ -354,7 +401,7 @@ public class FitCodeGen {
         throw new RuntimeException("Unknown base type " + primitive.getBaseType());
     }
 
-    public String toCamelCase(final String str) {
+    private String toCamelCase(final String str) {
         final StringBuilder sb = new StringBuilder(str.toLowerCase());
 
         for (int i = 0; i < sb.length(); i++) {
@@ -371,11 +418,14 @@ public class FitCodeGen {
         return methodName + capitalize(toCamelCase(primitive.getName()));
     }
 
-    public String capitalize(final String str) {
+    private String capitalize(final String str) {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
-    public String getHeader(final File file) throws IOException {
+    /**
+     * Get a java file header, before the package, if any.
+     */
+    private static String getHeader(final File file) throws IOException {
         if (file.exists()) {
             final String fileContents = new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
             final int packageIndex = fileContents.indexOf("package") - 1;
@@ -387,7 +437,10 @@ public class FitCodeGen {
         return "";
     }
 
-    public List<String> getImports(final File file) throws IOException {
+    /**
+     * Get all the imports from an existing java file.
+     */
+    private static List<String> getImports(final File file) throws IOException {
         if (file.exists()) {
             final String fileContents = new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
             final List<String> imports = new ArrayList<>();
