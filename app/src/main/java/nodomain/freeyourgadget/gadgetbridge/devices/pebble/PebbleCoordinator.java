@@ -250,4 +250,8 @@ public class PebbleCoordinator extends AbstractBLClassicDeviceCoordinator {
         return deviceSpecificPreferences.getBoolean(BG_JS_ENABLED, BG_JS_ENABLED_DEFAULT);
     }
 
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
+    }
 }

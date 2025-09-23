@@ -66,7 +66,7 @@ public class SoundcoreLiberty3ProCoordinator extends AbstractBLClassicDeviceCoor
 
     @Override
     public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceCoordinator.DeviceKind.HEAD_MOUNTED;
+        return DeviceKind.EARBUDS;
     }
 
     @NonNull

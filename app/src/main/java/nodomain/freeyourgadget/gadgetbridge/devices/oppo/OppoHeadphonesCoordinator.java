@@ -85,4 +85,9 @@ public abstract class OppoHeadphonesCoordinator extends AbstractBLClassicDeviceC
     }
 
     protected abstract Map<Pair<TouchConfigSide, TouchConfigType>, List<TouchConfigValue>> getTouchOptions();
+
+    @Override
+    public final DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.EARBUDS;
+    }
 }

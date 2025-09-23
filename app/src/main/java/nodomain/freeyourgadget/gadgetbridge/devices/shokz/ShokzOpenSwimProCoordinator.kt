@@ -15,6 +15,6 @@ class ShokzOpenSwimProCoordinator: ShokzCoordinator() {
     }
 
     override fun getDeviceKind(device: GBDevice): DeviceCoordinator.DeviceKind {
-        return DeviceCoordinator.DeviceKind.HEAD_MOUNTED
+        return DeviceCoordinator.DeviceKind.HEADPHONES
     }
 }

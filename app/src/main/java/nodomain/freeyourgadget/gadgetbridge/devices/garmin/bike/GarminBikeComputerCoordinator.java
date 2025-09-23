@@ -2,12 +2,18 @@ package nodomain.freeyourgadget.gadgetbridge.devices.garmin.bike;
 
 import androidx.annotation.NonNull;
 
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public abstract class GarminBikeComputerCoordinator extends GarminCoordinator {
     @Override
-    public boolean supportsActivityDataFetching(final GBDevice device) {
+    public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.BIKE_COMPUTER;
+    }
+
+    @Override
+    public boolean supportsActivityDataFetching(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -52,32 +58,32 @@ public abstract class GarminBikeComputerCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsActivityTracks(final GBDevice device) {
+    public boolean supportsActivityTracks(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsHeartRateMeasurement(final GBDevice device) {
+    public boolean supportsHeartRateMeasurement(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsManualHeartRateMeasurement(final GBDevice device) {
+    public boolean supportsManualHeartRateMeasurement(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsWeather(final GBDevice device) {
+    public boolean supportsWeather(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsFindDevice(GBDevice device) {
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsMusicInfo(GBDevice device) {
+    public boolean supportsMusicInfo(@NonNull GBDevice device) {
         // eg. Edge 840, Edge Explore 2, but not all
         return true;
     }

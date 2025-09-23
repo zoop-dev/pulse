@@ -140,4 +140,9 @@ public class AmazfitTRexCoordinator extends HuamiCoordinator {
     public int getDeviceNameResource() {
         return R.string.devicetype_amazfit_trex;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
+    }
 }

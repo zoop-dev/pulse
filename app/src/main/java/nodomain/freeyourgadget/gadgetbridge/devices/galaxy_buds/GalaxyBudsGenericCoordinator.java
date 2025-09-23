@@ -51,4 +51,9 @@ public abstract class GalaxyBudsGenericCoordinator extends AbstractBLClassicDevi
     public int getDefaultIconResource() {
         return R.drawable.ic_device_galaxy_buds;
     }
+
+    @Override
+    public final DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.EARBUDS;
+    }
 }

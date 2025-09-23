@@ -207,4 +207,9 @@ public class ZeTimeCoordinator extends AbstractBLEDeviceCoordinator {
         map.put(session.getZeTimeActivitySampleDao(), ZeTimeActivitySampleDao.Properties.DeviceId);
         return map;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
+    }
 }

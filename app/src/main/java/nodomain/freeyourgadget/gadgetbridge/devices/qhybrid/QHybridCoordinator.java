@@ -368,4 +368,9 @@ public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
     public boolean supportsSpo2(GBDevice device) {
         return device.getName().equals("Fossil Gen. 6 Hybrid");
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
+    }
 }

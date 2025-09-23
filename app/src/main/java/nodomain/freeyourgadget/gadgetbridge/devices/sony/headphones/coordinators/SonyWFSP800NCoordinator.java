@@ -61,12 +61,10 @@ public class SonyWFSP800NCoordinator extends SonyHeadphonesCoordinator {
         ));
     }
 
-
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_sony_wf_sp800n;
     }
-
 
     @Override
     public int getDefaultIconResource() {
@@ -75,6 +73,6 @@ public class SonyWFSP800NCoordinator extends SonyHeadphonesCoordinator {
 
     @Override
     public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceCoordinator.DeviceKind.HEAD_MOUNTED;
+        return DeviceKind.EARBUDS;
     }
 }

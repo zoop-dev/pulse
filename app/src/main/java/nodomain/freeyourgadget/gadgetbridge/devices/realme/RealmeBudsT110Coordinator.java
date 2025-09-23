@@ -18,8 +18,6 @@ package nodomain.freeyourgadget.gadgetbridge.devices.realme;
 
 import android.util.Pair;
 
-import androidx.annotation.NonNull;
-
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -28,11 +26,9 @@ import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.oppo.OppoHeadphonesCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigSide;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigValue;
-import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 
 public class RealmeBudsT110Coordinator extends OppoHeadphonesCoordinator {
     @Override
@@ -52,7 +48,7 @@ public class RealmeBudsT110Coordinator extends OppoHeadphonesCoordinator {
 
     @Override
     protected Map<Pair<TouchConfigSide, TouchConfigType>, List<TouchConfigValue>> getTouchOptions() {
-        return new LinkedHashMap<Pair<TouchConfigSide, TouchConfigType>, List<TouchConfigValue>>() {{
+        return new LinkedHashMap<>() {{
             final List<TouchConfigValue> options = Arrays.asList(
                     TouchConfigValue.OFF,
                     TouchConfigValue.PLAY_PAUSE,
@@ -73,10 +69,5 @@ public class RealmeBudsT110Coordinator extends OppoHeadphonesCoordinator {
                     TouchConfigValue.GAME_MODE
             ));
         }};
-    }
-
-    @Override
-    public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceCoordinator.DeviceKind.HEAD_MOUNTED;
     }
 }

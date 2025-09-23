@@ -140,4 +140,9 @@ public class AmazfitGTRCoordinator extends HuamiCoordinator {
     public int getDeviceNameResource() {
         return R.string.devicetype_amazfit_gtr;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
+    }
 }

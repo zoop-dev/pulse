@@ -23,7 +23,6 @@ import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLClassicDeviceCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.liveview.LiveviewSupport;
@@ -53,5 +52,10 @@ public class LiveviewCoordinator extends AbstractBLClassicDeviceCoordinator {
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_liveview;
+    }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
     }
 }

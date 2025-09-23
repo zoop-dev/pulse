@@ -52,12 +52,7 @@ public class SoundcoreMotion300Coordinator extends AbstractBLClassicDeviceCoordi
     }
 
     @Override
-    public int getBatteryCount(final GBDevice device) {
-        return 1;
-    }
-
-    @Override
-    public boolean supportsPowerOff(final GBDevice device) {
+    public boolean supportsPowerOff(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -80,7 +75,7 @@ public class SoundcoreMotion300Coordinator extends AbstractBLClassicDeviceCoordi
 
     @Override
     public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceCoordinator.DeviceKind.UNKNOWN;
+        return DeviceKind.SPEAKER;
     }
 
     @NonNull

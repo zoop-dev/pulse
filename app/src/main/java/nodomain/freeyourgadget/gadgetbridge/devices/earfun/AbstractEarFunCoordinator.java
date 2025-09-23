@@ -29,4 +29,9 @@ public abstract class AbstractEarFunCoordinator extends AbstractBLClassicDeviceC
     public int getDefaultIconResource() {
         return R.drawable.ic_device_nothingear;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.EARBUDS;
+    }
 }

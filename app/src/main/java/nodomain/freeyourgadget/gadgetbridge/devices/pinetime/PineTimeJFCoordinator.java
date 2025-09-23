@@ -142,4 +142,9 @@ public class PineTimeJFCoordinator extends AbstractBLEDeviceCoordinator {
         map.put(session.getPineTimeActivitySampleDao(), PineTimeActivitySampleDao.Properties.DeviceId);
         return map;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
+    }
 }

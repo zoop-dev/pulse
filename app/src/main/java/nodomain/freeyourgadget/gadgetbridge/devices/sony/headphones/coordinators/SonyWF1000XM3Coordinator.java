@@ -76,6 +76,6 @@ public class SonyWF1000XM3Coordinator extends SonyHeadphonesCoordinator {
 
     @Override
     public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceCoordinator.DeviceKind.HEAD_MOUNTED;
+        return DeviceKind.EARBUDS;
     }
 }

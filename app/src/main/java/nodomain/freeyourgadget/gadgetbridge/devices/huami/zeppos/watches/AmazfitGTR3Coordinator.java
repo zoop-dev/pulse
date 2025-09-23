@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches;
 
+import androidx.annotation.NonNull;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -53,5 +55,10 @@ public class AmazfitGTR3Coordinator extends ZeppOsCoordinator {
     @Override
     public boolean supportsBluetoothPhoneCalls(final GBDevice device) {
         return false;
+    }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
     }
 }

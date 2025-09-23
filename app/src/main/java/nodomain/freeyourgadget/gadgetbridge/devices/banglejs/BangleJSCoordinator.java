@@ -285,4 +285,9 @@ public class BangleJSCoordinator extends AbstractBLEDeviceCoordinator {
         map.put(session.getBaseActivitySummaryDao(), BaseActivitySummaryDao.Properties.DeviceId);
         return map;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
+    }
 }

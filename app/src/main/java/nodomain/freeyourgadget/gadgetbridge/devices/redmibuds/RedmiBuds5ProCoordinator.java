@@ -16,15 +16,12 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.redmibuds;
 
-import androidx.annotation.NonNull;
-
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 
 public class RedmiBuds5ProCoordinator extends AbstractRedmiBudsCoordinator {
     @Override
@@ -49,10 +46,5 @@ public class RedmiBuds5ProCoordinator extends AbstractRedmiBudsCoordinator {
     @Override
     public DeviceSpecificSettingsCustomizer getDeviceSpecificSettingsCustomizer(final GBDevice device) {
         return new RedmiBudsSettingsCustomizer(device);
-    }
-
-    @Override
-    public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceCoordinator.DeviceKind.HEAD_MOUNTED;
     }
 }

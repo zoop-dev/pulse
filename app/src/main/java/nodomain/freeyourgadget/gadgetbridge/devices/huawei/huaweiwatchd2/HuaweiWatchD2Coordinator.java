@@ -46,4 +46,9 @@ public class HuaweiWatchD2Coordinator extends HuaweiBRCoordinator {
     public boolean supportsUnicodeEmojis(@NonNull GBDevice device) {
         return true;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
+    }
 }

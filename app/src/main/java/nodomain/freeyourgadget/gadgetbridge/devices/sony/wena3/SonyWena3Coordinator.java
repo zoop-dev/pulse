@@ -107,12 +107,12 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsCalendarEvents(final GBDevice device) {
+    public boolean supportsCalendarEvents(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsActivityDataFetching(final GBDevice device) {
+    public boolean supportsActivityDataFetching(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -132,7 +132,7 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsHeartRateMeasurement(GBDevice device) {
+    public boolean supportsHeartRateMeasurement(@NonNull GBDevice device) {
         return true;
     }
 
@@ -157,7 +157,7 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsSmartWakeup(GBDevice device, int position) {
+    public boolean supportsSmartWakeup(@NonNull GBDevice device, int position) {
         return true;
     }
 
@@ -167,7 +167,7 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsWeather(final GBDevice device) {
+    public boolean supportsWeather(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -233,5 +233,10 @@ public class SonyWena3Coordinator extends AbstractBLEDeviceCoordinator {
                 LedColor.NONE, LedColor.RED, LedColor.YELLOW, LedColor.GREEN,
                 LedColor.CYAN, LedColor.BLUE, LedColor.PURPLE, LedColor.WHITE
         };
+    }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
     }
 }

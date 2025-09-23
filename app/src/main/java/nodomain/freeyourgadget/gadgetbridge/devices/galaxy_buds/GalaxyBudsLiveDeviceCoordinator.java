@@ -16,15 +16,12 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.galaxy_buds;
 
-import androidx.annotation.NonNull;
-
 import java.util.List;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
-import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 
@@ -61,12 +58,6 @@ public class GalaxyBudsLiveDeviceCoordinator extends GalaxyBudsGenericCoordinato
     public int getDeviceNameResource() {
         return R.string.devicetype_galaxybuds_live;
     }
-
-    @Override
-    public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceCoordinator.DeviceKind.HEAD_MOUNTED;
-    }
-
 
     @Override
     public int getDefaultIconResource() {

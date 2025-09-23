@@ -55,4 +55,9 @@ public class XiaomiWatchS1Coordinator extends XiaomiCoordinator {
     public boolean supportsFindDevice(@NonNull GBDevice device) {
         return false;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
+    }
 }

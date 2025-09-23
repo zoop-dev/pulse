@@ -16,10 +16,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watches;
 
+import androidx.annotation.NonNull;
+
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.XiaomiCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class MiWatchColorSportCoordinator extends XiaomiCoordinator {
 
@@ -41,5 +44,10 @@ public class MiWatchColorSportCoordinator extends XiaomiCoordinator {
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_miwatch;
+    }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
     }
 }

@@ -47,4 +47,9 @@ public class HuaweiWatch3Coordinator extends HuaweiBRCoordinator {
         // HarmonyOS watch
         return true;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
+    }
 }

@@ -87,7 +87,7 @@ public class FemometerVinca2DeviceCoordinator extends AbstractBLEDeviceCoordinat
     }
 
     @Override
-    public boolean supportsTemperatureMeasurement(final GBDevice device) {
+    public boolean supportsTemperatureMeasurement(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -125,6 +125,6 @@ public class FemometerVinca2DeviceCoordinator extends AbstractBLEDeviceCoordinat
 
     @Override
     public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceCoordinator.DeviceKind.UNKNOWN;
+        return DeviceCoordinator.DeviceKind.THERMOMETER;
     }
 }

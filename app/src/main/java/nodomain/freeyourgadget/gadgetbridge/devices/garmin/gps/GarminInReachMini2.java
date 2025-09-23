@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.garmin.gps;
 
+import androidx.annotation.NonNull;
+
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -23,11 +25,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class GarminInReachMini2 extends GarminCoordinator {
-    @Override
-    public int getBatteryCount(final GBDevice device) {
-        return 1;
-    }
-
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_garmin_inReach_mini_2;
@@ -44,20 +41,25 @@ public class GarminInReachMini2 extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsActivityDataFetching(final GBDevice device) {
+    public boolean supportsActivityDataFetching(@NonNull final GBDevice device) {
         // for gps tracks
         return true;
     }
 
     @Override
-    public boolean supportsActivityTracks(final GBDevice device) {
+    public boolean supportsActivityTracks(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsOSBatteryLevel(GBDevice device){
+    public boolean supportsOSBatteryLevel(@NonNull GBDevice device){
         // uses standard Bluetooth battery level updates
         // Garmin's RemoteDeviceBatteryStatusRequest isn't supported
         return true;
+    }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.UNKNOWN;
     }
 }

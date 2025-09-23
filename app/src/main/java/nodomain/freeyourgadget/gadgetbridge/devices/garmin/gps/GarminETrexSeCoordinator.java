@@ -11,18 +11,18 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class GarminETrexSeCoordinator extends GarminCoordinator {
     @Override
-    public boolean supportsActivityDataFetching(final GBDevice device) {
+    public boolean supportsActivityDataFetching(@NonNull final GBDevice device) {
         // for gps tracks
         return true;
     }
 
     @Override
-    public boolean supportsActivityTracks(final GBDevice device) {
+    public boolean supportsActivityTracks(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsWeather(final GBDevice device) {
+    public boolean supportsWeather(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -46,5 +46,4 @@ public class GarminETrexSeCoordinator extends GarminCoordinator {
     public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
         return DeviceCoordinator.DeviceKind.UNKNOWN;
     }
-
 }

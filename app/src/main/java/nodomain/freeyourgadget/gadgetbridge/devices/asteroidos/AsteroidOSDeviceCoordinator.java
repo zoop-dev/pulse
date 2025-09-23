@@ -90,4 +90,9 @@ public class AsteroidOSDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     public int getDeviceNameResource() {
         return R.string.devicetype_asteroidos;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
+    }
 }

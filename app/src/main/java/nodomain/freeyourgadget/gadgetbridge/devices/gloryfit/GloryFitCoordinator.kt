@@ -29,6 +29,7 @@ import nodomain.freeyourgadget.gadgetbridge.capabilities.HeartRateCapability.Mea
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventCameraRemote
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCardAction
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericSpo2SampleProvider
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider
@@ -50,6 +51,10 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.wena3.protocol.
 abstract class GloryFitCoordinator : AbstractBLEDeviceCoordinator() {
     override fun getDefaultIconResource(): Int {
         return R.drawable.ic_device_amazfit_bip
+    }
+
+    override fun getDeviceKind(device: GBDevice): DeviceCoordinator.DeviceKind {
+        return DeviceCoordinator.DeviceKind.WATCH
     }
 
     override fun getDeviceSupportClass(device: GBDevice): Class<out DeviceSupport> {

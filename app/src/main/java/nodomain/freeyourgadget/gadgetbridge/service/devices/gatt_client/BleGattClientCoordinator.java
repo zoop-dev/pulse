@@ -21,7 +21,7 @@ public class BleGattClientCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supports(GBDeviceCandidate candidate) {
+    public boolean supports(@NonNull GBDeviceCandidate candidate) {
         // can only add through debug settings
         return false;
     }
@@ -34,5 +34,10 @@ public class BleGattClientCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_scannable;
+    }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.UNKNOWN;
     }
 }

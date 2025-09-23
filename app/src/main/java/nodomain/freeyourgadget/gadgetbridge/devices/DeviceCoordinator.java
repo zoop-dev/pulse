@@ -141,7 +141,14 @@ public interface DeviceCoordinator {
         HEAD_MOUNTED,
         FITNESS_BAND,
         CHEST_STRAP,
-        SMART_DISPLAY
+        SMART_DISPLAY,
+        SPEAKER,
+        HEADPHONES,
+        SMART_GLASSES,
+        EARBUDS,
+        BIKE_COMPUTER,
+        SMART_CLOCK,
+        THERMOMETER,
     }
 
     /**
@@ -906,12 +913,5 @@ public interface DeviceCoordinator {
 
     List<DeviceCardAction> getCustomActions();
 
-    /**
-     * Returns the general kind of the device (watch, fitness band, etc.).
-     * The default implementation returns WATCH. Coordinators for other kinds
-     * of devices should override this method.
-     */
-    default DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceKind.WATCH;
-    }
+    DeviceKind getDeviceKind(@NonNull GBDevice device);
 }

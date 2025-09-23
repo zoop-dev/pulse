@@ -56,7 +56,7 @@ public class SMAQ2OSSCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsWeather(final GBDevice device) {
+    public boolean supportsWeather(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -79,5 +79,10 @@ public class SMAQ2OSSCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_smaq2oss;
+    }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
     }
 }

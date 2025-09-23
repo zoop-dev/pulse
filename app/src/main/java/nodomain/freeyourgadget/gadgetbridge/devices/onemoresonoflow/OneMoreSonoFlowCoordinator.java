@@ -84,6 +84,6 @@ public class OneMoreSonoFlowCoordinator extends AbstractBLClassicDeviceCoordinat
 
     @Override
     public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceCoordinator.DeviceKind.HEAD_MOUNTED;
+        return DeviceKind.HEADPHONES;
     }
 }

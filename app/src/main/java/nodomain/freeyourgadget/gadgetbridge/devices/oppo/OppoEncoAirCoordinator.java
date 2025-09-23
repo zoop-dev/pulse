@@ -27,7 +27,6 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigSide;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigType;
@@ -45,24 +44,19 @@ public class OppoEncoAirCoordinator extends OppoHeadphonesCoordinator {
     }
 
     @Override
-    public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceCoordinator.DeviceKind.HEAD_MOUNTED;
-    }
-
-    @Override
     public boolean supportsFindDevice(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
     protected Map<Pair<TouchConfigSide, TouchConfigType>, List<TouchConfigValue>> getTouchOptions() {
-        return new LinkedHashMap<Pair<TouchConfigSide, TouchConfigType>, List<TouchConfigValue>>() {{
+        return new LinkedHashMap<>() {{
             put(Pair.create(TouchConfigSide.LEFT, TouchConfigType.TAP_2), Arrays.asList(
-                TouchConfigValue.OFF,
-                TouchConfigValue.PLAY_PAUSE,
-                TouchConfigValue.PREVIOUS,
-                TouchConfigValue.NEXT,
-                TouchConfigValue.VOICE_ASSISTANT
+                    TouchConfigValue.OFF,
+                    TouchConfigValue.PLAY_PAUSE,
+                    TouchConfigValue.PREVIOUS,
+                    TouchConfigValue.NEXT,
+                    TouchConfigValue.VOICE_ASSISTANT
             ));
             put(Pair.create(TouchConfigSide.LEFT, TouchConfigType.TAP_3), Arrays.asList(
                     TouchConfigValue.OFF,

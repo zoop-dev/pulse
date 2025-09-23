@@ -57,7 +57,7 @@ public class BandWPSeriesDeviceCoordinator extends AbstractBLEDeviceCoordinator 
 
     @Override
     public DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceKind.HEAD_MOUNTED;
+        return DeviceKind.HEADPHONES;
     }
 
 }

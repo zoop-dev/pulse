@@ -222,6 +222,6 @@ public class G1DeviceCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceKind.HEAD_MOUNTED;
+        return DeviceKind.SMART_GLASSES;
     }
 }

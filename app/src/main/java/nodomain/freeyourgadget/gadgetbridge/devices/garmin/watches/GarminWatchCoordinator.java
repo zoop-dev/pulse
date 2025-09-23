@@ -53,12 +53,12 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsCalendarEvents(final GBDevice device) {
+    public boolean supportsCalendarEvents(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsActivityDataFetching(final GBDevice device) {
+    public boolean supportsActivityDataFetching(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -68,7 +68,7 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsActivityTracks(final GBDevice device) {
+    public boolean supportsActivityTracks(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -83,7 +83,7 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsHrvMeasurement(final GBDevice device) {
+    public boolean supportsHrvMeasurement(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -117,12 +117,12 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsHeartRateMeasurement(final GBDevice device) {
+    public boolean supportsHeartRateMeasurement(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsHeartRateRestingMeasurement(final GBDevice device) {
+    public boolean supportsHeartRateRestingMeasurement(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -132,7 +132,7 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsSpo2(GBDevice device) {
+    public boolean supportsSpo2(@NonNull GBDevice device) {
         return true;
     }
 
@@ -147,7 +147,7 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsSleepScore(final GBDevice device) {
+    public boolean supportsSleepScore(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -204,12 +204,17 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsWeather(final GBDevice device) {
+    public boolean supportsWeather(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
     public boolean supportsMusicInfo(@NonNull GBDevice device) {
         return true;
+    }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
     }
 }

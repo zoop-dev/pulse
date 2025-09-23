@@ -94,4 +94,9 @@ public final class HamaFit6900DeviceCoordinator extends AbstractBLEDeviceCoordin
     public int getDeviceNameResource() {
         return R.string.devicetype_hama_fit6900;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
+    }
 }

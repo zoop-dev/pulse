@@ -59,4 +59,9 @@ public abstract class AbstractRedmiBudsCoordinator extends AbstractBLClassicDevi
     public int getDefaultIconResource() {
         return R.drawable.ic_device_nothingear;
     }
+
+    @Override
+    public final DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.EARBUDS;
+    }
 }

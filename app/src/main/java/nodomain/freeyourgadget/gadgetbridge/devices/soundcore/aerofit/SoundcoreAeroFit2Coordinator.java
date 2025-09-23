@@ -66,7 +66,7 @@ public class SoundcoreAeroFit2Coordinator extends AbstractBLClassicDeviceCoordin
 
     @Override
     public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceCoordinator.DeviceKind.HEAD_MOUNTED;
+        return DeviceKind.HEADPHONES;
     }
 
     @NonNull

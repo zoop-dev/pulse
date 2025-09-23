@@ -102,7 +102,7 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
     }
 
     @Override
-    public boolean supportsActivityDataFetching(final GBDevice device) {
+    public boolean supportsActivityDataFetching(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -112,7 +112,7 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
     }
 
     @Override
-    public boolean supportsSpo2(GBDevice device) {
+    public boolean supportsSpo2(@NonNull GBDevice device) {
         return true;
     }
 
@@ -137,12 +137,12 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
     }
 
     @Override
-    public boolean supportsHeartRateMeasurement(GBDevice device) {
+    public boolean supportsHeartRateMeasurement(@NonNull GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsCalendarEvents(final GBDevice device) {
+    public boolean supportsCalendarEvents(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -152,7 +152,7 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
     }
 
     @Override
-    public boolean supportsWeather(final GBDevice device) {
+    public boolean supportsWeather(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -162,7 +162,7 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
     }
 
     @Override
-    public boolean supportsActivityTracks(final GBDevice device) {
+    public boolean supportsActivityTracks(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -177,7 +177,7 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
         return true;
     }
 
-    private static final MoyoungSetting[] MOYOUNG_SETTINGS = {
+    private static final MoyoungSetting<?>[] MOYOUNG_SETTINGS = {
         new MoyoungSettingUserInfo("USER_INFO", MoyoungConstants.CMD_SET_USER_INFO),
         new MoyoungSettingByte("STEP_LENGTH", (byte)-1, MoyoungConstants.CMD_SET_STEP_LENGTH),
         // (*) new MoyoungSettingEnum<>("DOMINANT_HAND", MoyoungConstants.CMD_QUERY_DOMINANT_HAND, MoyoungConstants.CMD_SET_DOMINANT_HAND, MoyoungEnumDominantHand.class),
@@ -274,5 +274,10 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
 
     public int getMtu() {
         return 20;
+    }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
     }
 }

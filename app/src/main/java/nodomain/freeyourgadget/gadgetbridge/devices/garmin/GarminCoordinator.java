@@ -279,14 +279,14 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsAppsManagement(final GBDevice device) {
+    public boolean supportsAppsManagement(@NonNull final GBDevice device) {
         // FIXME: disabled until better polished
         //return supports(device, GarminCapability.CONNECTIQ_APP_MANAGEMENT);
         return false;
     }
 
     @Override
-    public boolean supportsCachedAppManagement(final GBDevice device) {
+    public boolean supportsCachedAppManagement(@NonNull final GBDevice device) {
         return false;
     }
 
@@ -296,7 +296,7 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsAppListFetching(final GBDevice device) {
+    public boolean supportsAppListFetching(@NonNull final GBDevice device) {
         return true;
     }
 

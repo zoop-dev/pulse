@@ -18,6 +18,8 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.huawei;
 
 
+import androidx.annotation.NonNull;
+
 import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -140,5 +142,10 @@ public abstract class HuaweiFreebudsCoordinator extends AbstractBLClassicDeviceC
     @Override
     public boolean addBatteryPollingSettings() {
         return true;
+    }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.EARBUDS;
     }
 }

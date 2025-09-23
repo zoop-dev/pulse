@@ -72,7 +72,7 @@ public class QC35Coordinator extends AbstractBLClassicDeviceCoordinator {
 
     @Override
     public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceCoordinator.DeviceKind.HEAD_MOUNTED;
+        return DeviceKind.HEADPHONES;
     }
 
     @Override

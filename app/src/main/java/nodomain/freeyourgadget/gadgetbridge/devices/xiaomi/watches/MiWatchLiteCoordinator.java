@@ -64,4 +64,9 @@ public class MiWatchLiteCoordinator extends XiaomiCoordinator {
     public boolean supportsRealtimeData(@NonNull GBDevice device) {
         return false;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
+    }
 }

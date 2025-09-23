@@ -39,6 +39,11 @@ public abstract class AbstractEarCoordinator extends AbstractBLClassicDeviceCoor
     }
 
     @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.EARBUDS;
+    }
+
+    @Override
     public int getBatteryCount(final GBDevice device) {
         return 3;
     }

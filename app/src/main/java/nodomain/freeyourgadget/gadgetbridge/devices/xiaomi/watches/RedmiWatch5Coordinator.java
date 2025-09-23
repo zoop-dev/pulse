@@ -16,6 +16,8 @@
    along with this program. If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watches;
 
+import androidx.annotation.NonNull;
+
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -53,5 +55,10 @@ public class RedmiWatch5Coordinator extends XiaomiCoordinator {
     @Override
     public int getContactsSlotCount(final GBDevice device) {
         return 10;
+    }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
     }
 }

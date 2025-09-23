@@ -66,6 +66,6 @@ public class SonyWFC700NCoordinator extends SonyHeadphonesCoordinator {
 
     @Override
     public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceCoordinator.DeviceKind.HEAD_MOUNTED;
+        return DeviceKind.EARBUDS;
     }
 }

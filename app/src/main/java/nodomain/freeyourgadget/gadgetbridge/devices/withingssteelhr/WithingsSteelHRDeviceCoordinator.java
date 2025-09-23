@@ -149,4 +149,9 @@ public class WithingsSteelHRDeviceCoordinator extends AbstractBLEDeviceCoordinat
     public int getDefaultIconResource() {
         return R.drawable.ic_device_watchxplus;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
+    }
 }

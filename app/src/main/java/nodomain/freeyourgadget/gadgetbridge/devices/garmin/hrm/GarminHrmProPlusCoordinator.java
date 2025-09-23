@@ -33,6 +33,11 @@ public class GarminHrmProPlusCoordinator extends GarminCoordinator {
     }
 
     @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.CHEST_STRAP;
+    }
+
+    @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_garmin_hrm_pro_plus;
     }

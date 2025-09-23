@@ -55,4 +55,9 @@ public class XiaomiWatchS1ActiveCoordinator extends XiaomiCoordinator {
     public int getDefaultIconResource() {
         return R.drawable.ic_device_miwatch;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
+    }
 }

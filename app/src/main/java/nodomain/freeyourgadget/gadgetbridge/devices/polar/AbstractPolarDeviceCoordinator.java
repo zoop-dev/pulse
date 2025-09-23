@@ -50,7 +50,7 @@ public abstract class AbstractPolarDeviceCoordinator extends AbstractBLEDeviceCo
     }
 
     @Override
-    public boolean supportsHeartRateMeasurement(GBDevice device) {
+    public boolean supportsHeartRateMeasurement(@NonNull GBDevice device) {
         return true;
     }
 
@@ -75,5 +75,10 @@ public abstract class AbstractPolarDeviceCoordinator extends AbstractBLEDeviceCo
         Map<AbstractDao<?, ?>, Property> map = new HashMap<>(1);
         map.put(session.getPolarH10ActivitySampleDao(), PolarH10ActivitySampleDao.Properties.DeviceId);
         return map;
+    }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.CHEST_STRAP;
     }
 }

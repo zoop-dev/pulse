@@ -42,7 +42,7 @@ public abstract class AbstractMijiaLywsdCoordinator extends AbstractBLEDeviceCoo
     }
 
     @Override
-    public boolean supportsActivityDataFetching(final GBDevice device) {
+    public boolean supportsActivityDataFetching(@NonNull final GBDevice device) {
         return false;
     }
 
@@ -76,12 +76,12 @@ public abstract class AbstractMijiaLywsdCoordinator extends AbstractBLEDeviceCoo
     }
 
     @Override
-    public boolean supportsTemperatureMeasurement(final GBDevice device) {
+    public boolean supportsTemperatureMeasurement(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsContinuousTemperature(final GBDevice device) {
+    public boolean supportsContinuousTemperature(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -118,5 +118,10 @@ public abstract class AbstractMijiaLywsdCoordinator extends AbstractBLEDeviceCoo
         map.put(session.getMijiaLywsdHistoricSampleDao(), MijiaLywsdHistoricSampleDao.Properties.DeviceId);
         map.put(session.getMijiaLywsdRealtimeSampleDao(), MijiaLywsdRealtimeSampleDao.Properties.DeviceId);
         return map;
+    }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return supportsSetTime() ? DeviceKind.SMART_CLOCK : DeviceKind.THERMOMETER;
     }
 }

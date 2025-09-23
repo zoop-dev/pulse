@@ -2,9 +2,6 @@ package nodomain.freeyourgadget.gadgetbridge.devices.earfun;
 
 import androidx.annotation.NonNull;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -13,7 +10,6 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
-import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
@@ -22,8 +18,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.earfun.airpro4.EarFu
 import nodomain.freeyourgadget.gadgetbridge.service.devices.earfun.airpro4.EarFunAirPro4SettingsCustomizer;
 
 public class EarFunAirPro4Coordinator extends AbstractEarFunCoordinator {
-    private static final Logger LOG = LoggerFactory.getLogger(EarFunAirPro4Coordinator.class);
-
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_earfun_air_pro_4;
@@ -105,10 +99,5 @@ public class EarFunAirPro4Coordinator extends AbstractEarFunCoordinator {
     @Override
     public DeviceSpecificSettingsCustomizer getDeviceSpecificSettingsCustomizer(final GBDevice device) {
         return new EarFunAirPro4SettingsCustomizer(device);
-    }
-
-    @Override
-    public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceCoordinator.DeviceKind.HEAD_MOUNTED;
     }
 }

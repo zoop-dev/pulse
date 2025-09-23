@@ -21,7 +21,6 @@ import android.content.Context;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -163,22 +162,22 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsScreenshots(final GBDevice device) {
+    public boolean supportsScreenshots(@NonNull final GBDevice device) {
         return hasDisplay();
     }
 
     @Override
-    public boolean supportsHeartRateMeasurement(final GBDevice device) {
+    public boolean supportsHeartRateMeasurement(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsManualHeartRateMeasurement(final GBDevice device) {
+    public boolean supportsManualHeartRateMeasurement(@NonNull final GBDevice device) {
         return false; // FIXME: this is still somewhat broken and sometimes never finishes
     }
 
     @Override
-    public boolean supportsWeather(final GBDevice device) {
+    public boolean supportsWeather(@NonNull final GBDevice device) {
         return hasDisplay();
     }
 
@@ -193,7 +192,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsActivityTracks(final GBDevice device) {
+    public boolean supportsActivityTracks(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -203,7 +202,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsSpo2(final GBDevice device) {
+    public boolean supportsSpo2(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -243,7 +242,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsSleepScore(final GBDevice device) {
+    public boolean supportsSleepScore(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -253,7 +252,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsHrvMeasurement(final GBDevice device) {
+    public boolean supportsHrvMeasurement(@NonNull final GBDevice device) {
         return !hasDisplay() || supportsDisplayItem(device, "hrv");
     }
 
@@ -278,7 +277,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsAppsManagement(final GBDevice device) {
+    public boolean supportsAppsManagement(@NonNull final GBDevice device) {
         return experimentalFeatures(device);
     }
 
@@ -303,12 +302,12 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsAppListFetching(final GBDevice device) {
+    public boolean supportsAppListFetching(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsCalendarEvents(final GBDevice device) {
+    public boolean supportsCalendarEvents(@NonNull final GBDevice device) {
         return hasDisplay();
     }
 
@@ -334,7 +333,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsSmartWakeup(final GBDevice device, int position) {
+    public boolean supportsSmartWakeup(@NonNull final GBDevice device, int position) {
         return true;
     }
 
@@ -373,7 +372,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsAudioRecordings(final GBDevice device) {
+    public boolean supportsAudioRecordings(@NonNull final GBDevice device) {
         return supportsDisplayItem(device, "voice_memos") && supportsBleFileTransfer(device, "voicememo");
     }
 
@@ -591,12 +590,12 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsTemperatureMeasurement(final GBDevice device) {
+    public boolean supportsTemperatureMeasurement(@NonNull final GBDevice device) {
         return !hasDisplay() || supportsDisplayItem(device, "thermometer");
     }
 
     @Override
-    public boolean supportsContinuousTemperature(final GBDevice device) {
+    public boolean supportsContinuousTemperature(@NonNull final GBDevice device) {
         return supportsTemperatureMeasurement(device);
     }
 
@@ -696,11 +695,5 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     public boolean validateAuthKey(final String authKey) {
         final byte[] authKeyBytes = authKey.trim().getBytes();
         return authKeyBytes.length == 32 || (authKey.trim().startsWith("0x") && authKeyBytes.length == 34);
-    }
-
-    @Nullable
-    @Override
-    public String getAuthHelp() {
-        return "https://gadgetbridge.org/basics/pairing/huami-xiaomi-server/";
     }
 }

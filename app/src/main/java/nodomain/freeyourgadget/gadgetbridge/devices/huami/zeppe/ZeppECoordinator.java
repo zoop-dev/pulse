@@ -140,4 +140,9 @@ public class ZeppECoordinator extends HuamiCoordinator {
     public int getDeviceNameResource() {
         return R.string.devicetype_zepp_e;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
+    }
 }

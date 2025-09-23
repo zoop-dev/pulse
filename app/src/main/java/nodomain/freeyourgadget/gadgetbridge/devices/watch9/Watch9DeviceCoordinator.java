@@ -104,4 +104,9 @@ public class Watch9DeviceCoordinator extends AbstractBLEDeviceCoordinator {
     public Class<? extends Activity> getCalibrationActivity() {
         return Watch9CalibrationActivity.class;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
+    }
 }

@@ -64,7 +64,7 @@ public class MiBand7Coordinator extends ZeppOsCoordinator {
     }
 
     @Override
-    public boolean supportsScreenshots(final GBDevice device) {
+    public boolean supportsScreenshots(@NonNull final GBDevice device) {
         return false;
     }
 

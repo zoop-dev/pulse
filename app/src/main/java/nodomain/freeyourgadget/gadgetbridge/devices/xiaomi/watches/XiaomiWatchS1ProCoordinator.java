@@ -61,4 +61,9 @@ public class XiaomiWatchS1ProCoordinator extends XiaomiCoordinator {
     public boolean supportsTemperatureMeasurement(final GBDevice device) {
         return true;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
+    }
 }

@@ -363,4 +363,9 @@ public class CmfWatchProCoordinator extends AbstractBLEDeviceCoordinator {
     public boolean supportsSunriseSunset() {
         return false;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.WATCH;
+    }
 }

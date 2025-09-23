@@ -63,7 +63,7 @@ public abstract class SonyHeadphonesCoordinator extends AbstractBLClassicDeviceC
     }
 
     @Override
-    public boolean supportsPowerOff(final GBDevice device) {
+    public boolean supportsPowerOff(@NonNull final GBDevice device) {
         return supports(device, SonyHeadphonesCapabilities.PowerOffFromPhone);
     }
 
@@ -144,7 +144,7 @@ public abstract class SonyHeadphonesCoordinator extends AbstractBLClassicDeviceC
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_sony_headphones_speak_to_chat_simple);
         }
 
-        addSettingsUnderHeader(deviceSpecificSettings, device, R.xml.devicesettings_header_other, new LinkedHashMap<SonyHeadphonesCapabilities, Integer>() {{
+        addSettingsUnderHeader(deviceSpecificSettings, device, R.xml.devicesettings_header_other, new LinkedHashMap<>() {{
             put(SonyHeadphonesCapabilities.AudioSettingsOnlyOnSbcCodec, R.xml.devicesettings_sony_warning_wh1000xm3);
             put(SonyHeadphonesCapabilities.EqualizerSimple, R.xml.devicesettings_sony_headphones_equalizer);
             put(SonyHeadphonesCapabilities.EqualizerWithCustomBands, R.xml.devicesettings_sony_headphones_equalizer_with_custom_bands);
@@ -157,7 +157,7 @@ public abstract class SonyHeadphonesCoordinator extends AbstractBLClassicDeviceC
         final List<Integer> callsAndNotif = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS);
         callsAndNotif.add(R.xml.devicesettings_headphones);
 
-        addSettingsUnderHeader(deviceSpecificSettings, device, R.xml.devicesettings_header_system, new LinkedHashMap<SonyHeadphonesCapabilities, Integer>() {{
+        addSettingsUnderHeader(deviceSpecificSettings, device, R.xml.devicesettings_header_system, new LinkedHashMap<>() {{
             put(SonyHeadphonesCapabilities.WideAreaTap, R.xml.devicesettings_sony_headphones_wide_area_tap);
             put(SonyHeadphonesCapabilities.ButtonModesLeftRight, R.xml.devicesettings_sony_headphones_button_modes_left_right);
             put(SonyHeadphonesCapabilities.AmbientSoundControlButtonMode, R.xml.devicesettings_sony_headphones_ambient_sound_control_button_modes);
