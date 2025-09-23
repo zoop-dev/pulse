@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <Preference
+        android:key="pref_key_internethelper_info"
+        android:summary="Use the list below to configure which (parts of) URLs are allowed or denied to be forwarded to the internethelper add-on app. The validation is using a simple text comparison, so a part of a URL can be entered too."
+        app:iconSpaceReserved="false" />
+    <PreferenceCategory
+        android:title="@string/pref_header_general"
+        app:iconSpaceReserved="false">
+        <ListPreference
+            android:defaultValue="deny"
+            android:entries="@array/internethelper_new_url_action"
+            android:entryValues="@array/internethelper_new_url_action_values"
+            android:key="pref_key_internethelper_new_url_action"
+            android:summary="Set the default action to take when a URL is requested that isn't already in the list below."
+            android:title="New URL action"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="pref_key_internethelper_url_list"
+        android:title="Known URLs"
+        app:iconSpaceReserved="false">
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -4650,6 +4650,15 @@
         <item>net.osmand.dev</item>
     </string-array>
 
+    <string-array name="internethelper_new_url_action">
+        <item>Allow</item>
+        <item>Deny</item>
+    </string-array>
+    <string-array name="internethelper_new_url_action_values">
+        <item>allow</item>
+        <item>deny</item>
+    </string-array>
+
     <string-array name="workmode">
         <item>@string/automatic</item>
         <item>@string/manual</item>

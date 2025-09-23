@@ -1,0 +1,175 @@
+/*  Copyright (C) 2025 Arjan Schrijver
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
+package nodomain.freeyourgadget.gadgetbridge.activities
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.TextView
+import androidx.appcompat.widget.PopupMenu
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import nodomain.freeyourgadget.gadgetbridge.R
+import nodomain.freeyourgadget.gadgetbridge.database.DBHelper
+import nodomain.freeyourgadget.gadgetbridge.entities.URLFilterEntry
+
+class InternetHelperPreferencesActivity : AbstractGBActivity() {
+    val urlItems = ArrayList<UrlListAdapter.UrlEntry>()
+
+    private fun retrieveList() {
+        val urlFilterEntries = DBHelper.getURLFilterEntries()
+        urlItems.clear()
+        for (entry in urlFilterEntries) {
+            urlItems.add(UrlListAdapter.UrlEntry(entry))
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_internet_helper_preferences)
+
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.settings_container, InternetHelperPreferencesFragment())
+            .commit()
+
+        retrieveList()
+
+        val recyclerView = findViewById<RecyclerView>(R.id.internet_helper_url_list)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = UrlListAdapter(urlItems) { entry, action ->
+            when (action) {
+                UrlListAdapter.UrlAction.ALLOW -> {
+                    entry.urlFilterEntry.allowed = true
+                    DBHelper.store(entry.urlFilterEntry)
+                    recyclerView.adapter?.notifyDataSetChanged()
+                }
+                UrlListAdapter.UrlAction.DENY -> {
+                    entry.urlFilterEntry.allowed = false
+                    DBHelper.store(entry.urlFilterEntry)
+                    recyclerView.adapter?.notifyDataSetChanged()
+                }
+                UrlListAdapter.UrlAction.EDIT -> {
+                    val inputLayout = TextInputLayout(this)
+                    val editText = TextInputEditText(this).apply {
+                        setText(entry.urlFilterEntry.url)
+                    }
+                    inputLayout.addView(editText)
+                    inputLayout.hint = "Please enter (a part of) a URL to match against."
+
+                    MaterialAlertDialogBuilder(this)
+                        .setTitle("URL filter")
+                        .setView(inputLayout)
+                        .setPositiveButton(R.string.ok) { dialog, _ ->
+                            entry.urlFilterEntry.url = editText.text.toString()
+                            DBHelper.store(entry.urlFilterEntry)
+                            recyclerView.adapter?.notifyDataSetChanged()
+                        }
+                        .setNegativeButton("Cancel", null)
+                        .show()
+                }
+                UrlListAdapter.UrlAction.DELETE -> {
+                    MaterialAlertDialogBuilder(this)
+                        .setPositiveButton(R.string.yes) {_,_ ->
+                            DBHelper.delete(entry.urlFilterEntry)
+                            retrieveList()
+                            recyclerView.adapter?.notifyDataSetChanged()
+                        }
+                        .setNegativeButton(R.string.no, null)
+                        .setMessage("Are you sure you want to delete this URL?")
+                        .show()
+                }
+            }
+        }
+    }
+
+    class InternetHelperPreferencesFragment : AbstractPreferenceFragment() {
+        override fun onCreatePreferences(
+            savedInstanceState: Bundle?,
+            rootKey: String?
+        ) {
+            setPreferencesFromResource(R.xml.internethelper_preferences, rootKey)
+        }
+    }
+
+    class UrlListAdapter(
+        private val urls: List<UrlEntry>,
+        private val onAction: (UrlEntry, UrlAction) -> Unit
+    ) : RecyclerView.Adapter<UrlListAdapter.UrlViewHolder>() {
+
+        data class UrlEntry(
+            val urlFilterEntry: URLFilterEntry,
+        )
+
+        enum class UrlAction {
+            ALLOW, DENY, EDIT, DELETE
+        }
+
+        inner class UrlViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            val title: TextView = itemView.findViewById(R.id.url_title)
+            val status: TextView = itemView.findViewById(R.id.url_status)
+            val menuButton: ImageButton = itemView.findViewById(R.id.url_menu_button)
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UrlViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_url_list_entry, parent, false)
+            return UrlViewHolder(view)
+        }
+
+        override fun onBindViewHolder(holder: UrlViewHolder, position: Int) {
+            val entry = urls[position]
+
+            holder.title.text = entry.urlFilterEntry.url
+            holder.status.text = if (entry.urlFilterEntry.allowed) "Allowed" else "Denied"
+
+            holder.menuButton.setOnClickListener {
+                showPopupMenu(holder.menuButton, entry)
+            }
+        }
+
+        private fun showPopupMenu(anchor: View, entry: UrlEntry) {
+            val popupMenu = PopupMenu(anchor.context, anchor)
+            if (entry.urlFilterEntry.allowed) {
+                popupMenu.menu.add(Menu.NONE, 1, Menu.NONE, "Deny")
+            } else {
+                popupMenu.menu.add(Menu.NONE, 2, Menu.NONE, "Allow")
+            }
+            popupMenu.menu.add(Menu.NONE, 3, Menu.NONE, "Edit")
+            popupMenu.menu.add(Menu.NONE, 4, Menu.NONE, "Delete")
+
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    1 -> onAction(entry, UrlAction.DENY)
+                    2 -> onAction(entry, UrlAction.ALLOW)
+                    3 -> onAction(entry, UrlAction.EDIT)
+                    4 -> onAction(entry, UrlAction.DELETE)
+                }
+                true
+            }
+
+            popupMenu.show()
+        }
+
+        override fun getItemCount(): Int = urls.size
+    }
+}

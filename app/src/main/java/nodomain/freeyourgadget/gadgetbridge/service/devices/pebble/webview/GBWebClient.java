@@ -18,6 +18,7 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.webkit.WebResourceRequest;
@@ -40,9 +41,16 @@ import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import de.greenrobot.dao.query.Query;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
+import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
+import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
+import nodomain.freeyourgadget.gadgetbridge.entities.URLFilterEntry;
+import nodomain.freeyourgadget.gadgetbridge.entities.URLFilterEntryDao;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
@@ -78,7 +86,33 @@ public class GBWebClient extends WebViewClient {
     }
 
     private WebResourceResponse mimicReply(Uri requestedUri) {
-        if (requestedUri.getHost() != null && !requestedUri.toString().startsWith("file://")) {// && (StringUtils.indexOfAny(requestedUri.getHost(), AllowedDomains) != -1)) {
+        boolean urlIsAllowed = StringUtils.indexOfAny(requestedUri.getHost(), AllowedDomains) != -1;
+        List<URLFilterEntry> urlFilterEntries = DBHelper.getURLFilterEntries();
+
+        // Search for matches
+        boolean matchFound = false;
+        for (URLFilterEntry entry : urlFilterEntries) {
+            if (requestedUri.toString().contains(entry.getUrl())) {
+                matchFound = true;
+                urlIsAllowed = entry.getAllowed();
+                LOG.info("URL matched with URLFilterEntry: {}, allowed={}", entry.getUrl(), entry.getAllowed());
+            }
+        }
+
+        // Add to database if missing
+        if (requestedUri.getHost() != null && !requestedUri.toString().startsWith("file://") && !matchFound) {
+            LOG.info("URL not matched with URLFilterEntry, storing new entry");
+            SharedPreferences sharedPreferences = GBApplication.getPrefs().getPreferences();
+            String defaultAction = sharedPreferences.getString("pref_key_internethelper_new_url_action", "deny");
+            urlIsAllowed = defaultAction.equals("allow");
+            URLFilterEntry filterEntry = new URLFilterEntry();
+            filterEntry.setUrl(requestedUri.toString());
+            filterEntry.setAllowed(urlIsAllowed);
+            DBHelper.store(filterEntry);
+        }
+
+        // Handle request
+        if (requestedUri.getHost() != null && !requestedUri.toString().startsWith("file://") && urlIsAllowed) {
             if (WebViewSingleton.getInstance().ensureInternetHelperBound()) {
                 LOG.debug("WEBVIEW forwarding request to the internet helper");
                 try {

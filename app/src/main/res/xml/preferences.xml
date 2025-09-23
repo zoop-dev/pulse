@@ -337,6 +337,12 @@
                 app:iconSpaceReserved="false"
                 app:useSimpleSummaryProvider="true" />
         </PreferenceScreen>
+
+        <PreferenceScreen
+            android:icon="@drawable/ic_language"
+            android:key="pref_category_internethelper"
+            android:title="Internet helper"
+            android:summary="Configure the URLs that are allowed to be requested through the internet helper add-on app" />
     </PreferenceScreen>
 
     <Preference
