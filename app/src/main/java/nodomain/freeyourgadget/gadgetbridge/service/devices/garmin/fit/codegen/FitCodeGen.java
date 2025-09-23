@@ -27,6 +27,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.GlobalFIT
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes.BaseType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionAlarmLabel;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionExerciseCategory;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionGoalSource;
@@ -342,7 +343,7 @@ public class FitCodeGen {
         if (primitive.getType() != null) {
             return switch (primitive.getType()) {
                 case ALARM -> LocalTime.class;
-                case ARRAY -> Number[].class;
+                case ARRAY -> primitive.getBaseType() == BaseType.STRING ? String[].class : Number[].class;
                 case BOOLEAN -> Boolean.class;
                 case DAY_OF_WEEK -> DayOfWeek.class;
                 case EXERCISE_CATEGORY -> FieldDefinitionExerciseCategory.ExerciseCategory[].class;

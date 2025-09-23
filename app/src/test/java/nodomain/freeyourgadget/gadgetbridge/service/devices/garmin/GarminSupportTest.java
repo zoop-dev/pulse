@@ -850,11 +850,6 @@ public class GarminSupportTest extends TestBase {
                         // FIXME java.lang.ClassCastException: class java.lang.Integer cannot be cast to class java.lang.Double
                         continue;
                     }
-                    if ("FitSegmentFile".equals(recordName) && "getLeaderActivityIdString".equals(methodName)) {
-                        // TODO GarminSupportTest.TestFitMessageTypeParsing -> FitCodeGen is broken
-                        // FIXME FitSegmentFile.getLeaderActivityIdString should return String[] instead of Number[]
-                        continue;
-                    }
                     if ("FitMonitoring".equals(recordName) && "getActivityTime".equals(methodName)) {
                         // TODO GarminSupportTest.TestFitMessageTypeParsing -> sample fit file is likely broken
                         // FIXME sample FIT should use a plain value and not an array

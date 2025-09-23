@@ -103,17 +103,17 @@ public class FitSegmentFile extends RecordData {
     }
 
     @Nullable
-    public Number[] getLeaderActivityIdString() {
+    public String[] getLeaderActivityIdString() {
         final Object object = getFieldByNumber(10);
         if (object == null)
             return null;
         if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
+            return new String[]{(String) object};
         }
         final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
+        final String[] ret = new String[objectsArray.length];
         for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
+            ret[i] = (String) objectsArray[i];
         }
         return ret;
     }
@@ -166,7 +166,7 @@ public class FitSegmentFile extends RecordData {
             return this;
         }
 
-        public Builder setLeaderActivityIdString(final Number[] value) {
+        public Builder setLeaderActivityIdString(final String[] value) {
             setFieldByNumber(10, (Object[]) value);
             return this;
         }
