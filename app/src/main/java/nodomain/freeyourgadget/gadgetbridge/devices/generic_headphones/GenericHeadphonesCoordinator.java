@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
@@ -87,5 +88,10 @@ public class GenericHeadphonesCoordinator extends AbstractDeviceCoordinator {
     @Override
     public boolean supportsOSBatteryLevel(@NonNull GBDevice device) {
         return true;
+    }
+
+    @Override
+    public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceCoordinator.DeviceKind.HEAD_MOUNTED;
     }
 }

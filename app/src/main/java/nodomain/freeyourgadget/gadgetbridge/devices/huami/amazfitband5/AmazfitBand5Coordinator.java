@@ -28,6 +28,7 @@ import java.util.regex.Pattern;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiCoordinator;
@@ -179,5 +180,10 @@ public class AmazfitBand5Coordinator extends HuamiCoordinator {
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_miband2;
+    }
+
+    @Override
+    public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceCoordinator.DeviceKind.FITNESS_BAND;
     }
 }

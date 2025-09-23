@@ -219,4 +219,9 @@ public class G1DeviceCoordinator extends AbstractBLEDeviceCoordinator {
     public boolean supportsWeather(final GBDevice device) {
         return true;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.HEAD_MOUNTED;
+    }
 }

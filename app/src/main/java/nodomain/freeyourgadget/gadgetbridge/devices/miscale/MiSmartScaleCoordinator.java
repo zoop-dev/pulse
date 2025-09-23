@@ -130,4 +130,9 @@ public class MiSmartScaleCoordinator extends AbstractBLEDeviceCoordinator {
     public EnumSet<ServiceDeviceSupport.Flags> getInitialFlags() {
         return EnumSet.noneOf(ServiceDeviceSupport.Flags.class);
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.SCALE;
+    }
 }

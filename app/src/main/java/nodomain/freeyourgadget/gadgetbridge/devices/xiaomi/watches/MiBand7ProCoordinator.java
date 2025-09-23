@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.XiaomiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -50,5 +51,10 @@ public class MiBand7ProCoordinator extends XiaomiCoordinator {
     public boolean supportsPai(@NonNull GBDevice device) {
         // no PAI nor vitality score
         return false;
+    }
+
+    @Override
+    public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceCoordinator.DeviceKind.FITNESS_BAND;
     }
 }

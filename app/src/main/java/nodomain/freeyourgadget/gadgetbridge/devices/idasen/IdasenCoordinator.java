@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.idasen.IdasenDeviceSupport;
@@ -59,5 +60,10 @@ public class IdasenCoordinator extends AbstractBLEDeviceCoordinator {
         return new int[]{
             R.xml.devicesettings_idasen
         };
+    }
+
+    @Override
+    public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceCoordinator.DeviceKind.UNKNOWN;
     }
 }

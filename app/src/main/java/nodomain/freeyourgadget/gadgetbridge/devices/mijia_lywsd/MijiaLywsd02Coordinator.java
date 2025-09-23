@@ -16,9 +16,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.mijia_lywsd;
 
+import androidx.annotation.NonNull;
+
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class MijiaLywsd02Coordinator extends AbstractMijiaLywsdCoordinator {
     @Override
@@ -39,5 +43,10 @@ public class MijiaLywsd02Coordinator extends AbstractMijiaLywsdCoordinator {
     @Override
     public boolean supportsSetTime() {
         return true;
+    }
+
+    @Override
+    public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceCoordinator.DeviceKind.UNKNOWN;
     }
 }

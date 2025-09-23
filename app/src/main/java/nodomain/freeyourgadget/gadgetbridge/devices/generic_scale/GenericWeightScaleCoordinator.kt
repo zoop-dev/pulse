@@ -21,6 +21,7 @@ import de.greenrobot.dao.Property
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCardAction
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericWeightSampleProvider
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession
@@ -109,5 +110,9 @@ class GenericWeightScaleCoordinator : AbstractBLEDeviceCoordinator() {
 
     override fun supportsSpeedzones(device: GBDevice): Boolean {
         return false
+    }
+
+    override fun getDeviceKind(device: GBDevice): DeviceCoordinator.DeviceKind {
+        return DeviceCoordinator.DeviceKind.SCALE
     }
 }

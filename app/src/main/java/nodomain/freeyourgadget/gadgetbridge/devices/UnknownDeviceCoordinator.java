@@ -149,4 +149,9 @@ public class UnknownDeviceCoordinator extends AbstractDeviceCoordinator {
     public int getDefaultIconResource() {
         return R.drawable.ic_device_unknown;
     }
+
+    @Override
+    public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceCoordinator.DeviceKind.UNKNOWN;
+    }
 }

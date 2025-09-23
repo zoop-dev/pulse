@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches;
 
+import androidx.annotation.NonNull;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -79,5 +81,10 @@ public class MiBand7Coordinator extends ZeppOsCoordinator {
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_device_miband6;
+    }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.FITNESS_BAND;
     }
 }

@@ -16,12 +16,15 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring;
 
+import androidx.annotation.NonNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class ColmiR03Coordinator extends AbstractYawellRingCoordinator {
     private static final Logger LOG = LoggerFactory.getLogger(ColmiR03Coordinator.class);
@@ -34,5 +37,10 @@ public class ColmiR03Coordinator extends AbstractYawellRingCoordinator {
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_colmi_r03;
+    }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.RING;
     }
 }

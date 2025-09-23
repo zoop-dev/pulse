@@ -170,4 +170,9 @@ public class FitProDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     public int getDeviceNameResource() {
         return R.string.devicetype_fitpro;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.FITNESS_BAND;
+    }
 }

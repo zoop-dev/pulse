@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class VivitarHrBpMonitorActivityTrackerCoordinator extends LefunDeviceCoordinator {
@@ -51,5 +52,10 @@ public class VivitarHrBpMonitorActivityTrackerCoordinator extends LefunDeviceCoo
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_vivitar_hr_bp_monitor_activity_tracker;
+    }
+
+    @Override
+    public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceCoordinator.DeviceKind.FITNESS_BAND;
     }
 }

@@ -254,4 +254,9 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     public boolean supportsStressMeasurement(@NonNull GBDevice device) {
         return true;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.RING;
+    }
 }

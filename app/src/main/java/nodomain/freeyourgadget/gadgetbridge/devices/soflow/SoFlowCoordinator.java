@@ -23,6 +23,7 @@ import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.soflow.SoFlowSupport;
@@ -72,6 +73,10 @@ public class SoFlowCoordinator extends AbstractBLEDeviceCoordinator {
         return R.string.devicetype_soflow_s06;
     }
 
+    @Override
+    public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceCoordinator.DeviceKind.UNKNOWN;
+    }
 
     @Override
     public int getDefaultIconResource() {

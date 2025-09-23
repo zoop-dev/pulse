@@ -167,4 +167,9 @@ public class MiBand3Coordinator extends HuamiCoordinator {
     public int getDefaultIconResource() {
         return R.drawable.ic_device_miband2;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.FITNESS_BAND;
+    }
 }

@@ -233,4 +233,9 @@ public abstract class AbstractYawellRingCoordinator extends AbstractBLEDeviceCoo
     public int getLiveActivityFragmentPulseInterval() {
         return 2000;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.RING;
+    }
 }

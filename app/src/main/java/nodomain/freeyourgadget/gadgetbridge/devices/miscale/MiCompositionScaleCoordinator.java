@@ -134,4 +134,9 @@ public class MiCompositionScaleCoordinator extends AbstractBLEDeviceCoordinator 
     public int getDefaultIconResource() {
         return R.drawable.ic_device_miscale;
     }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.SCALE;
+    }
 }

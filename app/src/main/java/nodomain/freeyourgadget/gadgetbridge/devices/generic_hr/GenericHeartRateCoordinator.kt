@@ -4,6 +4,7 @@ import de.greenrobot.dao.AbstractDao
 import de.greenrobot.dao.Property
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider
 import nodomain.freeyourgadget.gadgetbridge.entities.AbstractActivitySample
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession
@@ -87,5 +88,9 @@ class GenericHeartRateCoordinator : AbstractBLEDeviceCoordinator() {
                 put(session.genericHeartRateSampleDao, GenericHeartRateSampleDao.Properties.DeviceId)
             }
         }
+    }
+
+    override fun getDeviceKind(device: GBDevice): DeviceCoordinator.DeviceKind {
+        return DeviceCoordinator.DeviceKind.CHEST_STRAP
     }
 }

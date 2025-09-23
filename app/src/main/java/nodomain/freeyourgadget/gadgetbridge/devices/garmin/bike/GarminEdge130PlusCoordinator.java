@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class GarminEdge130PlusCoordinator extends GarminBikeComputerCoordinator {
@@ -31,5 +32,10 @@ public class GarminEdge130PlusCoordinator extends GarminBikeComputerCoordinator 
     @Override
     public boolean supportsMusicInfo(@NonNull GBDevice device) {
         return false;
+    }
+
+    @Override
+    public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.UNKNOWN;
     }
 }
