@@ -120,7 +120,7 @@ public class FitCodeGen {
         final String existingHeader = getHeader(factoryFile);
 
         final String result = template
-                .replace("${copyrightHeader}", existingHeader.isEmpty() ? COPYRIGHT_HEADER.trim() : existingHeader + "\n")
+                .replace("${copyrightHeader}", (existingHeader.isEmpty() ? COPYRIGHT_HEADER : existingHeader).strip())
                 .replace("${generatorClass}", Objects.requireNonNull(getClass().getCanonicalName()))
                 .replace("${switchCases}", String.join("\n", switchCases));
 
@@ -170,7 +170,7 @@ public class FitCodeGen {
         //
         final StringBuilder sb = new StringBuilder();
         String header = getHeader(outputFile);
-        sb.append(header.isEmpty() ? COPYRIGHT_HEADER : header + "\n");
+        sb.append((header.isEmpty() ? COPYRIGHT_HEADER : header).strip()).append("\n");
         sb.append("package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages;\n\n");
 
         //
