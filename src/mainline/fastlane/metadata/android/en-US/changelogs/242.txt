@@ -1,0 +1,1 @@
+* Garmin: Fix strength workout fetching and parsing

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="0.87.1" versioncode="242">
+        <change>Garmin: Fix strength workout fetching and parsing</change>
+    </release>
     <release version="0.87.0" versioncode="241">
         <change>Initial support for Amazfit Active 2 Square, Helio Strap, Helio Ring</change>
         <change>Initial support for Blackview R60</change>

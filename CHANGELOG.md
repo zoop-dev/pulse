@@ -1,5 +1,9 @@
 ### Changelog
 
+#### 0.87.1
+
+* Garmin: Fix strength workout fetching and parsing
+
 #### 0.87.0
 
 * Initial support for Amazfit Active 2 Square, Helio Strap, Helio Ring
