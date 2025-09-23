@@ -12,7 +12,7 @@ class CoospoHW807Coordinator: CoospoHeartRateCoordinator() {
     }
 
     override fun getDeviceNameResource(): Int {
-        return R.string.devicetype_coospo_h6 // TODO: This seems to be a copy-paste from H6, is there a specific string for HW807?
+        return R.string.devicetype_coospo_hw807
     }
 
     override fun getDeviceKind(device: GBDevice): DeviceCoordinator.DeviceKind {
