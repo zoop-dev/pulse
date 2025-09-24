@@ -576,7 +576,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(97, BaseType.UINT8, "cns_load", 1, 0), // %
             new FieldDefinitionPrimitive(98, BaseType.UINT16, "n2_load", 1, 0), // %
             new FieldDefinitionPrimitive(99, BaseType.UINT8, "respiration_rate", 1, 0), // s
-            new FieldDefinitionPrimitive(108, BaseType.UINT16, "enhanced_respiration_rate"),
+            new FieldDefinitionPrimitive(108, BaseType.UINT16, "enhanced_respiration_rate", 100, 0), // breaths / min
             new FieldDefinitionPrimitive(114, BaseType.FLOAT32, "grit"),
             new FieldDefinitionPrimitive(115, BaseType.FLOAT32, "flow"),
             new FieldDefinitionPrimitive(116, BaseType.UINT16, "current_stress", 100, 0),

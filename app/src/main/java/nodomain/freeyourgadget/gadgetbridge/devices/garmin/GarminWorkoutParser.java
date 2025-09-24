@@ -277,14 +277,14 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         if (session.getAvgSpo2() != null) {
             summaryData.add(SPO2_AVG, session.getAvgSpo2(), UNIT_PERCENTAGE);
         }
-        if (session.getEnhancedAvgRespirationRate() != null) {
-            summaryData.add(RESPIRATION_AVG, session.getEnhancedAvgRespirationRate(), UNIT_BREATHS_PER_MIN);
+        if (session.getEnhancedMinRespirationRate() != null) {
+            summaryData.add(RESPIRATION_MIN, session.getEnhancedMinRespirationRate(), UNIT_BREATHS_PER_MIN);
         }
         if (session.getEnhancedMaxRespirationRate() != null) {
             summaryData.add(RESPIRATION_MAX, session.getEnhancedMaxRespirationRate(), UNIT_BREATHS_PER_MIN);
         }
-        if (session.getEnhancedMinRespirationRate() != null) {
-            summaryData.add(RESPIRATION_MIN, session.getEnhancedMinRespirationRate(), UNIT_BREATHS_PER_MIN);
+        if (session.getEnhancedAvgRespirationRate() != null) {
+            summaryData.add(RESPIRATION_AVG, session.getEnhancedAvgRespirationRate(), UNIT_BREATHS_PER_MIN);
         }
         if (session.getAvgStress() != null) {
             summaryData.add(STRESS_AVG, session.getAvgStress(), UNIT_NONE);

@@ -238,6 +238,7 @@ public class ActivitySummaryEntries {
     public static final String GROUP_ELEVATION = "Elevation";
     public static final String GROUP_POWER = "workout_power";
     public static final String GROUP_HEART_RATE = "heart_rate";
+    public static final String GROUP_RESPIRATORY_RATE = "respiratoryrate";
     public static final String GROUP_OTHER = "Other";
     public static final String GROUP_HEART_RATE_ZONES = "HeartRateZones";
     public static final String GROUP_STROKES = "Strokes";

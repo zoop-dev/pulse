@@ -278,12 +278,18 @@ object ActivitySummaryGroup {
             // Recovery Heart Rate
             put(ActivitySummaryEntries.GROUP_RECOVERY_HEART_RATE, listOf<String>())
 
+            // Respiratory Rate
+            put(
+                ActivitySummaryEntries.GROUP_RESPIRATORY_RATE, listOf<String>(
+                    ActivitySummaryEntries.RESPIRATION_MIN,
+                    ActivitySummaryEntries.RESPIRATION_MAX,
+                    ActivitySummaryEntries.RESPIRATION_AVG,
+                )
+            )
+
             // Other
             put(
                 ActivitySummaryEntries.GROUP_OTHER, listOf<String>(
-                    ActivitySummaryEntries.RESPIRATION_AVG,
-                    ActivitySummaryEntries.RESPIRATION_MIN,
-                    ActivitySummaryEntries.RESPIRATION_MAX,
                     ActivitySummaryEntries.ESTIMATED_SWEAT_LOSS,
                     ActivitySummaryEntries.CALORIES_BURNT,
                     ActivitySummaryEntries.CALORIES_ACTIVE,

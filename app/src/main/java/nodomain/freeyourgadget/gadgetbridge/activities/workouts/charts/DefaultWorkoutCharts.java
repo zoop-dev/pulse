@@ -1,6 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts;
 
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_BPM;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_BREATHS_PER_MIN;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KMPH;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS_PER_SECOND;
@@ -51,6 +52,7 @@ public class DefaultWorkoutCharts {
         final List<Entry> cadenceDataPoints = new ArrayList<>();
         final List<Entry> elevationDataPoints = new ArrayList<>();
         final List<Entry> powerDataPoints = new ArrayList<>();
+        final List<Entry> respiratoryRatePoints = new ArrayList<>();
         boolean hasSpeedValues = false;
         boolean hasCadenceValues = false;
         boolean hasElevationValues = false;
@@ -89,6 +91,9 @@ public class DefaultWorkoutCharts {
             if (point.getPower() >= 0) {
                 powerDataPoints.add(new Entry(tsShorten, (float) point.getPower()));
             }
+            if (point.getRespiratoryRate() >= 0) {
+                respiratoryRatePoints.add(new Entry(tsShorten, point.getRespiratoryRate()));
+            }
         }
 
         if (!heartRateDataPoints.isEmpty()) {
@@ -109,6 +114,10 @@ public class DefaultWorkoutCharts {
 
         if (!powerDataPoints.isEmpty()) {
             charts.add(createPowerChart(context, powerDataPoints));
+        }
+
+        if (!respiratoryRatePoints.isEmpty()) {
+            charts.add(createRespiratoryRateChart(context, respiratoryRatePoints));
         }
 
         return charts;
@@ -224,7 +233,7 @@ public class DefaultWorkoutCharts {
     }
 
     private static WorkoutChart createPowerChart(final Context context,
-                                                     final List<Entry> powerDataPoints) {
+                                                 final List<Entry> powerDataPoints) {
         final String label = String.format("%s (%s)", context.getString(R.string.workout_power), getUnitString(context, UNIT_WATT));
         LineDataSet dataset = createLineDataSet(context, powerDataPoints, label, context.getResources().getColor(R.color.chart_line_power));
         final ValueFormatter integerFormatter = new ValueFormatter() {
@@ -234,6 +243,26 @@ public class DefaultWorkoutCharts {
             }
         };
         return new WorkoutChart("power", context.getString(R.string.workout_power), ActivitySummaryEntries.GROUP_POWER, new LineData(dataset), integerFormatter, getUnitString(context, UNIT_WATT));
+    }
+
+    private static WorkoutChart createRespiratoryRateChart(final Context context,
+                                                           final List<Entry> powerDataPoints) {
+        final String label = String.format("%s (%s)", context.getString(R.string.respiratoryrate), getUnitString(context, UNIT_BREATHS_PER_MIN));
+        LineDataSet dataset = createLineDataSet(context, powerDataPoints, label, context.getResources().getColor(R.color.respiratory_rate_color));
+        final ValueFormatter integerFormatter = new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.valueOf((int) value);
+            }
+        };
+        return new WorkoutChart(
+                "respiratory_rate",
+                context.getString(R.string.respiratoryrate),
+                ActivitySummaryEntries.GROUP_RESPIRATORY_RATE,
+                new LineData(dataset),
+                integerFormatter,
+                getUnitString(context, UNIT_BREATHS_PER_MIN)
+        );
     }
 
     public static String getUnitString(final Context context, final String unit) {

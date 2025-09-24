@@ -450,8 +450,8 @@ public class FitRecord extends RecordData {
     }
 
     @Nullable
-    public Integer getEnhancedRespirationRate() {
-        return (Integer) getFieldByNumber(108);
+    public Float getEnhancedRespirationRate() {
+        return (Float) getFieldByNumber(108);
     }
 
     @Nullable
@@ -887,7 +887,7 @@ public class FitRecord extends RecordData {
             return this;
         }
 
-        public Builder setEnhancedRespirationRate(final Integer value) {
+        public Builder setEnhancedRespirationRate(final Float value) {
             setFieldByNumber(108, value);
             return this;
         }
@@ -1006,6 +1006,9 @@ public class FitRecord extends RecordData {
         }
         if (getPower() != null) {
             activityPoint.setPower(getPower());
+        }
+        if (getEnhancedRespirationRate() != null) {
+            activityPoint.setRespiratoryRate(getEnhancedRespirationRate());
         }
         return activityPoint;
     }

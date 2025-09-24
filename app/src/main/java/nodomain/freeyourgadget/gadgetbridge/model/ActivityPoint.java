@@ -42,6 +42,7 @@ public class ActivityPoint {
     private float speed = -1;
     private int cadence = -1;
     private int power = -1;
+    private float respiratoryRate = -1;
 
     // e.g. to describe a pause during the activity
     private @Nullable String description;
@@ -108,5 +109,13 @@ public class ActivityPoint {
 
     public void setPower(final int power) {
         this.power = power;
+    }
+
+    public float getRespiratoryRate() {
+        return respiratoryRate;
+    }
+
+    public void setRespiratoryRate(final float respiratoryRate) {
+        this.respiratoryRate = respiratoryRate;
     }
 }
