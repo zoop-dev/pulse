@@ -75,7 +75,7 @@ class PebbleKitSupport {
             switch (action) {
                 case PEBBLEKIT_ACTION_APP_START:
                 case PEBBLEKIT_ACTION_APP_STOP:
-                    uuid = (UUID) intent.getSerializableExtra("uuid");
+                    uuid = parseUUIDFromIntent(intent);
                     if (uuid != null) {
                         if (action.equals(PEBBLEKIT_ACTION_APP_STOP) &&
                                 intent.getBooleanExtra(PEBBLEKIT_EXTRA_REOPEN_LAST_APP, false)) {
@@ -87,7 +87,7 @@ class PebbleKitSupport {
                     break;
                 case PEBBLEKIT_ACTION_APP_SEND:
                     int transaction_id = intent.getIntExtra("transaction_id", -1);
-                    uuid = (UUID) intent.getSerializableExtra("uuid");
+                    uuid = parseUUIDFromIntent(intent);
                     String jsonString = intent.getStringExtra("msg_data");
                     LOG.info("json string: " + jsonString);
 
@@ -134,6 +134,14 @@ class PebbleKitSupport {
         intentFilter.addAction(PEBBLEKIT_ACTION_APP_STOP);
         intentFilter.addAction(PEBBLEKIT_ACTION_DL_ACK_DATA);
         ContextCompat.registerReceiver(mContext, mPebbleKitReceiver, intentFilter, ContextCompat.RECEIVER_EXPORTED);
+    }
+
+    private UUID parseUUIDFromIntent(Intent intent) {
+        if (intent.getStringExtra("uuid") != null) {
+            return UUID.fromString(intent.getStringExtra("uuid"));
+        } else {
+            return (UUID) intent.getSerializableExtra("uuid");
+        }
     }
 
     void sendAppMessageIntent(GBDeviceEventAppMessage appMessage) {
