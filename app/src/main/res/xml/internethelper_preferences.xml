@@ -17,6 +17,13 @@
             android:summary="Set the default action to take when a URL is requested that isn't already in the list below."
             android:title="New URL action"
             app:iconSpaceReserved="false" />
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="pref_key_internethelper_force_local"
+            android:layout="@layout/preference_checkbox"
+            android:title="Intercept supported requests"
+            android:summary="Some internet requests can be intercepted and responded to locally without sending anything to the internet."
+            app:iconSpaceReserved="false" />
     </PreferenceCategory>
     <PreferenceCategory
         android:key="pref_key_internethelper_url_list"
