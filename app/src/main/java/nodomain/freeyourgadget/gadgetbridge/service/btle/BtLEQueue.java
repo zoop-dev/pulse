@@ -339,12 +339,9 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
             mBluetoothGatt = remoteDevice.connectGatt(mContext, false,
                     internalGattCallback, BluetoothDevice.TRANSPORT_LE,
                     BluetoothDevice.PHY_LE_CODED_MASK, mReceiverHandler);
-        }else if (GBApplication.isRunningMarshmallowOrLater()) {
-            mBluetoothGatt = remoteDevice.connectGatt(mContext, false,
-                    internalGattCallback, BluetoothDevice.TRANSPORT_LE);
         } else {
             mBluetoothGatt = remoteDevice.connectGatt(mContext, false,
-                    internalGattCallback);
+                    internalGattCallback, BluetoothDevice.TRANSPORT_LE);
         }
 
         return mBluetoothGatt != null;

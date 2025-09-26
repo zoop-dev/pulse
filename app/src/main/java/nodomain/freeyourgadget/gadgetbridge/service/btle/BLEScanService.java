@@ -399,13 +399,9 @@ public class BLEScanService extends Service {
         }
 
         final ScanSettings.Builder scanSettingsBuilder = new ScanSettings.Builder()
-                .setScanMode(ScanSettings.SCAN_MODE_LOW_POWER); // enforced anyway in background
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            scanSettingsBuilder
-                    .setCallbackType(ScanSettings.CALLBACK_TYPE_ALL_MATCHES)
-                    .setMatchMode(ScanSettings.MATCH_MODE_STICKY);
-        }
+                .setScanMode(ScanSettings.SCAN_MODE_LOW_POWER) // enforced anyway in background
+                .setCallbackType(ScanSettings.CALLBACK_TYPE_ALL_MATCHES)
+                .setMatchMode(ScanSettings.MATCH_MODE_STICKY);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             scanSettingsBuilder.setLegacy(false);
@@ -413,7 +409,7 @@ public class BLEScanService extends Service {
 
         scanner.startScan(scanFilters, scanSettingsBuilder.build(), scanCallback);
         if (applyFilters) {
-            LOG.debug("restartScan: started scan for " + scanFilters.size() + " devices");
+            LOG.debug("restartScan: started scan for {} devices", scanFilters.size());
             updateNotification(true, scanFilters.size());
             currentState = ScanningState.SCANNING_WITH_FILTERS;
         } else {

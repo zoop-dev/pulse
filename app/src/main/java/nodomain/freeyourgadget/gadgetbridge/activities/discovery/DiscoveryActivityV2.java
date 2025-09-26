@@ -518,11 +518,9 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
         final ScanSettings.Builder builder = new ScanSettings.Builder()
                 .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            builder.setCallbackType(ScanSettings.CALLBACK_TYPE_ALL_MATCHES);
-            builder.setMatchMode(ScanSettings.MATCH_MODE_AGGRESSIVE);
-            builder.setNumOfMatches(ScanSettings.MATCH_NUM_ONE_ADVERTISEMENT);
-        }
+        builder.setCallbackType(ScanSettings.CALLBACK_TYPE_ALL_MATCHES);
+        builder.setMatchMode(ScanSettings.MATCH_MODE_AGGRESSIVE);
+        builder.setNumOfMatches(ScanSettings.MATCH_NUM_ONE_ADVERTISEMENT);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             builder.setPhy(ScanSettings.PHY_LE_ALL_SUPPORTED);

@@ -17,6 +17,7 @@
 package nodomain.freeyourgadget.gadgetbridge.util.notifications
 
 import android.app.Notification
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.StringRes
@@ -25,7 +26,6 @@ import nodomain.freeyourgadget.gadgetbridge.BuildConfig
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.ControlCenterv2
 import nodomain.freeyourgadget.gadgetbridge.util.GB
-import nodomain.freeyourgadget.gadgetbridge.util.PendingIntentUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.Random
@@ -214,12 +214,11 @@ class GBProgressNotification(
             val notificationIntent = Intent(context, ControlCenterv2::class.java)
             notificationIntent.setPackage(BuildConfig.APPLICATION_ID)
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            val pendingIntent = PendingIntentUtils.getActivity(
+            val pendingIntent = PendingIntent.getActivity(
                 context,
                 0,
                 notificationIntent,
-                0,
-                false
+                PendingIntent.FLAG_IMMUTABLE
             )
 
             val nb = NotificationCompat.Builder(context, channelId)

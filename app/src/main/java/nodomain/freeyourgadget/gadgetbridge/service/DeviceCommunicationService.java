@@ -1345,7 +1345,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         if (enable && initialized && features.supportsCalendarEvents()) {
             for (GBDevice deviceWithCalendar : devicesWithCalendar) {
                 if (!deviceHasCalendarReceiverRegistered(deviceWithCalendar)) {
-                    if (!(GBApplication.isRunningMarshmallowOrLater() && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_DENIED)) {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
                         CalendarReceiver receiver = new CalendarReceiver(this, deviceWithCalendar);
                         receiver.registerBroadcastReceivers();
                         mCalendarReceiver.add(receiver);

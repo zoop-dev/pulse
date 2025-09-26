@@ -50,7 +50,6 @@ import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FormatUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
-import nodomain.freeyourgadget.gadgetbridge.util.PendingIntentUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.WidgetPreferenceStorage;
 
 public class Widget extends AppWidgetProvider {
@@ -91,28 +90,47 @@ public class Widget extends AppWidgetProvider {
         intent.setPackage(BuildConfig.APPLICATION_ID);
         intent.setAction(WIDGET_CLICK);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        PendingIntent refreshDataIntent = PendingIntentUtils.getBroadcast(
-                context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT, false);
+        PendingIntent refreshDataIntent = PendingIntent.getBroadcast(
+                context,
+                appWidgetId,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
         views.setOnClickPendingIntent(R.id.todaywidget_header_container, refreshDataIntent);
 
         //open GB main window
         Intent startMainIntent = new Intent(context, ControlCenterv2.class);
         startMainIntent.setPackage(BuildConfig.APPLICATION_ID);
-        PendingIntent startMainPIntent = PendingIntentUtils.getActivity(context, 0, startMainIntent, 0, false);
+        PendingIntent startMainPIntent = PendingIntent.getActivity(
+                context,
+                0,
+                startMainIntent,
+                PendingIntent.FLAG_IMMUTABLE
+        );
         views.setOnClickPendingIntent(R.id.todaywidget_header_icon, startMainPIntent);
 
         //alarms popup menu
         Intent startAlarmListIntent = new Intent(context, WidgetAlarmsActivity.class);
         startAlarmListIntent.setPackage(BuildConfig.APPLICATION_ID);
         startAlarmListIntent.putExtra(GBDevice.EXTRA_DEVICE, deviceForWidget);
-        PendingIntent startAlarmListPIntent = PendingIntentUtils.getActivity(context, appWidgetId, startAlarmListIntent, PendingIntent.FLAG_UPDATE_CURRENT, false);
+        PendingIntent startAlarmListPIntent = PendingIntent.getActivity(
+                context,
+                appWidgetId,
+                startAlarmListIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
         views.setOnClickPendingIntent(R.id.todaywidget_header_alarm_icon, startAlarmListPIntent);
 
         //charts
         Intent startChartsIntent = new Intent(context, ActivityChartsActivity.class);
         startChartsIntent.setPackage(BuildConfig.APPLICATION_ID);
         startChartsIntent.putExtra(GBDevice.EXTRA_DEVICE, deviceForWidget);
-        PendingIntent startChartsPIntent = PendingIntentUtils.getActivity(context, appWidgetId, startChartsIntent, PendingIntent.FLAG_CANCEL_CURRENT, false);
+        PendingIntent startChartsPIntent = PendingIntent.getActivity(
+                context,
+                appWidgetId,
+                startChartsIntent,
+                PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
         views.setOnClickPendingIntent(R.id.todaywidget_bottom_layout, startChartsPIntent);
 
         DailyTotals dailyTotals = getSteps(deviceForWidget);
@@ -140,20 +158,18 @@ public class Widget extends AppWidgetProvider {
         views.setProgressBar(R.id.todaywidget_sleep_progress, sleepGoalMinutes, sleep, false);
         views.setProgressBar(R.id.todaywidget_distance_progress, distanceGoal, steps * stepLength, false);
         views.setViewVisibility(R.id.todaywidget_battery_icon, View.GONE);
-        if (deviceForWidget != null) {
-            String status = String.format("%1s", deviceForWidget.getStateString(context));
-            if (deviceForWidget.isConnected()) {
-                if (deviceForWidget.getBatteryLevel() > 1) {
-                    views.setViewVisibility(R.id.todaywidget_battery_icon, View.VISIBLE);
+        String status = String.format("%1s", deviceForWidget.getStateString(context));
+        if (deviceForWidget.isConnected()) {
+            if (deviceForWidget.getBatteryLevel() > 1) {
+                views.setViewVisibility(R.id.todaywidget_battery_icon, View.VISIBLE);
 
-                    status = String.format("%1s%%", deviceForWidget.getBatteryLevel());
-                }
+                status = String.format("%1s%%", deviceForWidget.getBatteryLevel());
             }
-
-            String deviceName = deviceForWidget.getAlias() != null ? deviceForWidget.getAlias() : deviceForWidget.getName();
-            views.setTextViewText(R.id.todaywidget_device_status, status);
-            views.setTextViewText(R.id.todaywidget_device_name, deviceName);
         }
+
+        String deviceName = deviceForWidget.getAlias() != null ? deviceForWidget.getAlias() : deviceForWidget.getName();
+        views.setTextViewText(R.id.todaywidget_device_status, status);
+        views.setTextViewText(R.id.todaywidget_device_name, deviceName);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);

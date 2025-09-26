@@ -41,7 +41,6 @@ import java.util.Locale;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
-import nodomain.freeyourgadget.gadgetbridge.util.PendingIntentUtils;
 
 public class GBDeviceEventScreenshot extends GBDeviceEvent {
     private static final Logger LOG = LoggerFactory.getLogger(GBDeviceEventScreenshot.class);
@@ -77,14 +76,21 @@ public class GBDeviceEventScreenshot extends GBDeviceEvent {
             intent.setDataAndType(screenshotURI, "image/*");
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-            final PendingIntent pIntent = PendingIntentUtils.getActivity(context, 0, intent, 0, false);
+            int flags1 = 0;
+            flags1 |= PendingIntent.FLAG_IMMUTABLE;
+            final PendingIntent pIntent = PendingIntent.getActivity(context, 0, intent, flags1);
 
             final Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("image/*");
             shareIntent.putExtra(Intent.EXTRA_STREAM, screenshotURI);
 
-            final PendingIntent pendingShareIntent = PendingIntentUtils.getActivity(context, 0, Intent.createChooser(shareIntent, context.getString(R.string.share_screenshot)),
-                    PendingIntent.FLAG_UPDATE_CURRENT, false);
+            Intent intent1 = Intent.createChooser(shareIntent, context.getString(R.string.share_screenshot));
+            final PendingIntent pendingShareIntent = PendingIntent.getActivity(
+                    context,
+                    0,
+                    intent1,
+                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+            );
 
             final NotificationCompat.Action action = new NotificationCompat.Action.Builder(android.R.drawable.ic_menu_share, context.getString(R.string.share), pendingShareIntent).build();
 

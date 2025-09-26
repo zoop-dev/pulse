@@ -108,11 +108,6 @@ public class NotificationManagementActivity extends AbstractSettingsActivityV2 {
 
             final PreferenceCategory notificationsCategory = findPreference("pref_key_notifications");
 
-            if (!GBApplication.isRunningMarshmallowOrLater()) {
-                pref = findPreference("notification_filter");
-                notificationsCategory.removePreference(pref);
-            }
-
             if (GBApplication.isRunningTenOrLater()) {
                 pref = findPreference("minimize_priority");
                 notificationsCategory.removePreference(pref);

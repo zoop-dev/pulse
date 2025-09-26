@@ -35,7 +35,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
-import nodomain.freeyourgadget.gadgetbridge.util.PendingIntentUtils;
 
 /**
  * Catches otherwise uncaught exceptions, logs them and terminates the app.
@@ -104,12 +103,12 @@ public class GBExceptionHandler implements Thread.UncaughtExceptionHandler {
         shareIntent.putExtra(Intent.EXTRA_TEXT, Log.getStackTraceString(e));
         shareIntent.setType("text/plain");
 
-        final PendingIntent pendingShareIntent = PendingIntentUtils.getActivity(
+        Intent intent = Intent.createChooser(shareIntent, context.getString(R.string.app_crash_share_stacktrace));
+        final PendingIntent pendingShareIntent = PendingIntent.getActivity(
                 context,
                 0,
-                Intent.createChooser(shareIntent, context.getString(R.string.app_crash_share_stacktrace)),
-                PendingIntent.FLAG_UPDATE_CURRENT,
-                false
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
         final NotificationCompat.Action shareAction = new NotificationCompat.Action.Builder(android.R.drawable.ic_menu_share, context.getString(R.string.share), pendingShareIntent).build();

@@ -16,7 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities.charts;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -99,11 +98,9 @@ public class StressPeriodFragment extends StressFragment<StressPeriodFragment.My
         mLocale = getResources().getConfiguration().locale;
         View rootView = inflater.inflate(R.layout.fragment_weekstress_chart, container, false);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            rootView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-                getChartsHost().enableSwipeRefresh(scrollY == 0);
-            });
-        }
+        rootView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            getChartsHost().enableSwipeRefresh(scrollY == 0);
+        });
 
         mWeekChart = rootView.findViewById(R.id.weekstresschart);
         mStressLevelsPieChart = rootView.findViewById(R.id.stress_pie_chart);

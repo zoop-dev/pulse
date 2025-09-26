@@ -40,7 +40,6 @@ import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
-import nodomain.freeyourgadget.gadgetbridge.util.PendingIntentUtils;
 
 
 /**
@@ -167,7 +166,7 @@ public class GBLocationService extends BroadcastReceiver {
             final Intent notificationIntent = new Intent(context, GBLocationService.class);
             notificationIntent.setPackage(BuildConfig.APPLICATION_ID);
             notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            final PendingIntent pendingIntent = PendingIntentUtils.getActivity(context, 0, notificationIntent, 0, false);
+            final PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
             final NotificationCompat.Builder nb = new NotificationCompat.Builder(context, GB.NOTIFICATION_CHANNEL_ID_GPS)
                     .setTicker(context.getString(R.string.notification_gps_title))

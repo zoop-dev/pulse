@@ -23,7 +23,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Build;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -37,7 +36,6 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceManager;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceCommunicationService;
-import nodomain.freeyourgadget.gadgetbridge.util.PendingIntentUtils;
 
 public class AutoConnectIntervalReceiver extends BroadcastReceiver {
 
@@ -65,11 +63,11 @@ public class AutoConnectIntervalReceiver extends BroadcastReceiver {
         }
 
         GBDevice[] devices = service.getGBDevices();
-        if (action.equals(DeviceManager.ACTION_DEVICES_CHANGED)){
+        if (action.equals(DeviceManager.ACTION_DEVICES_CHANGED)) {
             boolean scheduleAutoConnect = false;
             boolean allDevicesInitialized = true;
-            for(GBDevice device : devices){
-                if(!device.isInitialized()) {
+            for (GBDevice device : devices) {
+                if (!device.isInitialized()) {
                     allDevicesInitialized = false;
                     if (device.getState() == GBDevice.State.WAITING_FOR_RECONNECT) {
                         scheduleAutoConnect = true;
@@ -77,18 +75,18 @@ public class AutoConnectIntervalReceiver extends BroadcastReceiver {
                 }
             }
 
-            if(allDevicesInitialized){
+            if (allDevicesInitialized) {
                 LOG.info("will reset connection delay, all devices are initialized!");
                 mDelay = 4;
                 return;
             }
-            if(scheduleAutoConnect && !mScheduled){
+            if (scheduleAutoConnect && !mScheduled) {
                 scheduleReconnect();
             }
-        }else if (action.equals("GB_RECONNECT")){
+        } else if (action.equals("GB_RECONNECT")) {
             mScheduled = false;
-            for(GBDevice device : devices){
-                if(device.getState() == GBDevice.State.WAITING_FOR_RECONNECT) {
+            for (GBDevice device : devices) {
+                if (device.getState() == GBDevice.State.WAITING_FOR_RECONNECT) {
                     LOG.info("time based re-connect to {} ({})", device.getAddress(), device.getName());
                     GBApplication.deviceService(device).connect();
                 }
@@ -97,7 +95,7 @@ public class AutoConnectIntervalReceiver extends BroadcastReceiver {
     }
 
     private void scheduleReconnect() {
-        mDelay*=2;
+        mDelay *= 2;
         if (mDelay > 64) {
             mDelay = 64;
         }
@@ -109,16 +107,14 @@ public class AutoConnectIntervalReceiver extends BroadcastReceiver {
         AlarmManager am = (AlarmManager) (GBApplication.getContext().getSystemService(Context.ALARM_SERVICE));
         Intent intent = new Intent("GB_RECONNECT");
         intent.setPackage(BuildConfig.APPLICATION_ID);
-        PendingIntent pendingIntent = PendingIntentUtils.getBroadcast(GBApplication.getContext(), 0, intent, 0, false);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, Calendar.getInstance().
-                    getTimeInMillis() + delay * 1000, pendingIntent);
-            mScheduled = true;
-        } else {
-            am.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().
-                    getTimeInMillis() + delay * 1000, pendingIntent);
-            mScheduled = true;
-        }
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(GBApplication.getContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        am.setAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                Calendar.getInstance().
+                getTimeInMillis() + delay * 1000,
+                pendingIntent
+        );
+        mScheduled = true;
     }
 
     public void destroy() {

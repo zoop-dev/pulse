@@ -39,7 +39,6 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.FindPhoneActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
-import nodomain.freeyourgadget.gadgetbridge.util.PendingIntentUtils;
 
 public class GBDeviceEventFindPhone extends GBDeviceEvent {
     private static final Logger LOG = LoggerFactory.getLogger(GBDeviceEventFindPhone.class);
@@ -101,7 +100,12 @@ public class GBDeviceEventFindPhone extends GBDeviceEvent {
             // On Android Q and above, we need the device to be paired as companion. If it is not, display a notification
             // notifying the user and linking to further instructions
             final Intent instructionsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://gadgetbridge.org/basics/pairing/companion-device/"));
-            final PendingIntent pi = PendingIntentUtils.getActivity(context, 0, instructionsIntent, PendingIntent.FLAG_ONE_SHOT, false);
+            final PendingIntent pi = PendingIntent  .getActivity(
+                    context,
+                    0,
+                    instructionsIntent,
+                    PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE
+            );
             final NotificationCompat.Builder notification = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_HIGH_PRIORITY_ID)
                     .setSmallIcon(R.drawable.ic_warning)
                     .setOngoing(false)
@@ -121,7 +125,12 @@ public class GBDeviceEventFindPhone extends GBDeviceEvent {
         intent.putExtra(FindPhoneActivity.EXTRA_RING, ring);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        final PendingIntent pi = PendingIntentUtils.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT, false);
+        final PendingIntent pi = PendingIntent.getActivity(
+                context,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
 
         final NotificationCompat.Builder notification = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_HIGH_PRIORITY_ID)
                 .setSmallIcon(R.drawable.ic_notification)

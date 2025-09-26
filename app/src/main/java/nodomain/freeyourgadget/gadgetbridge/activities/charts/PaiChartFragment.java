@@ -16,8 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities.charts;
 
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -110,11 +108,9 @@ public class PaiChartFragment extends AbstractChartFragment<PaiChartFragment.Pai
 
         final View rootView = inflater.inflate(R.layout.fragment_pai_chart, container, false);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            rootView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
-                getChartsHost().enableSwipeRefresh(scrollY == 0);
-            });
-        }
+        rootView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            getChartsHost().enableSwipeRefresh(scrollY == 0);
+        });
 
         mGoalMinutesGauge = rootView.findViewById(R.id.goal_minutes_gauge);
         mWeekChart = rootView.findViewById(R.id.pai_chart_week);

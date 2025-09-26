@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.util.maps;
 import android.content.Context;
 import android.net.Uri;
 
+import androidx.core.content.ContextCompat;
 import androidx.documentfile.provider.DocumentFile;
 
 import org.mapsforge.core.graphics.Paint;
@@ -195,7 +196,7 @@ public final class MapsManager {
 
         if (polyline == null) {
             final Paint paint = AndroidGraphicFactory.INSTANCE.createPaint();
-            final int trackColor = GBApplication.getPrefs().getInt(MapsManager.PREF_TRACK_COLOR, mContext.getResources().getColor(R.color.map_track_default));
+            final int trackColor = GBApplication.getPrefs().getInt(MapsManager.PREF_TRACK_COLOR, ContextCompat.getColor(mContext, R.color.map_track_default));
             paint.setColor(trackColor);
             paint.setStrokeWidth(8);
             paint.setStyle(Style.STROKE);
@@ -221,7 +222,7 @@ public final class MapsManager {
 
     public void reload() {
         if (polyline != null) {
-            final int trackColor = GBApplication.getPrefs().getInt(MapsManager.PREF_TRACK_COLOR, mContext.getResources().getColor(R.color.map_track_default));
+            final int trackColor = GBApplication.getPrefs().getInt(MapsManager.PREF_TRACK_COLOR, ContextCompat.getColor(mContext, R.color.map_track_default));
             polyline.getPaintStroke().setColor(trackColor);
             polyline.requestRedraw();
         }

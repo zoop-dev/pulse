@@ -101,7 +101,6 @@ import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.LimitedQueue;
-import nodomain.freeyourgadget.gadgetbridge.util.PendingIntentUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.backup.PeriodicZipExporter;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
@@ -212,7 +211,12 @@ public class GBApplication extends Application {
         GBApplication.deviceService().quit();
 
         final Intent startActivity = new Intent(context, ControlCenterv2.class);
-        final PendingIntent pendingIntent = PendingIntentUtils.getActivity(context, 1337, startActivity, PendingIntent.FLAG_CANCEL_CURRENT, false);
+        final PendingIntent pendingIntent = PendingIntent.getActivity(
+                context,
+                1337,
+                startActivity,
+                PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
         final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC, System.currentTimeMillis() + 1500, pendingIntent);
 
@@ -229,9 +233,7 @@ public class GBApplication extends Application {
             thread.permitDiskReads(); // log requires disk access
             thread.permitDiskWrites(); // log requires disk access
             thread.detectNetwork();
-            if (VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                thread.detectResourceMismatches();
-            }
+            thread.detectResourceMismatches();
             if (VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 thread.detectUnbufferedIo();
             }
@@ -245,9 +247,7 @@ public class GBApplication extends Application {
             vm.detectLeakedClosableObjects();
             vm.detectLeakedRegistrationObjects();
             vm.detectFileUriExposure();
-            if (VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                vm.detectCleartextNetwork();
-            }
+            vm.detectCleartextNetwork();
             if (VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 vm.detectContentUriWithoutPermission();
                 vm.detectUntaggedSockets();
@@ -331,18 +331,16 @@ public class GBApplication extends Application {
             PeriodicZipExporter.INSTANCE.scheduleNextExecution(context);
         }
 
-        if (isRunningMarshmallowOrLater()) {
-            notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            if (isRunningOreoOrLater()) {
-                bluetoothStateChangeReceiver = new BluetoothStateChangeReceiver();
-                final IntentFilter bif = new IntentFilter();
-                bif.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
-                if (isRunningPieOrLater())
-                    bif.addAction(BluetoothStateChangeReceiver.ANDROID_BLUETOOTH_DEVICE_ACTION_BATTERY_LEVEL_CHANGED);
-                registerReceiver(bluetoothStateChangeReceiver, bif);
-            }
-            startNotificationCollectorMonitorService();
+        notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (isRunningOreoOrLater()) {
+            bluetoothStateChangeReceiver = new BluetoothStateChangeReceiver();
+            final IntentFilter bif = new IntentFilter();
+            bif.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+            if (isRunningPieOrLater())
+                bif.addAction(BluetoothStateChangeReceiver.ANDROID_BLUETOOTH_DEVICE_ACTION_BATTERY_LEVEL_CHANGED);
+            registerReceiver(bluetoothStateChangeReceiver, bif);
         }
+        startNotificationCollectorMonitorService();
 
         BondingUtil.StartObservingAll(getBaseContext());
     }
@@ -362,7 +360,12 @@ public class GBApplication extends Application {
         } catch (IllegalStateException e) {
             String message = e.toString();
             final Intent instructionsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://gadgetbridge.org/basics/topics/background-service/"));
-            final PendingIntent pi = PendingIntentUtils.getActivity(context, 0, instructionsIntent, PendingIntent.FLAG_ONE_SHOT, false);
+            final PendingIntent pi = PendingIntent.getActivity(
+                    context,
+                    0,
+                    instructionsIntent,
+                    PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE
+            );
             GB.notify(NOTIFICATION_ID_ERROR,
                     new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_HIGH_PRIORITY_ID)
                             .setSmallIcon(R.drawable.ic_notification)
@@ -513,10 +516,6 @@ public class GBApplication extends Application {
         dbLock.unlock();
     }
 
-    public static boolean isRunningMarshmallowOrLater() {
-        return VERSION.SDK_INT >= Build.VERSION_CODES.M;
-    }
-
     public static boolean isRunningNougatOrLater() {
         return VERSION.SDK_INT >= Build.VERSION_CODES.N;
     }
@@ -588,9 +587,8 @@ public class GBApplication extends Application {
         return false;
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     public static int getGrantedInterruptionFilter() {
-        if (GBApplication.isRunningMarshmallowOrLater() && notificationManager.isNotificationPolicyAccessGranted()) {
+        if (notificationManager.isNotificationPolicyAccessGranted()) {
             return notificationManager.getCurrentInterruptionFilter();
         }
         return NotificationManager.INTERRUPTION_FILTER_ALL;

@@ -127,7 +127,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
-import nodomain.freeyourgadget.gadgetbridge.util.PendingIntentUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.WidgetPreferenceStorage;
 
 public class DebugActivity extends AbstractGBActivity {
@@ -1037,8 +1036,10 @@ public class DebugActivity extends AbstractGBActivity {
         notificationIntent.setPackage(BuildConfig.APPLICATION_ID);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntentUtils.getActivity(getApplicationContext(), 0,
-                notificationIntent, 0, false);
+        Context context = getApplicationContext();
+        int flags1 = 0;
+        flags1 |= PendingIntent.FLAG_IMMUTABLE;
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, flags1);
 
         RemoteInput remoteInput = new RemoteInput.Builder(EXTRA_REPLY)
                 .build();
@@ -1046,7 +1047,7 @@ public class DebugActivity extends AbstractGBActivity {
         Intent replyIntent = new Intent(ACTION_REPLY);
         replyIntent.setPackage(BuildConfig.APPLICATION_ID);
 
-        PendingIntent replyPendingIntent = PendingIntentUtils.getBroadcast(this, 0, replyIntent, 0, true);
+        PendingIntent replyPendingIntent = PendingIntent.getBroadcast(this, 0, replyIntent, PendingIntent.FLAG_MUTABLE);
 
         NotificationCompat.Action action =
                 new NotificationCompat.Action.Builder(android.R.drawable.ic_input_add, "Reply", replyPendingIntent)

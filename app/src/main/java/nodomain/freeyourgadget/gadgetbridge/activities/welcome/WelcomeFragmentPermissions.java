@@ -84,7 +84,7 @@ public class WelcomeFragmentPermissions extends Fragment {
             List<PermissionsUtils.PermissionDetails> wantedPermissions = PermissionsUtils.getRequiredPermissionsList(requireActivity());
             requestingPermissions = new ArrayList<>();
             for (PermissionsUtils.PermissionDetails wantedPermission : wantedPermissions) {
-                requestingPermissions.add(wantedPermission.getPermission());
+                requestingPermissions.add(wantedPermission.permission());
             }
             requestAllPermissions();
         });
@@ -169,9 +169,9 @@ public class WelcomeFragmentPermissions extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull PermissionHolder holder, int position) {
             PermissionsUtils.PermissionDetails permissionData = permissionList.get(position);
-            holder.titleTextView.setText(permissionData.getTitle());
-            holder.summaryTextView.setText(permissionData.getSummary());
-            if (PermissionsUtils.checkPermission(requireContext(), permissionData.getPermission())) {
+            holder.titleTextView.setText(permissionData.title());
+            holder.summaryTextView.setText(permissionData.summary());
+            if (PermissionsUtils.checkPermission(requireContext(), permissionData.permission())) {
                 holder.requestButton.setVisibility(View.INVISIBLE);
                 holder.requestButton.setEnabled(false);
                 holder.checkmarkImageView.setVisibility(View.VISIBLE);
@@ -180,7 +180,7 @@ public class WelcomeFragmentPermissions extends Fragment {
                 holder.requestButton.setEnabled(true);
                 holder.checkmarkImageView.setVisibility(View.GONE);
                 holder.requestButton.setOnClickListener(view -> {
-                    PermissionsUtils.requestPermission(requireActivity(), permissionData.getPermission());
+                    PermissionsUtils.requestPermission(requireActivity(), permissionData.permission());
                 });
             }
         }

@@ -43,6 +43,7 @@ import androidx.annotation.StringRes;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.slf4j.Logger;
@@ -181,15 +182,13 @@ public class GB {
         notificationIntent.setPackage(BuildConfig.APPLICATION_ID);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntentUtils.getActivity(context, 0,
-                notificationIntent, 0, false);
 
-        return pendingIntent;
+        return PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
     }
 
     public static Notification createNotification(List<GBDevice> devices, Context context) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID_CONNECTION_STATUS);
-        if(devices.size() == 0){
+        if (devices.isEmpty()){
             builder.setContentTitle(context.getString(R.string.info_no_devices_connected))
                     .setSmallIcon(R.drawable.ic_notification_disconnected)
                     .setContentIntent(getContentIntent(context))
@@ -197,9 +196,9 @@ public class GB {
                     .setOngoing(true);
 
             if (!GBApplication.isRunningTwelveOrLater()) {
-                builder.setColor(context.getResources().getColor(R.color.accent));
+                builder.setColor(ContextCompat.getColor(context, R.color.accent));
             }
-        }else if(devices.size() == 1) {
+        } else if(devices.size() == 1) {
             GBDevice device = devices.get(0);
             String deviceName = device.getAliasOrName();
             String text = device.getStateString(context);
@@ -216,25 +215,40 @@ public class GB {
                     .setOngoing(true);
 
             if (!GBApplication.isRunningTwelveOrLater()) {
-                builder.setColor(context.getResources().getColor(R.color.accent));
+                builder.setColor(ContextCompat.getColor(context, R.color.accent));
             }
 
             Intent deviceCommunicationServiceIntent = new Intent(context, DeviceCommunicationService.class);
             deviceCommunicationServiceIntent.setPackage(BuildConfig.APPLICATION_ID);
             if (connected) {
                 deviceCommunicationServiceIntent.setAction(DeviceService.ACTION_DISCONNECT);
-                PendingIntent disconnectPendingIntent = PendingIntentUtils.getService(context, 0, deviceCommunicationServiceIntent, PendingIntent.FLAG_ONE_SHOT, false);
+                PendingIntent disconnectPendingIntent = PendingIntent.getService(
+                        context,
+                        0,
+                        deviceCommunicationServiceIntent,
+                        PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE
+                );
                 builder.addAction(R.drawable.ic_notification_disconnected, context.getString(R.string.controlcenter_disconnect), disconnectPendingIntent);
                 if (device.getDeviceCoordinator().supportsActivityDataFetching(device)) {
                     deviceCommunicationServiceIntent.setAction(DeviceService.ACTION_FETCH_RECORDED_DATA);
                     deviceCommunicationServiceIntent.putExtra(EXTRA_RECORDED_DATA_TYPES, ActivityKind.ACTIVITY);
-                    PendingIntent fetchPendingIntent = PendingIntentUtils.getService(context, 1, deviceCommunicationServiceIntent, PendingIntent.FLAG_ONE_SHOT, false);
+                    PendingIntent fetchPendingIntent = PendingIntent.getService(
+                            context,
+                            1,
+                            deviceCommunicationServiceIntent,
+                            PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE
+                    );
                     builder.addAction(R.drawable.ic_refresh, context.getString(R.string.controlcenter_fetch_activity_data), fetchPendingIntent);
                 }
             } else if (device.getState().equals(GBDevice.State.WAITING_FOR_RECONNECT) || device.getState().equals(GBDevice.State.NOT_CONNECTED)) {
                 deviceCommunicationServiceIntent.setAction(DeviceService.ACTION_CONNECT);
                 deviceCommunicationServiceIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
-                PendingIntent reconnectPendingIntent = PendingIntentUtils.getService(context, 2, deviceCommunicationServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT, false);
+                PendingIntent reconnectPendingIntent = PendingIntent.getService(
+                        context,
+                        2,
+                        deviceCommunicationServiceIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+                );
                 builder.addAction(R.drawable.ic_notification, context.getString(R.string.controlcenter_connect), reconnectPendingIntent);
             }
         }else{
@@ -269,7 +283,7 @@ public class GB {
                     .setOngoing(true);
 
             if (!GBApplication.isRunningTwelveOrLater()) {
-                builder.setColor(context.getResources().getColor(R.color.accent));
+                builder.setColor(ContextCompat.getColor(context, R.color.accent));
             }
 
             if (anyDeviceSupportesActivityDataFetching) {
@@ -277,7 +291,12 @@ public class GB {
                 deviceCommunicationServiceIntent.setPackage(BuildConfig.APPLICATION_ID);
                 deviceCommunicationServiceIntent.setAction(DeviceService.ACTION_FETCH_RECORDED_DATA);
                 deviceCommunicationServiceIntent.putExtra(EXTRA_RECORDED_DATA_TYPES, ActivityKind.ACTIVITY);
-                PendingIntent fetchPendingIntent = PendingIntentUtils.getService(context, 1, deviceCommunicationServiceIntent, PendingIntent.FLAG_ONE_SHOT, false);
+                PendingIntent fetchPendingIntent = PendingIntent.getService(
+                        context,
+                        1,
+                        deviceCommunicationServiceIntent,
+                        PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE
+                );
                 builder.addAction(R.drawable.ic_refresh, context.getString(R.string.controlcenter_fetch_activity_data), fetchPendingIntent);
             }
         }
@@ -323,7 +342,7 @@ public class GB {
                 .setOngoing(true);
 
         if (!GBApplication.isRunningTwelveOrLater()) {
-            builder.setColor(context.getResources().getColor(R.color.accent));
+            builder.setColor(ContextCompat.getColor(context, R.color.accent));
         }
 
         // A small bug: When "Reconnect only to connected devices" is disabled, the intent will be added even when there are no devices in GB
@@ -332,7 +351,12 @@ public class GB {
             Intent deviceCommunicationServiceIntent = new Intent(context, DeviceCommunicationService.class);
             deviceCommunicationServiceIntent.setPackage(BuildConfig.APPLICATION_ID);
             deviceCommunicationServiceIntent.setAction(DeviceService.ACTION_CONNECT);
-            PendingIntent reconnectPendingIntent = PendingIntentUtils.getService(context, 2, deviceCommunicationServiceIntent, PendingIntent.FLAG_ONE_SHOT, false);
+            PendingIntent reconnectPendingIntent = PendingIntent.getService(
+                    context,
+                    2,
+                    deviceCommunicationServiceIntent,
+                    PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE
+            );
             builder.addAction(R.drawable.ic_notification, context.getString(R.string.controlcenter_connect), reconnectPendingIntent);
         }
 
@@ -487,12 +511,7 @@ public class GB {
         if (Thread.currentThread() == mainLooper.getThread()) {
             Toast.makeText(context, message, displayTime).show();
         } else {
-            Runnable runnable = new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(context, message, displayTime).show();
-                }
-            };
+            Runnable runnable = () -> Toast.makeText(context, message, displayTime).show();
 
             if (context instanceof Activity) {
                 ((Activity) context).runOnUiThread(runnable);
@@ -524,8 +543,7 @@ public class GB {
         notificationIntent.setPackage(BuildConfig.APPLICATION_ID);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntentUtils.getActivity(context, 0,
-                notificationIntent, 0, false);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
         NotificationCompat.Builder nb = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID_TRANSFER)
                 .setTicker((title == null) ? context.getString(R.string.app_name) : title)
@@ -567,8 +585,7 @@ public class GB {
         notificationIntent.setPackage(BuildConfig.APPLICATION_ID);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntentUtils.getActivity(context, 0,
-                notificationIntent, 0, false);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
         NotificationCompat.Builder nb = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setContentTitle(context.getString(R.string.app_name))
@@ -598,8 +615,7 @@ public class GB {
         notificationIntent.setPackage(BuildConfig.APPLICATION_ID);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntentUtils.getActivity(context, 0,
-                notificationIntent, 0, false);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
         NotificationCompat.Builder nb = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID_LOW_BATTERY)
                 .setContentTitle(context.getString(R.string.notif_battery_low_title))
@@ -621,8 +637,7 @@ public class GB {
         notificationIntent.setPackage(BuildConfig.APPLICATION_ID);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntentUtils.getActivity(context, 0,
-                notificationIntent, 0, false);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
         NotificationCompat.Builder nb = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID_FULL_BATTERY)
                 .setContentTitle(context.getString(R.string.notif_battery_full_title))
@@ -668,8 +683,7 @@ public class GB {
         notificationIntent.setPackage(BuildConfig.APPLICATION_ID);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntentUtils.getActivity(context, 0,
-                notificationIntent, 0, false);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
         NotificationCompat.Builder nb = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setContentTitle(context.getString(R.string.notif_export_failed_title))

@@ -17,14 +17,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge;
 
-import android.annotation.TargetApi;
-import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.Toast;
@@ -33,13 +30,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import nodomain.freeyourgadget.gadgetbridge.activities.ConfigureAlarms;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.util.AlarmUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
-import nodomain.freeyourgadget.gadgetbridge.util.PendingIntentUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.WidgetPreferenceStorage;
 
 /**
@@ -65,8 +60,12 @@ public class SleepAlarmWidget extends AppWidgetProvider {
         intent.setPackage(BuildConfig.APPLICATION_ID);
         intent.setAction(ACTION_CLICK);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        PendingIntent clickPI = PendingIntentUtils.getBroadcast(
-                context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT, false);
+        PendingIntent clickPI = PendingIntent.getBroadcast(
+                context,
+                appWidgetId,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
         views.setOnClickPendingIntent(R.id.sleepalarmwidget_text, clickPI);
 
         // Instruct the widget manager to update the widget
@@ -133,27 +132,6 @@ public class SleepAlarmWidget extends AppWidgetProvider {
             ArrayList<Alarm> alarms = new ArrayList<>(1);
             alarms.add(alarm);
             GBApplication.deviceService(deviceForWidget).onSetAlarms(alarms);
-
-//          setAlarmViaAlarmManager(context, calendar.getTimeInMillis());
         }
     }
-
-    /**
-     * Use the Android alarm manager to create the alarm icon in the status bar.
-     *
-     * @param packageContext {@code Context}: A Context of the application package implementing this
-     *                       class.
-     * @param triggerTime    {@code long}: time at which the underlying alarm is triggered in wall time
-     *                       milliseconds since the epoch
-     */
-    private void setAlarmViaAlarmManager(Context packageContext, long triggerTime) {
-        AlarmManager am = (AlarmManager) packageContext.getSystemService(Context.ALARM_SERVICE);
-        // TODO: launch the alarm configuration activity when clicking the alarm in the status bar
-        Intent intent = new Intent(packageContext, ConfigureAlarms.class);
-        intent.setPackage(BuildConfig.APPLICATION_ID);
-        PendingIntent pi = PendingIntentUtils.getBroadcast(packageContext, 0, intent,
-                PendingIntent.FLAG_CANCEL_CURRENT, false);
-        am.setAlarmClock(new AlarmManager.AlarmClockInfo(triggerTime, pi), pi);
-    }
 }
-

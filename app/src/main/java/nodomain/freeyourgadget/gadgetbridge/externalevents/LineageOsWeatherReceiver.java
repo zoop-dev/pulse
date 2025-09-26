@@ -31,9 +31,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,16 +49,14 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
-import nodomain.freeyourgadget.gadgetbridge.util.PendingIntentUtils;
-import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
+import nodomain.freeyourgadget.gadgetbridge.util.Prevfs;
 
-@RequiresApi(api = Build.VERSION_CODES.M)
 public class LineageOsWeatherReceiver extends BroadcastReceiver implements LineageWeatherManager.WeatherUpdateRequestListener, LineageWeatherManager.LookupCityRequestListener {
 
     private static final Logger LOG = LoggerFactory.getLogger(LineageOsWeatherReceiver.class);
 
     private WeatherLocation weatherLocation = null;
-    private Context mContext;
+    private final Context mContext;
     private PendingIntent mPendingIntent = null;
 
     public LineageOsWeatherReceiver() {
@@ -76,7 +71,7 @@ public class LineageOsWeatherReceiver extends BroadcastReceiver implements Linea
         String city = prefs.getString("weather_city", null);
         String cityId = prefs.getString("weather_cityid", null);
 
-        if ((cityId == null || cityId.equals("")) && city != null && !city.equals("")) {
+        if ((cityId == null || cityId.isEmpty()) && city != null && !city.isEmpty()) {
             lookupCity(city);
         } else if (city != null && cityId != null) {
             weatherLocation = new WeatherLocation.Builder(cityId, city).build();
@@ -90,7 +85,7 @@ public class LineageOsWeatherReceiver extends BroadcastReceiver implements Linea
             return;
         }
 
-        if (city != null && !city.equals("")) {
+        if (city != null && !city.isEmpty()) {
             if (weatherManager.getActiveWeatherServiceProviderLabel() != null) {
                 weatherManager.lookupCity(city, this);
             }
@@ -111,7 +106,7 @@ public class LineageOsWeatherReceiver extends BroadcastReceiver implements Linea
         if (enable) {
             Intent intent = new Intent("GB_UPDATE_WEATHER");
             intent.setPackage(BuildConfig.APPLICATION_ID);
-            mPendingIntent = PendingIntentUtils.getBroadcast(mContext, 0, intent, 0, false);
+            mPendingIntent = PendingIntent.getBroadcast(mContext, 0, intent, PendingIntent.FLAG_IMMUTABLE);
             am.setInexactRepeating(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + 10000, AlarmManager.INTERVAL_HOUR, mPendingIntent);
         } else {
             am.cancel(mPendingIntent);
@@ -126,7 +121,7 @@ public class LineageOsWeatherReceiver extends BroadcastReceiver implements Linea
         String city = prefs.getString("weather_city", null);
         String cityId = prefs.getString("weather_cityid", null);
 
-        if (city != null && !city.equals("") && cityId == null) {
+        if (city != null && !city.isEmpty() && cityId == null) {
             lookupCity(city);
         } else {
             requestWeather();
@@ -163,7 +158,7 @@ public class LineageOsWeatherReceiver extends BroadcastReceiver implements Linea
     @Override
     public void onWeatherRequestCompleted(int status, WeatherInfo weatherInfo) {
         if (weatherInfo != null) {
-            LOG.info("weather: " + weatherInfo.toString());
+            LOG.info("weather: {}", weatherInfo);
             WeatherSpec weatherSpec = new WeatherSpec();
             weatherSpec.setTimestamp((int) (weatherInfo.getTimestamp() / 1000));
             weatherSpec.setLocation(weatherInfo.getCity());

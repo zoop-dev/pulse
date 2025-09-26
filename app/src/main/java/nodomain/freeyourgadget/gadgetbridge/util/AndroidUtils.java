@@ -40,6 +40,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -135,9 +136,9 @@ public class AndroidUtils {
             color = ta.getColor(0, 0);
             ta.recycle();
         } else if (GBApplication.isDarkThemeEnabled()) {
-            color = context.getResources().getColor(R.color.primarytext_dark);
+            color = ContextCompat.getColor(context, R.color.primarytext_dark);
         } else {
-            color = context.getResources().getColor(R.color.primarytext_light);
+            color = ContextCompat.getColor(context, R.color.primarytext_light);
         }
         return colorToHex(color);
     }
@@ -161,9 +162,9 @@ public class AndroidUtils {
             color = ta.getColor(0, 0);
             ta.recycle();
         } else if (GBApplication.isDarkThemeEnabled()) {
-            color = context.getResources().getColor(androidx.cardview.R.color.cardview_dark_background);
+            color = ContextCompat.getColor(context, androidx.cardview.R.color.cardview_dark_background);
         } else {
-            color = context.getResources().getColor(androidx.cardview.R.color.cardview_light_background);
+            color = ContextCompat.getColor(context, androidx.cardview.R.color.cardview_light_background);
         }
         return colorToHex(color);
     }
@@ -171,9 +172,9 @@ public class AndroidUtils {
     public static int getBackgroundColor(Context context) {
         int color;
         if (GBApplication.isDarkThemeEnabled()) {
-            color = context.getResources().getColor(androidx.cardview.R.color.cardview_dark_background);
+            color = ContextCompat.getColor(context, androidx.cardview.R.color.cardview_dark_background);
         } else {
-            color = context.getResources().getColor(androidx.cardview.R.color.cardview_light_background);
+            color = ContextCompat.getColor(context, androidx.cardview.R.color.cardview_light_background);
         }
         return color;
     }
