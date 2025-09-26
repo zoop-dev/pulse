@@ -317,6 +317,26 @@ public enum ActivityKind {
     APNEA_TRAINING(0x04000112, R.string.activity_type_apnea_training),
     APNEA_TEST(0x04000113, R.string.activity_type_apnea_test),
     SCUBA_DIVING(0x04000114, R.string.activity_type_scuba_diving, R.drawable.ic_activity_diving),
+    ADVENTURE_RACE(0x04000115, R.string.activity_type_adventure_race, R.drawable.ic_travel_explore),
+    ANCHOR(0x04000116, R.string.activity_type_anchor, R.drawable.ic_anchor),
+    BACKCOUNTRY_SKIING(0x04000117, R.string.activity_type_backcountry_skiing, R.drawable.ic_activity_skiing),
+    BACKCOUNTRY_SNOWBOARDING(0x04000118, R.string.activity_type_backcountry_snowboarding, R.drawable.ic_activity_snowboarding),
+    BIKE_TOUR(0x04000119, R.string.activity_type_bike_tour, R.drawable.ic_directions_bike),
+    CYCLO_CROSS(0x04000120, R.string.activity_type_cyclo_cross, R.drawable.ic_directions_bike),
+    EXPEDITION(0x04000121, R.string.activity_type_expedition, R.drawable.ic_explore),
+    E_MOUNTAIN_BIKE(0x04000122, R.string.activity_type_e_mountain_bike, R.drawable.ic_electric_bike),
+    GRAVEL_BIKE(0x04000123, R.string.activity_type_gravel_bike, R.drawable.ic_directions_bike),
+    MAP(0x04000124, R.string.menuitem_map, R.drawable.ic_map),
+    MOTOCROSS(0x04000125, R.string.activity_type_motocross, R.drawable.ic_activity_motorcycling),
+    MOUNTAIN_BIKE(0x04000126, R.string.activity_type_mountain_bike, R.drawable.ic_directions_bike),
+    OVERLANDING(0x04000127, R.string.activity_type_overlanding, R.drawable.ic_unpaved_road), // aka 4WD Touring
+    ROAD_BIKE(0x04000128, R.string.activity_type_road_bike, R.drawable.ic_activity_bike_lane),
+    TRACK_ME(0x04000129, R.string.activity_type_track_me, R.drawable.ic_familiar_face_and_zone),
+    TRACK_RUN(0x04000130, R.string.activity_type_track_run, R.drawable.ic_laps),
+    TROLLING_MOTOR(0x04000131, R.string.activity_type_trolling_motor, R.drawable.ic_mode_fan),
+    ULTRA_RUN(0x04000132, R.string.activity_type_ultra_run, R.drawable.ic_activity_trail_run),
+    VIRTUAL_RUN(0x04000133, R.string.activity_type_virtual_run, R.drawable.ic_activity_indoor_running),
+    XC_SKATE_SKI(0x04000134, R.string.activity_type_xc_skate_ski, R.drawable.ic_activity_skiing),
     ;
 
     private final int code;
