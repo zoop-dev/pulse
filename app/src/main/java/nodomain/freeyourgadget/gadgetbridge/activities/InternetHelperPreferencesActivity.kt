@@ -56,6 +56,7 @@ class InternetHelperPreferencesActivity : AbstractGBActivity() {
         retrieveList()
 
         val recyclerView = findViewById<RecyclerView>(R.id.internet_helper_url_list)
+        recyclerView.isNestedScrollingEnabled = false
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = UrlListAdapter(urlItems) { entry, action ->
             when (action) {

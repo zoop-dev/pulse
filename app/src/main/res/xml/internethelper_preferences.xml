@@ -2,10 +2,6 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <Preference
-        android:key="pref_key_internethelper_info"
-        android:summary="Use the list below to configure which (parts of) URLs are allowed or denied to be forwarded to the internethelper add-on app. The validation is using a simple text comparison, so a part of a URL can be entered too."
-        app:iconSpaceReserved="false" />
     <PreferenceCategory
         android:title="@string/pref_header_general"
         app:iconSpaceReserved="false">
@@ -29,5 +25,9 @@
         android:key="pref_key_internethelper_url_list"
         android:title="Known URLs"
         app:iconSpaceReserved="false">
+        <Preference
+            android:key="pref_key_internethelper_info"
+            android:summary="Use the list below to configure which (parts of) URLs are allowed or denied to be forwarded to the internethelper add-on app. The validation is using a simple text comparison, so a part of a URL can be entered too."
+            app:iconSpaceReserved="false" />
     </PreferenceCategory>
 </PreferenceScreen>

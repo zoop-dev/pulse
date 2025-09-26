@@ -1,20 +1,28 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root_layout"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:fillViewport="true">
 
-    <!-- Preference screen -->
-    <FrameLayout
-        android:id="@+id/settings_container"
+    <LinearLayout
+        android:id="@+id/root_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <!-- Dynamic URL List -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/internet_helper_url_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingTop="8dp"/>
-</LinearLayout>
+        <!-- Preference screen -->
+        <FrameLayout
+            android:id="@+id/settings_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Dynamic URL List -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/internet_helper_url_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingTop="8dp"/>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
