@@ -99,14 +99,20 @@ public class FitRecordDataFactory {
             case 160 -> new FitGpsMetadata(recordDefinition, recordHeader);
             case 161 -> new FitCameraEvent(recordDefinition, recordHeader);
             case 162 -> new FitTimestampCorrelation(recordDefinition, recordHeader);
+            case 164 -> new FitGyroscopeData(recordDefinition, recordHeader);
+            case 165 -> new FitAccelerometerData(recordDefinition, recordHeader);
             case 169 -> new FitVideoFrame(recordDefinition, recordHeader);
             case 174 -> new FitObdiiData(recordDefinition, recordHeader);
             case 177 -> new FitNmeaSentence(recordDefinition, recordHeader);
+            case 178 -> new FitAviationAttitude(recordDefinition, recordHeader);
             case 184 -> new FitVideo(recordDefinition, recordHeader);
             case 185 -> new FitVideoTitle(recordDefinition, recordHeader);
             case 186 -> new FitVideoDescription(recordDefinition, recordHeader);
             case 187 -> new FitVideoClip(recordDefinition, recordHeader);
             case 188 -> new FitOhrSettings(recordDefinition, recordHeader);
+            case 200 -> new FitExdScreenConfiguration(recordDefinition, recordHeader);
+            case 201 -> new FitExdDataFieldConfiguration(recordDefinition, recordHeader);
+            case 202 -> new FitExdDataConceptConfiguration(recordDefinition, recordHeader);
             case 206 -> new FitFieldDescription(recordDefinition, recordHeader);
             case 207 -> new FitDeveloperData(recordDefinition, recordHeader);
             case 209 -> new FitBarometerData(recordDefinition, recordHeader);
@@ -147,6 +153,7 @@ public class FitRecordDataFactory {
             case 346 -> new FitSleepStats(recordDefinition, recordHeader);
             case 370 -> new FitHrvSummary(recordDefinition, recordHeader);
             case 371 -> new FitHrvValue(recordDefinition, recordHeader);
+            case 372 -> new FitRawBbi(recordDefinition, recordHeader);
             case 375 -> new FitDeviceAuxBatteryInfo(recordDefinition, recordHeader);
             case 378 -> new FitTrainingLoad(recordDefinition, recordHeader);
             case 379 -> new FitSleepSchedule(recordDefinition, recordHeader);

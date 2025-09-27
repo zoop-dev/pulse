@@ -118,8 +118,19 @@ public class FitMonitoring extends RecordData {
     }
 
     @Nullable
-    public Integer getActivityTime() {
-        return (Integer) getFieldByNumber(16);
+    public Number[] getActivityTime() {
+        final Object object = getFieldByNumber(16);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            return new Number[]{(Number) object};
+        }
+        final Object[] objectsArray = (Object[]) object;
+        final Number[] ret = new Number[objectsArray.length];
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = (Number) objectsArray[i];
+        }
+        return ret;
     }
 
     @Nullable
@@ -270,8 +281,8 @@ public class FitMonitoring extends RecordData {
             return this;
         }
 
-        public Builder setActivityTime(final Integer value) {
-            setFieldByNumber(16, value);
+        public Builder setActivityTime(final Number[] value) {
+            setFieldByNumber(16, (Object[]) value);
             return this;
         }
 
