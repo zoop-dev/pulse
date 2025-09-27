@@ -3876,4 +3876,6 @@
     <string name="activity_type_ultra_run">Ультра-біг</string>
     <string name="activity_type_virtual_run">Віртуальний забіг</string>
     <string name="activity_type_xc_skate_ski">Лижі для скейтбордингу</string>
+    <string name="connection_force_legacy_gatt_title">Примусове стягнення застарілої ГАТТ</string>
+    <string name="connection_force_legacy_gatt_summary">Запобігає проблемам у старих версіях Android, але може спричиняти умови змагання</string>
 </resources>
