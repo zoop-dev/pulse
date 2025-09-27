@@ -222,7 +222,7 @@ function gbPebble() {
     }
 
     this.getAccountToken = function() {
-        return '';
+        return GBjs.getAccountToken();
     }
 
     this.getWatchToken = function() {

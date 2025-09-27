@@ -40,6 +40,7 @@ import java.util.UUID;
 import androidx.annotation.NonNull;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.PebbleUtils;
@@ -209,6 +210,14 @@ public class JSInterface {
             LOG.warn("Error definining local storage prefix", e);
             return prefix;
         }
+    }
+
+    @JavascriptInterface
+    public String getAccountToken() {
+        //specification says: A unique account token that is associated with the Pebble account of the current user.
+        //we don't have an account, so we use the device's mac address instead
+        //this allows purchasing / using purchased watchfaces using kiezelpay
+        return GB.hexdump(CheckSums.md5(this.device.getAddress().getBytes()));
     }
 
     @JavascriptInterface
