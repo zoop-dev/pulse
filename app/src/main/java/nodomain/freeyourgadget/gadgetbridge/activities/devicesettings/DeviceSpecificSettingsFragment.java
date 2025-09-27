@@ -1588,6 +1588,12 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
                         DeviceSpecificSettingsScreen.DEVELOPER,
                         R.xml.devicesettings_gatt_synchronous_writes
                 );
+                if (GBApplication.isRunningOreoOrLater()) {
+                    deviceSpecificSettings.addRootScreen(
+                            DeviceSpecificSettingsScreen.DEVELOPER,
+                            R.xml.devicesettings_connection_force_legacy_gatt
+                    );
+                }
             }
             if(BuildConfig.DEBUG) {
                 deviceSpecificSettings.addRootScreen(

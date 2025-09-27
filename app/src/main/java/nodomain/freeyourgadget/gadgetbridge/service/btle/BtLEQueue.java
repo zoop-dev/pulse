@@ -93,6 +93,7 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
     private final boolean mImplicitGattCallbackModify;
     private final boolean mSendWriteRequestResponse;
 
+    private final boolean connectionForceLegacyGatt;
     private final Thread mDispatchThread;
     private final HandlerThread mReceiverThread;
     private final Handler mReceiverHandler;
@@ -224,6 +225,8 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
         mPauseTransaction = false;
         mSendWriteRequestResponse = deviceSupport.getSendWriteRequestResponse();
         mSupportedServerServices = supportedServerServices;
+        // #5414 - some older android versions misbehave with the new constructor
+        connectionForceLegacyGatt = deviceSupport.getDevicePrefs().getConnectionForceLegacyGatt();
 
         long threadIdx = THREAD_COUNTER.getAndIncrement();
 
@@ -240,7 +243,7 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
         mDispatchThread.start();
 
         // 4) handler thread ensure serial processing and informative thread name in the log
-        if(GBApplication.isRunningOreoOrLater()){
+        if(GBApplication.isRunningOreoOrLater() && !connectionForceLegacyGatt){
             mReceiverThread = new HandlerThread("BtLEQueue_" + threadIdx + "_in");
             mReceiverThread.setUncaughtExceptionHandler(this);
             mReceiverThread.start();
@@ -335,7 +338,7 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
 
 
         // connectGatt with true doesn't really work ;( too often connection problems
-        if (GBApplication.isRunningOreoOrLater()){
+        if (GBApplication.isRunningOreoOrLater() && !connectionForceLegacyGatt) {
             mBluetoothGatt = remoteDevice.connectGatt(mContext, false,
                     internalGattCallback, BluetoothDevice.TRANSPORT_LE,
                     BluetoothDevice.PHY_LE_CODED_MASK, mReceiverHandler);

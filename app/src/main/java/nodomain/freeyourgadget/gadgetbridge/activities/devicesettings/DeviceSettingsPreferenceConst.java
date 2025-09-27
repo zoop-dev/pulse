@@ -663,6 +663,7 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_DISPLAY_ON_START = "display_on_start";
     public static final String PREF_DISPLAY_ON_END = "display_on_end";
     public static final String PREF_CONNECTION_PRIORITY_LOW_POWER = "connection_priority_low_power";
+    public static final String PREF_CONNECTION_FORCE_LEGACY_GATT = "connection_force_legacy_gatt";
     public static final String PREF_EVEN_REALITIES_SCREEN_HEIGHT = "pref_even_realities_g1_screen_height";
     public static final String PREF_EVEN_REALITIES_SCREEN_DEPTH = "pref_even_realities_g1_screen_depth";
     public static final String PREF_EVEN_REALITIES_SCREEN_ACTIVATION_ANGLE = "pref_even_realities_g1_screen_activation_angle";

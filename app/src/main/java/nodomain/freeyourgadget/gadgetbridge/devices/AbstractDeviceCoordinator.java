@@ -26,7 +26,9 @@ import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.ScanFilter;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
@@ -55,6 +57,7 @@ import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.HeartRateCapability;
@@ -98,6 +101,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
+import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractDeviceCoordinator.class);
@@ -157,6 +161,17 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     public GBDevice createDevice(GBDeviceCandidate candidate, DeviceType deviceType) {
         GBDevice gbDevice = new GBDevice(candidate.getDevice().getAddress(), candidate.getName(), null, null, deviceType);
         setBatteryConfigOnDevice(gbDevice);
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            final DevicePrefs devicePreferences = GBApplication.getDevicePrefs(gbDevice);
+            final SharedPreferences.Editor editor = devicePreferences.getPreferences().edit();
+
+            // #5414 - Some old Android versions misbehave
+            editor.putBoolean(DeviceSettingsPreferenceConst.PREF_CONNECTION_FORCE_LEGACY_GATT, true);
+
+            editor.apply();
+        }
+
         return gbDevice;
     }
 

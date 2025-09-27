@@ -23,6 +23,7 @@ import java.util.Locale;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.*;
 
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.text.format.DateFormat;
 
 import androidx.annotation.NonNull;
@@ -125,6 +126,10 @@ public class DevicePrefs extends Prefs {
 
     public boolean getConnectionPriorityLowPower() {
         return getBoolean(PREF_CONNECTION_PRIORITY_LOW_POWER, false);
+    }
+
+    public boolean getConnectionForceLegacyGatt() {
+        return getBoolean(PREF_CONNECTION_FORCE_LEGACY_GATT, Build.VERSION.SDK_INT < Build.VERSION_CODES.Q);
     }
 
     public DeviceCoordinator.ConnectionType getForcedConnectionTypeFromPrefs() {

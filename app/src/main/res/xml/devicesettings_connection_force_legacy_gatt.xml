@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_bluetooth"
+        android:key="connection_force_legacy_gatt"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/connection_force_legacy_gatt_summary"
+        android:title="@string/connection_force_legacy_gatt_title" />
+</PreferenceScreen>

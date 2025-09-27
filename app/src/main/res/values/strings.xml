@@ -482,6 +482,8 @@
     <string name="pref_summary_notifications_and_calls_title_shake_reject">Duplicates watch button action</string>
     <string name="connection_priority_low_power_title">Request low power</string>
     <string name="connection_priority_low_power_summary">Reduce Bluetooth priority and data rate connection parameters.</string>
+    <string name="connection_force_legacy_gatt_title">Force legacy GATT</string>
+    <string name="connection_force_legacy_gatt_summary">Prevent issues on old Android versions, but might introduce race conditions</string>
     <!-- Device Settings - Device Settings - Used in devicesettings_watchxplus.xml -->
     <string name="pref_header_device_spec_settings">Device settings</string>
     <string name="pref_title_device_spec_settings_force_time">Force synchronize time</string>
