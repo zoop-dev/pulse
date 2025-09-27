@@ -4034,4 +4034,9 @@
     <string name="workout_lap">Okrążenie</string>
     <string name="lap_time">Czas</string>
     <string name="hr_measurement_continuous">Ciągły</string>
+    <string name="map_theme_biker">Rowerzysta</string>
+    <string name="map_theme_indigo">Indigo</string>
+    <string name="stroke_rate">Częstotliwość pociągnięć</string>
+    <string name="jump_rope_longest_streak">Najdłuższa seria</string>
+    <string name="jump_rope_interruptions">Przerwy</string>
 </resources>
