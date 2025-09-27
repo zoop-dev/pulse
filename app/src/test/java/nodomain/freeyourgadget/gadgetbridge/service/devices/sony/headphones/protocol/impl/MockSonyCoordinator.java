@@ -26,11 +26,8 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.SonyHeadphon
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.SonyHeadphonesCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 
 public class MockSonyCoordinator extends SonyHeadphonesCoordinator {
-    private final DeviceType deviceType = DeviceType.SONY_WH_1000XM3;
-
     private final Set<SonyHeadphonesCapabilities> capabilities = new LinkedHashSet<>();
 
     @Override
@@ -41,6 +38,11 @@ public class MockSonyCoordinator extends SonyHeadphonesCoordinator {
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_sony_wh_1000xm5;
+    }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.HEADPHONES;
     }
 
     public void addCapability(final SonyHeadphonesCapabilities capability) {
