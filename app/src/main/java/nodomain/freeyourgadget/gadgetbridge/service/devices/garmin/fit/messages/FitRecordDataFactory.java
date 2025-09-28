@@ -101,6 +101,7 @@ public class FitRecordDataFactory {
             case 162 -> new FitTimestampCorrelation(recordDefinition, recordHeader);
             case 164 -> new FitGyroscopeData(recordDefinition, recordHeader);
             case 165 -> new FitAccelerometerData(recordDefinition, recordHeader);
+            case 167 -> new FitThreeDSensorCalibration(recordDefinition, recordHeader);
             case 169 -> new FitVideoFrame(recordDefinition, recordHeader);
             case 174 -> new FitObdiiData(recordDefinition, recordHeader);
             case 177 -> new FitNmeaSentence(recordDefinition, recordHeader);
@@ -115,7 +116,9 @@ public class FitRecordDataFactory {
             case 202 -> new FitExdDataConceptConfiguration(recordDefinition, recordHeader);
             case 206 -> new FitFieldDescription(recordDefinition, recordHeader);
             case 207 -> new FitDeveloperData(recordDefinition, recordHeader);
+            case 208 -> new FitMagnetometerData(recordDefinition, recordHeader);
             case 209 -> new FitBarometerData(recordDefinition, recordHeader);
+            case 210 -> new FitOneDSensorCalibration(recordDefinition, recordHeader);
             case 211 -> new FitMonitoringHrData(recordDefinition, recordHeader);
             case 216 -> new FitTimeInZone(recordDefinition, recordHeader);
             case 222 -> new FitAlarmSettings(recordDefinition, recordHeader);
@@ -132,8 +135,10 @@ public class FitRecordDataFactory {
             case 274 -> new FitSleepDataRaw(recordDefinition, recordHeader);
             case 275 -> new FitSleepStage(recordDefinition, recordHeader);
             case 285 -> new FitJump(recordDefinition, recordHeader);
+            case 289 -> new FitAadAccelFeatures(recordDefinition, recordHeader);
             case 290 -> new FitBeatIntervals(recordDefinition, recordHeader);
             case 297 -> new FitRespirationRate(recordDefinition, recordHeader);
+            case 302 -> new FitHsaAccelerometerData(recordDefinition, recordHeader);
             case 304 -> new FitHsaStepData(recordDefinition, recordHeader);
             case 305 -> new FitHsaSpo2Data(recordDefinition, recordHeader);
             case 306 -> new FitHsaStressData(recordDefinition, recordHeader);
@@ -155,6 +160,7 @@ public class FitRecordDataFactory {
             case 371 -> new FitHrvValue(recordDefinition, recordHeader);
             case 372 -> new FitRawBbi(recordDefinition, recordHeader);
             case 375 -> new FitDeviceAuxBatteryInfo(recordDefinition, recordHeader);
+            case 376 -> new FitHsaGyroscopeData(recordDefinition, recordHeader);
             case 378 -> new FitTrainingLoad(recordDefinition, recordHeader);
             case 379 -> new FitSleepSchedule(recordDefinition, recordHeader);
             case 387 -> new FitChronoShotSession(recordDefinition, recordHeader);

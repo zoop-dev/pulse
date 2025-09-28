@@ -1290,6 +1290,16 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
+    public static GlobalFITMessage THREE_D_SENSOR_CALIBRATION = new GlobalFITMessage(167, "THREE_D_SENSOR_CALIBRATION", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.ENUM, "sensor_type"),
+            new FieldDefinitionPrimitive(1, BaseType.UINT32, "calibration_factor"),
+            new FieldDefinitionPrimitive(2, BaseType.UINT32, "calibration_divisor"),
+            new FieldDefinitionPrimitive(3, BaseType.UINT32, "level_shift"),
+            new FieldDefinitionPrimitive(4, BaseType.SINT32, 3, "offset_cal", FieldDefinitionFactory.FIELD.ARRAY, 1, 0),
+            new FieldDefinitionPrimitive(5, BaseType.SINT32, 9, "orientation_matrix", FieldDefinitionFactory.FIELD.ARRAY, 65535, 0),
+            new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
+    ));
+
     public static GlobalFITMessage VIDEO_FRAME = new GlobalFITMessage(169, "VIDEO_FRAME", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "timestamp_ms"), // ms
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "frame_number"),
@@ -1417,10 +1427,31 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(4, BaseType.UINT32, "application_version")
     ));
 
+    public static GlobalFITMessage MAGNETOMETER_DATA = new GlobalFITMessage(208, "MAGNETOMETER_DATA", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.UINT16, "timestamp_ms"), // ms
+            new FieldDefinitionPrimitive(1, BaseType.UINT16, "sample_time_offset", FieldDefinitionFactory.FIELD.ARRAY),
+            new FieldDefinitionPrimitive(2, BaseType.UINT16, "mag_x", FieldDefinitionFactory.FIELD.ARRAY),
+            new FieldDefinitionPrimitive(3, BaseType.UINT16, "mag_y", FieldDefinitionFactory.FIELD.ARRAY),
+            new FieldDefinitionPrimitive(4, BaseType.UINT16, "mag_z", FieldDefinitionFactory.FIELD.ARRAY),
+            new FieldDefinitionPrimitive(5, BaseType.FLOAT32, "calibrated_mag_x", FieldDefinitionFactory.FIELD.ARRAY),
+            new FieldDefinitionPrimitive(6, BaseType.FLOAT32, "calibrated_mag_y", FieldDefinitionFactory.FIELD.ARRAY),
+            new FieldDefinitionPrimitive(7, BaseType.FLOAT32, "calibrated_mag_z", FieldDefinitionFactory.FIELD.ARRAY),
+            new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
+    ));
+
     public static GlobalFITMessage BAROMETER_DATA = new GlobalFITMessage(209, "BAROMETER_DATA", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "timestamp_ms"), // ms
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "sample_time_offset", FieldDefinitionFactory.FIELD.ARRAY), // ms
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "baro_pres", FieldDefinitionFactory.FIELD.ARRAY), // Pa
+            new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
+    ));
+
+    public static GlobalFITMessage ONE_D_SENSOR_CALIBRATION = new GlobalFITMessage(210, "ONE_D_SENSOR_CALIBRATION", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.ENUM, "sensor_type"),
+            new FieldDefinitionPrimitive(1, BaseType.UINT32, "calibration_factor"),
+            new FieldDefinitionPrimitive(2, BaseType.UINT32, "calibration_divisor"),
+            new FieldDefinitionPrimitive(3, BaseType.UINT32, "level_shift"),
+            new FieldDefinitionPrimitive(4, BaseType.SINT32, "offset_cal"),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
@@ -1624,6 +1655,15 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
+    public static GlobalFITMessage AAD_ACCEL_FEATURES = new GlobalFITMessage(289, "AAD_ACCEL_FEATURES", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.UINT16, "time"), // s
+            new FieldDefinitionPrimitive(1, BaseType.UINT32, "energy_total"),
+            new FieldDefinitionPrimitive(2, BaseType.UINT16, "zero_cross_cnt"),
+            new FieldDefinitionPrimitive(3, BaseType.UINT8, "instance"),
+            new FieldDefinitionPrimitive(4, BaseType.UINT16, "time_above_threshold"), // s
+            new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
+    ));
+
     public static GlobalFITMessage BEAT_INTERVALS = new GlobalFITMessage(290, "BEAT_INTERVALS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "timestamp_ms"), // ms
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "time", FieldDefinitionFactory.FIELD.ARRAY), // ms
@@ -1632,6 +1672,16 @@ public class GlobalFITMessage {
 
     public static GlobalFITMessage RESPIRATION_RATE = new GlobalFITMessage(297, "RESPIRATION_RATE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.SINT16, "respiration_rate", 100, 0), // breaths / min
+            new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
+    ));
+
+    public static GlobalFITMessage HSA_ACCELEROMETER_DATA = new GlobalFITMessage(302, "HSA_ACCELEROMETER_DATA", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.UINT16, "timestamp_ms"), // ms
+            new FieldDefinitionPrimitive(1, BaseType.UINT16, "sampling_interval"),
+            new FieldDefinitionPrimitive(2, BaseType.SINT16, "accel_x", FieldDefinitionFactory.FIELD.ARRAY),
+            new FieldDefinitionPrimitive(3, BaseType.SINT16, "accel_y", FieldDefinitionFactory.FIELD.ARRAY),
+            new FieldDefinitionPrimitive(4, BaseType.SINT16, "accel_z", FieldDefinitionFactory.FIELD.ARRAY),
+            new FieldDefinitionPrimitive(5, BaseType.UINT32, "timestamp_32k"),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
@@ -1825,6 +1875,16 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
+    public static GlobalFITMessage HSA_GYROSCOPE_DATA = new GlobalFITMessage(376, "HSA_GYROSCOPE_DATA", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.UINT16, "timestamp_ms"), // ms
+            new FieldDefinitionPrimitive(1, BaseType.UINT16, "sampling_interval"),
+            new FieldDefinitionPrimitive(2, BaseType.SINT16, "gyro_x", FieldDefinitionFactory.FIELD.ARRAY),
+            new FieldDefinitionPrimitive(3, BaseType.SINT16, "gyro_y", FieldDefinitionFactory.FIELD.ARRAY),
+            new FieldDefinitionPrimitive(4, BaseType.SINT16, "gyro_z", FieldDefinitionFactory.FIELD.ARRAY),
+            new FieldDefinitionPrimitive(5, BaseType.UINT32, "timestamp_32k"),
+            new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
+    ));
+
     public static GlobalFITMessage SKIN_TEMP_RAW = new GlobalFITMessage(397, "SKIN_TEMP_RAW", Arrays.asList(
             new FieldDefinitionPrimitive(1, BaseType.FLOAT32, "deviation"),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
@@ -1985,6 +2045,7 @@ public class GlobalFITMessage {
         put(162, TIMESTAMP_CORRELATION);
         put(164, GYROSCOPE_DATA);
         put(165, ACCELEROMETER_DATA);
+        put(167, THREE_D_SENSOR_CALIBRATION);
         put(169, VIDEO_FRAME);
         put(174, OBDII_DATA);
         put(177, NMEA_SENTENCE);
@@ -1999,7 +2060,9 @@ public class GlobalFITMessage {
         put(202, EXD_DATA_CONCEPT_CONFIGURATION);
         put(206, FIELD_DESCRIPTION);
         put(207, DEVELOPER_DATA);
+        put(208, MAGNETOMETER_DATA);
         put(209, BAROMETER_DATA);
+        put(210, ONE_D_SENSOR_CALIBRATION);
         put(211, MONITORING_HR_DATA);
         put(216, TIME_IN_ZONE);
         put(222, ALARM_SETTINGS);
@@ -2016,8 +2079,10 @@ public class GlobalFITMessage {
         put(268, DIVE_SUMMARY);
         put(275, SLEEP_STAGE);
         put(285, JUMP);
+        put(289, AAD_ACCEL_FEATURES);
         put(290, BEAT_INTERVALS);
         put(297, RESPIRATION_RATE);
+        put(302, HSA_ACCELEROMETER_DATA);
         put(304, HSA_STEP_DATA);
         put(305, HSA_SPO2_DATA);
         put(306, HSA_STRESS_DATA);
@@ -2039,6 +2104,7 @@ public class GlobalFITMessage {
         put(371, HRV_VALUE);
         put(372, RAW_BBI);
         put(375, DEVICE_AUX_BATTERY_INFO);
+        put(376, HSA_GYROSCOPE_DATA);
         put(378, TRAINING_LOAD);
         put(379, SLEEP_SCHEDULE);
         put(387, CHRONO_SHOT_SESSION);
