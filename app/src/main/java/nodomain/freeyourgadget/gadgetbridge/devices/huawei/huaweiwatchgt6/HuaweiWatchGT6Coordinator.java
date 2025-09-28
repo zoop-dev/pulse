@@ -26,16 +26,11 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 
+/// #5428
 public class HuaweiWatchGT6Coordinator extends HuaweiBRCoordinator {
     @Override
-    public boolean isExperimental() {
-        // #5428 - untested
-        return true;
-    }
-
-    @Override
     public DeviceType getDeviceType() {
-        return DeviceType.HUAWEIWATCHGT5;
+        return DeviceType.HUAWEIWATCHGT6;
     }
 
     @Override
@@ -45,7 +40,7 @@ public class HuaweiWatchGT6Coordinator extends HuaweiBRCoordinator {
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_huawei_watchgt5;
+        return R.string.devicetype_huawei_watchgt6;
     }
 
     @Override
