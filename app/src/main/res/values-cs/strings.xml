@@ -4018,4 +4018,25 @@
     <string name="stroke_rate">Frekvence úderů</string>
     <string name="jump_rope_longest_streak">Nejdelší série</string>
     <string name="jump_rope_interruptions">Přerušení</string>
+    <string name="connection_force_legacy_gatt_title">Vynutit zastaralé GATT</string>
+    <string name="connection_force_legacy_gatt_summary">Zabrání problémům na starších verzích systému Android, může ale způsobit podmínky závodu</string>
+    <string name="activity_type_adventure_race">Dobrodružný závod</string>
+    <string name="activity_type_anchor">Kotva</string>
+    <string name="activity_type_backcountry_skiing">Lyžování v terénu</string>
+    <string name="activity_type_backcountry_snowboarding">Snowboarding v terénu</string>
+    <string name="activity_type_bike_tour">Cyklistická túra</string>
+    <string name="activity_type_cyclo_cross">Cyklokros</string>
+    <string name="activity_type_e_mountain_bike">eMTB</string>
+    <string name="activity_type_expedition">Výprava</string>
+    <string name="activity_type_gravel_bike">Gravel kolo</string>
+    <string name="activity_type_motocross">Motokros</string>
+    <string name="activity_type_mountain_bike">Horská cyklistika</string>
+    <string name="activity_type_overlanding">Overlanding</string>
+    <string name="activity_type_road_bike">Silniční kolo</string>
+    <string name="activity_type_track_me">Track Me</string>
+    <string name="activity_type_track_run">Track Run</string>
+    <string name="activity_type_trolling_motor">Trollingový motor</string>
+    <string name="activity_type_ultra_run">Ultramaraton</string>
+    <string name="activity_type_virtual_run">Virtuální maraton</string>
+    <string name="activity_type_xc_skate_ski">Běh na lyžích</string>
 </resources>
