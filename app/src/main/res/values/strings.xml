@@ -2071,6 +2071,7 @@
     <string name="devicetype_huawei_watchgt3" translatable="false">Huawei Watch GT 3 (Pro)</string>
     <string name="devicetype_huawei_watchgt4" translatable="false">Huawei Watch GT 4</string>
     <string name="devicetype_huawei_watchgt5" translatable="false">Huawei Watch GT 5 (Pro)</string>
+    <string name="devicetype_huawei_watchgt6" translatable="false">Huawei Watch GT 6 (Pro)</string>
     <string name="devicetype_huawei_watchgtrunner" translatable="false">Huawei Watch GT Runner</string>
     <string name="devicetype_huawei_watchgtcyber" translatable="false">Huawei Watch GT Cyber</string>
     <string name="devicetype_huawei_watchfit" translatable="false">Huawei Watch Fit</string>
