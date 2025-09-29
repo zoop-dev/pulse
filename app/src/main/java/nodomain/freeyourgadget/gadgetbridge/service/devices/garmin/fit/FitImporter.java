@@ -1,3 +1,19 @@
+/*  Copyright (C) 2024 José Rebelo, CaptKentish, Daniele Gobbetti, Thomas Kuehne
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit;
 
 import android.content.Context;
@@ -42,6 +58,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminStressSamplePro
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminWorkoutParser;
 import nodomain.freeyourgadget.gadgetbridge.entities.AbstractTimeSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
+import nodomain.freeyourgadget.gadgetbridge.entities.BatteryLevel;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminActivitySample;
@@ -70,6 +87,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.FileType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionHrvStatus;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionSleepStage;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitDeviceStatus;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitFileId;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitHrvSummary;
@@ -119,6 +137,7 @@ public class FitImporter {
     private final Map<Integer, Integer> unknownRecords = new HashMap<>();
     private FitSleepDataInfo fitSleepDataInfo = null;
     private final List<FitSleepDataRaw> fitSleepDataRawSamples = new ArrayList<>();
+    private final List<BatteryLevel> batterySamples = new ArrayList<>();
     private FitFileId fileId = null;
 
     private final GarminWorkoutParser workoutParser;
@@ -351,6 +370,15 @@ public class FitImporter {
                 sample.setTimestamp(ts * 1000L);
                 sample.setHeartRate(monitoringHrData.getRestingHeartRate());
                 restingHrSamples.add(sample);
+            } else if (record instanceof FitDeviceStatus deviceStatus) {
+                Integer level = deviceStatus.getBatteryLevel();
+                if (ts != null && level != null){
+                    BatteryLevel batteryLevel = new BatteryLevel();
+                    batteryLevel.setTimestamp(ts.intValue());
+                    batteryLevel.setBatteryIndex(0);
+                    batteryLevel.setLevel(level);
+                    batterySamples.add(batteryLevel);
+                }
             } else {
                 LOG.trace("Unknown record: {}", record);
 
@@ -443,12 +471,30 @@ public class FitImporter {
                     LOG.warn("Unable to handle fit file of type {}", fileId.getType());
             }
         } catch (final Exception e) {
-            GB.toast(context, "Error saving samples", Toast.LENGTH_LONG, GB.ERROR, e);
+            GB.toast(context, "Error saving specific samples", Toast.LENGTH_LONG, GB.ERROR, e);
+        }
+
+        // these samples can occur in multiple FIT file types
+        try (DBHandler handler = GBApplication.acquireDB()) {
+            final DaoSession session = handler.getDaoSession();
+            final long deviceId = DBHelper.getDevice(gbDevice, session).getId();
+            persistBattery(session, deviceId);
+        } catch (final Exception e) {
+            GB.toast(context, "Error saving generic samples", Toast.LENGTH_LONG, GB.ERROR, e);
         }
 
         for (final Map.Entry<Integer, Integer> e : unknownRecords.entrySet()) {
             final String globalNumber = FitDebug.mesgNumLookup(e.getKey());
             LOG.warn("Unknown record of global number {} seen {} times", globalNumber, e.getValue());
+        }
+    }
+
+    private void persistBattery(final DaoSession session, final long deviceId) {
+        if (!batterySamples.isEmpty()) {
+            for (BatteryLevel batteryLevel : batterySamples) {
+                batteryLevel.setDeviceId(deviceId);
+            }
+            session.getBatteryLevelDao().insertOrReplaceInTx(batterySamples);
         }
     }
 
@@ -505,6 +551,7 @@ public class FitImporter {
         unknownRecords.clear();
         fitSleepDataInfo = null;
         fitSleepDataRawSamples.clear();
+        batterySamples.clear();
         fileId = null;
         workoutParser.reset();
     }
