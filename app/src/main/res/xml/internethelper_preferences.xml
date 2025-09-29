@@ -2,6 +2,11 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <Preference
+        android:icon="@drawable/ic_warning"
+        android:key="pref_key_internethelper_not_installed"
+        android:title="Add-on app required"
+        android:summary="This feature requires the installation of an add-on app. Tap here to go to the download page." />
     <PreferenceCategory
         android:title="@string/pref_header_general"
         app:iconSpaceReserved="false">

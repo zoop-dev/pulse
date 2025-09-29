@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -24,6 +25,8 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.net.toUri
+import androidx.preference.Preference
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -32,6 +35,8 @@ import com.google.android.material.textfield.TextInputLayout
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper
 import nodomain.freeyourgadget.gadgetbridge.entities.URLFilterEntry
+import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils
+import nodomain.freeyourgadget.gadgetbridge.util.PermissionsUtils.PACKAGE_INTERNET_HELPER
 
 class InternetHelperPreferencesActivity : AbstractGBActivity() {
     val urlItems = ArrayList<UrlListAdapter.UrlEntry>()
@@ -110,6 +115,17 @@ class InternetHelperPreferencesActivity : AbstractGBActivity() {
             rootKey: String?
         ) {
             setPreferencesFromResource(R.xml.internethelper_preferences, rootKey)
+            val installWarning = findPreference<Preference>("pref_key_internethelper_not_installed")
+            if (AndroidUtils.isPackageInstalled(PACKAGE_INTERNET_HELPER)) {
+                installWarning?.isVisible = false
+            } else {
+                installWarning?.setOnPreferenceClickListener {
+                    val startIntent = Intent(Intent.ACTION_VIEW)
+                    startIntent.data = "https://codeberg.org/Freeyourgadget/Internethelper/releases".toUri()
+                    startActivity(startIntent)
+                    true
+                }
+            }
         }
     }
 
