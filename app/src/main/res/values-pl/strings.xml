@@ -4048,4 +4048,16 @@
     <string name="activity_type_bike_tour">Wycieczka rowerowa</string>
     <string name="activity_type_cyclo_cross">Przełaj</string>
     <string name="activity_type_e_mountain_bike">eMTB</string>
+    <string name="activity_type_expedition">Wyprawa</string>
+    <string name="activity_type_gravel_bike">Rower szutrowy</string>
+    <string name="activity_type_motocross">Motocross</string>
+    <string name="activity_type_mountain_bike">MTB</string>
+    <string name="activity_type_overlanding">Wyprawa terenowa</string>
+    <string name="activity_type_road_bike">Rower szosowy</string>
+    <string name="activity_type_track_me">Śledzenie trasy</string>
+    <string name="activity_type_track_run">Bieg na bieżni</string>
+    <string name="activity_type_trolling_motor">Silnik trollingowy</string>
+    <string name="activity_type_ultra_run">Ultramaraton</string>
+    <string name="activity_type_virtual_run">Bieg wirtualny</string>
+    <string name="activity_type_xc_skate_ski">Narciarstwo biegowe (styl łyżwowy)</string>
 </resources>
