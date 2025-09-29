@@ -16,24 +16,21 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.igpsport;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class IGPSportiGS630Coordinator extends IGPSportAbstractCoordinator {
+public class IGPSportiGS630SCoordinator extends IGPSportAbstractCoordinator {
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_igpsport_igs630;
+        return R.string.devicetype_igpsport_igs630s;
     }
 
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("iGS630");
+        return Pattern.compile("iGS630S");
     }
 
     @Override

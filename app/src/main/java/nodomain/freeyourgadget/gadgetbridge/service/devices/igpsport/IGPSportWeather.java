@@ -201,7 +201,7 @@ public class IGPSportWeather {
             builder.queue();
 
         } catch (IOException e) {
-            LOG.error("Failed to encode weather " + e);
+            LOG.error("Failed to encode weather ", e);
         }
     }
 
