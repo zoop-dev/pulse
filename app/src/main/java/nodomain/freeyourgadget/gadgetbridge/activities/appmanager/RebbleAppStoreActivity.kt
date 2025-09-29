@@ -40,6 +40,7 @@ import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
+import nodomain.freeyourgadget.gadgetbridge.model.DeviceService
 import nodomain.freeyourgadget.gadgetbridge.util.Capsule
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 import nodomain.freeyourgadget.internethelper.aidl.http.HttpGetRequest
@@ -64,6 +65,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
     val LOG: Logger = LoggerFactory.getLogger(RebbleAppStoreActivity::class.java)
     private var mGBDevice: GBDevice? = null
     private var webView: WebView? = null
+    private var url = "https://apps.rebble.io/en_US/watchfaces"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,6 +83,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
         val extras = intent.extras
         if (extras != null) {
             mGBDevice = extras.getParcelable(GBDevice.EXTRA_DEVICE)
+            url = extras.getString(DeviceService.EXTRA_URI, url)
         }
         requireNotNull(mGBDevice) { "Must provide a device when invoking this activity" }
         initViews()
@@ -161,9 +164,9 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
     }
 
     private fun downloadInstallWatchappById(storeId: String) {
-        val url = "https://appstore-api.rebble.io/api/v1/apps/id/$storeId"
+        val appUrl = "https://appstore-api.rebble.io/api/v1/apps/id/$storeId"
         val httpHeaders = HttpHeaders()
-        val httpGetRequest = HttpGetRequest(url, httpHeaders)
+        val httpGetRequest = HttpGetRequest(appUrl, httpHeaders)
         iHttpService!!.get(httpGetRequest, object : IHttpCallback.Stub() {
             override fun onResponse(response: HttpResponse) {
                 val contentType = response.headers["content-type"]?.split(";")?.get(0)
@@ -194,8 +197,6 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
         settings.javaScriptEnabled = true
         settings.loadWithOverviewMode = true
         settings.useWideViewPort = true
-
-        val url = "https://apps.rebble.io/en_US/watchfaces"
 
         webView!!.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
