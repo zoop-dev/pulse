@@ -78,6 +78,7 @@ import nodomain.freeyourgadget.gadgetbridge.externalevents.CalendarReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.DeviceSettingsReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.GenericWeatherReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.IntentApiReceiver;
+import nodomain.freeyourgadget.gadgetbridge.externalevents.KeyMissingReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.LineageOsWeatherReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.MusicPlaybackReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.OmniJawsObserver;
@@ -260,6 +261,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
     private MusicPlaybackReceiver mMusicPlaybackReceiver = null;
     private TimeChangeReceiver mTimeChangeReceiver = null;
     private BluetoothConnectReceiver mBlueToothConnectReceiver = null;
+    private KeyMissingReceiver mKeyMissingReceiver = null;
     private BluetoothPairingRequestReceiver mBlueToothPairingRequestReceiver = null;
     private AlarmClockReceiver mAlarmClockReceiver = null;
     private SilentModeReceiver mSilentModeReceiver = null;
@@ -536,6 +538,9 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         ContextCompat.registerReceiver(this, deviceSettingsReceiver, deviceSettingsIntentFilter, ContextCompat.RECEIVER_EXPORTED);
 
         ContextCompat.registerReceiver(this, intentApiReceiver, intentApiReceiver.buildFilter(), ContextCompat.RECEIVER_EXPORTED);
+
+        mKeyMissingReceiver = new KeyMissingReceiver();
+        ContextCompat.registerReceiver(this, mKeyMissingReceiver, new IntentFilter(KeyMissingReceiver.ACTION_KEY_MISSING), ContextCompat.RECEIVER_EXPORTED);
     }
 
     @Override

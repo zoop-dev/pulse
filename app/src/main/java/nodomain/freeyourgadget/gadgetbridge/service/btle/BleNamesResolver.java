@@ -375,6 +375,18 @@ public class BleNamesResolver {
         };
     }
 
+    /// lookup description for numeric bond loss reasons (introduced in API 36.1)
+    public static String getBondLossReasonString(int reason){
+        return switch (reason) {
+            case 0 -> "BOND_LOSS_REASON_UNKNOWN";
+            case 1 -> "BOND_LOSS_REASON_BREDR_AUTH_FAILURE";
+            case 2 -> "BOND_LOSS_REASON_BREDR_INCOMING_PAIRING";
+            case 3 -> "BOND_LOSS_REASON_LE_ENCRYPT_FAILURE";
+            case 4 -> "BOND_LOSS_REASON_LE_INCOMING_PAIRING";
+            default -> "reason_" + reason;
+        };
+    }
+
     static public String getCharacteristicPropertyString(int property) {
         StringBuilder builder = new StringBuilder();
         if (BluetoothGattCharacteristic.PROPERTY_BROADCAST == (BluetoothGattCharacteristic.PROPERTY_BROADCAST & property)) {
