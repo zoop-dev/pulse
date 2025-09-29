@@ -4039,4 +4039,13 @@
     <string name="stroke_rate">Częstotliwość pociągnięć</string>
     <string name="jump_rope_longest_streak">Najdłuższa seria</string>
     <string name="jump_rope_interruptions">Przerwy</string>
+    <string name="connection_force_legacy_gatt_title">Wymuś starszy protokół GATT</string>
+    <string name="connection_force_legacy_gatt_summary">Zapobiega problemom na starszych wersjach Androida, ale może powodować wyścigi danych</string>
+    <string name="activity_type_adventure_race">Wyścig przygodowy</string>
+    <string name="activity_type_anchor">Kotwiczenie</string>
+    <string name="activity_type_backcountry_skiing">Narciarstwo poza trasami</string>
+    <string name="activity_type_backcountry_snowboarding">Snowboarding poza trasami</string>
+    <string name="activity_type_bike_tour">Wycieczka rowerowa</string>
+    <string name="activity_type_cyclo_cross">Przełaj</string>
+    <string name="activity_type_e_mountain_bike">eMTB</string>
 </resources>
