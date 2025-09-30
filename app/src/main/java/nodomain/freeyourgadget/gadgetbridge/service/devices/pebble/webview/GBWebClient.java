@@ -110,7 +110,7 @@ public class GBWebClient extends WebViewClient {
             String defaultAction = sharedPreferences.getString("pref_key_internethelper_new_url_action", "deny");
             urlIsAllowed = defaultAction.equals("allow");
             URLFilterEntry filterEntry = new URLFilterEntry();
-            filterEntry.setUrl(requestedUri.toString());
+            filterEntry.setUrl(requestedUri.toString().replaceAll("\\?.*", ""));
             filterEntry.setAllowed(urlIsAllowed);
             DBHelper.store(filterEntry);
         }
