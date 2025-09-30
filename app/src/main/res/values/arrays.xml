@@ -4651,8 +4651,8 @@
     </string-array>
 
     <string-array name="internethelper_new_url_action">
-        <item>Allow</item>
-        <item>Deny</item>
+        <item>@string/internet_helper_url_action_allow</item>
+        <item>@string/internet_helper_url_action_deny</item>
     </string-array>
     <string-array name="internethelper_new_url_action_values">
         <item>allow</item>

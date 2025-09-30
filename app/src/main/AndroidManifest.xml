@@ -212,7 +212,7 @@
             android:parentActivityName=".activities.SettingsActivity" />
         <activity
             android:name=".activities.InternetHelperPreferencesActivity"
-            android:label="@string/prefs_title_internet_helper"
+            android:label="@string/prefs_internet_helper_title"
             android:parentActivityName=".activities.SettingsActivity" />
         <activity
             android:name=".activities.AboutUserPreferencesActivity"

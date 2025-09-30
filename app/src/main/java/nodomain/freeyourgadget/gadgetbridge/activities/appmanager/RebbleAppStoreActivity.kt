@@ -131,7 +131,10 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
             override fun onResponse(response: HttpResponse) {
                 val contentType = response.headers["content-type"]?.split(";")?.get(0)
                 if (!contentType.equals("application/octet-stream") && !contentType.equals("application/zip")) {
-                    GB.toast("Download failed, wrong content-type: $contentType", Toast.LENGTH_LONG, GB.ERROR)
+                    GB.toast(
+                        getString(R.string.rebble_appstore_download_failed_wrong_content_type, contentType),
+                        Toast.LENGTH_LONG, GB.ERROR
+                    )
                     return
                 }
                 val inputStream = ParcelFileDescriptor.AutoCloseInputStream(response.body)
@@ -158,7 +161,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
                 startActivity(startIntent)
             }
             override fun onException(message: String?) {
-                GB.toast("Download failed: $message", Toast.LENGTH_LONG, GB.ERROR)
+                GB.toast(getString(R.string.rebble_appstore_download_failed, message), Toast.LENGTH_LONG, GB.ERROR)
             }
         })
     }
@@ -171,7 +174,10 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
             override fun onResponse(response: HttpResponse) {
                 val contentType = response.headers["content-type"]?.split(";")?.get(0)
                 if (!contentType.equals("application/json")) {
-                    GB.toast("Fetching app info failed, wrong content-type: $contentType", Toast.LENGTH_LONG, GB.ERROR)
+                    GB.toast(
+                        getString(R.string.rebble_appstore_fetch_app_info_failed_content_type, contentType),
+                        Toast.LENGTH_LONG, GB.ERROR
+                    )
                     return
                 }
                 val inputStream = ParcelFileDescriptor.AutoCloseInputStream(response.body)
@@ -184,7 +190,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
                 downloadInstallWatchapp(pbwFile.toUri())
             }
             override fun onException(message: String?) {
-                GB.toast("Fetching download file failed: $message", Toast.LENGTH_LONG, GB.ERROR)
+                GB.toast(getString(R.string.rebble_appstore_fetching_download_file_failed, message), Toast.LENGTH_LONG, GB.ERROR)
             }
         })
     }

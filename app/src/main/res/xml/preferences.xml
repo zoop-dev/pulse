@@ -341,8 +341,8 @@
         <PreferenceScreen
             android:icon="@drawable/ic_language"
             android:key="pref_category_internethelper"
-            android:title="Internet helper"
-            android:summary="Configure the URLs that are allowed to be requested through the internet helper add-on app" />
+            android:title="@string/prefs_internet_helper_title"
+            android:summary="@string/prefs_internet_helper_summary" />
     </PreferenceScreen>
 
     <Preference

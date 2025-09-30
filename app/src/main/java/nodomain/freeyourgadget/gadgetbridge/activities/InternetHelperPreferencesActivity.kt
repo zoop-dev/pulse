@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -63,7 +64,7 @@ class InternetHelperPreferencesActivity : AbstractGBActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.internet_helper_url_list)
         recyclerView.isNestedScrollingEnabled = false
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = UrlListAdapter(urlItems) { entry, action ->
+        recyclerView.adapter = UrlListAdapter(this, urlItems) { entry, action ->
             when (action) {
                 UrlListAdapter.UrlAction.ALLOW -> {
                     entry.urlFilterEntry.allowed = true
@@ -81,17 +82,17 @@ class InternetHelperPreferencesActivity : AbstractGBActivity() {
                         setText(entry.urlFilterEntry.url)
                     }
                     inputLayout.addView(editText)
-                    inputLayout.hint = "Please enter (a part of) a URL to match against."
+                    inputLayout.hint = getString(R.string.internet_helper_url_filter_hint)
 
                     MaterialAlertDialogBuilder(this)
-                        .setTitle("URL filter")
+                        .setTitle(getString(R.string.internet_helper_url_filter_title))
                         .setView(inputLayout)
-                        .setPositiveButton(R.string.ok) { dialog, _ ->
+                        .setPositiveButton(R.string.save) { dialog, _ ->
                             entry.urlFilterEntry.url = editText.text.toString()
                             DBHelper.store(entry.urlFilterEntry)
                             recyclerView.adapter?.notifyDataSetChanged()
                         }
-                        .setNegativeButton("Cancel", null)
+                        .setNegativeButton(getString(R.string.Cancel), null)
                         .show()
                 }
                 UrlListAdapter.UrlAction.DELETE -> {
@@ -102,7 +103,7 @@ class InternetHelperPreferencesActivity : AbstractGBActivity() {
                             recyclerView.adapter?.notifyDataSetChanged()
                         }
                         .setNegativeButton(R.string.no, null)
-                        .setMessage("Are you sure you want to delete this URL?")
+                        .setMessage(getString(R.string.internet_helper_url_filter_delete))
                         .show()
                 }
             }
@@ -130,6 +131,7 @@ class InternetHelperPreferencesActivity : AbstractGBActivity() {
     }
 
     class UrlListAdapter(
+        private val context: Context,
         private val urls: List<UrlEntry>,
         private val onAction: (UrlEntry, UrlAction) -> Unit
     ) : RecyclerView.Adapter<UrlListAdapter.UrlViewHolder>() {
@@ -157,7 +159,10 @@ class InternetHelperPreferencesActivity : AbstractGBActivity() {
             val entry = urls[position]
 
             holder.title.text = entry.urlFilterEntry.url
-            holder.status.text = if (entry.urlFilterEntry.allowed) "Allowed" else "Denied"
+            holder.status.text = if (entry.urlFilterEntry.allowed)
+                context.getString(R.string.internet_helper_url_allowed)
+            else
+                context.getString(R.string.internet_helper_url_denied)
 
             holder.menuButton.setOnClickListener {
                 showPopupMenu(holder.menuButton, entry)
@@ -167,12 +172,16 @@ class InternetHelperPreferencesActivity : AbstractGBActivity() {
         private fun showPopupMenu(anchor: View, entry: UrlEntry) {
             val popupMenu = PopupMenu(anchor.context, anchor)
             if (entry.urlFilterEntry.allowed) {
-                popupMenu.menu.add(Menu.NONE, 1, Menu.NONE, "Deny")
+                popupMenu.menu.add(Menu.NONE, 1, Menu.NONE,
+                    context.getString(R.string.internet_helper_url_action_deny))
             } else {
-                popupMenu.menu.add(Menu.NONE, 2, Menu.NONE, "Allow")
+                popupMenu.menu.add(Menu.NONE, 2, Menu.NONE,
+                    context.getString(R.string.internet_helper_url_action_allow))
             }
-            popupMenu.menu.add(Menu.NONE, 3, Menu.NONE, "Edit")
-            popupMenu.menu.add(Menu.NONE, 4, Menu.NONE, "Delete")
+            popupMenu.menu.add(Menu.NONE, 3, Menu.NONE,
+                context.getString(R.string.internet_helper_url_action_edit))
+            popupMenu.menu.add(Menu.NONE, 4, Menu.NONE,
+                context.getString(R.string.internet_helper_url_action_delete))
 
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {

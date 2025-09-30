@@ -5,8 +5,8 @@
     <Preference
         android:icon="@drawable/ic_warning"
         android:key="pref_key_internethelper_not_installed"
-        android:title="Add-on app required"
-        android:summary="This feature requires the installation of an add-on app. Tap here to go to the download page." />
+        android:title="@string/internet_helper_pref_app_req_title"
+        android:summary="@string/internet_helper_pref_app_req_summary" />
     <PreferenceCategory
         android:title="@string/pref_header_general"
         app:iconSpaceReserved="false">
@@ -15,24 +15,24 @@
             android:entries="@array/internethelper_new_url_action"
             android:entryValues="@array/internethelper_new_url_action_values"
             android:key="pref_key_internethelper_new_url_action"
-            android:summary="Set the default action to take when a URL is requested that isn't already in the list below."
-            android:title="New URL action"
+            android:title="@string/internet_helper_pref_new_url_action_title"
+            android:summary="@string/internet_helper_pref_new_url_action_summary"
             app:iconSpaceReserved="false" />
         <SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="pref_key_internethelper_force_local"
             android:layout="@layout/preference_checkbox"
-            android:title="Intercept supported requests"
-            android:summary="Some internet requests can be intercepted and responded to locally without sending anything to the internet."
+            android:title="@string/internet_helper_pref_intercept_supported_title"
+            android:summary="@string/internet_helper_pref_intercept_supported_summary"
             app:iconSpaceReserved="false" />
     </PreferenceCategory>
     <PreferenceCategory
         android:key="pref_key_internethelper_url_list"
-        android:title="Known URLs"
+        android:title="@string/internet_helper_pref_known_urls_title"
         app:iconSpaceReserved="false">
         <Preference
             android:key="pref_key_internethelper_info"
-            android:summary="Use the list below to configure which (parts of) URLs are allowed or denied to be forwarded to the internethelper add-on app. The validation is using a simple text comparison, so a part of a URL can be entered too."
+            android:summary="@string/internet_helper_url_list_instruction_summary"
             app:iconSpaceReserved="false" />
     </PreferenceCategory>
 </PreferenceScreen>

@@ -147,8 +147,8 @@ public class PermissionsUtils {
         if (AndroidUtils.isPackageInstalled(PACKAGE_INTERNET_HELPER)) {
             permissionsList.add(new PermissionDetails(
                     CUSTOM_PERM_INTERNET_HELPER,
-                    "Internet helper",
-                    "Permit access to the Gadgetbridge-internethelper add-on app"
+                    activity.getString(R.string.internet_helper_permission_title),
+                    activity.getString(R.string.internet_helper_permission_summary)
             ));
         }
 //        permissionsList.add(new PermissionDetails(  // NOTE: can't request this, it's only allowed for system apps
