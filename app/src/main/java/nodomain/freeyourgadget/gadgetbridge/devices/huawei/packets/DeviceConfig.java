@@ -837,7 +837,7 @@ public class DeviceConfig {
                         case 0xf:
                             break;
                         case 0x11:
-                            this.tlv.put(b, 1500106300); // Force AppVersion to 15.1.6.300
+                            this.tlv.put(b, 1600008300); // Force AppVersion to 16.0.8.300
                             break;
                         case 0x15:
                             this.tlv.put(b); // Force buildOSPlatformVersion to ""
@@ -1857,7 +1857,7 @@ public class DeviceConfig {
                 this.commandId = id;
 
                 // Bits like ext capabilities
-                byte[] capabilities = {(byte) 0xFD, (byte) 0xF7, 0x53};
+                byte[] capabilities = {(byte) 0xFD, (byte) 0xF7, (byte)0x73, (byte)0x7A};
                 this.tlv = new HuaweiTLV()
                         .put(0x01, capabilities);
 

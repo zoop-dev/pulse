@@ -124,7 +124,7 @@ public class Notifications {
             }
 
             if (sourceAppId != null)
-                this.tlv.put(0x11, sourceAppId);
+                this.tlv.put(0x11, sourceAppId.length() > 127?sourceAppId.substring(0, 127): sourceAppId);
 
             if(addParams != null) {
 

@@ -305,19 +305,20 @@ public class HuaweiEphemerisManager {
                 throw new Exception("Ephemeris no config data");
             }
 
-            JsonObject conf = availableDataConfig.getAsJsonObject(downloadTag);
+            final JsonObject conf = availableDataConfig.getAsJsonObject(downloadTag);
+            if(conf == null) {
+                throw new Exception("Ephemeris no config for tag");
+            }
 
             int version = conf.get("ver").getAsInt();
             if (version != downloadVersion) {
                 throw new Exception("Ephemeris version mismatch");
             }
             String uuid = conf.get("uuid").getAsString();
-
             if (uuid.isEmpty())
                 throw new Exception("Ephemeris uuid is empty");
 
             JsonArray filesJs = conf.get("files").getAsJsonArray();
-
             List<String> files = new ArrayList<>();
             for (int i = 0; i < filesJs.size(); i++) {
                 files.add(filesJs.get(i).getAsString());
@@ -366,14 +367,12 @@ public class HuaweiEphemerisManager {
                 //fileList = "gpslocation.dat";
                 LOG.error("Currently not supported. File type 1. Tag version 0");
             } else if (currentRequest.getTagVersion() == 1 || currentRequest.getTagVersion() == 2 || currentRequest.getTagVersion() == 3) {
-                int i = 0;
-                while (i < currentRequest.getTagFiles().size()) {
-                    fileList.append(currentRequest.getTagFiles().get(i));
-                    if (i == currentRequest.getTagFiles().size() - 1) {
-                        break;
+                List<String> tagFiles = currentRequest.getTagFiles();
+                for (int i = 0; i < tagFiles.size(); i++) {
+                    fileList.append(tagFiles.get(i));
+                    if (i < tagFiles.size() - 1) {
+                        fileList.append(";");
                     }
-                    fileList.append(";");
-                    i++;
                 }
             } else {
                 LOG.error("Unknown version");
