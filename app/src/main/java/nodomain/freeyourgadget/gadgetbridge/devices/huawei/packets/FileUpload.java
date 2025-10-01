@@ -236,4 +236,24 @@ public class FileUpload {
             }
         }
     }
+
+    public static class FileUploadDeviceResponse {
+        public static final byte id = 0x08;
+
+        public static class Response extends HuaweiPacket {
+            public byte fileId = 0;
+            public int code = 0;
+
+            public Response(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+            }
+
+            @Override
+            public void parseTlv() throws HuaweiPacket.ParseException {
+                this.fileId = this.tlv.getByte(0x01, (byte) 0);
+                this.code = this.tlv.getAsInteger(0x7f, 0);
+            }
+        }
+    }
+
 }

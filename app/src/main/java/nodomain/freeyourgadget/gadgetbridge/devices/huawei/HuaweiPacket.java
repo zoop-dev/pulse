@@ -30,7 +30,6 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Alarms;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.AccountRelated;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.App;
@@ -147,7 +146,7 @@ public class HuaweiPacket {
         public void setAuthMode(byte authMode) { this.authMode = authMode; }
 
         public byte[] getIv() {
-            byte[] iv = null;
+            byte[] iv;
             if (this.deviceSupportType == 0x04) {
                 iv = HuaweiCrypto.generateNonce();
             } else {
@@ -663,6 +662,10 @@ public class HuaweiPacket {
                         return new FileUpload.FileUploadConsultAck.Response(paramsProvider).fromPacket(this);
                     case FileUpload.FileNextChunkParams.id:
                         return new FileUpload.FileNextChunkParams(paramsProvider).fromPacket(this);
+                    case FileUpload.FileUploadResult.id:
+                        return new FileUpload.FileUploadResult.Response(paramsProvider).fromPacket(this);
+                    case FileUpload.FileUploadDeviceResponse.id:
+                        return new FileUpload.FileUploadDeviceResponse.Response(paramsProvider).fromPacket(this);
                     default:
                         this.isEncrypted = this.attemptDecrypt(); // Helps with debugging
                         return this;
@@ -889,7 +892,7 @@ public class HuaweiPacket {
             int length = packet.position() - start;
             if (length != packetSize - footerLength) {
                 // TODO: exception?
-                LOG.error(String.format(GBApplication.getLanguage(), "Packet lengths don't match! %d != %d", length, packetSize + headerLength));
+                LOG.error("Packet lengths don't match! {} != {}", length, packetSize + headerLength);
             }
 
             byte[] complete = new byte[length];

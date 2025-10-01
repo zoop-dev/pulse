@@ -528,6 +528,23 @@ public class AsynchronousResponse {
                         LOG.error("Could not send file upload result request", e);
                     }
                 }
+            } else if(response.commandId == FileUpload.FileUploadDeviceResponse.id) {
+                // TODO: I don't currently know how to recover from this state. The proper solution is restart the watch or wait while timeout is expired in the watch
+                // Usually happened on the programmer error on the previous state.
+                // The value of timeout is unknown
+                LOG.error("File upload error. Possible error in the previous state. Try to restart your watch.");
+                if (support.huaweiUploadManager.getFileUploadInfo() == null) {
+                    LOG.error("No current upload");
+                } else {
+                    FileUpload.FileUploadDeviceResponse.Response resp = (FileUpload.FileUploadDeviceResponse.Response) response;
+                    if(support.huaweiUploadManager.getFileUploadInfo().getFileId() == resp.fileId) {
+                        if (support.huaweiUploadManager.getFileUploadInfo().getFileUploadCallback() != null) {
+                            support.huaweiUploadManager.getFileUploadInfo().getFileUploadCallback().onError(resp.code);
+                        }
+                        //Cleanup
+                        support.huaweiUploadManager.setFileUploadInfo(null);
+                    }
+                }
             }
         }
     }
