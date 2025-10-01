@@ -1,0 +1,5 @@
+[FitFileId{type=LOCATION, manufacturer=5759, product=65534, number=65533, product_name=Gadgetbridge},
+FitFileCreator{software_version=2318, hardware_version=254},
+FitLocation{name=Bregenz, position_lat=47.50499999150634, position_long=9.73999997600913, symbol=Airport, altitude=-495.0, message_index=0},
+FitLocation{name=腓特烈港, position_lat=47.65599997714162, position_long=9.472999982535839, symbol=Anchor, altitude=0.0, message_index=1},
+FitLocation{name=קרויצלינגן, position_lat=47.633000034838915, position_long=9.166999999433756, symbol=Water Source, altitude=8850.0, message_index=2}]

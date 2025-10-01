@@ -43,6 +43,10 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDef
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes.BaseType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionLocationSymbol;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitFileCreator;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitFileId;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitLocation;
 import nodomain.freeyourgadget.gadgetbridge.test.TestBase;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
@@ -415,6 +419,65 @@ public class GarminSupportTest extends TestBase {
         String actual = fitFile.toString().replace("}, Fit", "},\nFit").replace("}, RecordData{", "},\nRecordData{");
         Assert.assertEquals(expected, actual);
         getAllFitFieldValues(fitFile);
+    }
+
+    /// encode->decode three locations / waypoints in a Lctns.fit compliant format
+    @Test
+    public void TestFitLocationEncoding() throws FitParseException, IOException {
+        final List<RecordData> records = new ArrayList<>();
+
+        FitFileId.Builder fileId = new FitFileId.Builder();
+        fileId.setType(FileType.FILETYPE.LOCATION);
+        fileId.setManufacturer(5759);
+        fileId.setProduct(65534);
+        fileId.setTimeCreated(null);
+        fileId.setNumber(65533);
+        fileId.setProductName("Gadgetbridge");
+        records.add(fileId.build());
+
+        FitFileCreator.Builder fileCreator = new FitFileCreator.Builder();
+        fileCreator.setSoftwareVersion(2318);
+        fileCreator.setHardwareVersion(254);
+        records.add(fileCreator.build());
+
+        FitLocation.Builder bregenz = new FitLocation.Builder();
+        bregenz.setName("Bregenz");
+        bregenz.setPositionLat(47.505);
+        bregenz.setPositionLong(9.740);
+        bregenz.setSymbol(FieldDefinitionLocationSymbol.LocationSymbol.Airport);
+        bregenz.setAltitude(-495.0f);
+        bregenz.setMessageIndex(0);
+        records.add(bregenz.build());
+
+        FitLocation.Builder friedrichshafen = new FitLocation.Builder();
+        friedrichshafen.setName("腓特烈港");
+        friedrichshafen.setPositionLat(47.656);
+        friedrichshafen.setPositionLong(9.473);
+        friedrichshafen.setSymbol(FieldDefinitionLocationSymbol.LocationSymbol.Anchor);
+        friedrichshafen.setAltitude(0.0f);
+        friedrichshafen.setMessageIndex(1);
+        records.add(friedrichshafen.build());
+
+        FitLocation.Builder kreuzlingen = new FitLocation.Builder();
+        kreuzlingen.setName("קרויצלינגן");
+        kreuzlingen.setPositionLat(47.633);
+        kreuzlingen.setPositionLong(9.167);
+        kreuzlingen.setSymbol(FieldDefinitionLocationSymbol.LocationSymbol.Water_Source);
+        kreuzlingen.setAltitude(8850.0f);
+        kreuzlingen.setMessageIndex(2);
+        records.add(kreuzlingen.build());
+
+        FitFile fitEncoded = new FitFile(records);
+        byte[] fit = fitEncoded.getOutgoingMessage();
+
+        byte[] expectedFit = readBinaryResource("/TestFitLocationEncoding.fit");
+        Assert.assertArrayEquals(expectedFit, fit);
+
+        String expectedText = readTextResource("/TestFitLocationEncoding.txt");
+        FitFile fitDecoded = FitFile.parseIncoming(fit);
+        String actual = fitDecoded.toString().replace("}, Fit", "},\nFit").replace("}, RecordData{", "},\nRecordData{");
+        Assert.assertEquals(expectedText, actual);
+        getAllFitFieldValues(fitDecoded);
     }
 
     // try to retrieve the value of each message's fields
