@@ -15,6 +15,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefi
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionHrZoneHighBoundary;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionHrvStatus;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionLanguage;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionLocationSymbol;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionMeasurementSystem;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionSleepStage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionSwimStyle;
@@ -50,6 +51,7 @@ public class FieldDefinitionFactory {
             case WEATHER_AQI -> new FieldDefinitionWeatherAqi(localNumber, size, baseType, name);
             case COORDINATE -> new FieldDefinitionCoordinate(localNumber, size, baseType, name);
             case SWIM_STYLE -> new FieldDefinitionSwimStyle(localNumber, size, baseType, name);
+            case LOCATION_SYMBOL -> new FieldDefinitionLocationSymbol(localNumber, size, baseType, name, scale, offset);
         };
     }
 
@@ -75,5 +77,6 @@ public class FieldDefinitionFactory {
         WEATHER_AQI,
         COORDINATE,
         SWIM_STYLE,
+        LOCATION_SYMBOL
     }
 }

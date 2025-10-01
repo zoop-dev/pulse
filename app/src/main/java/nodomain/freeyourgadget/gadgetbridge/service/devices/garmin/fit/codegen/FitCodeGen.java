@@ -34,6 +34,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefi
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionGoalType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionHrvStatus;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionLanguage;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionLocationSymbol;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionMeasurementSystem;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionSleepStage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionSwimStyle;
@@ -363,6 +364,7 @@ public class FitCodeGen {
                 case WEATHER_AQI -> FieldDefinitionWeatherAqi.AQI_LEVELS.class;
                 case COORDINATE -> Double.class;
                 case SWIM_STYLE -> FieldDefinitionSwimStyle.SwimStyle.class;
+                case LOCATION_SYMBOL -> FieldDefinitionLocationSymbol.LocationSymbol.class;
             };
         }
 

@@ -699,7 +699,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(0, BaseType.STRING, 32, "name"),
             new FieldDefinitionPrimitive(1, BaseType.SINT32, "position_lat", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(2, BaseType.SINT32, "position_long", FieldDefinitionFactory.FIELD.COORDINATE),
-            new FieldDefinitionPrimitive(3, BaseType.UINT16, "symbol"),
+            new FieldDefinitionPrimitive(3, BaseType.UINT16, "symbol", FieldDefinitionFactory.FIELD.LOCATION_SYMBOL),
             new FieldDefinitionPrimitive(4, BaseType.UINT16, "altitude", 5, 500), // m
             new FieldDefinitionPrimitive(5, BaseType.UINT16, "enhanced_altitude"),
             new FieldDefinitionPrimitive(6, BaseType.STRING, "description"),

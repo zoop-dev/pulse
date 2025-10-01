@@ -22,6 +22,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecord
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionLocationSymbol.LocationSymbol;
 
 /**
  * WARNING: This class was auto-generated, please avoid modifying it directly.
@@ -55,8 +56,8 @@ public class FitLocation extends RecordData {
     }
 
     @Nullable
-    public Integer getSymbol() {
-        return (Integer) getFieldByNumber(3);
+    public LocationSymbol getSymbol() {
+        return (LocationSymbol) getFieldByNumber(3);
     }
 
     @Nullable
@@ -107,7 +108,7 @@ public class FitLocation extends RecordData {
             return this;
         }
 
-        public Builder setSymbol(final Integer value) {
+        public Builder setSymbol(final LocationSymbol value) {
             setFieldByNumber(3, value);
             return this;
         }
