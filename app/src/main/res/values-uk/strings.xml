@@ -3878,4 +3878,6 @@
     <string name="activity_type_xc_skate_ski">Лижі для скейтбордингу</string>
     <string name="connection_force_legacy_gatt_title">Примусове стягнення застарілої ГАТТ</string>
     <string name="connection_force_legacy_gatt_summary">Запобігає проблемам у старих версіях Android, але може спричиняти умови змагання</string>
+    <string name="huawei_send_gps_and_time_title">Надсилати GPS та час на пристрій</string>
+    <string name="huawei_send_gps_and_time_summary">Надсилайте GPS та час на пристрій для оптимізації погоди та пошуку зірок. Розташування слід встановити в налаштуваннях</string>
 </resources>
