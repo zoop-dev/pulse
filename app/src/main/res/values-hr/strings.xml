@@ -1208,7 +1208,7 @@
     <string name="fossil_hr_synced_activity_data">Sinkronizirani podaci o aktivnostima</string>
     <string name="fossil_hr_auth_failed">Provjera autentičnosti nije uspjela, ograničena funkcionalnost</string>
     <string name="prefs_touch_lock">Zaključavanje dodirom</string>
-    <string name="discover_unsupported_devices_description">Omogućavanjem ove opcije prikazat će se svi otkriveni bluetooth uređaji prilikom skeniranja. Kratki dodir kopirat će naziv uređaja i mac adresu u međuspremnik. Dugi pritisak pokrenut će dijaloški okvir `Dodaj testni uređaj`. Može prouzročiti moguće probleme zamrzavanja aplikacije.</string>
+    <string name="discover_unsupported_devices_description">Omogućavanjem ove opcije prikazat će se svi otkriveni Bluetooth uređaji prilikom skeniranja. Kratki dodir kopirat će naziv uređaja i mac adresu u međuspremnik. Dugi pritisak pokrenut će dijaloški okvir `Dodaj testni uređaj`. Može prouzročiti moguće probleme zamrzavanja aplikacije.</string>
     <string name="pref_media_play">Reprodukcija</string>
     <string name="pref_media_pause">Pauza</string>
     <string name="about_hash">Uredi %s</string>
@@ -1431,9 +1431,9 @@
     <string name="thai">tajlandski</string>
     <string name="pref_summary_notification_filter">Blokiraj sve obavijesti kada je DND način omogućen na telefonu</string>
     <plurals name="widget_alarm_target_hours">
-        <item quantity="one">%d sat</item>
-        <item quantity="few">%d sata</item>
-        <item quantity="other">%d sati</item>
+        <item quantity="one">%1$d:%2$02d sat</item>
+        <item quantity="few">%1$d:%2$02d sata</item>
+        <item quantity="other">%1$d:%2$02d sati</item>
     </plurals>
     <string name="battery_case">Kućište za baterije</string>
     <string name="left_earbud">Lijeva slušalica</string>
@@ -1637,4 +1637,9 @@
     <string name="cycling">Biciklizam</string>
     <string name="title_cycling">Biciklizam</string>
     <string name="aerobicTrainingEffect">Efekt aerobika</string>
+    <plurals name="amount_of_days">
+        <item quantity="one">%d dan</item>
+        <item quantity="few">%d dana</item>
+        <item quantity="other">%d dana</item>
+    </plurals>
 </resources>
