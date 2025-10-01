@@ -19,31 +19,41 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests;
 
 import android.location.Location;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.GpsAndTime;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PContactsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.CurrentPosition;
 
 public class SendGpsAndTimeToDeviceRequest extends Request {
+    private final int timestamp;
+    private final double lat;
+    private final double lon;
 
-    public SendGpsAndTimeToDeviceRequest(HuaweiSupportProvider support) {
+    public SendGpsAndTimeToDeviceRequest(HuaweiSupportProvider support, int timestamp, double lat, double lon) {
         super(support);
         this.serviceId = GpsAndTime.id;
         this.commandId = GpsAndTime.CurrentGPSRequest.id;
+        this.timestamp = timestamp;
+        this.lat = lat;
+        this.lon = lon;
     }
 
     @Override
     protected List<byte[]> createRequest() throws RequestCreationException {
         try {
-            Location location = new CurrentPosition().getLastKnownLocation();
             return new GpsAndTime.CurrentGPSRequest(
                     this.paramsProvider,
-                    (int) (Calendar.getInstance().getTime().getTime() / 1000L) - 60, // Backdating a bit seems to work better
-                    location.getLatitude(),
-                    location.getLongitude()
+                    timestamp,
+                    lat,
+                    lon
             ).serialize();
         } catch (HuaweiPacket.CryptoException e) {
             throw new RequestCreationException(e);

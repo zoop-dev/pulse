@@ -4352,4 +4352,6 @@
     <string name="rotate_screen">Rotate screen</string>
     <string name="filter_charts">Filter charts</string>
     <string name="recovery_heart_rate">Recovery Heart rate</string>
+    <string name="huawei_send_gps_and_time_title">Send GPS and Time to device</string>
+    <string name="huawei_send_gps_and_time_summary">Send GPS and Time to device for weather and search stars optimization. Location should be set in the settings</string>
 </resources>

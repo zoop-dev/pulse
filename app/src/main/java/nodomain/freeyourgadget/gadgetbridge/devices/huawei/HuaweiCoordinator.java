@@ -395,6 +395,8 @@ public class HuaweiCoordinator {
         // Developer
         final List<Integer> developer = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DEVELOPER);
         developer.add(R.xml.devicesettings_huawei_debug);
+        if(supportsGpsAndTimeToDevice())
+            developer.add(R.xml.devicesettings_huawei_gps_and_time);
 
         return deviceSpecificSettings;
     }
@@ -651,6 +653,8 @@ public class HuaweiCoordinator {
     public boolean supportsSendingGps() {
         return supportsCommandForService(0x18, 0x02);
     }
+
+    public boolean supportsGpsAndTimeToDevice() { return supportsCommandForService(0x18, 0x06); }
 
     public boolean supportsAccount() {
         return supportsCommandForService(0x1A, 0x01);

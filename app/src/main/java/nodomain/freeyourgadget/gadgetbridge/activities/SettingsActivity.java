@@ -123,8 +123,8 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
             index(R.xml.automations_settings, R.string.pref_header_automations);
 
             setInputTypeFor("rtl_max_line_length", InputType.TYPE_CLASS_NUMBER);
-            setInputTypeFor("location_latitude", InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
-            setInputTypeFor("location_longitude", InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
+            setInputTypeFor("location_latitude", InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            setInputTypeFor("location_longitude", InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED  | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
             Prefs prefs = GBApplication.getPrefs();
             Preference pref = findPreference("pref_category_activity_personal");

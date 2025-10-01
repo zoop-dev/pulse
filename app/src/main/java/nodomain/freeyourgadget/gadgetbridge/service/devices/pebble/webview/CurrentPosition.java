@@ -62,7 +62,7 @@ public class CurrentPosition {
         lastKnownLocation.setLatitude(this.latitude);
         lastKnownLocation.setLongitude(this.longitude);
 
-        LOG.info("got longitude/latitude from preferences: " + latitude + "/" + longitude);
+        LOG.info("got longitude/latitude from preferences: {}/{}", latitude, longitude);
 
         this.timestamp = System.currentTimeMillis() - 86400000; //let accessor know this value is really old
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/pref_header_location" />
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:icon="@drawable/ic_gps_location"
+        android:key="pref_huawei_gps_and_time"
+        android:layout="@layout/preference_checkbox"
+        android:title="@string/huawei_send_gps_and_time_title"
+        android:summary="@string/huawei_send_gps_and_time_summary" />
+</androidx.preference.PreferenceScreen>

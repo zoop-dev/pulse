@@ -16,14 +16,19 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei;
 
+import android.location.Location;
 import android.widget.Toast;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Calendar;
 import java.util.Date;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
@@ -38,6 +43,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.Send
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendWeatherSunMoonSupportRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendWeatherSupportRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendWeatherUnitRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.CurrentPosition;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
@@ -169,6 +175,8 @@ public class HuaweiWeatherManager {
         }
 
         for (WeatherSpec.Daily point : weatherSpec.getForecasts()) {
+            if(point == null)
+                continue;
             currentDay = nextDay;
             nextDay = DateTimeUtils.shiftByDays(currentDay, 1);
 
@@ -188,6 +196,14 @@ public class HuaweiWeatherManager {
                 LOG.warn("Moon set for {} out of bounds: {}", currentDay, DateTimeUtils.parseTimeStamp(point.getMoonSet()));
                 point.setMoonSet(0);
             }
+        }
+    }
+
+    private BigDecimal toBigDecimal(double d2) {
+        try {
+            return new BigDecimal(d2);
+        } catch (NumberFormatException unused) {
+            return null;
         }
     }
 
@@ -250,10 +266,23 @@ public class HuaweiWeatherManager {
         lastRequest.nextRequest(sendWeatherCurrentRequest);
         lastRequest = sendWeatherCurrentRequest;
 
-        SendGpsAndTimeToDeviceRequest sendGpsAndTimeToDeviceRequest = new SendGpsAndTimeToDeviceRequest(supportProvider);
-        sendGpsAndTimeToDeviceRequest.setFinalizeReq(errorHandler);
-        lastRequest.nextRequest(sendGpsAndTimeToDeviceRequest);
-        lastRequest = sendGpsAndTimeToDeviceRequest;
+
+        if (supportProvider.getHuaweiCoordinator().supportsGpsAndTimeToDevice() &&
+                GBApplication.getDevicePrefs(supportProvider.getDevice()).getBoolean("pref_huawei_gps_and_time", true)) {
+            Location location = new CurrentPosition().getLastKnownLocation();
+            BigDecimal latitude = toBigDecimal(location.getLatitude());
+            BigDecimal longitude = toBigDecimal(location.getLongitude());
+            if (latitude != null && longitude != null) {
+                double lat = latitude.setScale(7, RoundingMode.HALF_UP).doubleValue();
+                double lon = longitude.setScale(7, RoundingMode.HALF_UP).doubleValue();
+                //TODO: should be timestamp when location is set, set old enough to prevent override location determined by workout
+                int timestamp = (int) (Calendar.getInstance().getTime().getTime() / 1000L) - 86400;
+                SendGpsAndTimeToDeviceRequest sendGpsAndTimeToDeviceRequest = new SendGpsAndTimeToDeviceRequest(supportProvider, timestamp, lat, lon);
+                sendGpsAndTimeToDeviceRequest.setFinalizeReq(errorHandler);
+                lastRequest.nextRequest(sendGpsAndTimeToDeviceRequest);
+                lastRequest = sendGpsAndTimeToDeviceRequest;
+            }
+        }
 
         if (supportProvider.getHuaweiCoordinator().supportsWeatherForecasts()) {
             SendWeatherForecastRequest sendWeatherForecastRequest = new SendWeatherForecastRequest(supportProvider, weatherSettings, weatherSpec);

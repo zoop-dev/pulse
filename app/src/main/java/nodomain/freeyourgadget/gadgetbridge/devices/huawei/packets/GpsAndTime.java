@@ -229,8 +229,8 @@ public class GpsAndTime {
             this.commandId = id;
             this.tlv = new HuaweiTLV()
                     .put(0x01, timestamp)
-                    .put(0x02, lon)
-                    .put(0x03, lat);
+                    .put(0x02, lat)
+                    .put(0x03, lon);
             this.isEncrypted = true;
             this.complete = true;
         }
