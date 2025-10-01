@@ -877,6 +877,12 @@ public class HuaweiCoordinator {
         return false;
     }
 
+    public boolean supportsContactsSync() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(271);
+        return false;
+    }
+
     public boolean supportsPromptPushMessage () {
 //              do not ask for capabilities under specific condition
 //                  if (deviceType == 10 && deviceVersion == 73617766697368 && deviceSoftVersion == 372E312E31) -> leo device
@@ -943,6 +949,11 @@ public class HuaweiCoordinator {
     }
 
     public int getContactsSlotCount(GBDevice device) {
+        if(supportsContactsSync()) {
+            // TODO: Currently I don't know how to obtain contacts limit in runtime, and I don't know is the limit exists,
+            // set limit to 20 because more items not comfortable to use in the current GB's UI. Can be increased in the future.
+            return 20;
+        }
         return supportsContacts()?maxContactsCount:0;
     }
 

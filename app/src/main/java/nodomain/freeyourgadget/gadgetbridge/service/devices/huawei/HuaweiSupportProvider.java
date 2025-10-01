@@ -141,6 +141,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.Huaw
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PAppIcon;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PCalendarService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PCannedRepliesService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PContactsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PTrackService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PDataDictionarySyncService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.AcceptAgreementsRequest;
@@ -941,6 +942,12 @@ public class HuaweiSupportProvider {
                             if (HuaweiP2PAppIcon.getRegisteredInstance(huaweiP2PManager) == null) {
                                 HuaweiP2PAppIcon appIconService = new HuaweiP2PAppIcon(huaweiP2PManager);
                                 appIconService.register();
+                            }
+                        }
+                        if(getHuaweiCoordinator().supportsContactsSync()) {
+                            if (HuaweiP2PContactsService.getRegisteredInstance(huaweiP2PManager) == null) {
+                                HuaweiP2PContactsService contactsService = new HuaweiP2PContactsService(huaweiP2PManager);
+                                contactsService.register();
                             }
                         }
                     }
@@ -2706,18 +2713,27 @@ public class HuaweiSupportProvider {
     }
 
     public void onSetContacts(ArrayList<? extends Contact> contacts) {
-        SendSetContactsRequest sendSetContactsRequest = new SendSetContactsRequest(
-                this,
-                contacts,
-                this.getHuaweiCoordinator().getContactsSlotCount(getDevice())
-        );
-        try {
-            sendSetContactsRequest.doPerform();
-        } catch (IOException e) {
-            GB.toast(context, "Failed to set contacts", Toast.LENGTH_SHORT, GB.ERROR, e);
-            LOG.error("Failed to send set contacts request", e);
-        }
+        if(getHuaweiCoordinator().supportsContactsSync()) {
+            HuaweiP2PContactsService P2PContactsService = HuaweiP2PContactsService.getRegisteredInstance(huaweiP2PManager);
 
+            if (P2PContactsService != null) {
+                P2PContactsService.startSync();
+            }
+        } else if(getHuaweiCoordinator().supportsContacts()) {
+            SendSetContactsRequest sendSetContactsRequest = new SendSetContactsRequest(
+                    this,
+                    contacts,
+                    this.getHuaweiCoordinator().getContactsSlotCount(getDevice())
+            );
+            try {
+                sendSetContactsRequest.doPerform();
+            } catch (IOException e) {
+                GB.toast(context, "Failed to set contacts", Toast.LENGTH_SHORT, GB.ERROR, e);
+                LOG.error("Failed to send set contacts request", e);
+            }
+        } else {
+            LOG.error("Contacts not supported");
+        }
     }
 
     public void onAddCalendarEvent(final CalendarEventSpec calendarEventSpec) {
