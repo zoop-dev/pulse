@@ -70,6 +70,16 @@ public class CommunicatorV1 implements ICommunicator {
     }
 
     @Override
+    public void dispose() {
+
+    }
+
+    @Override
+    public void onConnectionStateChange(final BluetoothGatt gatt, final int status, final int newState) {
+
+    }
+
+    @Override
     public void sendMessage(final String taskName, final byte[] message) {
         if (null == message)
             return;

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_bolt"
+        android:key="garmin_mlr"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/feature_experimental_unstable"
+        android:title="@string/garmin_mlr_protocol" />
+</androidx.preference.PreferenceScreen>

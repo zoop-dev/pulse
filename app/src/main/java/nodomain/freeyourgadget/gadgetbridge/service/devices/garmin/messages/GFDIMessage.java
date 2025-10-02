@@ -21,7 +21,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 public abstract class GFDIMessage {
     protected static final Logger LOG = LoggerFactory.getLogger(GFDIMessage.class);
     private static int maxPacketSize = 375; //safe default?
-    protected final ByteBuffer response = ByteBuffer.allocate(1000);
+    protected final ByteBuffer response = ByteBuffer.allocate(10 * 1024); // FIXME we should allocate the minimum necessary for each message
     protected GFDIStatusMessage statusMessage;
     protected GarminMessage garminMessage;
 
@@ -131,15 +131,6 @@ public abstract class GFDIMessage {
             this.objectClass = objectClass;
         }
 
-        public static Class<? extends GFDIMessage> getClassFromId(final int id) {
-            for (final GarminMessage garminMessage : GarminMessage.values()) {
-                if (garminMessage.getId() == id) {
-                    return garminMessage.getObjectClass();
-                }
-            }
-            return null;
-        }
-
         @Nullable
         public static GarminMessage fromId(final int id) {
             for (final GarminMessage garminMessage : GarminMessage.values()) {
@@ -152,10 +143,6 @@ public abstract class GFDIMessage {
 
         public int getId() {
             return id;
-        }
-
-        private Class<? extends GFDIMessage> getObjectClass() {
-            return objectClass;
         }
     }
 

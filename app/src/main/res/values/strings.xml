@@ -4354,4 +4354,6 @@
     <string name="recovery_heart_rate">Recovery Heart rate</string>
     <string name="huawei_send_gps_and_time_title">Send GPS and Time to device</string>
     <string name="huawei_send_gps_and_time_summary">Send GPS and Time to device for weather and search stars optimization. Location should be set in the settings</string>
+    <string name="garmin_mlr_protocol">Multi-Link Reliable Protocol</string>
+    <string name="feature_experimental_unstable">Experimental, might be unstable</string>
 </resources>

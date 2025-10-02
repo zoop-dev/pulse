@@ -12,6 +12,10 @@ public interface ICommunicator {
 
     boolean initializeDevice(TransactionBuilder builder);
 
+    void dispose();
+
+    void onConnectionStateChange(BluetoothGatt gatt, int status, int newState);
+
     boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value);
 
     void onHeartRateTest();

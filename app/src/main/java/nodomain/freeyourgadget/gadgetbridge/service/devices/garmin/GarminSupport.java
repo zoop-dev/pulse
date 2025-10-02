@@ -268,6 +268,14 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     }
 
     @Override
+    public void onConnectionStateChange(final BluetoothGatt gatt, final int status, final int newState) {
+        super.onConnectionStateChange(gatt, status, newState);
+        if (communicator != null) {
+            communicator.onConnectionStateChange(gatt, status, newState);
+        }
+    }
+
+    @Override
     public void onMessage(final byte[] message) {
         if (null == message) {
             return; //message is not complete yet TODO check before calling
@@ -277,9 +285,11 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         GFDIMessage parsedMessage = GFDIMessage.parseIncoming(message);
 
         if (null == parsedMessage) {
+            LOG.error("GFDIMessage is null - this should never happen");
             return; //message cannot be handled
         }
 
+        LOG.debug("Got GFDIMessage {} ({} bytes)", parsedMessage.getClass().getSimpleName(), message.length);
 
         /*
         the handler elaborates the followup message but might change the status message since it does
@@ -443,13 +453,13 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
     @Override
     public void onFetchRecordedData(final int dataTypes) {
-        if (this.supportedFileTypeList.isEmpty()) {
-            LOG.warn("No known supported file types");
+        if (dataTypes == RecordedDataTypes.TYPE_DEBUGLOGS) {
+            sendOutgoingMessage("fetch debug data", fileTransferHandler.initiateDebugDownload());
             return;
         }
 
-        if (dataTypes == RecordedDataTypes.TYPE_DEBUGLOGS){
-            sendOutgoingMessage("fetch debug data", fileTransferHandler.initiateDebugDownload());
+        if (this.supportedFileTypeList.isEmpty() && !newSyncProtocol()) {
+            LOG.warn("No known supported file types");
             return;
         }
 
@@ -462,6 +472,10 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
     public boolean newSyncProtocol() {
         return getDevicePrefs().getBoolean("new_sync_protocol", false);
+    }
+
+    public boolean mlrEnabled() {
+        return getDevicePrefs().getBoolean("garmin_mlr", false);
     }
 
     @Override
@@ -1231,7 +1245,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     }
 
     public void downloadFileFromServiceV2(final int fileHandle) {
-        LOG.warn("Requesting file service V2 handle={}", fileHandle);
+        LOG.info("Requesting file service V2 handle={}", fileHandle);
         if (!(communicator instanceof CommunicatorV2 communicatorV2)) {
             LOG.error("Communicator is not V2");
             return;

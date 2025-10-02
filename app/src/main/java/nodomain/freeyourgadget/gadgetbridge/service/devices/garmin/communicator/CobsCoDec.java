@@ -79,7 +79,7 @@ public class CobsCoDec {
     }
 
     // this implementation of COBS relies on a leading and a trailing 0 byte (the former is not part of default implementations)
-    public byte[] encode(byte[] data) {
+    public static byte[] encode(byte[] data) {
         ByteBuffer encodedBytesBuffer = ByteBuffer.allocate((data.length * 2) + 1); // Maximum expansion
 
         encodedBytesBuffer.put((byte) 0);// Garmin initial padding
