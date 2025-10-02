@@ -79,9 +79,9 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.PebbleProtoco
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GridAutoFitLayoutManager;
+import nodomain.freeyourgadget.gadgetbridge.util.InternetHelperSingleton;
 import nodomain.freeyourgadget.gadgetbridge.util.PebbleUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Version;
-import nodomain.freeyourgadget.gadgetbridge.util.WebViewSingleton;
 
 
 public abstract class AbstractAppManagerFragment extends Fragment {
@@ -451,7 +451,7 @@ public abstract class AbstractAppManagerFragment extends Fragment {
                         appListFabNew.show();
                     }
                     if (appStoreActivity != null && mGBDevice.getDeviceCoordinator() instanceof PebbleCoordinator) {
-                        if (WebViewSingleton.getInstance().ensureInternetHelperBound()) {
+                        if (InternetHelperSingleton.INSTANCE.ensureInternetHelperBound()) {
                             appListFabStore.show();
                         }
                     }
@@ -482,7 +482,7 @@ public abstract class AbstractAppManagerFragment extends Fragment {
         }
 
         if (appStoreActivity != null && mGBDevice.getDeviceCoordinator() instanceof PebbleCoordinator) {
-            if (WebViewSingleton.getInstance().ensureInternetHelperBound()) {
+            if (InternetHelperSingleton.INSTANCE.ensureInternetHelperBound()) {
                 appListFabStore.setOnClickListener(v -> {
                     Intent startIntent = new Intent(getContext(), appStoreActivity);
                     startIntent.putExtra(GBDevice.EXTRA_DEVICE, mGBDevice);
@@ -658,7 +658,7 @@ public abstract class AbstractAppManagerFragment extends Fragment {
             return true;
         } else if (itemId == R.id.appmanager_app_openinstore) {
             final String url = "https://apps.rebble.io/en_US/search/" + ((selectedApp.getType() == GBDeviceApp.Type.WATCHFACE) ? "watchfaces" : "watchapps") + "/1/?native=true&query=" +  Uri.encode(selectedApp.getUUID().toString());
-            if (WebViewSingleton.getInstance().ensureInternetHelperBound()) {
+            if (InternetHelperSingleton.INSTANCE.ensureInternetHelperBound()) {
                 final Intent startIntent = new Intent(getContext().getApplicationContext(), RebbleAppStoreActivity.class);
                 startIntent.putExtra(DeviceService.EXTRA_URI, url);
                 startIntent.putExtra(GBDevice.EXTRA_DEVICE, mGBDevice);

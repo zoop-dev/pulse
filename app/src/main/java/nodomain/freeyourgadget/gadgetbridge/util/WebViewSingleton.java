@@ -18,19 +18,10 @@
 package nodomain.freeyourgadget.gadgetbridge.util;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.content.MutableContextWrapper;
-import android.content.ServiceConnection;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Looper;
-import android.os.ParcelFileDescriptor;
-import android.os.RemoteException;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
@@ -40,17 +31,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
-import java.util.concurrent.CountDownLatch;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.GBChromeClient;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.GBWebClient;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.JSInterface;
-import nodomain.freeyourgadget.internethelper.aidl.http.HttpGetRequest;
-import nodomain.freeyourgadget.internethelper.aidl.http.HttpHeaders;
-import nodomain.freeyourgadget.internethelper.aidl.http.HttpResponse;
-import nodomain.freeyourgadget.internethelper.aidl.http.IHttpCallback;
-import nodomain.freeyourgadget.internethelper.aidl.http.IHttpService;
 
 public class WebViewSingleton {
 
@@ -61,26 +46,9 @@ public class WebViewSingleton {
     private MutableContextWrapper contextWrapper;
     private Looper mainLooper;
     private UUID currentRunningUUID;
-    private IHttpService internetHelper = null;
-    public boolean internetHelperBound;
 
     private WebViewSingleton() {
     }
-
-    //Internet helper outgoing connection
-    private final ServiceConnection internetHelperConnection = new ServiceConnection() {
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            LOG.info("internet helper service bound");
-            internetHelperBound = true;
-            internetHelper = IHttpService.Stub.asInterface(service);
-        }
-
-        public void onServiceDisconnected(ComponentName className) {
-            LOG.info("internet helper service unbound");
-            internetHelper = null;
-            internetHelperBound = false;
-        }
-    };
 
     public static synchronized void ensureCreated(Activity context) {
         if (instance.webView == null) {
@@ -107,69 +75,10 @@ public class WebViewSingleton {
         }
     }
 
-    public boolean ensureInternetHelperBound() {
-        if (contextWrapper != null && !internetHelperBound) {
-            String internetHelperPkg = "nodomain.freeyourgadget.internethelper";
-            String internetHelperCls = internetHelperPkg + ".HttpService";
-            try {
-                contextWrapper.getPackageManager().getApplicationInfo(internetHelperPkg, 0);
-                Intent intent = new Intent();
-                intent.setComponent(new ComponentName(internetHelperPkg, internetHelperCls));
-
-                final Intent intent1 = new Intent("nodomain.freeyourgadget.internethelper.HttpService");
-                intent1.setPackage("nodomain.freeyourgadget.internethelper");
-                contextWrapper.getApplicationContext().bindService(intent1, internetHelperConnection, Context.BIND_AUTO_CREATE);
-                LOG.info("WEBVIEW: Internet helper bound successfully.");
-            } catch (PackageManager.NameNotFoundException e) {
-                LOG.info("WEBVIEW: Internet helper not installed, only mimicked HTTP requests will work.");
-            } catch (SecurityException e) {
-                LOG.info("WEBVIEW: Permission for internet helper not granted, only mimicked HTTP requests will work.");
-            }
-        }
-        return internetHelperBound;
-    }
-
     public static WebViewSingleton getInstance() {
         return instance;
     }
 
-    public WebResourceResponse send(Uri webRequest) throws RemoteException, InterruptedException {
-        final HttpHeaders httpHeaders = new HttpHeaders();
-        final HttpGetRequest httpGetRequest = new HttpGetRequest(webRequest.toString(), httpHeaders);
-        final CountDownLatch latch = new CountDownLatch(1);
-        final Capsule<WebResourceResponse> internetResponseCapsule = new Capsule<>();
-        try {
-            internetHelper.get(httpGetRequest, new IHttpCallback.Stub() {
-                @Override
-                public void onResponse(HttpResponse response) throws RemoteException {
-                    response.getHeaders().addHeader("Access-Control-Allow-Origin", "*");
-                    WebResourceResponse internetResponse = new WebResourceResponse(
-                            response.getHeaders().get("content-type"),
-                            response.getHeaders().get("content-encoding"),
-                            response.getStatus(), "OK",
-                            response.getHeaders().toMap(),
-                            new ParcelFileDescriptor.AutoCloseInputStream(response.getBody())
-                    );
-                    internetResponseCapsule.set(internetResponse);
-                    latch.countDown();
-                }
-
-                @Override
-                public void onException(String message) throws RemoteException {
-                    throw new RuntimeException(message);
-                }
-            });
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            latch.await();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        return internetResponseCapsule.get();
-    }
 
     @NonNull
     public WebView getWebView(Context context) {
@@ -210,7 +119,7 @@ public class WebViewSingleton {
                 webView.addJavascriptInterface(jsInterface, "GBjs");
                 webView.loadUrl("file:///android_asset/app_config/configure.html?rand=" + Math.random() * 500);
             });
-            ensureInternetHelperBound();
+            InternetHelperSingleton.INSTANCE.ensureInternetHelperBound();
         }
     }
 
@@ -222,11 +131,6 @@ public class WebViewSingleton {
     }
 
     public void disposeWebView() {
-        if (internetHelperBound) {
-            LOG.debug("WEBVIEW: will unbind the internet helper");
-            contextWrapper.getApplicationContext().unbindService(internetHelperConnection);
-            internetHelperBound = false;
-        }
         currentRunningUUID = null;
         invokeWebview(webView -> {
             webView.removeJavascriptInterface("GBjs");

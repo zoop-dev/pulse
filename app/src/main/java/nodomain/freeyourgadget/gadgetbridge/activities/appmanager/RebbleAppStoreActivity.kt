@@ -1,4 +1,4 @@
-/*  Copyright (C) 2022-2024 Andreas Shimokawa, Daniel Dakhno, Gordon Williams, Arjan Schrijver
+/*  Copyright (C) 2025 Arjan Schrijver
 
     This file is part of Gadgetbridge.
 
@@ -17,21 +17,15 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.appmanager
 
 import android.annotation.SuppressLint
-import android.content.ComponentName
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.ServiceConnection
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.os.IBinder
 import android.os.Looper
 import android.os.ParcelFileDescriptor
-import android.os.RemoteException
 import android.webkit.PermissionRequest
-import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
-import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
@@ -41,25 +35,22 @@ import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService
-import nodomain.freeyourgadget.gadgetbridge.util.Capsule
+import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.GBChromeClient
+import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.GBWebClient
 import nodomain.freeyourgadget.gadgetbridge.util.GB
+import nodomain.freeyourgadget.gadgetbridge.util.InternetHelperSingleton
 import nodomain.freeyourgadget.internethelper.aidl.http.HttpGetRequest
 import nodomain.freeyourgadget.internethelper.aidl.http.HttpHeaders
 import nodomain.freeyourgadget.internethelper.aidl.http.HttpResponse
 import nodomain.freeyourgadget.internethelper.aidl.http.IHttpCallback
-import nodomain.freeyourgadget.internethelper.aidl.http.IHttpService
 import org.json.JSONObject
-import org.jsoup.Jsoup
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStreamReader
 import java.io.OutputStream
-import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
-import java.util.concurrent.CountDownLatch
-import kotlin.concurrent.Volatile
 
 class RebbleAppStoreActivity : AbstractGBActivity()  {
     val LOG: Logger = LoggerFactory.getLogger(RebbleAppStoreActivity::class.java)
@@ -70,15 +61,6 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_banglejs_apps_management)
-
-        val intent1 = Intent("nodomain.freeyourgadget.internethelper.HttpService")
-        intent1.setPackage("nodomain.freeyourgadget.internethelper")
-        val res = applicationContext.bindService(intent1, mHttpConnection, BIND_AUTO_CREATE)
-        if (res) {
-            LOG.info("Bound to HttpService")
-        } else {
-            LOG.warn("Could not bind to HttpService")
-        }
 
         val extras = intent.extras
         if (extras != null) {
@@ -104,21 +86,6 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
         finish()
     }
 
-    @Volatile
-    private var iHttpService: IHttpService? = null
-
-    private val mHttpConnection: ServiceConnection = object : ServiceConnection {
-        override fun onServiceConnected(className: ComponentName?, service: IBinder?) {
-            LOG.info("onServiceConnected: {}", className)
-            iHttpService = IHttpService.Stub.asInterface(service)
-        }
-
-        override fun onServiceDisconnected(className: ComponentName?) {
-            LOG.error("Service has unexpectedly disconnected: {}", className)
-            iHttpService = null
-        }
-    }
-
     private fun isDownloadableWatchapp(url: String): Boolean {
         val downloadExtensions = listOf(".pbw", ".zip")
         return downloadExtensions.any { url.endsWith(it, ignoreCase = true) }
@@ -127,7 +94,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
     private fun downloadInstallWatchapp(url: Uri) {
         val httpHeaders = HttpHeaders()
         val httpGetRequest = HttpGetRequest(url.toString(), httpHeaders)
-        iHttpService!!.get(httpGetRequest, object : IHttpCallback.Stub() {
+        InternetHelperSingleton.getHttpService()?.get(httpGetRequest, object : IHttpCallback.Stub() {
             override fun onResponse(response: HttpResponse) {
                 val contentType = response.headers["content-type"]?.split(";")?.get(0)
                 if (!contentType.equals("application/octet-stream") && !contentType.equals("application/zip")) {
@@ -160,6 +127,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
                 startIntent.setDataAndType(cacheFile.toUri(), null)
                 startActivity(startIntent)
             }
+
             override fun onException(message: String?) {
                 GB.toast(getString(R.string.rebble_appstore_download_failed, message), Toast.LENGTH_LONG, GB.ERROR)
             }
@@ -170,7 +138,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
         val appUrl = "https://appstore-api.rebble.io/api/v1/apps/id/$storeId"
         val httpHeaders = HttpHeaders()
         val httpGetRequest = HttpGetRequest(appUrl, httpHeaders)
-        iHttpService!!.get(httpGetRequest, object : IHttpCallback.Stub() {
+        InternetHelperSingleton.getHttpService()?.get(httpGetRequest, object : IHttpCallback.Stub() {
             override fun onResponse(response: HttpResponse) {
                 val contentType = response.headers["content-type"]?.split(";")?.get(0)
                 if (!contentType.equals("application/json")) {
@@ -204,7 +172,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
         settings.loadWithOverviewMode = true
         settings.useWideViewPort = true
 
-        webView!!.webViewClient = object : WebViewClient() {
+        webView!!.webViewClient = object : GBWebClient() {
             override fun shouldOverrideUrlLoading(
                 wv: WebView,
                 request: WebResourceRequest
@@ -229,85 +197,6 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
                 return true
             }
 
-            override fun shouldInterceptRequest(
-                view: WebView?,
-                request: WebResourceRequest
-            ): WebResourceResponse? {
-                LOG.info("shouldIntercept {} {} {}", request.method, request.url, iHttpService != null)
-
-                if (!request.method.equals("get", ignoreCase = true)) {
-                    return super.shouldInterceptRequest(view, request)
-                }
-                if (iHttpService == null) {
-                    return super.shouldInterceptRequest(view, request)
-                }
-
-                val httpHeaders = HttpHeaders()
-                for (header in request.requestHeaders.entries) {
-                    httpHeaders.addHeader(header.key, header.value)
-                }
-
-                val httpGetRequest = HttpGetRequest(request.url.toString(), httpHeaders)
-                val latch = CountDownLatch(1)
-                val internetResponseCapsule = Capsule<WebResourceResponse?>()
-
-                try {
-                    iHttpService!!.get(httpGetRequest, object : IHttpCallback.Stub() {
-                        @Throws(RemoteException::class)
-                        override fun onResponse(response: HttpResponse) {
-                            // Extract headers
-                            val contentType = response.headers["content-type"]?.split(";")?.get(0) ?: "text/html"
-                            val contentEncoding = response.headers["content-encoding"] ?: "UTF-8"
-
-                            // Retrieve original payload as InputStream
-                            val inputStream = ParcelFileDescriptor.AutoCloseInputStream(response.body)
-
-                            // Clean up malformed HTML from Rebble
-                            if (contentType.equals("text/html", ignoreCase = true)) {
-                                val rawHtml = inputStream.bufferedReader(Charset.forName(contentEncoding)).use { it.readText() }
-                                val cleanedHtml = Jsoup.parse(rawHtml).html()
-                                val internetResponse = WebResourceResponse(
-                                    contentType,
-                                    contentEncoding,
-                                    response.status,
-                                    "OK",
-                                    response.headers.toMap(),
-                                    cleanedHtml.byteInputStream()
-                                )
-                                internetResponseCapsule.set(internetResponse)
-                            } else {
-                                // If not text/html, return original response
-                                val internetResponse = WebResourceResponse(
-                                    contentType,
-                                    contentEncoding,
-                                    response.status,
-                                    "OK",
-                                    response.headers.toMap(),
-                                    inputStream
-                                )
-                                internetResponseCapsule.set(internetResponse)
-                            }
-                            latch.countDown()
-                        }
-
-                        @Throws(RemoteException::class)
-                        override fun onException(message: String?) {
-                            throw RuntimeException(message)
-                        }
-                    })
-                } catch (e: RemoteException) {
-                    throw RuntimeException(e)
-                }
-
-                try {
-                    latch.await()
-                } catch (e: InterruptedException) {
-                    throw RuntimeException(e)
-                }
-
-                return internetResponseCapsule.get()
-            }
-
             override fun onReceivedError(
                 view: WebView,
                 errorCode: Int,
@@ -328,7 +217,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
             webView!!.loadUrl(url)
         }, 100)
 
-        webView!!.webChromeClient = object : WebChromeClient() {
+        webView!!.webChromeClient = object : GBChromeClient() {
             override fun onPermissionRequest(request: PermissionRequest) {
                 request.grant(request.resources)
             }

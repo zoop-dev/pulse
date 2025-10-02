@@ -50,7 +50,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.URLFilterEntry;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
-import nodomain.freeyourgadget.gadgetbridge.util.WebViewSingleton;
+import nodomain.freeyourgadget.gadgetbridge.util.InternetHelperSingleton;
 
 public class GBWebClient extends WebViewClient {
 
@@ -63,7 +63,7 @@ public class GBWebClient extends WebViewClient {
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
         Uri parsedUri = request.getUrl();
-        LOG.debug("WEBVIEW shouldInterceptRequest URL: " + parsedUri.toString());
+        LOG.debug("WEBVIEW shouldInterceptRequest URL: {}", parsedUri.toString());
         WebResourceResponse mimickedReply = mimicReply(parsedUri);
         if (mimickedReply != null)
             return mimickedReply;
@@ -72,7 +72,7 @@ public class GBWebClient extends WebViewClient {
 
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-        LOG.debug("WEBVIEW shouldInterceptRequest URL (legacy): " + url);
+        LOG.debug("WEBVIEW shouldInterceptRequest URL (legacy): {}", url);
         Uri parsedUri = Uri.parse(url);
         WebResourceResponse mimickedReply = mimicReply(parsedUri);
         if (mimickedReply != null)
@@ -84,6 +84,11 @@ public class GBWebClient extends WebViewClient {
         boolean locallySupported = StringUtils.indexOfAny(requestedUri.getHost(), LocallySupportedDomains) != -1;
         boolean urlIsAllowed = locallySupported;
         List<URLFilterEntry> urlFilterEntries = DBHelper.getURLFilterEntries();
+
+        // Handle local schemes locally
+        if (requestedUri.toString().startsWith("file://") || requestedUri.toString().startsWith("gadgetbridge://")) {
+            return null;
+        }
 
         // Search for matches
         boolean matchFound = false;
@@ -105,7 +110,7 @@ public class GBWebClient extends WebViewClient {
         }
 
         // Add to database if missing
-        if (requestedUri.getHost() != null && !requestedUri.toString().startsWith("file://") && !matchFound) {
+        if (requestedUri.getHost() != null && !matchFound) {
             LOG.info("URL not matched with URLFilterEntry, storing new entry");
             String defaultAction = sharedPreferences.getString("pref_key_internethelper_new_url_action", "deny");
             urlIsAllowed = defaultAction.equals("allow");
@@ -116,27 +121,27 @@ public class GBWebClient extends WebViewClient {
         }
 
         // Handle request
-        if (requestedUri.getHost() != null && !requestedUri.toString().startsWith("file://") && urlIsAllowed) {
-            if (!forceLocal && WebViewSingleton.getInstance().ensureInternetHelperBound()) {
+        if (requestedUri.getHost() != null && urlIsAllowed) {
+            if (!forceLocal && InternetHelperSingleton.INSTANCE.ensureInternetHelperBound()) {
                 LOG.debug("WEBVIEW forwarding request to the internet helper");
                 try {
-                    return WebViewSingleton.getInstance().send(requestedUri);
+                    return InternetHelperSingleton.INSTANCE.send(requestedUri);
                 } catch (RemoteException | InterruptedException e) {
-                    LOG.warn("Error downloading data from " + requestedUri, e);
+                    LOG.warn("Error downloading data from {}", requestedUri, e);
                 }
             } else {
                 if (StringUtils.endsWith(requestedUri.getHost(), "openweathermap.org")){
-                    LOG.debug("WEBVIEW request to openweathermap.org detected of type: " + requestedUri.getPath() + " params: " + requestedUri.getQuery());
+                    LOG.debug("WEBVIEW request to openweathermap.org detected of type: {} params: {}", requestedUri.getPath(), requestedUri.getQuery());
                     return mimicOpenWeatherMapResponse(requestedUri.getPath(), requestedUri.getQueryParameter("units"));
                 } else if (StringUtils.endsWith(requestedUri.getHost(), "rawgit.com")) {
-                    LOG.debug("WEBVIEW request to rawgit.com detected of type: " + requestedUri.getPath() + " params: " + requestedUri.getQuery());
+                    LOG.debug("WEBVIEW request to rawgit.com detected of type: {} params: {}", requestedUri.getPath(), requestedUri.getQuery());
                     return mimicRawGitResponse(requestedUri.getPath());
                 } else {
-                    LOG.debug("WEBVIEW request to allowed domain detected but not intercepted: " + requestedUri);
+                    LOG.debug("WEBVIEW request to allowed domain detected but not intercepted: {}", requestedUri);
                 }
             }
         } else {
-            LOG.debug("WEBVIEW request not intercepted:" + requestedUri);
+            LOG.debug("WEBVIEW request not intercepted:{}", requestedUri);
         }
         return null;
     }
@@ -146,19 +151,31 @@ public class GBWebClient extends WebViewClient {
         Uri parsedUri = Uri.parse(url);
 
         if (parsedUri.getScheme().startsWith("http")) {
-            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            GBApplication.getContext().startActivity(i);
+            if (InternetHelperSingleton.INSTANCE.ensureInternetHelperBound()) {
+                view.loadUrl(url);
+            } else {
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                GBApplication.getContext().startActivity(i);
+            }
+        } else if (parsedUri.getScheme().startsWith("gadgetbridge")) {
+            url = url.replaceFirst("^gadgetbridge://.*json=", "file:///android_asset/app_config/configure.html?config=true&json=");
+            view.loadUrl(url);
         } else if (parsedUri.getScheme().startsWith("pebblejs")) {
             url = url.replaceFirst("^pebblejs://close#", "file:///android_asset/app_config/configure.html?config=true&json=");
             view.loadUrl(url);
         } else if (parsedUri.getScheme().equals("data")) { //clay
             view.loadUrl(url);
         } else {
-            LOG.debug("WEBVIEW Ignoring unhandled scheme: " + parsedUri.getScheme());
+            LOG.debug("WEBVIEW Ignoring unhandled scheme: {}", parsedUri.getScheme());
         }
 
         return true;
+    }
+
+    @Override
+    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+        return shouldOverrideUrlLoading(view, request.getUrl().toString());
     }
 
     private WebResourceResponse mimicRawGitResponse(String path) {
@@ -211,11 +228,11 @@ public class GBWebClient extends WebViewClient {
 //
 //                resp.put("cod", 200);
             } else {
-                LOG.warn("WEBVIEW - cannot mimick request of type " + type + " (unsupported or lack of data)");
+                LOG.warn("WEBVIEW - cannot mimick request of type {} (unsupported or lack of data)", type);
                 return null;
             }
 
-            LOG.info("WEBVIEW - mimic openweather response" + resp.toString());
+            LOG.info("WEBVIEW - mimic openweather response {}", resp.toString());
             Map<String, String> headers = new HashMap<>();
             headers.put("Access-Control-Allow-Origin", "*");
 
@@ -266,7 +283,7 @@ public class GBWebClient extends WebViewClient {
             LOG.error("Error while reconstructing OWM weather reply");
             return null;
         }
-        LOG.debug("Weather JSON for WEBVIEW: " + reconstructedOWMWeather);
+        LOG.debug("Weather JSON for WEBVIEW: {}", reconstructedOWMWeather);
         return reconstructedOWMWeather;
     }
 
