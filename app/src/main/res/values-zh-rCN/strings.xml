@@ -4041,4 +4041,6 @@
     <string name="activity_type_ultra_run">超跑</string>
     <string name="activity_type_virtual_run">虚拟跑</string>
     <string name="activity_type_xc_skate_ski">XC 滑板滑雪</string>
+    <string name="huawei_send_gps_and_time_title">发送 GPS 和时间到设备上</string>
+    <string name="huawei_send_gps_and_time_summary">发送 GPS 和时间到设备进行天气和星星搜索优化。应在设置中设定位置</string>
 </resources>
