@@ -869,11 +869,9 @@ public class NotificationListener extends NotificationListenerService {
                                 try (FileOutputStream fos = new FileOutputStream(pictureFile)) {
                                     bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
                                     notificationSpec.picturePath = pictureFile.getAbsolutePath();
-                                } catch (IOException e) {
-                                    LOG.error("Failed to encode image from message data uri to notification cache: ", e);
                                 }
                             }
-                        } catch (IOException e) {
+                        } catch (Exception e) {
                             LOG.error("Failed to load picture from data uri to cache: ", e);
                         } finally {
                             if (bmp != null) {
@@ -893,7 +891,7 @@ public class NotificationListener extends NotificationListenerService {
                 try (FileOutputStream fos = new FileOutputStream(pictureFile)) {
                     bmp.compress(Bitmap.CompressFormat.PNG, 100, fos);
                     notificationSpec.picturePath = pictureFile.getAbsolutePath();
-                } catch (IOException e) {
+                } catch (Exception e) {
                     LOG.error("Failed to save picture to notification cache: {}", e.getMessage());
                 } finally {
                     bmp.recycle();
