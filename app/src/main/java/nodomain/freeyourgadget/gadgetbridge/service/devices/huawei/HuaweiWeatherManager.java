@@ -227,6 +227,7 @@ public class HuaweiWeatherManager {
 
         Weather.Settings weatherSettings = new Weather.Settings();
         weatherSettings.uvIndexSupported = supportProvider.getHuaweiCoordinator().supportsWeatherUvIndex();
+        weatherSettings.extendedHourlyForecast = supportProvider.getHuaweiCoordinator().supportsWeatherExtendedHourForecast();
 
         SendWeatherStartRequest weatherStartRequest = new SendWeatherStartRequest(supportProvider, weatherSettings);
         weatherStartRequest.setFinalizeReq(errorHandler);

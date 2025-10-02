@@ -66,7 +66,10 @@ public class SendWeatherCurrentRequest extends Request {
                     aqi,
                     weatherSpec.getTimestamp(),
                     weatherSpec.getUvIndex(),
-                    "Gadgetbridge"
+                    "Gadgetbridge",
+                    (byte) weatherSpec.getCurrentHumidity(),
+                    (int) weatherSpec.getWindSpeed(),
+                    (weatherSpec.getFeelsLikeTemp() - 273)
                 ).serialize();
         } catch (HuaweiPacket.CryptoException e) {
             throw new RequestCreationException(e);

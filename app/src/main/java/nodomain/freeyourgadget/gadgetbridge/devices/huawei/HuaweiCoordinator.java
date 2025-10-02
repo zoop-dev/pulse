@@ -638,6 +638,10 @@ public class HuaweiCoordinator {
         return supportsExpandCapability(0x2f);
     }
 
+    public boolean supportsWeatherExtendedHourForecast() {
+        return supportsExpandCapability(0xc0);
+    }
+
     public boolean supportsWorkouts() {
         return supportsCommandForService(0x17, 0x01);
     }

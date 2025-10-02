@@ -43,6 +43,7 @@ public class Weather {
         public boolean timeSupported = false;
         public boolean sourceSupported = false;
         public boolean weatherIconSupported = false;
+        public boolean extendedHourlyForecast = false;
 
         // WeatherSunMoonSupport
         public boolean sunRiseSetSupported = false;
@@ -382,7 +383,10 @@ public class Weather {
                 Short airQualityIndex,
                 Integer observationTime,
                 Float uvIndex,
-                String sourceName
+                String sourceName,
+                Byte humidity,
+                Integer windSpeedValue,
+                Integer feelLikeTemperature
         ) {
             super(paramsProvider);
 
@@ -437,6 +441,16 @@ public class Weather {
                 this.tlv.put(0x0e, sourceName);
             if (uvIndex != null && settings.uvIndexSupported)
                 this.tlv.put(0x0f, uvIndex.byteValue());
+
+            if(settings.extendedHourlyForecast) {
+                if(humidity != null)
+                    this.tlv.put(0x10, humidity);
+                if(windSpeedValue != null)
+                    this.tlv.put(0x11, windSpeedValue);
+                if(feelLikeTemperature != null)
+                    this.tlv.put(0x12, feelLikeTemperature);
+
+            }
 
             this.isEncrypted = true;
             this.complete = true;
@@ -586,6 +600,8 @@ public class Weather {
             public int timestamp;
             public WeatherIcon icon;
             public Byte temperature;
+            public Byte precipitation;
+            public Byte uvIndex;
 
             @NonNull
             @Override
@@ -596,6 +612,8 @@ public class Weather {
                         ", timestamp=" + timestampStr +
                         ", icon=" + icon +
                         ", temperature=" + temperature +
+                        ", precipitation=" + precipitation +
+                        ", uvIndex=" + uvIndex +
                         '}';
             }
         }
@@ -652,6 +670,14 @@ public class Weather {
                             timeTlv.put(0x04, iconToByte(timeData.icon));
                         if (timeData.temperature != null && (settings.temperatureSupported || settings.currentTemperatureSupported))
                             timeTlv.put(0x05, timeData.temperature);
+                        if(settings.extendedHourlyForecast) {
+                            if (timeData.precipitation != null) {
+                                timeTlv.put(0x06, timeData.precipitation);
+                            }
+                            if (timeData.uvIndex != null) {
+                                timeTlv.put(0x07, timeData.uvIndex);
+                            }
+                        }
                         timeDataTlv.put(0x82, timeTlv);
                     }
                     this.tlv.put(0x81, timeDataTlv);

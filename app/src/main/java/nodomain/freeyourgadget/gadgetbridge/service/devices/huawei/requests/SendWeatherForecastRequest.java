@@ -50,6 +50,8 @@ public class SendWeatherForecastRequest extends Request {
             timeData.timestamp = hourly.getTimestamp();
             timeData.icon = supportProvider.openWeatherMapConditionCodeToHuaweiIcon(hourly.getConditionCode());
             timeData.temperature = (byte) (hourly.getTemp() - 273);
+            timeData.precipitation = (byte) hourly.getPrecipProbability();
+            timeData.uvIndex = (byte) hourly.getUvIndex();
             timeDataArrayList.add(timeData);
         }
 
