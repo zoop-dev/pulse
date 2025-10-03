@@ -33,8 +33,8 @@ import org.slf4j.LoggerFactory;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.GBChromeClient;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.GBWebClient;
+import nodomain.freeyourgadget.gadgetbridge.webview.GBChromeClient;
+import nodomain.freeyourgadget.gadgetbridge.webview.GBWebClient;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.JSInterface;
 
 public class WebViewSingleton {

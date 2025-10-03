@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview;
+package nodomain.freeyourgadget.gadgetbridge.webview;
 
 import android.Manifest;
 import android.content.Context;
@@ -23,10 +23,11 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 
+import androidx.core.app.ActivityCompat;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import androidx.core.app.ActivityCompat;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 

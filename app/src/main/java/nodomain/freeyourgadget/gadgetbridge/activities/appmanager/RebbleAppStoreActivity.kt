@@ -35,8 +35,8 @@ import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService
-import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.GBChromeClient
-import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.GBWebClient
+import nodomain.freeyourgadget.gadgetbridge.webview.GBChromeClient
+import nodomain.freeyourgadget.gadgetbridge.webview.GBWebClient
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 import nodomain.freeyourgadget.gadgetbridge.util.InternetHelperSingleton
 import nodomain.freeyourgadget.internethelper.aidl.http.HttpGetRequest

@@ -17,8 +17,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview;
 
+import android.location.Location;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,13 +40,13 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.UUID;
 
-import androidx.annotation.NonNull;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.PebbleUtils;
+import nodomain.freeyourgadget.gadgetbridge.webview.CurrentPosition;
 
 public class JSInterface {
 
@@ -54,12 +57,11 @@ public class JSInterface {
     private static final Logger LOG = LoggerFactory.getLogger(JSInterface.class);
 
     public JSInterface(@NonNull GBDevice device, @NonNull UUID mUuid) {
-        LOG.debug("Creating JS interface for UUID: " + mUuid.toString());
+        LOG.debug("Creating JS interface for UUID: {}", mUuid);
         this.device = device;
         this.mUuid = mUuid;
         this.lastTransaction = 0;
     }
-
 
     private boolean isLocationEnabledForWatchApp() {
         return true; //FIXME: as long as we don't give watchapp internet access it's not a problem
@@ -73,10 +75,10 @@ public class JSInterface {
     @JavascriptInterface
     public String sendAppMessage(String msg, String needsTransactionMsg) {
         boolean needsTransaction = "true".equals(needsTransactionMsg);
-        LOG.debug("from WEBVIEW: " + msg + " needs a transaction: " + needsTransaction);
+        LOG.debug("from WEBVIEW: {} needs a transaction: {}", msg, needsTransaction);
         JSONObject knownKeys = PebbleUtils.getAppConfigurationKeys(this.mUuid);
         if (knownKeys == null) {
-            LOG.warn("No app configuration keys for: " + mUuid);
+            LOG.warn("No app configuration keys for: {}", mUuid);
             return null;
         }
 
@@ -110,7 +112,7 @@ public class JSInterface {
                 }
 
             }
-            LOG.info("WEBVIEW message to pebble: " + out.toString());
+            LOG.info("WEBVIEW message to pebble: {}", out);
             if (needsTransaction) {
                 this.lastTransaction++;
                 GBApplication.deviceService().onAppConfiguration(this.mUuid, out.toString(), this.lastTransaction);
@@ -135,7 +137,7 @@ public class JSInterface {
             //TODO: use real info
             wi.put("language", "en");
         } catch (JSONException e) {
-            LOG.warn("Error building the ActiveWathcInfo JSON object", e);
+            LOG.warn("Error building the ActiveWatchInfo JSON object", e);
         }
         //Json not supported apparently, we need to cast back and forth
         return wi.toString();
@@ -143,7 +145,7 @@ public class JSInterface {
 
     @JavascriptInterface
     public String getAppConfigurationFile() {
-        LOG.debug("WEBVIEW loading config file of " + this.mUuid.toString());
+        LOG.debug("WEBVIEW loading config file of {}", this.mUuid.toString());
         try {
             File destDir = PebbleUtils.getPbwCacheDir();
             File configurationFile = new File(destDir, this.mUuid.toString() + "_config.js");
@@ -226,7 +228,6 @@ public class JSInterface {
         return "gb" + this.mUuid.toString();
     }
 
-
     @JavascriptInterface
     public String getCurrentPosition() {
         if (!isLocationEnabledForWatchApp()) {
@@ -236,28 +237,27 @@ public class JSInterface {
         JSONObject geoPosition = new JSONObject();
         JSONObject coords = new JSONObject();
         try {
+            final Location location = new CurrentPosition().getLastKnownLocation();
 
-            CurrentPosition currentPosition = new CurrentPosition();
+            geoPosition.put("timestamp", location.getTime());
 
-            geoPosition.put("timestamp", currentPosition.timestamp);
-
-            coords.put("latitude", currentPosition.getLatitude());
-            coords.put("longitude", currentPosition.getLongitude());
-            coords.put("accuracy", currentPosition.accuracy);
-            coords.put("altitude", currentPosition.altitude);
-            coords.put("speed", currentPosition.speed);
+            coords.put("latitude", location.getLatitude());
+            coords.put("longitude", location.getLongitude());
+            coords.put("accuracy", location.getAccuracy());
+            coords.put("altitude", location.getAltitude());
+            coords.put("speed", location.getSpeed());
 
             geoPosition.put("coords", coords);
 
         } catch (JSONException e) {
             LOG.warn(e.getMessage());
         }
-        LOG.info("WEBVIEW - geo position" + geoPosition.toString());
+        LOG.info("WEBVIEW - geo position {}", geoPosition);
         return geoPosition.toString();
     }
 
     @JavascriptInterface
     public void eventFinished(String event) {
-        LOG.debug("WEBVIEW event finished: " + event);
+        LOG.debug("WEBVIEW event finished: {}", event);
     }
 }

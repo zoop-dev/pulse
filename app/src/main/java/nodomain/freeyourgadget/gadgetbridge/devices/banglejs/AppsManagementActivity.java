@@ -20,18 +20,13 @@ import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.Dev
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Looper;
-import android.os.ParcelFileDescriptor;
-import android.os.RemoteException;
 import android.util.Base64;
 import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
@@ -39,7 +34,6 @@ import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -53,8 +47,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Map;
-import java.util.concurrent.CountDownLatch;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -62,13 +54,8 @@ import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.banglejs.BangleJSDeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.util.Capsule;
+import nodomain.freeyourgadget.gadgetbridge.webview.GBWebClient;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
-import nodomain.freeyourgadget.internethelper.aidl.http.HttpGetRequest;
-import nodomain.freeyourgadget.internethelper.aidl.http.HttpHeaders;
-import nodomain.freeyourgadget.internethelper.aidl.http.HttpResponse;
-import nodomain.freeyourgadget.internethelper.aidl.http.IHttpCallback;
-import nodomain.freeyourgadget.internethelper.aidl.http.IHttpService;
 
 public class AppsManagementActivity extends AbstractGBActivity {
     private static final Logger LOG = LoggerFactory.getLogger(AppsManagementActivity.class);
@@ -94,15 +81,6 @@ public class AppsManagementActivity extends AbstractGBActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_banglejs_apps_management);
-
-        final Intent intent1 = new Intent("nodomain.freeyourgadget.internethelper.HttpService");
-        intent1.setPackage("nodomain.freeyourgadget.internethelper");
-        boolean res = getApplicationContext().bindService(intent1, mHttpConnection, Context.BIND_AUTO_CREATE);
-        if (res) {
-            LOG.info("Bound to HttpService");
-        } else {
-            LOG.warn("Could not bind to HttpService");
-        }
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -214,21 +192,6 @@ public class AppsManagementActivity extends AbstractGBActivity {
         // see onActivityResult
     }
 
-    private volatile IHttpService iHttpService;
-    private final CountDownLatch latchInit = new CountDownLatch(1);
-
-    private final ServiceConnection mHttpConnection = new ServiceConnection() {
-        public void onServiceConnected(final ComponentName className, final IBinder service) {
-            LOG.info("onServiceConnected: {}", className);
-            iHttpService = IHttpService.Stub.asInterface(service);
-        }
-
-        public void onServiceDisconnected(final ComponentName className) {
-            LOG.error("Service has unexpectedly disconnected: {}", className);
-            iHttpService = null;
-        }
-    };
-
     private void initViews() {
         //https://stackoverflow.com/questions/4325639/android-calling-javascript-functions-in-webview
         webView = findViewById(R.id.webview);
@@ -247,7 +210,7 @@ public class AppsManagementActivity extends AbstractGBActivity {
         Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(mGBDevice.getAddress()));
         final String url = devicePrefs.getString(PREF_BANGLEJS_WEBVIEW_URL, "https://banglejs.com/apps/android.html").trim();
 
-        webView.setWebViewClient(new WebViewClient(){
+        webView.setWebViewClient(new GBWebClient(){
             @Override
             public void onPageFinished(WebView view, String weburl){
                 //webView.loadUrl("javascript:showToast('WebView in Espruino')");
@@ -257,54 +220,6 @@ public class AppsManagementActivity extends AbstractGBActivity {
                 Intent intent = new Intent(Intent.ACTION_VIEW, request.getUrl());
                 vw.getContext().startActivity(intent);
                 return true;
-            }
-
-            @Override
-            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-                LOG.info("shouldIntercept {} {} {}", request.getMethod(), request.getUrl(), iHttpService != null);
-                if (!request.getMethod().equalsIgnoreCase("get")) {
-                    return super.shouldInterceptRequest(view, request);
-                }
-                if (iHttpService == null) {
-                    return super.shouldInterceptRequest(view, request);
-                }
-                final HttpHeaders httpHeaders = new HttpHeaders();
-                for (Map.Entry<String, String> header : request.getRequestHeaders().entrySet()) {
-                    httpHeaders.addHeader(header.getKey(), header.getValue());
-                }
-                final HttpGetRequest httpGetRequest = new HttpGetRequest(request.getUrl().toString(), httpHeaders);
-                CountDownLatch latch = new CountDownLatch(1);
-                final Capsule<WebResourceResponse> internetResponseCapsule = new Capsule<>();
-                try {
-                    iHttpService.get(httpGetRequest, new IHttpCallback.Stub() {
-                        @Override
-                        public void onResponse(HttpResponse response) throws RemoteException {
-                            WebResourceResponse internetResponse = new WebResourceResponse(
-                                    response.getHeaders().get("content-type"),
-                                    response.getHeaders().get("content-encoding"),
-                                    response.getStatus(), "OK",
-                                    response.getHeaders().toMap(),
-                                    new ParcelFileDescriptor.AutoCloseInputStream(response.getBody())
-                            );
-                            internetResponseCapsule.set(internetResponse);
-                            latch.countDown();
-                        }
-
-                        @Override
-                        public void onException(String message) throws RemoteException {
-                            throw new RuntimeException(message);
-                        }
-                    });
-                } catch (RemoteException e) {
-                    throw new RuntimeException(e);
-                }
-                try {
-                    latch.await();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-
-                return internetResponseCapsule.get();
             }
 
             @Override
