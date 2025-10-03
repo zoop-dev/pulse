@@ -96,165 +96,89 @@ public class Weather {
     }
 
     private static byte iconToByte(WeatherIcon weatherIcon) {
-        switch (weatherIcon) {
-            case SUNNY:
-                return 0x00;
-            case CLOUDY:
-                return 0x01;
-            case OVERCAST:
-                return 0x02;
-            case SHOWERS:
-                return 0x03;
-            case THUNDERSTORMS:
-                return 0x04;
-            case THUNDER_AND_HAIL:
-                return 0x05;
-            case SLEET:
-                return 0x06;
-            case LIGHT_RAIN:
-                return 0x07;
-            case RAIN:
-                return 0x08;
-            case HEAVY_RAIN:
-                return 0x09;
-            case RAIN_STORM:
-                return 0x0a;
-            case HEAVY_RAIN_STORMS:
-                return 0x0b;
-            case SEVERE_RAIN_STORMS:
-                return 0x0c;
-            case SNOW_FLURRIES:
-                return 0x0d;
-            case LIGHT_SNOW:
-                return 0x0e;
-            case SNOW:
-                return 0x0f;
-            case HEAVY_SNOW:
-                return 0x10;
-            case SNOWSTORMS:
-                return 0x11;
-            case FOG:
-                return 0x12;
-            case FREEZING_RAIN:
-                return 0x13;
-            case DUST_STORM:
-                return 0x14;
-            case LIGHT_TO_MODERATE_RAIN:
-                return 0x15;
-            case MODERATE_TO_HEAVY_RAIN:
-                return 0x16;
-            case HEAVY_TO_SEVERE_RAIN:
-                return 0x17;
-            case HEAVY_TO_TORRENTIAL_RAIN:
-                return 0x18;
-            case SEVERE_TO_TORRENTIAL_RAIN:
-                return 0x19;
-            case LIGHT_TO_MODERATE_SNOW:
-                return 0x1a;
-            case MODERATE_TO_HEAVY_SNOW:
-                return 0x1b;
-            case HEAVY_SNOW_TO_BLIZZARD:
-                return 0x1c;
-            case DUST:
-                return 0x1d;
-            case SAND:
-                return 0x1e;
-            case SANDSTORMS:
-                return 0x1f;
-            case FREEZING:
-                return 0x20;
-            case HOT:
-                return 0x21;
-            case COLD:
-                return 0x22;
-            case WINDY:
-                return 0x23;
-            case HAZY:
-                return 0x35;
-            default:
-                return 0x63; // Any higher and the current weather breaks
-        }
+        return switch (weatherIcon) {
+            case SUNNY -> 0x00;
+            case CLOUDY -> 0x01;
+            case OVERCAST -> 0x02;
+            case SHOWERS -> 0x03;
+            case THUNDERSTORMS -> 0x04;
+            case THUNDER_AND_HAIL -> 0x05;
+            case SLEET -> 0x06;
+            case LIGHT_RAIN -> 0x07;
+            case RAIN -> 0x08;
+            case HEAVY_RAIN -> 0x09;
+            case RAIN_STORM -> 0x0a;
+            case HEAVY_RAIN_STORMS -> 0x0b;
+            case SEVERE_RAIN_STORMS -> 0x0c;
+            case SNOW_FLURRIES -> 0x0d;
+            case LIGHT_SNOW -> 0x0e;
+            case SNOW -> 0x0f;
+            case HEAVY_SNOW -> 0x10;
+            case SNOWSTORMS -> 0x11;
+            case FOG -> 0x12;
+            case FREEZING_RAIN -> 0x13;
+            case DUST_STORM -> 0x14;
+            case LIGHT_TO_MODERATE_RAIN -> 0x15;
+            case MODERATE_TO_HEAVY_RAIN -> 0x16;
+            case HEAVY_TO_SEVERE_RAIN -> 0x17;
+            case HEAVY_TO_TORRENTIAL_RAIN -> 0x18;
+            case SEVERE_TO_TORRENTIAL_RAIN -> 0x19;
+            case LIGHT_TO_MODERATE_SNOW -> 0x1a;
+            case MODERATE_TO_HEAVY_SNOW -> 0x1b;
+            case HEAVY_SNOW_TO_BLIZZARD -> 0x1c;
+            case DUST -> 0x1d;
+            case SAND -> 0x1e;
+            case SANDSTORMS -> 0x1f;
+            case FREEZING -> 0x20;
+            case HOT -> 0x21;
+            case COLD -> 0x22;
+            case WINDY -> 0x23;
+            case HAZY -> 0x35;
+            default -> 0x63; // Any higher and the current weather breaks
+        };
     }
 
     private static WeatherIcon byteToIcon(byte weatherIcon) {
-        switch (weatherIcon) {
-            case 0x00:
-                return WeatherIcon.SUNNY;
-            case 0x01:
-                return WeatherIcon.CLOUDY;
-            case 0x02:
-                return WeatherIcon.OVERCAST;
-            case 0x03:
-                return WeatherIcon.SHOWERS;
-            case 0x04:
-                return WeatherIcon.THUNDERSTORMS;
-            case 0x05:
-                return WeatherIcon.THUNDER_AND_HAIL;
-            case 0x06:
-                return WeatherIcon.SLEET;
-            case 0x07:
-                return WeatherIcon.LIGHT_RAIN;
-            case 0x08:
-                return WeatherIcon.RAIN;
-            case 0x09:
-                return WeatherIcon.HEAVY_RAIN;
-            case 0x0a:
-                return WeatherIcon.RAIN_STORM;
-            case 0x0b:
-                return WeatherIcon.HEAVY_RAIN_STORMS;
-            case 0x0c:
-                return WeatherIcon.SEVERE_RAIN_STORMS;
-            case 0x0d:
-                return WeatherIcon.SNOW_FLURRIES;
-            case 0x0e:
-                return WeatherIcon.LIGHT_SNOW;
-            case 0x0f:
-                return WeatherIcon.SNOW;
-            case 0x10:
-                return WeatherIcon.HEAVY_SNOW;
-            case 0x11:
-                return WeatherIcon.SNOWSTORMS;
-            case 0x12:
-                return WeatherIcon.FOG;
-            case 0x13:
-                return WeatherIcon.FREEZING_RAIN;
-            case 0x14:
-                return WeatherIcon.DUST_STORM;
-            case 0x15:
-                return WeatherIcon.LIGHT_TO_MODERATE_RAIN;
-            case 0x16:
-                return WeatherIcon.MODERATE_TO_HEAVY_RAIN;
-            case 0x17:
-                return WeatherIcon.HEAVY_TO_SEVERE_RAIN;
-            case 0x18:
-                return WeatherIcon.HEAVY_TO_TORRENTIAL_RAIN;
-            case 0x19:
-                return WeatherIcon.SEVERE_TO_TORRENTIAL_RAIN;
-            case 0x1a:
-                return WeatherIcon.LIGHT_TO_MODERATE_SNOW;
-            case 0x1b:
-                return WeatherIcon.MODERATE_TO_HEAVY_SNOW;
-            case 0x1c:
-                return WeatherIcon.HEAVY_SNOW_TO_BLIZZARD;
-            case 0x1d:
-                return WeatherIcon.DUST;
-            case 0x1e:
-                return WeatherIcon.SAND;
-            case 0x1f:
-                return WeatherIcon.SANDSTORMS;
-            case 0x20:
-                return WeatherIcon.FREEZING;
-            case 0x21:
-                return WeatherIcon.HOT;
-            case 0x22:
-                return WeatherIcon.COLD;
-            case 0x23:
-                return WeatherIcon.WINDY;
-            case 0x35:
-                return WeatherIcon.HAZY;
-            default:
-                return WeatherIcon.UNKNOWN;
-        }
+        return switch (weatherIcon) {
+            case 0x00 -> WeatherIcon.SUNNY;
+            case 0x01 -> WeatherIcon.CLOUDY;
+            case 0x02 -> WeatherIcon.OVERCAST;
+            case 0x03 -> WeatherIcon.SHOWERS;
+            case 0x04 -> WeatherIcon.THUNDERSTORMS;
+            case 0x05 -> WeatherIcon.THUNDER_AND_HAIL;
+            case 0x06 -> WeatherIcon.SLEET;
+            case 0x07 -> WeatherIcon.LIGHT_RAIN;
+            case 0x08 -> WeatherIcon.RAIN;
+            case 0x09 -> WeatherIcon.HEAVY_RAIN;
+            case 0x0a -> WeatherIcon.RAIN_STORM;
+            case 0x0b -> WeatherIcon.HEAVY_RAIN_STORMS;
+            case 0x0c -> WeatherIcon.SEVERE_RAIN_STORMS;
+            case 0x0d -> WeatherIcon.SNOW_FLURRIES;
+            case 0x0e -> WeatherIcon.LIGHT_SNOW;
+            case 0x0f -> WeatherIcon.SNOW;
+            case 0x10 -> WeatherIcon.HEAVY_SNOW;
+            case 0x11 -> WeatherIcon.SNOWSTORMS;
+            case 0x12 -> WeatherIcon.FOG;
+            case 0x13 -> WeatherIcon.FREEZING_RAIN;
+            case 0x14 -> WeatherIcon.DUST_STORM;
+            case 0x15 -> WeatherIcon.LIGHT_TO_MODERATE_RAIN;
+            case 0x16 -> WeatherIcon.MODERATE_TO_HEAVY_RAIN;
+            case 0x17 -> WeatherIcon.HEAVY_TO_SEVERE_RAIN;
+            case 0x18 -> WeatherIcon.HEAVY_TO_TORRENTIAL_RAIN;
+            case 0x19 -> WeatherIcon.SEVERE_TO_TORRENTIAL_RAIN;
+            case 0x1a -> WeatherIcon.LIGHT_TO_MODERATE_SNOW;
+            case 0x1b -> WeatherIcon.MODERATE_TO_HEAVY_SNOW;
+            case 0x1c -> WeatherIcon.HEAVY_SNOW_TO_BLIZZARD;
+            case 0x1d -> WeatherIcon.DUST;
+            case 0x1e -> WeatherIcon.SAND;
+            case 0x1f -> WeatherIcon.SANDSTORMS;
+            case 0x20 -> WeatherIcon.FREEZING;
+            case 0x21 -> WeatherIcon.HOT;
+            case 0x22 -> WeatherIcon.COLD;
+            case 0x23 -> WeatherIcon.WINDY;
+            case 0x35 -> WeatherIcon.HAZY;
+            default -> WeatherIcon.UNKNOWN;
+        };
     }
 
     public enum HuaweiTemperatureFormat {
@@ -302,49 +226,38 @@ public class Weather {
     }
 
     private static byte moonPhaseToByte (MoonPhase moonPhase) {
-        switch (moonPhase) {
-            case NEW_MOON:
-                return 1;
-            case WAXING_CRESCENT:
-                return 2;
-            case FIRST_QUARTER:
-                return 3;
-            case WAXING_GIBBOUS:
-                return 4;
-            case FULL_MOON:
-                return 5;
-            case WANING_GIBBOUS:
-                return 6;
-            case THIRD_QUARTER:
-                return 7;
-            case WANING_CRESCENT:
-                return 8;
-            default:
-                return -1;
-        }
+        return switch (moonPhase) {
+            case NEW_MOON -> 1;
+            case WAXING_CRESCENT -> 2;
+            case FIRST_QUARTER -> 3;
+            case WAXING_GIBBOUS -> 4;
+            case FULL_MOON -> 5;
+            case WANING_GIBBOUS -> 6;
+            case THIRD_QUARTER -> 7;
+            case WANING_CRESCENT -> 8;
+        };
     }
 
     private static MoonPhase byteToMoonPhase(byte moonPhase) {
-        switch (moonPhase) {
-            case 1:
-                return MoonPhase.NEW_MOON;
-            case 2:
-                return MoonPhase.WAXING_CRESCENT;
-            case 3:
-                return MoonPhase.FIRST_QUARTER;
-            case 4:
-                return MoonPhase.WAXING_GIBBOUS;
-            case 5:
-                return MoonPhase.FULL_MOON;
-            case 6:
-                return MoonPhase.WANING_GIBBOUS;
-            case 7:
-                return MoonPhase.THIRD_QUARTER;
-            case 8:
-                return MoonPhase.WANING_CRESCENT;
-            default:
-                return null;
-        }
+        return switch (moonPhase) {
+            case 1 -> MoonPhase.NEW_MOON;
+            case 2 -> MoonPhase.WAXING_CRESCENT;
+            case 3 -> MoonPhase.FIRST_QUARTER;
+            case 4 -> MoonPhase.WAXING_GIBBOUS;
+            case 5 -> MoonPhase.FULL_MOON;
+            case 6 -> MoonPhase.WANING_GIBBOUS;
+            case 7 -> MoonPhase.THIRD_QUARTER;
+            case 8 -> MoonPhase.WANING_CRESCENT;
+            default -> null;
+        };
+    }
+
+    // no wind - 0, NE - 1, E - 2, SE - 3, S - 4, SW - 5, W - 6, NW - 7, N - 8
+    private static int convertWindDirection(int degrees) {
+        if (degrees < 0 || degrees > 360)
+            return 0;
+        int val = ((int)((degrees/45.0) + 0.5)) % 8;
+        return (val == 0)?8:val;
     }
 
     public enum ErrorCode {
@@ -354,15 +267,11 @@ public class Weather {
     }
 
     private static byte errorCodeToByte(ErrorCode errorCode) {
-        switch (errorCode) {
-            case NETWORK_ERROR:
-                return 0;
-            case GPS_PERMISSION_ERROR:
-                return 1;
-            case WEATHER_DISABLED:
-                return 2;
-        }
-        throw new RuntimeException(); // Shouldn't happen
+        return switch (errorCode) {
+            case NETWORK_ERROR -> 0;
+            case GPS_PERMISSION_ERROR -> 1;
+            case WEATHER_DISABLED -> 2;
+        };
     }
 
     public static class CurrentWeatherRequest extends HuaweiPacket {
@@ -372,7 +281,7 @@ public class Weather {
                 ParamsProvider paramsProvider,
                 Settings settings,
                 WeatherIcon icon,
-                Byte windDirection,
+                Integer windDirection,
                 Byte windSpeed,
                 Byte lowestTemperature,
                 Byte highestTemperature,
@@ -406,10 +315,7 @@ public class Weather {
                     wind = (short) windSpeed;
 
                 if (windDirection != null) {
-                    if (windDirection > 0)
-                        wind |= (short) (((short) (windDirection * 8 / 360)) << 8);
-                    else
-                        wind |= (short) (((short) (360 + windDirection) * 8 / 360) << 8);
+                    wind |= (short) (convertWindDirection(windDirection) << 8);
                 }
                 tlv81.put(0x03, wind);
             }
@@ -423,8 +329,6 @@ public class Weather {
                         .put(0x07, highestTemperature)
                 );
             }
-            if (windDirection != null && windSpeed != null && settings.windSupported)
-                this.tlv.put(0x03, (short) ((((short) windDirection) << 8) | ((short) windSpeed)));
             if (pm25 != null && settings.pm25Supported)
                 this.tlv.put(0x04, pm25);
             if (locationName != null && settings.locationNameSupported)

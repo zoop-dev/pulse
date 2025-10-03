@@ -55,7 +55,7 @@ public class SendWeatherCurrentRequest extends Request {
                     this.paramsProvider,
                     settings,
                     supportProvider.openWeatherMapConditionCodeToHuaweiIcon(weatherSpec.getCurrentConditionCode()),
-                    (byte) weatherSpec.getWindDirection(),
+                    weatherSpec.getWindDirection(),
                     (byte) weatherSpec.windSpeedAsBeaufort(),
                     (byte) (weatherSpec.getTodayMinTemp() - 273),
                     (byte) (weatherSpec.getTodayMaxTemp() - 273),
