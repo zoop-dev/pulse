@@ -22,13 +22,13 @@ import androidx.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
@@ -108,16 +108,13 @@ public class CmfActivitySampleProvider extends AbstractSampleProvider<CmfActivit
             convertCumulativeSteps(samples, CmfActivitySampleDao.Properties.Steps);
         }
 
-        final Map<Integer, CmfActivitySample> sampleByTs = new HashMap<>();
-        for (final CmfActivitySample sample : samples) {
-            sampleByTs.put(sample.getTimestamp(), sample);
-        }
+        final Map<Integer, CmfActivitySample> sampleByTs = getActivitySampleMapByTimestamp(samples);
 
         overlayHeartRate(sampleByTs, timestamp_from, timestamp_to);
         overlaySleep(sampleByTs, timestamp_from, timestamp_to);
 
         final List<CmfActivitySample> finalSamples = new ArrayList<>(sampleByTs.values());
-        Collections.sort(finalSamples, (a, b) -> Integer.compare(a.getTimestamp(), b.getTimestamp()));
+        Collections.sort(finalSamples, Comparator.comparingInt(CmfActivitySample::getTimestamp));
 
         final long nanoEnd = System.nanoTime();
 
@@ -126,6 +123,27 @@ public class CmfActivitySampleProvider extends AbstractSampleProvider<CmfActivit
         LOG.trace("Getting cmf samples took {}ms", executionTime);
 
         return finalSamples;
+    }
+
+    @NonNull
+    private static Map<Integer, CmfActivitySample> getActivitySampleMapByTimestamp(final List<CmfActivitySample> samples) {
+        final Map<Integer, CmfActivitySample> sampleByTs = new HashMap<>(samples.size());
+        for (final CmfActivitySample sample : samples) {
+            sampleByTs.compute(sample.getTimestamp(), (k, existingSample) -> {
+                // Combine potential duplicates introduced by convertCumulativeSteps
+                if (existingSample == null) {
+                    return sample;
+                }
+                existingSample.setRawIntensity(Math.max(sample.getRawIntensity(), existingSample.getRawIntensity()));
+                existingSample.setSteps(Math.max(sample.getSteps(), existingSample.getSteps()));
+                existingSample.setHeartRate(Math.max(sample.getHeartRate(), existingSample.getHeartRate()));
+                existingSample.setDistance(Math.max(Objects.requireNonNullElse(sample.getDistance(), -1), Objects.requireNonNullElse(existingSample.getDistance(), -1)));
+                existingSample.setCalories(Math.max(Objects.requireNonNullElse(sample.getCalories(), -1), Objects.requireNonNullElse(existingSample.getCalories(), -1)));
+                existingSample.setCalories(Math.max(sample.getHeartRate(), existingSample.getHeartRate()));
+                return existingSample;
+            });
+        }
+        return sampleByTs;
     }
 
     private void overlayHeartRate(final Map<Integer, CmfActivitySample> sampleByTs, final int timestamp_from, final int timestamp_to) {
@@ -173,15 +191,11 @@ public class CmfActivitySampleProvider extends AbstractSampleProvider<CmfActivit
     }
 
     final ActivityKind sleepStageToActivityKind(final int sleepStage) {
-        switch (sleepStage) {
-            case 1:
-                return ActivityKind.DEEP_SLEEP;
-            case 2:
-                return ActivityKind.LIGHT_SLEEP;
-            case 3:
-                return ActivityKind.REM_SLEEP;
-            default:
-                return ActivityKind.UNKNOWN;
-        }
+        return switch (sleepStage) {
+            case 1 -> ActivityKind.DEEP_SLEEP;
+            case 2 -> ActivityKind.LIGHT_SLEEP;
+            case 3 -> ActivityKind.REM_SLEEP;
+            default -> ActivityKind.UNKNOWN;
+        };
     }
 }

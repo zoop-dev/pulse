@@ -187,7 +187,8 @@ public abstract class AbstractSampleProvider<T extends AbstractActivitySample> i
         }
         Property deviceProperty = getDeviceIdentifierSampleProperty();
         qb.where(deviceProperty.eq(dbDevice.getId()), timestampProperty.ge(timestamp_from))
-            .where(timestampProperty.le(timestamp_to));
+            .where(timestampProperty.le(timestamp_to))
+            .orderAsc(timestampProperty);
         List<T> samples = qb.build().list();
         for (T sample : samples) {
             sample.setProvider(this);
@@ -264,6 +265,7 @@ public abstract class AbstractSampleProvider<T extends AbstractActivitySample> i
         int prevSteps = samples.get(0).getSteps();
         int prevDistance = samples.get(0).getDistanceCm();
         int prevActiveCalories = samples.get(0).getActiveCalories();
+        // Round timestamp to the nearest minute
         samples.get(0).setTimestamp((samples.get(0).getTimestamp() / 60) * 60);
         int bak;
 
