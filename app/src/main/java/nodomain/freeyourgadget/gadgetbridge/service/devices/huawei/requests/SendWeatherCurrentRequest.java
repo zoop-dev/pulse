@@ -68,7 +68,7 @@ public class SendWeatherCurrentRequest extends Request {
                     weatherSpec.getUvIndex(),
                     "Gadgetbridge",
                     (byte) weatherSpec.getCurrentHumidity(),
-                    (int) weatherSpec.getWindSpeed(),
+                    Math.round(weatherSpec.getWindSpeed()),
                     (weatherSpec.getFeelsLikeTemp() - 273)
                 ).serialize();
         } catch (HuaweiPacket.CryptoException e) {

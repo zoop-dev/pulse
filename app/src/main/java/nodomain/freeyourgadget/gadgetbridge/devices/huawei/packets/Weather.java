@@ -344,7 +344,7 @@ public class Weather {
             if (sourceName != null && settings.sourceSupported)
                 this.tlv.put(0x0e, sourceName);
             if (uvIndex != null && settings.uvIndexSupported)
-                this.tlv.put(0x0f, uvIndex.byteValue());
+                this.tlv.put(0x0f, (byte)Math.round(uvIndex));
 
             if(settings.extendedHourlyForecast) {
                 if(humidity != null)
