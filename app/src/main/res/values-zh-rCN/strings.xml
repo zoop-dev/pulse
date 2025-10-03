@@ -4043,4 +4043,6 @@
     <string name="activity_type_xc_skate_ski">XC 滑板滑雪</string>
     <string name="huawei_send_gps_and_time_title">发送 GPS 和时间到设备上</string>
     <string name="huawei_send_gps_and_time_summary">发送 GPS 和时间到设备进行天气和星星搜索优化。应在设置中设定位置</string>
+    <string name="garmin_mlr_protocol">多链路可靠协议</string>
+    <string name="feature_experimental_unstable">实验性，可能不稳定</string>
 </resources>
