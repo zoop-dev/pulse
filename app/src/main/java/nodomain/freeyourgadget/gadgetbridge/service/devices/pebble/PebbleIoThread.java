@@ -549,7 +549,7 @@ class PebbleIoThread extends GBDeviceIoThread {
                         if (mPebbleProtocol.hasAppMessageHandler(appMgmt.uuid)) {
                             WebViewSingleton.getInstance().stopJavascriptInterface();
                         } else {
-                            WebViewSingleton.getInstance().runJavascriptInterface(gbDevice, appMgmt.uuid);
+                            WebViewSingleton.getInstance().runJavascriptInterface(getContext(), gbDevice, appMgmt.uuid);
                         }
                     }
 

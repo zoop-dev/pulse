@@ -17,7 +17,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.MutableContextWrapper;
 import android.os.Handler;
@@ -33,9 +32,9 @@ import org.slf4j.LoggerFactory;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.JSInterface;
 import nodomain.freeyourgadget.gadgetbridge.webview.GBChromeClient;
 import nodomain.freeyourgadget.gadgetbridge.webview.GBWebClient;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.JSInterface;
 
 public class WebViewSingleton {
 
@@ -50,7 +49,7 @@ public class WebViewSingleton {
     private WebViewSingleton() {
     }
 
-    public static synchronized void ensureCreated(Activity context) {
+    public static synchronized void ensureCreated(Context context) {
         if (instance.webView == null) {
             instance.contextWrapper = new MutableContextWrapper(context);
             instance.mainLooper = context.getMainLooper();
@@ -58,6 +57,7 @@ public class WebViewSingleton {
             WebView.setWebContentsDebuggingEnabled(true);
             instance.webView.setWillNotDraw(true);
             instance.webView.clearCache(true);
+            instance.webView.resumeTimers();
             instance.webView.setWebViewClient(new GBWebClient());
             instance.webView.setWebChromeClient(new GBChromeClient());
             WebSettings webSettings = instance.webView.getSettings();
@@ -101,12 +101,9 @@ public class WebViewSingleton {
         }
     }
 
-    public void runJavascriptInterface(@NonNull Activity context, @NonNull GBDevice device, @NonNull UUID uuid) {
+    public void runJavascriptInterface(@NonNull Context context, @NonNull GBDevice device, @NonNull UUID uuid) {
         ensureCreated(context);
-        runJavascriptInterface(device, uuid);
-    }
-
-    public void runJavascriptInterface(@NonNull GBDevice device, @NonNull UUID uuid) {
+        InternetHelperSingleton.INSTANCE.ensureInternetHelperBound();
         if (uuid.equals(currentRunningUUID)) {
             LOG.debug("WEBVIEW uuid not changed keeping the old context");
         } else {
@@ -119,7 +116,6 @@ public class WebViewSingleton {
                 webView.addJavascriptInterface(jsInterface, "GBjs");
                 webView.loadUrl("file:///android_asset/app_config/configure.html?rand=" + Math.random() * 500);
             });
-            InternetHelperSingleton.INSTANCE.ensureInternetHelperBound();
         }
     }
 

@@ -500,6 +500,14 @@ public abstract class AbstractAppManagerFragment extends Fragment {
         if (requestCode == CHILD_ACTIVITY_WATCHFACE_EDITOR) {
             refreshList();
         }
+        if ((mGBDevice.getType() == DeviceType.PEBBLE) && (((PebbleCoordinator) mGBDevice.getDeviceCoordinator()).isBackgroundJsEnabled(mGBDevice))) {
+            Intent startIntent = new Intent(getContext(), ExternalPebbleJSActivity.class);
+            startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startIntent.putExtra(GBDevice.EXTRA_DEVICE, mGBDevice);
+            startIntent.putExtra(ExternalPebbleJSActivity.START_BG_WEBVIEW, true);
+            getContext().startActivity(startIntent);
+        }
+
     }
 
     protected void sendOrderToDevice(String concatFilename) {
