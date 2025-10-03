@@ -28,7 +28,7 @@ public class SendWeatherDeviceRequest extends Request {
     public SendWeatherDeviceRequest(HuaweiSupportProvider support) {
         super(support);
         this.serviceId = Weather.id;
-        this.commandId = 0x04;
+        this.commandId = Weather.WeatherDeviceRequest.id;
         this.addToResponse = false; // Handled in async response
     }
 

@@ -600,7 +600,7 @@ public class AsynchronousResponse {
     }
 
     private void handleWeatherCheck(HuaweiPacket response) {
-        if (response.serviceId == Weather.id && response.commandId == 0x04) {
+        if (response.serviceId == Weather.id && response.commandId == Weather.WeatherDeviceRequest.id) {
             support.huaweiWeatherManager.handleAsyncMessage(response);
         }
     }
