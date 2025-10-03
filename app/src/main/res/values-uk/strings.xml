@@ -3880,4 +3880,6 @@
     <string name="connection_force_legacy_gatt_summary">Запобігає проблемам у старих версіях Android, але може спричиняти умови змагання</string>
     <string name="huawei_send_gps_and_time_title">Надсилати GPS та час на пристрій</string>
     <string name="huawei_send_gps_and_time_summary">Надсилайте GPS та час на пристрій для оптимізації погоди та пошуку зірок. Розташування слід встановити в налаштуваннях</string>
+    <string name="garmin_mlr_protocol">Багатоканальний надійний протокол</string>
+    <string name="feature_experimental_unstable">Експериментально, може бути нестабільним</string>
 </resources>
