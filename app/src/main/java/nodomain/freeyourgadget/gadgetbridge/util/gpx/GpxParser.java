@@ -1,4 +1,4 @@
-/*  Copyright (C) 2023-2024 José Rebelo
+/*  Copyright (C) 2023-2025 José Rebelo, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -42,13 +42,23 @@ import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxWaypoint;
 public class GpxParser {
     private static final Logger LOG = LoggerFactory.getLogger(GpxParser.class);
 
-    public static final byte[] XML_HEADER = new byte[]{
-            '<', '?', 'x', 'm', 'l'
+    public static final byte[][] XML_HEADER = {
+            {'<', '?', 'x', 'm', 'l'},
+            {(byte) 0xEF, (byte) 0xBB, (byte) 0xBF, '<', '?', 'x', 'm', 'l'}, // UTF-8 with BOM
+            {'<', 0, '?', 0, 'x', 0, 'm', 0, 'l', 0},  // UTF-16 LE
+            {(byte) 0xFF, (byte) 0xFE, '<', 0, '?', 0, 'x', 0, 'm', 0, 'l', 0}, // UTF-16 LE with BOM
+            {0, '<', 0, '?', 0, 'x', 0, 'm', 0, 'l'}, // UTF-16 BE
+            {(byte) 0xFE, (byte) 0xFF, 0, '<', 0, '?', 0, 'x', 0, 'm', 0, 'l'} // UTF-16 BE with BOM
     };
 
-    // Some gpx files start with "<gpx" directly.. this needs to be improved
-    public static final byte[] GPX_START = new byte[]{
-            '<', 'g', 'p', 'x'
+    // Some gpx files start with "<gpx" directly...
+    public static final byte[][] GPX_START = {
+            {'<', 'g', 'p', 'x'},
+            {(byte) 0xEF, (byte) 0xBB, (byte) 0xBF, '<', 'g', 'p', 'x'}, // UTF-8 with BOM
+            {'<', 0, 'g', 0, 'p', 0, 'x', 0}, // UTF-16 LE
+            {(byte) 0xFF, (byte) 0xFE, '<', 0, 'g', 0, 'p', 0, 'x', 0}, // UTF-16 LE with BOM
+            {0, '<', 0, 'g', 0, 'p', 0, 'x'}, // UTF-16 BE
+            {(byte) 0xFE, (byte) 0xFF, 0, '<', 0, 'g', 0, 'p', 0, 'x'} // UTF-16 BE with BOM
     };
 
     private final XmlPullParser parser;
@@ -76,8 +86,18 @@ public class GpxParser {
     }
 
     public static boolean isGpxFile(final byte[] data) {
-        // TODO improve this
-        return ArrayUtils.equals(data, XML_HEADER, 0) || ArrayUtils.equals(data, GPX_START, 0);
+        for(byte[] header : XML_HEADER){
+            if(ArrayUtils.equals(data, header, 0)){
+                return true;
+            }
+        }
+
+        for(byte[] start : GPX_START){
+            if(ArrayUtils.equals(data, start, 0)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public GpxParser(final InputStream stream) throws GpxParseException {
