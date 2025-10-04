@@ -119,7 +119,7 @@
     <string name="pref_title_pebble_forcele">Sempre preferir BLE</string>
     <string name="pref_summary_pebble_forcele">Usa suporte experimental a Pebble LE em vez do Bluetooth clássico. Requer ter nenhum LE pareado para, em seguida, parear o Pebble LE</string>
     <string name="pref_title_pebble_mtu_limit">Limite do MTU de GATT do Pebble 2/LE</string>
-    <string name="pref_summary_pebble_mtu_limit">Se o seu Pebble 2/Pebble LE não funcionar como esperado, tente esta configuração para limitar o MTU (intervalo válido 20 – 512).</string>
+    <string name="pref_summary_pebble_mtu_limit">Se o seu Pebble 2/Pebble LE não funcionar como esperado, tente esta configuração para limitar o MTU (intervalo válido 20 – 512)</string>
     <string name="pref_title_pebble_enable_applogs">Ativar log do aplicativo de monitoramento</string>
     <string name="pref_summary_pebble_enable_applogs">Faz com que os registros log de aplicativos de monitoramento sejam registrados pelo Gadgetbridge (exige reconexão)</string>
     <string name="pref_title_pebble_always_ack_pebblekit">ACK prematuro ao PebbleKit</string>
@@ -311,7 +311,7 @@
     <string name="charts_legend_heartrate">Frequência cardíaca</string>
     <string name="live_activity_heart_rate">Frequência cardíaca</string>
     <string name="pref_title_pebble_health_store_raw">Armazenar registro bruto no banco de dados</string>
-    <string name="pref_summary_pebble_health_store_raw">Armazena os dados \"como estão\", aumentando o uso do banco de dados para permitir posterior interpretação.</string>
+    <string name="pref_summary_pebble_health_store_raw">Armazena os dados tal como estão, aumentando a utilização da base de dados para permitir uma interpretação posterior.</string>
     <string name="action_db_management">Gerenciamento de dados</string>
     <string name="title_activity_db_management">Gerenciamento de dados</string>
     <string name="activity_db_management_import_export_explanation">As operações de exportação/importação usam o seguinte caminho (veja abaixo) para um diretório em seu dispositivo. Este diretório é acessível a outros aplicativos Android e seu computador. Observe que este diretório e todos os arquivos que contêm são excluídos se você desinstalar o Gadgetbridge. Os dados incluem:
@@ -326,7 +326,7 @@
     <string name="dbmanagementactivity_exported_to">Exportado para: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Erro ao exportar BD: %1$s</string>
     <string name="dbmanagementactivity_import_data_title">Importar dados?</string>
-    <string name="dbmanagementactivity_overwrite_database_confirmation">Realmente sobrescrever os dados atuais? Todos os seus dados atuais de atividade (se houver) e preferências serão substituídos.</string>
+    <string name="dbmanagementactivity_overwrite_database_confirmation">Deseja mesmo substituir os dados atuais? Todos os seus dados de atividade atuais (se houver), dispositivos e preferências serão substituídos.</string>
     <string name="dbmanagementactivity_import_successful">Importado.</string>
     <string name="dbmanagementactivity_error_importing_db">Erro ao importar BD: %1$s</string>
     <string name="dbmanagementactivity_delete_activity_data_title">Excluir dados de atividade\?</string>
@@ -461,7 +461,7 @@
     <string name="miband2_prefs_timeformat">Mi2: Formato da hora</string>
     <string name="mi2_fw_installhandler_fw53_hint">Você precisa instalar a versão %1$s antes de instalar esse firmware!</string>
     <string name="mi2_enable_text_notifications">Notificações de texto</string>
-    <string name="mi2_enable_text_notifications_summary">Precisa do firmware &gt;= 1.0.1.28 e Mili_pro.ft* instalados.</string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[Needs firmware >= 1.0.1.28 e Mili_pro.ft* instalados.]]></string>
     <string name="off">Desligado</string>
     <string name="mi2_dnd_off">Desligado</string>
     <string name="mi2_dnd_automatic">Automático (detecção de sono)</string>
@@ -484,14 +484,14 @@
     <string name="_pebble_watch_reply">Responder</string>
     <string name="activity_web_view">Web View Atividades</string>
     <string name="automatic">Automático</string>
-    <string name="simplified_chinese">Chinês simplificado</string>
-    <string name="traditional_chinese">Chinês tradicional</string>
+    <string name="simplified_chinese">Chinês (Simplificado)</string>
+    <string name="traditional_chinese">Chinês (Tradicional)</string>
     <string name="english">Inglês</string>
     <string name="kind_firmware">Firmware</string>
     <string name="kind_invalid">Dados inválidos</string>
     <string name="kind_font">Fonte</string>
     <string name="kind_gps">Firmware do GPS</string>
-    <string name="kind_gps_almanac">GPS Almanac</string>
+    <string name="kind_gps_almanac">Almanaque GPS</string>
     <string name="kind_gps_cep">Correção de erro de GPS</string>
     <string name="kind_resources">Recursos</string>
     <string name="kind_watchface">Mostrador</string>
@@ -658,7 +658,7 @@
     <string name="title_activity_device_specific_settings">Configurações específicas do dispositivo</string>
     <string name="pref_title_authkey">Chave de autenticação</string>
     <string name="pref_summary_authkey">Altere a chave de autenticação para um chave comum em todos os dispositivos Android a partir dos quais você gostaria de se conectar. A chave padrão anterior para todos dispositivos é 0123456789@ABCDE</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Você está prestes a instalar o firmware %s no seu Amazfit Cor 2.\n \nCertifique-se de instalar o arquivo .fw e, em seguida, o arquivo .res. Sua pulseira será reiniciada após a instalação do arquivo .fw. \n \nObservação: você não precisa instalar o .res se ele for exatamente igual ao instalado anteriormente.\n \nPROCEDA POR SUA PRÓPRIA CONTA E RISCO!\n \nCOMPLETAMENTE NÃO TESTADO, PROVAVELMENTE VOCÊ PRECISARÁ FLASHAR UM FIRMWARE BEATS_W SE O NOME DO SEU DISPOSITIVO FOR Amazfit Band 2.</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Você está prestes a instalar o firmware %s no seu Amazfit Cor 2.\n \nCertifique-se de instalar o arquivo .fw e, em seguida, o arquivo .res. Sua pulseira será reiniciada após a instalação do arquivo .fw. \n \nObservação: você não precisa instalar o .res se ele for exatamente igual ao instalado anteriormente.\n \nPROCEDA POR SUA PRÓPRIA CONTA E RISCO!\n \nCOMPLETAMENTE NÃO TESTADO, PROVAVELMENTE VOCÊ PRECISARÁ FLASHAR UM FIRMWARE BEATS_W SE O NOME DO SEU DISPOSITIVO FOR Amazfit Band 2</string>
     <string name="dutch">Holandês</string>
     <string name="turkish">Turco</string>
     <string name="ukrainian">Ucraniano</string>
@@ -712,14 +712,14 @@
     <string name="pref_display_add_device_fab_on">Sempre visível</string>
     <string name="pref_display_add_device_fab_off">Visível apenas se nenhum dispositivo estiver adicionado</string>
     <plurals name="widget_alarm_target_hours">
-        <item quantity="one">%d hora</item>
-        <item quantity="many">%d horas</item>
-        <item quantity="other">%d horas</item>
+        <item quantity="one">%1$d:%2$02d hora</item>
+        <item quantity="many">%1$d:%2$02d horas</item>
+        <item quantity="other">%1$d:%2$02d horas</item>
     </plurals>
     <string name="activity_error_no_app_for_gpx">Para visualizar o rastreamento de atividade, instale um aplicativo que consegue manipular arquivos GPX.</string>
     <string name="preferences_makibes_hr3_settings">Configurações de Makibes HR3</string>
     <string name="prefs_find_phone">Encontrar telefone</string>
-    <string name="prefs_enable_find_phone">Ativar \"Encontrar telefone\"</string>
+    <string name="prefs_enable_find_phone">Ativar Localizar telefone</string>
     <string name="prefs_find_phone_summary">Use sua pulseira para reproduzir o toque sonoro do seu celular.</string>
     <string name="prefs_find_phone_duration">Duração do toque sonoro em segundos</string>
     <string name="maximum_duration">Duração</string>
@@ -863,7 +863,7 @@
     <string name="about_title">Sobre</string>
     <string name="pref_title_weather_summary">Usado para o provedor de meteorologia LineageOS, outras versões do Android precisam usar um aplicativo como o Weather notification. Encontre mais informações na wiki do Gadgetbridge.</string>
     <string name="menuitem_worldclock">Relógio mundial</string>
-    <string name="error_version_check_extreme_caution">CUIDADO: Erro ao verificar informação da versão! Você não deve continuar! Encontrei o nome de versão \"%s\"</string>
+    <string name="error_version_check_extreme_caution">CUIDADO: Erro ao verificar informação da versão! Você não deve continuar! Encontrei o nome de versão %s</string>
     <string name="permission_granting_mandatory">Todas estas permissões são necessárias e instabilidade pode ocorrer se não concedidas</string>
     <string name="error_background_service_reason_truncated">A inicialização do serviço de segundo plano porque…</string>
     <string name="fw_upgrade_notice_miband5">Você está prestes a instalar o firmware %s na sua Mi Band 5.
@@ -890,8 +890,8 @@
     <string name="require_location_provider">Localização deve estar habilitada</string>
     <string name="averageStrokeDistance">Distância média das braçadas</string>
     <string name="averageStride">Média da caminhada</string>
-    <string name="averageKMPaceSeconds">Ritmo</string>
-    <string name="averageHR">Frequência cardíaca</string>
+    <string name="averageKMPaceSeconds">Ritmo Médio</string>
+    <string name="averageHR">Frequência cardíaca média</string>
     <string name="totalStride">Total da caminhada</string>
     <string name="maxPace">Ritmo mais rápido</string>
     <string name="minPace">Ritmo mais lento</string>
@@ -981,8 +981,8 @@
     <string name="swim_style">estilo de natação</string>
     <string name="averageSpeed">Velocidade média</string>
     <string name="baseAltitude">Elevação base</string>
-    <string name="swimStyle">nataçãoEstilo</string>
-    <string name="swolfIndex">swolfÍndice</string>
+    <string name="swimStyle">Estilo de natação</string>
+    <string name="swolfIndex">SWOLF</string>
     <string name="activity_type_badminton">Badminton</string>
     <string name="activity_type_pingpong">Ping pong</string>
     <string name="activity_type_basketball">Basquete</string>
@@ -1017,7 +1017,7 @@
     <string name="menuitem_goal">Meta da atividade</string>
     <string name="menuitem_stopwatch">Cronômetro</string>
     <string name="menuitem_alexa">Alexa</string>
-    <string name="menuitem_takephoto">Tirar uma foto</string>
+    <string name="menuitem_takephoto">Controle remoto da câmera</string>
     <string name="menuitem_mutephone">Silenciar telefone</string>
     <string name="menuitem_findphone">Encontrar telefone</string>
     <string name="menuitem_spo2">SpO2</string>
@@ -1084,7 +1084,7 @@
     <string name="dbmanagementactivity_error_cleaning_export_directory">Erro ao apagar arquivos de diretório externo %1$s</string>
     <string name="battery_detail_activity_title">Informações da bateria</string>
     <string name="watchface_setting_title_display_refresh_timeout">Tempo limite de atualização da tela</string>
-    <string name="watchface_dialog_widget_type">Tipo:</string>
+    <string name="watchface_dialog_widget_type">Tipo</string>
     <string name="appmanager_app_edit">Editar</string>
     <string name="prefs_autoheartrate_measurement">Medições automáticas de frequência cardíaca</string>
     <string name="prefs_autoheartrate">Frequência cardíaca automática</string>
@@ -1099,19 +1099,19 @@
     <string name="watchface_setting_power_saving_display">Desativar atualizações da tela enquanto fora do pulso</string>
     <string name="watchface_upload_failed">O envio do mostrador falhou. Tente novamente.</string>
     <string name="watchface_cache_confirm_overwrite">Já existe um mostrador com este nome no cache. Você deseja sobrescrevê-lo\?</string>
-    <string name="watchface_setting_wrist_flick_move_relative">Mover as mãos em relação ao tempo:</string>
+    <string name="watchface_setting_wrist_flick_move_relative">Mover as mãos em relação ao tempo</string>
     <string name="watchface_setting_desc_wrist_flick">(para desativar completamente, ative o movimento relativo e defina todos os valores para 0)</string>
     <string name="watchface_setting_title_wrist_flick">Movimento de pulso</string>
-    <string name="watchface_setting_display_refresh_partial">Atualização parcial (em minutos):</string>
-    <string name="watchface_setting_display_refresh_full">Atualização completa (em minutos):</string>
+    <string name="watchface_setting_display_refresh_partial">Atualização parcial (em minutos)</string>
+    <string name="watchface_setting_display_refresh_full">Atualização completa (em minutos)</string>
     <string name="watchface_dialog_title_settings">Configurações do mostrador</string>
     <string name="watchface_dialog_widget_color_black">Preta</string>
     <string name="watchface_dialog_widget_color_white">Branca</string>
-    <string name="watchface_dialog_widget_color">Cor:</string>
+    <string name="watchface_dialog_widget_color">Cor</string>
     <string name="watchface_dialog_widget_preset_left">Esquerda</string>
     <string name="watchface_dialog_widget_preset_bottom">Baixo</string>
     <string name="watchface_dialog_widget_preset_top">Topo</string>
-    <string name="watchface_dialog_widget_x_coordinate">Coordenada X (máx. 240):</string>
+    <string name="watchface_dialog_widget_x_coordinate">Coordenada X (máx. 240)</string>
     <string name="button_watchface_save_apply">Salvar e aplicar</string>
     <string name="button_watchface_preview">Visualização no relógio</string>
     <string name="watchface_widget_type_heart_rate">Frequência cardíaca</string>
@@ -1205,13 +1205,13 @@
     <string name="watchface_widget_type_2nd_tz">2º fuso horário</string>
     <string name="watchface_widget_type_calories">Calorias</string>
     <string name="watchface_widget_type_battery">Bateria</string>
-    <string name="watchface_setting_wrist_flick_duration">Duração (em ms):</string>
-    <string name="watchface_setting_wrist_flick_minute">Ponteiro dos minutos (-360 a 360):</string>
-    <string name="watchface_setting_wrist_flick_hour">Ponteiro das horas (-360 a 360):</string>
+    <string name="watchface_setting_wrist_flick_duration">Duração (em ms)</string>
+    <string name="watchface_setting_wrist_flick_minute">Ponteiro dos minutos (-360 a 360)</string>
+    <string name="watchface_setting_wrist_flick_hour">Ponteiro das horas (-360 a 360)</string>
     <string name="qhybrid_title_watchface_designer">Designer do mostrador</string>
     <string name="watchface_dialog_widget_preset_right">Direita</string>
-    <string name="watchface_dialog_widget_presets">Predefinições de posição:</string>
-    <string name="watchface_dialog_widget_y_coordinate">Coordenada Y (máx. 240):</string>
+    <string name="watchface_dialog_widget_presets">Predefinições de posição</string>
+    <string name="watchface_dialog_widget_y_coordinate">Coordenada Y (máx. 240)</string>
     <string name="watchface_widget_type_steps">Passos</string>
     <string name="watchface_widget_type_weather">Clima</string>
     <string name="watchface_widget_type_date">Data</string>
@@ -1355,10 +1355,10 @@
     <string name="sony_automatic_power_off_when_taken_off">Quando retirados os fones</string>
     <string name="prefs_fm_preset_instructions">Pressione longamente o botão para armazenar a predefinição</string>
     <string name="prefs_fm_presets_presets">Predefinições</string>
-    <string name="watchface_dialog_widget_timezone">Fuso horário:</string>
-    <string name="watchface_dialog_widget_update_timeout">Tempo limite de atualização em minutos:</string>
-    <string name="watchface_dialog_widget_timeout_hide_text">Ocultar texto ao exceder o tempo limite:</string>
-    <string name="watchface_dialog_widget_timeout_show_circle">Mostrar círculo ao exceder o tempo limite:</string>
+    <string name="watchface_dialog_widget_timezone">Fuso horário</string>
+    <string name="watchface_dialog_widget_update_timeout">Tempo limite de atualização em minutos</string>
+    <string name="watchface_dialog_widget_timeout_hide_text">Ocultar texto ao exceder o tempo limite</string>
+    <string name="watchface_dialog_widget_timeout_show_circle">Mostrar círculo ao exceder o tempo limite</string>
     <string name="controlcenter_power_off_confirm_description">Tem a certeza que deseja desligar o dispositivo\?</string>
     <string name="reminder_time_every_week">%1$s, todas as semanas</string>
     <string name="reminder_time_every_month">%1$s, todos os meses</string>
@@ -1486,7 +1486,7 @@
     <string name="dual_band">Dual Band</string>
     <string name="steps_streaks_since_date">Desde %s</string>
     <string name="step_streaks_achievements_sharing_message">Minhas conquistas diárias de passos!</string>
-    <string name="watchface_resolution_doesnt_match">A resolução do watchface não corresponde à tela do dispositivo. Watchface é %1$s a tela do dispositivo é %2$s</string>
+    <string name="watchface_resolution_doesnt_match">A resolução do mostrador do relógio não corresponde à tela do dispositivo. O mostrador do relógio é %1$s e a tela do dispositivo é %2$s</string>
     <string name="pref_title_huawei_account">Conta da Huawei</string>
     <string name="appmanager_downloaded_to_cache">Download de %s para o cache</string>
     <string name="appmanager_download_app_error">Erro no download do aplicativo</string>
@@ -1545,7 +1545,7 @@
     <string name="pref_dashboard_widget_today_hr_interval_title">Intervalo de frequência cardíaca</string>
     <string name="pref_dashboard_widget_double_size_summary">Permitir que o widget ocupe duas colunas no painel</string>
     <string name="pref_summary_bottom_navigation_bar_on">Alternar entre as telas principais usando a barra de navegação ou o deslizamento horizontal</string>
-    <string name="pref_dashboard_widget_today_hr_interval_summary">A quantidade de minutos que o gráfico mostra \"usado\" após cada medição bem-sucedida da frequência cardíaca</string>
+    <string name="pref_dashboard_widget_today_hr_interval_summary">A quantidade de minutos que o gráfico mostra usado após cada medição bem-sucedida da frequência cardíaca</string>
     <string name="pref_header_authentication">Autenticação</string>
     <string name="pref_title_opentracks_packagename">Nome do pacote do OpenTracks</string>
     <string name="pref_title_navigation_forward">Enviar navegação para o relógio</string>
@@ -1601,7 +1601,7 @@
     <string name="red">Vermelho</string>
     <string name="prefs_phone_silent_mode">Modo silencioso do telefone</string>
     <string name="sony_button_mode_volume_control">Controle de Volume</string>
-    <string name="huawei_trusleep_title">HUAWEI TruSleep ™</string>
+    <string name="huawei_trusleep_title">HUAWEI TruSleep™</string>
     <string name="prefs_wena3_item_rich_design">Use um design avançado</string>
     <string name="pref_header_calls_and_notifications">Chamadas e notificações</string>
     <string name="pref_speak_notifications_aloud_title">Falar as notificações em voz alta</string>
@@ -1669,7 +1669,7 @@
     <string name="prefs_wena3_item_large_font">Tamanho da Fonte Maior</string>
     <string name="pref_pair_bluetooth_calls_summary">Clique aqui para iniciar o processo de pareamento</string>
     <string name="pref_blacklist_calendars_summary">Os calendários na lista negra não serão sincronizados com o dispositivo</string>
-    <string name="activity_db_management_autoexport_scheduled_yes">A exportação automática foi (originalmente) agendada para %1$s.</string>
+    <string name="activity_db_management_autoexport_scheduled_yes">A exportação automática foi (originalmente) agendada para %1$s</string>
     <string name="battery_full_threshold">Limite de bateria cheia</string>
     <string name="femometer_measurement_mode_precise">Modo Preciso (3min)</string>
     <string name="purple">Roxo</string>
@@ -1756,7 +1756,7 @@
     <string name="folder_is_empty">A pasta está vazia</string>
     <string name="pref_speak_notifications_focus_exclusive_title">Pausar o áudio de outros aplicativos</string>
     <string name="pref_speak_notifications_focus_exclusive_summary_on">A reprodução de outros aplicativos será pausada enquanto a notificação estiver sendo falada</string>
-    <string name="chart_cycling_point_label_distance">Hoje: %.1f km \nTotal: %.1f km</string>
+    <string name="chart_cycling_point_label_distance">Hoje: %1$.1f km\nTotal: %2$.1f km</string>
     <string name="pref_title_cycling_persistence_interval">Intervalo de persistência</string>
     <string name="prefs_password_4_digits_0_to_9_summary">A senha deve ter 4 dígitos, usando apenas números</string>
     <string name="english_ca">Inglês (Canadá)</string>
@@ -1852,7 +1852,7 @@
     <string name="estonian">Estoniano</string>
     <string name="lithuanian">Lituano</string>
     <string name="cyan">Ciano</string>
-    <string name="permission_request">O %1$s permite que você envie mensagens e outros dados do Android para o seu dispositivo. Para fazer isso, ele precisa de permissão para acessar esses dados e, sem ela, pode não funcionar corretamente. \n \nAgora você verá algumas caixas de diálogo do Android solicitando essas permissões. \n \nToque em \'%2$s\' para continuar.</string>
+    <string name="permission_request">O %1$s permite que você envie mensagens e outros dados do Android para o seu dispositivo. Para fazer isso, ele precisa de permissão para acessar esses dados e, sem ela, pode não funcionar corretamente. \n \nAgora você verá algumas caixas de diálogo do Android solicitando essas permissões. \n \nToque em %2$s para continuar.</string>
     <string name="yellow">Amarelo</string>
     <string name="prefs_wena3_vibration_strength_item_weak">Fraca</string>
     <string name="prefs_wena3_item_weather_statusbar">Clima na Barra de Status</string>
@@ -1903,7 +1903,7 @@
     <string name="pref_title_fossil_hr_navigation_instructions">Instruções de navegação</string>
     <string name="device_name_cycling_sensor">Sensor de ciclismo</string>
     <string name="device_name_bicycle_sensor">Sensor de bicicleta</string>
-    <string name="waiting_for_bluetooth">Aguardando o bluetooth…</string>
+    <string name="waiting_for_bluetooth">Aguardando o Bluetooth…</string>
     <string name="realtime_settings">Configurações em tempo real</string>
     <string name="devicetype_cycling_sensor">Sensor de velocidade de ciclismo</string>
     <string name="pref_fetch_unknown_files_title">Colete arquivos desconhecidos</string>
@@ -1929,7 +1929,7 @@
     <string name="menuitem_unknown_app">Desconhecido (%s)</string>
     <string name="minSpeed">Mínimo</string>
     <string name="qhybrid_title_on_device_confirmation">Ativar a confirmação de pareamento no dispositivo</string>
-    <string name="huawei_trusleep_warning">Aviso: ativar isso impedirá que o sono apareça no Gadgetbridge! Clique aqui se você aceita isso.</string>
+    <string name="huawei_trusleep_warning">Aviso: o TruSleep™ não está totalmente implementado. Ativá-lo em alguns dispositivos fará com que todos os dados de sono sejam exibidos como sono leve no Gadgetbridge!</string>
     <string name="pref_enable_call_accept_summary">Ativar o recebimento de chamadas do dispositivo</string>
     <string name="connection_over_ble">Conexão via BLE</string>
     <string name="contact_missing_name">O nome do contato está vazio</string>
@@ -1963,7 +1963,7 @@
     <string name="activity_type_aerobic_exercise">Exercício aeróbico</string>
     <string name="pref_media_volumedown">Diminuir Volume</string>
     <string name="connection_over_bt_classic">Conexão via Bluetooth classic</string>
-    <string name="pref_summary_third_party_app_device_settings">Permitir que outros aplicativos de terceiros instalados definam as configurações do dispositivo por meio de intenções</string>
+    <string name="pref_summary_third_party_app_device_settings">Permitir que outros aplicativos de terceiros instalados definam as configurações do dispositivo por meio de intenções.</string>
     <string name="title">Título</string>
     <string name="pref_workout_detection_summary">Detectar o treino automaticamente</string>
     <string name="pref_morning_updates_categories_title">Categorias de atualizações matinais</string>
@@ -1975,7 +1975,7 @@
     <string name="averageAltitude">Médio</string>
     <string name="minCadence">Cadência mínima</string>
     <string name="anaerobicTrainingEffect">Efeito Anaeróbico</string>
-    <string name="controlcenter_connected_fraction">Conectado: %d/%d</string>
+    <string name="controlcenter_connected_fraction">Conectado: %1$d/%2$d</string>
     <string name="contact_name">Nome</string>
     <string name="pref_theme_dynamic_colors_explanation">Observação: para o tema de cores dinâmicas, é necessário ativar as cores do papel de parede ou a paleta de cores nas configurações de aparência do Android 12+. Se você não fizer isso, o Gadgetbridge usará as cores padrão do Material 3.</string>
     <string name="prefs_wena3_vibration_warning">Aviso</string>
@@ -1997,7 +1997,7 @@
     <string name="pref_button_action_disabled">Desabilitado</string>
     <string name="widget_layout_top_1_bot_2">1 superior, 2 inferiores</string>
     <string name="widget_screen_min_screens">Deve haver um mínimo de %1$s telas</string>
-    <string name="widget_screen_delete_confirm_description">Tem certeza de que deseja excluir \'%1$s\'?</string>
+    <string name="widget_screen_delete_confirm_description">Tem certeza de que deseja excluir %1$s?</string>
     <string name="widget_unknown_workout">Treino desconhecido - %s</string>
     <string name="pref_force_connection_type_ble">Bluetooth LE</string>
     <string name="unbind_before_pair_title">Já vinculado</string>
@@ -2079,7 +2079,7 @@
     <string name="pref_summary_banglejs_phone_gps_update_interval">O intervalo de atualização da posição GPS, em ms</string>
     <string name="pref_header_sony_device_info">Informações do dispositivo</string>
     <string name="pref_title_device_intents">Permitir Intenção</string>
-    <string name="permission_display_over_other_apps">%1$s precisa de permissão para ser exibido sobre outros aplicativos a fim de permitir que os relógios Bangle.js iniciem atividades por meio de intenções quando %1$s estiver em segundo plano. \n \nIsso pode ser usado para iniciar um aplicativo de música e reproduzir uma música e muitas outras coisas. \n \nToque em \"%2$s\" e depois em \"%1$s\" e ative a opção \"Permitir sobrepor outros aplicativos\", depois toque em \"Voltar\" para retornar a %1$s. \n \nPara que o %1$s pare de solicitar permissões, vá para \"Configurações\" e desmarque \"Verificar status da permissão\". \n \nCertifique-se de conceder ao %1$s as permissões necessárias para que ele funcione como você espera.</string>
+    <string name="permission_display_over_other_apps">%1$s precisa de permissão para ser exibido sobre outros aplicativos, a fim de permitir que os relógios Bangle.js iniciem atividades por meio de intenções quando %1$s estiver em segundo plano.\n\nIsso pode ser usado para iniciar um aplicativo de música e reproduzir uma música, entre muitas outras coisas.\n\nToque em %2$s e, em seguida, em %1$s e habilite Permitir exibição sobre outros aplicativos. Em seguida, toque em Voltar para retornar ao %1$s.\n\nPara impedir que o %1$s solicite permissões, acesse Configurações e desmarque Verificar status da permissão.\n\nCertifique-se de conceder ao %1$s as permissões necessárias para funcionar conforme o esperado.</string>
     <string name="activity_type_climbing">Escalada</string>
     <string name="pref_pair_bluetooth_calls_help_summary">Para receber chamadas por Bluetooth, é necessário parear o telefone com uma segunda instância do relógio.</string>
     <string name="pref_summary_notification_cache_while_disconnected">Envie notificações perdidas quando um dispositivo se reconectar após ficar fora do alcance</string>
@@ -2139,13 +2139,13 @@
     <string name="activity_type_martial_arts">Artes marciais</string>
     <string name="activity_error_share_failed">Falha no compartilhamento do arquivo.</string>
     <string name="updatefirmwareoperation_updateproblem_low_battery">A bateria do dispositivo está muito fraca</string>
-    <string name="permission_notification_listener">%1$s precisa de acesso às Notificações para exibi-las no relógio quando a tela do telefone estiver desligada. \n \nToque em \'%2$s\' e depois em \'%1$s\' e ative \'Permitir acesso a notificações\' e, em seguida, toque em \'Voltar\' para retornar a %1$s.</string>
+    <string name="permission_notification_listener">%1$s precisa de acesso às Notificações para poder exibi-las no seu relógio quando a tela do seu telefone estiver desligada.\n\nToque em %2$s e, em seguida, em %1$s e ative Permitir acesso às notificações. Em seguida, toque em Voltar para retornar a %1$s.</string>
     <string name="pref_summary_notification_times_enabled">Enviar notificações somente entre horários específicos</string>
     <string name="updatefirmwareoperation_updateproblem_free_space">O dispositivo não tem espaço livre suficiente</string>
     <string name="activity_db_management_autoexport_location">Não foi possível entender a localização. Provavelmente um problema do sistema de permissão mais recente do Android. Muito provavelmente, a exportação automática não está funcionando agora.</string>
     <string name="pref_battery_polling_interval_format">a cada %1$s minutos</string>
     <string name="proprietary_app_warning">Esse recurso requer a instalação de um aplicativo proprietário</string>
-    <string name="permission_location">%1$s precisa de acesso à sua localização em segundo plano para permitir que ele permaneça conectado ao seu relógio mesmo quando a tela estiver desligada. \n \nToque em \'%2$s\' para concordar.</string>
+    <string name="permission_location">O %1$s precisa de acesso à sua localização em segundo plano para se manter conectado ao seu relógio, mesmo quando a tela estiver desligada.\n\nSelecione %2$s na tela a seguir e toque em Voltar para retornar ao %1$s.</string>
     <string name="fwapp_install_device_not_supported">O arquivo não pode ser instalado, o dispositivo não é compatível.</string>
     <string name="moondrop_touch_action_call_start">Iniciar uma ligação</string>
     <string name="moondrop_touch_action_assistant">Iniciar o Assistente de Voz</string>
@@ -2192,9 +2192,9 @@
     <string name="menuitem_stress_segmented">Estresse (segmentado)</string>
     <string name="menuitem_stress_breakdown">Estresse (colapso)</string>
     <string name="backup_restore_exporting">Exportando para zip…</string>
-    <string name="backup_restore_warning_files">%1d falha ao restaurar os arquivos: \n%2s</string>
+    <string name="backup_restore_warning_files">%1$d arquivos não puderam ser restaurados: \n%2$s</string>
     <string name="number_selected_items">%1d selecionado</string>
-    <string name="backup_restore_importing_files_i_of_n">Importando arquivos... %1d de %2d</string>
+    <string name="backup_restore_importing_files_i_of_n">Importando arquivos... %1$d de %2$d</string>
     <string name="inactivity_warnings_minimum_steps_summary">Quantidade mínima de passos que precisam ser dados durante os minutos de limite</string>
     <string name="backup_restore_exporting_finishing">Finalizando exportação…</string>
     <string name="backup_restore_abort_title">Abortar</string>
@@ -2216,7 +2216,7 @@
     <string name="backup_restore_restart_summary">%1s será reiniciado agora.</string>
     <string name="backup_restore_exporting_preferences">Exportando preferências…</string>
     <string name="backup_restore_exporting_database">Exportando banco de dados…</string>
-    <string name="backup_restore_exporting_files_i_of_n">Exportando arquivos... %1d of %2d</string>
+    <string name="backup_restore_exporting_files_i_of_n">Exportando arquivos... %1$d de %2$d</string>
     <string name="activity_db_management_backup_restore_explanation">As operações de importação/exportação permitem migrar ou fazer backup de todas as configurações, dispositivos e dados do Gadgetbridge de e para um arquivo zip.\n\nA importação de um arquivo removerá todos os dados, dispositivos e preferências existentes, substituindo-os completamente pelo backup.</string>
     <string name="backup_restore_export_complete">Exportação concluída</string>
     <string name="backup_restore_importing_loading">Carregando arquivo…</string>
@@ -2227,7 +2227,7 @@
     <string name="backup_restore_importing_validating">Validando arquivo…</string>
     <string name="pref_dashboard_widget_today_yesterday_data_summary">Exibir dados de ontem em tom mais suave entre a hora atual e a meia-noite</string>
     <string name="hr_resting">Repouso</string>
-    <string name="discover_unsupported_devices_description">A ativação dessa opção exibirá todos os dispositivos bluetooth descobertos durante a procura. Um toque curto copiará o nome do dispositivo e o endereço MAC para a área de transferência. Um toque longo abrirá a caixa de diálogo `Adicionar dispositivo de teste`. Pode causar possíveis problemas de congelamento do aplicativo.</string>
+    <string name="discover_unsupported_devices_description">A ativação dessa opção exibirá todos os dispositivos Bluetooth descobertos durante a procura. Um toque curto copiará o nome do dispositivo e o endereço MAC para a área de transferência. Um toque longo abrirá a caixa de diálogo `Adicionar dispositivo de teste`. Pode causar possíveis problemas de congelamento do aplicativo.</string>
     <string name="pref_dashboard_widget_today_time_indicator_summary">Mostrar um indicador na hora atual, para separar visualmente os dados de ontem e de hoje</string>
     <string name="pref_dashboard_widget_today_time_indicator_title">Indicador de hora atual</string>
     <string name="pref_description_developer_options">Registros, API de Intenção (Intent API)</string>
@@ -2909,4 +2909,8 @@
     <string name="weather_condition_tropical_storm">tempestade tropical</string>
     <string name="weather_condition_cold">frio</string>
     <string name="weather_condition_hot">quente</string>
+    <string name="zepp_os_watchface_multiple_data">Multiple Data</string>
+    <string name="zepp_os_watchface_red_fantasy">Red Fantasy</string>
+    <string name="zepp_os_watchface_rush">Rush</string>
+    <string name="zepp_os_watchface_minimalist">Minimalist</string>
 </resources>
