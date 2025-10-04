@@ -52,8 +52,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.Activity
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryValue;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
-import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HeartRateZonesConfig;
-import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiSportHRZones;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiHeartRateZonesSpec;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Workout;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
@@ -75,8 +74,9 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
-import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
+import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZones;
+import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZonesSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.workout.WorkoutChart;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
@@ -798,7 +798,7 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
 
                 //NOTE: The method of retrieving HR zones from the Huawei watch is not discovered. It may not return zones.
                 // So they are calculated based on config.
-                HeartRateZonesConfig HRZonesCfg = null;
+                HeartRateZones HRZonesCfg = null;
 
                 Integer zonePostureType = parseAndValidatePostureType(additionalValues.get("postureType"));
                 LOG.info("Workout HR Zone Workout Posture Type: {}", zonePostureType);
@@ -809,10 +809,9 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
 
                 int zoneCalculateMethod = summary.getHrZoneType();
                 LOG.info("Workout HR Zone Calculate Type: {}", zoneCalculateMethod);
-                if (zonePostureType != null && HeartRateZonesConfig.isCalculateMethodValidForPostureType(zonePostureType, zoneCalculateMethod)) {
-                    ActivityUser activityUser = new ActivityUser();
-                    HuaweiSportHRZones hrSportZones = new HuaweiSportHRZones(activityUser.getAge());
-                    HRZonesCfg = hrSportZones.getHRZonesConfigByType(zonePostureType);
+                if (zonePostureType != null) {
+                    HeartRateZonesSpec spec = gbDevice.getDeviceCoordinator().getHeartRateZonesSpec(gbDevice);
+                    HRZonesCfg = HuaweiHeartRateZonesSpec.getHRZonesConfigByPostureAndCalculationMethod(spec.getDeviceConfig(), HuaweiHeartRateZonesSpec.fromHuaweiPostureType(zonePostureType), HuaweiHeartRateZonesSpec.fromHuaweiCalculationMethod(zoneCalculateMethod));
                 }
 
                 int dataDelta = 5;
@@ -830,7 +829,7 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
 
 
                     if (HRZonesCfg != null) {
-                        int zoneIdx = HRZonesCfg.getZoneByMethod(dataSample.getHeartRate() & 0xFF, zoneCalculateMethod);
+                        int zoneIdx = HuaweiHeartRateZonesSpec.getZoneForHR(dataSample.getHeartRate() & 0xFF, HRZonesCfg);
                         if (zoneIdx != -1 && dataIdx < (dataSamples.size() - 1)) {
                             HRZones[zoneIdx] += dataDelta;
                         }

@@ -96,6 +96,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.model.Vo2MaxSample;
 import nodomain.freeyourgadget.gadgetbridge.model.WeightSample;
 import nodomain.freeyourgadget.gadgetbridge.model.WorkoutLoadSample;
+import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZonesSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.ServiceDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -1104,5 +1105,10 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     @Override
     public List<DeviceCardAction> getCustomActions() {
         return Collections.emptyList();
+    }
+
+    @Override
+    public HeartRateZonesSpec getHeartRateZonesSpec(@NonNull GBDevice device) {
+        return null;
     }
 }

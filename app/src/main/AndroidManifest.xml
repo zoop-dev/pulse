@@ -248,6 +248,10 @@
             android:label="@string/huawei_stress_calibrate"
             android:parentActivityName=".activities.devicesettings.DeviceSettingsActivity" />
         <activity
+            android:name=".activities.heartratezones.HeartRateSettingsActivity"
+            android:label="@string/heart_rate_settings"
+            android:parentActivityName=".activities.devicesettings.DeviceSettingsActivity" />
+        <activity
             android:name=".activities.NotificationsAppIconUploadActivity"
             android:label="@string/notifications_app_icon_upload"
             android:parentActivityName=".activities.devicesettings.DeviceSettingsActivity" />

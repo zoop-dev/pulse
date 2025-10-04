@@ -45,6 +45,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.SleepScoreSample;
 import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.model.StressSample;
 import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
+import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZonesSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiLESupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiWorkoutGbParser;
@@ -322,5 +323,9 @@ public abstract class HuaweiLECoordinator extends AbstractBLEDeviceCoordinator i
     @Override
     public boolean addBatteryPollingSettings() {
         return true;
+    }
+
+    public HeartRateZonesSpec getHeartRateZonesSpec(@NonNull GBDevice device) {
+        return huaweiCoordinator.getHeartRateZonesSpec(device);
     }
 }

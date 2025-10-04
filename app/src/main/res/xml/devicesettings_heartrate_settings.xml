@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:key="pref_perform_heart_rate_settings"
+        android:icon="@drawable/ic_heartrate"
+        android:title="@string/heart_rate_settings"
+        android:summary="@string/heart_rate_settings_summary">
+    </Preference>
+</androidx.preference.PreferenceScreen>

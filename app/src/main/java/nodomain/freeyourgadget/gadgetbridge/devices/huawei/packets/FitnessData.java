@@ -20,11 +20,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HeartRateZonesConfig;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiHeartRateZonesSpec;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiReportThreshold;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiRunPaceConfig;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTLV;
+import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZones;
+import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZonesConfig;
 
 public class FitnessData {
 
@@ -618,35 +620,32 @@ public class FitnessData {
                 HuaweiTLV subTlv = new HuaweiTLV().
                         put(0x08, heartRateZonesConfig.getWarningEnable());
 
-                if (
-                        heartRateZonesConfig.hasValidMHRData() &&
-                        heartRateZonesConfig.getWarningHRLimit() > 0 &&
-                        heartRateZonesConfig.getMaxHRThreshold() > 0
-                ) {
+                HeartRateZones mhr = HuaweiHeartRateZonesSpec.getByMethod(heartRateZonesConfig, HeartRateZones.CalculationMethod.MHR);
+
+                if (mhr != null && mhr.hasValidData() && heartRateZonesConfig.getWarningHRLimit() > 0 && mhr.getHRThreshold() > 0) {
                     subTlv
                             .put(0x09, (byte) heartRateZonesConfig.getWarningHRLimit())
-                            .put(0x02, (byte) heartRateZonesConfig.getMHRWarmUp())
-                            .put(0x03, (byte) heartRateZonesConfig.getMHRFatBurning())
-                            .put(0x04, (byte) heartRateZonesConfig.getMHRAerobic())
-                            .put(0x05, (byte) heartRateZonesConfig.getMHRAnaerobic())
-                            .put(0x06, (byte) heartRateZonesConfig.getMHRExtreme())
-                            .put(0x07, (byte) heartRateZonesConfig.getMaxHRThreshold())
-                            .put(0x0b, (byte) heartRateZonesConfig.getMaxHRThreshold());
+                            .put(0x02, (byte) mhr.getZone1())
+                            .put(0x03, (byte) mhr.getZone2())
+                            .put(0x04, (byte) mhr.getZone3())
+                            .put(0x05, (byte) mhr.getZone4())
+                            .put(0x06, (byte) mhr.getZone5())
+                            .put(0x07, (byte) mhr.getHRThreshold())
+                            .put(0x0b, (byte) mhr.getHRThreshold());
                 }
 
-                if (id == id_extended && heartRateZonesConfig.hasValidHRRData()) {
-                    subTlv
-                            .put(0x0d, (byte) heartRateZonesConfig.getHRRBasicAerobic())
-                            .put(0x0e, (byte) heartRateZonesConfig.getHRRAdvancedAerobic())
-                            .put(0x0f, (byte) heartRateZonesConfig.getHRRLactate())
-                            .put(0x10, (byte) heartRateZonesConfig.getHRRBasicAnaerobic())
-                            .put(0x11, (byte) heartRateZonesConfig.getHRRAdvancedAnaerobic());
-                }
-
-                if (id == id_extended && heartRateZonesConfig.getRestHeartRate() > 0) {
-                    subTlv
-                            .put(0x0a, (byte) heartRateZonesConfig.getCalculateMethod())
-                            .put(0x0c, (byte) heartRateZonesConfig.getRestHeartRate());
+                if (id == id_extended) {
+                    HeartRateZones hrr = HuaweiHeartRateZonesSpec.getByMethod(heartRateZonesConfig, HeartRateZones.CalculationMethod.HRR);
+                    if (hrr != null && hrr.hasValidData()) {
+                        subTlv
+                                .put(0x0d, (byte) hrr.getZone1())
+                                .put(0x0e, (byte) hrr.getZone2())
+                                .put(0x0f, (byte) hrr.getZone3())
+                                .put(0x10, (byte) hrr.getZone4())
+                                .put(0x11, (byte) hrr.getZone5())
+                                .put(0x0a, (byte) HuaweiHeartRateZonesSpec.toHuaweiCalculationMethod(heartRateZonesConfig.getCurrentCalculationMethod()))
+                                .put(0x0c, (byte) hrr.getHRResting());
+                    }
                 }
 
                 this.tlv = new HuaweiTLV().put(0x81, subTlv);
@@ -732,8 +731,8 @@ public class FitnessData {
 
                 this.tlv = new HuaweiTLV()
                         .put(0x01, enabled);
-                if(enabled)
-                        this.tlv.put(0x02, highHeartRateAlert);
+                if (enabled)
+                    this.tlv.put(0x02, highHeartRateAlert);
 
                 this.isEncrypted = true;
                 this.complete = true;
@@ -753,7 +752,7 @@ public class FitnessData {
 
                 this.tlv = new HuaweiTLV()
                         .put(0x01, enabled);
-                if(enabled)
+                if (enabled)
                     this.tlv.put(0x02, lowHeartRateAlert);
 
                 this.isEncrypted = true;
@@ -811,7 +810,7 @@ public class FitnessData {
 
                 this.tlv = new HuaweiTLV()
                         .put(0x01, enabled);
-                if(enabled)
+                if (enabled)
                     this.tlv.put(0x02, lowHeartRateAlert);
 
                 this.isEncrypted = true;

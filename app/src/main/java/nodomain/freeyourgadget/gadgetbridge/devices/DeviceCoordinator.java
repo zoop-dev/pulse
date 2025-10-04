@@ -69,6 +69,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.model.Vo2MaxSample;
 import nodomain.freeyourgadget.gadgetbridge.model.WeightSample;
 import nodomain.freeyourgadget.gadgetbridge.model.WorkoutLoadSample;
+import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZonesSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.ServiceDeviceSupport;
 
@@ -914,4 +915,6 @@ public interface DeviceCoordinator {
     List<DeviceCardAction> getCustomActions();
 
     DeviceKind getDeviceKind(@NonNull GBDevice device);
+
+    HeartRateZonesSpec getHeartRateZonesSpec(@NonNull GBDevice device);
 }

@@ -18,10 +18,11 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests;
 
 import java.util.List;
 
-import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HeartRateZonesConfig;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiHeartRateZonesSpec;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.FitnessData;
-import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
+import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZonesConfig;
+import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZonesSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
 
 public class SendHeartRateZonesConfig extends Request {
@@ -44,7 +45,9 @@ public class SendHeartRateZonesConfig extends Request {
     @Override
     protected List<byte[]> createRequest() throws RequestCreationException {
         try {
-            HeartRateZonesConfig heartRateZonesConfig = new HeartRateZonesConfig(HeartRateZonesConfig.TYPE_UPRIGHT, new ActivityUser().getAge());
+            HuaweiHeartRateZonesSpec spec = new HuaweiHeartRateZonesSpec(supportProvider.getDevice(), supportProvider.getHuaweiCoordinator());
+            List<HeartRateZonesConfig> zones = spec.getDeviceConfig();
+            HeartRateZonesConfig heartRateZonesConfig = HuaweiHeartRateZonesSpec.getByPosture(zones, HeartRateZonesSpec.PostureType.UPRIGHT);
             if (supportProvider.getHuaweiCoordinator().supportsExtendedHeartRateZones()) {
                 return FitnessData.HeartRateZoneConfigPacket.Request.requestExtended(paramsProvider, heartRateZonesConfig).serialize();
             } else {

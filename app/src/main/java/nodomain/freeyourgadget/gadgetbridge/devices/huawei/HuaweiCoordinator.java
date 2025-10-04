@@ -60,6 +60,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSwimSegmentsSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZonesSpec;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.*;
@@ -343,6 +344,9 @@ public class HuaweiCoordinator {
         // Workout
         if (supportsSendingGps())
             deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.WORKOUT, R.xml.devicesettings_workout_send_gps_to_band);
+
+        if(supportsTrack() || supportsHeartRateZones())
+            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.WORKOUT, R.xml.devicesettings_heartrate_settings);
 
         // Other
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_find_phone);
@@ -1140,4 +1144,7 @@ public class HuaweiCoordinator {
         return supportsTruSleep() && supportsDictSleepSync();
     }
 
+    public HeartRateZonesSpec getHeartRateZonesSpec(@NonNull GBDevice device) {
+        return new HuaweiHeartRateZonesSpec(device, this);
+    }
 }

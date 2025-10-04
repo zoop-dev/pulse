@@ -32,6 +32,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsHandler;
+import nodomain.freeyourgadget.gadgetbridge.activities.heartratezones.HeartRateSettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.ui.HuaweiStressCalibrationActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiWorkoutGbParser;
@@ -166,6 +167,16 @@ public class HuaweiSettingsCustomizer implements DeviceSpecificSettingsCustomize
         if (stressCalibrate != null) {
             stressCalibrate.setOnPreferenceClickListener(preference -> {
                 final Intent intent = new Intent(handler.getContext(), HuaweiStressCalibrationActivity.class);
+                intent.putExtra(GBDevice.EXTRA_DEVICE, handler.getDevice());
+                handler.getContext().startActivity(intent);
+                return true;
+            });
+        }
+
+        final Preference hrSettings = handler.findPreference("pref_perform_heart_rate_settings");
+        if (hrSettings != null) {
+            hrSettings.setOnPreferenceClickListener(preference -> {
+                final Intent intent = new Intent(handler.getContext(), HeartRateSettingsActivity.class);
                 intent.putExtra(GBDevice.EXTRA_DEVICE, handler.getDevice());
                 handler.getContext().startActivity(intent);
                 return true;
