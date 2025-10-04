@@ -4041,4 +4041,6 @@
     <string name="activity_type_xc_skate_ski">Běh na lyžích</string>
     <string name="huawei_send_gps_and_time_title">Odesílat GPS a čas do zařízení</string>
     <string name="huawei_send_gps_and_time_summary">Odesílat GPS a čas do zařízení pro počasí a optimalizaci vyhledávání. Měla by být nastavena poloha</string>
+    <string name="garmin_mlr_protocol">Spolehlivý protokol Multi-Link</string>
+    <string name="feature_experimental_unstable">Experimentální, může být nestabilní</string>
 </resources>
