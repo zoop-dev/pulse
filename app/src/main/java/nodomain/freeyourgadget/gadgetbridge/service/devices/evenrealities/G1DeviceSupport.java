@@ -283,6 +283,34 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
     ////////////////////////////////////////////////////////////////////////
 
     @Override
+    public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
+        super.onMtuChanged(gatt, mtu, status);
+
+        // If the status was not successful, don't forward to the glasses.
+        if (status != BluetoothGatt.GATT_SUCCESS) {
+            return;
+        }
+
+        // The glasses expect to be forwarded the MTU, so when it is changed, also notify the side
+        // that it changed on.
+        String address = gatt.getDevice().getAddress();
+        if (getDevice(G1Constants.Side.LEFT.getDeviceIndex()) != null) {
+            String leftAddress = getDevice(G1Constants.Side.LEFT.getDeviceIndex()).getAddress();
+            if (address.equals(leftAddress) && leftSide != null) {
+                leftSide.send(new G1Communications.CommandSendMtu((byte)mtu));
+            }
+        }
+
+        if (getDevice(G1Constants.Side.RIGHT.getDeviceIndex()) != null) {
+            String rightAddress =
+                    getDevice(G1Constants.Side.RIGHT.getDeviceIndex()).getAddress();
+            if (address.equals(rightAddress) && rightSide != null) {
+                rightSide.send(new G1Communications.CommandSendMtu((byte)mtu));
+            }
+        }
+    }
+
+    @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt,
                                            BluetoothGattCharacteristic characteristic,
                                            byte[] payload) {

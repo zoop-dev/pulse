@@ -112,7 +112,7 @@ public class G1Constants {
         SYSTEM((byte) 0x23),
         HEARTBEAT((byte) 0x25),
         BATTERY_LEVEL((byte) 0x2C),
-        INIT((byte) 0x4D),
+        SET_MTU((byte) 0x4D),
         NOTIFICATION((byte) 0x4B),
         FW_INFO_RESPONSE((byte) 0x6E),
         DEBUG_LOG((byte) 0xF4),

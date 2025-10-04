@@ -179,24 +179,27 @@ public class G1Communications {
         protected abstract int getHeaderSize();
     }
 
-    public static class CommandSendInit extends CommandHandler {
-        public CommandSendInit() {
+    public static class CommandSendMtu extends CommandHandler {
+        private final byte mtu;
+
+        public CommandSendMtu(byte mtu) {
             super(true, null);
+            this.mtu = mtu;
         }
 
         @Override
         public byte[] serialize() {
-            return new byte[] { G1Constants.CommandId.INIT.id, (byte)0xFB };
+            return new byte[] { G1Constants.CommandId.SET_MTU.id, mtu };
         }
 
         @Override
         public boolean responseMatches(byte[] payload) {
-            return payload[0] == G1Constants.CommandId.INIT.id;
+            return payload[0] == G1Constants.CommandId.SET_MTU.id;
         }
 
         @Override
         public String getName() {
-            return "send_init";
+            return "send_mtu";
         }
     }
 
