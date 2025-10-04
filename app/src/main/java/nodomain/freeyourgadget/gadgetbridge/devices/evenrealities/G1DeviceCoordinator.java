@@ -153,11 +153,6 @@ public class G1DeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean addBatteryPollingSettings() {
-        return true;
-    }
-
-    @Override
     public int getBatteryCount(final GBDevice device) {
         return 3;
     }

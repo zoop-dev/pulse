@@ -1,6 +1,8 @@
 package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 
 
+import androidx.annotation.NonNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +30,12 @@ import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 
     private final UpdateType updateType;
 
+    @NonNull
+    @Override
+    public String toString() {
+        return super.toString() + ", state: " + state + ", " + updateType;
+    }
+
     public GBDeviceEventBatteryIncrementalInfo(int batteryIndex, GregorianCalendar lastChargeTime) {
         super();
         super.batteryIndex = batteryIndex;
@@ -42,7 +50,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
         super.state = state;
         super.level = GBDevice.BATTERY_UNKNOWN;
         this.updateType = UpdateType.STATE;
-
     }
 
     public GBDeviceEventBatteryIncrementalInfo(int batteryIndex, int level) {

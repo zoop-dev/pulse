@@ -51,7 +51,6 @@ public class G1SideManager {
     private final BiFunction<String, Integer, TransactionBuilder> createTransactionBuilder;
     private final BluetoothGattCharacteristic rx;
     private final BluetoothGattCharacteristic tx;
-    private final Runnable batteryRunner;
     private final Runnable heartBeatRunner;
     private final Runnable displaySettingsPreviewCloserRunner;
     private final Set<G1Communications.CommandHandler> commandHandlers;
@@ -75,10 +74,6 @@ public class G1SideManager {
         this.createTransactionBuilder = createTransactionBuilder;
         this.rx = rx;
         this.tx = tx;
-        this.batteryRunner = () -> {
-            send(new G1Communications.CommandGetBatteryInfo(this::handleBatteryPayload));
-            scheduleBatteryPolling();
-        };
 
         this.heartBeatRunner = () -> {
             Calendar c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
@@ -161,9 +156,6 @@ public class G1SideManager {
         // useless to the user.
         scheduleHeatBeat();
 
-        // Schedule the battery polling.
-        scheduleBatteryPolling();
-
         connectingState = GBDevice.State.INITIALIZED;
     }
 
@@ -212,11 +204,6 @@ public class G1SideManager {
     public void onSendConfiguration(String config) {
         DevicePrefs prefs = getDevicePrefs();
         switch (config) {
-            // Reschedule battery polling. The new schedule may be disabled.
-            case DeviceSettingsPreferenceConst.PREF_BATTERY_POLLING_ENABLE:
-            case DeviceSettingsPreferenceConst.PREF_BATTERY_POLLING_INTERVAL:
-                scheduleBatteryPolling();
-                break;
             case DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_HEIGHT:
             case DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_DEPTH:
                 sendDisplaySettings(prefs);
@@ -257,18 +244,6 @@ public class G1SideManager {
         backgroundTasksHandler.removeCallbacksAndMessages(heartBeatRunner);
         LOG.debug("Starting heartbeat runner delayed by {}ms", G1Constants.HEART_BEAT_DELAY_MS);
         backgroundTasksHandler.postDelayed(heartBeatRunner, G1Constants.HEART_BEAT_DELAY_MS);
-    }
-
-    private void scheduleBatteryPolling() {
-        backgroundTasksHandler.removeCallbacksAndMessages(batteryRunner);
-            DevicePrefs prefs = getDevicePrefs();
-            if (prefs.getBatteryPollingEnabled()) {
-                int interval_minutes = prefs.getBatteryPollingIntervalMinutes();
-                int interval = interval_minutes * 60 * 1000;
-                LOG.debug("Starting battery runner delayed by {} ({} minutes)", interval,
-                          interval_minutes);
-                backgroundTasksHandler.postDelayed(batteryRunner, interval);
-        }
     }
 
     private synchronized byte getNextSequence() {
