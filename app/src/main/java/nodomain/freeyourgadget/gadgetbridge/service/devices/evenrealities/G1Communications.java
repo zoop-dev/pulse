@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -23,23 +24,25 @@ public class G1Communications {
     private static final Logger LOG = LoggerFactory.getLogger(G1Communications.class);
 
     public abstract static class CommandHandler {
+        protected final byte sequence;
         private final boolean expectResponse;
         private final Function<byte[], Boolean> callback;
-        protected byte sequence;
         private byte[] responsePayload;
         private int retryCount;
 
-        public CommandHandler(boolean expectResponse, Function<byte[], Boolean> callback) {
+        protected CommandHandler(byte sequence, boolean expectResponse, Function<byte[], Boolean> callback) {
+            this.sequence = sequence;
             this.expectResponse = expectResponse;
             this.callback = callback;
             this.responsePayload = null;
             this.retryCount = 0;
         }
 
-        public boolean needsGlobalSequence() { return false; }
-        public void setGlobalSequence(byte sequence) {
-            this.sequence = sequence;
+        protected CommandHandler(boolean expectResponse, Function<byte[], Boolean> callback) {
+            /* sequence is not used */
+            this((byte)0, expectResponse, callback);
         }
+
         public int getTimeout() {
             return G1Constants.DEFAULT_COMMAND_TIMEOUT_MS;
         }
@@ -119,9 +122,11 @@ public class G1Communications {
         private byte currentChunk;
         protected final byte[] payload;
         protected final byte chunkCount;
+        Callable<Byte> getNextSequence;
 
-        public ChunkedCommandHandler(Consumer<CommandHandler> sendCallback, Function<byte[], Boolean> callback, byte[] payload) {
-            super(true, callback);
+        protected ChunkedCommandHandler(byte sequence, Consumer<CommandHandler> sendCallback,
+                                        Function<byte[], Boolean> callback, byte[] payload) {
+            super(sequence, true, callback);
             this.sendCallback = sendCallback;
             this.currentChunk = 0;
             this.payload = payload;
@@ -158,15 +163,17 @@ public class G1Communications {
             // Copy the chunk of the payload into the packet.
             System.arraycopy(this.payload, chunkBegin, packet, getHeaderSize(), payloadSize);
 
-            // Advance the chunk.
-            currentChunk++;
-
             return packet;
         }
 
         @Override
         final public boolean responseMatches(byte[] payload) {
-            return chunkMatches(currentChunk, payload);
+            if (chunkMatches(currentChunk, payload)) {
+                // Advance the chunk when the response is received.
+                currentChunk++;
+                return true;
+            }
+            return false;
         }
 
         private boolean sendNextChunk(byte[] payload) {
@@ -283,8 +290,7 @@ public class G1Communications {
 
     public static class CommandSendHeartBeat extends CommandHandler {
         public CommandSendHeartBeat(byte sequence) {
-            super(false, null);
-            setGlobalSequence(sequence);
+            super(sequence, false, null);
         }
 
         @Override
@@ -317,8 +323,9 @@ public class G1Communications {
         byte weatherIcon;
         boolean useFahrenheit;
 
-        public CommandSetTimeAndWeather(long timeMilliseconds, boolean use12HourFormat, WeatherSpec weatherInfo, boolean useFahrenheit) {
-            super(true, null);
+        public CommandSetTimeAndWeather(byte sequence, long timeMilliseconds, boolean use12HourFormat,
+                                        WeatherSpec weatherInfo, boolean useFahrenheit) {
+            super(sequence, true, null);
             this.timeMilliseconds = timeMilliseconds;
             this.use12HourFormat = use12HourFormat;
             if (weatherInfo != null) {
@@ -340,12 +347,10 @@ public class G1Communications {
             }
             this.useFahrenheit = useFahrenheit;
         }
-        public CommandSetTimeAndWeather(long timeMilliseconds, boolean use12HourFormat, boolean useFahrenheit) {
-            this(timeMilliseconds, use12HourFormat, null, useFahrenheit);
+        public CommandSetTimeAndWeather(byte sequence, long timeMilliseconds, boolean use12HourFormat,
+                                        boolean useFahrenheit) {
+            this(sequence, timeMilliseconds, use12HourFormat, null, useFahrenheit);
         }
-
-        @Override
-        public boolean needsGlobalSequence() { return true; }
 
         @Override
         public byte[] serialize() {
@@ -402,14 +407,11 @@ public class G1Communications {
     public static class CommandSetDashboardModeSettings extends CommandHandler {
         byte mode;
         byte secondaryPaneMode;
-        public CommandSetDashboardModeSettings(byte mode, byte secondaryPaneMode) {
-            super(true, null);
+        public CommandSetDashboardModeSettings(byte sequence, byte mode, byte secondaryPaneMode) {
+            super(sequence, true, null);
             this.mode = mode;
             this.secondaryPaneMode = secondaryPaneMode;
         }
-
-        @Override
-        public boolean needsGlobalSequence() { return true; }
 
         @Override
         public byte[] serialize() {
@@ -523,15 +525,12 @@ public class G1Communications {
         private final boolean preview;
         private final byte height;
         private final byte depth;
-        public CommandSetDisplaySettings(boolean preview, byte height, byte depth) {
-            super(true, null);
+        public CommandSetDisplaySettings(byte sequence, boolean preview, byte height, byte depth) {
+            super(sequence, true, null);
             this.preview = preview;
             this.height = height;
             this.depth = depth;
         }
-
-        @Override
-        public boolean needsGlobalSequence() { return true; }
 
         @Override
         public byte[] serialize() {
@@ -841,7 +840,8 @@ public class G1Communications {
                                                  boolean enableCalendar,
                                                  boolean enableCalls,
                                                  boolean enableSMS) {
-            super(sendCallback, null,
+            // Sequence is not used.
+            super((byte)0, sendCallback, null,
                   generatePayload(appIdentifiers, enableCalendar, enableCalls, enableSMS));
         }
 
@@ -871,7 +871,8 @@ public class G1Communications {
                 // Need to allocate one larger in order to null terminate.
                  String jsonString = json.toString();
                 byte[] bytes = new byte[jsonString.length() + 1];
-                System.arraycopy(jsonString.getBytes(StandardCharsets.US_ASCII), 0, bytes, 0, jsonString.length());
+                System.arraycopy(jsonString.getBytes(StandardCharsets.US_ASCII),
+                                 0, bytes, 0, jsonString.length());
                 bytes[jsonString.length()] = 0;
                 return bytes;
             } catch (JSONException e) {
@@ -906,7 +907,8 @@ public class G1Communications {
         private final int messageId;
 
         public CommandSendNotification(Consumer<CommandHandler> sendCallback, NotificationSpec notificationSpec) {
-            super(sendCallback, null, generatePayload(notificationSpec));
+            // Sequence is not used.
+            super((byte)0, sendCallback, null, generatePayload(notificationSpec));
             this.messageId = notificationSpec.getId();
         }
 
@@ -916,10 +918,15 @@ public class G1Communications {
                 JSONObject notificationJson = new JSONObject();
                 notificationJson.put("msg_id", notificationSpec.getId());
                 notificationJson.put("action", 0);
-                notificationJson.put("app_identifier", notificationSpec.sourceAppId.substring(0,Math.min(notificationSpec.sourceAppId.length(), 31)));
-                if (notificationSpec.title != null)  notificationJson.put("title", notificationSpec.title);
-                if (notificationSpec.subject != null)  notificationJson.put("subtitle", notificationSpec.subject);
-                if (notificationSpec.body != null)  notificationJson.put("message", notificationSpec.body);
+                notificationJson.put("app_identifier",
+                                     notificationSpec.sourceAppId.substring(
+                                             0,Math.min(notificationSpec.sourceAppId.length(), 31)));
+                if (notificationSpec.title != null)
+                    notificationJson.put("title", notificationSpec.title);
+                if (notificationSpec.subject != null)
+                    notificationJson.put("subtitle", notificationSpec.subject);
+                if (notificationSpec.body != null)
+                    notificationJson.put("message", notificationSpec.body);
                 notificationJson.put("time_s", notificationSpec.when / 1000);
                 notificationJson.put("date", new Date(notificationSpec.when).toString());
                 notificationJson.put("display_name", notificationSpec.sourceName);
@@ -930,7 +937,8 @@ public class G1Communications {
                 // Need to allocate one larger in order to null terminate.
                 String jsonString = json.toString();
                 byte[] bytes = new byte[jsonString.length() + 1];
-                System.arraycopy(jsonString.getBytes(StandardCharsets.US_ASCII), 0, bytes, 0, jsonString.length());
+                System.arraycopy(jsonString.getBytes(StandardCharsets.US_ASCII),
+                                 0, bytes, 0, jsonString.length());
                 bytes[jsonString.length()] = 0;
                 return bytes;
             } catch (JSONException e) {

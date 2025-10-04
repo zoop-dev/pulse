@@ -1,14 +1,11 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.evenrealities;
 
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.os.Build;
 import android.os.Handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Calendar;
-import java.util.TimeZone;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.List;
@@ -51,14 +48,10 @@ public class G1SideManager {
     private final BiFunction<String, Integer, TransactionBuilder> createTransactionBuilder;
     private final BluetoothGattCharacteristic rx;
     private final BluetoothGattCharacteristic tx;
-    private final Runnable heartBeatRunner;
-    private final Runnable displaySettingsPreviewCloserRunner;
     private final Set<G1Communications.CommandHandler> commandHandlers;
-    private byte globalSequence;
     private boolean isSilentModeEnabled;
     private GBDevice.State connectingState;
     private boolean debugEnabled;
-    private long lastHeartBeatTime;
 
     public G1SideManager(G1Constants.Side mySide, Handler backgroundTasksHandler,
                          Callable<BtLEQueue> getQueue, Callable<GBDevice> getDevice,
@@ -75,38 +68,12 @@ public class G1SideManager {
         this.rx = rx;
         this.tx = tx;
 
-        this.heartBeatRunner = () -> {
-            Calendar c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-            long currentMilliseconds = c.getTimeInMillis();
-            LOG.info("Side {}: {}ms since the last heartbeat", mySide, currentMilliseconds - lastHeartBeatTime);
-            lastHeartBeatTime = currentMilliseconds;
-            if (getDevice().isConnected()) {
-                // We can send any command as a heart beat. The official app uses this one.
-                send(new G1Communications.CommandSendHeartBeat(getNextSequence()));
-                scheduleHeatBeat();
-            } else {
-                // Don't reschedule if the device is disconnected.
-                LOG.debug("Stopping heartbeat runner since side is in state: {}", getDevice().getState());
-            }
-        };
-        this.displaySettingsPreviewCloserRunner = () -> {
-            DevicePrefs prefs = getDevicePrefs();
-            send(new G1Communications.CommandSetDisplaySettings(
-                    false /* preview */,
-                    (byte)prefs.getInt(DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_HEIGHT, 0),
-                    // Depth ranges from 1-9 instead of 0-8, so offset by one to convert from
-                    // the slider space.
-                    (byte)(prefs.getInt(DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_DEPTH, 0) + 1)));
-        };
         this.commandHandlers = new HashSet<>();
 
         // Non Finals
-        this.globalSequence = 0;
         this.isSilentModeEnabled = false;
         this.connectingState = GBDevice.State.CONNECTED;
         this.debugEnabled = false;
-        Calendar c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        this.lastHeartBeatTime = c.getTimeInMillis();
 
     }
 
@@ -151,11 +118,6 @@ public class G1SideManager {
             .putBoolean(DeviceSettingsPreferenceConst.PREF_DEVICE_LOGS_TOGGLE, this.debugEnabled)
             .apply();
 
-        // The glasses will auto disconnect after 30 seconds of no data on the wire.
-        // Schedule a heartbeat task. If this is not enabled, the glasses will disconnect and be
-        // useless to the user.
-        scheduleHeatBeat();
-
         connectingState = GBDevice.State.INITIALIZED;
     }
 
@@ -198,16 +160,11 @@ public class G1SideManager {
         sendInTransaction(transaction, new G1Communications.CommandGetDisplaySettings(this::handleDisplaySettingsPayload));
         sendInTransaction(transaction, new G1Communications.CommandGetWearDetectionSettings(this::handleWearDetectionSettingsPayload));
         sendInTransaction(transaction, new G1Communications.CommandGetNotificationDisplaySettings(this::handleNotificationDisplaySettingsPayload));
-        transaction.queue();
     }
 
     public void onSendConfiguration(String config) {
         DevicePrefs prefs = getDevicePrefs();
         switch (config) {
-            case DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_HEIGHT:
-            case DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_DEPTH:
-                sendDisplaySettings(prefs);
-                break;
             case DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_ACTIVATION_ANGLE:
                 send(new G1Communications.CommandSetHeadGestureSettings(
                         (byte)prefs.getInt(DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_ACTIVATION_ANGLE, 40)));
@@ -240,44 +197,6 @@ public class G1SideManager {
         send(new G1Communications.CommandSetSilentModeSettings(isSilentModeEnabled));
     }
 
-    private void scheduleHeatBeat() {
-        backgroundTasksHandler.removeCallbacksAndMessages(heartBeatRunner);
-        LOG.debug("Starting heartbeat runner delayed by {}ms", G1Constants.HEART_BEAT_DELAY_MS);
-        backgroundTasksHandler.postDelayed(heartBeatRunner, G1Constants.HEART_BEAT_DELAY_MS);
-    }
-
-    private synchronized byte getNextSequence() {
-        // Synchronized so the sequence increments atomically.
-        // This number will eventually overflow, and that is fine. The sequence number is just to
-        // match the request and response together.
-        return globalSequence++;
-    }
-
-    private synchronized void sendDisplaySettings(DevicePrefs prefs) {
-        // Synchronized so that there can only ever be one background task.
-        // Clear any existing runner in case the user has changed the value multiple times
-        // before th delay expired.
-        backgroundTasksHandler.removeCallbacksAndMessages(displaySettingsPreviewCloserRunner);
-
-        // The glasses expect the setting to
-        send(new G1Communications.CommandSetDisplaySettings(
-                true /* preview */,
-                (byte)prefs.getInt(DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_HEIGHT, 0),
-                // Depth ranges from 1-9 instead of 0-8, so offset by one to convert from
-                // the slider space.
-                (byte)(prefs.getInt(DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_DEPTH, 0) + 1)));
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            // On newer APIs, use the runner as the token.
-            backgroundTasksHandler.postDelayed(displaySettingsPreviewCloserRunner,
-                                               displaySettingsPreviewCloserRunner,
-                                               G1Constants.DISPLAY_SETTINGS_PREVIEW_DELAY);
-        } else {
-            backgroundTasksHandler.postDelayed(displaySettingsPreviewCloserRunner,
-                                               G1Constants.DISPLAY_SETTINGS_PREVIEW_DELAY);
-        }
-    }
-
     public void send(G1Communications.CommandHandler command) {
         TransactionBuilder transaction =
                 createTransactionBuilder.apply(command.getName(), mySide.getDeviceIndex());
@@ -286,12 +205,6 @@ public class G1SideManager {
     }
 
     private void sendInTransaction(TransactionBuilder transaction, G1Communications.CommandHandler command) {
-        // Calling getNextSequence() will advance the global sequence, if the command doesn't need
-        // a sequence number, don't call it so we don't waste a sequence number.
-        if (command.needsGlobalSequence()) {
-            command.setGlobalSequence(getNextSequence());
-        }
-
         LOG.debug("Send command {} on side {}", command.getName(), mySide.getDeviceIndex());
 
         // Write the packet to the BLE txn.
