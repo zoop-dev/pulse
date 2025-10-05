@@ -1,6 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.garmin;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.app.Activity;
 
@@ -53,9 +54,11 @@ import nodomain.freeyourgadget.gadgetbridge.entities.GenericTrainingLoadChronicS
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericTrainingLoadChronicSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.PendingFileDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.model.BodyEnergySample;
+import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvValueSample;
 import nodomain.freeyourgadget.gadgetbridge.model.PaiSample;
@@ -69,10 +72,32 @@ import nodomain.freeyourgadget.gadgetbridge.model.WorkoutLoadSample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
+import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public boolean suggestUnbindBeforePair() {
+        return false;
+    }
+
+    @Override
+    public GBDevice createDevice(final GBDeviceCandidate candidate, final DeviceType deviceType) {
+        final GBDevice gbDevice = super.createDevice(candidate, deviceType);
+
+        if (defaultNewSyncProtocol()) {
+            final DevicePrefs devicePreferences = GBApplication.getDevicePrefs(gbDevice);
+            final SharedPreferences.Editor editor = devicePreferences.getPreferences().edit();
+
+            // #5021 - Some new devices like Venu X1 misses a lot of files without the new sync protocol
+            editor.putBoolean("new_sync_protocol", true);
+
+            editor.apply();
+        }
+
+        return gbDevice;
+    }
+
+    public boolean defaultNewSyncProtocol() {
         return false;
     }
 
