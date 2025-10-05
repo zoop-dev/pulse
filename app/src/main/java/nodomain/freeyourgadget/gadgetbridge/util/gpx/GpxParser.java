@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 
 import com.google.gson.internal.bind.util.ISO8601Utils;
 
+import org.jetbrains.annotations.TestOnly;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xmlpull.v1.XmlPullParser;
@@ -27,11 +28,20 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParsePosition;
 import java.util.Date;
 
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.util.ArrayUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxFile;
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxTrack;
@@ -85,6 +95,28 @@ public class GpxParser {
         return null;
     }
 
+    /// simplify the GPX for parsing
+    @Nullable
+    @TestOnly
+    public static byte[] transformGpx(InputStream input){
+        try {
+            Source xmlSource = new StreamSource(input);
+            try (final InputStream xsltStream = GBApplication.getContext().getResources().openRawResource(R.raw.gpx_xslt)) {
+                Source xsltSource = new StreamSource(xsltStream);
+
+                TransformerFactory factory = TransformerFactory.newInstance();
+                Transformer transformer = factory.newTransformer(xsltSource);
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                final StreamResult result = new StreamResult(outputStream);
+                transformer.transform(xmlSource, result);
+                return outputStream.toByteArray();
+            }
+        } catch (Exception e) {
+            LOG.error("transformGpx ", e);
+            return null;
+        }
+    }
+
     public static boolean isGpxFile(final byte[] data) {
         for(byte[] header : XML_HEADER){
             if(ArrayUtils.equals(data, header, 0)){
@@ -103,8 +135,8 @@ public class GpxParser {
     public GpxParser(final InputStream stream) throws GpxParseException {
         this.fileBuilder = new GpxFile.Builder();
 
-        try {
-            parser = createXmlParser(stream);
+        try (InputStream simple = new ByteArrayInputStream(transformGpx(stream))){
+            parser = createXmlParser(simple);
             parseGpx();
         } catch (final Exception e) {
             throw new GpxParseException("Failed to parse gpx", e);
@@ -123,43 +155,84 @@ public class GpxParser {
         return parser;
     }
 
-    private void parseGpx() throws Exception {
-        eventType = parser.getEventType();
+    private Date getDate(String attribute, Date defaultDate) throws Exception {
+        final String text = parser.getAttributeValue(null, attribute);
+        if (text == null || text.length() < 1) {
+            return defaultDate;
+        }
+        return ISO8601Utils.parse(text, new ParsePosition(0));
+    }
 
-        while (eventType != XmlPullParser.END_DOCUMENT) {
+    private double getDouble(String attribute, double defaultDouble) {
+        final String text = parser.getAttributeValue(null, attribute);
+        if (text == null || text.length() < 1) {
+            return defaultDouble;
+        }
+        return Double.parseDouble(text);
+    }
+
+    private float getFloat(String attribute, float defaultFloat) {
+        final String text = parser.getAttributeValue(null, attribute);
+        if (text == null || text.length() < 1) {
+            return defaultFloat;
+        }
+        return Float.parseFloat(text);
+    }
+
+    private int getInt(String attribute, int defaultInt) {
+        final String text = parser.getAttributeValue(null, attribute);
+        if (text == null || text.length() < 1) {
+            return defaultInt;
+        }
+        return Integer.parseInt(text);
+    }
+
+    private void parseGpx() throws Exception {
+        for (eventType = parser.getEventType(); eventType != XmlPullParser.END_DOCUMENT; eventType = parser.next()) {
             if (eventType == XmlPullParser.START_TAG) {
-                switch (parser.getName()) {
+                String name = parser.getName();
+                switch (name) {
+                    case "gpx":
+                        fileBuilder.withName(parser.getAttributeValue(null, "name"));
+                        fileBuilder.withAuthor(parser.getAttributeValue(null, "author"));
+                        fileBuilder.withTime(getDate("time", null));
+                        break;
                     case "trk":
                         final GpxTrack track = parseTrack();
                         if (!track.isEmpty()) {
                             fileBuilder.withTrack(track);
                         }
-                        continue;
+                        break;
                     case "wpt":
-                        fileBuilder.withWaypoints(parseWaypoint());
-                        continue;
-                    case "metadata":
-                        parseMetadata();
-                        continue;
+                        final GpxWaypoint waypoint = new GpxWaypoint(
+                                getDouble("lon", 0.0),
+                                getDouble("lat", 0.0),
+                                getDouble("ele", Double.NaN),
+                                getDate("time", null),
+                                parser.getAttributeValue(null, "name"),
+                                parser.getAttributeValue(null, "desc"),
+                                parser.getAttributeValue(null, "sym"),
+                                getDouble("hdop", Double.NaN),
+                                getDouble("vdop", Double.NaN),
+                                getDouble("pdop", Double.NaN),
+                                getFloat("temperature", Float.NaN),
+                                getFloat("depth", Float.NaN)
+                        );
+                        fileBuilder.withWaypoints(waypoint);
+                        break;
                 }
             }
-
-            eventType = parser.next();
         }
     }
 
     private GpxTrack parseTrack() throws Exception {
         final GpxTrack.Builder trackBuilder = new GpxTrack.Builder();
 
+        trackBuilder.withName(parser.getAttributeValue(null, "name"));
+        trackBuilder.withType(parser.getAttributeValue(null, "type"));
         while (eventType != XmlPullParser.END_TAG || !parser.getName().equals("trk")) {
             if (eventType == XmlPullParser.START_TAG) {
                 switch (parser.getName()) {
-                    case "name":
-                        trackBuilder.withName(parseStringContent("name"));
-                        continue;
-                    case "type":
-                        trackBuilder.withType(parseStringContent("type"));
-                        continue;
                     case "trkseg":
                         final GpxTrackSegment segment = parseTrackSegment();
                         if (!segment.getTrackPoints().isEmpty()) {
@@ -182,9 +255,25 @@ public class GpxParser {
             if (eventType == XmlPullParser.START_TAG) {
                 switch (parser.getName()) {
                     case "trkpt":
-                        final GpxTrackPoint trackPoint = parseTrackPoint();
+                        final GpxTrackPoint trackPoint = new GpxTrackPoint(
+                                getDouble("lon", 0.0),
+                                getDouble("lat", 0.0),
+                                getDouble("ele", Double.NaN),
+                                getDate("time", null),
+                                parser.getAttributeValue(null, "name"),
+                                parser.getAttributeValue(null, "desc"),
+                                parser.getAttributeValue(null, "sym"),
+                                getDouble("hdop", Double.NaN),
+                                getDouble("vdop", Double.NaN),
+                                getDouble("pdop", Double.NaN),
+                                getInt("hr", -1),
+                                getFloat("speed", -1),
+                                getInt("cad", -1),
+                                getFloat("temperature", Float.NaN),
+                                getFloat("depth", Float.NaN)
+                        );
                         segmentBuilder.withTrackPoint(trackPoint);
-                        continue;
+                        break;
                 }
             }
 
@@ -192,130 +281,5 @@ public class GpxParser {
         }
 
         return segmentBuilder.build();
-    }
-
-    private String parseStringContent(final String tag) throws Exception {
-        String retString = "";
-        while (eventType != XmlPullParser.END_TAG || !parser.getName().equals(tag)) {
-            if (eventType == XmlPullParser.TEXT) {
-                retString = parser.getText();
-            }
-            eventType = parser.next();
-        }
-        return retString;
-    }
-
-    private double parseElevation() throws Exception {
-        return Double.parseDouble(parseStringContent("ele"));
-    }
-
-    private Date parseTime() throws Exception {
-        return ISO8601Utils.parse(parseStringContent("time"), new ParsePosition(0));
-    }
-
-    private GpxTrackPoint parseTrackPoint() throws Exception {
-        final GpxTrackPoint.Builder trackPointBuilder = new GpxTrackPoint.Builder();
-
-        final String latString = parser.getAttributeValue(null, "lat");
-        final String lonString = parser.getAttributeValue(null, "lon");
-        trackPointBuilder.withLatitude(latString != null ? Double.parseDouble(latString) : 0);
-        trackPointBuilder.withLongitude(lonString != null ? Double.parseDouble(lonString) : 0);
-
-        while (eventType != XmlPullParser.END_TAG || !parser.getName().equals("trkpt")) {
-            if (parser.getEventType() == XmlPullParser.START_TAG) {
-                switch (parser.getName()) {
-                    case "ele":
-                        trackPointBuilder.withAltitude(parseElevation());
-                        continue;
-                    case "time":
-                        trackPointBuilder.withTime(parseTime());
-                        continue;
-                    case "extensions":
-                        parseExtensions(trackPointBuilder);
-                        continue;
-                }
-            } 
-
-            eventType = parser.next();
-        }
-
-        return trackPointBuilder.build();
-    }
-
-    private void parseExtensions(final GpxTrackPoint.Builder trackPointBuilder) throws Exception {
-        while (eventType != XmlPullParser.END_TAG || !parser.getName().equals("extensions")) {
-            if (parser.getEventType() == XmlPullParser.START_TAG) {
-                switch (parser.getName()) {
-                    case "TrackPointExtension":
-                        parseTrackPointExtensions(trackPointBuilder);
-                        continue;
-                }
-            }
-
-            eventType = parser.next();
-        }
-    }
-
-    private void parseTrackPointExtensions(final GpxTrackPoint.Builder trackPointBuilder) throws Exception {
-        while (eventType != XmlPullParser.END_TAG || !parser.getName().equals("TrackPointExtension")) {
-            if (parser.getEventType() == XmlPullParser.START_TAG) {
-                switch (parser.getName()) {
-                    case "cad":
-                        trackPointBuilder.withCadence(Integer.parseInt(parseStringContent("cad")));
-                        continue;
-                    case "hr":
-                        trackPointBuilder.withHeartRate(Integer.parseInt(parseStringContent("hr")));
-                        continue;
-                    case "speed":
-                        trackPointBuilder.withSpeed(Float.parseFloat(parseStringContent("speed")));
-                        continue;
-                }
-            }
-
-            eventType = parser.next();
-        }
-    }
-
-    private GpxWaypoint parseWaypoint() throws Exception {
-        final GpxWaypoint.Builder waypointBuilder = new GpxWaypoint.Builder();
-
-        final String latString = parser.getAttributeValue(null, "lat");
-        final String lonString = parser.getAttributeValue(null, "lon");
-        waypointBuilder.withLatitude(latString != null ? Double.parseDouble(latString) : 0);
-        waypointBuilder.withLongitude(lonString != null ? Double.parseDouble(lonString) : 0);
-
-        while (eventType != XmlPullParser.END_TAG || !parser.getName().equals("wpt")) {
-            if (parser.getEventType() == XmlPullParser.START_TAG) {
-                switch (parser.getName()) {
-                    case "ele":
-                        waypointBuilder.withAltitude(parseElevation());
-                        continue;
-                    case "name":
-                        waypointBuilder.withName(parseStringContent("name"));
-                        continue;
-                }
-            }
-
-            eventType = parser.next();
-        }
-
-        return waypointBuilder.build();
-    }
-
-    private void parseMetadata() throws Exception {
-        while (eventType != XmlPullParser.END_TAG || !parser.getName().equals("metadata")) {
-            if (parser.getEventType() == XmlPullParser.START_TAG) {
-                switch (parser.getName()) {
-                    case "name":
-                        fileBuilder.withName(parseStringContent("name"));
-                        continue;
-                    case "author":
-                        // TODO parse author
-                        break;
-                }
-            }
-
-            eventType = parser.next();
-        }
     }
 }

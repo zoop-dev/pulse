@@ -1,4 +1,4 @@
-/*  Copyright (C) 2023-2024 José Rebelo
+/*  Copyright (C) 2023-2025 José Rebelo, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -16,7 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.util.gpx.model;
 
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,15 +28,24 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 public class GpxFile {
     private final String name;
     private final String author;
+    @Nullable
+    private final Date time;
 
     private final List<GpxTrack> tracks;
     private final List<GpxWaypoint> waypoints;
 
-    public GpxFile(final String name, final String author, final List<GpxTrack> tracks, final List<GpxWaypoint> waypoints) {
+    public GpxFile(@Nullable final String name, @Nullable final String author, @Nullable final Date time,
+                   final List<GpxTrack> tracks, final List<GpxWaypoint> waypoints) {
         this.name = name;
         this.author = author;
+        this.time = time;
         this.tracks = tracks;
         this.waypoints = waypoints;
+    }
+
+    @Nullable
+    public Date getTime() {
+        return time;
     }
 
     public String getName() {
@@ -75,9 +87,15 @@ public class GpxFile {
     public static class Builder {
         private String name;
         private String author;
+        private Date time;
 
         private List<GpxTrack> tracks = new ArrayList<>();
         private List<GpxWaypoint> waypoints = new ArrayList<>();
+
+        public Builder withTime(final Date date) {
+            this.time = date;
+            return this;
+        }
 
         public Builder withName(final String name) {
             this.name = name;
@@ -100,7 +118,7 @@ public class GpxFile {
         }
 
         public GpxFile build() {
-            return new GpxFile(name, author, tracks, waypoints);
+            return new GpxFile(name, author, time, tracks, waypoints);
         }
     }
 }

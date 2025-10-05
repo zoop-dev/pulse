@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<xsl:stylesheet
+    xmlns:ax="http://www.garmin.com/xmlschemas/ActivityExtension/v1"
+    xmlns:g3="http://www.garmin.com/xmlschemas/GpxExtensions/v3"
+    xmlns:gpx="http://www.topografix.com/GPX/1/1"
+    xmlns:tx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1"
+    xmlns:w1="http://www.garmin.com/xmlschemas/WaypointExtension/v1"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    exclude-result-prefixes="ax g3 gpx tx w1"
+    version="1.0">
+    <xsl:output
+        encoding="UTF-8"
+        indent="yes"
+        method="xml"
+        version="1.0" />
+    <xsl:strip-space elements="*" />
+
+    <xsl:template match="/gpx:gpx">
+        <gpx>
+            <xsl:if test="gpx:metadata/gpx:name"><xsl:attribute name="name"><xsl:value-of select="gpx:metadata/gpx:name" /></xsl:attribute></xsl:if>
+            <xsl:if test="gpx:metadata/gpx:author/gpx:name"><xsl:attribute name="author"><xsl:value-of select="gpx:metadata/gpx:author/gpx:name" /></xsl:attribute></xsl:if>
+            <xsl:if test="gpx:metadata/gpx:time"><xsl:attribute name="time"><xsl:value-of select="gpx:metadata/gpx:time" /></xsl:attribute></xsl:if>
+            <xsl:apply-templates select="gpx:wpt" />
+            <xsl:apply-templates select="gpx:trk" />
+        </gpx>
+    </xsl:template>
+
+    <xsl:template match="gpx:wpt">
+        <wpt>
+            <xsl:call-template name="point" />
+            <xsl:choose>
+                <xsl:when test="gpx:extensions/g3:WaypointExtension/g3:Temperature">
+                    <xsl:attribute name="temperature"><xsl:value-of select="gpx:extensions/g3:WaypointExtension/g3:Temperature" /></xsl:attribute>
+                </xsl:when>
+                <xsl:when test="gpx:extensions/w1:WaypointExtension/w1:Temperature">
+                    <xsl:attribute name="temperature"><xsl:value-of select="gpx:extensions/w1:WaypointExtension/w1:Temperature" /></xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
+            <xsl:choose>
+                <xsl:when test="gpx:extensions/g3:WaypointExtension/g3:Depth">
+                    <xsl:attribute name="depth"><xsl:value-of select="gpx:extensions/g3:WaypointExtension/g3:Depth" /></xsl:attribute>
+                </xsl:when>
+                <xsl:when test="gpx:extensions/w1:WaypointExtension/w1:Depth">
+                    <xsl:attribute name="depth"><xsl:value-of select="gpx:extensions/w1:WaypointExtension/w1:Depth" /></xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
+        </wpt>
+    </xsl:template>
+
+    <xsl:template match="gpx:trk">
+        <trk>
+            <xsl:attribute name="name"><xsl:value-of select="gpx:name" /></xsl:attribute>
+            <xsl:if test="gpx:type"><xsl:attribute name="type"><xsl:value-of select="gpx:type" /></xsl:attribute></xsl:if>
+            <xsl:apply-templates select="gpx:trkseg" />
+        </trk>
+    </xsl:template>
+
+    <xsl:template match="gpx:trkseg">
+        <trkseg>
+            <xsl:apply-templates select="gpx:trkpt" />
+        </trkseg>
+    </xsl:template>
+
+    <xsl:template match="gpx:trkpt">
+        <trkpt>
+            <xsl:call-template name="point" />
+            <xsl:choose>
+                <xsl:when test="gpx:extensions/tx:TrackPointExtension/tx:atemp">
+                    <xsl:attribute name="temperature"><xsl:value-of select="gpx:extensions/tx:TrackPointExtension/tx:atemp" /></xsl:attribute>
+                </xsl:when>
+                <xsl:when test="gpx:extensions/g3:TrackPointExtension/g3:Temperature">
+                    <xsl:attribute name="temperature"><xsl:value-of select="gpx:extensions/g3:TrackPointExtension/g3:Temperature" /></xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
+                        <xsl:choose>
+                            <xsl:when test="gpx:extensions/tx:TrackPointExtension/tx:depth">
+                                <xsl:attribute name="depth"><xsl:value-of select="gpx:extensions/tx:TrackPointExtension/tx:depth" /></xsl:attribute>
+                            </xsl:when>
+                            <xsl:when test="gpx:extensions/g3:TrackPointExtension/g3:Depth">
+                                <xsl:attribute name="depth"><xsl:value-of select="gpx:extensions/g3:TrackPointExtension/g3:Depth" /></xsl:attribute>
+                            </xsl:when>
+                        </xsl:choose>
+                        <xsl:if test="gpx:extensions/tx:TrackPointExtension/tx:hr"><xsl:attribute name="hr"><xsl:value-of select="gpx:extensions/tx:TrackPointExtension/tx:hr" /></xsl:attribute></xsl:if>
+                        <xsl:if test="gpx:extensions/tx:TrackPointExtension/tx:cad"><xsl:attribute name="cad"><xsl:value-of select="gpx:extensions/tx:TrackPointExtension/tx:cad" /></xsl:attribute></xsl:if>
+                        <xsl:if test="gpx:extensions/ax:TrackPointExtension/ax:speed"><xsl:attribute name="speed"><xsl:value-of select="gpx:extensions/ax:TrackPointExtension/ax:speed" /></xsl:attribute></xsl:if>
+                 </trkpt>
+    </xsl:template>
+
+    <xsl:template name="point">
+        <xsl:attribute name="lat"><xsl:value-of select="@lat" /></xsl:attribute>
+        <xsl:attribute name="lon"><xsl:value-of select="@lon" /></xsl:attribute>
+        <xsl:if test="gpx:ele"><xsl:attribute name="ele"><xsl:value-of select="gpx:ele" /></xsl:attribute></xsl:if>
+        <xsl:if test="gpx:time"><xsl:attribute name="time"><xsl:value-of select="gpx:time" /></xsl:attribute></xsl:if>
+        <xsl:if test="gpx:name"><xsl:attribute name="name"><xsl:value-of select="gpx:name" /></xsl:attribute></xsl:if>
+        <xsl:if test="gpx:desc"><xsl:attribute name="desc"><xsl:value-of select="gpx:desc" /></xsl:attribute></xsl:if>
+        <xsl:choose>
+            <xsl:when test="gpx:desc">
+                <xsl:attribute name="desc"><xsl:value-of select="gpx:desc" /></xsl:attribute>
+            </xsl:when>
+            <xsl:when test="gpx:cmt">
+                <xsl:attribute name="desc"><xsl:value-of select="gpx:cmt" /></xsl:attribute>
+            </xsl:when>
+        </xsl:choose>
+        <xsl:if test="gpx:sym"><xsl:attribute name="sym"><xsl:value-of select="gpx:sym" /></xsl:attribute></xsl:if>
+        <xsl:if test="gpx:hdop"><xsl:attribute name="hdop"><xsl:value-of select="gpx:hdop" /></xsl:attribute></xsl:if>
+        <xsl:if test="gpx:vdop"><xsl:attribute name="vdop"><xsl:value-of select="gpx:vdop" /></xsl:attribute></xsl:if>
+        <xsl:if test="gpx:pdop"><xsl:attribute name="pdop"><xsl:value-of select="gpx:pdop" /></xsl:attribute></xsl:if>
+    </xsl:template>
+</xsl:stylesheet>

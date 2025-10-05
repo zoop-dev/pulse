@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1"
+    creator="Garmin Desktop App"
+    xmlns:ax="http://www.garmin.com/xmlschemas/ActivityExtension/v1"
+    xmlns:ge="http://www.garmin.com/xmlschemas/GpxExtensions/v3"
+    xmlns:tpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1"
+    xmlns:wpx="http://www.garmin.com/xmlschemas/WaypointExtension/v1"
+>
+
+    <metadata>
+        <name>Gadgetbridge's TestGpxImport.gpx</name>
+        <author>
+            <name>Gadgetbridge test author</name>
+        </author>
+        <time>2025-10-03T18:20:45Z</time>
+    </metadata>
+
+    <wpt lat="47.5048828125" lon="9.7393798828125">
+        <ele>-470.1</ele>
+        <time>2025-10-03T14:10:59Z</time>
+        <name>Bregenz</name>
+        <desc>city in Österreich</desc>
+        <sym>Airport</sym>
+        <hdop>1.4</hdop>
+        <vdop>3.2</vdop>
+        <pdop>1.5</pdop>
+        <extensions>
+            <wpx:WaypointExtension>
+                <wpx:Temperature>9.1</wpx:Temperature>
+                <wpx:Depth>6.1</wpx:Depth>
+            </wpx:WaypointExtension>
+        </extensions>
+    </wpt>
+
+    <wpt lat="47.65594482421875" lon="9.47296142578125">
+        <ele>8850.1</ele>
+        <time>2025-10-03T14:20:59Z</time>
+        <name>腓特烈港</name>
+        <cmt>another comment</cmt>
+        <sym>Anchor</sym>
+        <extensions>
+            <ge:WaypointExtension>
+                <ge:Temperature>19.2</ge:Temperature>
+                <ge:Depth>16.2</ge:Depth>
+            </ge:WaypointExtension>
+        </extensions>
+    </wpt>
+
+    <wpt lat="47.66693115234375" lon="9.1680908203125">
+        <name>קרויצלינגן</name>
+    </wpt>
+
+    <rte>
+        <name>Test Route</name>
+        <rtept lat="47.5048828125" lon="9.7393798828125">
+            <time>2025-10-03T14:16:06Z</time>
+            <name>Bregenz</name>
+            <sym>Triangle, Red</sym>
+        </rtept>
+        <rtept lat="47.65594482421875" lon="9.47296142578125">
+            <time>2025-10-03T14:16:09Z</time>
+            <name>Friedrichshafen</name>
+            <sym>City (Medium)</sym>
+        </rtept>
+        <rtept lat="47.66693115234375" lon="9.1680908203125">
+            <time>2025-10-03T14:16:17Z</time>
+            <name>Konstanz</name>
+            <sym>Square, Blue</sym>
+        </rtept>
+    </rte>
+
+    <trk>
+        <name>Gadgetbridge import test track</name>
+        <trkseg>
+            <trkpt lat="47.5048828125" lon="9.7393798828125">
+                <ele>-440.2</ele>
+                <time>2025-10-03T15:10:59Z</time>
+                <name>Tp1</name>
+                <desc>a description</desc>
+                <sym>Summit</sym>
+                <hdop>1.4</hdop>
+                <vdop>3.2</vdop>
+                <pdop>1.5</pdop>
+                <extensions>
+                    <tpx:TrackPointExtension>
+                        <tpx:atemp>28.3</tpx:atemp>
+                        <tpx:depth>26.3</tpx:depth>
+                        <tpx:hr>123</tpx:hr>
+                        <tpx:cad>22</tpx:cad>
+                    </tpx:TrackPointExtension>
+                    <ax:TrackPointExtension>
+                        <ax:speed>23.3</ax:speed>
+                    </ax:TrackPointExtension>
+                </extensions>
+            </trkpt>
+            <trkpt lat="47.60899250395596" lon="9.55604980699718">
+                <ele>8849.2</ele>
+                <time>2025-10-03T15:20:59Z</time>
+                <name>Tp2</name>
+                <cmt>a comment</cmt>
+                <sym>Water</sym>
+                <extensions>
+                    <ge:TrackPointExtension>
+                        <ge:Temperature>34.3</ge:Temperature>
+                        <ge:Depth>33.3</ge:Depth>
+                    </ge:TrackPointExtension>
+                </extensions>
+            </trkpt>
+            <trkpt lat="47.65594482421875" lon="9.47296142578125" />
+            <trkpt lat="-43" lon="-19" />
+        </trkseg>
+    </trk>
+</gpx>

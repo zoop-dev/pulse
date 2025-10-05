@@ -1,4 +1,4 @@
-/*  Copyright (C) 2017-2024 Carsten Pfeiffer, José Rebelo, Petr Vaněk
+/*  Copyright (C) 2017-2025 Carsten Pfeiffer, José Rebelo, Petr Vaněk, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -42,12 +42,16 @@ public class GPSCoordinate implements Parcelable {
     public static final int GPS_DECIMAL_DEGREES_SCALE = 6; // precise to 111.132mm at equator: https://en.wikipedia.org/wiki/Decimal_degrees
 
     public GPSCoordinate(double longitude, double latitude, double altitude) {
+        this(longitude, latitude, altitude, UNKNOWN_DOP, UNKNOWN_DOP, UNKNOWN_DOP);
+    }
+
+    public GPSCoordinate(double longitude, double latitude, double altitude, double hdop, double vdop, double pdop) {
         this.longitude = longitude;
         this.latitude = latitude;
-        this.altitude = altitude;
-        this.hdop = UNKNOWN_DOP;
-        this.vdop = UNKNOWN_DOP;
-        this.pdop = UNKNOWN_DOP;
+        this.altitude = Double.isNaN(altitude) ? UNKNOWN_ALTITUDE : altitude;
+        this.hdop = Double.isNaN(hdop) ? UNKNOWN_DOP : hdop;
+        this.vdop = Double.isNaN(vdop) ? UNKNOWN_DOP : vdop;
+        this.pdop = Double.isNaN(pdop) ? UNKNOWN_DOP : pdop;
     }
 
     public GPSCoordinate(double longitude, double latitude) {
@@ -58,6 +62,9 @@ public class GPSCoordinate implements Parcelable {
         latitude = in.readDouble();
         longitude = in.readDouble();
         altitude = in.readDouble();
+        hdop = in.readDouble();
+        vdop = in.readDouble();
+        pdop = in.readDouble();
     }
 
     public double getLatitude() {
@@ -171,6 +178,9 @@ public class GPSCoordinate implements Parcelable {
         dest.writeDouble(latitude);
         dest.writeDouble(longitude);
         dest.writeDouble(altitude);
+        dest.writeDouble(hdop);
+        dest.writeDouble(vdop);
+        dest.writeDouble(pdop);
     }
 
     @Override

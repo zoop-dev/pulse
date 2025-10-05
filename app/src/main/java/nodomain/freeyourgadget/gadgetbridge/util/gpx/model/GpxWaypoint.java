@@ -1,4 +1,4 @@
-/*  Copyright (C) 2023-2024 José Rebelo
+/*  Copyright (C) 2023-2025 José Rebelo, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -18,15 +18,48 @@ package nodomain.freeyourgadget.gadgetbridge.util.gpx.model;
 
 import androidx.annotation.Nullable;
 
+import java.util.Date;
+
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 
 public class GpxWaypoint extends GPSCoordinate {
+    private final float depth;
+
+    @Nullable
+    private final String description;
+
     @Nullable
     private final String name;
 
-    public GpxWaypoint(final double longitude, final double latitude, final double altitude, @Nullable final String name) {
-        super(longitude, latitude, altitude);
+    @Nullable
+    private final String symbol;
+
+    private final float temperature;
+
+    @Nullable
+    private final Date time;
+
+    public GpxWaypoint(final double longitude, final double latitude, final double altitude,
+                       @Nullable final Date time, @Nullable final String name,
+                       @Nullable final String description, @Nullable final String symbol,
+                       final double hdop, final double vdop, final double pdop,
+                       final float temperature, final float depth) {
+        super(longitude, latitude, altitude, hdop, vdop, pdop);
+        this.depth = depth;
+        this.description = description;
         this.name = name;
+        this.symbol = symbol;
+        this.time = time;
+        this.temperature = temperature;
+    }
+
+    public float getDepth() {
+        return depth;
+    }
+
+    @Nullable
+    public String getDescription() {
+        return description;
     }
 
     @Nullable
@@ -34,34 +67,17 @@ public class GpxWaypoint extends GPSCoordinate {
         return name;
     }
 
-    public static class Builder {
-        private double longitude;
-        private double latitude;
-        private double altitude;
-        private String name;
+    @Nullable
+    public String getSymbol() {
+        return symbol;
+    }
 
-        public Builder withLongitude(final double longitude) {
-            this.longitude = longitude;
-            return this;
-        }
+    public float getTemperature() {
+        return temperature;
+    }
 
-        public Builder withLatitude(final double latitude) {
-            this.latitude = latitude;
-            return this;
-        }
-
-        public Builder withAltitude(final double altitude) {
-            this.altitude = altitude;
-            return this;
-        }
-
-        public Builder withName(final String name) {
-            this.name = name;
-            return this;
-        }
-
-        public GpxWaypoint build() {
-            return new GpxWaypoint(longitude, latitude, altitude, name);
-        }
+    @Nullable
+    public Date getTime() {
+        return time;
     }
 }
