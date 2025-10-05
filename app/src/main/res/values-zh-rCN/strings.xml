@@ -4045,4 +4045,18 @@
     <string name="huawei_send_gps_and_time_summary">发送 GPS 和时间到设备进行天气和星星搜索优化。应在设置中设定位置</string>
     <string name="garmin_mlr_protocol">多链路可靠协议</string>
     <string name="feature_experimental_unstable">实验性，可能不稳定</string>
+    <string name="heart_rate_settings">心率设置</string>
+    <string name="heart_rate_settings_summary">查看当前锻炼心率设置和区间</string>
+    <string name="workout_posture_type_upright">站立</string>
+    <string name="workout_posture_type_sitting">坐</string>
+    <string name="hr_settings_hr_limit">心率设置</string>
+    <string name="hr_settings_zones_calculation_method">计算方法</string>
+    <string name="hr_settings_zones_calculation_method_mhr">MHR</string>
+    <string name="hr_settings_zones_calculation_method_hrr">储备心率</string>
+    <string name="hr_settings_zones_calculation_method_lthr">LTHR</string>
+    <string name="hr_settings_zones_resting_hr">休息心率</string>
+    <string name="hr_settings_zones_max_hr">最大心率</string>
+    <string name="hr_settings_zones_lactate_threshold_hr">乳酸阈值心率</string>
+    <string name="hr_settings_zones_remove_all">重置所有</string>
+    <string name="hr_settings_zones_remove_all_description">确定要删除心率区间和全部姿势配置限制并将它们重置为默认吗？</string>
 </resources>
