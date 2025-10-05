@@ -60,7 +60,7 @@ public class ZipBackupExportJob extends AbstractZipBackupJob {
 
     @Override
     public void run() {
-        try (final OutputStream outputStream = getContext().getContentResolver().openOutputStream(mUri);
+        try (final OutputStream outputStream = getContext().getContentResolver().openOutputStream(mUri, "wt");
              final ZipOutputStream zipOut = new ZipOutputStream(outputStream)) {
 
             if (isAborted()) return;
@@ -149,6 +149,7 @@ public class ZipBackupExportJob extends AbstractZipBackupJob {
         final ZipEntry zipEntry = new ZipEntry(zipEntryName);
         zipOut.putNextEntry(zipEntry);
         zipOut.write(preferencesJson.getBytes(StandardCharsets.UTF_8));
+        zipOut.closeEntry();
     }
 
     private static void exportDatabase(final ZipOutputStream zipOut, final Context context) throws IOException {
@@ -163,6 +164,8 @@ public class ZipBackupExportJob extends AbstractZipBackupJob {
         } catch (final Exception e) {
             throw new IOException("Failed to export database", e);
         }
+
+        zipOut.closeEntry();
     }
 
     /**
@@ -230,6 +233,8 @@ public class ZipBackupExportJob extends AbstractZipBackupJob {
         } catch (final Exception e) {
             throw new IOException("Failed to write " + relativePath, e);
         }
+
+        zipOut.closeEntry();
     }
 
     private static void addMetadata(final ZipOutputStream zipOut) throws IOException {
@@ -254,6 +259,7 @@ public class ZipBackupExportJob extends AbstractZipBackupJob {
         zipEntry.setComment(comment);
         zipOut.putNextEntry(zipEntry);
         zipOut.write(metadataJson.getBytes(StandardCharsets.UTF_8));
+        zipOut.closeEntry();
 
         zipOut.setComment(comment);
     }
