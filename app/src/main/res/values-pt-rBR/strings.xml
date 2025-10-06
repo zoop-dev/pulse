@@ -314,14 +314,7 @@
     <string name="pref_summary_pebble_health_store_raw">Armazena os dados tal como estão, aumentando a utilização da base de dados para permitir uma interpretação posterior.</string>
     <string name="action_db_management">Gerenciamento de dados</string>
     <string name="title_activity_db_management">Gerenciamento de dados</string>
-    <string name="activity_db_management_import_export_explanation">As operações de exportação/importação usam o seguinte caminho (veja abaixo) para um diretório em seu dispositivo. Este diretório é acessível a outros aplicativos Android e seu computador. Observe que este diretório e todos os arquivos que contêm são excluídos se você desinstalar o Gadgetbridge. Os dados incluem:
-\n Export_preference - configurações globais
-\n Export_preference_MAC - configurações específicas do dispositivo
-\n Gadgetbridge - banco de dados de dispositivos e atividades
-\n Gadgetbridge_date - banco de dados exportado em uma data
-\n *.gpx - gravações deGPS
-\n *.log - arquivos de log
-\nEspere encontrar seus arquivos exportados (ou colocar os arquivos que deseja importar) lá:</string>
+    <string name="activity_db_management_import_export_explanation">As operações de exportação/importação usam o seguinte caminho (veja abaixo) para um diretório em seu dispositivo. Este diretório é acessível a outros aplicativos Android e seu computador. Observe que este diretório e todos os arquivos que contêm são excluídos se você desinstalar o Gadgetbridge. Os dados incluem: \n Export_preference - configurações globais \n Export_preference_MAC - configurações específicas do dispositivo \n Gadgetbridge - banco de dados de dispositivos e atividades \n Gadgetbridge_date - banco de dados exportado em uma data \n *.gpx - gravações de GPS \n *.log - arquivos de log \nEspere encontrar seus arquivos exportados (ou colocar os arquivos que deseja importar) lá:</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Não é possível acessar o caminho de exportação. Entre em contato com os desenvolvedores.</string>
     <string name="dbmanagementactivity_exported_to">Exportado para: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Erro ao exportar BD: %1$s</string>
@@ -589,7 +582,7 @@
     <string name="lack_of_step">Carência de passos: %1$d</string>
     <string name="overstep">Passos excedentes: %1$d</string>
     <string name="no_data">Nenhum dado</string>
-    <string name="live_activity_max_heart_rate">Frequência cardíaca atual / máx: %1$d / %2$d</string>
+    <string name="live_activity_max_heart_rate">Frequência cardíaca atual/máx.: %1$d / %2$d</string>
     <string name="debugactivity_really_factoryreset">Restaurar as configurações de fábrica vai excluir todos os dados do dispositivo conectado (se houver suporte). Dispositivos Xiami/Huami também mudam o endereço MAC do Bluetooth, então eles aparecem como novos dispositivos no Gadgetbridge.</string>
     <string name="title_activity_notification_filter">Filtro de notificação</string>
     <string name="edittext_notification_filter_words_hint">Insira as palavras desejadas, nova linha para cada</string>
@@ -616,7 +609,7 @@
     <string name="zetime_analog_mode_hands">Apenas mãos</string>
     <string name="zetime_analog_mode_handsandsteps">Mãos e passos</string>
     <string name="zetime_activity_tracking">Monitoramento de atividade</string>
-    <string name="zetime_activity_tracking_summary">Ao ativar o monitoramento de atividade, os passos serão contados etc.</string>
+    <string name="zetime_activity_tracking_summary">Ao ativar o monitoramento de atividade, os passos serão contados, etc.</string>
     <string name="zetime_handmove_display">Movimento da mão</string>
     <string name="zetime_handmove_display_summary">Gire seu pulso para ativar ou desativar a tela.</string>
     <string name="zetime_calories_type">Tipo de calorias</string>
@@ -962,7 +955,7 @@
     <string name="activity_summary_today">Hoje</string>
     <string name="activity_summary_edit_name_title">Editar rótulo</string>
     <string name="activity_type_yoga">Ioga</string>
-    <string name="activity_type_jump_roping">Corda de pular</string>
+    <string name="activity_type_jump_roping">Pular corda</string>
     <string name="activity_type_elliptical_trainer">Treinador Elíptico</string>
     <string name="activity_type_indoor_cycling">Ciclismo indoor</string>
     <string name="activity_type_swimming_openwater">Natação (Águas abertas)</string>
@@ -1109,7 +1102,7 @@
     <string name="watchface_dialog_widget_color_white">Branca</string>
     <string name="watchface_dialog_widget_color">Cor</string>
     <string name="watchface_dialog_widget_preset_left">Esquerda</string>
-    <string name="watchface_dialog_widget_preset_bottom">Baixo</string>
+    <string name="watchface_dialog_widget_preset_bottom">Abaixo</string>
     <string name="watchface_dialog_widget_preset_top">Topo</string>
     <string name="watchface_dialog_widget_x_coordinate">Coordenada X (máx. 240)</string>
     <string name="button_watchface_save_apply">Salvar e aplicar</string>
@@ -1388,7 +1381,7 @@
     <string name="world_clock_timezone">Fuso horário</string>
     <string name="world_clock_no_free_slots_description">O dispositivo não tem espaço para relógios mundiais (total de espaços: %1$s)</string>
     <string name="about_description_main_nopebble">Substituto para aplicativo não open source de dispositivos Android dos fabricantes, sem necessitar de nuvem e possui código livre. Atualizações Nightly (diárias) de Gadgetbridge. Essa versão tem o provedor Pebble renomeado para prevenir conflitos, então algumas integrações do Pebble não funcionarão, mas pode ser instalado com Gadgetbridge já existente.</string>
-    <string name="about_description_main_nightly">Substituto para aplicativos não open source de dispositivos Android dos fabricantes, sem necessitar de nuvem e código livre. Atualizações Nightly (diárias) de Gadgetbridge. Não pode ser instalado se você já tem ou o aplicativo Gadgetbridge ou Pebble, devido a um conflito no provedor Pebble.</string>
+    <string name="about_description_main_nightly">Substituto para aplicativos não open source de dispositivos Android dos fabricantes, sem necessitar de nuvem e código livre. Atualizações Nightly (diárias) de Gadgetbridge. Não pode ser instalado se você já tem ou o aplicativo Gadgetbridge, ou Pebble, devido a um conflito no provedor Pebble.</string>
     <string name="world_clock_no_free_slots_title">Não há espaço</string>
     <string name="about_description_banglejs_main">App de Android para Bangle.js construída sobre o projeto Gadgetbridge, com acesso à Internet adicionado. \n \nDevido a políticas da Google Play Store, não estamos autorizados a um link para doações no próprio aplicativo, porém se você gostou deste aplicativo por favor considere fazer uma doação através da página do Gadgetbridge mostrada abaixo.</string>
     <string name="application_name_banglejs_main">Bangle.js Gadgetbridge</string>
@@ -1412,7 +1405,7 @@
     <string name="about_description_banglejs_nightly">Aplicativo companheiro Android para Bangle.js construído em cima do projeto Gadgetbridge, com acesso adicional à Internet.
 \n
 \nDevido às políticas Google Play Store, não somos permitidos ter um link de doação no próprio aplicativo, mas se você gosta deste aplicativo, por favor, considere doar através da página inicial do Gadgetbridge abaixo.</string>
-    <string name="single_band">Single Band</string>
+    <string name="single_band">Banda única</string>
     <string name="about_activity_title_banglejs_nightly">Sobre o Bangle.js Gadgetbridge (Nightly)</string>
     <string name="power_saving">Economia de energia</string>
     <string name="gadgetbridge_running_banglejs_nightly">Nightly Bangle.js em execução</string>
@@ -1483,7 +1476,7 @@
     <string name="steps_streaks_total_days_hint_totals">Porcentagem de dias com meta atingida em relação a todos os dias com passos</string>
     <string name="pref_cache_weather">Informações sobre o clima em cache</string>
     <string name="pref_cache_weather_summary">As informações do clima serão armazenadas em cache durante as reinicializações do aplicativo.</string>
-    <string name="dual_band">Dual Band</string>
+    <string name="dual_band">Banda dupla</string>
     <string name="steps_streaks_since_date">Desde %s</string>
     <string name="step_streaks_achievements_sharing_message">Minhas conquistas diárias de passos!</string>
     <string name="watchface_resolution_doesnt_match">A resolução do mostrador do relógio não corresponde à tela do dispositivo. O mostrador do relógio é %1$s e a tela do dispositivo é %2$s</string>
@@ -2589,7 +2582,7 @@
     <string name="activity_type_elliptical">Elíptico</string>
     <string name="activity_type_baseball">Beisebol</string>
     <string name="activity_type_handball">Handebol</string>
-    <string name="activity_type_squash">Squash</string>
+    <string name="activity_type_squash">Abóbora</string>
     <string name="activity_type_indoor_fitness">Fitness em recinto fechado</string>
     <string name="activity_type_hiit">Treino intervalado de alta intensidade (HIIT)</string>
     <string name="activity_type_core_training">Treino do núcleo</string>
@@ -2720,7 +2713,7 @@
     <string name="activity_type_billiard_pool">Piscina</string>
     <string name="activity_type_canoeing">Canoagem</string>
     <string name="activity_type_water_scooter">Moto aquática</string>
-    <string name="activity_type_bobsleigh">Bobsleigh</string>
+    <string name="activity_type_bobsleigh">Bobsled</string>
     <string name="activity_type_sledding">Andar de trenó</string>
     <string name="activity_type_biathlon">Biatlo</string>
     <string name="activity_type_bungee_jumping">Bungee jumping</string>
@@ -2885,7 +2878,7 @@
     <string name="weather_condition_snow">neve</string>
     <string name="weather_condition_light_shower_snow">chuva leve de neve</string>
     <string name="weather_condition_heavy_snow">neve intensa</string>
-    <string name="weather_condition_sleet">granizo</string>
+    <string name="weather_condition_sleet">chuva congelada</string>
     <string name="weather_condition_shower_sleet">granizo forte</string>
     <string name="weather_condition_shower_snow">chuva de neve</string>
     <string name="weather_condition_heavy_shower_snow">chuva forte de neve</string>
@@ -3295,4 +3288,9 @@
     <string name="maps_track_color_title">Cor da pista</string>
     <string name="pref_refresh_on_swipe_summary">Deslize para baixo para obter novos dados dos dispositivos conectados.</string>
     <string name="pref_refresh_on_swipe_title">Atualizar ao deslizar</string>
+    <string name="bluetooth_multipoint_pairing">Emparelhamento multiponto</string>
+    <string name="bluetooth_multipoint">Multiponto</string>
+    <string name="bluetooth_multipoint_pair_new">Emparelhar novo dispositivo</string>
+    <string name="bluetooth_multipoint_no_devices">Nenhum dispositivo emparelhado encontrado\n\nToque em Emparelhar novo dispositivo para adicionar um dispositivo</string>
+    <string name="bluetooth_multipoint_pair_stop">Interrompa o emparelhamento</string>
 </resources>
