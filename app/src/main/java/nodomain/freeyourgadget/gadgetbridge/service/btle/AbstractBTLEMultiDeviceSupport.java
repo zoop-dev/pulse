@@ -201,6 +201,45 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
         }
     }
 
+    @Override
+    public boolean isConnected() {
+        // All queues must be connected for the composite device to be considered connected.
+        for (BtLEQueue queue : mQueues) {
+            if (queue == null || !queue.isConnected()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean isConnecting() {
+        // All sub devices must be initialized for the composite device to be considered initialized.
+        for (int i = 0; i < deviceCount; i++) {
+            if (!devices[i].isConnecting() || !devices[i].isConnected()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns true if the device is not only connected, but also
+     * initialized.
+     *
+     * @see GBDevice#isInitialized()
+     */
+    @Override
+    protected boolean isInitialized() {
+        // All sub devices must be initialized for the composite device to be considered initialized.
+        for (int i = 0; i < deviceCount; i++) {
+            if (!devices[i].isInitialized()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * Subclasses should populate the given builder to initialize the device (if necessary).
      *
@@ -409,6 +448,10 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
         int deviceIdx = getDeviceIndexForAddress(gatt.getDevice().getAddress());
         gattServicesDiscovered(gatt.getServices(), deviceIdx);
 
+        // TODO: If one sub device that is not index 0 calls getDevice().setState(), this can cause
+        // device 0 to never be initialized. This class should stop using device 0 == getDevice()
+        // and it should use a dummy device for the rest of the system to reference to prevent
+        // similar bugs.
         if (getDevice(deviceIdx).getState().compareTo(GBDevice.State.INITIALIZING) >= 0) {
             logger.warn(
                     "Services discovered, but device {} ({}) is already in state {}, so ignoring",

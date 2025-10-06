@@ -690,15 +690,10 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                                 deviceAddress);
                         continue;
                     }
-                    GBDevice supportDevice = deviceSupport.getDevice();
-                    if (supportDevice != null && supportDevice.isConnected()) {
-                        LOG.debug("connectToDevice - {} device is already connected",
-                                deviceAddress);
-                        continue;
-                    }
-                    if (supportDevice != null && supportDevice.isConnecting()) {
-                        LOG.debug("connectToDevice - {} device is already connecting",
-                                deviceAddress);
+
+                    if (deviceSupport.isConnecting()) {
+                        LOG.debug("connectToDevice - {} device support is already isConnecting",
+                                  deviceAddress);
                         continue;
                     }
                 }

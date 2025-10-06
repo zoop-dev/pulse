@@ -55,6 +55,13 @@ public interface DeviceSupport extends EventHandler {
     boolean isConnected();
 
     /**
+     * Returns whether a transport-level connection is being established with the device
+     *
+     * @return whether the device is connecting with the system running this software
+     */
+    boolean isConnecting();
+
+    /**
      * Attempts an initial connection to the device, typically after the user "discovered"
      * and connects to it for the first time. Some implementations may perform an additional
      * initialization or application-level pairing compared to the regular {@link #connect()}.

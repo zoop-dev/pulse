@@ -18,7 +18,15 @@ public class G1Constants {
     //       It could be that a 180 byte buffer is allocated in the FW for the payload and sending
     //       more will cause the glasses to crash.
     public static final int MAX_PACKET_SIZE_BYTES = 180;
-    public static final int HEART_BEAT_DELAY_MS = 28000;
+    // YUCK! The glasses require a constant connection otherwise they will completely shut down.
+    // Every 32 seconds (BLE timeout), a packet MUST be sent to the glasses to keep the connection
+    // alive. Due to scheduling of background threads in Android, the system can add upwards of 20
+    // seconds to the sleep time. There is not a great way around this, so the sleep time is set to
+    // 8 seconds. In deep sleep, that means the connection is generally refreshed every 28 seconds.
+    // Occasionally, the timeout will be exceeded, in which case we rely on the auto reconnection,
+    // however that process requires full initialization of the glasses, and as such it is more
+    // expensive from a battery budget than just sending the heartbeat message.
+    public static final int HEART_BEAT_DELAY_MS = 8000;
     public static final int DEFAULT_COMMAND_TIMEOUT_MS = 5000;
     public static final int DISPLAY_SETTINGS_PREVIEW_DELAY = 3000;
     public static final int DEFAULT_RETRY_COUNT = 5;

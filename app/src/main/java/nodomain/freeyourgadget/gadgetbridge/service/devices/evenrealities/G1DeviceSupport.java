@@ -1,8 +1,10 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.evenrealities;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattServer;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.concurrent.Callable;
 
@@ -36,6 +39,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEMultiDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEQueue;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.PlainAction;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
@@ -51,12 +55,13 @@ import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
  */
 public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(G1DeviceSupport.class);
-    private final HandlerThread backgroundThread = new HandlerThread("even_g1_background_thread", Process.THREAD_PRIORITY_DEFAULT);
+    private final HandlerThread backgroundThread = new HandlerThread("even_g1_background_thread", Process.THREAD_PRIORITY_MORE_FAVORABLE);
     private final Runnable heartBeatRunner;
     private final Runnable displaySettingsPreviewCloserRunner;
     private Handler backgroundTasksHandler = null;
     private BroadcastReceiver intentReceiver = null;
     private final Object lensSkewLock = new Object();
+    private final Object initializationLock = new Object();
     private G1SideManager leftSide = null;
     private G1SideManager rightSide = null;
     private long lastHeartBeatTime;
@@ -79,10 +84,12 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
             long currentMilliseconds = c.getTimeInMillis();
             LOG.info("{}ms since the last heartbeat", currentMilliseconds - lastHeartBeatTime);
             lastHeartBeatTime = currentMilliseconds;
-            if (getDevice().isConnected()) {
+            if (isConnected()) {
                 // We can send any command as a heart beat. The official app uses this one.
-                G1Communications.CommandGetSilentModeSettings leftCommand = new G1Communications.CommandGetSilentModeSettings(b -> { return true;});
-                G1Communications.CommandGetSilentModeSettings rightCommand = new G1Communications.CommandGetSilentModeSettings(b -> { return true;});
+                G1Communications.CommandGetSilentModeSettings leftCommand =
+                        new G1Communications.CommandGetSilentModeSettings(b -> { return true;});
+                G1Communications.CommandGetSilentModeSettings rightCommand =
+                        new G1Communications.CommandGetSilentModeSettings(b -> { return true;});
                 leftSide.send(leftCommand);
                 rightSide.send(rightCommand);
 
@@ -100,7 +107,9 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
                 scheduleHeatBeat();
             } else {
                 // Don't reschedule if the device is disconnected.
-                LOG.debug("Stopping heartbeat runner since side is in state: {}", getDevice().getState());
+                LOG.debug("Stopping heartbeat runner since side is in state: {} {}",
+                          getDevice(G1Constants.Side.LEFT.getDeviceIndex()).getState(),
+                          getDevice(G1Constants.Side.RIGHT.getDeviceIndex()).getState());
             }
         };
 
@@ -213,45 +222,73 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
         builder.notify(rx, true);
 
         // If the side is in the connected state, it is ready to be initialized.
-        // IMPORTANT: use getDevice(deviceIdx), not getDevice(/* 0 */) here otherwise the device
-        // will lock up in a half initialized state because GB thinks the left side is initialized,
-        // after because the right ran first.
-        if (side.getConnectingState() == GBDevice.State.CONNECTED) {
-            builder.setDeviceState(GBDevice.State.INITIALIZING);
+        if (side.getConnectingState() == GBDevice.State.NOT_CONNECTED) {
+            // Since the left side is device 0, ony it can mark the global device as initializing.
+            // If the right side were to do so, the Device support will skip ever initializing
+            // device 0. See: super::onServicesDiscovered()
+            if (side == leftSide) {
+                builder.setDeviceState(GBDevice.State.INITIALIZING);
+            }
             side.initialize(builder);
         }
 
-        synchronized (this) {
-            if (leftSide != null && leftSide.getConnectingState() == GBDevice.State.INITIALIZED &&
-                rightSide != null && rightSide.getConnectingState() == GBDevice.State.INITIALIZED) {
-                // set device firmware to prevent the following error when data is saved to the
-                // database and device firmware has not been set yet.
-                // java.lang.IllegalArgumentException: the bind value at index 2 is null.
-                // Must be called before the PostInitialize down below.
-                getDevice().setFirmwareVersion("N/A");
-                getDevice().setFirmwareVersion2("N/A");
+        // The final step of each transaction will be to decide if that particular side is the
+        // second side to complete, and if it, that side will be the one responsible for marking
+        // the composite device as initialized.
+        builder.add(new PlainAction() {
+            @Override
+            public boolean run(BluetoothGatt gatt) {
+                // There is a race condition of each device marking INITIALIZED. If one device
+                // initialize transaction runs after the other has completely finished, the device
+                // will transition from INITIALIZED back to INITIALIZING. Run this final step in a
+                // synchronized block so that only one of the devices can be the final one. Since
+                // this action always runs after "side.initialize(builder)" in the transaction order
+                // it is not possible for both devices to pass this point before both are marked
+                // initialized.
+                // NOTE: side.getConnectingState() != getDevice().getState().
+                synchronized (initializationLock) {
+                    // This means that both sides have been connected to and basic info has been collected.
+                    if (leftSide != null &&
+                        leftSide.getConnectingState() == GBDevice.State.INITIALIZED &&
+                        rightSide != null &&
+                        rightSide.getConnectingState() == GBDevice.State.INITIALIZED) {
+                        // Set device firmware to prevent the following error when data is saved to
+                        // the database and device firmware has not been set yet.
+                        // java.lang.IllegalArgumentException: the bind value at index 2 is null.
+                        // Must be called before the PostInitialize down below.
+                        getDevice().setFirmwareVersion("N/A");
+                        getDevice().setFirmwareVersion2("N/A");
 
-                // Both sides are initialized. The whole device is initialized, don't use a device
-                // index here. Device 0 is the device that the reset of GB sees.
-                builder.setDeviceState(GBDevice.State.INITIALIZED);
+                        // These next steps require that both sides are ready and they can run very
+                        // slowly which is why they are done post individual initialization and in
+                        // the background. We don't know what thread we are handling the update
+                        // state event on, so to be safe, schedule these as a background task.
+                        backgroundTasksHandler.postDelayed(() -> {
+                            onSetDashboardMode();
+                            onSetTime();
+                            // The glasses will auto disconnect after 30 seconds of no data on the wire.
+                            // Schedule a heartbeat task. If this is not enabled, the glasses will disconnect
+                            // and be useless to the user.
+                            scheduleHeatBeat();
+                            // Sent to the left only and it's own transaction, this is a large piece
+                            // of data and can cause GB to time out the initialization and get stuck
+                            // in a loop.
+                            leftSide.send(new G1Communications.CommandSetAppNotificationSettings(
+                                    leftSide::send, List.of(G1Constants.FIXED_NOTIFICATION_APP_ID),
+                                    false, false, false));
+                        }, 200);
 
-                // This means that both sides have been connected to and basic info has been collected.
-                // These next steps require that both sides are ready which is why they are done post
-                // individual initialization. We don't know what thread we are handling the update state
-                // event on, so to be safe, schedule these as a background task.
-                backgroundTasksHandler.postDelayed(() -> {
-                    leftSide.postInitializeLeft();
-                    rightSide.postInitializeRight();
-                    onSetDashboardMode();
-                    onSetTime();
-
-                    // The glasses will auto disconnect after 30 seconds of no data on the wire.
-                    // Schedule a heartbeat task. If this is not enabled, the glasses will disconnect and be
-                    // useless to the user.
-                    scheduleHeatBeat();
-                }, 200);
+                        // Mark both sub devices as INITIALIZED so that the composite device is
+                        // considered INITIALIZED.
+                        getDevice(G1Constants.Side.LEFT.getDeviceIndex())
+                                .setUpdateState(GBDevice.State.INITIALIZED, getContext());
+                        getDevice(G1Constants.Side.RIGHT.getDeviceIndex())
+                                .setUpdateState(GBDevice.State.INITIALIZED, getContext());
+                    }
+                }
+                return true;
             }
-        }
+        });
 
         getDevice().sendDeviceUpdateIntent(getContext());
         return builder;
@@ -386,6 +423,37 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
         }
     }
 
+    @Override
+    public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
+        super.onConnectionStateChange(gatt, status, newState);
+
+        String leftAddress = getDevice(G1Constants.Side.LEFT.getDeviceIndex()).getAddress();
+        String rightAddress = getDevice(G1Constants.Side.RIGHT.getDeviceIndex()).getAddress();
+        BluetoothDevice device = gatt.getDevice();
+        if (device == null || !(device.getAddress().equals(leftAddress) && !device.getAddress().equals(rightAddress))) {
+            // Not one of the managed devices, nothing to do.
+            return;
+        }
+
+        if (newState == BluetoothGattServer.STATE_DISCONNECTED) {
+            // If either side disconnects, initiate a reconnection on both sides.
+            if (status != BluetoothGatt.GATT_SUCCESS) {
+                LOG.info("One side unexpectedly diconnected, attempting to reconnect both.");
+                // The sides must also have their state reset so that the fully initialization
+                // processes is followed.
+                // TODO: Add an intermediate state that the initialization process can respect where
+                // only minimal communications are sent. For example the notification whitelist
+                // messages don't need to be resent.
+                leftSide.resetConnectingState();
+                rightSide.resetConnectingState();
+                getDevice(G1Constants.Side.LEFT.getDeviceIndex())
+                        .setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, getContext());
+                getDevice(G1Constants.Side.RIGHT.getDeviceIndex())
+                        .setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, getContext());
+
+            }
+        }
+    }
 
     ////////////////////////////////////////////////////////////////////////
     // Below are all the onXXX() handlers overridden from the base class. //
@@ -401,12 +469,14 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
         }
 
         // The glasses expect to be forwarded the MTU, so when it is changed, also notify the side
-        // that it changed on.
+        // that it changed on. Cap the MTU value that is sent to the glasses to the officially supported
+        // value. The FW on the glasses seems to internal allocate a buffer at this size, but it has
+        // a maximum value that is not tied to the real underlying BLE MTU.
         String address = gatt.getDevice().getAddress();
         if (getDevice(G1Constants.Side.LEFT.getDeviceIndex()) != null) {
             String leftAddress = getDevice(G1Constants.Side.LEFT.getDeviceIndex()).getAddress();
             if (address.equals(leftAddress) && leftSide != null) {
-                leftSide.send(new G1Communications.CommandSendMtu((byte)mtu));
+                leftSide.send(new G1Communications.CommandSendMtu((byte)Math.min(G1Constants.MTU, mtu)));
             }
         }
 
@@ -414,7 +484,7 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
             String rightAddress =
                     getDevice(G1Constants.Side.RIGHT.getDeviceIndex()).getAddress();
             if (address.equals(rightAddress) && rightSide != null) {
-                rightSide.send(new G1Communications.CommandSendMtu((byte)mtu));
+                rightSide.send(new G1Communications.CommandSendMtu((byte)Math.min(G1Constants.MTU, mtu)));
             }
         }
     }

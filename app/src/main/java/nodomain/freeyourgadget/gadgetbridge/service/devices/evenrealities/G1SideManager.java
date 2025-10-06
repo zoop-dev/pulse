@@ -1,5 +1,6 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.evenrealities;
 
+import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.os.Handler;
 
@@ -8,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.function.BiFunction;
@@ -27,6 +27,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEQueue;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.PlainAction;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 /**
@@ -72,9 +73,8 @@ public class G1SideManager {
 
         // Non Finals
         this.isSilentModeEnabled = false;
-        this.connectingState = GBDevice.State.CONNECTED;
+        this.connectingState = GBDevice.State.NOT_CONNECTED;
         this.debugEnabled = false;
-
     }
 
     private BtLEQueue getQueue() {
@@ -108,6 +108,9 @@ public class G1SideManager {
     public GBDevice.State getConnectingState() {
         return connectingState;
     }
+    public void resetConnectingState() {
+        connectingState  = GBDevice.State.NOT_CONNECTED;
+    }
 
     public void initialize(TransactionBuilder transaction) {
         // Disable device logging in the prefs. There is no way to query this state from the device
@@ -118,40 +121,41 @@ public class G1SideManager {
             .putBoolean(DeviceSettingsPreferenceConst.PREF_DEVICE_LOGS_TOGGLE, this.debugEnabled)
             .apply();
 
-        connectingState = GBDevice.State.INITIALIZED;
+        if (mySide == G1Constants.Side.LEFT) {
+            initializeLeft(transaction);
+        } else {
+            initializeRight(transaction);
+        }
+
+        transaction.add(new PlainAction() {
+            @Override
+            public boolean run(BluetoothGatt gatt) {
+                connectingState = GBDevice.State.INITIALIZED;
+                return true;
+            }
+        });
     }
 
     public byte getSilentModeStatus() {
         return isSilentModeEnabled ? G1Constants.SilentStatus.ENABLE : G1Constants.SilentStatus.DISABLE;
     }
 
-    private void postInitializeCommon(TransactionBuilder transaction) {
+    private void initializeCommon(TransactionBuilder transaction) {
         sendInTransaction(transaction, new G1Communications.CommandGetBatteryInfo(this::handleBatteryPayload));
         sendInTransaction(transaction, new G1Communications.CommandGetFirmwareInfo(this::handleFirmwareInfoPayload));
         sendInTransaction(transaction, new G1Communications.CommandGetSilentModeSettings(this::handleSilentStatusPayload));
     }
 
-    public void postInitializeLeft() {
-        TransactionBuilder transaction =
-                createTransactionBuilder.apply("post_initialize_left", mySide.getDeviceIndex());
-        postInitializeCommon(transaction);
+    public void initializeLeft(TransactionBuilder transaction) {
+        initializeCommon(transaction);
 
         // These can be sent to both, but the left lens is used as the master for these settings.
         sendInTransaction(transaction, new G1Communications.CommandGetBrightnessSettings(this::handleBrightnessSettingsPayload));
         sendInTransaction(transaction, new G1Communications.CommandGetSerialNumber(this::handleSerialNumberPayload));
-        transaction.queue();
-
-        // Sent to the left only and it's own transaction, this is a large piece of data and can
-        // cause GB to time out the initialization and get stuck in a loop.
-        send(new G1Communications.CommandSetAppNotificationSettings(
-                this::send, List.of(G1Constants.FIXED_NOTIFICATION_APP_ID),
-                false, false, false));
     }
 
-    public void postInitializeRight() {
-        TransactionBuilder transaction =
-                createTransactionBuilder.apply( "post_initialize_right", mySide.getDeviceIndex());
-        postInitializeCommon(transaction);
+    public void initializeRight(TransactionBuilder transaction) {
+        initializeCommon(transaction);
 
         // This settings are only sent to the right lens in the official app, so we copy that.
         sendInTransaction(transaction, new G1Communications.CommandGetHeadGestureSettings(this::handleHeadGestureSettingsPayload));

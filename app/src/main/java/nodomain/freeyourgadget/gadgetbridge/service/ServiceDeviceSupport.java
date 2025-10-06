@@ -82,6 +82,11 @@ public class ServiceDeviceSupport implements DeviceSupport {
     }
 
     @Override
+    public boolean isConnecting() {
+        return delegate.isConnecting();
+    }
+
+    @Override
     public boolean connectFirstTime() {
         return delegate.connectFirstTime();
     }

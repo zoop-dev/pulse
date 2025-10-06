@@ -92,6 +92,11 @@ public abstract class AbstractDeviceSupport implements DeviceSupport {
         return gbDevice.isConnected();
     }
 
+    @Override
+    public boolean isConnecting() {
+        return gbDevice.isConnecting();
+    }
+
     /**
      * Returns true if the device is not only connected, but also
      * initialized.
