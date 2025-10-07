@@ -81,7 +81,7 @@ public class GpxTrackPoint extends GPSCoordinate {
     @NonNull
     @Override
     public String toString() {
-        return "ts: " + time.getTime() + ", " + super.toString() + ", heartRate: " + heartRate + ", speed: " + speed + ", cadence: " + cadence;
+        return "ts: " + (time == null ? null : time.getTime()) + ", " + super.toString() + ", heartRate: " + heartRate + ", speed: " + speed + ", cadence: " + cadence;
     }
 
     public ActivityPoint toActivityPoint() {
