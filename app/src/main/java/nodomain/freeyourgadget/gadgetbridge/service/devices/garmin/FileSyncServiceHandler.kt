@@ -89,6 +89,15 @@ class FileSyncServiceHandler(val deviceSupport: GarminSupport) {
             deviceSupport.addFileToDownloadList(file)
         }
 
+        // #5461 - some watches to not send the next page ID
+        // however, from previous logs, it always seems to match the max seen across all sent items, so attempt
+        // to fallback to that as a workaround so we can fetch the subsequent files
+        if (fileListResponse.nextPageId == 0) {
+            nextPageId = fileListResponse.fileList
+                .mapNotNull { it.pageId }
+                .maxOrNull() ?: 0
+        }
+
         return null
     }
 

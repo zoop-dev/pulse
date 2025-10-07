@@ -56,8 +56,10 @@ message FileListRequest {
 
 message FileListResponse {
   optional uint32 unk1 = 1; // 0
+  optional uint32 unk2 = 2; // 2 on venu 4
   optional uint32 next_page_id = 3; // 33737, incrementiong
   repeated File file = 4;
+  optional uint32 unk6 = 6; // 1 on venu 4
 }
 
 message File {
@@ -65,6 +67,8 @@ message File {
   optional FileType type = 2;
   optional uint32 size = 3;
   optional uint32 page_id = 5; // 33652, 33653, ... incrementing
+  optional uint32 unk4 = 4; // 0 on venu 4
+  optional uint32 unk6 = 6; // 2 on venu 4
 }
 
 message FileId {
