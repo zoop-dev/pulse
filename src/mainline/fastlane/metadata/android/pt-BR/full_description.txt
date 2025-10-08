@@ -1,0 +1,9 @@
+Use seu relógio inteligente, monitor de fitness e outros dispositivos Bluetooth sem o aplicativo de código fechado do fornecedor e sem a necessidade de criar uma conta e transmitir seus dados para os servidores do fornecedor.
+Para obter uma lista completa dos dispositivos compatíveis, consulte nossa página de Gadgets https://gadgetbridge.org/gadgets/.
+
+Você pode receber notificações no seu pulso e (dependendo do dispositivo):
+
+- Coletar dados dos sensores do dispositivo.
+- Controlar a reprodução de música no seu dispositivo Android.
+- Ver a previsão do tempo.
+- Obter direções.
