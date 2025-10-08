@@ -4043,4 +4043,18 @@
     <string name="huawei_send_gps_and_time_summary">Odesílat GPS a čas do zařízení pro počasí a optimalizaci vyhledávání. Měla by být nastavena poloha</string>
     <string name="garmin_mlr_protocol">Spolehlivý protokol Multi-Link</string>
     <string name="feature_experimental_unstable">Experimentální, může být nestabilní</string>
+    <string name="heart_rate_settings">Nastavení srdečního tepu</string>
+    <string name="heart_rate_settings_summary">Zobrazit aktuální nastavení a zóny srdečního tepu při cvičení</string>
+    <string name="workout_posture_type_upright">Vzpřímený</string>
+    <string name="workout_posture_type_sitting">Sedící</string>
+    <string name="hr_settings_hr_limit">Limit srdečního tepu</string>
+    <string name="hr_settings_zones_calculation_method">Způsob výpočtu</string>
+    <string name="hr_settings_zones_calculation_method_mhr">MHR</string>
+    <string name="hr_settings_zones_calculation_method_hrr">HRR</string>
+    <string name="hr_settings_zones_calculation_method_lthr">LTHR</string>
+    <string name="hr_settings_zones_resting_hr">Srdeční tep v klidu</string>
+    <string name="hr_settings_zones_max_hr">Maximální srdeční tep</string>
+    <string name="hr_settings_zones_lactate_threshold_hr">Srdeční frekvence při laktátovém prahu</string>
+    <string name="hr_settings_zones_remove_all">Resetovat vše</string>
+    <string name="hr_settings_zones_remove_all_description">Opravdu chcete odstranit zóny a limity srdečního tepu pro všechny konfigurace postavení a resetovat je na výchozí nastavení?</string>
 </resources>
