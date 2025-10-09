@@ -3932,4 +3932,5 @@
     <string name="stroke_rate">Schlagfrequenz</string>
     <string name="jump_rope_longest_streak">Längste Seilsprung-Serie</string>
     <string name="jump_rope_interruptions">Seilsprung-Unterbrechungen</string>
+    <string name="connection_force_legacy_gatt_title">Erzwingen des alten GATT</string>
 </resources>
