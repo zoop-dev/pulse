@@ -736,7 +736,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(2, BaseType.SINT32, "position_lat", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(3, BaseType.SINT32, "position_long", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(4, BaseType.UINT32, "distance", 100, 0), // m
-            new FieldDefinitionPrimitive(5, BaseType.ENUM, "type"),
+            new FieldDefinitionPrimitive(5, BaseType.ENUM, "type", FieldDefinitionFactory.FIELD.COURSE_POINT),
             new FieldDefinitionPrimitive(6, BaseType.STRING, 16, "name"),
             new FieldDefinitionPrimitive(8, BaseType.ENUM, "favorite"),
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")

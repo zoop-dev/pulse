@@ -29,6 +29,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDef
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes.BaseType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionAlarmLabel;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionCoursePoint;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionExerciseCategory;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionGoalSource;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionGoalType;
@@ -365,6 +366,7 @@ public class FitCodeGen {
                 case COORDINATE -> Double.class;
                 case SWIM_STYLE -> FieldDefinitionSwimStyle.SwimStyle.class;
                 case LOCATION_SYMBOL -> FieldDefinitionLocationSymbol.LocationSymbol.class;
+                case COURSE_POINT -> FieldDefinitionCoursePoint.CoursePoint.class;
             };
         }
 

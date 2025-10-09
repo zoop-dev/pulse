@@ -22,6 +22,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecord
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionCoursePoint.CoursePoint;
 
 /**
  * WARNING: This class was auto-generated, please avoid modifying it directly.
@@ -60,8 +61,8 @@ public class FitCoursePoint extends RecordData {
     }
 
     @Nullable
-    public Integer getType() {
-        return (Integer) getFieldByNumber(5);
+    public CoursePoint getType() {
+        return (CoursePoint) getFieldByNumber(5);
     }
 
     @Nullable
@@ -107,7 +108,7 @@ public class FitCoursePoint extends RecordData {
             return this;
         }
 
-        public Builder setType(final Integer value) {
+        public Builder setType(final CoursePoint value) {
             setFieldByNumber(5, value);
             return this;
         }

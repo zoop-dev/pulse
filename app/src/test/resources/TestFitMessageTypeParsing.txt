@@ -22,7 +22,7 @@ FitWorkoutStep{2025-09-21 23:59:59.000, wkt_step_name=a, duration_type=1, durati
 FitSchedule{2025-09-21 23:59:59.000, manufacturer=1, product=1, serial_number=1, time_created=1127433599, completed=true, type=1, scheduled_time=1},
 FitWeightScale{2025-09-21 23:59:59.000, weight=1.0, percent_fat=1.0, percent_hydration=1.0, visceral_fat_mass=1.0, bone_mass=1.0, muscle_mass=1.0, basal_met=1.0, physique_rating=1, active_met=1.0, metabolic_age=1, visceral_fat_rating=1, user_profile_index=1, bmi=1.0, timestamp=1758499199},
 FitCourse{2025-09-21 23:59:59.000, sport=1, name=a, capabilities=1, sub_sport=1},
-FitCoursePoint{2025-09-21 23:59:59.000, timestamp=1758499199, position_lat=8.381903171539307E-8, position_long=8.381903171539307E-8, distance=1.0, type=1, name=a, favorite=1, message_index=1},
+FitCoursePoint{2025-09-21 23:59:59.000, timestamp=1758499199, position_lat=8.381903171539307E-8, position_long=8.381903171539307E-8, distance=1.0, type=summit, name=a, favorite=1, message_index=1},
 FitTotals{2025-09-21 23:59:59.000, timer_time=1, distance=1, calories=1, sport=1, elapsed_time=1, sessions=1, active_time=1, sport_index=1, timestamp=1758499199, message_index=1},
 FitActivity{2025-09-21 23:59:59.000, total_timer_time=1000, num_sessions=1, type=1, event=3, event_type=1, local_timestamp=1, event_group=1, timestamp=1758499199},
 FitSoftware{2025-09-21 23:59:59.000, version=1.0, part_number=a, message_index=1},
