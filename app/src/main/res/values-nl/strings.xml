@@ -3906,4 +3906,6 @@
     <string name="submit_button_text">Opslaan</string>
     <string name="auth_key_required_message">Authenticatiesleutel kan niet leeg zijn</string>
     <string name="invalid_auth_key_message">Ongeldige authenticatiesleutel - probeer opnieuw</string>
+    <string name="title_activity_gps_track_installer">GPS-trackinstallateur</string>
+    <string name="sound_and_vibration">Geluid + Trilling</string>
 </resources>
