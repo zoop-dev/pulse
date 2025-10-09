@@ -409,8 +409,8 @@ public class CommunicatorV2 implements ICommunicator {
         @Override
         public void onMessage(final byte[] value) {
             final byte type = value[0]; // 0/2/3? 3 == realtime?
-            final int hr = value[0] & 0xff;
-            final int resting = value[0] & 0xff;
+            final int hr = value[1] & 0xff;
+            final int resting = value[2] & 0xff;
             // ff ff after
             LOG.debug("Got realtime HR: type={} hr={} resting={}", type, hr, resting);
 
