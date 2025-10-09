@@ -1849,6 +1849,7 @@
     <string name="devicetype_amazfit_gts3" translatable="false">Amazfit GTS 3</string>
     <string name="devicetype_amazfit_gts4" translatable="false">Amazfit GTS 4</string>
     <string name="devicetype_amazfit_gts4_mini" translatable="false">Amazfit GTS 4 Mini</string>
+    <string name="devicetype_amazfit_gts4_mini_new" translatable="false">Amazfit GTS 4 Mini New</string>
     <string name="devicetype_amazfit_gtr3" translatable="false">Amazfit GTR 3</string>
     <string name="devicetype_amazfit_gtr3_pro" translatable="false">Amazfit GTR 3 Pro</string>
     <string name="devicetype_amazfit_bip3" translatable="false">Amazfit Bip 3</string>

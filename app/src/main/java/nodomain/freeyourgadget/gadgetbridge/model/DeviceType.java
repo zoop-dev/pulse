@@ -220,6 +220,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.Amazfit
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitGTS3Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitGTS4Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitGTS4MiniCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitGTS4MiniNewCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitTRex2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitTRex3Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitTRexUltraCoordinator;
@@ -497,6 +498,7 @@ public enum DeviceType {
     AMAZFITBAND7(AmazfitBand7Coordinator.class),
     AMAZFITGTS4(AmazfitGTS4Coordinator.class),
     AMAZFITGTS4MINI(AmazfitGTS4MiniCoordinator.class),
+    AMAZFITGTS4MININEW(AmazfitGTS4MiniNewCoordinator.class),
     AMAZFITTREX2(AmazfitTRex2Coordinator.class),
     AMAZFITTREX3(AmazfitTRex3Coordinator.class),
     AMAZFITGTR3PRO(AmazfitGTR3ProCoordinator.class),
