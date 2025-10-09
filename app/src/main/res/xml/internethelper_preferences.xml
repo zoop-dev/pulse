@@ -27,8 +27,41 @@
             app:iconSpaceReserved="false" />
     </PreferenceCategory>
     <PreferenceCategory
+        android:key="pref_key_internethelper_allowed_connections"
+        android:title="@string/internet_helper_pref_allowed_connections"
+        app:iconSpaceReserved="false">
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="pref_key_internethelper_allow_pebble_appstore"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/internet_helper_pref_pebble_app_store_title"
+            android:summary="@string/internet_helper_pref_pebble_app_store_summary"
+            app:iconSpaceReserved="false" />
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="pref_key_internethelper_allow_pebble_background_js"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/internet_helper_pref_pebble_background_js_title"
+            android:summary="@string/internet_helper_pref_pebble_background_js_summary"
+            app:iconSpaceReserved="false" />
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="pref_key_internethelper_allow_pebble_configs"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/internet_helper_pref_pebble_app_config_title"
+            android:summary="@string/internet_helper_pref_pebble_app_config_summary"
+            app:iconSpaceReserved="false" />
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="pref_key_internethelper_allow_bangle_app_loader"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/internet_helper_pref_bangle_app_loader_title"
+            android:summary="@string/internet_helper_pref_bangle_app_loader_summary"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+    <PreferenceCategory
         android:key="pref_key_internethelper_url_list"
-        android:title="@string/internet_helper_pref_known_urls_title"
+        android:title="@string/internet_helper_pref_other_urls_title"
         app:iconSpaceReserved="false">
         <Preference
             android:key="pref_key_internethelper_info"

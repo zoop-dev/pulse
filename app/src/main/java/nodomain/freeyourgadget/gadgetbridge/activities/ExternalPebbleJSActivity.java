@@ -51,12 +51,12 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceCommunicationService;
-import nodomain.freeyourgadget.gadgetbridge.webview.GBChromeClient;
-import nodomain.freeyourgadget.gadgetbridge.webview.GBWebClient;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.JSInterface;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.WebViewSingleton;
+import nodomain.freeyourgadget.gadgetbridge.webview.GBChromeClient;
+import nodomain.freeyourgadget.gadgetbridge.webview.GBWebClient;
 
 public class ExternalPebbleJSActivity extends AbstractGBActivity {
 
@@ -144,7 +144,7 @@ public class ExternalPebbleJSActivity extends AbstractGBActivity {
     }
 
     private void startBackgroundWebViewAndFinish() {
-        WebViewSingleton.ensureCreated(this);
+        WebViewSingleton.ensureCreated(this, GBWebClient.REQUEST_TYPE_PEBBLE_BACKGROUND_JS);
         finish();
     }
 
@@ -179,7 +179,7 @@ public class ExternalPebbleJSActivity extends AbstractGBActivity {
         setContentView(R.layout.activity_legacy_external_pebble_js);
         myWebView = (WebView) findViewById(R.id.configureWebview);
         myWebView.clearCache(true);
-        myWebView.setWebViewClient(new GBWebClient());
+        myWebView.setWebViewClient(new GBWebClient(GBWebClient.REQUEST_TYPE_PEBBLE_APP_CONFIG));
         myWebView.setWebChromeClient(new GBChromeClient());
         WebSettings webSettings = myWebView.getSettings();
         //noinspection SetJavaScriptEnabled

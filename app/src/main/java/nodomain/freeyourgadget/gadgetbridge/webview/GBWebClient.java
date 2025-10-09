@@ -18,7 +18,6 @@
 package nodomain.freeyourgadget.gadgetbridge.webview;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.webkit.WebResourceRequest;
@@ -50,15 +49,28 @@ import nodomain.freeyourgadget.gadgetbridge.entities.URLFilterEntry;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
+import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.InternetHelperSingleton;
 
 public class GBWebClient extends WebViewClient {
+    private static final Logger LOG = LoggerFactory.getLogger(GBWebClient.class);
+
+    public static int REQUEST_TYPE_OTHER = 0;
+    public static int REQUEST_TYPE_PEBBLE_APP_STORE = 1;
+    public static int REQUEST_TYPE_PEBBLE_APP_CONFIG = 2;
+    public static int REQUEST_TYPE_PEBBLE_BACKGROUND_JS = 3;
+    public static int REQUEST_TYPE_BANGLE_APP_LOADER = 4;
+    private int requestType;
 
     private String[] LocallySupportedDomains = new String[]{
             "openweathermap.org",   //for weather :)
             "rawgit.com",           //for trekvolle
     };
-    private static final Logger LOG = LoggerFactory.getLogger(GBWebClient.class);
+
+    public GBWebClient(int type) {
+        super();
+        requestType = type;
+    }
 
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
@@ -81,8 +93,10 @@ public class GBWebClient extends WebViewClient {
     }
 
     private WebResourceResponse mimicReply(Uri requestedUri) {
+        GBPrefs prefs = GBApplication.getPrefs();
         boolean locallySupported = StringUtils.indexOfAny(requestedUri.getHost(), LocallySupportedDomains) != -1;
         boolean urlIsAllowed = locallySupported;
+        boolean matchFound = false;
         List<URLFilterEntry> urlFilterEntries = DBHelper.getURLFilterEntries();
 
         // Handle local schemes locally
@@ -90,20 +104,35 @@ public class GBWebClient extends WebViewClient {
             return null;
         }
 
+        // Handle predefined groups
+        if (requestType == REQUEST_TYPE_PEBBLE_APP_STORE) {
+            matchFound = true;
+            urlIsAllowed = prefs.getBoolean("pref_key_internethelper_allow_pebble_appstore", false);
+        } else if (requestType == REQUEST_TYPE_PEBBLE_APP_CONFIG) {
+            matchFound = true;
+            urlIsAllowed = prefs.getBoolean("pref_key_internethelper_allow_pebble_configs", false);
+        } else if (requestType == REQUEST_TYPE_PEBBLE_BACKGROUND_JS) {
+            matchFound = true;
+            urlIsAllowed = prefs.getBoolean("pref_key_internethelper_allow_pebble_background_js", false);
+        } else if (requestType == REQUEST_TYPE_BANGLE_APP_LOADER) {
+            matchFound = true;
+            urlIsAllowed = prefs.getBoolean("pref_key_internethelper_allow_bangle_app_loader", false);
+        }
+
         // Search for matches
-        boolean matchFound = false;
-        for (URLFilterEntry entry : urlFilterEntries) {
-            if (requestedUri.toString().contains(entry.getUrl())) {
-                matchFound = true;
-                urlIsAllowed = entry.getAllowed();
-                LOG.info("URL matched with URLFilterEntry: {}, allowed={}", entry.getUrl(), entry.getAllowed());
+        if (!matchFound) {
+            for (URLFilterEntry entry : urlFilterEntries) {
+                if (requestedUri.toString().contains(entry.getUrl())) {
+                    matchFound = true;
+                    urlIsAllowed = entry.getAllowed();
+                    LOG.info("URL matched with URLFilterEntry: {}, allowed={}", entry.getUrl(), entry.getAllowed());
+                }
             }
         }
 
         // Handle OpenWeatherMap locally
         boolean forceLocal = false;
-        SharedPreferences sharedPreferences = GBApplication.getPrefs().getPreferences();
-        if (locallySupported && sharedPreferences.getBoolean("pref_key_internethelper_force_local", true)) {
+        if (locallySupported && prefs.getBoolean("pref_key_internethelper_force_local", true)) {
             matchFound = true;
             urlIsAllowed = true;
             forceLocal = true;
@@ -112,7 +141,7 @@ public class GBWebClient extends WebViewClient {
         // Add to database if missing
         if (requestedUri.getHost() != null && !matchFound) {
             LOG.info("URL not matched with URLFilterEntry, storing new entry");
-            String defaultAction = sharedPreferences.getString("pref_key_internethelper_new_url_action", "deny");
+            String defaultAction = prefs.getString("pref_key_internethelper_new_url_action", "deny");
             urlIsAllowed = defaultAction.equals("allow");
             URLFilterEntry filterEntry = new URLFilterEntry();
             filterEntry.setUrl(requestedUri.toString().replaceAll("\\?.*", ""));
@@ -141,7 +170,7 @@ public class GBWebClient extends WebViewClient {
                 }
             }
         } else {
-            LOG.debug("WEBVIEW request not intercepted:{}", requestedUri);
+            LOG.debug("WEBVIEW request not intercepted: {}", requestedUri);
         }
         return null;
     }

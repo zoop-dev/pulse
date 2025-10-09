@@ -4468,7 +4468,16 @@
     <string name="internet_helper_pref_new_url_action_summary">Set the default action to take when a URL is requested that isn\'t already in the list below.</string>
     <string name="internet_helper_pref_intercept_supported_title">Intercept supported requests</string>
     <string name="internet_helper_pref_intercept_supported_summary">Some internet requests can be intercepted and responded to locally without sending anything to the internet.</string>
-    <string name="internet_helper_pref_known_urls_title">Known URLs</string>
+    <string name="internet_helper_pref_allowed_connections">Allowed connections</string>
+    <string name="internet_helper_pref_pebble_app_store_title">Pebble app store</string>
+    <string name="internet_helper_pref_pebble_app_store_summary">Access the Pebble app store for app installations and updates</string>
+    <string name="internet_helper_pref_pebble_background_js_title">Requests from Pebble apps</string>
+    <string name="internet_helper_pref_pebble_background_js_summary">Allow Pebble watch apps and watchfaces to access the internet</string>
+    <string name="internet_helper_pref_pebble_app_config_title">Pebble app configuration pages</string>
+    <string name="internet_helper_pref_pebble_app_config_summary">Allow access to webpages that are needed for configuring apps and watchfaces</string>
+    <string name="internet_helper_pref_bangle_app_loader_title">Bangle app loader</string>
+    <string name="internet_helper_pref_bangle_app_loader_summary">Access the Bangle app loader website</string>
+    <string name="internet_helper_pref_other_urls_title">Other URLs</string>
     <string name="internet_helper_url_list_instruction_summary">Use the list below to configure which (parts of) URLs are allowed or denied to be forwarded to the internethelper add-on app. The validation is using a simple text comparison, so a part of a URL can be entered too.</string>
     <string name="rebble_appstore_download_failed_wrong_content_type">Download failed, wrong content-type: %1$s</string>
     <string name="rebble_appstore_download_failed">Download failed: %1$s</string>

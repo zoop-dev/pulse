@@ -49,7 +49,7 @@ public class WebViewSingleton {
     private WebViewSingleton() {
     }
 
-    public static synchronized void ensureCreated(Context context) {
+    public static synchronized void ensureCreated(Context context, int requestType) {
         if (instance.webView == null) {
             instance.contextWrapper = new MutableContextWrapper(context);
             instance.mainLooper = context.getMainLooper();
@@ -58,7 +58,7 @@ public class WebViewSingleton {
             instance.webView.setWillNotDraw(true);
             instance.webView.clearCache(true);
             instance.webView.resumeTimers();
-            instance.webView.setWebViewClient(new GBWebClient());
+            instance.webView.setWebViewClient(new GBWebClient(requestType));
             instance.webView.setWebChromeClient(new GBChromeClient());
             WebSettings webSettings = instance.webView.getSettings();
             //noinspection SetJavaScriptEnabled
@@ -102,7 +102,7 @@ public class WebViewSingleton {
     }
 
     public void runJavascriptInterface(@NonNull Context context, @NonNull GBDevice device, @NonNull UUID uuid) {
-        ensureCreated(context);
+        ensureCreated(context, GBWebClient.REQUEST_TYPE_PEBBLE_BACKGROUND_JS);
         InternetHelperSingleton.INSTANCE.ensureInternetHelperBound();
         if (uuid.equals(currentRunningUUID)) {
             LOG.debug("WEBVIEW uuid not changed keeping the old context");

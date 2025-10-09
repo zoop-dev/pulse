@@ -54,8 +54,8 @@ import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.banglejs.BangleJSDeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.webview.GBWebClient;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
+import nodomain.freeyourgadget.gadgetbridge.webview.GBWebClient;
 
 public class AppsManagementActivity extends AbstractGBActivity {
     private static final Logger LOG = LoggerFactory.getLogger(AppsManagementActivity.class);
@@ -210,7 +210,7 @@ public class AppsManagementActivity extends AbstractGBActivity {
         Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(mGBDevice.getAddress()));
         final String url = devicePrefs.getString(PREF_BANGLEJS_WEBVIEW_URL, "https://banglejs.com/apps/android.html").trim();
 
-        webView.setWebViewClient(new GBWebClient(){
+        webView.setWebViewClient(new GBWebClient(GBWebClient.REQUEST_TYPE_BANGLE_APP_LOADER){
             @Override
             public void onPageFinished(WebView view, String weburl){
                 //webView.loadUrl("javascript:showToast('WebView in Espruino')");

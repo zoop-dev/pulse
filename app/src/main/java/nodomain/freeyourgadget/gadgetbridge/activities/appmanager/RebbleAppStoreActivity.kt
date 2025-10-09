@@ -35,10 +35,10 @@ import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService
-import nodomain.freeyourgadget.gadgetbridge.webview.GBChromeClient
-import nodomain.freeyourgadget.gadgetbridge.webview.GBWebClient
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 import nodomain.freeyourgadget.gadgetbridge.util.InternetHelperSingleton
+import nodomain.freeyourgadget.gadgetbridge.webview.GBChromeClient
+import nodomain.freeyourgadget.gadgetbridge.webview.GBWebClient
 import nodomain.freeyourgadget.internethelper.aidl.http.HttpGetRequest
 import nodomain.freeyourgadget.internethelper.aidl.http.HttpHeaders
 import nodomain.freeyourgadget.internethelper.aidl.http.HttpResponse
@@ -172,7 +172,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
         settings.loadWithOverviewMode = true
         settings.useWideViewPort = true
 
-        webView!!.webViewClient = object : GBWebClient() {
+        webView!!.webViewClient = object : GBWebClient(GBWebClient.REQUEST_TYPE_PEBBLE_APP_STORE) {
             override fun shouldOverrideUrlLoading(
                 wv: WebView,
                 request: WebResourceRequest
