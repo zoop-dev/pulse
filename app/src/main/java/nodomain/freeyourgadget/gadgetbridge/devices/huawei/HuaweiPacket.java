@@ -648,6 +648,8 @@ public class HuaweiPacket {
                         return new AccountRelated.SendAccountToDevice.Response(paramsProvider).fromPacket(this);
                     case AccountRelated.SendExtendedAccountToDevice.id:
                         return new AccountRelated.SendExtendedAccountToDevice.Response(paramsProvider).fromPacket(this);
+                    case AccountRelated.SendCountryCodeToDevice.id:
+                        return new AccountRelated.SendCountryCodeToDevice.Response(paramsProvider).fromPacket(this);
                     default:
                         this.isEncrypted = this.attemptDecrypt(); // Helps with debugging
                         return this;

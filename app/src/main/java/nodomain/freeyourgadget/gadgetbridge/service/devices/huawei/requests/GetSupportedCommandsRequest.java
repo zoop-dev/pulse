@@ -93,7 +93,12 @@ public class GetSupportedCommandsRequest extends Request {
             this.nextRequest(nextRequest);
         } else {
             supportProvider.getHuaweiCoordinator().printCommandsPerService();
-            dynamicServicesReq.call();
+            if(supportProvider.getHuaweiCoordinator().supportsExpandCapability()) {
+                GetExpandCapabilityRequest nextRequest = new GetExpandCapabilityRequest(supportProvider);
+                this.nextRequest(nextRequest);
+            } else {
+                dynamicServicesReq.call();
+            }
         }
     }
 }

@@ -4372,4 +4372,13 @@
     <string name="hr_settings_zones_lactate_threshold_hr">Lactate threshold heart rate</string>
     <string name="hr_settings_zones_remove_all">Reset all</string>
     <string name="hr_settings_zones_remove_all_description">Are you sure you want to delete the heart rate zones and limits for all posture configurations and reset them to default?</string>
+    <string name="pref_huawei_health_features_config_title">Health features config</string>
+    <string name="pref_huawei_health_features_config_summary">Configure extended health features.</string>
+    <string name="pref_huawei_features_config_info_title">Enable additional health features</string>
+    <string name="pref_huawei_features_config_info_summary">Enabling the settings below will activate additional health features on your device. For example, emotional or ECG.\nNOTE: The available features depend on the device.</string>
+    <string name="pref_huawei_features_config_warning_title">Send country code and features config to the device.</string>
+    <string name="pref_huawei_features_config_warning_summary">Warning: Enabling these settings when both Gadgetbridge and the vendor app are in use can cause issues with the vendor app and device functionality or can not affect current device abilities at all. Enable at your own risk.\nDevice reconnect is required.</string>
+    <string name="pref_huawei_send_country_code_title">Send country code</string>
+    <string name="pref_huawei_send_country_code_summary">Send country code to the device.\n Attention: country code should be set</string>
+    <string name="pref_huawei_country_code_title">Country code</string>
 </resources>

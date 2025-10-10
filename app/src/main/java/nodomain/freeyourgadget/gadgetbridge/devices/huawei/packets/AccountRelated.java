@@ -79,4 +79,31 @@ public class AccountRelated {
 			}
 		}
 	}
+
+	public static class SendCountryCodeToDevice {
+		public static final byte id = 0x0a;
+
+		public static class Request extends HuaweiPacket {
+			public Request (ParamsProvider paramsProvider, String countryCode, Byte siteId) {
+				super(paramsProvider);
+
+				this.serviceId = AccountRelated.id;
+				this.commandId = id;
+
+				this.tlv = new HuaweiTLV();
+
+				tlv.put(0x01, countryCode);
+                if(siteId != null) {
+					tlv.put(0x02, siteId);
+				}
+				this.complete = true;
+			}
+		}
+
+		public static class Response extends HuaweiPacket {
+			public Response (ParamsProvider paramsProvider) {
+				super(paramsProvider);
+			}
+		}
+	}
 }

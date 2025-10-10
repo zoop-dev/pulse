@@ -40,10 +40,6 @@ public class GetExpandCapabilityRequest extends Request {
         this.commandId = DeviceConfig.ExpandCapability.id;
     }
 
-    @Override
-    protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsExpandCapability();
-    }
 
     @Override
     protected List<byte[]> createRequest() throws RequestCreationException {
@@ -55,6 +51,13 @@ public class GetExpandCapabilityRequest extends Request {
         }
     }
 
+    RequestCallback dynamicServicesReq = new RequestCallback() {
+        @Override
+        public void call() {
+            supportProvider.initializeDynamicServices();
+        }
+    };
+
     @Override
     protected void processResponse() throws ResponseParseException {
         LOG.debug("handle Expand Capability");
@@ -63,5 +66,7 @@ public class GetExpandCapabilityRequest extends Request {
             throw new ResponseTypeMismatchException(receivedPacket, DeviceConfig.ExpandCapability.Response.class);
 
         supportProvider.getHuaweiCoordinator().saveExpandCapabilities(((DeviceConfig.ExpandCapability.Response) receivedPacket).expandCapabilities);
+
+        dynamicServicesReq.call();
     }
 }

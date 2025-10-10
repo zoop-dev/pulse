@@ -135,6 +135,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncFeatureManager;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncEmotion;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncFindDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncGoals;
@@ -158,6 +159,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetW
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetWorkoutCapability;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetWorkoutTotalsRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendCameraRemoteSetupEvent;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendCountryCodeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendDeviceReportThreshold;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendExtendedAccountRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendFitnessUserInfoRequest;
@@ -203,7 +205,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetB
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetConnectStatusRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetDeviceStatusRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetDndLiftWristTypeRequest;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetExpandCapabilityRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetLinkParamsRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetPincodeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetProductInformationRequest;
@@ -295,6 +296,8 @@ public class HuaweiSupportProvider {
     protected HuaweiP2PManager huaweiP2PManager = new HuaweiP2PManager(this);
 
     protected HuaweiDataSyncManager huaweiDataSyncManager = new HuaweiDataSyncManager(this);
+
+    private HuaweiDataSyncFeatureManager huaweiDataSyncFeatureManager = null;
 
     private HuaweiDataSyncGoals huaweiDataSyncTreeCircleGoals = null;
 
@@ -845,9 +848,26 @@ public class HuaweiSupportProvider {
      */
     public void initializeDynamicServices() {
         try {
+
+            // NOTE: register all DAta Sync handlers on the early stage. We can receive requests from the watch during initialization.
+            if(getHuaweiCoordinator().getSendCountryCodeEnabled(getDevice())) {
+                huaweiDataSyncFeatureManager = new HuaweiDataSyncFeatureManager(HuaweiSupportProvider.this);
+            }
+
+            if (getHuaweiCoordinator().supportsThreeCircle() || getHuaweiCoordinator().supportsThreeCircleLite()) {
+                huaweiDataSyncTreeCircleGoals = new HuaweiDataSyncGoals(HuaweiSupportProvider.this);
+            }
+
+            if (getHuaweiCoordinator().supportsFindDeviceAbility()) {
+                huaweiDataSyncFindDevice = new HuaweiDataSyncFindDevice(HuaweiSupportProvider.this);
+            }
+
+            if (getHuaweiCoordinator().supportsEmotion()) {
+                huaweiDataSyncEmotion = new HuaweiDataSyncEmotion(HuaweiSupportProvider.this);
+            }
+
             // All of the below check that they are supported and otherwise they skip themselves
             final List<Request> initRequestQueue = new ArrayList<>();
-            initRequestQueue.add(new GetExpandCapabilityRequest(this));
             initRequestQueue.add(new SendExtendedAccountRequest(this));
             initRequestQueue.add(new GetSettingRelatedRequest(this));
             initRequestQueue.add(new AcceptAgreementsRequest(this));
@@ -890,6 +910,7 @@ public class HuaweiSupportProvider {
             initRequestQueue.add(new GetContactsCount(this));
             initRequestQueue.add(new SendOTASetAutoUpdate(this));
             initRequestQueue.add(new GetOTAChangeLog(this));
+            initRequestQueue.add(new SendCountryCodeRequest(this));
             initRequestQueue.add(new GetWorkoutCapability(this));
             initRequestQueue.add(new GetEventAlarmList(this));
             initRequestQueue.add(new GetSmartAlarmList(this));
@@ -950,18 +971,6 @@ public class HuaweiSupportProvider {
                                 contactsService.register();
                             }
                         }
-                    }
-
-                    if (getHuaweiCoordinator().supportsThreeCircle() || getHuaweiCoordinator().supportsThreeCircleLite()) {
-                        huaweiDataSyncTreeCircleGoals = new HuaweiDataSyncGoals(HuaweiSupportProvider.this);
-                    }
-
-                    if (getHuaweiCoordinator().supportsFindDeviceAbility()) {
-                        huaweiDataSyncFindDevice = new HuaweiDataSyncFindDevice(HuaweiSupportProvider.this);
-                    }
-
-                    if (getHuaweiCoordinator().supportsEmotion()) {
-                        huaweiDataSyncEmotion = new HuaweiDataSyncEmotion(HuaweiSupportProvider.this);
                     }
                 }
             });

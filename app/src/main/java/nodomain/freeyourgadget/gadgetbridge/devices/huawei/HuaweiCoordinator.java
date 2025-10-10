@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import java.nio.ByteBuffer;
 import java.util.List;
@@ -366,6 +367,10 @@ public class HuaweiCoordinator {
         //Music
         if (supportsMusicUploading() && getMusicInfoParams() != null && device.isConnected()) {
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_musicmanagement);
+        }
+
+        if(supportsSendCountryCode()) {
+            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_huawei_country_code);
         }
 
         // Time
@@ -895,6 +900,18 @@ public class HuaweiCoordinator {
         return false;
     }
 
+    public boolean supportsSendCountryCode() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(30);
+        return false;
+    }
+
+    public boolean supportsSendSiteId() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(170);
+        return false;
+    }
+
     public boolean supportsPromptPushMessage () {
 //              do not ask for capabilities under specific condition
 //                  if (deviceType == 10 && deviceVersion == 73617766697368 && deviceSoftVersion == 372E312E31) -> leo device
@@ -1147,4 +1164,14 @@ public class HuaweiCoordinator {
     public HeartRateZonesSpec getHeartRateZonesSpec(@NonNull GBDevice device) {
         return new HuaweiHeartRateZonesSpec(device, this);
     }
+
+    public String getCountryCode(GBDevice gbDevice) {
+        return getDeviceSpecificSharedPreferences(gbDevice).getString("pref_huawei_country_code", "");
+    }
+
+    public boolean getSendCountryCodeEnabled(GBDevice gbDevice) {
+        return getDeviceSpecificSharedPreferences(gbDevice).getBoolean("pref_huawei_country_code_enable", false) && !TextUtils.isEmpty(getCountryCode(gbDevice));
+    }
+
+
 }

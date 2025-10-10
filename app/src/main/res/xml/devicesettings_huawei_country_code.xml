@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceScreen
+        android:icon="@drawable/ic_extension"
+        android:key="screen_huawei_features_config"
+        android:persistent="false"
+        android:summary="@string/pref_huawei_health_features_config_summary"
+        android:title="@string/pref_huawei_health_features_config_title">
+
+        <PreferenceScreen
+            android:icon="@drawable/ic_info"
+            android:key="screen_huawei_features_config_info"
+            android:persistent="false"
+            android:selectable="false"
+            android:summary="@string/pref_huawei_features_config_info_summary"
+            android:title="@string/pref_huawei_features_config_info_title" />
+
+        <PreferenceScreen
+            android:icon="@drawable/ic_warning"
+            android:key="screen_huawei_features_config_warning"
+            android:persistent="false"
+            android:selectable="false"
+            android:summary="@string/pref_huawei_features_config_warning_summary"
+            android:title="@string/pref_huawei_features_config_warning_title" />
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="pref_huawei_country_code_enable"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/pref_huawei_send_country_code_title"
+            android:title="@string/pref_huawei_send_country_code_title" />
+        <ListPreference
+            android:dependency="pref_huawei_country_code_enable"
+            android:key="pref_huawei_country_code"
+            android:title="@string/pref_huawei_country_code_title"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceScreen>
+</androidx.preference.PreferenceScreen>

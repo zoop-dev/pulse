@@ -25,6 +25,7 @@ import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.SwitchPreferenceCompat;
 
+import java.util.Map;
 import java.util.Set;
 import java.util.Collections;
 
@@ -76,10 +77,14 @@ public class HuaweiSettingsCustomizer implements DeviceSpecificSettingsCustomize
             SharedPreferences sharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(device.getAddress());
             boolean statusLiftWrist = sharedPrefs.getBoolean(PREF_LIFTWRIST_NOSHED, false);
 
-            dndStart.setEnabled(dndState.equals("scheduled"));
-            dndEnd.setEnabled(dndState.equals("scheduled"));
-            dndLifWrist.setEnabled(statusLiftWrist && !dndState.equals("off"));
-            dndNotWear.setEnabled(dndState.equals("off"));
+            if (dndStart != null)
+                dndStart.setEnabled(dndState.equals("scheduled"));
+            if (dndEnd != null)
+                dndEnd.setEnabled(dndState.equals("scheduled"));
+            if (dndLifWrist != null)
+                dndLifWrist.setEnabled(statusLiftWrist && !dndState.equals("off"));
+            if (dndNotWear != null)
+                dndNotWear.setEnabled(dndState.equals("off"));
         }
         if (preference.getKey().equals("huawei_reparse_workout_data")) {
             if (((SwitchPreferenceCompat) preference).isChecked()) {
@@ -141,17 +146,21 @@ public class HuaweiSettingsCustomizer implements DeviceSpecificSettingsCustomize
             boolean supportsSpO2 = this.coordinator.supportsSPo2();
             forceOptions.setVisible(!supportsSmartAlarm || !supportsWearLocation || !supportsHeartRate || !supportsSpO2);
             final SwitchPreferenceCompat forceSmartAlarm = handler.findPreference(PREF_FORCE_ENABLE_SMART_ALARM);
-            forceSmartAlarm.setVisible(!supportsSmartAlarm);
+            if(forceSmartAlarm != null)
+                forceSmartAlarm.setVisible(!supportsSmartAlarm);
             final SwitchPreferenceCompat forceWearLocation = handler.findPreference(PREF_FORCE_ENABLE_WEAR_LOCATION);
-            forceWearLocation.setVisible(!supportsWearLocation);
+            if(forceWearLocation != null)
+                forceWearLocation.setVisible(!supportsWearLocation);
             final SwitchPreferenceCompat forceHeartRate = handler.findPreference(PREF_FORCE_ENABLE_HEARTRATE_SUPPORT);
-            forceHeartRate.setVisible(!supportsHeartRate);
+            if(forceHeartRate != null)
+                forceHeartRate.setVisible(!supportsHeartRate);
             final SwitchPreferenceCompat forceSpO2 = handler.findPreference(PREF_FORCE_ENABLE_SPO2_SUPPORT);
-            forceSpO2.setVisible(!supportsSpO2);
+            if(forceSpO2 != null)
+                forceSpO2.setVisible(!supportsSpO2);
         }
 
         final SwitchPreferenceCompat sleepBreath = handler.findPreference(PREF_HUAWEI_SLEEP_BREATH);
-        if(sleepBreath != null && !coordinator.supportsSleepBreath()) {
+        if (sleepBreath != null && !coordinator.supportsSleepBreath()) {
             sleepBreath.setVisible(false);
         }
 
@@ -188,6 +197,13 @@ public class HuaweiSettingsCustomizer implements DeviceSpecificSettingsCustomize
         if (calendarLookahead != null) {
             calendarLookahead.setVisible(false);
         }
+
+        final ListPreference countryCodeList = handler.findPreference("pref_huawei_country_code");
+        if (countryCodeList != null) {
+            Map<String, String> countries = HuaweiUtil.getCountriesMap();
+            countryCodeList.setEntries(countries.keySet().toArray(new String[0]));
+            countryCodeList.setEntryValues(countries.values().toArray(new String[0]));
+        }
     }
 
     @Override
@@ -206,7 +222,7 @@ public class HuaweiSettingsCustomizer implements DeviceSpecificSettingsCustomize
     }
 
 
-    public static final Creator<HuaweiSettingsCustomizer> CREATOR= new Creator<HuaweiSettingsCustomizer>() {
+    public static final Creator<HuaweiSettingsCustomizer> CREATOR = new Creator<>() {
 
         @Override
         public HuaweiSettingsCustomizer createFromParcel(Parcel parcel) {
