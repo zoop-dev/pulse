@@ -654,7 +654,7 @@ Temps de sommeil préféré en heures</string>
     <string name="title_activity_device_specific_settings">Paramètres spécifiques de l\'appareil</string>
     <string name="pref_title_authkey">Clé d\'autorisation</string>
     <string name="pref_summary_authkey">Changez la clé d\'autorisation pour une clé commune à tous vos appareils Android sur lesquels vous souhaitez vous connecter. La précédente clé par défaut est 0123456789@ABCDE</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Vous êtes sur le point d\'installer le micrologiciel %s sur votre Amazfit Cor 2. \n \nVeuillez installer le fichier .fw, puis le fichier .res. Votre montre redémarrera après installation du fichier .fw. \n \nNote : il n\'est pas nécessaire d\'installer le fichier .res si celui-ci est identique à celui installé précédemment. \n \nCONTINUEZ À VOS RISQUES ET PÉRILS ! \n \nNON TESTÉ, IL PEUT ÊTRE NÉCESSAIRE DE FLASHER UN MICROLOGICIEL BEATS_W SI LE NOM DE L\'APPAREIL EST Amazfit Band 2</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Vous êtes sur le point d\'installer le micrologiciel %s sur votre Amazfit Cor 2. \n \nVeuillez installer le fichier .fw, puis le fichier .res. Votre montre redémarrera après installation du fichier .fw. \n \nNote : il n\'est pas nécessaire d\'installer le fichier .res si celui-ci est identique à celui installé précédemment. \n \nCONTINUEZ À VOS RISQUES ET PÉRILS ! \n \nNON TESTÉ, IL PEUT ÊTRE NÉCESSAIRE DE FLASHER UN MICROLOGICIEL BEATS_W SI LE NOM DE L\'APPAREIL EST Amazfit Band 2</string>
     <string name="dutch">Néerlandais</string>
     <string name="turkish">Turc</string>
     <string name="ukrainian">Ukrainien</string>
@@ -2080,7 +2080,7 @@ Temps de sommeil préféré en heures</string>
     <string name="contact_delete_confirm_title">Effacer le contact</string>
     <string name="title_activity_contact_details">Détails du contact</string>
     <string name="title_activity_set_contacts">Configurer les contacts</string>
-    <string name="contact_delete_confirm_description">Êtes-vous sûr(e) de vouloir effacer %1$s ?</string>
+    <string name="contact_delete_confirm_description">Êtes-vous sûr(e) de vouloir effacer %1$s ?</string>
     <string name="contact_name">Nom</string>
     <string name="contact_missing_name">Le nom du contact est vide</string>
     <string name="contact_missing_number">Le numéro du contact est vide</string>
@@ -3260,7 +3260,7 @@ Temps de sommeil préféré en heures</string>
     <string name="redmi_buds_5_pro_equalizer_neg3">-3 dB</string>
     <string name="redmi_buds_5_pro_equalizer_6">6 dB</string>
     <string name="redmi_buds_5_pro_anc_deep">Profond</string>
-    <string name="music_delete_confirm_description">Êtes-vous sûr(e) de vouloir supprimer %1$s ?</string>
+    <string name="music_delete_confirm_description">Êtes-vous sûr(e) de vouloir supprimer %1$s ?</string>
     <string name="music_rename_playlist">Renommer la playlist</string>
     <string name="first_start_overview_dashboard">Le tableau de bord vous permet d’avoir une idée rapide de comment vous allez aujourd\'hui. L’affichage du calendrier indique l’état de vos objectifs sur un mois entier.</string>
     <string name="permission_fine_location_summary">Rechercher les appareils Bluetooth</string>
@@ -3304,7 +3304,7 @@ Temps de sommeil préféré en heures</string>
     <string name="redmi_buds_5_pro_equalizer_2">2 dB</string>
     <string name="first_start_overview_desc">Gadgetbridge a deux vues principales, chacune avec son propre but.</string>
     <string name="redmi_buds_5_pro_equalizer_4">4 dB</string>
-    <string name="music_delete_multiple_confirm_description">Êtes-vous sûr(e) de vouloir supprimer %1$d chansons ?</string>
+    <string name="music_delete_multiple_confirm_description">Êtes-vous sûr(e) de vouloir supprimer %1$d chansons ?</string>
     <string name="first_start_overview_devices">La vue des appareils affiche tous les appareils que vous avez configurés et leur statut, et donne accès à des fonctions spécifiques aux appareils telles que des graphiques détaillés, des paramètres, des applications et des alarmes.</string>
     <string name="permission_notifications_summary">Transfert des notifications vers les gadgets connectés</string>
     <string name="permission_displayover_title">Afficher par-dessus d\'autres applications</string>
