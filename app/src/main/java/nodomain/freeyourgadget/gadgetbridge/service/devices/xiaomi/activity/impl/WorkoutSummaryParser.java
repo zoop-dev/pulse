@@ -495,7 +495,7 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
             builder.addByte(HR_AVG, UNIT_BPM);
             builder.addByte(HR_MAX, UNIT_BPM);
             builder.addByte(HR_MIN, UNIT_BPM);
-            builder.addUnknown(25);
+            builder.addUnknown(20);
             builder.addFloat(TRAINING_EFFECT_AEROBIC, UNIT_NONE);
             builder.addUnknown(1);
             builder.addFloat(TRAINING_EFFECT_ANAEROBIC, UNIT_NONE);
