@@ -1052,5 +1052,5 @@
     <string name="pref_calendar_maximum_title_characters_title">Tähemärkide suurim arv sündmuse pealkirjas</string>
     <string name="pref_calendar_maximum_description_characters_title">Tähemärkide suurim arv sündmuse kirjelduses</string>
     <string name="pref_calendar_target_app_title">Nutikella sihtrakendus kalendrisündmuste jaoks</string>
-    <string name="single_band"></string>
+    <string name="single_band"/>
 </resources>
