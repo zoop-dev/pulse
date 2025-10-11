@@ -63,6 +63,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiSleepTimeSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
+import nodomain.freeyourgadget.gadgetbridge.model.BodyEnergySample;
 import nodomain.freeyourgadget.gadgetbridge.model.HeartRateSample;
 import nodomain.freeyourgadget.gadgetbridge.model.PaiSample;
 import nodomain.freeyourgadget.gadgetbridge.model.RespiratoryRateSample;
@@ -94,7 +95,7 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(@NonNull final GBDevice device) {
         return XiaomiSupport.class;
     }
 
@@ -132,12 +133,12 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public SampleProvider<? extends ActivitySample> getSampleProvider(final GBDevice device, DaoSession session) {
+    public SampleProvider<? extends ActivitySample> getSampleProvider(@NonNull final GBDevice device, DaoSession session) {
         return new XiaomiSampleProvider(device, session);
     }
 
     @Override
-    public TimeSampleProvider<? extends StressSample> getStressSampleProvider(final GBDevice device, final DaoSession session) {
+    public TimeSampleProvider<? extends StressSample> getStressSampleProvider(@NonNull final GBDevice device, final DaoSession session) {
         return new XiaomiStressSampleProvider(device, session);
     }
 
@@ -151,17 +152,22 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public TimeSampleProvider<? extends TemperatureSample> getTemperatureSampleProvider(final GBDevice device, final DaoSession session) {
+    public TimeSampleProvider<? extends TemperatureSample> getTemperatureSampleProvider(@NonNull final GBDevice device, final DaoSession session) {
         return new XiaomiTemperatureSampleProvider(device, session);
     }
 
     @Override
-    public TimeSampleProvider<? extends Spo2Sample> getSpo2SampleProvider(final GBDevice device, final DaoSession session) {
+    public TimeSampleProvider<? extends Spo2Sample> getSpo2SampleProvider(@NonNull final GBDevice device, final DaoSession session) {
         return new XiaomiSpo2SampleProvider(device, session);
     }
 
     @Override
-    public TimeSampleProvider<? extends HeartRateSample> getHeartRateMaxSampleProvider(final GBDevice device, final DaoSession session) {
+    public TimeSampleProvider<? extends BodyEnergySample> getBodyEnergySampleProvider(@NonNull final GBDevice device, final DaoSession session) {
+        return new XiaomiBodyEnergySampleProvider(device, session);
+    }
+
+    @Override
+    public TimeSampleProvider<? extends HeartRateSample> getHeartRateMaxSampleProvider(@NonNull final GBDevice device, final DaoSession session) {
         // TODO XiaomiHeartRateMaxSampleProvider
         return super.getHeartRateMaxSampleProvider(device, session);
     }
@@ -172,25 +178,25 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public TimeSampleProvider<? extends HeartRateSample> getHeartRateManualSampleProvider(final GBDevice device, final DaoSession session) {
+    public TimeSampleProvider<? extends HeartRateSample> getHeartRateManualSampleProvider(@NonNull final GBDevice device, final DaoSession session) {
         // TODO XiaomiHeartRateManualSampleProvider
         return super.getHeartRateManualSampleProvider(device, session);
     }
 
     @Override
-    public TimeSampleProvider<? extends PaiSample> getPaiSampleProvider(final GBDevice device, final DaoSession session) {
+    public TimeSampleProvider<? extends PaiSample> getPaiSampleProvider(@NonNull final GBDevice device, final DaoSession session) {
         return new XiaomiPaiSampleProvider(device, session);
     }
 
     @Override
-    public TimeSampleProvider<? extends RespiratoryRateSample> getRespiratoryRateSampleProvider(final GBDevice device, final DaoSession session) {
+    public TimeSampleProvider<? extends RespiratoryRateSample> getRespiratoryRateSampleProvider(@NonNull final GBDevice device, final DaoSession session) {
         // TODO XiaomiSleepRespiratoryRateSampleProvider
         return super.getRespiratoryRateSampleProvider(device, session);
     }
 
     @Nullable
     @Override
-    public ActivitySummaryParser getActivitySummaryParser(final GBDevice device, final Context context) {
+    public ActivitySummaryParser getActivitySummaryParser(@NonNull final GBDevice device, final Context context) {
         return new WorkoutSummaryParser();
     }
 
@@ -200,48 +206,43 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public int getAlarmSlotCount(final GBDevice device) {
+    public int getAlarmSlotCount(@NonNull final GBDevice device) {
         return getPrefs(device).getInt(XiaomiPreferences.PREF_ALARM_SLOTS, 0);
     }
 
     @Override
-    public boolean supportsSmartWakeup(final GBDevice device, int position) {
+    public boolean supportsSmartWakeup(@NonNull final GBDevice device, int position) {
         return true;
     }
 
     @Override
-    public boolean supportsAppsManagement(final GBDevice device) {
+    public boolean supportsAppsManagement(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsCachedAppManagement(GBDevice device) {
+    public boolean supportsCachedAppManagement(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsInstalledAppManagement(GBDevice device) {
+    public boolean supportsInstalledAppManagement(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsWatchfaceManagement(GBDevice device) {
+    public boolean supportsWatchfaceManagement(@NonNull final GBDevice device) {
         return supportsAppsManagement(device);
     }
 
     @Override
-    public Class<? extends Activity> getAppsManagementActivity(final GBDevice device) {
+    public Class<? extends Activity> getAppsManagementActivity(@NonNull final GBDevice device) {
         return AppManagerActivity.class;
     }
 
     @Override
-    public boolean supportsAppListFetching(final GBDevice device) {
+    public boolean supportsAppListFetching(@NonNull final GBDevice device) {
         return true;
-    }
-
-    @Override
-    public boolean supportsAppReordering(final GBDevice device) {
-        return false;
     }
 
     @Override
@@ -250,12 +251,12 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsCalendarEvents(final GBDevice device) {
+    public boolean supportsCalendarEvents(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsActivityDataFetching(final GBDevice device) {
+    public boolean supportsActivityDataFetching(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -265,7 +266,7 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityTracks(final GBDevice device) {
+    public boolean supportsActivityTracks(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -275,8 +276,13 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsSpo2(GBDevice device) {
+    public boolean supportsSpo2(@NonNull GBDevice device) {
         return true;
+    }
+
+    @Override
+    public boolean supportsBodyEnergy(@NonNull GBDevice device) {
+        return false; // FIXME is should, but untested
     }
 
     @Override
@@ -286,7 +292,7 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsHeartRateRestingMeasurement(GBDevice device) {
+    public boolean supportsHeartRateRestingMeasurement(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -324,12 +330,12 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public int getReminderSlotCount(final GBDevice device) {
+    public int getReminderSlotCount(@NonNull final GBDevice device) {
         return getPrefs(device).getInt(XiaomiPreferences.PREF_REMINDER_SLOTS, 0);
     }
 
     @Override
-    public int getCannedRepliesSlotCount(final GBDevice device) {
+    public int getCannedRepliesSlotCount(@NonNull final GBDevice device) {
         return getPrefs(device).getInt(XiaomiPreferences.PREF_CANNED_MESSAGES_MAX, 0);
     }
 
@@ -353,12 +359,12 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsHeartRateMeasurement(final GBDevice device) {
+    public boolean supportsHeartRateMeasurement(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsManualHeartRateMeasurement(final GBDevice device) {
+    public boolean supportsManualHeartRateMeasurement(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -378,7 +384,7 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsWeather(final GBDevice device) {
+    public boolean supportsWeather(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -412,7 +418,7 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
+    public DeviceSpecificSettings getDeviceSpecificSettings(@NonNull final GBDevice device) {
         final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
 
         if (supports(device, FEAT_WEAR_MODE)) {
@@ -536,12 +542,12 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public DeviceSpecificSettingsCustomizer getDeviceSpecificSettingsCustomizer(final GBDevice device) {
+    public DeviceSpecificSettingsCustomizer getDeviceSpecificSettingsCustomizer(@NonNull final GBDevice device) {
         return new XiaomiSettingsCustomizer();
     }
 
     @Override
-    public String[] getSupportedLanguageSettings(final GBDevice device) {
+    public String[] getSupportedLanguageSettings(@NonNull final GBDevice device) {
         return new String[]{
                 "auto",
                 "ar_SA",
@@ -591,20 +597,20 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsWidgets(final GBDevice device) {
+    public boolean supportsWidgets(@NonNull final GBDevice device) {
         return getPrefs(device).getBoolean(XiaomiPreferences.FEAT_WIDGETS, false);
     }
 
     @Override
-    public WidgetManager getWidgetManager(final GBDevice device) {
+    public WidgetManager getWidgetManager(@NonNull final GBDevice device) {
         return new XiaomiWidgetManager(device);
     }
 
-    protected static Prefs getPrefs(final GBDevice device) {
+    protected static Prefs getPrefs(@NonNull final GBDevice device) {
         return new Prefs(GBApplication.getDeviceSpecificSharedPrefs(device.getAddress()));
     }
 
-    public boolean supports(final GBDevice device, final String feature) {
+    public boolean supports(@NonNull final GBDevice device, final String feature) {
         return getPrefs(device).getBoolean(feature, false);
     }
 

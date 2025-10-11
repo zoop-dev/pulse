@@ -54,7 +54,7 @@ public class MiBand9ActiveCoordinator extends XiaomiCoordinator {
     }
 
     @Override
-    public boolean supportsManualHeartRateMeasurement(final GBDevice device) {
+    public boolean supportsManualHeartRateMeasurement(@NonNull final GBDevice device) {
         return false;
     }
 

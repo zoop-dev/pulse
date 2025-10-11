@@ -54,7 +54,7 @@ public class RedmiSmartBand3Coordinator extends XiaomiCoordinator {
     }
 
     @Override
-    public boolean supportsManualHeartRateMeasurement(final GBDevice device) {
+    public boolean supportsManualHeartRateMeasurement(@NonNull final GBDevice device) {
         // #4809 does not seem to be supported
         return false;
     }

@@ -46,7 +46,7 @@ public class MiWatchLiteCoordinator extends XiaomiCoordinator {
     }
 
     @Override
-    public boolean supportsCalendarEvents(final GBDevice device) {
+    public boolean supportsCalendarEvents(@NonNull final GBDevice device) {
         return false;
     }
 
@@ -56,7 +56,7 @@ public class MiWatchLiteCoordinator extends XiaomiCoordinator {
     }
 
     @Override
-    public boolean supportsSpo2(GBDevice device) {
+    public boolean supportsSpo2(@NonNull GBDevice device) {
         return false;
     }
 

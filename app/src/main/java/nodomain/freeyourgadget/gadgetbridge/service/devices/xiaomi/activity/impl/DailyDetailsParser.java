@@ -37,6 +37,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityFileId;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityParser;
@@ -89,6 +90,9 @@ public class DailyDetailsParser extends XiaomiActivityParser {
 
             final XiaomiActivitySample sample = new XiaomiActivitySample();
             sample.setTimestamp((int) (timestamp.getTimeInMillis() / 1000));
+            sample.setActiveCalories(ActivitySample.NOT_MEASURED);
+            sample.setDistanceCm(ActivitySample.NOT_MEASURED);
+            sample.setEnergy(ActivitySample.NOT_MEASURED);
 
             int includeExtraEntry = 0;
             if (complexParser.nextGroup(16)) {
@@ -105,7 +109,7 @@ public class DailyDetailsParser extends XiaomiActivityParser {
             if (complexParser.nextGroup(8)) {
                 // TODO activity type?
                 if (complexParser.hasSecond()) {
-                    final int calories = complexParser.get(2, 6);
+                    sample.setActiveCalories(complexParser.get(2, 6));
                 }
             }
 
@@ -114,7 +118,9 @@ public class DailyDetailsParser extends XiaomiActivityParser {
             }
 
             if (complexParser.nextGroup(16)) {
-                // TODO distance
+                if (complexParser.hasFirst()) {
+                    sample.setDistanceCm(complexParser.get(0, 16) * 100);
+                }
             }
 
             if (complexParser.nextGroup(8)) {
@@ -127,6 +133,7 @@ public class DailyDetailsParser extends XiaomiActivityParser {
             if (complexParser.nextGroup(8)) {
                 if (complexParser.hasFirst()) {
                     // energy, 8 bits
+                    sample.setEnergy(complexParser.get(0, 8));
                 }
             }
 
