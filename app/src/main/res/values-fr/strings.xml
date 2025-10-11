@@ -428,7 +428,7 @@ Temps de sommeil préféré en heures</string>
     <string name="mi2_prefs_button_press_count">Nombre de pressions du bouton</string>
     <string name="mi2_prefs_button_press_count_summary">Nombre d\'appuis sur le boutton pour envoyer l’Évènement 1. Appuyer de nouveau autant de fois créera l\'Évènement 2, etc.</string>
     <string name="mi2_prefs_button_press_broadcast">Message à envoyer</string>
-    <string name="mi2_prefs_button_press_broadcast_summary">Message de diffusion envoyé avec l\'évènement. Le paramètre « button_id » est automatiquement ajouté à chaque message.</string>
+    <string name="mi2_prefs_button_press_broadcast_summary">Message de diffusion envoyé avec l\'évènement. Le paramètre « button_id » est automatiquement ajouté à chaque message.</string>
     <string name="mi2_prefs_button_action">Activer action du bouton</string>
     <string name="mi2_prefs_button_action_summary">Activer action après nombre spécifié de pressions</string>
     <string name="mi2_prefs_button_action_vibrate">Activer la vibration du bracelet</string>
