@@ -160,12 +160,11 @@ public class CommunicatorV2 implements ICommunicator {
             // MLR packet - extract handle and forward to appropriate MLR communicator, but keep the mlr flag
             final int handle = ((value[0] & MlrCommunicator.HANDLE_MASK) >> 4) | MlrCommunicator.MLR_FLAG_MASK;
             final MlrCommunicator mlrComm = mlrCommunicators.get(handle);
-            if (mlrComm == null) {
-                LOG.warn("Received MLR packet for unknown handle: {}", handle);
+            if (mlrComm != null) {
+                mlrComm.onPacketReceived(value);
                 return true;
             }
-            mlrComm.onPacketReceived(value);
-            return true;
+            // #5476 - It looks like non-MLR handles can also have the msb set, so we let it fall through
         }
 
         final ByteBuffer message = ByteBuffer.wrap(value).order(ByteOrder.LITTLE_ENDIAN);
