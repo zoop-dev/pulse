@@ -53,10 +53,10 @@ public class G1DeviceCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     protected Pattern getSupportedDeviceName() {
-        // eg. G1_45_L_F2333, G1_63_R_04935.
+        // eg. G1_45_L_F2333, G1_63_R_04935, G1_2_R_B7D35.
         // Note that the G1_XX_L_YYYYY will have a corresponding G1_XX_R_ZZZZZ. The XX will match,
         // but the trailing 5 characters will not.
-        return Pattern.compile("Even G1_\\d\\d_[L|R]_\\w+");
+        return Pattern.compile("Even G1_\\d+_[L|R]_\\w+");
     }
 
     @Override

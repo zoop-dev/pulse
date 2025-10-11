@@ -35,14 +35,13 @@ public class G1Constants {
 
     // Extract the L or R at the end of the device prefix.
     public static Side getSideFromFullName(String deviceName) {
-        int prefixSize = "Even G1_XX_X".length();
+        // Name will be "G1_XX_[L|R]_YYYYY"
+        int firstUnderScore = deviceName.indexOf('_');
+        if (firstUnderScore < 0) return null;
+        int prefixSize = deviceName.indexOf('_', firstUnderScore);
+        if (prefixSize < 0) return null;
 
-        if (deviceName.length() < prefixSize) {
-            return null;
-        }
-
-        String prefix = deviceName.substring(0, prefixSize);
-        char side = prefix.charAt(prefix.length() - 1);
+        char side = deviceName.charAt(prefixSize+1);
         if (side == 'L' || side == 'R') {
             return side == 'L' ? Side.LEFT : Side.RIGHT;
         }
@@ -51,13 +50,13 @@ public class G1Constants {
     }
 
     public static String getNameFromFullName(String deviceName) {
-        int prefixSize = "Even G1_XX".length();
+        // Name will be "G1_XX_[L|R]_YYYYY"
+        int firstUnderScore = deviceName.indexOf('_');
+        if (firstUnderScore < 0) return null;
+        int prefixSize = deviceName.indexOf('_', firstUnderScore);
+        if (prefixSize < 0) return null;
 
-        if (deviceName.length() < prefixSize) {
-            return null;
-        }
-
-        return deviceName.substring(0, prefixSize);
+        return deviceName.substring(0, prefixSize-1);
     }
 
     public enum Side {
