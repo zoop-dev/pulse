@@ -46,10 +46,10 @@ public class G1Constants {
         // Name will be "G1_XX_[L|R]_YYYYY"
         int firstUnderScore = deviceName.indexOf('_');
         if (firstUnderScore < 0) return null;
-        int prefixSize = deviceName.indexOf('_', firstUnderScore);
+        int prefixSize = deviceName.indexOf('_', firstUnderScore + 1);
         if (prefixSize < 0) return null;
 
-        char side = deviceName.charAt(prefixSize+1);
+        char side = deviceName.charAt(prefixSize + 1);
         if (side == 'L' || side == 'R') {
             return side == 'L' ? Side.LEFT : Side.RIGHT;
         }
@@ -61,10 +61,10 @@ public class G1Constants {
         // Name will be "G1_XX_[L|R]_YYYYY"
         int firstUnderScore = deviceName.indexOf('_');
         if (firstUnderScore < 0) return null;
-        int prefixSize = deviceName.indexOf('_', firstUnderScore);
+        int prefixSize = deviceName.indexOf('_', firstUnderScore + 1);
         if (prefixSize < 0) return null;
 
-        return deviceName.substring(0, prefixSize-1);
+        return deviceName.substring(0, prefixSize);
     }
 
     public enum Side {
