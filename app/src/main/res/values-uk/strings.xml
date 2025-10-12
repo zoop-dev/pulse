@@ -3901,8 +3901,20 @@
     <string name="pref_huawei_features_config_info_title">Увімкнути додаткові функції для здоров\'я</string>
     <string name="pref_huawei_features_config_info_summary">Увімкнення наведених нижче налаштувань активує додаткові функції для здоров’я на вашому пристрої. Наприклад, емоційний моніторинг або ЕКГ.\nПРИМІТКА. Доступність функцій залежить від пристрою.</string>
     <string name="pref_huawei_features_config_warning_title">Надіслати код країни та конфігурацію функцій на пристрій.</string>
-    <string name="pref_huawei_features_config_warning_summary">Попередження: увімкнення цих налаштувань, коли одночасно використовуються Gadgetbridge і додаток виробника, може спричинити проблеми з роботою додатка виробника та функціональністю пристрою або взагалі не вплинути на поточні можливості пристрою. Увімкніть на власний ризик.\nНеобхідно повторно підключити пристрій.</string>
+    <string name="pref_huawei_features_config_warning_summary">Попередження: увімкнення цих налаштувань, коли одночасно використовуються Gadgetbridge і додаток постачальника, може спричинити проблеми з роботою додатка постачальника та функціональністю пристрою або взагалі не вплинути на поточні можливості пристрою. Встановлення неправильної країни може вплинути на інші налаштування пристрою, такі як конфігурація частоти залежно від регіону тощо. Увімкніть на власний ризик.\nНеобхідно повторно підключити пристрій.</string>
     <string name="pref_huawei_send_country_code_title">Надіслати код країни</string>
     <string name="pref_huawei_send_country_code_summary">Надіслати код країни на пристрій.\n Увага: слід встановити код країни</string>
     <string name="pref_huawei_country_code_title">Код країни</string>
+    <string name="pref_huawei_force_features_settings_title">Примусово показувати налаштування, обмежені для певної країни</string>
+    <string name="pref_huawei_force_features_settings_summary">Примусове відображення налаштувань для конкретної країни в додатку Gadgetbridge.\n Попередження: Gadgetbridge відображатиме налаштування, які ваш пристрій повідомляє як підтримувані. Зверніть увагу, що деякі налаштування можуть бути обмежені додатком постачальника на вашому пристрої і можуть не працювати або працювати неправильно.</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia">Пульсова аритмія</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_enable_title">Увімкнути пульсову хвилю аритмії</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_enable_summary">Активуйте пульсову аритмію на пристрої</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_automatic_title">Автоматичне виявлення аритмії</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_automatic_summary">Пристрій автоматично відстежуватиме ваш пульс.</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_alert_title">Попередження про аритмію</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_alert_summary">Отримуйте сповіщення, коли ваш серцевий ритм змінюється</string>
+    <string name="pref_screen_ecg">ECG</string>
+    <string name="pref_huawei_ecg_activate_title">Активувати ECG</string>
+    <string name="pref_huawei_ecg_activate_summary">Активація або деактивація ECG на пристрої</string>
 </resources>
