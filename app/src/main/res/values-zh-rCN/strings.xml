@@ -464,7 +464,7 @@
     <string name="tap_connected_device_for_app_mananger">点按为已连接的设备管理应用</string>
     <string name="notif_export_failed_title">数据库导出失败！ 请检查您的设置。</string>
     <string name="miband_prefs_reserve_alarm_calendar">预警未来事件</string>
-    <string name="mi2_prefs_button_press_broadcast_summary">事件与广播消息一起发送。参数 `button_id` 将会自动添加到每条消息中。</string>
+    <string name="mi2_prefs_button_press_broadcast_summary">事件与广播消息一起发送。button_id 参数会自动添加到每条消息中。</string>
     <string name="DEVINFO_HR_VER">"心率： "</string>
     <string name="timeformat_am_pm">AM/PM</string>
     <string name="choose_auto_export_location">选择导出位置</string>
@@ -651,7 +651,7 @@
     <string name="title_activity_device_specific_settings">设备特殊设置</string>
     <string name="pref_title_authkey">认证密钥</string>
     <string name="pref_summary_authkey">将您想要连接的所有 Android 设备上的认证密钥更改为通用的密钥。默认所有设备的密钥是 0123456789@ABCDE</string>
-    <string name="fw_upgrade_notice_amazfitcor2">您即将在跃我手环2(Amazfit Cor 2)上安装 %s 版本的固件 \n \n请确保先安装 .fw 文件，再安装 .res 文件。您的手环将会在安装了 .fw 文件后重启 \n \n备注：如果您安装的 .res 文件和之前相同，则无需安装 .res 文件 \n \n风险自担！ \n \n此功能未经测试，如果您的设备名为 Amazfit Band 2，您可能需要刷入 BEATS_W 固件</string>
+    <string name="fw_upgrade_notice_amazfitcor2">您即将在跃我手环2(Amazfit Cor 2)上安装 %s 版本的固件。 \n \n请确保先安装 .fw 文件，再安装 .res 文件。您的手环将会在安装了 .fw 文件后重启。 \n \n备注：如果您安装的 .res 文件和之前相同，则无需安装 .res 文件。 \n \n风险自担！ \n \n此功能完全未经测试，如果您的设备名为 Amazfit Band 2，可能需要刷入 BEATS_W 固件</string>
     <string name="dutch">荷兰语</string>
     <string name="turkish">土耳其语</string>
     <string name="ukrainian">乌克兰语</string>
@@ -1587,8 +1587,8 @@
     <string name="pref_workout_start_on_phone_title">健身应用追踪</string>
     <string name="pref_workout_start_on_phone_summary">在手环上开始 GPS 锻炼时，在手机上开始/停止健身应用跟踪</string>
     <string name="notification_channel_gps">GPS跟踪</string>
-    <string name="permission_notification_listener">%1$s需要访问通知，以便当您的手机屏幕息屏时能在您的手表上显示这些通知。 \n \n请点击 %2$s 然后 %1$s 并启用允许通知访问，然后点击返回至 %1$s。</string>
-    <string name="permission_notification_policy_access">%1$s 需要访问“请勿打扰”设置以便在您的手机息屏时才能在手表上使用它们。 \n \n请点击 %2$s 然后点击 %1$s 并启用允许请勿打扰，然后点击返回至 %1$s。</string>
+    <string name="permission_notification_listener">%1$s需要访问通知，以便当您的手机屏幕息屏时能在您的手表上显示这些通知。 \n \n请点击 %2$s 然后 %1$s 并启用允许通知访问，然后点击返回回到 %1$s。</string>
+    <string name="permission_notification_policy_access">%1$s 需要访问“请勿打扰”设置以便在您的手机息屏时才能在手表上使用它们。 \n \n请点击 %2$s 然后 %1$s 并启用允许请勿打扰，然后点击返回回到 %1$s。</string>
     <string name="pref_workout_send_gps_title">在锻炼期间发送 GPS</string>
     <string name="pref_workout_send_gps_summary">锻炼时将当前的GPS位置发送到手环上</string>
     <string name="notification_gps_title">Gadgetbridge GPS</string>
@@ -1602,7 +1602,7 @@
     <string name="info_connected_count">%d 设备已连接</string>
     <string name="pref_title_banglejs_webview_url">应用加载程序网址</string>
     <string name="pref_summary_banglejs_webview_url">如果您想要一个自定义的应用程序加载器，请将您的 https://…/android.html 网址放在这里。留空的话则为： https://banglejs.com/apps</string>
-    <string name="permission_location">%1$s 需要在后台访问您的位置，以使其即使在屏幕关闭时也能与您的手表保持连接。 \n \n请在稍后出现的页面中选择 %2$s ，然后点击返回至 %1$s 。</string>
+    <string name="permission_location">%1$s 需要在后台访问您的位置，以使其即使在屏幕关闭时也能与您的手表保持连接。 \n \n请在之后的屏幕中选择 %2$s ，然后点击返回回到 %1$s 。</string>
     <string name="lithuanian">立陶宛语</string>
     <string name="persian">波斯语</string>
     <string name="scandinavian">斯堪的纳维亚语</string>
@@ -1702,7 +1702,7 @@
     <string name="prefs_hourly_chime_summary">手表每小时将发出一次蜂鸣音</string>
     <string name="step_streaks_achievements_sharing_message">我每天的步数成就!</string>
     <string name="step_streaks_achievements_sharing_title">步数成就</string>
-    <string name="permission_display_over_other_apps">当 %1$s 在后台时，%1$s 需要显示在其他应用程序上的权限，以便让 Bangle.js 手表通过意图启动活动。 \n \n这可用于启动音乐应用程序并播放歌曲以及许多其他事情。 \n \n请点击 %2$s，然后点击 %1$s 并启用允许显示在其他应用程序上，然后点击返回至 %1$s。 \n \n若需要停止 %1$s 询问权限，请进入设置，并取消检查权限状态。 \n \n请确保 %1$s 已经给予了必要的权限。</string>
+    <string name="permission_display_over_other_apps">当 %1$s 在后台时，%1$s 需要显示在其他应用程序上的权限，以便让 Bangle.js 手表通过意图启动活动。 \n \n这可用于启动音乐应用程序并播放歌曲以及许多其他事情。 \n \n请点击 %2$s，然后 %1$s 并启用允许显示在其他应用程序上，然后点击返回回到 %1$s。 \n \n要停止 %1$s 请求权限，请进入设置，并取消勾选检查权限状态。 \n \n请确保已授予 %1$s 按期望正常运作所必需的权限。</string>
     <string name="pref_header_display">显示</string>
     <string name="pref_header_health">健康</string>
     <string name="pref_header_time">时间</string>
@@ -2215,7 +2215,7 @@
     <string name="info_fossil_rebuild_watchface_custom_menu">请重建您的表盘以进行自定义菜单</string>
     <string name="device_experimental">试验性</string>
     <string name="info_menu_structure_removed">菜单结构已删除</string>
-    <string name="error_menu_companion_not_installed">心率菜单伴侣可能未安装</string>
+    <string name="error_menu_companion_not_installed">可能未安装心率菜单伴侣</string>
     <string name="info_menu_structure_contents">菜单结构：%s</string>
     <string name="english_au">英文 （澳大利亚）</string>
     <string name="english_ca">英文 （加拿大）</string>
@@ -2687,7 +2687,7 @@
     <string name="pref_dashboard_widget_double_size_summary">允许小部件占据仪表板上的两列</string>
     <string name="pref_dashboard_all_devices_summary">将所有添加设备的活动数据合并到仪表板上的总计中</string>
     <string name="pref_dashboard_widget_today_hr_interval_title">心率区间</string>
-    <string name="pref_dashboard_widget_today_hr_interval_summary">每次成功测量心率后图表显示佩戴的分钟数</string>
+    <string name="pref_dashboard_widget_today_hr_interval_summary">每次成功测量心率后图表显示的佩戴分钟数</string>
     <string name="pref_auto_reply_calls_summary">手机将自动接听来电</string>
     <string name="pref_auto_reply_calls_title">自动接听电话</string>
     <string name="pref_auto_reply_calls_delay_summary">自动接听电话之前的秒数</string>
@@ -4059,4 +4059,13 @@
     <string name="hr_settings_zones_lactate_threshold_hr">乳酸阈值心率</string>
     <string name="hr_settings_zones_remove_all">重置所有</string>
     <string name="hr_settings_zones_remove_all_description">确定要删除心率区间和全部姿势配置限制并将它们重置为默认吗？</string>
+    <string name="pref_huawei_health_features_config_title">健康功能配置</string>
+    <string name="pref_huawei_health_features_config_summary">配置扩展的健康功能。</string>
+    <string name="pref_huawei_features_config_info_title">启用附加的健康功能</string>
+    <string name="pref_huawei_features_config_info_summary">启用下列设置会激活设备上附加的健康功能。比如情绪或心电图。\n注：可用功能取决于设备。</string>
+    <string name="pref_huawei_features_config_warning_summary">警告：Gadgetbridge 和厂商应用同时使用时开启这些设置可能导致厂商应用或设备功能问题或者完全无法影响但概念设备功能。自行承担开启风险。\n需要重连设备。</string>
+    <string name="pref_huawei_send_country_code_title">发送国家/地区码</string>
+    <string name="pref_huawei_send_country_code_summary">发送国家/地区码到设备上。\n 注意:应当设置国家/地区码</string>
+    <string name="pref_huawei_country_code_title">国家/地区码</string>
+    <string name="pref_huawei_features_config_warning_title">发送国家/地区码和功能配置文件到该设备。</string>
 </resources>
