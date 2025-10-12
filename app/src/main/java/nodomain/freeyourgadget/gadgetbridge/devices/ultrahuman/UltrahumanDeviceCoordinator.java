@@ -177,7 +177,7 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public TimeSampleProvider<? extends TemperatureSample> getTemperatureSampleProvider(GBDevice device, DaoSession session) {
-        return new GenericTemperatureSampleProvider(device, session);
+        return new GenericTemperatureSampleProvider(device, session, TemperatureSample.TYPE_SKIN, TemperatureSample.LOCATION_FINGER);
     }
 
     @Override

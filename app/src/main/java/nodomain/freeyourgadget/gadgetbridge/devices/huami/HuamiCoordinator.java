@@ -74,6 +74,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.MiBandActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.model.SleepScoreSample;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiVibrationPatternNotificationType;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
@@ -209,7 +210,7 @@ public abstract class HuamiCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public GenericTemperatureSampleProvider getTemperatureSampleProvider(GBDevice device, DaoSession session) {
-        return new GenericTemperatureSampleProvider(device, session);
+        return new GenericTemperatureSampleProvider(device, session, TemperatureSample.TYPE_SKIN, TemperatureSample.LOCATION_WRIST);
     }
 
     @Override

@@ -37,6 +37,8 @@ import static nodomain.freeyourgadget.gadgetbridge.devices.ultrahuman.Ultrahuman
 import static nodomain.freeyourgadget.gadgetbridge.devices.ultrahuman.UltrahumanConstants.UUID_TODO;
 import static nodomain.freeyourgadget.gadgetbridge.impl.GBDevice.State.INITIALIZED;
 import static nodomain.freeyourgadget.gadgetbridge.impl.GBDevice.State.INITIALIZING;
+import static nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample.LOCATION_FINGER;
+import static nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample.TYPE_SKIN;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.ultrahuman.UltrahumanCharacteristic.COMMAND;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.ultrahuman.UltrahumanCharacteristic.DATA;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.ultrahuman.UltrahumanCharacteristic.RESPONSE;
@@ -642,7 +644,13 @@ public class UltrahumanDeviceSupport extends AbstractBTLESingleDeviceSupport {
         if (temperatureMax != 0.0f || temperatureMin != 0.0f) {
             float temperature = (temperatureMax + temperatureMin) / 2.0f;
             GenericTemperatureSampleProvider provider = new GenericTemperatureSampleProvider(device, session);
-            GenericTemperatureSample sample = new GenericTemperatureSample(timestampTemp * 1000L, deviceId, userId, temperature, 0);
+            GenericTemperatureSample sample = new GenericTemperatureSample();
+            sample.setTimestamp(timestampTemp * 1000L);
+            sample.setDeviceId(deviceId);
+            sample.setUserId(userId);
+            sample.setTemperature(temperature);
+            sample.setTemperatureLocation(LOCATION_FINGER);
+            sample.setTemperatureType(TYPE_SKIN);
             provider.addSample(sample);
         }
 

@@ -33,4 +33,6 @@ public abstract class AbstractTemperatureSample extends AbstractTimeSample imple
                 ", deviceId=" + getDeviceId() +
                 "}";
     }
+
+    public abstract void setTemperature(float temperature);
 }

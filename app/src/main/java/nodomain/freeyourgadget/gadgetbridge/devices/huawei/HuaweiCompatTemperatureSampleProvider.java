@@ -1,5 +1,8 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.huawei;
 
+import static nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample.LOCATION_WRIST;
+import static nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample.TYPE_SKIN;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -89,7 +92,8 @@ public class HuaweiCompatTemperatureSampleProvider implements TimeSampleProvider
                 HuaweiTemperatureSample sample = new HuaweiTemperatureSample();
                 sample.setTimestamp(vl.getHuaweiDictData().getStartTimestamp());
                 sample.setTemperature((float) skinTemperature);
-                sample.setTemperatureType(0);
+                sample.setTemperatureLocation(LOCATION_WRIST);
+                sample.setTemperatureType(TYPE_SKIN);
                 ret.add(idx++, sample);
             }
         }
@@ -149,7 +153,8 @@ public class HuaweiCompatTemperatureSampleProvider implements TimeSampleProvider
         HuaweiTemperatureSample sample = new HuaweiTemperatureSample();
         sample.setTimestamp(valuesData.get(0).getHuaweiDictData().getStartTimestamp());
         sample.setTemperature((float) HuaweiUtil.convBytes2Double(valuesData.get(0).getValue()));
-        sample.setTemperatureType(0);
+        sample.setTemperatureLocation(LOCATION_WRIST);
+        sample.setTemperatureType(TYPE_SKIN);
         return sample;
     }
 
@@ -189,7 +194,8 @@ public class HuaweiCompatTemperatureSampleProvider implements TimeSampleProvider
         HuaweiTemperatureSample sample = new HuaweiTemperatureSample();
         sample.setTimestamp(valuesData.get(0).getHuaweiDictData().getStartTimestamp());
         sample.setTemperature((float) HuaweiUtil.convBytes2Double(valuesData.get(0).getValue()));
-        sample.setTemperatureType(0);
+        sample.setTemperatureLocation(LOCATION_WRIST);
+        sample.setTemperatureType(TYPE_SKIN);
         return sample;
     }
 
@@ -222,7 +228,8 @@ public class HuaweiCompatTemperatureSampleProvider implements TimeSampleProvider
         HuaweiTemperatureSample sample = new HuaweiTemperatureSample();
         sample.setTimestamp(valuesData.get(0).getHuaweiDictData().getStartTimestamp());
         sample.setTemperature((float) HuaweiUtil.convBytes2Double(valuesData.get(0).getValue()));
-        sample.setTemperatureType(0);
+        sample.setTemperatureLocation(LOCATION_WRIST);
+        sample.setTemperatureType(TYPE_SKIN);
         return sample;
     }
 
@@ -256,7 +263,7 @@ public class HuaweiCompatTemperatureSampleProvider implements TimeSampleProvider
                 for (HuaweiDictDataValues vl : valuesData) {
                     double skinTemperature = HuaweiUtil.convBytes2Double(vl.getValue());
                     if (skinTemperature >= 20 && skinTemperature <= 42) {
-                        res.add(new HuaweiTemperatureSample(vl.getHuaweiDictData().getStartTimestamp(), vl.getHuaweiDictData().getDeviceId(), vl.getHuaweiDictData().getUserId(), Math.max(vl.getHuaweiDictData().getModifyTimestamp(), vl.getHuaweiDictData().getEndTimestamp()), (float) skinTemperature, 0));
+                        res.add(new HuaweiTemperatureSample(vl.getHuaweiDictData().getStartTimestamp(), vl.getHuaweiDictData().getDeviceId(), vl.getHuaweiDictData().getUserId(), Math.max(vl.getHuaweiDictData().getModifyTimestamp(), vl.getHuaweiDictData().getEndTimestamp()), (float) skinTemperature, TYPE_SKIN, LOCATION_WRIST));
                     }
                 }
                 daoSession.getHuaweiTemperatureSampleDao().insertInTx(res);

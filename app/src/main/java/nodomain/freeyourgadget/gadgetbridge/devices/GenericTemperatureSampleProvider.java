@@ -1,4 +1,5 @@
-/*  Copyright (C) 2025  Thomas Kuehne
+/*  Copyright (C) 2025  Thomas Kuehne, José Rebelo, Gideon Zenz
+    Copyright (C) 2023-2024 Alicia Hormann (Original AbstractTemperatureSample)
 
     This file is part of Gadgetbridge.
 
@@ -18,6 +19,10 @@
 package nodomain.freeyourgadget.gadgetbridge.devices;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
@@ -25,10 +30,35 @@ import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericTemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericTemperatureSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 
 public class GenericTemperatureSampleProvider extends AbstractTimeSampleProvider<GenericTemperatureSample> {
+    private final Integer defaultType;
+    private final Integer defaultLocation;
+
     public GenericTemperatureSampleProvider(final GBDevice device, final DaoSession session) {
+        this(device, session, TemperatureSample.TYPE_UNKNOWN, TemperatureSample.LOCATION_UNKNOWN);
+    }
+
+    public GenericTemperatureSampleProvider(final GBDevice device,
+                                            final DaoSession session,
+                                            final Integer defaultType,
+                                            final Integer defaultLocation) {
         super(device, session);
+        this.defaultType = defaultType;
+        this.defaultLocation = defaultLocation;
+    }
+
+    private GenericTemperatureSample applyDefaults(final GenericTemperatureSample sample) {
+        if (sample != null) {
+            if (defaultType != -1 && (sample.getTemperatureType() == null || sample.getTemperatureType() == 0)) {
+                sample.setTemperatureType(defaultType);
+            }
+            if (defaultLocation != -1 && (sample.getTemperatureLocation() == null || sample.getTemperatureLocation() == 0)) {
+                sample.setTemperatureLocation(defaultLocation);
+            }
+        }
+        return sample;
     }
 
     @NonNull
@@ -52,5 +82,41 @@ public class GenericTemperatureSampleProvider extends AbstractTimeSampleProvider
     @Override
     public GenericTemperatureSample createSample() {
         return new GenericTemperatureSample();
+    }
+
+    @NonNull
+    @Override
+    public List<GenericTemperatureSample> getAllSamples(final long timestampFrom, final long timestampTo) {
+        return super.getAllSamples(timestampFrom, timestampTo).stream()
+                .map(this::applyDefaults)
+                .collect(Collectors.toList());
+    }
+
+    @Nullable
+    @Override
+    public GenericTemperatureSample getLatestSample() {
+        return applyDefaults(super.getLatestSample());
+    }
+
+    @Nullable
+    @Override
+    public GenericTemperatureSample getLatestSample(final long until) {
+        return applyDefaults(super.getLatestSample(until));
+    }
+
+    @Nullable
+    public GenericTemperatureSample getLastSampleBefore(final long timestampTo) {
+        return applyDefaults(super.getLastSampleBefore(timestampTo));
+    }
+
+    @Nullable
+    public GenericTemperatureSample getNextSampleAfter(final long timestampFrom) {
+        return applyDefaults(super.getNextSampleAfter(timestampFrom));
+    }
+
+    @Nullable
+    @Override
+    public GenericTemperatureSample getFirstSample() {
+        return applyDefaults(super.getFirstSample());
     }
 }

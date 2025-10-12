@@ -25,6 +25,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.FemometerVinca2TemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.FemometerVinca2TemperatureSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 
 public class FemometerVinca2SampleProvider extends AbstractTimeSampleProvider<FemometerVinca2TemperatureSample> {
 
@@ -52,6 +53,9 @@ public class FemometerVinca2SampleProvider extends AbstractTimeSampleProvider<Fe
 
     @Override
     public FemometerVinca2TemperatureSample createSample() {
-        return new FemometerVinca2TemperatureSample();
+        FemometerVinca2TemperatureSample sample=new FemometerVinca2TemperatureSample();
+        sample.setTemperatureType(TemperatureSample.TYPE_BODY);
+        sample.setTemperatureLocation(TemperatureSample.LOCATION_MOUTH);
+        return sample;
     }
 }

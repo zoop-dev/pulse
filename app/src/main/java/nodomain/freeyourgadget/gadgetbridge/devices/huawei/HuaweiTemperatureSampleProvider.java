@@ -30,6 +30,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiTemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiTemperatureSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 
 public class HuaweiTemperatureSampleProvider extends AbstractTimeSampleProvider<HuaweiTemperatureSample> {
 
@@ -57,7 +58,10 @@ public class HuaweiTemperatureSampleProvider extends AbstractTimeSampleProvider<
 
     @Override
     public HuaweiTemperatureSample createSample() {
-        return new HuaweiTemperatureSample();
+        HuaweiTemperatureSample sample = new HuaweiTemperatureSample();
+        sample.setTemperatureType(TemperatureSample.TYPE_SKIN);
+        sample.setTemperatureLocation(TemperatureSample.LOCATION_WRIST);
+        return sample;
     }
 
 

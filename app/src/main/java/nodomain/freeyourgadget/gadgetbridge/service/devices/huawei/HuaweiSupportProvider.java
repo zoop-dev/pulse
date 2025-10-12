@@ -133,6 +133,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncArrhythmia;
@@ -1606,8 +1607,9 @@ public class HuaweiSupportProvider {
                                             HuaweiTemperatureSample sample = new HuaweiTemperatureSample();
                                             sample.setTimestamp(timestamp);
                                             sample.setLastTimestamp(lastTime);
-                                            sample.setTemperatureType(0);
                                             sample.setTemperature((float) skinTemperature);
+                                            sample.setTemperatureType(TemperatureSample.TYPE_SKIN);
+                                            sample.setTemperatureLocation(TemperatureSample.LOCATION_WRIST);
                                             temperatureSamples.add(sample);
                                         }
                                     }

@@ -74,6 +74,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.DeviceAttributes;
 import nodomain.freeyourgadget.gadgetbridge.entities.DeviceAttributesDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericTrainingLoadAcuteSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericTrainingLoadChronicSample;
+import nodomain.freeyourgadget.gadgetbridge.entities.HealthConnectSyncStateDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.AbstractNotificationPattern;
@@ -225,6 +226,8 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
                 batteryLevelQueryBuilder.where(BatteryLevelDao.Properties.DeviceId.eq(device.getId())).buildDelete().executeDeleteWithoutDetachingEntities();
                 QueryBuilder<?> alarmDeviceQueryBuilder = session.getAlarmDao().queryBuilder();
                 alarmDeviceQueryBuilder.where(AlarmDao.Properties.DeviceId.eq(device.getId())).buildDelete().executeDeleteWithoutDetachingEntities();
+                QueryBuilder<?> healthSyncStateQueryBuilder = session.getHealthConnectSyncStateDao().queryBuilder();
+                healthSyncStateQueryBuilder.where(HealthConnectSyncStateDao.Properties.DeviceId.eq(device.getId())).buildDelete().executeDeleteWithoutDetachingEntities();
                 session.getDeviceDao().delete(device);
             } else {
                 LOG.info("device to delete not found in db: {}", gbDevice);

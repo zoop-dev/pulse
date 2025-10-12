@@ -49,22 +49,21 @@ public class GBDaoGenerator {
     private static final String SAMPLE_SPO2 = "spo2";
     private static final String SAMPLE_STRESS = "stress";
     private static final String SAMPLE_TEMPERATURE = "temperature";
-    private static final String SAMPLE_TEMPERATURE_TYPE = "temperatureType";
     private static final String SAMPLE_WEIGHT_KG = "weightKg";
     private static final String SAMPLE_BLOOD_PRESSURE_SYSTOLIC = "bpSystolic";
     private static final String SAMPLE_BLOOD_PRESSURE_DIASTOLIC = "bpDiastolic";
     private static final String TIMESTAMP_FROM = "timestampFrom";
     private static final String TIMESTAMP_TO = "timestampTo";
 
-
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(117, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(118, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
 
         Entity deviceAttributes = addDeviceAttributes(schema);
         Entity device = addDevice(schema, deviceAttributes);
+        addHealthConnectSyncState(schema, device);
 
         // yeah deep shit, has to be here (after device) for db upgrade and column order
         // because addDevice adds a property to deviceAttributes also....
@@ -644,7 +643,9 @@ public class GBDaoGenerator {
     private static Entity addColmiTemperatureSample(Schema schema, Entity user, Entity device) {
         Entity sample = addEntity(schema, "ColmiTemperatureSample");
         addCommonTimeSampleProperties("AbstractTemperatureSample", sample, user, device);
-        addTemperatureProperties(sample);
+        sample.addFloatProperty(SAMPLE_TEMPERATURE).notNull();
+        sample.addIntProperty("temperatureType");
+        sample.addIntProperty("temperatureLocation");
         return sample;
     }
 
@@ -1223,6 +1224,14 @@ public class GBDaoGenerator {
         calendarSyncState.addIntProperty("hash").notNull();
     }
 
+    private static void addHealthConnectSyncState(Schema schema, Entity device) {
+        Entity healthConnectSyncState = addEntity(schema, "HealthConnectSyncState");
+        Property deviceId = healthConnectSyncState.addLongProperty("deviceId").primaryKey().notNull().getProperty();
+        healthConnectSyncState.addStringProperty("dataType").primaryKey().notNull();
+        healthConnectSyncState.addToOne(device, deviceId);
+        healthConnectSyncState.addLongProperty("lastSyncTimestamp").notNull();
+    }
+
     private static void addAlarms(Schema schema, Entity user, Entity device) {
         Entity alarm = addEntity(schema, "Alarm");
         alarm.implementsInterface("nodomain.freeyourgadget.gadgetbridge.model.Alarm");
@@ -1598,9 +1607,9 @@ public class GBDaoGenerator {
         Entity sample = addEntity(schema, "HuaweiTemperatureSample");
         addCommonTimeSampleProperties("AbstractTemperatureSample", sample, user, device);
         sample.addLongProperty("lastTimestamp").notNull().index();
-        sample.addFloatProperty(SAMPLE_TEMPERATURE).notNull().codeBeforeGetter(OVERRIDE);
-        sample.addIntProperty(SAMPLE_TEMPERATURE_TYPE).notNull().primaryKey().codeBeforeGetter(OVERRIDE);
-
+        sample.addFloatProperty(SAMPLE_TEMPERATURE).notNull();
+        sample.addIntProperty("temperatureType").primaryKey();
+        sample.addIntProperty("temperatureLocation");
         return sample;
     }
 
@@ -1891,23 +1900,22 @@ public class GBDaoGenerator {
     }
 
 
-    private static void addTemperatureProperties(Entity activitySample) {
-        activitySample.addFloatProperty(SAMPLE_TEMPERATURE).notNull().codeBeforeGetter(OVERRIDE);
-        activitySample.addIntProperty(SAMPLE_TEMPERATURE_TYPE).notNull().codeBeforeGetter(OVERRIDE);
-    }
-
     private static Entity addFemometerVinca2TemperatureSample(Schema schema, Entity user, Entity device) {
         Entity sample = addEntity(schema, "FemometerVinca2TemperatureSample");
+        sample.addFloatProperty(SAMPLE_TEMPERATURE).notNull();
+        sample.addIntProperty("temperatureType");
+        sample.addIntProperty("temperatureLocation");
         addCommonTimeSampleProperties("AbstractTemperatureSample", sample, user, device);
-        addTemperatureProperties(sample);
         return sample;
     }
 
     private static Entity addMijiaLywsdRealtimeSample(Schema schema, Entity user, Entity device) {
         Entity sample = addEntity(schema, "MijiaLywsdRealtimeSample");
         addCommonTimeSampleProperties("AbstractTemperatureSample", sample, user, device);
-        addTemperatureProperties(sample);
+        sample.addFloatProperty(SAMPLE_TEMPERATURE).notNull().codeBeforeGetter(OVERRIDE);
         sample.addIntProperty("humidity").notNull();
+        sample.addIntProperty("temperatureType");
+        sample.addIntProperty("temperatureLocation");
         return sample;
     }
 
@@ -1960,7 +1968,8 @@ public class GBDaoGenerator {
         Entity temperatureSample = addEntity(schema, "GenericTemperatureSample");
         addCommonTimeSampleProperties("AbstractTemperatureSample", temperatureSample, user, device);
         temperatureSample.addFloatProperty(SAMPLE_TEMPERATURE).notNull();
-        temperatureSample.addIntProperty(SAMPLE_TEMPERATURE_TYPE).notNull();
+        temperatureSample.addIntProperty("temperatureType");
+        temperatureSample.addIntProperty("temperatureLocation");
         return temperatureSample;
     }
 

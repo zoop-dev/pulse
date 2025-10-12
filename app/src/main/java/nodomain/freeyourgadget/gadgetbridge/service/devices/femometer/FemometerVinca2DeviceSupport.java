@@ -283,14 +283,17 @@ public class FemometerVinca2DeviceSupport extends AbstractBTLESingleDeviceSuppor
     private void handleMeasurement(TemperatureInfo info) {
         Date timestamp = info.getTimestamp();
         float temperature = info.getTemperature();
-        int temperatureType = info.getTemperatureType();
         try (DBHandler db = GBApplication.acquireDB()) {
             Long userId = DBHelper.getUser(db.getDaoSession()).getId();
             Long deviceId = DBHelper.getDevice(getDevice(), db.getDaoSession()).getId();
             long time = timestamp.getTime();
 
             FemometerVinca2SampleProvider sampleProvider = new FemometerVinca2SampleProvider(getDevice(), db.getDaoSession());
-            FemometerVinca2TemperatureSample temperatureSample = new FemometerVinca2TemperatureSample(time, deviceId, userId, temperature, temperatureType);
+            FemometerVinca2TemperatureSample temperatureSample = sampleProvider.createSample();
+            temperatureSample.setTimestamp(time);
+            temperatureSample.setDeviceId(deviceId);
+            temperatureSample.setUserId(userId);
+            temperatureSample.setTemperature(temperature);
             sampleProvider.addSample(temperatureSample);
         } catch (Exception e) {
             LOG.error("Error acquiring database", e);

@@ -25,6 +25,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.MijiaLywsdRealtimeSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.MijiaLywsdRealtimeSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 
 public class MijiaLywsdRealtimeSampleProvider extends AbstractTimeSampleProvider<MijiaLywsdRealtimeSample> {
     public MijiaLywsdRealtimeSampleProvider(final GBDevice device, final DaoSession session) {
@@ -51,6 +52,9 @@ public class MijiaLywsdRealtimeSampleProvider extends AbstractTimeSampleProvider
 
     @Override
     public MijiaLywsdRealtimeSample createSample() {
-        return new MijiaLywsdRealtimeSample();
+        MijiaLywsdRealtimeSample sample=new MijiaLywsdRealtimeSample();
+        sample.setTemperatureType(TemperatureSample.TYPE_AMBIENT);
+        sample.setTemperatureLocation(TemperatureSample.LOCATION_UNKNOWN);
+        return sample;
     }
 }

@@ -78,10 +78,5 @@ public class TestTemperatureSampleProvider extends AbstractTestSampleProvider<Te
         public float getTemperature() {
             return temperature;
         }
-
-        @Override
-        public int getTemperatureType() {
-            return 0; // ?
-        }
     }
 }
