@@ -135,6 +135,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncArrhythmia;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncFeatureManager;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncEmotion;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncFindDevice;
@@ -304,6 +305,8 @@ public class HuaweiSupportProvider {
     private HuaweiDataSyncFindDevice huaweiDataSyncFindDevice = null;
 
     private HuaweiDataSyncEmotion huaweiDataSyncEmotion = null;
+
+    private HuaweiDataSyncArrhythmia huaweiDataSyncArrhythmia = null;
 
     protected HuaweiOTAManager huaweiOTAManager = new HuaweiOTAManager(this);
 
@@ -866,6 +869,10 @@ public class HuaweiSupportProvider {
                 huaweiDataSyncEmotion = new HuaweiDataSyncEmotion(HuaweiSupportProvider.this);
             }
 
+            if (getHuaweiCoordinator().supportsArrhythmia() && getHuaweiCoordinator().isShowForceCountrySpecificFeatures(getCoordinator().getDevice())) {
+                huaweiDataSyncArrhythmia = new HuaweiDataSyncArrhythmia(HuaweiSupportProvider.this);
+            }
+
             // All of the below check that they are supported and otherwise they skip themselves
             final List<Request> initRequestQueue = new ArrayList<>();
             initRequestQueue.add(new SendExtendedAccountRequest(this));
@@ -1198,6 +1205,15 @@ public class HuaweiSupportProvider {
                     break;
                 case HuaweiConstants.PREF_HUAWEI_STRESS_CALIBRATE:
                     calibrateStress();
+                    break;
+                case HuaweiConstants.PREF_HUAWEI_ARRHYTHMIA_SWITCH:
+                    activateArrhythmia();
+                    break;
+                case HuaweiConstants.PREF_HUAWEI_ARRHYTHMIA_AUTOMATIC:
+                    setArrhythmiaAutomatic();
+                    break;
+                case HuaweiConstants.PREF_HUAWEI_ARRHYTHMIA_ALERT:
+                    setArrhythmiaAlert();
                     break;
                 case DeviceSettingsPreferenceConst.PREF_FORCE_ENABLE_SMART_ALARM:
                     getAlarms();
@@ -2487,6 +2503,40 @@ public class HuaweiSupportProvider {
             return null;
         }
         return HuaweiStressParser.stressDataFromJsonStr(str);
+    }
+
+    private void activateArrhythmia() {
+        if(huaweiDataSyncArrhythmia != null) {
+            boolean arrhythmiaEnabled = GBApplication
+                    .getDeviceSpecificSharedPrefs(getDevice().getAddress())
+                    .getBoolean(HuaweiConstants.PREF_HUAWEI_ARRHYTHMIA_SWITCH, false);
+            if(!huaweiDataSyncArrhythmia.changeState(arrhythmiaEnabled)) {
+                LOG.error("Error Arrhythmia change state");
+            }
+        }
+
+    }
+
+    private void setArrhythmiaAutomatic() {
+        if(huaweiDataSyncArrhythmia != null) {
+            boolean automaticArrhythmiaEnabled = GBApplication
+                    .getDeviceSpecificSharedPrefs(getDevice().getAddress())
+                    .getBoolean(HuaweiConstants.PREF_HUAWEI_ARRHYTHMIA_AUTOMATIC, false);
+            if(!huaweiDataSyncArrhythmia.setAutomatic(automaticArrhythmiaEnabled)) {
+                LOG.error("Error Arrhythmia change automatic");
+            }
+        }
+    }
+
+    private void setArrhythmiaAlert() {
+        if(huaweiDataSyncArrhythmia != null) {
+            boolean arrhythmiaAlertEnabled = GBApplication
+                    .getDeviceSpecificSharedPrefs(getDevice().getAddress())
+                    .getBoolean(HuaweiConstants.PREF_HUAWEI_ARRHYTHMIA_ALERT, false);
+            if(!huaweiDataSyncArrhythmia.setAlert(arrhythmiaAlertEnabled)) {
+                LOG.error("Error Arrhythmia change alert");
+            }
+        }
     }
 
     public void sendDebugRequest() {

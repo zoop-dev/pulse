@@ -114,7 +114,9 @@ public final class HuaweiConstants {
     public static final String PREF_HUAWEI_ACTIVITY_REMINDER_STAND = "pref_huawei_activity_reminder_stand";
     public static final String PREF_HUAWEI_ACTIVITY_REMINDER_PROGRESS = "pref_huawei_activity_reminder_progress";
     public static final String PREF_HUAWEI_ACTIVITY_REMINDER_GOAL_REACHED = "pref_huawei_activity_reminder_goal_reached";
-
+    public static final String PREF_HUAWEI_ARRHYTHMIA_SWITCH = "pref_huawei_arrhythmia_switch";
+    public static final String PREF_HUAWEI_ARRHYTHMIA_AUTOMATIC = "pref_huawei_arrhythmia_automatic";
+    public static final String PREF_HUAWEI_ARRHYTHMIA_ALERT = "pref_huawei_arrhythmia_alert";
 
 
     public static final String PKG_NAME = "com.huawei.devicegroupmanage";

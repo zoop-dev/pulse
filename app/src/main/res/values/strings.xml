@@ -4377,8 +4377,17 @@
     <string name="pref_huawei_features_config_info_title">Enable additional health features</string>
     <string name="pref_huawei_features_config_info_summary">Enabling the settings below will activate additional health features on your device. For example, emotional or ECG.\nNOTE: The available features depend on the device.</string>
     <string name="pref_huawei_features_config_warning_title">Send country code and features config to the device.</string>
-    <string name="pref_huawei_features_config_warning_summary">Warning: Enabling these settings when both Gadgetbridge and the vendor app are in use can cause issues with the vendor app and device functionality or can not affect current device abilities at all. Enable at your own risk.\nDevice reconnect is required.</string>
+    <string name="pref_huawei_features_config_warning_summary">Warning: Enabling these settings when both Gadgetbridge and the vendor app are in use can cause issues with the vendor app and device functionality or can not affect current device abilities at all. Setting incorrect country can affect other device settings, such as the region-based frequency configuration etc. Enable at your own risk.\nDevice reconnect is required.</string>
     <string name="pref_huawei_send_country_code_title">Send country code</string>
     <string name="pref_huawei_send_country_code_summary">Send country code to the device.\n Attention: country code should be set</string>
     <string name="pref_huawei_country_code_title">Country code</string>
+    <string name="pref_huawei_force_features_settings_title">Force to show country-restricted settings</string>
+    <string name="pref_huawei_force_features_settings_summary">Force to show the country specific settings in the Gadgetbridge app.\n Warning: Gadgetbridge will display the settings reported by your device as supported. Please note that some settings may be restricted by the vendor app on your device and may not work, or may work incorrect.</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia">Pulse wave arrhythmia</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_enable_title">Enable pulse wave arrhythmia</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_enable_summary">Activate Pulse wave arrhythmia on the device</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_automatic_title">Automatic arrhythmia detection</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_automatic_summary">The device will automatically monitor your heart rate.</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_alert_title">Arrhythmia alert</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_alert_summary">Receive alert when your heart rate is abnormal</string>
 </resources>

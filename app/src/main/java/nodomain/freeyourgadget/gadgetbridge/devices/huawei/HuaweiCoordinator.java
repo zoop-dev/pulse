@@ -321,6 +321,11 @@ public class HuaweiCoordinator {
         if(supportsAutoStress()) {
             deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_stress);
         }
+
+        if(supportsArrhythmia() && isShowForceCountrySpecificFeatures(device)) {
+            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_arrhythmia);
+        }
+
         if(supportsThreeCircle() || supportsThreeCircleLite()) {
             deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_activity_reminders);
         }
@@ -370,7 +375,7 @@ public class HuaweiCoordinator {
         }
 
         if(supportsSendCountryCode()) {
-            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_huawei_country_code);
+            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_huawei_features);
         }
 
         // Time
@@ -912,6 +917,12 @@ public class HuaweiCoordinator {
         return false;
     }
 
+    public boolean supportsArrhythmia() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(168); // 113
+        return false;
+    }
+
     public boolean supportsPromptPushMessage () {
 //              do not ask for capabilities under specific condition
 //                  if (deviceType == 10 && deviceVersion == 73617766697368 && deviceSoftVersion == 372E312E31) -> leo device
@@ -1173,5 +1184,8 @@ public class HuaweiCoordinator {
         return getDeviceSpecificSharedPreferences(gbDevice).getBoolean("pref_huawei_country_code_enable", false) && !TextUtils.isEmpty(getCountryCode(gbDevice));
     }
 
+    public boolean isShowForceCountrySpecificFeatures(GBDevice gbDevice) {
+        return getDeviceSpecificSharedPreferences(gbDevice).getBoolean("pref_huawei_force_features_settings_switch", false) || getSendCountryCodeEnabled(gbDevice);
+    }
 
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceScreen
+        android:icon="@drawable/ic_heartrate"
+        android:key="screen_huawei_arrhythmia"
+        android:persistent="false"
+        android:title="@string/pref_huawei_pulse_wave_arrhythmia">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_heartrate"
+            android:key="pref_huawei_arrhythmia_switch"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/pref_huawei_pulse_wave_arrhythmia_enable_title"
+            android:summary="@string/pref_huawei_pulse_wave_arrhythmia_enable_summary" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_heartrate"
+            android:key="pref_huawei_arrhythmia_automatic"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/pref_huawei_pulse_wave_arrhythmia_automatic_title"
+            android:summary="@string/pref_huawei_pulse_wave_arrhythmia_automatic_summary" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_heartrate"
+            android:key="pref_huawei_arrhythmia_alert"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/pref_huawei_pulse_wave_arrhythmia_alert_title"
+            android:summary="@string/pref_huawei_pulse_wave_arrhythmia_alert_summary" />
+
+
+    </PreferenceScreen>
+</androidx.preference.PreferenceScreen>
