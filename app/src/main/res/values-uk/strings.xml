@@ -164,7 +164,7 @@
     <string name="chart_no_data_synchronize">Немає даних. Синхронізувати пристрій?</string>
     <string name="user_feedback_miband_activity_data_transfer">Буде передано %1$s даних, починаючи з %2$s</string>
     <string name="miband_prefs_fitness_goal">Щоденна мета кроків</string>
-    <string name="dbaccess_error_executing">Помилка виконання %1$s</string>
+    <string name="dbaccess_error_executing">Помилка виконання \"%1$s\"</string>
     <string name="controlcenter_start_activitymonitor">Ваша діяльність</string>
     <string name="cannot_connect">Не вдалося зʼєднатися: %1$s</string>
     <string name="installer_activity_unable_to_find_handler">Не вдалося знайти обробник для встановлення цього файлу.</string>
@@ -581,7 +581,7 @@
     <string name="appwidget_text">Хрр</string>
     <string name="error_creating_directory_for_logfiles">Помилка створення теки для файлів журналу: %1$s</string>
     <string name="pref_title_pebble_health_store_raw">Зберігати необроблені записи до бази даних</string>
-    <string name="pref_summary_pebble_health_store_raw">Зберігає дані як є, збільшуючи використання бази даних для подальшої інтерпретації.</string>
+    <string name="pref_summary_pebble_health_store_raw">Зберігає дані \"як є\", збільшуючи використання бази даних для подальшої інтерпретації.</string>
     <string name="activity_db_management_import_export_explanation">Операції експорту/імпорту використовують наступний шлях (див. нижче) до директорії на вашому пристрої. Ця тека доступна для інших застосунків Android та вашого компʼютера. Зверніть увагу, що ця директорія та всі файли в ній буде знищенно під час видалення Gadgetbridge. Ці дані включають:\n Export_preference — загальні налаштування\n Export_preference_MAC — специфічні налаштування пристрою\n Gadgetbridge — база даних пристроїв та діяльностей\n Gadgetbridge_date — база даних експортована в певну дату\n *.gpx — GPS записи\n *.log — файли журналів\nЕкспортовані файли (або файли для імпорту) будуть знаходитися тут:</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Не вдалося отримати доступ до шляху експорту. Зверніться до розробників.</string>
     <string name="dbmanagementactivity_overwrite_database_confirmation">Ви впевнені, що хочете перезаписати поточні дані? Усі ваші поточні дані про діяльності (якщо вони є), пристрої та налаштування будуть перезаписані.</string>
@@ -609,7 +609,7 @@
     <string name="discovery_yes_pair">Сполучити</string>
     <string name="discovery_dont_pair">Не сполучати</string>
     <string name="mi2_prefs_button_press_count_summary">Кількість натискань кнопки для запуску «Подія 1». Наступне натискання призведе до створення «Подія 2» й так далі.</string>
-    <string name="mi2_prefs_button_press_broadcast_summary">Повідомлення розсилки, надіслане разом із подією. Параметр `button_id` автоматично додається до кожного повідомлення.</string>
+    <string name="mi2_prefs_button_press_broadcast_summary">Повідомлення розсилки, надіслане разом із подією. Параметр \"button_id\" автоматично додається до кожного повідомлення.</string>
     <string name="mi2_prefs_button_action_summary">Увімкнути дію на певну кількість натискань на кнопку</string>
     <string name="mi2_prefs_button_action_vibrate_summary">Вмикати вібрацію на браслеті у разі спрацьовування дії кнопки</string>
     <string name="mi2_prefs_button_press_count_max_delay">Максимальна затримка між натисканнями</string>
@@ -655,7 +655,7 @@
     <string name="activity_prefs_distance_meters">Щоденна мета: відстань у метрах</string>
     <string name="activity_prefs_activetime_minutes">Щоденна мета: тривалість діяльності у хвилинах</string>
     <string name="pref_summary_authkey">Змініти ключ автентифікації на загальний ключ для всіх ваших Android пристроїв, із яких ви хочете підʼєднатися. Попередній усталений ключ для всіх пристроїв – 0123456789@ABCDE</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Ви збираєтеся встановити прошивку %s на свій Amazfit Cor 2.\n\nБудь ласка, переконайтеся, що ви встановили файл .fw, а потім файл .res. Ваш браслет перезавантажиться після встановлення файлу .fw.\n\nПримітка: Вам не потрібно встановлювати файл .res, якщо він точно такий самий, як і попередньо встановлений.\n\nДІЙСЯ НА ВЛАСНИЙ РИЗИК!\n\nАБСОЛЮТНО НЕ ПЕРЕВІРЕНО, ЙМОВІРНО, ВАМ ПОТРІБНО ПРОШИТИ ПРОШИВКУ BEATS_W, ЯКЩО НАЗВА ВАШОГО ПРИСТРОЮ – Amazfit Band 2</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Ви збираєтеся встановити прошивку %s на свій Amazfit Cor 2.\n\nБудь ласка, переконайтеся, що ви встановили файл .fw, а потім файл .res. Ваш браслет перезавантажиться після встановлення файлу .fw.\n\nПримітка: Вам не потрібно встановлювати файл .res, якщо він точно такий самий, як і попередньо встановлений.\n\nДІЙСЯ НА ВЛАСНИЙ РИЗИК!\n\nАБСОЛЮТНО НЕ ПЕРЕВІРЕНО, ЙМОВІРНО, ВАМ ПОТРІБНО ПРОШИТИ ПРОШИВКУ BEATS_W, ЯКЩО НАЗВА ВАШОГО ПРИСТРОЮ – \"Amazfit Band 2\"</string>
     <string name="fw_upgrade_notice_miband4">Ви збираєтеся встановити мікропрограму %s на ваш Mi Band 4.\n\nСпочатку встановіть файл .fw, потім .res. Ваш годинник перезавантажиться після встановлення файлу .fw.\n\nПримітка: вам не потрібно встановлювати файл .res, якщо він такий самий, як раніше встановлений.\n\nПРОДОВЖУЙТЕ НА ВЛАСНИЙ РИЗИК!</string>
     <string name="pref_title_charts_average">Показувати середні значення на діаграмах</string>
     <string name="pref_charts_range_on">Діапазон діаграм за місяць</string>
@@ -684,7 +684,7 @@
         <item quantity="other">%1$d:%2$02d годин</item>
     </plurals>
     <string name="activity_error_no_app_for_gpx">Щоби переглянути маршрути, встановіть застосунок, який зможе обробляти GPX файли.</string>
-    <string name="prefs_enable_find_phone">Увімкніть функцію «Знайти телефон»</string>
+    <string name="prefs_enable_find_phone">Увімкнути \"Знайти телефон\"</string>
     <string name="prefs_find_phone_summary">Використовуйте свій браслет, щоби відтворити мелодію виклику на вашому телефоні.</string>
     <string name="prefs_find_phone_duration">Тривалість мелодії в секундах</string>
     <string name="maximum_duration">Тривалість</string>
@@ -784,7 +784,7 @@
     <string name="controlcenter_set_alias">Установити псевдонім</string>
     <string name="swolfIndex">SWOLF</string>
     <string name="swimStyle">Стиль плавання</string>
-    <string name="pref_title_weather_summary">Використовується для постачальника погоди LineageOS, інші версії Android потребують використання програми, наприклад, «Сповіщення про погоду». Більше інформації можна знайти у вікі Gadgetbridge.</string>
+    <string name="pref_title_weather_summary">Використовується для постачальника погоди LineageOS, інші версії Android потребують використання програми, наприклад, \"Сповіщення про погоду\". Більше інформації можна знайти у вікі Gadgetbridge.</string>
     <string name="prefs_events_forwarding_summary">Використовувати події пристрою для запуску дій та трансляцій Android</string>
     <string name="prefs_events_forwarding_broadcast_title">Повідомлення розсилки</string>
     <string name="medley">Комплексний</string>
@@ -884,7 +884,7 @@
     <string name="error_background_service">Не вдалось запустити фонову службу</string>
     <string name="companiondevice_pairing">Сполучення зі супутнім пристроєм</string>
     <string name="require_location_provider">Місцеперебування має бути ввімкнено</string>
-    <string name="error_version_check_extreme_caution">УВАГА: Помилка під час перевірки інформації про версію! Не продовжуйте! Побачено назву версії %s</string>
+    <string name="error_version_check_extreme_caution">УВАГА: Помилка під час перевірки інформації про версію! Не продовжуйте! Побачено назву версії \"%s\"</string>
     <string name="permission_granting_mandatory">Усі ці дозволи необхідні, а їхній брак може призвести до нестабільної роботи</string>
     <string name="about_links">Покликання</string>
     <string name="about_additional_contributions">Щиро дякуємо всім невказаним учасникам за внесок до коду, переклади, підтримку, ідеї, заохочення, повідомлення про помилки та фінансову допомогу… ✊</string>
@@ -1298,7 +1298,7 @@
     <string name="activity_prefs_discovery_pairing">Налаштування виявлення та сполучення</string>
     <string name="add_test_device">Додати перевірочний пристрій</string>
     <string name="discover_unsupported_devices">Виявляти непідтримувані пристрої</string>
-    <string name="discover_unsupported_devices_description">Увімкнення цієї опції дозволить відображати всі виявлені пристрої Bluetooth під час сканування. Коротким натисканням можна скопіювати назву пристрою та MAC-адресу до буфера обміну. Довгим натисканням відкриється діалогове вікно «Додати тестовий пристрій». Може спричинити потенційні проблеми із зависанням програми.</string>
+    <string name="discover_unsupported_devices_description">Увімкнення цієї опції дозволить відображати всі виявлені пристрої Bluetooth під час сканування. Коротким натисканням можна скопіювати назву пристрою та MAC-адресу до буфера обміну. Довгим натисканням відкриється діалогове вікно \"Додати тестовий пристрій\". Може спричинити потенційні проблеми із зависанням програми.</string>
     <string name="sony_button_mode_left">Режим кнопки (ліворуч)</string>
     <string name="sony_button_mode_volume_control">Керування гучністю</string>
     <string name="controlcenter_power_off_confirm_description">Ви впевнені, що хочете вимкнути пристрій\?</string>
@@ -1402,7 +1402,7 @@
     <string name="about_description_main_nightly">Безхмарна вільна заміна закритих Android застосунків для гаджетів від інших виробників із копілефт ліцензією. Випуски Gadgetbridge Nightly. Не можна встановити, якщо у вас уже встановлено застосунок Gadgetbridge або Pebble через конфлікт у постачальнику Pebble.</string>
     <string name="about_description_main_nopebble">Безхмарна вільна заміна закритих Android застосунків для гаджетів від інших виробників із копілефт ліцензією. Випуски Gadgetbridge Nightly. У цій версії постачальника Pebble було перейменовано для уникнення конфліктів, тому деякі інтеграції, повʼязані з Pebble, не працюватимуть, але його можна встановити разом із наявним установленим Gadgetbridge.</string>
     <string name="pref_device_action_fitness_app_control_toggle">Перемкнути відстеження застосунку для фітнесу</string>
-    <string name="world_clock_delete_confirm_title">Видалити %1$s</string>
+    <string name="world_clock_delete_confirm_title">Видалити \"%1$s\"</string>
     <string name="world_clock_delete_confirm_description">Ви впевнені, що хочете видалити цей годинник?</string>
     <string name="world_clock_no_free_slots_description">На пристрої немає вільних комірок для світових годинників (усього комірок: %1$s)</string>
     <string name="prefs_activate_display_on_lift_sensitivity">Чутливість</string>
@@ -1496,8 +1496,8 @@
     <string name="notification_channel_gps">Відстеження GPS</string>
     <string name="notification_gps_title">Gadgetbridge GPS</string>
     <string name="notification_gps_text">Надсилання GPS місцеперебування на %1$d пристроїв</string>
-    <string name="permission_notification_listener">%1$s потрібен доступ до сповіщень, щоб відображати їх на вашому годиннику, коли екран вашого телефону вимкнено.\n\nБудь ласка, натисніть %2$s, потім %1$s та увімкніть \"Дозволити доступ до сповіщень\", а потім натисніть \"Назад\", щоб повернутися до %1$s.</string>
-    <string name="permission_notification_policy_access">%1$s потрібен доступ до налаштувань режиму «Не турбувати», щоб вони діяли на вашому годиннику, коли екран телефону вимкнено.\n\nБудь ласка, натисніть %2$s, потім %1$s та увімкніть «Дозволити режим «Не турбувати», а потім натисніть «Назад», щоб повернутися до %1$s.</string>
+    <string name="permission_notification_listener">%1$s потрібен доступ до сповіщень, щоб відображати їх на вашому годиннику, коли екран вашого телефону вимкнено.\n\nБудь ласка, натисніть \"%2$s\", потім \"%1$s\" та увімкніть \"Дозволити доступ до сповіщень\", а потім натисніть \"Назад\", щоб повернутися до %1$s.</string>
+    <string name="permission_notification_policy_access">%1$s потрібен доступ до налаштувань режиму «Не турбувати», щоб вони діяли на вашому годиннику, коли екран телефону вимкнено.\n\nБудь ласка, натисніть \"%2$s\", потім \"%1$s\" та увімкніть режим \"Не турбувати\", а потім натисніть \"Назад\", щоб повернутися до %1$s.</string>
     <string name="pref_device_action_phone_gps_location_listener_stop">Зупинка відстеження GPS-розташування</string>
     <string name="portuguese_br">Португальська (Бразилія)</string>
     <string name="quick_alarm">Швидкий будильник</string>
@@ -1505,7 +1505,7 @@
     <string name="quick_alarm_description">Будильник із віджета</string>
     <string name="pref_title_banglejs_webview_url">URL-адреса завантажувача застосунків</string>
     <string name="pref_summary_banglejs_webview_url">Якщо ви хочете використовувати власний завантажувач застосунків, вкажіть вашу URL-адресу «https://…/android.html» тут. В іншому випадку залиште порожнім для «https://banglejs.com/apps»</string>
-    <string name="permission_location">%1$s потребує доступу до вашого місцезнаходження у фоновому режимі, щоб залишатися підключеним до вашого годинника, навіть коли екран вимкнено.\n\nБудь ласка, виберіть %2$s на наступному екрані, а потім натисніть «Назад», щоб повернутися до %1$s.</string>
+    <string name="permission_location">%1$s потребує доступу до вашого місцезнаходження у фоновому режимі, щоб залишатися підключеним до вашого годинника навіть тоді, коли екран вимкнений.\n\nБудь ласка, виберіть \"%2$s\" на наступному екрані, а потім натисніть \"Назад\", щоб повернутися до %1$s.</string>
     <string name="info_no_devices_connected">Немає підʼєднаних пристроїв</string>
     <string name="info_connected_count">Підʼєднано пристроїв: %d</string>
     <string name="bengali">Бенгальська</string>
@@ -1520,7 +1520,7 @@
     <string name="controlcenter_set_preferences">Установити налаштування</string>
     <string name="controlcenter_toggle_details">Перемкнути подробиці</string>
     <string name="pref_explanation_authkey">Деякі пристрої потребують спеціальний ключ для сполучення під час першої ініціалізації пристрою. Натисніть тут, щоби переглянути подробиці у вікі.</string>
-    <string name="pref_explanation_authkey_new_protocol">Якщо на браслеті з’явиться повідомлення «Оновити програму до останньої версії», обов’язково перевірте розділ «Новий протокол автентифікації» вище. Натисніть тут, щоб отримати докладнішу інформацію у вікі.</string>
+    <string name="pref_explanation_authkey_new_protocol">Якщо на браслеті з’являється повідомлення \"Оновити програму до останньої версії\", обов’язково перевірте пункт \"Новий протокол автентифікації\" вище. Натисніть тут, щоб отримати докладнішу інформацію у вікі.</string>
     <string name="controlcenter_connected_fraction">Підключено: %1$d/%2$d</string>
     <string name="connection_over_bt_classic">Зʼєднання через класичний Bluetooth</string>
     <string name="controlcenter_add_new_folder">Додати нову теку</string>
@@ -1601,7 +1601,7 @@
     <string name="prefs_hourly_chime_summary">Годинник подаватиме звуковий сигнал раз на годину</string>
     <string name="step_streaks_achievements_sharing_title">Досягнення кількості кроків</string>
     <string name="step_streaks_achievements_sharing_message">Мої щоденні досягнення кількості кроків!</string>
-    <string name="permission_display_over_other_apps">%1$s потребує дозволу на відображення поверх інших програм, щоб годинники Bangle.js могли запускати дії через наміри, коли %1$s працює у фоновому режимі.\n\nЦе можна використовувати для запуску музичної програми та відтворення пісні, а також для багатьох інших речей.\n\nБудь ласка, натисніть %2$s, потім %1$s та увімкніть «Дозволити відображення поверх інших програм», а потім натисніть «Назад», щоб повернутися до %1$s.\n\nЩоб %1$s не запитував дозволи, перейдіть до «Налаштування» та зніміть прапорець «Перевіряти стан дозволів».\n\nПереконайтеся, що ви надали %1$s дозволи, необхідні для належної роботи.</string>
+    <string name="permission_display_over_other_apps">%1$s потребує дозволу на відображення над іншими програмами, щоб годинники Bangle.js могли запускати дії через наміри, коли %1$s знаходиться у фоновому режимі.\n\nЦе можна використовувати для запуску музичної програми та відтворення пісні, а також для багатьох інших речей.\n\nНатисніть «%2$s», потім «%1$s» і увімкніть \"Дозволити відображення над іншими програмами\", а потім натисніть \"Назад\", щоб повернутися до %1$s.\n\nЩоб %1$s більше не запитував дозволів, перейдіть до \"Налаштування\" і зніміть прапорець \"Перевіряти стан дозволів\".\n\nПереконайтеся, що ви надали %1$s дозволи, необхідні для роботи, як ви очікуєте.</string>
     <string name="pref_summary_canned_replies">Відповідайте з годинника за допомогою заздалегідь підготовлених повідомлень</string>
     <string name="pref_title_screen_on_on_notifications">Вмикати екран під час отримання сповіщень</string>
     <string name="pref_summary_screen_on_on_notifications">Увімкнути екран пристрою, коли надходить сповіщення</string>
@@ -1880,9 +1880,9 @@
     <string name="pref_display_caller_title">Показати контактну інформацію</string>
     <string name="pref_pair_bluetooth_calls_help_summary">Щоб приймати дзвінки через Bluetooth, потрібно підключити телефон до другого екземпляра годинника.</string>
     <string name="pref_pair_bluetooth_calls_summary">Натисніть тут, щоби розпочати сполучення</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Перейдіть до налаштувань Bluetooth вашого телефону та з’єднайте його з новим пристроєм, який з’явиться (назва схожа на назву вашого поточного годинника, але з суфіксом, наприклад, Amazfit GTR 4 – AFC8).</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Перейдіть до налаштувань Bluetooth вашого телефону та з’єднайте його з новим пристроєм, який з’явиться назва схожа на назву вашого поточного годинника, але з суфіксом, наприклад, \"Amazfit GTR 4 – AFC8\".</string>
     <string name="pref_pair_bluetooth_calls_help_warning">ПОПЕРЕДЖЕННЯ: Якщо ввімкнути дзвінки Bluetooth без сполучення з другим пристроєм, сповіщення про дзвінки можуть працювати неналежним чином.</string>
-    <string name="pref_pair_bluetooth_calls_help_3">3. Увімкніть налаштування викликів через Bluetooth нижче.</string>
+    <string name="pref_pair_bluetooth_calls_help_3">3. Увімкніть налаштування \"Дзвінки через Bluetooth\" нижче.</string>
     <string name="pref_title_notification_cache_while_disconnected">Кеш поза зоною досяжності</string>
     <string name="pref_summary_notification_cache_while_disconnected">Надсилати пропущені сповіщення, коли пристрій перепідʼєднується після перебування поза зоною досяжності</string>
     <string name="sony_button_mode_help_summary">Опис режиму кожної кнопки</string>
@@ -1941,7 +1941,7 @@
     <string name="contact_no_free_slots_description">На пристрої немає вільних комірок для контактів (усього комірок: %1$s)</string>
     <string name="contact_name">Імʼя</string>
     <string name="title_activity_contact_details">Подробиці контакту</string>
-    <string name="contact_delete_confirm_description">Ви впевнені, що хочете видалити %1$s?</string>
+    <string name="contact_delete_confirm_description">Ви впевнені, що хочете видалити \"%1$s\"?</string>
     <string name="contact_missing_number">Номер контакту порожній</string>
     <string name="pref_header_navigation">Навігація</string>
     <string name="pref_title_navigation_forward">Надсилати навігаційні дані на годинник</string>
@@ -2019,7 +2019,7 @@
     <string name="activity_prefs_goals">Мети</string>
     <string name="error_no_bluetooth_scan">Для належної роботи виявлення потрібно ввімкнути та надати доступ до виявлення через Bluetooth</string>
     <string name="error_no_bluetooth_connect">Для належної роботи виявлення потрібно ввімкнути та надати доступ до зʼєднання через Bluetooth</string>
-    <string name="permission_request">%1$s дозволяє надсилати повідомлення та інші дані з Android на ваш пристрій. Для цього потрібен дозвіл на доступ до цих даних, і без нього програма може працювати неправильно.\n\nТепер вам буде представлено кілька діалогових вікон Android із запитом на ці дозволи.\n\nБудь ласка, натисніть %2$s, щоб продовжити.</string>
+    <string name="permission_request">%1$s дозволяє надсилати повідомлення та інші дані з Android на ваш пристрій. Для цього потрібен дозвіл на доступ до цих даних, і без нього програма може працювати неправильно.\n\nТепер вам буде представлено кілька діалогових вікон Android із запитом на ці дозволи.\n\nБудь ласка, натисніть \"%2$s\", щоб продовжити.</string>
     <string name="withings_bt_calibration_next">Наступне</string>
     <string name="activity_type_surfing">Серфінг</string>
     <string name="activity_type_squash">Сквош</string>
@@ -2070,7 +2070,7 @@
     <string name="button_reset_menu_structure">Скинути структуру меню</string>
     <string name="info_menu_structure_removed">Структуру меню вилучено</string>
     <string name="info_menu_structure_contents">Структура меню: %s</string>
-    <string name="error_menu_companion_not_installed">HR Menu Companion, ймовірно, не встановлено</string>
+    <string name="error_menu_companion_not_installed">\"HR Menu Companion\", ймовірно, не встановлено</string>
     <string name="info_fossil_rebuild_watchface_custom_menu">Перестворіть ваш циферблат для власного меню</string>
     <string name="english_au">Англійська (Австралія)</string>
     <string name="english_ca">Англійська (Канада)</string>
@@ -2207,7 +2207,7 @@
     <string name="menuitem_readiness">Готовність</string>
     <string name="menuitem_thermometer">Термометр</string>
     <string name="fossil_hr_nav_app_not_installed_notify_title">Застосунок для навігації не встановлено на годиннику</string>
-    <string name="pref_title_casio_alert_other">Інші сповіщення</string>
+    <string name="pref_title_casio_alert_other">Сповіщення про \"інші\" сповіщеннях</string>
     <string name="pref_title_casio_alert_calendar">Сповіщення календаря</string>
     <string name="pref_summary_casio_alert_call">Сповіщення про вхідні виклики (вібрація/сигнал)</string>
     <string name="pref_device_action_dnd_on">Не турбувати – увімкнено</string>
@@ -2228,7 +2228,7 @@
     <string name="pref_summary_send_app_notifications">Надсилати сповіщення застосунків на пристрій</string>
     <string name="pref_device_action_dnd_priority">Не турбувати – лише важливі</string>
     <string name="danish">Данська</string>
-    <string name="pref_summary_casio_alert_other">Інші сповіщення (вібрація/сигнал)</string>
+    <string name="pref_summary_casio_alert_other">Сповіщення (вібрація/звуковий сигнал) для сповіщень у категорії \"інше\"</string>
     <string name="standing_time">Тривалість стояння</string>
     <string name="active_time">Тривалість діяльності</string>
     <string name="pref_title_prefix_notification_with_app">Назва застосунку в сповіщенні</string>
@@ -2265,7 +2265,7 @@
     <string name="menuitem_alerts">Сповіщення</string>
     <string name="activity_type_wrestling">Боротьба</string>
     <string name="widget_screen_no_free_slots_description">Пристрій не має вільних комірок для екранів віджетів (усього комірок: %1$s)</string>
-    <string name="widget_screen_delete_confirm_description">Ви впевнені, що хочете видалити %1$s?</string>
+    <string name="widget_screen_delete_confirm_description">Ви впевнені, що хочете видалити \"%1$s\"?</string>
     <string name="widget_screen_delete_confirm_title">Видалити екран віджета</string>
     <string name="widget">Віджет</string>
     <string name="pref_vitality_score_daily_summary">Отримувати сповіщення, коли ви досягнете найвищої кількості балів жвавості за день</string>
@@ -3077,7 +3077,7 @@
     <string name="pref_dashboard_select_devices_summary">Об\'єднувати дані діяльностей з окремих пристроїв для загальних показників у зведенні</string>
     <string name="pref_auto_reply_calls_delay_summary">Кількість секунд, після яких виклик автоматично прийматиметься</string>
     <string name="pref_auto_reply_calls_delay_title">Затримка автоматичної відповіді</string>
-    <string name="pref_dashboard_widget_today_hr_interval_summary">Кількість хвилин, яку діаграма показує з носіння після кожного успішного вимірювання частоти серцевих скорочень</string>
+    <string name="pref_dashboard_widget_today_hr_interval_summary">Кількість хвилин, яку діаграма показує як \"зношену\" після кожного успішного вимірювання частоти серцевих скорочень</string>
     <string name="pref_dashboard_all_devices_summary">Об\'єднувати дані діяльностей з усіх доданих пристроїв для загальних показників у зведенні</string>
     <string name="pref_dashboard_widget_show_legend_summary">Показувати пояснення кольорів під віджетом</string>
     <string name="error_showing_changelog">Помилка показу переліку змін</string>
@@ -3166,8 +3166,8 @@
     <string name="prefs_hrv_monitoring_description">Автоматично відслідковувати варіабельність серцевого ритму впродовж дня</string>
     <string name="pref_music_management_title">Керувати музикою</string>
     <string name="pref_music_management_summary">Керувати музикою з годинника</string>
-    <string name="music_delete_confirm_description">Ви впевнені, що хочете видалити %1$s?</string>
-    <string name="music_delete_multiple_confirm_description">Ви впевнені, що хочете видалити %1$d пісень?</string>
+    <string name="music_delete_confirm_description">Ви впевнені, що хочете видалити \"%1$s\"?</string>
+    <string name="music_delete_multiple_confirm_description">Ви впевнені, що хочете видалити \"%1$d\" пісень?</string>
     <string name="music_add_to_playlist">Додати в список відтворення</string>
     <string name="music_delete_from_playlist">Видалити зі списку відтворення</string>
     <string name="music_delete">Видалити пісню</string>
@@ -3564,7 +3564,7 @@
     <string name="earfun_tap_action_redial">Повторний набір</string>
     <string name="earfun_change_device_name_confirm_message">1) Після оновлення назви помістіть навушники в зарядний футляр, закрийте кришку та зачекайте приблизно 10 секунд.\n\n2) У налаштуваннях пристрою вийміть оригінальний пристрій.\n\n3) Знову відкрийте зарядний футляр, знайдіть пристрій, і зміна назви має бути успішно застосована.</string>
     <string name="earfun_change_confirm_title">Зміна %s?</string>
-    <string name="earfun_reboot_confirm_message">Після застосування цього налаштування ваш пристрій перезавантажиться. Після повторного ввімкнення перейдіть на екран «Пристрої» та підключіться знову.</string>
+    <string name="earfun_reboot_confirm_message">Після застосування цього налаштування ваш пристрій перезавантажиться. Після повторного ввімкнення перейдіть на екран \"Пристрої\" та підключіться знову.</string>
     <string name="earfun_low_latency_mode">Режим низької затримки</string>
     <string name="earfun_low_latency_mode_hint">Режим низької затримки зменшує затримку звуку, використовуючи менший буфер, хоча іноді це може призвести до менш стабільного з\'єднання.</string>
     <string name="earfun_connect_two_devices">Підключення двох пристроїв</string>
@@ -3771,7 +3771,7 @@
     <string name="bluetooth_multipoint_pairing">Багатоточкове сполучення</string>
     <string name="bluetooth_multipoint">Багатоточковий</string>
     <string name="bluetooth_multipoint_pair_new">Підключити новий пристрій</string>
-    <string name="bluetooth_multipoint_no_devices">Не знайдено сполучених пристроїв\n\nНатисніть «Спів’язати новий пристрій», щоб додати пристрій</string>
+    <string name="bluetooth_multipoint_no_devices">Не знайдено сполучених пристроїв\n\nНатисніть \"Спів’язати новий пристрій\", щоб додати пристрій</string>
     <string name="bluetooth_multipoint_pair_stop">Зупинити сполучення</string>
     <string name="bluetooth_paired_devices">Парні пристрої</string>
     <string name="connect">З\'єднання</string>
@@ -3896,4 +3896,13 @@
     <string name="hr_settings_zones_lactate_threshold_hr">Частота серцевих скорочень при лактатному порозі</string>
     <string name="hr_settings_zones_remove_all">Скинути все</string>
     <string name="hr_settings_zones_remove_all_description">Ви впевнені, що хочете видалити зони та обмеження серцевого ритму для всіх конфігурацій постави та скинути їх до значень за замовчуванням?</string>
+    <string name="pref_huawei_health_features_config_title">Конфігурація функцій здоров\'я</string>
+    <string name="pref_huawei_health_features_config_summary">Налаштуйте розширені функції охорони здоров’я.</string>
+    <string name="pref_huawei_features_config_info_title">Увімкнути додаткові функції для здоров\'я</string>
+    <string name="pref_huawei_features_config_info_summary">Увімкнення наведених нижче налаштувань активує додаткові функції для здоров’я на вашому пристрої. Наприклад, емоційний моніторинг або ЕКГ.\nПРИМІТКА. Доступність функцій залежить від пристрою.</string>
+    <string name="pref_huawei_features_config_warning_title">Надіслати код країни та конфігурацію функцій на пристрій.</string>
+    <string name="pref_huawei_features_config_warning_summary">Попередження: увімкнення цих налаштувань, коли одночасно використовуються Gadgetbridge і додаток виробника, може спричинити проблеми з роботою додатка виробника та функціональністю пристрою або взагалі не вплинути на поточні можливості пристрою. Увімкніть на власний ризик.\nНеобхідно повторно підключити пристрій.</string>
+    <string name="pref_huawei_send_country_code_title">Надіслати код країни</string>
+    <string name="pref_huawei_send_country_code_summary">Надіслати код країни на пристрій.\n Увага: слід встановити код країни</string>
+    <string name="pref_huawei_country_code_title">Код країни</string>
 </resources>
