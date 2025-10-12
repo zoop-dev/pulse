@@ -36,6 +36,7 @@ public class FileDownloadService2C {
         RRI,
         GPS,
         SEQUENCE_DATA,
+        ECG_ANALYSIS_DATA,
         UNKNOWN; // Never use this as input
 
         static byte fileTypeToByte(FileType fileType) {
@@ -45,6 +46,7 @@ public class FileDownloadService2C {
                 case RRI -> (byte) 0x10;
                 case GPS -> (byte) 0x11;
                 case SEQUENCE_DATA -> (byte) 0x16;
+                case ECG_ANALYSIS_DATA -> (byte) 0x18;
                 default -> throw new RuntimeException();
             };
         }
@@ -56,6 +58,7 @@ public class FileDownloadService2C {
                 case 0x10 -> FileType.RRI;
                 case 0x11 -> FileType.GPS;
                 case 0x16 -> FileType.SEQUENCE_DATA;
+                case 0x18 -> FileType.ECG_ANALYSIS_DATA;
                 default -> FileType.UNKNOWN;
             };
         }

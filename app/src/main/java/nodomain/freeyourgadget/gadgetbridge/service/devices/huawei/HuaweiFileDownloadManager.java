@@ -124,6 +124,7 @@ public class HuaweiFileDownloadManager {
         RRI,
         GPS,
         SEQUENCE_DATA,
+        ECG_ANALYSIS_DATA,
         UNKNOWN // Never for input!
     }
 
@@ -183,8 +184,13 @@ public class HuaweiFileDownloadManager {
         }
 
         public static FileRequest rriFileRequest(boolean supportsRriNewSync, int startTime, int endTime, FileDownloadCallback fileDownloadCallback) {
-            return new FileRequest("rrisqi_data.bin", FileType.RRI, supportsRriNewSync, startTime, endTime,fileDownloadCallback);
+            return new FileRequest("rrisqi_data.bin", FileType.RRI, supportsRriNewSync, startTime, endTime, fileDownloadCallback);
         }
+
+        public static FileRequest ecgAnalysisFileRequest(int startTime, int endTime, FileDownloadCallback fileDownloadCallback) {
+            return new FileRequest("ecg_analysis_data.bin", FileType.ECG_ANALYSIS_DATA, true, startTime, endTime, fileDownloadCallback);
+        }
+
 
         private FileRequest(String filename, FileType fileType, int startTime, int endTime, int dictId, FileDownloadCallback fileDownloadCallback) {
             this.filename = filename;

@@ -50,6 +50,7 @@ import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstant
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_ARRHYTHMIA_SWITCH;
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_DEBUG_REQUEST;
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_CONTINUOUS_SKIN_TEMPERATURE_MEASUREMENT;
+import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_ECG_SWITCH;
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_HEART_RATE_HIGH_ALERT;
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_HEART_RATE_LOW_ALERT;
 import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants.PREF_HUAWEI_HEART_RATE_REALTIME_MODE;
@@ -135,6 +136,7 @@ public class HuaweiSettingsCustomizer implements DeviceSpecificSettingsCustomize
         handler.addPreferenceHandlerFor(PREF_HUAWEI_SPO_LOW_ALERT);
         handler.addPreferenceHandlerFor(PREF_HUAWEI_STRESS_SWITCH);
         handler.addPreferenceHandlerFor(PREF_HUAWEI_STRESS_CALIBRATE);
+        handler.addPreferenceHandlerFor(PREF_HUAWEI_ECG_SWITCH);
 
         handler.addPreferenceHandlerFor(PREF_HUAWEI_ACTIVITY_REMINDER_STAND);
         handler.addPreferenceHandlerFor(PREF_HUAWEI_ACTIVITY_REMINDER_PROGRESS);

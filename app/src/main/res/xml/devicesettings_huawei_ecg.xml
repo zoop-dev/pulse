@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceScreen
+        android:icon="@drawable/ic_ecg"
+        android:key="screen_huawei_ecg"
+        android:persistent="false"
+        android:title="@string/pref_screen_ecg">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_ecg"
+            android:key="pref_huawei_ecg_switch"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/pref_huawei_ecg_activate_title"
+            android:summary="@string/pref_huawei_ecg_activate_summary" />
+
+    </PreferenceScreen>
+</androidx.preference.PreferenceScreen>

@@ -321,11 +321,12 @@ public class HuaweiCoordinator {
         if(supportsAutoStress()) {
             deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_stress);
         }
-
         if(supportsArrhythmia() && isShowForceCountrySpecificFeatures(device)) {
             deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_arrhythmia);
         }
-
+        if(supportsECG() && isShowForceCountrySpecificFeatures(device)) {
+            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_ecg);
+        }
         if(supportsThreeCircle() || supportsThreeCircleLite()) {
             deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_activity_reminders);
         }
@@ -920,6 +921,24 @@ public class HuaweiCoordinator {
     public boolean supportsArrhythmia() {
         if (supportsExpandCapability())
             return supportsExpandCapability(168); // 113
+        return false;
+    }
+
+    public boolean supportsECG() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(106); // 226
+        return false;
+    }
+
+    public boolean supportsECGOpen() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(27);
+        return false;
+    }
+
+    public boolean supportsECGNotification() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(138);
         return false;
     }
 

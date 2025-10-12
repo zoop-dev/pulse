@@ -4390,4 +4390,7 @@
     <string name="pref_huawei_pulse_wave_arrhythmia_automatic_summary">The device will automatically monitor your heart rate.</string>
     <string name="pref_huawei_pulse_wave_arrhythmia_alert_title">Arrhythmia alert</string>
     <string name="pref_huawei_pulse_wave_arrhythmia_alert_summary">Receive alert when your heart rate is abnormal</string>
+    <string name="pref_screen_ecg">ECG</string>
+    <string name="pref_huawei_ecg_activate_title">Activate ECG</string>
+    <string name="pref_huawei_ecg_activate_summary">Activate or deactivate ECG on the device</string>
 </resources>

@@ -58,6 +58,7 @@ public class GetFileDownloadInitRequest extends Request {
             case RRI -> FileDownloadService2C.FileType.RRI;
             case GPS -> FileDownloadService2C.FileType.GPS;
             case SEQUENCE_DATA -> FileDownloadService2C.FileType.SEQUENCE_DATA;
+            case ECG_ANALYSIS_DATA -> FileDownloadService2C.FileType.ECG_ANALYSIS_DATA;
             default -> FileDownloadService2C.FileType.UNKNOWN;
         };
     }
@@ -69,6 +70,7 @@ public class GetFileDownloadInitRequest extends Request {
             case RRI -> HuaweiFileDownloadManager.FileType.RRI;
             case GPS -> HuaweiFileDownloadManager.FileType.GPS;
             case SEQUENCE_DATA -> HuaweiFileDownloadManager.FileType.SEQUENCE_DATA;
+            case ECG_ANALYSIS_DATA -> HuaweiFileDownloadManager.FileType.ECG_ANALYSIS_DATA;
             default -> HuaweiFileDownloadManager.FileType.UNKNOWN;
         };
     }

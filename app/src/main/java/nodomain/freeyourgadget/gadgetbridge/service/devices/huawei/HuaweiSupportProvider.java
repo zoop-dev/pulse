@@ -136,6 +136,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncArrhythmia;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncEcg;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncFeatureManager;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncEmotion;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncFindDevice;
@@ -174,6 +175,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.Send
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendSetContactsRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendNotifyHeartRateCapabilityRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendNotifyRestHeartRateCapabilityRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendSetECGOpenRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendSleepBreathRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetAutomaticHeartrateRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetAutomaticSpoRequest;
@@ -307,6 +309,8 @@ public class HuaweiSupportProvider {
     private HuaweiDataSyncEmotion huaweiDataSyncEmotion = null;
 
     private HuaweiDataSyncArrhythmia huaweiDataSyncArrhythmia = null;
+
+    private HuaweiDataSyncEcg huaweiDataSyncEcg = null;
 
     protected HuaweiOTAManager huaweiOTAManager = new HuaweiOTAManager(this);
 
@@ -872,6 +876,9 @@ public class HuaweiSupportProvider {
             if (getHuaweiCoordinator().supportsArrhythmia() && getHuaweiCoordinator().isShowForceCountrySpecificFeatures(getCoordinator().getDevice())) {
                 huaweiDataSyncArrhythmia = new HuaweiDataSyncArrhythmia(HuaweiSupportProvider.this);
             }
+            if (getHuaweiCoordinator().supportsECG()  && getHuaweiCoordinator().isShowForceCountrySpecificFeatures(getCoordinator().getDevice())) {
+                huaweiDataSyncEcg = new HuaweiDataSyncEcg(HuaweiSupportProvider.this);
+            }
 
             // All of the below check that they are supported and otherwise they skip themselves
             final List<Request> initRequestQueue = new ArrayList<>();
@@ -919,6 +926,7 @@ public class HuaweiSupportProvider {
             initRequestQueue.add(new GetOTAChangeLog(this));
             initRequestQueue.add(new SendCountryCodeRequest(this));
             initRequestQueue.add(new GetWorkoutCapability(this));
+            initRequestQueue.add(new SendSetECGOpenRequest(this));
             initRequestQueue.add(new GetEventAlarmList(this));
             initRequestQueue.add(new GetSmartAlarmList(this));
 
@@ -972,7 +980,7 @@ public class HuaweiSupportProvider {
                                 appIconService.register();
                             }
                         }
-                        if(getHuaweiCoordinator().supportsContactsSync()) {
+                        if (getHuaweiCoordinator().supportsContactsSync()) {
                             if (HuaweiP2PContactsService.getRegisteredInstance(huaweiP2PManager) == null) {
                                 HuaweiP2PContactsService contactsService = new HuaweiP2PContactsService(huaweiP2PManager);
                                 contactsService.register();
@@ -1214,6 +1222,8 @@ public class HuaweiSupportProvider {
                     break;
                 case HuaweiConstants.PREF_HUAWEI_ARRHYTHMIA_ALERT:
                     setArrhythmiaAlert();
+                case HuaweiConstants.PREF_HUAWEI_ECG_SWITCH:
+                    setECG();
                     break;
                 case DeviceSettingsPreferenceConst.PREF_FORCE_ENABLE_SMART_ALARM:
                     getAlarms();
@@ -2482,6 +2492,17 @@ public class HuaweiSupportProvider {
         }
     }
 
+    private void setECG() {
+        boolean ecgEnabled = GBApplication
+                .getDeviceSpecificSharedPrefs(getDevice().getAddress())
+                .getBoolean(HuaweiConstants.PREF_HUAWEI_ECG_SWITCH, false);
+        if (huaweiDataSyncEcg != null) {
+            if (!huaweiDataSyncEcg.changeECGState(ecgEnabled)) {
+                LOG.error("Error to set ECG");
+            }
+        }
+    }
+
     public void storeLastStressData(HuaweiStressParser.StressData data) {
         String str = HuaweiStressParser.stressDataToJsonStr(data);
         if (TextUtils.isEmpty(str)) {
@@ -2772,13 +2793,13 @@ public class HuaweiSupportProvider {
     }
 
     public void onSetContacts(ArrayList<? extends Contact> contacts) {
-        if(getHuaweiCoordinator().supportsContactsSync()) {
+        if (getHuaweiCoordinator().supportsContactsSync()) {
             HuaweiP2PContactsService P2PContactsService = HuaweiP2PContactsService.getRegisteredInstance(huaweiP2PManager);
 
             if (P2PContactsService != null) {
                 P2PContactsService.startSync();
             }
-        } else if(getHuaweiCoordinator().supportsContacts()) {
+        } else if (getHuaweiCoordinator().supportsContacts()) {
             SendSetContactsRequest sendSetContactsRequest = new SendSetContactsRequest(
                     this,
                     contacts,
