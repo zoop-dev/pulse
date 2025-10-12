@@ -4019,4 +4019,9 @@
     <string name="running_step_speed_loss">Потеря скорости шага</string>
     <string name="running_step_speed_loss_percentage">Скорость шага теряет %</string>
     <string name="recovery_heart_rate">Восстановление пульса сердца</string>
+    <string name="activity_type_expedition">Экспедиция</string>
+    <string name="lap_time">Время</string>
+    <string name="huawei_send_gps_and_time_title">Отправлять данные о GPS и времени на устройство</string>
+    <string name="heart_rate_settings">Настройки сердцебиения</string>
+    <string name="hr_settings_hr_limit">Ограничение сердцебиения</string>
 </resources>
