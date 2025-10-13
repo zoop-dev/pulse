@@ -653,7 +653,7 @@
     <string name="title_activity_device_specific_settings">Apparaatspecifieke instellingen</string>
     <string name="pref_title_authkey">Authenticatiesleutel</string>
     <string name="pref_summary_authkey">Wijzig de authenticatiesleutel in een algemene sleutel op al uw Android-apparaten waarmee u verbinding wilt maken. De vorige standaardsleutel voor alle apparaten is 0123456789@ABCDE</string>
-    <string name="fw_upgrade_notice_amazfitcor2">U staat op het punt om de firmware %s te installeren op uw Amazfit Cor 2. \n \nZorg ervoor dat u het .fw-bestand installeert, daarna het .res-bestand. Uw horloge wordt opnieuw gestart na het installeren van het .fw-bestand. \n \nOpmerking: U hoeft de .res niet te installeren als deze exact dezelfde is als degene die ervoor al was geïnstalleerd. \n \nGA VERDER OP EIGEN RISICO! \n \nVOLLEDIG ONGETEST, MISSCHIEN MOET JE EEN BEATS_W_FIRMWARE INSTALLEREN ALS JE DEVICE NAAM Amazfit Band 2 IS</string>
+    <string name="fw_upgrade_notice_amazfitcor2">U staat op het punt om de firmware %s te installeren op uw Amazfit Cor 2. \n \nZorg ervoor dat u het .fw-bestand installeert, daarna het .res-bestand. Uw horloge wordt opnieuw gestart na het installeren van het .fw-bestand. \n \nOpmerking: U hoeft de .res niet te installeren als deze exact dezelfde is als degene die ervoor al was geïnstalleerd. \n \nGA VERDER OP EIGEN RISICO! \n \nVOLLEDIG ONGETEST, MISSCHIEN MOET JE EEN BEATS_W_FIRMWARE INSTALLEREN ALS JE DEVICE NAAM \"Amazfit Band 2\" IS</string>
     <string name="dutch">Nederlands</string>
     <string name="turkish">Turks</string>
     <string name="ukrainian">Oekraïens</string>
@@ -855,7 +855,7 @@
     <string name="about_description_generic">Cloudloze vrije vervanging voor de gesloten Android-applicaties van gadgetfabrikanten.</string>
     <string name="about_activity_title_generic">Over Gadgetbridge</string>
     <string name="about_title">Over</string>
-    <string name="pref_title_weather_summary">Gebruikt voor de LineageOS-weeraanbieder, andere Android versies moeten een app zoals Weather notification gebruiken. Meer informatie is te vinden in de Gadgetbridge wiki.</string>
+    <string name="pref_title_weather_summary">Gebruikt voor de LineageOS-weeraanbieder, andere Android versies moeten een app zoals \"Weather notification\" gebruiken. Meer informatie is te vinden in de Gadgetbridge wiki.</string>
     <string name="menuitem_worldclock">Wereld Klok</string>
     <string name="error_background_service_reason_truncated">Het starten van de achtergrondservice is mislukt omdat…</string>
     <string name="error_background_service_reason">Het starten van de achtergrondservice is mislukt door een probleem. Klik hier voor meer informatie.\n\nFout:</string>
@@ -2015,14 +2015,14 @@
     <string name="bluetooth_calls_settings">Instellingen voor Bluetooth-oproepen</string>
     <string name="pref_display_caller_title">Contactgegevens weergeven</string>
     <string name="pref_display_caller_summary">Telefoonnummer of naam weergeven voor inkomende oproepen</string>
-    <string name="pref_pair_bluetooth_calls_title">Koppelen voor bluetooth-oproepen</string>
+    <string name="pref_pair_bluetooth_calls_title">Koppelen voor Bluetooth-oproepen</string>
     <string name="pref_pair_bluetooth_calls_summary">Klik hier om het koppelingsproces te starten</string>
     <string name="pref_pair_bluetooth_calls_help_title">Bluetooth-oproepen ontvangen</string>
-    <string name="pref_pair_bluetooth_calls_help_summary">Om bluetooth-oproepen te ontvangen, moet u uw telefoon koppelen met het tweede bluetooth-apparaat van het horloge.</string>
+    <string name="pref_pair_bluetooth_calls_help_summary">Om Bluetooth-oproepen te ontvangen, moet u uw telefoon koppelen met het tweede Bluetooth-apparaat van het horloge.</string>
     <string name="pref_pair_bluetooth_calls_help_1">1. Tik op de onderstaande knop om het koppelingsproces te starten.</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Ga naar de Bluetooth-instellingen van je telefoon en koppel met het nieuwe apparaat dat verschijnt (met soortgelijke naam als je huidige horloge, maar met een achtervoegsel, bijv. Amazfit GTR 4 - AFC8).</string>
-    <string name="pref_pair_bluetooth_calls_help_3">3. Schakel de instelling voor Bluetooth-oproepen hieronder in.</string>
-    <string name="pref_pair_bluetooth_calls_help_warning">WAARSCHUWING: Als u Bluetooth-oproepen inschakelt zonder te koppelen met het tweede bluetooth-apparaat, werken oproepmeldingen mogelijk niet zoals verwacht.</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Ga naar de Bluetooth-instellingen van je telefoon en koppel met het nieuwe apparaat dat verschijnt (met soortgelijke naam als je huidige horloge, maar met een achtervoegsel, bijv. \"Amazfit GTR 4 - AFC8\").</string>
+    <string name="pref_pair_bluetooth_calls_help_3">3. Schakel de instelling voor \"Bluetooth-oproepen\" hieronder in.</string>
+    <string name="pref_pair_bluetooth_calls_help_warning">WAARSCHUWING: Als u Bluetooth-oproepen inschakelt zonder te koppelen met het tweede Bluetooth-apparaat, werken oproepmeldingen mogelijk niet zoals verwacht.</string>
     <string name="sony_button_mode_help_title">Knopmodi - Help</string>
     <string name="pref_switch_controls_anc_ambient_off">Ruisonderdrukking ←→ Omgeving ←→ Uit</string>
     <string name="sony_button_mode_help_summary">Een beschrijving van elke knopmodus</string>
@@ -3908,4 +3908,8 @@
     <string name="invalid_auth_key_message">Ongeldige authenticatiesleutel - probeer opnieuw</string>
     <string name="title_activity_gps_track_installer">GPS-trackinstallateur</string>
     <string name="sound_and_vibration">Geluid + Trilling</string>
+    <string name="map_theme_biker">Fietser</string>
+    <string name="map_theme_indigo">Indigo</string>
+    <string name="pref_title_block_screenshot">Blokkeer schermafbeeldingen</string>
+    <string name="pref_summary_block_screenshots">Voorkom schermafbeeldingen en weergeven op onveilige schermen. Vereist een herstart van Gb om volledig actief te worden.</string>
 </resources>
