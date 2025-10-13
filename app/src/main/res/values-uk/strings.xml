@@ -688,7 +688,7 @@
     <string name="prefs_find_phone_summary">Використовуйте свій браслет, щоби відтворити мелодію виклику на вашому телефоні.</string>
     <string name="prefs_find_phone_duration">Тривалість мелодії в секундах</string>
     <string name="maximum_duration">Тривалість</string>
-    <string name="discovery_need_to_enter_authkey">Цей пристрій потребує секретного ключа автентифікації, затисніть, щоби ввести його. Прочитайте про це у вікі.</string>
+    <string name="discovery_need_to_enter_authkey">Для цього пристрою потрібен секретний ключ авторизації, натисніть і утримуйте кнопку на пристрої, щоб ввести його. Більше інформації на вебсайті.</string>
     <string name="fw_upgrade_notice_amazfitbip_lite">Ви збираєтеся встановити мікропрограму %s на ваш Amazfit Bip Lite.\n\nСпочатку встановіть файл .fw, потім .res. Ваш годинник перезавантажиться після встановлення файлу .fw.\n\nПримітка: вам не потрібно встановлювати файл .res, якщо він такий самий, як раніше встановлений.\n\nПРОДОВЖУЙТЕ НА ВЛАСНИЙ РИЗИК!</string>
     <string name="fw_upgrade_notice_amazfitgtr">Ви збираєтеся встановити мікропрограму %s на ваш Amazfit GTR.\n\nСпочатку встановіть файл .fw, потім .res, а наприкінці – .gps. Ваш годинник перезавантажиться після встановлення файлу .fw.\n\nПримітка: вам не потрібно встановлювати файли .res та .gps, якщо вони такі самі, що були встановлені раніше.\n\nПРОДОВЖУЙТЕ НА ВЛАСНИЙ РИЗИК!</string>
     <string name="fw_upgrade_notice_amazfitgts">Ви збираєтеся встановити мікропрограму %s на ваш Amazfit GTS.\n\nСпочатку встановіть файл .fw, потім .res, а наприкінці – .gps. Ваш годинник перезавантажиться після встановлення файлу .fw.\n\nПримітка: вам не потрібно встановлювати файли .res та .gps, якщо вони такі самі, що були встановлені раніше.\n\nПРОДОВЖУЙТЕ НА ВЛАСНИЙ РИЗИК!</string>
@@ -784,7 +784,7 @@
     <string name="controlcenter_set_alias">Установити псевдонім</string>
     <string name="swolfIndex">SWOLF</string>
     <string name="swimStyle">Стиль плавання</string>
-    <string name="pref_title_weather_summary">Використовується для постачальника погоди LineageOS, інші версії Android потребують використання програми, наприклад, \"Сповіщення про погоду\". Більше інформації можна знайти у вікі Gadgetbridge.</string>
+    <string name="pref_title_weather_summary">Використовується для постачальника погоди LineageOS, для інших версій Android потрібен додаток, наприклад, «Breezy Weather». Більше інформації можна знайти на вебсайті Gadgetbridge.</string>
     <string name="prefs_events_forwarding_summary">Використовувати події пристрою для запуску дій та трансляцій Android</string>
     <string name="prefs_events_forwarding_broadcast_title">Повідомлення розсилки</string>
     <string name="medley">Комплексний</string>
@@ -1040,7 +1040,7 @@
     <string name="battery_level">Рівень заряду</string>
     <string name="find_lost_device_message">Шукати %1$s\?</string>
     <string name="fw_upgrade_notice_miband6">Ви збираєтеся встановити мікропрограму %s на ваш Mi Band 6.\n\nСпочатку встановіть файл .fw, потім .res. Ваш годинник перезавантажиться після встановлення файлу .fw.\n\nПримітка: вам не потрібно встановлювати файл .res, якщо він такий самий, як раніше встановлений.\n\nПРОДОВЖУЙТЕ НА ВЛАСНИЙ РИЗИК!</string>
-    <string name="fossil_hr_commute_actions_explanation">Дії, налаштовані тут, з\'являться в застосунку Commute на вашому годиннику. У вікі ви знайдете подробиці про те, як обробляти створені цими діями наміри.</string>
+    <string name="fossil_hr_commute_actions_explanation">Дії, налаштовані тут, відображатимуться в додатку «Щоденник на роботу» на вашому годиннику. Перегляньте веб-сайт, щоб дізнатися, як обробляти наміри, створені цими діями.</string>
     <string name="qhybrid_watchface_configuration_old_firmware">Налаштування циферблата для годинників з версією мікропрограми DN1.0.2.19r та нижче</string>
     <string name="qhybrid_pref_summary_external_intents">Дозволяти іншим застосункам Android завантажувати/перезаписувати файли</string>
     <string name="qhybrid_pref_title_external_intents">Дозволяти небезпечні зовнішні Intents</string>
@@ -1519,8 +1519,8 @@
     <string name="scandinavian">Скандинавська</string>
     <string name="controlcenter_set_preferences">Установити налаштування</string>
     <string name="controlcenter_toggle_details">Перемкнути подробиці</string>
-    <string name="pref_explanation_authkey">Деякі пристрої потребують спеціальний ключ для сполучення під час першої ініціалізації пристрою. Натисніть тут, щоби переглянути подробиці у вікі.</string>
-    <string name="pref_explanation_authkey_new_protocol">Якщо на браслеті з’являється повідомлення \"Оновити програму до останньої версії\", обов’язково перевірте пункт \"Новий протокол автентифікації\" вище. Натисніть тут, щоб отримати докладнішу інформацію у вікі.</string>
+    <string name="pref_explanation_authkey">Для деяких пристроїв потрібен спеціальний ключ сполучення для першої ініціалізації. Натисніть тут, щоб отримати докладнішу інформацію на вебсайті.</string>
+    <string name="pref_explanation_authkey_new_protocol">Якщо на браслеті з’являється повідомлення «Оновити програму до останньої версії», обов’язково перевірте пункт «Новий протокол автентифікації» вище. Натисніть тут, щоб отримати докладнішу інформацію на вебсайті.</string>
     <string name="controlcenter_connected_fraction">Підключено: %1$d/%2$d</string>
     <string name="connection_over_bt_classic">Зʼєднання через класичний Bluetooth</string>
     <string name="controlcenter_add_new_folder">Додати нову теку</string>
@@ -1547,7 +1547,7 @@
     <string name="open_fw_installer_warning_title">Попередження</string>
     <string name="open_fw_installer_pick_file">Обрати файл</string>
     <string name="open_fw_installer_connect_minimum_one_device">Підʼєднайте ПРИНАЙМНІ ОДИН пристрій, на який ви хочете надіслати файл.</string>
-    <string name="open_fw_installer_info_text">Інсталятор прошивки/циферблата/додатків/файлів дозволяє завантажувати/встановлювати підтримувані файли (прошивку, циферблати, додатки, GPS, ресурси, шрифти…) на пристрій. Додаткову інформацію дивіться у вікі: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
+    <string name="open_fw_installer_info_text">Програма встановлення прошивки/циферблату/додатку/файлу дозволяє завантажувати/встановлювати на пристрій підтримувані файли (прошивку, циферблати, додатки, GPS, ресурси, шрифти тощо). Більше інформації можна знайти на веб-сайті: https://gadgetbridge.org/internals/features/installer/</string>
     <string name="open_fw_installer_warning_text">Ця функція може зіпсувати ваш пристрій. Тим не менш, цього ніколи не траплялося з жодним із розробників під час встановлення мікропрограм, але памʼятайте, що ви робите це на власний ризик.</string>
     <string name="open_fw_installer_getting_files_title">Отримання файлу мікропрограми/застосунку</string>
     <string name="open_fw_installer_getting_files_text">Оскільки ми не можемо розповсюджувати файли мікропрограм, вам доведеться знайти ці файли самостійно. Це означає, що вам потрібно буде шукати їх в apk-файлах, у мережі, на форумах, на Amazfitwatchfaces (для пристроїв Miband/Amazfit) тощо.</string>
@@ -2998,7 +2998,7 @@
     <string name="pref_heart_rate_high_alert">Попередження про високий пульс</string>
     <string name="huawei_ignore_wakeup_status_start">Не зважати на стан початку пробудження</string>
     <string name="pref_force_enable_heartrate_support">Примусове підтримування вимірювання пульсу</string>
-    <string name="pref_force_options_summary">Деякі пристрої помилково стверджують, що не підтримують певні опції. Ці налаштування дозволяють увімкнути їх попри це.\nВИКОРИСТОВУЙТЕ НА ВЛАСНИЙ РИЗИК!\nОзнайомтеся з вікі</string>
+    <string name="pref_force_options_summary">Деякі пристрої хибно стверджують, що не підтримують деякі опції. Ці налаштування можна використовувати для їх увімкнення в будь-якому разі.\nВИКОРИСТОВУЙТЕ НА ВЛАСНИЙ РИЗИК\nОзнайомтеся з веб-сайтом</string>
     <string name="dual_device_mode_summary">Дозволити одночасне під\'єднання навушників до двох пристроїв</string>
     <string name="weekly_total">Усього за тиждень</string>
     <string name="pref_app_connection_duration">Тривалість з\'єднання застосунку</string>
