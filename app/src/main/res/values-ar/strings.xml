@@ -2468,9 +2468,7 @@
     <string name="dnd_all_day">كل اليوم</string>
     <string name="pref_enable_call_reject_summary">تمكين رفض المكالمات من الجهاز</string>
     <string name="pref_enable_call_reject">تمكين رفض المكالمات</string>
-    <string name="pref_force_options_summary">تدعي بعض الأجهزة كذباً أنها لا تدعم بعض الخيارات. يمكن استخدام هذه الإعدادات لتمكينها على أي حال.
-\nاستخدام على مسؤوليتك الخاصة
-\nاقرأ الويكي</string>
+    <string name="pref_force_options_summary">تدعي بعض الأجهزة كذباً أنها لا تدعم بعض الخيارات. يمكن استخدام هذه الإعدادات لتمكينها على أي حال. \nاستخدام على مسؤوليتك الخاصة \nاقرأ الويكي</string>
     <string name="huawei_reparse_workout_data">إعادة تحليل بيانات التمرين</string>
     <string name="huawei_ignore_wakeup_status_start_description">قد يساعد في اكتشاف النوم المناسب. مرئية على الفور في عرض الأنشطة اليومية.</string>
     <string name="pref_summary_debug">أرسل طلب تصحيح إلى جهاز هواوي</string>
