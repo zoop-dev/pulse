@@ -186,7 +186,7 @@
     <string name="miband_firmware_unknown_warning">This firmware is untested and may not be compatible with Gadgetbridge.\n\nYou are DISCOURAGED from flashing it!</string>
     <string name="miband_firmware_suggest_whitelist">If you still want to proceed and things continue to work properly afterwards, please tell the Gadgetbridge developers to whitelist the %s firmware version.</string>
     <!-- Strings related to the FwAppInstaller opener activity -->
-    <string name="open_fw_installer_info_text">The Firmware/Watchface/App/File Installer allows you to upload/install supported files (firmware, watchfaces, applications, GPS, resources, fonts…) to the device. See some more information in the wiki: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
+    <string name="open_fw_installer_info_text">The Firmware/Watchface/App/File Installer allows you to upload/install supported files (firmware, watchfaces, applications, GPS, resources, fonts…) to the device. See some more information on the website: https://gadgetbridge.org/internals/features/installer/</string>
     <string name="open_fw_installer_warning_title">Warning</string>
     <string name="open_fw_installer_warning_text">This feature has the potential to brick your device. That said, this has never happened to any of the developers through flashing, but remember that you are doing this at your own risk.</string>
     <string name="open_fw_installer_getting_files_title">Getting the firmware/app file</string>
@@ -345,7 +345,7 @@
     <string name="pref_message_privacy_mode_bodyonly">Hide only body</string>
     <string name="pref_title_weather">Weather</string>
     <string name="pref_title_weather_location">Weather location (for LineageOS weather provider)</string>
-    <string name="pref_title_weather_summary">Used for the LineageOS weather provider, other Android versions need to use an app like \"Weather notification\". Find more information in the Gadgetbridge wiki.</string>
+    <string name="pref_title_weather_summary">Used for the LineageOS weather provider, other Android versions need to use an app like \"Breezy Weather\". Find more information on the Gadgetbridge website.</string>
     <string name="pref_applications_settings">Applications list</string>
     <string name="pref_blacklist_calendars">Blacklist Calendars</string>
     <string name="pref_blacklist_calendars_summary">Blacklisted calendars will not be synced to the device</string>
@@ -559,8 +559,8 @@
     <string name="pref_title_authkey">Auth Key</string>
     <string name="title_gpx_track_name">Track name</string>
     <string name="pref_summary_authkey">Change the auth key to a common key on all your Android devices from which you would like to connect from. The previous default key for all devices is 0123456789@ABCDE</string>
-    <string name="pref_explanation_authkey">Some devices require a special pairing key for the very first initialization of the device. Tap here for more details in the wiki.</string>
-    <string name="pref_explanation_authkey_new_protocol">If you get \"Update the app to latest version\" message on the band, make sure to check the \"New Auth Protocol\" above. Tap here for more details in the wiki.</string>
+    <string name="pref_explanation_authkey">Some devices require a special pairing key for the very first initialization of the device. Tap here for more details on the website.</string>
+    <string name="pref_explanation_authkey_new_protocol">If you get \"Update the app to latest version\" message on the band, make sure to check the \"New Auth Protocol\" above. Tap here for more details on the website.</string>
     <string name="prefs_hr_alarm_activity">Heart rate alarm during sports activity</string>
     <string name="prefs_hr_alarm_low">Low limit</string>
     <string name="prefs_hr_alarm_high">High limit</string>
@@ -721,7 +721,7 @@
     <string name="miband_pairing_tap_hint">When your Mi Band vibrates and blinks, tap it a few times in a row.</string>
     <string name="appinstaller_install">Install</string>
     <string name="discovery_connected_devices_hint">Make your device discoverable. Currently connected devices will likely not be discovered. Activate location (e.g. GPS) on Android 6+. Disable Privacy Guard for Gadgetbridge, because it may crash and reboot your phone. If no device is found after a few minutes, try again after rebooting your mobile device.</string>
-    <string name="discovery_need_to_enter_authkey">This device needs a secret auth key, long press on the device to enter it. Read the wiki.</string>
+    <string name="discovery_need_to_enter_authkey">This device needs a secret auth key, long press on the device to enter it. More information on the website.</string>
     <string name="discovery_entered_invalid_authkey">The secret auth key you entered is invalid! Long press on the device to edit.</string>
     <string name="discovery_note">Note:</string>
     <string name="title_activity_even_realities_g1_pairing">Even G1 Pairing</string>
@@ -2881,7 +2881,7 @@
     <string name="qhybrid_summary_calibration">Calibrate the watch hands</string>
     <string name="pref_summary_canned_messages_set">Send the messages configured below to your device</string>
     <string name="pref_summary_canned_messages_dismisscall">Dismiss calls from the watch with an SMS message</string>
-    <string name="fossil_hr_commute_actions_explanation">The actions configured here will appear in the Commute app on your watch. Read the wiki for information on how to handle the intents produced by these actions.</string>
+    <string name="fossil_hr_commute_actions_explanation">The actions configured here will appear in the Commute app on your watch. Read the website for information on how to handle the intents produced by these actions.</string>
     <string name="fossil_hr_edit_action_delete">delete</string>
     <string name="fossil_hr_edit_action">Edit action</string>
     <string name="fossil_hr_new_action_cancel">cancel</string>
@@ -3430,7 +3430,7 @@
     <string name="pref_spo_low_alert">Low SpO2 alert</string>
 
     <string name="pref_force_options">Force options</string>
-    <string name="pref_force_options_summary">Some devices falsely claim not to have support for some options. This settings can be used to enable them anyway.\nUSE AT YOUR OWN RISK\nRead the wiki</string>
+    <string name="pref_force_options_summary">Some devices falsely claim not to have support for some options. This settings can be used to enable them anyway.\nUSE AT YOUR OWN RISK\nRead the website</string>
     <string name="pref_force_smart_alarm">Force smart alarm</string>
     <string name="pref_force_smart_alarm_summary">Force smart alarms support.\nUSE AT YOUR OWN RISK</string>
     <string name="pref_force_wear_location">Force wear location</string>
