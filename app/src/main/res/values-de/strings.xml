@@ -2390,9 +2390,7 @@
     <string name="prefs_wena3_vibration_step_down">Schritt runter</string>
     <string name="huawei_ignore_wakeup_status_start_description">Kann bei der korrekten Schlaferkennung helfen. Sofort sichtbar in der Ansicht der täglichen Aktivitäten.</string>
     <string name="huawei_alarm_smart_description">Deaktiviere nicht das Kontrollkästchen für das intelligente Aufwecken.</string>
-    <string name="pref_force_options_summary">Einige Geräte behaupten fälschlicherweise, dass sie einige Optionen nicht unterstützen. Diese Einstellungen können verwendet werden, um sie trotzdem zu aktivieren.
-\nVERWENDUNG AUF EIGENE GEFAHR
-\nLese auf der Webseite</string>
+    <string name="pref_force_options_summary">Einige Geräte behaupten fälschlicherweise, dass sie einige Optionen nicht unterstützen. Diese Einstellungen können verwendet werden, um sie trotzdem zu aktivieren. \nVERWENDUNG AUF EIGENE GEFAHR \nLese auf der Webseite</string>
     <string name="pref_enable_call_reject_summary">Aktiviere das Abweisen von Anrufen vom Gerät</string>
     <string name="pref_enable_call_accept_summary">Aktiviere die Annahme von Anrufen vom Gerät</string>
     <string name="huawei_reparse_workout_data">Reparieren der Trainingsdaten</string>
