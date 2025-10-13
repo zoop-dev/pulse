@@ -115,7 +115,7 @@ public class TransactionBuilder {
 
         int maxChunk = getMaxWriteChunk();
         if (data.length > maxChunk) {
-            LOG.error("writeLegacy - payload for {} is too long: {} > {}",
+            LOG.warn("writeLegacy - payload for {} is longer than current MTU: {} > {}",
                     characteristic.getUuid(), data.length, maxChunk);
             // TODO throw exception after reviewing device specific code (performConnected...)
         }
@@ -139,7 +139,7 @@ public class TransactionBuilder {
 
         int maxChunk = getMaxWriteChunk();
         if (data.length > maxChunk) {
-            LOG.error("write - payload for {} is too long: {} > {}",
+            LOG.warn("write - payload for {} is longer than current MTU: {} > {}",
                     characteristic.getUuid(), data.length, maxChunk);
             // TODO throw exception after reviewing device specific code (performConnected...)
         }
