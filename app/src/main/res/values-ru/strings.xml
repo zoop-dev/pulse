@@ -2477,9 +2477,7 @@
     <string name="pref_activity_recognize_rowing">распознавать греблю</string>
     <string name="pref_enable_call_reject_summary">Включить отклонение вызовов с устройства</string>
     <string name="pref_disable_find_phone_with_dnd">Запретить \"найти мой телефон\" при включенном режиме \"не беспокоить\"</string>
-    <string name="pref_force_options_summary">Некоторые устройства ложно помечают себя как не имеющие поддержки этих опций. В этих настройках их можно попытаться включить.
-\nИСПОЛЬЗУЙТЕ НА СВОЙ РИСК
-\nЗа помощью обращайтесь к Вики</string>
+    <string name="pref_force_options_summary">Некоторые устройства ложно помечают себя как не имеющие поддержки этих опций. В этих настройках их можно попытаться включить. \nИСПОЛЬЗУЙТЕ НА СВОЙ РИСК \nЗа помощью обращайтесь к Вики</string>
     <string name="pref_force_dnd_support_summary">Форсировать поддержку режима \"не беспокоить\".
 \nИСПОЛЬЗУЙТЕ НА СВОЙ РИСК</string>
     <string name="huawei_ignore_wakeup_status_end_description">Может помочь исправить распознание сна. Сразу видимо в обзоре дневных активностей.</string>
