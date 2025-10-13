@@ -4393,4 +4393,7 @@
     <string name="pref_screen_ecg">ECG</string>
     <string name="pref_huawei_ecg_activate_title">Activate ECG</string>
     <string name="pref_huawei_ecg_activate_summary">Activate or deactivate ECG on the device</string>
+    <string name="pref_huawei_arterial_stiffness_detection">Arterial stiffness detection</string>
+    <string name="pref_huawei_arterial_stiffness_detection_enable_title">Enable arterial stiffness detection</string>
+    <string name="pref_huawei_arterial_stiffness_detection_enable_summary">Activate arterial stiffness detection on the device</string>
 </resources>

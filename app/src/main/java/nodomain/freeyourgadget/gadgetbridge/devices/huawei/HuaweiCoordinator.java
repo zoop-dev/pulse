@@ -327,6 +327,9 @@ public class HuaweiCoordinator {
         if(supportsECG() && isShowForceCountrySpecificFeatures(device)) {
             deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_ecg);
         }
+        if(supportsArterialStiffnessDetection() && isShowForceCountrySpecificFeatures(device)) {
+            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_arterial_stiffness_detection);
+        }
         if(supportsThreeCircle() || supportsThreeCircleLite()) {
             deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_activity_reminders);
         }
@@ -962,6 +965,14 @@ public class HuaweiCoordinator {
             return supportsExpandCapability(138);
         return false;
     }
+
+    public boolean supportsArterialStiffnessDetection() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(75);
+        return false;
+    }
+
+
 
     public boolean supportsPromptPushMessage () {
 //              do not ask for capabilities under specific condition

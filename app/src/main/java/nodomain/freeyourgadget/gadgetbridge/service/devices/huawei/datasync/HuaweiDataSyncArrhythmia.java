@@ -56,9 +56,8 @@ public class HuaweiDataSyncArrhythmia implements HuaweiDataSyncCommon.DataCallba
     }
 
     // TODO:
-    public boolean queryState(boolean state) {
-        HuaweiTLV tlv = new HuaweiTLV().put(0x01, state);
-        return sendCommonData(900300004, (byte) 2, tlv.serialize());
+    public boolean queryState() {
+        return sendCommonData(900300004, (byte) 2, new byte[0]);
     }
 
     // TODO:

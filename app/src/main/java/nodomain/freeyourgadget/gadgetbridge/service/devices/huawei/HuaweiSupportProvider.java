@@ -141,6 +141,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.Huaw
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncEmotion;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncFindDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncGoals;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncArterialStiffnessDetection;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncSleepApnea;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PAppIcon;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PCalendarService;
@@ -314,6 +315,8 @@ public class HuaweiSupportProvider {
     private HuaweiDataSyncSleepApnea huaweiDataSyncSleepApnea = null;
 
     private HuaweiDataSyncEcg huaweiDataSyncEcg = null;
+
+    private HuaweiDataSyncArterialStiffnessDetection huaweiDataSyncArterialStiffnessDetection = null;
 
     protected HuaweiOTAManager huaweiOTAManager = new HuaweiOTAManager(this);
 
@@ -885,6 +888,9 @@ public class HuaweiSupportProvider {
             if(getHuaweiCoordinator().supportsSleepApnea()) {
                 huaweiDataSyncSleepApnea = new HuaweiDataSyncSleepApnea(HuaweiSupportProvider.this);
             }
+            if(getHuaweiCoordinator().supportsArterialStiffnessDetection()) {
+                huaweiDataSyncArterialStiffnessDetection = new HuaweiDataSyncArterialStiffnessDetection(HuaweiSupportProvider.this);
+            }
 
             // All of the below check that they are supported and otherwise they skip themselves
             final List<Request> initRequestQueue = new ArrayList<>();
@@ -1228,8 +1234,12 @@ public class HuaweiSupportProvider {
                     break;
                 case HuaweiConstants.PREF_HUAWEI_ARRHYTHMIA_ALERT:
                     setArrhythmiaAlert();
+                    break;
                 case HuaweiConstants.PREF_HUAWEI_ECG_SWITCH:
                     setECG();
+                    break;
+                case HuaweiConstants.PREF_HUAWEI_ARTERIAL_STIFFNESS_DETECTION_SWITCH:
+                    setArterialStiffnessDetection();
                     break;
                 case DeviceSettingsPreferenceConst.PREF_FORCE_ENABLE_SMART_ALARM:
                     getAlarms();
@@ -2517,6 +2527,17 @@ public class HuaweiSupportProvider {
         if (huaweiDataSyncEcg != null) {
             if (!huaweiDataSyncEcg.changeECGState(ecgEnabled)) {
                 LOG.error("Error to set ECG");
+            }
+        }
+    }
+
+    void setArterialStiffnessDetection() {
+        boolean ecgEnabled = GBApplication
+                .getDeviceSpecificSharedPrefs(getDevice().getAddress())
+                .getBoolean(HuaweiConstants.PREF_HUAWEI_ARTERIAL_STIFFNESS_DETECTION_SWITCH, false);
+        if (huaweiDataSyncArterialStiffnessDetection != null) {
+            if (!huaweiDataSyncArterialStiffnessDetection.changeState(ecgEnabled)) {
+                LOG.error("Error to set Arterial Stiffness Detection");
             }
         }
     }

@@ -9,15 +9,15 @@ import java.util.List;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTLV;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
 
-public class HuaweiDataSyncSleepApnea implements HuaweiDataSyncCommon.DataCallback {
-    private final Logger LOG = LoggerFactory.getLogger(HuaweiDataSyncSleepApnea.class);
+public class HuaweiDataSyncArterialStiffnessDetection implements HuaweiDataSyncCommon.DataCallback {
+    private final Logger LOG = LoggerFactory.getLogger(HuaweiDataSyncArterialStiffnessDetection.class);
 
     private final HuaweiSupportProvider support;
 
-    public static final String SRC_PKG_NAME = "hw.health.apneajsmodule";
-    public static final String PKG_NAME = "hw.watch.health.osa";
+    public static final String SRC_PKG_NAME = "hw.health.pwv";
+    public static final String PKG_NAME = "com.huawei.health.pwv";
 
-    public HuaweiDataSyncSleepApnea(HuaweiSupportProvider support) {
+    public HuaweiDataSyncArterialStiffnessDetection(HuaweiSupportProvider support) {
         this.support = support;
         this.support.getHuaweiDataSyncManager().registerCallback(PKG_NAME, this);
     }
@@ -34,23 +34,18 @@ public class HuaweiDataSyncSleepApnea implements HuaweiDataSyncCommon.DataCallba
         return this.support.getHuaweiDataSyncManager().sendConfigCommand(SRC_PKG_NAME, PKG_NAME, data);
     }
 
-    public boolean changeSleepBreatheState(boolean state) {
+    public boolean changeState(boolean state) {
         HuaweiTLV tlv = new HuaweiTLV().put(0x01, state);
-        return sendCommonData(900300008, (byte) 1, tlv.serialize());
+        return sendCommonData(900300010, (byte) 1, tlv.serialize());
     }
 
-    public boolean changeSleepApneaState(boolean state) {
-        HuaweiTLV tlv = new HuaweiTLV().put(0x01, state);
-        return sendCommonData(900300007, (byte) 1, tlv.serialize());
-    }
-
-    public boolean querySleepApneaState() {
-        return sendCommonData(900300007, (byte) 2, new byte[0]);
+    public boolean queryState() {
+        return sendCommonData(900300010, (byte) 2, new byte[0]);
     }
 
     @Override
     public void onConfigCommand(HuaweiDataSyncCommon.ConfigCommandData data) {
-        LOG.info("Handle SleepApnea command");
+        LOG.info("Handle PWV command");
         //TODO:
     }
 

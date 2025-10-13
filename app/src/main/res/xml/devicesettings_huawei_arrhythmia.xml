@@ -29,7 +29,5 @@
             android:layout="@layout/preference_checkbox"
             android:title="@string/pref_huawei_pulse_wave_arrhythmia_alert_title"
             android:summary="@string/pref_huawei_pulse_wave_arrhythmia_alert_summary" />
-
-
     </PreferenceScreen>
 </androidx.preference.PreferenceScreen>

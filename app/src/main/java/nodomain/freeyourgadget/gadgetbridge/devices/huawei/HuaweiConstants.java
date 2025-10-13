@@ -118,6 +118,9 @@ public final class HuaweiConstants {
     public static final String PREF_HUAWEI_ARRHYTHMIA_AUTOMATIC = "pref_huawei_arrhythmia_automatic";
     public static final String PREF_HUAWEI_ARRHYTHMIA_ALERT = "pref_huawei_arrhythmia_alert";
     public static final String PREF_HUAWEI_ECG_SWITCH = "pref_huawei_ecg_switch";
+    public static final String PREF_HUAWEI_ARTERIAL_STIFFNESS_DETECTION_SWITCH = "pref_huawei_arterial_stiffness_detection_switch";
+
+
 
     public static final String PKG_NAME = "com.huawei.devicegroupmanage";
 }
