@@ -2485,9 +2485,7 @@
     <string name="maxStrokeRate">Tingkat Membelai Maks</string>
     <string name="pref_spo_automatic_enable">Aktifkan pengukuran SpO2 otomatis</string>
     <string name="pref_force_options">Paksa opsi</string>
-    <string name="pref_force_options_summary">Beberapa perangkat mengklaim secara palsu bahwa tidak ada dukungan untuk beberapa opsi. Pengaturan berikut dapat digunakan untuk mengaktifkannya saja.
-\nGUNAKAN DENGAN RISIKO ANDA SENDIRI
-\nBaca wikinya</string>
+    <string name="pref_force_options_summary">Beberapa perangkat mengklaim secara palsu bahwa tidak ada dukungan untuk beberapa opsi. Pengaturan berikut dapat digunakan untuk mengaktifkannya saja. \nGUNAKAN DENGAN RISIKO ANDA SENDIRI \nBaca wikinya</string>
     <string name="huawei_ignore_wakeup_status_start_description">Dapat membantu dengan deteksi tidur yang sesuai. Terlihat secara langsung dalam tampilan aktivitas harian.</string>
     <string name="huawei_ignore_wakeup_status_end">Abaikan status akhir bangun</string>
     <string name="fossil_hr_nav_app_not_installed_notify_text">Navigasi dimulai tetapi aplikasi navigasi tidak terpasang di jam tangan. Silakan pasang dari App Manager.</string>
