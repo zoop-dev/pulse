@@ -2498,9 +2498,7 @@
     <string name="pref_touch_tone_summary">Přehraje tón, když se dotknete sluchátka</string>
     <string name="pref_navigation_app_osmand">OsmAnd(+)</string>
     <string name="battery_i">Baterie %d</string>
-    <string name="pref_force_options_summary">Některá zařízení nesprávně tvrdí, že podporují některé možnosti. Těmito nastaveními je přesto povolíte.
-\nPOUŽÍVEJTE NA VLASTNÍ NEBEZPEČÍ
-\nPřečtěte si wiki</string>
+    <string name="pref_force_options_summary">Některá zařízení nesprávně tvrdí, že podporují některé možnosti. Těmito nastaveními je přesto povolíte. \nPOUŽÍVEJTE NA VLASTNÍ NEBEZPEČÍ \nPřečtěte si wiki</string>
     <string name="pref_force_smart_alarm">Vynutit chytrý budík</string>
     <string name="pref_force_wear_location">Vynutit umístění gadgetu</string>
     <string name="pref_force_enable_heartrate_support_summary">Vynutit povolení podpory srdečního tepu.
