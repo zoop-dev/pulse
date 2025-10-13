@@ -2446,9 +2446,7 @@
     <string name="pref_enable_call_accept">启用接听电话</string>
     <string name="pref_enable_call_accept_summary">启用从设备接受电话</string>
     <string name="pref_heartrate_automatic_enable">启用自动心率测量</string>
-    <string name="pref_force_options_summary">某些设备错误地声称不支持某些选项。无论如何，此设置可用于启用它们。
-\n使用风险由您自行承担。
-\n阅读维基</string>
+    <string name="pref_force_options_summary">某些设备错误地声称不支持某些选项。无论如何，此设置可用于启用它们。 \n使用风险由您自行承担。 \n阅读维基</string>
     <string name="pref_force_smart_alarm_summary">强制智能报警支持。
 \n风险自担</string>
     <string name="pref_force_dnd_support">强制请勿打扰支持</string>
