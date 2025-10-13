@@ -184,7 +184,7 @@
     <string name="chart_no_data_synchronize">Brak danych. Synchronizować urządzenie?</string>
     <string name="user_feedback_miband_activity_data_transfer">Zamierzam przesłać %1$s danych, rozpoczynając od %2$s</string>
     <string name="miband_prefs_fitness_goal">Dzienny cel kroków</string>
-    <string name="dbaccess_error_executing">Błąd przetwarzania %1$s</string>
+    <string name="dbaccess_error_executing">Błąd przetwarzania „%1$s”</string>
     <string name="controlcenter_start_activitymonitor">Twoja aktywność</string>
     <string name="cannot_connect">Nie można połączyć: %1$s</string>
     <string name="installer_activity_unable_to_find_handler">Nie można znaleźć procedury by zainstalować ten plik.</string>
@@ -618,7 +618,7 @@
     <string name="activity_prefs_activetime_minutes">Cel dzienny: czas aktywności w minutach</string>
     <string name="title_activity_device_specific_settings">Ustawienia danego urządzenia</string>
     <string name="pref_title_authkey">Klucz autoryzacji</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Właśnie zamierzasz zainstalować oprogramowanie układowe %s na swoim Amazfit Cor 2. \n \nProszę upewnić się, że zainstalowany został plik .fw, a następnie plik .res. Po zainstalowaniu pliku .fw Twój zegarek zostanie ponownie uruchomiony. \n \nUwaga: Nie musisz instalować pliku .res, jeśli jest on dokładnie taki sam jak ten, który został wcześniej zainstalowany. \n \nKONTYNUUJ NA WŁASNE RYZYKO! \n \nCAŁKOWICIE NIEPRZETESTOWANE – PRAWODOPODOBNIE MUSISZ WGRAĆ FIRMWARE BEATS_W, JEŚLI TWOJE URZĄDZENIE TO Amazfit Band 2</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Właśnie zamierzasz zainstalować oprogramowanie układowe %s na swoim Amazfit Cor 2. \n \nProszę upewnić się, że zainstalowany został plik .fw, a następnie plik .res. Po zainstalowaniu pliku .fw Twój zegarek zostanie ponownie uruchomiony. \n \nUwaga: Nie musisz instalować pliku .res, jeśli jest on dokładnie taki sam jak ten, który został wcześniej zainstalowany. \n \nKONTYNUUJ NA WŁASNE RYZYKO! \n \nCAŁKOWICIE NIEPRZETESTOWANE – PRAWODOPODOBNIE MUSISZ WGRAĆ FIRMWARE BEATS_W, JEŚLI TWOJE URZĄDZENIE TO \"Amazfit Band 2\"</string>
     <string name="dutch">Niderlandzki</string>
     <string name="turkish">Turecki</string>
     <string name="ukrainian">Ukraiński</string>
@@ -663,7 +663,7 @@
     <string name="pref_display_add_device_fab_off">Widoczny tylko wtedy, gdy nie dodano żadnego urządzenia</string>
     <string name="preferences_makibes_hr3_settings">Ustawienia Makibes HR3</string>
     <string name="prefs_find_phone">Znajdź telefon</string>
-    <string name="prefs_enable_find_phone">Włącz Znajdź telefon</string>
+    <string name="prefs_enable_find_phone">Włącz „Znajdź telefon”</string>
     <string name="prefs_find_phone_summary">Użyj opaski, aby odtworzyć dzwonek telefonu.</string>
     <string name="prefs_find_phone_duration">Czas trwania dzwonka w sekundach</string>
     <string name="fw_upgrade_notice_amazfitbip_lite">Właśnie zamierzasz zainstalować oprogramowanie układowe %s na swoim Amazfit Bip Lite.
@@ -755,7 +755,7 @@
     </plurals>
     <string name="activity_error_no_app_for_gpx">Aby wyświetlić ślad, zainstaluj aplikację obsługującą pliki GPX.</string>
     <string name="maximum_duration">Czas trwania</string>
-    <string name="discovery_need_to_enter_authkey">To urządzenie wymaga poufnego klucza autoryzacji, naciśnij i przytrzymaj, aby go wprowadzić. Przeczytaj wiki, aby uzyskać więcej informacji.</string>
+    <string name="discovery_need_to_enter_authkey">To urządzenie wymaga poufnego klucza autoryzacji, naciśnij i przytrzymaj, aby go wprowadzić. Więcej informacji na stronie internetowej.</string>
     <string name="pref_title_chart_heartrate_color">Kolor tętna</string>
     <string name="watch_not_connected">Zegarek niepołączony</string>
     <string name="qhybrid_vibration_strength">siła wibracji:</string>
@@ -883,7 +883,7 @@
     <string name="menuitem_breathing">Oddychanie</string>
     <string name="activity_summary_detail">Szczegóły aktywności sportowej</string>
     <string name="activity_type_jump_roping">Skakanka</string>
-    <string name="pref_title_weather_summary">Używane przez dostawcę pogody LineageOS. Inne wersje systemu Android powinny używać innej aplikacji, np. Weather notification. Więcej informacji znajdziesz na stronie projektu Gadgetbridge.</string>
+    <string name="pref_title_weather_summary">Używane przez dostawcę pogody LineageOS. Inne wersje systemu Android powinny używać innej aplikacji, np. \"Breezy Weather\". Więcej informacji znajdziesz na stronie projektu Gadgetbridge.</string>
     <string name="fw_upgrade_notice_miband5">Właśnie zamierzasz zainstalować oprogramowanie układowe %s na swoim Mi Band 5.
 \n
 \nProszę upewnić się, że zainstalowany został plik .fw, a następnie plik .res. Po zainstalowaniu pliku .fw Twój zegarek zostanie ponownie uruchomiony.
@@ -1507,7 +1507,7 @@
     <string name="pref_title_device_internet_access">Zezwól na dostęp do internetu</string>
     <string name="pref_summary_device_internet_access">Zezwól aplikacjom na tym urządzeniu na dostęp do Internetu</string>
     <string name="heartrate_bpm_100">100 uderzeń/min</string>
-    <string name="world_clock_delete_confirm_title">Usuń %1$s</string>
+    <string name="world_clock_delete_confirm_title">Usuń „%1$s”</string>
     <string name="world_clock_timezone">Strefa czasowa</string>
     <string name="heartrate_bpm_105">105 uderzeń/min</string>
     <string name="heartrate_bpm_110">110 uderzeń/min</string>
@@ -1579,7 +1579,7 @@
     <string name="prefs_active_noise_cancelling_level_low">Niskie</string>
     <string name="watchface_dialog_widget_cat_position">Pozycja</string>
     <string name="watchface_dialog_title_widget">Ustawienia widżetu</string>
-    <string name="open_fw_installer_info_text">Instalator oprogramowania układowego/tarcz/aplikacji/plików pozwala na wgranie/instalację obsługiwanych plików (oprogramowanie układowe, tarcze, aplikacje, GPS, zasoby, czcionki...) do urządzenia. Zobacz więcej informacji w wiki: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
+    <string name="open_fw_installer_info_text">Instalator oprogramowania układowego/tarcz/aplikacji/plików pozwala na wgranie/instalację obsługiwanych plików (oprogramowanie układowe, tarcze, aplikacje, GPS, zasoby, czcionki...) do urządzenia. Zobacz więcej informacji na stronie: https://gadgetbridge.org/internals/features/installer/</string>
     <string name="pref_title_overwrite_settings_on_connection">Nadpisz ustawienia przy połączeniu</string>
     <string name="pref_summary_overwrite_settings_on_connection">Podczas łączenia się z opaską nadpisz wszystkie znajdujące się na niej ustawienia.</string>
     <string name="prefs_spo2_monitoring_title">Monitorowanie tlenu we krwi</string>
@@ -1656,9 +1656,9 @@
     <string name="prefs_heartrate_alert_experimental_title">Alarm tętna (eksperymentalny)</string>
     <string name="prefs_heartrate_alert_threshold">Próg alarmowy tętna</string>
     <string name="pref_blacklist_calendars_summary">Zablokowane kalendarze nie będą synchronizowane z urządzeniem</string>
-    <string name="pref_explanation_authkey_new_protocol">Jeśli na opasce pojawi się komunikat o konieczności zaktualizowania aplikacji do najnowszej wersji, upewnij się, że powyżej zaznaczono opcję nowego protokołu uwierzytelniania. Stuknij tutaj, aby zobaczyć więcej informacji w wiki.</string>
+    <string name="pref_explanation_authkey_new_protocol">Jeśli na opasce pojawi się komunikat „Zaktualizuj aplikację do najnowszej wersji”, upewnij się, że opcja „Nowy protokół uwierzytelniania” jest włączona. Stuknij tutaj, aby uzyskać więcej szczegółów na stronie internetowej.</string>
     <string name="pref_workout_start_on_phone_summary">Rozpocznij/zatrzymaj śledzenie aplikacji fitness w telefonie po rozpoczęciu treningu GPS w opasce</string>
-    <string name="pref_explanation_authkey">Niektóre urządzenia wymagają specjalnego klucza parowania przy pierwszej inicjalizacji urządzenia. Naciśnij tutaj, aby uzyskać więcej szczegółów w wiki.</string>
+    <string name="pref_explanation_authkey">Niektóre urządzenia wymagają specjalnego klucza parowania przy pierwszej inicjalizacji urządzenia. Stuknij tutaj, aby uzyskać więcej szczegółów na stronie internetowej.</string>
     <string name="appmanager_item_outdated">(nieaktualne)</string>
     <string name="pref_title_banglejs_txt_bitmap_size">Rozmiar Bitmapy Tekstu</string>
     <string name="pref_summary_banglejs_txt_bitmap_size">Rozmiar używany do renderowania tekstu bitmapowego</string>
@@ -2057,7 +2057,7 @@
     <string name="pref_title_banglejs_phone_gps_enbale">Korzystanie z danych GPS telefonu</string>
     <string name="pref_pair_bluetooth_calls_help_warning">OSTRZEŻENIE: Jeśli włączysz połączenia Bluetooth bez parowania z drugą instancją, powiadomienia o połączeniach mogą nie działać zgodnie z oczekiwaniami.</string>
     <string name="pref_theme_dynamic">Dynamiczne kolory</string>
-    <string name="pref_pair_bluetooth_calls_help_3">3. Włącz poniższe ustawienie połączeń Bluetooth.</string>
+    <string name="pref_pair_bluetooth_calls_help_3">3. Włącz poniżej ustawienie „Połączenia Bluetooth”.</string>
     <string name="pref_pair_bluetooth_calls_title">Paruj dla połączeń Bluetooth</string>
     <string name="pref_title_mb_intents">Bezpośrednie nadawanie intencji przycisków multimedialnych</string>
     <string name="pref_summary_banglejs_phone_gps_update_interval">Częstotliwość aktualizacji pozycji GPS, w ms</string>
@@ -2082,7 +2082,7 @@
     <string name="pref_title_banglejs_phone_gps_update_interval">Interwał aktualizacji danych GPS</string>
     <string name="fw_upgrade_notice_zepp_os">Zamierzasz zainstalować oprogramowanie sprzętowe %1$s na %2$s.\n\nZegarek uruchomi się ponownie po zainstalowaniu pliku .zip.\n\nPOSTĘPUJ NA WŁASNE RYZYKO!</string>
     <string name="pref_summary_notification_cache_while_disconnected">Wysyłanie nieodebranych powiadomień, gdy urządzenie połączy się ponownie po utracie zasięgu</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Przejdź do ustawień Bluetooth telefonu i sparuj z nowym urządzeniem, które się pojawi (nazwa podobna do obecnego zegarka, ale z przyrostkiem, np. Amazfit GTR 4 - AFC8.</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Przejdź do ustawień Bluetooth telefonu i sparuj z nowym urządzeniem, które się pojawi (nazwa podobna do obecnego zegarka, ale z przyrostkiem, np. \"Amazfit GTR 4 - AFC8\".</string>
     <string name="pref_canned_message">Wiadomość</string>
     <string name="pref_pair_bluetooth_calls_help_title">Jak odbierać połączenia Bluetooth</string>
     <string name="sony_button_mode_help_title">Tryby przycisków - Pomoc</string>
@@ -2148,7 +2148,7 @@
     <string name="contact_no_free_slots_description">Urządzenie nie posiada wolnych miejsc na styki (całkowita liczba miejsc: %1$s)</string>
     <string name="pref_workout_keep_screen_on_summary">Ekran pozostanie włączony podczas treningu, a jasność zostanie dostosowana tak, aby stale wyświetlać dane treningu w czasie rzeczywistym</string>
     <string name="prefs_wena3_home_icon_name_pedometer">Liczba kroków</string>
-    <string name="contact_delete_confirm_description">Czy na pewno chcesz usunąć %1$s?</string>
+    <string name="contact_delete_confirm_description">Czy na pewno chcesz usunąć „%1$s”?</string>
     <string name="fossil_hr_connection_not_confirmed">Połączenie nie zostało potwierdzone na zegarku, przy użyciu trybu nieuwierzytelnionego</string>
     <string name="wifi_hotspot_summary">Kontroluj hotspot Wi-Fi na zegarku</string>
     <string name="prefs_wena3_home_icon_name_qrio">Qrio</string>
@@ -2377,7 +2377,7 @@
     <string name="pref_title_prefix_notification_with_app">Nazwa aplikacji w powiadomieniu</string>
     <string name="pref_title_osmand_packagename">Nazwa pakietu OsmAnd</string>
     <string name="pref_navigation_app_osmand">OsmAnd(+)</string>
-    <string name="pref_title_casio_alert_other">Alert dla pozostałych powiadomień</string>
+    <string name="pref_title_casio_alert_other">Powiadomienia o alertach z „innych” aplikacji</string>
     <string name="pref_title_casio_alert_calendar">Alert powiadomień z kalendarza</string>
     <string name="pref_summary_casio_alert_call">Alert (wibracja/beep) dla połączeń przychodzących</string>
     <string name="menuitem_running">Bieganie</string>
@@ -2394,7 +2394,7 @@
     <string name="danish">Duński</string>
     <string name="wake_up_time">Pobudka</string>
     <string name="menuitem_stats">Statystyki</string>
-    <string name="pref_summary_casio_alert_other">Alert (wibracja/beep) dla pozostałych powiadomień</string>
+    <string name="pref_summary_casio_alert_other">Ostrzeżenie (wibracja/sygnał) o powiadomieniach z kategorii „Inne”</string>
     <string name="pref_summary_preview_message_in_title">Pokaż podgląd wiadomości w tytule powiadomienia, jeżeli udzielone jest odpowiednie uprawnienie</string>
     <string name="pref_sleep_mode_schedule_summary">Wyślij przypomnienie i przed snem wejdź w tryb uśpienia. O zaplanowanej godzinie pobudki zabrzmi alarm.</string>
     <string name="pref_title_casio_alert_sms">Alert powiadomień SMS</string>
