@@ -1,3 +1,19 @@
+/*  Copyright (C) 2025 jrthomas270, José Rebelo, Thomas Kuehne, Daniele Gobbetti
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.evenrealities;
 
 import android.bluetooth.BluetoothAdapter;
@@ -39,7 +55,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEMultiDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEQueue;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.PlainAction;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
@@ -235,9 +250,9 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
         // The final step of each transaction will be to decide if that particular side is the
         // second side to complete, and if it, that side will be the one responsible for marking
         // the composite device as initialized.
-        builder.add(new PlainAction() {
+        builder.run(new Runnable() {
             @Override
-            public boolean run(BluetoothGatt gatt) {
+            public void run() {
                 // There is a race condition of each device marking INITIALIZED. If one device
                 // initialize transaction runs after the other has completely finished, the device
                 // will transition from INITIALIZED back to INITIALIZING. Run this final step in a
@@ -286,7 +301,6 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
                                 .setUpdateState(GBDevice.State.INITIALIZED, getContext());
                     }
                 }
-                return true;
             }
         });
 
