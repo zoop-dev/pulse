@@ -150,7 +150,7 @@
     <string name="controlcenter_take_screenshot">Ekran Görüntüsü Al</string>
     <string name="dateformat_date_time"><![CDATA[Saat ve tarih]]></string>
     <string name="dateformat_time">Saat</string>
-    <string name="dbaccess_error_executing">\'%1$s\' çalıştırılırken hata oluştu</string>
+    <string name="dbaccess_error_executing">\"%1$s\" çalıştırılırken hata oluştu</string>
     <string name="dbmanagementactivity_database_successfully_deleted">Veriler silindi.</string>
     <string name="dbmanagementactivity_db_deletion_failed">Veri tabanını silme başarısız oldu.</string>
     <string name="dbmanagementactivity_delete_activity_data_title">Etkinlik Verileri Silinsin mi\?</string>
@@ -181,7 +181,7 @@
     <string name="discovery_connected_devices_hint">Aygıtınızı bulunabilir hale getirin. Şu anda bağlı aygıtlar muhtemelen keşfedilmeyecek. Android 6+ için konumu (örn. GPS) etkinleştirin. Gadgetbridge için Gizlilik Korumasını (Privacy Guard) devre dışı bırakın, çünkü çökebilir ve telefonunuzu yeniden başlatabilir. Birkaç dakika sonra hiçbir aygıt bulunmazsa, mobil aygıtınızı yeniden başlattıktan sonra tekrar deneyin.</string>
     <string name="discovery_dont_pair">Eşleştirme</string>
     <string name="discovery_enable_bluetooth">Aygıtları bulmak için Bluetooth\'u etkinleştir.</string>
-    <string name="discovery_need_to_enter_authkey">Bu aygıt için gizli bir kimlik doğrulama anahtarı gerekiyor, girmek için aygıta uzun basın. Wiki sayfasını okuyun.</string>
+    <string name="discovery_need_to_enter_authkey">Bu aygıt için gizli bir kimlik doğrulama anahtarı gerekiyor, girmek için aygıta uzun basın. Daha fazla bilgi için web sitesini ziyaret edin.</string>
     <string name="discovery_note">Not:</string>
     <string name="discovery_pair_question">Aygıtlarınızı eşleştirmek için Eşleştir seçeneğini seçin. Bu başarısız olursa, eşleştirme olmadan tekrar deneyin.</string>
     <string name="discovery_pair_title">%1$s ile eşleştirilsin mi?</string>
@@ -352,7 +352,7 @@
     <string name="mi2_prefs_button_actions_summary">Düğme basma eylemlerini belirtin</string>
     <string name="mi2_prefs_button_press_broadcast">Gönderilecek yayınlama mesajı</string>
     <string name="mi2_prefs_button_press_broadcast_default_value">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>
-    <string name="mi2_prefs_button_press_broadcast_summary">Etkinlikle birlikte gönderilen yayınlama mesajı. `button_id` parametresi otomatik olarak her mesaja eklenir.</string>
+    <string name="mi2_prefs_button_press_broadcast_summary">Etkinlikle birlikte gönderilen yayınlama mesajı. \"button_id\" parametresi otomatik olarak her mesaja eklenir.</string>
     <string name="mi2_prefs_button_press_count">Düğme basma sayısı</string>
     <string name="mi2_prefs_button_press_count_max_delay">Basmalar arasındaki azami gecikme</string>
     <string name="mi2_prefs_button_press_count_max_delay_summary">Milisaniye cinsinden basmalar arasındaki azami gecikme</string>
@@ -538,7 +538,7 @@
     <string name="pref_summary_pebble_forceuntested">Test edilmemiş özellikleri etkinleştir. NE YAPTIĞINIZI BİLİN!</string>
     <string name="pref_summary_pebble_gatt_clientonly">Bu yalnızca Pebble 2 içindir ve deneyseldir, bağlantı sorunlarınız varsa bunu deneyin</string>
     <string name="pref_summary_pebble_health_store_raw">Verileri \"olduğu gibi\" saklar, daha sonra yorumlanabilmesi için veri tabanı kullanımını artırır.</string>
-    <string name="pref_summary_pebble_mtu_limit">Eğer Pebble 2/Pebble LE beklendiği gibi çalışmazsa, MTU sınırlaması için bu ayarı deneyin (geçerli aralık 20–512)</string>
+    <string name="pref_summary_pebble_mtu_limit">Eğer Pebble 2/Pebble LE beklendiği gibi çalışmazsa, MTU sınırlaması için bu ayarı deneyin (geçerli aralık 20 – 512)</string>
     <string name="pref_summary_relax_firmware_checks">Ürün yazılımı denetimlerini gevşet</string>
     <string name="pref_summary_rtl">Aygıtınız sağdan sola dilleri gösteremiyorsa bunu etkinleştirin</string>
     <string name="pref_summary_setup_bt_pairing">Bağlanma konusunda sorun yaşıyorsanız bunu devre dışı bırakın</string>
@@ -641,7 +641,7 @@
     <string name="prefs_button_triple_press_action_selection_title">Etkinlik 3 eylemi</string>
     <string name="prefs_button_variable_actions">Ayrıntılı basma eylemi ayarları</string>
     <string name="prefs_disconnect_notification">Bağlantı kesilme bildirimi</string>
-    <string name="prefs_enable_find_phone">\'Telefonu bul\' özelliğini aç</string>
+    <string name="prefs_enable_find_phone">\"Telefonu bul\" özelliğini aç</string>
     <string name="prefs_find_phone">Telefonu bul</string>
     <string name="prefs_find_phone_duration">Saniye cinsinden zil süresi</string>
     <string name="prefs_find_phone_summary">Telefonunuzun zilini çalmak için bilekliğinizi kullanın.</string>
@@ -676,7 +676,7 @@
     <string name="share">Paylaş</string>
     <string name="share_log">Günlüğü paylaş</string>
     <string name="share_log_warning">Gadgetbridge\'in sağlık verileri, benzersiz tanımlayıcılar (bir aygıtın MAC adresi gibi), müzik tercihleri vb. dahil ancak bunlarla sınırlı olmamak üzere birçok kişisel bilgiyi günlük dosyalarına kaydettiğini lütfen unutmayın. Dosyayı herkese açık sorun bildirimi olarak göndermeden önce bu dosyayı düzenlemeyi ve bu bilgileri kaldırmayı göz önünde bulundurun.</string>
-    <string name="simplified_chinese">Basitleştirilmiş Çince</string>
+    <string name="simplified_chinese">Çince (Basitleştirilmiş)</string>
     <string name="sleep_activity_date_range">Saat %1$s ile %2$s arası</string>
     <string name="sleepchart_your_sleep">Uyku</string>
     <string name="spanish">İspanyolca</string>
@@ -717,7 +717,7 @@
     <string name="toast_enable_networklocationprovider">Lütfen ağ konumunu etkinleştirin</string>
     <string name="toast_notification_filter_saved_successfully">Bildirim filtresi kaydedildi</string>
     <string name="toast_notification_filter_words_empty_hint">Lütfen en az bir sözcük girin</string>
-    <string name="traditional_chinese">Geleneksel Çince</string>
+    <string name="traditional_chinese">Çince (Geleneksel)</string>
     <string name="turkish">Türkçe</string>
     <string name="ukrainian">Ukraynaca</string>
     <string name="unit_imperial">İngiliz birimleri</string>
@@ -776,7 +776,7 @@
     <string name="widget_listing_label">Durum ve Alarmlar</string>
     <string name="widget_set_alarm_after">Alarm kur:</string>
     <string name="you_did_not_sleep">Uyumadınız</string>
-    <string name="you_slept">%1$s - %2$s</string>
+    <string name="you_slept">%1$s – %2$s</string>
     <string name="zetime_activity_tracking">Etkinlik izleme</string>
     <string name="zetime_activity_tracking_summary">Etkinlik izlemenin açılması adımlarınızı sayacaktır.</string>
     <string name="zetime_analog_mode">Analog modu</string>
@@ -878,7 +878,7 @@
     <string name="about_description_generic">Satıcıların kapalı kaynaklı Android aygıt uygulamalarının yerine bulut gerektirmeyen copyleft özgür alternatif.</string>
     <string name="about_activity_title_generic">Gadgetbridge hakkında</string>
     <string name="about_title">Hakkında</string>
-    <string name="pref_title_weather_summary">LineageOS hava durumu sağlayıcısı için kullanılır, diğer Android sürümleri \"Weather notification\" gibi bir uygulama kullanmalıdır. Gadgetbridge wiki sayfasında daha fazla bilgi bulabilirsiniz.</string>
+    <string name="pref_title_weather_summary">LineageOS hava durumu sağlayıcısı için kullanılır, diğer Android sürümleri \"Breezy Weather\" gibi bir uygulama kullanmalıdır. Gadgetbridge web sitesinde daha fazla bilgi bulabilirsiniz.</string>
     <string name="menuitem_worldclock">Dünya Saati</string>
     <string name="error_version_check_extreme_caution">DİKKAT: Sürüm bilgileri denetlenirken hata oluştu! Devam etmemelisiniz! Görülen sürüm adı \"%s\"</string>
     <string name="permission_granting_mandatory">Tüm bu izinler gereklidir ve izin verilmezse kararsızlık oluşabilir</string>
@@ -1520,7 +1520,7 @@
     <string name="pref_device_action_fitness_app_control_toggle">Fitness Uygulaması İzlemesini Değiştir</string>
     <string name="pref_world_clocks_title">Dünya Saatleri</string>
     <string name="pref_world_clocks_summary">Diğer saat dilimleri için saatleri yapılandırın</string>
-    <string name="world_clock_delete_confirm_title">\'%1$s\' sil</string>
+    <string name="world_clock_delete_confirm_title">\"%1$s\" sil</string>
     <string name="world_clock_delete_confirm_description">Dünya saatini silmek istediğinizden emin misiniz\?</string>
     <string name="world_clock_no_free_slots_title">Boş yuva yok</string>
     <string name="title_activity_world_clock_details">Dünya saati ayrıntıları</string>
@@ -1630,8 +1630,8 @@
     <string name="extended_ascii">Genişletilmiş ASCII</string>
     <string name="czech">Çekçe</string>
     <string name="icelandic">İzlandaca</string>
-    <string name="pref_explanation_authkey">Bazı aygıtlar, aygıtın ilk kez başlatılması için özel bir eşleştirme anahtarı gerektirir. Viki sayfasında daha fazla ayrıntı için buraya dokunun.</string>
-    <string name="pref_explanation_authkey_new_protocol">Bileklikte \"Uygulamayı en son sürüme güncelleyin\" mesajı alırsanız, yukarıdaki \"Yeni Kimlik Doğrulama Protokolü\" seçeneğini işaretlediğinizden emin olun. Wiki sayfasında daha fazla ayrıntı için buraya dokunun.</string>
+    <string name="pref_explanation_authkey">Bazı aygıtlar, aygıtın ilk kez başlatılması için özel bir eşleştirme anahtarı gerektirir. Web sitesinde daha fazla ayrıntı için buraya dokunun.</string>
+    <string name="pref_explanation_authkey_new_protocol">Bileklikte \"Uygulamayı en son sürüme güncelleyin\" mesajı alırsanız, yukarıdaki \"Yeni Kimlik Doğrulama Protokolü\" seçeneğini işaretlediğinizden emin olun. Web sitesinde daha fazla ayrıntı için buraya dokunun.</string>
     <string name="prefs_password">Parola</string>
     <string name="prefs_password_summary">Bilekten çıkarıldığında bilekliği bir parolayla kilitleyin</string>
     <string name="prefs_password_4_digits_1_to_4_summary">Parola 1\'den 4\'e kadar rakamlardan oluşmalı ve 4 basamaklı olmalıdır</string>
@@ -1661,7 +1661,7 @@
     <string name="open_fw_installer_pick_file">Dosya seç</string>
     <string name="open_fw_installer_connect_maximum_one_device">Lütfen dosyayı göndermek istediğiniz YALNIZCA BİR aygıtı bağlayın.</string>
     <string name="open_fw_installer_select_file">Aygıta yüklemek istediğiniz bir dosya seçin: %s</string>
-    <string name="open_fw_installer_info_text">Ürün Yazılımı/Saat Arayüzü/Uygulama/Dosya Kurucusu, desteklenen dosyaları (ürün yazılımı, saat arayüzleri, uygulamalar, GPS, kaynaklar, yazı tipleri...) aygıta yüklemenizi/kurmanızı sağlar. Wiki sayfasında daha fazla bilgi edinin: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
+    <string name="open_fw_installer_info_text">Ürün Yazılımı/Saat Arayüzü/Uygulama/Dosya Kurucusu, desteklenen dosyaları (ürün yazılımı, saat arayüzleri, uygulamalar, GPS, kaynaklar, yazı tipleri…) aygıta yüklemenizi/kurmanızı sağlar. Web sitesinde daha fazla bilgi edinin: https://gadgetbridge.org/internals/features/installer/</string>
     <string name="open_fw_installer_warning_text">Bu özelliğin aygıtınızı kullanılamaz duruma getirme olasılığı vardır. Bununla birlikte, kurulum sırasında hiçbir geliştiricinin başına böyle bir şey gelmemiştir, ancak bunu kendi sorumluluğunuzda yaptığınızı unutmayın.</string>
     <string name="open_fw_installer_getting_files_title">Ürün yazılımı/uygulama dosyasını edinme</string>
     <string name="open_fw_installer_info_text_title">Dosya Kurucusu</string>
@@ -1725,7 +1725,7 @@
     <string name="pref_header_health">Sağlık</string>
     <string name="pref_header_workout">Egzersiz</string>
     <string name="pref_title_screen_on_on_notifications">Bildirimlerde ekranı aç</string>
-    <string name="pref_summary_screen_on_on_notifications">Bir bildirim geldiğinde bilekliğin ekranını aç</string>
+    <string name="pref_summary_screen_on_on_notifications">Bir bildirim geldiğinde aygıtın ekranını aç</string>
     <string name="pref_cache_weather">Hava durumu bilgilerini önbelleğe al</string>
     <string name="heartrate_bpm_40">40 kalp atışı/dakika</string>
     <string name="heartrate_bpm_45">45 kalp atışı/dakika</string>
@@ -2026,9 +2026,9 @@
     <string name="pref_display_caller_summary">Gelen aramalar için telefon numarasını veya adı görüntüle</string>
     <string name="pref_pair_bluetooth_calls_title">Bluetooth aramaları için eşleştir</string>
     <string name="pref_pair_bluetooth_calls_help_summary">Bluetooth aramalarını alabilmek için telefonunuzu saatin ikinci bir örneğiyle eşleştirmeniz gerekir.</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Telefonunuzun bluetooth ayarlarına gidin ve görünecek yeni aygıtla eşleştirin (geçerli saatinize benzer bir ad, ancak bir son ek ile, örneğin \"Amazfit GTR 4 - AFC8\").</string>
-    <string name="pref_pair_bluetooth_calls_help_3">3. Aşağıdaki Bluetooth arama ayarını etkinleştirin.</string>
-    <string name="pref_pair_bluetooth_calls_help_warning">UYARI: İkinci örnekle eşleştirme yapmadan bluetooth aramalarını etkinleştirirseniz, arama bildirimleri beklendiği gibi çalışmayabilir.</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Telefonunuzun Bluetooth ayarlarına gidin ve görünecek yeni aygıtla eşleştirin (geçerli saatinize benzer bir ad, ancak bir son ek ile, örneğin \"Amazfit GTR 4 - AFC8\").</string>
+    <string name="pref_pair_bluetooth_calls_help_3">3. Aşağıdaki \"Bluetooth arama\" ayarını etkinleştirin.</string>
+    <string name="pref_pair_bluetooth_calls_help_warning">UYARI: İkinci örnekle eşleştirme yapmadan Bluetooth aramalarını etkinleştirirseniz, arama bildirimleri beklendiği gibi çalışmayabilir.</string>
     <string name="pref_pair_bluetooth_calls_help_1">1. Eşleştirme işlemini başlatmak için aşağıdaki düğmeye dokunun.</string>
     <string name="pref_summary_receive_calls_watch">Aramaları doğrudan saat üzerinden gerçekleştirin ve alın</string>
     <string name="pref_pair_bluetooth_calls_help_title">Bluetooth aramaları nasıl alınır</string>
@@ -2056,7 +2056,7 @@
     <string name="pref_summary_notification_cache_while_disconnected">Bir aygıt kapsama alanı dışında kaldıktan sonra yeniden bağlandığında kaçırılan bildirimleri gönder</string>
     <string name="pref_summary_banglejs_phone_gps_enbale">Bangle aygıtının GPS verilerinin üzerine yazmak için telefonun GPS verilerini kullan</string>
     <string name="pref_canned_message">Mesaj</string>
-    <string name="pref_title_casio_alert_other">Diğer bildirimler için uyar</string>
+    <string name="pref_title_casio_alert_other">\"Diğer\" bildirimler için uyar</string>
     <string name="pref_title_preview_message_in_title">Başlıkta mesajın ön izlemesini göster</string>
     <string name="pref_title_casio_alert_call">Gelen çağrılar için uyar</string>
     <string name="femometer_measurement_mode_precise">Hassas Mod (3 dak)</string>
@@ -2078,7 +2078,7 @@
     <string name="pref_summary_casio_alert_email">E-posta bildirimleri için uyar (titreşim/bip sesi)</string>
     <string name="pref_title_casio_alert_sms">SMS bildirimleri için uyar</string>
     <string name="pref_summary_casio_alert_sms">SMS (kısa mesaj) bildirimleri için uyar (titreşim/bip sesi)</string>
-    <string name="pref_summary_casio_alert_other">Diğer kategorideki bildirimler için uyar (titreşim/bip sesi)</string>
+    <string name="pref_summary_casio_alert_other">\"Diğer\" kategorideki bildirimler için uyar (titreşim/bip sesi)</string>
     <string name="pref_summary_casio_alert_call">Gelen çağrılar için uyar (titreşim/bip sesi)</string>
     <string name="pref_header_navigation">Navigasyon</string>
     <string name="busy_task_fetch_pai_data">PAI verileri getiriliyor</string>
@@ -2104,7 +2104,7 @@
     <string name="busy_task_fetch_debug_logs">Hata ayıklama günlükleri getiriliyor</string>
     <string name="prefs_wearmode">Giyme modu</string>
     <string name="pref_contacts_title">Kişiler</string>
-    <string name="contact_delete_confirm_description">\'%1$s\' kişisini silmek istediğinizden emin misiniz?</string>
+    <string name="contact_delete_confirm_description">\"%1$s\" kişisini silmek istediğinizden emin misiniz?</string>
     <string name="fw_upgrade_notice_amazfit_cheetah_pro">Amazfit Cheetah Pro aygıtınıza %s ürün yazılımını kurmak üzeresiniz.
 \n
 \nBilekliğiniz .zip dosyasını kurduktan sonra yeniden başlatılacak.
@@ -2133,7 +2133,7 @@
     <string name="pref_title_goal_secondary">İkincil hedef</string>
     <string name="femometer_measurement_mode_title">Ölçüm modu</string>
     <string name="femometer_measurement_mode_quick">Hızlı Mod (30 sn)</string>
-    <string name="femometer_measurement_mode_normal">Normal Mod (60sn-90sn)</string>
+    <string name="femometer_measurement_mode_normal">Normal Mod (60sn – 90sn)</string>
     <string name="preferences_miband_1_2_warning">Uyarı: Bu tercihler yalnızca Mi Band 1 ve 2 için geçerlidir.</string>
     <string name="activity_type_surfing">Sörf yapma</string>
     <string name="activity_type_kitesurfing">Uçurtma sörfü</string>
@@ -2233,9 +2233,7 @@
     <string name="pref_enable_call_reject_summary">Aygıttan gelen çağrıları reddetmeyi etkinleştirin</string>
     <string name="pref_force_smart_alarm_summary">Akıllı alarm desteğini zorla.
 \nKULLANMANIZ DURUMUNDA RİSK SİZE AİTTİR</string>
-    <string name="pref_force_options_summary">Bazı aygıtlar yanlışlıkla bazı seçenekleri desteklemediğini belirtir. Bu ayarlar yine de onları etkinleştirmek için kullanılabilir.
-\nKULLANMANIZ DURUMUNDA RİSK SİZE AİTTİR
-\nWiki sayfasını okuyun</string>
+    <string name="pref_force_options_summary">Bazı aygıtlar yanlışlıkla bazı seçenekleri desteklemediğini belirtir. Bu ayarlar yine de onları etkinleştirmek için kullanılabilir. \nKULLANMANIZ DURUMUNDA RİSK SİZE AİTTİR \nWiki sayfasını okuyun</string>
     <string name="huawei_ignore_wakeup_status_end_description">Doğru uyku algılamasına yardımcı olabilir. Günlük etkinlikler görünümünde hemen görülebilir.</string>
     <string name="huawei_reparse_workout_data">Egzersiz verilerini yeniden ayrıştır</string>
     <string name="huawei_reparse_workout_data_description">Bu yalnızca belirli güncellemelerden sonra bir şeyler yapacaktır</string>
@@ -2866,7 +2864,7 @@
     <string name="hrv_status_last_night_highest_5">Dün gece 5-dk en yüksek ortalama</string>
     <string name="hrv_status_seven_days_avg_long">7 günlük ortalama</string>
     <string name="hrv_status_unit">%1$d ms</string>
-    <string name="hrv_status_baseline">%1$d-%2$d ms</string>
+    <string name="hrv_status_baseline">%1$d – %2$d ms</string>
     <string name="hrv_status_baseline_label">Alt sınır</string>
     <string name="hrv_status_day_avg_legend">Günlük ortalama (ms)</string>
     <string name="hrv_status_day_avg">Günlük ortalama</string>
@@ -3193,7 +3191,7 @@
     <string name="paceCorrection">Düzeltme</string>
     <string name="activity_detail_share_json_details">JSON Ayrıntılarını Paylaş</string>
     <string name="number_selected_items">%1d seçildi</string>
-    <string name="date_placeholders__start_time__end_time">%1$s - %2$s</string>
+    <string name="date_placeholders__start_time__end_time">%1$s – %2$s</string>
     <string name="mijia_lywsd_comfort_temperature_summary">Tavsiye edilen aralık: 19 - 27</string>
     <string name="mijia_lywsd_comfort_level_title">Rahatlık Seviyesi</string>
     <string name="mijia_lywsd_comfort_level_summary">Görüntülenen emoji için sıcaklık ve nem sınırlarını yapılandırın</string>
@@ -3231,7 +3229,7 @@
     <string name="active_calories_goal">Aktif hedef</string>
     <string name="sleep_avg">Uyku ortalaması</string>
     <string name="lowest">En düşük</string>
-    <string name="sleep_score">Uyku skoru</string>
+    <string name="sleep_score">Uyku Puanı</string>
     <string name="sleep_score_value">Skor: %1d</string>
     <string name="title_activity_musicmanager">Müzik Yöneticisi</string>
     <string name="highest">En yüksek</string>
@@ -3413,7 +3411,7 @@
     <string name="redmi_buds_5_pro_equalizer_band_12k">12 kHz</string>
     <string name="view_file">Görünüm</string>
     <string name="reset">Sıfırla</string>
-    <string name="pairing_even_realities_g1_working">%1s ile eşleştirme...</string>
+    <string name="pairing_even_realities_g1_working">%1s ile eşleştiriliyor…</string>
     <string name="copy_to_clipboard">Kopyala</string>
     <string name="unit_rpm">rpm</string>
     <string name="average_power">Ortalama güç</string>
@@ -3423,8 +3421,8 @@
     <string name="pref_garmin_fake_oauth_title">Sahte OAuth yanıtları gönderin</string>
     <string name="gree_pair_clipboard">Cihaz adı: %1$s\nMAC adresi: %2$s\nBağlanma anahtarı: %3$s</string>
     <string name="vertical_ratio">Dikey oran</string>
-    <string name="range_percentage">%1$d%% - %2$d%%</string>
-    <string name="range_degrees">%1$dº - %2$dº</string>
+    <string name="range_percentage">%%%1$d – %%%2$d</string>
+    <string name="range_degrees">%1$dº – %2$dº</string>
     <string name="unit_millimeter">mm</string>
     <string name="pref_import_activity_files_title">Etkinlik dosyalarını içe aktar</string>
     <string name="pairing_even_realities_g1_bottom_hint">Android aygıtınızda birkaç eşleştirme iletişim kutusu açılacaktır. Açılmazsa, bildirim çekmecesine bakın ve eşleştirme isteğini kabul edin. Hem sol hem de sağ lensin eşleştirilmesi gerekecektir.</string>
@@ -3472,7 +3470,7 @@
     <string name="swim_style_butterfly">Kelebek</string>
     <string name="aqi_level_poor">kötü</string>
     <string name="workout_repetitions">Tekrar</string>
-    <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
+    <string name="range_percentage_float">%%%1$.1f – %%%2$.1f</string>
     <string name="weather_condition_drizzle">çise</string>
     <string name="audio_recordings">Ses kayıtları</string>
     <string name="weather_condition_thunderstorm">fırtına</string>
@@ -3485,7 +3483,7 @@
     <string name="weather_condition_hail">dolu</string>
     <string name="weather_condition_tornado">tornado</string>
     <string name="maps">Haritalar</string>
-    <string name="pairing_even_realities_g1_final_connect">Cihazlar ayarlanıyor, lütfen bekleyin...</string>
+    <string name="pairing_even_realities_g1_final_connect">Aygıtlar ayarlanıyor, lütfen bekleyin…</string>
     <string name="map_upload_failed">Harita yükleme başarısız oldu</string>
     <string name="map_upload_complete">Harita yükleme tamamlandı</string>
     <string name="map_upload_in_progress">Harita yükleniyor</string>
@@ -3525,4 +3523,73 @@
     <string name="maps_settings">Harita ayarları</string>
     <string name="maps_download_title">Harita indir</string>
     <string name="pref_device_version">Aygıt sürümü</string>
+    <string name="title_activity_file_installer">Dosya kurucusu</string>
+    <string name="sound_and_vibration">Ses + Titreşim</string>
+    <string name="map_theme_osmarender">Osmarender</string>
+    <string name="pref_title_block_screenshot">Ekran görüntülerini engelle</string>
+    <string name="pref_summary_block_screenshots">Ekran görüntülerini ve güvenli olmayan ekranlarda görüntülemeyi önleyin. Tamamen etkili olması için GB yeniden başlatılması gerekir.</string>
+    <string name="phone_calls">Telefon çağrıları</string>
+    <string name="pref_title_screen_on_on_notifications_timeout">Bildirim Görüntüleme Süresi</string>
+    <string name="pref_summary_screen_on_on_notifications_timeout">Bildirimden sonra ekranı tekrar kapatmadan önce %s saniye bekle</string>
+    <string name="pref_title_stable_connection">Kararlı Bağlantı</string>
+    <string name="pref_watch_face">Saat arayüzü</string>
+    <string name="connection_priority_low_power_summary">Bluetooth önceliğini ve veri hızı bağlantı parametrelerini azalt.</string>
+    <string name="connection_force_legacy_gatt_title">Eski GATT zorla</string>
+    <string name="connection_force_legacy_gatt_summary">Eski Android sürümlerinde sorunları önler, ancak yarışma durumlarına yol açabilir</string>
+    <string name="pref_header_auto_export_db">Veri tabanını otomatik dışa aktar</string>
+    <string name="pref_header_auto_export_zip">Otomatik zip dışa aktar</string>
+    <string name="gatt_synchronous_writes_title">Eşzamanlı GATT yazmaları</string>
+    <string name="prefs_device_support_settings">Aygıt Desteği</string>
+    <string name="device_support_can_reconnect_title">Aygıt desteğini yeniden kullan</string>
+    <string name="busy_task_fetch_training_data">Son antrenman verileri getiriliyor</string>
+    <string name="busy_task_fetch_training_data_finished">Antrenman verileri alındı!</string>
+    <string name="busy_task_processing_files">Dosyalar işleniyor</string>
+    <string name="busy_task_progress_int">%1$d / %2$d</string>
+    <string name="busy_task_busy">Meşgul…</string>
+    <string name="busy_task_configuring">Yapılandırılıyor</string>
+    <string name="busy_task_downloading">İndiriliyor</string>
+    <string name="busy_task_fetch_configuration">Yapılandırma getiriliyor</string>
+    <string name="busy_task_fetch_ppg">PPG getiriliyor</string>
+    <string name="busy_task_fetch_steps">Adımlar getiriliyor</string>
+    <string name="busy_task_setting_alarms">Alarmlar getiriliyor</string>
+    <string name="busy_task_syncing">Eşzamanlanıyor</string>
+    <string name="interval_1_hour">saatte bir</string>
+    <string name="interval_2_hour">her 2 saatte bir</string>
+    <string name="interval_3_hour">her 3 saatte bir</string>
+    <string name="interval_4_hour">her 4 saatte bir</string>
+    <string name="interval_6_hour">her 6 saatte bir</string>
+    <string name="notif_export_location_not_set">Dışa aktarma konumu yapılandırılmadı</string>
+    <string name="notif_export_zip_failed_title">Zip dosyası dışa aktarılmadı! Lütfen ayarlarınızı gözden geçirin.</string>
+    <string name="unknown_error">Bilinmeyen hata</string>
+    <string name="charts_two_items_only">Aynı anda yalnızca iki ögeyi karşılaştırabilirsiniz.</string>
+    <string name="charts_at_least_one_item">En az bir öge seçilmelidir.</string>
+    <string name="fwinstaller_file_not_compatible_to_device">Seçilen dosya aygıtla uyumlu değil</string>
+    <string name="fwinstaller_no_compatible_device_found">%1s kurmak için uyumlu aygıt bulunamadı</string>
+    <string name="mi2_prefs_inactivity_warnings_dnd_lunch_break_summary">Öğle molası sırasında (12:00 – 14:00) hareketsizlik uyarılarını devre dışı bırak</string>
+    <string name="silent_mode">Sessiz Mod</string>
+    <string name="chinese">Çince</string>
+    <string name="bahasa_melayu">Malayca</string>
+    <string name="activity_prefs_sleep_duration_minutes">Dakika cinsinden tercih edilen uyku süresi</string>
+    <string name="delete_device_and_retain_files">Dosyaları Sakla</string>
+    <string name="hr_measurement_continuous">Sürekli</string>
+    <string name="this_week_total">Bu haftanın toplamı</string>
+    <string name="last_week_total">Geçen haftanın toplamı</string>
+    <string name="low">Düşük</string>
+    <string name="optimal">En uygun</string>
+    <string name="high">Yüksek</string>
+    <string name="very_high">Çok Yüksek</string>
+    <string name="devicetype_generic_thermal_printer">Termal Yazıcı</string>
+    <string name="devicetype_generic_headphones">Kulaklık</string>
+    <string name="devicetype_generic_heart_rate_sensor">Kalp Ritmi Sensörü</string>
+    <string name="devicetype_generic_weight_scale">Tartı</string>
+    <string name="zepp_os_sun_moon_utc_title">Güneş/ay zamanlarını UTC olarak gönder</string>
+    <string name="zepp_os_sun_moon_utc_summary">Saatiniz güneş ve ay zamanları için yanlış değerler gösteriyorsa bunu etkinleştirin</string>
+    <string name="weather_condition_thunderstorm_with_light_rain">hafif yağmurlu fırtına</string>
+    <string name="weather_condition_thunderstorm_with_rain">yağmurlu fırtına</string>
+    <string name="weather_condition_thunderstorm_with_heavy_rain">şiddetli yağmurlu fırtına</string>
+    <string name="weather_condition_light_thunderstorm">hafif fırtına</string>
+    <string name="weather_condition_thunderstorm_with_light_drizzle">hafif çiseleyen yağmurlu fırtına</string>
+    <string name="weather_condition_thunderstorm_with_drizzle">çiseleyen yağmurlu fırtına</string>
+    <string name="weather_condition_thunderstorm_with_heavy_drizzle">şiddetli çiseleyen yağmurlu fırtına</string>
+    <string name="weather_condition_heavy_thunderstorm">şiddetli fırtına</string>
 </resources>
