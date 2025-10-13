@@ -1872,9 +1872,7 @@
     <string name="pref_disable_find_phone_with_dnd">當勿擾模式啟用時禁用尋找我的手機</string>
     <string name="pref_spo_automatic_enable">啟用自動SpO2測量</string>
     <string name="pref_force_options">強制選項</string>
-    <string name="pref_force_options_summary">某些設備錯誤地聲稱不支持某些選項。這些設置可以用來強行啟用它們。
-\n自擔風險使用
-\n請閱讀維基</string>
+    <string name="pref_force_options_summary">某些設備錯誤地聲稱不支持某些選項。這些設置可以用來強行啟用它們。 \n自擔風險使用 \n請閱讀維基</string>
     <string name="pref_force_smart_alarm">強制智能警報</string>
     <string name="pref_force_smart_alarm_summary">強制智能警報支援。
 \n使用風險自負</string>
