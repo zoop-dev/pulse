@@ -169,10 +169,9 @@ public class HuaweiSettingsCustomizer implements DeviceSpecificSettingsCustomize
         }
 
         final SwitchPreferenceCompat sleepBreath = handler.findPreference(PREF_HUAWEI_SLEEP_BREATH);
-        if (sleepBreath != null && !coordinator.supportsSleepBreath()) {
+        if (sleepBreath != null && !(coordinator.supportsSleepBreath() || coordinator.supportsSleepApnea())) {
             sleepBreath.setVisible(false);
         }
-
 
         final SwitchPreferenceCompat reparseWorkout = handler.findPreference("huawei_reparse_workout_data");
         if (reparseWorkout != null) {

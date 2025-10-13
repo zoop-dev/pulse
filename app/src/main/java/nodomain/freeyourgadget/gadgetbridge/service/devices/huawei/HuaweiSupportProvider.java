@@ -141,6 +141,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.Huaw
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncEmotion;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncFindDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncGoals;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncSleepApnea;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PAppIcon;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PCalendarService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PCannedRepliesService;
@@ -309,6 +310,8 @@ public class HuaweiSupportProvider {
     private HuaweiDataSyncEmotion huaweiDataSyncEmotion = null;
 
     private HuaweiDataSyncArrhythmia huaweiDataSyncArrhythmia = null;
+
+    private HuaweiDataSyncSleepApnea huaweiDataSyncSleepApnea = null;
 
     private HuaweiDataSyncEcg huaweiDataSyncEcg = null;
 
@@ -878,6 +881,9 @@ public class HuaweiSupportProvider {
             }
             if (getHuaweiCoordinator().supportsECG()  && getHuaweiCoordinator().isShowForceCountrySpecificFeatures(getCoordinator().getDevice())) {
                 huaweiDataSyncEcg = new HuaweiDataSyncEcg(HuaweiSupportProvider.this);
+            }
+            if(getHuaweiCoordinator().supportsSleepApnea()) {
+                huaweiDataSyncSleepApnea = new HuaweiDataSyncSleepApnea(HuaweiSupportProvider.this);
             }
 
             // All of the below check that they are supported and otherwise they skip themselves
@@ -2301,12 +2307,24 @@ public class HuaweiSupportProvider {
     }
 
     public void setSleepBreath() {
-        try {
-            SendSleepBreathRequest setSleepBreathReq = new SendSleepBreathRequest(this);
-            setSleepBreathReq.doPerform();
-        } catch (IOException e) {
-            GB.toast(context, "Failed to configure sleep breathing awareness", Toast.LENGTH_SHORT, GB.ERROR, e);
-            LOG.error("Failed to configure sleep breathing awareness", e);
+        if(huaweiDataSyncSleepApnea != null) {
+            boolean sleepBreathSwitch = GBApplication
+                    .getDeviceSpecificSharedPrefs(this.getDevice().getAddress())
+                    .getBoolean(HuaweiConstants.PREF_HUAWEI_SLEEP_BREATH, false);
+            if(!huaweiDataSyncSleepApnea.changeSleepBreatheState(sleepBreathSwitch)) {
+                LOG.error("Failed to configure sleep breathing");
+            }
+            if(!huaweiDataSyncSleepApnea.changeSleepApneaState(sleepBreathSwitch)) {
+                LOG.error("Failed to configure sleep apnea");
+            }
+        } else {
+            try {
+                SendSleepBreathRequest setSleepBreathReq = new SendSleepBreathRequest(this);
+                setSleepBreathReq.doPerform();
+            } catch (IOException e) {
+                GB.toast(context, "Failed to configure sleep breathing awareness", Toast.LENGTH_SHORT, GB.ERROR, e);
+                LOG.error("Failed to configure sleep breathing awareness", e);
+            }
         }
     }
 

@@ -733,6 +733,10 @@ public class HuaweiCoordinator {
         return supportsCommandForService(0x20, 0x09);
     }
 
+    public boolean supportsSleepBreath() {
+        return supportsCommandForService(0x2d, 0x01);
+    }
+
     public boolean supportsExternalCalendarService() {
         if (supportsExpandCapability())
             return supportsExpandCapability(184);
@@ -894,9 +898,10 @@ public class HuaweiCoordinator {
         return false;
     }
 
-    public boolean supportsSleepBreath() {
+    //111 - resend capability
+    public boolean supportsSleepApnea() {
         if (supportsExpandCapability())
-            return supportsExpandCapability(178); // 107
+            return supportsExpandCapability(107); // 178
         return false;
     }
 
@@ -918,10 +923,26 @@ public class HuaweiCoordinator {
         return false;
     }
 
-    public boolean supportsArrhythmia() {
+    public boolean supportsArrhythmiaOther() {
         if (supportsExpandCapability())
-            return supportsExpandCapability(168); // 113
+            return supportsExpandCapability(113);
         return false;
+    }
+
+    public boolean supportsArrhythmiaCE() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(255);
+        return false;
+    }
+
+    public boolean supportsArrhythmiaCN() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(168);
+        return false;
+    }
+
+    public boolean supportsArrhythmia() {
+        return supportsArrhythmiaCE() || supportsArrhythmiaCN() || supportsArrhythmiaOther();
     }
 
     public boolean supportsECG() {
