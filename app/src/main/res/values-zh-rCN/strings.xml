@@ -4063,9 +4063,21 @@
     <string name="pref_huawei_health_features_config_summary">配置扩展的健康功能。</string>
     <string name="pref_huawei_features_config_info_title">启用附加的健康功能</string>
     <string name="pref_huawei_features_config_info_summary">启用下列设置会激活设备上附加的健康功能。比如情绪或心电图。\n注：可用功能取决于设备。</string>
-    <string name="pref_huawei_features_config_warning_summary">警告：Gadgetbridge 和厂商应用同时使用时开启这些设置可能导致厂商应用或设备功能问题或者完全无法影响但概念设备功能。自行承担开启风险。\n需要重连设备。</string>
+    <string name="pref_huawei_features_config_warning_summary">警告：Gadgetbridge 和厂商应用同时使用时开启这些设置可能导致厂商应用或设备功能问题或者完全无法影响但概念设备功能。设置错误的国家/地区可能会影响其他设备设置，例如基于区域的频率配置等。自行承担开启风险。\n需要重连设备。</string>
     <string name="pref_huawei_send_country_code_title">发送国家/地区码</string>
     <string name="pref_huawei_send_country_code_summary">发送国家/地区码到设备上。\n 注意:应当设置国家/地区码</string>
     <string name="pref_huawei_country_code_title">国家/地区码</string>
     <string name="pref_huawei_features_config_warning_title">发送国家/地区码和功能配置文件到该设备。</string>
+    <string name="pref_huawei_force_features_settings_title">强制显示国家/地区限制设置</string>
+    <string name="pref_huawei_force_features_settings_summary">强制在 Gadgetbridge 应用中显示特定国家/地区的设置。\n警告：Gadgetbridge 将显示您设备报告的支持设置。请注意，某些设置可能受到您设备上供应商应用的限制，可能不工作或无法正确地工作。</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia">脉搏波心律失常</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_enable_title">开启脉搏波心律失常</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_enable_summary">在设备上激活脉冲波心律失常</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_automatic_title">自动心律失常检测</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_automatic_summary">设备将自动监测您的心率。</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_alert_title">心律失常警报</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_alert_summary">心率异常时收到警报</string>
+    <string name="pref_screen_ecg">心电图</string>
+    <string name="pref_huawei_ecg_activate_title">激活心电图</string>
+    <string name="pref_huawei_ecg_activate_summary">在设备上激活或停用心电图</string>
 </resources>
