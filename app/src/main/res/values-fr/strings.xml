@@ -2571,9 +2571,7 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_enable_call_accept_summary">Autoriser les appels depuis l\'appareil</string>
     <string name="widget_move_up">Déplacer vers le haut</string>
     <string name="pref_force_connection_type_auto">Automatique</string>
-    <string name="pref_force_options_summary">Certains appareils prétendent à tort ne pas prendre en charge certaines options. Ces réglages peuvent être utilisés pour les activer malgré tout.
-\nÀ UTILISER À VOS RISQUES ET PÉRILS
-\nLire le wiki</string>
+    <string name="pref_force_options_summary">Certains appareils prétendent à tort ne pas prendre en charge certaines options. Ces réglages peuvent être utilisés pour les activer malgré tout. \nÀ UTILISER À VOS RISQUES ET PÉRILS \nLire le wiki</string>
     <string name="pref_force_smart_alarm">Forcer l\'alarme intelligente</string>
     <string name="pref_force_smart_alarm_summary">Forcer la gestion des alarmes intelligentes
 \nUTILISER À VOS RISQUES ET PÉRILS</string>
