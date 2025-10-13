@@ -2489,9 +2489,7 @@
     <string name="impactMax">Impatto massimo</string>
     <string name="pref_force_options">Forza le opzioni</string>
     <string name="pref_spo_automatic_enable">Abilita la misurazione automatica della SpO2</string>
-    <string name="pref_force_options_summary">Alcuni dispositivi dichiarano falsamente di non supportare alcune opzioni. Questa impostazione può essere utilizzata per abilitarle comunque.
-\nUSA A TUO RISCHIO E PERICOLO
-\nLeggi il wiki</string>
+    <string name="pref_force_options_summary">Alcuni dispositivi dichiarano falsamente di non supportare alcune opzioni. Questa impostazione può essere utilizzata per abilitarle comunque. \nUSA A TUO RISCHIO E PERICOLO \nLeggi il wiki</string>
     <string name="pref_force_dnd_support_summary">Forza il supporto a Non Disturbare
 \nUSA A TUO RISCHIO E PERICOLO</string>
     <string name="pref_summary_debug">Inviare una richiesta di debug al dispositivo Huawei</string>
