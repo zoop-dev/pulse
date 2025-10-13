@@ -4,9 +4,10 @@
     xmlns:g3="http://www.garmin.com/xmlschemas/GpxExtensions/v3"
     xmlns:gpx="http://www.topografix.com/GPX/1/1"
     xmlns:tx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1"
+    xmlns:tx2="http://www.garmin.com/xmlschemas/TrackPointExtension/v2"
     xmlns:w1="http://www.garmin.com/xmlschemas/WaypointExtension/v1"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    exclude-result-prefixes="ax g3 gpx tx w1"
+    exclude-result-prefixes="ax g3 gpx tx tx2 w1"
     version="1.0">
     <xsl:output
         encoding="UTF-8"
@@ -65,6 +66,9 @@
         <trkpt>
             <xsl:call-template name="point" />
             <xsl:choose>
+                <xsl:when test="gpx:extensions/tx2:TrackPointExtension/tx2:atemp">
+                    <xsl:attribute name="temperature"><xsl:value-of select="gpx:extensions/tx2:TrackPointExtension/tx2:atemp" /></xsl:attribute>
+                </xsl:when>
                 <xsl:when test="gpx:extensions/tx:TrackPointExtension/tx:atemp">
                     <xsl:attribute name="temperature"><xsl:value-of select="gpx:extensions/tx:TrackPointExtension/tx:atemp" /></xsl:attribute>
                 </xsl:when>
@@ -72,18 +76,42 @@
                     <xsl:attribute name="temperature"><xsl:value-of select="gpx:extensions/g3:TrackPointExtension/g3:Temperature" /></xsl:attribute>
                 </xsl:when>
             </xsl:choose>
-                        <xsl:choose>
-                            <xsl:when test="gpx:extensions/tx:TrackPointExtension/tx:depth">
-                                <xsl:attribute name="depth"><xsl:value-of select="gpx:extensions/tx:TrackPointExtension/tx:depth" /></xsl:attribute>
-                            </xsl:when>
-                            <xsl:when test="gpx:extensions/g3:TrackPointExtension/g3:Depth">
-                                <xsl:attribute name="depth"><xsl:value-of select="gpx:extensions/g3:TrackPointExtension/g3:Depth" /></xsl:attribute>
-                            </xsl:when>
-                        </xsl:choose>
-                        <xsl:if test="gpx:extensions/tx:TrackPointExtension/tx:hr"><xsl:attribute name="hr"><xsl:value-of select="gpx:extensions/tx:TrackPointExtension/tx:hr" /></xsl:attribute></xsl:if>
-                        <xsl:if test="gpx:extensions/tx:TrackPointExtension/tx:cad"><xsl:attribute name="cad"><xsl:value-of select="gpx:extensions/tx:TrackPointExtension/tx:cad" /></xsl:attribute></xsl:if>
-                        <xsl:if test="gpx:extensions/ax:TrackPointExtension/ax:speed"><xsl:attribute name="speed"><xsl:value-of select="gpx:extensions/ax:TrackPointExtension/ax:speed" /></xsl:attribute></xsl:if>
-                 </trkpt>
+            <xsl:choose>
+                <xsl:when test="gpx:extensions/tx2:TrackPointExtension/tx2:depth">
+                    <xsl:attribute name="depth"><xsl:value-of select="gpx:extensions/tx2:TrackPointExtension/tx2:depth" /></xsl:attribute>
+                </xsl:when>
+                <xsl:when test="gpx:extensions/tx:TrackPointExtension/tx:depth">
+                    <xsl:attribute name="depth"><xsl:value-of select="gpx:extensions/tx:TrackPointExtension/tx:depth" /></xsl:attribute>
+                </xsl:when>
+                <xsl:when test="gpx:extensions/g3:TrackPointExtension/g3:Depth">
+                    <xsl:attribute name="depth"><xsl:value-of select="gpx:extensions/g3:TrackPointExtension/g3:Depth" /></xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
+            <xsl:choose>
+                <xsl:when test="gpx:extensions/tx2:TrackPointExtension/tx2:hr">
+                    <xsl:attribute name="hr"><xsl:value-of select="gpx:extensions/tx2:TrackPointExtension/tx2:hr" /></xsl:attribute>
+                </xsl:when>
+                <xsl:when test="gpx:extensions/tx:TrackPointExtension/tx:hr">
+                    <xsl:attribute name="hr"><xsl:value-of select="gpx:extensions/tx:TrackPointExtension/tx:hr" /></xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
+            <xsl:choose>
+                <xsl:when test="gpx:extensions/tx2:TrackPointExtension/tx2:cad">
+                    <xsl:attribute name="cad"><xsl:value-of select="gpx:extensions/tx2:TrackPointExtension/tx2:cad" /></xsl:attribute>
+                </xsl:when>
+                <xsl:when test="gpx:extensions/tx:TrackPointExtension/tx:cad">
+                    <xsl:attribute name="cad"><xsl:value-of select="gpx:extensions/tx:TrackPointExtension/tx:cad" /></xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
+            <xsl:choose>
+                <xsl:when test="gpx:extensions/tx2:TrackPointExtension/tx2:speed">
+                    <xsl:attribute name="speed"><xsl:value-of select="gpx:extensions/tx2:TrackPointExtension/tx2:speed" /></xsl:attribute>
+                </xsl:when>
+                <xsl:when test="gpx:extensions/ax:TrackPointExtension/ax:speed">
+                    <xsl:attribute name="speed"><xsl:value-of select="gpx:extensions/ax:TrackPointExtension/ax:speed" /></xsl:attribute>
+                </xsl:when>
+            </xsl:choose>
+        </trkpt>
     </xsl:template>
 
     <xsl:template name="point">

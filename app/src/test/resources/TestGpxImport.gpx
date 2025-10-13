@@ -3,7 +3,8 @@
     creator="Garmin Desktop App"
     xmlns:ax="http://www.garmin.com/xmlschemas/ActivityExtension/v1"
     xmlns:ge="http://www.garmin.com/xmlschemas/GpxExtensions/v3"
-    xmlns:tpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1"
+    xmlns:t1="http://www.garmin.com/xmlschemas/TrackPointExtension/v1"
+    xmlns:t2="http://www.garmin.com/xmlschemas/TrackPointExtension/v2"
     xmlns:wpx="http://www.garmin.com/xmlschemas/WaypointExtension/v1"
 >
 
@@ -82,12 +83,12 @@
                 <vdop>3.2</vdop>
                 <pdop>1.5</pdop>
                 <extensions>
-                    <tpx:TrackPointExtension>
-                        <tpx:atemp>28.3</tpx:atemp>
-                        <tpx:depth>26.3</tpx:depth>
-                        <tpx:hr>123</tpx:hr>
-                        <tpx:cad>22</tpx:cad>
-                    </tpx:TrackPointExtension>
+                    <t1:TrackPointExtension>
+                        <t1:atemp>28.3</t1:atemp>
+                        <t1:depth>26.3</t1:depth>
+                        <t1:hr>123</t1:hr>
+                        <t1:cad>22</t1:cad>
+                    </t1:TrackPointExtension>
                     <ax:TrackPointExtension>
                         <ax:speed>23.3</ax:speed>
                     </ax:TrackPointExtension>
@@ -106,7 +107,17 @@
                     </ge:TrackPointExtension>
                 </extensions>
             </trkpt>
-            <trkpt lat="47.65594482421875" lon="9.47296142578125" />
+            <trkpt lat="47.65594482421875" lon="9.47296142578125">
+                <extensions>
+                    <t2:TrackPointExtension>
+                        <t2:atemp>40.4</t2:atemp>
+                        <t2:depth>41.4</t2:depth>
+                        <t2:hr>42</t2:hr>
+                        <t2:cad>43</t2:cad>
+                        <t2:speed>44.4</t2:speed>
+                    </t2:TrackPointExtension>
+                </extensions>
+            </trkpt>
             <trkpt lat="-43" lon="-19" />
         </trkseg>
     </trk>
