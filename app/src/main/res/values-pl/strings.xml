@@ -457,7 +457,7 @@
     <string name="appwidget_text">Zzz</string>
     <string name="updatefirmwareoperation_firmware_not_sent">Firmware nie zostało wysłane</string>
     <string name="pref_title_pebble_health_store_raw">Przechowuj \"surowe\" rekordy w bazie danych</string>
-    <string name="pref_summary_pebble_health_store_raw">Zapisuje dane bez przetwarzania, zwiększając użycie bazy danych i umożliwiając ich późniejszą interpretację.</string>
+    <string name="pref_summary_pebble_health_store_raw">Przechowuje dane „w oryginalnej postaci”, zwiększając zużycie bazy danych, aby umożliwić późniejszą interpretację.</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Brak dostępu do ścieżki eksportu. Prosimy o kontakt z developerami.</string>
     <string name="dbmanagementactivity_import_successful">Zaimportowano.</string>
     <string name="dbmanagementactivity_delete_activity_data_title">Skasować dane o aktywności\?</string>
@@ -532,7 +532,7 @@
     <string name="overstep">Przekroczenie: %1$d</string>
     <string name="you_did_not_sleep">Nie spałeś(-aś)</string>
     <string name="mi2_prefs_button_press_broadcast">Wiadomość do rozgłoszenia</string>
-    <string name="mi2_prefs_button_press_broadcast_summary">Wiadomość broadcast nadawana wraz z zdarzeniem. Do każdej wiadomości jest automatycznie dodawany parametr `button_id`.</string>
+    <string name="mi2_prefs_button_press_broadcast_summary">Wiadomość rozgłoszeniowa wysłana ze zdarzeniem. Parametr „button_id” jest dodawany do każdej wiadomości automatycznie.</string>
     <string name="mi2_prefs_do_not_disturb_summary">Opaska nie będzie wyświetlać powiadomień, gdy ten tryb jest aktywny</string>
     <string name="mi2_prefs_do_not_disturb_start">Początek</string>
     <string name="mi2_prefs_do_not_disturb_end">Koniec</string>
@@ -2194,7 +2194,7 @@
     <string name="fossil_hr_pairing_failed">Parowanie z zegarkiem nie powiodło się</string>
     <string name="english_au">Angielski (Australia)</string>
     <string name="prefs_wena3_home_icon_name_energy">Energia ciała</string>
-    <string name="permission_request">%1$s umożliwia wysyłanie wiadomości i innych danych z Androida na Twoje urządzenie. Aby to zrobić, wymagany jest dostęp do tych danych i bez niego może nie działać poprawnie. \n \nZostanie wyświetlonych kilka okien dialogowych Androida z prośbą o te uprawnienia. \n \nAby kontynuować, kliknij %2$s.</string>
+    <string name="permission_request">%1$s umożliwia wysyłanie wiadomości i innych danych z Androida na Twoje urządzenie. Aby to zrobić, wymagany jest dostęp do tych danych i bez niego może nie działać poprawnie. \n \nZostanie wyświetlonych kilka okien dialogowych Androida z prośbą o te uprawnienia. \n \nAby kontynuować, kliknij „%2$s”.</string>
     <string name="loyalty_cards_catima_package">Nazwa pakietu Catima</string>
     <string name="prefs_wena3_notification_vibration_repetition_2">Dwukrotnie</string>
     <string name="prefs_wena3_auto_power_off_hint">Urządzenie wyłączy się i włączy automatycznie według określonego harmonogramu</string>
