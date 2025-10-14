@@ -714,7 +714,7 @@
     <string name="prefs_find_phone_summary">使用您的手环以在手机上播放铃声。</string>
     <string name="prefs_find_phone_duration">铃声将持续数秒</string>
     <string name="maximum_duration">持续</string>
-    <string name="discovery_need_to_enter_authkey">此设备需要认证密钥，请在设备上长按以输入密钥。具体请阅读 Wiki 。</string>
+    <string name="discovery_need_to_enter_authkey">此设备需要认证密钥，请在设备上长按以输入密钥。更多信息请见网站。</string>
     <string name="fw_upgrade_notice_amazfitbip_lite">您即将在跃我手表青春版 Lite(Amazfit Bip Lite)上安装 %s 版本的固件
 \n
 \n请确保先安装 .fw 文件，再安装 .res 文件。您的手环将会在安装了 .fw 文件后重启
@@ -852,7 +852,7 @@
     <string name="about_description_generic">用于替代供应商闭源穿戴设备 Android 应用程序的脱机、无版权、自由的方案。</string>
     <string name="about_activity_title_generic">关于 Gadgetbridge</string>
     <string name="about_title">关于</string>
-    <string name="pref_title_weather_summary">由 LineageOS 天气服务提供，其它 Android 版本需要使用类似 Weather notification 的应用。更多信息请查阅 Gadgetbridge 的Wiki。</string>
+    <string name="pref_title_weather_summary">由 LineageOS 天气服务提供，其它 Android 版本需要使用类似 Breezy Weather 等应用。更多信息请查阅 Gadgetbridge 的网站。</string>
     <string name="menuitem_worldclock">世界时钟</string>
     <string name="permission_granting_mandatory">所有权限都是必须的，若未授予这些权限，可能会导致不稳定</string>
     <string name="error_background_service_reason">由于意外错误，启动后台服务失败。 - 点击此处查看更多详情。\n\n错误：</string>
@@ -1145,7 +1145,7 @@
     <string name="fossil_hr_new_action_cancel">取消</string>
     <string name="fossil_hr_edit_action">编辑动作</string>
     <string name="fossil_hr_edit_action_delete">删除</string>
-    <string name="fossil_hr_commute_actions_explanation">这里配置的动作将出现在你的手表上的通勤应用中。阅读Wiki以了解如何处理这些动作所产生的意图的信息。</string>
+    <string name="fossil_hr_commute_actions_explanation">这里配置的动作将出现在你的手表上的通勤应用中。阅读网站了解如何处理这些动作所产生的意图的信息。</string>
     <string name="watchface_install_info">您即将安装下列表盘：
 \n
 \n%1$s
@@ -1612,8 +1612,8 @@
     <string name="ukranian">乌克兰语</string>
     <string name="bengali">孟加拉语</string>
     <string name="icelandic">冰岛语</string>
-    <string name="pref_explanation_authkey">有些设备在第一次初始化时需要一个特殊的配对密钥。点击这里访问Wiki以了解更多细节。</string>
-    <string name="pref_explanation_authkey_new_protocol">如果您在手环上看到“更新应用至最新版本”的提示，请确保选中上方的“新认证协议”。点击这里以在 Wiki 上获得更多信息。</string>
+    <string name="pref_explanation_authkey">有些设备在第一次初始化时需要一个特殊的配对密钥。点击此处在网站上获取更多细节。</string>
+    <string name="pref_explanation_authkey_new_protocol">如果您在手环上看到“更新应用至最新版本”的提示，请确保选中上方的“新认证协议”。点击这里在网站上获得更多信息。</string>
     <string name="prefs_password">密码</string>
     <string name="prefs_password_summary">从手腕上取下时，用密码锁定手环</string>
     <string name="prefs_password_4_digits_1_to_4_summary">密码必须有4位数，使用数字1至4</string>
@@ -1643,7 +1643,7 @@
     <string name="open_fw_installer_pick_file">选择文件</string>
     <string name="open_fw_installer_info_text_title">文件安装程序</string>
     <string name="open_fw_installer_select_file">选择您想上传到设备的文件： %s</string>
-    <string name="open_fw_installer_info_text">固件/表盘/应用程序/文件安装程序允许您将支持的文件（固件，表盘，应用程序，GPS，资源，字体等）上传/安装到设备。在 Wiki 中查看更多信息： https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
+    <string name="open_fw_installer_info_text">固件/表盘/应用程序/文件安装程序允许您将支持的文件（固件，表盘，应用程序，GPS，资源，字体等）上传/安装到设备。在网站查看更多信息： https://gadgetbridge.org/internals/features/installer/</string>
     <string name="open_fw_installer_warning_text">此功能有可能使您的设备变砖。虽然如此这般，但是这从未发生在任何开发人员身上，但请记住，这样做需要您自担风险。</string>
     <string name="open_fw_installer_getting_files_title">获取固件/应用程序文件</string>
     <string name="open_fw_installer_getting_files_text">由于我们可能不会提供固件文件，因此您必须自己获取文件。这意味着您将需要在 apk 文件中提取固件，使用搜索引擎查找、或者在论坛搜索（如 Amazfitwatchfaces，适用于小米手环/ 跃我设备）对应的固件等。</string>
@@ -2446,7 +2446,7 @@
     <string name="pref_enable_call_accept">启用接听电话</string>
     <string name="pref_enable_call_accept_summary">启用从设备接受电话</string>
     <string name="pref_heartrate_automatic_enable">启用自动心率测量</string>
-    <string name="pref_force_options_summary">某些设备错误地声称不支持某些选项。无论如何，此设置可用于启用它们。 \n使用风险由您自行承担。 \n阅读维基</string>
+    <string name="pref_force_options_summary">某些设备错误地声称不支持某些选项。无论如何，此设置可用于启用它们。 \n使用风险由您自行承担。 \n阅读网站</string>
     <string name="pref_force_smart_alarm_summary">强制智能报警支持。
 \n风险自担</string>
     <string name="pref_force_dnd_support">强制请勿打扰支持</string>
@@ -4078,4 +4078,7 @@
     <string name="pref_screen_ecg">心电图</string>
     <string name="pref_huawei_ecg_activate_title">激活心电图</string>
     <string name="pref_huawei_ecg_activate_summary">在设备上激活或停用心电图</string>
+    <string name="pref_huawei_arterial_stiffness_detection">动脉硬度检测</string>
+    <string name="pref_huawei_arterial_stiffness_detection_enable_title">开启动脉硬度检测</string>
+    <string name="pref_huawei_arterial_stiffness_detection_enable_summary">在设备上激活动脉硬度检测</string>
 </resources>
