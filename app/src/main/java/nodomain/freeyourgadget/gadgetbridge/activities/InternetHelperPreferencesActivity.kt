@@ -33,6 +33,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import nodomain.freeyourgadget.gadgetbridge.BuildConfig
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper
 import nodomain.freeyourgadget.gadgetbridge.entities.URLFilterEntry
@@ -116,6 +117,8 @@ class InternetHelperPreferencesActivity : AbstractGBActivity() {
             rootKey: String?
         ) {
             setPreferencesFromResource(R.xml.internethelper_preferences, rootKey)
+            val unusedWarning = findPreference<Preference>("pref_key_internethelper_unused")
+            unusedWarning?.isVisible = BuildConfig.INTERNET_ACCESS
             val installWarning = findPreference<Preference>("pref_key_internethelper_not_installed")
             if (AndroidUtils.isPackageInstalled(PACKAGE_INTERNET_HELPER)) {
                 installWarning?.isVisible = false

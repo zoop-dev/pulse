@@ -99,6 +99,12 @@ public class GBWebClient extends WebViewClient {
         boolean matchFound = false;
         List<URLFilterEntry> urlFilterEntries = DBHelper.getURLFilterEntries();
 
+        // Allow full access to internet when available
+        boolean directInternetAccess = GBApplication.hasDirectInternetAccess();
+        if (directInternetAccess && !locallySupported) {
+            return null;
+        }
+
         // Handle local schemes locally
         if (requestedUri.toString().startsWith("file://") || requestedUri.toString().startsWith("gadgetbridge://")) {
             return null;
@@ -151,7 +157,7 @@ public class GBWebClient extends WebViewClient {
 
         // Handle request
         if (requestedUri.getHost() != null && urlIsAllowed) {
-            if (!forceLocal && InternetHelperSingleton.INSTANCE.ensureInternetHelperBound()) {
+            if (!forceLocal && !directInternetAccess && InternetHelperSingleton.INSTANCE.ensureInternetHelperBound()) {
                 LOG.debug("WEBVIEW forwarding request to the internet helper");
                 try {
                     return InternetHelperSingleton.INSTANCE.send(requestedUri);

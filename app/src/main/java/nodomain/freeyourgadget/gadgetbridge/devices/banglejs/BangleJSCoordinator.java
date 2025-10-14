@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
-import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
@@ -55,6 +55,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.banglejs.BangleJSDeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.util.InternetHelperSingleton;
 
 public class BangleJSCoordinator extends AbstractBLEDeviceCoordinator {
 
@@ -168,12 +169,12 @@ public class BangleJSCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public boolean supportsAppsManagement(final GBDevice device) {
-        return true;
+        return GBApplication.hasDirectInternetAccess() || InternetHelperSingleton.INSTANCE.ensureInternetHelperBound();
     }
 
     @Override
     public Class<? extends Activity> getAppsManagementActivity(final GBDevice device) {
-        return AppsManagementActivity.class;
+        return supportsAppsManagement(device) ? AppsManagementActivity.class : null;
     }
 
     @Override
@@ -232,7 +233,7 @@ public class BangleJSCoordinator extends AbstractBLEDeviceCoordinator {
 
         settings.add(R.xml.devicesettings_header_connection);
         settings.add(R.xml.devicesettings_high_mtu);
-        if (BuildConfig.INTERNET_ACCESS)
+        if (GBApplication.hasDirectInternetAccess() || InternetHelperSingleton.INSTANCE.ensureInternetHelperBound())
             settings.add(R.xml.devicesettings_device_internet_access);
 
         settings.add(R.xml.devicesettings_banglejs_activity);

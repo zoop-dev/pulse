@@ -99,7 +99,6 @@ import java.util.SimpleTimeZone;
 import de.greenrobot.dao.query.QueryBuilder;
 import io.wax911.emojify.EmojiManager;
 import io.wax911.emojify.parser.EmojiParserKt;
-import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.WakeActivity;
@@ -141,8 +140,8 @@ import nodomain.freeyourgadget.gadgetbridge.model.NavigationInfoSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
-import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.service.SleepAsAndroidSender;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
@@ -152,6 +151,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.EmojiConverter;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
+import nodomain.freeyourgadget.gadgetbridge.util.InternetHelperSingleton;
 import nodomain.freeyourgadget.gadgetbridge.util.LimitedQueue;
 import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
@@ -918,14 +918,14 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         }
         final String id = _id;
 
-        if (!BuildConfig.INTERNET_ACCESS) {
+        if (!GBApplication.hasDirectInternetAccess() && !InternetHelperSingleton.INSTANCE.ensureInternetHelperBound()) {
             uartTxJSONError("http", "Internet access not enabled, check Gadgetbridge Device Settings", id);
             return;
         }
 
         Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()));
         if (! devicePrefs.getBoolean(PREF_DEVICE_INTERNET_ACCESS, false)) {
-            uartTxJSONError("http", "Internet access not enabled in this Gadgetbridge build", id);
+            uartTxJSONError("http", "Internet access not enabled for this device", id);
             return;
         }
 

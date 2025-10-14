@@ -20,6 +20,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -101,6 +102,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.LimitedQueue;
+import nodomain.freeyourgadget.gadgetbridge.util.PermissionsUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.backup.PeriodicZipExporter;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
@@ -2271,6 +2273,10 @@ public class GBApplication extends Application {
         Resources.Theme theme = context.getTheme();
         theme.resolveAttribute(android.R.attr.windowBackground, typedValue, true);
         return typedValue.data;
+    }
+
+    public static boolean hasDirectInternetAccess() {
+        return BuildConfig.INTERNET_ACCESS && PermissionsUtils.checkPermission(getContext(), Manifest.permission.INTERNET);
     }
 
     public static GBPrefs getPrefs() {

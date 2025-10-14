@@ -4485,4 +4485,6 @@
     <string name="rebble_appstore_fetching_download_file_failed">Fetching download file failed: %1$s</string>
     <string name="internet_helper_permission_title">Internet helper add-on</string>
     <string name="internet_helper_permission_summary">Permit access to the Gadgetbridge-internethelper add-on app</string>
+    <string name="internet_helper_pref_unused_settings_title">Unused settings</string>
+    <string name="internet_helper_pref_unused_settings_summary">The settings below are not used because direct internet access is available.</string>
 </resources>
