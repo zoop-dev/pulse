@@ -3917,4 +3917,7 @@
     <string name="pref_screen_ecg">ECG</string>
     <string name="pref_huawei_ecg_activate_title">Активувати ECG</string>
     <string name="pref_huawei_ecg_activate_summary">Активація або деактивація ECG на пристрої</string>
+    <string name="pref_huawei_arterial_stiffness_detection">Виявлення артеріальної жорсткості</string>
+    <string name="pref_huawei_arterial_stiffness_detection_enable_title">Увімкнути виявлення жорсткості артерій</string>
+    <string name="pref_huawei_arterial_stiffness_detection_enable_summary">Активуйте виявлення жорсткості артерій на пристрої</string>
 </resources>
