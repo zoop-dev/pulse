@@ -140,6 +140,8 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("Fit1900", DeviceType.FITPRO);
             put("M6-4711", DeviceType.FITPRO);
             put("M4-4711", DeviceType.FITPRO);
+            put("C20", DeviceType.C20); // #4070
+            put("C 20", DeviceType.C20); // #5495
         }};
 
         for (Map.Entry<String, DeviceType> e : bluetoothNameToExpectedType.entrySet()) {

@@ -25,7 +25,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 public class C20Coordinator extends AbstractMoyoungDeviceCoordinator {
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("^C20$");
+        return Pattern.compile("^C *20$");
     }
 
     @Override
