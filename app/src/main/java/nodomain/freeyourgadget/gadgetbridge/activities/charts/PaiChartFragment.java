@@ -150,8 +150,8 @@ public class PaiChartFragment extends AbstractChartFragment<PaiChartFragment.Pai
         mWeekChart.getDescription().setTextColor(DESCRIPTION_COLOR);
         mWeekChart.getDescription().setText("");
         mWeekChart.setFitBars(true);
-
         configureBarLineChartDefaults(mWeekChart);
+        mWeekChart.setTouchEnabled(false);
 
         final XAxis x = mWeekChart.getXAxis();
         x.setDrawLabels(true);
@@ -315,7 +315,7 @@ public class PaiChartFragment extends AbstractChartFragment<PaiChartFragment.Pai
         barData.setValueTextColor(TEXT_COLOR); //prevent tearing other graph elements with the black text. Another approach would be to hide the values cmpletely with data.setDrawValues(false);
         barData.setValueTextSize(10f);
 
-        barChart.getAxisLeft().setAxisMaximum(Math.max(maxPai, getPaiTarget()));
+        barChart.getAxisLeft().setAxisMaximum(Math.max(maxPai, getPaiTarget()) + 20);
 
         return new WeekChartsData(barData, new PreformattedXIndexLabelFormatter(labels));
     }
