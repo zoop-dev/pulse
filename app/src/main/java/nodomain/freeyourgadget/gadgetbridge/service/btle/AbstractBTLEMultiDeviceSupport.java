@@ -144,18 +144,20 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
     @Override
     public boolean connect() {
         // Connect to the queue for each device.
+        boolean connected = true;
         synchronized (ConnectionMonitor) {
             for (int i = 0; i < deviceCount; i++) {
                 if (mQueues[i] == null && devices[i] != null) {
                     mQueues[i] = new BtLEQueue(devices[i], mSupportedServerServices[i], this);
                 }
 
-                if (mQueues[i] != null && !mQueues[i].connect()) {
-                    return false;
+                if (mQueues[i] != null) {
+                    // If any device returns false, then return false.
+                    connected &= mQueues[i].connect();
                 }
             }
         }
-        return true;
+        return connected;
     }
 
     /// Disconnects, but doesn't dispose.

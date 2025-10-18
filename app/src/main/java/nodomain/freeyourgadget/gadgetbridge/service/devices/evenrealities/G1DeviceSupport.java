@@ -80,6 +80,7 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
     private G1SideManager leftSide = null;
     private G1SideManager rightSide = null;
     private long lastHeartBeatTime;
+    private long lastHeartBeatDelayTarget;
     private byte globalSequence;
 
     public G1DeviceSupport() {
@@ -95,10 +96,6 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
                             G1Constants.Side.RIGHT.getDeviceIndex());
 
         this.heartBeatRunner = () -> {
-            Calendar c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-            long currentMilliseconds = c.getTimeInMillis();
-            LOG.info("{}ms since the last heartbeat", currentMilliseconds - lastHeartBeatTime);
-            lastHeartBeatTime = currentMilliseconds;
             if (isConnected()) {
                 // We can send any command as a heart beat. The official app uses this one.
                 G1Communications.CommandGetSilentModeSettings leftCommand =
@@ -146,8 +143,8 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
         };
 
         // Non Finals
-        Calendar c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        this.lastHeartBeatTime = c.getTimeInMillis();
+        this.lastHeartBeatTime = 0;
+        this.lastHeartBeatDelayTarget = G1Constants.HEART_BEAT_TARGET_DELAY_MS;
         this.globalSequence = 0;
     }
 
@@ -401,9 +398,35 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
     }
 
     private void scheduleHeatBeat() {
+        Calendar c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        long currentMilliseconds = c.getTimeInMillis();
+        long lastDelay = currentMilliseconds - lastHeartBeatTime;
+        LOG.info("{}ms since the last heartbeat", lastDelay);
+
+        // The actual delay can change based on the sleep state of the phone CPU, the base delay
+        // should always be enough to keep the glasses connected, however it uses the most amount
+        // of battery. Since the amount of time the system adds is unknown, look at the last amount
+        // of sleep time between the last heart beat and now to estimate how much of a delay should
+        // be used to get as close to the target as possible. When transitioning to a low power
+        // state, the timeout may be crossed because the heartbeat was too late, in that case, we
+        // rely on the reconnection logic to connect back. After reconnection, the base delay will
+        // be used and the correct system added delay will be determined.
+        long systemAddedTime = lastDelay - lastHeartBeatDelayTarget;
+        long delay = G1Constants.HEART_BEAT_TARGET_DELAY_MS;
+        if (systemAddedTime > 0) {
+            delay -= systemAddedTime;
+        }
+
+        // Bound the delay between the base and the target.
+        delay = Math.max(delay, G1Constants.HEART_BEAT_BASE_DELAY_MS);
+        delay = Math.min(delay, G1Constants.HEART_BEAT_TARGET_DELAY_MS);
+
         backgroundTasksHandler.removeCallbacksAndMessages(heartBeatRunner);
-        LOG.info("Starting heartbeat runner delayed by {}ms", G1Constants.HEART_BEAT_DELAY_MS);
-        backgroundTasksHandler.postDelayed(heartBeatRunner, G1Constants.HEART_BEAT_DELAY_MS);
+        LOG.info("Starting heartbeat runner delayed by {}ms", delay);
+        backgroundTasksHandler.postDelayed(heartBeatRunner, delay);
+
+        lastHeartBeatTime = currentMilliseconds;
+        lastHeartBeatDelayTarget = delay;
     }
 
     private synchronized void sendDisplaySettings() {
@@ -437,14 +460,25 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////
+    // Below are all the onXXX() handlers overridden from the base class. //
+    ////////////////////////////////////////////////////////////////////////
+
     @Override
     public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
         super.onConnectionStateChange(gatt, status, newState);
 
-        String leftAddress = getDevice(G1Constants.Side.LEFT.getDeviceIndex()).getAddress();
-        String rightAddress = getDevice(G1Constants.Side.RIGHT.getDeviceIndex()).getAddress();
         BluetoothDevice device = gatt.getDevice();
-        if (device == null || !(device.getAddress().equals(leftAddress) && !device.getAddress().equals(rightAddress))) {
+        if (device == null) {
+            return;
+        }
+
+        GBDevice leftDevice = getDevice(G1Constants.Side.LEFT.getDeviceIndex());
+        GBDevice rightDevice = getDevice(G1Constants.Side.RIGHT.getDeviceIndex());
+        boolean isLeft = leftDevice != null && leftDevice.getAddress().equals(device.getAddress());
+        boolean isRight = rightDevice != null && rightDevice.getAddress().equals(device.getAddress());
+
+        if (!isLeft && !isRight) {
             // Not one of the managed devices, nothing to do.
             return;
         }
@@ -452,26 +486,34 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
         if (newState == BluetoothGattServer.STATE_DISCONNECTED) {
             // If either side disconnects, initiate a reconnection on both sides.
             if (status != BluetoothGatt.GATT_SUCCESS) {
-                LOG.info("One side unexpectedly diconnected, attempting to reconnect both.");
-                // The sides must also have their state reset so that the fully initialization
-                // processes is followed.
-                // TODO: Add an intermediate state that the initialization process can respect where
-                // only minimal communications are sent. For example the notification whitelist
-                // messages don't need to be resent.
-                leftSide.resetConnectingState();
-                rightSide.resetConnectingState();
-                getDevice(G1Constants.Side.LEFT.getDeviceIndex())
-                        .setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, getContext());
-                getDevice(G1Constants.Side.RIGHT.getDeviceIndex())
-                        .setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, getContext());
+                synchronized (ConnectionMonitor) {
+                    LOG.info("One side unexpectedly diconnected, attempting to reconnect both.");
+                    // The sides must also have their state reset so that the fully initialization
+                    // processes is followed.
+                    // TODO: Add an intermediate state that the initialization process can respect where
+                    // only minimal communications are sent. For example the notification whitelist
+                    // messages don't need to be resent.
+                    if (leftSide != null) leftSide.resetConnectingState();
+                    if (rightSide != null) rightSide.resetConnectingState();
 
+                    // HACK: disconnect() will notify the whole system of the disconnection if the
+                    // device is not already in the disconnected state, so manually set it to
+                    // disconnected temporarily just so the global broadcast isn't sent out.
+                    if (leftDevice != null) leftDevice.setState(GBDevice.State.NOT_CONNECTED);
+                    if (rightDevice != null) rightDevice.setState(GBDevice.State.NOT_CONNECTED);
+
+                    disconnect();
+
+                    if (leftDevice != null) leftDevice.setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, getContext());
+                    if (rightDevice != null) rightDevice.setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, getContext());
+
+                    // Reset the last heartbeat time to the epoch so it looks like the last one was a
+                    // very long time ago.
+                    lastHeartBeatTime = 0;
+                }
             }
         }
     }
-
-    ////////////////////////////////////////////////////////////////////////
-    // Below are all the onXXX() handlers overridden from the base class. //
-    ////////////////////////////////////////////////////////////////////////
 
     @Override
     public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {

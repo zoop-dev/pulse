@@ -26,7 +26,8 @@ public class G1Constants {
     // Occasionally, the timeout will be exceeded, in which case we rely on the auto reconnection,
     // however that process requires full initialization of the glasses, and as such it is more
     // expensive from a battery budget than just sending the heartbeat message.
-    public static final int HEART_BEAT_DELAY_MS = 8000;
+    public static final int HEART_BEAT_BASE_DELAY_MS = 8000;
+    public static final int HEART_BEAT_TARGET_DELAY_MS = 25000;
     public static final int DEFAULT_COMMAND_TIMEOUT_MS = 5000;
     public static final int DISPLAY_SETTINGS_PREVIEW_DELAY = 3000;
     public static final int DEFAULT_RETRY_COUNT = 5;
