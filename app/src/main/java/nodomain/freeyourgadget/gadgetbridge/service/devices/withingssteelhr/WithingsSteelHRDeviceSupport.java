@@ -184,9 +184,8 @@ public class WithingsSteelHRDeviceSupport extends AbstractBTLESingleDeviceSuppor
         builder.setDeviceState(GBDevice.State.INITIALIZING);
         getDevice().setFirmwareVersion("N/A");
         getDevice().setFirmwareVersion2("N/A");
+        builder.requestMtu(512);
         builder.notify(WithingsUUID.WITHINGS_WRITE_CHARACTERISTIC_UUID, true);
-        logger.debug("Requesting change of MTU...");
-        builder.requestMtu(119);
         return builder;
     }
 
@@ -203,7 +202,7 @@ public class WithingsSteelHRDeviceSupport extends AbstractBTLESingleDeviceSuppor
             return;
         }
 
-        logger.debug("MTU has changed to " + mtu);
+        logger.debug("MTU has changed to {}", mtu);
         mtuSize = mtu;
         if (firstTimeConnect) {
             addSimpleConversationToQueue(new WithingsMessage(WithingsMessageType.INITIAL_CONNECT));
