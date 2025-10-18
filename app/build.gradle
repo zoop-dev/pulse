@@ -266,7 +266,7 @@ dependencies {
     implementation 'com.github.wax911.android-emojify:contract:1.9.7'
     implementation 'com.github.wax911.android-emojify:emojify:1.9.7'
     implementation 'com.github.wax911.android-emojify:gson:1.9.7'
-    implementation 'com.google.protobuf:protobuf-javalite:4.32.1'
+    implementation 'com.google.protobuf:protobuf-javalite:4.33.0'
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'org.msgpack:msgpack-core:0.9.10'
     implementation 'com.github.ByteHamster:SearchPreference:2.7.3'
@@ -310,7 +310,7 @@ tasks.clean.dependsOn(tasks.cleanGenerated)
 
 protobuf {
     protoc {
-        artifact = 'com.google.protobuf:protoc:4.32.1'
+        artifact = 'com.google.protobuf:protoc:4.33.0'
     }
     generateProtoTasks {
         all().each { final task ->
