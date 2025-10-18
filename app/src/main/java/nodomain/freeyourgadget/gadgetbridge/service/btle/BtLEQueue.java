@@ -937,7 +937,7 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
         private void checkWaitingCharacteristic(BluetoothGattCharacteristic characteristic, int status) {
             if (status != BluetoothGatt.GATT_SUCCESS) {
                 if (characteristic != null) {
-                    LOG.debug("failed btle action, aborting transaction: {} {}", characteristic.getUuid(), BleNamesResolver.getStatusString(status));
+                    LOG.warn("failed btle action, aborting transaction: {} {}", characteristic.getUuid(), BleNamesResolver.getStatusString(status));
                 }
                 mAbortTransaction = true;
             }

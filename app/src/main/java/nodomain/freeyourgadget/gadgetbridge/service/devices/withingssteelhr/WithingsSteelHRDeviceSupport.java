@@ -28,6 +28,8 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -118,24 +120,23 @@ public class WithingsSteelHRDeviceSupport extends AbstractBTLESingleDeviceSuppor
     public static final String HANDS_CALIBRATION_CMD = "withings_hands_calibration";
     public static final String START_HANDS_CALIBRATION_CMD = "start_withings_hands_calibration";
     public static final String STOP_HANDS_CALIBRATION_CMD = "stop_withings_hands_calibration";
-    private static Prefs prefs = GBApplication.getPrefs();
-    private MessageBuilder messageBuilder;
+    private final MessageBuilder messageBuilder;
     private LiveWorkoutHandler liveWorkoutHandler;
     private ActivitySampleHandler activitySampleHandler;
-    private ConversationQueue conversationQueue;
+    private final ConversationQueue conversationQueue;
     private boolean firstTimeConnect;
     private BluetoothGattCharacteristic notificationSourceCharacteristic;
     private BluetoothGattCharacteristic dataSourceCharacteristic;
     private BluetoothDevice device;
     private boolean syncInProgress;
-    private ActivityUser activityUser;
-    private NotificationProvider notificationProvider;
-    private IncomingMessageHandlerFactory incomingMessageHandlerFactory;
-    private final BroadcastReceiver commandReceiver;
-    private int mtuSize = 115;
+    private final ActivityUser activityUser;
+    private final NotificationProvider notificationProvider;
+    private final IncomingMessageHandlerFactory incomingMessageHandlerFactory;
+    private final Handler backgroundTasksHandler = new Handler(Looper.getMainLooper());
 
     public WithingsSteelHRDeviceSupport() {
         super(logger);
+        conversationQueue = new ConversationQueue(this);
         notificationProvider = NotificationProvider.getInstance(this);
         messageBuilder = new MessageBuilder(this, new MessageFactory(new DataStructureFactory()));
         liveWorkoutHandler = new LiveWorkoutHandler(this);
@@ -149,8 +150,7 @@ public class WithingsSteelHRDeviceSupport extends AbstractBTLESingleDeviceSuppor
         IntentFilter commandFilter = new IntentFilter(HANDS_CALIBRATION_CMD);
         commandFilter.addAction(START_HANDS_CALIBRATION_CMD);
         commandFilter.addAction(STOP_HANDS_CALIBRATION_CMD);
-        commandReceiver = new BroadcastReceiver() {
-
+        final BroadcastReceiver commandReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction() == null) {
@@ -160,8 +160,8 @@ public class WithingsSteelHRDeviceSupport extends AbstractBTLESingleDeviceSuppor
                 switch (intent.getAction()) {
                     case HANDS_CALIBRATION_CMD:
                         MoveHand moveHand = new MoveHand();
-                        moveHand.setHand(intent.getShortExtra("hand", (short)1));
-                        moveHand.setMovement(intent.getShortExtra("movementAmount", (short)1));
+                        moveHand.setHand(intent.getShortExtra("hand", (short) 1));
+                        moveHand.setMovement(intent.getShortExtra("movementAmount", (short) 1));
                         sendToDevice(new WithingsMessage(WithingsMessageType.MOVE_HAND, moveHand));
                         break;
                     case START_HANDS_CALIBRATION_CMD:
@@ -178,15 +178,34 @@ public class WithingsSteelHRDeviceSupport extends AbstractBTLESingleDeviceSuppor
     }
 
     @Override
+    public void dispose() {
+        synchronized (ConnectionMonitor) {
+            backgroundTasksHandler.removeCallbacksAndMessages(null);
+
+            super.dispose();
+        }
+    }
+
+    @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         logger.debug("Starting initialization...");
-        conversationQueue = new ConversationQueue(this);
+        conversationQueue.clear();
         builder.setDeviceState(GBDevice.State.INITIALIZING);
         getDevice().setFirmwareVersion("N/A");
         getDevice().setFirmwareVersion2("N/A");
-        builder.requestMtu(512);
-        builder.notify(WithingsUUID.WITHINGS_WRITE_CHARACTERISTIC_UUID, true);
+
+        // Delay initialization with 2 seconds to give the watch time to settle
+        backgroundTasksHandler.removeCallbacksAndMessages(null);
+        backgroundTasksHandler.postDelayed(this::postConnectInitialization, 2000);
+
         return builder;
+    }
+
+    private void postConnectInitialization() {
+        final TransactionBuilder builder = createTransactionBuilder("delayed initialization");
+        builder.notify(WithingsUUID.WITHINGS_WRITE_CHARACTERISTIC_UUID, true);
+        builder.requestMtu(512);
+        builder.queue();
     }
 
     @Override
@@ -199,11 +218,12 @@ public class WithingsSteelHRDeviceSupport extends AbstractBTLESingleDeviceSuppor
     public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
         super.onMtuChanged(gatt, mtu, status);
         if (status != BluetoothGatt.GATT_SUCCESS) {
+            logger.error("Failed to change mtu - disconnecting");
+            disconnect();
             return;
         }
 
         logger.debug("MTU has changed to {}", mtu);
-        mtuSize = mtu;
         if (firstTimeConnect) {
             addSimpleConversationToQueue(new WithingsMessage(WithingsMessageType.INITIAL_CONNECT));
             addSimpleConversationToQueue(new WithingsMessage(WithingsMessageType.SET_LOCALE, getLocale()));
@@ -296,7 +316,7 @@ public class WithingsSteelHRDeviceSupport extends AbstractBTLESingleDeviceSuppor
         if (complete) {
             Message message = messageBuilder.getMessage();
             if (message.isIncomingMessage()) {
-                logger.debug("received incoming message: " + message.getType());
+                logger.debug("received incoming message: {}", message.getType());
                 IncomingMessageHandler handler = incomingMessageHandlerFactory.getHandler(message);
                 handler.handleMessage(message);
             } else {
@@ -429,7 +449,7 @@ public class WithingsSteelHRDeviceSupport extends AbstractBTLESingleDeviceSuppor
             }
 
             byte[] rawData = message.getRawData();
-            builder.writeChunkedData(characteristic, rawData, mtuSize - 4);
+            builder.writeChunkedData(characteristic, rawData, getMTU() - 3);
             builder.queue();
         } catch (Exception e) {
             logger.warn("Could not send message because of " + e.getMessage());
@@ -731,7 +751,7 @@ public class WithingsSteelHRDeviceSupport extends AbstractBTLESingleDeviceSuppor
     }
 
     private short getUnit() {
-        String units = prefs.getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
+        String units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
 
         if (units.equals(GBApplication.getContext().getString(R.string.p_unit_metric))) {
             return UserUnitConstants.UNIT_KM;
