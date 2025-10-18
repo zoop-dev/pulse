@@ -154,6 +154,7 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
             binding.sleepScoreWrapper.setVisibility(View.GONE);
         } else {
             setupSleepScoreChart();
+            setupSleepScoreLegend();
         }
 
         setupWeekChart();
@@ -436,6 +437,18 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
             binding.sleepScoreChart.setScaleEnabled(false);
             binding.sleepScoreChart.setTouchEnabled(false);
         }
+    }
+
+    protected void setupSleepScoreLegend() {
+        List<LegendEntry> legendEntries = new ArrayList<>(1);
+        LegendEntry sleepScoreValue = new LegendEntry();
+        sleepScoreValue.label = getString(R.string.sleep_score);
+        sleepScoreValue.formColor = getResources().getColor(R.color.chart_light_sleep_light);
+        legendEntries.add(sleepScoreValue);
+        binding.sleepScoreChart.getLegend().setCustom(legendEntries);
+        binding.sleepScoreChart.getLegend().setTextColor(LEGEND_TEXT_COLOR);
+        binding.sleepScoreChart.getLegend().setWordWrapEnabled(true);
+        binding.sleepScoreChart.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
     }
 
     @Override
