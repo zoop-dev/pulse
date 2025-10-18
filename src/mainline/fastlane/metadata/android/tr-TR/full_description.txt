@@ -1,0 +1,9 @@
+Akıllı saatinizi, fitness takipçinizi ve diğer Bluetooth aygıtlarınızı, üreticinin kapalı kaynaklı uygulaması olmadan, hesap oluşturmanıza ve verilerinizi üreticinin sunucularına aktarmanıza gerek kalmadan kullanın.
+Desteklenen aygıtların tam listesi için lütfen Aygıtlar sayfamıza bakın: https://gadgetbridge.org/gadgets/.
+
+Bilekliğinizden bildirimler alabilir ve ( aygıta bağlı olarak):
+
+- Aygıt sensörlerinden veri toplayabilirsiniz.
+- Android aygıtınızda çalan müziği denetleyebilirsiniz.
+- Hava durumunu görebilirsiniz.
+- Yol tarifi alabilirsiniz.
