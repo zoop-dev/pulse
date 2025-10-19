@@ -299,18 +299,21 @@ public class GarminRealtimeSettingsFragment extends AbstractPreferenceFragment {
                     case 1: // list preference
                         pref = new ListPreference(activity);
                         final CharSequence[] entries = new String[entry.getTarget().getOptions().getOptionList().size()];
+                        final CharSequence[] values = new String[entry.getTarget().getOptions().getOptionList().size()];
                         int optionIndex = 0;
                         for (final GdiSettingsService.TargetOptionEntry option : entry.getTarget().getOptions().getOptionList()) {
-                            entries[optionIndex++] = option.getTitle().getText();
+                            entries[optionIndex] = option.getTitle().getText().replace("%", "%%");
+                            values[optionIndex] = option.getTitle().getText();
+                            optionIndex++;
                         }
                         final ListPreference listPreference = (ListPreference) pref;
                         listPreference.setEntries(entries);
-                        listPreference.setEntryValues(entries);
-                        listPreference.setValue(entries[Objects.requireNonNull(state).getSummary().getValueList().getIndex()].toString());
+                        listPreference.setEntryValues(values);
+                        listPreference.setValue(values[Objects.requireNonNull(state).getSummary().getValueList().getIndex()].toString());
                         listPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                             int newValueIdx = -1;
-                            for (int i = 0; i < entries.length; i++) {
-                                if (entries[i].equals(newValue.toString())) {
+                            for (int i = 0; i < values.length; i++) {
+                                if (values[i].equals(newValue.toString())) {
                                     newValueIdx = i;
                                     break;
                                 }
@@ -684,7 +687,7 @@ public class GarminRealtimeSettingsFragment extends AbstractPreferenceFragment {
             }
 
             if (state != null && !StringUtils.isEmpty(state.getSummary().getTitle().getText())) {
-                pref.setSummary(state.getSummary().getTitle().getText());
+                pref.setSummary(state.getSummary().getTitle().getText().replace("%", "%%"));
             }
 
             if (state != null && state.hasState()) {
