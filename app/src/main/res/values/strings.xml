@@ -2657,6 +2657,7 @@
     <string name="workout_set_repetitions_weight_kg">%1$d x %2$.2f kg</string>
     <string name="workout_set_repetitions_weight_lbs">%1$d x %2$.2f lbs</string>
     <string name="diving_avg_depth">Average depth</string>
+    <string name="diving_depth">Depth</string>
     <string name="diving_avg_descent_rate">Average descent rate</string>
     <string name="diving_avg_ascent_rate">Average ascent rate</string>
     <string name="diving_max_descent_rate">Max descent rate</string>

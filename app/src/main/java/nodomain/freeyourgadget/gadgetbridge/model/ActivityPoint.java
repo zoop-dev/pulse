@@ -43,6 +43,8 @@ public class ActivityPoint {
     private int cadence = -1;
     private int power = -1;
     private float respiratoryRate = -1;
+    private double depth = -1;
+    private double temperature = -273;
 
     // e.g. to describe a pause during the activity
     private @Nullable String description;
@@ -118,4 +120,10 @@ public class ActivityPoint {
     public void setRespiratoryRate(final float respiratoryRate) {
         this.respiratoryRate = respiratoryRate;
     }
+
+    public double getTemperature() {return temperature; }
+    public void setTemperature(final double temperature) { this.temperature = temperature; }
+    public double getDepth() {return depth; }
+    public void setDepth(final double depth) { this.depth = depth; }
+
 }

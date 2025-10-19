@@ -97,6 +97,7 @@
     <color name="chart_line_swolf" type="color">#F9DB22</color>
     <color name="chart_line_stroke_rate" type="color">#6495ED</color>
     <color name="chart_highline_dolor" type="color">#ffff8800</color>
+    <color name="chart_line_depth" type="color">#ff4040ff</color>
 
     <attr name="row_separator" format="color" />
     <color name="alternate_row_background_light">#FFEDEDED</color>

@@ -1010,6 +1010,13 @@ public class FitRecord extends RecordData {
         if (getEnhancedRespirationRate() != null) {
             activityPoint.setRespiratoryRate(getEnhancedRespirationRate());
         }
+        if (getTemperature() != null) {
+            activityPoint.setTemperature(getTemperature());
+        }
+        if (getDepth() != null) {
+            activityPoint.setDepth(getDepth());
+        }
+
         return activityPoint;
     }
 }

@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts;
 
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_BPM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_BREATHS_PER_MIN;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_CELSIUS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KMPH;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS_PER_SECOND;
@@ -53,6 +54,8 @@ public class DefaultWorkoutCharts {
         final List<Entry> elevationDataPoints = new ArrayList<>();
         final List<Entry> powerDataPoints = new ArrayList<>();
         final List<Entry> respiratoryRatePoints = new ArrayList<>();
+        final List<Entry> temperatureDataPoints = new ArrayList<>();
+        final List<Entry> depthDataPoints = new ArrayList<>();
         boolean hasSpeedValues = false;
         boolean hasCadenceValues = false;
         boolean hasElevationValues = false;
@@ -94,6 +97,16 @@ public class DefaultWorkoutCharts {
             if (point.getRespiratoryRate() >= 0) {
                 respiratoryRatePoints.add(new Entry(tsShorten, point.getRespiratoryRate()));
             }
+
+            // Depth (diving activity)
+            if (point.getDepth() > 0) {
+                depthDataPoints.add(new Entry(tsShorten, (float) point.getDepth() * -1));
+            }
+
+            // Temperature
+            if (point.getTemperature() > -273) {
+                temperatureDataPoints.add(new Entry(tsShorten, (float) point.getTemperature()));
+            }
         }
 
         if (!heartRateDataPoints.isEmpty()) {
@@ -118,6 +131,14 @@ public class DefaultWorkoutCharts {
 
         if (!respiratoryRatePoints.isEmpty()) {
             charts.add(createRespiratoryRateChart(context, respiratoryRatePoints));
+        }
+
+        if (!depthDataPoints.isEmpty()) {
+            charts.add(createDepthChart(context, depthDataPoints));
+        }
+
+        if (!temperatureDataPoints.isEmpty()) {
+            charts.add(createTemperatureChart(context, temperatureDataPoints));
         }
 
         return charts;
@@ -262,6 +283,55 @@ public class DefaultWorkoutCharts {
                 new LineData(dataset),
                 integerFormatter,
                 getUnitString(context, UNIT_BREATHS_PER_MIN)
+        );
+    }
+
+    private static WorkoutChart createDepthChart(final Context context,
+                                                     final List<Entry> depthDataPoints) {
+        final String label = String.format("%s(%s)", context.getString(R.string.diving_depth), getUnitString(context, UNIT_METERS));
+        final LineDataSet dataset = createLineDataSet(context, depthDataPoints, label, ContextCompat.getColor(context, R.color.chart_line_depth));
+        final ValueFormatter integerFormatter = new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.valueOf((int) value);
+            }
+        };
+        return new WorkoutChart(
+                "diving_depth",
+                context.getString(R.string.diving_depth),
+                ActivitySummaryEntries.GROUP_DIVING,
+                new LineData(dataset),
+                integerFormatter,
+                getUnitString(context, UNIT_METERS)
+        );
+    }
+
+    private static WorkoutChart createTemperatureChart(final Context context,
+                                                     final List<Entry> temperatureDataPoints) {
+        final String label = String.format("%s(%s)", context.getString(R.string.menuitem_temperature), getUnitString(context, UNIT_CELSIUS));
+        final LineDataSet dataset = createLineDataSet(context, temperatureDataPoints, label, ContextCompat.getColor(context, R.color.chart_line_heart_rate));
+        final ValueFormatter integerFormatter = new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.valueOf((int) value);
+            }
+        };
+        return new WorkoutChart(
+                "temperature",
+                context.getString(R.string.menuitem_temperature),
+                ActivitySummaryEntries.GROUP_OTHER,
+                new LineData(dataset),
+                integerFormatter,
+                getUnitString(context, UNIT_CELSIUS),
+                lineChart -> {
+                    YAxis yAxisLeft = lineChart.getAxisLeft();
+                    yAxisLeft.setAxisMinimum(0);
+                    yAxisLeft.setAxisMaximum(35);
+                    YAxis yAxisRight = lineChart.getAxisRight();
+                    yAxisRight.setAxisMinimum(0);
+                    yAxisRight.setAxisMaximum(35);
+                    return kotlin.Unit.INSTANCE;
+                }
         );
     }
 
