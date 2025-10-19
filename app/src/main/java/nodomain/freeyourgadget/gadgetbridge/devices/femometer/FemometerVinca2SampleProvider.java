@@ -53,7 +53,7 @@ public class FemometerVinca2SampleProvider extends AbstractTimeSampleProvider<Fe
 
     @Override
     public FemometerVinca2TemperatureSample createSample() {
-        FemometerVinca2TemperatureSample sample=new FemometerVinca2TemperatureSample();
+        FemometerVinca2TemperatureSample sample = new FemometerVinca2TemperatureSample();
         sample.setTemperatureType(TemperatureSample.TYPE_BODY);
         sample.setTemperatureLocation(TemperatureSample.LOCATION_MOUTH);
         return sample;

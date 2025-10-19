@@ -33,8 +33,8 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 
 public class GenericTemperatureSampleProvider extends AbstractTimeSampleProvider<GenericTemperatureSample> {
-    private final Integer defaultType;
-    private final Integer defaultLocation;
+    private final int defaultType;
+    private final int defaultLocation;
 
     public GenericTemperatureSampleProvider(final GBDevice device, final DaoSession session) {
         this(device, session, TemperatureSample.TYPE_UNKNOWN, TemperatureSample.LOCATION_UNKNOWN);
@@ -42,8 +42,8 @@ public class GenericTemperatureSampleProvider extends AbstractTimeSampleProvider
 
     public GenericTemperatureSampleProvider(final GBDevice device,
                                             final DaoSession session,
-                                            final Integer defaultType,
-                                            final Integer defaultLocation) {
+                                            final int defaultType,
+                                            final int defaultLocation) {
         super(device, session);
         this.defaultType = defaultType;
         this.defaultLocation = defaultLocation;
@@ -51,10 +51,10 @@ public class GenericTemperatureSampleProvider extends AbstractTimeSampleProvider
 
     private GenericTemperatureSample applyDefaults(final GenericTemperatureSample sample) {
         if (sample != null) {
-            if (defaultType != -1 && (sample.getTemperatureType() == null || sample.getTemperatureType() == 0)) {
+            if (defaultType != TemperatureSample.TYPE_UNKNOWN && sample.getTemperatureType() == TemperatureSample.TYPE_UNKNOWN) {
                 sample.setTemperatureType(defaultType);
             }
-            if (defaultLocation != -1 && (sample.getTemperatureLocation() == null || sample.getTemperatureLocation() == 0)) {
+            if (defaultLocation != TemperatureSample.LOCATION_UNKNOWN && sample.getTemperatureLocation() == TemperatureSample.LOCATION_UNKNOWN) {
                 sample.setTemperatureLocation(defaultLocation);
             }
         }
@@ -81,7 +81,10 @@ public class GenericTemperatureSampleProvider extends AbstractTimeSampleProvider
 
     @Override
     public GenericTemperatureSample createSample() {
-        return new GenericTemperatureSample();
+        final GenericTemperatureSample sample = new GenericTemperatureSample();
+        sample.setTemperatureType(defaultType);
+        sample.setTemperatureLocation(defaultLocation);
+        return sample;
     }
 
     @NonNull

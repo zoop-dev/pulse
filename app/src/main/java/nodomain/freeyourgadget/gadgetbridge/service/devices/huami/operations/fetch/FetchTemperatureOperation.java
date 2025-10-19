@@ -83,7 +83,8 @@ public class FetchTemperatureOperation extends AbstractRepeatingFetchOperation {
             final GenericTemperatureSample sample = new GenericTemperatureSample();
             sample.setTimestamp(timestamp.getTimeInMillis());
             sample.setTemperature(temperature / 100f);
-            sample.setTemperatureType(0);
+            sample.setTemperatureLocation(GenericTemperatureSample.LOCATION_WRIST);
+            sample.setTemperatureType(GenericTemperatureSample.TYPE_SKIN);
             samples.add(sample);
 
             timestamp.add(Calendar.MINUTE, 1);

@@ -36,16 +36,16 @@ public class SchemaMigration {
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        LOG.info("ActivityDatabase: schema upgrade requested from " + oldVersion + " to " + newVersion);
+        LOG.info("ActivityDatabase: schema upgrade requested from {} to {}", oldVersion, newVersion);
         try {
             for (int i = oldVersion + 1; i <= newVersion; i++) {
                 DBUpdateScript updater = getUpdateScript(db, i);
                 if (updater != null) {
-                    LOG.info("upgrading activity database to version " + i);
+                    LOG.info("upgrading activity database to version {}", i);
                     updater.upgradeSchema(db);
                 }
             }
-            LOG.info("activity database is now at version " + newVersion);
+            LOG.info("activity database is now at version {}", newVersion);
         } catch (RuntimeException ex) {
             GB.toast("Error upgrading database.", Toast.LENGTH_SHORT, GB.ERROR, ex);
             throw ex; // reject upgrade
@@ -53,16 +53,16 @@ public class SchemaMigration {
     }
 
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        LOG.info("ActivityDatabase: schema downgrade requested from " + oldVersion + " to " + newVersion);
+        LOG.info("ActivityDatabase: schema downgrade requested from {} to {}", oldVersion, newVersion);
         try {
             for (int i = oldVersion; i >= newVersion; i--) {
                 DBUpdateScript updater = getUpdateScript(db, i);
                 if (updater != null) {
-                    LOG.info("downgrading activity database to version " + (i - 1));
+                    LOG.info("downgrading activity database to version {}", i - 1);
                     updater.downgradeSchema(db);
                 }
             }
-            LOG.info("activity database is now at version " + newVersion);
+            LOG.info("activity database is now at version {}", newVersion);
         } catch (RuntimeException ex) {
             GB.toast("Error downgrading database.", Toast.LENGTH_SHORT, GB.ERROR, ex);
             throw ex; // reject downgrade

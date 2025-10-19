@@ -643,9 +643,9 @@ public class GBDaoGenerator {
     private static Entity addColmiTemperatureSample(Schema schema, Entity user, Entity device) {
         Entity sample = addEntity(schema, "ColmiTemperatureSample");
         addCommonTimeSampleProperties("AbstractTemperatureSample", sample, user, device);
-        sample.addFloatProperty(SAMPLE_TEMPERATURE).notNull();
-        sample.addIntProperty("temperatureType");
-        sample.addIntProperty("temperatureLocation");
+        sample.addFloatProperty(SAMPLE_TEMPERATURE).notNull().codeBeforeGetter(OVERRIDE);
+        sample.addIntProperty("temperatureType").notNull().codeBeforeGetter(OVERRIDE);
+        sample.addIntProperty("temperatureLocation").notNull().codeBeforeGetter(OVERRIDE);
         return sample;
     }
 
@@ -1608,8 +1608,8 @@ public class GBDaoGenerator {
         addCommonTimeSampleProperties("AbstractTemperatureSample", sample, user, device);
         sample.addLongProperty("lastTimestamp").notNull().index();
         sample.addFloatProperty(SAMPLE_TEMPERATURE).notNull();
-        sample.addIntProperty("temperatureType").primaryKey();
-        sample.addIntProperty("temperatureLocation");
+        sample.addIntProperty("temperatureType").notNull().primaryKey().codeBeforeGetter(OVERRIDE);
+        sample.addIntProperty("temperatureLocation").notNull().codeBeforeGetter(OVERRIDE);
         return sample;
     }
 
@@ -1902,10 +1902,10 @@ public class GBDaoGenerator {
 
     private static Entity addFemometerVinca2TemperatureSample(Schema schema, Entity user, Entity device) {
         Entity sample = addEntity(schema, "FemometerVinca2TemperatureSample");
-        sample.addFloatProperty(SAMPLE_TEMPERATURE).notNull();
-        sample.addIntProperty("temperatureType");
-        sample.addIntProperty("temperatureLocation");
         addCommonTimeSampleProperties("AbstractTemperatureSample", sample, user, device);
+        sample.addFloatProperty(SAMPLE_TEMPERATURE).notNull().codeBeforeGetter(OVERRIDE);
+        sample.addIntProperty("temperatureType").notNull().codeBeforeGetter(OVERRIDE);
+        sample.addIntProperty("temperatureLocation").notNull().codeBeforeGetter(OVERRIDE);
         return sample;
     }
 
@@ -1914,8 +1914,8 @@ public class GBDaoGenerator {
         addCommonTimeSampleProperties("AbstractTemperatureSample", sample, user, device);
         sample.addFloatProperty(SAMPLE_TEMPERATURE).notNull().codeBeforeGetter(OVERRIDE);
         sample.addIntProperty("humidity").notNull();
-        sample.addIntProperty("temperatureType");
-        sample.addIntProperty("temperatureLocation");
+        sample.addIntProperty("temperatureType").notNull().codeBeforeGetter(OVERRIDE);
+        sample.addIntProperty("temperatureLocation").notNull().codeBeforeGetter(OVERRIDE);
         return sample;
     }
 
@@ -1967,9 +1967,9 @@ public class GBDaoGenerator {
     private static Entity addGenericTemperatureSample(Schema schema, Entity user, Entity device) {
         Entity temperatureSample = addEntity(schema, "GenericTemperatureSample");
         addCommonTimeSampleProperties("AbstractTemperatureSample", temperatureSample, user, device);
-        temperatureSample.addFloatProperty(SAMPLE_TEMPERATURE).notNull();
-        temperatureSample.addIntProperty("temperatureType");
-        temperatureSample.addIntProperty("temperatureLocation");
+        temperatureSample.addFloatProperty(SAMPLE_TEMPERATURE).notNull().codeBeforeGetter(OVERRIDE);
+        temperatureSample.addIntProperty("temperatureType").notNull().codeBeforeGetter(OVERRIDE);
+        temperatureSample.addIntProperty("temperatureLocation").notNull().codeBeforeGetter(OVERRIDE);
         return temperatureSample;
     }
 

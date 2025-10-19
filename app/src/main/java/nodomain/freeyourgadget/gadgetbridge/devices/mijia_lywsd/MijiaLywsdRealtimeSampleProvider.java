@@ -52,7 +52,7 @@ public class MijiaLywsdRealtimeSampleProvider extends AbstractTimeSampleProvider
 
     @Override
     public MijiaLywsdRealtimeSample createSample() {
-        MijiaLywsdRealtimeSample sample=new MijiaLywsdRealtimeSample();
+        MijiaLywsdRealtimeSample sample = new MijiaLywsdRealtimeSample();
         sample.setTemperatureType(TemperatureSample.TYPE_AMBIENT);
         sample.setTemperatureLocation(TemperatureSample.LOCATION_UNKNOWN);
         return sample;

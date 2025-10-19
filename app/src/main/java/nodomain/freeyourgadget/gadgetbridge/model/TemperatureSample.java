@@ -37,17 +37,18 @@ public interface TemperatureSample extends TimeSample {
      * Returns the temperature value.
      */
     float getTemperature();
+
     /**
      * Returns the temperature type (the position on the body where the measurement was taken).
      */
-    default Integer getTemperatureType() {
+    default int getTemperatureType() {
         return TYPE_UNKNOWN;
     }
 
     /**
      * Returns the temperature measurement location (the position on the body where the measurement was taken).
      */
-    default Integer getTemperatureLocation() {
+    default int getTemperatureLocation() {
         return LOCATION_UNKNOWN;
     }
 }
