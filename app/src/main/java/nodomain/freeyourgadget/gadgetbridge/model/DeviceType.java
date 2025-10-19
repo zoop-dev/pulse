@@ -82,6 +82,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminF
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix6SapphireCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix6XProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix6XProSolarCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix6XSapphireCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix7Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix7ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix7SCoordinator;
@@ -588,6 +589,7 @@ public enum DeviceType {
     GARMIN_FENIX_6S_SAPPHIRE(GarminFenix6SSapphireCoordinator.class),
     GARMIN_FENIX_6X_PRO(GarminFenix6XProCoordinator.class),
     GARMIN_FENIX_6X_PRO_SOLAR(GarminFenix6XProSolarCoordinator.class),
+    GARMIN_FENIX_6X_SAPPHIRE(GarminFenix6XSapphireCoordinator.class),
     GARMIN_FENIX_7(GarminFenix7Coordinator.class),
     GARMIN_FENIX_7S(GarminFenix7SCoordinator.class),
     GARMIN_FENIX_7S_PRO(GarminFenix7SProCoordinator.class),
