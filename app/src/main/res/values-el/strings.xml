@@ -1096,4 +1096,5 @@
     <string name="pref_title_banglejs_phone_gps_enbale">Χρησιμοποιήστε δεδομένα gps του τηλεφώνου</string>
     <string name="pref_title_banglejs_phone_gps_network_only">Χρησιμοποιήστε μόνο το δίκτυο για να καθορίσετε την τοποθεσία</string>
     <string name="pref_summary_banglejs_phone_gps_network_only">Χρησιμοποιήστε μόνο τον πάροχο δικτύου για να καθορίσετε την τοποθεσία. Αυτό μειώνει την κατανάλωση ενέργειας με κόστος ακρίβειας. Χρειάζεται επανασύνδεση.</string>
+    <string name="about_description_main_nightly">Ελευθερή αντικατάσταση χωρίς cloud και copyright για κλειστές εφαρμογές Android gadget από προμηθευτές. Nightly εκδοχές απο το Gadgetbridge. Δεν μπορεί να εγκατασταθεί αν έχετε ήδη είτε το Gadgetbridge ή την εφαρμογή Pebble εγκατεστημένη, λόγω μιας σύγκρουσης στον πάροχο Pebble.</string>
 </resources>
