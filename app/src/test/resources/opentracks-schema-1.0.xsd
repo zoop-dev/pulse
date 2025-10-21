@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://opentracksapp.com/xmlschemas/v1">
+
+    <xsd:element name="trackuuid"
+        type="xsd:string">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+                A unique track identifier stored as UUID.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+
+    <xsd:element name="loss"
+        type="xsd:float">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+                The lost elevation in meters from the previous to the current TrackPoint.
+                Only used in GPX.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="gain"
+        type="xsd:string">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+                The gained elevation in meters from the previous to the current TrackPoint.
+                Only used in GPX.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="accuracy_horizontal"
+        type="xsd:float">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+                Horizontal accuracy in meters of the current TrackPoint; 68% chance that the actual
+                location is
+                within this radius around the measured location.
+                Only used in GPX.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="accuracy_vertical"
+        type="xsd:float">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+                Vertical accuracy in meters of the current TrackPoint; 68% chance that the actual
+                location is
+                within this radius around the measured location.
+                Only used in GPX.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="typeTranslated"
+        type="xsd:string">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+                User-defined translation of GPX's <![CDATA[<type>]]>.
+                Only used in GPX.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+</xsd:schema>

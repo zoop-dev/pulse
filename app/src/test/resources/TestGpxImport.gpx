@@ -96,18 +96,19 @@
             </trkpt>
             <trkpt lat="47.60899250395596" lon="9.55604980699718">
                 <ele>8849.2</ele>
-                <time>2025-10-03T15:20:59Z</time>
+                <time>2025-10-03T21:06:07+05:45</time>
                 <name>Tp2</name>
                 <cmt>a comment</cmt>
                 <sym>Water</sym>
                 <extensions>
                     <ge:TrackPointExtension>
                         <ge:Temperature>34.3</ge:Temperature>
-                        <ge:Depth>33.3</ge:Depth>
+                        <ge:Depth>10345</ge:Depth>
                     </ge:TrackPointExtension>
                 </extensions>
             </trkpt>
             <trkpt lat="47.65594482421875" lon="9.47296142578125">
+                <time>2025-10-03T03:30:00-12:00</time>
                 <extensions>
                     <t2:TrackPointExtension>
                         <t2:atemp>40.4</t2:atemp>

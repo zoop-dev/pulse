@@ -79,6 +79,10 @@ public class GPSCoordinate implements Parcelable {
         return altitude;
     }
 
+    public boolean hasAltitude() {
+        return altitude > UNKNOWN_ALTITUDE;
+    }
+
     public void setHdop(double hdop) {
         this.hdop = hdop;
     }

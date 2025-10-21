@@ -163,6 +163,9 @@ public class GPXParserTest extends TestBase {
         Assert.assertEquals(28.3f, trkpt0.getTemperature(), 0.0001f);
         Assert.assertEquals(26.3f, trkpt0.getDepth(), 0.0001f);
 
+        GpxTrackPoint trkpt1 = trkseg0.getTrackPoints().get(1);
+        Assert.assertEquals(Date.from(Instant.parse("2025-10-03T21:06:07+05:45")), trkpt1.getTime());
+
         byte[] raw = readBinaryResource("/TestGpxImport.gpx");
         GpxFile file2 = GpxParser.parseGpx(raw);
         Assert.assertNotNull(file2);

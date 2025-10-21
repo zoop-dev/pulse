@@ -5,8 +5,8 @@
     <trk name="Gadgetbridge import test track">
         <trkseg>
             <trkpt lat="47.5048828125" lon="9.7393798828125" ele="-440.2" time="2025-10-03T15:10:59Z" name="Tp1" desc="a description" sym="Summit" hdop="1.4" vdop="3.2" pdop="1.5" temperature="28.3" depth="26.3" hr="123" cad="22" speed="23.3"/>
-            <trkpt lat="47.60899250395596" lon="9.55604980699718" ele="8849.2" time="2025-10-03T15:20:59Z" name="Tp2" desc="a comment" sym="Water" temperature="34.3" depth="33.3"/>
-            <trkpt lat="47.65594482421875" lon="9.47296142578125" temperature="40.4" depth="41.4" hr="42" cad="43" speed="44.4"/>
+            <trkpt lat="47.60899250395596" lon="9.55604980699718" ele="8849.2" time="2025-10-03T21:06:07+05:45" name="Tp2" desc="a comment" sym="Water" temperature="34.3" depth="10345"/>
+            <trkpt lat="47.65594482421875" lon="9.47296142578125" time="2025-10-03T03:30:00-12:00" temperature="40.4" depth="41.4" hr="42" cad="43" speed="44.4"/>
             <trkpt lat="-43" lon="-19"/>
         </trkseg>
     </trk>
