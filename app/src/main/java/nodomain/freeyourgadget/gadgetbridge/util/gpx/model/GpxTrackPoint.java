@@ -128,8 +128,19 @@ public class GpxTrackPoint extends GPSCoordinate {
         activityPoint.setTime(time);
         activityPoint.setLocation(this);
         activityPoint.setHeartRate(heartRate);
-        activityPoint.setSpeed(speed);
+        if (!Float.isNaN(speed)) {
+            activityPoint.setSpeed(speed);
+        }
         activityPoint.setCadence(cadence);
+        if (!Double.isNaN(depth)) {
+            activityPoint.setDepth(depth);
+        }
+        if (!Double.isNaN(temperature)) {
+            activityPoint.setTemperature(temperature);
+        }
+        if (description != null && description.length() > 0) {
+            activityPoint.setDescription(description);
+        }
 
         return activityPoint;
     }

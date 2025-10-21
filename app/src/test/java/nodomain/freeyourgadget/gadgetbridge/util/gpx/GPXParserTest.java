@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.test.TestBase;
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxFile;
@@ -169,5 +170,31 @@ public class GPXParserTest extends TestBase {
         Assert.assertEquals(4, file2.getPoints().size());
         Assert.assertEquals(1, file2.getTracks().size());
         Assert.assertEquals(trkpt0, file2.getTracks().get(0).getTrackSegments().get(0).getTrackPoints().get(0));
+    }
+
+    @Test
+    public void TestToActivityPoint() throws Exception {
+        final GpxFile file;
+        try (final InputStream gpx = getClass().getResourceAsStream("/TestGpxImport.gpx")) {
+            file = new GpxParser(gpx).getGpxFile();
+        }
+
+        GpxTrackPoint trackpoint = file.getTracks().get(0).getTrackSegments().get(0).getTrackPoints().get(0);
+        ActivityPoint activityPoint = trackpoint.toActivityPoint();
+        Assert.assertNotNull(activityPoint);
+
+        Assert.assertEquals(trackpoint.getAltitude(), activityPoint.getLocation().getAltitude(), 0.0);
+        Assert.assertEquals(trackpoint.getCadence(), activityPoint.getCadence());
+        Assert.assertEquals(trackpoint.getDepth(), activityPoint.getDepth(), 0.0);
+        Assert.assertEquals(trackpoint.getDescription(), activityPoint.getDescription());
+        Assert.assertEquals(trackpoint.getHdop(), activityPoint.getLocation().getHdop(), 0.0);
+        Assert.assertEquals(trackpoint.getHeartRate(), activityPoint.getHeartRate());
+        Assert.assertEquals(trackpoint.getLatitude(), activityPoint.getLocation().getLatitude(), 0.0);
+        Assert.assertEquals(trackpoint.getLongitude(), activityPoint.getLocation().getLongitude(), 0.0);
+        Assert.assertEquals(trackpoint.getPdop(), activityPoint.getLocation().getPdop(), 0.0);
+        Assert.assertEquals(trackpoint.getSpeed(), activityPoint.getSpeed(), 0.0);
+        Assert.assertEquals(trackpoint.getTemperature(), activityPoint.getTemperature(), 0.0);
+        Assert.assertEquals(trackpoint.getTime(), activityPoint.getTime());
+        Assert.assertEquals(trackpoint.getVdop(), activityPoint.getLocation().getVdop(), 0.0);
     }
 }
