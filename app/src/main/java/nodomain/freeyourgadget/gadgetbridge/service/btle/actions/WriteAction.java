@@ -26,7 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.Logging;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BleNamesResolver;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCallback;
@@ -69,7 +68,7 @@ public class WriteAction extends BtLEAction {
     /// shared write implementation that can be used without a BtLEAction
     public static boolean writeCharacteristic(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
         if (LOG.isDebugEnabled()) {
-            LOG.debug("writing to characteristic: {} - {}", characteristic.getUuid(), Logging.formatBytes(value));
+            LOG.debug("writing to characteristic: {} - {}", characteristic.getUuid(), GB.hexdump(value));
         }
         return writeCharacteristicImp(gatt, characteristic, value, false);
     }
