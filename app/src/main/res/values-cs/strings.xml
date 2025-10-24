@@ -4079,4 +4079,5 @@
     <string name="pref_huawei_arterial_stiffness_detection">Detekce arteriální tuhosti</string>
     <string name="pref_huawei_arterial_stiffness_detection_enable_title">Povolit detekci arteriální tuhosti</string>
     <string name="pref_huawei_arterial_stiffness_detection_enable_summary">Aktivovat detekci arteriální tuhosti na zařízení</string>
+    <string name="diving_depth">Hloubka</string>
 </resources>
