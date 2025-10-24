@@ -958,7 +958,7 @@
     <string name="error_background_service_reason_truncated">Uruchomienie usługi w tle nie powiodło się, ponieważ…</string>
     <string name="error_background_service">Nie udało się uruchomić usługi w tle</string>
     <string name="companiondevice_pairing">Parowanie urządzeń towarzyszących (CompanionDevice Pairing)</string>
-    <string name="error_version_check_extreme_caution">UWAGA: Błąd przy sprawdzaniu informacji o wersji! Nie należy kontynuować! Nazwa wersji %s</string>
+    <string name="error_version_check_extreme_caution">UWAGA: Błąd przy sprawdzaniu informacji o wersji! Nie należy kontynuować! Nazwa wersji \"%s\"</string>
     <string name="about_links">Linki</string>
     <string name="about_additional_contributions">Dziękujemy wszystkim nie notowanym na liście współtwórcom za udostępnienie kodu, tłumaczenia, wsparcie, pomysły, motywację, zgłoszenia błędów, pieniądze… ✊</string>
     <string name="about_core_team_title">Zespół główny (w kolejności od pierwszego wkładu w kod aplikacji)</string>
@@ -1164,7 +1164,7 @@
 \nWersja %2$s od %3$s
 \n</string>
     <string name="qhybrid_watchface_configuration_old_firmware">Ekran konfiguracji tarczy zegarka dla zegarków z oprogramowaniem układowym w wersji DN1.0.2.19r i niższym</string>
-    <string name="fossil_hr_commute_actions_explanation">Działania skonfigurowane w tym miejscu będą wyświetlane na twoim zegarku w aplikacji Commute. Więcej informacji znajdziesz na stronie projektu.</string>
+    <string name="fossil_hr_commute_actions_explanation">Skonfigurowane tutaj akcje pojawią się w aplikacji Commute na Twoim zegarku. Zapoznaj się ze stroną internetową, aby dowiedzieć się, jak obsługiwać komunikaty intencji generowane przez te akcje.</string>
     <string name="qhybrid_title_watchface">Konfiguracja tarczy zegarka</string>
     <string name="notification_channel_low_battery_name">Niski poziom naładowania baterii</string>
     <string name="notification_channel_transfer_name">Transfer danych</string>
@@ -1368,7 +1368,7 @@
     <string name="prefs_activity_in_device_card_steps_title_summary">Pokaż wszystkie kroki</string>
     <string name="prefs_activity_in_device_card_sleep_title">Sen</string>
     <string name="prefs_activity_in_device_card_sleep_title_summary">Pokaż czas trwania snu</string>
-    <string name="discover_unsupported_devices_description">Włączenie tej opcji spowoduje wyświetlenie wszystkich wykrytych urządzeń Bluetooth podczas skanowania. Krótkie dotknięcie skopiuje nazwę urządzenia i adres mac do schowka. Długie naciśnięcie uruchomi okno dialogowe `Dodaj urządzenie testowe`. Może powodować potencjalne problemy związane z zawieszaniem się aplikacji.</string>
+    <string name="discover_unsupported_devices_description">Włączenie tej opcji spowoduje wyświetlenie wszystkich wykrytych urządzeń Bluetooth podczas skanowania. Krótkie dotknięcie skopiuje nazwę urządzenia i adres mac do schowka. Długie naciśnięcie uruchomi okno dialogowe \"Dodaj urządzenie testowe\". Może powodować potencjalne problemy związane z zawieszaniem się aplikacji.</string>
     <string name="sony_touch_sensor">Sterowanie czujnikiem dotykowym</string>
     <string name="pref_header_sony_ambient_sound_control">Kontrola dźwięku otoczenia</string>
     <string name="sony_ambient_sound">Tryb</string>
@@ -1678,7 +1678,7 @@
     <string name="menuitem_workout_status">Status treningu</string>
     <string name="share_log_not_enabled_message">Musisz najpierw włączyć rejestrowanie w Ustawieniach - Zapisywanie plików dziennika</string>
     <string name="menuitem_personal_activity_intelligence">Inteligencja działań osobistych (PAI)</string>
-    <string name="permission_display_over_other_apps">%1$s potrzebuje uprawnień do wyświetlania nad innymi aplikacjami, aby zegarki Bangle.js mogły rozpoczynać działania za pomocą intencji, gdy %1$s działa w tle. \n \nMożna go użyć do uruchomienia aplikacji muzycznej i odtworzenia utworu oraz wielu innych rzeczy. \n \nWybierz %2$s, a następnie %1$s i włącz opcję Zezwalaj na wyświetlanie w innych aplikacjach, a następnie dotknij Wstecz, aby powrócić do %1$s. \n \nAby przestać pytać %1$s o uprawnienia, przejdź do Ustawień i odznacz Sprawdź stan uprawnień. \n \nUpewnij się, że przyznałeś %1$s uprawnienia potrzebne do działania zgodnie z oczekiwaniami.</string>
+    <string name="permission_display_over_other_apps">%1$s potrzebuje uprawnienia do wyświetlania się nad innymi aplikacjami, aby umożliwić zegarkom Bangle.js uruchamianie aktywności za pomocą intencji, gdy %1$s działa w tle.\n\nMoże to służyć do uruchomienia aplikacji muzycznej i odtworzenia utworu oraz wielu innych czynności.\n\nProszę stuknąć „%2$s”, a następnie „%1$s” i włączyć opcję „Zezwalaj na wyświetlanie na innych aplikacjach”, po czym stuknąć „Wstecz”, aby powrócić do %1$s.\n\nAby zatrzymać prośby o uprawnienia przez %1$s, przejdź do „Ustawienia” i odznacz opcję „Sprawdzaj status uprawnień”.\n\nUpewnij się, że przyznałeś/przyznałaś %1$s uprawnienia niezbędne do oczekiwanego funkcjonowania.</string>
     <string name="watchface_dialog_widget_cat_generic">Generyczny</string>
     <string name="watchface_dialog_widget_cat_2nd_tz_widget">Drugi widżet strefy czasowej</string>
     <string name="prefs_double_tap_edge_summary">Wykrywaj podwójne dotknięcie, nawet jeśli nie zostało dotknięte na płytce dotykowej</string>
@@ -1765,12 +1765,12 @@
     <string name="lithuanian">Litewski</string>
     <string name="persian">Perski</string>
     <string name="scandinavian">Skandynawski</string>
-    <string name="permission_notification_listener">%1$s potrzebuje dostępu do powiadomień, aby móc je wyświetlać na zegarku, gdy ekran telefonu jest wyłączony. \n \nProszę dotknąć %2$s, a następnie %1$s i włączyć Pozwól na dostęp do powiadomień, a następnie dotknąć Wróć, aby powrócić do %1$s.</string>
-    <string name="permission_notification_policy_access">%1$s potrzebuje dostępu do ustawień Nie przeszkadzać, aby móc je honorować na zegarku, gdy ekran telefonu jest wyłączony. \n \nProszę dotknąć %2$s a następnie %1$s i włączyć ozwól na zmianę ustawień trybu Nie Przeszkadzać a następnie dotknąć róć aby powrócić do %1$s.</string>
+    <string name="permission_notification_listener">%1$s potrzebuje dostępu do Powiadomień, aby wyświetlać je na zegarku, gdy ekran telefonu jest wyłączony.\n\nStuknij „%2$s”, a następnie „%1$s” i włącz „Zezwól na dostęp do powiadomień”, po czym stuknij „Wstecz”, aby wrócić do %1$s.</string>
+    <string name="permission_notification_policy_access">Aby %1$s mógł szanować ustawienia Nie przeszkadzać na Twoim zegarku, gdy ekran telefonu jest wyłączony, musi mieć do nich dostęp.\n\nStuknij „%2$s”, a następnie „%1$s” i włącz „Zezwól na dostęp do nie przeszkadzać”, po czym stuknij „Wstecz”, aby wrócić do %1$s.</string>
     <string name="pref_title_touch_volume">Głośność</string>
     <string name="pref_switch_controls_anc_off">Tłumienie hałasu ←→ Wyłączone</string>
     <string name="sensitive">Wrażliwy</string>
-    <string name="permission_location">%1$s potrzebuje dostępu do Twojej lokalizacji w tle, aby móc pozostać połączonym z zegarkiem, nawet gdy ekran jest wyłączony.\n\nWybierz %2$s na poniższym ekranie, a następnie stuknij Wstecz, aby powrócić do %1$s.</string>
+    <string name="permission_location">Aby %1$s mógł pozostać połączony z zegarkiem, gdy ekran telefonu jest wyłączony, musi mieć stały dostęp do Twojej lokalizacji.\n\nWybierz opcję „%2$s” na następnym ekranie, a następnie stuknij „Wstecz”, aby wrócić do %1$s.</string>
     <string name="controlcenter_unset_folder">Nieustawiony folder</string>
     <string name="pref_switch_controls_ambient_off">Otoczenie ←→ Wyłączone</string>
     <string name="prefs_noise_control">Kontrola hałasu</string>
@@ -2213,7 +2213,7 @@
     <string name="prefs_wena3_vibration_rapid">Szybkie</string>
     <string name="text_receiver_activity_title">Wyślij SMS-a na urządzenie</string>
     <string name="prefs_wena3_button_action_name_qrio_unlock">Blokada Qrio</string>
-    <string name="error_menu_companion_not_installed">Prawdopodobnie nie zainstalowano aplikacji HR Menu Companion</string>
+    <string name="error_menu_companion_not_installed">Prawdopodobnie nie zainstalowano aplikacji \"HR Menu Companion\"</string>
     <string name="temperature_scale_cf">Skala temperatury</string>
     <string name="menuitem_last_workout">Ostatni trening</string>
     <string name="voice_service_package_summary">Aplikacja zawierająca usługę obsługującą polecenia głosowe</string>
@@ -2412,7 +2412,7 @@
     <string name="prefs_wearmode">Tryb noszenia</string>
     <string name="wearmode_pebble">Pebble (klamra do butów)</string>
     <string name="widget_move_up">Przesuń w górę</string>
-    <string name="widget_screen_delete_confirm_description">Czy na pewno chcesz usunąć %1$s?</string>
+    <string name="widget_screen_delete_confirm_description">Czy na pewno chcesz usunąć \"%1$s\"?</string>
     <string name="clap_hands_to_wakeup_device">Klaśnij dłońmi, aby wybudzić ekran</string>"
     <string name="silent_mode_normal_vibrate">Normalny / Wibracje</string>
     <string name="pref_vitality_score_7_day_summary">Otrzymuj powiadomienie, gdy Twój wynik witalności osiągnie 30, 60 lub 100 w ciągu ostatnich 7 dni</string>
@@ -2466,7 +2466,7 @@
     <string name="huawei_reparse_workout_data_description">Ta opcja będzie działać dopiero w nowszej wersji aplikacji</string>
     <string name="updatefirmwareoperation_updateproblem_low_battery">Poziom baterii urządzenia jest zbyt niski</string>
     <string name="dnd_all_day">Cały dzień</string>
-    <string name="pref_force_options_summary">Niektóre urządzenia fałszywie twierdzą, że nie mają wsparcia dla pewnych funkcji. Tej opcji można użyć by włączyć je pomimo tego. \nKONTYNUUJ NA WŁASNE RYZYKO! \nPrzeczytaj wiki</string>
+    <string name="pref_force_options_summary">Niektóre urządzenia błędnie zgłaszają brak obsługi dla pewnych opcji. Te ustawienia można wykorzystać, aby włączyć je mimo to.\nUŻYWAJ NA WŁASNĄ ODPOWIEDZIALNOŚĆ\nZapoznaj się ze stroną internetową</string>
     <string name="prefs_disconnect_notification_summary">Powiadomienie na urządzeniu, po rozłączeniu Bluetooth.</string>
     <string name="pref_force_options">Wymuś opcje</string>
     <string name="pref_do_not_disturb_not_wear">Nie przeszkadzać, gdy nie noszone</string>
@@ -2828,7 +2828,7 @@
     <string name="scan_scanning_all_devices">Skanowanie wszystkich urządzeń</string>
     <string name="companion_pairing_request_title">Urządzenie towarzyszące</string>
     <string name="dashboard_settings">Ustawienia pulpitu</string>
-    <string name="pref_dashboard_widget_today_hr_interval_summary">Ilość minut na wykresie pokazujących wartość założone po każdym udanym pomiarze tętna</string>
+    <string name="pref_dashboard_widget_today_hr_interval_summary">Liczba minut, przez jaką wykres wskazuje, że urządzenie było \"noszone\" po każdym pomyślnym pomiarze tętna</string>
     <string name="pref_auto_reply_calls_summary">Telefon będzie automatycznie odbierał przychodzące połączenia</string>
     <string name="pref_header_calls_and_notifications">Połączenia i powiadomienia</string>
     <string name="pref_sleepasandroid_feat_notifications">Powiadomienia</string>
@@ -3252,7 +3252,7 @@
     <string name="activity_type_push_walk_speed">Push - Walk Speed</string>
     <string name="pref_music_management_title">Zarządzaj muzyką</string>
     <string name="pref_music_management_summary">Zarządzaj muzyką na zegarku</string>
-    <string name="music_delete_confirm_description">Czy na pewno chcesz usunąć %1$s?</string>
+    <string name="music_delete_confirm_description">Czy na pewno chcesz usunąć \"%1$s\"?</string>
     <string name="music_add_to_playlist">Dodaj do playlisty</string>
     <string name="music_delete_from_playlist">Usuń z listy odtwarzania</string>
     <string name="music_huawei_device_info">Obsługiwane formaty: %1$s\nPamięć masowa zegarka: %2$d MB</string>
@@ -3359,7 +3359,7 @@
     <string name="redmi_buds_5_pro_equalizer_preset_custom">Własne</string>
     <string name="redmi_buds_5_pro_equalizer_band_125">125 Hz</string>
     <string name="redmi_buds_5_pro_equalizer_band_250">250 Hz</string>
-    <string name="music_delete_multiple_confirm_description">Czy na pewno chcesz usunąć %1$d utworów?</string>
+    <string name="music_delete_multiple_confirm_description">Czy na pewno chcesz usunąć \"%1$d\" utworów?</string>
     <string name="redmi_buds_5_pro_anc_balanced">Zrównoważony</string>
     <string name="redmi_buds_5_pro_equalizer_band_4k">4 kHz</string>
     <string name="redmi_buds_5_pro_equalizer_band_8k">8 kHz</string>
@@ -3567,7 +3567,7 @@
     <string name="banglejs_notification_missed_call_suppressed_caller_id">Nieznany rozmówca. Identyfikator jest ukryty</string>
     <string name="prefs_active_noise_cancelling_level_ultra">Ultra</string>
     <string name="prefs_active_noise_cancelling_level_dynamic">Dynamiczny</string>
-    <string name="earfun_reboot_confirm_message">Po zastosowaniu tego ustawienia urządzenie zostanie ponownie uruchomione. Po ponownym włączeniu przejdź do ekranu Urządzenia i ponownie się połącz.</string>
+    <string name="earfun_reboot_confirm_message">Po zastosowaniu tego ustawienia urządzenie zostanie ponownie uruchomione. Po ponownym włączeniu przejdź do ekranu \"Urządzenia\" i ponownie się połącz.</string>
     <string name="earfun_connect_two_devices">Podwójne połączenie urządzeń</string>
     <string name="earfun_advanced_audio_mode">Zaawansowany tryb audio</string>
     <string name="earfun_microphone_mode">Tryb mikrofonu</string>
@@ -3953,7 +3953,7 @@
     <string name="bluetooth_multipoint_pairing">Parowanie wielopunktowe</string>
     <string name="bluetooth_multipoint">Wielopunktowy</string>
     <string name="bluetooth_multipoint_pair_new">Sparuj nowe urządzenie</string>
-    <string name="bluetooth_multipoint_no_devices">Nie znaleziono sparowanych urządzeń\n\nStuknij Sparuj nowe urządzenie, aby dodać urządzenie</string>
+    <string name="bluetooth_multipoint_no_devices">Nie znaleziono sparowanych urządzeń\n\nStuknij \"Sparuj nowe urządzenie\", aby dodać urządzenie</string>
     <string name="bluetooth_multipoint_pair_stop">Zatrzymaj parowanie</string>
     <string name="bluetooth_paired_devices">Sparowane urządzenia</string>
     <string name="connect">Połącz</string>
@@ -4076,4 +4076,29 @@
     <string name="hr_settings_zones_lactate_threshold_hr">Tętno progowe mleczanowe</string>
     <string name="hr_settings_zones_remove_all">Resetuj wszystko</string>
     <string name="hr_settings_zones_remove_all_description">Jesteś pewny, że chcesz usunąć strefy tętna i limity dla wszystkich pozycji i przywrócić ustawienia domyślne?</string>
+    <string name="diving_depth">Głębokość</string>
+    <string name="pref_huawei_health_features_config_title">Konfiguracja funkcji zdrowotnych</string>
+    <string name="pref_huawei_health_features_config_summary">Skonfiguruj rozszerzone funkcje zdrowotne.</string>
+    <string name="pref_huawei_features_config_info_title">Włącz dodatkowe funkcje zdrowotne</string>
+    <string name="pref_huawei_features_config_info_summary">Włączenie poniższych ustawień aktywuje dodatkowe funkcje zdrowotne na Twoim urządzeniu. Przykładowo, funkcje związane z emocjami lub EKG.\nUWAGA: Dostępne funkcje zależą od modelu urządzenia.</string>
+    <string name="pref_huawei_features_config_warning_title">Wyślij kod kraju i konfigurację funkcji do urządzenia.</string>
+    <string name="pref_huawei_features_config_warning_summary">Ostrzeżenie: Włączenie tych ustawień przy jednoczesnym używaniu aplikacji Gadgetbridge i aplikacji producenta może spowodować problemy z funkcjonalnością aplikacji producenta i urządzenia, lub wręcz nie wpłynąć w ogóle na aktualne możliwości urządzenia. Ustawienie nieprawidłowego kraju może wpłynąć na inne ustawienia urządzenia, takie jak konfiguracja częstotliwości oparta na regionie, itp. Włączasz na własne ryzyko.\nWymagane jest ponowne nawiązanie połączenia z urządzeniem.</string>
+    <string name="pref_huawei_send_country_code_title">Wyślij kod kraju</string>
+    <string name="pref_huawei_send_country_code_summary">Wyślij kod kraju do urządzenia.\nUwaga: Kod kraju musi być ustawiony</string>
+    <string name="pref_huawei_country_code_title">Kod kraju</string>
+    <string name="pref_huawei_force_features_settings_title">Wymuś wyświetlanie ustawień z ograniczeniami regionalnymi</string>
+    <string name="pref_huawei_force_features_settings_summary">Wymuś wyświetlanie ustawień specyficznych dla kraju w aplikacji Gadgetbridge.\nOstrzeżenie: Gadgetbridge wyświetli ustawienia zgłaszane przez Twoje urządzenie jako obsługiwane. Pamiętaj, że niektóre ustawienia mogą być ograniczone przez aplikację producenta na Twoim urządzeniu i mogą nie działać lub działać nieprawidłowo.</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia">Arytmia fali tętna</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_enable_title">Włącz arytmię fali tętna</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_enable_summary">Aktywuj arytmię fali tętna na urządzeniu</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_automatic_title">Automatyczne wykrywanie arytmii</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_automatic_summary">Urządzenie będzie automatycznie monitorować Twoje tętno.</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_alert_title">Alert arytmii</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_alert_summary">Otrzymuj alert, gdy Twoje tętno jest nieprawidłowe</string>
+    <string name="pref_screen_ecg">EKG</string>
+    <string name="pref_huawei_ecg_activate_title">Aktywuj EKG</string>
+    <string name="pref_huawei_ecg_activate_summary">Aktywuj lub dezaktywuj EKG na urządzeniu</string>
+    <string name="pref_huawei_arterial_stiffness_detection">Wykrywanie sztywności tętnic</string>
+    <string name="pref_huawei_arterial_stiffness_detection_enable_title">Włącz wykrywanie sztywności tętnic</string>
+    <string name="pref_huawei_arterial_stiffness_detection_enable_summary">Aktywuj wykrywanie sztywności tętnic na urządzeniu</string>
 </resources>
