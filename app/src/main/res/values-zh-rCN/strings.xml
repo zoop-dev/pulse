@@ -4081,4 +4081,5 @@
     <string name="pref_huawei_arterial_stiffness_detection">动脉硬度检测</string>
     <string name="pref_huawei_arterial_stiffness_detection_enable_title">开启动脉硬度检测</string>
     <string name="pref_huawei_arterial_stiffness_detection_enable_summary">在设备上激活动脉硬度检测</string>
+    <string name="diving_depth">深度</string>
 </resources>
