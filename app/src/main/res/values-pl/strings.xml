@@ -4101,4 +4101,7 @@
     <string name="pref_huawei_arterial_stiffness_detection">Wykrywanie sztywności tętnic</string>
     <string name="pref_huawei_arterial_stiffness_detection_enable_title">Włącz wykrywanie sztywności tętnic</string>
     <string name="pref_huawei_arterial_stiffness_detection_enable_summary">Aktywuj wykrywanie sztywności tętnic na urządzeniu</string>
+    <string name="pref_install_unsupported_files_title">Zainstaluj nieobsługiwane pliki</string>
+    <string name="pref_install_unsupported_files_summary">Zezwól na przesyłanie nieobsługiwanych plików na urządzenie.</string>
+    <string name="install_unsupported_files_warning">Ten plik nie jest obsługiwany przez urządzenie i może powodować problemy.\n\nSTANOWCZO ODRADZAMY jego instalację!</string>
 </resources>
