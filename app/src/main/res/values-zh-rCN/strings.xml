@@ -4082,4 +4082,7 @@
     <string name="pref_huawei_arterial_stiffness_detection_enable_title">开启动脉硬度检测</string>
     <string name="pref_huawei_arterial_stiffness_detection_enable_summary">在设备上激活动脉硬度检测</string>
     <string name="diving_depth">深度</string>
+    <string name="pref_install_unsupported_files_title">安装不受支持的文件</string>
+    <string name="pref_install_unsupported_files_summary">允许上传不受支持的文件到设备上。</string>
+    <string name="install_unsupported_files_warning">此文件不受设备支持，可能造成问题。\n\n不鼓励安装它！</string>
 </resources>
