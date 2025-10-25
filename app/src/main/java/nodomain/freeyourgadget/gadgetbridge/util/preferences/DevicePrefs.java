@@ -124,6 +124,10 @@ public class DevicePrefs extends Prefs {
         return getBoolean(PREF_ALLOW_HIGH_MTU, true);
     }
 
+    public boolean installUnsupportedFiles() {
+        return getBoolean("install_unsupported_files", false);
+    }
+
     public boolean getConnectionPriorityLowPower() {
         return getBoolean(PREF_CONNECTION_PRIORITY_LOW_POWER, false);
     }

@@ -24,6 +24,7 @@ import android.net.Uri;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.GpxRouteInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -36,12 +37,13 @@ public class GarminGpxRouteInstallHandler extends GpxRouteInstallHandler {
     }
 
     @Override
-    protected boolean isCompatible(GBDevice device) {
+    protected boolean isCompatible(final GBDevice device) {
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
         if (!(coordinator instanceof GarminCoordinator garminCoordinator)) {
             LOG.warn("Coordinator is not a GarminCoordinator: {}", coordinator.getClass());
             return false;
         }
-        return garminCoordinator.supports(device, COURSE_DOWNLOAD);
+        final boolean installUnsupportedFiles = GBApplication.getDevicePrefs(device).installUnsupportedFiles();
+        return garminCoordinator.supports(device, COURSE_DOWNLOAD) || installUnsupportedFiles;
     }
 }
