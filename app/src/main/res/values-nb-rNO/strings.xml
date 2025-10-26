@@ -667,7 +667,7 @@
     <string name="pref_display_add_device_fab_off">Synlig bare hvis ingen enhet er lagt til</string>
     <plurals name="widget_alarm_target_hours">
         <item quantity="one">%1$d:%2$02d time</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="activity_error_no_app_for_gpx">For å vise aktivitetsspor, installer en app som kan håndtere GPX-filer.</string>
     <string name="preferences_makibes_hr3_settings">Makibes HR3 innstillinger</string>
@@ -1495,13 +1495,13 @@
     <string name="about_activity_title_banglejs_main">Om Bangle.js Gadgetbridge</string>
     <string name="about_description_banglejs_main">Android-kompanjonsapp for Bangle.js bygget på toppen av Gadgetbridge-prosjektet, med lagt til Internett-tilgang.\n\nPå grunn av Google Play Store-regler er vi ikke tillatt å ha en donasjonslenke i appen selv, men hvis du liker denne appen, vurder å donere via Gadgetbridge-hjemmesiden nedenfor.</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js kjører</string>
-    <string name="application_name_banglejs_nightly">Bangle.js Gadgetbridge (Nightly)</string>
-    <string name="title_activity_controlcenter_banglejs_nightly">Bangle.js Gadgetbridge (Nightly)</string>
+    <string name="application_name_banglejs_nightly">Bangle.js Gadgetbridge (Nightly) , uoffisiell versjon</string>
+    <string name="title_activity_controlcenter_banglejs_nightly">Bangle.js Gadgetbridge (Nightly), uoffisiell versjon</string>
     <string name="about_activity_title_banglejs_nightly">Om Bangle.js Gadgetbridge (Nightly)</string>
     <string name="about_description_banglejs_nightly">Android-kompanjonsapp for Bangle.js bygget på toppen av Gadgetbridge-prosjektet, med lagt til Internett-tilgang.\n\nPå grunn av Google Play Store-regler er vi ikke tillatt å ha en donasjonslenke i appen selv, men hvis du liker denne appen, vurder å donere via Gadgetbridge-hjemmesiden nedenfor.</string>
     <string name="gadgetbridge_running_banglejs_nightly">Nightly Bangle.js kjører</string>
-    <string name="application_name_main_nightly">Gadgetbridge (Nightly)</string>
-    <string name="title_activity_controlcenter_main_nightly">Gadgetbridge Nightly</string>
+    <string name="application_name_main_nightly">Gadgetbridge (Nightly), uoffisiell versjon</string>
+    <string name="title_activity_controlcenter_main_nightly">Gadgetbridge Nightly, uoffisiell versjon</string>
     <string name="about_activity_title_main_nightly">Om Gadgetbridge Nightly</string>
     <string name="about_description_main_nightly">Skyfri copyleftet fri erstatning for proprietære Android-gadgetapper fra leverandører. Nightly-utgivelser av Gadgetbridge. Den kan ikke installeres hvis du allerede har enten Gadgetbridge eller Pebble-appen installert, på grunn av en konflikt i Pebble-leverandøren.</string>
     <string name="gadgetbridge_running_main_nightly">Nightly GB kjører</string>
@@ -1541,7 +1541,7 @@
     <string name="appmanager_download_started">App-nedlasting startet</string>
     <string name="appmanager_downloaded_to_cache">Lastet ned %s til hurtiglager</string>
     <string name="appmanager_download_app_error">Feil ved nedlasting av app</string>
-    <string name="title_activity_file_installer">Filinstaller</string>
+    <string name="title_activity_file_installer">Fil installerer</string>
     <string name="title_activity_gps_track_installer">GPS-sporinstaller</string>
     <string name="fw_upgrade_notice_amazfitbip3">Du er i ferd med å installere %s fastvare på din Amazfit Bip 3.\n\nVennligst sørg for å installere .fw-filen, og etter det .res-filen. Klokken din vil starte på nytt etter å ha installert .fw-filen.\n\nMerk: Du trenger ikke å installere .res hvis den er nøyaktig den samme som den tidligere installerte.\n\nFORTSETT PÅ EGET ANSVAR!</string>
     <string name="fw_upgrade_notice_amazfitbip3pro">Du er i ferd med å installere %s fastvare på din Amazfit Bip 3 Pro.\n\nVennligst sørg for å installere .fw-filen, og etter det .res-filen. Klokken din vil starte på nytt etter å ha installert .fw-filen.\n\nMerk: Du trenger ikke å installere .res hvis den er nøyaktig den samme som den tidligere installerte.\n\nFORTSETT PÅ EGET ANSVAR!</string>
@@ -3377,7 +3377,7 @@
     <string name="pref_dashboard_widget_today_hr_interval_summary">Antall minutter kartet viser \"båret\" etter hver vellykket hjerteslagmåling</string>
     <plurals name="amount_of_days">
         <item quantity="one">%d dag</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="dashboard_calendar_month_goals_reached_title">% av stegmål nådd</string>
     <string name="pref_auto_reply_calls_summary">Telefonen vil automatisk ta opp innkommende telefonsamtaler</string>
@@ -3913,4 +3913,8 @@
     <string name="pref_huawei_arterial_stiffness_detection">Arteriestivhetsoppdagelse</string>
     <string name="pref_huawei_arterial_stiffness_detection_enable_title">Aktiver arteriestivhetsoppdagelse</string>
     <string name="pref_huawei_arterial_stiffness_detection_enable_summary">Aktiver arteriestivhetsoppdagelse på enheten</string>
+    <string name="diving_depth">Dybde</string>
+    <string name="pref_install_unsupported_files_title">Installere uverifiserte filer</string>
+    <string name="pref_install_unsupported_files_summary">Tillat opplasting av uverifiserte filer til enheten.</string>
+    <string name="install_unsupported_files_warning">Denne er ikke kompatibel med enheten og kan forårsake feil.\n\nDu bør ikke installere denne!</string>
 </resources>
