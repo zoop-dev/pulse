@@ -4080,4 +4080,7 @@
     <string name="pref_huawei_arterial_stiffness_detection_enable_title">Povolit detekci arteriální tuhosti</string>
     <string name="pref_huawei_arterial_stiffness_detection_enable_summary">Aktivovat detekci arteriální tuhosti na zařízení</string>
     <string name="diving_depth">Hloubka</string>
+    <string name="pref_install_unsupported_files_title">Instalovat nepodporované soubory</string>
+    <string name="pref_install_unsupported_files_summary">Umožnit instalaci nepodporovaných souborů na zařízení.</string>
+    <string name="install_unsupported_files_warning">Tento soubor není podorován zařízením a může způsobit problémy.\n\nNEDOPORUČUJEME pokračovat v instalaci!</string>
 </resources>
