@@ -464,27 +464,4 @@ public class FileUtils {
 
         return null;
     }
-
-    @Nullable
-    public static String md5sum(final InputStream is) {
-        MessageDigest digest;
-        try {
-            digest = MessageDigest.getInstance("MD5");
-        } catch (final NoSuchAlgorithmException e) {
-            GB.log("Failed to get MD5 digest instance", GB.ERROR, e);
-            return null;
-        }
-
-        try {
-            final byte[] buffer = new byte[8192];
-            int read;
-            while ((read = is.read(buffer)) > 0) {
-                digest.update(buffer, 0, read);
-            }
-            return String.format("%1$32s", GB.hexdump(digest.digest())).replace(' ', '0').toLowerCase(Locale.ROOT);
-        } catch (final IOException e) {
-            GB.log("Error reading file", GB.ERROR, e);
-            return null;
-        }
-    }
 }
