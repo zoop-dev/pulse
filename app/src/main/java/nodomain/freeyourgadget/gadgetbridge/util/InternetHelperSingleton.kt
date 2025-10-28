@@ -63,6 +63,10 @@ object InternetHelperSingleton {
         }
     }
 
+    fun isInternetHelperBound(): Boolean {
+        return internetHelperBound
+    }
+
     fun ensureInternetHelperBound(): Boolean {
         val context = GBApplication.getContext()
         if (!internetHelperBound) {
