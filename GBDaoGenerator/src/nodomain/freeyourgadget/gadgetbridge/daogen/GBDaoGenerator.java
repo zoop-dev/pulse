@@ -213,7 +213,6 @@ public class GBDaoGenerator {
         addAppSpecificNotificationSettings(schema, device);
         addCyclingSample(schema, user, device);
         addAudioRecordings(schema, device);
-        addURLFilterEntry(schema);
 
         Entity notificationFilter = addNotificationFilters(schema);
 
@@ -1436,18 +1435,6 @@ public class GBDaoGenerator {
         recording.addIntProperty("duration");
 
         recording.addToOne(device, deviceId);
-    }
-
-    private static void addURLFilterEntry(Schema schema) {
-        Entity urlFilterEntry = addEntity(schema, "URLFilterEntry");
-        urlFilterEntry.addIdProperty().autoincrement();
-        Property urlProperty = urlFilterEntry.addStringProperty("url").notNull().getProperty();
-        Property allowedProperty = urlFilterEntry.addBooleanProperty("allowed").notNull().getProperty();
-
-        Index indexUnique = new Index();
-        indexUnique.addProperty(urlProperty);
-        indexUnique.makeUnique();
-        urlFilterEntry.addIndex(indexUnique);
     }
 
     private static void addNotificationFilterEntry(Schema schema, Entity notificationFilterEntity) {

@@ -15,14 +15,6 @@
     <PreferenceCategory
         android:title="@string/pref_header_general"
         app:iconSpaceReserved="false">
-        <ListPreference
-            android:defaultValue="deny"
-            android:entries="@array/internethelper_new_url_action"
-            android:entryValues="@array/internethelper_new_url_action_values"
-            android:key="pref_key_internethelper_new_url_action"
-            android:title="@string/internet_helper_pref_new_url_action_title"
-            android:summary="@string/internet_helper_pref_new_url_action_summary"
-            app:iconSpaceReserved="false" />
         <SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="pref_key_internethelper_force_local"
@@ -62,15 +54,6 @@
             android:layout="@layout/preference_checkbox"
             android:title="@string/internet_helper_pref_bangle_app_loader_title"
             android:summary="@string/internet_helper_pref_bangle_app_loader_summary"
-            app:iconSpaceReserved="false" />
-    </PreferenceCategory>
-    <PreferenceCategory
-        android:key="pref_key_internethelper_url_list"
-        android:title="@string/internet_helper_pref_other_urls_title"
-        app:iconSpaceReserved="false">
-        <Preference
-            android:key="pref_key_internethelper_info"
-            android:summary="@string/internet_helper_url_list_instruction_summary"
             app:iconSpaceReserved="false" />
     </PreferenceCategory>
 </PreferenceScreen>

@@ -40,12 +40,9 @@ import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
-import nodomain.freeyourgadget.gadgetbridge.entities.URLFilterEntry;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
@@ -97,7 +94,6 @@ public class GBWebClient extends WebViewClient {
         boolean locallySupported = StringUtils.indexOfAny(requestedUri.getHost(), LocallySupportedDomains) != -1;
         boolean urlIsAllowed = locallySupported;
         boolean matchFound = false;
-        List<URLFilterEntry> urlFilterEntries = DBHelper.getURLFilterEntries();
 
         // Allow full access to internet when available
         boolean directInternetAccess = GBApplication.hasDirectInternetAccess();
@@ -125,34 +121,12 @@ public class GBWebClient extends WebViewClient {
             urlIsAllowed = prefs.getBoolean("pref_key_internethelper_allow_bangle_app_loader", false);
         }
 
-        // Search for matches
-        if (!matchFound) {
-            for (URLFilterEntry entry : urlFilterEntries) {
-                if (requestedUri.toString().contains(entry.getUrl())) {
-                    matchFound = true;
-                    urlIsAllowed = entry.getAllowed();
-                    LOG.info("URL matched with URLFilterEntry: {}, allowed={}", entry.getUrl(), entry.getAllowed());
-                }
-            }
-        }
-
         // Handle OpenWeatherMap locally
         boolean forceLocal = false;
         if (locallySupported && prefs.getBoolean("pref_key_internethelper_force_local", true)) {
             matchFound = true;
             urlIsAllowed = true;
             forceLocal = true;
-        }
-
-        // Add to database if missing
-        if (requestedUri.getHost() != null && !matchFound) {
-            LOG.info("URL not matched with URLFilterEntry, storing new entry");
-            String defaultAction = prefs.getString("pref_key_internethelper_new_url_action", "deny");
-            urlIsAllowed = defaultAction.equals("allow");
-            URLFilterEntry filterEntry = new URLFilterEntry();
-            filterEntry.setUrl(requestedUri.toString().replaceAll("\\?.*", ""));
-            filterEntry.setAllowed(urlIsAllowed);
-            DBHelper.store(filterEntry);
         }
 
         // Handle request
