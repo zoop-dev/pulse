@@ -229,7 +229,7 @@
     <string name="hr_widget_weather">Vrijeme</string>
     <string name="hr_widget_nothing">Ništa</string>
     <string name="about_additional_contributions">Veliko hvala svim nenavedenim suradnicima na doprinosu kodu, prijevodima, podršci, idejama, motivaciji, izvješćima o greškama, novcu… ✊</string>
-    <string name="error_version_check_extreme_caution">OPREZ: Pogreška prilikom provjere informacija o verziji! Ne biste trebali nastaviti! Pronađen naziv verzije %s</string>
+    <string name="error_version_check_extreme_caution">OPREZ: Pogreška prilikom provjere informacija o verziji! Ne biste trebali nastaviti! Pronađen naziv verzije „%s”</string>
     <string name="require_location_provider">Lokacija mora biti omogućena</string>
     <string name="error_background_service">Pokretanje pozadinske usluge nije uspjelo</string>
     <string name="error_background_service_reason_truncated">Pokretanje pozadinske usluge nije uspjelo jer…</string>
@@ -322,7 +322,7 @@
     <string name="pref_summary_physical_buttons">Konfigurirajte funkcionalnost fizičkih gumba na satu</string>
     <string name="qhybrid_summary_calibration">Kalibrirajte kazaljke na satu</string>
     <string name="pref_summary_canned_messages_set">Pošaljite dolje konfigurirane poruke na svoj uređaj</string>
-    <string name="fossil_hr_commute_actions_explanation">Ovdje konfigurirane radnje pojavit će se u aplikaciji Putovanje na posao na vašem satu. Pročitajte wiki za informacije o tome kako postupati s namjerama koje proizvedu ove radnje.</string>
+    <string name="fossil_hr_commute_actions_explanation">Ovdje konfigurirane radnje pojavit će se u aplikaciji Putovanje na posao na vašem satu. Pročitajte web-stranicu za informacije o tome kako postupati s namjerama koje proizvedu ove radnje.</string>
     <string name="fossil_hr_edit_action_delete">izbriši</string>
     <string name="fossil_hr_new_action_cancel">otkaži</string>
     <string name="fossil_hr_new_action">Nova radnja</string>
@@ -754,7 +754,7 @@
     <string name="alarm_smart_wakeup">Pametno buđenje</string>
     <string name="alarm_snooze">Odgodi</string>
     <string name="user_feedback_miband_set_alarms_failed">Došlo je do pogreške prilikom postavljanja alarma, pokušajte ponovno.</string>
-    <string name="dbaccess_error_executing">Pogreška pri izvršavanju %1$s</string>
+    <string name="dbaccess_error_executing">Pogreška pri izvršavanju „%1$s”</string>
     <string name="controlcenter_start_activitymonitor">Vaša aktivnost</string>
     <string name="cannot_connect">Ne mogu se povezati: %1$s</string>
     <string name="installer_activity_unable_to_find_handler">Nije moguće pronaći rukovatelja za instalaciju ove datoteke.</string>
@@ -823,7 +823,7 @@
     <string name="miband_prefs_device_time_offset_hours">Pomak vremena uređaja u satima (za otkrivanje spavanja radnika u smjenama)</string>
     <string name="prefs_enable_find_phone">Uključite „Pronađi telefon”</string>
     <string name="mi2_prefs_button_press_count">Broj pritisaka gumba</string>
-    <string name="mi2_prefs_button_press_broadcast_summary">Poruka emitiranja poslana uz događaj. Parametar `button_id` se automatski dodaje svakoj poruci.</string>
+    <string name="mi2_prefs_button_press_broadcast_summary">Poruka emitiranja poslana uz događaj. Parametar „button_id” se automatski dodaje svakoj poruci.</string>
     <string name="mi2_prefs_button_action_vibrate">Omogući vibraciju trake</string>
     <string name="mi2_prefs_goal_notification_summary">Band će vibrirati kada se postigne cilj dnevnih koraka</string>
     <string name="mi2_prefs_display_items">Prikaži stavke</string>
@@ -953,7 +953,7 @@
     <string name="pref_applications_settings">Popis aplikacija</string>
     <string name="pref_title_development_miaddr">Mi Band adresa</string>
     <string name="pref_title_pebble_settings">Postavke oblutaka</string>
-    <string name="discovery_need_to_enter_authkey">Ovom uređaju je potreban tajni ključ za autentifikaciju, dugo pritisnite uređaj da biste ga unijeli. Pročitajte wiki.</string>
+    <string name="discovery_need_to_enter_authkey">Ovom uređaju je potreban tajni ključ za autentifikaciju, dugo pritisnite uređaj da biste ga unijeli. Više informacija potražite na web-stranici.</string>
     <string name="discovery_note">Napomena:</string>
     <string name="busy_task_fetch_activity_data">Dohvaćanje podataka o aktivnostima</string>
     <string name="sleep_activity_date_range">Od %1$s do %2$s</string>
@@ -1168,7 +1168,7 @@
     <string name="pref_chart_sleep_rolling_24_on">Posljednja 24 sata</string>
     <string name="activity_prefs_activetime_minutes">Dnevni cilj: aktivno vrijeme u minutama</string>
     <string name="pref_title_pebble_health_store_raw">Spremi neobrađeni zapis u bazu podataka</string>
-    <string name="pref_summary_pebble_health_store_raw">Pohranjuje podatke nepromijenjeno, povećavajući korištenje baze podataka kako bi se omogućila kasnija interpretacija.</string>
+    <string name="pref_summary_pebble_health_store_raw">Sprema podatke „nepromijenjeno”, povećavajući korištenje baze podataka kako bi se omogućila kasnija interpretacija.</string>
     <string name="dbmanagementactivity_import_data_title">Uvesti podatke\?</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">Brisanje baze podataka stare aktivnosti nije uspjelo.</string>
     <string name="dbmanagementactivity_overwrite">Prepiši</string>
@@ -1208,7 +1208,7 @@
     <string name="fossil_hr_synced_activity_data">Sinkronizirani podaci o aktivnostima</string>
     <string name="fossil_hr_auth_failed">Provjera autentičnosti nije uspjela, ograničena funkcionalnost</string>
     <string name="prefs_touch_lock">Zaključavanje dodirom</string>
-    <string name="discover_unsupported_devices_description">Omogućavanjem ove opcije prikazat će se svi otkriveni Bluetooth uređaji prilikom skeniranja. Kratki dodir kopirat će naziv uređaja i mac adresu u međuspremnik. Dugi pritisak pokrenut će dijaloški okvir `Dodaj testni uređaj`. Može prouzročiti moguće probleme zamrzavanja aplikacije.</string>
+    <string name="discover_unsupported_devices_description">Omogućavanjem ove opcije prikazat će se svi otkriveni Bluetooth uređaji prilikom skeniranja. Kratki dodir kopirat će naziv uređaja i mac adresu u međuspremnik. Dugi pritisak pokrenut će dijaloški okvir „Dodaj testni uređaj”. Može prouzročiti moguće probleme zamrzavanja aplikacije.</string>
     <string name="pref_media_play">Reprodukcija</string>
     <string name="pref_media_pause">Pauza</string>
     <string name="about_hash">Uredi %s</string>
@@ -1362,7 +1362,7 @@
     <string name="pref_title_canned_reply_suffix">Uobičajeni sufiks</string>
     <string name="pref_blacklist_calendars">Kalendari na crnoj listi</string>
     <string name="pref_header_cannned_messages">Sadržajne poruke</string>
-    <string name="pref_title_weather_summary">Koristi se za davatelja vremenske prognoze LineageOS, druge verzije Androida moraju koristiti aplikaciju kao što je „Obavijest o vremenu”. Više informacija potražite na wikiju Gadgetbridge.</string>
+    <string name="pref_title_weather_summary">Koristi se za pružatelja usluge vremenske prognoze LineageOS, druge verzije Androida moraju koristiti aplikaciju kao što je „Breezy Weather”. Više informacija potražite na Gadgetbridge web-stranici.</string>
     <string name="pref_title_weather">Vrijeme</string>
     <string name="pref_title_weather_location">Vremenska lokacija (za davatelja vremena LineageOS)</string>
     <string name="pref_call_privacy_mode_name">Sakrij ime, ali prikaži broj</string>
