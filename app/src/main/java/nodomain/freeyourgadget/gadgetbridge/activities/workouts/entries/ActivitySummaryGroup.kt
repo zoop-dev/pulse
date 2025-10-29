@@ -287,6 +287,17 @@ object ActivitySummaryGroup {
                 )
             )
 
+            // Movement Evaluation
+            put(
+                ActivitySummaryEntries.GROUP_MOVEMENT_EVALUATION, listOf<String>(
+                    ActivitySummaryEntries.MOVEMENT_CONSISTENCY,
+                    ActivitySummaryEntries.MOVEMENT_STABILITY,
+                    ActivitySummaryEntries.MOVEMENT_CONTINUITY,
+                    ActivitySummaryEntries.MOVEMENT_RHYTHM,
+                    ActivitySummaryEntries.MOVEMENT_SPEED_DECAY,
+                )
+            )
+
             // Other
             put(
                 ActivitySummaryEntries.GROUP_OTHER, listOf<String>(

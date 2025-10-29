@@ -220,6 +220,14 @@ public class ZeppOsActivitySummaryParser extends HuamiActivitySummaryParser {
             summaryData.add(SWOLF_INDEX, summaryProto.getSwimmingData().getSwolf(), UNIT_NONE);
         }
 
+        if(summaryProto.hasMovementEvaluation()) {
+            summaryData.add(MOVEMENT_CONSISTENCY, summaryProto.getMovementEvaluation().getConsistency(), UNIT_NONE);
+            summaryData.add(MOVEMENT_STABILITY, summaryProto.getMovementEvaluation().getStability(), UNIT_NONE);
+            summaryData.add(MOVEMENT_CONTINUITY, summaryProto.getMovementEvaluation().getContinuity(), UNIT_NONE);
+            summaryData.add(MOVEMENT_RHYTHM, summaryProto.getMovementEvaluation().getRhythm(), UNIT_NONE);
+            summaryData.add(MOVEMENT_SPEED_DECAY, summaryProto.getMovementEvaluation().getSpeedDecay(), UNIT_NONE);
+        }
+
         if (forDetails && !StringUtils.isBlank(summary.getRawDetailsPath())) {
             try {
                 enrichWithDetails(summary);

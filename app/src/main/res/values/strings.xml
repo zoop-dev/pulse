@@ -4404,4 +4404,10 @@
     <string name="pref_huawei_arterial_stiffness_detection">Arterial stiffness detection</string>
     <string name="pref_huawei_arterial_stiffness_detection_enable_title">Enable arterial stiffness detection</string>
     <string name="pref_huawei_arterial_stiffness_detection_enable_summary">Activate arterial stiffness detection on the device</string>
+    <string name="movementConsistency">Consistency</string>
+    <string name="movementStability">Stability</string>
+    <string name="movementContinuity">Continuity</string>
+    <string name="movementRhythm">Rhythm</string>
+    <string name="movementSpeedDecay">Speed decay</string>
+    <string name="movement_evaluation">Movement Evaluation</string>
 </resources>

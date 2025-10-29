@@ -179,6 +179,13 @@ public class ActivitySummaryEntries {
     public static final String CYCLING_POWER_MIN = "cyclingPowerMin";
     public static final String CYCLING_POWER_MAX = "cyclingPowerMax";
 
+
+    public static final String MOVEMENT_CONSISTENCY = "movementConsistency";
+    public static final String MOVEMENT_STABILITY = "movementStability";
+    public static final String MOVEMENT_CONTINUITY = "movementContinuity";
+    public static final String MOVEMENT_RHYTHM = "movementRhythm";
+    public static final String MOVEMENT_SPEED_DECAY = "movementSpeedDecay";
+
     public static final String SETS = "workoutSets";
     public static final String REPETITIONS = "workout_repetitions";
     public static final String REVOLUTIONS = "workout_revolutions";
@@ -252,6 +259,7 @@ public class ActivitySummaryEntries {
     public static final String GROUP_INTERVALS = "workout_intervals";
     public static final String GROUP_DIVING = "activity_type_diving";
     public static final String GROUP_RECOVERY_HEART_RATE = "recovery_heart_rate";
+    public static final String GROUP_MOVEMENT_EVALUATION = "movement_evaluation";
     public static final String AVG_DEPTH = "diving_avg_depth";
     public static final String START_CNS = "diving_start_cns";
     public static final String END_CNS = "diving_end_cns";
