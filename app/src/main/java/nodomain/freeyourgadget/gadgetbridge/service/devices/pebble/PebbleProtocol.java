@@ -280,7 +280,9 @@ public class PebbleProtocol extends GBDeviceProtocol {
             // Pebble 2 Series
             "silk_evt", "robert_evt", "silk",
             // Pebble 2 Duo
-            "asterix"
+            "asterix",
+            // Pebble Time 2
+            "obelix",
     };
 
     private static final Random mRandom = new Random();
@@ -2483,10 +2485,10 @@ public class PebbleProtocol extends GBDeviceProtocol {
                 versionCmd.fwVersion = getFixedString(buf, 32);
 
                 mFwMajor = versionCmd.fwVersion.charAt(1) - 48;
-                LOG.info("Pebble firmware major detected as " + mFwMajor);
-
-                byte[] tmp = new byte[9];
-                buf.get(tmp, 0, 9);
+                LOG.info("Pebble firmware major detected as {}", mFwMajor);
+                String gitHash = getFixedString(buf, 8);
+                int fwFlags = buf.get();
+                LOG.info("git hash: {}, flags: {}", gitHash, fwFlags);
                 int hwRev = buf.get() + 8;
                 if (hwRev >= 0 && hwRev < hwRevisions.length) {
                     versionCmd.hwVersion = hwRevisions[hwRev];
