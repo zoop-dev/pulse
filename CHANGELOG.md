@@ -1,5 +1,8 @@
 ### Changelog
 
+#### Next
+* Initial support for Pebble 2 Duo (Experimental)
+
 #### 0.87.1
 
 * Garmin: Fix strength workout fetching and parsing

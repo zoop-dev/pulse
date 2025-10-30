@@ -247,7 +247,8 @@ class PebbleGATTClient extends BluetoothGattCallback {
             NotifyAction.writeDescriptor(gatt, descriptor, BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
             gatt.setCharacteristicNotification(gatt.getService(SERVICE_UUID).getCharacteristic(MTU_CHARACTERISTIC), true);
         } else {
-            LOG.info("Could not find MTU Characteristic. This seems to be a 2025 Pebble");
+            LOG.info("Could not find MTU Characteristic. This seems to be a 2025 Pebble, requesting MTU via gatt");
+            gatt.requestMtu(339);
         }
     }
 
