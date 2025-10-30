@@ -188,7 +188,7 @@ class PebbleIoThread extends GBDeviceIoThread {
                     deviceAddress = gbDevice.getVolatileAddress();
                 }
                 BluetoothDevice btDevice = mBtAdapter.getRemoteDevice(deviceAddress);
-                if (btDevice.getType() == BluetoothDevice.DEVICE_TYPE_LE || btDevice.getType() == BluetoothDevice.DEVICE_TYPE_DUAL) {
+                if (btDevice.getType() == BluetoothDevice.DEVICE_TYPE_LE) {
                     LOG.info("This is a Pebble 2 or Pebble-LE/Pebble Time LE, will use BLE");
                     mInStream = new PipedInputStream();
                     mOutStream = new PipedOutputStream();
@@ -201,15 +201,21 @@ class PebbleIoThread extends GBDeviceIoThread {
                     for (ParcelUuid uuid : uuids) {
                         LOG.info("found service UUID {}", uuid);
                     }
+                    if (uuids.length > 1) {
+                        final UUID UuidSDP = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+                        mBtSocket = btDevice.createRfcommSocketToServiceRecord(UuidSDP);
 
-                    final UUID UuidSDP = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
-                    mBtSocket = btDevice.createRfcommSocketToServiceRecord(UuidSDP);
-
-                    // TODO: Why is this comment here?
-                    //mBtSocket = btDevice.createRfcommSocketToServiceRecord(uuids[0].getUuid());
-                    mBtSocket.connect();
-                    mInStream = mBtSocket.getInputStream();
-                    mOutStream = mBtSocket.getOutputStream();
+                        // TODO: Why is this comment here?
+                        //mBtSocket = btDevice.createRfcommSocketToServiceRecord(uuids[0].getUuid());
+                        mBtSocket.connect();
+                        mInStream = mBtSocket.getInputStream();
+                        mOutStream = mBtSocket.getOutputStream();
+                    } else {
+                        LOG.info("This seems to be a 2025 Pebble will use BLE");
+                        mInStream = new PipedInputStream();
+                        mOutStream = new PipedOutputStream();
+                        mPebbleLESupport = new PebbleLESupport(this.getContext(), gbDevice, btDevice, (PipedInputStream) mInStream, (PipedOutputStream) mOutStream);
+                    }
                 }
             }
             if (((PebbleCoordinator) gbDevice.getDeviceCoordinator()).isBackgroundJsEnabled(gbDevice)) {
