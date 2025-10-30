@@ -1202,50 +1202,48 @@ public class GoogleMapsNotificationHandler {
             LOG.info("Navigation: " + instruction + "," + distance + "," + navLines[0] + "," + navLines[1] + "," + navLines[2]);
             int matchedIcon = -1;
             // getLargeIcon only works in API 23+ - don't try and get icons on older devices
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                Icon icon = notification.getLargeIcon();
-                if (icon != null) {
-                    // We convert the icon to a bitmap, then to x 32x32 1bpp which we'll check against known images
-                    Drawable drawable = icon.loadDrawable(context);
-                    Bitmap bitmap = Bitmap.createBitmap(32, 32, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
-                    Canvas canvas = new Canvas(bitmap);
-                    drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-                    drawable.draw(canvas);
-                    int[] pixelsRGBA = new int[32 * 32];
-                    bitmap.getPixels(pixelsRGBA, 0, 32, 0, 0, 32, 32);
-                    int[] pixelPack = new int[32]; // pixels packed down 1bpp
-                    char[] pixelStringChars = new char[33 * 32];
+            Icon icon = notification.getLargeIcon();
+            if (icon != null) {
+                // We convert the icon to a bitmap, then to x 32x32 1bpp which we'll check against known images
+                Drawable drawable = icon.loadDrawable(context);
+                Bitmap bitmap = Bitmap.createBitmap(32, 32, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
+                Canvas canvas = new Canvas(bitmap);
+                drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+                drawable.draw(canvas);
+                int[] pixelsRGBA = new int[32 * 32];
+                bitmap.getPixels(pixelsRGBA, 0, 32, 0, 0, 32, 32);
+                int[] pixelPack = new int[32]; // pixels packed down 1bpp
+                char[] pixelStringChars = new char[33 * 32];
 
-                    for (int y = 0; y < 32; y++) {
-                        int pack = 0;
-                        for (int x = 0; x < 32; x++) {
-                            int pixel = ((pixelsRGBA[(y * 32) + x] & 0x80000000) != 0) ? 1 : 0;
-                            pack = (pack << 1) | pixel; // check top bit (=alpha)
-                            pixelStringChars[x + y * 33] = (pixel != 0) ? '1' : '0';
-                        }
-                        pixelStringChars[32 + y * 33] = '\n';
-                        pixelPack[y] = pack;
+                for (int y = 0; y < 32; y++) {
+                    int pack = 0;
+                    for (int x = 0; x < 32; x++) {
+                        int pixel = ((pixelsRGBA[(y * 32) + x] & 0x80000000) != 0) ? 1 : 0;
+                        pack = (pack << 1) | pixel; // check top bit (=alpha)
+                        pixelStringChars[x + y * 33] = (pixel != 0) ? '1' : '0';
                     }
-                    // This is now a printable string showing the image, which we can log if we don't recognise it
-                    String pixelString = new String(pixelStringChars);
+                    pixelStringChars[32 + y * 33] = '\n';
+                    pixelPack[y] = pack;
+                }
+                // This is now a printable string showing the image, which we can log if we don't recognise it
+                String pixelString = new String(pixelStringChars);
 
-                    int bestDiff = 100;
-                    for (int i = 0; i < knownImages.size(); i++) {
-                        IconType knownImage = knownImages.get(i);
-                        int diff = 0;
-                        // Work out how many bits differ over the whole image
-                        for (int j = 0; j < 32; j++)
-                            diff += Integer.bitCount(knownImage.icon[j] ^ pixelPack[j]);
-                        // if it's close enough, match
-                        if (diff < 32 && diff < bestDiff) {
-                            matchedIcon = knownImage.iconType;
-                            bestDiff = diff;
-                        }
+                int bestDiff = 100;
+                for (int i = 0; i < knownImages.size(); i++) {
+                    IconType knownImage = knownImages.get(i);
+                    int diff = 0;
+                    // Work out how many bits differ over the whole image
+                    for (int j = 0; j < 32; j++)
+                        diff += Integer.bitCount(knownImage.icon[j] ^ pixelPack[j]);
+                    // if it's close enough, match
+                    if (diff < 32 && diff < bestDiff) {
+                        matchedIcon = knownImage.iconType;
+                        bestDiff = diff;
                     }
-                    if (matchedIcon < 0) {
-                        LOG.info("Icon NEW:\n" + pixelString);
-                        knownImages.add(new IconType(255, pixelPack));
-                    }
+                }
+                if (matchedIcon < 0) {
+                    LOG.info("Icon NEW:\n" + pixelString);
+                    knownImages.add(new IconType(255, pixelPack));
                 }
             }
             NavigationInfoSpec navInfo = new NavigationInfoSpec();

@@ -572,7 +572,6 @@ public class GBApplication extends Application {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     public static boolean isPriorityNumber(int priorityType, String number) {
         NotificationManager.Policy notificationPolicy = notificationManager.getNotificationPolicy();
         if (priorityType == Policy.PRIORITY_CATEGORY_MESSAGES) {

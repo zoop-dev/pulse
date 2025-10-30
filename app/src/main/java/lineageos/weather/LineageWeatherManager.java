@@ -44,7 +44,6 @@ import lineageos.providers.WeatherContract;
 /**
  * Provides access to the weather services in the device.
  */
-@RequiresApi(api = Build.VERSION_CODES.M)
 public class LineageWeatherManager {
 
     private static ILineageWeatherManager sWeatherManagerService;

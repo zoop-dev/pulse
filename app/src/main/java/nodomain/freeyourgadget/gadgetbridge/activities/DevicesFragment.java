@@ -189,7 +189,7 @@ public class DevicesFragment extends Fragment {
 
         refreshPairedDevices();
 
-        if (GB.isBluetoothEnabled() && deviceList.isEmpty() && Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+        if (GB.isBluetoothEnabled() && deviceList.isEmpty()) {
             startActivity(new Intent(getActivity(), DiscoveryActivityV2.class));
         }
 
