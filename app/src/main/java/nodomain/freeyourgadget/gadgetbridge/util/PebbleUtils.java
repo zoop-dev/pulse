@@ -48,8 +48,10 @@ public class PebbleUtils {
             return "chalk";
         } else if (hwRev.startsWith("silk")) {
             return "diorite";
-        } else if (hwRev.startsWith("robert")) {
+        } else if (hwRev.startsWith("robert") || hwRev.startsWith("obelix")) {
             return "emery";
+        } else if (hwRev.startsWith("asterix")) {
+            return "flint";
         }
         return DEFAULT_PLATFORM;
     }
@@ -66,8 +68,10 @@ public class PebbleUtils {
             return "pebble_time_round_black_20mm";
         } else if (hwRev.startsWith("silk")) {
             return "pebble2_black";
-        } else if (hwRev.startsWith("robert")) {
+        } else if (hwRev.startsWith("robert") || hwRev.startsWith("obelix")) {
             return "pebble_time2_black";
+        } else if (hwRev.startsWith("asterix")) {
+            return "pebble2_duo_black";
         }
         return DEFAULT_MODEL;
     }
