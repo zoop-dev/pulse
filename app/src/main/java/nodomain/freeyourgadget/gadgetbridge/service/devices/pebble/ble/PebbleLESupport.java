@@ -38,22 +38,20 @@ public class PebbleLESupport {
     private static final Logger LOG = LoggerFactory.getLogger(PebbleLESupport.class);
     private static final AtomicLong THREAD_COUNTER = new AtomicLong(0L);
 
-    private final GBDevice mgbDevice;
     private final BluetoothDevice mBtDevice;
     private PipeReader mPipeReader;
     private PebbleGATTServer mPebbleGATTServer;
     private PebbleGATTClient mPebbleGATTClient;
-    private PipedInputStream mPipedInputStream;
-    private PipedOutputStream mPipedOutputStream;
+    private final PipedInputStream mPipedInputStream;
+    private final PipedOutputStream mPipedOutputStream;
     private int mMTU = 20;
-    private int mMTULimit = Integer.MAX_VALUE;
-    public boolean clientOnly = false; // currently experimental, and only possible for Pebble 2
+    private int mMTULimit;
+    public boolean clientOnly; // currently experimental, and only possible for Pebble 2
     private boolean mIsConnected = false;
-    private HandlerThread mWriteHandlerThread;
-    private Handler mWriteHandler;
+    private final HandlerThread mWriteHandlerThread;
+    private final Handler mWriteHandler;
 
     public PebbleLESupport(Context context, GBDevice gbDevice, final BluetoothDevice btDevice, PipedInputStream pipedInputStream, PipedOutputStream pipedOutputStream) throws IOException {
-        mgbDevice = gbDevice;
         mBtDevice = btDevice;
         mPipedInputStream = new PipedInputStream();
         mPipedOutputStream = new PipedOutputStream();
@@ -69,14 +67,16 @@ public class PebbleLESupport {
         mWriteHandler = new Handler(mWriteHandlerThread.getLooper());
         mWriteHandler.post(() -> LOG.debug("started thread {}", Thread.currentThread().getName()));
 
-        mMTULimit = GBApplication.getDevicePrefs(mgbDevice).getInt("pebble_mtu_limit", 512);
+        mMTULimit = GBApplication.getDevicePrefs(gbDevice).getInt("pebble_mtu_limit", 512);
         mMTULimit = Math.max(mMTULimit, 20);
         mMTULimit = Math.min(mMTULimit, 512);
 
-        clientOnly = GBApplication.getDevicePrefs(mgbDevice).getBoolean("pebble_gatt_clientonly", false);
+        clientOnly = GBApplication.getDevicePrefs(gbDevice).getBoolean("pebble_gatt_clientonly", false);
 
         if (!clientOnly) {
             mPebbleGATTServer = new PebbleGATTServer(this, context, mBtDevice);
+        } else {
+            LOG.info ("using client only mode");
         }
         if (clientOnly || mPebbleGATTServer.initialize()) {
             mPebbleGATTClient = new PebbleGATTClient(this, context, mBtDevice);
@@ -94,9 +94,9 @@ public class PebbleLESupport {
         throw new IOException("connection failed");
     }
 
-    private void writeToPipedOutputStream(byte[] value, int offset, int count) {
+    private void writeToPipedOutputStream(byte[] value, int count) {
         try {
-            mPipedOutputStream.write(value, offset, count);
+            mPipedOutputStream.write(value, 1, count);
         } catch (IOException e) {
             LOG.warn("error writing to output stream", e);
         }
@@ -163,7 +163,7 @@ public class PebbleLESupport {
         int command = header & 7;
         int serial = header >> 3;
         if (command == 0x01) {
-            LOG.info("got ACK for serial = " + serial);
+            LOG.info("got ACK for serial = {}", serial);
         }
         if (command == 0x02) { // some request?
             LOG.info("got command 0x02");
@@ -178,7 +178,7 @@ public class PebbleLESupport {
 
             sendAckToPebble(serial);
 
-            writeToPipedOutputStream(value, 1, value.length - 1);
+            writeToPipedOutputStream(value, value.length - 1);
         }
     }
 
@@ -238,7 +238,7 @@ public class PebbleLESupport {
                     int srcPos = 0;
                     int maxChunkSize = calcMaxWriteChunk(mMTU) - 1;
                     while (payloadToSend > 0) {
-                        int chunkSize = (payloadToSend < maxChunkSize) ? payloadToSend : maxChunkSize;
+                        int chunkSize = Math.min(payloadToSend, maxChunkSize);
                         byte[] outBuf = new byte[chunkSize + 1];
                         outBuf[0] = (byte) ((mmSequence++ << 3) & 0xff);
                         System.arraycopy(buf, srcPos, outBuf, 1, chunkSize);

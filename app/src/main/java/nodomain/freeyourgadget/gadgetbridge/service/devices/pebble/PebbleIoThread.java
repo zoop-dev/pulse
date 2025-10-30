@@ -188,7 +188,7 @@ class PebbleIoThread extends GBDeviceIoThread {
                     deviceAddress = gbDevice.getVolatileAddress();
                 }
                 BluetoothDevice btDevice = mBtAdapter.getRemoteDevice(deviceAddress);
-                if (btDevice.getType() == BluetoothDevice.DEVICE_TYPE_LE) {
+                if (btDevice.getType() == BluetoothDevice.DEVICE_TYPE_LE || btDevice.getType() == BluetoothDevice.DEVICE_TYPE_DUAL) {
                     LOG.info("This is a Pebble 2 or Pebble-LE/Pebble Time LE, will use BLE");
                     mInStream = new PipedInputStream();
                     mOutStream = new PipedOutputStream();
