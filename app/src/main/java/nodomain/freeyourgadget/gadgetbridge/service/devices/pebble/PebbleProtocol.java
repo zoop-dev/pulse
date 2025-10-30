@@ -55,6 +55,7 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInf
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.pebble.GBDeviceEventDataLogging;
 import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleIconID;
+import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleNotification;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
@@ -64,11 +65,10 @@ import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec.Action;
-import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleNotification;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
+import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
-import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -278,7 +278,9 @@ public class PebbleProtocol extends GBDeviceProtocol {
             // Pebble Time Series
             "snowy_evt2", "snowy_dvt", "spalding_dvt", "snowy_s3", "spalding",
             // Pebble 2 Series
-            "silk_evt", "robert_evt", "silk"
+            "silk_evt", "robert_evt", "silk",
+            // Pebble 2 Duo
+            "asterix"
     };
 
     private static final Random mRandom = new Random();
@@ -2488,6 +2490,8 @@ public class PebbleProtocol extends GBDeviceProtocol {
                 int hwRev = buf.get() + 8;
                 if (hwRev >= 0 && hwRev < hwRevisions.length) {
                     versionCmd.hwVersion = hwRevisions[hwRev];
+                } else {
+                    LOG.warn("unknown hw revision {}", hwRev);
                 }
                 devEvts = new GBDeviceEvent[]{versionCmd};
                 break;
