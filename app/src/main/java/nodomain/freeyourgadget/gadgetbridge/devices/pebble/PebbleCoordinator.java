@@ -236,7 +236,6 @@ public class PebbleCoordinator extends AbstractBLClassicDeviceCoordinator {
         return PebbleSupport.class;
     }
 
-
     @Override
     @StringRes
     public int getDeviceNameResource() {

@@ -96,6 +96,7 @@ object InternetHelperSingleton {
         val httpGetRequest = HttpGetRequest(webRequest.toString(), httpHeaders)
         val latch = CountDownLatch(1)
         val internetResponseCapsule = Capsule<WebResourceResponse?>()
+        LOG.debug("Forwarding GET request to {} to internet helper app", webRequest)
         try {
             internetHelper?.get(httpGetRequest, object : IHttpCallback.Stub() {
                 @Throws(RemoteException::class)
@@ -137,16 +138,16 @@ object InternetHelperSingleton {
 
                 @Throws(RemoteException::class)
                 override fun onException(message: String?) {
-                    throw RuntimeException(message)
+                    LOG.error("Error during GET request: $message")
                 }
             })
         } catch (e: RemoteException) {
-            throw RuntimeException(e)
+            LOG.error("Error during GET request", e)
         }
         try {
             latch.await()
         } catch (e: InterruptedException) {
-            throw RuntimeException(e)
+            LOG.error("Error during GET request", e)
         }
 
         return internetResponseCapsule.get()

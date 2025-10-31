@@ -27,7 +27,6 @@ import android.os.ParcelFileDescriptor
 import android.webkit.PermissionRequest
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.core.net.toUri
 import com.android.volley.Request
@@ -119,6 +118,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
                                 ),
                                 Toast.LENGTH_LONG, GB.ERROR
                             )
+                            LOG.error("Received content-type $contentType but expected application/octet-stream or application/zip")
                             return
                         }
                         val inputStream = ParcelFileDescriptor.AutoCloseInputStream(response.body)
@@ -142,6 +142,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
                             Toast.LENGTH_LONG,
                             GB.ERROR
                         )
+                        LOG.error("Failed downloading file: $message")
                     }
                 })
         }
@@ -167,6 +168,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
                             error
                         ), Toast.LENGTH_LONG, GB.ERROR
                     )
+                    LOG.error("Failed fetching download file URL", error)
                 }
             )
             requestQueue.add(jsonObjectRequest)
@@ -185,6 +187,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
                                 ),
                                 Toast.LENGTH_LONG, GB.ERROR
                             )
+                            LOG.error("Received content-type $contentType but expected application/json")
                             return
                         }
                         val inputStream = ParcelFileDescriptor.AutoCloseInputStream(response.body)
@@ -205,6 +208,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
                                 message
                             ), Toast.LENGTH_LONG, GB.ERROR
                         )
+                        LOG.error("Error downloading file: $message")
                     }
                 })
         }
@@ -244,6 +248,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
         val installHandler: InstallHandler? = mGBDevice?.deviceCoordinator?.findInstallHandler(file.toUri(), applicationContext)
         if (installHandler == null) {
             GB.toast(getString(R.string.fwinstaller_file_not_compatible_to_device), Toast.LENGTH_LONG, GB.ERROR)
+            LOG.error("Installable file not compatible with device")
             return
         }
         val startIntent = Intent(applicationContext, installHandler.getInstallActivity())
@@ -256,13 +261,12 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
     @SuppressLint("SetJavaScriptEnabled")
     private fun initViews() {
         webView = findViewById(R.id.webview)
-        webView!!.webViewClient = WebViewClient()
         val settings = webView!!.settings
         settings.javaScriptEnabled = true
         settings.loadWithOverviewMode = true
         settings.useWideViewPort = true
 
-        webView!!.webViewClient = object : GBWebClient(GBWebClient.REQUEST_TYPE_PEBBLE_APP_STORE) {
+        webView!!.webViewClient = object : GBWebClient(REQUEST_TYPE_PEBBLE_APP_STORE) {
             override fun shouldOverrideUrlLoading(
                 wv: WebView,
                 request: WebResourceRequest
@@ -293,11 +297,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
                 description: String?,
                 failingUrl: String?
             ) {
-                GB.toast(
-                    "Error: $description",
-                    Toast.LENGTH_SHORT,
-                    GB.ERROR
-                )
+                LOG.error(description)
                 view.loadUrl("about:blank")
             }
         }
