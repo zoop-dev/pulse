@@ -255,6 +255,24 @@ public class PebbleProtocol extends GBDeviceProtocol {
     private static final byte PHONEVERSION_REMOTE_OS_LINUX = 4;
     private static final byte PHONEVERSION_REMOTE_OS_WINDOWS = 5;
 
+    private static final long PHONEVERSION_PROTOCOL_CAPS_APPRUNSTATE = 0x00000001L;
+    private static final long PHONEVERSION_PROTOCOL_CAPS_INFINITE_LOG_DUMP = 0x00000002L;
+    private static final long PHONEVERSION_PROTOCOL_CAPS_EXTENDED_MUSIC = 0x00000004L;
+    private static final long PHONEVERSION_PROTOCOL_CAPS_TWO_WAY_DISMISSAL = 0x00000008L;
+    private static final long PHONEVERSION_PROTOCOL_CAPS_LOCALIZATION = 0x00000010L;
+    private static final long PHONEVERSION_PROTOCOL_CAPS_8K_APPMESSAGE = 0x00000020L;
+    private static final long PHONEVERSION_PROTOCOL_CAPS_HEALTH_INSIGHTS = 0x00000040L;
+    private static final long PHONEVERSION_PROTOCOL_CAPS_APP_DICATION = 0x00000080L;
+    private static final long PHONEVERSION_PROTOCOL_CAPS_SEND_TEXT_APP = 0x00000100L;
+    private static final long PHONEVERSION_PROTOCOL_CAPS_NOTIFICATION_FILTERING = 0x00000200L;
+    private static final long PHONEVERSION_PROTOCOL_CAPS_UNREAD_COREDUMP = 0x00000400L;
+    private static final long PHONEVERSION_PROTOCOL_CAPS_WEATHER_APP = 0x00000800L;
+    private static final long PHONEVERSION_PROTOCOL_CAPS_REMINDERS_APP = 0x00001000L;
+    private static final long PHONEVERSION_PROTOCOL_CAPS_WORKOUT_APP = 0x00002000L;
+    private static final long PHONEVERSION_PROTOCOL_CAPS_SMOOTH_FW_INSTALL_PROGRESS = 0x00004000L;
+    private static final long PHONEVERSION_PROTOCOL_CAPS_JS_BYTECODE_VERSION = 0x00010000L;
+    private static final long PHONEVERSION_PROTOCOL_CAPS_FW_UPDATE_ACROSS_DISCONNECTS = 0x00200000L;
+
     static final byte TYPE_BYTEARRAY = 0;
     private static final byte TYPE_CSTRING = 1;
     static final byte TYPE_UINT = 2;
@@ -1490,10 +1508,21 @@ public class PebbleProtocol extends GBDeviceProtocol {
 
         buf.put(PHONEVERSION_APPVERSION_MAGIC);
         buf.put((byte) 4); // major
-        buf.put((byte) 1); // minor
-        buf.put((byte) 1); // patch
+        buf.put((byte) 4); // minor
+        buf.put((byte) 2); // patch
         buf.order(ByteOrder.LITTLE_ENDIAN);
-        buf.putLong(0x00000000000029af); //flags
+        long flags = PHONEVERSION_PROTOCOL_CAPS_APPRUNSTATE |
+                PHONEVERSION_PROTOCOL_CAPS_INFINITE_LOG_DUMP |
+                PHONEVERSION_PROTOCOL_CAPS_EXTENDED_MUSIC |
+                PHONEVERSION_PROTOCOL_CAPS_TWO_WAY_DISMISSAL |
+                PHONEVERSION_PROTOCOL_CAPS_8K_APPMESSAGE |
+                PHONEVERSION_PROTOCOL_CAPS_APP_DICATION |
+                PHONEVERSION_PROTOCOL_CAPS_SEND_TEXT_APP |
+                PHONEVERSION_PROTOCOL_CAPS_WEATHER_APP |
+                PHONEVERSION_PROTOCOL_CAPS_WORKOUT_APP;
+
+        buf.putLong(flags);
+        LOG.info("sending protocol flags: {}", flags);
 
         return buf.array();
     }
