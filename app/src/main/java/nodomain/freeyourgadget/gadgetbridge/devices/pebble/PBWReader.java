@@ -246,23 +246,14 @@ public class PBWReader {
          * we still prefer the subfolders if present.
          * chalk needs to be its subfolder
          */
-        String[] platformDirs;
-        switch (platform) {
-            case "basalt":
-                platformDirs = new String[]{"basalt/"};
-                break;
-            case "chalk":
-                platformDirs = new String[]{"chalk/"};
-                break;
-            case "diorite":
-                platformDirs = new String[]{"diorite/", "aplite/"};
-                break;
-            case "emery":
-                platformDirs = new String[]{"emery/", "basalt/"};
-                break;
-            default:
-                platformDirs = new String[]{"aplite/"};
-        }
+        String[] platformDirs = switch (platform) {
+            case "basalt" -> new String[]{"basalt/"};
+            case "chalk" -> new String[]{"chalk/"};
+            case "diorite" -> new String[]{"diorite/", "aplite/"};
+            case "emery" -> new String[]{"emery/", "basalt/"};
+            case "flint" -> new String[]{"flint/", "diorite/", "aplite/"};
+            default -> new String[]{"aplite/"};
+        };
 
         for (String dir : platformDirs) {
             try (ZipInputStream zis = new ZipInputStream(uriHelper.openInputStream())) {
