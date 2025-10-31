@@ -84,9 +84,6 @@ class AppMessageHandlerMisfit extends AppMessageHandler {
                         break;
                     }
 
-                    if (mPebbleProtocol.mFwMajor < 3) {
-                        timestamp -= SimpleTimeZone.getDefault().getOffset(timestamp * 1000L) / 1000;
-                    }
                     Date startDate = new Date((long) timestamp * 1000L);
                     Date endDate = new Date((long) (timestamp + samples * 60) * 1000L);
                     LOG.info("got data from " + startDate + " to " + endDate);

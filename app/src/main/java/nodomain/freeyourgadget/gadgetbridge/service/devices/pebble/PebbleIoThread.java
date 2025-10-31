@@ -236,8 +236,6 @@ class PebbleIoThread extends GBDeviceIoThread {
             return false;
         }
 
-        mPebbleProtocol.setForceProtocol(devicePrefs.getBoolean("pebble_force_protocol", false));
-
         mIsConnected = true;
         write(mPebbleProtocol.encodeFirmwareVersionReq());
         gbDevice.setUpdateState(GBDevice.State.CONNECTED, getContext());
@@ -337,12 +335,8 @@ class PebbleIoThread extends GBDeviceIoThread {
                         case APP_REFRESH:
                             if (mPBWReader.isFirmware()) {
                                 writeInstallApp(mPebbleProtocol.encodeInstallFirmwareComplete());
-                                finishInstall(false);
-                            } else if (mPBWReader.isLanguage() || mPebbleProtocol.mFwMajor >= 3) {
-                                finishInstall(false); // FIXME: don't know yet how to detect success
-                            } else {
-                                writeInstallApp(mPebbleProtocol.encodeAppRefresh(mInstallSlot));
                             }
+                            finishInstall(false); // FIXME: don't know yet how to detect success
                             break;
                         default:
                             break;
@@ -469,8 +463,8 @@ class PebbleIoThread extends GBDeviceIoThread {
         if (bytes == null) {
             return;
         }
-        // on FW < 3.0 block writes if app installation in in progress
-        if (!mIsConnected || (mPebbleProtocol.mFwMajor < 3 && mIsInstalling && mInstallState != PebbleAppInstallState.WAIT_SLOT)) {
+
+        if (!mIsConnected) {
             return;
         }
         write_real(bytes);
@@ -649,7 +643,7 @@ class PebbleIoThread extends GBDeviceIoThread {
             writeInstallApp(mPebbleProtocol.encodeGetTime());
         } else {
             mCurrentlyInstallingApp = mPBWReader.getGBDeviceApp();
-            if (mPebbleProtocol.mFwMajor >= 3 && !mPBWReader.isLanguage()) {
+            if (!mPBWReader.isLanguage()) {
                 if (appId == 0) {
                     // only install metadata - not the binaries
                     write(mPebbleProtocol.encodeInstallMetadata(mCurrentlyInstallingApp.getUUID(), mCurrentlyInstallingApp.getName(), mPBWReader.getAppVersion(), mPBWReader.getSdkVersion(), mPBWReader.getFlags(), mPBWReader.getIconId()));
@@ -697,19 +691,19 @@ class PebbleIoThread extends GBDeviceIoThread {
             GB.updateInstallNotification(getContext().getString(R.string.installation_failed_), false, 0, getContext());
         } else {
             GB.updateInstallNotification(getContext().getString(R.string.installation_successful), false, 0, getContext());
-            if (mPebbleProtocol.mFwMajor >= 3) {
-                String filenameSuffix;
-                if (mCurrentlyInstallingApp != null) {
-                    if (mCurrentlyInstallingApp.getType() == GBDeviceApp.Type.WATCHFACE) {
-                        filenameSuffix = ".watchfaces";
-                    } else {
-                        filenameSuffix = ".watchapps";
-                    }
-                    AppManagerActivity.addToAppOrderFile(gbDevice.getAddress() + filenameSuffix, mCurrentlyInstallingApp.getUUID());
-                    Intent refreshIntent = new Intent(AbstractAppManagerFragment.ACTION_REFRESH_APPLIST);
-                    LocalBroadcastManager.getInstance(getContext()).sendBroadcast(refreshIntent);
+
+            String filenameSuffix;
+            if (mCurrentlyInstallingApp != null) {
+                if (mCurrentlyInstallingApp.getType() == GBDeviceApp.Type.WATCHFACE) {
+                    filenameSuffix = ".watchfaces";
+                } else {
+                    filenameSuffix = ".watchapps";
                 }
+                AppManagerActivity.addToAppOrderFile(gbDevice.getAddress() + filenameSuffix, mCurrentlyInstallingApp.getUUID());
+                Intent refreshIntent = new Intent(AbstractAppManagerFragment.ACTION_REFRESH_APPLIST);
+                LocalBroadcastManager.getInstance(getContext()).sendBroadcast(refreshIntent);
             }
+
         }
         mInstallState = PebbleAppInstallState.UNKNOWN;
 

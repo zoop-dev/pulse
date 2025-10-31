@@ -1831,7 +1831,6 @@ public class GBApplication extends Application {
                         deviceSharedPrefsEdit.putBoolean("pebble_health_store_raw", sharedPrefs.getBoolean("pebble_health_store_raw", true));
                         deviceSharedPrefsEdit.putBoolean("pebble_sync_misfit", sharedPrefs.getBoolean("pebble_sync_misfit", true));
                         deviceSharedPrefsEdit.putBoolean("pebble_sync_morpheuz", sharedPrefs.getBoolean("pebble_sync_morpheuz", true));
-                        deviceSharedPrefsEdit.putBoolean("pebble_force_protocol", sharedPrefs.getBoolean("pebble_force_protocol", false));
                         deviceSharedPrefsEdit.putBoolean("pebble_force_untested", sharedPrefs.getBoolean("pebble_force_untested", false));
                         deviceSharedPrefsEdit.putBoolean("pebble_force_le", sharedPrefs.getBoolean("pebble_force_le", false));
                         deviceSharedPrefsEdit.putString("pebble_mtu_limit", sharedPrefs.getString("pebble_mtu_limit", "512"));

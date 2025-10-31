@@ -157,18 +157,12 @@ public class PebbleCoordinator extends AbstractBLClassicDeviceCoordinator {
 
     @Override
     public boolean supportsAppListFetching(final GBDevice device) {
-        if (device.getFirmwareVersion() != null) {
-            return PebbleUtils.getFwMajor(device.getFirmwareVersion()) < 3;
-        }
         return false;
     }
 
     @Override
     public boolean supportsAppReordering(final GBDevice device) {
-        if (device.getFirmwareVersion() != null) {
-            return PebbleUtils.getFwMajor(device.getFirmwareVersion()) >= 3;
-        }
-        return false;
+        return true;
     }
 
     @Override
