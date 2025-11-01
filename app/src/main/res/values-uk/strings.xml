@@ -3921,4 +3921,7 @@
     <string name="pref_huawei_arterial_stiffness_detection_enable_title">Увімкнути виявлення жорсткості артерій</string>
     <string name="pref_huawei_arterial_stiffness_detection_enable_summary">Активуйте виявлення жорсткості артерій на пристрої</string>
     <string name="diving_depth">Глибина</string>
+    <string name="pref_install_unsupported_files_title">Встановлення непідтримуваних файлів</string>
+    <string name="pref_install_unsupported_files_summary">Дозволити завантаження непідтримуваних файлів на пристрій.</string>
+    <string name="install_unsupported_files_warning">Цей файл не підтримується пристроєм і може спричинити проблеми.\n\nВам не рекомендується його встановлювати!</string>
 </resources>
