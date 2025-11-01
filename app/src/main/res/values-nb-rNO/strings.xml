@@ -91,7 +91,7 @@
     <string name="pref_header_development">Utvikleralternativer</string>
     <string name="pref_title_development_miaddr">Mi Band-adresse</string>
     <string name="pref_title_pebble_settings">Pebble-innstillinger</string>
-    <string name="pref_header_activitytrackers">Aktivitetsspørere</string>
+    <string name="pref_header_activitytrackers">Aktivitetssporer</string>
     <string name="pref_title_pebble_activitytracker">Foretrukket aktivitetssporer</string>
     <string name="pref_title_pebble_sync_health">Synkroniser Pebble Health</string>
     <string name="pref_title_pebble_sync_misfit">Synkroniser Misfit</string>
@@ -362,7 +362,7 @@
     <string name="dbmanagementactivity_db_deletion_failed">Databasesletting mislyktes.</string>
     <string name="dbmanagementactivity_delete_old_activity_db">Slett gammel aktivitetsdatabase?</string>
     <string name="dbmanagementactivity_delete_old_activitydb_confirmation">Virkelig slette den gamle aktivitetsdatabasen? Aktivitetsdata som ikke ble importert vil gå tapt.</string>
-    <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Gammel aktivitetsdata slettet.</string>
+    <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Aktivitetsdata slettet.</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">Sletting av gammel aktivitetsdatabase mislyktes.</string>
     <string name="dbmanagementactivity_overwrite">Overskriv</string>
     <string name="Cancel">Avbryt</string>
@@ -449,7 +449,7 @@
     <string name="spanish">Spansk</string>
     <string name="notification_channel_name">Generelt</string>
     <string name="on">På</string>
-    <string name="controlcenter_start_activity_tracks">Aktivitetsporer dine</string>
+    <string name="controlcenter_start_activity_tracks">Dine aktiviteter</string>
     <string name="activity_type_not_measured">Ikke målt</string>
     <string name="activity_type_activity">Aktivitet</string>
     <string name="activity_type_light_sleep">Lett søvn</string>
@@ -459,7 +459,7 @@
     <string name="activity_type_walking">Gåing</string>
     <string name="activity_type_swimming">Svømming</string>
     <string name="activity_type_unknown">Ukjent aktivitet</string>
-    <string name="activity_summaries">Sportaktiviteter</string>
+    <string name="activity_summaries">Sportsaktiviteter</string>
     <string name="activity_type_biking">Sykling</string>
     <string name="activity_type_treadmill">Løpebånd</string>
     <string name="select_all">Velg alle</string>
@@ -569,7 +569,7 @@
     <string name="zetime_title_settings">ZeTime innstillinger</string>
     <string name="zetime_analog_mode">Analog modus</string>
     <string name="zetime_analog_mode_hands">Bare visere</string>
-    <string name="zetime_activity_tracking">Aktivitetsporing</string>
+    <string name="zetime_activity_tracking">Aktivitetssporing</string>
     <string name="zetime_handmove_display">Håndbevegelse</string>
     <string name="zetime_calories_type">Kaloritype</string>
     <string name="zetime_date_format">Datoformat</string>
@@ -596,7 +596,7 @@
     <string name="zetime_signaling_vibrate_beep_once">Vibrer og pipe én gang</string>
     <string name="pref_screen_notification_profile_missed_call">Misset anropsvarsel</string>
     <string name="pref_screen_notification_profile_calendar">Kalendervarsel</string>
-    <string name="pref_screen_notification_profile_inactivity">Uaktivitetvarsel</string>
+    <string name="pref_screen_notification_profile_inactivity">Inaktivitet varsel</string>
     <string name="pref_screen_notification_profile_low_power">Lav effektadvarsel</string>
     <string name="interval_fifteen_minutes">hver 15. minutt</string>
     <string name="interval_forty_five_minutes">hver 45. minutt</string>
@@ -609,7 +609,7 @@
     <string name="zetime_title_heart_rate_alarm_summary">Klokken vil varsle deg når hjertefrekvensen din overstiger grensene.</string>
     <string name="zetime_heart_rate_alarm_enable">Aktiver hjertefrekvensalarmen</string>
     <string name="zetime_analog_mode_handsandsteps">Visere og skritt</string>
-    <string name="zetime_activity_tracking_summary">Å bytte aktivitetsporing på vil telle skrittene dine og så videre.</string>
+    <string name="zetime_activity_tracking_summary">Aktivere aktivitetssporing vil telle skrittene dine og så videre.</string>
     <string name="zetime_handmove_display_summary">Roter håndleddet for å aktivere eller deaktivere skjermen.</string>
     <string name="zetime_calories_type_active">Bare aktive brente kalorier</string>
     <string name="zetime_calories_type_all">Aktive og inaktive brente kalorier</string>
@@ -938,7 +938,7 @@
     <string name="devicestatus_connecting">Enhet kobler til</string>
     <string name="devicestatus_connected">Enhet er koblet til</string>
     <string name="charts_activity_list">Aktivitetsliste</string>
-    <string name="chart_get_active_and_synchronize">Gjør noen aktivitet og synkroniser enhet.</string>
+    <string name="chart_get_active_and_synchronize">Utfør en aktivitet og synkroniser enheten.</string>
     <string name="chart_no_active_data">Ingen aktiviteter oppdaget.</string>
     <string name="pref_title_device_spec_settings_show_raw_graph">Vis RAW-data på aktivitetsgraf</string>
     <string name="pref_summary_device_spec_settings_title_force_time">Tving auto-synkroniser tid ved omkobling. Analog visere kan vise feil tid!</string>
@@ -1021,7 +1021,7 @@
     <string name="battery_level">Batterinivå</string>
     <string name="fossil_hr_auth_failed">Autentisering mislyktes, begrenset funksjonalitet</string>
     <string name="fossil_hr_unavailable_unauthed">Ikke tilgjengelig i ikke-autorisert modus</string>
-    <string name="fossil_hr_synced_activity_data">Synkronisert aktivitetsdata</string>
+    <string name="fossil_hr_synced_activity_data">Synkroniserte aktivitetsdata</string>
     <string name="fossil_hr_commute_processing">Behandler forespørsel…</string>
     <string name="qhybrid_title_apps">Apper</string>
     <string name="qhybrid_title_background_image">Bakgrunnsbilde</string>
