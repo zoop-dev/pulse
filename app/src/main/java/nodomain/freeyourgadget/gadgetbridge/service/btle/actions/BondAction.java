@@ -72,7 +72,7 @@ public class BondAction extends PlainAction implements BondingInterface {
     @Override
     public boolean run(BluetoothGatt gatt) {
         BluetoothDevice device = gatt.getDevice();
-        mCandidate = new GBDeviceCandidate(device, GBDevice.RSSI_UNKNOWN, null);
+        mCandidate = new GBDeviceCandidate(device, GBDevice.RSSI_UNKNOWN, null, null);
         BondingUtil.tryBondThenComplete(this, device);
         return true;
     }

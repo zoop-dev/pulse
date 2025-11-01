@@ -46,6 +46,7 @@ import android.os.Parcelable;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Pair;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -319,7 +320,7 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
                     final Boolean isConnected = (Boolean) isConnectedMethod.invoke(device);
                     if (isConnected != null && isConnected) {
                         LOG.debug("Pre-adding already bonded device {}", device.getAddress());
-                        deviceFoundProcessor.scheduleProcessing(new GBScanEvent(device, (short) -1, null));
+                        deviceFoundProcessor.scheduleProcessing(new GBScanEvent(device, (short) -1, device.getUuids(), null));
                     }
                 } catch (final Exception e) {
                     LOG.error("Failed to check whether {} is connected", device.getAddress());
@@ -931,7 +932,7 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
                     }
                     LOG.debug("ACTION_FOUND {}", device.getAddress());
                     final short rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, GBDevice.RSSI_UNKNOWN);
-                    deviceFoundProcessor.scheduleProcessing(new GBScanEvent(device, rssi, null));
+                    deviceFoundProcessor.scheduleProcessing(new GBScanEvent(device, rssi, device.getUuids(), null));
                     break;
                 }
                 case BluetoothDevice.ACTION_UUID: {
@@ -944,7 +945,7 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
                     final short rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, GBDevice.RSSI_UNKNOWN);
                     final Parcelable[] uuids = intent.getParcelableArrayExtra(BluetoothDevice.EXTRA_UUID);
                     final ParcelUuid[] uuids2 = AndroidUtils.toParcelUuids(uuids);
-                    deviceFoundProcessor.scheduleProcessing(new GBScanEvent(device, rssi, uuids2));
+                    deviceFoundProcessor.scheduleProcessing(new GBScanEvent(device, rssi, uuids2, null));
                     break;
                 }
                 case BluetoothDevice.ACTION_BOND_STATE_CHANGED: {
@@ -987,10 +988,12 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
                     return;
                 }
                 ParcelUuid[] uuids = null;
+                SparseArray<byte[]> manufacturerSpecificData = null;
                 final List<ParcelUuid> serviceUuids = scanRecord.getServiceUuids();
                 if (serviceUuids != null) {
                     uuids = serviceUuids.toArray(new ParcelUuid[0]);
                 }
+                manufacturerSpecificData = scanRecord.getManufacturerSpecificData();
                 final BluetoothDevice device = result.getDevice();
                 final short rssi = (short) result.getRssi();
                 LOG.debug(
@@ -1001,7 +1004,7 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
                         rssi,
                         uuids != null ? uuids.length : "null"
                 );
-                deviceFoundProcessor.scheduleProcessing(new GBScanEvent(device, rssi, uuids));
+                deviceFoundProcessor.scheduleProcessing(new GBScanEvent(device, rssi, uuids, manufacturerSpecificData));
             } catch (final Exception e) {
                 LOG.warn("Error handling BLE scan result", e);
             }

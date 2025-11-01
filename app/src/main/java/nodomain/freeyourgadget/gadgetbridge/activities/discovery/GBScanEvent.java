@@ -18,6 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.activities.discovery;
 
 import android.bluetooth.BluetoothDevice;
 import android.os.ParcelUuid;
+import android.util.SparseArray;
 
 import androidx.annotation.Nullable;
 
@@ -32,10 +33,16 @@ public class GBScanEvent {
     @Nullable
     private final ParcelUuid[] serviceUuids;
 
-    public GBScanEvent(final BluetoothDevice device, final short rssi, @Nullable final ParcelUuid[] serviceUuids) {
+    private final SparseArray<byte[]> manufacturerSpecificData;
+
+    public GBScanEvent(final BluetoothDevice device,
+                       final short rssi,
+                       @Nullable final ParcelUuid[] serviceUuids,
+                       SparseArray<byte[]> manufacturerSpecificData) {
         this.device = device;
         this.rssi = rssi;
         this.serviceUuids = serviceUuids;
+        this.manufacturerSpecificData = manufacturerSpecificData;
     }
 
     public BluetoothDevice getDevice() {
@@ -49,5 +56,10 @@ public class GBScanEvent {
     @Nullable
     public ParcelUuid[] getServiceUuids() {
         return serviceUuids;
+    }
+
+    @Nullable
+    public SparseArray<byte[]> getManufacturerSpecificData() {
+        return manufacturerSpecificData;
     }
 }

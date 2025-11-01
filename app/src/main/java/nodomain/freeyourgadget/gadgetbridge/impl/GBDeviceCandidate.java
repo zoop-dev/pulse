@@ -21,6 +21,9 @@ import android.bluetooth.BluetoothDevice;
 import android.os.Parcel;
 import android.os.ParcelUuid;
 import android.os.Parcelable;
+import android.util.SparseArray;
+
+import androidx.annotation.NonNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +32,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import androidx.annotation.NonNull;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
@@ -58,10 +61,15 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
      */
     private DeviceType forcedType;
 
-    public GBDeviceCandidate(BluetoothDevice device, short rssi, ParcelUuid[] serviceUuids) {
+    private SparseArray<byte[]> manufacturerSpecificData;
+
+    public GBDeviceCandidate(BluetoothDevice device, short rssi, ParcelUuid[] serviceUuids,
+                             SparseArray<byte[]> manufacturerSpecificData) {
         this.device = device;
         this.rssi = rssi;
         this.serviceUuids = serviceUuids != null ? serviceUuids : new ParcelUuid[0];
+        this.manufacturerSpecificData =
+                Objects.requireNonNullElseGet(manufacturerSpecificData, () -> new SparseArray<>(0));
     }
 
     private GBDeviceCandidate(Parcel in) {
@@ -82,6 +90,8 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
         if (isBondedInt != -1) {
             isBonded = (isBondedInt == 1);
         }
+
+        manufacturerSpecificData = in.readSparseArray(getClass().getClassLoader());
     }
 
     @Override
@@ -96,9 +106,11 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
         } else {
             dest.writeInt(isBonded ? 1 : 0);
         }
+
+        dest.writeSparseArray(manufacturerSpecificData);
     }
 
-    public static final Creator<GBDeviceCandidate> CREATOR = new Creator<>() {
+    public static final Creator<GBDeviceCandidate> CREATOR = new Creator<GBDeviceCandidate>() {
         @Override
         public GBDeviceCandidate createFromParcel(Parcel in) {
             return new GBDeviceCandidate(in);
@@ -141,6 +153,15 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
         this.serviceUuids = mergeServiceUuids(serviceUuids, newUuids);
     }
 
+    public void addManufacturerSpecificData(SparseArray<byte[]> newData) {
+        if (newData != null) {
+            for (int i = 0; i < newData.size(); ++i) {
+                int key = newData.keyAt(i);
+                this.manufacturerSpecificData.set(key, newData.get(key));
+            }
+        }
+    }
+
     public void setRssi(short rssi) {
         this.rssi = rssi;
     }
@@ -159,6 +180,11 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
         }
 
         return isBonded;
+    }
+
+    @NonNull
+    public SparseArray<byte[]> getManufacturerSpecificData() {
+        return manufacturerSpecificData;
     }
 
     @NonNull
@@ -269,6 +295,7 @@ public class GBDeviceCandidate implements Parcelable, Cloneable {
             clone.deviceName = this.deviceName;
             clone.isBonded = this.isBonded;
             clone.forcedType = this.forcedType;
+            clone.manufacturerSpecificData = this.manufacturerSpecificData;
             return clone;
         } catch (final CloneNotSupportedException e) {
             throw new RuntimeException(e);

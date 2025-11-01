@@ -39,6 +39,7 @@ import android.content.pm.ServiceInfo;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.Parcel;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
@@ -68,6 +69,7 @@ public class BLEScanService extends Service {
     public static final String EXTRA_DEVICE = "EXTRA_DEVICE";
     public static final String EXTRA_DEVICE_ADDRESS = "EXTRA_DEVICE_ADDRESS";
     public static final String EXTRA_RSSI = "EXTRA_RSSI";
+    public static final String EXTRA_MANUFACTURER_SPECIFIC_DATA = "EXTRA_MANUFACTURER_SPECIFIC_DATA";
 
     // 5 minutes scan restart interval
     private final int DELAY_SCAN_RESTART = 5 * 60 * 1000;
@@ -107,7 +109,17 @@ public class BLEScanService extends Service {
             Intent intent = new Intent(EVENT_DEVICE_FOUND);
             intent.putExtra(EXTRA_DEVICE_ADDRESS, device.getAddress());
             intent.putExtra(EXTRA_RSSI, result.getRssi());
-            localBroadcastManager.sendBroadcast(intent);
+
+            Parcel parcel = Parcel.obtain();
+            try {
+                if (result.getScanRecord() != null) {
+                    parcel.writeSparseArray(result.getScanRecord().getManufacturerSpecificData());
+                    intent.putExtra(EXTRA_MANUFACTURER_SPECIFIC_DATA, parcel.readBundle(getClass().getClassLoader()));
+                }
+                localBroadcastManager.sendBroadcast(intent);
+            } finally {
+                parcel.recycle();
+            }
 
             // device found, attempt connection
             // stop scanning for device for now
