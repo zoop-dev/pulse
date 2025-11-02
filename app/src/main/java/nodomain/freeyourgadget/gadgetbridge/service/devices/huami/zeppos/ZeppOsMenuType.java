@@ -71,6 +71,8 @@ public class ZeppOsMenuType {
         put("0000004B", "map");
         put("0000004C", "zepp_pay");
         put("0000004D", "heart_rate_push");
+        put("00000053", "golf");
+        put("00000056", "bio_charge");
         put("00000100", "alexa");
         put("00000101", "offline_voice");
         put("00000102", "flashlight");
@@ -82,6 +84,9 @@ public class ZeppOsMenuType {
         put("000F4263", "watch_storage_space");
         put("000F4259", "water_time");
         put("000F653B", "meditation");
+        put("0010132C", "breathing2");
+        put("00100446", "worldclock2");
+        put("00100F0A", "takephoto2");
         put("0010660A", "zepp_flow");
     }};
 

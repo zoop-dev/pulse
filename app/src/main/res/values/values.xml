@@ -64,6 +64,9 @@
     <item name="p_menuitem_workout_history" type="string">workout_history</item>
     <item name="p_menuitem_female_health" type="string">female_health</item>
     <item name="p_menuitem_workout_status" type="string">workout_status</item>
+    <item name="p_menuitem_golf" type="string">golf</item>
+    <item name="p_menuitem_bio_charge" type="string">bio_charge</item>
+    <item name="p_menuitem_camera_remote" type="string">camera_remote</item>
 
     <!-- currently used for sounds -->
     <item name="p_menuitem_button" type="string">button</item>

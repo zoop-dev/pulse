@@ -1111,6 +1111,11 @@
         <item>@string/menuitem_water_time</item>
         <item>@string/activity_type_meditation</item>
         <item>@string/menuitem_zepp_flow</item>
+        <item>@string/menuitem_golf</item>
+        <item>@string/menuitem_bio_charge</item>
+        <item>@string/menuitem_breathing</item>
+        <item>@string/menuitem_worldclock</item>
+        <item>@string/menuitem_takephoto</item>
         <!-- dummy item -->
         <item>@string/menuitem_more</item>
     </string-array>
@@ -1176,6 +1181,11 @@
         <item>water_time</item>
         <item>meditation</item>
         <item>zepp_flow</item>
+        <item>golf</item>
+        <item>bio_charge</item>
+        <item>breathing2</item>
+        <item>worldclock2</item>
+        <item>takephoto2</item>
         <!-- dummy item -->
         <item>more</item>
     </string-array>
