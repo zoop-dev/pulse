@@ -125,6 +125,9 @@ public class ZeppOsMenuType {
         put("00000029", "body_composition");
         put("0000002A", "readiness");
         put("0000002B", "zepp_pay");
+        put("0000002D", "bio_charge");
+        put("00100446", "worldclock2");
+        put("0010132C", "breathing2");
         put("000FFD39", "hrv");
     }};
 

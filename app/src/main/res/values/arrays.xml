@@ -1227,6 +1227,9 @@
         <item>@string/menuitem_apps_shortcuts</item>
         <item>@string/menuitem_alexa</item>
         <item>@string/menuitem_zepp_flow</item>
+        <item>@string/menuitem_bio_charge</item>
+        <item>@string/menuitem_worldclock</item>
+        <item>@string/menuitem_breathing</item>
     </string-array>
 
     <string-array name="pref_zepp_os_shortcut_cards_values">
@@ -1266,6 +1269,9 @@
         <item>apps_shortcuts</item>
         <item>alexa</item>
         <item>zepp_flow</item>
+        <item>bio_charge</item>
+        <item>worldclock2</item>
+        <item>breathing2</item>
     </string-array>
 
     <string-array name="pref_huami2021_control_center">
