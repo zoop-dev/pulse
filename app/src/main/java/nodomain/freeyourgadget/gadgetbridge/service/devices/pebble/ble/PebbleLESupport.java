@@ -218,10 +218,14 @@ public class PebbleLESupport {
             int bytesRead;
             while (true) {
                 try {
-                    // this code is very similar to iothread, that is bad
+                    // this code is very similar to IOThread, that is bad
                     // because we are the ones who prepared the buffer, there should be no
                     // need to do crazy stuff just to find out the PP boundaries again.
                     bytesRead = mPipedInputStream.read(buf, 0, 4);
+                    if (bytesRead < 0) {
+                        LOG.info("It seams the InputStream is closed, will shut down the PipeReader.");
+                        break;
+                    }
                     while (bytesRead < 4) {
                         bytesRead += mPipedInputStream.read(buf, bytesRead, 4 - bytesRead);
                     }
