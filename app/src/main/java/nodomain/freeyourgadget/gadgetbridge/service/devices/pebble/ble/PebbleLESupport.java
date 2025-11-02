@@ -33,6 +33,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.PebbleSupport;
 
 public class PebbleLESupport {
     private static final Logger LOG = LoggerFactory.getLogger(PebbleLESupport.class);
@@ -50,8 +51,10 @@ public class PebbleLESupport {
     private boolean mIsConnected = false;
     private final HandlerThread mWriteHandlerThread;
     private final Handler mWriteHandler;
+    private final PebbleSupport mPebbleSupport;
 
-    public PebbleLESupport(Context context, GBDevice gbDevice, final BluetoothDevice btDevice, PipedInputStream pipedInputStream, PipedOutputStream pipedOutputStream) throws IOException {
+    public PebbleLESupport(Context context, PebbleSupport pebbleSupport, GBDevice gbDevice, final BluetoothDevice btDevice, PipedInputStream pipedInputStream, PipedOutputStream pipedOutputStream) throws IOException {
+        mPebbleSupport = pebbleSupport;
         mBtDevice = btDevice;
         mPipedInputStream = new PipedInputStream();
         mPipedOutputStream = new PipedOutputStream();
@@ -169,12 +172,12 @@ public class PebbleLESupport {
             LOG.info("got command 0x02");
             if (value.length > 1) {
                 sendDataToPebble(new byte[]{0x03, 0x19, 0x19}); // no we don't know what that means
-                createPipedInputReader(); // FIXME: maybe not here
+                createPipedInputReader(); // maybe better not here?
             } else {
                 sendDataToPebble(new byte[]{0x03}); // no we don't know what that means
             }
         } else if (command == 0) { // normal package
-            LOG.info("got PPoGATT package serial = " + serial + " sending ACK");
+            LOG.info("got PPoGATT package serial = {} sending ACK", serial);
 
             sendAckToPebble(serial);
 
@@ -188,21 +191,15 @@ public class PebbleLESupport {
 
     private synchronized void sendDataToPebble(final byte[] bytes) {
         if (mPebbleGATTServer != null) {
-            mWriteHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    mPebbleGATTServer.sendDataToPebble(bytes);
-                }
-            });
+            mWriteHandler.post(() -> mPebbleGATTServer.sendDataToPebble(bytes));
         } else {
             // For now only in experimental client only code
-            mWriteHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    mPebbleGATTClient.sendDataToPebble(bytes);
-                }
-            });
+            mWriteHandler.post(() -> mPebbleGATTClient.sendDataToPebble(bytes));
         }
+    }
+
+    public PebbleSupport getPebbleSupport() {
+        return mPebbleSupport;
     }
 
     private class PipeReader extends Thread {
@@ -256,26 +253,26 @@ public class PebbleLESupport {
                     break;
                 }
             }
-            LOG.info("Pipereader thread shut down");
+            LOG.info("PipeReader thread shut down");
         }
 
         @Override
         public void interrupt() {
             super.interrupt();
             try {
-                LOG.info("closing piped inputstream");
+                LOG.info("closing piped InputStream");
                 mPipedInputStream.close();
             } catch (IOException ignore) {
             }
         }
     }
 
-    boolean isExpectedDevice(BluetoothDevice device) {
+    boolean isUnexpectedDevice(BluetoothDevice device) {
         if (!device.getAddress().equals(mBtDevice.getAddress())) {
-            LOG.info("unhandled device: " + device.getAddress() + " , ignoring, will only talk to " + mBtDevice.getAddress());
-            return false;
+            LOG.info("unhandled device: {} , ignoring, will only talk to {}", device.getAddress(), mBtDevice.getAddress());
+            return true;
         }
-        return true;
+        return false;
     }
 }
 

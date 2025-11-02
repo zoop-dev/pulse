@@ -192,7 +192,7 @@ class PebbleIoThread extends GBDeviceIoThread {
                     LOG.info("This is a Pebble 2 or Pebble-LE/Pebble Time LE, will use BLE");
                     mInStream = new PipedInputStream();
                     mOutStream = new PipedOutputStream();
-                    mPebbleLESupport = new PebbleLESupport(this.getContext(), gbDevice, btDevice, (PipedInputStream) mInStream, (PipedOutputStream) mOutStream);
+                    mPebbleLESupport = new PebbleLESupport(this.getContext(), mPebbleSupport, gbDevice, btDevice, (PipedInputStream) mInStream, (PipedOutputStream) mOutStream);
                 } else {
                     ParcelUuid[] uuids = btDevice.getUuids();
                     if (uuids == null) {
@@ -214,7 +214,7 @@ class PebbleIoThread extends GBDeviceIoThread {
                         LOG.info("This seems to be a 2025 Pebble will use BLE");
                         mInStream = new PipedInputStream();
                         mOutStream = new PipedOutputStream();
-                        mPebbleLESupport = new PebbleLESupport(this.getContext(), gbDevice, btDevice, (PipedInputStream) mInStream, (PipedOutputStream) mOutStream);
+                        mPebbleLESupport = new PebbleLESupport(this.getContext(), mPebbleSupport, gbDevice, btDevice, (PipedInputStream) mInStream, (PipedOutputStream) mOutStream);
                     }
                 }
             }

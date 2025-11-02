@@ -33,10 +33,13 @@ import org.slf4j.LoggerFactory;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
-import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
+import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.NotifyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.WriteAction;
-import nodomain.freeyourgadget.gadgetbridge.util.BondingUtil;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.ValueDecoder;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 @SuppressLint("MissingPermission")
@@ -63,7 +66,6 @@ class PebbleGATTClient extends BluetoothGattCallback {
 
     private boolean hasConnectivityCharacteristics = false;
     private final boolean doPairing = true;
-    private final boolean removeBond = false;
     private BluetoothGatt mBluetoothGatt;
 
     private CountDownLatch mWaitWriteCompleteLatch;
@@ -76,7 +78,7 @@ class PebbleGATTClient extends BluetoothGattCallback {
 
     @Override
     public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-        if (!mPebbleLESupport.isExpectedDevice(gatt.getDevice())) {
+        if (mPebbleLESupport.isUnexpectedDevice(gatt.getDevice())) {
             return;
         }
 
@@ -86,6 +88,9 @@ class PebbleGATTClient extends BluetoothGattCallback {
             mPebbleLESupport.setMTU(newMTU);
         } else if (characteristic.getUuid().equals(PPOGATT_CHARACTERISTIC_READ)) {
             mPebbleLESupport.handlePPoGATTPacket(characteristic.getValue().clone());
+        } else if (characteristic.getUuid().equals(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL)) {
+            int battery_percent = ValueDecoder.decodePercent(characteristic, characteristic.getValue());
+            LOG.info("Got battery level through notification, is at {}%", battery_percent);
         } else {
             LOG.info("onCharacteristicChanged() {} {}", characteristic.getUuid().toString(), GB.hexdump(characteristic.getValue(), 0, -1));
         }
@@ -93,29 +98,40 @@ class PebbleGATTClient extends BluetoothGattCallback {
 
     @Override
     public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-        if (!mPebbleLESupport.isExpectedDevice(gatt.getDevice())) {
+        if (mPebbleLESupport.isUnexpectedDevice(gatt.getDevice())) {
             return;
         }
 
         LOG.info("onCharacteristicRead() status = {}", status);
         if (status == BluetoothGatt.GATT_SUCCESS) {
             LOG.info("onCharacteristicRead() {} {}", characteristic.getUuid().toString(), GB.hexdump(characteristic.getValue(), 0, -1));
-
-            if (hasConnectivityCharacteristics) {
-                subscribeToConnectivity(gatt);
-            } else {
-                subscribeToConnectionParams(gatt);
+            if (characteristic.getUuid().equals(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL)) {
+                int battery_percent = ValueDecoder.decodePercent(characteristic, characteristic.getValue());
+                LOG.info("Got battery level through read, is at {}%", battery_percent);
+                GBDeviceEventBatteryInfo gbDeviceEventBatteryInfo = new GBDeviceEventBatteryInfo();
+                gbDeviceEventBatteryInfo.level = battery_percent;
+                gbDeviceEventBatteryInfo.state = BatteryState.BATTERY_NORMAL;
+                mPebbleLESupport.getPebbleSupport().evaluateGBDeviceEvent(gbDeviceEventBatteryInfo);
+            } else if ((characteristic.getUuid().equals(PAIRING_TRIGGER_CHARACTERISTIC))) {
+                // this is just a hack to force sequential ble commands for initialization
+                // kind of event driven
+                // And this never happens when not READING the pairing trigger which is only done for old pebbles running fw 3.x
+                if (hasConnectivityCharacteristics) {
+                    subscribeToConnectivity(gatt);
+                } else {
+                    subscribeToConnectionParams(gatt);
+                }
             }
         }
     }
 
     @Override
     public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-        if (!mPebbleLESupport.isExpectedDevice(gatt.getDevice())) {
+        if (mPebbleLESupport.isUnexpectedDevice(gatt.getDevice())) {
             return;
         }
 
-        LOG.info("onConnectionStateChange() status = " + status + " newState = " + newState);
+        LOG.info("onConnectionStateChange() status = {} newState = {}", status, newState);
         if (newState == BluetoothGatt.STATE_CONNECTED) {
             LOG.info("calling discoverServices()");
             gatt.discoverServices();
@@ -126,7 +142,7 @@ class PebbleGATTClient extends BluetoothGattCallback {
 
     @Override
     public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-        if (!mPebbleLESupport.isExpectedDevice(gatt.getDevice())) {
+        if (mPebbleLESupport.isUnexpectedDevice(gatt.getDevice())) {
             return;
         }
         if (characteristic.getUuid().equals(PPOGATT_CHARACTERISTIC_WRITE)) {
@@ -153,19 +169,21 @@ class PebbleGATTClient extends BluetoothGattCallback {
 
     @Override
     public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor bluetoothGattDescriptor, int status) {
-        if (!mPebbleLESupport.isExpectedDevice(gatt.getDevice())) {
+        if (mPebbleLESupport.isUnexpectedDevice(gatt.getDevice())) {
             return;
         }
 
-        LOG.info("onDescriptorWrite() status=" + status);
+        LOG.info("onDescriptorWrite() status={}", status);
 
         UUID CHARACTERISTICUUID = bluetoothGattDescriptor.getCharacteristic().getUuid();
 
+        // this is just a hack to force sequential ble commands for initialization
+        // kind of event driven
         if (CHARACTERISTICUUID.equals(CONNECTION_PARAMETERS_CHARACTERISTIC)) {
             subscribeToConnectivity(gatt);
         } else if (CHARACTERISTICUUID.equals(CONNECTIVITY_CHARACTERISTIC)) {
-            subscribeToMTU(gatt);
-        } else if (CHARACTERISTICUUID.equals(MTU_CHARACTERISTIC)) {
+            subscribeToMTUOrBattery(gatt);
+        } else if (CHARACTERISTICUUID.equals(MTU_CHARACTERISTIC) || CHARACTERISTICUUID.equals(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL)) {
             if (mPebbleLESupport.clientOnly) {
                 subscribeToPPoGATT(gatt);
             } else {
@@ -178,7 +196,7 @@ class PebbleGATTClient extends BluetoothGattCallback {
 
     @Override
     public void onServicesDiscovered(BluetoothGatt gatt, int status) {
-        if (!mPebbleLESupport.isExpectedDevice(gatt.getDevice())) {
+        if (mPebbleLESupport.isUnexpectedDevice(gatt.getDevice())) {
             return;
         }
 
@@ -227,13 +245,16 @@ class PebbleGATTClient extends BluetoothGattCallback {
         if (status == BluetoothGatt.GATT_SUCCESS) {
             LOG.info("MTU changed to {}", mtu);
             mPebbleLESupport.setMTU(mtu);
+
+            // read battery
+            BluetoothGattCharacteristic characteristic = gatt.getService(GattService.UUID_SERVICE_BATTERY_SERVICE).getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL);
+            if (characteristic != null) {
+                gatt.readCharacteristic(characteristic);
+            }
         }
     }
 
     private void connectToPebble(BluetoothDevice btDevice) {
-        if (removeBond) {
-            BondingUtil.Unpair(GBApplication.getContext(), btDevice.getAddress());
-        }
         if (mBluetoothGatt != null) {
             this.close();
         }
@@ -255,8 +276,7 @@ class PebbleGATTClient extends BluetoothGattCallback {
             NotifyAction.writeDescriptor(gatt, descriptor, BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
             gatt.setCharacteristicNotification(gatt.getService(SERVICE_UUID).getCharacteristic(MTU_CHARACTERISTIC), true);
         } else {
-            LOG.info("Could not find MTU Characteristic. This seems to be a 2025 Pebble, requesting MTU via gatt");
-            gatt.requestMtu(339);
+            LOG.info("Could not find MTU Characteristic. This seems to be a 2025 Pebble");
         }
     }
 
@@ -267,14 +287,40 @@ class PebbleGATTClient extends BluetoothGattCallback {
         gatt.setCharacteristicNotification(gatt.getService(SERVICE_UUID).getCharacteristic(CONNECTION_PARAMETERS_CHARACTERISTIC), true);
     }
 
+    private void subscribeToMTUOrBattery(BluetoothGatt gatt) {
+        // This is dumb, right now there is only one of them present in all pebbles
+        BluetoothGattCharacteristic characteristic = gatt.getService(SERVICE_UUID).getCharacteristic(MTU_CHARACTERISTIC);
+        if (characteristic != null) {
+            subscribeToMTU(gatt);
+        } else {
+            subscribeToBattery(gatt);
+        }
+    }
+
+    private void subscribeToBattery(BluetoothGatt gatt) {
+        BluetoothGattCharacteristic characteristic = gatt.getService(GattService.UUID_SERVICE_BATTERY_SERVICE).getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL);
+        if (characteristic != null) {
+            LOG.info("subscribing to battery characteristic");
+            BluetoothGattDescriptor descriptor = gatt.getService(GattService.UUID_SERVICE_BATTERY_SERVICE).getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL).getDescriptor(CHARACTERISTIC_CONFIGURATION_DESCRIPTOR);
+            NotifyAction.writeDescriptor(gatt, descriptor, BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+            gatt.setCharacteristicNotification(gatt.getService(GattService.UUID_SERVICE_BATTERY_SERVICE).getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL), true);
+        } else {
+            LOG.info("Could not find Battery Characteristic. This is normal on pre-2025 pebbles.");
+        }
+    }
+
     private void setMTU(BluetoothGatt gatt) {
         LOG.info("setting MTU");
         BluetoothGattCharacteristic characteristic = gatt.getService(SERVICE_UUID).getCharacteristic(MTU_CHARACTERISTIC);
-        BluetoothGattDescriptor descriptor = characteristic.getDescriptor(CHARACTERISTIC_CONFIGURATION_DESCRIPTOR);
-        descriptor.setValue(new byte[]{0x0b, 0x01}); // unknown
-        // descriptor is not wrote back to the device, but the characteristic is.
-        // Reason is unclear but writing back the descriptor instead of the characteristic breaks the connection.
-        WriteAction.writeCharacteristic(gatt,characteristic, characteristic.getValue());
+        if (characteristic != null) {
+            BluetoothGattDescriptor descriptor = characteristic.getDescriptor(CHARACTERISTIC_CONFIGURATION_DESCRIPTOR);
+            descriptor.setValue(new byte[]{0x0b, 0x01}); // unknown
+            // descriptor is not wrote back to the device, but the characteristic is.
+            // Reason is unclear but writing back the descriptor instead of the characteristic breaks the connection.
+            WriteAction.writeCharacteristic(gatt, characteristic, characteristic.getValue());
+        } else {
+            gatt.requestMtu(339);
+        }
     }
 
     private void subscribeToPPoGATT(BluetoothGatt gatt) {

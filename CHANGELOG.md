@@ -2,6 +2,7 @@
 
 #### Next
 * Initial support for Pebble 2 Duo (Experimental)
+* Pebble 2/2 Duo: Fix random crashes on disconnect
 
 #### 0.87.1
 
