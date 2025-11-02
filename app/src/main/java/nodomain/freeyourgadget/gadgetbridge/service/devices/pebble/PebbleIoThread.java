@@ -481,6 +481,9 @@ class PebbleIoThread extends GBDeviceIoThread {
             write(mPebbleProtocol.encodeEnableAppLogs(devicePrefs.getBoolean("pebble_enable_applogs", false)));
             write(mPebbleProtocol.encodeReportDataLogSessions());
             gbDevice.setState(GBDevice.State.INITIALIZED);
+            if (mPebbleLESupport != null) {
+                mPebbleLESupport.readBatteryCharacteristic();
+            }
             return false;
         } else if (deviceEvent instanceof GBDeviceEventAppManagement) {
             GBDeviceEventAppManagement appMgmt = (GBDeviceEventAppManagement) deviceEvent;

@@ -154,6 +154,10 @@ public class PebbleLESupport {
         mMTU = Math.min(mtu, mMTULimit);
     }
 
+    public void readBatteryCharacteristic() {
+        mPebbleGATTClient.readBatteryCharacteristic();
+    }
+
     public void handlePPoGATTPacket(byte[] value) {
         if (!mIsConnected) {
             mIsConnected = true;

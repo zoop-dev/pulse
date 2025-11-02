@@ -245,12 +245,13 @@ class PebbleGATTClient extends BluetoothGattCallback {
         if (status == BluetoothGatt.GATT_SUCCESS) {
             LOG.info("MTU changed to {}", mtu);
             mPebbleLESupport.setMTU(mtu);
+        }
+    }
 
-            // read battery
-            BluetoothGattCharacteristic characteristic = gatt.getService(GattService.UUID_SERVICE_BATTERY_SERVICE).getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL);
-            if (characteristic != null) {
-                gatt.readCharacteristic(characteristic);
-            }
+    public void readBatteryCharacteristic() {
+        BluetoothGattCharacteristic characteristic = mBluetoothGatt.getService(GattService.UUID_SERVICE_BATTERY_SERVICE).getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL);
+        if (characteristic != null) {
+            mBluetoothGatt.readCharacteristic(characteristic);
         }
     }
 
