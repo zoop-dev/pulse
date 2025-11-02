@@ -222,6 +222,14 @@ class PebbleGATTClient extends BluetoothGattCallback {
         }
     }
 
+    @Override
+    public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
+        if (status == BluetoothGatt.GATT_SUCCESS) {
+            LOG.info("MTU changed to {}", mtu);
+            mPebbleLESupport.setMTU(mtu);
+        }
+    }
+
     private void connectToPebble(BluetoothDevice btDevice) {
         if (removeBond) {
             BondingUtil.Unpair(GBApplication.getContext(), btDevice.getAddress());
