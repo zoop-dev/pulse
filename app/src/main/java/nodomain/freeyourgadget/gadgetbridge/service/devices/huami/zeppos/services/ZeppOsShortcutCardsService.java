@@ -92,7 +92,10 @@ public class ZeppOsShortcutCardsService extends AbstractZeppOsService {
         ALEXA("35", "1"),
         ZEPP_PAY("37", "1"),
         CALORIES("38", "1"),
+        BIO_CHARGE("39", "1"),
         HRV("1047865", "1"),
+        WORLDCLOCK2("1049670", "1"),
+        BREATHING2("1053484", "1"),
         ZEPP_FLOW("1074698", "1"),
         ;
 
