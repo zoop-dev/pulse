@@ -214,7 +214,7 @@ public abstract class AbstractSerialDeviceSupport extends AbstractDeviceSupport 
 
     @Override
     public void onFetchRecordedData(int dataTypes) {
-        byte[] bytes = gbDeviceProtocol.encodeSynchronizeActivityData();
+        byte[] bytes = gbDeviceProtocol.encodeFetchRecordedData(dataTypes);
         sendToDevice(bytes);
     }
 

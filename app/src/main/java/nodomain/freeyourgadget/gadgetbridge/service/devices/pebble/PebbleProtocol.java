@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +66,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec.Action;
+import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
@@ -731,6 +733,26 @@ public class PebbleProtocol extends GBDeviceProtocol {
 
     byte[] encodeReportDataLogSessions() {
         return encodeSimpleMessage(ENDPOINT_DATALOG, DATALOG_REPORTSESSIONS);
+    }
+
+    @Override
+    public byte[] encodeFetchRecordedData(int dataTypes) {
+        if (dataTypes == RecordedDataTypes.TYPE_DEBUGLOGS) {
+            return encodeRequestLogDump(0, 0);
+        }
+        return null;
+    }
+
+    byte[] encodeRequestLogDump(int generation, int cookie) {
+        final short LENGTH_REQUEST_LOGDUMP = 5;
+        ByteBuffer buf = ByteBuffer.allocate(LENGTH_PREFIX + LENGTH_REQUEST_LOGDUMP);
+        buf.order(ByteOrder.BIG_ENDIAN);
+        buf.putShort(LENGTH_REQUEST_LOGDUMP);
+        buf.putShort(ENDPOINT_LOGDUMP);
+        buf.put((byte) generation);
+        buf.putInt(cookie);
+
+        return buf.array();
     }
 
     private byte[] encodeBlobDBClear(byte database) {
@@ -2060,7 +2082,20 @@ public class PebbleProtocol extends GBDeviceProtocol {
         int lineNumber = buf.getShort() & 0xffff;
         String fileName = getFixedString(buf, 16);
         String message = getFixedString(buf, messageLength);
-        LOG.debug("APP_LOGS ({}) from uuid {} in {}:{} {}", logLevel, uuid, fileName, lineNumber, message);
+        LOG.debug("APP_LOGS: {} : ({}) from uuid {} in {}:{} {}", DateTimeUtils.formatIso8601(new Date(timestamp * 1000L)), logLevel, uuid, fileName, lineNumber, message);
+    }
+
+    private void decodeLogDump(ByteBuffer buf) {
+        int logLevel = buf.get() & 0xff;
+        int cookie = buf.getInt();
+        int timestamp = buf.getInt();
+        buf.get();
+        buf.order(ByteOrder.LITTLE_ENDIAN);
+        int length = buf.getShort();
+        short lineNumber = buf.getShort();
+        String fileName = getFixedString(buf, 15);
+        String message = getFixedString(buf, length);
+        LOG.debug("PEBBLE LOG_DUMP: {} : ({}) in {}:{} {}", DateTimeUtils.formatIso8601(new Date(timestamp * 1000L)), logLevel, fileName, lineNumber, message);
     }
 
     private GBDeviceEvent decodeSystemMessage(ByteBuffer buf) {
@@ -2560,6 +2595,9 @@ public class PebbleProtocol extends GBDeviceProtocol {
                 break;
             case ENDPOINT_APPLOGS:
                 decodeAppLogs(buf);
+                break;
+            case ENDPOINT_LOGDUMP:
+                decodeLogDump(buf);
                 break;
             case ENDPOINT_VOICECONTROL:
                 devEvts = new GBDeviceEvent[]{decodeVoiceControl(buf)};
