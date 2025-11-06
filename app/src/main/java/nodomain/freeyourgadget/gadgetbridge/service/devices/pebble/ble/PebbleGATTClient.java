@@ -25,6 +25,7 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
+import android.bluetooth.BluetoothGattService;
 import android.content.Context;
 
 import org.slf4j.Logger;
@@ -249,10 +250,15 @@ class PebbleGATTClient extends BluetoothGattCallback {
     }
 
     public void readBatteryCharacteristic() {
-        BluetoothGattCharacteristic characteristic = mBluetoothGatt.getService(GattService.UUID_SERVICE_BATTERY_SERVICE).getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL);
-        if (characteristic != null) {
-            mBluetoothGatt.readCharacteristic(characteristic);
-        }
+        BluetoothGattService serivce = mBluetoothGatt.getService(GattService.UUID_SERVICE_BATTERY_SERVICE);
+        if (serivce == null)
+            return;
+
+        BluetoothGattCharacteristic characteristic = serivce.getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL);
+        if (characteristic == null)
+            return;
+
+        mBluetoothGatt.readCharacteristic(characteristic);
     }
 
     private void connectToPebble(BluetoothDevice btDevice) {
