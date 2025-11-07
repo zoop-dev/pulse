@@ -712,7 +712,7 @@
     <string name="prefs_find_phone_summary">Verwende dein Band, um den Klingelton deines Telefons wiederzugeben.</string>
     <string name="prefs_find_phone_duration">Klingeldauer in Sekunden</string>
     <string name="maximum_duration">Dauer</string>
-    <string name="discovery_need_to_enter_authkey">Dieses Gerät benötigt einen geheimen Authentifikationsschlüssel, den du durch langes Drücken auf den Gerätnamen eingeben kannst. Mehr Informationen gibt es auf der Gadgetbride-Webseite.</string>
+    <string name="discovery_need_to_enter_authkey">Dieses Gerät benötigt einen geheimen Authentifizierungsschlüssel. Halten Sie das Gerät gedrückt, um ihn einzugeben. Weitere Informationen finden Sie auf der Website.</string>
     <string name="fw_upgrade_notice_amazfitbip_lite">Du bist dabei, die Firmware %s auf deiner Amazfit Bip Lite zu installieren.\n\nBitte stelle sicher, dass du zuerst die .fw-Datei und danach die .res-Datei installierst. Deine Smartwatch wird nach der Installation der .fw-Datei neu gestartet.\n\nHinweis: Du musst .res nicht installieren, wenn sie exakt mit der zuvor installierten Datei identisch ist.\n\nDURCHFÜHRUNG AUF EIGENE GEFAHR!</string>
     <string name="fw_upgrade_notice_amazfitgtr">Du bist dabei, die Firmware %s auf deiner Amazfit GTR zu installieren.\n\nBitte stelle sicher, dass du zuerst die .fw-Datei und danach die .res-Datei installierst. Deine Smartwatch wird nach der Installation der .fw-Datei neu gestartet.\n\nHinweis: Du musst .res nicht installieren, wenn sie exakt mit der zuvor installierten Datei identisch ist.\n\nDURCHFÜHRUNG AUF EIGENE GEFAHR!</string>
     <string name="pref_chart_heartrate_color_red">Rot</string>
@@ -825,7 +825,7 @@
     <string name="about_description_generic">Cloudfreie, copyleft-lizenzierte, freie Alternative zu proprietären Android-Gadget-Apps der Hersteller.</string>
     <string name="about_activity_title_generic">Über Gadgetbridge</string>
     <string name="about_title">Über</string>
-    <string name="pref_title_weather_summary">Wird für den LineageOS-Wetterdienst verwendet. Andere Android-Versionen benötigen eine App wie \"Weather notification\". Weitere Informationen findest du im Gadgetbridge-Wiki.</string>
+    <string name="pref_title_weather_summary">Wird für den Wetterdienst von LineageOS verwendet; andere Android-Versionen benötigen eine App wie „Breezy Weather“. Weitere Informationen finden Sie auf der Gadgetbridge-Website.</string>
     <string name="menuitem_worldclock">Weltuhr</string>
     <string name="error_version_check_extreme_caution">ACHTUNG: Fehler beim Prüfen der Information zur Version! Du solltest nicht fortfahren! Versionsname \"%s\" gefunden</string>
     <string name="permission_granting_mandatory">Alle Berechtigungen sind notwendig und es kann zu Problemen führen, wenn sie nicht genehmigt werden</string>
@@ -1094,7 +1094,7 @@
 \nHinweis: Du musst .res nicht installieren, wenn es genau die gleiche ist, wie die zuvor installierte.
 \n
 \nINSTALLATION AUF EIGENE GEFAHR!</string>
-    <string name="fossil_hr_commute_actions_explanation">Die hier konfigurierten Aktionen werden in der Commute-App auf deiner Smartwatch angezeigt. Mehr Informationen gibt es auf der Gadgetbride-Webseite.</string>
+    <string name="fossil_hr_commute_actions_explanation">Die hier konfigurierten Aktionen werden in der Commute-App auf Ihrer Smartwatch angezeigt. Informationen zum Umgang mit den durch diese Aktionen ausgelösten Intents finden Sie auf der Website.</string>
     <string name="kind_agps_bundle">AGPS-Bundle</string>
     <string name="qhybrid_calibration_100_steps">100 Schritte</string>
     <string name="qhybrid_calibration_10_steps">10 Schritte</string>
@@ -1590,8 +1590,8 @@
     <string name="controlcenter_folder_name">Ordnername:</string>
     <string name="controlcenter_add_new_folder">Neuen Ordner hinzufügen</string>
     <string name="controlcenter_unset_folder">Ordner aufheben</string>
-    <string name="pref_explanation_authkey">Einige Geräte erfordern einen speziellen Pairing-Schlüssel für die erste Initialisierung des Geräts. Tippe hier für weitere Details im Wiki.</string>
-    <string name="pref_explanation_authkey_new_protocol">Erscheint auf dem Band die Meldung „App auf die neueste Version aktualisieren“, überprüfe bitte, ob oben das „Neue Authentifizierungsprotokoll“ aktiviert ist. Für weitere Details tippe hier, um das Wiki zu öffnen.</string>
+    <string name="pref_explanation_authkey">Für einige Geräte ist bei der ersten Inbetriebnahme ein spezieller Kopplungsschlüssel erforderlich. Tippen Sie hier, um weitere Informationen auf der Website zu erhalten.</string>
+    <string name="pref_explanation_authkey_new_protocol">Wenn auf Ihrem Armband die Meldung „Aktualisieren Sie die App auf die neueste Version“ angezeigt wird, überprüfen Sie bitte das oben stehende „Neue Authentifizierungsprotokoll“. Tippen Sie hier, um weitere Informationen auf der Website zu erhalten.</string>
     <string name="prefs_password">Passwort</string>
     <string name="prefs_password_summary">Band/Smartwatch beim Ablegen per Passwort sperren</string>
     <string name="prefs_password_enabled">Passwort aktiviert</string>
@@ -1610,7 +1610,7 @@
     <string name="open_fw_installer_connect_minimum_one_device">Bitte verbinde MINDESTENS EIN Gerät, an das du die Datei senden möchtest.</string>
     <string name="open_fw_installer_connect_maximum_one_device">Bitte verbinde NUR EIN Gerät, an das du die Datei senden möchtest.</string>
     <string name="open_fw_installer_ensure_device_connected">Stelle sicher, dass das Gerät %s angeschlossen ist</string>
-    <string name="open_fw_installer_info_text">Mit dem Installer kannst du unterstützte Dateien (Firmware, Zifferblätter, Apps, GPS-Daten, Ressourcen und Schriftarten ) auf deine Smartwatch übertragen. Mehr Infos im Wiki: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
+    <string name="open_fw_installer_info_text">Mit dem Firmware-/Zifferblatt-/App-/Datei-Installer können Sie unterstützte Dateien (Firmware, Zifferblätter, Anwendungen, GPS, Ressourcen, Schriftarten usw.) auf das Gerät hochladen und installieren. Weitere Informationen finden Sie auf der Website: https://gadgetbridge.org/internals/features/installer/</string>
     <string name="open_fw_installer_getting_files_text">Da wir die Firmware-Dateien nicht weitergeben dürfen, musst du sie selbst beschaffen. Das bedeutet, dass du nach den Dateien in APKs, online, in Foren oder auf Amazfitwatchfaces (für Mi Band- und Amazfit-Geräte) suchen musst.</string>
     <string name="appmanager_item_outdated">(veraltet)</string>
     <string name="pref_title_banglejs_txt_bitmap_size">Größe der Text-Bitmaps</string>
@@ -2390,7 +2390,7 @@
     <string name="prefs_wena3_vibration_step_down">Schritt runter</string>
     <string name="huawei_ignore_wakeup_status_start_description">Kann bei der korrekten Schlaferkennung helfen. Sofort sichtbar in der Ansicht der täglichen Aktivitäten.</string>
     <string name="huawei_alarm_smart_description">Deaktiviere nicht das Kontrollkästchen für das intelligente Aufwecken.</string>
-    <string name="pref_force_options_summary">Einige Geräte behaupten fälschlicherweise, dass sie einige Optionen nicht unterstützen. Diese Einstellungen können verwendet werden, um sie trotzdem zu aktivieren. \nVERWENDUNG AUF EIGENE GEFAHR \nLese auf der Webseite</string>
+    <string name="pref_force_options_summary">Manche Geräte geben fälschlicherweise an, bestimmte Optionen nicht zu unterstützen. Mit diesen Einstellungen können Sie diese Funktionen dennoch aktivieren.\nBENUTZUNG AUF EIGENE GEFAHR\nLesen Sie die Website</string>
     <string name="pref_enable_call_reject_summary">Aktiviere das Abweisen von Anrufen vom Gerät</string>
     <string name="pref_enable_call_accept_summary">Aktiviere die Annahme von Anrufen vom Gerät</string>
     <string name="huawei_reparse_workout_data">Reparieren der Trainingsdaten</string>
@@ -3990,4 +3990,11 @@
     <string name="pref_screen_ecg">EKG</string>
     <string name="pref_huawei_ecg_activate_title">EKG aktivieren</string>
     <string name="pref_huawei_ecg_activate_summary">EKG auf dem Gerät aktivieren oder deaktivieren</string>
+    <string name="diving_depth">Tiefe</string>
+    <string name="pref_install_unsupported_files_title">Nicht unterstützte Dateien installieren</string>
+    <string name="pref_install_unsupported_files_summary">Das Hochladen nicht unterstützter Dateien auf das Gerät zulassen.</string>
+    <string name="install_unsupported_files_warning">Diese Datei wird vom Gerät nicht unterstützt und kann Probleme verursachen.\n\nVon der Installation wird dringend abgeraten!</string>
+    <string name="pref_huawei_arterial_stiffness_detection">Erkennung der arteriellen Steifigkeit</string>
+    <string name="pref_huawei_arterial_stiffness_detection_enable_title">Aktivierung der Erkennung arterieller Steifigkeit</string>
+    <string name="pref_huawei_arterial_stiffness_detection_enable_summary">Aktivieren Sie die Erkennung der arteriellen Steifigkeit am Gerät</string>
 </resources>
