@@ -227,7 +227,9 @@ public class ComputedHrvSummarySampleProvider implements TimeSampleProvider<HrvS
             cal.add(Calendar.DATE, -1);
         }
 
-        if (overnightAverages.isEmpty()) {
+        // Require at least 7 days of overnight data before calculating a baseline
+        // This prevents unreliable status calculations in the first few days
+        if (overnightAverages.size() < 7) {
             return new BaselineValues(0, 0, 0);
         }
 
