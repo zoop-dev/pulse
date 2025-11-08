@@ -15,39 +15,49 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 
-package nodomain.freeyourgadget.gadgetbridge.devices.huami;
+package nodomain.freeyourgadget.gadgetbridge.devices;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
-import nodomain.freeyourgadget.gadgetbridge.devices.GenericHrvValueSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvValueSample;
 
 /**
- * Provides HRV summary data for Huami/Zepp OS devices by computing statistics
- * from the per-minute HRV value samples.
- * This provider calculates:
- * - Weekly average (7-day rolling average)
- * - Last night average and 5-min high
- * - Baseline values for status determination
+ * Generic provider that computes HRV summary data from per-minute HRV value samples.
+ * This provider can be used by any device that stores per-minute HRV data but doesn't
+ * receive summary statistics from the device firmware.
+ * <p>
+ * The provider calculates:
+ * - Weekly average (7-day rolling average of all HRV values)
+ * - Last night average and 5-min high (8 hours before midnight to midnight)
+ * - Baseline values using Garmin's method: mean ± standard deviation of 28 overnight averages
+ * <p>
+ * Summaries are computed on-demand and cached for performance.
  */
-public class HuamiHrvSummarySampleProvider implements TimeSampleProvider<HrvSummarySample> {
+public class ComputedHrvSummarySampleProvider implements TimeSampleProvider<HrvSummarySample> {
     private static final int DAYS_FOR_WEEKLY_AVG = 7;
-    private static final int DAYS_FOR_BASELINE = 14; // Use 2 weeks for baseline calculation
+    private static final int DAYS_FOR_BASELINE = 28; // Use 28 days (4 weeks) for baseline calculation
+    private static final int CACHE_SIZE = 100; // Cache up to 100 computed summaries
 
-    private final GenericHrvValueSampleProvider valueProvider;
+    private final TimeSampleProvider<? extends HrvValueSample> valueProvider;
 
-    public HuamiHrvSummarySampleProvider(final GBDevice device, final DaoSession session) {
-        this.valueProvider = new GenericHrvValueSampleProvider(device, session);
+    // LRU cache for computed summaries
+    private final Map<Long, HrvSummarySample> summaryCache = new LinkedHashMap<>(CACHE_SIZE, 0.75f, true) {
+        @Override
+        protected boolean removeEldestEntry(Map.Entry<Long, HrvSummarySample> eldest) {
+            return size() > CACHE_SIZE;
+        }
+    };
+
+    public ComputedHrvSummarySampleProvider(final TimeSampleProvider<? extends HrvValueSample> valueProvider) {
+        this.valueProvider = valueProvider;
     }
 
     @NonNull
@@ -93,6 +103,11 @@ public class HuamiHrvSummarySampleProvider implements TimeSampleProvider<HrvSumm
      * The timestamp should be at the end of the day (23:59:59).
      */
     private HrvSummarySample generateSummaryForDay(long dayEndTimestamp) {
+        // Check cache first
+        if (summaryCache.containsKey(dayEndTimestamp)) {
+            return summaryCache.get(dayEndTimestamp);
+        }
+
         final Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(dayEndTimestamp);
 
@@ -113,28 +128,25 @@ public class HuamiHrvSummarySampleProvider implements TimeSampleProvider<HrvSumm
             return null;
         }
 
-
         // Calculate weekly average (past 7 days including today)
         final Calendar weekStart = (Calendar) dayStart.clone();
         weekStart.add(Calendar.DATE, -DAYS_FOR_WEEKLY_AVG + 1);
         final int weeklyAvg = calculateAverageHrv(weekStart.getTimeInMillis(), dayEndTimestamp);
 
-        // Calculate last night average (previous night, typically 10 PM to 6 AM)
+        // Calculate last night average (previous night, 8 hours before midnight to midnight)
         final Calendar lastNightEnd = (Calendar) dayStart.clone();
         final Calendar lastNightStart = (Calendar) lastNightEnd.clone();
         lastNightStart.add(Calendar.HOUR_OF_DAY, -8); // 8 hours back from midnight
         final int lastNightAvg = calculateAverageHrv(lastNightStart.getTimeInMillis(), lastNightEnd.getTimeInMillis());
         final int lastNight5MinHigh = calculate5MinHighHrv(lastNightStart.getTimeInMillis(), lastNightEnd.getTimeInMillis());
 
-        // Calculate baseline values (using past 2 weeks)
-        final Calendar baselineStart = (Calendar) dayStart.clone();
-        baselineStart.add(Calendar.DATE, -DAYS_FOR_BASELINE);
-        final BaselineValues baseline = calculateBaseline(baselineStart.getTimeInMillis(), dayEndTimestamp);
+        // Calculate baseline values (using past 28 overnight averages)
+        final BaselineValues baseline = calculateBaseline(dayEndTimestamp);
 
         // Determine status based on weekly average and baseline
         final HrvSummarySample.Status status = determineStatus(weeklyAvg, baseline);
 
-        return new HuamiHrvSummarySample(
+        final HrvSummarySample summary = new ComputedHrvSummarySample(
                 dayEndTimestamp,
                 weeklyAvg > 0 ? weeklyAvg : null,
                 lastNightAvg > 0 ? lastNightAvg : null,
@@ -144,6 +156,11 @@ public class HuamiHrvSummarySampleProvider implements TimeSampleProvider<HrvSumm
                 baseline.balancedUpper > 0 ? baseline.balancedUpper : null,
                 status
         );
+
+        // Cache the computed summary
+        summaryCache.put(dayEndTimestamp, summary);
+
+        return summary;
     }
 
     private int calculateAverageHrv(long timestampFrom, long timestampTo) {
@@ -181,38 +198,67 @@ public class HuamiHrvSummarySampleProvider implements TimeSampleProvider<HrvSumm
         return maxAvg;
     }
 
-    private BaselineValues calculateBaseline(long timestampFrom, long timestampTo) {
-        final List<? extends HrvValueSample> samples = valueProvider.getAllSamples(timestampFrom, timestampTo);
-        if (samples.isEmpty()) {
-            return new BaselineValues(0, 0, 0);
-        }
+    private BaselineValues calculateBaseline(long timestampTo) {
+        // Calculate baseline using Garmin's approach:
+        // Get overnight HRV averages for the last 28 days, then calculate mean ± standard deviation
 
-        // Get all HRV values and sort them
-        final List<Integer> values = new ArrayList<>();
-        for (HrvValueSample sample : samples) {
-            if (sample.getValue() > 0) {
-                values.add(sample.getValue());
+        final List<Integer> overnightAverages = new ArrayList<>();
+        final Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(timestampTo);
+
+        // Collect overnight averages for the past 28 days
+        for (int i = 0; i < DAYS_FOR_BASELINE; i++) {
+            // Define "overnight" as 8 hours before midnight to midnight
+            final Calendar dayStart = (Calendar) cal.clone();
+            dayStart.set(Calendar.HOUR_OF_DAY, 0);
+            dayStart.set(Calendar.MINUTE, 0);
+            dayStart.set(Calendar.SECOND, 0);
+            dayStart.set(Calendar.MILLISECOND, 0);
+
+            final Calendar nightStart = (Calendar) dayStart.clone();
+            nightStart.add(Calendar.HOUR_OF_DAY, -8);
+
+            final int nightAvg = calculateAverageHrv(nightStart.getTimeInMillis(), dayStart.getTimeInMillis());
+            if (nightAvg > 0) {
+                overnightAverages.add(nightAvg);
             }
+
+            // Move to previous day
+            cal.add(Calendar.DATE, -1);
         }
 
-        if (values.isEmpty()) {
+        if (overnightAverages.isEmpty()) {
             return new BaselineValues(0, 0, 0);
         }
 
-        Collections.sort(values);
+        // Calculate mean
+        double sum = 0;
+        for (int value : overnightAverages) {
+            sum += value;
+        }
+        final double mean = sum / overnightAverages.size();
 
-        // Calculate percentiles for baseline determination
-        // Low: below 25th percentile
-        // Balanced: 25th to 75th percentile
-        // Unbalanced: above 75th percentile
-        final int p25Index = values.size() / 4;
-        final int p75Index = (values.size() * 3) / 4;
+        // Calculate standard deviation
+        double varianceSum = 0;
+        for (int value : overnightAverages) {
+            final double diff = value - mean;
+            varianceSum += diff * diff;
+        }
+        final double stdDev = Math.sqrt(varianceSum / overnightAverages.size());
 
-        final int baselineLowUpper = values.get(Math.max(0, p25Index - 1));
-        final int baselineBalancedLower = values.get(p25Index);
-        final int baselineBalancedUpper = values.get(Math.min(values.size() - 1, p75Index));
+        // Baseline range is mean ± 1 standard deviation, rounded to whole numbers
+        final int baselineLower = (int) Math.round(mean - stdDev);
+        final int baselineUpper = (int) Math.round(mean + stdDev);
 
-        return new BaselineValues(baselineLowUpper, baselineBalancedLower, baselineBalancedUpper);
+        // For the "low upper" threshold, we use a value below the lower baseline boundary
+        // This creates three ranges:
+        // Poor: < (mean - 1.5 * stdDev)
+        // Low: < (mean - stdDev)
+        // Balanced: (mean - stdDev) to (mean + stdDev)
+        // Unbalanced: > (mean + stdDev)
+        final int poorThreshold = (int) Math.round(mean - 1.5 * stdDev);
+
+        return new BaselineValues(poorThreshold, baselineLower, baselineUpper);
     }
 
     private HrvSummarySample.Status determineStatus(int weeklyAvg, BaselineValues baseline) {
@@ -221,16 +267,16 @@ public class HuamiHrvSummarySampleProvider implements TimeSampleProvider<HrvSumm
         }
 
         if (weeklyAvg < baseline.lowUpper) {
-            // Very low HRV - could indicate poor recovery or health issues
-            return HrvSummarySample.Status.LOW;
+            // Very low HRV - indicates poor recovery, possible overtraining or illness
+            return HrvSummarySample.Status.POOR;
         } else if (weeklyAvg < baseline.balancedLower) {
-            // Below balanced range
-            return HrvSummarySample.Status.UNBALANCED;
+            // Below baseline range but not critically low
+            return HrvSummarySample.Status.LOW;
         } else if (weeklyAvg <= baseline.balancedUpper) {
-            // Within balanced range
+            // Within normal baseline range
             return HrvSummarySample.Status.BALANCED;
         } else {
-            // Above balanced range - could indicate overtraining or stress
+            // Above baseline range - could indicate stress or unusual recovery pattern
             return HrvSummarySample.Status.UNBALANCED;
         }
     }
@@ -248,8 +294,8 @@ public class HuamiHrvSummarySampleProvider implements TimeSampleProvider<HrvSumm
     @NonNull
     @Override
     public HrvSummarySample createSample() {
-        // This provider is read-only and computes samples on-demand, so we return an empty sample
-        return new HuamiHrvSummarySample(
+        // This provider is read-only and computes samples on-demand
+        return new ComputedHrvSummarySample(
                 System.currentTimeMillis(),
                 null,
                 null,
@@ -322,9 +368,9 @@ public class HuamiHrvSummarySampleProvider implements TimeSampleProvider<HrvSumm
     }
 
     private static class BaselineValues {
-        final int lowUpper;
-        final int balancedLower;
-        final int balancedUpper;
+        final int lowUpper;          // Threshold between POOR and LOW
+        final int balancedLower;     // Lower bound of balanced range (mean - stdDev)
+        final int balancedUpper;     // Upper bound of balanced range (mean + stdDev)
 
         BaselineValues(int lowUpper, int balancedLower, int balancedUpper) {
             this.lowUpper = lowUpper;
@@ -334,10 +380,10 @@ public class HuamiHrvSummarySampleProvider implements TimeSampleProvider<HrvSumm
     }
 
     /**
-     * Computed HRV summary sample for Huami/Zepp OS devices.
+     * Computed HRV summary sample.
      * This is not stored in the database but computed on-demand from HRV value samples.
      */
-    public static class HuamiHrvSummarySample implements HrvSummarySample {
+    public static class ComputedHrvSummarySample implements HrvSummarySample {
         private final long timestamp;
         private final Integer weeklyAverage;
         private final Integer lastNightAverage;
@@ -347,7 +393,7 @@ public class HuamiHrvSummarySampleProvider implements TimeSampleProvider<HrvSumm
         private final Integer baselineBalancedUpper;
         private final Status status;
 
-        public HuamiHrvSummarySample(
+        public ComputedHrvSummarySample(
                 long timestamp,
                 Integer weeklyAverage,
                 Integer lastNightAverage,
@@ -355,7 +401,8 @@ public class HuamiHrvSummarySampleProvider implements TimeSampleProvider<HrvSumm
                 Integer baselineLowUpper,
                 Integer baselineBalancedLower,
                 Integer baselineBalancedUpper,
-                Status status) {
+                Status status
+        ) {
             this.timestamp = timestamp;
             this.weeklyAverage = weeklyAverage;
             this.lastNightAverage = lastNightAverage;
@@ -407,4 +454,3 @@ public class HuamiHrvSummarySampleProvider implements TimeSampleProvider<HrvSumm
         }
     }
 }
-
