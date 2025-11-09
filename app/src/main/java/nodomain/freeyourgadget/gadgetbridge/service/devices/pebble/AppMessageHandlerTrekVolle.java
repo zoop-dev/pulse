@@ -28,8 +28,8 @@ import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventSendBytes;
-import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 class AppMessageHandlerTrekVolle extends AppMessageHandler {
@@ -78,8 +78,8 @@ class AppMessageHandlerTrekVolle extends AppMessageHandler {
             return isNight ? ID_WEATHER_CLOUDYNIGHT : ID_WEATHER_CLOUDY;
         } else if (conditionCode >= 300 && conditionCode < 313) {
             return ID_WEATHER_RAIN;
-        } else if (conditionCode >= 313 && conditionCode < 400) {
-            return ID_WEATHER_RAIN;
+        } else if ((conditionCode >= 313 && conditionCode < 400) || conditionCode == 500) {
+            return isNight ? ID_WEATHER_RAINYNIGHT : ID_WEATHER_RAINY;
         } else if (conditionCode >= 500 && conditionCode < 600) {
             return ID_WEATHER_RAIN;
         } else if (conditionCode >= 700 && conditionCode < 732) {
@@ -125,7 +125,11 @@ class AppMessageHandlerTrekVolle extends AppMessageHandler {
             return null;
         }
 
-        boolean isNight = false; // FIXME
+        boolean isNight = false;
+        if (weatherSpec.getSunRise() != 0 && weatherSpec.getSunSet() != 0) {
+            isNight = weatherSpec.getSunRise() * 1000L > System.currentTimeMillis() || weatherSpec.getSunSet() * 1000L < System.currentTimeMillis();
+        }
+
         ArrayList<Pair<Integer, Object>> pairs = new ArrayList<>();
         pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_TEMPERATURE, weatherSpec.getCurrentTemp() - 273));
         pairs.add(new Pair<>(MESSAGE_KEY_WEATHER_CONDITIONS, weatherSpec.getCurrentCondition()));
