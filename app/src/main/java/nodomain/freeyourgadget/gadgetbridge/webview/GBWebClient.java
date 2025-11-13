@@ -134,7 +134,11 @@ public class GBWebClient extends WebViewClient {
             if (!forceLocal && !directInternetAccess && InternetHelperSingleton.INSTANCE.ensureInternetHelperBound()) {
                 LOG.debug("WEBVIEW forwarding request to the internet helper");
                 try {
-                    return InternetHelperSingleton.INSTANCE.send(requestedUri);
+                    WebResourceResponse wrr = InternetHelperSingleton.INSTANCE.send(requestedUri);
+                    if (wrr != null && wrr.getStatusCode() < 400)
+                        return wrr;
+                    else
+                        return null;
                 } catch (RemoteException | InterruptedException e) {
                     LOG.warn("Error downloading data from {}", requestedUri, e);
                 }
