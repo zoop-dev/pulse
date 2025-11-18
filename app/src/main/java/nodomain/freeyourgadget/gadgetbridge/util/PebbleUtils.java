@@ -17,7 +17,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.util;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.SparseArray;
 
 import androidx.annotation.Nullable;
@@ -32,6 +35,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.UUID;
+
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.PebbleJsService;
 
 public class PebbleUtils {
     private static final Logger LOG = LoggerFactory.getLogger(PebbleUtils.class);
@@ -190,5 +196,33 @@ public class PebbleUtils {
             LOG.warn("Unable to parse incoming app message", e);
         }
         return jsAppMessage.toString();
+    }
+
+    public static void startJsEngineForDevice(Context context, GBDevice device, UUID uuid) {
+        PebbleJsService service = PebbleJsService.Companion.getInstance();
+
+        if (service == null) {
+            LOG.warn("PebbleJsService not running yet, starting it");
+            PebbleJsService.Companion.startService(context);
+
+            // Delay start until service is ready
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                PebbleJsService s = PebbleJsService.Companion.getInstance();
+                if (s != null) {
+                    s.startJsForDevice(device, uuid);
+                }
+            }, 600);
+
+            return;
+        }
+
+        service.startJsForDevice(device, uuid);
+    }
+
+    public static void stopJsEngineForDevice(GBDevice device) {
+        PebbleJsService service = PebbleJsService.Companion.getInstance();
+        if (service != null) {
+            service.stopJsForDevice(device);
+        }
     }
 }

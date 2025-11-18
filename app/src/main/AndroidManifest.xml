@@ -602,6 +602,12 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name=".service.devices.pebble.webview.PebbleJsService"
+            android:exported="false"
+            android:stopWithTask="false"
+            android:foregroundServiceType="connectedDevice" />
+
         <receiver
             android:name=".externalevents.GenericWeatherReceiver"
             android:enabled="true"
@@ -885,10 +891,7 @@
 
         <activity
             android:name=".activities.ExternalPebbleJSActivity"
-            android:allowTaskReparenting="true"
-            android:clearTaskOnLaunch="true"
             android:label="@string/app_configure"
-            android:launchMode="singleTask"
             android:parentActivityName=".activities.appmanager.AppManagerActivity"
             android:exported="true">
             <meta-data

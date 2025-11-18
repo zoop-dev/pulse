@@ -33,6 +33,7 @@ public class GBDeviceEventAppMessage extends GBDeviceEvent {
     public UUID appUUID;
     public int id;
     public String message;
+    public GBDevice device;
 
     @NonNull
     @Override
@@ -42,6 +43,7 @@ public class GBDeviceEventAppMessage extends GBDeviceEvent {
                 ", appUUID=" + appUUID +
                 ", message='" + message + '\'' +
                 ", id=" + id +
+                ", device=" + device +
                 '}';
     }
 

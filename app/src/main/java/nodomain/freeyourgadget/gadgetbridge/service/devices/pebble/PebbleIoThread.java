@@ -24,8 +24,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.ParcelUuid;
-import android.webkit.ValueCallback;
-import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -48,7 +46,6 @@ import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.ExternalPebbleJSActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AbstractAppManagerFragment;
 import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
@@ -63,12 +60,12 @@ import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleInstallable;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.ble.PebbleLESupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.PebbleJsService;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.PebbleUtils;
-import nodomain.freeyourgadget.gadgetbridge.util.WebViewSingleton;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 class PebbleIoThread extends GBDeviceIoThread {
@@ -115,35 +112,31 @@ class PebbleIoThread extends GBDeviceIoThread {
     }
 
     private static void sendAppMessage(GBDeviceEventAppMessage message) {
+        if (! ((PebbleCoordinator) message.device.getDeviceCoordinator()).isBackgroundJsEnabled(message.device)) {
+            LOG.info("App message received but Pebble JS Service not running");
+            return;
+        }
         final String jsEvent;
         try {
-            WebViewSingleton.getInstance().checkAppRunning(message.appUUID);
-        } catch (IllegalStateException ex) {
-            LOG.warn("Unable to send app message: " + message, ex);
+            PebbleJsService.Companion.getInstance().checkAppRunning(message.device, message.appUUID);
+        } catch (NullPointerException | IllegalStateException ex) {
+            LOG.warn("Unable to send app message: {}", message, ex);
             return;
         }
 
         // TODO: handle ACK and NACK types with ids
         if (message.type != GBDeviceEventAppMessage.TYPE_APPMESSAGE) {
             jsEvent = (GBDeviceEventAppMessage.TYPE_NACK == GBDeviceEventAppMessage.TYPE_APPMESSAGE) ? "NACK" + message.id : "ACK" + message.id;
-            LOG.debug("WEBVIEW received ACK/NACK:" + message.message + " for uuid: " + message.appUUID + " ID: " + message.id);
+            LOG.debug("WEBVIEW received ACK/NACK:{} for uuid: {} ID: {}", message.message, message.appUUID, message.id);
         } else {
             jsEvent = "appmessage";
         }
 
         final String appMessage = PebbleUtils.parseIncomingAppMessage(message.message, message.appUUID, message.id);
-        LOG.debug("to WEBVIEW: event: " + jsEvent + " message: " + appMessage);
-        WebViewSingleton.getInstance().invokeWebview(new WebViewSingleton.WebViewRunnable() {
-            @Override
-            public void invoke(WebView webView) {
-                webView.evaluateJavascript("if (typeof Pebble == 'object') Pebble.evaluate('" + jsEvent + "',[" + appMessage + "]);", new ValueCallback<String>() {
-                    @Override
-                    public void onReceiveValue(String s) {
-                        //TODO: the message should be acked here instead of in PebbleIoThread
-                        LOG.debug("Callback from appmessage: " + s);
-                    }
-                });
-            }
+        LOG.debug("to WEBVIEW: event: {} message: {}", jsEvent, appMessage);
+        PebbleJsService.Companion.getInstance().evaluateJsForDevice(message.device, "if (typeof Pebble == 'object') Pebble.evaluate('" + jsEvent + "',[" + appMessage + "]);", s -> {
+            //TODO: the message should be acked here instead of in PebbleIoThread
+            LOG.debug("Callback from appmessage: {}", s);
         });
     }
 
@@ -219,11 +212,8 @@ class PebbleIoThread extends GBDeviceIoThread {
                 }
             }
             if (((PebbleCoordinator) gbDevice.getDeviceCoordinator()).isBackgroundJsEnabled(gbDevice)) {
-                Intent startIntent = new Intent(getContext(), ExternalPebbleJSActivity.class);
-                startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startIntent.putExtra(GBDevice.EXTRA_DEVICE, gbDevice);
-                startIntent.putExtra(ExternalPebbleJSActivity.START_BG_WEBVIEW, true);
-                getContext().startActivity(startIntent);
+                PebbleJsService.Companion.startService(getContext());
+                PebbleUtils.startJsEngineForDevice(getContext(), gbDevice, new UUID(0, 0));
             } else {
                 LOG.debug("Not enabling background Webview, is disabled in preferences.");
             }
@@ -414,7 +404,7 @@ class PebbleIoThread extends GBDeviceIoThread {
         }
 
         if (((PebbleCoordinator) gbDevice.getDeviceCoordinator()).isBackgroundJsEnabled(gbDevice)) {
-            WebViewSingleton.getInstance().disposeWebView();
+            PebbleUtils.stopJsEngineForDevice(gbDevice);
         }
 
         gbDevice.sendDeviceUpdateIntent(getContext());
@@ -547,9 +537,9 @@ class PebbleIoThread extends GBDeviceIoThread {
                     LOG.info("got GBDeviceEventAppManagement START event for uuid: {}", appMgmt.uuid);
                     if (((PebbleCoordinator) gbDevice.getDeviceCoordinator()).isBackgroundJsEnabled(gbDevice)) {
                         if (mPebbleProtocol.hasAppMessageHandler(appMgmt.uuid)) {
-                            WebViewSingleton.getInstance().stopJavascriptInterface();
+                            PebbleUtils.stopJsEngineForDevice(gbDevice);
                         } else {
-                            WebViewSingleton.getInstance().runJavascriptInterface(getContext(), gbDevice, appMgmt.uuid);
+                            PebbleUtils.startJsEngineForDevice(getContext(), gbDevice, appMgmt.uuid);
                         }
                     }
 

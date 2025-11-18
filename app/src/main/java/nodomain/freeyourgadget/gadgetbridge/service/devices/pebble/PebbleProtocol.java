@@ -1782,6 +1782,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
         appMessage.appUUID = uuid;
         appMessage.id = last_id & 0xff;
         appMessage.message = jsonArray.toString();
+        appMessage.device = getDevice();
         return new GBDeviceEvent[]{appMessage, sendBytesAck};
     }
 
@@ -2562,6 +2563,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
                             }
                             evtAppMessage.id = idLookup[last_id & 0xff];
                             evtAppMessage.appUUID = currentRunningApp;
+                            evtAppMessage.device = getDevice();
                         }
                         devEvts = new GBDeviceEvent[]{evtAppMessage};
                         break;

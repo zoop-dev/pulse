@@ -501,14 +501,6 @@ public abstract class AbstractAppManagerFragment extends Fragment {
         if (requestCode == CHILD_ACTIVITY_WATCHFACE_EDITOR) {
             refreshList();
         }
-        if ((mGBDevice.getType() == DeviceType.PEBBLE) && (((PebbleCoordinator) mGBDevice.getDeviceCoordinator()).isBackgroundJsEnabled(mGBDevice))) {
-            Intent startIntent = new Intent(getContext(), ExternalPebbleJSActivity.class);
-            startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startIntent.putExtra(GBDevice.EXTRA_DEVICE, mGBDevice);
-            startIntent.putExtra(ExternalPebbleJSActivity.START_BG_WEBVIEW, true);
-            getContext().startActivity(startIntent);
-        }
-
     }
 
     protected void sendOrderToDevice(String concatFilename) {
@@ -662,7 +654,6 @@ public abstract class AbstractAppManagerFragment extends Fragment {
             final Intent startIntent = new Intent(getContext().getApplicationContext(), ExternalPebbleJSActivity.class);
             startIntent.putExtra(DeviceService.EXTRA_APP_UUID, selectedApp.getUUID());
             startIntent.putExtra(GBDevice.EXTRA_DEVICE, mGBDevice);
-            startIntent.putExtra(ExternalPebbleJSActivity.SHOW_CONFIG, true);
             startActivity(startIntent);
             return true;
         } else if (itemId == R.id.appmanager_app_openinstore) {
