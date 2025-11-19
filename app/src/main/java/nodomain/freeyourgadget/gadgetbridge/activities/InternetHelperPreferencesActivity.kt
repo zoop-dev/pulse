@@ -28,7 +28,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.PermissionsUtils.PACKAGE_INTERN
 class InternetHelperPreferencesActivity : AbstractGBActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_internet_helper_preferences)
+        setContentView(R.layout.activity_settings)
 
         supportFragmentManager
             .beginTransaction()

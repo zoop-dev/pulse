@@ -208,10 +208,12 @@ public class PebbleUtils {
             // Delay start until service is ready
             new Handler(Looper.getMainLooper()).postDelayed(() -> {
                 PebbleJsService s = PebbleJsService.Companion.getInstance();
-                if (s != null) {
+                if (s == null) {
+                    LOG.warn("Couldn't start PebbleJsService");
+                } else {
                     s.startJsForDevice(device, uuid);
                 }
-            }, 600);
+            }, 1000);
 
             return;
         }

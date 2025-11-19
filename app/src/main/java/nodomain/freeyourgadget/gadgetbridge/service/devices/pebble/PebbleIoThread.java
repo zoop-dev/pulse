@@ -105,20 +105,20 @@ class PebbleIoThread extends GBDeviceIoThread {
     private int mBytesWritten = -1;
 
     private void sendAppMessageJS(GBDeviceEventAppMessage appMessage) {
-        sendAppMessage(appMessage);
+        sendAppMessage(gbDevice, appMessage);
         if (appMessage.type == GBDeviceEventAppMessage.TYPE_APPMESSAGE) {
             write(mPebbleProtocol.encodeApplicationMessageAck(appMessage.appUUID, (byte) appMessage.id));
         }
     }
 
-    private static void sendAppMessage(GBDeviceEventAppMessage message) {
-        if (! ((PebbleCoordinator) message.device.getDeviceCoordinator()).isBackgroundJsEnabled(message.device)) {
+    private static void sendAppMessage(GBDevice device, GBDeviceEventAppMessage message) {
+        if (! ((PebbleCoordinator) device.getDeviceCoordinator()).isBackgroundJsEnabled(device)) {
             LOG.info("App message received but Pebble JS Service not running");
             return;
         }
         final String jsEvent;
         try {
-            PebbleJsService.Companion.getInstance().checkAppRunning(message.device, message.appUUID);
+            PebbleJsService.Companion.getInstance().checkAppRunning(device, message.appUUID);
         } catch (NullPointerException | IllegalStateException ex) {
             LOG.warn("Unable to send app message: {}", message, ex);
             return;
@@ -134,7 +134,7 @@ class PebbleIoThread extends GBDeviceIoThread {
 
         final String appMessage = PebbleUtils.parseIncomingAppMessage(message.message, message.appUUID, message.id);
         LOG.debug("to WEBVIEW: event: {} message: {}", jsEvent, appMessage);
-        PebbleJsService.Companion.getInstance().evaluateJsForDevice(message.device, "if (typeof Pebble == 'object') Pebble.evaluate('" + jsEvent + "',[" + appMessage + "]);", s -> {
+        PebbleJsService.Companion.getInstance().evaluateJsForDevice(device, "if (typeof Pebble == 'object') Pebble.evaluate('" + jsEvent + "',[" + appMessage + "]);", s -> {
             //TODO: the message should be acked here instead of in PebbleIoThread
             LOG.debug("Callback from appmessage: {}", s);
         });
