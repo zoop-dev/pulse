@@ -1263,6 +1263,13 @@ public class NotificationListener extends NotificationListenerService {
             }
         }
 
+        if (NotificationCompat.CATEGORY_PROGRESS.equals(sbn.getNotification().category)
+                && (sbn.getPackageName().equals("com.whatsapp") || sbn.getPackageName().equals("com.whatsapp.w4b"))) {
+            // #5554 - WhatsApp progress notifications are not marked as ongoing and will spam the watch
+            LOG.debug("Ignoring WhatsApp progress notification");
+            return true;
+        }
+
         if (shouldIgnoreOngoing(sbn, type)) {
             LOG.trace("Ignoring notification, ongoing");
             return false;
