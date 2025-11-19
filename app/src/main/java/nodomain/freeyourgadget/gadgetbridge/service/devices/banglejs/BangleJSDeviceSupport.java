@@ -918,8 +918,8 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         }
         final String id = _id;
 
-        if (!GBApplication.hasDirectInternetAccess() && !InternetHelperSingleton.INSTANCE.ensureInternetHelperBound()) {
-            uartTxJSONError("http", "Internet access not enabled, check Gadgetbridge Device Settings", id);
+        if (!GBApplication.hasInternetAccess()) {
+            uartTxJSONError("http", "Internet access not enabled in Gadgetbridge", id);
             return;
         }
 

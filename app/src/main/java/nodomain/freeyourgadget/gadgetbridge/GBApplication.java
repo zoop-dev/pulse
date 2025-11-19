@@ -20,8 +20,23 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge;
 
+import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.AMAZFITBIP;
+import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.AMAZFITCOR;
+import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.AMAZFITCOR2;
+import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.FITPRO;
+import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.GALAXY_BUDS;
+import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.LEFUN;
+import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.MIBAND;
+import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.MIBAND2;
+import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.MIBAND2_HRX;
+import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.MIBAND3;
+import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.PEBBLE;
+import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.TLW64;
+import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.WATCHXPLUS;
+import static nodomain.freeyourgadget.gadgetbridge.util.GB.NOTIFICATION_CHANNEL_HIGH_PRIORITY_ID;
+import static nodomain.freeyourgadget.gadgetbridge.util.GB.NOTIFICATION_ID_ERROR;
+
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Application;
@@ -58,6 +73,10 @@ import androidx.annotation.VisibleForTesting;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONObject;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -101,31 +120,12 @@ import nodomain.freeyourgadget.gadgetbridge.util.BondingUtil;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
+import nodomain.freeyourgadget.gadgetbridge.util.InternetHelperSingleton;
 import nodomain.freeyourgadget.gadgetbridge.util.LimitedQueue;
 import nodomain.freeyourgadget.gadgetbridge.util.PermissionsUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.backup.PeriodicZipExporter;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
-
-import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.AMAZFITBIP;
-import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.AMAZFITCOR;
-import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.AMAZFITCOR2;
-import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.FITPRO;
-import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.GALAXY_BUDS;
-import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.LEFUN;
-import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.MIBAND;
-import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.MIBAND2;
-import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.MIBAND2_HRX;
-import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.MIBAND3;
-import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.PEBBLE;
-import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.TLW64;
-import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.WATCHXPLUS;
-import static nodomain.freeyourgadget.gadgetbridge.util.GB.NOTIFICATION_CHANNEL_HIGH_PRIORITY_ID;
-import static nodomain.freeyourgadget.gadgetbridge.util.GB.NOTIFICATION_ID_ERROR;
-
-import org.apache.commons.lang3.StringUtils;
-import org.json.JSONObject;
-import org.slf4j.LoggerFactory;
 
 /**
  * Main Application class that initializes and provides access to certain things like
@@ -2277,6 +2277,10 @@ public class GBApplication extends Application {
 
     public static boolean hasDirectInternetAccess() {
         return BuildConfig.INTERNET_ACCESS && PermissionsUtils.checkPermission(getContext(), Manifest.permission.INTERNET);
+    }
+
+    public static boolean hasInternetAccess() {
+        return hasDirectInternetAccess() || InternetHelperSingleton.INSTANCE.ensureInternetHelperBound();
     }
 
     public static GBPrefs getPrefs() {

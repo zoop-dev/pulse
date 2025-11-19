@@ -169,7 +169,7 @@ public class BangleJSCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public boolean supportsAppsManagement(final GBDevice device) {
-        return GBApplication.hasDirectInternetAccess() || InternetHelperSingleton.INSTANCE.isInternetHelperBound();
+        return GBApplication.hasInternetAccess();
     }
 
     @Override
@@ -233,7 +233,7 @@ public class BangleJSCoordinator extends AbstractBLEDeviceCoordinator {
 
         settings.add(R.xml.devicesettings_header_connection);
         settings.add(R.xml.devicesettings_high_mtu);
-        if (GBApplication.hasDirectInternetAccess() || InternetHelperSingleton.INSTANCE.isInternetHelperBound())
+        if (GBApplication.hasInternetAccess())
             settings.add(R.xml.devicesettings_device_internet_access);
 
         settings.add(R.xml.devicesettings_banglejs_activity);

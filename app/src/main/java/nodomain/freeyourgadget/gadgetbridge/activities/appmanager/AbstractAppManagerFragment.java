@@ -450,10 +450,8 @@ public abstract class AbstractAppManagerFragment extends Fragment {
                     if (watchfaceDesignerActivity != null) {
                         appListFabNew.show();
                     }
-                    if (appStoreActivity != null && mGBDevice.getDeviceCoordinator() instanceof PebbleCoordinator) {
-                        if (InternetHelperSingleton.INSTANCE.ensureInternetHelperBound()) {
-                            appListFabStore.show();
-                        }
+                    if (appStoreActivity != null && GBApplication.hasInternetAccess()) {
+                        appListFabStore.show();
                     }
                 }
             }
@@ -481,14 +479,19 @@ public abstract class AbstractAppManagerFragment extends Fragment {
             appListFabNew.show();
         }
 
-        boolean appStoreAllowed = GBApplication.getPrefs().getBoolean("pref_key_internethelper_allow_pebble_appstore", false);
-        if (appStoreAllowed && appStoreActivity != null && mGBDevice.getDeviceCoordinator() instanceof PebbleCoordinator) {
-            if (InternetHelperSingleton.INSTANCE.ensureInternetHelperBound()) {
-                appListFabStore.setOnClickListener(v -> {
-                    Intent startIntent = new Intent(getContext(), appStoreActivity);
-                    startIntent.putExtra(GBDevice.EXTRA_DEVICE, mGBDevice);
-                    getContext().startActivity(startIntent);
-                });
+        if (appStoreActivity != null) {
+            appListFabStore.setOnClickListener(v -> {
+                Intent startIntent = new Intent(getContext(), appStoreActivity);
+                startIntent.putExtra(GBDevice.EXTRA_DEVICE, mGBDevice);
+                getContext().startActivity(startIntent);
+            });
+            if (mGBDevice.getDeviceCoordinator() instanceof PebbleCoordinator) {
+                boolean pebbleAppStoreAllowed = GBApplication.getPrefs().getBoolean("pref_key_internethelper_allow_pebble_appstore", false);
+                if (GBApplication.hasDirectInternetAccess() || (pebbleAppStoreAllowed && InternetHelperSingleton.INSTANCE.ensureInternetHelperBound())) {
+                    appListFabStore.show();
+                }
+            } else {
+                // If other devices use a webview for their app store too, add the same logic here as for Pebble above
                 appListFabStore.show();
             }
         }
@@ -659,7 +662,7 @@ public abstract class AbstractAppManagerFragment extends Fragment {
         } else if (itemId == R.id.appmanager_app_openinstore) {
             boolean appStoreAllowed = GBApplication.getPrefs().getBoolean("pref_key_internethelper_allow_pebble_appstore", false);
             final String url = "https://apps.rebble.io/en_US/search/" + ((selectedApp.getType() == GBDeviceApp.Type.WATCHFACE) ? "watchfaces" : "watchapps") + "/1/?native=true&query=" +  Uri.encode(selectedApp.getUUID().toString());
-            if (appStoreAllowed && InternetHelperSingleton.INSTANCE.ensureInternetHelperBound()) {
+            if (appStoreAllowed && GBApplication.hasInternetAccess()) {
                 final Intent startIntent = new Intent(getContext().getApplicationContext(), RebbleAppStoreActivity.class);
                 startIntent.putExtra(DeviceService.EXTRA_URI, url);
                 startIntent.putExtra(GBDevice.EXTRA_DEVICE, mGBDevice);
