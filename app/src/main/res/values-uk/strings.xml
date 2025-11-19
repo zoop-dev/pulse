@@ -3926,4 +3926,10 @@
     <string name="install_unsupported_files_warning">Цей файл не підтримується пристроєм і може спричинити проблеми.\n\nВам не рекомендується його встановлювати!</string>
     <string name="menuitem_golf">Гольф</string>
     <string name="menuitem_bio_charge">БіоЗарядка</string>
+    <string name="movementConsistency">Послідовність</string>
+    <string name="movementStability">Стабільність</string>
+    <string name="movementContinuity">Безперервність</string>
+    <string name="movementRhythm">Ритм</string>
+    <string name="movementSpeedDecay">Згасання швидкості</string>
+    <string name="movement_evaluation">Оцінка руху</string>
 </resources>
