@@ -443,12 +443,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
         super(device);
         mAppMessageHandlers.put(UUID_MORPHEUZ, new AppMessageHandlerMorpheuz(UUID_MORPHEUZ, PebbleProtocol.this));
         mAppMessageHandlers.put(UUID_MISFIT, new AppMessageHandlerMisfit(UUID_MISFIT, PebbleProtocol.this));
-        mAppMessageHandlers.put(UUID_WEATHER, new AppMessageHandler(UUID_WEATHER, PebbleProtocol.this) {
-            @Override
-            public GBDeviceEvent[] onAppStart() {
-                return new GBDeviceEvent[]{new GBDeviceEventSendBytes(encodeSendWeather())};
-            }
-        });
+        mAppMessageHandlers.put(UUID_WEATHER, new AppMessageHandler(UUID_WEATHER, PebbleProtocol.this));
         if (!((PebbleCoordinator) device.getDeviceCoordinator()).isBackgroundJsEnabled(device)) {
             mAppMessageHandlers.put(UUID_PEBBLE_TIMESTYLE, new AppMessageHandlerTimeStylePebble(UUID_PEBBLE_TIMESTYLE, PebbleProtocol.this));
             mAppMessageHandlers.put(UUID_PEBSTYLE, new AppMessageHandlerPebStyle(UUID_PEBSTYLE, PebbleProtocol.this));
@@ -718,13 +713,25 @@ public class PebbleProtocol extends GBDeviceProtocol {
 
     byte[] encodeActivateWeather(boolean activate) {
         if (activate) {
-            ByteBuffer buf = ByteBuffer.allocate(0x61);
-            buf.put((byte) 1);
+            ByteBuffer buf = ByteBuffer.allocate(5 * LENGTH_UUID + 1);
+            buf.put((byte) 5); // nr_locations
             buf.order(ByteOrder.BIG_ENDIAN);
             buf.putLong(UUID_LOCATION.getMostSignificantBits());
             buf.putLong(UUID_LOCATION.getLeastSignificantBits());
-            // disable remaining 5 possible location
-            buf.put(new byte[60 - LENGTH_UUID]);
+
+            // just put fake UUIDs for the remaining ones
+            buf.putLong(0);
+            buf.putLong(1);
+
+            buf.putLong(0);
+            buf.putLong(2);
+
+            buf.putLong(0);
+            buf.putLong(3);
+
+            buf.putLong(0);
+            buf.putLong(4);
+
             return encodeBlobdb("weatherApp", BLOBDB_INSERT, BLOBDB_APPSETTINGS, buf.array());
         } else {
             return encodeBlobdb("weatherApp", BLOBDB_DELETE, BLOBDB_APPSETTINGS, null);
@@ -1087,30 +1094,44 @@ public class PebbleProtocol extends GBDeviceProtocol {
 
     @Override
     public byte[] encodeSendWeather() {
-        final WeatherSpec weatherSpec = Weather.getWeatherSpec();
-        if (weatherSpec == null) {
+        final List<WeatherSpec> weatherSpecs = Weather.getWeatherSpecs();
+        if (weatherSpecs.isEmpty()) {
             LOG.warn("No weather found in singleton");
             return null;
         }
 
-        byte[] forecastProtocol = null;
         byte[] watchfaceProtocol = null;
+        byte[][] forecastProtocolBuf = {null, null, null, null, null};
+        byte[] deleteWeatherDataProtocol = null;
+
         int length = 0;
         if (mFwMajor >= 4) {
-            forecastProtocol = encodeWeatherForecast(weatherSpec);
-            length += forecastProtocol.length;
+            deleteWeatherDataProtocol = encodeBlobDBClear(BLOBDB_WEATHER);
+            length += deleteWeatherDataProtocol.length;
+            for (int i = 0; i < 5; i++) {
+                if (weatherSpecs.size() < i + 1)
+                    break;
+                WeatherSpec weatherSpec = weatherSpecs.get(i);
+                forecastProtocolBuf[i] = encodeWeatherForecast(weatherSpec, i);
+                length += forecastProtocolBuf[i].length;
+            }
         }
         AppMessageHandler handler = mAppMessageHandlers.get(currentRunningApp);
         if (handler != null) {
-            watchfaceProtocol = handler.encodeUpdateWeather(weatherSpec);
+            watchfaceProtocol = handler.encodeUpdateWeather(weatherSpecs.get(0));
             if (watchfaceProtocol != null) {
                 length += watchfaceProtocol.length;
             }
         }
         ByteBuffer buf = ByteBuffer.allocate(length);
 
-        if (forecastProtocol != null) {
-            buf.put(forecastProtocol);
+        if (deleteWeatherDataProtocol != null) {
+            buf.put(deleteWeatherDataProtocol);
+        }
+        for (byte[] forecastProtocol : forecastProtocolBuf) {
+            if (forecastProtocol != null) {
+                buf.put(forecastProtocol);
+            }
         }
         if (watchfaceProtocol != null) {
             buf.put(watchfaceProtocol);
@@ -1119,8 +1140,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
         return buf.array();
     }
 
-    private byte[] encodeWeatherForecast(WeatherSpec weatherSpec) {
-
+    private byte[] encodeWeatherForecast(WeatherSpec weatherSpec, int location) {
         short currentTemp = (short) (weatherSpec.getCurrentTemp() - 273);
         short todayMax = (short) (weatherSpec.getTodayMaxTemp() - 273);
         short todayMin = (short) (weatherSpec.getTodayMinTemp() - 273);
@@ -1184,7 +1204,10 @@ public class PebbleProtocol extends GBDeviceProtocol {
             LOG.info(s);
         }
 
-        return encodeBlobdb(UUID_LOCATION, BLOBDB_INSERT, BLOBDB_WEATHER, buf.array());
+        if (location == 0) {
+            return encodeBlobdb(UUID_LOCATION, BLOBDB_INSERT, BLOBDB_WEATHER, buf.array()); // compatibility for people who already had the weather app enabled
+        }
+        return encodeBlobdb(new UUID(0, location), BLOBDB_INSERT, BLOBDB_WEATHER, buf.array());
     }
 
     private byte[] encodeActionResponse(UUID uuid, int iconId, String caption) {

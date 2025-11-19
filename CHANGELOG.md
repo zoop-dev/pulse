@@ -1,8 +1,9 @@
 ### Changelog
 
 #### Next
-* Initial support for Pebble 2 Duo (Experimental)
+* Initial support for Pebble 2 Duo
 * Pebble 2/2 Duo: Fix random crashes on disconnect
+* Pebble: Support multiple weather location with system weather app (on fw 4.x)
 
 #### 0.87.1
 
