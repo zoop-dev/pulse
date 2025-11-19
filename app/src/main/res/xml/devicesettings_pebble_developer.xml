@@ -41,13 +41,5 @@
             android:summary="@string/pref_summary_pebble_always_ack_pebblekit"
             android:title="@string/pref_title_pebble_always_ack_pebblekit"
             app:iconSpaceReserved="false" />
-        <SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:dependency="pebble_force_untested"
-            android:key="pebble_enable_background_javascript"
-            android:layout="@layout/preference_checkbox"
-            android:summary="@string/pref_summary_pebble_enable_bgjs"
-            android:title="@string/pref_title_pebble_enable_bgjs"
-            app:iconSpaceReserved="false" />
     </PreferenceCategory>
 </androidx.preference.PreferenceScreen>

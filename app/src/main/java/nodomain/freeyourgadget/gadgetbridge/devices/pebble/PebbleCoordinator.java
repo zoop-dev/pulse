@@ -205,6 +205,9 @@ public class PebbleCoordinator extends AbstractBLClassicDeviceCoordinator {
     public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
         final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
 
+        final List<Integer> generic = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.GENERIC);
+        generic.add(R.xml.devicesettings_pebble_generic);
+
         final List<Integer> notifications = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS);
         notifications.add(R.xml.devicesettings_autoremove_notifications);
         notifications.add(R.xml.devicesettings_pebble_calls_notifications);
