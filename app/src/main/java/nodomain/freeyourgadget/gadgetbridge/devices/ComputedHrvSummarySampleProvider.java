@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,24 +44,29 @@ import nodomain.freeyourgadget.gadgetbridge.model.HrvValueSample;
  * - Last night average and 5-min high (based on actual sleep sessions detected from activity data)
  * - Baseline values using Garmin's method: mean ± standard deviation of 28 overnight averages
  * <p>
- * Summaries are computed on-demand and cached for performance.
+ * Summaries are computed on-demand and cached in a static cache shared across all instances.
+ * This allows computed summaries to be reused even when the provider is recreated.
  */
 public class ComputedHrvSummarySampleProvider implements TimeSampleProvider<HrvSummarySample> {
     private static final int DAYS_FOR_WEEKLY_AVG = 7;
     private static final int DAYS_FOR_BASELINE = 28; // Use 28 days (4 weeks) for baseline calculation
-    private static final int CACHE_SIZE = 100; // Cache up to 100 computed summaries
+    private static final int CACHE_SIZE = 500; // Cache up to 500 computed summaries per device
+
+    // Static cache shared across all instances, keyed by "deviceId:timestamp"
+    // Using synchronizedMap for thread-safety
+    private static final Map<String, HrvSummarySample> SUMMARY_CACHE = Collections.synchronizedMap(
+            new LinkedHashMap<String, HrvSummarySample>(CACHE_SIZE, 0.75f, true) {
+                @Override
+                protected boolean removeEldestEntry(Map.Entry<String, HrvSummarySample> eldest) {
+                    return size() > CACHE_SIZE;
+                }
+            }
+    );
 
     private final TimeSampleProvider<? extends HrvValueSample> valueProvider;
     private final GBDevice device;
     private final DaoSession session;
 
-    // LRU cache for computed summaries
-    private final Map<Long, HrvSummarySample> summaryCache = new LinkedHashMap<>(CACHE_SIZE, 0.75f, true) {
-        @Override
-        protected boolean removeEldestEntry(Map.Entry<Long, HrvSummarySample> eldest) {
-            return size() > CACHE_SIZE;
-        }
-    };
 
     public ComputedHrvSummarySampleProvider(final TimeSampleProvider<? extends HrvValueSample> valueProvider,
                                            final GBDevice device,
@@ -113,9 +119,11 @@ public class ComputedHrvSummarySampleProvider implements TimeSampleProvider<HrvS
      * The timestamp should be at the end of the day (23:59:59).
      */
     private HrvSummarySample generateSummaryForDay(long dayEndTimestamp) {
-        // Check cache first
-        if (summaryCache.containsKey(dayEndTimestamp)) {
-            return summaryCache.get(dayEndTimestamp);
+        // Check cache first - use device MAC address as part of cache key to separate devices
+        final String cacheKey = device.getAddress() + ":" + dayEndTimestamp;
+        final HrvSummarySample cached = SUMMARY_CACHE.get(cacheKey);
+        if (cached != null) {
+            return cached;
         }
 
         final Calendar cal = Calendar.getInstance();
@@ -205,8 +213,8 @@ public class ComputedHrvSummarySampleProvider implements TimeSampleProvider<HrvS
                 status
         );
 
-        // Cache the computed summary
-        summaryCache.put(dayEndTimestamp, summary);
+        // Cache the computed summary for future use
+        SUMMARY_CACHE.put(cacheKey, summary);
 
         return summary;
     }
@@ -526,3 +534,4 @@ public class ComputedHrvSummarySampleProvider implements TimeSampleProvider<HrvS
         }
     }
 }
+

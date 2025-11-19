@@ -40,7 +40,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples.ColmiStr
 import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.samples.ColmiTemperatureSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiHeartRateSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.ColmiHrvSummarySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiHrvValueSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiSleepSessionSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiSleepStageSampleDao;
@@ -67,7 +66,6 @@ public abstract class AbstractYawellRingCoordinator extends AbstractBLEDeviceCoo
             put(session.getColmiStressSampleDao(), ColmiStressSampleDao.Properties.DeviceId);
             put(session.getColmiSleepSessionSampleDao(), ColmiSleepSessionSampleDao.Properties.DeviceId);
             put(session.getColmiSleepStageSampleDao(), ColmiSleepStageSampleDao.Properties.DeviceId);
-            put(session.getColmiHrvSummarySampleDao(), ColmiHrvSummarySampleDao.Properties.DeviceId);
             put(session.getColmiHrvValueSampleDao(), ColmiHrvValueSampleDao.Properties.DeviceId);
         }};
     }
