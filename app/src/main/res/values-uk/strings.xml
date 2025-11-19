@@ -2042,7 +2042,7 @@
     <string name="activity_type_hockey">Хокей</string>
     <string name="activity_type_icehockey">Хокей на льоду</string>
     <string name="activity_type_iceskating">Катання на ковзанах</string>
-    <string name="activity_type_golf">Гольф</string>
+    <string name="activity_type_golf">Гольфа</string>
     <string name="activity_type_other">Інше</string>
     <string name="pref_theme_dynamic">Динамічні кольори</string>
     <string name="find_my_phone_found_it">ЗНАЙДЕНО</string>
@@ -3924,4 +3924,6 @@
     <string name="pref_install_unsupported_files_title">Встановлення непідтримуваних файлів</string>
     <string name="pref_install_unsupported_files_summary">Дозволити завантаження непідтримуваних файлів на пристрій.</string>
     <string name="install_unsupported_files_warning">Цей файл не підтримується пристроєм і може спричинити проблеми.\n\nВам не рекомендується його встановлювати!</string>
+    <string name="menuitem_golf">Гольф</string>
+    <string name="menuitem_bio_charge">БіоЗарядка</string>
 </resources>
