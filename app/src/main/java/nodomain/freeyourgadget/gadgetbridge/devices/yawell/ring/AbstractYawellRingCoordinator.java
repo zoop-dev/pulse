@@ -179,7 +179,7 @@ public abstract class AbstractYawellRingCoordinator extends AbstractBLEDeviceCoo
 
     @Override
     public TimeSampleProvider<? extends HrvSummarySample> getHrvSummarySampleProvider(GBDevice device, DaoSession session) {
-        return new ComputedHrvSummarySampleProvider(getHrvValueSampleProvider(device, session));
+        return new ComputedHrvSummarySampleProvider(getHrvValueSampleProvider(device, session), device, session);
     }
 
     @Override
