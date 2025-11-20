@@ -55,6 +55,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("HUAWEI WATCH FIT 4 Pro-CC6", DeviceType.HUAWEIWATCHFIT4PRO);
             put("Edge Explore 2", DeviceType.GARMIN_EDGE_EXPLORE_2);
             put("Redmi Smart Band 3 CCF1", DeviceType.REDMISMARTBAND3);
+            put("fenix 6 Pro", DeviceType.GARMIN_FENIX_6_PRO); // #5536
             put("fenix 6X Pro", DeviceType.GARMIN_FENIX_6X_PRO);
             put("fenix 6X Sapphire", DeviceType.GARMIN_FENIX_6X_SAPPHIRE); // #5496
             put("R50Pro", DeviceType.R50PRO);
@@ -91,6 +92,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("Venu 4 45mm", DeviceType.GARMIN_VENU_4); // #5461
             put("Forerunner 265", DeviceType.GARMIN_FORERUNNER_265); // #3831
             put("EPIX PRO - 51mm", DeviceType.GARMIN_EPIX_PRO); // #3810
+            put("EPIX", DeviceType.GARMIN_EPIX); // matrix
             put("Amazfit GTR", DeviceType.AMAZFITGTR); // #3809 / #2442
             put("Amazfit Bip 3", DeviceType.AMAZFITBIP3); // #3627
             put("Xiaomi Band 8 Active 0C09", DeviceType.MIBAND8ACTIVE); // #3614

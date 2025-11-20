@@ -70,6 +70,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.gps.GarminInReachMini
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.hrm.GarminHrm200Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.descent.GarminDescentMk3Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.enduro.GarminEnduro3Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.epix.GarminEpixCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.epix.GarminEpixProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix3Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix3HrCoordinator;
@@ -582,6 +583,7 @@ public enum DeviceType {
     GARMIN_EDGE_EXPLORE_2(GarminEdgeExplore2Coordinator.class),
     GARMIN_ETREX_SE(GarminETrexSeCoordinator.class),
     GARMIN_ENDURO_3(GarminEnduro3Coordinator.class),
+    GARMIN_EPIX(GarminEpixCoordinator.class),
     GARMIN_EPIX_PRO(GarminEpixProCoordinator.class),
     GARMIN_DESCENT_MK3(GarminDescentMk3Coordinator.class),
     GARMIN_FENIX_3(GarminFenix3Coordinator.class),
