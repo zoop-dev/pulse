@@ -4085,4 +4085,12 @@
     <string name="pref_install_unsupported_files_title">安装不受支持的文件</string>
     <string name="pref_install_unsupported_files_summary">允许上传不受支持的文件到设备上。</string>
     <string name="install_unsupported_files_warning">该文件不受设备支持，可能造成问题。\n\n不鼓励安装它！</string>
+    <string name="menuitem_golf">高尔夫</string>
+    <string name="menuitem_bio_charge">BioCharge</string>
+    <string name="movementConsistency">一致性</string>
+    <string name="movementStability">稳定性</string>
+    <string name="movementContinuity">持续性</string>
+    <string name="movementRhythm">节拍</string>
+    <string name="movementSpeedDecay">速度衰减</string>
+    <string name="movement_evaluation">移动评估</string>
 </resources>
