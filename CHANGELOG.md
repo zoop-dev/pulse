@@ -4,6 +4,8 @@
 * Initial support for Pebble 2 Duo
 * Pebble 2/2 Duo: Fix random crashes on disconnect
 * Pebble: Support multiple weather location with system weather app (on fw 4.x)
+* Pebble: Map cloudy weather icons in system weather app (on fw 4.x)
+* Pebble: Support night icons on TrekVolle and TimeStyle
 
 #### 0.87.1
 
