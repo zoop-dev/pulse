@@ -74,7 +74,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiDictTypes;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiGpsParser;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiSequenceDataParser;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiSequenceDataFileParser;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiSleepStageSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiSleepStatsSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiStressParser;
@@ -2933,16 +2933,17 @@ public class HuaweiSupportProvider {
                 new HuaweiFileDownloadManager.FileDownloadCallback() {
                     @Override
                     public void downloadComplete(HuaweiFileDownloadManager.FileRequest fileRequest) {
-                        HuaweiSequenceDataParser.SequenceFileData sequenceFileData = HuaweiSequenceDataParser.parseSequenceFileData(fileRequest.getData());
+                        HuaweiSequenceDataFileParser.SequenceFileData sequenceFileData = HuaweiSequenceDataFileParser.parseSequenceFileData(fileRequest.getData());
                         LOG.info("SLEEP File data: {}", sequenceFileData);
 
                         if (sequenceFileData != null) {
                             final List<HuaweiSleepStatsSample> sleepStatsSamples = new ArrayList<>();
                             final List<HuaweiSleepStageSample> sleepStageSamples = new ArrayList<>();
 
-                            for (HuaweiSequenceDataParser.SequenceData sd : sequenceFileData.getSequenceDataList()) {
+                            for (HuaweiSequenceDataFileParser.SequenceData sd : sequenceFileData.getSequenceDataList()) {
                                 LOG.info("SLEEP SequenceData: {}", sd);
-                                HuaweiTrueSleepSequenceDataParser.SleepSummary sleepDataSummary = HuaweiTrueSleepSequenceDataParser.parseSleepDataSummary(sequenceFileData, sd);
+                                HuaweiTrueSleepSequenceDataParser sleepParser = new HuaweiTrueSleepSequenceDataParser();
+                                HuaweiTrueSleepSequenceDataParser.SleepSummary sleepDataSummary = sleepParser.parseData(sequenceFileData, sd);
                                 if (sleepDataSummary == null) {
                                     LOG.warn("SLEEP DataSummary is null");
                                     continue;
@@ -2953,25 +2954,44 @@ public class HuaweiSupportProvider {
                                 LOG.info("SLEEP DataSummary: {}", sleepDataSummary);
 
                                 HuaweiSleepStatsSample sleepStat = new HuaweiSleepStatsSample();
-                                sleepStat.setTimestamp(sleepDataSummary.getFallAsleepTime() * 1000L);
-                                sleepStat.setSleepScore(sleepDataSummary.getSleepScore());
-                                sleepStat.setBedTime(sleepDataSummary.getBedTime() * 1000L);
-                                sleepStat.setRisingTime(sleepDataSummary.getRisingTime() * 1000L);
-                                sleepStat.setWakeupTime(sleepDataSummary.getWakeupTime() * 1000L);
-                                sleepStat.setSleepDataQuality(sleepDataSummary.getSleepDataQuality());
-                                sleepStat.setDeepPart(sleepDataSummary.getDeepPart());
-                                sleepStat.setSnoreFreq(sleepDataSummary.getSnoreFreq());
-                                sleepStat.setSleepLatency(sleepDataSummary.getSleepLatency());
-                                sleepStat.setSleepEfficiency(sleepDataSummary.getSleepEfficiency());
-                                sleepStat.setMinHeartRate(sleepDataSummary.getMinHeartrate());
-                                sleepStat.setMaxHeartRate(sleepDataSummary.getMaxHeartrate());
-                                sleepStat.setMinOxygenSaturation(sleepDataSummary.getMinOxygenSaturation());
-                                sleepStat.setMaxOxygenSaturation(sleepDataSummary.getMaxOxygenSaturation());
-                                sleepStat.setMinBreathRate(sleepDataSummary.getMinBreathrate());
-                                sleepStat.setMaxBreathRate(sleepDataSummary.getMaxBreathrate());
+                                sleepStat.setTimestamp(sleepDataSummary.fallAsleepTime * 1000L);
+                                sleepStat.setSleepScore(sleepDataSummary.sleepScore);
+                                sleepStat.setBedTime(sleepDataSummary.bedTime * 1000L);
+                                sleepStat.setRisingTime(sleepDataSummary.risingTime * 1000L);
+                                sleepStat.setWakeupTime(sleepDataSummary.wakeupTime * 1000L);
+                                sleepStat.setSleepDataQuality(sleepDataSummary.sleepDataQuality);
+                                sleepStat.setDeepPart(sleepDataSummary.deepPart);
+                                sleepStat.setSnoreFreq(sleepDataSummary.snoreFreq);
+                                sleepStat.setSleepLatency(sleepDataSummary.sleepLatency);
+                                sleepStat.setSleepEfficiency(sleepDataSummary.sleepEfficiency);
+                                sleepStat.setMinHeartRate(sleepDataSummary.minHeartRate);
+                                sleepStat.setMaxHeartRate(sleepDataSummary.maxHeartRate);
+                                sleepStat.setMinOxygenSaturation(sleepDataSummary.minOxygenSaturation);
+                                sleepStat.setMaxOxygenSaturation(sleepDataSummary.maxOxygenSaturation);
+                                sleepStat.setMinBreathRate(sleepDataSummary.minBreathRate);
+                                sleepStat.setMaxBreathRate(sleepDataSummary.maxBreathRate);
+                                //TODO:
+//                                validData -- not needed
+//                                hrvDayToBaseline
+//                                maxHrvBaseline
+//                                minHrvBaseline
+//                                avgHrv
+//                                breathRateDayToBaseline
+//                                maxBreathRateBaseline
+//                                minBreathRateBaseline
+//                                avgBreathRate
+//                                oxygenSaturationDayToBaseline
+//                                maxOxygenSaturationBaseline
+//                                minOxygenSaturationBaseline
+//                                avgOxygenSaturation
+//                                heartRateDayToBaseline
+//                                maxHeartRateBaseline
+//                                minHeartRateBaseline
+//                                avgHeartRate
+//                                rdi
                                 sleepStatsSamples.add(sleepStat);
 
-                                long time = HuaweiTrueSleepSequenceDataParser.getTime(sleepDataSummary.getFallAsleepTime(), sleepDataSummary.getBedTime(), sleepDataSummary.getValidData(), getHuaweiCoordinator().supportsBedTime());
+                                long time = HuaweiTrueSleepSequenceDataParser.getTime(sleepDataSummary.fallAsleepTime, sleepDataSummary.bedTime, sleepDataSummary.validData, getHuaweiCoordinator().supportsBedTime());
                                 LOG.info("SLEEP Time: {}", time);
                                 List<HuaweiTrueSleepSequenceDataParser.SleepStage> stages = HuaweiTrueSleepSequenceDataParser.parseSleepDetails(sd.getDetails(), time);
                                 LOG.info("SLEEP Stages: {}", stages);

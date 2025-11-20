@@ -24,10 +24,9 @@ import org.slf4j.LoggerFactory;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class HuaweiTrueSleepSequenceDataParser {
+public class HuaweiTrueSleepSequenceDataParser extends HuaweiSequenceDataParserBase<HuaweiTrueSleepSequenceDataParser.SleepSummary> {
     private static final Logger LOG = LoggerFactory.getLogger(HuaweiTrueSleepSequenceDataParser.class);
 
     public static class SleepStage {
@@ -50,316 +49,317 @@ public class HuaweiTrueSleepSequenceDataParser {
         @NonNull
         @Override
         public String toString() {
-            final StringBuffer sb = new StringBuffer("SleepStages{");
-            sb.append("time=").append(time);
-            sb.append(", stage=").append(stage);
-            sb.append('}');
-            return sb.toString();
+            return "SleepStages{" + "time=" + time +
+                    ", stage=" + stage +
+                    '}';
         }
     }
 
     public static class SleepSummary {
-        private long fallAsleepTime = -1;
-        private long bedTime = -1;
-        private long risingTime = -1;
-        private long wakeupTime = -1;
-        private int validData = -1;
-        private int sleepDataQuality = -1;
-        private int deepPart = -1;
-        private int snoreFreq = -1;
-        private int sleepScore = -1;
-        private int sleepLatency = -1;
-        private int sleepEfficiency = -1;
-        private int minHeartrate = -1;
-        private int maxHeartrate = -1;
-        private double minOxygenSaturation = -1;
-        private double maxOxygenSaturation = -1;
-        private double minBreathrate = -1;
-        private double maxBreathrate = -1;
-
-        public long getFallAsleepTime() { return fallAsleepTime; }
-
-        public void setFallAsleepTime(long fallAsleepTime) { this.fallAsleepTime = fallAsleepTime; }
-
-        public long getBedTime() { return bedTime; }
-
-        public void setBedTime(long bedTime) { this.bedTime = bedTime;}
-
-        public long getRisingTime() { return risingTime;}
-
-        public void setRisingTime(long risingTime) {this.risingTime = risingTime;}
-
-        public long getWakeupTime() {return wakeupTime;}
-
-        public void setWakeupTime(long wakeupTime) {this.wakeupTime = wakeupTime;}
-
-        public int getValidData() { return validData; }
-
-        public void setValidData(int validData) { this.validData = validData;}
-
-        public int getSleepDataQuality() { return sleepDataQuality;}
-
-        public void setSleepDataQuality(int sleepDataQuality) {this.sleepDataQuality = sleepDataQuality;}
-
-        public int getDeepPart() {return deepPart;}
-
-        public void setDeepPart(int deepPart) {this.deepPart = deepPart;}
-
-        public int getSnoreFreq() {return snoreFreq;}
-
-        public void setSnoreFreq(int snoreFreq) {this.snoreFreq = snoreFreq;}
-
-        public int getSleepScore() {return sleepScore;}
-
-        public void setSleepScore(int sleepScore) {this.sleepScore = sleepScore;}
-
-        public int getSleepLatency() {return sleepLatency;}
-
-        public void setSleepLatency(int sleepLatency) {this.sleepLatency = sleepLatency;}
-
-        public int getSleepEfficiency() {return sleepEfficiency;}
-
-        public void setSleepEfficiency(int sleepEfficiency) {this.sleepEfficiency = sleepEfficiency;}
-
-        public int getMinHeartrate() {return minHeartrate;}
-
-        public void setMinHeartrate(int minHeartrate) {this.minHeartrate = minHeartrate;}
-
-        public int getMaxHeartrate() {return maxHeartrate;}
-
-        public void setMaxHeartrate(int maxHeartrate) {this.maxHeartrate = maxHeartrate;}
-
-        public double getMinOxygenSaturation() {return minOxygenSaturation;}
-
-        public void setMinOxygenSaturation(double minOxygenSaturation) {this.minOxygenSaturation = minOxygenSaturation;}
-
-        public double getMaxOxygenSaturation() {return maxOxygenSaturation;}
-
-        public void setMaxOxygenSaturation(double maxOxygenSaturation) {this.maxOxygenSaturation = maxOxygenSaturation;}
-
-        public double getMinBreathrate() {return minBreathrate;}
-
-        public void setMinBreathrate(double minBreathrate) {this.minBreathrate = minBreathrate;}
-
-        public double getMaxBreathrate() {return maxBreathrate;}
-
-        public void setMaxBreathrate(double maxBreathrate) {this.maxBreathrate = maxBreathrate;}
+        public long fallAsleepTime = -1;
+        public long bedTime = -1;
+        public long risingTime = -1;
+        public long wakeupTime = -1;
+        public int validData = -1;
+        public int sleepDataQuality = -1;
+        public int deepPart = -1;
+        public int snoreFreq = -1;
+        public int sleepScore = -1;
+        public int sleepLatency = -1;
+        public int sleepEfficiency = -1;
+        public int minHeartRate = -1;
+        public int maxHeartRate = -1;
+        public double minOxygenSaturation = -1;
+        public double maxOxygenSaturation = -1;
+        public double minBreathRate = -1;
+        public double maxBreathRate = -1;
+        public int hrvDayToBaseline = -1;
+        public int maxHrvBaseline = -1;
+        public int minHrvBaseline = -1;
+        public int avgHrv = -1;
+        public int breathRateDayToBaseline = -1;
+        public int maxBreathRateBaseline = -1;
+        public int minBreathRateBaseline = -1;
+        public int avgBreathRate = -1;
+        public int oxygenSaturationDayToBaseline = -1;
+        public int maxOxygenSaturationBaseline = -1;
+        public int minOxygenSaturationBaseline = -1;
+        public int avgOxygenSaturation = -1;
+        public int heartRateDayToBaseline = -1;
+        public int maxHeartRateBaseline = -1;
+        public int minHeartRateBaseline = -1;
+        public int avgHeartRate = -1;
+        public int rdi = -1; // Respiratory Disturbance Index, RDI is a numeric index which helps to define the degree of the apnea.
+        public int wakeCount = -1;
+        public int turnOverCount = -1;
+        public long prepareSleepTime = -1;
+        public int wakeUpFeeling = -1;
+        public int sleepVersion = -1;
 
         @NonNull
         @Override
         public String toString() {
-            final StringBuilder sb = new StringBuilder("SleepDetails{");
-            sb.append("fallAsleepTime=").append(fallAsleepTime);
-            sb.append(", bedTime=").append(bedTime);
-            sb.append(", risingTime=").append(risingTime);
-            sb.append(", wakeupTime=").append(wakeupTime);
-            sb.append(", validData=").append(validData);
-            sb.append(", sleepDataQuality=").append(sleepDataQuality);
-            sb.append(", deepPart=").append(deepPart);
-            sb.append(", snoreFreq=").append(snoreFreq);
-            sb.append(", sleepScore=").append(sleepScore);
-            sb.append(", sleepLatency=").append(sleepLatency);
-            sb.append(", sleepEfficiency=").append(sleepEfficiency);
-            sb.append(", minHeartrate=").append(minHeartrate);
-            sb.append(", maxHeartrate=").append(maxHeartrate);
-            sb.append(", minOxygenSaturation=").append(minOxygenSaturation);
-            sb.append(", maxOxygenSaturation=").append(maxOxygenSaturation);
-            sb.append(", minBreathrate=").append(minBreathrate);
-            sb.append(", maxBreathrate=").append(maxBreathrate);
-            sb.append('}');
-            return sb.toString();
+            return "SleepSummary{" + "fallAsleepTime=" + fallAsleepTime +
+                    ", bedTime=" + bedTime +
+                    ", risingTime=" + risingTime +
+                    ", wakeupTime=" + wakeupTime +
+                    ", validData=" + validData +
+                    ", sleepDataQuality=" + sleepDataQuality +
+                    ", deepPart=" + deepPart +
+                    ", snoreFreq=" + snoreFreq +
+                    ", sleepScore=" + sleepScore +
+                    ", sleepLatency=" + sleepLatency +
+                    ", sleepEfficiency=" + sleepEfficiency +
+                    ", minHeartRate=" + minHeartRate +
+                    ", maxHeartRate=" + maxHeartRate +
+                    ", minOxygenSaturation=" + minOxygenSaturation +
+                    ", maxOxygenSaturation=" + maxOxygenSaturation +
+                    ", minBreathRate=" + minBreathRate +
+                    ", maxBreathRate=" + maxBreathRate +
+                    ", hrvDayToBaseline=" + hrvDayToBaseline +
+                    ", maxHrvBaseline=" + maxHrvBaseline +
+                    ", minHrvBaseline=" + minHrvBaseline +
+                    ", avgHrv=" + avgHrv +
+                    ", breathRateDayToBaseline=" + breathRateDayToBaseline +
+                    ", maxBreathRateBaseline=" + maxBreathRateBaseline +
+                    ", minBreathRateBaseline=" + minBreathRateBaseline +
+                    ", avgBreathRate=" + avgBreathRate +
+                    ", oxygenSaturationDayToBaseline=" + oxygenSaturationDayToBaseline +
+                    ", maxOxygenSaturationBaseline=" + maxOxygenSaturationBaseline +
+                    ", minOxygenSaturationBaseline=" + minOxygenSaturationBaseline +
+                    ", avgOxygenSaturation=" + avgOxygenSaturation +
+                    ", heartRateDayToBaseline=" + heartRateDayToBaseline +
+                    ", maxHeartRateBaseline=" + maxHeartRateBaseline +
+                    ", minHeartRateBaseline=" + minHeartRateBaseline +
+                    ", avgHeartRate=" + avgHeartRate +
+                    ", rdi=" + rdi +
+                    ", wakeCount=" + wakeCount +
+                    ", turnOverCount=" + turnOverCount +
+                    ", prepareSleepTime=" + prepareSleepTime +
+                    ", wakeUpFeeling=" + wakeUpFeeling +
+                    ", sleepVersion=" + sleepVersion +
+                    '}';
         }
     }
 
-    public static int readAsInteger(byte[] data, int def) {
-        if (data == null || data.length == 0 || data.length > 4) {
-            return def;
-        }
-        // NOTE: Looks like validData should be float but the watch returns it as integer.
-        // unsigned integer  stored as 0xBF800000 = 10111111 10000000 00000000 00000000
-        // for float -1.
-        if(Arrays.equals(data,new byte[]{(byte) 0xBF, (byte) 0x80, 0x00, 0x00})) {
-            return def;
-        }
-        int res = 0;
-        for (int i = 0; i < data.length; i++) {
-            res |= (data[i] & 0xFF) << (((data.length - i) - 1) * 8);
-        }
-        return res;
-    }
 
-    public static long readAsLong(byte[] data, long def) {
-        if (data == null || data.length == 0 || data.length > 8) {
-            return def;
-        }
-        long res = 0;
-        for (int i = 0; i < data.length; i++) {
-            res |= (long) (data[i] & 0xFF) << (((data.length - i) - 1) * 8);
-        }
-        return res;
-    }
-
-    private static long getValueAsLong(int i, byte[] str2, long def) {
-        if (i == 1 || i == 2 || i == 4) { // int, byte, short (I suppose)
-            return readAsInteger(str2, (int) def);
-        } else if (i == 3) { // long
-            return readAsLong(str2, def);
-        } else if (i == 5) { // string
-            return def;
-        } else if (i == 6) { // double
-            return (long) Double.longBitsToDouble(readAsLong(str2, def));
-        } else {
-            return def;
-        }
-    }
-
-    private static double getValueAsDouble(int i, byte[] str2, double def) {
-        if (i == 1 || i == 2 || i == 4) { // int, byte, short (I suppose)
-            return readAsInteger(str2, (int) def);
-        } else if (i == 3) { // long
-            return readAsLong(str2, (int) def);
-        } else if (i == 5) { // string
-            return def;
-        } else if (i == 6) { // double
-            return Double.longBitsToDouble(readAsLong(str2, (int) def));
-        } else {
-            return def;
-        }
-    }
-
-    private static void fillSleepSummary(SleepSummary details, int dictId, int dataType, byte[] value) {
+    protected void fillData(SleepSummary details, int dictId, int dataType, byte[] value) {
         switch (dictId) {
             case 700013686:
                 long fallAsleepTime = getValueAsLong(dataType, value, -1);
                 if(fallAsleepTime >=0)
-                    details.setFallAsleepTime(fallAsleepTime);
+                    details.fallAsleepTime = fallAsleepTime;
                 break;
             case 700013298:
                 long bedTime = getValueAsLong(dataType, value, -1);
                 if(bedTime >=0)
-                    details.setBedTime(bedTime);
+                    details.bedTime = bedTime;
                 break;
             case 700013973:
                 long risingTime = getValueAsLong(dataType, value, -1);
                 if(risingTime >=0)
-                    details.setRisingTime(risingTime);
+                    details.risingTime = risingTime;
                 break;
             case 700013156:
                 long wakeupTime = getValueAsLong(dataType, value, -1);
                 if(wakeupTime >=0)
-                    details.setWakeupTime(wakeupTime);
+                    details.wakeupTime = wakeupTime;
                 break;
             case 700013786:
                 long validData = getValueAsLong(dataType, value, -1);
                 if(validData >=0 && validData <= Integer.MAX_VALUE)
-                    details.setValidData((int) validData);
+                    details.validData = (int) validData;
                 break;
             case 700013254:
                 long sleepDataQuality = getValueAsLong(dataType, value, -1);
                 if(sleepDataQuality >=0 && sleepDataQuality <= Integer.MAX_VALUE)
-                    details.setSleepDataQuality((int) sleepDataQuality);
+                    details.sleepDataQuality = (int) sleepDataQuality;
                 break;
             case 700013679:
                 long deepPart = getValueAsLong(dataType, value, -1);
                 if(deepPart >=0 && deepPart <= Integer.MAX_VALUE)
-                    details.setDeepPart((int) deepPart);
+                    details.deepPart = (int) deepPart;
                 break;
             case 700013721:
                 long snoreFreq = getValueAsLong(dataType, value, -1);
                 if(snoreFreq >=0 && snoreFreq <= Integer.MAX_VALUE)
-                    details.setSnoreFreq((int) snoreFreq);
+                    details.snoreFreq = (int) snoreFreq;
                 break;
             case 700013245:
                 long sleepScore = getValueAsLong(dataType, value, -1);
                 if(sleepScore >=0 && sleepScore <= Integer.MAX_VALUE)
-                    details.setSleepScore((int) sleepScore);
+                    details.sleepScore = (int) sleepScore;
                 break;
             case 700013713:
                 long sleepLatency = getValueAsLong(dataType, value, -1);
                 if(sleepLatency >=0 && sleepLatency <= Integer.MAX_VALUE)
-                    details.setSleepLatency((int) sleepLatency);
+                    details.sleepLatency = (int) sleepLatency;
                 break;
             case 700013232:
                 long sleepEfficiency = getValueAsLong(dataType, value, -1);
                 if(sleepEfficiency >=0 && sleepEfficiency <= Integer.MAX_VALUE)
-                    details.setSleepEfficiency((int) sleepEfficiency);
+                    details.sleepEfficiency = (int) sleepEfficiency;
                 break;
             case 700013436:
-                long minHeartrate = getValueAsLong(dataType, value, -1);
-                if(minHeartrate >= -1 && minHeartrate <= 255)
-                    details.setMinHeartrate((int) minHeartrate);
+                long minHeartRate = getValueAsLong(dataType, value, -1);
+                if(minHeartRate >= -1 && minHeartRate <= 255)
+                    details.minHeartRate = (int) minHeartRate;
                 break;
             case 700013502:
-                long maxHeartrate = getValueAsLong(dataType, value, -1);
-                if(maxHeartrate >=0 && maxHeartrate <= 255)
-                    details.setMaxHeartrate((int) maxHeartrate);
+                long maxHeartRate = getValueAsLong(dataType, value, -1);
+                if(maxHeartRate >=0 && maxHeartRate <= 255)
+                    details.maxHeartRate = (int) maxHeartRate;
                 break;
             case 700013340:
                 double minOxygenSaturation = getValueAsDouble(dataType, value, -1);
                 if(minOxygenSaturation >=0)
-                    details.setMinOxygenSaturation((int) minOxygenSaturation);
+                    details.minOxygenSaturation = minOxygenSaturation;
                 break;
             case 700013026:
                 double maxOxygenSaturation = getValueAsDouble(dataType, value, -1);
                 if(maxOxygenSaturation >=0)
-                    details.setMaxOxygenSaturation((int) maxOxygenSaturation);
+                    details.maxOxygenSaturation = maxOxygenSaturation;
                 break;
             case 700013646:
-                double minBreathrate = getValueAsDouble(dataType, value, -1);
-                if(minBreathrate >=0 && minBreathrate <= Integer.MAX_VALUE)
-                    details.setMinBreathrate((int) minBreathrate);
+                long minBreathRate = getValueAsLong(dataType, value, -1);
+                if(minBreathRate >=0 && minBreathRate <= Integer.MAX_VALUE)
+                    details.minBreathRate = (int) minBreathRate;
                 break;
             case 700013492:
-                double maxBreathrate = getValueAsDouble(dataType, value, -1);
-                if(maxBreathrate >=0 && maxBreathrate <= Integer.MAX_VALUE)
-                    details.setMaxBreathrate((int) maxBreathrate);
+                long maxBreathRate = getValueAsLong(dataType, value, -1);
+                if(maxBreathRate >=0 && maxBreathRate <= Integer.MAX_VALUE)
+                    details.maxBreathRate = (int) maxBreathRate;
+                break;
+            case 700013824:
+                long hrvDayToBaseline = getValueAsLong(dataType, value, -1);
+                if(hrvDayToBaseline >=0 && hrvDayToBaseline <= 30)
+                    details.hrvDayToBaseline = (int) hrvDayToBaseline;
+                break;
+            case 700013355:
+                long maxHrvBaseline = getValueAsLong(dataType, value, -1);
+                if(maxHrvBaseline >=0 && maxHrvBaseline <= 200)
+                    details.maxHrvBaseline = (int) maxHrvBaseline;
+                break;
+            case 700013305:
+                long minHrvBaseline = getValueAsLong(dataType, value, -1);
+                if(minHrvBaseline >=0 && minHrvBaseline <= 200)
+                    details.minHrvBaseline = (int) minHrvBaseline;
+                break;
+            case 700013878:
+                long avgHrv = getValueAsLong(dataType, value, -1);
+                if(avgHrv >=0 && avgHrv <= 200)
+                    details.avgHrv = (int) avgHrv;
+                break;
+            case 700013236:
+                long breathRateDayToBaseline = getValueAsLong(dataType, value, -1);
+                if(breathRateDayToBaseline >= 0 && breathRateDayToBaseline <= 30)
+                    details.breathRateDayToBaseline = (int) breathRateDayToBaseline;
+                break;
+            case 700013225:
+                long maxBreathRateBaseline = getValueAsLong(dataType, value, -1);
+                if(maxBreathRateBaseline >= 0 && maxBreathRateBaseline <= 80)
+                    details.maxBreathRateBaseline = (int) maxBreathRateBaseline;
+                break;
+            case 700013839:
+                long minBreathRateBaseline = getValueAsLong(dataType, value, -1);
+                if(minBreathRateBaseline >= 0 && minBreathRateBaseline <= 80)
+                    details.minBreathRateBaseline = (int) minBreathRateBaseline;
+                break;
+            case 700013886:
+                long avgBreathRate = getValueAsLong(dataType, value, -1);
+                if(avgBreathRate >= 0 && avgBreathRate <= 80)
+                    details.avgBreathRate = (int) avgBreathRate;
+                break;
+            case 700013718:
+                long oxygenSaturationDayToBaseline = getValueAsLong(dataType, value, -1);
+                if(oxygenSaturationDayToBaseline >= 0 && oxygenSaturationDayToBaseline <= 30)
+                    details.oxygenSaturationDayToBaseline = (int) oxygenSaturationDayToBaseline;
+                break;
+            case 700013227:
+                long maxOxygenSaturationBaseline = getValueAsLong(dataType, value, -1);
+                if(maxOxygenSaturationBaseline >= 0 && maxOxygenSaturationBaseline <= 100)
+                    details.maxOxygenSaturationBaseline = (int) maxOxygenSaturationBaseline;
+                break;
+            case 700013633:
+                long minOxygenSaturationBaseline = getValueAsLong(dataType, value, -1);
+                if(minOxygenSaturationBaseline >= 0 && minOxygenSaturationBaseline <= 100)
+                    details.minOxygenSaturationBaseline = (int) minOxygenSaturationBaseline;
+                break;
+            case 700013468:
+                long avgOxygenSaturation = getValueAsLong(dataType, value, -1);
+                if(avgOxygenSaturation >= 0 && avgOxygenSaturation <= 100)
+                    details.avgOxygenSaturation = (int) avgOxygenSaturation;
+                break;
+            case 700013810:
+                long heartRateDayToBaseline = getValueAsLong(dataType, value, -1);
+                if(heartRateDayToBaseline >= 0 && heartRateDayToBaseline <= 30)
+                    details.heartRateDayToBaseline = (int) heartRateDayToBaseline;
+                break;
+            case 700013841:
+                long maxHeartRateBaseline = getValueAsLong(dataType, value, -1);
+                if(maxHeartRateBaseline >= 0 && maxHeartRateBaseline <= 255)
+                    details.maxHeartRateBaseline = (int) maxHeartRateBaseline;
+                break;
+            case 700013722:
+                long minHeartRateBaseline = getValueAsLong(dataType, value, -1);
+                if(minHeartRateBaseline >= 0 && minHeartRateBaseline <= 255)
+                    details.minHeartRateBaseline = (int) minHeartRateBaseline;
+                break;
+            case 700013580:
+                long avgHeartRate = getValueAsLong(dataType, value, -1);
+                if(avgHeartRate >= 0 && avgHeartRate <= 255)
+                    details.avgHeartRate = (int) avgHeartRate;
+                break;
+            case 700013759:
+                long rdi = getValueAsLong(dataType, value, -1);
+                if(rdi >= 0 && rdi <= 100)
+                    details.rdi = (int) rdi;
+                break;
+            case 700013635:
+                long wakeCount = getValueAsLong(dataType, value, -1);
+                if(wakeCount >= 0)
+                    details.wakeCount = (int) wakeCount;
+                break;
+            case 700013670:
+                long turnOverCount = getValueAsLong(dataType, value, -1);
+                if(turnOverCount >= 0)
+                    details.turnOverCount = (int) turnOverCount;
+                break;
+            case 700013821:
+                long prepareSleepTime = getValueAsLong(dataType, value, -1);
+                if(prepareSleepTime >= 0)
+                    details.prepareSleepTime = prepareSleepTime;
+                break;
+            case 700013925:
+                long wakeUpFeeling = getValueAsLong(dataType, value, -1);
+                if(wakeUpFeeling >= 0)
+                    details.wakeUpFeeling = (int) wakeUpFeeling;
+                break;
+            case 700013697:
+                long sleepVersion = getValueAsLong(dataType, value, -1);
+                if(sleepVersion >= 0 && sleepVersion <= 100)
+                    details.sleepVersion = (int) sleepVersion;
                 break;
             default:
                 LOG.info("Unknown dictId: {}", dictId);
         }
     }
 
-    private static SleepSummary parseTLVData(byte[] str) {
-        SleepSummary details = new SleepSummary();
-        HuaweiTLV tlv = new HuaweiTLV().parse(str);
-        List<HuaweiTLV> tlvs = tlv.getAllContainerObjects();
-        for (HuaweiTLV tv : tlvs) {
-            List<HuaweiTLV> tlvs2 = tv.getAllContainerObjects();
-            for (HuaweiTLV tv2 : tlvs2) {
-                try {
-                    int dictId = tv2.getAsInteger(0x03);
-                    int dataType = tv2.getAsInteger(0x04);
-                    byte[] value = tv2.getBytes(0x5);
-                    fillSleepSummary(details, dictId, dataType, value);
-                } catch (Exception e) {
-                    LOG.error("Sleep dict sync: tag is missing", e);
-                }
-            }
-
-        }
-        return details;
-    }
-
-
-    public static SleepSummary parseSleepDataSummary(HuaweiSequenceDataParser.SequenceFileData fileData, HuaweiSequenceDataParser.SequenceData data) {
-        // summary type 2 is TLV. TLV works only for fileType != 2 (or maybe only for 1)
-        // currently only data version 1 supported
-        if (data != null && data.getDataVersion() == 1 && data.getSummaryType() == 2 && fileData.getFileType() != 2) {
-            return parseTLVData(data.getSummary());
-        }
-        return null;
+    protected SleepSummary getNewData() {
+        return new SleepSummary();
     }
 
     public static void correctSummary(SleepSummary summary) {
         if(summary.validData == -1) {
-            summary.setBedTime(0);
-            summary.setRisingTime(0);
-            summary.setSleepScore(-1);
-            summary.setSleepDataQuality(-1);
-            summary.setDeepPart(-1);
-            summary.setSnoreFreq(-1);
-            summary.setSleepEfficiency(-1);
-            summary.setSleepLatency(-1);
+            summary.bedTime = 0;
+            summary.risingTime = 0;
+            summary.sleepScore = -1;
+            summary.sleepDataQuality = -1;
+            summary.deepPart = -1;
+            summary.snoreFreq = -1;
+            summary.sleepEfficiency = -1;
+            summary.sleepLatency = -1;
+            summary.prepareSleepTime = -1;
         }
     }
 

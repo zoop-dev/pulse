@@ -27,8 +27,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class HuaweiSequenceDataParser {
-    private static final Logger LOG = LoggerFactory.getLogger(HuaweiSequenceDataParser.class);
+public class HuaweiSequenceDataFileParser {
+    private static final Logger LOG = LoggerFactory.getLogger(HuaweiSequenceDataFileParser.class);
 
     public static class SequenceData {
         private int endTime;
