@@ -1626,19 +1626,6 @@ public class PebbleProtocol extends GBDeviceProtocol {
         return encodeSystemMessage(SYSTEMMESSAGE_FIRMWAREFAIL);
     }
 
-
-    byte[] encodeAppRefresh(int index) {
-        final short LENGTH_REFRESHAPP = 5;
-        ByteBuffer buf = ByteBuffer.allocate(LENGTH_PREFIX + LENGTH_REFRESHAPP);
-        buf.order(ByteOrder.BIG_ENDIAN);
-        buf.putShort(LENGTH_REFRESHAPP);
-        buf.putShort(ENDPOINT_APPMANAGER);
-        buf.put(APPMANAGER_REFRESHAPP);
-        buf.putInt(index);
-
-        return buf.array();
-    }
-
     private byte[] encodeDatalog(byte handle, byte reply) {
         ByteBuffer buf = ByteBuffer.allocate(LENGTH_PREFIX + 2);
         buf.order(ByteOrder.BIG_ENDIAN);
