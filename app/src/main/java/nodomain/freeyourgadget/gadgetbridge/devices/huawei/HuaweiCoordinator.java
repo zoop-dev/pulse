@@ -50,9 +50,12 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictData;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataValuesDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiEmotionsSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiHrvValueSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStageSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStatsSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiStressSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiTemperatureSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutDataSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutPaceSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSpO2SampleDao;
@@ -139,6 +142,13 @@ public class HuaweiCoordinator {
 
         QueryBuilder<?> stressQb = session.getHuaweiStressSampleDao().queryBuilder();
         stressQb.where(HuaweiStressSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
+
+        QueryBuilder<?> hrvQb = session.getHuaweiHrvValueSampleDao().queryBuilder();
+        hrvQb.where(HuaweiHrvValueSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
+
+        session.getHuaweiTemperatureSampleDao().queryBuilder().where(HuaweiTemperatureSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
+
+        session.getHuaweiEmotionsSampleDao().queryBuilder().where(HuaweiEmotionsSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
 
         QueryBuilder<HuaweiWorkoutSummarySample> qb2 = session.getHuaweiWorkoutSummarySampleDao().queryBuilder();
         List<HuaweiWorkoutSummarySample> workouts = qb2.where(HuaweiWorkoutSummarySampleDao.Properties.DeviceId.eq(deviceId)).build().list();
@@ -972,7 +982,11 @@ public class HuaweiCoordinator {
         return false;
     }
 
-
+    public boolean supportsHRV() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(235);
+        return false;
+    }
 
     public boolean supportsPromptPushMessage () {
 //              do not ask for capabilities under specific condition

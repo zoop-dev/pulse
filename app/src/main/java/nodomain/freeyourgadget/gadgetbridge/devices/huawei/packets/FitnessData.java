@@ -356,6 +356,8 @@ public class FitnessData {
 
                 public int spo = -1;
 
+                public int restingHeartRate = -1;
+
                 public List<TV> unknownTVs = null;
 
                 @Override
@@ -414,7 +416,7 @@ public class FitnessData {
             private static void parseData(SubContainer returnValue, byte[] data) {
                 int i = 0;
 
-                if (data.length <= 0) {
+                if (data.length == 0) {
                     returnValue.parsedData = null;
                     returnValue.parsedDataError = "Data is missing feature bitmap.";
                     return;
@@ -491,6 +493,8 @@ public class FitnessData {
 
                             if (bitToCheck == 0x01)
                                 returnValue.spo = value;
+                            else if (bitToCheck == 0x02)
+                                returnValue.restingHeartRate = value;
                             else
                                 returnValue.unknownTVs.add(tv);
                         }

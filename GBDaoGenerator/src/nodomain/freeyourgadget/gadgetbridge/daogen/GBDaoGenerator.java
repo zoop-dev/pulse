@@ -56,7 +56,7 @@ public class GBDaoGenerator {
     private static final String TIMESTAMP_TO = "timestampTo";
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(118, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(119, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -172,6 +172,8 @@ public class GBDaoGenerator {
         addHuaweiSleepStageSample(schema, user, device);
         addHuaweiSleepStatsSample(schema, user, device);
         addHuaweiTemperatureSample(schema, user, device);
+        addHuaweiHrvValuesSample(schema, user, device);
+        addHuaweiEmotionsSample(schema, user, device);
 
         addUltrahumanActivitySample(schema, user, device);
         addUltrahumanDeviceStateSample(schema, user, device);
@@ -1558,6 +1560,7 @@ public class GBDaoGenerator {
         );
         activitySample.addIntProperty("spo").notNull();
         activitySample.addIntProperty("heartRate").notNull();
+        activitySample.addIntProperty("restingHeartRate").notNull();
         return activitySample;
     }
 
@@ -1596,6 +1599,29 @@ public class GBDaoGenerator {
         sample.addDoubleProperty("minBreathRate").notNull();
         sample.addDoubleProperty("maxBreathRate").notNull();
 
+        sample.addIntProperty("hrvDayToBaseline").notNull();
+        sample.addIntProperty("maxHrvBaseline").notNull();
+        sample.addIntProperty("minHrvBaseline").notNull();
+        sample.addIntProperty("avgHrv").notNull();
+        sample.addIntProperty("breathRateDayToBaseline").notNull();
+        sample.addIntProperty("maxBreathRateBaseline").notNull();
+        sample.addIntProperty("minBreathRateBaseline").notNull();
+        sample.addIntProperty("avgBreathRate").notNull();
+        sample.addIntProperty("oxygenSaturationDayToBaseline").notNull();
+        sample.addIntProperty("maxOxygenSaturationBaseline").notNull();
+        sample.addIntProperty("minOxygenSaturationBaseline").notNull();
+        sample.addIntProperty("avgOxygenSaturation").notNull();
+        sample.addIntProperty("heartRateDayToBaseline").notNull();
+        sample.addIntProperty("maxHeartRateBaseline").notNull();
+        sample.addIntProperty("minHeartRateBaseline").notNull();
+        sample.addIntProperty("avgHeartRate").notNull();
+        sample.addIntProperty("rdi").notNull();
+        sample.addIntProperty("wakeCount").notNull();
+        sample.addIntProperty("turnOverCount").notNull();
+        sample.addLongProperty("prepareSleepTime").notNull();
+        sample.addIntProperty("wakeUpFeeling").notNull();
+        sample.addIntProperty("sleepVersion").notNull();
+
         final Index indexWakeUp = new Index();
         indexWakeUp.addProperty(wakeupTime);
         sample.addIndex(indexWakeUp);
@@ -1610,6 +1636,26 @@ public class GBDaoGenerator {
         sample.addFloatProperty(SAMPLE_TEMPERATURE).notNull();
         sample.addIntProperty("temperatureType").notNull().primaryKey().codeBeforeGetter(OVERRIDE);
         sample.addIntProperty("temperatureLocation").notNull().codeBeforeGetter(OVERRIDE);
+        return sample;
+    }
+
+    private static Entity addHuaweiHrvValuesSample(Schema schema, Entity user, Entity device) {
+        Entity sample = addEntity(schema, "HuaweiHrvValueSample");
+        addCommonTimeSampleProperties("AbstractHrvValueSample", sample, user, device);
+        sample.addLongProperty("lastTimestamp").notNull().index();
+        sample.addIntProperty("value").notNull().codeBeforeGetter(OVERRIDE);
+        return sample;
+    }
+
+    private static Entity addHuaweiEmotionsSample(Schema schema, Entity user, Entity device) {
+        Entity sample = addEntity(schema, "HuaweiEmotionsSample");
+        addCommonTimeSampleProperties("AbstractTimeSample", sample, user, device);
+        sample.addLongProperty("lastTimestamp").notNull().index();
+        sample.addIntProperty("status").notNull();
+        sample.addDoubleProperty("valenceCharacter");
+        sample.addIntProperty("originStatus");
+        sample.addDoubleProperty("arousalCharacter");
+        
         return sample;
     }
 

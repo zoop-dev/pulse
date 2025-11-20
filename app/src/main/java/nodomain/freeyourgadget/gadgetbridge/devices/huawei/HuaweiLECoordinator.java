@@ -41,6 +41,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
+import nodomain.freeyourgadget.gadgetbridge.model.HrvValueSample;
 import nodomain.freeyourgadget.gadgetbridge.model.SleepScoreSample;
 import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.model.StressSample;
@@ -245,6 +246,9 @@ public abstract class HuaweiLECoordinator extends AbstractBLEDeviceCoordinator i
     public boolean supportsSleepScore(@NonNull final GBDevice device) { return huaweiCoordinator.getSupportsNewTrueSleep(device); }
 
     @Override
+    public boolean supportsHrvMeasurement(@NonNull GBDevice device) { return  huaweiCoordinator.supportsHRV();}
+
+    @Override
     public InstallHandler findInstallHandler(Uri uri, Context context) {
         return huaweiCoordinator.getInstallHandler(uri, context);
     }
@@ -277,6 +281,11 @@ public abstract class HuaweiLECoordinator extends AbstractBLEDeviceCoordinator i
     @Override
     public TimeSampleProvider<? extends SleepScoreSample> getSleepScoreProvider(final GBDevice device, final DaoSession session) {
         return new HuaweiSleepScoreSampleProvider(device, session);
+    }
+
+    @Override
+    public TimeSampleProvider<? extends HrvValueSample> getHrvValueSampleProvider(final GBDevice device, final DaoSession session) {
+        return new HuaweiHrvValueSampleProvider(device, session);
     }
 
     @Override

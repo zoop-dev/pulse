@@ -54,3 +54,4 @@ public class GadgetbridgeUpdate_118 implements DBUpdateScript {
     public void downgradeSchema(SQLiteDatabase db) {
     }
 }
+
