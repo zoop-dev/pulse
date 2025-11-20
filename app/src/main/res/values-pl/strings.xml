@@ -2037,7 +2037,7 @@
     <string name="contact_delete_confirm_title">Usuń kontakt</string>
     <string name="menuitem_aqi">Indeks jakości powietrza</string>
     <string name="pref_contacts_title">Kontakty</string>
-    <string name="activity_type_golf">Golf</string>
+    <string name="activity_type_golf">Gra w golfa</string>
     <string name="ftp_server_configuration">Konfiguracja serwera FTP</string>
     <string name="activity_type_tennis">Tenis</string>
     <string name="fossil_hr_confirm_connection">Potwierdź na zegarku</string>
@@ -4104,4 +4104,12 @@
     <string name="pref_install_unsupported_files_title">Zainstaluj nieobsługiwane pliki</string>
     <string name="pref_install_unsupported_files_summary">Zezwól na przesyłanie nieobsługiwanych plików na urządzenie.</string>
     <string name="install_unsupported_files_warning">Ten plik nie jest obsługiwany przez urządzenie i może powodować problemy.\n\nSTANOWCZO ODRADZAMY jego instalację!</string>
+    <string name="menuitem_golf">Golf</string>
+    <string name="menuitem_bio_charge">BioCharge</string>
+    <string name="movementConsistency">Spójność ruchu</string>
+    <string name="movementStability">Stabilność</string>
+    <string name="movementContinuity">Ciągłość</string>
+    <string name="movementRhythm">Rytm</string>
+    <string name="movementSpeedDecay">Wygasanie prędkości</string>
+    <string name="movement_evaluation">Ocena ruchu</string>
 </resources>
