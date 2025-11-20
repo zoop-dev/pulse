@@ -54,7 +54,7 @@ public class OpenTracksController extends Activity {
      * their documentation here: https://github.com/OpenTracksApp/OpenTracks#api
      * `startRecording()` sends an explicit Intent to OpenTracks signalling it
      * to start recording. It passes along the package name and class name of
-     * our `OpenTracksController` which OpenTracks will use to send the 
+     * our `OpenTracksController` which OpenTracks will use to send the
      * statistics URIs to. After starting the recording service, OpenTracks
      * uses a new explicit Intent to start our `OpenTracksController` and passes
      * along the URIs and the read permissions for those URIs (using
@@ -86,8 +86,8 @@ public class OpenTracksController extends Activity {
             }
             Uri tracksUri = uris.get(0);
             Uri trackpointsUri = uris.get(1);
-            LOG.info("Registering OpenTracksContentObserver with tracks URI: " + tracksUri);
-            LOG.info("Registering OpenTracksContentObserver with trackpoints URI: " + trackpointsUri);
+            LOG.info("Registering OpenTracksContentObserver with tracks URI: {}", tracksUri);
+            LOG.info("Registering OpenTracksContentObserver with trackpoints URI: {}", trackpointsUri);
             gbApp.setOpenTracksObserver(new OpenTracksContentObserver(this, tracksUri, trackpointsUri, protocolVersion));
             try {
                 getContentResolver().registerContentObserver(tracksUri, false, gbApp.getOpenTracksObserver());
@@ -99,7 +99,7 @@ public class OpenTracksController extends Activity {
         moveTaskToBack(true);
     }
 
-    public static void sendIntent(Context context, String className, String category, String icon) {
+    public static void sendIntent(Context context, String className, String category, OpenTracksActivityType openTracksActivityType) {
         Prefs prefs = GBApplication.getPrefs();
         String packageName = prefs.getString("opentracks_packagename", "de.dennisguse.opentracks");
         Intent intent = new Intent();
@@ -110,8 +110,8 @@ public class OpenTracksController extends Activity {
         if (category != null) {
             intent.putExtra("TRACK_CATEGORY", category);
         }
-        if (icon != null) {
-            intent.putExtra("TRACK_ICON", icon);
+        if (openTracksActivityType != null) {
+            intent.putExtra("TRACK_ICON", openTracksActivityType.getId());
         }
         try {
             context.startActivity(intent);
@@ -126,24 +126,12 @@ public class OpenTracksController extends Activity {
 
     public static void startRecording(Context context, ActivityKind activityKind) {
         final String category = activityKind.getLabel(context);
-        final String icon;
-        switch (activityKind) {
-            case CYCLING:
-                icon = "BIKE";
-                break;
-            case HIKING:
-            case WALKING:
-                icon = "WALK";
-                break;
-            case RUNNING:
-                icon = "RUN";
-                break;
-            default:
-                LOG.warn("Unmapped activity kind icon for {}", activityKind);
-                icon = null;
+        final OpenTracksActivityType openTracksActivityType = OpenTracksActivityType.fromActivityKind(activityKind);
+        if (openTracksActivityType == OpenTracksActivityType.UNKNOWN) {
+            LOG.warn("Unmapped activity kind icon for {}", activityKind);
         }
 
-        sendIntent(context, "de.dennisguse.opentracks.publicapi.StartRecording", category, icon);
+        sendIntent(context, "de.dennisguse.opentracks.publicapi.StartRecording", category, openTracksActivityType);
     }
 
     public static void stopRecording(Context context) {
