@@ -31,7 +31,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 public class AmazfitTRex3Pro44mmCoordinator extends ZeppOsCoordinator {
     @Override
     public List<String> getDeviceBluetoothNames() {
-        return Collections.singletonList("Amazfit T-Rex 3 Pro (44mm)");
+        return Collections.singletonList("T-Rex 3 Pro (44mm)");
     }
 
     @Override

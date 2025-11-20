@@ -24,6 +24,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("Amazfit GTS 3", DeviceType.AMAZFITGTS3); // #2442
             put("Amazfit Helio Ring", DeviceType.AMAZFITHELIORING);
             put("Amazfit T-Rex 2", DeviceType.AMAZFITTREX2); // #3033
+            put("T-Rex 3 Pro (48mm)-6752", DeviceType.AMAZFITTREX3PRO48MM); // #5533
             put("Amazfit GTS 4 mini New", DeviceType.AMAZFITGTS4MININEW); // #5472
             put("Xiaomi Band 9 Active AB01", DeviceType.MIBAND9ACTIVE);
             put("vívoactive 6", DeviceType.GARMIN_VIVOACTIVE_6);
