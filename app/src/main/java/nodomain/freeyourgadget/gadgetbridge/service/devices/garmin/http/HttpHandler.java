@@ -21,11 +21,13 @@ public class HttpHandler {
     private final AgpsHandler agpsHandler;
     private final ContactsHandler contactsHandler;
     private final OauthHandler oauthHandler;
+    private final ImageServiceHandler imageServiceHandler;
 
     public HttpHandler(GarminSupport deviceSupport) {
         agpsHandler = new AgpsHandler(deviceSupport);
         contactsHandler = new ContactsHandler(deviceSupport);
         oauthHandler = new OauthHandler(deviceSupport);
+        imageServiceHandler = new ImageServiceHandler();
     }
 
     public GdiHttpService.HttpService handle(final GdiHttpService.HttpService httpService) {
@@ -62,6 +64,9 @@ public class HttpHandler {
         } else if (request.getPath().startsWith("/api/oauth") || request.getPath().startsWith("/oauthTokenExchangeService")) {
             LOG.info("Got OAuth request for {}", request.getPath());
             response = oauthHandler.handleRequest(request);
+        } else if (request.getPath().startsWith("/image-service/")) {
+            LOG.info("Got image service request for {}", request.getPath());
+            response = imageServiceHandler.handleRequest(request);
         } else {
             LOG.warn("Unhandled path {}", request.getPath());
             response = null;
@@ -92,9 +97,9 @@ public class HttpHandler {
             );
         }
 
-        if (response.getStatus() == 200 && request.getRawRequest().hasUseDataXfer() && request.getRawRequest().getUseDataXfer()) {
+        if (request.getRawRequest().hasUseDataXfer() && request.getRawRequest().getUseDataXfer()) {
             LOG.debug("Data will be returned using data_xfer");
-            int id = DataTransferHandler.registerData(response.getBody());
+            final int id = DataTransferHandler.registerData(response.getBody());
             if (response.getOnDataSuccessfullySentListener() != null) {
                 DataTransferHandler.addOnDataSuccessfullySentListener(id, response.getOnDataSuccessfullySentListener());
             }
@@ -136,7 +141,7 @@ public class HttpHandler {
         }
 
         return GdiHttpService.HttpService.RawResponse.newBuilder()
-                .setStatus(response.getStatus() / 100 == 2 ? GdiHttpService.HttpService.Status.OK : GdiHttpService.HttpService.Status.UNKNOWN_STATUS)
+                .setStatus(GdiHttpService.HttpService.Status.OK)
                 .setHttpStatus(response.getStatus())
                 .setBody(ByteString.copyFrom(responseBody))
                 .addAllHeader(responseHeaders)
