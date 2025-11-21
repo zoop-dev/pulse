@@ -207,9 +207,6 @@ public class AppsManagementActivity extends AbstractGBActivity {
         webView.addJavascriptInterface(new WebViewInterface(this), "Android");
         webView.setWebContentsDebuggingEnabled(true); // FIXME
 
-        Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(mGBDevice.getAddress()));
-        final String url = devicePrefs.getString(PREF_BANGLEJS_WEBVIEW_URL, "https://banglejs.com/apps/android.html").trim();
-
         webView.setWebViewClient(new GBWebClient(GBWebClient.REQUEST_TYPE_BANGLE_APP_LOADER){
             @Override
             public void onPageFinished(WebView view, String weburl){
@@ -229,9 +226,14 @@ public class AppsManagementActivity extends AbstractGBActivity {
             }
         });
 
+        Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(mGBDevice.getAddress()));
+        String url = devicePrefs.getString(PREF_BANGLEJS_WEBVIEW_URL, "").trim();
+        if (url.isEmpty()) url = "https://banglejs.com/apps/android.html";
+        final String finalUrl = url;
+
         final Looper mainLooper = Looper.getMainLooper();
         new Handler(mainLooper).postDelayed(() -> {
-            webView.loadUrl(url);
+            webView.loadUrl(finalUrl);
         }, 1000);
 
 

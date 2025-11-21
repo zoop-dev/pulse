@@ -925,7 +925,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
         Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()));
         if (! devicePrefs.getBoolean(PREF_DEVICE_INTERNET_ACCESS, false)) {
-            uartTxJSONError("http", "Internet access not enabled for this device", id);
+            uartTxJSONError("http", "Internet access not enabled for this watch", id);
             return;
         }
 
