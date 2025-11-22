@@ -62,6 +62,7 @@ public class NotificationControlMessage extends GFDIMessage {
                                       List<NotificationsHandler.AppAttribute> appAttributes) {
         this.garminMessage = garminMessage;
         this.command = command;
+        this.notificationId = 0;
         this.appIdentifier = appIdentifier;
         this.appAttributes = appAttributes;
 
