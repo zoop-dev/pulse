@@ -33,6 +33,7 @@ import static nodomain.freeyourgadget.gadgetbridge.devices.banglejs.BangleJSCons
 import static nodomain.freeyourgadget.gadgetbridge.devices.banglejs.BangleJSConstants.PREF_BANGLEJS_ACTIVITY_FULL_SYNC_STATUS;
 import static nodomain.freeyourgadget.gadgetbridge.devices.banglejs.BangleJSConstants.PREF_BANGLEJS_NOTIFICATION_MISSED_CALL_ENABLE;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.BroadcastReceiver;
@@ -152,6 +153,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.LimitedQueue;
+import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.VolleyUtils;
 
@@ -182,6 +184,8 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     private boolean gpsUpdateSetup = false;
 
+    protected MediaManager mediaManager;
+
     // this stores the globalUartReceiver (for uart.tx intents)
     private BroadcastReceiver globalUartReceiver = null;
 
@@ -208,6 +212,12 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
         registerLocalIntents();
         registerGlobalIntents();
+    }
+
+    @Override
+    public void setContext(final GBDevice gbDevice, final BluetoothAdapter btAdapter, final Context context) {
+        super.setContext(gbDevice, btAdapter, context);
+        this.mediaManager = new MediaManager(context);
     }
 
     @Override
@@ -1670,37 +1680,41 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     public void onSetMusicState(MusicStateSpec stateSpec) {
-        try {
-            JSONObject o = new JSONObject();
-            o.put("t", "musicstate");
-            int musicState = stateSpec.state;
-            String[] musicStates = {"play", "pause", "stop", ""};
-            if (musicState<0) musicState=3;
-            if (musicState>=musicStates.length) musicState = musicStates.length-1;
-            o.put("state", musicStates[musicState]);
-            o.put("position", stateSpec.position);
-            o.put("shuffle", stateSpec.shuffle);
-            o.put("repeat", stateSpec.repeat);
-            uartTxJSON("onSetMusicState", o);
-        } catch (JSONException e) {
-            LOG.info("JSONException: " + e.getLocalizedMessage());
+        if (mediaManager.onSetMusicState(stateSpec)) {
+            try {
+                JSONObject o = new JSONObject();
+                o.put("t", "musicstate");
+                int musicState = stateSpec.state;
+                String[] musicStates = {"play", "pause", "stop", ""};
+                if (musicState<0) musicState=3;
+                if (musicState>=musicStates.length) musicState = musicStates.length-1;
+                o.put("state", musicStates[musicState]);
+                o.put("position", stateSpec.position);
+                o.put("shuffle", stateSpec.shuffle);
+                o.put("repeat", stateSpec.repeat);
+                uartTxJSON("onSetMusicState", o);
+            } catch (JSONException e) {
+                LOG.info("JSONException: " + e.getLocalizedMessage());
+            }
         }
     }
 
     @Override
     public void onSetMusicInfo(MusicSpec musicSpec) {
-        try {
-            JSONObject o = new JSONObject();
-            o.put("t", "musicinfo");
-            o.put("artist", renderUnicodeAsImage(musicSpec.artist));
-            o.put("album", renderUnicodeAsImage(musicSpec.album));
-            o.put("track", renderUnicodeAsImage(musicSpec.track));
-            o.put("dur", musicSpec.duration);
-            o.put("c", musicSpec.trackCount);
-            o.put("n", musicSpec.trackNr);
-            uartTxJSON("onSetMusicInfo", o);
-        } catch (JSONException e) {
-            LOG.info("JSONException: " + e.getLocalizedMessage());
+        if (mediaManager.onSetMusicInfo(musicSpec)) {
+            try {
+                JSONObject o = new JSONObject();
+                o.put("t", "musicinfo");
+                o.put("artist", renderUnicodeAsImage(musicSpec.artist));
+                o.put("album", renderUnicodeAsImage(musicSpec.album));
+                o.put("track", renderUnicodeAsImage(musicSpec.track));
+                o.put("dur", musicSpec.duration);
+                o.put("c", musicSpec.trackCount);
+                o.put("n", musicSpec.trackNr);
+                uartTxJSON("onSetMusicInfo", o);
+            } catch (JSONException e) {
+                LOG.info("JSONException: " + e.getLocalizedMessage());
+            }
         }
     }
 
