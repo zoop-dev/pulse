@@ -64,6 +64,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.galaxy_buds.GalaxyBudsProDev
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.bike.GarminEdge130PlusCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.bike.GarminEdge540Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.bike.GarminEdgeExplore2Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.bike.GarminEdgeExploreCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.hrm.GarminHrmProPlusCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.gps.GarminETrexSeCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.gps.GarminInReachMini2;
@@ -583,6 +584,7 @@ public enum DeviceType {
     GARMIN_HRM_200(GarminHrm200Coordinator.class),
     GARMIN_EDGE_130_PLUS(GarminEdge130PlusCoordinator.class),
     GARMIN_EDGE_540(GarminEdge540Coordinator.class),
+    GARMIN_EDGE_EXPLORE(GarminEdgeExploreCoordinator.class),
     GARMIN_EDGE_EXPLORE_2(GarminEdgeExplore2Coordinator.class),
     GARMIN_ETREX_SE(GarminETrexSeCoordinator.class),
     GARMIN_ENDURO(GarminEnduroCoordinator.class),
