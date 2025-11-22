@@ -21,6 +21,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Queue;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventCallControl;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventNotificationControl;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
@@ -33,6 +34,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.Noti
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.NotificationUpdateMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.status.NotificationDataStatusMessage;
 import nodomain.freeyourgadget.gadgetbridge.util.LimitedQueue;
+import nodomain.freeyourgadget.gadgetbridge.util.NotificationUtils;
 
 public class NotificationsHandler implements MessageHandler {
     public static final SimpleDateFormat NOTIFICATION_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd'T'HHmmss", Locale.ROOT);
@@ -165,21 +167,24 @@ public class NotificationsHandler implements MessageHandler {
     public GFDIMessage handle(GFDIMessage message) {
         if (!enabled)
             return null;
-        if (message instanceof NotificationControlMessage) {
-            final NotificationSpec notificationSpec = getNotificationSpecFromQueue(((NotificationControlMessage) message).getNotificationId());
+        if (message instanceof NotificationControlMessage notificationControlMessage) {
+            if (notificationControlMessage.getCommand() == NotificationsHandler.NotificationCommand.GET_APP_ATTRIBUTES) {
+                return getAppAttributes(notificationControlMessage);
+            }
+            final NotificationSpec notificationSpec = getNotificationSpecFromQueue(notificationControlMessage.getNotificationId());
             if (notificationSpec != null) {
-                switch (((NotificationControlMessage) message).getCommand()) {
+                switch (notificationControlMessage.getCommand()) {
                     case GET_NOTIFICATION_ATTRIBUTES:
-                        return getNotificationDataMessage((NotificationControlMessage) message, notificationSpec);
+                        return getNotificationDataMessage(notificationControlMessage, notificationSpec);
                     case PERFORM_LEGACY_NOTIFICATION_ACTION:
-                        LOG.info("Legacy Notification: {}", ((NotificationControlMessage) message).getLegacyNotificationAction());
+                        LOG.info("Legacy Notification: {}", notificationControlMessage.getLegacyNotificationAction());
                         break;
                     case PERFORM_NOTIFICATION_ACTION:
-                        performNotificationAction((NotificationControlMessage) message, notificationSpec);
+                        performNotificationAction(notificationControlMessage, notificationSpec);
                         break;
 
                     default:
-                        LOG.error("NOT SUPPORTED: {}", ((NotificationControlMessage) message).getCommand());
+                        LOG.error("NOT SUPPORTED: {}", (notificationControlMessage).getCommand());
                 }
             }
         } else if (message instanceof NotificationDataStatusMessage) {
@@ -269,6 +274,31 @@ public class NotificationsHandler implements MessageHandler {
         return upload.setCurrentlyUploading(notificationFragment);
     }
 
+    private NotificationDataMessage getAppAttributes(NotificationControlMessage message) {
+        final MessageWriter messageWriter = new MessageWriter();
+        messageWriter.writeByte(NotificationCommand.GET_APP_ATTRIBUTES.code);
+        messageWriter.writeBytes(message.getAppIdentifier().getBytes(StandardCharsets.UTF_8));
+        messageWriter.writeByte(0);
+        for (AppAttribute appAttribute : message.getAppAttributes()) {
+            messageWriter.writeByte(appAttribute.code);
+            switch (appAttribute) {
+                case APP_NAME -> {
+                    final byte[] sourceNameBytes = StringUtils.firstNonBlank(
+                            NotificationUtils.getApplicationLabel(GBApplication.getContext(), message.getAppIdentifier()),
+                            message.getAppIdentifier()
+                    ).getBytes(StandardCharsets.UTF_8);
+                    messageWriter.writeShort(sourceNameBytes.length);
+                    messageWriter.writeBytes(sourceNameBytes);
+                }
+                default -> {
+                    LOG.error("Unknow app attribute {}", appAttribute);
+                    return null;
+                }
+            }
+        }
+        NotificationFragment notificationFragment = new NotificationFragment(messageWriter.getBytes());
+        return upload.setCurrentlyUploading(notificationFragment);
+    }
 
     public void setEnabled(boolean enable) {
         this.enabled = enable;
@@ -300,6 +330,26 @@ public class NotificationsHandler implements MessageHandler {
         REFUSE
 
     }
+
+    public enum AppAttribute {
+        APP_NAME(0),
+        ;
+
+        public final int code;
+
+        AppAttribute(final int code) {
+            this.code = code;
+        }
+
+        public static AppAttribute getByCode(final int code) {
+            for (AppAttribute value : AppAttribute.values()) {
+                if (value.code == code)
+                    return value;
+            }
+            return null;
+        }
+    }
+
     public enum NotificationAttribute { //was AncsAttribute
         APP_IDENTIFIER(0),
         TITLE(1, true),
@@ -488,6 +538,7 @@ public class NotificationsHandler implements MessageHandler {
         RIGHT, //or is it accept?
         LEFT, //or is it dismiss/refuse?
     }
+
     public static class Upload {
 
         private NotificationFragment currentlyUploading;

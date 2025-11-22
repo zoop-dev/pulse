@@ -10,6 +10,7 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.NotificationsHandler;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.status.NotificationControlStatusMessage;
 
+import static nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.NotificationsHandler.NotificationCommand.GET_APP_ATTRIBUTES;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.NotificationsHandler.NotificationCommand.GET_NOTIFICATION_ATTRIBUTES;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.NotificationsHandler.NotificationCommand.PERFORM_LEGACY_NOTIFICATION_ACTION;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.NotificationsHandler.NotificationCommand.PERFORM_NOTIFICATION_ACTION;
@@ -19,6 +20,8 @@ public class NotificationControlMessage extends GFDIMessage {
     private final NotificationsHandler.NotificationCommand command;
     private final int notificationId;
     private Map<NotificationsHandler.NotificationAttribute, Integer> notificationAttributesMap;
+    private String appIdentifier;
+    private List<NotificationsHandler.AppAttribute> appAttributes;
     private NotificationsHandler.LegacyNotificationAction legacyNotificationAction;
     private NotificationsHandler.NotificationAction notificationAction;
     private String actionString;
@@ -53,24 +56,51 @@ public class NotificationControlMessage extends GFDIMessage {
         this.statusMessage = new NotificationControlStatusMessage(garminMessage, GFDIMessage.Status.ACK, NotificationControlStatusMessage.NotificationChunkStatus.OK, NotificationControlStatusMessage.NotificationStatusCode.NO_ERROR);
     }
 
+    public NotificationControlMessage(GarminMessage garminMessage,
+                                      NotificationsHandler.NotificationCommand command,
+                                      String appIdentifier,
+                                      List<NotificationsHandler.AppAttribute> appAttributes) {
+        this.garminMessage = garminMessage;
+        this.command = command;
+        this.appIdentifier = appIdentifier;
+        this.appAttributes = appAttributes;
+
+        this.statusMessage = new NotificationControlStatusMessage(garminMessage, GFDIMessage.Status.ACK, NotificationControlStatusMessage.NotificationChunkStatus.OK, NotificationControlStatusMessage.NotificationStatusCode.NO_ERROR);
+    }
+
     //TODO: the fact that we return three versions of this object is really ugly
     public static NotificationControlMessage parseIncoming(MessageReader reader, GarminMessage garminMessage) {
 
         final NotificationsHandler.NotificationCommand command = NotificationsHandler.NotificationCommand.fromCode(reader.readByte());
 
-        final int notificationId = reader.readInt();
         if (command == GET_NOTIFICATION_ATTRIBUTES) {
+            final int notificationId = reader.readInt();
             final Map<NotificationsHandler.NotificationAttribute, Integer> notificationAttributesMap = createGetNotificationAttributesCommand(reader);
             return new NotificationControlMessage(garminMessage, command, notificationId, notificationAttributesMap);
         } else if (command == PERFORM_LEGACY_NOTIFICATION_ACTION) {
+            final int notificationId = reader.readInt();
             NotificationsHandler.LegacyNotificationAction[] values = NotificationsHandler.LegacyNotificationAction.values();
             final NotificationsHandler.LegacyNotificationAction legacyNotificationAction = values[reader.readByte()];
             return new NotificationControlMessage(garminMessage, command, notificationId, legacyNotificationAction);
         } else if (command == PERFORM_NOTIFICATION_ACTION) {
+            final int notificationId = reader.readInt();
             final int actionId = reader.readByte();
             final NotificationsHandler.NotificationAction notificationAction = NotificationsHandler.NotificationAction.fromCode(actionId);
             final String actionString = reader.readNullTerminatedString();
             return new NotificationControlMessage(garminMessage, command, notificationId, notificationAction, actionString);
+        } else if (command == GET_APP_ATTRIBUTES) {
+            final String appIdentifier = reader.readNullTerminatedString();
+            final List<NotificationsHandler.AppAttribute> appAttributes = new ArrayList<>();
+            while (reader.remaining() > 0) {
+                final int attributeID = reader.readByte();
+                final NotificationsHandler.AppAttribute attribute = NotificationsHandler.AppAttribute.getByCode(attributeID);
+                if (attribute == null) {
+                    LOG.error("Unknown app attribute requested {}", attributeID);
+                    return null;
+                }
+                appAttributes.add(attribute);
+            }
+            return new NotificationControlMessage(garminMessage, command, appIdentifier, appAttributes);
         }
         LOG.warn("Unknown NotificationCommand in NotificationControlMessage");
 
@@ -140,6 +170,14 @@ public class NotificationControlMessage extends GFDIMessage {
 
     public Map<NotificationsHandler.NotificationAttribute, Integer> getNotificationAttributesMap() {
         return notificationAttributesMap;
+    }
+
+    public String getAppIdentifier() {
+        return appIdentifier;
+    }
+
+    public List<NotificationsHandler.AppAttribute> getAppAttributes() {
+        return appAttributes;
     }
 
     @Override
