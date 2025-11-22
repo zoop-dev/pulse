@@ -27,7 +27,7 @@ public class HttpHandler {
         agpsHandler = new AgpsHandler(deviceSupport);
         contactsHandler = new ContactsHandler(deviceSupport);
         oauthHandler = new OauthHandler(deviceSupport);
-        imageServiceHandler = new ImageServiceHandler();
+        imageServiceHandler = new ImageServiceHandler(deviceSupport);
     }
 
     public GdiHttpService.HttpService handle(final GdiHttpService.HttpService httpService) {
