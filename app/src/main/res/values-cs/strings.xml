@@ -4083,4 +4083,12 @@
     <string name="pref_install_unsupported_files_title">Instalovat nepodporované soubory</string>
     <string name="pref_install_unsupported_files_summary">Umožnit instalaci nepodporovaných souborů na zařízení.</string>
     <string name="install_unsupported_files_warning">Tento soubor není podorován zařízením a může způsobit problémy.\n\nNEDOPORUČUJEME pokračovat v instalaci!</string>
+    <string name="menuitem_golf">Golf</string>
+    <string name="menuitem_bio_charge">BioCharge</string>
+    <string name="movementConsistency">Konzistentnost</string>
+    <string name="movementStability">Stabilita</string>
+    <string name="movementContinuity">Kontinuita</string>
+    <string name="movementRhythm">Rytmus</string>
+    <string name="movementSpeedDecay">Úbytek rychlosti</string>
+    <string name="movement_evaluation">Hodnocení pohybu</string>
 </resources>
