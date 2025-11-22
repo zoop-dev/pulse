@@ -65,7 +65,9 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("Instinct 3 - 45mm", DeviceType.GARMIN_INSTINCT_3); // #4923
             put("Instinct E - 45mm", DeviceType.GARMIN_INSTINCT_E); // #4526
             put("fenix 7S Pro", DeviceType.GARMIN_FENIX_7S_PRO); // #4488
+            put("Forerunner 35", DeviceType.GARMIN_FORERUNNER_35); // #5558
             put("Forerunner 45", DeviceType.GARMIN_FORERUNNER_45);
+            put("Forerunner 745", DeviceType.GARMIN_FORERUNNER_745); // #5556
             put("Sony ULT", DeviceType.SONY_WH_ULT900N); // #4444
             put("Instinct Dual Power", DeviceType.GARMIN_INSTINCT_SOLAR); // #4380
             put("Redmi Buds 4 Active", DeviceType.REDMIBUDS4ACTIVE); // #4359
@@ -76,7 +78,9 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("fenix 8 - 51mm", DeviceType.GARMIN_FENIX_8); // #4226
             put("Forerunner 265S", DeviceType.GARMIN_FORERUNNER_265S);
             put("Forerunner 955", DeviceType.GARMIN_FORERUNNER_955); // #4124
+            put("Enduro", DeviceType.GARMIN_ENDURO); // #5347
             put("Enduro 3", DeviceType.GARMIN_ENDURO_3);
+            put("vívomove Sport", DeviceType.GARMIN_VIVOMOVE_SPORT); // #5080
             put("Redmi Watch 5 Active E7B7", DeviceType.REDMIWATCH5ACTIVE);
             put("Forerunner 165", DeviceType.GARMIN_FORERUNNER_165);
             put("Xiaomi Smart Band 9 7E1E", DeviceType.MIBAND9);

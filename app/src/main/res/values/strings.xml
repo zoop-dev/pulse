@@ -1909,6 +1909,7 @@
     <string name="devicetype_garmin_edge_540" translatable="false">Garmin Edge 540</string>
     <string name="devicetype_garmin_edge_explore_2" translatable="false">Garmin Edge Explore 2</string>
     <string name="devicetype_garmin_etrex_se" translatable="false">Garmin eTrex SE</string>
+    <string name="devicetype_garmin_enduro" translatable="false">Garmin Enduro</string>
     <string name="devicetype_garmin_enduro_3" translatable="false">Garmin Enduro 3</string>
     <string name="devicetype_garmin_epix" translatable="false">Garmin Epix</string>
     <string name="devicetype_garmin_epix_pro" translatable="false">Garmin Epix Pro</string>
@@ -1948,6 +1949,7 @@
     <string name="devicetype_garmin_instinct_e" translatable="false">Garmin Instinct E</string>
     <string name="devicetype_garmin_instinct_3" translatable="false">Garmin Instinct 3</string>
     <string name="devicetype_garmin_instinct_3_tactical" translatable="false">Garmin Instinct 3 Tactical</string>
+    <string name="devicetype_garmin_forerunner_35" translatable="false">Garmin Forerunner 35</string>
     <string name="devicetype_garmin_forerunner_45" translatable="false">Garmin Forerunner 45</string>
     <string name="devicetype_garmin_forerunner_55" translatable="false">Garmin Forerunner 55</string>
     <string name="devicetype_garmin_forerunner_165" translatable="false">Garmin Forerunner 165</string>
@@ -1965,6 +1967,7 @@
     <string name="devicetype_garmin_forerunner_630" translatable="false">Garmin Forerunner 630</string>
     <string name="devicetype_garmin_forerunner_645_music" translatable="false">Garmin Forerunner 645 Music</string>
     <string name="devicetype_garmin_forerunner_735xt" translatable="false">Garmin Forerunner 735XT</string>
+    <string name="devicetype_garmin_forerunner_745" translatable="false">Garmin Forerunner 745</string>
     <string name="devicetype_garmin_forerunner_945" translatable="false">Garmin Forerunner 945</string>
     <string name="devicetype_garmin_forerunner_955" translatable="false">Garmin Forerunner 955</string>
     <string name="devicetype_garmin_forerunner_965" translatable="false">Garmin Forerunner 965</string>

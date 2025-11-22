@@ -70,6 +70,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.gps.GarminInReachMini
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.hrm.GarminHrm200Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.descent.GarminDescentMk3Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.enduro.GarminEnduro3Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.enduro.GarminEnduroCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.epix.GarminEpixCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.epix.GarminEpixProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.fenix.GarminFenix3Coordinator;
@@ -103,12 +104,14 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.Ga
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner255SMusicCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner265Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner265SCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner35Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner45Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner55Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner620Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner630Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner645MusicCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner735XTCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner745Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner945Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner955Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner965Coordinator;
@@ -582,6 +585,7 @@ public enum DeviceType {
     GARMIN_EDGE_540(GarminEdge540Coordinator.class),
     GARMIN_EDGE_EXPLORE_2(GarminEdgeExplore2Coordinator.class),
     GARMIN_ETREX_SE(GarminETrexSeCoordinator.class),
+    GARMIN_ENDURO(GarminEnduroCoordinator.class),
     GARMIN_ENDURO_3(GarminEnduro3Coordinator.class),
     GARMIN_EPIX(GarminEpixCoordinator.class),
     GARMIN_EPIX_PRO(GarminEpixProCoordinator.class),
@@ -606,6 +610,7 @@ public enum DeviceType {
     GARMIN_FENIX_7_PRO(GarminFenix7ProCoordinator.class),
     GARMIN_FENIX_7X_PRO(GarminFenix7XProCoordinator.class),
     GARMIN_FENIX_8(GarminFenix8Coordinator.class),
+    GARMIN_FORERUNNER_35(GarminForerunner35Coordinator.class),
     GARMIN_FORERUNNER_45(GarminForerunner45Coordinator.class),
     GARMIN_FORERUNNER_55(GarminForerunner55Coordinator.class),
     GARMIN_FORERUNNER_165(GarminForerunner165Coordinator.class),
@@ -623,6 +628,7 @@ public enum DeviceType {
     GARMIN_FORERUNNER_630(GarminForerunner630Coordinator.class),
     GARMIN_FORERUNNER_645_MUSIC(GarminForerunner645MusicCoordinator.class),
     GARMIN_FORERUNNER_735XT(GarminForerunner735XTCoordinator.class),
+    GARMIN_FORERUNNER_745(GarminForerunner745Coordinator.class),
     GARMIN_FORERUNNER_945(GarminForerunner945Coordinator.class),
     GARMIN_FORERUNNER_955(GarminForerunner955Coordinator.class),
     GARMIN_FORERUNNER_965(GarminForerunner965Coordinator.class),
