@@ -414,7 +414,8 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
         }
 
         if (forceDisconnect) {
-            LOG.warn("unhealthy disconnect {} {}", mBluetoothGatt.getDevice().getAddress(),
+            BluetoothDevice device = mBluetoothGatt.getDevice();
+            LOG.warn("unhealthy disconnect {} {}", device == null ?  "<UNKNOWN>" : device.getAddress(),
                     BleNamesResolver.getStatusString(status));
         } else if (mBluetoothGatt != null) {
             // try to reconnect immediately

@@ -913,7 +913,6 @@ public class G1Communications {
         }
 
         private static byte[] generatePayload(NotificationSpec notificationSpec) {
-
             try {
                 JSONObject notificationJson = new JSONObject();
                 notificationJson.put("msg_id", notificationSpec.getId());
@@ -933,14 +932,7 @@ public class G1Communications {
 
                 JSONObject json = new JSONObject();
                 json.put("ncs_notification", notificationJson);
-
-                // Need to allocate one larger in order to null terminate.
-                String jsonString = json.toString();
-                byte[] bytes = new byte[jsonString.length() + 1];
-                System.arraycopy(jsonString.getBytes(StandardCharsets.US_ASCII),
-                                 0, bytes, 0, jsonString.length());
-                bytes[jsonString.length()] = 0;
-                return bytes;
+                return json.toString().getBytes(StandardCharsets.UTF_8);
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -1033,7 +1025,7 @@ public class G1Communications {
         }
 
         public static String getMessage(byte[] payload) {
-            return new String(payload, 1, payload.length-2, StandardCharsets.US_ASCII);
+            return new String(payload, 1, payload.length-2, StandardCharsets.UTF_8);
         }
     }
 
