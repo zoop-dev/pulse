@@ -36,6 +36,7 @@ public enum ZeppOsActivityType {
     BeachVolleyball(0x7a, ActivityKind.BEACH_VOLLEYBALL),
     BellyDance(0x48, ActivityKind.BELLY_DANCE),
     Billiards(0x97, ActivityKind.BILLIARDS),
+    Bouldering(0xb8, ActivityKind.BOULDERING),
     bmx(0x30, ActivityKind.BMX),
     BoardGame(0xb1, ActivityKind.BOARD_GAME),
     Bocce(0xaa, ActivityKind.BOCCE),
