@@ -16,6 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.model;
 
+import androidx.annotation.NonNull;
+
+import nodomain.freeyourgadget.gadgetbridge.util.GBToStringBuilder;
+
 public class NavigationInfoSpec {
     public static final int ACTION_CONTINUE = 1;
     public static final int ACTION_TURN_LEFT = 2;
@@ -41,4 +45,15 @@ public class NavigationInfoSpec {
     public String distanceToTurn; ///< Distance to turn (as a string, eg "100m")
     public int nextAction; ///< One of the ACTION_ constants
     public String ETA; ///< Estimated time of Arrival
+
+    @NonNull
+    @Override
+    public String toString() {
+        final GBToStringBuilder tsb = new GBToStringBuilder(this);
+        tsb.append("instruction", instruction);
+        tsb.append("distanceToTurn", distanceToTurn);
+        tsb.append("nextAction", nextAction);
+        tsb.append("ETA", ETA);
+        return tsb.toString();
+    }
 }
