@@ -333,6 +333,7 @@ public abstract class AbstractChartFragment<D extends ChartsData> extends Abstra
         ChartsHost chartsHost = getChartsHost();
         if (chartsHost != null) {
             if (chartsHost.getDevice() != null) {
+                chartsHost.setLoading(true);
                 mChartDirty = false;
                 if (refreshTask != null && refreshTask.getStatus() != AsyncTask.Status.FINISHED) {
                     refreshTask.cancel(true);
@@ -372,6 +373,9 @@ public abstract class AbstractChartFragment<D extends ChartsData> extends Abstra
                 LOG.info("Not rendering charts because activity is not available anymore");
                 return;
             }
+
+            getChartsHost().setLoading(false);
+
             if (getTaskError() != null) {
                 // Async task failed - we will have no data, so avoid NPE crashes
                 // a log + toast were already displayed by the DBAccess class

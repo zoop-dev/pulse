@@ -45,6 +45,8 @@ public interface ChartsHost {
 
     void setDateInfo(String dateInfo);
 
+    void setLoading(boolean loading);
+
     ViewGroup getDateBar();
 
     void enableSwipeRefresh(boolean enable);

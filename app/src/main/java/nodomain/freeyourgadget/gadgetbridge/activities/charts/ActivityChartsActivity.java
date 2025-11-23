@@ -28,6 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,6 +88,8 @@ public class ActivityChartsActivity extends AbstractGBActivity implements Charts
     public static final String EXTRA_ACTIONBAR_TITLE = "actionbarTitle";
     public static final String EXTRA_TIMESTAMP = "timestamp";
     public static final String EXTRA_MODE = "mode";
+
+    private ProgressBar mLoadingProgressBar;
 
     private TextView mDateControl;
 
@@ -214,6 +217,7 @@ public class ActivityChartsActivity extends AbstractGBActivity implements Charts
             }
         }
 
+        mLoadingProgressBar = findViewById(R.id.loading_progressbar);
         dateBar = findViewById(R.id.charts_date_bar);
         mDateControl = findViewById(R.id.charts_text_date);
         mDateControl.setOnClickListener(v -> {
@@ -376,6 +380,11 @@ public class ActivityChartsActivity extends AbstractGBActivity implements Charts
     @Override
     public void setDateInfo(final String dateInfo) {
         mDateControl.setText(dateInfo);
+    }
+
+    @Override
+    public void setLoading(boolean loading) {
+        mLoadingProgressBar.setVisibility(loading ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override
