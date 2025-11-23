@@ -1923,6 +1923,7 @@
     <string name="devicetype_garmin_fenix_6_pro" translatable="false">Garmin Fenix 6 Pro</string>
     <string name="devicetype_garmin_fenix_6_sapphire" translatable="false">Garmin Fenix 6 Sapphire</string>
     <string name="devicetype_garmin_fenix_6s_pro" translatable="false">Garmin Fenix 6S Pro</string>
+    <string name="devicetype_garmin_fenix_6s_pro_solar" translatable="false">Garmin Fenix 6S Pro Solar</string>
     <string name="devicetype_garmin_fenix_6s_sapphire" translatable="false">Garmin Fenix 6S Sapphire</string>
     <string name="devicetype_garmin_fenix_6x_pro" translatable="false">Garmin Fenix 6X Pro</string>
     <string name="devicetype_garmin_fenix_6x_pro_solar" translatable="false">Garmin Fenix 6X Pro Solar</string>

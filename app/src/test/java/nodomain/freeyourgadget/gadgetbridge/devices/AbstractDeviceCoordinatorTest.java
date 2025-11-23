@@ -60,6 +60,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("fenix 6 Pro", DeviceType.GARMIN_FENIX_6_PRO); // #5536
             put("fenix 6X Pro", DeviceType.GARMIN_FENIX_6X_PRO);
             put("fenix 6X Sapphire", DeviceType.GARMIN_FENIX_6X_SAPPHIRE); // #5496
+            put("fenix 6S Pro Solar", DeviceType.GARMIN_FENIX_6S_PRO_SOLAR); // #5568
             put("R50Pro", DeviceType.R50PRO);
             put("R11_0500", DeviceType.YAWELL_R11); // #4711
             put("Lily 2 Active", DeviceType.GARMIN_LILY_2_ACTIVE);
