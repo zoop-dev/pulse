@@ -55,6 +55,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.RemoteInput;
+import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.apache.commons.lang3.StringUtils;
@@ -167,7 +168,28 @@ public class NotificationListener extends NotificationListenerService {
     private Runnable mSetMusicInfoRunnable = null;
     private Runnable mSetMusicStateRunnable = null;
 
+    private boolean isDreaming = false;
+
     private final GoogleMapsNotificationHandler googleMapsNotificationHandler = new GoogleMapsNotificationHandler();
+
+    private final BroadcastReceiver mExportedReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(final Context context, final Intent intent) {
+            final String action = intent.getAction();
+            if (action == null) {
+                LOG.warn("Got intent without action");
+                return;
+            }
+
+            LOG.debug("Got action: {}", action);
+
+            switch (action) {
+                case Intent.ACTION_DREAMING_STARTED -> isDreaming = true;
+                case Intent.ACTION_DREAMING_STOPPED -> isDreaming = false;
+                default -> LOG.warn("Unknown action: {}", action);
+            }
+        }
+    };
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
 
@@ -294,6 +316,12 @@ public class NotificationListener extends NotificationListenerService {
         filterLocal.addAction(ACTION_REPLY);
         //noinspection deprecation
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, filterLocal);
+
+        final IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_DREAMING_STARTED);
+        filter.addAction(Intent.ACTION_DREAMING_STOPPED);
+        ContextCompat.registerReceiver(this, mExportedReceiver, filter, ContextCompat.RECEIVER_EXPORTED);
+
         createNotificationPictureCacheDirectory();
         cleanUpNotificationPictureProvider();
     }
@@ -302,6 +330,7 @@ public class NotificationListener extends NotificationListenerService {
     public void onDestroy() {
         //noinspection deprecation
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
+        unregisterReceiver(mExportedReceiver);
         notificationStack.clear();
         notificationsActive.clear();
         cleanUpNotificationPictureProvider();
@@ -1221,10 +1250,15 @@ public class NotificationListener extends NotificationListenerService {
         // has to be on (obviously)
         if (!remove) {
             if (!prefs.getBoolean("notifications_generic_whenscreenon", false)) {
-                PowerManager powermanager = (PowerManager) getSystemService(POWER_SERVICE);
+                final PowerManager powermanager = (PowerManager) getSystemService(POWER_SERVICE);
                 if (powermanager != null && powermanager.isScreenOn()) {
-                    LOG.info("Not forwarding notification, screen seems to be on and settings do not allow this");
-                    return true;
+                    if (!isDreaming) {
+                        LOG.info("Not forwarding notification, screen seems to be on and settings do not allow this");
+                        return true;
+                    } else if (!prefs.getBoolean("notifications_generic_when_screen_saver", true)) {
+                        LOG.info("Not forwarding notification, screen saver seems to be on and settings do not allow this");
+                        return true;
+                    }
                 }
             }
         }

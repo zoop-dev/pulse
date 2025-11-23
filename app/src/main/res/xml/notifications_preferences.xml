@@ -24,6 +24,13 @@
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
+            android:key="notifications_generic_when_screen_saver"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/pref_title_notifications_when_screen_saver"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
             android:key="notifications_ignore_low_priority"
             android:layout="@layout/preference_checkbox"
             android:summary="@string/pref_summary_notifications_ignore_low_priority"

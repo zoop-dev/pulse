@@ -294,6 +294,7 @@
     <string name="pref_title_notifications_generic">Generic notification support</string>
     <string name="pref_title_notifications_generic_settings">Android notification settings</string>
     <string name="pref_title_whenscreenon">…also when screen is on</string>
+    <string name="pref_title_notifications_when_screen_saver">…also when screen saver is on</string>
     <string name="pref_title_notifications_ignore_low_priority">Ignore low priority notifications</string>
     <string name="pref_summary_notifications_ignore_low_priority">Do not send low and minimum priority notifications to the watch</string>
     <string name="pref_title_notifications_ignore_work_profile">Ignore work profile notifications</string>
