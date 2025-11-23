@@ -51,6 +51,9 @@
     <uses-permission android:name="me.hackerchick.catima.READ_CARDS"/>
     <uses-permission android:name="me.hackerchick.catima.debug.READ_CARDS"/>
 
+    <!-- Make sure we don't get the INTERNET permission even when a depencency requires it -->
+    <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
+
     <!-- Internet Helper -->
     <uses-permission android:name="nodomain.freeyourgadget.internethelper.INTERNET"/>
 
