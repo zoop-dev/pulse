@@ -4314,6 +4314,7 @@
     <string name="activity_print_label_print_size">Print size (px): %1$d x %2$d</string>
     <string name="service_notification_collector_service_title">Gadgetbridge Notification Monitor</string>
     <string name="service_notification_collector_service_text">Monitoring notifications in background</string>
+    <string name="devicetype_imiki_frame_2" translatable="false">IMIKI Frame 2</string>
     <string name="devicetype_oukitel_bt103" translatable="false">Oukitel BT103</string>
     <string name="devicetype_y66" translatable="false">Y66</string>
     <string name="devicetype_haylou_watch_2_pro" translatable="false">Haylou Watch 2 Pro</string>
