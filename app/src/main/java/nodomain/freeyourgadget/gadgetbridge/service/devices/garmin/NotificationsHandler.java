@@ -285,7 +285,8 @@ public class NotificationsHandler implements MessageHandler {
                 case APP_NAME -> {
                     final byte[] sourceNameBytes = StringUtils.firstNonBlank(
                             NotificationUtils.getApplicationLabel(GBApplication.getContext(), message.getAppIdentifier()),
-                            message.getAppIdentifier()
+                            message.getAppIdentifier(),
+                            "Unknown"
                     ).getBytes(StandardCharsets.UTF_8);
                     messageWriter.writeShort(sourceNameBytes.length);
                     messageWriter.writeBytes(sourceNameBytes);

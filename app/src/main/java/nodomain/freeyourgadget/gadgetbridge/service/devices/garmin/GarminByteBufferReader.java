@@ -77,6 +77,7 @@ public class GarminByteBufferReader {
         byteBuffer.position(position);
         byte[] bytes = new byte[size];
         byteBuffer.get(bytes);
+        byteBuffer.get(); // discard null terminator
         return new String(bytes, StandardCharsets.UTF_8);
     }
 

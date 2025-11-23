@@ -245,6 +245,7 @@ public class DebugActivity extends AbstractGBActivity {
                 CallSpec callSpec = new CallSpec();
                 callSpec.command = CallSpec.CALL_INCOMING;
                 callSpec.number = editContent.getText().toString();
+                callSpec.sourceAppId = BuildConfig.APPLICATION_ID;
                 GBApplication.deviceService().onSetCallState(callSpec);
             }
         });
