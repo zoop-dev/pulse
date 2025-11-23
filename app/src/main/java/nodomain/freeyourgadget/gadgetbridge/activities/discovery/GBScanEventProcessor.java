@@ -173,10 +173,8 @@ public final class GBScanEventProcessor implements Runnable {
         LOG.debug("found device: {}, {}", candidate.getName(), candidate.getMacAddress());
         if (LOG.isDebugEnabled()) {
             final ParcelUuid[] uuids = candidate.getServiceUuids();
-            if (uuids != null && uuids.length > 0) {
-                for (ParcelUuid uuid : uuids) {
-                    LOG.debug("  supports uuid: {}", uuid.toString());
-                }
+            for (ParcelUuid uuid : uuids) {
+                LOG.debug("  supports uuid: {}", uuid.toString());
             }
         }
 

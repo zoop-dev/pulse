@@ -46,6 +46,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -62,6 +64,13 @@ public class DeviceHelper {
     private static final Logger LOG = LoggerFactory.getLogger(DeviceHelper.class);
 
     private static final DeviceHelper instance = new DeviceHelper();
+
+    /**
+     * A map from mac address to a forced device type this device will be recognized as. Allows unsupported
+     * devices to be paired as a specified device type. This is a hack, required until we refactor the current
+     * discovery and pairing process.
+     */
+    private final Map<String, DeviceType> forcedDeviceTypes = new HashMap<>();
 
     private DeviceType[] orderedDeviceTypes = null;
 
@@ -86,11 +95,9 @@ public class DeviceHelper {
      * Returns the list of all available devices that are supported by Gadgetbridge.
      * Note that no state is known about the returned devices. Even if one of those
      * devices is connected, it will report the default not-connected state.
-     *
+     * <p>
      * Clients interested in the "live" devices being managed should use the class
      * DeviceManager.
-     * @param context
-     * @return
      */
     public Set<GBDevice> getAvailableDevices(Context context) {
         BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -101,9 +108,23 @@ public class DeviceHelper {
             GB.toast(context, context.getString(R.string.bluetooth_is_disabled_), Toast.LENGTH_SHORT, GB.WARN);
         }
 
-        Set<GBDevice> availableDevices = new LinkedHashSet<>(getDatabaseDevices());
-        Prefs prefs = GBApplication.getPrefs();
-        return availableDevices;
+        return new LinkedHashSet<>(getDatabaseDevices());
+    }
+
+    public void setForcedDeviceType(final String address, final DeviceType deviceType) {
+        LOG.debug("Forcing recognition of {} as {}", address, deviceType);
+        synchronized (this) {
+            forcedDeviceTypes.put(address.toLowerCase(), deviceType);
+        }
+    }
+
+    public void clearForcedDeviceTypes() {
+        synchronized (this) {
+            if (!forcedDeviceTypes.isEmpty()) {
+                LOG.debug("Clearing forced device types");
+            }
+            forcedDeviceTypes.clear();
+        }
     }
 
     @RequiresPermission(Manifest.permission.BLUETOOTH_CONNECT)
@@ -118,8 +139,8 @@ public class DeviceHelper {
         return resolvedType.getDeviceCoordinator().createDevice(candidate, resolvedType);
     }
 
-    private DeviceType[] getOrderedDeviceTypes(){
-        if(orderedDeviceTypes == null){
+    private DeviceType[] getOrderedDeviceTypes() {
+        if (orderedDeviceTypes == null) {
             ArrayList<DeviceType> orderedDevices = new ArrayList<>(Arrays.asList(DeviceType.values()));
             Collections.sort(orderedDevices, Comparator.comparingInt(dc -> dc.getDeviceCoordinator().getOrderPriority()));
             orderedDeviceTypes = orderedDevices.toArray(new DeviceType[0]);
@@ -127,20 +148,24 @@ public class DeviceHelper {
 
         return orderedDeviceTypes;
     }
+
     public DeviceType resolveDeviceType(@NonNull final GBDeviceCandidate deviceCandidate) {
         return resolveDeviceType(deviceCandidate, true);
     }
 
-    public DeviceType resolveDeviceType(@NonNull final GBDeviceCandidate deviceCandidate, boolean useCache){
-        final DeviceType forcedType = deviceCandidate.getForcedType();
-        if (forcedType != null) {
-            return forcedType;
-        }
-
+    public DeviceType resolveDeviceType(@NonNull final GBDeviceCandidate deviceCandidate, boolean useCache) {
         synchronized (this) {
+            final String macAddress = deviceCandidate.getMacAddress().toLowerCase();
+
+            if (forcedDeviceTypes.containsKey(macAddress)) {
+                final DeviceType deviceType = forcedDeviceTypes.get(macAddress);
+                LOG.debug("Resolving of {} is forced to {}", macAddress, deviceType);
+                return deviceType;
+            }
+
             if (useCache) {
                 DeviceType cachedType =
-                        deviceTypeCache.get(deviceCandidate.getMacAddress().toLowerCase());
+                        deviceTypeCache.get(macAddress);
                 if (cachedType != null) {
                     return cachedType;
                 }
@@ -148,11 +173,11 @@ public class DeviceHelper {
 
             for (DeviceType type : getOrderedDeviceTypes()) {
                 if (type.getDeviceCoordinator().supports(deviceCandidate)) {
-                    deviceTypeCache.put(deviceCandidate.getMacAddress().toLowerCase(), type);
+                    deviceTypeCache.put(macAddress, type);
                     return type;
                 }
             }
-            deviceTypeCache.put(deviceCandidate.getMacAddress().toLowerCase(), DeviceType.UNKNOWN);
+            deviceTypeCache.put(macAddress, DeviceType.UNKNOWN);
         }
         return DeviceType.UNKNOWN;
     }
@@ -182,8 +207,6 @@ public class DeviceHelper {
     /**
      * Converts a known device from the database to a GBDevice.
      * Note: The device might not be supported anymore, so callers should verify that.
-     * @param dbDevice
-     * @return
      */
     public GBDevice toGBDevice(Device dbDevice) {
         DeviceType deviceType = DeviceType.fromName(dbDevice.getTypeName());
