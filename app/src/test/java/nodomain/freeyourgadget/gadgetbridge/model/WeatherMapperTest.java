@@ -228,9 +228,10 @@ public class WeatherMapperTest extends TestBase {
 //Group 80x: Clouds
                 case 801:  //few clouds:  //[[file:02d.png]] [[file:02n.png]]
                 case 802:  //scattered clouds:  //[[file:03d.png]] [[file:03d.png]]
+                    return 0;
                 case 803:  //broken clouds:  //[[file:04d.png]] [[file:03d.png]]
                 case 804:  //overcast clouds:  //[[file:04d.png]] [[file:04d.png]]
-                    return 0;
+                    return 1;
 //Group 90x: Extreme
                 case 901:  //tropical storm
                 case 903:  //cold
