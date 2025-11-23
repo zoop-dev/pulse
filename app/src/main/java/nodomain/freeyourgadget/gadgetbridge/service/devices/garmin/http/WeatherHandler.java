@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import lineageos.weather.util.WeatherUtils;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -28,6 +29,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.CurrentPosition;
 
+@SuppressWarnings("unused")
 public class WeatherHandler {
     private static final Logger LOG = LoggerFactory.getLogger(WeatherHandler.class);
 
@@ -92,7 +94,12 @@ public class WeatherHandler {
 
                 final List<WeatherForecastHour> ret = new ArrayList<>(duration);
                 for (int i = 0; i < Math.min(duration, weatherSpec.getHourly().size()); i++) {
-                    ret.add(new WeatherForecastHour(weatherSpec.getHourly().get(i), tempUnit, speedUnit));
+                    ret.add(new WeatherForecastHour(
+                            weatherSpec,
+                            Objects.requireNonNull(weatherSpec.getHourly().get(i)),
+                            tempUnit,
+                            speedUnit
+                    ));
                 }
                 weatherData = ret;
                 break;
@@ -223,7 +230,10 @@ public class WeatherHandler {
         public Integer cloudCover;
         //public WeatherValue ceilingHeight; // 4700 / FOOT
 
-        public WeatherForecastHour(final WeatherSpec.Hourly hourlyForecast, final String tempUnit, final String speedUnit) {
+        public WeatherForecastHour(final WeatherSpec weatherSpec,
+                                   final WeatherSpec.Hourly hourlyForecast,
+                                   final String tempUnit,
+                                   final String speedUnit) {
             epochSeconds = hourlyForecast.getTimestamp();
             description = WeatherMapper.getConditionString(GBApplication.getContext(), hourlyForecast.getConditionCode());
             temp = getTemperature(hourlyForecast.getTemp(), tempUnit);
@@ -236,7 +246,9 @@ public class WeatherHandler {
             //feelsLikeTemperature = new WeatherValue(hourlyForecast.temp - 273f, "CELSIUS"); // TODO feelsLikeTemperature
             //visibility = new WeatherValue(0, "METER"); // TODO visibility
             //pressure = new WeatherValue(0f, "INCHES_OF_MERCURY"); // TODO pressure
-            airQuality = mapAqiToGarminAirQuality(Weather.getInstance().getWeatherSpec().airQuality.aqi);   // TODO: replace with better way to get current weather
+            if (weatherSpec.getAirQuality() != null) {
+                airQuality = mapAqiToGarminAirQuality(weatherSpec.getAirQuality().getAqi());
+            }
             //cloudCover = 0; // TODO cloudCover
         }
     }
@@ -321,31 +333,29 @@ public class WeatherHandler {
     }
 
     private static WeatherValue getTemperature(final int kelvin, final String unit) {
-        switch (unit) {
-            case "FAHRENHEIT":
-                return new WeatherValue(WeatherUtils.celsiusToFahrenheit(kelvin - 273.15), "FAHRENHEIT");
-            case "KELVIN":
-                return new WeatherValue(kelvin, "KELVIN");
-            case "CELSIUS":
+        return switch (unit) {
+            case "FAHRENHEIT" -> new WeatherValue(WeatherUtils.celsiusToFahrenheit(kelvin - 273.15), "FAHRENHEIT");
+            case "KELVIN" -> new WeatherValue(kelvin, "KELVIN");
+            case "CELSIUS" ->
                 // #4313 - We do a "wrong" conversion to celsius on purpose
-                return new WeatherValue(kelvin - 273, "CELSIUS");
-            default:
+                    new WeatherValue(kelvin - 273, "CELSIUS");
+            default -> {
                 LOG.warn("Unknown temperature unit {}, returning CELSIUS", unit);
                 // #4313 - We do a "wrong" conversion to celsius on purpose
-                return new WeatherValue(kelvin - 273, "CELSIUS");
-        }
+                yield new WeatherValue(kelvin - 273, "CELSIUS");
+            }
+        };
     }
 
     private static WeatherValue getSpeed(final float kmph, final String unit) {
-        switch (unit) {
-            case "METERS_PER_SECOND":
-                return new WeatherValue(kmph / 3.6, "METERS_PER_SECOND");
-            case "KILOMETERS_PER_HOUR":
-                return new WeatherValue(kmph, "KILOMETERS_PER_HOUR");
-            default:
+        return switch (unit) {
+            case "METERS_PER_SECOND" -> new WeatherValue(kmph / 3.6, "METERS_PER_SECOND");
+            case "KILOMETERS_PER_HOUR" -> new WeatherValue(kmph, "KILOMETERS_PER_HOUR");
+            default -> {
                 LOG.warn("Unknown speed unit {}, returning KILOMETERS_PER_HOUR", unit);
-                return new WeatherValue(kmph, "KILOMETERS_PER_HOUR");
-        }
+                yield new WeatherValue(kmph, "KILOMETERS_PER_HOUR");
+            }
+        };
     }
 
     private static Integer mapAqiToGarminAirQuality(int aqi) { //see https://github.com/breezy-weather/breezy-weather/blob/main/app/src/main/java/org/breezyweather/domain/weather/index/PollutantIndex.kt#L38
@@ -509,9 +519,9 @@ public class WeatherHandler {
             case 959:  //severe gale
                 return 46;
 
-            default:
         //Group 90x: Extreme
             case 903:  //cold
+            default:
                 return 35;
         }
     }
