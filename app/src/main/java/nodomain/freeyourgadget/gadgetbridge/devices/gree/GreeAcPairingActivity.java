@@ -1,5 +1,6 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.gree;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -7,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -216,6 +219,12 @@ public class GreeAcPairingActivity extends AbstractGBActivity {
             pairResultTextView.setVisibility(View.GONE);
 
             GBApplication.deviceService().disconnect();
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                // This should never happen
+                GB.toast("No bluetooth permissions!", Toast.LENGTH_LONG, GB.INFO);
+                finish();
+                return;
+            }
             gbDevice = DeviceHelper.getInstance().toSupportedDevice(deviceCandidate.getDevice());
             GBApplication.deviceService(gbDevice).connect(true);
         });
