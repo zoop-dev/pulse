@@ -245,5 +245,10 @@ public class FitWeather extends RecordData {
         public FitWeather build() {
             return (FitWeather) super.build();
         }
+
+        @Override
+        public FitWeather build(final int localMessageType) {
+            return (FitWeather) super.build(localMessageType);
+        }
     }
 }

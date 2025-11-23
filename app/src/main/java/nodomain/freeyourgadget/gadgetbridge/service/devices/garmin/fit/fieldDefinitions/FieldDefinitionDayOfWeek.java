@@ -26,6 +26,10 @@ public class FieldDefinitionDayOfWeek extends FieldDefinition {
 
     @Override
     public void encode(ByteBuffer byteBuffer, Object o) {
+        if (o == null) {
+            baseType.encode(byteBuffer, null, scale, offset);
+            return;
+        }
         if (o instanceof DayOfWeek) {
             baseType.encode(byteBuffer, (((DayOfWeek) o).getValue() % 7), scale, offset);
             return;

@@ -318,6 +318,11 @@ public class FitCodeGen {
                         public ${className} build() {
                             return (${className}) super.build();
                         }
+
+                        @Override
+                        public ${className} build(final int localMessageType) {
+                            return (${className}) super.build(localMessageType);
+                        }
                     }
                 """
                 .replace("${className}", className)

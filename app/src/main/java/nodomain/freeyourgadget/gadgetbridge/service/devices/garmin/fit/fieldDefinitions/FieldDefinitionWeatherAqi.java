@@ -27,25 +27,26 @@ public class FieldDefinitionWeatherAqi extends FieldDefinition {
             baseType.encode(byteBuffer, ((AQI_LEVELS) o).ordinal(), scale, offset);
             return;
         }
-        baseType.encode(byteBuffer, aqiAbsoluteValueToIndex((int) o), scale, offset);
+        final AQI_LEVELS aqiLevel = o != null ? aqiAbsoluteValueToEnum((int) o) : null;
+        baseType.encode(byteBuffer, aqiLevel != null ? aqiLevel.ordinal() : o, scale, offset);
     }
 
-    private int aqiAbsoluteValueToIndex(int rawValue) { //see https://github.com/breezy-weather/breezy-weather/blob/main/app/src/main/java/org/breezyweather/domain/weather/index/PollutantIndex.kt#L38
+    public static AQI_LEVELS aqiAbsoluteValueToEnum(int rawValue) { //see https://github.com/breezy-weather/breezy-weather/blob/main/app/src/main/java/org/breezyweather/domain/weather/index/PollutantIndex.kt#L38
         if (rawValue == -1) {
-            return rawValue; //invalid
+            return null; //invalid
         }
         if (rawValue < 20) {
-            return AQI_LEVELS.GOOD.ordinal();
+            return AQI_LEVELS.GOOD;
         } else if (rawValue < 50) {
-            return AQI_LEVELS.MODERATE.ordinal();
+            return AQI_LEVELS.MODERATE;
         } else if (rawValue < 100) {
-            return AQI_LEVELS.UNHEALTHY_SENSITIVE.ordinal();
+            return AQI_LEVELS.UNHEALTHY_SENSITIVE;
         } else if (rawValue < 150) {
-            return AQI_LEVELS.UNHEALTHY.ordinal();
+            return AQI_LEVELS.UNHEALTHY;
         } else if (rawValue < 250) {
-            return AQI_LEVELS.VERY_UNHEALTHY.ordinal();
+            return AQI_LEVELS.VERY_UNHEALTHY;
         } else {
-            return AQI_LEVELS.HAZARDOUS.ordinal();
+            return AQI_LEVELS.HAZARDOUS;
         }
     }
 

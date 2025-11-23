@@ -27,10 +27,13 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -92,11 +95,16 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.Predefine
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionAlarmLabel;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherAqi;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherCondition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitAlarmSettings;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitDeviceSettings;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitFileId;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitWeather;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.ConfigurationMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.DownloadRequestMessage;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.FitDataMessage;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.FitDefinitionMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.GFDIMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.MusicControlEntityUpdateMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.ProtobufMessage;
@@ -591,97 +599,103 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             return;
         }
 
+        final List<RecordData> weatherData = encodeWeather(weather);
+
+        // Get all distinct record definitions
+        Set<Integer> seenDefinitions = new HashSet<>();
+        List<RecordDefinition> weatherDefinitions = new ArrayList<>(3);
+        for (RecordData d : weatherData) {
+            final int localMessageType = d.getRecordDefinition().getRecordHeader().getLocalMessageType();
+            if (!seenDefinitions.contains(localMessageType)) {
+                seenDefinitions.add(localMessageType);
+                weatherDefinitions.add(d.getRecordDefinition());
+            }
+        }
+
+        sendOutgoingMessage("send " + weatherDefinitions.size() + " weather definitions", new FitDefinitionMessage(weatherDefinitions));
+        sendOutgoingMessage("send weather data", new FitDataMessage(weatherData));
+    }
+
+    public static List<RecordData> encodeWeather(final WeatherSpec weather) {
         List<RecordData> weatherData = new ArrayList<>();
 
-        final RecordDefinition recordDefinitionToday = PredefinedLocalMessage.TODAY_WEATHER_CONDITIONS.getRecordDefinition();
-        final RecordDefinition recordDefinitionHourly = PredefinedLocalMessage.HOURLY_WEATHER_FORECAST.getRecordDefinition();
-        final RecordDefinition recordDefinitionDaily = PredefinedLocalMessage.DAILY_WEATHER_FORECAST.getRecordDefinition();
-
-        List<RecordDefinition> weatherDefinitions = new ArrayList<>(3);
-        weatherDefinitions.add(recordDefinitionToday);
-        weatherDefinitions.add(recordDefinitionHourly);
-        weatherDefinitions.add(recordDefinitionDaily);
-
-        sendOutgoingMessage("send weather definitions", new nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.FitDefinitionMessage(weatherDefinitions));
-
-        RecordData today = new RecordData(recordDefinitionToday, recordDefinitionToday.getRecordHeader());
-        today.setFieldByName("weather_report", 0); // 0 = current, 1 = hourly_forecast, 2 = daily_forecast
-        today.setFieldByName("timestamp", weather.getTimestamp());
-        today.setFieldByName("observed_at_time", weather.getTimestamp());
-        today.setFieldByName("temperature", weather.getCurrentTemp());
-        today.setFieldByName("low_temperature", weather.getTodayMinTemp());
-        today.setFieldByName("high_temperature", weather.getTodayMaxTemp());
-        today.setFieldByName("condition", weather.getCurrentConditionCode());
-        today.setFieldByName("wind_direction", weather.getWindDirection());
-        today.setFieldByName("precipitation_probability", weather.getPrecipProbability());
-        today.setFieldByName("wind_speed", Math.round(weather.getWindSpeed()));
-        today.setFieldByName("temperature_feels_like", weather.getFeelsLikeTemp());
-        today.setFieldByName("relative_humidity", weather.getCurrentHumidity());
-        today.setFieldByName("observed_location_lat", weather.getLatitude());
-        today.setFieldByName("observed_location_long", weather.getLongitude());
-        today.setFieldByName("dew_point", weather.getDewPoint());
+        final FitWeather.Builder today = new FitWeather.Builder();
+        today.setWeatherReport(0); // 0 = current, 1 = hourly_forecast, 2 = daily_forecast
+        today.setTimestamp((long) weather.getTimestamp());
+        today.setObservedAtTime((long) weather.getTimestamp());
+        today.setTemperature(weather.getCurrentTemp());
+        today.setLowTemperature(weather.getTodayMinTemp());
+        today.setHighTemperature(weather.getTodayMaxTemp());
+        today.setCondition(FieldDefinitionWeatherCondition.openWeatherCodeToFitWeatherStatus(weather.getCurrentConditionCode()));
+        today.setWindDirection(weather.getWindDirection());
+        today.setPrecipitationProbability(weather.getPrecipProbability());
+        today.setWindSpeed(weather.getWindSpeed());
+        today.setTemperatureFeelsLike(weather.getFeelsLikeTemp());
+        today.setRelativeHumidity(weather.getCurrentHumidity());
+        today.setObservedLocationLat((long) weather.getLatitude());
+        today.setObservedLocationLong((long) weather.getLongitude());
+        today.setDewPoint(weather.getDewPoint());
         if (null != weather.getAirQuality()) {
-            today.setFieldByName("air_quality", weather.getAirQuality().getAqi());
+            today.setAirQuality(FieldDefinitionWeatherAqi.aqiAbsoluteValueToEnum(weather.getAirQuality().getAqi()));
         }
-        today.setFieldByName("location", weather.getLocation());
-        weatherData.add(today);
+        today.setLocation(weather.getLocation());
+        weatherData.add(today.build(6));
 
         for (int hour = 0; hour <= 11; hour++) {
             if (hour < weather.getHourly().size()) {
                 WeatherSpec.Hourly hourly = weather.getHourly().get(hour);
-                RecordData weatherHourlyForecast = new RecordData(recordDefinitionHourly, recordDefinitionHourly.getRecordHeader());
-                weatherHourlyForecast.setFieldByName("weather_report", 1); // 0 = current, 1 = hourly_forecast, 2 = daily_forecast
-                weatherHourlyForecast.setFieldByName("timestamp", hourly.getTimestamp());
-                weatherHourlyForecast.setFieldByName("temperature", hourly.getTemp());
-                weatherHourlyForecast.setFieldByName("condition", hourly.getConditionCode());
-                weatherHourlyForecast.setFieldByName("temperature_feels_like", hourly.getTemp()); //TODO: switch to actual feels like field once Hourly contains this information
-                weatherHourlyForecast.setFieldByName("wind_direction", hourly.getWindDirection());
-                weatherHourlyForecast.setFieldByName("wind_speed", Math.round(hourly.getWindSpeed()));
-                weatherHourlyForecast.setFieldByName("precipitation_probability", hourly.getPrecipProbability());
-                weatherHourlyForecast.setFieldByName("relative_humidity", hourly.getHumidity());
-//                    weatherHourlyForecast.setFieldByName("dew_point", 0); // TODO: add once Hourly contains this information
-                weatherHourlyForecast.setFieldByName("uv_index", hourly.getUvIndex());
-//                    weatherHourlyForecast.setFieldByName("air_quality", 0); // TODO: add once Hourly contains this information
-                weatherData.add(weatherHourlyForecast);
+                final FitWeather.Builder weatherHourlyForecast = new FitWeather.Builder();
+                weatherHourlyForecast.setWeatherReport(1); // 0 = current, 1 = hourly_forecast, 2 = daily_forecast
+                weatherHourlyForecast.setTimestamp((long) hourly.getTimestamp());
+                weatherHourlyForecast.setTemperature(hourly.getTemp());
+                weatherHourlyForecast.setCondition(FieldDefinitionWeatherCondition.openWeatherCodeToFitWeatherStatus(hourly.getConditionCode()));
+                weatherHourlyForecast.setTemperatureFeelsLike(hourly.getTemp()); //TODO: switch to actual feels like field once Hourly contains this information
+                weatherHourlyForecast.setWindDirection(hourly.getWindDirection());
+                weatherHourlyForecast.setWindSpeed(hourly.getWindSpeed());
+                weatherHourlyForecast.setPrecipitationProbability(hourly.getPrecipProbability());
+                weatherHourlyForecast.setRelativeHumidity(hourly.getHumidity());
+//                    weatherHourlyForecast.setDewPoint(0); // TODO: add once Hourly contains this information
+                weatherHourlyForecast.setUvIndex(hourly.getUvIndex());
+//                    weatherHourlyForecast.setAirQuality(0); // TODO: add once Hourly contains this information
+                weatherData.add(weatherHourlyForecast.build(9));
             }
         }
 //
-        RecordData todayDailyForecast = new RecordData(recordDefinitionDaily, recordDefinitionDaily.getRecordHeader());
-        todayDailyForecast.setFieldByName("weather_report", 2); // 0 = current, 1 = hourly_forecast, 2 = daily_forecast
-        todayDailyForecast.setFieldByName("timestamp", weather.getTimestamp());
-        todayDailyForecast.setFieldByName("low_temperature", weather.getTodayMinTemp());
-        todayDailyForecast.setFieldByName("high_temperature", weather.getTodayMaxTemp());
-        todayDailyForecast.setFieldByName("condition", weather.getCurrentConditionCode());
-        todayDailyForecast.setFieldByName("precipitation_probability", weather.getPrecipProbability());
+        final FitWeather.Builder todayDailyForecast = new FitWeather.Builder();
+        todayDailyForecast.setWeatherReport(2); // 0 = current, 1 = hourly_forecast, 2 = daily_forecast
+        todayDailyForecast.setTimestamp((long) weather.getTimestamp());
+        todayDailyForecast.setLowTemperature(weather.getTodayMinTemp());
+        todayDailyForecast.setHighTemperature(weather.getTodayMaxTemp());
+        todayDailyForecast.setCondition(FieldDefinitionWeatherCondition.openWeatherCodeToFitWeatherStatus(weather.getCurrentConditionCode()));
+        todayDailyForecast.setPrecipitationProbability(weather.getPrecipProbability());
+        todayDailyForecast.setDayOfWeek(Instant.ofEpochSecond(weather.getTimestamp()).atZone(ZoneId.systemDefault()).getDayOfWeek());
         todayDailyForecast.setFieldByName("day_of_week", weather.getTimestamp());
         if (null != weather.getAirQuality()) {
-            todayDailyForecast.setFieldByName("air_quality", weather.getAirQuality().getAqi());
+            todayDailyForecast.setAirQuality(FieldDefinitionWeatherAqi.aqiAbsoluteValueToEnum(weather.getAirQuality().getAqi()));
         }
-        weatherData.add(todayDailyForecast);
+        weatherData.add(todayDailyForecast.build(10));
 
 
         for (int day = 0; day < 4; day++) {
             if (day < weather.getForecasts().size()) {
-                //noinspection ExtractMethodRecommender
                 WeatherSpec.Daily daily = weather.getForecasts().get(day);
                 int ts = weather.getTimestamp() + (day + 1) * 24 * 60 * 60;
-                RecordData weatherDailyForecast = new RecordData(recordDefinitionDaily, recordDefinitionDaily.getRecordHeader());
-                weatherDailyForecast.setFieldByName("weather_report", 2); // 0 = current, 1 = hourly_forecast, 2 = daily_forecast
-                weatherDailyForecast.setFieldByName("timestamp", weather.getTimestamp());
-                weatherDailyForecast.setFieldByName("low_temperature", daily.getMinTemp());
-                weatherDailyForecast.setFieldByName("high_temperature", daily.getMaxTemp());
-                weatherDailyForecast.setFieldByName("condition", daily.getConditionCode());
-                weatherDailyForecast.setFieldByName("precipitation_probability", daily.getPrecipProbability());
+                final FitWeather.Builder weatherDailyForecast = new FitWeather.Builder();
+                weatherDailyForecast.setWeatherReport(2); // 0 = current, 1 = hourly_forecast, 2 = daily_forecast
+                weatherDailyForecast.setTimestamp((long) weather.getTimestamp());
+                weatherDailyForecast.setLowTemperature(daily.getMinTemp());
+                weatherDailyForecast.setHighTemperature(daily.getMaxTemp());
+                weatherDailyForecast.setCondition(FieldDefinitionWeatherCondition.openWeatherCodeToFitWeatherStatus(daily.getConditionCode()));
+                weatherDailyForecast.setPrecipitationProbability(daily.getPrecipProbability());
+                weatherDailyForecast.setDayOfWeek(Instant.ofEpochSecond(ts).atZone(ZoneId.systemDefault()).getDayOfWeek());
                 if (null != daily.getAirQuality()) {
-                    weatherDailyForecast.setFieldByName("air_quality", daily.getAirQuality().getAqi());
+                    weatherDailyForecast.setAirQuality(FieldDefinitionWeatherAqi.aqiAbsoluteValueToEnum(daily.getAirQuality().getAqi()));
                 }
-                weatherDailyForecast.setFieldByName("day_of_week", ts);
-                weatherData.add(weatherDailyForecast);
+                weatherData.add(weatherDailyForecast.build(10));
             }
         }
 
-        sendOutgoingMessage("send weather data", new nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.FitDataMessage(weatherData));
-
+        return weatherData;
     }
 
     private void completeInitialization() {

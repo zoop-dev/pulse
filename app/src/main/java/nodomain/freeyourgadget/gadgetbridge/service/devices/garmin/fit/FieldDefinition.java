@@ -1,5 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit;
 
+import androidx.annotation.NonNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,6 +11,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminByteBuf
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes.BaseType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionTimestamp;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.MessageWriter;
+import nodomain.freeyourgadget.gadgetbridge.util.GBToStringBuilder;
 
 public class FieldDefinition implements FieldInterface {
     protected static final Logger LOG = LoggerFactory.getLogger(FieldDefinition.class);
@@ -99,5 +102,22 @@ public class FieldDefinition implements FieldInterface {
     @Override
     public void invalidate(ByteBuffer byteBuffer) {
         baseType.invalidate(byteBuffer);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        final GBToStringBuilder tsb = new GBToStringBuilder(this);
+        tsb.append("baseType", baseType);
+        if (scale != 1) {
+            tsb.append("scale", scale);
+        }
+        if (offset != 0) {
+            tsb.append("offset", offset);
+        }
+        if (size != 1) {
+            tsb.append("size", size);
+        }
+        return tsb.toString();
     }
 }

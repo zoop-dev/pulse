@@ -42,15 +42,19 @@ public class FitRecordDataBuilder {
     }
 
     public RecordData build() {
+        return build(0);
+    }
+
+    public RecordData build(final int localMessageType) {
         final RecordData recordData = FitRecordDataFactory.create(
                 new RecordDefinition(
-                        new RecordHeader((byte) 0x40),
+                        new RecordHeader(true, localMessageType),
                         ByteOrder.BIG_ENDIAN,
                         globalMessage,
                         values.entrySet().stream().map(e -> globalMessage.getFieldDefinition(e.getKey(), e.getValue().length)).collect(Collectors.toList()),
                         null
                 ),
-                new RecordHeader((byte) 0x00)
+                new RecordHeader(false, localMessageType)
         );
 
         for (final Map.Entry<String, Object[]> e : values.entrySet()) {

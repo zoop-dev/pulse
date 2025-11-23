@@ -10,6 +10,10 @@ public class RecordHeader {
     private final int localMessageType;
     private final Integer timeOffset;
 
+    public RecordHeader(boolean definition, int localMessageType) {
+        this(definition, false, localMessageType, null);
+    }
+
     public RecordHeader(boolean definition, boolean developerData, int localMessageType, Integer timeOffset) {
         this.definition = definition;
         this.developerData = developerData;
