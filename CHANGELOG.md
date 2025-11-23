@@ -1,11 +1,77 @@
 ### Changelog
 
 #### Next
-* Initial support for Pebble 2 Duo
-* Pebble 2/2 Duo: Fix random crashes on disconnect
-* Pebble: Support multiple weather location with system weather app (on fw 4.x)
+
+* Initial support for Amazfit GTS 4 Mini New, T-Rex 3 Pro
+* Initial support for Garmin Edge Explore
+* Initial support for Garmin HRM-Pro Plus
+* Initial support for Garmin Enduro, Epix, Fenix 6 Pro, Fenix 6X Sapphire, Forerunner 35, Forerunner 745, Venu 4
+* Initial support for Huawei FreeArc
+* Initial support for Huawei Watch GT 6 (Pro)
+* Initial support for more FitPro devices
+* Initial support for Pebble 2 Duo / Time 2
+* Initial support for Sony WH-CH720N
+* Amazfit GTS: Fix device discovery
+* Amazfit T-Rex 3 Pro: Fix device discovery
+* Bangle.js: Avoid repeated media updates without changes
+* C20: Fix bluetooth name matching on some watches
+* CMF Watch Pro: Fix some activity samples being discarded
+* Coospo HW807: Fix device discovery
+* Even Realities G1: Fix support for some BLE names
+* Even Realities G1: Improve connection reliability
+* Even Realities G1: Support non-latin charaters in notifications
+* Garmin: Add debug support to fetch DEVICE_XML
+* Garmin: Add respiratory rate chart
+* Garmin: Add temperature / diving depth charts
+* Garmin: Add workaround for missing next page id on new sync protocol
+* Garmin: Allow installing unsupported files
+* Garmin: Fix legacy fit file decoding
+* Garmin: Fix notifications on recent firmware versions
+* Garmin: Fix realtime settings crash
+* Garmin: MLR support
+* Garmin: Send app notification icons
+* Huawei: Activate Arterial Stiffness Detection, ECG (no sync)
+* Huawei: Add contact sync support
+* Huawei: Experimental support for health feature configuration
+* Huawei: Fetch HRV, more sleep stats, resting HR, and emotions
+* Huawei: Fix send GPS and time data
+* Huawei: Fix weather speed, wind direction and uvIndex
+* Huawei: Improve swimming and jump rope workout parsing
+* Huawei: Pulse wave arrhythmia activation and control (no sync)
+* Huawei: Sleep breathing awareness for new devices (no sync)
+* Huawei: View heart rate zones and limits
+* Pebble: Bump app version to report to pebble to 4.4.2 (last official)
 * Pebble: Map cloudy weather icons in system weather app (on fw 4.x)
+* Pebble: Map cloudy weather icons in system weather app (on fw 4.x)
+* Pebble: Remove firmware 1.x and 2.x support
+* Pebble: Support fetching debug logs
+* Pebble: Support multiple weather location with system weather app (on fw 4.x)
+* Pebble: Support multiple weather location with system weather app (on fw 4.x)
 * Pebble: Support night icons on TrekVolle and TimeStyle
+* Pebble 2: Allow activating health
+* Pebble 2: Fix connection recovery mode
+* Pebble 2: Fix getting inital battery level
+* Pebble 2: Fix random crashes on disconnect
+* Pebble 2: Improve MTU change handling
+* Pebble 2: Prefer flint/ and diorite/ folders over aplite/ when installing apps
+* Pebble TimeStyle: Support night icons
+* Pebble TrekVolle: Show night icon if appropriate
+* Sony Wena 3: Enable body energy
+* Withings Steel HR: Improve initialization reliability
+* Xiaomi-protobuf: Fix outdoor running HR zones for some devices
+* Xiaomi-protobuf: Parse daily calories, distance, energy
+* Zepp OS: Add some missing menu items and shortcuts
+* Zepp OS: Fix gpx import for some devices
+* Zepp OS: Map bouldering activity
+* Zepp OS: Process workout movement evaluation
+* Add setting to force legacy GATT
+* Maps: Add themes biker, dark, indigo
+* Fix auto zip export when file already exists
+* Fix full crash when re-processing workout details fails
+* Fix crash while loading some notification pictures
+* Fix OpenTracks icon mapping
+* Fix spam from WhatsApp progress notifications
+* Improve gpx parsing and exporting
 
 #### 0.87.1
 
