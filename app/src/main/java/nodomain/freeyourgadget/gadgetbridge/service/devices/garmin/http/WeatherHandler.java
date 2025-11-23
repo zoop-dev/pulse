@@ -275,7 +275,7 @@ public class WeatherHandler {
             temperature = getTemperature(weatherSpec.getCurrentTemp(), tempUnit);
             description = weatherSpec.getCurrentCondition();
             icon = mapToGarminCondition(weatherSpec.getCurrentConditionCode());
-            feelsLikeTemperature = getTemperature(weatherSpec.getCurrentTemp(), tempUnit);
+            feelsLikeTemperature = getTemperature(weatherSpec.getFeelsLikeTemp(), tempUnit);
             dewPoint = getTemperature(weatherSpec.getDewPoint(), tempUnit);
             relativeHumidity = weatherSpec.getCurrentHumidity();
             wind = new Wind(getSpeed(weatherSpec.getWindSpeed(), speedUnit), weatherSpec.getWindDirection());
