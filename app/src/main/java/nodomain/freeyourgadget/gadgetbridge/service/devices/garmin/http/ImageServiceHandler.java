@@ -125,10 +125,10 @@ public class ImageServiceHandler {
         final ByteBuffer buf = ByteBuffer.allocate(43).order(ByteOrder.BIG_ENDIAN);
 
         // 0c 11 ee 5e
-        buf.putInt(0x0c);
-        buf.putInt(0x11);
-        buf.putInt(0xee);
-        buf.putInt(0x5e);
+        buf.put((byte) 0x0c);
+        buf.put((byte) 0x11);
+        buf.put((byte) 0xee);
+        buf.put((byte) 0x5e);
 
         buf.putInt(pngLength + 0x23);
         buf.putShort((short) imageSize);
