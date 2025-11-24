@@ -319,11 +319,12 @@ public class LoadFragment extends AbstractChartFragment<LoadFragment.LoadsData> 
         int latestAcuteLoad = 0;
         int latestChronicLoad = 0;
         if (supportsTrainingLoad()) {
-            GenericTrainingLoadAcuteSample latestAcuteLoadSample = getLatestTrainingLoadAcuteSample(db, device, getTSEnd());
+            final Date dayEnd = DateTimeUtils.dayEnd(getEndDate());
+            GenericTrainingLoadAcuteSample latestAcuteLoadSample = getLatestTrainingLoadAcuteSample(db, device, dayEnd.getTime());
             if (latestAcuteLoadSample != null) {
                 latestAcuteLoad = latestAcuteLoadSample.getValue();
             }
-            GenericTrainingLoadChronicSample latestChronicLoadSample = getLatestTrainingLoadChronicSample(db, device, getTSEnd());
+            GenericTrainingLoadChronicSample latestChronicLoadSample = getLatestTrainingLoadChronicSample(db, device, dayEnd.getTime());
             if (latestChronicLoadSample != null) {
                 latestChronicLoad = latestChronicLoadSample.getValue();
             }
@@ -351,27 +352,27 @@ public class LoadFragment extends AbstractChartFragment<LoadFragment.LoadsData> 
         return sampleProvider.getAllSamples(tsFrom * 1000L, tsTo * 1000L);
     }
 
-    private List<? extends GenericTrainingLoadChronicSample> getTrainingLoadChronicSamples(final DBHandler db, final GBDevice device, int tsFrom, int tsTo) {
+    private List<? extends GenericTrainingLoadChronicSample> getTrainingLoadChronicSamples(final DBHandler db, final GBDevice device, int tsFrom, long tsToMillis) {
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
         final TimeSampleProvider<? extends GenericTrainingLoadChronicSample> sampleProvider = coordinator.getTrainingChronicLoadSampleProvider(device, db.getDaoSession());
         if (sampleProvider == null) {
             LOG.warn("Device {} does not implement GenericTrainingLoadChronicSample", device);
             return new ArrayList<>();
         }
-        return sampleProvider.getAllSamples(tsFrom * 1000L, tsTo * 1000L);
+        return sampleProvider.getAllSamples(tsFrom * 1000L, tsToMillis);
     }
 
-    private GenericTrainingLoadAcuteSample getLatestTrainingLoadAcuteSample(final DBHandler db, final GBDevice device, int tsTo) {
+    private GenericTrainingLoadAcuteSample getLatestTrainingLoadAcuteSample(final DBHandler db, final GBDevice device, long tsToMillis) {
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
         final TimeSampleProvider<? extends GenericTrainingLoadAcuteSample> sampleProvider = coordinator.getTrainingAcuteLoadSampleProvider(device, db.getDaoSession());
         if (sampleProvider == null) {
             LOG.warn("Device {} does not implement GenericTrainingLoadAcuteSample", device);
             return null;
         }
-        return sampleProvider.getLatestSample(tsTo * 1000L);
+        return sampleProvider.getLatestSample(tsToMillis);
     }
 
-    private GenericTrainingLoadChronicSample getLatestTrainingLoadChronicSample(final DBHandler db, final GBDevice device, int tsTo) {
+    private GenericTrainingLoadChronicSample getLatestTrainingLoadChronicSample(final DBHandler db, final GBDevice device, long tsTo) {
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
         final TimeSampleProvider<? extends GenericTrainingLoadChronicSample> sampleProvider = coordinator.getTrainingChronicLoadSampleProvider(device, db.getDaoSession());
         if (sampleProvider == null) {
