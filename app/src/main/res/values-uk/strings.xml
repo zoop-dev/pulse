@@ -3932,4 +3932,5 @@
     <string name="movementRhythm">Ритм</string>
     <string name="movementSpeedDecay">Згасання швидкості</string>
     <string name="movement_evaluation">Оцінка руху</string>
+    <string name="pref_title_notifications_when_screen_saver">…також коли увімкнено заставку</string>
 </resources>
