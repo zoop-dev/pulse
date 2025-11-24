@@ -2276,7 +2276,7 @@ public class GBApplication extends Application {
     }
 
     public static boolean hasDirectInternetAccess() {
-        return BuildConfig.INTERNET_ACCESS && PermissionsUtils.checkPermission(getContext(), Manifest.permission.INTERNET);
+        return PermissionsUtils.checkPermission(getContext(), Manifest.permission.INTERNET);
     }
 
     public static boolean hasInternetAccess() {

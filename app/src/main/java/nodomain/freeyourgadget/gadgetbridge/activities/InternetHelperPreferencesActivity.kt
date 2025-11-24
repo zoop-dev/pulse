@@ -21,6 +21,7 @@ import android.os.Bundle
 import androidx.core.net.toUri
 import androidx.preference.Preference
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig
+import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils
 import nodomain.freeyourgadget.gadgetbridge.util.PermissionsUtils.PACKAGE_INTERNET_HELPER
@@ -43,7 +44,7 @@ class InternetHelperPreferencesActivity : AbstractGBActivity() {
         ) {
             setPreferencesFromResource(R.xml.internethelper_preferences, rootKey)
             val unusedWarning = findPreference<Preference>("pref_key_internethelper_unused")
-            unusedWarning?.isVisible = BuildConfig.INTERNET_ACCESS
+            unusedWarning?.isVisible = GBApplication.hasDirectInternetAccess();
             val installWarning = findPreference<Preference>("pref_key_internethelper_not_installed")
             if (AndroidUtils.isPackageInstalled(PACKAGE_INTERNET_HELPER)) {
                 installWarning?.isVisible = false

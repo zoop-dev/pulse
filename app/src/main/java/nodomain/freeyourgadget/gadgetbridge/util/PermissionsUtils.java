@@ -26,6 +26,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -138,7 +139,7 @@ public class PermissionsUtils {
                     activity.getString(R.string.permission_post_notification_title),
                     activity.getString(R.string.permission_post_notification_summary)));
         }
-        if (BuildConfig.INTERNET_ACCESS) {
+        if (isPermissionDeclared(activity, Manifest.permission.INTERNET)) {
             permissionsList.add(new PermissionDetails(
                     Manifest.permission.INTERNET,
                     activity.getString(R.string.permission_internet_access_title),
@@ -259,6 +260,30 @@ public class PermissionsUtils {
     public record PermissionDetails(String permission,
                                     String title,
                                     String summary) {
+    }
+
+    public static boolean isPermissionDeclared(Context context, String permission) {
+        // Checks whether a permission has been declared in the (merged) manifest file.
+        // This also includes permissions declared by dependencies.
+        try {
+            PackageManager pm = context.getPackageManager();
+            PackageInfo info = pm.getPackageInfo(
+                    context.getPackageName(),
+                    PackageManager.GET_PERMISSIONS
+            );
+
+            String[] requestedPermissions = info.requestedPermissions;
+            if (requestedPermissions != null) {
+                for (String p : requestedPermissions) {
+                    if (p.equals(permission)) {
+                        return true;
+                    }
+                }
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            // Do nothing
+        }
+        return false;
     }
 
     @SuppressLint("BatteryLife")
