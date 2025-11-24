@@ -4112,4 +4112,5 @@
     <string name="movementRhythm">Rytm</string>
     <string name="movementSpeedDecay">Wygasanie prędkości</string>
     <string name="movement_evaluation">Ocena ruchu</string>
+    <string name="pref_title_notifications_when_screen_saver">...także przy włączonym wygaszaczu</string>
 </resources>
