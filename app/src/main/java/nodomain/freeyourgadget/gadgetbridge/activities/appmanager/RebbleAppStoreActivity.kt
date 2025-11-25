@@ -23,41 +23,24 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.os.ParcelFileDescriptor
 import android.webkit.PermissionRequest
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.widget.Toast
 import androidx.core.net.toUri
-import com.android.volley.Request
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService
 import nodomain.freeyourgadget.gadgetbridge.util.GB
-import nodomain.freeyourgadget.gadgetbridge.util.InternetHelperSingleton
+import nodomain.freeyourgadget.gadgetbridge.util.InternetUtils
 import nodomain.freeyourgadget.gadgetbridge.webview.GBChromeClient
 import nodomain.freeyourgadget.gadgetbridge.webview.GBWebClient
-import nodomain.freeyourgadget.internethelper.aidl.http.HttpGetRequest
-import nodomain.freeyourgadget.internethelper.aidl.http.HttpHeaders
-import nodomain.freeyourgadget.internethelper.aidl.http.HttpResponse
-import nodomain.freeyourgadget.internethelper.aidl.http.IHttpCallback
-import okhttp3.OkHttpClient
 import org.json.JSONObject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStreamReader
-import java.io.OutputStream
-import java.nio.charset.StandardCharsets
 
 class RebbleAppStoreActivity : AbstractGBActivity()  {
     val LOG: Logger = LoggerFactory.getLogger(RebbleAppStoreActivity::class.java)
@@ -99,148 +82,24 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
     }
 
     private fun downloadInstallWatchapp(url: Uri) {
-        if (GBApplication.hasDirectInternetAccess()) {
-            downloadBinaryFile(url) { file ->
-                installFile(file)
-            }
-        } else {
-            val httpHeaders = HttpHeaders()
-            val httpGetRequest = HttpGetRequest(url.toString(), httpHeaders)
-            InternetHelperSingleton.getHttpService()
-                ?.get(httpGetRequest, object : IHttpCallback.Stub() {
-                    override fun onResponse(response: HttpResponse) {
-                        val contentType = response.headers["content-type"]?.split(";")?.get(0)
-                        if (!contentType.equals("application/octet-stream") && !contentType.equals("application/zip")) {
-                            GB.toast(
-                                getString(
-                                    R.string.rebble_appstore_download_failed_wrong_content_type,
-                                    contentType
-                                ),
-                                Toast.LENGTH_LONG, GB.ERROR
-                            )
-                            LOG.error("Received content-type $contentType but expected application/octet-stream or application/zip")
-                            return
-                        }
-                        val inputStream = ParcelFileDescriptor.AutoCloseInputStream(response.body)
-                        val filename = url.lastPathSegment ?: "downloaded_file.pbw"
-                        val cacheDir = applicationContext.externalCacheDir ?: return
-                        val cacheFile = File(cacheDir, filename)
-                        val outputStream: OutputStream = FileOutputStream(cacheFile)
-                        val buffer = ByteArray(1024)
-                        var len: Int
-                        while (inputStream.read(buffer).also { len = it } > 0) {
-                            outputStream.write(buffer, 0, len)
-                        }
-                        outputStream.flush()
-                        outputStream.close()
-                        installFile(cacheFile)
-                    }
+        val filename = url.lastPathSegment ?: "downloaded_file.bin"
+        val cacheDir = applicationContext.externalCacheDir
+        val targetFile = File(cacheDir, filename)
 
-                    override fun onException(message: String?) {
-                        GB.toast(
-                            getString(R.string.rebble_appstore_download_failed, message),
-                            Toast.LENGTH_LONG,
-                            GB.ERROR
-                        )
-                        LOG.error("Failed downloading file: $message")
-                    }
-                })
+        InternetUtils.downloadBinaryFile(url, targetFile) { file ->
+            installFile(file)
         }
     }
 
     private fun downloadInstallWatchappById(storeId: String) {
         val appUrl = "https://appstore-api.rebble.io/api/v1/apps/id/$storeId"
-        if (GBApplication.hasDirectInternetAccess()) {
-            val requestQueue = Volley.newRequestQueue(this)
-            val jsonObjectRequest = JsonObjectRequest(
-                Request.Method.GET, appUrl, null,
-                { response ->
-                    val dataArray = response.getJSONArray("data")
-                    val firstAppObject = dataArray.getJSONObject(0)
-                    val latestRelease = firstAppObject.getJSONObject("latest_release")
-                    val pbwFile = latestRelease.getString("pbw_file")
-                    downloadInstallWatchapp(pbwFile.toUri())
-                },
-                { error ->
-                    GB.toast(
-                        getString(
-                            R.string.rebble_appstore_fetching_download_file_failed,
-                            error
-                        ), Toast.LENGTH_LONG, GB.ERROR
-                    )
-                    LOG.error("Failed fetching download file URL", error)
-                }
-            )
-            requestQueue.add(jsonObjectRequest)
-        } else {
-            val httpHeaders = HttpHeaders()
-            val httpGetRequest = HttpGetRequest(appUrl, httpHeaders)
-            InternetHelperSingleton.getHttpService()
-                ?.get(httpGetRequest, object : IHttpCallback.Stub() {
-                    override fun onResponse(response: HttpResponse) {
-                        val contentType = response.headers["content-type"]?.split(";")?.get(0)
-                        if (!contentType.equals("application/json")) {
-                            GB.toast(
-                                getString(
-                                    R.string.rebble_appstore_fetch_app_info_failed_content_type,
-                                    contentType
-                                ),
-                                Toast.LENGTH_LONG, GB.ERROR
-                            )
-                            LOG.error("Received content-type $contentType but expected application/json")
-                            return
-                        }
-                        val inputStream = ParcelFileDescriptor.AutoCloseInputStream(response.body)
-                        val responseBody =
-                            InputStreamReader(inputStream, StandardCharsets.UTF_8).readText()
-                        val jsonObject = JSONObject(responseBody)
-                        val dataArray = jsonObject.getJSONArray("data")
-                        val firstAppObject = dataArray.getJSONObject(0)
-                        val latestRelease = firstAppObject.getJSONObject("latest_release")
-                        val pbwFile = latestRelease.getString("pbw_file")
-                        downloadInstallWatchapp(pbwFile.toUri())
-                    }
-
-                    override fun onException(message: String?) {
-                        GB.toast(
-                            getString(
-                                R.string.rebble_appstore_fetching_download_file_failed,
-                                message
-                            ), Toast.LENGTH_LONG, GB.ERROR
-                        )
-                        LOG.error("Error downloading file: $message")
-                    }
-                })
-        }
-    }
-
-    fun downloadBinaryFile(url: Uri, onComplete: (File) -> Unit) {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val client = OkHttpClient()
-                val request = okhttp3.Request.Builder().url(url.toString()).build()
-                val response = client.newCall(request).execute()
-
-                if (!response.isSuccessful) {
-                    LOG.error("Downloading $url failed: ${response.code}")
-                    return@launch
-                }
-
-                val filename = url.lastPathSegment ?: "downloaded_file.pbw"
-                val cacheDir = applicationContext.externalCacheDir
-                val cacheFile = File(cacheDir, filename)
-                val outputStream = FileOutputStream(cacheFile)
-
-                val inputStream = response.body.byteStream()
-                inputStream.copyTo(outputStream)
-                outputStream.flush()
-                outputStream.close()
-                inputStream.close()
-
-                onComplete(cacheFile)
-            } catch (e: Exception) {
-                LOG.error("Downloading $url failed: ", e)
-            }
+        val response: JSONObject? = InternetUtils.doRequest(appUrl.toUri())
+        if (response != null) {
+            val dataArray = response.getJSONArray("data")
+            val firstAppObject = dataArray.getJSONObject(0)
+            val latestRelease = firstAppObject.getJSONObject("latest_release")
+            val pbwFile = latestRelease.getString("pbw_file")
+            downloadInstallWatchapp(pbwFile.toUri())
         }
     }
 

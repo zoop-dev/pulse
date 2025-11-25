@@ -43,12 +43,6 @@ object InternetHelperSingleton {
     private var internetHelperBound = false
     private var internetHelper: IHttpService? = null
 
-    fun getHttpService(): IHttpService? {
-        ensureInternetHelperBound()
-        return internetHelper
-    }
-
-    //Internet helper outgoing connection
     private val internetHelperConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName?, service: IBinder?) {
             LOG.info("internet helper service bound")
@@ -63,8 +57,9 @@ object InternetHelperSingleton {
         }
     }
 
-    fun isInternetHelperBound(): Boolean {
-        return internetHelperBound
+    fun getHttpService(): IHttpService? {
+        ensureInternetHelperBound()
+        return internetHelper
     }
 
     fun ensureInternetHelperBound(): Boolean {
@@ -92,64 +87,66 @@ object InternetHelperSingleton {
 
     @Throws(RemoteException::class, InterruptedException::class)
     fun send(webRequest: Uri): WebResourceResponse? {
-        val httpHeaders = HttpHeaders()
-        val httpGetRequest = HttpGetRequest(webRequest.toString(), httpHeaders)
         val latch = CountDownLatch(1)
-        val internetResponseCapsule = Capsule<WebResourceResponse?>()
+        var result: WebResourceResponse? = null
+        val request = HttpGetRequest(webRequest.toString(), HttpHeaders())
+
         LOG.debug("Forwarding GET request to {} to internet helper app", webRequest)
         try {
-            internetHelper?.get(httpGetRequest, object : IHttpCallback.Stub() {
-                @Throws(RemoteException::class)
+            internetHelper?.get(request, object : IHttpCallback.Stub() {
                 override fun onResponse(response: HttpResponse) {
-                    // Extract headers
-                    val contentType = response.headers["content-type"]?.split(";")?.get(0) ?: "text/html"
-                    val contentEncoding = response.headers["content-encoding"] ?: "UTF-8"
+                    try {
+                        val headers = response.headers.toMap()
+                        val contentType = response.headers["content-type"]
+                            ?.substringBefore(";")
+                            ?.trim()
+                            ?: "text/html"
+                        val encoding = response.headers["content-encoding"] ?: "UTF-8"
+                        val inputStream = ParcelFileDescriptor.AutoCloseInputStream(response.body)
 
-                    // Retrieve original payload as InputStream
-                    val inputStream = ParcelFileDescriptor.AutoCloseInputStream(response.body)
+                        result = if (contentType.equals("text/html", ignoreCase = true)) {
+                            val rawHtml = inputStream.bufferedReader(Charset.forName(encoding)).use { it.readText() }
+                            val cleanedHtml = Jsoup.parse(rawHtml).html()
+                            WebResourceResponse(
+                                contentType,
+                                encoding,
+                                response.status,
+                                "OK",
+                                headers,
+                                cleanedHtml.byteInputStream()
+                            )
+                        } else {
+                            WebResourceResponse(
+                                contentType,
+                                encoding,
+                                response.status,
+                                "OK",
+                                headers,
+                                inputStream
+                            )
+                        }
 
-                    // Clean up and fix received malformed HTML
-                    if (contentType.equals("text/html", ignoreCase = true)) {
-                        val rawHtml = inputStream.bufferedReader(Charset.forName(contentEncoding)).use { it.readText() }
-                        val cleanedHtml = Jsoup.parse(rawHtml).html()
-                        val internetResponse = WebResourceResponse(
-                            contentType,
-                            contentEncoding,
-                            response.status,
-                            "OK",
-                            response.headers.toMap(),
-                            cleanedHtml.byteInputStream()
-                        )
-                        internetResponseCapsule.set(internetResponse)
-                    } else {
-                        // If not text/html, return original response
-                        val internetResponse = WebResourceResponse(
-                            contentType,
-                            contentEncoding,
-                            response.status,
-                            "OK",
-                            response.headers.toMap(),
-                            inputStream
-                        )
-                        internetResponseCapsule.set(internetResponse)
+                    } catch (e: Exception) {
+                        LOG.error("Error processing HTTP response", e)
+                    } finally {
+                        latch.countDown()
                     }
-                    latch.countDown()
                 }
 
-                @Throws(RemoteException::class)
                 override fun onException(message: String?) {
                     LOG.error("Error during GET request: $message")
+                    result = null
+                    latch.countDown()
                 }
             })
+
         } catch (e: RemoteException) {
-            LOG.error("Error during GET request", e)
-        }
-        try {
-            latch.await()
-        } catch (e: InterruptedException) {
-            LOG.error("Error during GET request", e)
+            LOG.error("Error initiating GET request", e)
+            latch.countDown()
+            return null
         }
 
-        return internetResponseCapsule.get()
+        latch.await()
+        return result
     }
 }

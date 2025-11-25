@@ -164,7 +164,7 @@ public class GBWebClient extends WebViewClient {
         Uri parsedUri = Uri.parse(url);
 
         if (parsedUri.getScheme().startsWith("http")) {
-            if (InternetHelperSingleton.INSTANCE.ensureInternetHelperBound()) {
+            if (GBApplication.hasInternetAccess()) {
                 view.loadUrl(url);
             } else {
                 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));

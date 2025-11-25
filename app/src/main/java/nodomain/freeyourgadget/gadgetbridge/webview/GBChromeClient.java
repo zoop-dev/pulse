@@ -18,28 +18,27 @@ package nodomain.freeyourgadget.gadgetbridge.webview;
 
 import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
-import android.widget.Toast;
 
-import nodomain.freeyourgadget.gadgetbridge.util.GB;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class GBChromeClient extends WebChromeClient {
+    private static final Logger LOG = LoggerFactory.getLogger(GBChromeClient.class);
 
     @Override
     public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
         if (ConsoleMessage.MessageLevel.ERROR.equals(consoleMessage.messageLevel())) {
-            GB.toast(formatConsoleMessage(consoleMessage), Toast.LENGTH_LONG, GB.ERROR);
-            //TODO: show error page
+            LOG.error(formatConsoleMessage(consoleMessage));
+            //TODO: show small error indication to user, allowing them to view the error(s)
         }
         return super.onConsoleMessage(consoleMessage);
     }
 
     private static String formatConsoleMessage(ConsoleMessage message) {
         String sourceId = message.sourceId();
-        if (sourceId == null || sourceId.length() == 0) {
+        if (sourceId == null || sourceId.isEmpty()) {
             sourceId = "unknown";
         }
         return String.format("%s (at %s: %d)", message.message(), sourceId, message.lineNumber());
     }
-
-
 }

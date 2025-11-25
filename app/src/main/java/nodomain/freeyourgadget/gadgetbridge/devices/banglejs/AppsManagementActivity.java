@@ -32,11 +32,8 @@ import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -55,6 +52,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.banglejs.BangleJSDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
+import nodomain.freeyourgadget.gadgetbridge.webview.GBChromeClient;
 import nodomain.freeyourgadget.gadgetbridge.webview.GBWebClient;
 
 public class AppsManagementActivity extends AbstractGBActivity {
@@ -195,7 +193,6 @@ public class AppsManagementActivity extends AbstractGBActivity {
     private void initViews() {
         //https://stackoverflow.com/questions/4325639/android-calling-javascript-functions-in-webview
         webView = findViewById(R.id.webview);
-        webView.setWebViewClient(new WebViewClient());
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDatabaseEnabled(true);
@@ -211,12 +208,6 @@ public class AppsManagementActivity extends AbstractGBActivity {
             @Override
             public void onPageFinished(WebView view, String weburl){
                 //webView.loadUrl("javascript:showToast('WebView in Espruino')");
-            }
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView vw, WebResourceRequest request) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, request.getUrl());
-                vw.getContext().startActivity(intent);
-                return true;
             }
 
             @Override
@@ -237,7 +228,7 @@ public class AppsManagementActivity extends AbstractGBActivity {
         }, 1000);
 
 
-        webView.setWebChromeClient(new WebChromeClient() {
+        webView.setWebChromeClient(new GBChromeClient() {
             @Override
             public void onPermissionRequest(final PermissionRequest request) {
                 request.grant(request.getResources());

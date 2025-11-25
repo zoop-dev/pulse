@@ -19,6 +19,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.banglejs;
 
+import static java.util.Collections.emptyMap;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_ALLOW_HIGH_MTU;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BANGLEJS_TEXT_BITMAP;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BANGLEJS_TEXT_BITMAP_SIZE;
@@ -58,21 +59,9 @@ import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -151,11 +140,10 @@ import nodomain.freeyourgadget.gadgetbridge.util.EmojiConverter;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
-import nodomain.freeyourgadget.gadgetbridge.util.InternetHelperSingleton;
+import nodomain.freeyourgadget.gadgetbridge.util.InternetUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.LimitedQueue;
 import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
-import nodomain.freeyourgadget.gadgetbridge.util.VolleyUtils;
 
 public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(BangleJSDeviceSupport.class);
@@ -188,10 +176,6 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     // this stores the globalUartReceiver (for uart.tx intents)
     private BroadcastReceiver globalUartReceiver = null;
-
-    // used to make HTTP requests and handle responses
-    private RequestQueue requestQueue = null;
-    private RequestQueue insecureRequestQueue = null;
 
     /// Maximum amount of characters to store in receiveHistory
     public static final int MAX_RECEIVE_HISTORY_CHARS = 100000;
@@ -226,7 +210,6 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             super.dispose();
             stopGlobalUartReceiver();
             stopLocationUpdate();
-            stopRequestQueue();
             handler.removeCallbacksAndMessages(null);
         }
     }
@@ -244,38 +227,6 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         LOG.info("Stop location updates");
         GBLocationService.stop(getContext(), getDevice());
         gpsUpdateSetup = false;
-    }
-
-    private void stopRequestQueue() {
-        if (requestQueue != null) {
-            requestQueue.stop();
-        }
-        if (insecureRequestQueue != null) {
-            insecureRequestQueue.stop();
-        }
-    }
-
-    private RequestQueue getRequestQueue(final boolean insecure) {
-        if (insecure) {
-            if (insecureRequestQueue == null) {
-                try {
-                    insecureRequestQueue = Volley.newRequestQueue(
-                            getContext(),
-                            VolleyUtils.createInsecureHurlStack()
-                    );
-                } catch (final Exception e) {
-                    LOG.error("Failed to initialized insecure request queue", e);
-                    // fallback to secure one
-                    return getRequestQueue(false);
-                }
-            }
-            return insecureRequestQueue;
-        } else {
-            if (requestQueue == null) {
-                requestQueue = Volley.newRequestQueue(getContext());
-            }
-            return requestQueue;
-        }
     }
 
     private void addReceiveHistory(String s) {
@@ -924,123 +875,37 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         }
 
         Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()));
-        if (! devicePrefs.getBoolean(PREF_DEVICE_INTERNET_ACCESS, false)) {
+        if (!devicePrefs.getBoolean(PREF_DEVICE_INTERNET_ACCESS, false)) {
             uartTxJSONError("http", "Internet access not enabled for this watch", id);
             return;
         }
 
         String url = json.getString("url");
         final boolean insecure = json.optBoolean("insecure", false);
-        int method = Request.Method.GET;
-        if (json.has("method")) {
-            String m = json.getString("method").toLowerCase(Locale.US);
-            if (m.equals("get")) method = Request.Method.GET;
-            else if (m.equals("post")) method = Request.Method.POST;
-            else if (m.equals("head")) method = Request.Method.HEAD;
-            else if (m.equals("put")) method = Request.Method.PUT;
-            else if (m.equals("patch")) method = Request.Method.PATCH;
-            else if (m.equals("delete")) method = Request.Method.DELETE;
-            else uartTxJSONError("http", "Unknown HTTP method "+m,id);
-        }
+        String method = json.getString("method").toUpperCase(Locale.US);
 
-        byte[] _body = null;
+        String body = null;
         if (json.has("body"))
-            _body = json.getString("body").getBytes();
-        final byte[] body = _body;
+            body = json.getString("body");
 
-        Map<String,String> _headers = null;
+        Map<String,String> headers = null;
         if (json.has("headers")) {
             JSONObject h = json.getJSONObject("headers");
-            _headers = new HashMap<String,String>();
+            headers = new HashMap<String,String>();
             Iterator<String> iter = h.keys();
             while (iter.hasNext()) {
                 String key = iter.next();
                 try {
                     String value = h.getString(key);
-                    _headers.put(key, value);
+                    headers.put(key, value);
                 } catch (JSONException e) {
                 }
             }
         }
-        final Map<String,String> headers = _headers;
+        if (headers == null) headers = emptyMap();
 
-        String _xmlPath = "";
-        String _xmlReturn = "";
-        try {
-            _xmlPath = json.getString("xpath");
-            _xmlReturn = json.getString("return");
-        } catch (JSONException e) {
-        }
-        final String xmlPath = _xmlPath;
-        final String xmlReturn = _xmlReturn;
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(method, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        JSONObject o = new JSONObject();
-                        if (xmlPath.length() != 0) {
-                            try {
-                                Document doc = Jsoup.parse(response);
-                                Elements result = doc.selectXpath(xmlPath);
-                                if (xmlReturn.equals("array")) {
-                                    response = null; // don't add it below
-                                    JSONArray arr = new JSONArray();
-                                    for (int i = 0; i < result.size(); i++)
-                                        arr.put(result.get(i).text());
-                                    o.put("resp", arr);
-                                } else { // else return only first!
-                                    response = "";
-                                    if (!result.isEmpty())
-                                        response = result.get(0).text();
-                                }
-                            } catch (Exception error) {
-                                uartTxJSONError("http", error.toString(), id);
-                                return;
-                            }
-                        }
-                        try {
-                            o.put("t", "http");
-                            if( id!=null)
-                                o.put("id", id);
-                            if (response!=null)
-                                o.put("resp", response);
-                        } catch (JSONException e) {
-                            GB.toast(getContext(), "HTTP: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
-                        }
-                        uartTxJSON("http", o);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                uartTxJSONError("http", error.toString(), id);
-            }
-        }) {
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                if (body == null) return super.getBody();
-                return body;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                // clone the data from super.getHeaders() so we can write to it
-                Map<String, String> h = new HashMap<>(super.getHeaders());
-                if (headers != null) {
-                    for (String key : headers.keySet()) {
-                        String value = headers.get(key);
-                        h.put(key, value);
-                    }
-                }
-                return h;
-            }
-        };
-        if (json.has("timeout")) {
-            int timeout = json.getInt("timeout");
-            stringRequest.setRetryPolicy(new DefaultRetryPolicy(timeout, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        }
-        RequestQueue queue = getRequestQueue(insecure);
-        queue.add(stringRequest);
+        JSONObject o = InternetUtils.Companion.doRequest(Uri.parse(url), method, headers, body, "application/json", insecure);
+        uartTxJSON("http", o);
     }
 
     /**

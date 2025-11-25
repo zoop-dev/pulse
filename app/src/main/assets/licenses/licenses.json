@@ -63,10 +63,10 @@
     "path": "licenses/desugar_jdk_libs.txt"
   },
   {
-    "name": "volley",
-    "owner": "Google",
+    "name": "okhttp",
+    "owner": "Square, Inc.",
     "type": "Apache 2.0",
-    "url": "https://github.com/google/volley",
+    "url": "https://github.com/square/okhttp",
     "path": "licenses/apache-2.0.txt"
   },
   {

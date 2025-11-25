@@ -55,7 +55,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.banglejs.BangleJSDeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.util.InternetHelperSingleton;
 
 public class BangleJSCoordinator extends AbstractBLEDeviceCoordinator {
 

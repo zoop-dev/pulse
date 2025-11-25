@@ -58,10 +58,6 @@ public class ExternalPebbleJSActivity extends AbstractGBActivity {
     private static final Logger LOG = LoggerFactory.getLogger(ExternalPebbleJSActivity.class);
 
     private Uri confUri;
-    /**
-     * When bgjs is enabled, this field refers to the WebViewSingleton,
-     * otherwise it refers to the legacy webview from the activity_legacy_external_pebble_js layout
-     */
     private WebView myWebView;
 
     @Override
