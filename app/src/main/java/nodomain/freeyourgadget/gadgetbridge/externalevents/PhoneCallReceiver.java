@@ -49,6 +49,8 @@ public class PhoneCallReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        LOG.debug("Got phone call intent: {}", intent.getAction());
+
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Service.TELEPHONY_SERVICE);
         if ("android.intent.action.NEW_OUTGOING_CALL".equals(intent.getAction())) {
             mSavedNumber = intent.getExtras().getString("android.intent.extra.PHONE_NUMBER");

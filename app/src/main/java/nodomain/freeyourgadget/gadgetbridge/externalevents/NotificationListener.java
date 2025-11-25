@@ -703,7 +703,7 @@ public class NotificationListener extends NotificationListenerService {
         boolean callStarted = false;
         if (noti.actions != null && noti.actions.length > 0) {
             for (Notification.Action action : noti.actions) {
-                LOG.info("Found call action: " + action.title);
+                LOG.info("Found call action: {}", action.title);
             }
             if (noti.actions.length == 1) {
                 if (mLastCallCommand == CallSpec.CALL_INCOMING) {
@@ -721,6 +721,22 @@ public class NotificationListener extends NotificationListenerService {
             } catch (PendingIntent.CanceledException e) {
                 e.printStackTrace();
             }*/
+        }
+
+        if (app.equals("com.microsoft.teams")) {
+            // #5525 - microsoft teams spams notifications with slightly increasing timestamps
+            // we use a different key for the burst prevention to prevent suppressing notifications
+            final String burstPreventionKey = "call:" + app;
+            final Long notificationBurstPreventionValue = notificationBurstPrevention.get(burstPreventionKey);
+            long curTime = System.nanoTime();
+            if (notificationBurstPreventionValue != null) {
+                long diff = curTime - notificationBurstPreventionValue;
+                if (diff < TimeUnit.SECONDS.toNanos(1)) {
+                    LOG.info("Ignoring burst call notification from microsoft teams, last one was {} ms ago", TimeUnit.NANOSECONDS.toMillis(diff));
+                    return;
+                }
+            }
+            notificationBurstPrevention.put(burstPreventionKey, curTime);
         }
 
         // figure out sender
