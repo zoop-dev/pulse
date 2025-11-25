@@ -4091,4 +4091,5 @@
     <string name="movementRhythm">Rytmus</string>
     <string name="movementSpeedDecay">Úbytek rychlosti</string>
     <string name="movement_evaluation">Hodnocení pohybu</string>
+    <string name="pref_title_notifications_when_screen_saver">…také při zapnutém spořiči obrazovky</string>
 </resources>
