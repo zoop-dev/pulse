@@ -56,7 +56,7 @@ public class GBDaoGenerator {
     private static final String TIMESTAMP_TO = "timestampTo";
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(119, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(120, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -171,6 +171,7 @@ public class GBDaoGenerator {
         addHuaweiStressSample(schema, user, device);
         addHuaweiSleepStageSample(schema, user, device);
         addHuaweiSleepStatsSample(schema, user, device);
+        addHuaweiSleepApneaSample(schema, user, device);
         addHuaweiTemperatureSample(schema, user, device);
         addHuaweiHrvValuesSample(schema, user, device);
         addHuaweiEmotionsSample(schema, user, device);
@@ -1578,6 +1579,14 @@ public class GBDaoGenerator {
         addCommonTimeSampleProperties("AbstractTimeSample", sleepStageSample, user, device);
         sleepStageSample.addIntProperty("stage").notNull();
         return sleepStageSample;
+    }
+
+    private static Entity addHuaweiSleepApneaSample(Schema schema, Entity user, Entity device) {
+        Entity sleepApneaSample = addEntity(schema, "HuaweiSleepApneaSample");
+        addCommonTimeSampleProperties("AbstractTimeSample", sleepApneaSample, user, device);
+        sleepApneaSample.addLongProperty("lastTimestamp").notNull().index();
+        sleepApneaSample.addIntProperty("level").notNull();
+        return sleepApneaSample;
     }
 
     private static Entity addHuaweiSleepStatsSample(Schema schema, Entity user, Entity device) {

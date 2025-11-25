@@ -20,90 +20,90 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTLV;
 
 public class AccountRelated {
-	public static final byte id = 0x1A;
+    public static final byte id = 0x1A;
 
-	public static class SendAccountToDevice {
-		public static final byte id = 0x01;
+    public static class SendAccountToDevice {
+        public static final byte id = 0x01;
 
-		public static class Request extends HuaweiPacket {
-			public Request (ParamsProvider paramsProvider, String account) {
-				super(paramsProvider);
+        public static class Request extends HuaweiPacket {
+            public Request(ParamsProvider paramsProvider, String account) {
+                super(paramsProvider);
 
-				this.serviceId = AccountRelated.id;
-				this.commandId = id;
+                this.serviceId = AccountRelated.id;
+                this.commandId = id;
 
-				this.tlv = new HuaweiTLV();
-				if (account.length() > 0) {
-					tlv.put(0x01, account);
-				} else {
-					tlv.put(0x01);
-				}
-				this.complete = true;
-			}
-		}
+                this.tlv = new HuaweiTLV();
+                if (!account.isEmpty()) {
+                    tlv.put(0x01, account);
+                } else {
+                    tlv.put(0x01);
+                }
+                this.complete = true;
+            }
+        }
 
-		public static class Response extends HuaweiPacket {
-			public Response (ParamsProvider paramsProvider) {
-				super(paramsProvider);
-			}
-		}
-	}
+        public static class Response extends HuaweiPacket {
+            public Response(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+            }
+        }
+    }
 
-	public static class SendExtendedAccountToDevice {
-		public static final byte id = 0x05;
+    public static class SendExtendedAccountToDevice {
+        public static final byte id = 0x05;
 
-		public static class Request extends HuaweiPacket {
-			public Request (ParamsProvider paramsProvider, boolean accountPairingOptimization, String account) {
-				super(paramsProvider);
+        public static class Request extends HuaweiPacket {
+            public Request(ParamsProvider paramsProvider, boolean accountPairingOptimization, String account) {
+                super(paramsProvider);
 
-				this.serviceId = AccountRelated.id;
-				this.commandId = id;
+                this.serviceId = AccountRelated.id;
+                this.commandId = id;
 
-				this.tlv = new HuaweiTLV();
-				if (account.length() > 0) {
-					tlv.put(0x01, account);
-				} else {
-					tlv.put(0x01, (byte)0x00);
-				}
+                this.tlv = new HuaweiTLV();
+                if (!account.isEmpty()) {
+                    tlv.put(0x01, account);
+                } else {
+                    tlv.put(0x01, (byte) 0x00);
+                }
 
-				if (accountPairingOptimization) {
-					this.tlv.put(0x03, (byte)0x01);
-				}
-				this.complete = true;
-			}
-		}
+                if (accountPairingOptimization) {
+                    this.tlv.put(0x03, (byte) 0x01);
+                }
+                this.complete = true;
+            }
+        }
 
-		public static class Response extends HuaweiPacket {
-			public Response (ParamsProvider paramsProvider) {
-				super(paramsProvider);
-			}
-		}
-	}
+        public static class Response extends HuaweiPacket {
+            public Response(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+            }
+        }
+    }
 
-	public static class SendCountryCodeToDevice {
-		public static final byte id = 0x0a;
+    public static class SendCountryCodeToDevice {
+        public static final byte id = 0x0a;
 
-		public static class Request extends HuaweiPacket {
-			public Request (ParamsProvider paramsProvider, String countryCode, Byte siteId) {
-				super(paramsProvider);
+        public static class Request extends HuaweiPacket {
+            public Request(ParamsProvider paramsProvider, String countryCode, Byte siteId) {
+                super(paramsProvider);
 
-				this.serviceId = AccountRelated.id;
-				this.commandId = id;
+                this.serviceId = AccountRelated.id;
+                this.commandId = id;
 
-				this.tlv = new HuaweiTLV();
+                this.tlv = new HuaweiTLV();
 
-				tlv.put(0x01, countryCode);
-                if(siteId != null) {
-					tlv.put(0x02, siteId);
-				}
-				this.complete = true;
-			}
-		}
+                tlv.put(0x01, countryCode);
+                if (siteId != null) {
+                    tlv.put(0x02, siteId);
+                }
+                this.complete = true;
+            }
+        }
 
-		public static class Response extends HuaweiPacket {
-			public Response (ParamsProvider paramsProvider) {
-				super(paramsProvider);
-			}
-		}
-	}
+        public static class Response extends HuaweiPacket {
+            public Response(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+            }
+        }
+    }
 }

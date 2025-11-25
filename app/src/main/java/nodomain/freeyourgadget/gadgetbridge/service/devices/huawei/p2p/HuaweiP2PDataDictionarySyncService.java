@@ -91,6 +91,8 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
                 result.add(cl);
             } else if(cl == HuaweiDictTypes.EMOTION_CLASS && coordinator.supportsEmotion()) {
                 result.add(cl);
+            } else if(cl == HuaweiDictTypes.SLEEP_APNEA_CLASS && coordinator.supportsSleepApnea()) {
+                result.add(cl);
             }
         }
         return result;

@@ -44,6 +44,7 @@ import java.nio.charset.StandardCharsets;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -77,6 +78,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiHrvValueSampleP
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiSequenceDataFileParser;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiSleepApneaSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiSleepStageSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiSleepStatsSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiStressParser;
@@ -97,6 +99,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiEmotionsSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiHrvValueSample;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepApneaSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStageSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStatsSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiStressSample;
@@ -1578,7 +1581,11 @@ public class HuaweiSupportProvider {
         HuaweiP2PDataDictionarySyncService P2PSyncService = HuaweiP2PDataDictionarySyncService.getRegisteredInstance(huaweiP2PManager);
 
         if (P2PSyncService != null) {
-            List<Integer> list = P2PSyncService.checkSupported(this.getHuaweiCoordinator(), Arrays.asList(HuaweiDictTypes.SKIN_TEMPERATURE_CLASS, HuaweiDictTypes.HRV_CLASS, HuaweiDictTypes.EMOTION_CLASS));
+            List<Integer> list = P2PSyncService.checkSupported(this.getHuaweiCoordinator(), Arrays.asList(
+                    HuaweiDictTypes.SKIN_TEMPERATURE_CLASS,
+                    HuaweiDictTypes.HRV_CLASS,
+                    HuaweiDictTypes.EMOTION_CLASS,
+                    HuaweiDictTypes.SLEEP_APNEA_CLASS));
             if (!list.isEmpty()) {
                 syncState.setP2pSync(true);
                 P2PSyncService.startSync(list, new HuaweiP2PDataDictionarySyncService.DictionarySyncCallback() {
@@ -1590,7 +1597,7 @@ public class HuaweiSupportProvider {
                                 HuaweiTemperatureSampleProvider sleepStatsSampleProvider = new HuaweiTemperatureSampleProvider(gbDevice, db.getDaoSession());
                                 return sleepStatsSampleProvider.getLastFetchTimestamp();
                             } catch (Exception e) {
-                                LOG.warn("Exception for getting temperature start time", e);
+                                LOG.warn("Exception for getting skin temperature start time", e);
                             }
                             return 0;
                         } else if (dictClass == HuaweiDictTypes.HRV_CLASS) {
@@ -1606,8 +1613,10 @@ public class HuaweiSupportProvider {
                                 HuaweiEmotionsSampleProvider emotionsStatsSampleProvider = new HuaweiEmotionsSampleProvider(gbDevice, db.getDaoSession());
                                 return emotionsStatsSampleProvider.getLastFetchTimestamp();
                             } catch (Exception e) {
-                                LOG.warn("Exception for getting HRV start time", e);
+                                LOG.warn("Exception for getting emotion start time", e);
                             }
+                            return 0;
+                        } else if (dictClass == HuaweiDictTypes.SLEEP_APNEA_CLASS) {
                             return 0;
                         }
                         return -1;
@@ -1621,19 +1630,29 @@ public class HuaweiSupportProvider {
                             for (HuaweiP2PDataDictionarySyncService.DictData dt : dictData) {
                                 long timestamp = dt.getStartTimestamp();
                                 long lastTime = Math.max(dt.getEndTimestamp(), dt.getModifyTimestamp());
+                                Float temperature = null;
                                 for (HuaweiP2PDataDictionarySyncService.DictData.DictDataValue val : dt.getData()) {
-                                    if (val.getTag() == 10 && val.getDataType() == HuaweiDictTypes.SKIN_TEMPERATURE_VALUE) {
-                                        double skinTemperature = HuaweiUtil.convBytes2Double(val.getValue());
-                                        if (skinTemperature >= 20 && skinTemperature <= 42) {
-                                            HuaweiTemperatureSample sample = new HuaweiTemperatureSample();
-                                            sample.setTimestamp(timestamp);
-                                            sample.setLastTimestamp(lastTime);
-                                            sample.setTemperature((float) skinTemperature);
-                                            sample.setTemperatureType(TemperatureSample.TYPE_SKIN);
-                                            sample.setTemperatureLocation(TemperatureSample.LOCATION_WRIST);
-                                            temperatureSamples.add(sample);
-                                        }
+                                    if (val.getTag() != 10) {
+                                        LOG.info("skin temperature unexpected tag: {}", val.getTag());
+                                        continue;
                                     }
+                                    if (val.getDataType() == HuaweiDictTypes.SKIN_TEMPERATURE_VALUE) {
+                                        double value = HuaweiUtil.convBytes2Double(val.getValue());
+                                        if (value >= 20 && value <= 42) {
+                                             temperature = (float) value;
+                                        }
+                                    } else {
+                                        LOG.info("skin temperature unknown data type: {}", val.getDataType());
+                                    }
+                                }
+                                if(temperature != null) {
+                                    HuaweiTemperatureSample sample = new HuaweiTemperatureSample();
+                                    sample.setTimestamp(timestamp);
+                                    sample.setLastTimestamp(lastTime);
+                                    sample.setTemperature(temperature);
+                                    sample.setTemperatureType(TemperatureSample.TYPE_SKIN);
+                                    sample.setTemperatureLocation(TemperatureSample.LOCATION_WRIST);
+                                    temperatureSamples.add(sample);
                                 }
                             }
                             try (DBHandler db = GBApplication.acquireDB()) {
@@ -1647,25 +1666,34 @@ public class HuaweiSupportProvider {
                             for (HuaweiP2PDataDictionarySyncService.DictData dt : dictData) {
                                 long timestamp = dt.getStartTimestamp();
                                 long lastTime = Math.max(dt.getEndTimestamp(), dt.getModifyTimestamp());
+                                Integer rmssd = null;
                                 for (HuaweiP2PDataDictionarySyncService.DictData.DictDataValue val : dt.getData()) {
-                                    if (val.getTag() == 10 && val.getDataType() == HuaweiDictTypes.HRV_RMSSD_VALUE) {
-                                        double rmssd = HuaweiUtil.convBytes2Double(val.getValue());
-                                        int value = (int) rmssd;
-                                        if (value >= 0 && value <= 200) {
-                                            HuaweiHrvValueSample sample = new HuaweiHrvValueSample();
-                                            sample.setTimestamp(timestamp);
-                                            sample.setLastTimestamp(lastTime);
-                                            sample.setValue(value);
-                                            hrvSamples.add(sample);
-                                        }
+                                    if (val.getTag() != 10) {
+                                        LOG.info("HRV unexpected tag: {}", val.getTag());
+                                        continue;
                                     }
+                                    if (val.getDataType() == HuaweiDictTypes.HRV_RMSSD_VALUE) {
+                                        double value = HuaweiUtil.convBytes2Double(val.getValue());
+                                        if (value >= 0 && value <= 200) {
+                                            rmssd = (int) value;
+                                        }
+                                    } else {
+                                        LOG.info("HRV unknown data type: {}", val.getDataType());
+                                    }
+                                }
+                                if(rmssd != null) {
+                                    HuaweiHrvValueSample sample = new HuaweiHrvValueSample();
+                                    sample.setTimestamp(timestamp);
+                                    sample.setLastTimestamp(lastTime);
+                                    sample.setValue(rmssd);
+                                    hrvSamples.add(sample);
                                 }
                             }
                             try (DBHandler db = GBApplication.acquireDB()) {
                                 final DaoSession session = db.getDaoSession();
                                 new HuaweiHrvValueSampleProvider(gbDevice, session).persistForDevice(context, gbDevice, hrvSamples);
                             } catch (Exception e) {
-                                LOG.error("Cannot save skin HRV samples, continue");
+                                LOG.error("Cannot save HRV samples, continue");
                             }
                         } else if (dictClass == HuaweiDictTypes.EMOTION_CLASS) {
                             List<HuaweiEmotionsSample> emotionsSamples = new ArrayList<>();
@@ -1704,7 +1732,6 @@ public class HuaweiSupportProvider {
                                     } else {
                                         LOG.info("emotions unknown data type: {}", val.getDataType());
                                     }
-
                                 }
                                 if (status != null || valenceCharacter != null || originStatus != null || arousalCharacter != null) {
                                     HuaweiEmotionsSample sample = new HuaweiEmotionsSample();
@@ -1716,13 +1743,49 @@ public class HuaweiSupportProvider {
                                     sample.setArousalCharacter(arousalCharacter);
                                     emotionsSamples.add(sample);
                                 }
-
                             }
                             try (DBHandler db = GBApplication.acquireDB()) {
                                 final DaoSession session = db.getDaoSession();
                                 new HuaweiEmotionsSampleProvider(gbDevice, session).persistForDevice(context, gbDevice, emotionsSamples);
                             } catch (Exception e) {
-                                LOG.error("Cannot save skin emotions samples, continue");
+                                LOG.error("Cannot save emotions samples, continue");
+                            }
+                        } else if (dictClass == HuaweiDictTypes.SLEEP_APNEA_CLASS) {
+                            List<HuaweiSleepApneaSample> sleepApneaSamples = new ArrayList<>();
+                            for (HuaweiP2PDataDictionarySyncService.DictData dt : dictData) {
+                                long timestamp = dt.getStartTimestamp();
+                                long lastTime = Math.max(dt.getEndTimestamp(), dt.getModifyTimestamp());
+                                Integer level = null;
+                                for (HuaweiP2PDataDictionarySyncService.DictData.DictDataValue val : dt.getData()) {
+                                    if (val.getTag() == 10) {
+                                        if (val.getDataType() == HuaweiDictTypes.SLEEP_APNEA_LEVEL_VALUE) {
+                                            int value = (int) HuaweiUtil.convBytes2Double(val.getValue());
+                                            if (value == 1 || value == 2 || value == 3 || value == 4) {
+                                                level = value;
+                                            } else {
+                                                LOG.info("sleep apnea invalid value: {}", value);
+                                            }
+                                        } else {
+                                            LOG.info("sleep apnea unknown data type: {}", val.getDataType());
+                                        }
+                                    } else {
+                                        LOG.info("sleep apnea unsupported tag: {}", val.getTag());
+                                    }
+                                }
+                                if(level != null) {
+                                    LOG.info("APNEA  timestamp: {}  lastTime: {} level: {}", new Date(timestamp), lastTime, level);
+                                    HuaweiSleepApneaSample sample = new HuaweiSleepApneaSample();
+                                    sample.setTimestamp(timestamp);
+                                    sample.setLastTimestamp(lastTime);
+                                    sample.setLevel(level);
+                                    sleepApneaSamples.add(sample);
+                                }
+                            }
+                            try (DBHandler db = GBApplication.acquireDB()) {
+                                final DaoSession session = db.getDaoSession();
+                                new HuaweiSleepApneaSampleProvider(gbDevice, session).persistForDevice(context, gbDevice, sleepApneaSamples);
+                            } catch (Exception e) {
+                                LOG.error("Cannot save sleep apnea samples, continue");
                             }
                         }
                     }
@@ -3391,13 +3454,10 @@ public class HuaweiSupportProvider {
 
     public void onTestNewFunction() {
 
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                long startTime = System.nanoTime();
-                boolean ret = HuaweiCompatTemperatureSampleProvider.migrateOldData();
-                LOG.info("Migrating: {}  Took : {} ms", ret ? "OK" : "Error", ((System.nanoTime() - startTime) / 1000000.0));
-            }
+        AsyncTask.execute(() -> {
+            long startTime = System.nanoTime();
+            boolean ret = HuaweiCompatTemperatureSampleProvider.migrateOldData();
+            LOG.info("Migrating: {}  Took : {} ms", ret ? "OK" : "Error", ((System.nanoTime() - startTime) / 1000000.0));
         });
     }
 
