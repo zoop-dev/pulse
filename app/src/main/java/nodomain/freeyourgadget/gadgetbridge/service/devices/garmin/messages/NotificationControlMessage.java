@@ -87,7 +87,8 @@ public class NotificationControlMessage extends GFDIMessage {
             final int notificationId = reader.readInt();
             final int actionId = reader.readByte();
             final NotificationsHandler.NotificationAction notificationAction = NotificationsHandler.NotificationAction.fromCode(actionId);
-            final String actionString = reader.readNullTerminatedString();
+            // non-reply action might not have an action string at all in recent firmwares
+            final String actionString = reader.remaining() > 0 ? reader.readNullTerminatedString() : null;
             return new NotificationControlMessage(garminMessage, command, notificationId, notificationAction, actionString);
         } else if (command == GET_APP_ATTRIBUTES) {
             final String appIdentifier = reader.readNullTerminatedString();
