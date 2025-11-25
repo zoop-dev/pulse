@@ -352,14 +352,14 @@ public class LoadFragment extends AbstractChartFragment<LoadFragment.LoadsData> 
         return sampleProvider.getAllSamples(tsFrom * 1000L, tsTo * 1000L);
     }
 
-    private List<? extends GenericTrainingLoadChronicSample> getTrainingLoadChronicSamples(final DBHandler db, final GBDevice device, int tsFrom, long tsToMillis) {
+    private List<? extends GenericTrainingLoadChronicSample> getTrainingLoadChronicSamples(final DBHandler db, final GBDevice device, int tsFrom, int tsTo) {
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
         final TimeSampleProvider<? extends GenericTrainingLoadChronicSample> sampleProvider = coordinator.getTrainingChronicLoadSampleProvider(device, db.getDaoSession());
         if (sampleProvider == null) {
             LOG.warn("Device {} does not implement GenericTrainingLoadChronicSample", device);
             return new ArrayList<>();
         }
-        return sampleProvider.getAllSamples(tsFrom * 1000L, tsToMillis);
+        return sampleProvider.getAllSamples(tsFrom * 1000L, tsTo * 1000L);
     }
 
     private GenericTrainingLoadAcuteSample getLatestTrainingLoadAcuteSample(final DBHandler db, final GBDevice device, long tsToMillis) {
@@ -372,14 +372,14 @@ public class LoadFragment extends AbstractChartFragment<LoadFragment.LoadsData> 
         return sampleProvider.getLatestSample(tsToMillis);
     }
 
-    private GenericTrainingLoadChronicSample getLatestTrainingLoadChronicSample(final DBHandler db, final GBDevice device, long tsTo) {
+    private GenericTrainingLoadChronicSample getLatestTrainingLoadChronicSample(final DBHandler db, final GBDevice device, long tsToMillis) {
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
         final TimeSampleProvider<? extends GenericTrainingLoadChronicSample> sampleProvider = coordinator.getTrainingChronicLoadSampleProvider(device, db.getDaoSession());
         if (sampleProvider == null) {
             LOG.warn("Device {} does not implement GenericTrainingLoadChronicSample", device);
             return null;
         }
-        return sampleProvider.getLatestSample(tsTo * 1000L);
+        return sampleProvider.getLatestSample(tsToMillis);
     }
 
     private void setupAcuteLoadChart() {
