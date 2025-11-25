@@ -804,6 +804,12 @@ public class HuaweiCoordinator {
         return false;
     }
 
+    public boolean supportsNotificationsStartCall() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(74);
+        return false;
+    }
+
     public boolean supportsNotificationsAddIconTimestamp() {
         if (supportsExpandCapability())
             return supportsExpandCapability(77);
@@ -996,7 +1002,7 @@ public class HuaweiCoordinator {
         return (((notificationCapabilities >> 1) & 1) == 0);
     }
 
-    public boolean supportsOutgoingCall () {
+    public boolean supportsOutgoingCall() {
         return (((notificationCapabilities >> 2) & 1) == 0);
     }
 
@@ -1004,7 +1010,7 @@ public class HuaweiCoordinator {
         return supportsNotificationConstraint(NotificationConstraintsType.yellowPagesSupport);
     }
 
-    public boolean supportsContentSIgn() {
+    public boolean supportsContentSign() {
         return supportsNotificationConstraint(NotificationConstraintsType.contentSignSupport);
     }
 
@@ -1024,7 +1030,7 @@ public class HuaweiCoordinator {
         return getNotificationConstraint(NotificationConstraintsType.contentSignFormat);
     }
 
-    public int getIncomingFormatFormat() {
+    public int getIncomingNumberFormat() {
         return getNotificationConstraint(NotificationConstraintsType.incomingNumberFormat);
     }
 

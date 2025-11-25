@@ -87,6 +87,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTrueSleepSequen
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiUtil;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.CameraRemote;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.GpsAndTime;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Notifications;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Weather;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Workout;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.ui.HuaweiStressCalibrationFragment;
@@ -1911,7 +1912,7 @@ public class HuaweiSupportProvider {
     }
 
     public void onSetCallState(CallSpec callSpec) {
-        if (callSpec.command == CallSpec.CALL_INCOMING) {
+        if (callSpec.command == CallSpec.CALL_INCOMING || (callSpec.command == CallSpec.CALL_OUTGOING && getHuaweiCoordinator().supportsOutgoingCall())) {
             SendNotificationRequest sendNotificationReq = new SendNotificationRequest(this);
             try {
                 sendNotificationReq.buildNotificationTLVFromCallSpec(callSpec);
@@ -1921,11 +1922,19 @@ public class HuaweiSupportProvider {
             }
         } else if (
                 callSpec.command == CallSpec.CALL_ACCEPT ||
-                        callSpec.command == CallSpec.CALL_START ||
+                        callSpec.command == CallSpec.CALL_START) {
+            byte type = getHuaweiCoordinator().supportsNotificationsStartCall()?Notifications.NotificationType.startCall:Notifications.NotificationType.stopNotification;
+            StopNotificationRequest stopNotificationRequest = new StopNotificationRequest(this, type);
+            try {
+                stopNotificationRequest.doPerform();
+            } catch (IOException e) {
+                LOG.error("Failed to send stop call notification", e);
+            }
+        }else if (
                         callSpec.command == CallSpec.CALL_REJECT ||
                         callSpec.command == CallSpec.CALL_END
         ) {
-            StopNotificationRequest stopNotificationRequest = new StopNotificationRequest(this);
+            StopNotificationRequest stopNotificationRequest = new StopNotificationRequest(this, Notifications.NotificationType.stopNotification);
             try {
                 stopNotificationRequest.doPerform();
             } catch (IOException e) {

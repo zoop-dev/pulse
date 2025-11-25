@@ -21,6 +21,7 @@ import static nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.Huawei
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
@@ -95,29 +96,58 @@ public class SendNotificationRequest extends Request {
         params.category = notificationSpec.category;
         params.address = notificationSpec.phoneNumber;
 
+        ArrayList<Notifications.NotificationActionRequest.TextElement> content = new ArrayList<>();
+        content.add(
+                new Notifications.NotificationActionRequest.TextElement(
+                        (byte)Notifications.TextType.title,
+                        (byte)supportProvider.getHuaweiCoordinator().getContentFormat(),
+                        title)
+        );
+        content.add(
+                new Notifications.NotificationActionRequest.TextElement(
+                        (byte) Notifications.TextType.sender,
+                        (byte)supportProvider.getHuaweiCoordinator().getContentFormat(),
+                        notificationSpec.sender)
+        );
+        content.add(
+                new Notifications.NotificationActionRequest.TextElement(
+                        (byte) Notifications.TextType.text,
+                        (byte)supportProvider.getHuaweiCoordinator().getContentFormat(),
+                        body)
+        );
 
         this.packet = new Notifications.NotificationActionRequest(
                 paramsProvider,
                 supportProvider.getNotificationId(),
                 getNotificationType(notificationSpec.type),
-                supportProvider.getHuaweiCoordinator().getContentFormat(),
-                title,
-                notificationSpec.sender,
-                body,
+                content,
                 notificationSpec.sourceAppId,
                 params
         );
     }
 
     public void buildNotificationTLVFromCallSpec(CallSpec callSpec) {
+        ArrayList<Notifications.NotificationActionRequest.TextElement> content = new ArrayList<>();
+        content.add(
+                new Notifications.NotificationActionRequest.TextElement(
+                        (byte) Notifications.TextType.text,
+                        (byte)supportProvider.getHuaweiCoordinator().getContentFormat(),
+                        callSpec.name)
+        );
+        if(supportProvider.getHuaweiCoordinator().supportsIncomingNumber()) {
+            content.add(
+                    new Notifications.NotificationActionRequest.TextElement(
+                            (byte) Notifications.TextType.flight,
+                            (byte) supportProvider.getHuaweiCoordinator().getIncomingNumberFormat(),
+                            callSpec.number)
+            );
+        }
+        final byte notificationType = callSpec.command == CallSpec.CALL_OUTGOING?Notifications.NotificationType.outgoingCall:Notifications.NotificationType.call;
         this.packet = new Notifications.NotificationActionRequest(
                 paramsProvider,
                 supportProvider.getNotificationId(),
-                Notifications.NotificationType.call,
-                supportProvider.getHuaweiCoordinator().getContentFormat(),
-                callSpec.name,
-                callSpec.name,
-                callSpec.name,
+                notificationType,
+                content,
                 null,
                 null
         );
