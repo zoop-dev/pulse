@@ -36,6 +36,12 @@ public class CallSpec {
      */
     public String sourceAppId;
 
+    public String key;
+    public String channelId;
+    public String category;
+
+    public boolean isVoip = false;
+
     public int command;
     public int dndSuppressed;
 }

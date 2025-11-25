@@ -64,6 +64,8 @@ public class Notifications {
             public byte subscriptionId = 0;
             public String address = "";
             public String category = "";
+            public int voipType = 0;
+            public long when = 0;
         }
 
         // TODO: support other types of notifications
@@ -90,12 +92,6 @@ public class Notifications {
                 short msgId,
                 byte notificationType,
                 ArrayList<TextElement> content,
-//                int encoding,
-//                String titleContent,
-//                String senderContent,
-//                String bodyContent,
-//                int numberFormat,
-//                String numberContent,
                 String sourceAppId,
                 AdditionalParams addParams
         ) {
@@ -132,7 +128,6 @@ public class Notifications {
                 this.tlv.put(0x11, sourceAppId.length() > 127?sourceAppId.substring(0, 127): sourceAppId);
 
             if(addParams != null) {
-
                 if(!TextUtils.isEmpty(addParams.category)) { // type >= 34
                     this.tlv.put(0x12, addParams.category); // "imcall" also possible value, not standard for android
                 }
@@ -150,6 +145,13 @@ public class Notifications {
                     this.tlv.put(0x19, (addParams.notificationKey != null) ? addParams.notificationKey : "");
                     this.tlv.put(0x1a, addParams.notificationId);
                     this.tlv.put(0x1b, (addParams.channelId != null) ? addParams.channelId : "");
+                }
+                if(addParams.voipType != 0) {
+                    this.tlv.put(0x29, (byte)addParams.voipType);
+                }
+
+                if(addParams.when != 0) {
+                    this.tlv.put(0x32, addParams.when);
                 }
             }
 

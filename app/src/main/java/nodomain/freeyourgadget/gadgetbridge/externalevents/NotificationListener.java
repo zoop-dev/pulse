@@ -761,6 +761,15 @@ public class NotificationListener extends NotificationListenerService {
         if (appName != null) {
             callSpec.sourceName = appName;
         }
+
+        callSpec.isVoip = true;
+
+        callSpec.key = sbn.getKey();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            callSpec.channelId = noti.getChannelId();
+        }
+        callSpec.category = noti.category;
+
         callSpec.command = callStarted ? CallSpec.CALL_START : CallSpec.CALL_INCOMING;
         mLastCallCommand = callSpec.command;
         GBApplication.deviceService().onSetCallState(callSpec);

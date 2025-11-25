@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests;
 
+import static nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiNotificationsManager.getCallSpecKey;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiNotificationsManager.getNotificationKey;
 
 import org.slf4j.Logger;
@@ -23,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Notifications;
@@ -95,6 +97,7 @@ public class SendNotificationRequest extends Request {
         params.channelId = notificationSpec.channelId;
         params.category = notificationSpec.category;
         params.address = notificationSpec.phoneNumber;
+        params.when = notificationSpec.when;
 
         ArrayList<Notifications.NotificationActionRequest.TextElement> content = new ArrayList<>();
         content.add(
@@ -127,6 +130,11 @@ public class SendNotificationRequest extends Request {
     }
 
     public void buildNotificationTLVFromCallSpec(CallSpec callSpec) {
+        byte notificationType = callSpec.command == CallSpec.CALL_OUTGOING?Notifications.NotificationType.outgoingCall:Notifications.NotificationType.call;
+
+        Notifications.NotificationActionRequest.AdditionalParams params = null;
+        String sourceAppId = null;
+
         ArrayList<Notifications.NotificationActionRequest.TextElement> content = new ArrayList<>();
         content.add(
                 new Notifications.NotificationActionRequest.TextElement(
@@ -134,6 +142,54 @@ public class SendNotificationRequest extends Request {
                         (byte)supportProvider.getHuaweiCoordinator().getContentFormat(),
                         callSpec.name)
         );
+
+        if(callSpec.isVoip && callSpec.command == CallSpec.CALL_INCOMING) {
+            sourceAppId = callSpec.sourceAppId;
+            params = new Notifications.NotificationActionRequest.AdditionalParams();
+
+            params.supportsReply = supportProvider.getHuaweiCoordinator().supportsNotificationsReply();
+            params.supportsRepeatedNotify = supportProvider.getHuaweiCoordinator().supportsNotificationsRepeatedNotify();
+            params.supportsRemoveSingle = supportProvider.getHuaweiCoordinator().supportsNotificationsRemoveSingle();
+            params.supportsReplyActions = supportProvider.getHuaweiCoordinator().supportsNotificationsReplyActions();
+            params.supportsTimestamp = supportProvider.getHuaweiCoordinator().supportsNotificationsAddIconTimestamp();
+
+            params.notificationId = new Random().nextInt(Integer.MAX_VALUE - 1);
+            params.notificationKey = getCallSpecKey(callSpec, params.notificationId);
+            params.channelId = callSpec.channelId;
+            if(supportProvider.getHuaweiCoordinator().supportsVoipType3()) {
+                params.category = "imcall";
+            } else {
+                params.category = callSpec.category;
+            }
+            params.address = null;
+            if(supportProvider.getHuaweiCoordinator().supportsVoipType2()) {
+                params.voipType = 1;
+            }
+            if (supportProvider.getHuaweiCoordinator().supportsVoipType1() || supportProvider.getHuaweiCoordinator().supportsVoipType2()) {
+                notificationType = Notifications.NotificationType.generic;
+
+                content.add(
+                        new Notifications.NotificationActionRequest.TextElement(
+                                (byte) Notifications.TextType.title,
+                                (byte) supportProvider.getHuaweiCoordinator().getContentFormat(),
+                                callSpec.name)
+                );
+                content.add(
+                        new Notifications.NotificationActionRequest.TextElement(
+                                (byte) Notifications.TextType.sender,
+                                (byte) supportProvider.getHuaweiCoordinator().getContentFormat(),
+                                callSpec.name)
+                );
+// TODO: Reject action, need to be parsed from the notification and added here. Then the watch send it back in the service id: 0x2  Command id: 0x11
+//                content.add(
+//                        new Notifications.NotificationActionRequest.TextElement(
+//                                (byte) 8,
+//                                (byte) supportProvider.getHuaweiCoordinator().getContentFormat(),
+//                                "REJECT_CALL")
+//                );
+            }
+        }
+
         if(supportProvider.getHuaweiCoordinator().supportsIncomingNumber()) {
             content.add(
                     new Notifications.NotificationActionRequest.TextElement(
@@ -142,14 +198,14 @@ public class SendNotificationRequest extends Request {
                             callSpec.number)
             );
         }
-        final byte notificationType = callSpec.command == CallSpec.CALL_OUTGOING?Notifications.NotificationType.outgoingCall:Notifications.NotificationType.call;
+
         this.packet = new Notifications.NotificationActionRequest(
                 paramsProvider,
                 supportProvider.getNotificationId(),
                 notificationType,
                 content,
-                null,
-                null
+                sourceAppId,
+                params
         );
     }
 

@@ -28,6 +28,7 @@ import java.util.Queue;
 
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventNotificationControl;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Notifications;
+import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendNotificationRequest;
@@ -64,6 +65,13 @@ public class HuaweiNotificationsManager {
             return notificationSpec.key;
         }
         return "0|" + notificationSpec.sourceAppId + "|" + notificationSpec.getId() + "||0";
+    }
+
+    public static String getCallSpecKey(CallSpec callSpec, int id) {
+        if(!TextUtils.isEmpty(callSpec.key)) {
+            return callSpec.key;
+        }
+        return "0|" + callSpec.sourceAppId + "|" + id + "||0";
     }
 
     public void onNotification(NotificationSpec notificationSpec) {

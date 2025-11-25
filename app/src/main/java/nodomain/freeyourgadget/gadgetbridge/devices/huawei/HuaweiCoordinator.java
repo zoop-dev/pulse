@@ -840,6 +840,24 @@ public class HuaweiCoordinator {
         return false;
     }
 
+    public boolean supportsVoipType1() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(249);
+        return false;
+    }
+
+    public boolean supportsVoipType2() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(185);
+        return false;
+    }
+
+    public boolean supportsVoipType3() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(152);
+        return false;
+    }
+
     public boolean supportsCannedReplies() {
         if (supportsExpandCapability())
             return supportsExpandCapability(82);

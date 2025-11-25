@@ -1010,6 +1010,10 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 callSpec.name = intentCopy.getStringExtra(EXTRA_CALL_DISPLAYNAME);
                 callSpec.sourceName = intentCopy.getStringExtra(EXTRA_CALL_SOURCENAME);
                 callSpec.sourceAppId = intentCopy.getStringExtra(EXTRA_CALL_SOURCEAPPID);
+                callSpec.key = intentCopy.getStringExtra(EXTRA_CALL_KEY);
+                callSpec.channelId = intentCopy.getStringExtra(EXTRA_CALL_CHANNELID);
+                callSpec.category = intentCopy.getStringExtra(EXTRA_CALL_CATEGORY);
+                callSpec.isVoip = intentCopy.getBooleanExtra(EXTRA_CALL_ISVOIP, false);
                 callSpec.dndSuppressed = intentCopy.getIntExtra(EXTRA_CALL_DNDSUPPRESSED, 0);
                 deviceSupport.onSetCallState(callSpec);
                 break;
