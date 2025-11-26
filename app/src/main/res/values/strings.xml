@@ -4473,4 +4473,7 @@
     <string name="internet_helper_permission_summary">Permit access to the Gadgetbridge-internethelper add-on app</string>
     <string name="internet_helper_pref_unused_settings_title">Unused settings</string>
     <string name="internet_helper_pref_unused_settings_summary">The settings below are not used because direct internet access is available.</string>
+    <string name="notification_channel_pebble_js_runner">Pebble JS runner</string>
+    <string name="notification_pebble_js_service_title">Pebble JavaScript service</string>
+    <string name="notification_pebble_js_service_text">Running Pebble app/watchface JavaScript</string>
 </resources>

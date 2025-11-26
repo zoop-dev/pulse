@@ -83,13 +83,13 @@ class PebbleJsService : Service() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             nm.createNotificationChannel(
-                NotificationChannel(GB.NOTIFICATION_CHANNEL_ID_PEBBLE_JS, "Pebble JS service", NotificationManager.IMPORTANCE_LOW)
+                NotificationChannel(GB.NOTIFICATION_CHANNEL_ID_PEBBLE_JS, getString(R.string.notification_channel_pebble_js_runner), NotificationManager.IMPORTANCE_LOW)
             )
         }
 
         val notification = NotificationCompat.Builder(this, GB.NOTIFICATION_CHANNEL_ID_PEBBLE_JS)
-            .setContentTitle("Pebble JavaScript service")
-            .setContentText("Running Pebble app/watchface JavaScript")
+            .setContentTitle(getString(R.string.notification_pebble_js_service_title))
+            .setContentText(getString(R.string.notification_pebble_js_service_text))
             .setSmallIcon(R.drawable.ic_play)
             .build()
 

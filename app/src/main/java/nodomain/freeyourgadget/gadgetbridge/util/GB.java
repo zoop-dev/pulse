@@ -177,7 +177,7 @@ public class GB {
 
             NotificationChannel channelPebbleJs = new NotificationChannel(
                     NOTIFICATION_CHANNEL_ID_PEBBLE_JS,
-                    "Pebble JS runner",
+                    context.getString(R.string.notification_channel_pebble_js_runner),
                     NotificationManager.IMPORTANCE_MIN);
             notificationManager.createNotificationChannel(channelPebbleJs);
         }
