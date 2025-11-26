@@ -20,40 +20,38 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.core.net.toUri
 import androidx.preference.Preference
-import nodomain.freeyourgadget.gadgetbridge.BuildConfig
+import androidx.preference.PreferenceFragmentCompat
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils
 import nodomain.freeyourgadget.gadgetbridge.util.PermissionsUtils.PACKAGE_INTERNET_HELPER
 
-class InternetHelperPreferencesActivity : AbstractGBActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
-
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.settings_container, InternetHelperPreferencesFragment())
-            .commit()
+class InternetHelperPreferencesActivity : AbstractSettingsActivityV2() {
+    override fun newFragment(): PreferenceFragmentCompat? {
+        return InternetHelperPreferencesFragment()
     }
 
-    class InternetHelperPreferencesFragment : AbstractPreferenceFragment() {
-        override fun onCreatePreferences(
-            savedInstanceState: Bundle?,
-            rootKey: String?
-        ) {
-            setPreferencesFromResource(R.xml.internethelper_preferences, rootKey)
-            val unusedWarning = findPreference<Preference>("pref_key_internethelper_unused")
-            unusedWarning?.isVisible = GBApplication.hasDirectInternetAccess();
-            val installWarning = findPreference<Preference>("pref_key_internethelper_not_installed")
-            if (AndroidUtils.isPackageInstalled(PACKAGE_INTERNET_HELPER)) {
-                installWarning?.isVisible = false
-            } else {
-                installWarning?.setOnPreferenceClickListener {
-                    val startIntent = Intent(Intent.ACTION_VIEW)
-                    startIntent.data = "https://codeberg.org/Freeyourgadget/Internethelper/releases".toUri()
-                    startActivity(startIntent)
-                    true
+    companion object {
+        class InternetHelperPreferencesFragment : AbstractPreferenceFragment() {
+            override fun onCreatePreferences(
+                savedInstanceState: Bundle?,
+                rootKey: String?
+            ) {
+                setPreferencesFromResource(R.xml.internethelper_preferences, rootKey)
+                val unusedWarning = findPreference<Preference>("pref_key_internethelper_unused")
+                unusedWarning?.isVisible = GBApplication.hasDirectInternetAccess();
+                val installWarning =
+                    findPreference<Preference>("pref_key_internethelper_not_installed")
+                if (AndroidUtils.isPackageInstalled(PACKAGE_INTERNET_HELPER)) {
+                    installWarning?.isVisible = false
+                } else {
+                    installWarning?.setOnPreferenceClickListener {
+                        val startIntent = Intent(Intent.ACTION_VIEW)
+                        startIntent.data =
+                            "https://codeberg.org/Freeyourgadget/Internethelper/releases".toUri()
+                        startActivity(startIntent)
+                        true
+                    }
                 }
             }
         }
