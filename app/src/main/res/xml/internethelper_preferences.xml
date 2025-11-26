@@ -4,11 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <Preference
         android:icon="@drawable/ic_warning"
-        android:key="pref_key_internethelper_unused"
-        android:title="@string/internet_helper_pref_unused_settings_title"
-        android:summary="@string/internet_helper_pref_unused_settings_summary" />
-    <Preference
-        android:icon="@drawable/ic_warning"
         android:key="pref_key_internethelper_not_installed"
         android:title="@string/internet_helper_pref_app_req_title"
         android:summary="@string/internet_helper_pref_app_req_summary" />

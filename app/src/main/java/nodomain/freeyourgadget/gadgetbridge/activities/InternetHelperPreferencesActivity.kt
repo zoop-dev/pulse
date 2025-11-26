@@ -38,8 +38,6 @@ class InternetHelperPreferencesActivity : AbstractSettingsActivityV2() {
                 rootKey: String?
             ) {
                 setPreferencesFromResource(R.xml.internethelper_preferences, rootKey)
-                val unusedWarning = findPreference<Preference>("pref_key_internethelper_unused")
-                unusedWarning?.isVisible = GBApplication.hasDirectInternetAccess();
                 val installWarning =
                     findPreference<Preference>("pref_key_internethelper_not_installed")
                 if (AndroidUtils.isPackageInstalled(PACKAGE_INTERNET_HELPER)) {

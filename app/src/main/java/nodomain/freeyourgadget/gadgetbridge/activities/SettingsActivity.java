@@ -364,11 +364,15 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
 
             pref = findPreference("pref_category_internethelper");
             if (pref != null) {
-                pref.setOnPreferenceClickListener(preference -> {
-                    Intent enableIntent = new Intent(requireContext(), InternetHelperPreferencesActivity.class);
-                    startActivity(enableIntent);
-                    return true;
-                });
+                if (GBApplication.hasDirectInternetAccess()) {
+                    pref.setVisible(false);
+                } else {
+                    pref.setOnPreferenceClickListener(preference -> {
+                        Intent enableIntent = new Intent(requireContext(), InternetHelperPreferencesActivity.class);
+                        startActivity(enableIntent);
+                        return true;
+                    });
+                }
             }
 
             pref = findPreference("pref_category_notifications");
