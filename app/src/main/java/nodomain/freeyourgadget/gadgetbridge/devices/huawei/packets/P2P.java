@@ -87,7 +87,7 @@ public class P2P {
                 // It sends byte from wearable but send integer to wearable
                 // So we have a change that other device can send different type.
                 if(this.tlv.contains(0x08))
-                    respCode = this.tlv.getByte(0x08);
+                    respCode = this.tlv.getAsInteger(0x08);
             }
 
         }

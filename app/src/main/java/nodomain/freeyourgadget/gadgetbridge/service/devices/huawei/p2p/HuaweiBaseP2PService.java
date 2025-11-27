@@ -74,27 +74,48 @@ public abstract class HuaweiBaseP2PService {
     public void sendCommand(byte[] sendData, HuaweiP2PCallback callback) {
         try {
             short seq = this.getNextSequence();
-            SendP2PCommand test = new SendP2PCommand(this.manager.getSupportProvider(), (byte) 2, seq, this.getModule(), this.getPackage(), this.getLocalFingerprint(), this.getFingerprint(), sendData, 0);
+            SendP2PCommand command2 = new SendP2PCommand(this.manager.getSupportProvider(), (byte) 2, seq, this.getModule(), this.getPackage(), this.getLocalFingerprint(), this.getFingerprint(), sendData, 0);
             if (callback != null) {
                 this.waitPackets.put(seq, callback);
             }
-            test.doPerform();
+            command2.doPerform();
         } catch (IOException e) {
-            LOG.error("Failed to send p2p command", e);
+            LOG.error("Failed to send p2p command 2", e);
+        }
+    }
+
+    public void sendCommand4(byte[] sendData, HuaweiP2PCallback callback) {
+        try {
+            short seq = this.getNextSequence();
+            SendP2PCommand command4 = new SendP2PCommand(this.manager.getSupportProvider(), (byte) 4, seq, this.getModule(), this.getPackage(), null, null, sendData, 0);
+            if (callback != null) {
+                this.waitPackets.put(seq, callback);
+            }
+            command4.doPerform();
+        } catch (IOException e) {
+            LOG.error("Failed to send p2p command 4", e);
         }
     }
 
     public void sendPing(HuaweiP2PCallback callback) {
         try {
             short seq = this.getNextSequence();
-            SendP2PCommand test = new SendP2PCommand(this.manager.getSupportProvider(), (byte) 1, seq, this.getPingPackage(), this.getPackage(), null, null, null, 0);
+            SendP2PCommand commandPing = new SendP2PCommand(this.manager.getSupportProvider(), (byte) 1, seq, this.getPingPackage(), this.getPackage(), null, null, null, 0);
             if (callback != null) {
                 this.waitPackets.put(seq, callback);
             }
-            test.doPerform();
+            commandPing.doPerform();
         } catch (IOException e) {
             LOG.error("Failed to send ping", e);
         }
+    }
+
+    protected int onPingPacket(P2P.P2PCommand.Response packet) {
+        return 0xcf;
+    }
+
+    protected int onDataPacket(P2P.P2PCommand.Response packet) {
+        return 0xcf;
     }
 
     public void handlePacket(P2P.P2PCommand.Response packet) {
@@ -109,9 +130,11 @@ public abstract class HuaweiBaseP2PService {
             }
         } else {
             if (packet.cmdId == 1) { //Ping
-                manager.sendAck(packet.sequenceId, packet.dstPackage, packet.srcPackage, 0xcf);
+                int ret = onPingPacket(packet);
+                manager.sendAck(packet.sequenceId, packet.dstPackage, packet.srcPackage, ret);
             } else if (packet.cmdId == 2) {
-                manager.sendAck(packet.sequenceId, packet.dstPackage, packet.srcPackage, 0xcf);
+                int ret = onDataPacket(packet);
+                manager.sendAck(packet.sequenceId, packet.dstPackage, packet.srcPackage, ret);
                 handleData(packet.respData);
             }
         }

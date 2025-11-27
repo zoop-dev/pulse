@@ -104,6 +104,8 @@ public class HuaweiCoordinator {
     private String otaSoftwareVersion = null;
     private int otaSignatureLength = 256;
 
+    private boolean navigationAvailable = false;
+
     public HuaweiCoordinator(HuaweiCoordinatorSupplier parent) {
         this.parent = parent;
 
@@ -1275,6 +1277,14 @@ public class HuaweiCoordinator {
 
     public boolean isShowForceCountrySpecificFeatures(GBDevice gbDevice) {
         return getDeviceSpecificSharedPreferences(gbDevice).getBoolean("pref_huawei_force_features_settings_switch", false) || getSendCountryCodeEnabled(gbDevice);
+    }
+
+    public boolean supportsNavigation(@NonNull GBDevice device) {
+        return navigationAvailable;
+    }
+
+    public void setNavigationAvailability(boolean state) {
+        navigationAvailable = state;
     }
 
 }

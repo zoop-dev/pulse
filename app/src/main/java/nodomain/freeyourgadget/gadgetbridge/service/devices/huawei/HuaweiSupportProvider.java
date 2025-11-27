@@ -139,6 +139,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.Contact;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.NavigationInfoSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
@@ -156,6 +157,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2P
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PCalendarService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PCannedRepliesService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PContactsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PDirection;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PTrackService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PDataDictionarySyncService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.AcceptAgreementsRequest;
@@ -1006,6 +1008,11 @@ public class HuaweiSupportProvider {
                                 HuaweiP2PContactsService contactsService = new HuaweiP2PContactsService(huaweiP2PManager);
                                 contactsService.register();
                             }
+                        }
+
+                        if (HuaweiP2PDirection.getRegisteredInstance(huaweiP2PManager) == null) {
+                            HuaweiP2PDirection directionService = new HuaweiP2PDirection(huaweiP2PManager);
+                            directionService.register();
                         }
                     }
                 }
@@ -3495,6 +3502,14 @@ public class HuaweiSupportProvider {
             } else {
                 huaweiDataSyncFindDevice.sendStopFindDevice();
             }
+        }
+    }
+
+    public void onSetNavigationInfo(NavigationInfoSpec navigationInfoSpec) {
+        LOG.info("navigation: {}", navigationInfoSpec);
+        HuaweiP2PDirection nav = HuaweiP2PDirection.getRegisteredInstance(huaweiP2PManager);
+        if(nav != null) {
+            nav.updateInstruction(navigationInfoSpec.distanceToTurn, HuaweiP2PDirection.actionToIconId(navigationInfoSpec.nextAction), navigationInfoSpec.instruction);
         }
     }
 

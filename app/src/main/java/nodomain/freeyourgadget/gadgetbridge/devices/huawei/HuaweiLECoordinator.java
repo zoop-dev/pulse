@@ -337,4 +337,9 @@ public abstract class HuaweiLECoordinator extends AbstractBLEDeviceCoordinator i
     public HeartRateZonesSpec getHeartRateZonesSpec(@NonNull GBDevice device) {
         return huaweiCoordinator.getHeartRateZonesSpec(device);
     }
+
+    @Override
+    public boolean supportsNavigation(@NonNull GBDevice device) {
+        return huaweiCoordinator.supportsNavigation(device);
+    }
 }
