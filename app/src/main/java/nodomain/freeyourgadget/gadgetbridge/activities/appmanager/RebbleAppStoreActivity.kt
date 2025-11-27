@@ -93,7 +93,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
 
     private fun downloadInstallWatchappById(storeId: String) {
         val appUrl = "https://appstore-api.rebble.io/api/v1/apps/id/$storeId"
-        val response: JSONObject? = InternetUtils.doRequest(appUrl.toUri())
+        val response: JSONObject? = InternetUtils.doJsonRequest(appUrl.toUri())
         if (response != null) {
             val dataArray = response.getJSONArray("data")
             val firstAppObject = dataArray.getJSONObject(0)

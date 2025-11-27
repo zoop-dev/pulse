@@ -46,14 +46,14 @@ class InternetUtils {
         /**
          * Performs an HTTP request to the given URI, optionally allowing insecure connections.
          */
-        fun doRequest(
+        fun doStringRequest(
             uri: Uri,
             method: String = "GET",
             requestHeaders: Map<String, String> = emptyMap(),
             body: String? = null,
             bodyContentType: String = "text/plain",
             insecure: Boolean = false
-        ): JSONObject? {
+        ): String? {
             val response: WebResourceResponse? = if (GBApplication.hasDirectInternetAccess()) {
                 directRequest(uri, method, requestHeaders, body, bodyContentType, insecure)
             } else {
@@ -62,8 +62,30 @@ class InternetUtils {
             if (response == null) return null
 
             // Convert response InputStream to String
-            val text = response.data.bufferedReader().use { it.readText() }
-            return JSONObject(text)
+            return response.data.bufferedReader().use { it.readText() }
+        }
+
+        fun doJsonRequest(
+            uri: Uri,
+            method: String = "GET",
+            requestHeaders: Map<String, String> = emptyMap(),
+            body: String? = null,
+            bodyContentType: String = "text/plain",
+            insecure: Boolean = false
+        ): JSONObject? {
+            val text = doStringRequest(
+                uri,
+                method,
+                requestHeaders,
+                body,
+                bodyContentType,
+                insecure
+            )
+            try {
+                return JSONObject(text)
+            } catch (e: Exception) {
+                return null
+            }
         }
 
         fun downloadBinaryFile(

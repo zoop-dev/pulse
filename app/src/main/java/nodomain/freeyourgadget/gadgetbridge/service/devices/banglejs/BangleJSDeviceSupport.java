@@ -62,6 +62,9 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -882,7 +885,8 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
         String url = json.getString("url");
         final boolean insecure = json.optBoolean("insecure", false);
-        String method = json.getString("method").toUpperCase(Locale.US);
+        String method = "GET";
+        if (json.has("method")) json.getString("method").toUpperCase(Locale.US);
 
         String body = null;
         if (json.has("body"))
@@ -904,9 +908,47 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         }
         if (headers == null) headers = emptyMap();
 
-        JSONObject o = InternetUtils.Companion.doRequest(Uri.parse(url), method, headers, body, "application/json", insecure);
-        uartTxJSON("http", o);
-    }
+        String response = InternetUtils.Companion.doStringRequest(Uri.parse(url), method, headers, body, "application/json", insecure);
+        JSONObject o = new JSONObject();
+        String _xmlPath = "";
+        String _xmlReturn = "";
+        try {
+            _xmlPath = json.getString("xpath");
+            _xmlReturn = json.getString("return");
+        } catch (JSONException ignored) {
+        }
+        final String xmlPath = _xmlPath;
+        final String xmlReturn = _xmlReturn;
+        if (!xmlPath.isEmpty()) {
+            try {
+                Document doc = Jsoup.parse(response);
+                Elements result = doc.selectXpath(xmlPath);
+                if (xmlReturn.equals("array")) {
+                    response = null; // don't add it below
+                    JSONArray arr = new JSONArray();
+                    for (int i = 0; i < result.size(); i++)
+                        arr.put(result.get(i).text());
+                    o.put("resp", arr);
+                } else { // else return only first!
+                    response = "";
+                    if (!result.isEmpty())
+                        response = result.get(0).text();
+                }
+            } catch (Exception error) {
+                uartTxJSONError("http", error.toString(), id);
+                return;
+            }
+        }
+        try {
+            o.put("t", "http");
+            if( id!=null)
+                o.put("id", id);
+            if (response!=null)
+                o.put("resp", response);
+        } catch (JSONException e) {
+            GB.toast(getContext(), "HTTP: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
+        }
+        uartTxJSON("http", o);    }
 
     /**
      * Handle "force_calendar_sync" packet
