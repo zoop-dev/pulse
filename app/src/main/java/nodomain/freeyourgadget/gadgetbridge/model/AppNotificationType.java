@@ -88,6 +88,7 @@ public class AppNotificationType extends HashMap<String, NotificationType> {
         put("org.telegram.plus", NotificationType.TELEGRAM); // "Plus Messenger"
         put("org.thunderdog.challegram", NotificationType.TELEGRAM);
         put("nekox.messenger", NotificationType.TELEGRAM);
+        put("tw.nekomimi.nekogram", NotificationType.TELEGRAM);
 
         // Threema
         put("ch.threema.app", NotificationType.THREEMA);
