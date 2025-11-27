@@ -178,6 +178,7 @@ public class AppNotificationType extends HashMap<String, NotificationType> {
 
         // Etar
         put("ws.xsoh.etar", NotificationType.GENERIC_CALENDAR);
+        put("org.lineageos.etar", NotificationType.GENERIC_CALENDAR);
 
         // Discord
         put("com.discord", NotificationType.DISCORD);
