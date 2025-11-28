@@ -134,7 +134,7 @@ public class GBWebClient extends WebViewClient {
             if (!forceLocal && !directInternetAccess && InternetHelperSingleton.INSTANCE.ensureInternetHelperBound()) {
                 LOG.debug("WEBVIEW forwarding request to the internet helper");
                 try {
-                    WebResourceResponse wrr = InternetHelperSingleton.INSTANCE.send(requestedUri);
+                    WebResourceResponse wrr = InternetHelperSingleton.INSTANCE.send(requestedUri, false);
                     if (wrr != null && wrr.getStatusCode() < 400)
                         return wrr;
                     else

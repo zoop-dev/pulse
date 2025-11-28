@@ -86,10 +86,10 @@ object InternetHelperSingleton {
     }
 
     @Throws(RemoteException::class, InterruptedException::class)
-    fun send(webRequest: Uri): WebResourceResponse? {
+    fun send(webRequest: Uri, allowInsecure: Boolean): WebResourceResponse? {
         val latch = CountDownLatch(1)
         var result: WebResourceResponse? = null
-        val request = HttpGetRequest(webRequest.toString(), HttpHeaders())
+        val request = HttpGetRequest(webRequest.toString(), allowInsecure, HttpHeaders())
 
         LOG.debug("Forwarding GET request to {} to internet helper app", webRequest)
         try {

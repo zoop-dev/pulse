@@ -52,12 +52,12 @@ class InternetUtils {
             requestHeaders: Map<String, String> = emptyMap(),
             body: String? = null,
             bodyContentType: String = "text/plain",
-            insecure: Boolean = false
+            allowInsecure: Boolean = false
         ): String? {
             val response: WebResourceResponse? = if (GBApplication.hasDirectInternetAccess()) {
-                directRequest(uri, method, requestHeaders, body, bodyContentType, insecure)
+                directRequest(uri, method, requestHeaders, body, bodyContentType, allowInsecure)
             } else {
-                InternetHelperSingleton.send(uri)
+                InternetHelperSingleton.send(uri, allowInsecure)
             }
             if (response == null) return null
 
@@ -71,7 +71,7 @@ class InternetUtils {
             requestHeaders: Map<String, String> = emptyMap(),
             body: String? = null,
             bodyContentType: String = "text/plain",
-            insecure: Boolean = false
+            allowInsecure: Boolean = false
         ): JSONObject? {
             val text = doStringRequest(
                 uri,
@@ -79,7 +79,7 @@ class InternetUtils {
                 requestHeaders,
                 body,
                 bodyContentType,
-                insecure
+                allowInsecure
             )
             try {
                 return JSONObject(text)
@@ -101,10 +101,10 @@ class InternetUtils {
                         requestHeaders = emptyMap(),
                         body = null,
                         bodyContentType = "application/octet-stream",
-                        insecure = false
+                        allowInsecure = false
                     )
                 } else {
-                    InternetHelperSingleton.send(uri)
+                    InternetHelperSingleton.send(uri, false)
                 }
 
                 response?.data?.use { input ->
@@ -129,10 +129,10 @@ class InternetUtils {
             requestHeaders: Map<String, String>,
             body: String?,
             bodyContentType: String,
-            insecure: Boolean
+            allowInsecure: Boolean
         ): WebResourceResponse {
 
-            val client = if (insecure) createInsecureClient() else defaultClient
+            val client = if (allowInsecure) createInsecureClient() else defaultClient
 
             val builder = Request.Builder().url(uri.toString())
 
