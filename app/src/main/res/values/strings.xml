@@ -4422,4 +4422,6 @@
     <string name="movementRhythm">Rhythm</string>
     <string name="movementSpeedDecay">Speed decay</string>
     <string name="movement_evaluation">Movement Evaluation</string>
+    <string name="pref_notifications_pictures_enable">Send notification pictures</string>
+    <string name="pref_notifications_pictures_enable_summary">Send notification pictures for current device</string>
 </resources>

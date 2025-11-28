@@ -19,6 +19,8 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiNotificationsManager.getCallSpecKey;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiNotificationsManager.getNotificationKey;
 
+import android.text.TextUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Notifications;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
@@ -45,16 +49,12 @@ public class SendNotificationRequest extends Request {
     }
 
     public static byte getNotificationType(NotificationType type) {
-        switch (type.getGenericType()) {
-            case "generic":
-            case "generic_social":
-            case "generic_chat":
-                return Notifications.NotificationType.generic;
-            case "generic_email":
-                return Notifications.NotificationType.email;
-            default:
-                return Notifications.NotificationType.sms;
-        }
+        return switch (type.getGenericType()) {
+            case "generic", "generic_social", "generic_chat" ->
+                    Notifications.NotificationType.generic;
+            case "generic_email" -> Notifications.NotificationType.email;
+            default -> Notifications.NotificationType.sms;
+        };
     }
     
     public void buildNotificationTLVFromNotificationSpec(NotificationSpec notificationSpec) {
@@ -98,6 +98,13 @@ public class SendNotificationRequest extends Request {
         params.category = notificationSpec.category;
         params.address = notificationSpec.phoneNumber;
         params.when = notificationSpec.when;
+
+        boolean pictureEnabled = GBApplication
+                .getDeviceSpecificSharedPrefs(supportProvider.getDevice().getAddress())
+                .getBoolean(DeviceSettingsPreferenceConst.PREF_NOTIFICATION_PICTURES_ENABLE, true);
+        if(supportProvider.getHuaweiCoordinator().supportsNotificationPicture() && !TextUtils.isEmpty(notificationSpec.picturePath) && pictureEnabled) {
+            params.pictureName = supportProvider.getHuaweiDataSyncNotificationPictures().getNameForPath(notificationSpec.picturePath);
+        }
 
         ArrayList<Notifications.NotificationActionRequest.TextElement> content = new ArrayList<>();
         content.add(

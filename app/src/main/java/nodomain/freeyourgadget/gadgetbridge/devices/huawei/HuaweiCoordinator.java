@@ -352,6 +352,9 @@ public class HuaweiCoordinator {
         if (supportsNotificationsRepeatedNotify() || supportsNotificationsRemoveSingle()){
             notifications.add(R.xml.devicesettings_autoremove_notifications);
         }
+        if( supportsP2PService() && supportsNotificationPicture()) {
+            notifications.add(R.xml.devicesettings_notifications_pictures);
+        }
         if (getCannedRepliesSlotCount(device) > 0) {
             notifications.add(R.xml.devicesettings_canned_reply_16);
         }
@@ -839,6 +842,12 @@ public class HuaweiCoordinator {
     public boolean supportsNotificationsRemoveSingle() {
         if (supportsExpandCapability())
             return supportsExpandCapability(120);
+        return false;
+    }
+
+    public boolean supportsNotificationPicture() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(256);
         return false;
     }
 

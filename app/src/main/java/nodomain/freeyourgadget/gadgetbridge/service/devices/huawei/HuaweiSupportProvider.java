@@ -145,6 +145,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncNotificationPictures;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncArrhythmia;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncEcg;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.datasync.HuaweiDataSyncFeatureManager;
@@ -315,6 +316,8 @@ public class HuaweiSupportProvider {
 
     private HuaweiDataSyncFeatureManager huaweiDataSyncFeatureManager = null;
 
+    private HuaweiDataSyncNotificationPictures huaweiDataSyncNotificationPictures = null;
+
     private HuaweiDataSyncGoals huaweiDataSyncTreeCircleGoals = null;
 
     private HuaweiDataSyncFindDevice huaweiDataSyncFindDevice = null;
@@ -375,6 +378,10 @@ public class HuaweiSupportProvider {
 
     public HuaweiOTAManager getHuaweiOTAManager() {
         return huaweiOTAManager;
+    }
+
+    public HuaweiDataSyncNotificationPictures getHuaweiDataSyncNotificationPictures() {
+        return huaweiDataSyncNotificationPictures;
     }
 
     public HuaweiSupportProvider(HuaweiBRSupport support) {
@@ -876,6 +883,10 @@ public class HuaweiSupportProvider {
             // NOTE: register all DAta Sync handlers on the early stage. We can receive requests from the watch during initialization.
             if (getHuaweiCoordinator().getSendCountryCodeEnabled(getDevice())) {
                 huaweiDataSyncFeatureManager = new HuaweiDataSyncFeatureManager(HuaweiSupportProvider.this);
+            }
+
+            if (getHuaweiCoordinator().supportsNotificationPicture()) {
+                huaweiDataSyncNotificationPictures = new HuaweiDataSyncNotificationPictures(HuaweiSupportProvider.this);
             }
 
             if (getHuaweiCoordinator().supportsThreeCircle() || getHuaweiCoordinator().supportsThreeCircleLite()) {

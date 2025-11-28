@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:icon="@drawable/ic_notifications"
+        android:key="notification_pictures_enable"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_notifications_pictures_enable_summary"
+        android:title="@string/pref_notifications_pictures_enable" />
+</androidx.preference.PreferenceScreen>

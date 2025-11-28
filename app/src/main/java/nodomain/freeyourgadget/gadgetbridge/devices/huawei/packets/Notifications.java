@@ -66,6 +66,7 @@ public class Notifications {
             public String category = "";
             public int voipType = 0;
             public long when = 0;
+            public String pictureName = "";
         }
 
         // TODO: support other types of notifications
@@ -152,6 +153,10 @@ public class Notifications {
 
                 if(addParams.when != 0) {
                     this.tlv.put(0x32, addParams.when);
+                }
+
+                if(!TextUtils.isEmpty(addParams.pictureName)) {
+                    this.tlv.put(0x34, addParams.pictureName);
                 }
             }
 
