@@ -94,7 +94,7 @@ public class HuaweiP2PDirection extends HuaweiBaseP2PService {
     }
 
     private void checkAvailability() {
-        sendPing((code, data) -> manager.getSupportProvider().getCoordinator().getHuaweiCoordinator().setNavigationAvailability(code == 0xca || code == 0xc9));
+        sendCommand4( null, (version, data) -> manager.getSupportProvider().getCoordinator().getHuaweiCoordinator().setNavigationAvailability(version != -1));
     }
 
     public void startNavigation() {
