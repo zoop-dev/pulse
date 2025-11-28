@@ -80,6 +80,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("fenix 7", DeviceType.GARMIN_FENIX_7);
             put("Venu Sq", DeviceType.GARMIN_VENU_SQ);
             put("fenix 8 - 51mm", DeviceType.GARMIN_FENIX_8); // #4226
+            put("quatix 8 - 51mm", DeviceType.GARMIN_QUATIX_8); // #5575
             put("Forerunner 265S", DeviceType.GARMIN_FORERUNNER_265S);
             put("Forerunner 955", DeviceType.GARMIN_FORERUNNER_955); // #4124
             put("Enduro", DeviceType.GARMIN_ENDURO); // #5347
