@@ -4092,4 +4092,6 @@
     <string name="movementSpeedDecay">Úbytek rychlosti</string>
     <string name="movement_evaluation">Hodnocení pohybu</string>
     <string name="pref_title_notifications_when_screen_saver">…také při zapnutém spořiči obrazovky</string>
+    <string name="pref_notifications_pictures_enable">Odesílat obrázky oznámení</string>
+    <string name="pref_notifications_pictures_enable_summary">Odesílat obrázky oznámení u aktuálního zařízení</string>
 </resources>
