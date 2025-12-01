@@ -30,7 +30,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.Send
 public abstract class HuaweiBaseP2PService {
     private final Logger LOG = LoggerFactory.getLogger(HuaweiBaseP2PService.class);
 
-
     public interface HuaweiP2PCallback {
         void onResponse(int code, byte[] data);
     }
@@ -67,46 +66,41 @@ public abstract class HuaweiBaseP2PService {
 
     private final Map<Short, HuaweiP2PCallback> waitPackets = new ConcurrentHashMap<>();
 
-    private Short getNextSequence() {
+    private short getNextSequence() {
         return manager.getNextSequence();
     }
 
-    public void sendCommand(byte[] sendData, HuaweiP2PCallback callback) {
+    private void sendP2PCommand(byte cmdId,
+                               String srcPackage,
+                               String dstPackage,
+                               String srcFingerprint,
+                               String dstFingerprint,
+                               byte[] sendData,
+                               HuaweiP2PCallback callback) {
         try {
             short seq = this.getNextSequence();
-            SendP2PCommand command2 = new SendP2PCommand(this.manager.getSupportProvider(), (byte) 2, seq, this.getModule(), this.getPackage(), this.getLocalFingerprint(), this.getFingerprint(), sendData, 0);
+            SendP2PCommand cmd = new SendP2PCommand(this.manager.getSupportProvider(), cmdId, seq, srcPackage, dstPackage, srcFingerprint, dstFingerprint, sendData, 0);
             if (callback != null) {
                 this.waitPackets.put(seq, callback);
             }
-            command2.doPerform();
+            cmd.doPerform();
         } catch (IOException e) {
-            LOG.error("Failed to send p2p command 2", e);
-        }
-    }
-
-    public void sendCommand4(byte[] sendData, HuaweiP2PCallback callback) {
-        try {
-            short seq = this.getNextSequence();
-            SendP2PCommand command4 = new SendP2PCommand(this.manager.getSupportProvider(), (byte) 4, seq, this.getModule(), this.getPackage(), null, null, sendData, 0);
-            if (callback != null) {
-                this.waitPackets.put(seq, callback);
-            }
-            command4.doPerform();
-        } catch (IOException e) {
-            LOG.error("Failed to send p2p command 4", e);
+            LOG.error("Failed to send p2p cmdId: {}", cmdId,  e);
         }
     }
 
     public void sendPing(HuaweiP2PCallback callback) {
-        try {
-            short seq = this.getNextSequence();
-            SendP2PCommand commandPing = new SendP2PCommand(this.manager.getSupportProvider(), (byte) 1, seq, this.getPingPackage(), this.getPackage(), null, null, null, 0);
-            if (callback != null) {
-                this.waitPackets.put(seq, callback);
-            }
-            commandPing.doPerform();
-        } catch (IOException e) {
-            LOG.error("Failed to send ping", e);
+        sendP2PCommand((byte) 1, this.getPingPackage(), this.getPackage(), null, null, null, callback);
+    }
+
+    public void sendCommand(byte[] sendData, HuaweiP2PCallback callback) {
+        sendP2PCommand((byte) 2, this.getModule(), this.getPackage(), this.getLocalFingerprint(), this.getFingerprint(), sendData, callback);
+    }
+    public void sendGetVersion(HuaweiP2PCallback callback) {
+        if(manager.getSupportProvider().getHuaweiCoordinator().supportsP2PGetAppVersion()) {
+            sendP2PCommand((byte) 4, this.getModule(), this.getPackage(), null, null, null, callback);
+        } else {
+            LOG.error("P2P Get App Version is not supported");
         }
     }
 

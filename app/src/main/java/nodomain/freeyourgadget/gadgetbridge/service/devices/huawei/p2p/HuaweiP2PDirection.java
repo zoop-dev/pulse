@@ -24,6 +24,24 @@ public class HuaweiP2PDirection extends HuaweiBaseP2PService {
 
     public static final String MODULE = "com.huawei.maps.app";
 
+    // NOTE: Gadgetbridge and OsmAnd AIDL API does not return events for navigation starts and ends
+    // There are a little workarounds to keep it working with huawei watch
+    // Also the watch wait actions at least every 5 second(according to my tests), but I send it each 3 seconds,
+
+    Handler handler = new Handler(Looper.getMainLooper());
+    private final Runnable updateCallback = this::sendNavigationInfo;
+
+    private final AtomicBoolean isInProgress = new AtomicBoolean(false);
+    private final AtomicBoolean isStarted = new AtomicBoolean(false);
+
+    private final AtomicReference<String> lastInstruction = new AtomicReference<>();
+
+    public final int SEND_DELAY = 3000;
+    public final int SEND_COUNT_BEFORE_END = 10;
+
+    private final AtomicInteger currCount = new AtomicInteger(0);
+
+
     public HuaweiP2PDirection(HuaweiP2PManager manager) {
         super(manager);
         LOG.info("HuaweiP2PDirection");
@@ -66,6 +84,8 @@ public class HuaweiP2PDirection extends HuaweiBaseP2PService {
 
     @Override
     public void unregister() {
+        handler.removeCallbacks(updateCallback);
+        clearNavigationState();
         isRegistered.set(false);
     }
 
@@ -94,7 +114,12 @@ public class HuaweiP2PDirection extends HuaweiBaseP2PService {
     }
 
     private void checkAvailability() {
-        sendCommand4( null, (version, data) -> manager.getSupportProvider().getCoordinator().getHuaweiCoordinator().setNavigationAvailability(version != -1));
+        // NOTE: Get version command may not be supported by some old devices.
+        // app availability can be checked by querying app list from the watch (service 0x2a).
+        sendGetVersion((version, data) -> {
+            LOG.info("HuaweiP2PDirection App version: {}", version);
+            manager.getSupportProvider().getCoordinator().getHuaweiCoordinator().setNavigationAvailability(version != -1);
+        });
     }
 
     public void startNavigation() {
@@ -104,21 +129,13 @@ public class HuaweiP2PDirection extends HuaweiBaseP2PService {
                 isInProgress.set(false);
                 return;
             }
-            sendCommand4(null, (version, data1) -> { // getVersion code - version
-                LOG.error("App version: {}", version);
-                if (version == -1) {
-                    LOG.error("Invalid app version");
+            sendCommand("start navigation".getBytes(), (code3, data3) -> {
+                if (code3 != 0xcf) {
+                    LOG.error("Error start navigation");
                     isInProgress.set(false);
                     return;
                 }
-                sendCommand("start navigation".getBytes(), (code3, data3) -> {
-                    if (code3 != 0xcf) {
-                        LOG.error("Error start navigation");
-                        isInProgress.set(false);
-                        return;
-                    }
-                    isStarted.set(true);
-                });
+                isStarted.set(true);
             });
         });
     }
@@ -139,37 +156,30 @@ public class HuaweiP2PDirection extends HuaweiBaseP2PService {
         });
     }
 
-    // NOTE: Gadgetbridge and OSMAnd AIDL API does not return events for navigation starts and ends
-    // There are a little workarounds to keep it working with huawei watch
-    // Also the watch wait actions at least every 5 second(according to my tests), but I send it each 3 seconds,
-
-    Handler handler = new Handler(Looper.getMainLooper());
-    private final Runnable updateCallback = this::sendNavigationInfo;
-
-    private final AtomicBoolean isInProgress = new AtomicBoolean(false);
-    private final AtomicBoolean isStarted = new AtomicBoolean(false);
-
-    private final AtomicReference<String> lastInstruction = new AtomicReference<>();
-
-    public final int SEND_DELAY = 3000;
-    public final int SEND_COUNT_BEFORE_END = 10;
-
-    private final AtomicInteger currCount = new AtomicInteger(0);
+    private void clearNavigationState() {
+        currCount.set(0);
+        isInProgress.set(false);
+        isStarted.set(false);
+        lastInstruction.set(null);
+    }
 
     private void sendNavigationInfo() {
+        if(!isInProgress.get()) {
+            return;
+        }
         if (currCount.incrementAndGet() < SEND_COUNT_BEFORE_END) {
             handler.postDelayed(updateCallback, SEND_DELAY);
             sendInstruction(lastInstruction.get());
         } else {
             endNavigation();
-            currCount.set(0);
-            isInProgress.set(false);
-            isStarted.set(false);
-            lastInstruction.set(null);
+            clearNavigationState();
         }
     }
 
     public void updateInstruction(String distance, String icon, String name) {
+        if(!isRegistered.get()) {
+            return;
+        }
         currCount.set(0);
         handler.removeCallbacks(updateCallback);
         JsonArray roadName = new JsonArray();

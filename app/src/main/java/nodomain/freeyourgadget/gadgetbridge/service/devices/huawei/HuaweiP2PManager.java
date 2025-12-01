@@ -48,10 +48,11 @@ public class HuaweiP2PManager {
 
     private final Map<String, HuaweiWakeApp> supportedWakeApp;
 
-    private Short sequence = 1;
+    private short sequence = 1;
 
-    public synchronized Short getNextSequence() {
-            return sequence++;
+    public synchronized short getNextSequence() {
+        sequence = (short) ((sequence + 1) % (Short.MAX_VALUE - 1));
+        return sequence;
     }
 
     public HuaweiP2PManager(HuaweiSupportProvider support) {

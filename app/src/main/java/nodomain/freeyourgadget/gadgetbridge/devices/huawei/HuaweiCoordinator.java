@@ -352,7 +352,7 @@ public class HuaweiCoordinator {
         if (supportsNotificationsRepeatedNotify() || supportsNotificationsRemoveSingle()){
             notifications.add(R.xml.devicesettings_autoremove_notifications);
         }
-        if( supportsP2PService() && supportsNotificationPicture()) {
+        if (supportsP2PService() && supportsNotificationPicture()) {
             notifications.add(R.xml.devicesettings_notifications_pictures);
         }
         if (getCannedRepliesSlotCount(device) > 0) {
@@ -753,6 +753,12 @@ public class HuaweiCoordinator {
 
     public boolean supportsSleepBreath() {
         return supportsCommandForService(0x2d, 0x01);
+    }
+
+    public boolean supportsP2PGetAppVersion() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(14);
+        return false;
     }
 
     public boolean supportsExternalCalendarService() {

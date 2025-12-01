@@ -26,7 +26,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.P2P;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
 
 public class SendP2PCommand extends Request {
-    private static final Logger LOG = LoggerFactory.getLogger(SendP2PCommand.class);
 
     private final byte cmdId;
     private final short sequenceId;
