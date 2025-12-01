@@ -352,7 +352,7 @@ public class HuaweiCoordinator {
         if (supportsNotificationsRepeatedNotify() || supportsNotificationsRemoveSingle()){
             notifications.add(R.xml.devicesettings_autoremove_notifications);
         }
-        if (supportsP2PService() && supportsNotificationPicture()) {
+        if (supportsNotificationPicture()) {
             notifications.add(R.xml.devicesettings_notifications_pictures);
         }
         if (getCannedRepliesSlotCount(device) > 0) {
