@@ -3976,7 +3976,7 @@
     <string name="pref_huawei_features_config_warning_title">Ländercode und Funktionskonfiguration an das Gerät senden.</string>
     <string name="pref_huawei_features_config_warning_summary">Warnung: Das Aktivieren dieser Einstellungen, während sowohl Gadgetbridge als auch die Hersteller-App verwendet werden, kann zu Problemen mit der Hersteller-App oder der Gerätefunktion führen – oder unter Umständen keine Wirkung haben. Eine falsche Länderauswahl kann andere Geräteeinstellungen beeinflussen, z. B. regionsabhängige Frequenzkonfigurationen. Aktivierung auf eigene Verantwortung.\nEin erneutes Verbinden des Geräts ist erforderlich.</string>
     <string name="pref_huawei_send_country_code_title">Ländercode senden</string>
-    <string name="pref_huawei_send_country_code_summary">Ländercode an das Gerät senden.\nAchtung: Der Ländercode muss zuvor festgelegt sein.</string>
+    <string name="pref_huawei_send_country_code_summary">Ländercode an das Gerät senden.\nAchtung: Der Ländercode muss zuvor festgelegt sein</string>
     <string name="pref_huawei_country_code_title">Ländercode</string>
     <string name="pref_huawei_force_features_settings_title">Anzeige länderbeschränkter Einstellungen erzwingen</string>
     <string name="pref_huawei_force_features_settings_summary">Anzeige landesspezifischer Einstellungen in der Gadgetbridge-App erzwingen.\nWarnung: Gadgetbridge zeigt die vom Gerät als unterstützt gemeldeten Einstellungen an. Einige davon können jedoch von der Hersteller-App eingeschränkt sein und möglicherweise nicht oder nur fehlerhaft funktionieren.</string>
@@ -3999,4 +3999,13 @@
     <string name="pref_huawei_arterial_stiffness_detection_enable_summary">Aktivieren Sie die Erkennung der arteriellen Steifigkeit am Gerät</string>
     <string name="movementSpeedDecay">Geschwindigkeitsabfall</string>
     <string name="pref_notifications_pictures_enable">Bilder zur Benachrichtigung senden</string>
+    <string name="pref_title_notifications_when_screen_saver">…auch wenn der Bildschirmschoner an ist</string>
+    <string name="menuitem_golf">Golf</string>
+    <string name="menuitem_bio_charge">BioCharge</string>
+    <string name="movementConsistency">Konsistenz</string>
+    <string name="movementStability">Stabilität</string>
+    <string name="movementContinuity">Kontinuität</string>
+    <string name="movementRhythm">Rhythmus</string>
+    <string name="movement_evaluation">Bewegungsanalyse</string>
+    <string name="pref_notifications_pictures_enable_summary">Benachrichtigungs-Bilder an dieses Gerät senden</string>
 </resources>
