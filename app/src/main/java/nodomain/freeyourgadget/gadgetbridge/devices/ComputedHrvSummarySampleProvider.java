@@ -448,22 +448,13 @@ public class ComputedHrvSummarySampleProvider implements TimeSampleProvider<HrvS
     }
 
     /**
-     * Invalidate cached summary for the current day for a specific device.
-     * This should be called when new HRV data is synced during the day to ensure
-     * the latest data is reflected in the computed summary.
+     * Invalidate a specific cache entry for a device and day.
      *
-     * @param deviceAddress The MAC address of the device to invalidate cache for
+     * @param deviceAddress The MAC address of the device
+     * @param dayEndTimestamp The end timestamp of the day (23:59:59.999)
      */
-    public static void invalidateCurrentDay(String deviceAddress) {
-        final Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.HOUR_OF_DAY, 23);
-        cal.set(Calendar.MINUTE, 59);
-        cal.set(Calendar.SECOND, 59);
-        cal.set(Calendar.MILLISECOND, 999);
-
-        final long dayEndTimestamp = cal.getTimeInMillis();
+    public static void invalidateCacheEntry(String deviceAddress, long dayEndTimestamp) {
         final String cacheKey = deviceAddress + ":" + dayEndTimestamp;
-
         synchronized (SUMMARY_CACHE) {
             SUMMARY_CACHE.remove(cacheKey);
         }
