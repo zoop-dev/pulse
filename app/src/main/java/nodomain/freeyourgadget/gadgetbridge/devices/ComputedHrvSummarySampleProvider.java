@@ -447,6 +447,47 @@ public class ComputedHrvSummarySampleProvider implements TimeSampleProvider<HrvS
         return generateSummaryForDay(cal.getTimeInMillis());
     }
 
+    /**
+     * Invalidate cached summary for the current day for a specific device.
+     * This should be called when new HRV data is synced during the day to ensure
+     * the latest data is reflected in the computed summary.
+     *
+     * @param deviceAddress The MAC address of the device to invalidate cache for
+     */
+    public static void invalidateCurrentDay(String deviceAddress) {
+        final Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 23);
+        cal.set(Calendar.MINUTE, 59);
+        cal.set(Calendar.SECOND, 59);
+        cal.set(Calendar.MILLISECOND, 999);
+
+        final long dayEndTimestamp = cal.getTimeInMillis();
+        final String cacheKey = deviceAddress + ":" + dayEndTimestamp;
+
+        synchronized (SUMMARY_CACHE) {
+            SUMMARY_CACHE.remove(cacheKey);
+        }
+    }
+
+    /**
+     * Clear cached summaries for a specific device. This should be called when new HRV data
+     * is synced to ensure cached values are recalculated with the latest data.
+     *
+     * @param deviceAddress The MAC address of the device to clear cache for
+     */
+    public static void clearCache(String deviceAddress) {
+        synchronized (SUMMARY_CACHE) {
+            SUMMARY_CACHE.entrySet().removeIf(entry -> entry.getKey().startsWith(deviceAddress + ":"));
+        }
+    }
+
+    /**
+     * Clear all cached summaries for all devices.
+     */
+    public static void clearAllCache() {
+        SUMMARY_CACHE.clear();
+    }
+
     private static class BaselineValues {
         final int lowUpper;          // Threshold between POOR and LOW
         final int balancedLower;     // Lower bound of balanced range (mean - stdDev)

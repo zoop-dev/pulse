@@ -205,7 +205,9 @@ public class HRVStatusFragment extends AbstractChartFragment<HRVStatusFragment.H
         x.setValueFormatter(getHRVStatusChartDayValueFormatter(weeklyData));
 
         HRVStatusDayData today = weeklyData.getCurrentDay();
-        mHRVStatusSevenDaysAvg.setText(today.weeklyAvg > 0 ? getString(R.string.hrv_status_unit, today.weeklyAvg) : "-");
+        // Show weekly average even if we don't have full 7 days - it's computed from available data
+        mHRVStatusSevenDaysAvg.setText(today.weeklyAvg > 0 ? getString(R.string.hrv_status_unit, today.weeklyAvg) :
+                (today.dayAvg > 0 ? getString(R.string.hrv_status_unit, today.dayAvg) : "-"));
         mHRVStatusLastNight.setText(today.lastNight > 0 ? getString(R.string.hrv_status_unit, today.lastNight) : "-");
         mHRVStatusLastNight5MinHighest.setText(today.lastNight5MinHigh > 0 ? getString(R.string.hrv_status_unit, today.lastNight5MinHigh) : "-");
         mHRVStatusDayAvg.setText(today.dayAvg > 0 ? getString(R.string.hrv_status_unit, today.dayAvg) : "-");

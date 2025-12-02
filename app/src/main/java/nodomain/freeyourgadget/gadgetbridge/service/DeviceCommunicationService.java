@@ -77,6 +77,7 @@ import nodomain.freeyourgadget.gadgetbridge.externalevents.CMWeatherReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.CalendarReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.DeviceSettingsReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.GenericWeatherReceiver;
+import nodomain.freeyourgadget.gadgetbridge.externalevents.HrvCacheInvalidationReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.IntentApiReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.KeyMissingReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.LineageOsWeatherReceiver;
@@ -269,6 +270,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
     private AutoConnectIntervalReceiver mAutoConnectInvervalReceiver = null;
 
     private VolumeChangeReceiver mVolumeChangeReceiver = null;
+    private HrvCacheInvalidationReceiver mHrvCacheInvalidationReceiver = null;
 
     private final List<CalendarReceiver> mCalendarReceiver = new ArrayList<>();
     private CMWeatherReceiver mCMWeatherReceiver = null;
@@ -541,6 +543,9 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
 
         mKeyMissingReceiver = new KeyMissingReceiver();
         ContextCompat.registerReceiver(this, mKeyMissingReceiver, new IntentFilter(KeyMissingReceiver.ACTION_KEY_MISSING), ContextCompat.RECEIVER_EXPORTED);
+
+        mHrvCacheInvalidationReceiver = new HrvCacheInvalidationReceiver();
+        mHrvCacheInvalidationReceiver.registerReceiver(this);
     }
 
     @Override
@@ -1598,6 +1603,11 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         unregisterReceiver(bluetoothCommandReceiver);
         unregisterReceiver(deviceSettingsReceiver);
         unregisterReceiver(intentApiReceiver);
+
+        if (mHrvCacheInvalidationReceiver != null) {
+            mHrvCacheInvalidationReceiver.unregisterReceiver();
+            mHrvCacheInvalidationReceiver = null;
+        }
     }
 
     @Override
