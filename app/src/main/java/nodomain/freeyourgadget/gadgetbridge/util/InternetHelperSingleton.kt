@@ -27,8 +27,8 @@ import android.os.ParcelFileDescriptor
 import android.os.RemoteException
 import android.webkit.WebResourceResponse
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
-import nodomain.freeyourgadget.internethelper.aidl.http.HttpGetRequest
 import nodomain.freeyourgadget.internethelper.aidl.http.HttpHeaders
+import nodomain.freeyourgadget.internethelper.aidl.http.HttpRequest
 import nodomain.freeyourgadget.internethelper.aidl.http.HttpResponse
 import nodomain.freeyourgadget.internethelper.aidl.http.IHttpCallback
 import nodomain.freeyourgadget.internethelper.aidl.http.IHttpService
@@ -86,12 +86,19 @@ object InternetHelperSingleton {
     }
 
     @Throws(RemoteException::class, InterruptedException::class)
-    fun send(webRequest: Uri, allowInsecure: Boolean): WebResourceResponse? {
+    fun send(
+        webRequest: Uri,
+        method: HttpRequest.Method,
+        requestHeaders: Map<String, String>,
+        body: String?,
+        bodyContentType: String,
+        allowInsecure: Boolean,
+    ): WebResourceResponse? {
         val latch = CountDownLatch(1)
         var result: WebResourceResponse? = null
-        val request = HttpGetRequest(webRequest.toString(), allowInsecure, HttpHeaders())
+        val request = HttpRequest(webRequest.toString(), method, body, bodyContentType, allowInsecure, HttpHeaders(requestHeaders))
 
-        LOG.debug("Forwarding GET request to {} to internet helper app", webRequest)
+        LOG.debug("Forwarding {} request to {} to internet helper app", method.name, webRequest)
         try {
             internetHelper?.get(request, object : IHttpCallback.Stub() {
                 override fun onResponse(response: HttpResponse) {

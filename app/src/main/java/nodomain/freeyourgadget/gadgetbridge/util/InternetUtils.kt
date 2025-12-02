@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.util
 import android.net.Uri
 import android.webkit.WebResourceResponse
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
+import nodomain.freeyourgadget.internethelper.aidl.http.HttpRequest
 import okhttp3.Headers
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -57,7 +58,14 @@ class InternetUtils {
             val response: WebResourceResponse? = if (GBApplication.hasDirectInternetAccess()) {
                 directRequest(uri, method, requestHeaders, body, bodyContentType, allowInsecure)
             } else {
-                InternetHelperSingleton.send(uri, allowInsecure)
+                InternetHelperSingleton.send(
+                    uri,
+                    HttpRequest.Method.valueOf(method),
+                    requestHeaders,
+                    body,
+                    bodyContentType,
+                    allowInsecure,
+                )
             }
             if (response == null) return null
 
@@ -104,7 +112,14 @@ class InternetUtils {
                         allowInsecure = false
                     )
                 } else {
-                    InternetHelperSingleton.send(uri, false)
+                    InternetHelperSingleton.send(
+                        uri,
+                        HttpRequest.Method.GET,
+                        requestHeaders = emptyMap(),
+                        null,
+                        "application/octet-stream",
+                        false
+                    )
                 }
 
                 response?.data?.use { input ->

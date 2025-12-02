@@ -23,6 +23,12 @@ public class HttpHeaders implements Parcelable {
         }
     }
 
+    public HttpHeaders(Map<String, String> headersMap) {
+        for (String key : headersMap.keySet()) {
+            headers.add(new Pair<>(key, headersMap.get(key)));
+        }
+    }
+
     public HttpHeaders() {
     }
 

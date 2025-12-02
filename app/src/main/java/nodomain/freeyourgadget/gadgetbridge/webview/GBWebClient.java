@@ -48,6 +48,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.InternetHelperSingleton;
+import nodomain.freeyourgadget.internethelper.aidl.http.HttpRequest;
 
 public class GBWebClient extends WebViewClient {
     private static final Logger LOG = LoggerFactory.getLogger(GBWebClient.class);
@@ -72,8 +73,8 @@ public class GBWebClient extends WebViewClient {
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
         Uri parsedUri = request.getUrl();
-        LOG.debug("WEBVIEW shouldInterceptRequest URL: {}", parsedUri.toString());
-        WebResourceResponse mimickedReply = mimicReply(parsedUri);
+        LOG.debug("WEBVIEW shouldInterceptRequest URL: {} (method {})", parsedUri.toString(), request.getMethod());
+        WebResourceResponse mimickedReply = mimicReply(parsedUri, request.getMethod(), request.getRequestHeaders());
         if (mimickedReply != null)
             return mimickedReply;
         return super.shouldInterceptRequest(view, request);
@@ -83,13 +84,13 @@ public class GBWebClient extends WebViewClient {
     public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
         LOG.debug("WEBVIEW shouldInterceptRequest URL (legacy): {}", url);
         Uri parsedUri = Uri.parse(url);
-        WebResourceResponse mimickedReply = mimicReply(parsedUri);
+        WebResourceResponse mimickedReply = mimicReply(parsedUri, "GET", new HashMap<>());
         if (mimickedReply != null)
             return mimickedReply;
         return super.shouldInterceptRequest(view, url);
     }
 
-    private WebResourceResponse mimicReply(Uri requestedUri) {
+    private WebResourceResponse mimicReply(Uri requestedUri, String method, Map<String, String> requestHeaders) {
         GBPrefs prefs = GBApplication.getPrefs();
         boolean locallySupported = StringUtils.indexOfAny(requestedUri.getHost(), LocallySupportedDomains) != -1;
         boolean urlIsAllowed = locallySupported;
@@ -134,7 +135,7 @@ public class GBWebClient extends WebViewClient {
             if (!forceLocal && !directInternetAccess && InternetHelperSingleton.INSTANCE.ensureInternetHelperBound()) {
                 LOG.debug("WEBVIEW forwarding request to the internet helper");
                 try {
-                    WebResourceResponse wrr = InternetHelperSingleton.INSTANCE.send(requestedUri, false);
+                    WebResourceResponse wrr = InternetHelperSingleton.INSTANCE.send(requestedUri, HttpRequest.Method.valueOf(method), requestHeaders, null, "application/octet-stream", false);
                     if (wrr != null && wrr.getStatusCode() < 400)
                         return wrr;
                     else
