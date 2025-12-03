@@ -552,7 +552,7 @@ public class ActivityChartsActivity extends AbstractGBActivity implements Charts
                 case "livestats":
                     return new LiveActivityFragment();
                 case "spo2":
-                    return new Spo2ChartFragment();
+                    return Spo2CollectionFragment.newInstance(enabledTabsList.size() == 1);
                 case "temperature":
                     return coordinator.supportsContinuousTemperature(getDevice())? new TemperatureDailyFragment(): new TemperatureChartFragment();
                 case "cycling":
