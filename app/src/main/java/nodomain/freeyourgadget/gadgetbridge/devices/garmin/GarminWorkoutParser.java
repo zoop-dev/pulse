@@ -54,6 +54,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
 
     private final List<FitTimeInZone> timesInZone = new ArrayList<>();
     private final List<ActivityPoint> activityPoints = new ArrayList<>();
+    private List<ActivityPoint> sessionActivityPoints;
     private FitSession session = null;
     private FitSport sport = null;
     private FitUserProfile userProfile = null;
@@ -154,6 +155,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             } else {
                 // We only support 1 session
                 session = (FitSession) record;
+                sessionActivityPoints = (session.toActivityPoints());
             }
         } else if (record instanceof FitPhysiologicalMetrics) {
             LOG.debug("Physiological Metrics: {}", record);
@@ -681,7 +683,8 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
 
         summaryData.add(
                 INTERNAL_HAS_GPS,
-                String.valueOf(activityPoints.stream().anyMatch(p -> p.getLocation() != null))
+                String.valueOf(activityPoints.stream().anyMatch(p -> p.getLocation() != null) ||
+                        sessionActivityPoints.stream().anyMatch(p -> p.getLocation() != null))
         );
 
         summary.setSummaryData(summaryData.toString());

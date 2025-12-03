@@ -18,6 +18,12 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
+import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
@@ -1951,5 +1957,33 @@ public class FitSession extends RecordData {
         public FitSession build() {
             return (FitSession) super.build();
         }
+    }
+
+    // manual changes below
+
+    public List<ActivityPoint> toActivityPoints() {
+        final List<ActivityPoint> activityPoints = new ArrayList<ActivityPoint>();
+        final ActivityPoint startActivityPoint = new ActivityPoint();
+        startActivityPoint.setTime(new Date(getComputedTimestamp() * 1000L));
+        if (getStartLatitude() != null && getStartLongitude() != null) {
+            startActivityPoint.setLocation(new GPSCoordinate(
+                    getStartLongitude(),
+                    getStartLatitude(),
+                    GPSCoordinate.UNKNOWN_ALTITUDE
+            ));
+            activityPoints.add(startActivityPoint);
+        }
+        final ActivityPoint endActivityPoint = new ActivityPoint();
+        endActivityPoint.setTime(new Date(getComputedTimestamp() * 1000L));
+        if (getEndLatitude() != null && getEndLongitude() != null) {
+            endActivityPoint.setLocation(new GPSCoordinate(
+                    getEndLongitude(),
+                    getEndLatitude(),
+                    GPSCoordinate.UNKNOWN_ALTITUDE
+            ));
+            activityPoints.add(endActivityPoint);
+        }
+
+        return activityPoints;
     }
 }

@@ -11,6 +11,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitRecord
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitSession
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.GpxParseException
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.GpxParser
 import org.slf4j.LoggerFactory
@@ -69,9 +70,15 @@ class MapsTrackViewModel : ViewModel() {
 
                     trackFile.name.endsWith(".fit") -> {
                         val fitFile = FitFile.parseIncoming(trackFile)
-                        return fitFile.records
-                            .filterIsInstance<FitRecord>()
-                            .map { it.toActivityPoint() }
+                        val activityPoints = fitFile.records
+                           .filterIsInstance<FitRecord>()
+                           .map { it.toActivityPoint() }
+                        for (activityPoint in activityPoints) {
+                            if (activityPoint.location != null) {
+                                return activityPoints
+                            }
+                        }
+                        return fitFile.records.filterIsInstance<FitSession>()[0].toActivityPoints()
                     }
 
                     else -> {

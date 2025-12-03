@@ -178,6 +178,22 @@ public final class MapsManager {
         isMapLoaded = false;
     }
 
+    private BoundingBox minimalBoundingBox(double minLat, double minLon, double maxLat, double maxLon) {
+        final LatLong center = new LatLong(minLat + (maxLat - minLat) / 2, minLon + (maxLon - minLon) / 2);
+        final double minLatDistance = LatLongUtils.latitudeDistance(1000);
+        final double minLonDistance = LatLongUtils.longitudeDistance(1000, center.latitude);
+        if ((maxLat - minLat) < minLatDistance) {
+            maxLat = center.latitude + minLatDistance/2;
+            minLat = center.latitude - minLatDistance/2;
+        }
+        if ((maxLon - minLon) < minLonDistance) {
+            maxLon = center.longitude + minLonDistance/2;
+            minLon = center.longitude - minLonDistance/2;
+        }
+
+        return new BoundingBox(minLat, minLon, maxLat, maxLon);
+    }
+
     public void setTrack(final List<? extends GPSCoordinate> trackPoints) {
         final Accumulator latitudeAccumulator = new Accumulator();
         final Accumulator longitudeAccumulator = new Accumulator();
@@ -189,6 +205,7 @@ public final class MapsManager {
         final double minLat = latitudeAccumulator.getMin();
         final double maxLon = longitudeAccumulator.getMax();
         final double minLon = longitudeAccumulator.getMin();
+        final LatLong center = new LatLong(minLat + (maxLat - minLat) / 2, minLon + (maxLon - minLon) / 2);
 
         final List<LatLong> points = trackPoints.stream()
                 .map(p -> new LatLong(p.getLatitude(), p.getLongitude()))
@@ -206,10 +223,11 @@ public final class MapsManager {
         }
         polyline.setPoints(points);
 
-        mapView.setCenter(new LatLong(minLat + (maxLat - minLat) / 2, minLon + (maxLon - minLon) / 2));
+        mapView.setCenter(center);
+
         final byte zoom = LatLongUtils.zoomForBounds(
                 new Dimension(mapView.getWidth(), mapView.getHeight()),
-                new BoundingBox(minLat, minLon, maxLat, maxLon),
+                minimalBoundingBox(minLat, minLon, maxLat, maxLon),
                 mapView.getModel().displayModel.getTileSize()
         );
         mapView.setZoomLevel(zoom);
