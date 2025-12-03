@@ -73,7 +73,7 @@ import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractPreferenceFragment;
-import nodomain.freeyourgadget.gadgetbridge.activities.CalBlacklistActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.CalendarSelectionActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.ConfigureContacts;
 import nodomain.freeyourgadget.gadgetbridge.activities.ConfigureWorldClocks;
 import nodomain.freeyourgadget.gadgetbridge.activities.NotificationsAppIconUploadActivity;
@@ -93,6 +93,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
+import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.GBSimpleSummaryProvider;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.MinMaxTextWatcher;
@@ -1019,6 +1020,11 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_CALENDAR_MAX_TITLE_LENGTH);
         addPreferenceHandlerFor(PREF_CALENDAR_MAX_DESC_LENGTH);
         addPreferenceHandlerFor(PREF_CALENDAR_TARGET_APP);
+        addPreferenceHandlerFor(PREF_CALENDAR_SYNC_CANCELED);
+        addPreferenceHandlerFor(PREF_CALENDAR_SYNC_DECLINED);
+        addPreferenceHandlerFor(PREF_CALENDAR_SYNC_FOCUS_TIME);
+        addPreferenceHandlerFor(PREF_CALENDAR_SYNC_ALL_DAY);
+        addPreferenceHandlerFor(PREF_CALENDAR_SYNC_WORKING_LOCATION);
 
         addPreferenceHandlerFor(PREF_ATC_BLE_OEPL_MODEL);
         addPreferenceHandlerFor(PREF_ATC_BLE_OEPL_BLE_ADV_INTERVAL);
@@ -1274,15 +1280,13 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
             });
         }
 
-        final Preference calendarBlacklist = findPreference("blacklist_calendars");
+        final Preference calendarBlacklist = findPreference(GBPrefs.CALENDAR_BLACKLIST);
         if (calendarBlacklist != null) {
-            calendarBlacklist.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                public boolean onPreferenceClick(Preference preference) {
-                    Intent intent = new Intent(getContext(), CalBlacklistActivity.class);
-                    intent.putExtra(GBDevice.EXTRA_DEVICE, device);
-                    startActivity(intent);
-                    return true;
-                }
+            calendarBlacklist.setOnPreferenceClickListener(preference -> {
+                Intent intent = new Intent(getContext(), CalendarSelectionActivity.class);
+                intent.putExtra(GBDevice.EXTRA_DEVICE, device);
+                startActivity(intent);
+                return true;
             });
         }
 

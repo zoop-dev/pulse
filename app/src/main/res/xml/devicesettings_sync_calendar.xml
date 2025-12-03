@@ -8,6 +8,12 @@
         android:layout="@layout/preference_checkbox"
         android:summary="@string/pref_summary_sync_calendar"
         android:title="@string/pref_title_sync_caldendar" />
+    <Preference
+        android:dependency="sync_calendar"
+        android:icon="@drawable/ic_calendar_month"
+        android:key="calendar_blacklist"
+        android:summary="@string/pref_summary_calendar_sync_choose"
+        android:title="@string/pref_title_calendar_sync_choose" />
     <EditTextPreference
         android:defaultValue="7"
         android:dependency="sync_calendar"
@@ -25,10 +31,44 @@
         android:layout="@layout/preference_checkbox"
         android:summary="@string/pref_summary_sync_birthdays"
         android:title="@string/pref_title_sync_birthdays" />
-    <Preference
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
         android:dependency="sync_calendar"
-        android:icon="@drawable/ic_block"
-        android:key="blacklist_calendars"
-        android:summary="@string/pref_blacklist_calendars_summary"
-        android:title="@string/pref_blacklist_calendars" />
+        android:icon="@drawable/ic_calendar_cancel"
+        android:key="calendar_sync_canceled"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_summary_calendar_sync_canceled"
+        android:title="@string/pref_title_calendar_sync_canceled" />
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:dependency="sync_calendar"
+        android:icon="@drawable/ic_calendar_cancel"
+        android:key="calendar_sync_declined"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_summary_calendar_sync_declined"
+        android:title="@string/pref_title_calendar_sync_declined" />
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:dependency="sync_calendar"
+        android:icon="@drawable/ic_calendar_from"
+        android:key="calendar_sync_all_day"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_summary_calendar_sync_all_day"
+        android:title="@string/pref_title_calendar_sync_all_day" />
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:dependency="sync_calendar"
+        android:icon="@drawable/ic_focus"
+        android:key="calendar_sync_focus_time"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_summary_calendar_sync_focus_time"
+        android:title="@string/pref_title_calendar_sync_focus_time" />
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:dependency="sync_calendar"
+        android:icon="@drawable/ic_gps_location"
+        android:key="calendar_sync_working_location"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_summary_calendar_sync_working_location"
+        android:title="@string/pref_title_calendar_sync_working_location" />
 </androidx.preference.PreferenceScreen>

@@ -47,10 +47,10 @@ import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.Contact;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.NavigationInfoSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.Reminder;
 import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
-import nodomain.freeyourgadget.gadgetbridge.model.NavigationInfoSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
@@ -554,6 +554,12 @@ public abstract class AbstractDeviceSupport implements DeviceSupport {
         switch (config) {
             case DeviceSettingsPreferenceConst.PREF_SYNC_CALENDAR:
             case DeviceSettingsPreferenceConst.PREF_SYNC_BIRTHDAYS:
+            case DeviceSettingsPreferenceConst.PREF_CALENDAR_SYNC_CANCELED:
+            case DeviceSettingsPreferenceConst.PREF_CALENDAR_SYNC_DECLINED:
+            case DeviceSettingsPreferenceConst.PREF_CALENDAR_SYNC_FOCUS_TIME:
+            case DeviceSettingsPreferenceConst.PREF_CALENDAR_SYNC_ALL_DAY:
+            case DeviceSettingsPreferenceConst.PREF_CALENDAR_SYNC_WORKING_LOCATION:
+            case DeviceSettingsPreferenceConst.PREF_CALENDAR_SYNC_COLOR_BLACKLIST:
                 CalendarReceiver.forceSync(getDevice());
                 break;
         }

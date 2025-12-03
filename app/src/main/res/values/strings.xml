@@ -134,8 +134,6 @@
     <string name="whitelist_all_for_notifications">Whitelist all for notifications</string>
     <string name="check_all_applications">Check all applications</string>
     <string name="uncheck_all_applications">Uncheck all applications</string>
-    <!-- Strings related to CalBlacklist -->
-    <string name="title_activity_calblacklist">Blacklisted Calendars</string>
     <!-- Strings related to FwAppInstaller -->
     <string name="title_activity_file_installer">File installer</string>
     <string name="title_activity_fw_app_insaller">FW/App installer</string>
@@ -447,8 +445,21 @@
     <string name="pref_summary_device_intents">Allow Bangle.js watch apps to send Android Intents, and allow other apps on Android (like Tasker) to send data to Bangle.js with the com.banglejs.uart.tx Intent. Needs permission to display over other apps to work in the background.</string>
     <string name="pref_summary_sync_calendar">Enables calendar alerts, even when disconnected</string>
     <string name="pref_title_sync_caldendar">Sync calendar events</string>
+    <string name="pref_summary_calendar_sync_choose">Choose which calendars and color labels to sync to the device</string>
+    <string name="pref_title_calendar_sync_choose">Calendars to sync</string>
+    <string name="pref_title_calendar_sync_colors">Event colors to sync</string>
     <string name="pref_summary_sync_birthdays">Sync contact birthdays alongside calendar events</string>
     <string name="pref_title_sync_birthdays">Sync birthdays</string>
+    <string name="pref_summary_calendar_sync_canceled">Calendar events that are cancelled will be synced to the device</string>
+    <string name="pref_title_calendar_sync_canceled">Sync canceled events</string>
+    <string name="pref_summary_calendar_sync_declined">Calendar events that you have declined will be synced to the device</string>
+    <string name="pref_title_calendar_sync_declined">Sync declined events</string>
+    <string name="pref_summary_calendar_sync_focus_time">Calendar events that are tagged as \"Focus Time\" will be synced to the device</string>
+    <string name="pref_title_calendar_sync_focus_time">Sync focus time events</string>
+    <string name="pref_summary_calendar_sync_all_day">Calendar events that are marked as  \"All Day\" will be synced to the device</string>
+    <string name="pref_title_calendar_sync_all_day">Sync all day events</string>
+    <string name="pref_summary_calendar_sync_working_location">Calendar events that are special \"Working Locations\" will be synced to the device</string>
+    <string name="pref_title_calendar_sync_working_location">Sync working location events</string>
     <string name="pref_summary_relax_firmware_checks">Relax firmware checks</string>
     <string name="pref_title_relax_firmware_checks">Enable this if you want to flash a firmware not intended for your device (at your own risk)</string>
     <string name="pref_title_vibration_strength">Vibration strength</string>
@@ -1383,6 +1394,7 @@
     <string name="delete_device_and_retain_files">Keep Files</string>
     <string name="ok">OK</string>
     <string name="save">Save</string>
+    <string name="done">Done</string>
     <string name="dismiss">Dismiss</string>
     <string name="notifications_dismiss_all">Dismiss All</string>
     <string name="start">Start</string>

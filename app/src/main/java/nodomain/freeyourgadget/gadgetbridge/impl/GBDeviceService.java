@@ -20,6 +20,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.impl;
 
+import static nodomain.freeyourgadget.gadgetbridge.util.JavaExtensions.coalesce;
+
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +30,11 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+
+import androidx.annotation.NonNull;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -50,13 +57,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.Reminder;
 import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceCommunicationService;
 import nodomain.freeyourgadget.gadgetbridge.util.RtlUtils;
-
-import static nodomain.freeyourgadget.gadgetbridge.util.JavaExtensions.coalesce;
-
-import androidx.annotation.NonNull;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 public class GBDeviceService implements DeviceService {
@@ -456,6 +456,7 @@ public class GBDeviceService implements DeviceService {
     public void onAddCalendarEvent(CalendarEventSpec calendarEventSpec) {
         Intent intent = createIntent().setAction(ACTION_ADD_CALENDAREVENT)
                 .putExtra(EXTRA_CALENDAREVENT_ID, calendarEventSpec.id)
+                .putExtra(EXTRA_CALENDAREVENT_EVENT_ID, calendarEventSpec.eventId)
                 .putExtra(EXTRA_CALENDAREVENT_TYPE, calendarEventSpec.type)
                 .putExtra(EXTRA_CALENDAREVENT_TIMESTAMP, calendarEventSpec.timestamp)
                 .putExtra(EXTRA_CALENDAREVENT_DURATION, calendarEventSpec.durationInSeconds)
@@ -464,8 +465,11 @@ public class GBDeviceService implements DeviceService {
                 .putExtra(EXTRA_CALENDAREVENT_TITLE, calendarEventSpec.title)
                 .putExtra(EXTRA_CALENDAREVENT_DESCRIPTION, calendarEventSpec.description)
                 .putExtra(EXTRA_CALENDAREVENT_CALNAME, calendarEventSpec.calName)
+                .putExtra(EXTRA_CALENDAREVENT_CALENDAR_COLOR, calendarEventSpec.calendarColor)
                 .putExtra(EXTRA_CALENDAREVENT_COLOR, calendarEventSpec.color)
-                .putExtra(EXTRA_CALENDAREVENT_LOCATION, calendarEventSpec.location);
+                .putExtra(EXTRA_CALENDAREVENT_LOCATION, calendarEventSpec.location)
+                .putExtra(EXTRA_CALENDAREVENT_STATUS, calendarEventSpec.location)
+                .putExtra(EXTRA_CALENDAREVENT_ATTENDING_STATUS, calendarEventSpec.location);
         invokeService(intent);
     }
 
@@ -473,6 +477,7 @@ public class GBDeviceService implements DeviceService {
     public void onDeleteCalendarEvent(byte type, long id) {
         Intent intent = createIntent().setAction(ACTION_DELETE_CALENDAREVENT)
                 .putExtra(EXTRA_CALENDAREVENT_TYPE, type)
+                // TODO: If swapping to EVENT_ID, change this here.
                 .putExtra(EXTRA_CALENDAREVENT_ID, id);
         invokeService(intent);
     }

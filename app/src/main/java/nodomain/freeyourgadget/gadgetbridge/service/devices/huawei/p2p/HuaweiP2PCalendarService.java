@@ -62,7 +62,7 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
     public final int OPERATION_ADD = 1;
     public final int OPERATION_DELETE = 2;
     public final int OPERATION_UPDATE = 3;
-    
+
     public static final String MODULE = "hw.unitedevice.calendarapp";
 
     private final AtomicBoolean isRegistered = new AtomicBoolean(false);
@@ -206,7 +206,7 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
         ret.addProperty("account_name", truncateToHexBytes(calendarEvent.getCalAccountName(), 64));
         ret.addProperty("account_type", truncateToHexBytes(calendarEvent.getCalAccountType(), 64));
         ret.addProperty("all_day", calendarEvent.isAllDay() ? 1 : 0);
-        ret.addProperty("calendar_color", calendarEvent.getColor());
+        ret.addProperty("calendar_color", calendarEvent.getCalendarColor());
         ret.addProperty("calendar_displayName", truncateToHexBytes(calendarEvent.getCalName(), 64));
         ret.addProperty("calendar_id", valueOrEmpty(calendarEvent.getCalendarId(), "0"));
         ret.addProperty("description", truncateToHexBytes(calendarEvent.getDescription(), 512));

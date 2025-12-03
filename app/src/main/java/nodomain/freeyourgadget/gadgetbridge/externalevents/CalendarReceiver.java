@@ -39,9 +39,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.concurrent.TimeUnit;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
@@ -53,9 +53,9 @@ import nodomain.freeyourgadget.gadgetbridge.entities.CalendarSyncStateDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarEvent;
 import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarManager;
-import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class CalendarReceiver extends ContentObserver {
     private static final Logger LOG = LoggerFactory.getLogger(CalendarReceiver.class);
@@ -253,7 +253,9 @@ public class CalendarReceiver extends ContentObserver {
                 calendarEventSpec.location = calendarEvent.getLocation();
                 calendarEventSpec.type = CalendarEventSpec.TYPE_UNKNOWN;
                 calendarEventSpec.calName = calendarEvent.getUniqueCalName();
+                calendarEventSpec.calendarColor = calendarEvent.getCalendarColor();
                 calendarEventSpec.color = calendarEvent.getColor();
+                calendarEventSpec.attendingStatus = calendarEvent.getAttendingStatus();
                 if (syncState == EventState.NEEDS_UPDATE) {
                     GBApplication.deviceService(mGBDevice).onDeleteCalendarEvent(CalendarEventSpec.TYPE_UNKNOWN, i);
                 }

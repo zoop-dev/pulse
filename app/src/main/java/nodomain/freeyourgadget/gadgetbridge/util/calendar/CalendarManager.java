@@ -28,6 +28,9 @@ import android.text.format.Time;
 
 import androidx.annotation.Nullable;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,10 +41,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.StringJoiner;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -61,34 +68,22 @@ public class CalendarManager {
     // needed for MiBand:
     // time
 
-    private static final String[] EVENT_INSTANCE_PROJECTION = new String[]{
-            Instances._ID,
-
-            Instances.BEGIN,
-            Instances.END,
-            Instances.DURATION,
-            Instances.TITLE,
-            Instances.DESCRIPTION,
-            Instances.EVENT_LOCATION,
-            Instances.ORGANIZER,
-            Instances.CALENDAR_DISPLAY_NAME,
-            CalendarContract.Calendars.ACCOUNT_NAME,
-            Instances.CALENDAR_COLOR,
-            Instances.ALL_DAY,
-            Instances.EVENT_ID, //needed for reminders
-            CalendarContract.Calendars.ACCOUNT_TYPE,
-            Instances.CALENDAR_ID,
-            Instances.RRULE
-    };
-
     private final String deviceAddress;
     private final Context mContext;
+    private HashSet<String> calendarBlacklist = null;
+    private Map<String, HashSet<Integer>> colorBlacklist = null;
+
+    public record CalendarEntry(String displayName, String accountName, int color, Set<Integer> eventColors) {
+        public String getUniqueString() {
+            return accountName + '/' + displayName;
+        }
+    }
 
     public CalendarManager(final Context context, final String deviceAddress) {
         this.mContext = context;
         this.deviceAddress = deviceAddress;
-
         loadCalendarsBlackList();
+        loadColorBlackList();
     }
 
     public List<CalendarEvent> getCalendarEventList() {
@@ -99,6 +94,7 @@ public class CalendarManager {
 
     public List<CalendarEvent> getCalendarEventList(final int lookaheadDays) {
         loadCalendarsBlackList();
+        loadColorBlackList();
 
         final Prefs prefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(deviceAddress));
 
@@ -111,6 +107,7 @@ public class CalendarManager {
             calendarEventList.addAll(getBirthdays(lookaheadDays));
             calendarEventList.sort(Comparator.comparingInt(CalendarEvent::getBeginSeconds));
         }
+
         return calendarEventList;
     }
 
@@ -127,7 +124,55 @@ public class CalendarManager {
         ContentUris.appendId(eventsUriBuilder, dtEnd);
         Uri eventsUri = eventsUriBuilder.build();
 
-        try (Cursor evtCursor = mContext.getContentResolver().query(eventsUri, EVENT_INSTANCE_PROJECTION, null, null, Instances.BEGIN + " ASC")) {
+        final String[] EVENT_INSTANCE_PROJECTION = new String[]{
+                Instances._ID,
+                Instances.BEGIN,
+                Instances.END,
+                Instances.DURATION,
+                Instances.TITLE,
+                Instances.DESCRIPTION,
+                Instances.EVENT_LOCATION,
+                Instances.ORGANIZER,
+                Instances.CALENDAR_DISPLAY_NAME,
+                CalendarContract.Calendars.ACCOUNT_NAME,
+                Instances.CALENDAR_COLOR,
+                Instances.EVENT_COLOR,
+                Instances.ALL_DAY,
+                Instances.EVENT_ID, //needed for reminders
+                CalendarContract.Calendars.ACCOUNT_TYPE,
+                Instances.CALENDAR_ID,
+                Instances.RRULE,
+                Instances.STATUS,
+                Instances.SELF_ATTENDEE_STATUS,
+                Instances.HAS_EXTENDED_PROPERTIES
+        };
+
+        final Prefs prefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(deviceAddress));
+        boolean filterCanceled = !prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_CALENDAR_SYNC_CANCELED, true);
+        boolean filterDeclined = !prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_CALENDAR_SYNC_DECLINED, true);
+        boolean filterAllDay = !prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_CALENDAR_SYNC_ALL_DAY, true);
+
+        ArrayList<String> selectionArgsList = new ArrayList<>();
+        StringJoiner selection = new StringJoiner(" AND ");
+        if (filterCanceled) {
+            selection.add(Instances.STATUS + " != ?");
+            selectionArgsList.add(String.valueOf(CalendarContract.Instances.STATUS_CANCELED));
+        }
+
+        if (filterDeclined) {
+            selection.add(Instances.SELF_ATTENDEE_STATUS + " != ?");
+            selectionArgsList.add(String.valueOf(CalendarContract.Attendees.ATTENDEE_STATUS_DECLINED));
+        }
+
+        if (filterAllDay) {
+            selection.add(Instances.ALL_DAY + " != ?");
+            selectionArgsList.add("1");
+        }
+
+        String[] selectionArgs = new String[selectionArgsList.size()];
+        selectionArgsList.toArray(selectionArgs);
+
+        try (Cursor evtCursor = mContext.getContentResolver().query(eventsUri, EVENT_INSTANCE_PROJECTION, selection.toString(), selectionArgs, Instances.BEGIN + " ASC")) {
             if (evtCursor == null || evtCursor.getCount() == 0) {
                 return calendarEventList;
             }
@@ -145,25 +190,39 @@ public class CalendarManager {
                         start,
                         end,
                         evtCursor.getLong(evtCursor.getColumnIndexOrThrow(Instances._ID)),
+                        evtCursor.getLong(evtCursor.getColumnIndexOrThrow(Instances.EVENT_ID)),
                         evtCursor.getString(evtCursor.getColumnIndexOrThrow(Instances.TITLE)),
                         evtCursor.getString(evtCursor.getColumnIndexOrThrow(Instances.DESCRIPTION)),
                         evtCursor.getString(evtCursor.getColumnIndexOrThrow(Instances.EVENT_LOCATION)),
                         evtCursor.getString(evtCursor.getColumnIndexOrThrow(Instances.CALENDAR_DISPLAY_NAME)),
                         evtCursor.getString(evtCursor.getColumnIndexOrThrow(CalendarContract.Calendars.ACCOUNT_NAME)),
                         evtCursor.getInt(evtCursor.getColumnIndexOrThrow(Instances.CALENDAR_COLOR)),
+                        evtCursor.getInt(evtCursor.getColumnIndexOrThrow(Instances.EVENT_COLOR)),
                         !evtCursor.getString(evtCursor.getColumnIndexOrThrow(Instances.ALL_DAY)).equals("0"),
                         evtCursor.getString(evtCursor.getColumnIndexOrThrow(Instances.ORGANIZER)),
                         evtCursor.getString(evtCursor.getColumnIndexOrThrow(CalendarContract.Calendars.ACCOUNT_TYPE)),
                         evtCursor.getString(evtCursor.getColumnIndexOrThrow(Instances.CALENDAR_ID)),
-                        evtCursor.getString(evtCursor.getColumnIndexOrThrow(Instances.RRULE))
+                        evtCursor.getString(evtCursor.getColumnIndexOrThrow(Instances.RRULE)),
+                        evtCursor.getInt(evtCursor.getColumnIndexOrThrow(Instances.STATUS)),
+                        evtCursor.getInt(evtCursor.getColumnIndexOrThrow(Instances.SELF_ATTENDEE_STATUS))
                 );
+
+
+                // Filter now to avoid any reminder looking up the reminders.
+                boolean hasExtendedProperties = evtCursor.getInt(evtCursor.getColumnIndexOrThrow(Instances.HAS_EXTENDED_PROPERTIES)) != 0;
+                if (isCalendarBlacklisted(calEvent.getUniqueCalName()) ||
+                    isColorBlacklistedForCalendar(calEvent.getUniqueCalName(), calEvent.getColor()) ||
+                    (hasExtendedProperties && isExtendedPropertyBlacklisted(calEvent.getEventId()))) {
+                    LOG.debug("event {} - {} skipped because it's blacklisted or filtered", calEvent.getUniqueCalName(), calEvent.getTitle());
+                    continue;
+                }
 
                 // Query reminders for this event
                 try (Cursor reminderCursor = mContext.getContentResolver().query(
                         CalendarContract.Reminders.CONTENT_URI,
                         null,
                         CalendarContract.Reminders.EVENT_ID + " = ?",
-                        new String[]{String.valueOf(evtCursor.getLong(evtCursor.getColumnIndexOrThrow(Instances.EVENT_ID)))},
+                        new String[]{String.valueOf(calEvent.getEventId())},
                         null
                 )) {
                     if (reminderCursor != null && reminderCursor.getCount() > 0) {
@@ -185,11 +244,7 @@ public class CalendarManager {
                     LOG.warn("failed to get reminder for event", e);
                 }
 
-                if (!calendarIsBlacklisted(calEvent.getUniqueCalName())) {
-                    calendarEventList.add(calEvent);
-                } else {
-                    LOG.debug("calendar {} skipped because it's blacklisted", calEvent.getUniqueCalName());
-                }
+                calendarEventList.add(calEvent);
             }
             return calendarEventList;
         } catch (final Exception e) {
@@ -234,17 +289,21 @@ public class CalendarManager {
                         startTimestampUtc,
                         startTimestampUtc + 86400000L - 1L,
                         contactId.hashCode(),
+                        contactId.hashCode(),
                         mContext.getString(R.string.contact_birthday, displayName),
                         null,
                         null,
                         mContext.getString(R.string.birthdays),
                         mContext.getString(R.string.pref_contacts_title),
                         0,
+                        0,
                         true,
                         null,
                         CalendarContract.ACCOUNT_TYPE_LOCAL,
                         null,
-                        null
+                        null,
+                        0,
+                        0
                 ));
             }
         } catch (final Exception e) {
@@ -278,28 +337,90 @@ public class CalendarManager {
         return birthday.plusYears(1);
     }
 
-    private static HashSet<String> calendars_blacklist = null;
+    public List<CalendarEntry> getCalendars() {
+        final String[] COLOR_PROJECTION = new String[] {
+            CalendarContract.Colors.COLOR, CalendarContract.Colors.ACCOUNT_NAME
+        };
 
-    public boolean calendarIsBlacklisted(String calendarUniqueName) {
-        if (calendars_blacklist == null) {
-            LOG.warn("calendarIsBlacklisted: calendars_blacklist is null!");
+        final String COLOR_SELECTION = CalendarContract.Colors.COLOR_TYPE + " = " + CalendarContract.Colors.TYPE_EVENT;
+
+        Map<String, Set<Integer>> eventColors = new HashMap<>();
+        try (Cursor colorCursor = mContext.getContentResolver().query(CalendarContract.Colors.CONTENT_URI, COLOR_PROJECTION, COLOR_SELECTION, null,  CalendarContract.Colors.ACCOUNT_NAME)) {
+            if (colorCursor != null && colorCursor.getCount() > 0) {
+                while (colorCursor.moveToNext()) {
+                    final int color = colorCursor.getInt(colorCursor.getColumnIndexOrThrow(CalendarContract.Colors.COLOR));
+                    final String account = colorCursor.getString(colorCursor.getColumnIndexOrThrow(CalendarContract.Colors.ACCOUNT_NAME));
+                    if (eventColors.containsKey(account)) {
+                        eventColors.get(account).add(color);
+                    } else {
+                        // Some events have no color, aka 0, add that as an option to all lists.
+                        eventColors.put(account, new HashSet<>(List.of(0, color)));
+                    }
+                }
+            }
+        } catch (final Exception e) {
+            LOG.warn("failed to getting colors", e);
         }
-        return calendars_blacklist != null && calendars_blacklist.contains(calendarUniqueName);
+
+        final String[] CALENDAR_PROJECTION = new String[]{
+                CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,
+                CalendarContract.Calendars.ACCOUNT_NAME,
+                CalendarContract.Calendars.CALENDAR_COLOR
+        };
+
+        ArrayList<CalendarEntry> out = new ArrayList<>();
+        try (Cursor cur = mContext.getContentResolver().query(
+                CalendarContract.Calendars.CONTENT_URI, CALENDAR_PROJECTION, null, null, null)) {
+            while (cur != null && cur.moveToNext()) {
+                out.add(new CalendarEntry(cur.getString(0),
+                                          cur.getString(1),
+                                          cur.getInt(2),
+                                          eventColors.getOrDefault(cur.getString(1),
+                                                                   new HashSet<>(List.of()))));
+            }
+        }
+        return out;
     }
 
-    public void setCalendarsBlackList(Set<String> calendarNames) {
-        if (calendarNames == null) {
-            LOG.info("Set null apps_notification_blacklist");
-            calendars_blacklist = new HashSet<>();
-        } else {
-            calendars_blacklist = new HashSet<>(calendarNames);
+    private boolean isExtendedPropertyBlacklisted(long eventId) {
+        final Prefs prefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(deviceAddress));
+        boolean filterFocusTime = !prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_CALENDAR_SYNC_FOCUS_TIME, true);
+        boolean filterWorkingLocations = !prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_CALENDAR_SYNC_WORKING_LOCATION, true);
+
+        // If both filters are disabled, or the API level is not high enough, no need to even try
+        // querying the properties table.
+        if (!filterFocusTime && !filterWorkingLocations) {
+            return false;
         }
-        LOG.info("New calendars_blacklist has {} entries", calendars_blacklist.size());
-        saveCalendarsBlackList();
+
+        try (Cursor propCursor = mContext.getContentResolver().query(
+                CalendarContract.ExtendedProperties.CONTENT_URI,
+                new String[] { CalendarContract.ExtendedProperties.VALUE },
+                CalendarContract.Reminders.EVENT_ID + " = ? AND " +
+                    CalendarContract.ExtendedProperties.NAME + " = ?",
+                new String[]{ String.valueOf(eventId), "shared:calendarProviderEventType" },
+                null)) {
+            while (propCursor != null && propCursor.moveToNext()) {
+                String propValue = propCursor.getString(propCursor.getColumnIndexOrThrow(CalendarContract.ExtendedProperties.VALUE));
+                if (filterFocusTime && propValue.equals("USER_STATUS_FOCUS_TIME")) {
+                    return true;
+                } else if (filterWorkingLocations && propValue.equals("WORKING_LOCATION")) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean isCalendarBlacklisted(String calendarUniqueName) {
+        if (calendarBlacklist == null) {
+            LOG.warn("isCalendarBlacklisted: calendarBlacklist is null!");
+        }
+        return calendarBlacklist != null && calendarBlacklist.contains(calendarUniqueName);
     }
 
     public void addCalendarToBlacklist(String calendarUniqueName) {
-        if (calendars_blacklist.add(calendarUniqueName)) {
+        if (calendarBlacklist.add(calendarUniqueName)) {
             LOG.info("Blacklisted calendar {}", calendarUniqueName);
             saveCalendarsBlackList();
         } else {
@@ -308,7 +429,7 @@ public class CalendarManager {
     }
 
     public void removeFromCalendarBlacklist(String calendarUniqueName) {
-        calendars_blacklist.remove(calendarUniqueName);
+        calendarBlacklist.remove(calendarUniqueName);
         LOG.info("Unblacklisted calendar {}", calendarUniqueName);
         saveCalendarsBlackList();
     }
@@ -316,24 +437,112 @@ public class CalendarManager {
     private void loadCalendarsBlackList() {
         SharedPreferences sharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(deviceAddress);
 
-        LOG.info("Loading calendars_blacklist");
-        calendars_blacklist = (HashSet<String>) sharedPrefs.getStringSet(GBPrefs.CALENDAR_BLACKLIST, null);
-        if (calendars_blacklist == null) {
-            calendars_blacklist = new HashSet<>();
+        LOG.info("Loading calendarBlacklist");
+        calendarBlacklist = (HashSet<String>) sharedPrefs.getStringSet(GBPrefs.CALENDAR_BLACKLIST, null);
+        if (calendarBlacklist == null) {
+            calendarBlacklist = new HashSet<>();
         }
-        LOG.info("Loaded calendars_blacklist has {} entries", calendars_blacklist.size());
+        LOG.info("Loaded calendarBlacklist has {} entries", calendarBlacklist.size());
     }
 
     private void saveCalendarsBlackList() {
         final SharedPreferences sharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(deviceAddress);
 
-        LOG.info("Saving calendars_blacklist with {} entries", calendars_blacklist.size());
+        LOG.info("Saving calendarBlacklist with {} entries", calendarBlacklist.size());
         SharedPreferences.Editor editor = sharedPrefs.edit();
-        if (calendars_blacklist.isEmpty()) {
+        if (calendarBlacklist.isEmpty()) {
             editor.putStringSet(GBPrefs.CALENDAR_BLACKLIST, null);
         } else {
-            Prefs.putStringSet(editor, GBPrefs.CALENDAR_BLACKLIST, calendars_blacklist);
+            Prefs.putStringSet(editor, GBPrefs.CALENDAR_BLACKLIST, calendarBlacklist);
         }
         editor.apply();
     }
+
+    public boolean isColorBlacklistedForCalendar(String calendarUniqueName, int color) {
+        if (colorBlacklist == null) {
+            LOG.warn("isColorBlacklistedForCalendar: colorBlacklist is null!");
+        }
+        return colorBlacklist != null &&
+               colorBlacklist.containsKey(calendarUniqueName) &&
+               colorBlacklist.get(calendarUniqueName).contains(color);
+    }
+
+    public void addColorToBlacklistForCalendar(String calendarUniqueName, int color) {
+        if (colorBlacklist.containsKey(calendarUniqueName)) {
+            if (colorBlacklist.get(calendarUniqueName).add(color)) {
+                LOG.info("Blacklisted color {} {}", calendarUniqueName, color);
+                saveColorBlackList();
+            } else {
+                LOG.warn("Color {} {} already blacklisted!", calendarUniqueName, color);
+            }
+        } else {
+            colorBlacklist.put(calendarUniqueName, new HashSet<>(List.of(color)));
+            LOG.info("Blacklisted color {} {}", calendarUniqueName, color);
+            saveColorBlackList();
+        }
+    }
+
+    public void removeColorFromBlacklistForCalendar(String calendarUniqueName, int color) {
+        if (colorBlacklist.containsKey(calendarUniqueName)) {
+            colorBlacklist.get(calendarUniqueName).remove(color);
+            if (colorBlacklist.get(calendarUniqueName).isEmpty()) {
+                colorBlacklist.remove(calendarUniqueName);
+            }
+            LOG.info("Unblacklisted color {} {}", calendarUniqueName, color);
+            saveColorBlackList();
+        }
+    }
+
+    private void loadColorBlackList() {
+        SharedPreferences sharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(deviceAddress);
+        colorBlacklist = new HashMap<>();
+        String serializedColorBlackList = sharedPrefs.getString(DeviceSettingsPreferenceConst.PREF_CALENDAR_SYNC_COLOR_BLACKLIST, null);
+        if (serializedColorBlackList != null && !serializedColorBlackList.isEmpty()) {
+            LOG.info("Loading colorBlacklist from json {}", serializedColorBlackList);
+            JSONObject json = null;
+            try {
+                json = new JSONObject(serializedColorBlackList);
+                for (Iterator<String> it = json.keys(); it.hasNext(); ) {
+                    String calendarName = it.next();
+                    JSONArray colorJson = json.getJSONArray(calendarName);
+                    HashSet<Integer> colors = new HashSet<>();
+                    for (int i = 0; i < colorJson.length(); i++) {
+                        colors.add(colorJson.getInt(i));
+                    }
+                    colorBlacklist.put(calendarName, colors);
+                }
+            } catch (JSONException e) {
+                LOG.warn("Error parsing colors from prefs: {}", e.toString());
+            }
+        }
+
+        LOG.info("Loaded colorBlacklist has {} entries", colorBlacklist.size());
+    }
+
+    private void saveColorBlackList() {
+        final SharedPreferences sharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(deviceAddress);
+
+        LOG.info("Saving colorBlacklist with {} entries", colorBlacklist.size());
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        if (colorBlacklist.isEmpty()) {
+            editor.putString(DeviceSettingsPreferenceConst.PREF_CALENDAR_SYNC_COLOR_BLACKLIST, null);
+        } else {
+            JSONObject json = new JSONObject();
+            for (Map.Entry<String, HashSet<Integer>> entry : colorBlacklist.entrySet()) {
+                JSONArray colorList = new JSONArray();
+                for (int color : entry.getValue()) {
+                    colorList.put(color);
+                }
+                try {
+                    json.put(entry.getKey(), colorList);
+                } catch (JSONException e) {
+                    LOG.warn("Error serializing colors to prefs: {}", e.toString());
+                }
+            }
+
+            editor.putString(DeviceSettingsPreferenceConst.PREF_CALENDAR_SYNC_COLOR_BLACKLIST, json.toString());
+        }
+        editor.apply();
+    }
+
 }

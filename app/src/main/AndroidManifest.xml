@@ -287,8 +287,8 @@
             android:label="@string/title_activity_notification_management"
             android:parentActivityName=".activities.SettingsActivity" />
         <activity
-            android:name=".activities.CalBlacklistActivity"
-            android:label="@string/title_activity_calblacklist"
+            android:name=".activities.CalendarSelectionActivity"
+            android:label="@string/pref_title_calendar_sync_choose"
             android:parentActivityName=".activities.SettingsActivity" />
         <activity
             android:name=".devices.vesc.VescControlActivity"

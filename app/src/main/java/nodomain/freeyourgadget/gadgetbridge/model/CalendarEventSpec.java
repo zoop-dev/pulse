@@ -26,13 +26,17 @@ public class CalendarEventSpec {
 
     public byte type;
     public long id;
+    public long eventId;
     public int timestamp;
     public int durationInSeconds;
     public String title;
     public String description;
     public String location;
     public String calName;
+    public int calendarColor;
     public int color;
     public boolean allDay;
     public ArrayList<Long> reminders; // unix epoch millis
+    public int status;
+    public int attendingStatus;
 }

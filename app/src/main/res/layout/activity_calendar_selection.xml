@@ -2,13 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="nodomain.freeyourgadget.gadgetbridge.activities.CalBlacklistActivity">
+    tools:context="nodomain.freeyourgadget.gadgetbridge.activities.CalendarSelectionActivity">
 
     <ListView
-        android:id="@+id/calListView"
+        android:id="@+id/calendar_selection_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:divider="@null" />
-
 </RelativeLayout>

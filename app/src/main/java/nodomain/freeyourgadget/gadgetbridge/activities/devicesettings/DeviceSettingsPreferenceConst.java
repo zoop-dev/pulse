@@ -89,6 +89,12 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_CALENDAR_MAX_TITLE_LENGTH = "calendar_sync_event_title_length";
     public static final String PREF_CALENDAR_MAX_DESC_LENGTH = "calendar_sync_event_desc_length";
     public static final String PREF_CALENDAR_TARGET_APP = "calendar_sync_target_app";
+    public static final String PREF_CALENDAR_SYNC_CANCELED = "calendar_sync_canceled";
+    public static final String PREF_CALENDAR_SYNC_DECLINED = "calendar_sync_declined";
+    public static final String PREF_CALENDAR_SYNC_FOCUS_TIME = "calendar_sync_focus_time";
+    public static final String PREF_CALENDAR_SYNC_ALL_DAY = "calendar_sync_all_day";
+    public static final String PREF_CALENDAR_SYNC_WORKING_LOCATION = "calendar_sync_working_location";
+    public static final String PREF_CALENDAR_SYNC_COLOR_BLACKLIST = "calendar_sync_color_blacklist";
     public static final String PREF_TIME_SYNC = "time_sync";
     public static final String PREF_WEIGHT_SCALE_UNIT = "pref_weight_scale_unit";
     public static final String PREF_USE_CUSTOM_DEVICEICON = "use_custom_deviceicon";
