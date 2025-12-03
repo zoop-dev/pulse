@@ -536,7 +536,7 @@ public class ActivityChartsActivity extends AbstractGBActivity implements Charts
                 case "hrvstatus":
                     return new HRVStatusFragment();
                 case "bodyenergy":
-                    return new BodyEnergyFragment();
+                    return BodyEnergyCollectionFragment.newInstance(enabledTabsList.size() == 1);
                 case "vo2max":
                     return new VO2MaxFragment();
                 case "load":
