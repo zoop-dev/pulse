@@ -34,12 +34,11 @@
     in
     {
       devShells.${system} = {
-        # Main development environment - simple shell with steam-run for Android tools
+        # Main development environment - simple shell with Android tools
         default = pkgs.mkShell {
           buildInputs = with pkgs; [
             jdk21
             android-composition
-            steam-run # Steam-run for running precompiled Android binaries
             adb-sync
             scrcpy
           ];
@@ -59,25 +58,20 @@
             export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
             export PATH=$PATH:$ANDROID_SDK_ROOT/build-tools/36.0.0
 
-            # Create alias for gradlew with steam-run wrapper
-            alias gradlew-nixos='steam-run ./gradlew'
-
             # Gradle configuration
-            export GRADLE_OPTS="-Dorg.gradle.daemon=false"
+            export GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.project.android.aapt2FromMavenOverride=$ANDROID_SDK_ROOT/build-tools/36.0.0/aapt2"
 
             echo "Java version: $(java -version 2>&1 | head -n1)"
             echo "✅ Environment ready!"
             echo "• JAVA_HOME: $JAVA_HOME"
             echo "• ANDROID_SDK_ROOT: $ANDROID_SDK_ROOT"
-            echo "• Available commands: gradlew-nixos (alias), adb, aapt2"
+            echo "• Available commands: ./gradlew (alias), adb, aapt2"
             echo ""
             echo "🚀 Quick start:"
-            echo "  gradlew-nixos assembleMainlineDebug    # Build debug APK"
-            echo "  gradlew-nixos installMainlineDebug     # Install to connected device"
-            echo "  gradlew-nixos test                     # Run tests"
-            echo "  gradlew-nixos lint                     # Run lint checks"
-            echo ""
-            echo "⚠️  Use 'gradlew-nixos' (alias) instead of 'gradlew' to avoid AAPT2 issues"
+            echo "  ./gradlew assembleMainlineDebug    # Build debug APK"
+            echo "  ./gradlew installMainlineDebug     # Install to connected device"
+            echo "  ./gradlew test                     # Run tests"
+            echo "  ./gradlew lint                     # Run lint checks"
           '';
         };
       };
