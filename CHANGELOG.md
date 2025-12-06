@@ -1,6 +1,6 @@
 ### Changelog
 
-#### Next
+#### 0.88.0
 
 * Initial support for Amazfit GTS 4 Mini New, T-Rex 3 Pro
 * Initial support for Garmin Edge Explore
@@ -40,22 +40,14 @@
 * Huawei: Pulse wave arrhythmia activation and control (no sync)
 * Huawei: Sleep breathing awareness for new devices (no sync)
 * Huawei: View heart rate zones and limits
-* Pebble: Bump app version to report to pebble to 4.4.2 (last official)
-* Pebble: Map cloudy weather icons in system weather app (on fw 4.x)
 * Pebble: Map cloudy weather icons in system weather app (on fw 4.x)
 * Pebble: Remove firmware 1.x and 2.x support
 * Pebble: Support fetching debug logs
 * Pebble: Support multiple weather location with system weather app (on fw 4.x)
-* Pebble: Support multiple weather location with system weather app (on fw 4.x)
 * Pebble: Support night icons on TrekVolle and TimeStyle
-* Pebble 2: Allow activating health
-* Pebble 2: Fix connection recovery mode
-* Pebble 2: Fix getting inital battery level
-* Pebble 2: Fix random crashes on disconnect
-* Pebble 2: Improve MTU change handling
-* Pebble 2: Prefer flint/ and diorite/ folders over aplite/ when installing apps
-* Pebble TimeStyle: Support night icons
-* Pebble TrekVolle: Show night icon if appropriate
+* Pebble 2/2 Duo: Fix random crashes on disconnect
+* Pebble 2 Duo: Support getting inital battery level
+* Pebble: support night weather icons in TrekVolle watch face
 * Sony Wena 3: Enable body energy
 * Withings Steel HR: Improve initialization reliability
 * Xiaomi-protobuf: Fix outdoor running HR zones for some devices
