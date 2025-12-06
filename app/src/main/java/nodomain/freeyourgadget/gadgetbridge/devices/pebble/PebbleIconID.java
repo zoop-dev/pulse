@@ -115,11 +115,27 @@ public final class PebbleIconID {
     public static final int REWARD_AVERAGE = 104;
     public static final int NOTIFICATION_FACETIME = 110;
 
-    // 4.x only from here
+    // >=4.0 only from here
     public static final int NOTIFICATION_AMAZON = 111;
     public static final int NOTIFICATION_GOOGLE_MAPS = 112;
     public static final int NOTIFICATION_GOOGLE_PHOTOS = 113;
     public static final int NOTIFICATION_IOS_PHOTOS = 114;
     public static final int NOTIFICATION_LINKEDIN = 115;
     public static final int NOTIFICATION_SLACK = 116;
+
+    // >=4.9 only from here (core devices)
+    public static final int NOTIFICATION_BEEPER = 120;
+    public static final int NOTIFICATION_DISCORD = 121;
+    public static final int NOTIFICATION_BLUESKY = 122;
+    public static final int NOTIFICATION_DUOLINGO = 123;
+    public static final int NOTIFICATION_ELEMENT = 124;
+    public static final int NOTIFICATION_GOOGLE_CHAT = 125;
+    public static final int NOTIFICATION_GOOGLE_TASKS = 126;
+    public static final int NOTIFICATION_HOME_ASSISTANT = 127;
+    public static final int NOTIFICATION_STEAM = 128;
+    public static final int NOTIFICATION_TEAMS = 129;
+    public static final int NOTIFICATION_THREADS = 130;
+    public static final int NOTIFICATION_UNIFI_PROTECT = 131;
+    public static final int NOTIFICATION_ZOOM = 132;
+    public static final int NOTIFICATION_EBAY = 133;
 }

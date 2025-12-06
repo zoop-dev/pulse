@@ -33,7 +33,6 @@ public enum NotificationType {
     MAILBOX,
     OUTLOOK,
     BUSINESS_CALENDAR,
-    RIOT,
     SIGNAL,
     WIRE,
     SKYPE,
@@ -53,7 +52,6 @@ public enum NotificationType {
     COL_REMINDER,
     DELTACHAT,
     ELEMENT,
-    ELEMENTX,
     MOLLY,
     VK,
     QQ,
@@ -90,7 +88,6 @@ public enum NotificationType {
                 return "generic_social";
             case CONVERSATIONS:
             case FACEBOOK_MESSENGER:
-            case RIOT:
             case SIGNAL:
             case WIRE:
             case TELEGRAM:
@@ -111,7 +108,6 @@ public enum NotificationType {
             case DISCORD:
             case DELTACHAT:
             case ELEMENT:
-            case ELEMENTX:
             case MOLLY:
                 return "generic_chat";
             case GMAIL:

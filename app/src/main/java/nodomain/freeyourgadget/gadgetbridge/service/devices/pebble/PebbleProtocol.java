@@ -305,6 +305,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
     private static final Random mRandom = new Random();
 
     int mFwMajor = 3;
+    boolean isNewEraPebble = false;
     boolean mEnablePebbleKit = false;
     boolean mAlwaysACKPebbleKit = false;
     private byte[] screenshotData = null;
@@ -523,7 +524,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
 
     @Override
     public byte[] encodeNotification(NotificationSpec notificationSpec) {
-        final PebbleNotification pebbleNotification = new PebbleNotification(notificationSpec);
+        final PebbleNotification pebbleNotification = new PebbleNotification(notificationSpec, isNewEraPebble);
         int id = notificationSpec.getId() != -1 ? notificationSpec.getId() : mRandom.nextInt();
         String title;
         String subtitle = null;
@@ -2399,7 +2400,13 @@ public class PebbleProtocol extends GBDeviceProtocol {
                 versionCmd.fwVersion = getFixedString(buf, 32);
 
                 mFwMajor = versionCmd.fwVersion.charAt(1) - 48;
+                String[] parsedVersion = versionCmd.fwVersion.split("\\.");
                 LOG.info("Pebble firmware major detected as {}", mFwMajor);
+                LOG.info("Pebble firmware minor detected as {}", parsedVersion[1]);
+                if (mFwMajor >= 5 || (mFwMajor == 4 && Integer.parseInt(parsedVersion[1]) >= 9)) {
+                    isNewEraPebble = true;
+                }
+
                 String gitHash = getFixedString(buf, 8);
                 int fwFlags = buf.get();
                 LOG.info("git hash: {}, flags: {}", gitHash, fwFlags);

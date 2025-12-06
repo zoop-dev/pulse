@@ -23,9 +23,11 @@ public class PebbleNotification {
     private final int icon;
     private final byte color;
     private final NotificationType notificationType;
+    private final boolean isCoreDevice;
 
-    public PebbleNotification(NotificationSpec notificationSpec) {
+    public PebbleNotification(NotificationSpec notificationSpec, boolean isCoreDevice) {
         this.notificationType = notificationSpec.type;
+        this.isCoreDevice = isCoreDevice;
         this.icon = setIcon(notificationSpec.type);
         this.color = setColor(notificationSpec);
     }
@@ -56,13 +58,13 @@ public class PebbleNotification {
             case KAKAO_TALK -> PebbleColor.Yellow;
             case KIK, LINE, WHATSAPP, COL_REMINDER -> PebbleColor.IslamicGreen;
             case LIGHTHOUSE -> PebbleColor.PictonBlue;
-            case RIOT, MOLLY -> PebbleColor.LavenderIndigo;
+            case MOLLY -> PebbleColor.LavenderIndigo;
             case SLACK -> PebbleColor.Folly;
             case SNAPCHAT -> PebbleColor.Icterine;
             case DISCORD -> PebbleColor.Purpureus;
             case WECHAT -> PebbleColor.KellyGreen;
             case YAHOO_MAIL -> PebbleColor.Indigo;
-            case ELEMENT, ELEMENTX -> PebbleColor.Malachite;
+            case ELEMENT  -> PebbleColor.MediumAquamarine;
             default -> PebbleColor.DarkCandyAppleRed;
         };
     }
@@ -71,9 +73,10 @@ public class PebbleNotification {
         return switch (notificationType) {
             case AMAZON -> PebbleIconID.NOTIFICATION_AMAZON;
             case BBM -> PebbleIconID.NOTIFICATION_BLACKBERRY_MESSENGER;
-            case CONVERSATIONS, HIPCHAT, RIOT, SIGNAL, WIRE, THREEMA, KONTALK,
-                 ANTOX, DISCORD, DELTACHAT, ELEMENT, ELEMENTX, MOLLY ->
+            case CONVERSATIONS, HIPCHAT, SIGNAL, WIRE, THREEMA, KONTALK,
+                 ANTOX, DISCORD, DELTACHAT, MOLLY ->
                     PebbleIconID.NOTIFICATION_HIPCHAT;
+            case ELEMENT -> isCoreDevice ? PebbleIconID.NOTIFICATION_ELEMENT : PebbleIconID.NOTIFICATION_HIPCHAT;
             case FACEBOOK -> PebbleIconID.NOTIFICATION_FACEBOOK;
             case FACEBOOK_MESSENGER -> PebbleIconID.NOTIFICATION_FACEBOOK_MESSENGER;
             case GENERIC_ALARM_CLOCK -> PebbleIconID.ALARM_CLOCK;

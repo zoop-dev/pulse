@@ -50,7 +50,7 @@ enum class GloryFitNotificationType(val code: Byte) {
     companion object {
         fun fromNotificationType(type: NotificationType): GloryFitNotificationType {
             when (type) {
-                NotificationType.CONVERSATIONS, NotificationType.RIOT, NotificationType.HIPCHAT, NotificationType.KONTALK,
+                NotificationType.CONVERSATIONS, NotificationType.HIPCHAT, NotificationType.KONTALK,
                 NotificationType.ANTOX, NotificationType.GENERIC_SMS, NotificationType.WECHAT,
                 NotificationType.SIGNAL-> return WECHAT
 

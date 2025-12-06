@@ -68,10 +68,12 @@ public class AppNotificationType extends HashMap<String, NotificationType> {
         put("eu.siacs.conversations", NotificationType.CONVERSATIONS);
         put("de.pixart.messenger", NotificationType.CONVERSATIONS);
 
-        // Riot, Element, ElementX
-        put("im.vector.alpha", NotificationType.RIOT);
+        // Element, ElementX, SchildiChat, FluffyChat
+        // (making the last two an extra Notification Type to give them distinct colors is debatable)
         put("im.vector.app", NotificationType.ELEMENT);
-        put("io.element.android.x", NotificationType.ELEMENTX);
+        put("io.element.android.x", NotificationType.ELEMENT);
+        put("chat.fluffy.fluffychat", NotificationType.ELEMENT);
+        put("chat.schildi.android", NotificationType.ELEMENT);
 
         // Signal
         put("org.thoughtcrime.securesms", NotificationType.SIGNAL);

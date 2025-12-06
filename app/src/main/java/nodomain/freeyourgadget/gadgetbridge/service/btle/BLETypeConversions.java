@@ -436,7 +436,6 @@ public class BLETypeConversions {
             case HIPCHAT:
             case KAKAO_TALK:
             case LINE:
-            case RIOT:
             case SIGNAL:
             case WIRE:
             case SKYPE:

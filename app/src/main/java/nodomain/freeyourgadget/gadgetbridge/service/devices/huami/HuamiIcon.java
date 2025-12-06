@@ -67,7 +67,6 @@ public class HuamiIcon {
             case GENERIC_NAVIGATION:
                 return APP_11;
             case CONVERSATIONS:
-            case RIOT:
             case HIPCHAT:
             case KONTALK:
             case ANTOX:

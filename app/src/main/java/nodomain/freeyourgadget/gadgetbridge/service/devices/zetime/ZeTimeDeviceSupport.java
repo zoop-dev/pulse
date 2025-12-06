@@ -755,7 +755,6 @@ public class ZeTimeDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 notification[5] = ZeTimeConstants.NOTIFICATION_SKYPE;
                 break;
             case CONVERSATIONS:
-            case RIOT:
             case SIGNAL:
             case WIRE:
             case TELEGRAM:

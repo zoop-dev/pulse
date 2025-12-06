@@ -150,7 +150,6 @@ public class NotificationProvider {
             case MAILBOX:
                 return AncsConstants.CATEGORY_ID_MISSED_CALL;
             case LINE:
-            case RIOT:
             case SIGNAL:
             case WIRE:
             case SKYPE:
