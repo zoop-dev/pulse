@@ -1,0 +1,5 @@
+• Support for 24 new devices: Amazfit (GTS 4 Mini New / T-Rex 3 Pro), Garmin (Fenix 6 series / Venu 4 / Enduro / others), Huawei GT 6, Pebble 2 Duo, Sony WH-CH720N, Coospo H9Z & others
+• Pebble: Improved support for Pebble 2/2 Duo
+• Garmin: More workout charts, weather air quality, notification icons, improved notifications and sync on newer firmware versions
+• Huawei: Navigation instructions, contact sync, notification pictures, HRV sync, others
+• Other misc crash fixes and device improvements

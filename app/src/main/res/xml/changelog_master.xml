@@ -1,5 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="0.88.0" versioncode="243">
+        <change>Initial support for Amazfit GTS 4 Mini New, T-Rex 3 Pro</change>
+        <change>Initial support for Coospo H9Z</change>
+        <change>Initial support for Garmin Edge Explore</change>
+        <change>Initial support for Garmin HRM-Pro Plus</change>
+        <change>Initial support for Garmin Descent G2, Enduro, Epix, Fenix 6 Pro, Fenix 6S Pro Solar, Fenix 6X Sapphire, Forerunner 35, Forerunner 745, Quatix 8, Venu 4</change>
+        <change>Initial support for Huawei FreeArc</change>
+        <change>Initial support for Huawei Watch GT 6 (Pro)</change>
+        <change>Initial support for more FitPro devices</change>
+        <change>Initial support for Pebble 2 Duo / Time 2</change>
+        <change>Initial support for IMIKI Frame 2, S52 (GloryFit)</change>
+        <change>Initial support for Sony WH-CH720N</change>
+        <change>Amazfit GTS: Fix device discovery</change>
+        <change>Amazfit T-Rex 3 Pro: Fix device discovery</change>
+        <change>Bangle.js: Avoid repeated media updates without changes</change>
+        <change>C20: Fix bluetooth name matching on some watches</change>
+        <change>CMF Watch Pro: Fix some activity samples being discarded</change>
+        <change>Coospo HW807: Fix device discovery</change>
+        <change>Even Realities G1: Fix support for some BLE names</change>
+        <change>Even Realities G1: Improve connection reliability</change>
+        <change>Even Realities G1: Support non-latin charaters in notifications</change>
+        <change>Garmin: Add debug support to fetch DEVICE_XML</change>
+        <change>Garmin: Add respiratory rate chart</change>
+        <change>Garmin: Add temperature / diving depth charts</change>
+        <change>Garmin: Add workaround for missing next page id on new sync protocol</change>
+        <change>Garmin: Allow installing unsupported files</change>
+        <change>Garmin: Fix current training load fetching</change>
+        <change>Garmin: Fix feels-like temperature</change>
+        <change>Garmin: Fix legacy fit file decoding</change>
+        <change>Garmin: Fix map in diving activities</change>
+        <change>Garmin: Fix notifications on recent firmware versions</change>
+        <change>Garmin: Fix realtime settings crash</change>
+        <change>Garmin: MLR support</change>
+        <change>Garmin: Send app notification icons</change>
+        <change>Garmin: Send current air quality</change>
+        <change>Huawei: Activate Arterial Stiffness Detection, ECG (no sync)</change>
+        <change>Huawei: Add contact sync support</change>
+        <change>Huawei: Experimental support for health feature configuration</change>
+        <change>Huawei: Fetch HRV, more sleep stats, resting HR, and emotions</change>
+        <change>Huawei: Fix send GPS and time data</change>
+        <change>Huawei: Fix VoIP call notification</change>
+        <change>Huawei: Fix weather speed, wind direction and uvIndex</change>
+        <change>Huawei: Improve swimming and jump rope workout parsing</change>
+        <change>Huawei: Initial step-by-step navigation support</change>
+        <change>Huawei: Notifications picture support</change>
+        <change>Huawei: Pulse wave arrhythmia activation and control (no sync)</change>
+        <change>Huawei: Sleep breathing awareness for new devices (no sync)</change>
+        <change>Huawei: Sync sleep apnea (no UI)</change>
+        <change>Huawei: View heart rate zones and limits</change>
+        <change>Pebble: Map cloudy weather icons in system weather app (on fw 4.x)</change>
+        <change>Pebble: Remove firmware 1.x and 2.x support</change>
+        <change>Pebble: Support fetching debug logs</change>
+        <change>Pebble: Support multiple weather location with system weather app (on fw 4.x)</change>
+        <change>Pebble: Support night icons on TrekVolle and TimeStyle</change>
+        <change>Pebble 2/2 Duo: Fix random crashes on disconnect</change>
+        <change>Pebble 2 Duo: Support getting inital battery level</change>
+        <change>Pebble: support night weather icons in TrekVolle watch face</change>
+        <change>Sony Wena 3: Enable body energy</change>
+        <change>Withings Steel HR: Improve initialization reliability</change>
+        <change>Xiaomi-protobuf: Fix outdoor running HR zones for some devices</change>
+        <change>Xiaomi-protobuf: Parse daily calories, distance, energy</change>
+        <change>Zepp OS: Add some missing menu items and shortcuts</change>
+        <change>Zepp OS: Fix gpx import for some devices</change>
+        <change>Zepp OS: Map bouldering activity</change>
+        <change>Zepp OS: Process workout movement evaluation</change>
+        <change>Allow notifications while screen saver is on</change>
+        <change>Add setting to force legacy GATT</change>
+        <change>Maps: Add themes biker, dark, indigo</change>
+        <change>Fix auto zip export when file already exists</change>
+        <change>Fix full crash when re-processing workout details fails</change>
+        <change>Fix crash while loading some notification pictures</change>
+        <change>Fix OpenTracks icon mapping</change>
+        <change>Fix pairing of unsupported devices</change>
+        <change>Fix spam from Microsoft Teams and WhatsApp notifications</change>
+        <change>Improve gpx parsing and exporting</change>
+    </release>
     <release version="0.87.1" versioncode="242">
         <change>Garmin: Fix strength workout fetching and parsing</change>
     </release>

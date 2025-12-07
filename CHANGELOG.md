@@ -3,13 +3,15 @@
 #### 0.88.0
 
 * Initial support for Amazfit GTS 4 Mini New, T-Rex 3 Pro
+* Initial support for Coospo H9Z
 * Initial support for Garmin Edge Explore
 * Initial support for Garmin HRM-Pro Plus
-* Initial support for Garmin Enduro, Epix, Fenix 6 Pro, Fenix 6X Sapphire, Forerunner 35, Forerunner 745, Venu 4
+* Initial support for Garmin Descent G2, Enduro, Epix, Fenix 6 Pro, Fenix 6S Pro Solar, Fenix 6X Sapphire, Forerunner 35, Forerunner 745, Quatix 8, Venu 4
 * Initial support for Huawei FreeArc
 * Initial support for Huawei Watch GT 6 (Pro)
 * Initial support for more FitPro devices
 * Initial support for Pebble 2 Duo / Time 2
+* Initial support for IMIKI Frame 2, S52 (GloryFit)
 * Initial support for Sony WH-CH720N
 * Amazfit GTS: Fix device discovery
 * Amazfit T-Rex 3 Pro: Fix device discovery
@@ -25,20 +27,28 @@
 * Garmin: Add temperature / diving depth charts
 * Garmin: Add workaround for missing next page id on new sync protocol
 * Garmin: Allow installing unsupported files
+* Garmin: Fix current training load fetching
+* Garmin: Fix feels-like temperature
 * Garmin: Fix legacy fit file decoding
+* Garmin: Fix map in diving activities
 * Garmin: Fix notifications on recent firmware versions
 * Garmin: Fix realtime settings crash
 * Garmin: MLR support
 * Garmin: Send app notification icons
+* Garmin: Send current air quality
 * Huawei: Activate Arterial Stiffness Detection, ECG (no sync)
 * Huawei: Add contact sync support
 * Huawei: Experimental support for health feature configuration
 * Huawei: Fetch HRV, more sleep stats, resting HR, and emotions
 * Huawei: Fix send GPS and time data
+* Huawei: Fix VoIP call notification
 * Huawei: Fix weather speed, wind direction and uvIndex
 * Huawei: Improve swimming and jump rope workout parsing
+* Huawei: Initial step-by-step navigation support
+* Huawei: Notifications picture support
 * Huawei: Pulse wave arrhythmia activation and control (no sync)
 * Huawei: Sleep breathing awareness for new devices (no sync)
+* Huawei: Sync sleep apnea (no UI)
 * Huawei: View heart rate zones and limits
 * Pebble: Map cloudy weather icons in system weather app (on fw 4.x)
 * Pebble: Remove firmware 1.x and 2.x support
@@ -56,13 +66,15 @@
 * Zepp OS: Fix gpx import for some devices
 * Zepp OS: Map bouldering activity
 * Zepp OS: Process workout movement evaluation
+* Allow notifications while screen saver is on
 * Add setting to force legacy GATT
 * Maps: Add themes biker, dark, indigo
 * Fix auto zip export when file already exists
 * Fix full crash when re-processing workout details fails
 * Fix crash while loading some notification pictures
 * Fix OpenTracks icon mapping
-* Fix spam from WhatsApp progress notifications
+* Fix pairing of unsupported devices
+* Fix spam from Microsoft Teams and WhatsApp notifications
 * Improve gpx parsing and exporting
 
 #### 0.87.1
