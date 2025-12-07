@@ -153,7 +153,7 @@ public class DeviceManager {
     }
 
     private void refreshPairedDevices() {
-        Set<GBDevice> availableDevices = DeviceHelper.getInstance().getAvailableDevices(context);
+        Set<GBDevice> availableDevices = DeviceHelper.getInstance().getAvailableDevices();
         deviceList.retainAll(availableDevices);
         for (GBDevice availableDevice : availableDevices) {
             if (!deviceList.contains(availableDevice)) {

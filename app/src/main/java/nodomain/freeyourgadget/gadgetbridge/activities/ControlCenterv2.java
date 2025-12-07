@@ -403,7 +403,7 @@ public class ControlCenterv2 extends AppCompatActivity
         if(ACTION_CONNECT.equals(intent.getAction())) {
             String btDeviceAddress = intent.getStringExtra("device");
             if(btDeviceAddress!=null){
-                GBDevice candidate = DeviceHelper.getInstance().findAvailableDevice(btDeviceAddress, this);
+                GBDevice candidate = DeviceHelper.getInstance().findAvailableDevice(btDeviceAddress);
                 if (candidate != null && !candidate.isConnected()) {
                     GBApplication.deviceService(candidate).connect();
                 }

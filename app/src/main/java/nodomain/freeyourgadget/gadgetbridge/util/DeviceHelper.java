@@ -27,7 +27,6 @@
 package nodomain.freeyourgadget.gadgetbridge.util;
 
 import android.Manifest;
-import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.widget.Toast;
@@ -81,8 +80,8 @@ public class DeviceHelper {
     private final HashMap<String, DeviceType> deviceTypeCache = new HashMap<>();
 
     @Nullable
-    public GBDevice findAvailableDevice(String deviceAddress, Context context) {
-        Set<GBDevice> availableDevices = getAvailableDevices(context);
+    public GBDevice findAvailableDevice(String deviceAddress) {
+        Set<GBDevice> availableDevices = getAvailableDevices();
         for (GBDevice availableDevice : availableDevices) {
             if (deviceAddress.equals(availableDevice.getAddress())) {
                 return availableDevice;
@@ -99,15 +98,7 @@ public class DeviceHelper {
      * Clients interested in the "live" devices being managed should use the class
      * DeviceManager.
      */
-    public Set<GBDevice> getAvailableDevices(Context context) {
-        BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        if (btAdapter == null) {
-            GB.toast(context, context.getString(R.string.bluetooth_is_not_supported_), Toast.LENGTH_SHORT, GB.WARN);
-        } else if (!btAdapter.isEnabled()) {
-            GB.toast(context, context.getString(R.string.bluetooth_is_disabled_), Toast.LENGTH_SHORT, GB.WARN);
-        }
-
+    public Set<GBDevice> getAvailableDevices() {
         return new LinkedHashSet<>(getDatabaseDevices());
     }
 

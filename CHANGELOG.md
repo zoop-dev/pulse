@@ -76,6 +76,7 @@
 * Fix pairing of unsupported devices
 * Fix spam from Microsoft Teams and WhatsApp notifications
 * Improve gpx parsing and exporting
+* Remove toast when bluetooth is off
 
 #### 0.87.1
 
