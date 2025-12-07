@@ -73,7 +73,7 @@ public enum GarminSport {
     E_BIKING(21, 0, ActivityKind.E_BIKE),
     MOTORCYCLING(22, 0, ActivityKind.MOTORCYCLING),
     ATV(22, 35, ActivityKind.ATV),
-    MOTOCROSS(22, 35, ActivityKind.MOTOCROSS),
+    MOTOCROSS(22, 36, ActivityKind.MOTOCROSS),
     BOATING(23, 0, ActivityKind.BOATING),
     DRIVING(24, 0, ActivityKind.DRIVING),
     GOLF(25, 0, ActivityKind.GOLF),
