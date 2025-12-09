@@ -338,6 +338,7 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
             case 38:
             case 39:
             case 40:
+            case 41:
             case 10000:
                 return new int[]{
                         0x000000, // black
