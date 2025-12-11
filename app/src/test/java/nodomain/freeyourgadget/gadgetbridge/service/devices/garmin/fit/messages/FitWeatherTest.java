@@ -22,6 +22,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FieldDefinition;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitLocalMessageBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.PredefinedLocalMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
@@ -304,6 +305,9 @@ public class FitWeatherTest {
             }
         }
 
+        FitLocalMessageBuilder weatherLocalMessage = new FitLocalMessageBuilder(weatherData);
+
+        FitLocalMessageBuilder test = new FitLocalMessageBuilder(null);
         for (RecordDefinition weatherDefinition : weatherDefinitions) {
             MessageWriter writer = new MessageWriter();
             weatherDefinition.generateOutgoingPayload(writer);

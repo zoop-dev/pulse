@@ -1,6 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit;
 
 import java.nio.ByteBuffer;
+import java.util.Objects;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminByteBufferReader;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes.BaseType;
@@ -56,5 +57,24 @@ public class DevFieldDefinition {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DevFieldDefinition that = (DevFieldDefinition) o;
+        return fieldDefinitionNumber == that.fieldDefinitionNumber && size == that.size && developerDataIndex == that.developerDataIndex && valueHolder.equals(that.valueHolder) && baseType == that.baseType && Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = valueHolder.hashCode();
+        result = 31 * result + fieldDefinitionNumber;
+        result = 31 * result + size;
+        result = 31 * result + developerDataIndex;
+        result = 31 * result + Objects.hashCode(baseType);
+        result = 31 * result + Objects.hashCode(name);
+        return result;
     }
 }

@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminByteBufferReader;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes.BaseType;
@@ -122,5 +123,23 @@ public class RecordDefinition {
                 //ignore
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RecordDefinition that = (RecordDefinition) o;
+        return Objects.equals(recordHeader, that.recordHeader) && Objects.equals(globalFITMessage, that.globalFITMessage) && Objects.equals(byteOrder, that.byteOrder) && Objects.equals(fieldDefinitions, that.fieldDefinitions) && Objects.equals(devFieldDefinitions, that.devFieldDefinitions);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hashCode(recordHeader);
+        result = 31 * result + Objects.hashCode(globalFITMessage);
+        result = 31 * result + Objects.hashCode(byteOrder);
+        result = 31 * result + Objects.hashCode(fieldDefinitions);
+        result = 31 * result + Objects.hashCode(devFieldDefinitions);
+        return result;
     }
 }

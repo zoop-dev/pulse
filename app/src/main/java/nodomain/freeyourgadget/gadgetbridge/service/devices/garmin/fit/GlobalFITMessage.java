@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes.BaseType;
 
@@ -994,7 +995,7 @@ public class GlobalFITMessage {
     ));
 
     public static GlobalFITMessage WEATHER = new GlobalFITMessage(128, "WEATHER", Arrays.asList(
-            new FieldDefinitionPrimitive(0, BaseType.ENUM, "weather_report"),
+            new FieldDefinitionPrimitive(0, BaseType.ENUM, "weather_report", FieldDefinitionFactory.FIELD.WEATHER_REPORT),
             new FieldDefinitionPrimitive(1, BaseType.SINT8, "temperature", FieldDefinitionFactory.FIELD.TEMPERATURE),
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "condition", FieldDefinitionFactory.FIELD.WEATHER_CONDITION),
             new FieldDefinitionPrimitive(3, BaseType.UINT16, "wind_direction"),
@@ -2215,6 +2216,22 @@ public class GlobalFITMessage {
         return null;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        GlobalFITMessage that = (GlobalFITMessage) o;
+        return number == that.number && Objects.equals(name, that.name) && Objects.equals(fieldDefinitionPrimitives, that.fieldDefinitionPrimitives);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = number;
+        result = 31 * result + Objects.hashCode(name);
+        result = 31 * result + Objects.hashCode(fieldDefinitionPrimitives);
+        return result;
+    }
+
     public static class FieldDefinitionPrimitive {
         private final int number;
         private final BaseType baseType;
@@ -2280,6 +2297,26 @@ public class GlobalFITMessage {
 
         public int getSize() {
             return size;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == null || getClass() != o.getClass()) return false;
+
+            FieldDefinitionPrimitive that = (FieldDefinitionPrimitive) o;
+            return number == that.number && scale == that.scale && offset == that.offset && size == that.size && baseType == that.baseType && Objects.equals(name, that.name) && type == that.type;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = number;
+            result = 31 * result + Objects.hashCode(baseType);
+            result = 31 * result + Objects.hashCode(name);
+            result = 31 * result + Objects.hashCode(type);
+            result = 31 * result + scale;
+            result = 31 * result + offset;
+            result = 31 * result + size;
+            return result;
         }
     }
 }

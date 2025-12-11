@@ -12,6 +12,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefi
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionFileType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionGoalSource;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionGoalType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherReport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionHrTimeInZone;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionHrZoneHighBoundary;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionHrvStatus;
@@ -54,6 +55,7 @@ public class FieldDefinitionFactory {
             case SWIM_STYLE -> new FieldDefinitionSwimStyle(localNumber, size, baseType, name);
             case LOCATION_SYMBOL -> new FieldDefinitionLocationSymbol(localNumber, size, baseType, name, scale, offset);
             case COURSE_POINT -> new FieldDefinitionCoursePoint(localNumber, size, baseType, name, scale, offset);
+            case WEATHER_REPORT -> new FieldDefinitionWeatherReport(localNumber, size, baseType, name);
         };
     }
 
@@ -80,6 +82,7 @@ public class FieldDefinitionFactory {
         COORDINATE,
         SWIM_STYLE,
         LOCATION_SYMBOL,
-        COURSE_POINT
+        COURSE_POINT,
+        WEATHER_REPORT;
     }
 }

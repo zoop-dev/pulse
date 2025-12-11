@@ -90,13 +90,13 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitAsyncProcessor;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitImporter;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitLocalMessageBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.GpxRouteFileConverter;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.PredefinedLocalMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionAlarmLabel;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherAqi;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherCondition;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherReport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitAlarmSettings;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitDeviceSettings;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitFileId;
@@ -599,28 +599,17 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             return;
         }
 
-        final List<RecordData> weatherData = encodeWeather(weather);
+        final FitLocalMessageBuilder weatherLocalMessage = new FitLocalMessageBuilder(encodeWeather(weather));
 
-        // Get all distinct record definitions
-        Set<Integer> seenDefinitions = new HashSet<>();
-        List<RecordDefinition> weatherDefinitions = new ArrayList<>(3);
-        for (RecordData d : weatherData) {
-            final int localMessageType = d.getRecordDefinition().getRecordHeader().getLocalMessageType();
-            if (!seenDefinitions.contains(localMessageType)) {
-                seenDefinitions.add(localMessageType);
-                weatherDefinitions.add(d.getRecordDefinition());
-            }
-        }
-
-        sendOutgoingMessage("send " + weatherDefinitions.size() + " weather definitions", new FitDefinitionMessage(weatherDefinitions));
-        sendOutgoingMessage("send weather data", new FitDataMessage(weatherData));
+        sendOutgoingMessage("send " + weatherLocalMessage.getDefinitions().size() + " weather definitions", new FitDefinitionMessage(weatherLocalMessage.getDefinitions()));
+        sendOutgoingMessage("send weather data", new FitDataMessage(weatherLocalMessage.getData()));
     }
 
     public static List<RecordData> encodeWeather(final WeatherSpec weather) {
         List<RecordData> weatherData = new ArrayList<>();
 
         final FitWeather.Builder today = new FitWeather.Builder();
-        today.setWeatherReport(0); // 0 = current, 1 = hourly_forecast, 2 = daily_forecast
+        today.setWeatherReport(FieldDefinitionWeatherReport.Type.current);
         today.setTimestamp((long) weather.getTimestamp());
         today.setObservedAtTime((long) weather.getTimestamp());
         today.setTemperature(weather.getCurrentTemp());
@@ -645,7 +634,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             if (hour < weather.getHourly().size()) {
                 WeatherSpec.Hourly hourly = weather.getHourly().get(hour);
                 final FitWeather.Builder weatherHourlyForecast = new FitWeather.Builder();
-                weatherHourlyForecast.setWeatherReport(1); // 0 = current, 1 = hourly_forecast, 2 = daily_forecast
+                weatherHourlyForecast.setWeatherReport(FieldDefinitionWeatherReport.Type.hourly_forecast);
                 weatherHourlyForecast.setTimestamp((long) hourly.getTimestamp());
                 weatherHourlyForecast.setTemperature(hourly.getTemp());
                 weatherHourlyForecast.setCondition(FieldDefinitionWeatherCondition.openWeatherCodeToFitWeatherStatus(hourly.getConditionCode()));
@@ -653,6 +642,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                 weatherHourlyForecast.setWindDirection(hourly.getWindDirection());
                 weatherHourlyForecast.setWindSpeed(hourly.getWindSpeed());
                 weatherHourlyForecast.setPrecipitationProbability(hourly.getPrecipProbability());
+                weatherHourlyForecast.setTemperatureFeelsLike(hourly.getTemp()); //TODO: switch to actual feels like field once Hourly contains this information
                 weatherHourlyForecast.setRelativeHumidity(hourly.getHumidity());
 //                    weatherHourlyForecast.setDewPoint(0); // TODO: add once Hourly contains this information
                 weatherHourlyForecast.setUvIndex(hourly.getUvIndex());
@@ -662,7 +652,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         }
 //
         final FitWeather.Builder todayDailyForecast = new FitWeather.Builder();
-        todayDailyForecast.setWeatherReport(2); // 0 = current, 1 = hourly_forecast, 2 = daily_forecast
+        todayDailyForecast.setWeatherReport(FieldDefinitionWeatherReport.Type.daily_forecast);
         todayDailyForecast.setTimestamp((long) weather.getTimestamp());
         todayDailyForecast.setLowTemperature(weather.getTodayMinTemp());
         todayDailyForecast.setHighTemperature(weather.getTodayMaxTemp());
@@ -681,10 +671,10 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                 WeatherSpec.Daily daily = weather.getForecasts().get(day);
                 int ts = weather.getTimestamp() + (day + 1) * 24 * 60 * 60;
                 final FitWeather.Builder weatherDailyForecast = new FitWeather.Builder();
-                weatherDailyForecast.setWeatherReport(2); // 0 = current, 1 = hourly_forecast, 2 = daily_forecast
+                weatherDailyForecast.setWeatherReport(FieldDefinitionWeatherReport.Type.daily_forecast);
                 weatherDailyForecast.setTimestamp((long) weather.getTimestamp());
-                weatherDailyForecast.setLowTemperature(daily.getMinTemp());
                 weatherDailyForecast.setHighTemperature(daily.getMaxTemp());
+                weatherDailyForecast.setLowTemperature(daily.getMinTemp());
                 weatherDailyForecast.setCondition(FieldDefinitionWeatherCondition.openWeatherCodeToFitWeatherStatus(daily.getConditionCode()));
                 weatherDailyForecast.setPrecipitationProbability(daily.getPrecipProbability());
                 weatherDailyForecast.setDayOfWeek(Instant.ofEpochSecond(ts).atZone(ZoneId.systemDefault()).getDayOfWeek());

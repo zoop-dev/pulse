@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
+import java.util.Objects;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminByteBufferReader;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes.BaseType;
@@ -119,5 +120,24 @@ public class FieldDefinition implements FieldInterface {
             tsb.append("size", size);
         }
         return tsb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FieldDefinition that = (FieldDefinition) o;
+        return scale == that.scale && offset == that.offset && number == that.number && size == that.size && baseType == that.baseType && Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hashCode(baseType);
+        result = 31 * result + scale;
+        result = 31 * result + offset;
+        result = 31 * result + number;
+        result = 31 * result + size;
+        result = 31 * result + Objects.hashCode(name);
+        return result;
     }
 }

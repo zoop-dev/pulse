@@ -26,6 +26,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDef
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherAqi.AQI_LEVELS;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherCondition.Condition;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherReport.Type;
 
 /**
  * WARNING: This class was auto-generated, please avoid modifying it directly.
@@ -44,8 +45,8 @@ public class FitWeather extends RecordData {
     }
 
     @Nullable
-    public Integer getWeatherReport() {
-        return (Integer) getFieldByNumber(0);
+    public Type getWeatherReport() {
+        return (Type) getFieldByNumber(0);
     }
 
     @Nullable
@@ -146,7 +147,7 @@ public class FitWeather extends RecordData {
             super(128);
         }
 
-        public Builder setWeatherReport(final Integer value) {
+        public Builder setWeatherReport(final Type value) {
             setFieldByNumber(0, value);
             return this;
         }
