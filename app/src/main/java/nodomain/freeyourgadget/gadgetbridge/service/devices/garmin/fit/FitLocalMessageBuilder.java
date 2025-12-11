@@ -14,24 +14,58 @@ public class FitLocalMessageBuilder {
     private final List<RecordData> recordData = new ArrayList<>();
     private final Map<Integer, RecordDefinition> definitionsByLocalType = new LinkedHashMap<>();
 
+    public FitLocalMessageBuilder() {
+    }
+
+    public FitLocalMessageBuilder addRecordData(RecordData data) {
+        Objects.requireNonNull(data, "RecordData cannot be null");
+        Objects.requireNonNull(data.getRecordDefinition(), "RecordDefinition cannot be null");
+
+        processRecordData(data);
+        return this;
+    }
+
     public FitLocalMessageBuilder(List<RecordData> recordDataList) {
         Objects.requireNonNull(recordDataList, "recordDataList cannot be null");
 
         for (RecordData data : recordDataList) {
             Objects.requireNonNull(data.getRecordDefinition(), "recordDefinition cannot be null");
 
-            processRecordData(data);
+            addRecordData(data);
         }
+    }
+
+    public int getNextAvailableLocalMessageType() {
+        for (int i = 0; i < MAX_DEFINITIONS; i++) {
+            if (!definitionsByLocalType.containsKey(i)) {
+                return i;
+            }
+        }
+
+        throw new IllegalStateException(
+                String.format("No available localMessageType: all %d slots are occupied", MAX_DEFINITIONS)
+        );
     }
 
     private void processRecordData(RecordData data) {
         final RecordDefinition definition = data.getRecordDefinition();
         final int localMessageType = definition.getRecordHeader().getLocalMessageType();
 
+        validateLocalMessageType(localMessageType);
+
         if (!definitionsByLocalType.containsKey(localMessageType)) {
             addNewDefinition(data, definition, localMessageType);
         } else {
             processExistingDefinition(data, definition, localMessageType);
+        }
+    }
+
+    private void validateLocalMessageType(int localMessageType) {
+        if (localMessageType < 0 || localMessageType >= MAX_DEFINITIONS) {
+            throw new IllegalArgumentException(
+                    String.format("localMessageType must be between 0 and %d, got: %d",
+                            MAX_DEFINITIONS - 1, localMessageType)
+            );
         }
     }
 
@@ -77,8 +111,7 @@ public class FitLocalMessageBuilder {
         return new ArrayList<>(definitionsByLocalType.values());
     }
 
-    public List<RecordData> getData() {
+    public List<RecordData> getRecordDataList() {
         return new ArrayList<>(recordData);
     }
 }
-

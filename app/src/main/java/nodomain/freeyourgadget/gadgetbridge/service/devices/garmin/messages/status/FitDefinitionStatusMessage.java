@@ -31,6 +31,10 @@ public class FitDefinitionStatusMessage extends GFDIStatusMessage {
         return new FitDefinitionStatusMessage(garminMessage, status, fitDefinitionStatusCode);
     }
 
+    public FitDefinitionStatusCode getFitDefinitionStatusCode() {
+        return fitDefinitionStatusCode;
+    }
+
     public enum FitDefinitionStatusCode {
         APPLIED,
         NOT_UNIQUE,

@@ -292,7 +292,8 @@ public class FitWeatherTest {
         Assert.assertEquals("FitWeather{weather_report=2, condition=CLEAR, precipitation_probability=53, day_of_week=TUESDAY, high_temperature=301, low_temperature=286, timestamp=1764364324}", weatherData.get(17).toString());
         */
 
-        List<RecordData> weatherData = GarminSupport.encodeWeather(weather);
+        FitLocalMessageBuilder weatherLocalMessage = GarminSupport.encodeWeather(weather);
+        List<RecordData> weatherData = weatherLocalMessage.getRecordDataList();
 
         // Get all distinct record definitions
         Set<Integer> seenDefinitions = new HashSet<>();
@@ -305,9 +306,7 @@ public class FitWeatherTest {
             }
         }
 
-        FitLocalMessageBuilder weatherLocalMessage = new FitLocalMessageBuilder(weatherData);
 
-        FitLocalMessageBuilder test = new FitLocalMessageBuilder(null);
         for (RecordDefinition weatherDefinition : weatherDefinitions) {
             MessageWriter writer = new MessageWriter();
             weatherDefinition.generateOutgoingPayload(writer);

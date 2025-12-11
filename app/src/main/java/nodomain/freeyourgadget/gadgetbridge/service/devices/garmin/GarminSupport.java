@@ -33,7 +33,6 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -599,14 +598,22 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             return;
         }
 
-        final FitLocalMessageBuilder weatherLocalMessage = new FitLocalMessageBuilder(encodeWeather(weather));
+        final FitLocalMessageBuilder weatherLocalMessage = encodeWeather(weather);
 
-        sendOutgoingMessage("send " + weatherLocalMessage.getDefinitions().size() + " weather definitions", new FitDefinitionMessage(weatherLocalMessage.getDefinitions()));
-        sendOutgoingMessage("send weather data", new FitDataMessage(weatherLocalMessage.getData()));
+        final FitLocalMessageHandler weatherHandler = new FitLocalMessageHandler(this, weatherLocalMessage);
+        messageHandlers.add(weatherHandler);
+
+        sendOutgoingMessage("send " + weatherLocalMessage.getDefinitions().size() + " weather definitions", weatherHandler.init());
     }
 
-    public static List<RecordData> encodeWeather(final WeatherSpec weather) {
-        List<RecordData> weatherData = new ArrayList<>();
+    protected void unregisterHandler(MessageHandler registered) {
+        messageHandlers.remove(registered);
+        LOG.warn("handlers: {}", messageHandlers.stream().count());
+    }
+
+    public static FitLocalMessageBuilder encodeWeather(final WeatherSpec weather) {
+
+        final FitLocalMessageBuilder weatherLocalMessage = new FitLocalMessageBuilder();
 
         final FitWeather.Builder today = new FitWeather.Builder();
         today.setWeatherReport(FieldDefinitionWeatherReport.Type.current);
@@ -628,8 +635,9 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             today.setAirQuality(FieldDefinitionWeatherAqi.aqiAbsoluteValueToEnum(weather.getAirQuality().getAqi()));
         }
         today.setLocation(weather.getLocation());
-        weatherData.add(today.build(6));
+        weatherLocalMessage.addRecordData(today.build(weatherLocalMessage.getNextAvailableLocalMessageType()));
 
+        final int hourlyMessageType = weatherLocalMessage.getNextAvailableLocalMessageType();
         for (int hour = 0; hour <= 11; hour++) {
             if (hour < weather.getHourly().size()) {
                 WeatherSpec.Hourly hourly = weather.getHourly().get(hour);
@@ -647,10 +655,12 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 //                    weatherHourlyForecast.setDewPoint(0); // TODO: add once Hourly contains this information
                 weatherHourlyForecast.setUvIndex(hourly.getUvIndex());
 //                    weatherHourlyForecast.setAirQuality(0); // TODO: add once Hourly contains this information
-                weatherData.add(weatherHourlyForecast.build(9));
+                weatherLocalMessage.addRecordData(weatherHourlyForecast.build(hourlyMessageType));
             }
         }
 //
+        final int dailyMessageType = weatherLocalMessage.getNextAvailableLocalMessageType();
+
         final FitWeather.Builder todayDailyForecast = new FitWeather.Builder();
         todayDailyForecast.setWeatherReport(FieldDefinitionWeatherReport.Type.daily_forecast);
         todayDailyForecast.setTimestamp((long) weather.getTimestamp());
@@ -663,7 +673,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         if (null != weather.getAirQuality()) {
             todayDailyForecast.setAirQuality(FieldDefinitionWeatherAqi.aqiAbsoluteValueToEnum(weather.getAirQuality().getAqi()));
         }
-        weatherData.add(todayDailyForecast.build(10));
+        weatherLocalMessage.addRecordData(todayDailyForecast.build(dailyMessageType));
 
 
         for (int day = 0; day < 4; day++) {
@@ -681,11 +691,11 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                 if (null != daily.getAirQuality()) {
                     weatherDailyForecast.setAirQuality(FieldDefinitionWeatherAqi.aqiAbsoluteValueToEnum(daily.getAirQuality().getAqi()));
                 }
-                weatherData.add(weatherDailyForecast.build(10));
+                weatherLocalMessage.addRecordData(weatherDailyForecast.build(dailyMessageType));
             }
         }
 
-        return weatherData;
+        return weatherLocalMessage;
     }
 
     private void completeInitialization() {
