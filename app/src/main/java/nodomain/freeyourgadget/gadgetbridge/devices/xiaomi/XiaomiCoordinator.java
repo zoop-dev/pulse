@@ -313,6 +313,11 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
+    public boolean supportsActiveCalories(@NonNull GBDevice device) {
+        return true;
+    }
+
+    @Override
     public boolean supportsSleepRespiratoryRate(@NonNull GBDevice device) {
         // TODO it does
         return false;
