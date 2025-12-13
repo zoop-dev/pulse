@@ -84,11 +84,11 @@ public class ZeppOsActivitySummaryParser extends HuamiActivitySummaryParser {
             return;
         }
 
+        final ActivityKind activityKind;
         if (summaryProto.hasType()) {
             final byte typeCode = (byte) summaryProto.getType().getType();
             final ZeppOsActivityType activityType = ZeppOsActivityType.fromCode(typeCode);
 
-            final ActivityKind activityKind;
             if (activityType != null) {
                 activityKind = activityType.toActivityKind();
             } else {
@@ -97,7 +97,10 @@ public class ZeppOsActivitySummaryParser extends HuamiActivitySummaryParser {
                 summaryData.add(ACTIVITY_TYPE_CODE, typeCode, UNIT_NONE);
             }
             summary.setActivityKind(activityKind.getCode());
+        } else {
+            activityKind = ActivityKind.UNKNOWN;
         }
+        final ActivityKind.CycleUnit cycleUnit = ActivityKind.getCycleUnit(activityKind);
 
         if (summaryProto.hasTime()) {
             int totalDuration = summaryProto.getTime().getTotalDuration();
@@ -121,8 +124,8 @@ public class ZeppOsActivitySummaryParser extends HuamiActivitySummaryParser {
         }
 
         if (summaryProto.hasSteps()) {
-            summaryData.add(CADENCE_MAX, summaryProto.getSteps().getMaxCadence() * 60, UNIT_SPM);
-            summaryData.add(CADENCE_AVG, summaryProto.getSteps().getAvgCadence() * 60, UNIT_SPM);
+            summaryData.addCadenceMax(summaryProto.getSteps().getMaxCadence() * 60, cycleUnit);
+            summaryData.addCadenceAvg(summaryProto.getSteps().getAvgCadence() * 60, cycleUnit);
             summaryData.add(STRIDE_AVG, summaryProto.getSteps().getAvgStride(), UNIT_CM);
             summaryData.add(STEPS, summaryProto.getSteps().getSteps(), UNIT_STEPS);
         }
@@ -134,6 +137,15 @@ public class ZeppOsActivitySummaryParser extends HuamiActivitySummaryParser {
         if (summaryProto.hasPace()) {
             summaryData.add(PACE_MAX, summaryProto.getPace().getBest(), UNIT_SECONDS_PER_M);
             summaryData.add(PACE_AVG_SECONDS_KM, summaryProto.getPace().getAvg() * 1000, UNIT_SECONDS_PER_KM);
+        }
+
+        if (summaryProto.hasFrequency()) {
+            summaryData.addCadenceAvg(summaryProto.getFrequency().getAvgFrequency(), cycleUnit);
+            summaryData.addCadenceMax(summaryProto.getFrequency().getMaxFrequency(), cycleUnit);
+        }
+
+        if (summaryProto.hasCount()) {
+            summaryData.add(JUMPS, summaryProto.getCount().getTotalJumps(), UNIT_JUMPS);
         }
 
         if (summaryProto.hasCalories()) {

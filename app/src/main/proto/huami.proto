@@ -8,6 +8,7 @@ message WorkoutSummary {
     Location location = 2;
     Type type = 3;
     Distance distance = 4;
+    Count count = 5;
     Steps steps = 11;
     Time time = 7;
     SwimmingData swimmingData = 9;
@@ -15,6 +16,7 @@ message WorkoutSummary {
     Altitude altitude = 13;
     HeartRate heartRate = 19;
     Calories calories = 16;
+    Frequency frequency = 18;
     TrainingEffect trainingEffect = 21;
     HeartRateZones heartRateZones = 22;
     Elevation elevation = 23;
@@ -55,6 +57,10 @@ message Distance {
     float distance = 1; // meters
 }
 
+message Count {
+    uint32 totalJumps = 1;
+}
+
 message Time {
     int32 totalDuration = 1; // seconds
     int32 workoutDuration = 2; // seconds
@@ -77,6 +83,11 @@ message Altitude {
 
 message Calories {
     int32 calories = 1; // kcal
+}
+
+message Frequency {
+    uint32 avgFrequency = 1;
+    uint32 maxFrequency = 2;
 }
 
 message HeartRateZones {
