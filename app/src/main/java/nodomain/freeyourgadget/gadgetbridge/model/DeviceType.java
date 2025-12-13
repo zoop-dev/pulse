@@ -320,6 +320,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.R50ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.RainbuvvyT97Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ViranC29Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.no1f1.No1F1Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.nothing.CmfBuds2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.nothing.CmfBudsPro2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.nothing.Ear1Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.nothing.Ear2Coordinator;
@@ -696,6 +697,7 @@ public enum DeviceType {
     NOTHING_EAR2(Ear2Coordinator.class),
     NOTHING_EAR_A(EarACoordinator.class),
     NOTHING_EAR_STICK(EarStickCoordinator.class),
+    NOTHING_CMF_BUDS_2(CmfBuds2Coordinator.class),
     NOTHING_CMF_BUDS_PRO_2(CmfBudsPro2Coordinator.class),
     NOTHING_CMF_WATCH_PRO(CmfWatchProCoordinator.class),
     NOTHING_CMF_WATCH_PRO_2(CmfWatchPro2Coordinator.class),

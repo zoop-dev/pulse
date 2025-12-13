@@ -2993,6 +2993,7 @@
     <string name="devicetype_nothingear2" translatable="false">Nothing Ear (2)</string>
     <string name="devicetype_nothing_ear_a" translatable="false">Nothing Ear (a)</string>
     <string name="devicetype_nothingearstick" translatable="false">Nothing Ear (Stick)</string>
+    <string name="devicetype_nothing_cmf_buds_2" translatable="false">CMF Buds 2</string>
     <string name="devicetype_nothing_cmf_buds_pro_2" translatable="false">CMF Buds Pro 2</string>
     <string name="devicetype_nothing_cmf_watch_pro" translatable="false">CMF Watch Pro</string>
     <string name="devicetype_nothing_cmf_watch_pro_2" translatable="false">CMF Watch Pro 2</string>
