@@ -4094,4 +4094,17 @@
     <string name="pref_title_notifications_when_screen_saver">…také při zapnutém spořiči obrazovky</string>
     <string name="pref_notifications_pictures_enable">Odesílat obrázky oznámení</string>
     <string name="pref_notifications_pictures_enable_summary">Odesílat obrázky oznámení u aktuálního zařízení</string>
+    <string name="prefs_pinch_and_hold_action">Akce roztažení a držení</string>
+    <string name="prefs_noise_modes_to_cycle">Režimy hluku k cyklování</string>
+    <string name="prefs_media_controls">Ovládání médií</string>
+    <string name="prefs_media_controls_summary">Roztažení • Posunutí nahoru a dolů</string>
+    <string name="prefs_pinch_and_hold_controls">Ovládání roztažení a posunutí</string>
+    <string name="prefs_call_controls">Ovládání hovoru</string>
+    <string name="prefs_answer_call_or_end_call">Přijmout nebo ukončit hovor</string>
+    <string name="prefs_answer_call_summary">Roztáhnout</string>
+    <string name="prefs_decline_call">Zamítnout hovor</string>
+    <string name="prefs_decline_call_summary">Roztáhnout a podržet</string>
+    <string name="prefs_earbud_lights_controls">Ovládání světel sluchátek</string>
+    <string name="prefs_earbud_lights_fade">Postupné rozsvícení a zhasnutí</string>
+    <string name="prefs_earbud_lights_steady">Stálé</string>
 </resources>
