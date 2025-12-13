@@ -400,7 +400,26 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_GALAXY_BUDS_PRO_AMBIENT_SOUND_TONE ="pref_galaxy_buds_pro_ambient_sound_tone";
     public static final String PREFS_NOISE_CONTROL_WITH_ONE_EARBUD ="pref_galaxy_buds_noise_controls_with_one_earbud";
     public static final String PREF_GALAXY_BUDS_PRO_ANC_LEVEL="pref_galaxy_buds_pro_anc_level";
+    public static final String PREF_GALAXY_BUDS_3_PRO_ANC_LEVEL="pref_galaxy_buds_3_pro_anc_level";
     public static final String PREFS_GALAXY_BUDS_SEAMLESS_CONNECTION="prefs_galaxy_buds_seamless_connection";
+
+    // Galaxy Buds3 Pro specific
+    public static final String PREF_GALAXY_BUDS_3_PRO_MEDIA_CONTROLS="pref_galaxy_buds_3_pro_media_controls";
+    public static final String PREF_GALAXY_BUDS_3_PRO_ANSWER_CALL="pref_galaxy_buds_3_pro_answer_call";
+    public static final String PREF_GALAXY_BUDS_3_PRO_DECLINE_CALL="pref_galaxy_buds_3_pro_decline_call";
+    public static final String PREF_GALAXY_BUDS_3_PRO_EARBUD_LIGHTS="pref_galaxy_buds_3_pro_earbud_lights";
+    
+    // Galaxy Buds3 Pro checkbox-based noise control switching (left earbud)
+    public static final String PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_ANC="pref_galaxy_buds_touch_left_switch_anc";
+    public static final String PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_AMBIENT="pref_galaxy_buds_touch_left_switch_ambient";
+    public static final String PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_ADAPTIVE="pref_galaxy_buds_touch_left_switch_adaptive";
+    public static final String PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_OFF="pref_galaxy_buds_touch_left_switch_off";
+    
+    // Galaxy Buds3 Pro checkbox-based noise control switching (right earbud)
+    public static final String PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_ANC="pref_galaxy_buds_touch_right_switch_anc";
+    public static final String PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_AMBIENT="pref_galaxy_buds_touch_right_switch_ambient";
+    public static final String PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_ADAPTIVE="pref_galaxy_buds_touch_right_switch_adaptive";
+    public static final String PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_OFF="pref_galaxy_buds_touch_right_switch_off";
 
     public static final String PREF_REDMI_BUDS_5_PRO_AMBIENT_SOUND_CONTROL="pref_redmi_buds_5_pro_ambient_sound_control";
     public static final String PREF_REDMI_BUDS_5_PRO_NOISE_CANCELLING_STRENGTH="pref_redmi_buds_5_pro_noise_cancelling_strength";

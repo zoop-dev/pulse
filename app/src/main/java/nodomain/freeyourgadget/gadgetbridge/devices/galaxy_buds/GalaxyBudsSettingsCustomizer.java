@@ -23,8 +23,21 @@ import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.Dev
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_PRO_NOISE_CONTROL;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_LEFT;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_ANC;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_AMBIENT;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_ADAPTIVE;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_OFF;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_RIGHT;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_ANC;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_AMBIENT;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_ADAPTIVE;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_OFF;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_3_PRO_MEDIA_CONTROLS;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_3_PRO_ANSWER_CALL;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_3_PRO_DECLINE_CALL;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_3_PRO_EARBUD_LIGHTS;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_3_PRO_ANC_LEVEL;
 
 import android.os.Parcel;
 
@@ -52,7 +65,6 @@ public class GalaxyBudsSettingsCustomizer implements DeviceSpecificSettingsCusto
 
     @Override
     public void customizeSettings(final DeviceSpecificSettingsHandler handler, Prefs prefs, final String rootKey) {
-
         final Preference pref_galaxy_buds_pro_balance = handler.findPreference(PREF_GALAXY_BUDS_PRO_BALANCE);
         if (pref_galaxy_buds_pro_balance != null) {
             pref_galaxy_buds_pro_balance.setSummary(String.valueOf((prefs.getInt(PREF_GALAXY_BUDS_PRO_BALANCE, 16) - 16)));
@@ -158,28 +170,96 @@ public class GalaxyBudsSettingsCustomizer implements DeviceSpecificSettingsCusto
         final Preference pref_galaxy_buds_touch_right = handler.findPreference(PREF_GALAXY_BUDS_TOUCH_RIGHT);
         String pref_galaxy_buds_touch_right_value = prefs.getString(PREF_GALAXY_BUDS_TOUCH_RIGHT, "1");
         final Preference pref_galaxy_buds_touch_right_switch = handler.findPreference(PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH);
+        
+        // For Buds3 Pro: checkbox-based switch controls (Buds2 Pro uses ListPreference)
+        final Preference pref_galaxy_buds_touch_right_switch_anc = handler.findPreference(PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_ANC);
+        final Preference pref_galaxy_buds_touch_right_switch_ambient = handler.findPreference(PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_AMBIENT);
+        final Preference pref_galaxy_buds_touch_right_switch_adaptive = handler.findPreference(PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_ADAPTIVE);
+        final Preference pref_galaxy_buds_touch_right_switch_off = handler.findPreference(PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_OFF);
+        
+        // Add change listeners for Buds3 Pro checkbox preferences to notify protocol handler
+        if (pref_galaxy_buds_touch_right_switch_anc != null) {
+            pref_galaxy_buds_touch_right_switch_anc.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newVal) {
+                    handler.notifyPreferenceChanged(PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_ANC);
+                    return true;
+                }
+            });
+        }
+        if (pref_galaxy_buds_touch_right_switch_ambient != null) {
+            pref_galaxy_buds_touch_right_switch_ambient.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newVal) {
+                    handler.notifyPreferenceChanged(PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_AMBIENT);
+                    return true;
+                }
+            });
+        }
+        if (pref_galaxy_buds_touch_right_switch_adaptive != null) {
+            pref_galaxy_buds_touch_right_switch_adaptive.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newVal) {
+                    handler.notifyPreferenceChanged(PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_ADAPTIVE);
+                    return true;
+                }
+            });
+        }
+        if (pref_galaxy_buds_touch_right_switch_off != null) {
+            pref_galaxy_buds_touch_right_switch_off.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newVal) {
+                    handler.notifyPreferenceChanged(PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_OFF);
+                    return true;
+                }
+            });
+        }
 
         if (pref_galaxy_buds_touch_right != null) {
-
-            switch (pref_galaxy_buds_touch_right_value) {
-                case "2":
-                    pref_galaxy_buds_touch_right_switch.setEnabled(true);
-                    break;
-                default:
-                    pref_galaxy_buds_touch_right_switch.setEnabled(false);
+            boolean isNoiseControl = pref_galaxy_buds_touch_right_value.equals("2");
+            
+            // Enable/disable old-style switch preference (for older models)
+            if (pref_galaxy_buds_touch_right_switch != null) {
+                pref_galaxy_buds_touch_right_switch.setEnabled(isNoiseControl);
+            }
+            
+            // Enable/disable Buds3 Pro checkboxes (Buds2 Pro uses old ListPreference)
+            if (pref_galaxy_buds_touch_right_switch_anc != null) {
+                pref_galaxy_buds_touch_right_switch_anc.setEnabled(isNoiseControl);
+            }
+            if (pref_galaxy_buds_touch_right_switch_ambient != null) {
+                pref_galaxy_buds_touch_right_switch_ambient.setEnabled(isNoiseControl);
+            }
+            if (pref_galaxy_buds_touch_right_switch_adaptive != null) {
+                pref_galaxy_buds_touch_right_switch_adaptive.setEnabled(isNoiseControl);
+            }
+            if (pref_galaxy_buds_touch_right_switch_off != null) {
+                pref_galaxy_buds_touch_right_switch_off.setEnabled(isNoiseControl);
             }
 
             pref_galaxy_buds_touch_right.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newVal) {
                     handler.notifyPreferenceChanged(PREF_GALAXY_BUDS_TOUCH_RIGHT);
-                    switch (newVal.toString()) {
-                        case "2":
-                            pref_galaxy_buds_touch_right_switch.setEnabled(true);
-                            break;
-                        default:
-                            pref_galaxy_buds_touch_right_switch.setEnabled(false);
-
+                    boolean enable = newVal.toString().equals("2");
+                    
+                    // Update old-style switch
+                    if (pref_galaxy_buds_touch_right_switch != null) {
+                        pref_galaxy_buds_touch_right_switch.setEnabled(enable);
+                    }
+                    
+                    // Update Buds3 Pro checkboxes
+                    if (pref_galaxy_buds_touch_right_switch_anc != null) {
+                        pref_galaxy_buds_touch_right_switch_anc.setEnabled(enable);
+                    }
+                    if (pref_galaxy_buds_touch_right_switch_ambient != null) {
+                        pref_galaxy_buds_touch_right_switch_ambient.setEnabled(enable);
+                    }
+                    if (pref_galaxy_buds_touch_right_switch_adaptive != null) {
+                        pref_galaxy_buds_touch_right_switch_adaptive.setEnabled(enable);
+                    }
+                    if (pref_galaxy_buds_touch_right_switch_off != null) {
+                        pref_galaxy_buds_touch_right_switch_off.setEnabled(enable);
                     }
 
                     return true;
@@ -190,28 +270,96 @@ public class GalaxyBudsSettingsCustomizer implements DeviceSpecificSettingsCusto
         final Preference pref_galaxy_buds_touch_left = handler.findPreference(PREF_GALAXY_BUDS_TOUCH_LEFT);
         String pref_galaxy_buds_touch_left_value = prefs.getString(PREF_GALAXY_BUDS_TOUCH_LEFT, "1");
         final Preference pref_galaxy_buds_touch_left_switch = handler.findPreference(PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH);
+        
+        // For Buds3 Pro: checkbox-based switch controls (Buds2 Pro uses ListPreference)
+        final Preference pref_galaxy_buds_touch_left_switch_anc = handler.findPreference(PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_ANC);
+        final Preference pref_galaxy_buds_touch_left_switch_ambient = handler.findPreference(PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_AMBIENT);
+        final Preference pref_galaxy_buds_touch_left_switch_adaptive = handler.findPreference(PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_ADAPTIVE);
+        final Preference pref_galaxy_buds_touch_left_switch_off = handler.findPreference(PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_OFF);
+        
+        // Add change listeners for Buds3 Pro checkbox preferences to notify protocol handler
+        if (pref_galaxy_buds_touch_left_switch_anc != null) {
+            pref_galaxy_buds_touch_left_switch_anc.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newVal) {
+                    handler.notifyPreferenceChanged(PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_ANC);
+                    return true;
+                }
+            });
+        }
+        if (pref_galaxy_buds_touch_left_switch_ambient != null) {
+            pref_galaxy_buds_touch_left_switch_ambient.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newVal) {
+                    handler.notifyPreferenceChanged(PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_AMBIENT);
+                    return true;
+                }
+            });
+        }
+        if (pref_galaxy_buds_touch_left_switch_adaptive != null) {
+            pref_galaxy_buds_touch_left_switch_adaptive.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newVal) {
+                    handler.notifyPreferenceChanged(PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_ADAPTIVE);
+                    return true;
+                }
+            });
+        }
+        if (pref_galaxy_buds_touch_left_switch_off != null) {
+            pref_galaxy_buds_touch_left_switch_off.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newVal) {
+                    handler.notifyPreferenceChanged(PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_OFF);
+                    return true;
+                }
+            });
+        }
 
         if (pref_galaxy_buds_touch_left != null) {
-
-            switch (pref_galaxy_buds_touch_left_value) {
-                case "2":
-                    pref_galaxy_buds_touch_left_switch.setEnabled(true);
-                    break;
-                default:
-                    pref_galaxy_buds_touch_left_switch.setEnabled(false);
+            boolean isNoiseControl = pref_galaxy_buds_touch_left_value.equals("2");
+            
+            // Enable/disable old-style switch preference (for older models)
+            if (pref_galaxy_buds_touch_left_switch != null) {
+                pref_galaxy_buds_touch_left_switch.setEnabled(isNoiseControl);
+            }
+            
+            // Enable/disable Buds3 Pro checkboxes (Buds2 Pro uses old ListPreference)
+            if (pref_galaxy_buds_touch_left_switch_anc != null) {
+                pref_galaxy_buds_touch_left_switch_anc.setEnabled(isNoiseControl);
+            }
+            if (pref_galaxy_buds_touch_left_switch_ambient != null) {
+                pref_galaxy_buds_touch_left_switch_ambient.setEnabled(isNoiseControl);
+            }
+            if (pref_galaxy_buds_touch_left_switch_adaptive != null) {
+                pref_galaxy_buds_touch_left_switch_adaptive.setEnabled(isNoiseControl);
+            }
+            if (pref_galaxy_buds_touch_left_switch_off != null) {
+                pref_galaxy_buds_touch_left_switch_off.setEnabled(isNoiseControl);
             }
 
             pref_galaxy_buds_touch_left.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newVal) {
                     handler.notifyPreferenceChanged(PREF_GALAXY_BUDS_TOUCH_LEFT);
-                    switch (newVal.toString()) {
-                        case "2":
-                            pref_galaxy_buds_touch_left_switch.setEnabled(true);
-                            break;
-                        default:
-                            pref_galaxy_buds_touch_left_switch.setEnabled(false);
-
+                    boolean enable = newVal.toString().equals("2");
+                    
+                    // Update old-style switch
+                    if (pref_galaxy_buds_touch_left_switch != null) {
+                        pref_galaxy_buds_touch_left_switch.setEnabled(enable);
+                    }
+                    
+                    // Update Buds3 Pro checkboxes
+                    if (pref_galaxy_buds_touch_left_switch_anc != null) {
+                        pref_galaxy_buds_touch_left_switch_anc.setEnabled(enable);
+                    }
+                    if (pref_galaxy_buds_touch_left_switch_ambient != null) {
+                        pref_galaxy_buds_touch_left_switch_ambient.setEnabled(enable);
+                    }
+                    if (pref_galaxy_buds_touch_left_switch_adaptive != null) {
+                        pref_galaxy_buds_touch_left_switch_adaptive.setEnabled(enable);
+                    }
+                    if (pref_galaxy_buds_touch_left_switch_off != null) {
+                        pref_galaxy_buds_touch_left_switch_off.setEnabled(enable);
                     }
 
                     return true;
@@ -219,6 +367,72 @@ public class GalaxyBudsSettingsCustomizer implements DeviceSpecificSettingsCusto
             });
         }
 
+        // ANC level change listener
+        if (pref_galaxy_buds_pro_anc_level != null) {
+            pref_galaxy_buds_pro_anc_level.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newVal) {
+                    handler.notifyPreferenceChanged(PREF_GALAXY_BUDS_PRO_ANC_LEVEL);
+                    return true;
+                }
+            });
+        }
+
+        // Galaxy Buds3 Pro specific preferences - add change listeners
+        final Preference pref_galaxy_buds_3_pro_media_controls = handler.findPreference(PREF_GALAXY_BUDS_3_PRO_MEDIA_CONTROLS);
+        if (pref_galaxy_buds_3_pro_media_controls != null) {
+            pref_galaxy_buds_3_pro_media_controls.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newVal) {
+                    handler.notifyPreferenceChanged(PREF_GALAXY_BUDS_3_PRO_MEDIA_CONTROLS);
+                    return true;
+                }
+            });
+        }
+        
+        final Preference pref_galaxy_buds_3_pro_answer_call = handler.findPreference(PREF_GALAXY_BUDS_3_PRO_ANSWER_CALL);
+        if (pref_galaxy_buds_3_pro_answer_call != null) {
+            pref_galaxy_buds_3_pro_answer_call.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newVal) {
+                    handler.notifyPreferenceChanged(PREF_GALAXY_BUDS_3_PRO_ANSWER_CALL);
+                    return true;
+                }
+            });
+        }
+        
+        final Preference pref_galaxy_buds_3_pro_decline_call = handler.findPreference(PREF_GALAXY_BUDS_3_PRO_DECLINE_CALL);
+        if (pref_galaxy_buds_3_pro_decline_call != null) {
+            pref_galaxy_buds_3_pro_decline_call.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newVal) {
+                    handler.notifyPreferenceChanged(PREF_GALAXY_BUDS_3_PRO_DECLINE_CALL);
+                    return true;
+                }
+            });
+        }
+        
+        final Preference pref_galaxy_buds_3_pro_earbud_lights = handler.findPreference(PREF_GALAXY_BUDS_3_PRO_EARBUD_LIGHTS);
+        if (pref_galaxy_buds_3_pro_earbud_lights != null) {
+            pref_galaxy_buds_3_pro_earbud_lights.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newVal) {
+                    handler.notifyPreferenceChanged(PREF_GALAXY_BUDS_3_PRO_EARBUD_LIGHTS);
+                    return true;
+                }
+            });
+        }
+        
+        final Preference pref_galaxy_buds_3_pro_anc_level = handler.findPreference(PREF_GALAXY_BUDS_3_PRO_ANC_LEVEL);
+        if (pref_galaxy_buds_3_pro_anc_level != null) {
+            pref_galaxy_buds_3_pro_anc_level.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newVal) {
+                    handler.notifyPreferenceChanged(PREF_GALAXY_BUDS_3_PRO_ANC_LEVEL);
+                    return true;
+                }
+            });
+        }
 
 /*
         final Preference pref_galaxy_buds_ambient_mode = handler.findPreference(PREF_GALAXY_BUDS_AMBIENT_SOUND);

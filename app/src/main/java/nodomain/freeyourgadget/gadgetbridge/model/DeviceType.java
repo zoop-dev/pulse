@@ -59,6 +59,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.fitpro.colacao.ColaCao23Coor
 import nodomain.freeyourgadget.gadgetbridge.devices.flipper.zero.FlipperZeroCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.galaxy_buds.GalaxyBuds2DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.galaxy_buds.GalaxyBuds2ProDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.galaxy_buds.GalaxyBuds3ProDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.galaxy_buds.GalaxyBudsDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.galaxy_buds.GalaxyBudsLiveDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.galaxy_buds.GalaxyBudsProDeviceCoordinator;
@@ -706,6 +707,7 @@ public enum DeviceType {
     GALAXY_BUDS(GalaxyBudsDeviceCoordinator.class),
     GALAXY_BUDS2(GalaxyBuds2DeviceCoordinator.class),
     GALAXY_BUDS2_PRO(GalaxyBuds2ProDeviceCoordinator.class),
+    GALAXY_BUDS3_PRO(GalaxyBuds3ProDeviceCoordinator.class),
     SONY_WH_1000XM3(SonyWH1000XM3Coordinator.class),
     SONY_WF_SP800N(SonyWFSP800NCoordinator.class),
     SONY_WI_C100(SonyWIC100Coordinator.class),

@@ -384,6 +384,11 @@ public class GalaxyBudsProtocol extends GBDeviceProtocol {
             case DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_PRO_ANC_LEVEL:
                 int anc_level = Integer.parseInt(prefs.getString(DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_PRO_ANC_LEVEL, "0"));
                 return encodeMessage(set_noise_reduction_level, (byte) anc_level);
+            
+            case DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_3_PRO_ANC_LEVEL:
+                // Buds3 Pro uses integer-based SeekBarPreference (0-4)
+                int anc_level_3pro = prefs.getInt(DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_3_PRO_ANC_LEVEL, 4);
+                return encodeMessage(set_noise_reduction_level, (byte) anc_level_3pro);
 
             case DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_AMBIENT_SOUND:
             case DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_PRO_AMBIENT_VOLUME_RIGHT:
@@ -410,6 +415,51 @@ public class GalaxyBudsProtocol extends GBDeviceProtocol {
                 int ambient_volume = prefs.getInt(DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_AMBIENT_VOLUME, 0);
                 byte ambient_volume_byte = (byte) (ambient_volume);
                 return encodeMessage(set_ambient_volume, ambient_volume_byte);
+            // Galaxy Buds3 Pro: Full touch controls message (10 bytes)
+            // Command 0x90 now controls ALL touch features with extended payload
+            case DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_3_PRO_MEDIA_CONTROLS:
+            case DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_3_PRO_ANSWER_CALL:
+            case DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_3_PRO_DECLINE_CALL:
+            case DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_3_PRO_EARBUD_LIGHTS:
+                // Build full 10-byte payload for Buds3 Pro touch controls
+                // Format discovered from Samsung Galaxy Wearable app decompilation
+                byte[] touchPayload = new byte[10];
+                
+                // Byte 0: Overall touch controls (always enabled for Buds3 Pro)
+                // Note: This is a device state field, not a user preference
+                touchPayload[0] = (byte) 0x01;
+                
+                // Byte 1: Single pinch (play/pause)
+                boolean mediaControlsOn = prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_3_PRO_MEDIA_CONTROLS, true);
+                touchPayload[1] = (byte) (mediaControlsOn ? 0x01 : 0x00);
+                
+                // Byte 2: Double pinch (next track)
+                touchPayload[2] = (byte) (mediaControlsOn ? 0x01 : 0x00);
+                
+                // Byte 3: Triple pinch (previous track)
+                touchPayload[3] = (byte) (mediaControlsOn ? 0x01 : 0x00);
+                
+                // Byte 4: Pinch and hold (always enabled for Buds3 Pro)
+                touchPayload[4] = (byte) 0x01;
+                
+                // Byte 5: Single pinch to answer call
+                touchPayload[5] = (byte) (prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_3_PRO_ANSWER_CALL, true) ? 0x01 : 0x00);
+                
+                // Byte 6: Pinch and hold to decline call
+                touchPayload[6] = (byte) (prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_3_PRO_DECLINE_CALL, true) ? 0x01 : 0x00);
+                
+                // Byte 7: Swipe up/down for volume
+                touchPayload[7] = (byte) (mediaControlsOn ? 0x01 : 0x00);
+                
+                // Byte 8: Earbud lights mode (0=?, 1=steady, 2=blinking, 3=fade)
+                String lightsMode = prefs.getString(DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_3_PRO_EARBUD_LIGHTS, "0");
+                touchPayload[8] = (byte) Integer.parseInt(lightsMode);
+                
+                // Byte 9: Quick launch advanced (unused for now)
+                touchPayload[9] = (byte) 0x00;
+                
+                return encodeMessage(set_lock_touch, touchPayload);
+                
             case DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_LOCK_TOUCH:
                 byte set_lock = (byte) (prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_LOCK_TOUCH, false) ? 0x01 : 0x00);
                 return encodeMessage(set_lock_touch, set_lock);
@@ -448,20 +498,44 @@ public class GalaxyBudsProtocol extends GBDeviceProtocol {
                 byte touchmode_right = (byte) Integer.parseInt(touch_right);
                 return encodeMessage(set_touchpad_options, touchmode_left, touchmode_right);
 
+            // Noise control switching for pinch-and-hold gesture
             case DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH:
             case DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH:
-                String touch_right_switch = prefs.getString(DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH, "1");
-                String touch_left_switch = prefs.getString(DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH, "1");
-                byte[] touch_right_switch_b = encode_touch_switch(touch_right_switch);
-                byte[] touch_left_switch_b = encode_touch_switch(touch_left_switch);
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                try {
-                    outputStream.write(touch_left_switch_b);
-                    outputStream.write(touch_right_switch_b);
-                } catch (IOException e) {
-                    LOG.warn("Assembling message failed: " + e.getMessage());
+            case DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_ANC:
+            case DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_AMBIENT:
+            case DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_ADAPTIVE:
+            case DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_OFF:
+            case DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_ANC:
+            case DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_AMBIENT:
+            case DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_ADAPTIVE:
+            case DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_OFF:
+                // Check if using newer format (Buds3 Pro only) - 1 byte per side with checkboxes
+                // vs older format (Buds Live, Buds Pro, Buds2 Pro) - 3 bytes per side with list selection
+                DeviceType type = getDevice().getType();
+                boolean useNewFormat = type.equals(DeviceType.GALAXY_BUDS3_PRO);
+                
+                byte[] touch_payload;
+                if (useNewFormat) {
+                    // New format: 2 bytes total (1 per side with bit flags from checkboxes)
+                    byte touch_left_byte = encode_touch_switch_checkboxes(prefs, true);
+                    byte touch_right_byte = encode_touch_switch_checkboxes(prefs, false);
+                    touch_payload = new byte[]{touch_left_byte, touch_right_byte};
+                } else {
+                    // Old format: 6 bytes total (3 per side from list selection)
+                    String touch_right_switch = prefs.getString(DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH, "1");
+                    String touch_left_switch = prefs.getString(DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH, "1");
+                    byte[] touch_right_switch_b = encode_touch_switch(touch_right_switch);
+                    byte[] touch_left_switch_b = encode_touch_switch(touch_left_switch);
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    try {
+                        outputStream.write(touch_left_switch_b);
+                        outputStream.write(touch_right_switch_b);
+                    } catch (IOException e) {
+                        LOG.warn("Assembling message failed: " + e.getMessage());
+                    }
+                    touch_payload = outputStream.toByteArray();
                 }
-                return encodeMessage(set_touch_and_hold_noise_controls, outputStream.toByteArray());
+                return encodeMessage(set_touch_and_hold_noise_controls, touch_payload);
 
 
             case DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_LIVE_ANC:
@@ -529,9 +603,58 @@ public class GalaxyBudsProtocol extends GBDeviceProtocol {
                 return new byte[]{0x1, 0x0, 0x1};
             case "2":
                 return new byte[]{0x0, 0x1, 0x1};
+            case "3":
+                return new byte[]{0x1, 0x0, 0x0};
+            case "4":
+                return new byte[]{0x0, 0x0, 0x1};
             default:
                 return new byte[]{0x1, 0x1, 0x0};
         }
+    }
+    
+    /**
+     * Encode touch switch for newer Galaxy Buds models (Buds3 Pro) using checkboxes
+     * Format: Single byte with bit flags
+     * Bit 3 (0x08): ANC enabled
+     * Bit 2 (0x04): Off enabled
+     * Bit 1 (0x02): Adaptive enabled
+     * Bit 0 (0x01): Ambient enabled
+     */
+    private byte encode_touch_switch_checkboxes(SharedPreferences prefs, boolean isLeft) {
+        byte result = 0x00;
+        
+        // Select the correct preference keys based on left/right side
+        String prefANC = isLeft ? DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_ANC 
+                                : DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_ANC;
+        String prefAmbient = isLeft ? DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_AMBIENT
+                                    : DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_AMBIENT;
+        String prefAdaptive = isLeft ? DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_ADAPTIVE
+                                     : DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_ADAPTIVE;
+        String prefOff = isLeft ? DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_LEFT_SWITCH_OFF
+                                : DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_TOUCH_RIGHT_SWITCH_OFF;
+        
+        // Build byte from checkbox states using bit flags
+        if (prefs.getBoolean(prefANC, true)) {
+            result |= 0x08; // Set bit 3
+        }
+        if (prefs.getBoolean(prefOff, false)) {
+            result |= 0x04; // Set bit 2
+        }
+        if (prefs.getBoolean(prefAdaptive, false)) {
+            result |= 0x02; // Set bit 1
+        }
+        if (prefs.getBoolean(prefAmbient, true)) {
+            result |= 0x01; // Set bit 0
+        }
+        
+        // Ensure at least one mode is selected (default to ANC + Ambient if none selected)
+        if (result == 0x00) {
+            LOG.warn("No noise control modes selected for " + (isLeft ? "left" : "right") + " earbud, defaulting to ANC + Ambient");
+            result = 0x09; // ANC | Ambient
+        }
+        
+        LOG.debug("Noise control byte for " + (isLeft ? "left" : "right") + ": 0x" + String.format("%02X", result));
+        return result;
     }
 
     protected GalaxyBudsProtocol(GBDevice device) {
@@ -540,7 +663,8 @@ public class GalaxyBudsProtocol extends GBDeviceProtocol {
         if (type.equals(DeviceType.GALAXY_BUDS_LIVE)
                 || type.equals(DeviceType.GALAXY_BUDS_PRO)
                 || type.equals(DeviceType.GALAXY_BUDS2)
-                || type.equals(DeviceType.GALAXY_BUDS2_PRO)) {
+                || type.equals(DeviceType.GALAXY_BUDS2_PRO)
+                || type.equals(DeviceType.GALAXY_BUDS3_PRO)) {
             StartOfMessage = SOM_BUDS_PLUS;
             EndOfMessage = EOM_BUDS_PLUS;
         }

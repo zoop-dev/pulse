@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/galaxy_buds_3_pro_noise_controls_options"
+        android:entryValues="@array/galaxy_buds_3_pro_noise_controls_options_values"
+        android:icon="@drawable/ic_surround"
+        android:key="pref_galaxy_buds_pro_noise_control"
+        app:useSimpleSummaryProvider="true"
+        android:title="@string/prefs_noise_control" />
+    <PreferenceScreen
+        android:icon="@drawable/ic_hearing"
+        android:key="prefs_accessibility"
+        android:persistent="false"
+        android:title="@string/nothing_prefs_audiomode_title">
+
+        <PreferenceCategory android:title="@string/prefs_active_noise_cancelling">
+            <SeekBarPreference
+                android:defaultValue="4"
+                android:icon="@drawable/ic_surround"
+                android:key="pref_galaxy_buds_3_pro_anc_level"
+                android:max="4"
+                android:min="0"
+                android:title="@string/prefs_active_noise_cancelling_level"
+                app:showSeekBarValue="true" />
+        </PreferenceCategory>
+
+        <PreferenceCategory android:title="@string/prefs_voice_detect">
+            <SwitchPreferenceCompat
+                android:defaultValue="false"
+                android:icon="@drawable/ic_voice"
+                android:key="pref_galaxy_buds_pro_voice_detect"
+                android:layout="@layout/preference_checkbox"
+                android:summary="@string/prefs_voice_detect_summary"
+                android:title="@string/prefs_voice_detect" />
+            <ListPreference
+                android:defaultValue="5"
+                android:dependency="pref_galaxy_buds_pro_voice_detect"
+                android:entries="@array/galaxy_pro_voice_detect_duration_options"
+                android:entryValues="@array/galaxy_pro_voice_detect_duration_values"
+                android:icon="@drawable/ic_timer"
+                android:key="pref_galaxy_buds_pro_voice_detect_duration"
+                app:useSimpleSummaryProvider="true"
+                android:title="@string/prefs_voice_detect_duration" />
+
+        </PreferenceCategory>
+        <PreferenceCategory android:title="@string/prefs_ambient_sound">
+
+
+            <SwitchPreferenceCompat
+                android:defaultValue="false"
+                android:icon="@drawable/ic_phone"
+                android:key="pref_galaxy_buds_ambient_mode_during_call"
+                android:layout="@layout/preference_checkbox"
+                android:summary="@string/prefs_ambient_sound_during_call_summary"
+                android:title="@string/prefs_ambient_sound_during_call_title" />
+
+            <SwitchPreferenceCompat
+                android:defaultValue="false"
+                android:icon="@drawable/ic_hearing"
+                android:key="pref_galaxy_buds_ambient_sound"
+                android:layout="@layout/preference_checkbox"
+                android:title="@string/prefs_customize_ambient_sound_summary" />
+
+            <SeekBarPreference
+                android:defaultValue="1"
+                android:dependency="pref_galaxy_buds_ambient_sound"
+                android:icon="@drawable/ic_volume_up"
+                android:key="pref_galaxy_buds_pro_ambient_volume_right"
+                android:max="4"
+                android:min="0"
+                android:title="@string/prefs_ambient_volume_right"
+                app:showSeekBarValue="false" />
+
+            <SeekBarPreference
+                android:defaultValue="1"
+                android:dependency="pref_galaxy_buds_ambient_sound"
+                android:icon="@drawable/ic_volume_up"
+                android:key="pref_galaxy_buds_pro_ambient_volume_left"
+                android:max="4"
+                android:min="0"
+                android:title="@string/prefs_ambient_volume_left"
+                app:showSeekBarValue="false" />
+
+            <SeekBarPreference
+                android:defaultValue="1"
+                android:dependency="pref_galaxy_buds_ambient_sound"
+                android:icon="@drawable/ic_surround"
+                android:key="pref_galaxy_buds_pro_ambient_sound_tone"
+                android:max="4"
+                android:min="0"
+                android:summary="@string/pref_ambient_sound_tone_summary"
+                android:title="@string/pref_ambient_sound_tone"
+                app:showSeekBarValue="false" />
+        </PreferenceCategory>
+    </PreferenceScreen>
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/galaxy_buds_live_equalizer_modes"
+        android:entryValues="@array/galaxy_buds_live_equalizer_values"
+        android:icon="@drawable/ic_equalizer"
+        android:key="pref_galaxy_buds_equalizer_mode"
+        app:useSimpleSummaryProvider="true"
+        android:title="@string/prefs_equalizer_preset" />
+
+    <PreferenceScreen
+        android:icon="@drawable/ic_touch"
+        android:key="prefs_galaxy_touch_options"
+        android:persistent="false"
+        android:title="@string/prefs_galaxy_touch_options">
+        
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:icon="@drawable/ic_touch"
+            android:key="pref_galaxy_buds_3_pro_media_controls"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/prefs_media_controls_summary"
+            android:title="@string/prefs_media_controls" />
+
+        <!-- Left Earbud Touch Controls -->
+        <PreferenceCategory android:title="@string/prefs_left">
+            <ListPreference
+                android:defaultValue="0"
+                android:entries="@array/galaxy_buds_3_pro_touch_options_left"
+                android:entryValues="@array/galaxy_buds_3_pro_touch_options_values"
+                android:icon="@drawable/ic_switch_left"
+                android:key="pref_galaxy_buds_touch_left"
+                app:useSimpleSummaryProvider="true"
+                android:title="@string/prefs_pinch_and_hold_action" />
+
+            <PreferenceCategory 
+                android:dependency="pref_galaxy_buds_touch_left"
+                android:title="@string/prefs_noise_modes_to_cycle">
+                <SwitchPreferenceCompat
+                    android:defaultValue="true"
+                    android:icon="@drawable/ic_surround"
+                    android:key="pref_galaxy_buds_touch_left_switch_anc"
+                    android:layout="@layout/preference_checkbox"
+                    android:title="@string/prefs_active_noise_cancelling" />
+                <SwitchPreferenceCompat
+                    android:defaultValue="false"
+                    android:icon="@drawable/ic_auto_awesome"
+                    android:key="pref_galaxy_buds_touch_left_switch_adaptive"
+                    android:layout="@layout/preference_checkbox"
+                    android:title="@string/redmi_buds_5_pro_adaptive_sound" />
+                <SwitchPreferenceCompat
+                    android:defaultValue="true"
+                    android:icon="@drawable/ic_hearing"
+                    android:key="pref_galaxy_buds_touch_left_switch_ambient"
+                    android:layout="@layout/preference_checkbox"
+                    android:title="@string/prefs_ambient_sound" />
+                <SwitchPreferenceCompat
+                    android:defaultValue="false"
+                    android:icon="@drawable/ic_volume_off"
+                    android:key="pref_galaxy_buds_touch_left_switch_off"
+                    android:layout="@layout/preference_checkbox"
+                    android:title="@string/off" />
+            </PreferenceCategory>
+        </PreferenceCategory>
+
+        <!-- Right Earbud Touch Controls -->
+        <PreferenceCategory android:title="@string/prefs_right">
+            <ListPreference
+                android:defaultValue="0"
+                android:entries="@array/galaxy_buds_3_pro_touch_options_right"
+                android:entryValues="@array/galaxy_buds_3_pro_touch_options_values"
+                android:icon="@drawable/ic_switch_right"
+                android:key="pref_galaxy_buds_touch_right"
+                app:useSimpleSummaryProvider="true"
+                android:title="@string/prefs_pinch_and_hold_action" />
+
+            <PreferenceCategory 
+                android:dependency="pref_galaxy_buds_touch_right"
+                android:title="@string/prefs_noise_modes_to_cycle">
+                <SwitchPreferenceCompat
+                    android:defaultValue="true"
+                    android:icon="@drawable/ic_surround"
+                    android:key="pref_galaxy_buds_touch_right_switch_anc"
+                    android:layout="@layout/preference_checkbox"
+                    android:title="@string/prefs_active_noise_cancelling" />
+                <SwitchPreferenceCompat
+                    android:defaultValue="false"
+                    android:icon="@drawable/ic_auto_awesome"
+                    android:key="pref_galaxy_buds_touch_right_switch_adaptive"
+                    android:layout="@layout/preference_checkbox"
+                    android:title="@string/redmi_buds_5_pro_adaptive_sound" />
+                <SwitchPreferenceCompat
+                    android:defaultValue="true"
+                    android:icon="@drawable/ic_hearing"
+                    android:key="pref_galaxy_buds_touch_right_switch_ambient"
+                    android:layout="@layout/preference_checkbox"
+                    android:title="@string/prefs_ambient_sound" />
+                <SwitchPreferenceCompat
+                    android:defaultValue="false"
+                    android:icon="@drawable/ic_volume_off"
+                    android:key="pref_galaxy_buds_touch_right_switch_off"
+                    android:layout="@layout/preference_checkbox"
+                    android:title="@string/off" />
+            </PreferenceCategory>
+        </PreferenceCategory>
+
+        <PreferenceCategory android:title="@string/prefs_call_controls">
+            <SwitchPreferenceCompat
+                android:defaultValue="true"
+                android:icon="@drawable/ic_phone"
+                android:key="pref_galaxy_buds_3_pro_answer_call"
+                android:layout="@layout/preference_checkbox"
+                android:summary="@string/prefs_answer_call_summary"
+                android:title="@string/prefs_answer_call_or_end_call" />
+
+            <SwitchPreferenceCompat
+                android:defaultValue="true"
+                android:icon="@drawable/ic_phone"
+                android:key="pref_galaxy_buds_3_pro_decline_call"
+                android:layout="@layout/preference_checkbox"
+                android:summary="@string/prefs_decline_call_summary"
+                android:title="@string/prefs_decline_call" />
+        </PreferenceCategory>
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/galaxy_buds_3_pro_earbud_lights_options"
+            android:entryValues="@array/galaxy_buds_3_pro_earbud_lights_values"
+            android:icon="@drawable/ic_led_color"
+            android:key="pref_galaxy_buds_3_pro_earbud_lights"
+            app:useSimpleSummaryProvider="true"
+            android:title="@string/prefs_earbud_lights_controls" />
+    </PreferenceScreen>
+
+    <PreferenceScreen
+        android:icon="@drawable/ic_settings"
+        android:key="prefs_settings"
+        android:persistent="false"
+        android:title="@string/title_activity_settings">
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_hearing"
+            android:key="pref_galaxy_buds_pro_in_ear_detection"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/prefs_in_ear_detection_summary"
+            android:title="@string/nothing_prefs_inear_title" />
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_auto_awesome"
+            android:key="prefs_galaxy_buds_seamless_connection"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/prefs_seamless_connection_switch_summary"
+            android:title="@string/prefs_seamless_connection_switch_title" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_hearing"
+            android:key="pref_galaxy_buds_noise_controls_with_one_earbud"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/prefs_noise_control_with_one_earbud_summary"
+            android:title="@string/prefs_noise_control_with_one_earbud" />
+
+        <SeekBarPreference
+            android:defaultValue="50"
+            android:icon="@drawable/ic_volume_up"
+            android:key="pref_galaxy_buds_pro_balance"
+            android:max="32"
+            android:min="0"
+            android:title="@string/pref_balance"
+            app:defaultValue="16"
+            app:showSeekBarValue="true" />
+
+        <PreferenceCategory android:title="@string/prefs_galaxy_buds_experimental">
+            <SwitchPreferenceCompat
+                android:defaultValue="false"
+                android:icon="@drawable/ic_videogame"
+                android:key="pref_galaxy_buds_game_mode"
+                android:layout="@layout/preference_checkbox"
+                android:summary="@string/prefs_game_mode_summary"
+                android:title="@string/prefs_game_mode" />
+        </PreferenceCategory>
+
+        <!-- <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_graphic_eq"
+            android:key="pref_galaxy_buds_pro_read_notifications_outloud"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/prefs_read_notification_outloud" />
+            -->
+
+    </PreferenceScreen>
+
+</androidx.preference.PreferenceScreen>

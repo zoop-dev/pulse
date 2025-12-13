@@ -3009,6 +3009,7 @@
     <string name="devicetype_galaxybuds_pro" translatable="false">Galaxy Buds Pro</string>
     <string name="devicetype_galaxybuds_2" translatable="false">Galaxy Buds2</string>
     <string name="devicetype_galaxybuds_2_pro" translatable="false">Galaxy Buds2 Pro</string>
+    <string name="devicetype_galaxybuds_3_pro" translatable="false">Galaxy Buds3 Pro</string>
     <string name="nothing_prefs_inear_summary">Play/pause the music depending if you wear the earbuds</string>
     <string name="nothing_prefs_inear_title">In-Ear detection</string>
     <string name="prefs_in_ear_detection_summary">Play calls through your earbuds when they are in your ears</string>
@@ -3064,7 +3065,20 @@
     <string name="prefs_right">Right</string>
     <string name="prefs_switch_control_left">Switch control left</string>
     <string name="prefs_switch_control_right">Switch control right</string>
+    <string name="prefs_pinch_and_hold_action">Pinch and hold action</string>
+    <string name="prefs_noise_modes_to_cycle">Noise modes to cycle</string>
     <string name="prefs_galaxy_touch_options">Touch Options</string>
+    <string name="prefs_media_controls">Media controls</string>
+    <string name="prefs_media_controls_summary">Pinch • Swipe up and down</string>
+    <string name="prefs_pinch_and_hold_controls">Pinch and hold controls</string>
+    <string name="prefs_call_controls">Call controls</string>
+    <string name="prefs_answer_call_or_end_call">Answer call or end call</string>
+    <string name="prefs_answer_call_summary">Pinch</string>
+    <string name="prefs_decline_call">Decline call</string>
+    <string name="prefs_decline_call_summary">Pinch and hold</string>
+    <string name="prefs_earbud_lights_controls">Earbud lights controls</string>
+    <string name="prefs_earbud_lights_fade">Fade in and out</string>
+    <string name="prefs_earbud_lights_steady">Steady</string>
     <string name="battery_i">Battery %d</string>
     <string name="battery_case">Battery case</string>
     <string name="left_earbud">Left earbud</string>
