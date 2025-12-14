@@ -83,6 +83,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.communicator.
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.communicator.v2.CommunicatorV2;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.CapabilitiesDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.FileDownloadedDeviceEvent;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.IncomingFitDefinitionDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.NotificationSubscriptionDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.SupportedFileTypesDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.WeatherRequestDeviceEvent;
@@ -446,6 +447,10 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             }
 
             currentlyDownloading = null;
+        } else if (deviceEvent instanceof IncomingFitDefinitionDeviceEvent) {
+            //TODO: commented for now to avoid leaking
+//            final FitLocalMessageHandler fitLocalMessageHandler = new FitLocalMessageHandler(this, ((IncomingFitDefinitionDeviceEvent) deviceEvent).getRecordDefinitions());
+//            messageHandlers.add(fitLocalMessageHandler);
         } else {
             super.evaluateGBDeviceEvent(deviceEvent);
         }
@@ -608,7 +613,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
     protected void unregisterHandler(MessageHandler registered) {
         messageHandlers.remove(registered);
-        LOG.warn("handlers: {}", messageHandlers.stream().count());
+        LOG.warn("handlers left: {}", messageHandlers.stream().count());
     }
 
     public static FitLocalMessageBuilder encodeWeather(final WeatherSpec weather) {

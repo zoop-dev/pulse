@@ -14,13 +14,12 @@ public class FitDataMessage extends GFDIMessage {
     private List<RecordData> recordDataList;
     private GarminByteBufferReader reader;
     private final boolean generateOutgoing;
-    private boolean isProcessed = false;
 
     public FitDataMessage(GarminByteBufferReader messageReader, GarminMessage garminMessage) {
         this.reader = messageReader;
-        this.recordDataList = new ArrayList<>();
+        this.recordDataList = null;
         this.garminMessage = garminMessage;
-        this.statusMessage = new FitDataStatusMessage(garminMessage, Status.ACK, FitDataStatusMessage.FitDataStatusCode.APPLIED);
+        this.statusMessage = new FitDataStatusMessage(garminMessage, Status.ACK, FitDataStatusMessage.FitDataStatusCode.APPLIED, true);
         this.generateOutgoing = false;
     }
 
@@ -29,7 +28,6 @@ public class FitDataMessage extends GFDIMessage {
         this.recordDataList = recordDataList;
         this.garminMessage = GarminMessage.FIT_DATA;
         this.statusMessage = null;
-        this.isProcessed = true;
         this.generateOutgoing = true;
     }
 
@@ -37,13 +35,14 @@ public class FitDataMessage extends GFDIMessage {
         return new FitDataMessage(new GarminByteBufferReader(reader.readBytes(reader.remaining())), garminMessage);
     }
 
-    public void applyDefinitions(List<RecordDefinition> recordDefinitions) {
+    public List<RecordData> applyDefinitions(List<RecordDefinition> recordDefinitions) {
+        final List<RecordData> recordDataList = new ArrayList<>();;
         Objects.requireNonNull(reader, "reader cannot be null");
         try {
             while (reader.remaining() > 0) {
                 RecordHeader recordHeader = new RecordHeader((byte) reader.readByte());
                 if (recordHeader.isDefinition())
-                    return;
+                    return null;
 
                 RecordDefinition localMessageDefinition = recordDefinitions.stream()
                         .filter(d -> d.getRecordHeader().getLocalMessageType() == recordHeader.getLocalMessageType())
@@ -52,7 +51,7 @@ public class FitDataMessage extends GFDIMessage {
 
                 if (localMessageDefinition == null) {
                     LOG.warn("Cannot find a local message definition for type: {}", recordHeader.getLocalMessageType());
-                    return ;
+                    return null;
                 }
                 RecordData recordData = new RecordData(
                         localMessageDefinition,
@@ -61,30 +60,19 @@ public class FitDataMessage extends GFDIMessage {
                 recordData.parseDataMessage(reader, null);
                 recordDataList.add(recordData);
             }
-            this.isProcessed = true;
         } catch (Exception e) {
             LOG.error("Error while applying definitions", e);
             throw new IllegalStateException("Failed to apply definitions to FIT data", e);
         } finally {
-            reader = null;
+            reader.setPosition(0);
         }
-    }
-
-
-    public List<RecordData> getRecordDataList() {
-        if(!isProcessed())
-            throw new IllegalStateException(
-                    "Message has not been processed yet. Call applyDefinitions first."
-            );
         return recordDataList;
-    }
-
-    public boolean isProcessed() {
-        return isProcessed;
     }
 
     @Override
     protected boolean generateOutgoing() {
+        if(this.recordDataList == null)
+            return false;
         final MessageWriter writer = new MessageWriter(response);
         writer.writeShort(0); // packet size will be filled below
         writer.writeShort(this.garminMessage.getId());
