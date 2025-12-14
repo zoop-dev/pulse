@@ -4106,4 +4106,7 @@
     <string name="prefs_answer_call_summary">捏</string>
     <string name="prefs_decline_call">拒绝通话</string>
     <string name="prefs_decline_call_summary">拿捏</string>
+    <string name="prefs_earbud_lights_controls">耳机灯光控制</string>
+    <string name="prefs_earbud_lights_fade">淡入淡出</string>
+    <string name="prefs_earbud_lights_steady">稳定</string>
 </resources>
