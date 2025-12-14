@@ -1670,4 +1670,6 @@
     <string name="pref_title_banglejs_webview_url">URL del carregador d’aplicació</string>
     <string name="pref_summary_banglejs_webview_url">Si vols un carregador d\'aplicacions personalitzat, posa la teva URL https://…/android.html aquí. En cas contrari, deixa-ho en blanc per a https://banglejs.com/apps</string>
     <string name="pref_blacklist_calendars_summary">Els calendari de la llista negra no es sincronitzaran al dispositiu</string>
+    <string name="pref_summary_canned_replies">Resposta del rellotge amb missatges predefinits</string>
+    <string name="pref_header_intent_api">API d\'Intenció</string>
 </resources>
