@@ -3935,4 +3935,17 @@
     <string name="pref_title_notifications_when_screen_saver">…також коли увімкнено заставку</string>
     <string name="pref_notifications_pictures_enable">Надсилати зображення сповіщень</string>
     <string name="pref_notifications_pictures_enable_summary">Надсилати зображення сповіщень для поточного пристрою</string>
+    <string name="prefs_pinch_and_hold_action">Дія стискання та утримання</string>
+    <string name="prefs_noise_modes_to_cycle">Режими шуму для циклічного перемикання</string>
+    <string name="prefs_media_controls">Елементи керування медіа</string>
+    <string name="prefs_media_controls_summary">Зведення • Проведіть пальцями вгору та вниз</string>
+    <string name="prefs_pinch_and_hold_controls">Елементи керування, що утримуються стисканням і зведенням пальців</string>
+    <string name="prefs_call_controls">Елементи керування викликами</string>
+    <string name="prefs_answer_call_or_end_call">Відповісти на дзвінок або завершити дзвінок</string>
+    <string name="prefs_answer_call_summary">Зведіть</string>
+    <string name="prefs_decline_call">Відхилити дзвінок</string>
+    <string name="prefs_decline_call_summary">Зведіть та утримуйте</string>
+    <string name="prefs_earbud_lights_controls">Керування підсвічуванням навушників</string>
+    <string name="prefs_earbud_lights_fade">Згасання та поступове поява</string>
+    <string name="prefs_earbud_lights_steady">Стабільний</string>
 </resources>
