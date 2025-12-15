@@ -107,7 +107,7 @@ object InternetHelperSingleton {
                         val contentType = response.headers["content-type"]
                             ?.substringBefore(";")
                             ?.trim()
-                            ?: "text/html"
+                            ?: "application/octet-stream"
                         val encoding = response.headers["content-encoding"] ?: "UTF-8"
                         val inputStream = ParcelFileDescriptor.AutoCloseInputStream(response.body)
 
