@@ -39,6 +39,14 @@ public class HttpHandler {
                         .build();
             }
             return null;
+        } else if (httpService.hasWebRequest()) {
+            final GdiHttpService.HttpService.WebResponse webResponse = handleWebRequest(httpService.getWebRequest());
+            if (webResponse != null) {
+                return GdiHttpService.HttpService.newBuilder()
+                        .setWebResponse(webResponse)
+                        .build();
+            }
+            return null;
         }
 
         LOG.warn("Unsupported http service request {}", httpService);
@@ -146,5 +154,11 @@ public class HttpHandler {
                 .setBody(ByteString.copyFrom(responseBody))
                 .addAllHeader(responseHeaders)
                 .build();
+    }
+
+    public GdiHttpService.HttpService.WebResponse handleWebRequest(final GdiHttpService.HttpService.WebRequest webRequest) {
+        LOG.debug("Got webRequest: {} - {}", webRequest.getMethod(), webRequest.getUrl());
+
+        return null;
     }
 }
