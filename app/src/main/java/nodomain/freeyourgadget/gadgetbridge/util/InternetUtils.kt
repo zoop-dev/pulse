@@ -78,7 +78,7 @@ class InternetUtils {
             method: String = "GET",
             requestHeaders: Map<String, String> = emptyMap(),
             body: String? = null,
-            bodyContentType: String = "text/plain",
+            bodyContentType: String = "application/json",
             allowInsecure: Boolean = false
         ): JSONObject? {
             val text = doStringRequest(
@@ -92,6 +92,7 @@ class InternetUtils {
             try {
                 return JSONObject(text)
             } catch (e: Exception) {
+                LOG.error("Error while parsing JSON response", e)
                 return null
             }
         }
