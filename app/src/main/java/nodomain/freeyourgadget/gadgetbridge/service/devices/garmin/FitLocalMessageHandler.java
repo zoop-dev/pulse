@@ -43,6 +43,15 @@ public class FitLocalMessageHandler implements MessageHandler{
         return new FitDataMessage(this.recordDataList);
     }
 
+    private void parseIncomingFitDataMessage(FitDataMessage incoming) {
+        recordDataList = (incoming).applyDefinitions(recordDefinitionList);
+        for(RecordData d: recordDataList){
+            LOG.info("Incoming FitDataMessage: {}", d);
+        }
+        LOG.info("Incoming FitDataMessages are not processed any further, just logged.");
+        unregisterSelf();
+    }
+
     private void unregisterSelf() {
         deviceSupport.unregisterHandler(this);
     }
@@ -54,8 +63,7 @@ public class FitLocalMessageHandler implements MessageHandler{
         else if (message instanceof FitDataStatusMessage) {
             unregisterSelf();
         } else if (message instanceof  FitDataMessage) {
-            recordDataList = ((FitDataMessage) message).applyDefinitions(recordDefinitionList);
-            //TODO: do something
+            parseIncomingFitDataMessage((FitDataMessage) message);
         }
         return null;
     }

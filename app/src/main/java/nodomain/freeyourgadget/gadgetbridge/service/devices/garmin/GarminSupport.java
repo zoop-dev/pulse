@@ -448,9 +448,8 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
             currentlyDownloading = null;
         } else if (deviceEvent instanceof IncomingFitDefinitionDeviceEvent) {
-            //TODO: commented for now to avoid leaking
-//            final FitLocalMessageHandler fitLocalMessageHandler = new FitLocalMessageHandler(this, ((IncomingFitDefinitionDeviceEvent) deviceEvent).getRecordDefinitions());
-//            messageHandlers.add(fitLocalMessageHandler);
+            final FitLocalMessageHandler fitLocalMessageHandler = new FitLocalMessageHandler(this, ((IncomingFitDefinitionDeviceEvent) deviceEvent).getRecordDefinitions());
+            messageHandlers.add(fitLocalMessageHandler);
         } else {
             super.evaluateGBDeviceEvent(deviceEvent);
         }
@@ -611,9 +610,9 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         sendOutgoingMessage("send " + weatherLocalMessage.getDefinitions().size() + " weather definitions", weatherHandler.init());
     }
 
-    protected void unregisterHandler(MessageHandler registered) {
+    protected void unregisterHandler(final MessageHandler registered) {
         messageHandlers.remove(registered);
-        LOG.warn("handlers left: {}", messageHandlers.stream().count());
+        LOG.debug("{} handler removed, handlers left: {}", registered.getClass().getSimpleName(), messageHandlers.stream().count());
     }
 
     public static FitLocalMessageBuilder encodeWeather(final WeatherSpec weather) {
