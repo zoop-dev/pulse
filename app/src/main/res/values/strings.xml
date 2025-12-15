@@ -4338,6 +4338,7 @@
     <string name="devicetype_oukitel_bt103" translatable="false">Oukitel BT103</string>
     <string name="devicetype_y66" translatable="false">Y66</string>
     <string name="devicetype_s52" translatable="false">S52</string>
+    <string name="devicetype_r1" translatable="false">R1</string>
     <string name="devicetype_haylou_watch_2_pro" translatable="false">Haylou Watch 2 Pro</string>
     <string name="devicetype_dotn_p66d" translatable="false">Dotn P66D</string>
     <string name="pref_title_time_interval">Time interval</string>
