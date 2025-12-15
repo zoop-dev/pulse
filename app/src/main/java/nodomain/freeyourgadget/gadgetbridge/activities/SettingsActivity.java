@@ -123,7 +123,8 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
             index(R.xml.notifications_preferences, R.string.pref_header_notifications);
             index(R.xml.map_settings, R.string.maps_settings);
             index(R.xml.automations_settings, R.string.pref_header_automations);
-            index(R.xml.internethelper_preferences, R.string.prefs_internet_helper_title);
+            if (!GBApplication.hasDirectInternetAccess())
+                index(R.xml.internethelper_preferences, R.string.prefs_internet_helper_title);
 
             setInputTypeFor("rtl_max_line_length", InputType.TYPE_CLASS_NUMBER);
             setInputTypeFor("location_latitude", InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED | InputType.TYPE_NUMBER_FLAG_DECIMAL);
