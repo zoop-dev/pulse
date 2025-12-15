@@ -4008,4 +4008,17 @@
     <string name="movementRhythm">Rhythmus</string>
     <string name="movement_evaluation">Bewegungsanalyse</string>
     <string name="pref_notifications_pictures_enable_summary">Benachrichtigungs-Bilder an dieses Gerät senden</string>
+    <string name="prefs_pinch_and_hold_action">Zusammenziehen und halten</string>
+    <string name="prefs_noise_modes_to_cycle">Geräuschunterdrückungs-Modi wechseln</string>
+    <string name="prefs_media_controls">Mediensteuerung</string>
+    <string name="prefs_media_controls_summary">Zusammenziehen • Nach oben/unten wischen</string>
+    <string name="prefs_pinch_and_hold_controls">Steuerung durch Zusammenziehen und Halten</string>
+    <string name="prefs_call_controls">Anrufsteuerung</string>
+    <string name="prefs_answer_call_or_end_call">Anruf annehmen oder beenden</string>
+    <string name="prefs_answer_call_summary">Zusammenziehen</string>
+    <string name="prefs_decline_call">Anruf ablehnen</string>
+    <string name="prefs_decline_call_summary">Zusammenziehen und halten</string>
+    <string name="prefs_earbud_lights_controls">Ohrhörer-Beleuchtung steuern</string>
+    <string name="prefs_earbud_lights_fade">Ein- und ausblenden</string>
+    <string name="prefs_earbud_lights_steady">Dauerlicht</string>
 </resources>
