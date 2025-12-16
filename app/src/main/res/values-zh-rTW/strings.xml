@@ -41,13 +41,7 @@
     <string name="appmanager_hrm_deactivate">停用HRM</string>
     <string name="appmanager_weather_activate">啟動系統天氣應用程式</string>
     <string name="appmanager_weather_deactivate">停用系統天氣應用程式</string>
-    <string name="fw_upgrade_notice_miband3">您即將在您的小米手環3上安裝韌體 %s
-\n
-\n請確定先安裝 .fw 檔，然後再安裝 .res 檔。您的手環將在安裝完 .fw 檔後重新啟動。
-\n
-\n注意：如果您安裝的是與先前同樣的版本，您就不必再安裝 .res 檔。
-\n
-\n過程中的風險請自負！</string>
+    <string name="fw_upgrade_notice_miband3">您即將在您的 Mi Band 3 上安裝韌體 %s。\n\n請確定先安裝 .fw 檔，然後再安裝 .res 檔。您的手環將在安裝完 .fw 檔後重新啟動。 \n\n注意：如果您安裝的是與先前同樣的版本，您就不必再安裝 .res 檔。 \n\n過程中的風險請自負！</string>
     <string name="miband_firmware_known">此韌體已經過測試且確認與 Gadgetbridge 相容。</string>
     <string name="title_activity_settings">設定</string>
     <string name="pref_header_general">一般設定</string>
@@ -117,19 +111,13 @@
     <string name="menuitem_settings">設定</string>
     <string name="language_and_region_prefs">語言與地區設定</string>
     <plurals name="widget_alarm_target_hours">
-        <item quantity="other">%d 小時</item>
+        <item quantity="other">%1$d:%2$02d 小時</item>
     </plurals>
     <string name="app_configure">設定</string>
     <string name="blacklist_all_for_notifications">將所有通知列入黑名單</string>
     <string name="whitelist_all_for_notifications">將所有通知列入白名單</string>
     <string name="title_activity_fw_app_insaller">FW/App 安裝程式</string>
-    <string name="fw_upgrade_notice_miband4">您即將在您的小米手環4上安裝韌體 %s 
-\n 
-\n請確定先安裝 .fw 檔，然後再安裝 .res 檔。您的手環將在安裝完 .fw 檔後重新啟動。 
-\n 
-\n注意：如果您安裝的是與先前同樣的版本，您就不必再安裝 .res 檔。 
-\n 
-\n過程中的風險請自負！</string>
+    <string name="fw_upgrade_notice_miband4">您即將在您的小米手環4上安裝韌體 %s。\n\n請確定先安裝 .fw 檔，然後再安裝 .res 檔。您的手環將在安裝完 .fw 檔後重新啟動。\n\n注意：如果您安裝的是與先前同樣的版本，您就不必再安裝 .res 檔。\n\n過程中的風險請自負！</string>
     <string name="miband_firmware_unknown_warning">此韌體未經測試，可能與 Gadgetbridge 不相容。
 \n
 \n不建議您安裝它！</string>
@@ -235,8 +223,8 @@
     <string name="mi3_prefs_night_mode">夜間模式</string>
     <string name="mi3_prefs_night_mode_summary">在夜晚時自動降低螢幕亮度</string>
     <string name="automatic">自動</string>
-    <string name="simplified_chinese">簡體中文</string>
-    <string name="traditional_chinese">繁體中文</string>
+    <string name="simplified_chinese">中文(簡體)</string>
+    <string name="traditional_chinese">中文(繁體)</string>
     <string name="english">英文</string>
     <string name="norwegian_bokmal">挪威語</string>
     <string name="spanish">西班牙文</string>
@@ -658,26 +646,10 @@
     <string name="pref_theme_system">根據系統</string>
     <string name="discovery_bluetooth_scan">藍牙掃描：</string>
     <string name="discovery_bluetooth_le_scan">低功耗藍牙掃描：</string>
-    <string name="fw_upgrade_notice_miband6">您即將在您的小米手環6上安裝韌體 %s 
-\n 
-\n請確定先安裝 .fw 檔，然後再安裝 .res 檔。您的手環將在安裝完 .fw 檔後重新啟動。 
-\n 
-\n注意：如果您安裝的是與先前同樣的版本，您就不必再安裝 .res 檔。 
-\n 
-\n過程中的風險請自負！</string>
+    <string name="fw_upgrade_notice_miband6">您即將在您的小米手環6上安裝韌體 %s。\n\n請確定先安裝 .fw 檔，然後再安裝 .res 檔。您的手環將在安裝完 .fw 檔後重新啟動。\n\n注意：如果您安裝的是與先前同樣的版本，您就不必再安裝 .res 檔。\n\n過程中的風險請自負！</string>
     <string name="watchface_setting_light_up_on_notification">新通知時亮起</string>
-    <string name="fw_upgrade_notice_amazfitneo">您將要在Amazfit Neo上安裝%s固件。
-\n
-\n安裝 .fw 檔後，您的手環將重新啟動。
-\n
-\n過程中的風險請自負！</string>
-    <string name="fw_upgrade_notice_amazfitx">您將要在Amazfit X上安裝%s固件。
-\n
-\n請確定先安裝 .fw 檔，然後再安裝 .res 檔。您的手環將在安裝完 .fw 檔後重新啟動。
-\n
-\n注意：如果您安裝的是與先前同樣的版本，您就不必再安裝 .res 檔。
-\n
-\n過程中的風險請自負！</string>
+    <string name="fw_upgrade_notice_amazfitneo">您將要在Amazfit Neo上安裝%s固件。\n\n安裝 .fw 檔後，您的手環將重新啟動。\n\n過程中的風險請自負！</string>
+    <string name="fw_upgrade_notice_amazfitx">您將要在Amazfit X上安裝%s固件。\n\n請確定先安裝 .fw 檔，然後再安裝 .res 檔。您的手環將在安裝完 .fw 檔後重新啟動。\n\n注意：如果您安裝的是與先前同樣的版本，您就不必再安裝 .res 檔。\n\n過程中的風險請自負！</string>
     <string name="about_activity_title_banglejs_main">關於 Bangle.js Gadgetbridge</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js 正在執行</string>
     <string name="about_activity_title_banglejs_nightly">關於 Bangle.js Gadgetbridge（先行版）</string>
@@ -820,7 +792,7 @@
     <string name="huawei_alarm_event_description">請勿勾選智能喚醒選項。</string>
     <string name="huawei_trusleep_title">HUAWEI TruSleep ™</string>
     <string name="huawei_trusleep_summary_light">改善的睡眠監測</string>
-    <string name="huawei_trusleep_warning">警告：啟用此選項將使所有睡眠顯示為輕度睡眠在 Gadgetbridge 中！如果您接受此條件，請點擊這裡。</string>
+    <string name="huawei_trusleep_warning">警告：TruSleep™ 尚未完整實作。在部分裝置上啟用此功能，將導致所有睡眠資料在 Gadgetbridge 中皆顯示為淺眠!</string>
     <string name="prefs_activity_recognition">活動識別設置</string>
     <string name="pref_activity_recognize_walking">識別行走</string>
     <string name="pref_activity_recognition_mode_none">無</string>
@@ -866,7 +838,7 @@
     <string name="title_activity_watch9_pairing">觀看9對</string>
     <string name="error_no_bluetooth_connect">必須授予並啟用藍牙連接訪問，以便掃描正常運作</string>
     <string name="wifi_hotspot_summary">控制手錶上的 Wi-Fi 熱點</string>
-    <string name="prefs_wena3_home_icon_name_wena_pay">Wena Pay</string>
+    <string name="prefs_wena3_home_icon_name_wena_pay">Wena 支付</string>
     <string name="pref_vitality_score_7_day_summary">當您的活力分數在過去7天內達到30、60或100時，獲取通知</string>
     <string name="open_fw_installer_connect_maximum_one_device">請僅連接一個您想要發送檔案的設備。</string>
     <string name="pairing_unable_to_pair_with">無法與 %1$s (%2$s) 配對</string>
@@ -926,8 +898,8 @@
     <string name="pref_summary_banglejs_phone_gps_network_only">僅使用網路提供者來定位。可以減少功耗，但會降低精確度。需要重新連接。</string>
     <string name="pref_title_pebble_sync_health">同步 Pebble 健康</string>
     <string name="pref_title_casio_alert_sms">簡訊通知提醒</string>
-    <string name="pref_title_casio_alert_other">其他通知的警報</string>
-    <string name="pref_summary_casio_alert_other">對於其他類別的通知進行警報（振動/蜂鳴）</string>
+    <string name="pref_title_casio_alert_other">提醒「其他」通知</string>
+    <string name="pref_summary_casio_alert_other">對「其他」類別的通知發出提醒（振動/蜂鳴聲）</string>
     <string name="pref_header_navigation">導航</string>
     <string name="toast_enable_networklocationprovider">請啟用網路位置</string>
     <string name="toast_aqurired_networklocation">位置已獲得</string>
@@ -997,105 +969,23 @@
     <string name="appmanager_item_outdated">(過時的)</string>
     <string name="appmanager_download_started">應用程式下載已開始</string>
     <string name="appmanager_downloaded_to_cache">已下載 %s 到快取</string>
-    <string name="fw_upgrade_notice_amazfitbip">您即將在您的 Amazfit Bip 上安裝 %s 韌體。
-\n
-\n請確保先安裝 .fw 檔案，然後是 .res 檔案，最後是 .gps 檔案。安裝 .fw 檔案後，您的手錶將重新啟動。
-\n
-\n注意：如果這些檔案與之前安裝的檔案完全相同，則不需要安裝 .res 和 .gps。
-\n
-\n請自行承擔風險進行操作！</string>
-    <string name="fw_upgrade_notice_amazfitbip_lite">您即將在您的 Amazfit Bip Lite 上安裝 %s 韌體。
-\n
-\n請確保安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，您的手錶將重新啟動。
-\n
-\n注意：如果 .res 檔案與之前安裝的完全相同，則不必再次安裝。
-\n
-\n請自行承擔風險！</string>
-    <string name="fw_upgrade_notice_amazfitbip3pro">您即將在您的 Amazfit Bip 3 Pro 上安裝 %s 韌體。
-\n
-\n請確保先安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，您的手錶將會重新啟動。
-\n
-\n注意：如果 .res 檔案與之前安裝的完全相同，則無需安裝 .res。
-\n
-\n請自行承擔風險進行操作！</string>
+    <string name="fw_upgrade_notice_amazfitbip">您即將在您的 Amazfit Bip 上安裝 %s 韌體。\n\n請確保先安裝 .fw 檔案，然後是 .res 檔案，最後是 .gps 檔案。安裝 .fw 檔案後，您的手錶將重新啟動。 \n\n注意：如果這些檔案與之前安裝的檔案完全相同，則不需要安裝 .res 和 .gps。 \n\n請自行承擔風險進行操作！</string>
+    <string name="fw_upgrade_notice_amazfitbip_lite">您即將在您的 Amazfit Bip Lite 上安裝 %s 韌體。\n\n請確保安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，您的手錶將重新啟動。 \n\n注意：如果 .res 檔案與之前安裝的完全相同，則不必再次安裝。 \n\n請自行承擔風險！</string>
+    <string name="fw_upgrade_notice_amazfitbip3pro">您即將在您的 Amazfit Bip 3 Pro 上安裝 %s 韌體。\n\n請確保先安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，您的手錶將會重新啟動。 \n\n注意：如果 .res 檔案與之前安裝的完全相同，則無需安裝 .res。 \n\n請自行承擔風險進行操作！</string>
     <string name="fw_upgrade_notice_amazfitcor2">即將在 Amazfit Cor 2 上安裝 %s 韌體。\n\n請確保先安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，手環會重新啟動。\n\n注意：如果 .res 檔案與之前安裝的完全相同，則不需要再次安裝。\n\n請自行承擔風險！\n\n完全未經測試，若您的裝置名稱為「Amazfit Band 2」，可能需要刷入 BEATS_W 韌體</string>
-    <string name="fw_upgrade_notice_amazfitcor">您即將在您的 Amazfit Cor 上安裝 %s 韌體。
-\n
-\n請確保先安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，您的手環將會重啟。
-\n
-\n注意：如果 .res 檔案與之前安裝的完全相同，則無需安裝 .res。
-\n
-\n請自負風險進行！</string>
-    <string name="fw_upgrade_notice_amazfitgtr">您即將在您的 Amazfit GTR 上安裝 %s 韌體。
-\n
-\n請確保先安裝 .fw 檔案，然後是 .res 檔案，最後是 .gps 檔案。安裝 .fw 檔案後，您的手錶將重新啟動。
-\n
-\n注意：如果這些檔案與之前安裝的檔案完全相同，則不必安裝 .res 和 .gps 檔案。
-\n
-\n請自行承擔風險進行操作！</string>
-    <string name="fw_upgrade_notice_amazfitgts">您即將在您的 Amazfit GTS 上安裝 %s 固件。
-\n
-\n請確保先安裝 .fw 文件，然後是 .res 文件，最後是 .gps 文件。安裝 .fw 文件後，您的手錶將會重啟。
-\n
-\n注意：如果 .res 和 .gps 文件與之前安裝的文件完全相同，則不必再次安裝。
-\n
-\n請自行承擔風險！</string>
-    <string name="fw_upgrade_notice_amazfit_trex">您即將在您的 Amazfit T-Rex 上安裝 %s 韌體。
-\n
-\n請確保先安裝 .fw 檔案，然後是 .res 檔案，最後是 .gps 檔案。安裝 .fw 檔案後，您的手錶將會重新啟動。
-\n
-\n注意：如果 .res 和 .gps 檔案與之前安裝的檔案完全相同，則無需安裝這些檔案。
-\n
-\n請自行承擔風險！</string>
-    <string name="fw_upgrade_notice_amazfitvergel">您即將在您的 Amazfit Verge Lite 上安裝 %s 韌體。
-\n
-\n請確保先安裝 .fw 檔案，然後是 .res 檔案，最後是 .gps 檔案。安裝 .fw 檔案後，您的手錶將重新啟動。
-\n
-\n注意：如果這些檔案與之前安裝的檔案完全相同，則不必安裝 .res 和 .gps。
-\n
-\n請自行承擔風險進行操作！</string>
-    <string name="fw_upgrade_notice_miband5">您即將在您的 Mi Band 5 上安裝 %s 韌體。
-\n
-\n請確保先安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，您的手環將重新啟動。
-\n
-\n注意：如果 .res 檔案與之前安裝的完全相同，則不需要安裝 .res。
-\n
-\n請自行承擔風險進行操作！</string>
-    <string name="fw_upgrade_notice_amazfit_gts4_mini">您即將在您的 Amazfit GTS 4 Mini 上安裝 %s 韌體。
-\n
-\n安裝 .zip 檔案後，您的手環將重新啟動。
-\n
-\n請自行承擔風險進行！</string>
-    <string name="fw_upgrade_notice_amazfit_gtr3">您即將在您的 Amazfit GTR 3 上安裝 %s 韌體。
-\n
-\n安裝 .zip 檔案後，您的手環將重新啟動。
-\n
-\n請自行承擔風險進行操作！</string>
-    <string name="fw_upgrade_notice_miband7">您即將在您的小米智能手環 7 上安裝 %s 韌體。
-\n
-\n安裝 .zip 檔案後，您的手環將會重啟。
-\n
-\n請自行承擔風險！</string>
-    <string name="fw_upgrade_notice_amazfit_gts3">您即將在您的 Amazfit GTS 3 上安裝 %s 韌體。
-\n
-\n安裝 .zip 檔案後，您的手環將重新啟動。
-\n
-\n請自行承擔風險繼續！</string>
-    <string name="fw_upgrade_notice_amazfit_gts4">您即將在您的 Amazfit GTS 4 上安裝 %s 韌體。
-\n
-\n安裝 .zip 檔案後，您的手環將重新啟動。
-\n
-\n請自行承擔風險進行操作！</string>
-    <string name="fw_upgrade_notice_amazfit_gtr3_pro">您即將在您的 Amazfit GTR 3 Pro 上安裝 %s 韌體。
-\n
-\n安裝 .zip 檔案後，您的設備將會重新啟動。
-\n
-\n請自行承擔風險進行操作！</string>
-    <string name="fw_upgrade_notice_amazfit_band7">您即將在您的 Amazfit Band 7 上安裝 %s 韌體。
-\n
-\n安裝 .zip 檔案後，您的手環將會重新啟動。
-\n
-\n請自行承擔風險進行操作！</string>
+    <string name="fw_upgrade_notice_amazfitcor">您即將在您的 Amazfit Cor 上安裝 %s 韌體。\n\n請確保先安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，您的手環將會重啟。 \n\n注意：如果 .res 檔案與之前安裝的完全相同，則無需安裝 .res。 \n\n請自負風險進行！</string>
+    <string name="fw_upgrade_notice_amazfitgtr">您即將在您的 Amazfit GTR 上安裝 %s 韌體。\n\n請確保先安裝 .fw 檔案，然後是 .res 檔案，最後是 .gps 檔案。安裝 .fw 檔案後，您的手錶將重新啟動。 \n\n注意：如果這些檔案與之前安裝的檔案完全相同，則不必安裝 .res 和 .gps 檔案。 \n\n請自行承擔風險進行操作！</string>
+    <string name="fw_upgrade_notice_amazfitgts">您即將在您的 Amazfit GTS 上安裝 %s 固件。\n\n請確保先安裝 .fw 文件，然後是 .res 文件，最後是 .gps 文件。安裝 .fw 文件後，您的手錶將會重啟。 \n\n注意：如果 .res 和 .gps 文件與之前安裝的文件完全相同，則不必再次安裝。 \n\n請自行承擔風險！</string>
+    <string name="fw_upgrade_notice_amazfit_trex">您即將在您的 Amazfit T-Rex 上安裝 %s 韌體。\n\n請確保先安裝 .fw 檔案，然後是 .res 檔案，最後是 .gps 檔案。安裝 .fw 檔案後，您的手錶將會重新啟動。 \n\n注意：如果 .res 和 .gps 檔案與之前安裝的檔案完全相同，則無需安裝這些檔案。 \n\n請自行承擔風險！</string>
+    <string name="fw_upgrade_notice_amazfitvergel">您即將在您的 Amazfit Verge Lite 上安裝 %s 韌體。\n\n請確保先安裝 .fw 檔案，然後是 .res 檔案，最後是 .gps 檔案。安裝 .fw 檔案後，您的手錶將重新啟動。 \n\n注意：如果這些檔案與之前安裝的檔案完全相同，則不必安裝 .res 和 .gps。 \n\n請自行承擔風險進行操作！</string>
+    <string name="fw_upgrade_notice_miband5">您即將在您的 Mi Band 5 上安裝 %s 韌體。\n\n請確保先安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，您的手環將重新啟動。\n\n注意：如果 .res 檔案與之前安裝的完全相同，則不需要安裝 .res。\n\n請自行承擔風險進行操作！</string>
+    <string name="fw_upgrade_notice_amazfit_gts4_mini">您即將在您的 Amazfit GTS 4 Mini 上安裝 %s 韌體。\n\n安裝 .zip 檔案後，您的手環將重新啟動。\n\n請自行承擔風險進行！</string>
+    <string name="fw_upgrade_notice_amazfit_gtr3">您即將在您的 Amazfit GTR 3 上安裝 %s 韌體。\n\n安裝 .zip 檔案後，您的手環將重新啟動。\n\n請自行承擔風險進行操作！</string>
+    <string name="fw_upgrade_notice_miband7">您即將在您的小米智能手環 7 上安裝 %s 韌體。\n\n安裝 .zip 檔案後，您的手環將會重啟。\n\n請自行承擔風險！</string>
+    <string name="fw_upgrade_notice_amazfit_gts3">您即將在您的 Amazfit GTS 3 上安裝 %s 韌體。\n\n安裝 .zip 檔案後，您的手環將重新啟動。\n\n請自行承擔風險繼續！</string>
+    <string name="fw_upgrade_notice_amazfit_gts4">您即將在您的 Amazfit GTS 4 上安裝 %s 韌體。\n\n安裝 .zip 檔案後，您的手環將重新啟動。\n\n請自行承擔風險進行操作！</string>
+    <string name="fw_upgrade_notice_amazfit_gtr3_pro">您即將在您的 Amazfit GTR 3 Pro 上安裝 %s 韌體。\n\n安裝 .zip 檔案後，您的設備將會重新啟動。\n\n請自行承擔風險進行操作！</string>
+    <string name="fw_upgrade_notice_amazfit_band7">您即將在您的 Amazfit Band 7 上安裝 %s 韌體。\n\n安裝 .zip 檔案後，您的手環將會重新啟動。\n\n請自行承擔風險進行操作！</string>
     <string name="open_fw_installer_info_text">固件/表面/應用程式/檔案安裝程式允許您將支援的檔案（固件、表面、應用程式、GPS、資源、字型等）上傳/安裝到設備上。更多資訊請參見維基：https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
     <string name="open_fw_installer_warning_text">此功能有可能使您的設備變磚。不過，通過刷機，這對任何開發者來說從未發生過，但請記住，您是在自擔風險的情況下進行這項操作。</string>
     <string name="open_fw_installer_getting_files_title">取得韌體/應用程式檔案</string>
@@ -1542,7 +1432,7 @@
     <string name="menuitem_vo2_max">最大攝氧量</string>
     <string name="menuitem_recommendation">建議</string>
     <string name="menuitem_zepp_coach">Zepp 教練</string>
-    <string name="menuitem_zepp_pay">Zepp Pay</string>
+    <string name="menuitem_zepp_pay">Zepp 支付</string>
     <string name="menuitem_map">地圖</string>
     <string name="menuitem_heart_rate_push">心率推進</string>
     <string name="menuitem_wechat_pay">微信支付</string>
@@ -1892,7 +1782,7 @@
     <string name="info_no_devices_connected">沒有設備連接</string>
     <string name="controlcenter_set_parent_folder">設置父文件夾</string>
     <string name="controlcenter_set_preferences">設置偏好</string>
-    <string name="controlcenter_connected_fraction">已連接: %d/%d</string>
+    <string name="controlcenter_connected_fraction">已連接: %1$d/%2$d</string>
     <string name="error_setting_parent_folder">設置父文件夾時出錯: %s</string>
     <string name="error_deleting_device">刪除設備時出錯: %s</string>
     <string name="controlcenter_folder_name">資料夾名稱：</string>
@@ -2041,7 +1931,7 @@
     <string name="pref_title_wheel_diameter">輪徑</string>
     <string name="pref_summary_cycling_persistence_interval">當前循環數據應寫入數據庫的時間間隔（以秒為單位）</string>
     <string name="pref_title_cycling_persistence_interval">持續時間</string>
-    <string name="chart_cycling_point_label_distance">今天：%.1f 公里\n總計：%.1f 公里</string>
+    <string name="chart_cycling_point_label_distance">今天：%1$.1f 公里\n總計：%2$.1f 公里</string>
     <string name="toast_setting_requires_reconnect">此設定將在重新連接後生效</string>
     <string name="open_camera">打開相機</string>
     <string name="toast_camera_permission_required">此功能需要相機權限。</string>
@@ -2053,7 +1943,7 @@
     <string name="folder">資料夾</string>
     <string name="url">網址</string>
     <string name="garmin_agps_local_file">本機檔案</string>
-    <string name="pref_garmin_agps_help">以下列表包含手錶請求的所有 AGPS 更新的 URL。您可以從手機的存儲中選擇一個文件，當手錶請求更新時將其發送到手錶。</string>
+    <string name="pref_garmin_agps_help">以下列表包含手錶請求 AGPS 更新的所有 URL。您可以從手機儲存中選擇一個文件，該文件將在手錶請求更新時發送到手錶。\n\n只需配置其中一個檔案即可。</string>
     <string name="toggle_debug_mode">切換除錯模式</string>
     <string name="battery_low_notify_enabled">低電量通知</string>
     <string name="battery_full_notify_enabled">充電完成時通知</string>
@@ -2079,7 +1969,7 @@
     <string name="activity_db_management_backup_restore_explanation">進口/出口操作允許您將所有Gadgetbridge設置、設備和數據從zip文件中遷移或備份。
 \n
 \n導入文件將刪除所有現有數據、設備和偏好設置，並完全用備份替換它們。</string>
-    <string name="backup_restore_importing_files_i_of_n">正在匯入檔案… %1d / %2d</string>
+    <string name="backup_restore_importing_files_i_of_n">正在匯入檔案… 第 %1$d 項，共 %2$d 項</string>
     <string name="backup_restore_export_complete">匯出完成</string>
     <string name="backup_restore_import_complete">導入完成</string>
     <string name="backup_restore_error_import">從壓縮檔匯入失敗</string>
@@ -2125,7 +2015,7 @@
     <string name="controlcenter_start_configure_reminders">設定提醒</string>
     <string name="reminder_repeat">重複</string>
     <string name="reminder_delete_confirm_title">刪除提醒</string>
-    <string name="firmware_update_progress">上傳正在進行中 \n%1d%% 速度 %.2fkbps (平均 %.2fkbps) \n第 %1d 部分，共 %1d 部分</string>
+    <string name="firmware_update_progress">上傳進行中\n%1$d%% 以 %2$.2fkbps 的速度上傳 (平均 %3$.2fkbps)\n第 %4$d 部份，共 %5$d 部份</string>
     <string name="pref_summary_overwrite_settings_on_connection">連接到音響時，覆蓋其上的所有設置。</string>
     <string name="application_name_banglejs_main">Please initialize the addon first by opening it from the Extensions Menu &gt; GPT for Docs, Sheets and Slides &gt; Start</string>
     <string name="title_activity_controlcenter_banglejs_main">Bangle.js Gadgetbridge</string>
@@ -2325,13 +2215,7 @@
     <string name="backup_restore_error_export">導出為 zip 失敗</string>
     <string name="open_fw_installer_select_file">選擇要上傳到裝置的檔案：%s</string>
     <string name="hrv_status_baseline_label">基準</string>
-    <string name="fw_upgrade_notice_amazfitbip3">您即將在您的 Amazfit Bip 3 上安裝 %s 韌體。
-\n
-\n請確保先安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，您的手錶將重新啟動。
-\n
-\n注意：如果 .res 檔案與之前安裝的完全相同，則您不必安裝 .res 檔案。
-\n
-\n請自行承擔風險進行操作！</string>
+    <string name="fw_upgrade_notice_amazfitbip3">您即將在您的 Amazfit Bip 3 上安裝 %s 韌體。\n\n請確保先安裝 .fw 檔案，然後再安裝 .res 檔案。安裝 .fw 檔案後，您的手錶將重新啟動。 \n\n注意：如果 .res 檔案與之前安裝的完全相同，則您不必安裝 .res 檔案。 \n\n請自行承擔風險進行操作！</string>
     <string name="pref_agps_expire_time">AGPS 到期時間</string>
     <string name="pref_title_canned_replies">回覆</string>
     <string name="pref_header_activitytrackers">活動追蹤器</string>
@@ -2357,14 +2241,14 @@
 \n版本 %2$s 由 %3$s 提供
 \n</string>
     <string name="android_pairing_hint">使用 Android 藍牙配對對話框來配對設備。</string>
-    <string name="world_clock_delete_confirm_title">刪除 \'%1$s\'</string>
+    <string name="world_clock_delete_confirm_title">刪除 「%1$s」</string>
     <string name="contact_delete_confirm_description">您確定要刪除「%1$s」嗎？</string>
     <string name="contact_no_free_slots_description">該設備沒有可用的聯絡人插槽（總插槽數：%1$s）</string>
     <string name="title_activity_reminder_details">提醒細節</string>
     <string name="prefs_heartrate_alert_experimental_description">當心率超過閾值且在過去10分鐘內沒有明顯的身體活動時，讓手環震動。此功能為實驗性，尚未進行廣泛測試。</string>
     <string name="prefs_heartrate_alert_high_threshold">高心率警報閾值</string>
     <string name="prefs_activity_monitoring_title">活動監控</string>
-    <string name="dbaccess_error_executing">執行 \'%1$s\' 時發生錯誤</string>
+    <string name="dbaccess_error_executing">執行 「%1$s」 時發生錯誤</string>
     <string name="cannot_connect">無法連線：%1$s</string>
     <string name="pref_header_cannned_messages">預設訊息</string>
     <string name="activity_type_dodgeball">躲避球</string>
@@ -2430,12 +2314,8 @@
     <string name="triple_tap">三次輕觸</string>
     <string name="prefs_wena3_led_none">沒有LED</string>
     <string name="pref_summary_fossil_hr_nav_vibrate">手錶是否應該在每次新的或更改的導航指令時振動（僅在應用程式在前景時）</string>
-    <string name="fw_upgrade_notice_amazfit_cheetah_pro">您即將在您的 Amazfit Cheetah Pro 上安裝 %s 韌體。
-\n
-\n安裝 .zip 文件後，您的手環將重新啟動。
-\n
-\n請自行承擔風險！</string>
-    <string name="fw_upgrade_notice_zepp_os">您即將在您的%s上安裝%s固件。 \n \n安裝完.zip文件後，您的手錶將重啟。 \n \n請自行承擔風險！</string>
+    <string name="fw_upgrade_notice_amazfit_cheetah_pro">您即將在您的 Amazfit Cheetah Pro 上安裝 %s 韌體。\n\n安裝 .zip 文件後，您的手環將重新啟動。\n\n請自行承擔風險！</string>
+    <string name="fw_upgrade_notice_zepp_os">您即將在您的 %1$s 上安裝 %2$s 固件。\n\n安裝完.zip文件後，您的手錶將重啟。\n\n請自行承擔風險！</string>
     <string name="prefs_equalizer">均衡器</string>
     <string name="copied_to_clipboard">已複製到剪貼簿</string>
     <string name="minPace">最慢的步伐</string>
@@ -2693,7 +2573,7 @@
     <string name="pref_device_action_dnd_priority">請勿打擾 - 僅限優先</string>
     <string name="pref_device_action_dnd_alarms">請勿打擾 - 僅限警報</string>
     <string name="distance_format_meters">###m</string>
-    <string name="huawei_trusleep_summary">實時監測您的睡眠質量和呼吸模式。 \n分析您的睡眠模式，準確診斷6種睡眠問題。</string>
+    <string name="huawei_trusleep_summary">即時監測您的睡眠品質。</string>
     <string name="pref_activity_recognition_mode_ask">問</string>
     <string name="pref_summary_opentracks_packagename">用於在外部健身應用程式中啟動/停止 GPS 路徑錄製。</string>
     <string name="pref_enable_call_accept">啟用接聽電話</string>
@@ -2727,7 +2607,7 @@
     <string name="pref_dashboard_first_title">首先顯示儀表板</string>
     <string name="pref_dashboard_first_summary">當 Gadgetbridge 啟動時顯示儀表板，而不是設備螢幕</string>
     <string name="pref_dashboard_widget_settings">小工具設定</string>
-    <string name="pref_dashboard_select_devices_title">選擇設備...</string>
+    <string name="pref_dashboard_select_devices_title">選擇設備…</string>
     <string name="pref_speak_notifications_focus_exclusive_summary_off">在通知被朗讀時，其他應用程式的播放音量將會降低</string>
     <string name="pref_title_bottom_navigation_bar">底部導航欄</string>
     <string name="pref_summary_bottom_navigation_bar_on">使用導航欄或橫向滑動在主畫面之間切換</string>
@@ -2748,7 +2628,7 @@
     <string name="backup_restore_exporting_preferences">導出偏好設定中…</string>
     <string name="backup_restore_exporting_database">正在匯出資料庫…</string>
     <string name="backup_restore_exporting_files">正在匯出檔案…</string>
-    <string name="backup_restore_exporting_files_i_of_n">正在導出檔案… %1d 的 %2d</string>
+    <string name="backup_restore_exporting_files_i_of_n">正在導出檔案… %1$d 的 %2$d</string>
     <string name="backup_restore_exporting_finishing">正在完成匯出…</string>
     <string name="backup_restore_importing">正在從壓縮檔匯入…</string>
     <string name="backup_restore_importing_loading">正在加載檔案…</string>
@@ -2793,7 +2673,7 @@
     <string name="pref_header_sony_device_info">設備資訊</string>
     <string name="pref_title_touch_spotify_official_app">Spotify（官方應用程式專用）</string>
     <string name="pref_huami_truncate_fetch_operation_timestamps_summary">將取回操作的時間戳截斷到分鐘。如果在取回非常短的鍛煉時遇到問題，請禁用此設置以保持時間戳為秒。</string>
-    <string name="mi2_prefs_button_press_broadcast_summary">隨事件發送的廣播消息。參數 `button_id` 自動添加到每條消息中。</string>
+    <string name="mi2_prefs_button_press_broadcast_summary">隨事件發送的廣播消息。參數「button_id」自動添加到每條消息中。</string>
     <string name="mi2_prefs_button_action">啟用按鈕動作</string>
     <string name="mi2_prefs_button_action_vibrate">啟用帶振動</string>
     <string name="portuguese_pt">葡萄牙語（葡萄牙）</string>
@@ -2852,16 +2732,8 @@
     <string name="gps_galileo">GPS + GALILEO</string>
     <string name="all_satellites">所有衛星</string>
     <string name="appmanager_download_app_error">下載應用程式時出錯</string>
-    <string name="fw_upgrade_notice_amazfit_gtr4">您即將在您的 Amazfit GTR 4 上安裝 %s 韌體。
-\n
-\n安裝 .zip 檔案後，您的手環將重新啟動。
-\n
-\n請自行承擔風險進行操作！</string>
-    <string name="fw_upgrade_notice_amazfit_trex2">您即將在您的 Amazfit T-Rex 2 上安裝 %s 韌體。
-\n
-\n安裝 .zip 檔案後，您的手環將重新啟動。
-\n
-\n請自行承擔風險！</string>
+    <string name="fw_upgrade_notice_amazfit_gtr4">您即將在您的 Amazfit GTR 4 上安裝 %s 韌體。\n\n安裝 .zip 檔案後，您的手環將重新啟動。\n\n請自行承擔風險進行操作！</string>
+    <string name="fw_upgrade_notice_amazfit_trex2">您即將在您的 Amazfit T-Rex 2 上安裝 %s 韌體。\n\n安裝 .zip 檔案後，您的手環將重新啟動。\n\n請自行承擔風險！</string>
     <string name="open_fw_installer_info_text_title">檔案安裝程式</string>
     <string name="spo2_perc_90">0.9</string>
     <string name="spo2_off">關</string>
@@ -3089,7 +2961,7 @@
     <string name="active_calories">活動卡路里</string>
     <string name="active_calories_short">活動</string>
     <string name="activity_prefs_goal_active_calories_burnt">每日目標：活動消耗的卡路里</string>
-    <string name="workout_set_repetitions_weight_kg">%1d x %2$.2f 公斤</string>
+    <string name="workout_set_repetitions_weight_kg">%1$d x %2$.2f 公斤</string>
     <string name="pref_title_calendar_lookahead">提前天數</string>
     <string name="reminder_time_every_year">%1$s，每年</string>
     <string name="fmtPaceAverage">平均配速</string>
@@ -3102,7 +2974,7 @@
     <string name="reminder_time_once">%1$s，單次</string>
     <string name="active_calories_goal">活動目標</string>
     <string name="total_calories_burnt">總共消耗</string>
-    <string name="workout_set_repetitions_weight_lbs">%1d x %2$.2f 磅</string>
+    <string name="workout_set_repetitions_weight_lbs">%1$d x %2$.2f 磅</string>
     <string name="pref_header_heartrate_allday">全天監測</string>
     <string name="hrZoneThreshold">閾值</string>
     <string name="pref_voice_passthrough_enabled"/>
@@ -3156,7 +3028,7 @@
     <string name="pai_plus_num">+%d</string>
     <string name="view_file">查看</string>
     <string name="first_start_overview_title">簡介</string>
-    <string name="range_percentage_float">%.1f%% - %.1f%%</string>
+    <string name="range_percentage_float">%1$.1f%% – %2$.1f%%</string>
     <string name="first_start_intro_tag_line">擺脫配件裝置廠商的專有應用程式和雲端服務。</string>
     <string name="first_start_permissions_title">權限</string>
     <string name="maps_settings">地圖設定</string>
@@ -3165,8 +3037,8 @@
     <string name="first_start_intro_welcome_to">歡迎使用</string>
     <string name="first_start_open_source_title">開源</string>
     <string name="first_start_permissions_desc">Gadgetbridge 需要取得很多權限，才能執行所有功能。請查看以下權限及其用途。</string>
-    <string name="range_degrees">%1$dº - %2$dº</string>
-    <string name="range_percentage">%1$d%% - %2$d%%</string>
+    <string name="range_degrees">%1$dº – %2$dº</string>
+    <string name="range_percentage">%1$d%% – %2$d%%</string>
     <string name="permission_bluetooth_title">藍牙</string>
     <string name="first_start_permissions_request_all_button">授予所有權限</string>
     <string name="maps">地圖</string>
