@@ -18,6 +18,7 @@ class HuaweiSyncState {
     private boolean activitySync = false;
     private boolean p2pSync = false;
     private boolean stressSync = false;
+    private boolean ecgSync = false;
     private boolean workoutSync = false;
     private int workoutGpsDownload = 0;
 
@@ -26,7 +27,7 @@ class HuaweiSyncState {
     }
 
     private boolean isSyncActive() {
-        return activitySync || p2pSync || stressSync || workoutSync || workoutGpsDownload != 0;
+        return activitySync || p2pSync || stressSync || ecgSync || workoutSync || workoutGpsDownload != 0;
     }
 
     private String activeSync() {
@@ -37,6 +38,8 @@ class HuaweiSyncState {
             retv.append("p2pSync,");
         if (stressSync)
             retv.append("stressSync,");
+        if (ecgSync)
+            retv.append("ecgSync,");
         if (workoutSync)
             retv.append("workoutSync,");
         if (workoutGpsDownload != 0) {
@@ -95,7 +98,7 @@ class HuaweiSyncState {
         // We cannot do the syncActive check for the P2P sync as it runs in parallel with the activity sync
         LOG.debug("Set p2p sync state to {}", state);
         this.p2pSync = state;
-        if (!state && !this.activitySync && !this.stressSync) {
+        if (!state && !this.activitySync && !this.stressSync && !this.ecgSync) {
             this.syncQueue.remove((Integer) RecordedDataTypes.TYPE_ACTIVITY);
             supportProvider.fetchRecodedDataFromQueue();
         }
@@ -106,6 +109,17 @@ class HuaweiSyncState {
         // We cannot do the syncActive check for the stress sync as it runs in parallel with the activity sync (sleep file specifically)
         LOG.debug("Set stress sync state to {}", state);
         this.stressSync = state;
+        if (!state && !this.activitySync && !this.p2pSync && !this.ecgSync) {
+            this.syncQueue.remove((Integer) RecordedDataTypes.TYPE_ACTIVITY);
+            supportProvider.fetchRecodedDataFromQueue();
+        }
+        updateState();
+    }
+
+    public void setEcgSync(boolean state) {
+        // We cannot do the syncActive check for the stress sync as it runs in parallel with the activity sync (sleep file specifically)
+        LOG.debug("Set ECG sync state to {}", state);
+        this.ecgSync = state;
         if (!state && !this.activitySync && !this.p2pSync) {
             this.syncQueue.remove((Integer) RecordedDataTypes.TYPE_ACTIVITY);
             supportProvider.fetchRecodedDataFromQueue();

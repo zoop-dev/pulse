@@ -15,6 +15,8 @@
  */
 package nodomain.freeyourgadget.gadgetbridge.daogen;
 
+import java.util.List;
+
 import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
 import de.greenrobot.daogenerator.Index;
@@ -56,7 +58,7 @@ public class GBDaoGenerator {
     private static final String TIMESTAMP_TO = "timestampTo";
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(120, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(121, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -186,6 +188,9 @@ public class GBDaoGenerator {
         addHuaweiWorkoutSwimSegmentsSample(schema, huaweiWorkoutSummary);
         addHuaweiWorkoutSpO2Sample(schema, huaweiWorkoutSummary);
         addHuaweiWorkoutSectionsSample(schema, huaweiWorkoutSummary);
+
+        Entity huaweiEcgSummary = addHuaweiEcgSummarySample(schema, user, device);
+        addHuaweiEcgDataSample(schema, huaweiEcgSummary);
 
         Entity huaweiDictData = addHuaweiDictData(schema, user, device);
         addHuaweiDictDataValues(schema, huaweiDictData);
@@ -1892,6 +1897,42 @@ public class GBDaoGenerator {
         workoutSectionsSample.addIntProperty("divingBreakTime").notNull();
 
         return workoutSectionsSample;
+    }
+
+    private static Entity addHuaweiEcgSummarySample(Schema schema, Entity user, Entity device) {
+        Entity ecgSummary = addEntity(schema, "HuaweiEcgSummarySample");
+
+        ecgSummary.setJavaDoc("Contains Huawei Ecg Summary samples (one per measurement)");
+
+        ecgSummary.addLongProperty("ecgId").primaryKey().autoincrement();
+
+        Property deviceId = ecgSummary.addLongProperty("deviceId").notNull().getProperty();
+        ecgSummary.addToOne(device, deviceId);
+        Property userId = ecgSummary.addLongProperty("userId").notNull().getProperty();
+        ecgSummary.addToOne(user, userId);
+
+        ecgSummary.addLongProperty("startTimestamp").notNull().index();
+        ecgSummary.addLongProperty("endTimestamp").notNull().index();
+        ecgSummary.addStringProperty("appVersion").notNull();
+        ecgSummary.addIntProperty("averageHeartRate").notNull();
+        ecgSummary.addLongProperty("arrhythmiaType").notNull().index();
+        ecgSummary.addLongProperty("userSymptoms").notNull();
+
+        return ecgSummary;
+    }
+
+    private static Entity addHuaweiEcgDataSample(Schema schema, Entity summaryEntity) {
+        Entity ecgDataSample = addEntity(schema, "HuaweiEcgDataSample");
+
+        ecgDataSample.setJavaDoc("Contains Huawei Ecg Data samples (multiple per summary)");
+
+        Property id = ecgDataSample.addLongProperty("ecgId").primaryKey().notNull().getProperty();
+        ecgDataSample.addToOne(summaryEntity, id);
+
+        ecgDataSample.addIntProperty("timeDelta").notNull().primaryKey();
+        ecgDataSample.addFloatProperty("value").notNull();
+
+        return ecgDataSample;
     }
 
     private static Entity addUltrahumanActivitySample(Schema schema, Entity user, Entity device) {

@@ -50,6 +50,9 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictData;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataValuesDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiEcgDataSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiEcgSummarySample;
+import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiEcgSummarySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiEmotionsSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiHrvValueSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStageSampleDao;
@@ -187,8 +190,16 @@ public class HuaweiCoordinator {
                     HuaweiDictDataValuesDao.Properties.DictId.eq(data.getDictId())
             ).buildDelete().executeDeleteWithoutDetachingEntities();
         }
-
         session.getHuaweiDictDataDao().queryBuilder().where(HuaweiDictDataDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
+
+        QueryBuilder<HuaweiEcgSummarySample> qb4 = session.getHuaweiEcgSummarySampleDao().queryBuilder();
+        List<HuaweiEcgSummarySample> ecgSummary = qb4.where(HuaweiEcgSummarySampleDao.Properties.DeviceId.eq(deviceId)).build().list();
+        for (HuaweiEcgSummarySample sample : ecgSummary) {
+            session.getHuaweiEcgDataSampleDao().queryBuilder().where(
+                    HuaweiEcgDataSampleDao.Properties.EcgId.eq(sample.getEcgId())
+            ).buildDelete().executeDeleteWithoutDetachingEntities();
+        }
+        session.getHuaweiEcgSummarySampleDao().queryBuilder().where(HuaweiEcgSummarySampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
     }
 
     private SharedPreferences getCapabilitiesSharedPreferences() {
