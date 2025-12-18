@@ -3055,7 +3055,7 @@
     <string name="dialog_open_url">開啟 URL</string>
     <string name="zepp_os_install_map_instructions">手機上開始安裝前，您需要在手錶上接受安裝。</string>
     <string name="sound_and_vibration">聲音 + 振動</string>
-    <string name="map_theme_motorider"></string>
+    <string name="map_theme_motorider"/>
     <string name="pref_title_block_screenshot">屏蔽螢幕截圖</string>
     <string name="pref_summary_block_screenshots">防止在非安全顯示器上截圖和檢視。需要重啟GB才能完全生效。</string>
     <string name="phone_calls">電話</string>
@@ -3122,4 +3122,19 @@
     <string name="music_upload_in_progress">正在上傳音樂</string>
     <string name="respiratoryrate">呼吸頻率</string>
     <string name="sleep_avg">睡眠平均值</string>
+    <string name="bpm_value_unit">%1$d 次/分鐘</string>
+    <string name="devicetype_generic_headphones">耳機</string>
+    <string name="devicetype_generic_thermal_printer">熱感式印表機</string>
+    <string name="devicetype_generic_heart_rate_sensor">心率感測器</string>
+    <string name="devicetype_generic_weight_scale">體重計</string>
+    <string name="menuitem_bluetooth_scale_assistant">藍牙體重計助手</string>
+    <string name="menuitem_calculator">計算機</string>
+    <string name="menuitem_running_calculator"></string>
+    <string name="menuitem_real_time_heart_rate">即時心率</string>
+    <string name="menuitem_watch_storage_space">手錶儲存空間</string>
+    <string name="menuitem_water_time">喝水時間</string>
+    <string name="menuitem_calories_segmented">卡路里 (分段)</string>
+    <string name="menuitem_calories_active_goal">卡路里目標 (活躍)</string>
+    <string name="menuitem_workout_history">運動紀錄</string>
+    <string name="menuitem_screen_always_lit">螢幕始終亮著</string>
 </resources>
