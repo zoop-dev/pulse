@@ -855,7 +855,7 @@
     <string name="heartrate_bpm_145">145 拍每分鐘</string>
     <string name="heartrate_bpm_195">195 拍每分鐘</string>
     <string name="heartrate_bpm_205">205 拍每分鐘</string>
-    <string name="spo2_perc_80">0.8</string>
+    <string name="spo2_perc_80">80%</string>
     <string name="reminder_every_month">每個月</string>
     <string name="contact_delete_confirm_title">刪除聯絡人</string>
     <string name="title_activity_world_clock_details">世界時鐘詳情</string>
@@ -1437,7 +1437,7 @@
     <string name="menuitem_worldclock">世界時鐘</string>
     <string name="menuitem_findphone">尋找電話</string>
     <string name="menuitem_takephoto">相機遙控器</string>
-    <string name="menuitem_alexa">Alexa</string>
+    <string name="menuitem_alexa"></string>
     <string name="menuitem_stopwatch">計時器</string>
     <string name="menuitem_sleep">睡覺</string>
     <string name="menuitem_pomodoro">番茄鐘追蹤器</string>
@@ -1756,7 +1756,7 @@
     <string name="pref_enable_call_reject">啟用拒接來電</string>
     <string name="pref_enable_call_reject_summary">啟用拒絕來電的設備</string>
     <string name="pref_disable_find_phone_with_dnd">當勿擾模式啟用時禁用尋找我的手機</string>
-    <string name="pref_spo_automatic_enable">啟用自動SpO2測量</string>
+    <string name="pref_spo_automatic_enable">啟用自動SpO²測量</string>
     <string name="pref_force_options">強制選項</string>
     <string name="pref_force_options_summary">某些設備錯誤地聲稱不支持某些選項。這些設置可以用來強行啟用它們。 \n自擔風險使用 \n請閱讀維基</string>
     <string name="pref_force_smart_alarm">強制智能警報</string>
@@ -1834,7 +1834,7 @@
     <string name="prefs_wena3_vibration_strength_item_weak">弱</string>
     <string name="prefs_wena3_vibration_strength_item_medium">中等</string>
     <string name="prefs_wena3_home_icon_title">主畫面圖示</string>
-    <string name="prefs_wena3_home_icon_name_qrio">Qrio</string>
+    <string name="prefs_wena3_home_icon_name_qrio"></string>
     <string name="prefs_wena3_home_icon_name_clock">當前時間</string>
     <string name="prefs_wena3_status_page_title">狀態頁面訂購</string>
     <string name="prefs_wena3_day_start_hour_item">日開始於</string>
@@ -1917,7 +1917,7 @@
     <string name="pref_sleepasandroid_feat_movement">加速度計</string>
     <string name="pref_sleepasandroid_feat_heartrate">心率</string>
     <string name="pref_sleepasandroid_feat_oximetry">血氧測定法</string>
-    <string name="pref_sleepasandroid_feat_spo2">血氧飽和度</string>
+    <string name="pref_sleepasandroid_feat_spo2">SpO²</string>
     <string name="pref_summary_huawei_account">在配對過程中使用的華為帳戶。設置它可以在不恢復出廠設置的情況下進行配對。</string>
     <string name="watchface_resolution_doesnt_match">錶面解析度與設備螢幕不匹配。錶面為 %1$s，設備螢幕為 %2$s</string>
     <string name="device_name_bicycle_sensor">自行車感測器</string>
@@ -2142,7 +2142,7 @@
     <string name="pref_title_sensors_altitude">高度校準</string>
     <string name="tap_connected_device_for_vibration">輕觸連接的設備以震動</string>
     <string name="busy_task_fetch_pai_data">取得 PAI 資料</string>
-    <string name="busy_task_fetch_spo2_data">取得 SpO2 資料</string>
+    <string name="busy_task_fetch_spo2_data">取得 SpO² 資料</string>
     <string name="busy_task_fetch_sleep_respiratory_rate_data">取得睡眠呼吸速率資料</string>
     <string name="busy_task_fetch_statistics">取得統計資料</string>
     <string name="pref_screen_vibration_patterns_summary">為不同的通知配置震動模式</string>
@@ -2179,7 +2179,7 @@
     <string name="pref_title_pebble_enable_applogs">啟用手錶應用程式日誌</string>
     <string name="pref_explanation_authkey">某些設備在首次初始化時需要一個特殊的配對密鑰。點擊這裡以獲取維基中的更多詳細資訊。</string>
     <string name="pref_workout_detection_sensitivity">敏感性</string>
-    <string name="pref_title_touch_spotify">Spotify</string>
+    <string name="pref_title_touch_spotify"></string>
     <string name="sony_equalizer_preset_speech">演講</string>
     <string name="pref_media_rewind">跳回</string>
     <string name="english_au">英文（澳大利亞）</string>
@@ -2273,7 +2273,7 @@
     <string name="watchface_dialog_pre_setting_position">預設位置為 %s</string>
     <string name="pref_summary_canned_messages_set">將以下配置的消息發送到您的設備</string>
     <string name="heartrate_bpm_140">140 每分鐘</string>
-    <string name="spo2_perc_85">0.85</string>
+    <string name="spo2_perc_85">85%</string>
     <string name="prefs_active_noise_cancelling_level">主動噪音取消等級</string>
     <string name="pref_ambient_sound_tone_summary">從柔和到清晰</string>
     <string name="pref_header_sony_equalizer_preset_custom_1">自訂預設 1</string>
@@ -2282,7 +2282,7 @@
     <string name="sony_speak_to_chat_timeout_standard">標準（30秒）</string>
     <string name="sony_button_mode_off">關</string>
     <string name="pref_title_opentracks_packagename">OpenTracks 套件名稱</string>
-    <string name="pref_force_enable_spo2_support">強制 SpO2 支援</string>
+    <string name="pref_force_enable_spo2_support">強制 SpO² 支援</string>
     <string name="huawei_ignore_wakeup_status_start">忽略喚醒開始狀態</string>
     <string name="auto_reconnect_ble_title">自動重新連接到設備</string>
     <string name="prefs_wena3_home_icon_name_suica">Suica餘額</string>
@@ -2415,7 +2415,7 @@
     <string name="busy_task_fetch_sleep_data">取得睡眠資料</string>
     <string name="heartrate_bpm_100">100 每分鐘心跳次數</string>
     <string name="reminder_every_day">每天</string>
-    <string name="prefs_spo2_alert_threshold">SPO2 警報閾值</string>
+    <string name="prefs_spo2_alert_threshold">SpO² 警報閾值</string>
     <string name="activity_type_soccer">足球</string>
     <string name="activity_type_mountaineering">登山</string>
     <string name="activity_type_body_combat">搏擊操</string>
@@ -2645,8 +2645,7 @@
     <string name="sony_automatic_power_off_off">請勿關閉</string>
     <string name="sony_automatic_power_off_30_min">30分鐘</string>
     <string name="pref_summary_navigation_forward">將導航應用程式的指示轉發至手錶</string>
-    <string name="pref_force_enable_spo2_support_summary">強制啟用 SpO2 支援。
-\n自擔風險使用</string>
+    <string name="pref_force_enable_spo2_support_summary">強制啟用 SpO² 支援。 \n自擔風險使用</string>
     <string name="contact_missing_name">聯絡人名稱是空的</string>
     <string name="menuitem_email">電子郵件</string>
     <string name="pref_title_goal_secondary">次要目標</string>
@@ -2731,7 +2730,7 @@
     <string name="fw_upgrade_notice_amazfit_gtr4">您即將在您的 Amazfit GTR 4 上安裝 %s 韌體。\n\n安裝 .zip 檔案後，您的手環將重新啟動。\n\n請自行承擔風險進行操作！</string>
     <string name="fw_upgrade_notice_amazfit_trex2">您即將在您的 Amazfit T-Rex 2 上安裝 %s 韌體。\n\n安裝 .zip 檔案後，您的手環將重新啟動。\n\n請自行承擔風險！</string>
     <string name="open_fw_installer_info_text_title">檔案安裝程式</string>
-    <string name="spo2_perc_90">0.9</string>
+    <string name="spo2_perc_90">90%</string>
     <string name="spo2_off">關</string>
     <string name="pref_world_clocks_summary">為其他時區配置時鐘</string>
     <string name="pref_contacts_title">聯絡人</string>
@@ -2760,7 +2759,7 @@
     <string name="menuitem_stress_simple">壓力（簡單）</string>
     <string name="menuitem_stress_breakdown">壓力（崩潰）</string>
     <string name="menuitem_pai">PAI</string>
-    <string name="menuitem_spo2">血氧飽和度</string>
+    <string name="menuitem_spo2">SpO²</string>
     <string name="appwidget_setting_alarm">設定鬧鐘為 %1$02d:%2$02d</string>
     <string name="quick_alarm">快速警報</string>
     <string name="quick_alarm_description">小工具的警報</string>
@@ -2897,7 +2896,7 @@
     <string name="prefs_wena3_home_icon_name_pedometer">步數</string>
     <string name="prefs_wena3_home_icon_name_energy">身體能量</string>
     <string name="prefs_wena3_home_icon_name_calories">卡路里</string>
-    <string name="prefs_wena3_home_icon_name_riiiver">Riiiver</string>
+    <string name="prefs_wena3_home_icon_name_riiiver"></string>
     <string name="prefs_wena3_menu_icon_name_payment">付款</string>
     <string name="prefs_wena3_menu_icon_title">菜單圖標</string>
     <string name="prefs_wena3_menu_icon_hint">設置圖標總是顯示在最後</string>
@@ -3129,7 +3128,7 @@
     <string name="devicetype_generic_weight_scale">體重計</string>
     <string name="menuitem_bluetooth_scale_assistant">藍牙體重計助手</string>
     <string name="menuitem_calculator">計算機</string>
-    <string name="menuitem_running_calculator"></string>
+    <string name="menuitem_running_calculator"/>
     <string name="menuitem_real_time_heart_rate">即時心率</string>
     <string name="menuitem_watch_storage_space">手錶儲存空間</string>
     <string name="menuitem_water_time">喝水時間</string>
@@ -3137,4 +3136,24 @@
     <string name="menuitem_calories_active_goal">卡路里目標 (活躍)</string>
     <string name="menuitem_workout_history">運動紀錄</string>
     <string name="menuitem_screen_always_lit">螢幕始終亮著</string>
+    <string name="watchface_widget_type_sp02">SpO²</string>
+    <string name="pref_spo_low_alert">低 SpO² 警報</string>
+    <string name="lowest">最低</string>
+    <string name="highest">最高</string>
+    <string name="sleep_score">睡眠分數</string>
+    <string name="sleep_score_value">分數: %1d</string>
+    <string name="charts_two_items_only">一次只能比較兩個項目。</string>
+    <string name="charts_at_least_one_item">至少要選擇一項。</string>
+    <string name="fwinstaller_file_not_compatible_to_device">所選檔案與設備不相容</string>
+    <string name="fwinstaller_no_compatible_device_found">未找到可相容的設備進行安裝 %1s</string>
+    <string name="mi2_prefs_inactivity_warnings_dnd_lunch_break_summary">午休時間 (12:00 – 14:00) 停用不活動警告</string>
+    <string name="silent_mode">靜音模式</string>
+    <string name="chinese">中文</string>
+    <string name="serbian_latin">塞爾維亞語 (拉丁語)</string>
+    <string name="catalan">加泰隆尼亞語</string>
+    <string name="finnish">芬蘭語</string>
+    <string name="bahasa_melayu">馬來西亞語</string>
+    <string name="activity_prefs_sleep_duration_minutes">理想睡眠時間 (分鐘)</string>
+    <string name="notifications_dismiss_all">全部取消</string>
+    <string name="hr_measurement_continuous">連續的</string>
 </resources>
