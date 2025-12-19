@@ -29,10 +29,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
-import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.ComputedHrvSummarySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
@@ -43,23 +45,46 @@ import nodomain.freeyourgadget.gadgetbridge.model.HrvValueSample;
  * Receiver that listens for new data events and invalidates the HRV summary cache
  * for affected days. This ensures that computed HRV summaries are recalculated
  * with the latest data when new HRV samples arrive.
+ *
+ * Performance optimization: Only registers if at least one device supports HRV,
+ * and filters events by device address to avoid unnecessary processing.
  */
 public class HrvCacheInvalidationReceiver {
     private static final Logger LOG = LoggerFactory.getLogger(HrvCacheInvalidationReceiver.class);
     private Context context;
     private boolean registered = false;
     private HrvCacheInvalidationBroadcastReceiver hrvCacheInvalidationBroadcastReceiver;
+    private final Set<String> hrvCapableDeviceAddresses = new HashSet<>();
 
     public HrvCacheInvalidationReceiver() {
     }
 
+    /**
+     * Registers the receiver only if at least one device supports HRV measurements.
+     * Builds a set of HRV-capable device addresses for fast filtering.
+     */
     public void registerReceiver(Context context) {
         this.context = context;
-        this.hrvCacheInvalidationBroadcastReceiver = new HrvCacheInvalidationBroadcastReceiver();
+
+        // Build list of HRV-capable devices
+        final List<GBDevice> devices = GBApplication.app().getDeviceManager().getDevices();
+        for (GBDevice device : devices) {
+            if (device.getDeviceCoordinator().supportsHrvMeasurement(device)) {
+                hrvCapableDeviceAddresses.add(device.getAddress());
+            }
+        }
+
+        // Only register if we have at least one HRV-capable device
+        if (hrvCapableDeviceAddresses.isEmpty()) {
+            LOG.debug("No HRV-capable devices found, not registering HRV cache invalidation receiver");
+            return;
+        }
+
+        this.hrvCacheInvalidationBroadcastReceiver = new HrvCacheInvalidationBroadcastReceiver(hrvCapableDeviceAddresses);
         IntentFilter intentFilter = new IntentFilter(ACTION_NEW_DATA);
         ContextCompat.registerReceiver(this.context, this.hrvCacheInvalidationBroadcastReceiver, intentFilter, ContextCompat.RECEIVER_EXPORTED);
         this.registered = true;
-        LOG.debug("HRV cache invalidation receiver registered");
+        LOG.debug("HRV cache invalidation receiver registered for {} HRV-capable devices", hrvCapableDeviceAddresses.size());
     }
 
     public void unregisterReceiver() {
@@ -76,12 +101,17 @@ public class HrvCacheInvalidationReceiver {
 
     private static class HrvCacheInvalidationBroadcastReceiver extends BroadcastReceiver {
         private static final Logger LOG = LoggerFactory.getLogger(HrvCacheInvalidationBroadcastReceiver.class);
+        private final Set<String> hrvCapableDeviceAddresses;
+
+        HrvCacheInvalidationBroadcastReceiver(Set<String> hrvCapableDeviceAddresses) {
+            this.hrvCapableDeviceAddresses = hrvCapableDeviceAddresses;
+        }
 
         @Override
         public void onReceive(Context context, Intent intent) {
             if (ACTION_NEW_DATA.equals(intent.getAction())) {
                 final GBDevice device = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE);
-                if (device != null) {
+                if (device != null && hrvCapableDeviceAddresses.contains(device.getAddress())) {
                     invalidateCacheForDevice(device);
                 }
             }
@@ -90,6 +120,7 @@ public class HrvCacheInvalidationReceiver {
         private void invalidateCacheForDevice(GBDevice device) {
             try (DBHandler db = GBApplication.acquireDB()) {
                 final DeviceCoordinator coordinator = device.getDeviceCoordinator();
+
                 final TimeSampleProvider<? extends HrvValueSample> sampleProvider =
                     coordinator.getHrvValueSampleProvider(device, db.getDaoSession());
 
