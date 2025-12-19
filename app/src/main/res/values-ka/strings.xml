@@ -128,7 +128,7 @@
     <string name="installer_activity_unable_to_find_handler">არ შეუძლია ამ ფაილის დასაყენებლად დამმუშავებლის პოვნა.</string>
     <string name="cannot_connect">არ შეუძლია დაკავშირება: %1$s</string>
     <string name="controlcenter_start_activitymonitor">შენი საქმიანობა</string>
-    <string name="dbaccess_error_executing">\'%1$s\'-ის შესრულებისას მოხდა შეცდომა</string>
+    <string name="dbaccess_error_executing">\"%1$s\'-ის შესრულების შეცდომა</string>
     <string name="miband_prefs_fitness_goal">ყოველდღიური ნაბიჯის მიზანი</string>
     <string name="user_feedback_miband_activity_data_transfer">%1$s მონაცემების გადატანაა %2$s-დან დაწყებული</string>
     <string name="chart_get_active_and_synchronize">დაკავდი აქტივობით და გააკეთე მოწყობილობის სინქრონიზაცია.</string>
@@ -169,4 +169,13 @@
     <string name="blacklist_all_for_notifications">შეტყობინებებიდან ყველას გაცხრილვა</string>
     <string name="whitelist_all_for_notifications">ყველა გაფრთხილების თეთრ სიაში ჩასმა</string>
     <string name="pref_header_sensors_calibration">სენსორის კალიბრაცია</string>
+    <string name="fw_upgrade_notice_amazfitbip">აპირებთ, დააყენოთ %s მიკროკოდი თქვენს Amazflit Bip-ზე.\n\nდარწმუნდით, რომ დააყენოთ .fw ფაილი, შემდეგ .res ფაილი და ბოლოს .gps ფაილი. თქვენი საათი გადაიტვირთება .fw ფაილის დაყენების შემდეგ.\n\nშენიშვნა: .res და .gps ფაილების დაყენება აიცო;ებელი არაა, თუ ეს ფაილები ზუსტად იგივეა, რაც ადრე იყო დაყენებული.\n\nგააგრძელეთ საკუთარი რისკების აღქმით!</string>
+    <plurals name="widget_alarm_target_hours">
+        <item quantity="one">%1$d:%2$02d საათი</item>
+        <item quantity="other">%1$d:%2$02d საათი</item>
+    </plurals>
+    <plurals name="amount_of_days">
+        <item quantity="one">%d დღე</item>
+        <item quantity="other">%d დღე</item>
+    </plurals>
 </resources>
