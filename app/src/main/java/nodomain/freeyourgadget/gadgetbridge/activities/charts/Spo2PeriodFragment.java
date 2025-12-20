@@ -232,33 +232,36 @@ public class Spo2PeriodFragment extends AbstractChartFragment<Spo2PeriodFragment
             spo2Chart.getAxisLeft().setAxisMinimum(Math.max(5 * ((minimum - 5) / 5), 0));
         }
 
+        final CombinedData combinedData = new CombinedData();
+
         // Candle data for range bars
-        CandleDataSet candleDataSet = new CandleDataSet(candleEntries, getString(R.string.pref_header_spo2));
-        candleDataSet.setDrawValues(false);
-        candleDataSet.setDrawIcons(false);
-        candleDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-        candleDataSet.setShadowColor(SPO2_COLOR);
-        candleDataSet.setShadowWidth(2f);
-        candleDataSet.setDecreasingColor(SPO2_COLOR);
-        candleDataSet.setDecreasingPaintStyle(Paint.Style.FILL);
-        candleDataSet.setIncreasingColor(SPO2_COLOR);
-        candleDataSet.setIncreasingPaintStyle(Paint.Style.FILL);
-        candleDataSet.setNeutralColor(SPO2_COLOR);
-        candleDataSet.setBarSpace(0.3f);
-        candleDataSet.setShowCandleBar(true);
+        if (!candleEntries.isEmpty()) {
+            CandleDataSet candleDataSet = new CandleDataSet(candleEntries, getString(R.string.pref_header_spo2));
+            candleDataSet.setDrawValues(false);
+            candleDataSet.setDrawIcons(false);
+            candleDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+            candleDataSet.setShadowColor(SPO2_COLOR);
+            candleDataSet.setShadowWidth(2f);
+            candleDataSet.setDecreasingColor(SPO2_COLOR);
+            candleDataSet.setDecreasingPaintStyle(Paint.Style.FILL);
+            candleDataSet.setIncreasingColor(SPO2_COLOR);
+            candleDataSet.setIncreasingPaintStyle(Paint.Style.FILL);
+            candleDataSet.setNeutralColor(SPO2_COLOR);
+            candleDataSet.setBarSpace(0.15f);
+            candleDataSet.setShowCandleBar(true);
+            combinedData.setData(new CandleData(candleDataSet));
+        }
 
         // Scatter data for daily average markers
-        ScatterDataSet scatterDataSet = new ScatterDataSet(avgEntries, getString(R.string.hr_average));
-        scatterDataSet.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
-        scatterDataSet.setScatterShapeSize(12f);
-        scatterDataSet.setColor(SPO2_AVG_COLOR);
-        scatterDataSet.setDrawValues(false);
-        scatterDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-
-        // Combine both datasets
-        CombinedData combinedData = new CombinedData();
-        combinedData.setData(new CandleData(candleDataSet));
-        combinedData.setData(new ScatterData(scatterDataSet));
+        if (!avgEntries.isEmpty()) {
+            ScatterDataSet scatterDataSet = new ScatterDataSet(avgEntries, getString(R.string.hr_average));
+            scatterDataSet.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
+            scatterDataSet.setScatterShapeSize(15f);
+            scatterDataSet.setColor(SPO2_AVG_COLOR);
+            scatterDataSet.setDrawValues(false);
+            scatterDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+            combinedData.setData(new ScatterData(scatterDataSet));
+        }
 
         spo2Chart.setData(combinedData);
     }
