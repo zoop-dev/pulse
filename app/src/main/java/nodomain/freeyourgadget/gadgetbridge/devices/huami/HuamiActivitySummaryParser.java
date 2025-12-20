@@ -19,45 +19,94 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huami;
 
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.*;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.GBException;
+import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.DefaultWorkoutCharts;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
+import nodomain.freeyourgadget.gadgetbridge.model.workout.Workout;
+import nodomain.freeyourgadget.gadgetbridge.model.workout.WorkoutChart;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.AbstractHuamiActivityDetailsParser;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiActivityDetailsParser;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSportsActivityType;
+import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 
 public class HuamiActivitySummaryParser implements ActivitySummaryParser {
 
     private static final Logger LOG = LoggerFactory.getLogger(HuamiActivitySummaryParser.class);
     protected ActivitySummaryData summaryData = new ActivitySummaryData();
+    protected final List<WorkoutChart> charts = new ArrayList<>();
 
     @Override
     public BaseActivitySummary parseBinaryData(BaseActivitySummary summary, final boolean forDetails) {
+        // FIXME Do not use this
+        return parseWorkout(summary, forDetails).getSummary();
+    }
+
+    @Override
+    public Workout parseWorkout(final BaseActivitySummary summary, final boolean forDetails) {
         Date startTime = summary.getStartTime();
         if (startTime == null) {
             LOG.error("Due to a bug, we can only parse the summary when startTime is already set");
             return null;
         }
         summaryData = new ActivitySummaryData();
-        parseBinaryData(summary, startTime, forDetails);
+        charts.clear();
+        parseBinaryData(summary, startTime);
         summary.setSummaryData(summaryData.toString());
-        return summary;
+        if (forDetails && !StringUtils.isBlank(summary.getRawDetailsPath())) {
+            try {
+                final File inputFile = FileUtils.tryFixPath(new File(summary.getRawDetailsPath()));
+                if (inputFile == null) {
+                    LOG.warn("Raw file for details not found: {}", summary.getRawDetailsPath());
+                    return new Workout(summary, ActivitySummaryData.fromJson(summaryData.toString()));
+                }
+
+                final byte[] detailsBytes;
+                try (InputStream inputStream = new FileInputStream(inputFile)) {
+                    detailsBytes = FileUtils.readAll(inputStream, inputFile.length());
+                }
+
+                final AbstractHuamiActivityDetailsParser detailsParser = getDetailsParser(summary);
+                final ActivityTrack activityTrack = detailsParser.parse(detailsBytes);
+
+                enrichWithDetails(summary, activityTrack);
+            } catch (final Exception e) {
+                LOG.error("Failed enrich workout with details", e);
+            }
+        }
+
+        return new Workout(
+                summary,
+                ActivitySummaryData.fromJson(summaryData.toString()),
+                charts
+        );
     }
 
     public AbstractHuamiActivityDetailsParser getDetailsParser(final BaseActivitySummary summary) {
         return new HuamiActivityDetailsParser(summary);
     }
 
-    protected void parseBinaryData(BaseActivitySummary summary, Date startTime, final boolean forDetails) {
+    protected void parseBinaryData(BaseActivitySummary summary, Date startTime) {
         final byte[] rawSummaryData = summary.getRawSummaryData();
         if (rawSummaryData == null) {
             return;
@@ -65,14 +114,14 @@ public class HuamiActivitySummaryParser implements ActivitySummaryParser {
         final ByteBuffer buffer = ByteBuffer.wrap(rawSummaryData).order(ByteOrder.LITTLE_ENDIAN);
 
         short version = buffer.getShort(); // version
-        LOG.debug("Got sport summary version " + version + " total bytes=" + buffer.capacity());
+        LOG.debug("Got sport summary version {} total bytes={}", version, buffer.capacity());
         ActivityKind activityKind = ActivityKind.UNKNOWN;
         int rawKind = BLETypeConversions.toUnsigned(buffer.getShort());
         try {
             HuamiSportsActivityType activityType = HuamiSportsActivityType.fromCode(rawKind);
             activityKind = activityType.toActivityKind();
         } catch (Exception ex) {
-            LOG.error("Error mapping activity kind: " + ex.getMessage(), ex);
+            LOG.error("Error mapping activity kind", ex);
             summaryData.add("Raw Activity Kind", rawKind, UNIT_NONE);
         }
         summary.setActivityKind(activityKind.getCode());
@@ -370,23 +419,26 @@ public class HuamiActivitySummaryParser implements ActivitySummaryParser {
             summaryData.add(LAP_PACE_AVERAGE, averageLapPace, "second");
             summaryData.add(STROKES, strokes, "strokes");
             summaryData.add(SWOLF_INDEX, swolfIndex, "swolf_index");
-            String swimStyleName = "unknown"; // TODO: translate here or keep as string identifier here?
-            switch (swimStyle) {
-                case 1:
-                    swimStyleName = "breaststroke";
-                    break;
-                case 2:
-                    swimStyleName = "freestyle";
-                    break;
-                case 3:
-                    swimStyleName = "backstroke";
-                    break;
-                case 4:
-                    swimStyleName = "medley";
-                    break;
-            }
+            String swimStyleName = switch (swimStyle) {
+                case 1 -> "breaststroke";
+                case 2 -> "freestyle";
+                case 3 -> "backstroke";
+                case 4 -> "medley";
+                default -> "unknown"; // TODO: translate here or keep as string identifier here?
+            };
             summaryData.add(SWIM_STYLE, swimStyleName);
             summaryData.add(LAPS, laps, "laps");
+        }
+    }
+
+    protected void enrichWithDetails(final BaseActivitySummary summary, final ActivityTrack activityTrack) throws IOException, GBException {
+        final List<ActivityPoint> allPoints = activityTrack.getAllPoints();
+        if (!allPoints.isEmpty()) {
+            charts.addAll(DefaultWorkoutCharts.buildDefaultCharts(
+                    GBApplication.getContext(),
+                    allPoints,
+                    ActivityKind.fromCode(summary.getActivityKind())
+            ));
         }
     }
 }

@@ -20,17 +20,15 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 
 import android.content.Context;
 
+import androidx.core.content.ContextCompat;
+
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +39,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.Activity
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryTableBuilder;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryValue;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiActivitySummaryParser;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
 import nodomain.freeyourgadget.gadgetbridge.proto.HuamiProtos;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
@@ -48,7 +47,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.AbstractHuamiA
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsActivityDetailsParser;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsActivityTrack;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsActivityType;
-import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 
 public class ZeppOsActivitySummaryParser extends HuamiActivitySummaryParser {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsActivitySummaryParser.class);
@@ -64,7 +62,7 @@ public class ZeppOsActivitySummaryParser extends HuamiActivitySummaryParser {
     }
 
     @Override
-    protected void parseBinaryData(final BaseActivitySummary summary, final Date startTime, final boolean forDetails) {
+    protected void parseBinaryData(final BaseActivitySummary summary, final Date startTime) {
         final byte[] rawData = summary.getRawSummaryData();
         if (rawData == null) {
             return;
@@ -163,11 +161,11 @@ public class ZeppOsActivitySummaryParser extends HuamiActivitySummaryParser {
                 final List<String> zoneOrder = Arrays.asList(HR_ZONE_NA, HR_ZONE_WARM_UP, HR_ZONE_FAT_BURN, HR_ZONE_AEROBIC, HR_ZONE_ANAEROBIC, HR_ZONE_EXTREME);
                 final int[] zoneColors = new int[]{
                         0,
-                        context.getResources().getColor(R.color.hr_zone_warm_up_color),
-                        context.getResources().getColor(R.color.hr_zone_easy_color),
-                        context.getResources().getColor(R.color.hr_zone_aerobic_color),
-                        context.getResources().getColor(R.color.hr_zone_threshold_color),
-                        context.getResources().getColor(R.color.hr_zone_maximum_color),
+                        ContextCompat.getColor(context, R.color.hr_zone_warm_up_color),
+                        ContextCompat.getColor(context, R.color.hr_zone_easy_color),
+                        ContextCompat.getColor(context, R.color.hr_zone_aerobic_color),
+                        ContextCompat.getColor(context, R.color.hr_zone_threshold_color),
+                        ContextCompat.getColor(context, R.color.hr_zone_maximum_color),
                 };
                 for (int i = 0; i < zoneOrder.size(); i++) {
                     summaryData.add(
@@ -239,30 +237,15 @@ public class ZeppOsActivitySummaryParser extends HuamiActivitySummaryParser {
             summaryData.add(MOVEMENT_RHYTHM, summaryProto.getMovementEvaluation().getRhythm(), UNIT_NONE);
             summaryData.add(MOVEMENT_SPEED_DECAY, summaryProto.getMovementEvaluation().getSpeedDecay(), UNIT_NONE);
         }
-
-        if (forDetails && !StringUtils.isBlank(summary.getRawDetailsPath())) {
-            try {
-                enrichWithDetails(summary);
-            } catch (final Exception e) {
-                LOG.error("Failed enrich summary", e);
-            }
-        }
     }
 
-    private void enrichWithDetails(final BaseActivitySummary summary) throws IOException, GBException {
-        final File inputFile = FileUtils.tryFixPath(new File(summary.getRawDetailsPath()));
-        if (inputFile == null) {
+    protected void enrichWithDetails(final BaseActivitySummary summary, ActivityTrack activityTrack) throws IOException, GBException {
+        super.enrichWithDetails(summary, activityTrack);
+        if (!(activityTrack instanceof ZeppOsActivityTrack zeppOsActivityTrack)) {
+            LOG.error("ActivityTrack not instanceof ZeppOsActivityTrack: {}", activityTrack.getClass());
             return;
         }
-
-        final byte[] detailsBytes;
-        try (InputStream inputStream = new FileInputStream(inputFile)) {
-            detailsBytes = FileUtils.readAll(inputStream, inputFile.length());
-        }
-
-        final ZeppOsActivityDetailsParser detailsParser = new ZeppOsActivityDetailsParser(summary);
-        final ZeppOsActivityTrack activityTrack = detailsParser.parse(detailsBytes);
-        List<ZeppOsActivityTrack.StrengthSet> strengthSets = activityTrack.getStrengthSets();
+        List<ZeppOsActivityTrack.StrengthSet> strengthSets = zeppOsActivityTrack.getStrengthSets();
         if (!strengthSets.isEmpty()) {
             final ActivitySummaryTableBuilder tableBuilder = new ActivitySummaryTableBuilder(SETS, "sets_header", Arrays.asList(
                     "set",
@@ -287,7 +270,7 @@ public class ZeppOsActivitySummaryParser extends HuamiActivitySummaryParser {
             tableBuilder.addToSummaryData(summaryData);
         }
 
-        final List<ZeppOsActivityTrack.Lap> laps = activityTrack.getLaps();
+        final List<ZeppOsActivityTrack.Lap> laps = zeppOsActivityTrack.getLaps();
         if (!laps.isEmpty()) {
             final ActivitySummaryTableBuilder tableBuilder = new ActivitySummaryTableBuilder(LAPS, "laps_header", Arrays.asList(
                     "workout_lap",

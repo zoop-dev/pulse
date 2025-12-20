@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
@@ -30,7 +31,7 @@ public class ActivityTrack {
     private User user;
     private String name;
     private List<ActivityPoint> currentSegment = new ArrayList<>();
-    private List<List<ActivityPoint>> segments = new ArrayList<List<ActivityPoint>>() {{
+    private List<List<ActivityPoint>> segments = new ArrayList<>() {{
         add(currentSegment);
     }};
 
@@ -75,6 +76,12 @@ public class ActivityTrack {
 
     public List<List<ActivityPoint>> getSegments() {
         return segments;
+    }
+
+    public List<ActivityPoint> getAllPoints() {
+        return getSegments().stream()
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
     }
 
     public Date getBaseTime() {
