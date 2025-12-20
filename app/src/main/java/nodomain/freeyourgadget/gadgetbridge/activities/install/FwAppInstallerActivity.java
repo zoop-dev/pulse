@@ -226,9 +226,12 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
 
         if (installHandler == null) {
             // Should never happen? at this point, we got here by installing to the device
+            LOG.error("Install handler not found for {}", uri);
             setInfoText(getString(R.string.installer_activity_unable_to_find_handler));
             return;
         }
+
+        LOG.debug("Install handler for {}: {}", uri, installHandler.getClass());
 
         setInfoText(getString(R.string.installer_activity_wait_while_determining_status));
 

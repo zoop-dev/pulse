@@ -77,13 +77,12 @@ public class ZeppOsMusicInstallHandler implements InstallHandler {
         }
 
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
-        if (!(coordinator instanceof ZeppOsCoordinator)) {
+        if (!(coordinator instanceof ZeppOsCoordinator zeppOsCoordinator)) {
             LOG.warn("Coordinator is not a ZeppOsCoordinator: {}", coordinator.getClass());
             installActivity.setInfoText(mContext.getString(R.string.fwapp_install_device_not_supported));
             installActivity.setInstallEnabled(false);
             return;
         }
-        final ZeppOsCoordinator zeppOsCoordinator = (ZeppOsCoordinator) coordinator;
         if (!zeppOsCoordinator.supportsMusicUpload(device)) {
             installActivity.setInfoText(mContext.getString(R.string.fwapp_install_device_not_supported));
             installActivity.setInstallEnabled(false);
