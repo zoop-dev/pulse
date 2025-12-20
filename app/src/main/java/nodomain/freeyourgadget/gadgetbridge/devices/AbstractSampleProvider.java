@@ -44,6 +44,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
+import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 
 /**
  * Base class for all sample providers. A Sample provider is device specific and provides
@@ -365,13 +366,29 @@ public abstract class AbstractSampleProvider<T extends AbstractActivitySample> i
         final ListIterator<T> it = ret.listIterator();
         T previousSample = it.next();
 
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("Starting filling gapps at {}", DateTimeUtils.formatDateTime(DateTimeUtils.parseTimestampMillis(previousSample.getTimestamp() * 1000L)));
+        }
+
         while (it.hasNext()) {
             final T sample = it.next();
+            if (LOG.isTraceEnabled()) {
+                LOG.trace("Processing for gaps at {}", DateTimeUtils.formatDateTime(DateTimeUtils.parseTimestampMillis(sample.getTimestamp() * 1000L)));
+            }
             if (sample.getTimestamp() - previousSample.getTimestamp() > 60) {
-                LOG.trace("Filling gap between {} and {}", Instant.ofEpochSecond(previousSample.getTimestamp() + 60), Instant.ofEpochSecond(sample.getTimestamp()));
+                // Rewind before we insert the dummy samples so the list stays in order
+                it.previous();
+                if (LOG.isTraceEnabled()) {
+                    LOG.trace("Filling gap between {} and {}", Instant.ofEpochSecond(previousSample.getTimestamp() + 60), Instant.ofEpochSecond(sample.getTimestamp()));
+                }
                 for (int ts = previousSample.getTimestamp() + 60; ts < sample.getTimestamp(); ts += 60) {
+                    if (LOG.isTraceEnabled()) {
+                        LOG.trace("Inserting dummy sample at {}", DateTimeUtils.formatDateTime(DateTimeUtils.parseTimestampMillis(ts * 1000L)));
+                    }
                     it.add(createDummySample(ts));
                 }
+                // Move forward again
+                it.next();
             }
             previousSample = sample;
         }
