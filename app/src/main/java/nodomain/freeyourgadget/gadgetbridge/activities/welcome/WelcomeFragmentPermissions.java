@@ -51,6 +51,7 @@ public class WelcomeFragmentPermissions extends Fragment {
     private FragmentWelcomePermissionsBinding binding;
     private PermissionAdapter permissionAdapter;
     private List<String> requestingPermissions = new ArrayList<>();
+    private boolean showDoNotAskAgain;
 
     @Nullable
     @Override
@@ -59,7 +60,7 @@ public class WelcomeFragmentPermissions extends Fragment {
         binding = FragmentWelcomePermissionsBinding.inflate(getLayoutInflater(), container, false);
 
         final Bundle arguments = getArguments();
-        final boolean showDoNotAskAgain = arguments != null && arguments.getBoolean(ARG_SHOW_DO_NOT_ASK_BUTTON, false);
+        showDoNotAskAgain = arguments != null && arguments.getBoolean(ARG_SHOW_DO_NOT_ASK_BUTTON, false);
         if (!showDoNotAskAgain) {
             binding.buttonDoNotAskAgain.setVisibility(View.GONE);
         }
@@ -109,6 +110,10 @@ public class WelcomeFragmentPermissions extends Fragment {
         permissionAdapter.notifyDataSetChanged();
         if (PermissionsUtils.checkAllPermissions(requireActivity())) {
             binding.buttonRequestAll.setEnabled(false);
+            if (showDoNotAskAgain) {
+                // We just got all permissions, and this was pestering - disappear
+                requireActivity().finish();
+            }
         }
         if (!requestingPermissions.isEmpty()) {
             requestAllPermissions();
