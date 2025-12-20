@@ -49,7 +49,9 @@ public class SleepAnalysis {
                 durationSinceLastSleep = 0;
             } else {
                 //exclude "not worn" times from sleep sessions as this makes a discrepancy with the charts
-                if (lightSleepDuration + deepSleepDuration + remSleepDuration + awakeSleepDuration > MIN_SESSION_LENGTH)
+                final boolean validTimes = sleepStart != null && sleepEnd != null && sleepEnd.getTime() - sleepStart.getTime() > MIN_SESSION_LENGTH;
+                final long durationLengths = lightSleepDuration + deepSleepDuration + remSleepDuration + awakeSleepDuration;
+                if (validTimes && durationLengths > MIN_SESSION_LENGTH)
                     result.add(new SleepSession(sleepStart, sleepEnd, lightSleepDuration, deepSleepDuration, remSleepDuration, awakeSleepDuration));
                 sleepStart = null;
                 sleepEnd = null;
