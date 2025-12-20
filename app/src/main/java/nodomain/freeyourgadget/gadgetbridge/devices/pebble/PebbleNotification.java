@@ -73,9 +73,10 @@ public class PebbleNotification {
         return switch (notificationType) {
             case AMAZON -> PebbleIconID.NOTIFICATION_AMAZON;
             case BBM -> PebbleIconID.NOTIFICATION_BLACKBERRY_MESSENGER;
-            case CONVERSATIONS, HIPCHAT, SIGNAL, WIRE, THREEMA, KONTALK,
+            case CONVERSATIONS, HIPCHAT, WIRE, THREEMA, KONTALK,
                  ANTOX, DISCORD, DELTACHAT, MOLLY ->
                     PebbleIconID.NOTIFICATION_HIPCHAT;
+            case SIGNAL -> isCoreDevice ? PebbleIconID.NOTIFICATION_SIGNAL: PebbleIconID.NOTIFICATION_HIPCHAT;
             case ELEMENT -> isCoreDevice ? PebbleIconID.NOTIFICATION_ELEMENT : PebbleIconID.NOTIFICATION_HIPCHAT;
             case FACEBOOK -> PebbleIconID.NOTIFICATION_FACEBOOK;
             case FACEBOOK_MESSENGER -> PebbleIconID.NOTIFICATION_FACEBOOK_MESSENGER;

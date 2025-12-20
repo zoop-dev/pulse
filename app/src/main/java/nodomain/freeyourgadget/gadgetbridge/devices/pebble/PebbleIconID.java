@@ -138,4 +138,7 @@ public final class PebbleIconID {
     public static final int NOTIFICATION_UNIFI_PROTECT = 131;
     public static final int NOTIFICATION_ZOOM = 132;
     public static final int NOTIFICATION_EBAY = 133;
+    public static final int NOTIFICATION_YOUTUBE = 134;
+    public static final int NOTIFICATION_SIGNAL = 135;
+    public static final int NOTIFICATION_TWITCH = 136;
 }
