@@ -40,7 +40,7 @@ public class StopNotificationRequest extends Request {
             content.add(
                     new Notifications.NotificationActionRequest.TextElement(
                             (byte) Notifications.TextType.text,
-                            (byte)supportProvider.getHuaweiCoordinator().getContentFormat(),
+                            (byte)supportProvider.getDeviceState().getContentFormat(),
                             "")
             );
             return new Notifications.NotificationActionRequest(

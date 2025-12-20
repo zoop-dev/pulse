@@ -66,10 +66,11 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventDisplayMes
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCompatTemperatureSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants;
-import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCoordinatorSupplier;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCoordinatorSupplier.HuaweiDeviceType;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCrypto;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiDeviceStateManager;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiDictTypes;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiEcgFileParser;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiGpsParser;
@@ -336,8 +337,8 @@ public class HuaweiSupportProvider {
         return ((HuaweiCoordinatorSupplier) this.gbDevice.getDeviceCoordinator());
     }
 
-    public HuaweiCoordinator getHuaweiCoordinator() {
-        return getCoordinator().getHuaweiCoordinator();
+    public HuaweiCoordinator getDeviceState() {
+        return HuaweiDeviceStateManager.get(getDevice());
     }
 
     public HuaweiUploadManager getUploadManager() {
@@ -388,7 +389,11 @@ public class HuaweiSupportProvider {
         this.leSupport = support;
     }
 
-    public void setContext(Context context) {
+    public void setContext(GBDevice device, Context context) {
+        this.gbDevice = device;
+        this.context = context;
+        this.huaweiType = getCoordinator().getHuaweiType();
+        this.paramsProvider.setTransactionsCrypted(getCoordinator().isTransactionCrypted());
         mediaManager = new MediaManager(context);
     }
 
@@ -472,11 +477,10 @@ public class HuaweiSupportProvider {
         this.gbDevice = device;
         this.context = context;
         this.huaweiType = getCoordinator().getHuaweiType();
-        this.paramsProvider.setTransactionsCrypted(this.getHuaweiCoordinator().isTransactionCrypted());
+        this.paramsProvider.setTransactionsCrypted(getCoordinator().isTransactionCrypted());
     }
 
     protected nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder initializeDevice(nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder builder) {
-        setup(leSupport.getDevice(), leSupport.getContext());
         builder.setCallback(leSupport);
         final BluetoothGattCharacteristic characteristicRead = leSupport.getCharacteristic(HuaweiConstants.UUID_CHARACTERISTIC_HUAWEI_READ);
         if (characteristicRead == null) {
@@ -488,17 +492,14 @@ public class HuaweiSupportProvider {
         builder.setDeviceState(GBDevice.State.AUTHENTICATING);
         final GetLinkParamsRequest linkParamsReq = new GetLinkParamsRequest(this, builder);
         initializeDevice(linkParamsReq);
-        getCoordinator().setDevice(this.gbDevice);
         return builder;
     }
 
     protected nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder initializeDevice(nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder builder) {
-        setup(brSupport.getDevice(), brSupport.getContext());
         builder.setCallback(brSupport);
         builder.setDeviceState(GBDevice.State.AUTHENTICATING);
         final GetLinkParamsRequest linkParamsReq = new GetLinkParamsRequest(this, builder);
         initializeDevice(linkParamsReq);
-        getCoordinator().setDevice(this.gbDevice);
         return builder;
     }
 
@@ -877,36 +878,36 @@ public class HuaweiSupportProvider {
         try {
 
             // NOTE: register all DAta Sync handlers on the early stage. We can receive requests from the watch during initialization.
-            if (getHuaweiCoordinator().getSendCountryCodeEnabled(getDevice())) {
+            if (getDeviceState().getSendCountryCodeEnabled(getDevice())) {
                 huaweiDataSyncFeatureManager = new HuaweiDataSyncFeatureManager(HuaweiSupportProvider.this);
             }
 
-            if (getHuaweiCoordinator().supportsNotificationPicture()) {
+            if (getDeviceState().supportsNotificationPicture()) {
                 huaweiDataSyncNotificationPictures = new HuaweiDataSyncNotificationPictures(HuaweiSupportProvider.this);
             }
 
-            if (getHuaweiCoordinator().supportsThreeCircle() || getHuaweiCoordinator().supportsThreeCircleLite()) {
+            if (getDeviceState().supportsThreeCircle() || getDeviceState().supportsThreeCircleLite()) {
                 huaweiDataSyncTreeCircleGoals = new HuaweiDataSyncGoals(HuaweiSupportProvider.this);
             }
 
-            if (getHuaweiCoordinator().supportsFindDeviceAbility()) {
+            if (getDeviceState().supportsFindDeviceAbility()) {
                 huaweiDataSyncFindDevice = new HuaweiDataSyncFindDevice(HuaweiSupportProvider.this);
             }
 
-            if (getHuaweiCoordinator().supportsEmotion()) {
+            if (getDeviceState().supportsEmotion()) {
                 huaweiDataSyncEmotion = new HuaweiDataSyncEmotion(HuaweiSupportProvider.this);
             }
 
-            if (getHuaweiCoordinator().supportsArrhythmia() && getHuaweiCoordinator().isShowForceCountrySpecificFeatures(getCoordinator().getDevice())) {
+            if (getDeviceState().supportsArrhythmia() && getDeviceState().isShowForceCountrySpecificFeatures(getDevice())) {
                 huaweiDataSyncArrhythmia = new HuaweiDataSyncArrhythmia(HuaweiSupportProvider.this);
             }
-            if (getHuaweiCoordinator().supportsECG() && getHuaweiCoordinator().isShowForceCountrySpecificFeatures(getCoordinator().getDevice())) {
+            if (getDeviceState().supportsECG() && getDeviceState().isShowForceCountrySpecificFeatures(getDevice())) {
                 huaweiDataSyncEcg = new HuaweiDataSyncEcg(HuaweiSupportProvider.this);
             }
-            if (getHuaweiCoordinator().supportsSleepApnea()) {
+            if (getDeviceState().supportsSleepApnea()) {
                 huaweiDataSyncSleepApnea = new HuaweiDataSyncSleepApnea(HuaweiSupportProvider.this);
             }
-            if (getHuaweiCoordinator().supportsArterialStiffnessDetection()) {
+            if (getDeviceState().supportsArterialStiffnessDetection()) {
                 huaweiDataSyncArterialStiffnessDetection = new HuaweiDataSyncArterialStiffnessDetection(HuaweiSupportProvider.this);
             }
 
@@ -962,7 +963,7 @@ public class HuaweiSupportProvider {
 
 
             // Setup the alarms if necessary
-            if (!getHuaweiCoordinator().supportsChangingAlarm() && firstConnection)
+            if (!getDeviceState().supportsChangingAlarm() && firstConnection)
                 initializeAlarms();
 
             // Queue all the requests
@@ -981,20 +982,20 @@ public class HuaweiSupportProvider {
                 public void call() {
                     gbDevice.setUpdateState(GBDevice.State.INITIALIZED, getContext());
 
-                    if (getHuaweiCoordinator().supportsP2PService()) {
-                        if (getHuaweiCoordinator().supportsCalendar()) {
+                    if (getDeviceState().supportsP2PService()) {
+                        if (getDeviceState().supportsCalendar()) {
                             if (HuaweiP2PCalendarService.getRegisteredInstance(huaweiP2PManager) == null) {
                                 HuaweiP2PCalendarService calendarService = new HuaweiP2PCalendarService(huaweiP2PManager);
                                 calendarService.register();
                             }
                         }
-                        if (getHuaweiCoordinator().supportsTrack()) {
+                        if (getDeviceState().supportsTrack()) {
                             if (HuaweiP2PTrackService.getRegisteredInstance(huaweiP2PManager) == null) {
                                 HuaweiP2PTrackService trackService = new HuaweiP2PTrackService(huaweiP2PManager);
                                 trackService.register();
                             }
                         }
-                        if (getHuaweiCoordinator().supportsCannedReplies()) {
+                        if (getDeviceState().supportsCannedReplies()) {
                             if (HuaweiP2PCannedRepliesService.getRegisteredInstance(huaweiP2PManager) == null) {
                                 HuaweiP2PCannedRepliesService cannedRepliesService = new HuaweiP2PCannedRepliesService(huaweiP2PManager);
                                 cannedRepliesService.register();
@@ -1004,13 +1005,13 @@ public class HuaweiSupportProvider {
                             HuaweiP2PDataDictionarySyncService trackService = new HuaweiP2PDataDictionarySyncService(huaweiP2PManager);
                             trackService.register();
                         }
-                        if (getHuaweiCoordinator().supportsNotificationsAddIconTimestamp()) {
+                        if (getDeviceState().supportsNotificationsAddIconTimestamp()) {
                             if (HuaweiP2PAppIcon.getRegisteredInstance(huaweiP2PManager) == null) {
                                 HuaweiP2PAppIcon appIconService = new HuaweiP2PAppIcon(huaweiP2PManager);
                                 appIconService.register();
                             }
                         }
-                        if (getHuaweiCoordinator().supportsContactsSync()) {
+                        if (getDeviceState().supportsContactsSync()) {
                             if (HuaweiP2PContactsService.getRegisteredInstance(huaweiP2PManager) == null) {
                                 HuaweiP2PContactsService contactsService = new HuaweiP2PContactsService(huaweiP2PManager);
                                 contactsService.register();
@@ -1078,14 +1079,14 @@ public class HuaweiSupportProvider {
     }
 
     private void getAlarms() {
-        if (!getHuaweiCoordinator().supportsChangingAlarm())
+        if (!getDeviceState().supportsChangingAlarm())
             return;
 
         GetEventAlarmList getEventAlarmList = new GetEventAlarmList(this);
         getEventAlarmList.setFinalizeReq(new RequestCallback() {
             @Override
             public void call() {
-                if (!getHuaweiCoordinator().supportsSmartAlarm(getDevice()))
+                if (!getDeviceState().supportsSmartAlarm(getDevice()))
                     return; // Don't get smart alarms when not supported
 
                 GetSmartAlarmList getSmartAlarmList = new GetSmartAlarmList(HuaweiSupportProvider.this);
@@ -1621,7 +1622,7 @@ public class HuaweiSupportProvider {
         if (P2PSyncService == null) {
             return;
         }
-        Map<Integer, HuaweiDictionarySyncInterface> sup = P2PSyncService.getAllSupported(this.getHuaweiCoordinator());
+        Map<Integer, HuaweiDictionarySyncInterface> sup = P2PSyncService.getAllSupported(this.getDeviceState());
         if (sup.isEmpty()) {
             return;
         }
@@ -1808,7 +1809,7 @@ public class HuaweiSupportProvider {
     }
 
     public void onSetAlarms(ArrayList<? extends nodomain.freeyourgadget.gadgetbridge.model.Alarm> alarms) {
-        boolean smartAlarmEnabled = getHuaweiCoordinator().supportsSmartAlarm(getDevice());
+        boolean smartAlarmEnabled = getDeviceState().supportsSmartAlarm(getDevice());
 
         AlarmsRequest smartAlarmReq = new AlarmsRequest(this, true);
         AlarmsRequest eventAlarmReq = new AlarmsRequest(this, false);
@@ -1830,7 +1831,7 @@ public class HuaweiSupportProvider {
     }
 
     public void onSetCallState(CallSpec callSpec) {
-        if (callSpec.command == CallSpec.CALL_INCOMING || (callSpec.command == CallSpec.CALL_OUTGOING && getHuaweiCoordinator().supportsOutgoingCall())) {
+        if (callSpec.command == CallSpec.CALL_INCOMING || (callSpec.command == CallSpec.CALL_OUTGOING && getDeviceState().supportsOutgoingCall())) {
             SendNotificationRequest sendNotificationReq = new SendNotificationRequest(this);
             try {
                 sendNotificationReq.buildNotificationTLVFromCallSpec(callSpec);
@@ -1841,7 +1842,7 @@ public class HuaweiSupportProvider {
         } else if (
                 callSpec.command == CallSpec.CALL_ACCEPT ||
                         callSpec.command == CallSpec.CALL_START) {
-            byte type = getHuaweiCoordinator().supportsNotificationsStartCall() ? Notifications.NotificationType.startCall : Notifications.NotificationType.stopNotification;
+            byte type = getDeviceState().supportsNotificationsStartCall() ? Notifications.NotificationType.startCall : Notifications.NotificationType.stopNotification;
             StopNotificationRequest stopNotificationRequest = new StopNotificationRequest(this, type);
             try {
                 stopNotificationRequest.doPerform();
@@ -2098,7 +2099,7 @@ public class HuaweiSupportProvider {
                     packet.trainingPoints,
                     packet.longestStreak,
                     packet.tripped,
-                    getHuaweiCoordinator().isSupportsWorkoutNewSteps()
+                    getDeviceState().isSupportsWorkoutNewSteps()
             );
 
             db.getDaoSession().getHuaweiWorkoutSummarySampleDao().insertOrReplace(summarySample);
@@ -2914,17 +2915,17 @@ public class HuaweiSupportProvider {
     }
 
     public void onSetContacts(ArrayList<? extends Contact> contacts) {
-        if (getHuaweiCoordinator().supportsContactsSync()) {
+        if (getDeviceState().supportsContactsSync()) {
             HuaweiP2PContactsService P2PContactsService = HuaweiP2PContactsService.getRegisteredInstance(huaweiP2PManager);
 
             if (P2PContactsService != null) {
                 P2PContactsService.startSync();
             }
-        } else if (getHuaweiCoordinator().supportsContacts()) {
+        } else if (getDeviceState().supportsContacts()) {
             SendSetContactsRequest sendSetContactsRequest = new SendSetContactsRequest(
                     this,
                     contacts,
-                    this.getHuaweiCoordinator().getContactsSlotCount(getDevice())
+                    this.getDeviceState().getContactsSlotCount(getDevice())
             );
             try {
                 sendSetContactsRequest.doPerform();
@@ -3002,8 +3003,8 @@ public class HuaweiSupportProvider {
     }
 
     private boolean downloadDictTrueSleepData(int start, int end) {
-        LOG.info("supportsDictSleepSync: {}", getHuaweiCoordinator().supportsDictSleepSync());
-        if (!getHuaweiCoordinator().supportsDictSleepSync()) {
+        LOG.info("supportsDictSleepSync: {}", getDeviceState().supportsDictSleepSync());
+        if (!getDeviceState().supportsDictSleepSync()) {
             return false;
         }
         huaweiFileDownloadManager.addToQueue(HuaweiFileDownloadManager.FileRequest.sequenceDataFileRequest(
@@ -3075,7 +3076,7 @@ public class HuaweiSupportProvider {
                                 sleepStat.setSleepVersion(sleepDataSummary.sleepVersion);
                                 sleepStatsSamples.add(sleepStat);
 
-                                long time = HuaweiTrueSleepSequenceDataParser.getTime(sleepDataSummary.fallAsleepTime, sleepDataSummary.bedTime, sleepDataSummary.validData, getHuaweiCoordinator().supportsBedTime());
+                                long time = HuaweiTrueSleepSequenceDataParser.getTime(sleepDataSummary.fallAsleepTime, sleepDataSummary.bedTime, sleepDataSummary.validData, getDeviceState().supportsBedTime());
                                 LOG.info("SLEEP Time: {}", time);
                                 List<HuaweiTrueSleepSequenceDataParser.SleepStage> stages = HuaweiTrueSleepSequenceDataParser.parseSleepDetails(sd.getDetails(), time);
                                 LOG.info("SLEEP Stages: {}", stages);
@@ -3112,7 +3113,7 @@ public class HuaweiSupportProvider {
 
     public boolean downloadTruSleepData(int start, int end) {
         // We only get the data if TruSleep is supported
-        if (!getHuaweiCoordinator().supportsTruSleep())
+        if (!getDeviceState().supportsTruSleep())
             return false;
 
         if (downloadDictTrueSleepData(start, end))
@@ -3148,13 +3149,13 @@ public class HuaweiSupportProvider {
         };
 
         huaweiFileDownloadManager.addToQueue(HuaweiFileDownloadManager.FileRequest.sleepStateFileRequest(
-                getHuaweiCoordinator().getSupportsTruSleepNewSync(),
+                getDeviceState().getSupportsTruSleepNewSync(),
                 start,
                 end,
                 callback
         ), true);
         huaweiFileDownloadManager.addToQueue(HuaweiFileDownloadManager.FileRequest.sleepDataFileRequest(
-                getHuaweiCoordinator().getSupportsTruSleepNewSync(),
+                getDeviceState().getSupportsTruSleepNewSync(),
                 start,
                 end,
                 callback
@@ -3163,13 +3164,13 @@ public class HuaweiSupportProvider {
     }
 
     public boolean downloadStressData(int start, int end) {
-        if (!getHuaweiCoordinator().supportsAutoStress())
+        if (!getDeviceState().supportsAutoStress())
             return false;
 
         syncState.setStressSync(true);
 
         huaweiFileDownloadManager.addToQueue(HuaweiFileDownloadManager.FileRequest.rriFileRequest(
-                getHuaweiCoordinator().getSupportsRriNewSync(),
+                getDeviceState().getSupportsRriNewSync(),
                 start,
                 end,
                 new HuaweiFileDownloadManager.FileDownloadCallback() {
@@ -3208,7 +3209,7 @@ public class HuaweiSupportProvider {
     }
 
     public boolean downloadEcgData(int start, int end) {
-        if (!getHuaweiCoordinator().supportsECG())
+        if (!getDeviceState().supportsECG())
             return false;
 
         syncState.setEcgSync(true);
@@ -3274,7 +3275,7 @@ public class HuaweiSupportProvider {
     }
 
     public void downloadWorkoutPdrFiles(short workoutId, Long databaseId) {
-        if(!getHuaweiCoordinator().isSupportsGpsNewSync())
+        if(!getDeviceState().isSupportsGpsNewSync())
             return;
         huaweiFileDownloadManager.addToQueue(HuaweiFileDownloadManager.FileRequest.workoutPdrFileRequest(
                 workoutId,
@@ -3306,7 +3307,7 @@ public class HuaweiSupportProvider {
         syncState.startWorkoutGpsDownload();
 
         huaweiFileDownloadManager.addToQueue(HuaweiFileDownloadManager.FileRequest.workoutGpsFileRequest(
-                getHuaweiCoordinator().isSupportsGpsNewSync(),
+                getDeviceState().isSupportsGpsNewSync(),
                 workoutId,
                 databaseId,
                 new HuaweiFileDownloadManager.FileDownloadCallback() {

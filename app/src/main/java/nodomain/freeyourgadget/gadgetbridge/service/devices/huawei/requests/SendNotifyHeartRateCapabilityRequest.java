@@ -37,7 +37,7 @@ public class SendNotifyHeartRateCapabilityRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsWorkoutsTrustHeartRate();
+        return supportProvider.getDeviceState().supportsWorkoutsTrustHeartRate();
     }
 
     @Override

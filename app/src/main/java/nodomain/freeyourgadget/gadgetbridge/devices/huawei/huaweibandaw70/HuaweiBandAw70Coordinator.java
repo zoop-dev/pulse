@@ -25,14 +25,8 @@ import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiLECoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 
 public class HuaweiBandAw70Coordinator extends HuaweiLECoordinator {
-    @Override
-    public DeviceType getDeviceType() {
-        return DeviceType.HUAWEIBANDAW70;
-    }
-
     @Override
     protected Pattern getSupportedDeviceName() {
         return Pattern.compile("(" + HuaweiConstants.HU_BAND3E_NAME + "|" + HuaweiConstants.HU_BAND4E_NAME + ").*", Pattern.CASE_INSENSITIVE);

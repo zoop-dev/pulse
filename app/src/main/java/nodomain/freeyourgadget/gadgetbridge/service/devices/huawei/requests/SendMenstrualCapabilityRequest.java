@@ -37,7 +37,7 @@ public class SendMenstrualCapabilityRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsMenstrual();
+        return supportProvider.getDeviceState().supportsMenstrual();
     }
 
     @Override

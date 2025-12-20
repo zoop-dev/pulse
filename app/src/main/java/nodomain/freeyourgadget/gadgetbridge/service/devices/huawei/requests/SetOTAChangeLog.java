@@ -36,15 +36,15 @@ public class SetOTAChangeLog extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsOTAChangelog() &&
-                supportProvider.getHuaweiCoordinator().getOtaSoftwareVersion() != null;
+        return supportProvider.getDeviceState().supportsOTAChangelog() &&
+                supportProvider.getDeviceState().getOtaSoftwareVersion() != null;
     }
 
     @Override
     protected List<byte[]> createRequest() throws RequestCreationException {
         try {
             // TODO: currently send empty. Send real changelog. Research required.
-            return new OTA.SetChangeLog.Request(paramsProvider, supportProvider.getHuaweiCoordinator().getOtaSoftwareVersion(), (byte) 0).serialize();
+            return new OTA.SetChangeLog.Request(paramsProvider, supportProvider.getDeviceState().getOtaSoftwareVersion(), (byte) 0).serialize();
         } catch (HuaweiPacket.CryptoException e) {
             throw new RequestCreationException(e);
         }

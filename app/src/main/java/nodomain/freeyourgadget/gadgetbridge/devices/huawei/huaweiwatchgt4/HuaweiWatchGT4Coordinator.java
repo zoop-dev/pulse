@@ -24,19 +24,8 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiBRCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 
 public class HuaweiWatchGT4Coordinator extends HuaweiBRCoordinator {
-    public HuaweiWatchGT4Coordinator() {
-        super();
-        getHuaweiCoordinator().setTransactionCrypted(true);
-    }
-
-    @Override
-    public DeviceType getDeviceType() {
-        return DeviceType.HUAWEIWATCHGT4;
-    }
-
     @Override
     protected Pattern getSupportedDeviceName() {
         return Pattern.compile("(" + HuaweiConstants.HU_WATCHGT4_NAME + ").*", Pattern.CASE_INSENSITIVE);

@@ -34,7 +34,7 @@ public class SendOTASetStatus extends Request {
     @Override
     protected List<byte[]> createRequest() throws RequestCreationException {
         Byte useWifi = null;
-        if(supportProvider.getHuaweiCoordinator().supportsWiFiDirect()) {
+        if(supportProvider.getDeviceState().supportsWiFiDirect()) {
             useWifi = 0;  // NOTE: do not use wifi
         }
         try {

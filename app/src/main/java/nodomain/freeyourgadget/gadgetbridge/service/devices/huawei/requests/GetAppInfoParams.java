@@ -33,7 +33,7 @@ public class GetAppInfoParams extends Request{
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsAppParams();
+        return supportProvider.getDeviceState().supportsAppParams();
     }
 
     @Override
@@ -51,6 +51,6 @@ public class GetAppInfoParams extends Request{
             throw new ResponseTypeMismatchException(receivedPacket, App.AppInfoParams.Response.class);
 
         App.AppInfoParams.Response resp = (App.AppInfoParams.Response)(receivedPacket);
-        supportProvider.getHuaweiCoordinator().setAppDeviceParams(resp.params);
+        supportProvider.getDeviceState().setAppDeviceParams(resp.params);
     }
 }

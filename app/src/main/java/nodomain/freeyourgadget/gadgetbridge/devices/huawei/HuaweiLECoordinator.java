@@ -54,15 +54,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiLESuppo
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiWorkoutGbParser;
 
 public abstract class HuaweiLECoordinator extends AbstractBLEDeviceCoordinator implements HuaweiCoordinatorSupplier {
-
-    private final HuaweiCoordinator huaweiCoordinator = new HuaweiCoordinator(this);
-    private GBDevice device;
-
-    @Override
-    public HuaweiCoordinator getHuaweiCoordinator() {
-        return huaweiCoordinator;
-    }
-
     @NonNull
     @Override
     public Collection<? extends ScanFilter> createBLEScanFilters() {
@@ -78,7 +69,7 @@ public abstract class HuaweiLECoordinator extends AbstractBLEDeviceCoordinator i
 
     @Override
     public String[] getSupportedLanguageSettings(GBDevice device) {
-        return huaweiCoordinator.getSupportedLanguageSettings(device);
+        return HuaweiDeviceStateManager.get(device).getSupportedLanguageSettings(device);
     }
 
     @Override
@@ -96,7 +87,7 @@ public abstract class HuaweiLECoordinator extends AbstractBLEDeviceCoordinator i
 
     @Override
     protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-        huaweiCoordinator.deleteDevice(gbDevice, device, session);
+        HuaweiDeviceStateManager.get(gbDevice).deleteDevice(gbDevice, device, session);
     }
 
     @Override
@@ -106,7 +97,7 @@ public abstract class HuaweiLECoordinator extends AbstractBLEDeviceCoordinator i
 
     @Override
     public boolean supportsSmartWakeup(@NonNull GBDevice device, int position) {
-        return huaweiCoordinator.supportsSmartAlarm(device, position);
+        return HuaweiDeviceStateManager.get(device).supportsSmartAlarm(device, position);
     }
 
     @Override
@@ -116,7 +107,7 @@ public abstract class HuaweiLECoordinator extends AbstractBLEDeviceCoordinator i
 
     @Override
     public boolean forcedSmartWakeup(GBDevice device, int alarmPosition) {
-        return huaweiCoordinator.forcedSmartWakeup(device, alarmPosition);
+        return HuaweiDeviceStateManager.get(device).forcedSmartWakeup(device, alarmPosition);
     }
 
     @Override
@@ -126,21 +117,21 @@ public abstract class HuaweiLECoordinator extends AbstractBLEDeviceCoordinator i
 
     @Override
     public boolean supportsWeather(@NonNull final GBDevice device) {
-        return huaweiCoordinator.supportsWeather();
+        return HuaweiDeviceStateManager.get(device).supportsWeather();
     }
 
     @Override
     public Class<? extends Activity> getAppsManagementActivity(final GBDevice device) {
-        return huaweiCoordinator.getAppManagerActivity();
+        return HuaweiDeviceStateManager.get(device).getAppManagerActivity();
     }
 
     @Override
     public boolean supportsAppListFetching(@NonNull final GBDevice device) {
-        return huaweiCoordinator.getSupportsAppListFetching();
+        return HuaweiDeviceStateManager.get(device).getSupportsAppListFetching();
     }
     @Override
     public boolean supportsAppsManagement(@NonNull GBDevice device) {
-        return huaweiCoordinator.getSupportsAppsManagement(device);
+        return HuaweiDeviceStateManager.get(device).getSupportsAppsManagement(device);
     }
 
     @Override
@@ -150,37 +141,37 @@ public abstract class HuaweiLECoordinator extends AbstractBLEDeviceCoordinator i
 
     @Override
     public boolean supportsInstalledAppManagement(@NonNull GBDevice device) {
-        return huaweiCoordinator.getSupportsInstalledAppManagement(device);
+        return HuaweiDeviceStateManager.get(device).getSupportsInstalledAppManagement(device);
     }
 
     @Override
     public boolean supportsCachedAppManagement(@NonNull GBDevice device) {
-        return huaweiCoordinator.getSupportsCachedAppManagement(device);
+        return HuaweiDeviceStateManager.get(device).getSupportsCachedAppManagement(device);
     }
 
     @Override
     public boolean supportsFlashing(@NonNull GBDevice device) {
-        return huaweiCoordinator.getSupportsFlashing();
+        return HuaweiDeviceStateManager.get(device).getSupportsFlashing();
     }
 
     @Override
     public int getAlarmSlotCount(GBDevice device) {
-        return huaweiCoordinator.getAlarmSlotCount(device);
+        return HuaweiDeviceStateManager.get(device).getAlarmSlotCount(device);
     }
 
     @Override
     public int getContactsSlotCount(GBDevice device) {
-        return huaweiCoordinator.getContactsSlotCount(device);
+        return HuaweiDeviceStateManager.get(device).getContactsSlotCount(device);
     }
 
     @Override
     public int getCannedRepliesSlotCount(GBDevice device) {
-        return huaweiCoordinator.getCannedRepliesSlotCount(device);
+        return HuaweiDeviceStateManager.get(device).getCannedRepliesSlotCount(device);
     }
 
     @Override
     public boolean supportsCalendarEvents(@NonNull final GBDevice device) {
-        return huaweiCoordinator.supportsCalendarEvents();
+        return HuaweiDeviceStateManager.get(device).supportsCalendarEvents();
     }
 
     @Override
@@ -205,54 +196,55 @@ public abstract class HuaweiLECoordinator extends AbstractBLEDeviceCoordinator i
 
     @Override
     public boolean supportsHeartRateMeasurement(@NonNull GBDevice device) {
-        return huaweiCoordinator.supportsHeartRate(device);
+        return HuaweiDeviceStateManager.get(device).supportsHeartRate(device);
     }
 
     @Override
     public boolean supportsSpo2(@NonNull GBDevice device) {
-        return huaweiCoordinator.supportsSPo2(device);
+        return HuaweiDeviceStateManager.get(device).supportsSPo2(device);
     }
 
     @Override
     public boolean supportsMusicInfo(@NonNull GBDevice device) {
-        return huaweiCoordinator.supportsMusic();
+        return HuaweiDeviceStateManager.get(device).supportsMusic();
     }
 
     @Override
     public boolean supportsTemperatureMeasurement(@NonNull final GBDevice device) {
-        return huaweiCoordinator.supportsTemperature();
+        return HuaweiDeviceStateManager.get(device).supportsTemperature();
     }
 
     @Override
     public boolean supportsContinuousTemperature(@NonNull final GBDevice device) {
-        return huaweiCoordinator.supportsTemperature();
+        return HuaweiDeviceStateManager.get(device).supportsTemperature();
     }
 
     @Override
     public boolean supportsStressMeasurement(@NonNull GBDevice device) {
-        return huaweiCoordinator.supportsAutoStress();
+        return HuaweiDeviceStateManager.get(device).supportsAutoStress();
     }
 
     @Override
     public boolean supportsFindDevice(@NonNull GBDevice device) {
-        return huaweiCoordinator.supportsFindDeviceAbility();
+        return HuaweiDeviceStateManager.get(device).supportsFindDeviceAbility();
     }
 
     @Override
-    public boolean supportsRemSleep(@NonNull GBDevice device) {return huaweiCoordinator.getSupportsNewTrueSleep(device);}
+    public boolean supportsRemSleep(@NonNull GBDevice device) {return HuaweiDeviceStateManager.get(device).getSupportsNewTrueSleep(device);}
 
     @Override
-    public boolean supportsAwakeSleep(@NonNull GBDevice device) {return huaweiCoordinator.getSupportsNewTrueSleep(device);}
+    public boolean supportsAwakeSleep(@NonNull GBDevice device) {return HuaweiDeviceStateManager.get(device).getSupportsNewTrueSleep(device);}
 
     @Override
-    public boolean supportsSleepScore(@NonNull final GBDevice device) { return huaweiCoordinator.getSupportsNewTrueSleep(device); }
+    public boolean supportsSleepScore(@NonNull final GBDevice device) { return HuaweiDeviceStateManager.get(device).getSupportsNewTrueSleep(device); }
 
     @Override
-    public boolean supportsHrvMeasurement(@NonNull GBDevice device) { return  huaweiCoordinator.supportsHRV();}
+    public boolean supportsHrvMeasurement(@NonNull GBDevice device) { return  HuaweiDeviceStateManager.get(device).supportsHRV();}
 
     @Override
     public InstallHandler findInstallHandler(Uri uri, Context context) {
-        return huaweiCoordinator.getInstallHandler(uri, context);
+        HuaweiInstallHandler handler = new HuaweiInstallHandler(uri, context);
+        return handler.isValid() ? handler : null;
     }
 
     @Override
@@ -297,7 +289,11 @@ public abstract class HuaweiLECoordinator extends AbstractBLEDeviceCoordinator i
 
     @Override
     public int[] getStressRanges() {
-        return huaweiCoordinator.getStressRanges();
+        // 1-29 = relaxed
+        // 30-59 = mild
+        // 60-79 = moderate
+        // 80-100 = high
+        return new int[]{1, 30, 60, 80};
     }
 
     @Override
@@ -307,27 +303,18 @@ public abstract class HuaweiLECoordinator extends AbstractBLEDeviceCoordinator i
 
     @Override
     public int[] getStressChartParameters() {
-        return huaweiCoordinator.getStressChartParameters();
+        // For Huawei devices stress data is provided every 30 minutes. So draw it as bars with delta
+        return new int[]{1800, 1800, 400};
     }
 
     @Override
     public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
-        return huaweiCoordinator.getDeviceSpecificSettings(device);
+        return HuaweiDeviceStateManager.get(device).getDeviceSpecificSettings(device);
     }
 
     @Override
     public HuaweiDeviceType getHuaweiType() {
         return HuaweiDeviceType.BLE;
-    }
-
-    @Override
-    public void setDevice(GBDevice device) {
-        this.device = device;
-    }
-
-    @Override
-    public GBDevice getDevice() {
-        return this.device;
     }
 
     @NonNull
@@ -342,11 +329,11 @@ public abstract class HuaweiLECoordinator extends AbstractBLEDeviceCoordinator i
     }
 
     public HeartRateZonesSpec getHeartRateZonesSpec(@NonNull GBDevice device) {
-        return huaweiCoordinator.getHeartRateZonesSpec(device);
+        return HuaweiDeviceStateManager.get(device).getHeartRateZonesSpec(device);
     }
 
     @Override
     public boolean supportsNavigation(@NonNull GBDevice device) {
-        return huaweiCoordinator.supportsNavigation(device);
+        return HuaweiDeviceStateManager.get(device).supportsNavigation(device);
     }
 }

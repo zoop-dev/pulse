@@ -65,8 +65,8 @@ public class SendNotificationRequest extends Request {
             title = notificationSpec.sourceName;
 
         String body = notificationSpec.body;
-        if (body != null && body.length() > supportProvider.getHuaweiCoordinator().getContentLength()) {
-            body = notificationSpec.body.substring(0x0, supportProvider.getHuaweiCoordinator().getContentLength() - 0xD);
+        if (body != null && body.length() > supportProvider.getDeviceState().getContentLength()) {
+            body = notificationSpec.body.substring(0x0, supportProvider.getDeviceState().getContentLength() - 0xD);
             body += "...";
         }
 
@@ -85,11 +85,11 @@ public class SendNotificationRequest extends Request {
 
         Notifications.NotificationActionRequest.AdditionalParams params = new Notifications.NotificationActionRequest.AdditionalParams();
 
-        params.supportsReply = supportProvider.getHuaweiCoordinator().supportsNotificationsReply();
-        params.supportsRepeatedNotify = supportProvider.getHuaweiCoordinator().supportsNotificationsRepeatedNotify();
-        params.supportsRemoveSingle = supportProvider.getHuaweiCoordinator().supportsNotificationsRemoveSingle();
-        params.supportsReplyActions = supportProvider.getHuaweiCoordinator().supportsNotificationsReplyActions();
-        params.supportsTimestamp = supportProvider.getHuaweiCoordinator().supportsNotificationsAddIconTimestamp();
+        params.supportsReply = supportProvider.getDeviceState().supportsNotificationsReply();
+        params.supportsRepeatedNotify = supportProvider.getDeviceState().supportsNotificationsRepeatedNotify();
+        params.supportsRemoveSingle = supportProvider.getDeviceState().supportsNotificationsRemoveSingle();
+        params.supportsReplyActions = supportProvider.getDeviceState().supportsNotificationsReplyActions();
+        params.supportsTimestamp = supportProvider.getDeviceState().supportsNotificationsAddIconTimestamp();
 
         params.notificationId = notificationSpec.getId();
         params.notificationKey = getNotificationKey(notificationSpec);
@@ -102,7 +102,7 @@ public class SendNotificationRequest extends Request {
         boolean pictureEnabled = GBApplication
                 .getDeviceSpecificSharedPrefs(supportProvider.getDevice().getAddress())
                 .getBoolean(DeviceSettingsPreferenceConst.PREF_NOTIFICATION_PICTURES_ENABLE, true);
-        if(supportProvider.getHuaweiCoordinator().supportsNotificationPicture() && !TextUtils.isEmpty(notificationSpec.picturePath) && pictureEnabled) {
+        if(supportProvider.getDeviceState().supportsNotificationPicture() && !TextUtils.isEmpty(notificationSpec.picturePath) && pictureEnabled) {
             params.pictureName = supportProvider.getHuaweiDataSyncNotificationPictures().getNameForPath(notificationSpec.picturePath);
         }
 
@@ -110,19 +110,19 @@ public class SendNotificationRequest extends Request {
         content.add(
                 new Notifications.NotificationActionRequest.TextElement(
                         (byte)Notifications.TextType.title,
-                        (byte)supportProvider.getHuaweiCoordinator().getContentFormat(),
+                        (byte)supportProvider.getDeviceState().getContentFormat(),
                         title)
         );
         content.add(
                 new Notifications.NotificationActionRequest.TextElement(
                         (byte) Notifications.TextType.sender,
-                        (byte)supportProvider.getHuaweiCoordinator().getContentFormat(),
+                        (byte)supportProvider.getDeviceState().getContentFormat(),
                         notificationSpec.sender)
         );
         content.add(
                 new Notifications.NotificationActionRequest.TextElement(
                         (byte) Notifications.TextType.text,
-                        (byte)supportProvider.getHuaweiCoordinator().getContentFormat(),
+                        (byte)supportProvider.getDeviceState().getContentFormat(),
                         body)
         );
 
@@ -146,7 +146,7 @@ public class SendNotificationRequest extends Request {
         content.add(
                 new Notifications.NotificationActionRequest.TextElement(
                         (byte) Notifications.TextType.text,
-                        (byte)supportProvider.getHuaweiCoordinator().getContentFormat(),
+                        (byte)supportProvider.getDeviceState().getContentFormat(),
                         callSpec.name)
         );
 
@@ -154,54 +154,54 @@ public class SendNotificationRequest extends Request {
             sourceAppId = callSpec.sourceAppId;
             params = new Notifications.NotificationActionRequest.AdditionalParams();
 
-            params.supportsReply = supportProvider.getHuaweiCoordinator().supportsNotificationsReply();
-            params.supportsRepeatedNotify = supportProvider.getHuaweiCoordinator().supportsNotificationsRepeatedNotify();
-            params.supportsRemoveSingle = supportProvider.getHuaweiCoordinator().supportsNotificationsRemoveSingle();
-            params.supportsReplyActions = supportProvider.getHuaweiCoordinator().supportsNotificationsReplyActions();
-            params.supportsTimestamp = supportProvider.getHuaweiCoordinator().supportsNotificationsAddIconTimestamp();
+            params.supportsReply = supportProvider.getDeviceState().supportsNotificationsReply();
+            params.supportsRepeatedNotify = supportProvider.getDeviceState().supportsNotificationsRepeatedNotify();
+            params.supportsRemoveSingle = supportProvider.getDeviceState().supportsNotificationsRemoveSingle();
+            params.supportsReplyActions = supportProvider.getDeviceState().supportsNotificationsReplyActions();
+            params.supportsTimestamp = supportProvider.getDeviceState().supportsNotificationsAddIconTimestamp();
 
             params.notificationId = new Random().nextInt(Integer.MAX_VALUE - 1);
             params.notificationKey = getCallSpecKey(callSpec, params.notificationId);
             params.channelId = callSpec.channelId;
-            if(supportProvider.getHuaweiCoordinator().supportsVoipType3()) {
+            if(supportProvider.getDeviceState().supportsVoipType3()) {
                 params.category = "imcall";
             } else {
                 params.category = callSpec.category;
             }
             params.address = null;
-            if(supportProvider.getHuaweiCoordinator().supportsVoipType2()) {
+            if(supportProvider.getDeviceState().supportsVoipType2()) {
                 params.voipType = 1;
             }
-            if (supportProvider.getHuaweiCoordinator().supportsVoipType1() || supportProvider.getHuaweiCoordinator().supportsVoipType2()) {
+            if (supportProvider.getDeviceState().supportsVoipType1() || supportProvider.getDeviceState().supportsVoipType2()) {
                 notificationType = Notifications.NotificationType.generic;
 
                 content.add(
                         new Notifications.NotificationActionRequest.TextElement(
                                 (byte) Notifications.TextType.title,
-                                (byte) supportProvider.getHuaweiCoordinator().getContentFormat(),
+                                (byte) supportProvider.getDeviceState().getContentFormat(),
                                 callSpec.name)
                 );
                 content.add(
                         new Notifications.NotificationActionRequest.TextElement(
                                 (byte) Notifications.TextType.sender,
-                                (byte) supportProvider.getHuaweiCoordinator().getContentFormat(),
+                                (byte) supportProvider.getDeviceState().getContentFormat(),
                                 callSpec.name)
                 );
 // TODO: Reject action, need to be parsed from the notification and added here. Then the watch send it back in the service id: 0x2  Command id: 0x11
 //                content.add(
 //                        new Notifications.NotificationActionRequest.TextElement(
 //                                (byte) 8,
-//                                (byte) supportProvider.getHuaweiCoordinator().getContentFormat(),
+//                                (byte) supportProvider.getDeviceState().getContentFormat(),
 //                                "REJECT_CALL")
 //                );
             }
         }
 
-        if(supportProvider.getHuaweiCoordinator().supportsIncomingNumber()) {
+        if(supportProvider.getDeviceState().supportsIncomingNumber()) {
             content.add(
                     new Notifications.NotificationActionRequest.TextElement(
                             (byte) Notifications.TextType.flight,
-                            (byte) supportProvider.getHuaweiCoordinator().getIncomingNumberFormat(),
+                            (byte) supportProvider.getDeviceState().getIncomingNumberFormat(),
                             callSpec.number)
             );
         }

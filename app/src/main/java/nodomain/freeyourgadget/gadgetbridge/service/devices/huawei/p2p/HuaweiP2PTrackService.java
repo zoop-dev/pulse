@@ -29,7 +29,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZones;
 import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZonesConfig;
 import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZonesSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiP2PManager;
-import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class HuaweiP2PTrackService extends HuaweiBaseP2PService {
     private final Logger LOG = LoggerFactory.getLogger(HuaweiP2PTrackService.class);
@@ -89,7 +88,7 @@ public class HuaweiP2PTrackService extends HuaweiBaseP2PService {
 
     public byte[] getHRZonesData() {
 
-        HuaweiHeartRateZonesSpec spec = new HuaweiHeartRateZonesSpec(manager.getSupportProvider().getDevice(), manager.getSupportProvider().getHuaweiCoordinator());
+        HuaweiHeartRateZonesSpec spec = new HuaweiHeartRateZonesSpec(manager.getSupportProvider().getDevice(), manager.getSupportProvider().getDeviceState());
         List<HeartRateZonesConfig> zones = spec.getDeviceConfig();
         HeartRateZonesConfig uprightConfig = HuaweiHeartRateZonesSpec.getByPosture(zones, HeartRateZonesSpec.PostureType.UPRIGHT);
         HeartRateZonesConfig sittingConfig = HuaweiHeartRateZonesSpec.getByPosture(zones, HeartRateZonesSpec.PostureType.SITTING);

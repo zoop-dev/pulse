@@ -43,7 +43,7 @@ public class SetLanguageSettingRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsLanguageSetting();
+        return supportProvider.getDeviceState().supportsLanguageSetting();
     }
 
     @Override

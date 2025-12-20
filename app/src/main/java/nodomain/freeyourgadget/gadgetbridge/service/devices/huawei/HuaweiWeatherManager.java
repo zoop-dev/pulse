@@ -209,7 +209,7 @@ public class HuaweiWeatherManager {
 
     public void sendWeather(WeatherSpec weatherSpec) {
         // Initialize weather settings and send weather
-        if (!supportProvider.getHuaweiCoordinator().supportsWeather()) {
+        if (!supportProvider.getDeviceState().supportsWeather()) {
             LOG.error("onSendWeather called while weather is not supported.");
             return;
         }
@@ -226,15 +226,15 @@ public class HuaweiWeatherManager {
         fixupWeather(weatherSpec);
 
         Weather.Settings weatherSettings = new Weather.Settings();
-        weatherSettings.uvIndexSupported = supportProvider.getHuaweiCoordinator().supportsWeatherUvIndex();
-        weatherSettings.extendedHourlyForecast = supportProvider.getHuaweiCoordinator().supportsWeatherExtendedHourForecast();
+        weatherSettings.uvIndexSupported = supportProvider.getDeviceState().supportsWeatherUvIndex();
+        weatherSettings.extendedHourlyForecast = supportProvider.getDeviceState().supportsWeatherExtendedHourForecast();
 
         SendWeatherStartRequest weatherStartRequest = new SendWeatherStartRequest(supportProvider, weatherSettings);
         weatherStartRequest.setFinalizeReq(errorHandler);
         weatherStartRequest.setupTimeoutUntilNext(1000);
         Request lastRequest = weatherStartRequest;
 
-        if (supportProvider.getHuaweiCoordinator().supportsWeatherUnit()) {
+        if (supportProvider.getDeviceState().supportsWeatherUnit()) {
             SendWeatherUnitRequest weatherUnitRequest = new SendWeatherUnitRequest(supportProvider);
             weatherUnitRequest.setFinalizeReq(errorHandler);
             lastRequest.nextRequest(weatherUnitRequest);
@@ -246,14 +246,14 @@ public class HuaweiWeatherManager {
         lastRequest.nextRequest(weatherSupportRequest);
         lastRequest = weatherSupportRequest;
 
-        if (supportProvider.getHuaweiCoordinator().supportsWeatherExtended()) {
+        if (supportProvider.getDeviceState().supportsWeatherExtended()) {
             SendWeatherExtendedSupportRequest weatherExtendedSupportRequest = new SendWeatherExtendedSupportRequest(supportProvider, weatherSettings);
             weatherExtendedSupportRequest.setFinalizeReq(errorHandler);
             lastRequest.nextRequest(weatherExtendedSupportRequest);
             lastRequest = weatherExtendedSupportRequest;
         }
 
-        if (supportProvider.getHuaweiCoordinator().supportsWeatherMoonRiseSet()) {
+        if (supportProvider.getDeviceState().supportsWeatherMoonRiseSet()) {
             SendWeatherSunMoonSupportRequest weatherSunMoonSupportRequest = new SendWeatherSunMoonSupportRequest(supportProvider, weatherSettings);
             weatherSunMoonSupportRequest.setFinalizeReq(errorHandler);
             lastRequest.nextRequest(weatherSunMoonSupportRequest);
@@ -268,7 +268,7 @@ public class HuaweiWeatherManager {
         lastRequest = sendWeatherCurrentRequest;
 
 
-        if (supportProvider.getHuaweiCoordinator().supportsGpsAndTimeToDevice() &&
+        if (supportProvider.getDeviceState().supportsGpsAndTimeToDevice() &&
                 GBApplication.getDevicePrefs(supportProvider.getDevice()).getBoolean("pref_huawei_gps_and_time", true)) {
             Location location = new CurrentPosition().getLastKnownLocation();
             BigDecimal latitude = toBigDecimal(location.getLatitude());
@@ -285,7 +285,7 @@ public class HuaweiWeatherManager {
             }
         }
 
-        if (supportProvider.getHuaweiCoordinator().supportsWeatherForecasts()) {
+        if (supportProvider.getDeviceState().supportsWeatherForecasts()) {
             SendWeatherForecastRequest sendWeatherForecastRequest = new SendWeatherForecastRequest(supportProvider, weatherSettings, weatherSpec);
             sendWeatherForecastRequest.setFinalizeReq(errorHandler);
             lastRequest.nextRequest(sendWeatherForecastRequest);

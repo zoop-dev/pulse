@@ -36,7 +36,7 @@ public class GetExtendedMusicInfoParams extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsMusicUploading();
+        return supportProvider.getDeviceState().supportsMusicUploading();
     }
 
     @Override
@@ -55,6 +55,6 @@ public class GetExtendedMusicInfoParams extends Request {
             throw new Request.ResponseTypeMismatchException(receivedPacket, MusicControl.ExtendedMusicInfoParams.Response.class);
 
         MusicControl.ExtendedMusicInfoParams.Response resp = (MusicControl.ExtendedMusicInfoParams.Response)(receivedPacket);
-        supportProvider.getHuaweiCoordinator().setExtendedMusicInfoParams(resp.params);
+        supportProvider.getDeviceState().setExtendedMusicInfoParams(resp.params);
     }
 }

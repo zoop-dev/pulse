@@ -36,7 +36,7 @@ public class SendOTASetAutoUpdate extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsOTAAutoUpdate();
+        return supportProvider.getDeviceState().supportsOTAAutoUpdate();
     }
 
     @Override

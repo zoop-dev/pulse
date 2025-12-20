@@ -37,7 +37,7 @@ public class SendDeviceReportThreshold extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsDeviceReportThreshold();
+        return supportProvider.getDeviceState().supportsDeviceReportThreshold();
     }
 
     @Override

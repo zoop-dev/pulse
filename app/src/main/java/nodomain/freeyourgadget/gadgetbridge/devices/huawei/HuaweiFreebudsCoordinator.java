@@ -36,13 +36,6 @@ import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 public abstract class HuaweiFreebudsCoordinator extends AbstractBLClassicDeviceCoordinator implements HuaweiCoordinatorSupplier {
 
-    private final HuaweiCoordinator huaweiCoordinator = new HuaweiCoordinator(this);
-    private GBDevice gbDevice;
-
-    public HuaweiFreebudsCoordinator() {
-        huaweiCoordinator.setTransactionCrypted(false);
-    }
-
     @Override
     public String getManufacturer() {
         return "Huawei";
@@ -54,23 +47,13 @@ public abstract class HuaweiFreebudsCoordinator extends AbstractBLClassicDeviceC
     }
 
     @Override
-    public HuaweiCoordinator getHuaweiCoordinator() {
-        return huaweiCoordinator;
+    public boolean isTransactionCrypted() {
+        return false;
     }
 
     @Override
     public HuaweiDeviceType getHuaweiType() {
         return HuaweiDeviceType.BR;
-    }
-
-    @Override
-    public void setDevice(GBDevice gbDevice) {
-        this.gbDevice = gbDevice;
-    }
-
-    @Override
-    public GBDevice getDevice() {
-        return this.gbDevice;
     }
 
     @Override

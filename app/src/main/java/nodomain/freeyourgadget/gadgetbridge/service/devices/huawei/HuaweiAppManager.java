@@ -91,7 +91,7 @@ public class HuaweiAppManager {
     }
 
     public void requestAppList() {
-        if (!this.support.getHuaweiCoordinator().supportsAppParams())
+        if (!this.support.getDeviceState().supportsAppParams())
             return;
         try {
             GetAppNames getAppNames = new GetAppNames(support);

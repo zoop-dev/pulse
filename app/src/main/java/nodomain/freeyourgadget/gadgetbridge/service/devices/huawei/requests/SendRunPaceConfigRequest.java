@@ -37,7 +37,7 @@ public class SendRunPaceConfigRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsRunPaceConfig();
+        return supportProvider.getDeviceState().supportsRunPaceConfig();
     }
 
     @Override

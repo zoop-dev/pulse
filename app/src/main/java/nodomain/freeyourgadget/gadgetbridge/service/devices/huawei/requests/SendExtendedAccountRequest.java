@@ -39,7 +39,7 @@ public class SendExtendedAccountRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsAccountJudgment() && supportProvider.getHuaweiCoordinator().supportsAccountSwitch();
+        return supportProvider.getDeviceState().supportsAccountJudgment() && supportProvider.getDeviceState().supportsAccountSwitch();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class SendExtendedAccountRequest extends Request {
         try {
             return new AccountRelated.SendExtendedAccountToDevice.Request(
                     paramsProvider,
-                    supportProvider.getHuaweiCoordinator().supportsDiffAccountPairingOptimization(),
+                    supportProvider.getDeviceState().supportsDiffAccountPairingOptimization(),
                     account)
                     .serialize();
         } catch (CryptoException e) {

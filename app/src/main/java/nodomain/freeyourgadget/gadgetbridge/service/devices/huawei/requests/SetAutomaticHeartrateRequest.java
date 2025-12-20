@@ -50,7 +50,7 @@ public class SetAutomaticHeartrateRequest extends Request {
             LOG.info("Attempting to enable automatic heart rate");
         else
             LOG.info("Attempting to disable automatic heart rate");
-        if(realtimeHeartRateEnabled && this.supportProvider.getHuaweiCoordinator().supportsRealtimeHeartRate()) {
+        if(realtimeHeartRateEnabled && this.supportProvider.getDeviceState().supportsRealtimeHeartRate()) {
             try {
                 return new FitnessData.EnableRealtimeHeartRate.Request(paramsProvider, automaticHeartRateEnabled).serialize();
             } catch (HuaweiPacket.CryptoException e) {

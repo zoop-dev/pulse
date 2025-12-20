@@ -36,7 +36,7 @@ public class GetWorkoutCapability extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsWorkoutCapability();
+        return supportProvider.getDeviceState().supportsWorkoutCapability();
     }
 
     @Override
@@ -56,6 +56,6 @@ public class GetWorkoutCapability extends Request {
 
         LOG.info("Workout capability: NewSteps: {}", ((Workout.WorkoutCapability.Response) receivedPacket).supportNewStep);
 
-        supportProvider.getHuaweiCoordinator().setSupportsWorkoutNewSteps(((Workout.WorkoutCapability.Response) receivedPacket).supportNewStep);
+        supportProvider.getDeviceState().setSupportsWorkoutNewSteps(((Workout.WorkoutCapability.Response) receivedPacket).supportNewStep);
     }
 }

@@ -24,22 +24,16 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HonorBRCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 
 public class HonorWatch4Coordinator extends HonorBRCoordinator {
-    public HonorWatch4Coordinator() {
-        super();
-        getHuaweiCoordinator().setTransactionCrypted(false);
+    @Override
+    public boolean isTransactionCrypted() {
+        return false;
     }
 
     @Override
     public String getManufacturer() {
         return "Honor";
-    }
-
-    @Override
-    public DeviceType getDeviceType() {
-        return DeviceType.HONORWATCH4;
     }
 
     @Override

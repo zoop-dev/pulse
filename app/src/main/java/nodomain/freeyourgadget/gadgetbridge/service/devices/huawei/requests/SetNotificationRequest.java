@@ -38,7 +38,7 @@ public class SetNotificationRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsNotification();
+        return supportProvider.getDeviceState().supportsNotification();
     }
 
     @Override

@@ -97,7 +97,7 @@ public abstract class HuaweiBaseP2PService {
         sendP2PCommand((byte) 2, this.getModule(), this.getPackage(), this.getLocalFingerprint(), this.getFingerprint(), sendData, callback);
     }
     public void sendGetVersion(HuaweiP2PCallback callback) {
-        if(manager.getSupportProvider().getHuaweiCoordinator().supportsP2PGetAppVersion()) {
+        if(manager.getSupportProvider().getDeviceState().supportsP2PGetAppVersion()) {
             sendP2PCommand((byte) 4, this.getModule(), this.getPackage(), null, null, null, callback);
         } else {
             LOG.error("P2P Get App Version is not supported");

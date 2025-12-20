@@ -82,8 +82,6 @@ public class HuaweiFreebudsSupport extends HuaweiBRSupport implements HeadphoneH
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
         LOG.info("Huawei Freebuds init");
 
-        super.getSupportProvider().setup(getDevice(), getContext());
-
         builder.setDeviceState(GBDevice.State.INITIALIZING);
         try {
             builder.setCallback(this);

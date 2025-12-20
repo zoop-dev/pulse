@@ -25,17 +25,11 @@ import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiLECoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 
 public class HonorBand4Coordinator extends HuaweiLECoordinator {
     @Override
     public String getManufacturer() {
         return "Honor";
-    }
-
-    @Override
-    public DeviceType getDeviceType() {
-        return DeviceType.HONORBAND4;
     }
 
     @Override

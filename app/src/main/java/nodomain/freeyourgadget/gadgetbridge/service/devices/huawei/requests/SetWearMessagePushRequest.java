@@ -38,7 +38,7 @@ public class SetWearMessagePushRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsDoNotDisturb(supportProvider.getDevice()) && supportProvider.getHuaweiCoordinator().supportsWearMessagePush();
+        return supportProvider.getDeviceState().supportsDoNotDisturb(supportProvider.getDevice()) && supportProvider.getDeviceState().supportsWearMessagePush();
     }
 
     @Override

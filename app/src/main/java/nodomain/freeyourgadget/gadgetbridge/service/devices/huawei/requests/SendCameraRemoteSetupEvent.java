@@ -37,7 +37,7 @@ public class SendCameraRemoteSetupEvent extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsCameraRemote() && GBApplication.getDeviceSpecificSharedPrefs(supportProvider.getDevice().getAddress()).getBoolean(DeviceSettingsPreferenceConst.PREF_CAMERA_REMOTE, false);
+        return supportProvider.getDeviceState().supportsCameraRemote() && GBApplication.getDeviceSpecificSharedPrefs(supportProvider.getDevice().getAddress()).getBoolean(DeviceSettingsPreferenceConst.PREF_CAMERA_REMOTE, false);
     }
 
     @Override

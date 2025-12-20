@@ -16,7 +16,7 @@ public class SendSetECGOpenRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsECGOpen();
+        return supportProvider.getDeviceState().supportsECGOpen();
     }
 
     @Override

@@ -39,7 +39,7 @@ public class SetDateFormatRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsDateFormat();
+        return supportProvider.getDeviceState().supportsDateFormat();
     }
 
     @Override

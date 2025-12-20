@@ -24,22 +24,11 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiBRCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 
 public class HuaweiWatch5Coordinator extends HuaweiBRCoordinator {
-    public HuaweiWatch5Coordinator() {
-        super();
-        getHuaweiCoordinator().setTransactionCrypted(true);
-    }
-
     @Override
     public boolean isExperimental() {
         return true;
-    }
-
-    @Override
-    public DeviceType getDeviceType() {
-        return DeviceType.HUAWEIWATCH5;
     }
 
     @Override

@@ -185,7 +185,7 @@ public class HuaweiDataSyncFeatureManager implements HuaweiDataSyncCommon.DataCa
     private void sendFeaturesFile() {
         LOG.info("HuaweiDataSyncFeatureManager Send feature file upload info");
 
-        final String countryCode = support.getHuaweiCoordinator().getCountryCode(support.getDevice());
+        final String countryCode = support.getDeviceState().getCountryCode(support.getDevice());
 
         final String json = getFeaturesFileContent(countryCode);
         LOG.info("feature file content: {}", json);

@@ -24,14 +24,8 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiBRCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 
 public class HuaweiWatchGTCyberCoordinator extends HuaweiBRCoordinator {
-    @Override
-    public DeviceType getDeviceType() {
-        return DeviceType.HUAWEIWATCHGTCYBER;
-    }
-
     @Override
     protected Pattern getSupportedDeviceName() {
         return Pattern.compile("(" + HuaweiConstants.HU_WATCHGTCYBER_NAME + ").*", Pattern.CASE_INSENSITIVE);

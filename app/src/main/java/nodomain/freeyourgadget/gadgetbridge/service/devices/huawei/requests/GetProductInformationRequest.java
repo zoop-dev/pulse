@@ -60,7 +60,7 @@ public class GetProductInformationRequest extends Request {
         getDevice().addDeviceInfo(new GenericItem("SN: ", ((DeviceConfig.ProductInfo.Response) receivedPacket).serialNumber));
         getDevice().addDeviceInfo(new GenericItem("RC: ", String.valueOf(((DeviceConfig.ProductInfo.Response) receivedPacket).regionCode)));
 
-        supportProvider.getHuaweiCoordinator().setOtaSoftwareVersion(((DeviceConfig.ProductInfo.Response) receivedPacket).softwareVersion);
-        supportProvider.getHuaweiCoordinator().setOtaSignatureLength(((DeviceConfig.ProductInfo.Response) receivedPacket).otaSignatureLength);
+        supportProvider.getDeviceState().setOtaSoftwareVersion(((DeviceConfig.ProductInfo.Response) receivedPacket).softwareVersion);
+        supportProvider.getDeviceState().setOtaSignatureLength(((DeviceConfig.ProductInfo.Response) receivedPacket).otaSignatureLength);
    }
 }

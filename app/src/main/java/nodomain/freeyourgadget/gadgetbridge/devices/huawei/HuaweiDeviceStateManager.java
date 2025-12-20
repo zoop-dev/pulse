@@ -1,4 +1,4 @@
-/*  Copyright (C) 2024 Damien Gaignon, Martin.JM
+/*  Copyright (C) 2025 Damien José Rebelo
 
     This file is part of Gadgetbridge.
 
@@ -16,29 +16,26 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.huawei;
 
-public interface HuaweiCoordinatorSupplier {
+import java.util.HashMap;
+import java.util.Map;
 
-    enum HuaweiDeviceType {
-        AW(0),     //BLE behind
-        BR(1),
-        BLE(2),
-        SMART(5)   //BLE behind
-        ;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-        final int huaweiType;
+public class HuaweiDeviceStateManager {
+    private static final Map<String, HuaweiCoordinator> STATES = new HashMap<>();
 
-        HuaweiDeviceType(int huaweiType) {
-            this.huaweiType = huaweiType;
-        }
-
-        public int getType(){
-            return huaweiType;
-        }
+    public static HuaweiCoordinator get(final GBDevice device) {
+        return get(device.getAddress());
     }
 
-    default boolean isTransactionCrypted() {
-        return true;
-    }
+    public static HuaweiCoordinator get(final String macAddress) {
+        if (STATES.containsKey(macAddress)) {
+            return STATES.get(macAddress);
+        }
 
-    HuaweiDeviceType getHuaweiType();
+        final HuaweiCoordinator huaweiDeviceState = new HuaweiCoordinator(macAddress);
+        STATES.put(macAddress, huaweiDeviceState);
+
+        return huaweiDeviceState;
+    }
 }

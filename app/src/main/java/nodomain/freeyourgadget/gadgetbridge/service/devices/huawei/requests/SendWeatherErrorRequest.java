@@ -32,13 +32,13 @@ public class SendWeatherErrorRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsWeatherErrorSimple() || supportProvider.getHuaweiCoordinator().supportsWeatherErrorExtended();
+        return supportProvider.getDeviceState().supportsWeatherErrorSimple() || supportProvider.getDeviceState().supportsWeatherErrorExtended();
     }
 
     public SendWeatherErrorRequest(HuaweiSupportProvider support, Weather.ErrorCode errorCode) {
         super(support);
         this.serviceId = Weather.id;
-        if (supportProvider.getHuaweiCoordinator().supportsWeatherErrorExtended())
+        if (supportProvider.getDeviceState().supportsWeatherErrorExtended())
             this.commandId = Weather.WeatherErrorExtended.id;
         else
             this.commandId = Weather.WeatherErrorSimple.id;
@@ -48,7 +48,7 @@ public class SendWeatherErrorRequest extends Request {
     @Override
     protected List<byte[]> createRequest() throws RequestCreationException {
         try {
-            if (supportProvider.getHuaweiCoordinator().supportsWeatherErrorExtended()) {
+            if (supportProvider.getDeviceState().supportsWeatherErrorExtended()) {
                 Weather.WeatherErrorExtended.Request request = new Weather.WeatherErrorExtended.Request(paramsProvider, errorCode, false);
                 return request.serialize();
             } else {

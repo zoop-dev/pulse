@@ -118,7 +118,7 @@ public class HuaweiP2PDirection extends HuaweiBaseP2PService {
         // app availability can be checked by querying app list from the watch (service 0x2a).
         sendGetVersion((version, data) -> {
             LOG.info("HuaweiP2PDirection App version: {}", version);
-            manager.getSupportProvider().getCoordinator().getHuaweiCoordinator().setNavigationAvailability(version != -1);
+            manager.getSupportProvider().getDeviceState().setNavigationAvailability(version != -1);
         });
     }
 

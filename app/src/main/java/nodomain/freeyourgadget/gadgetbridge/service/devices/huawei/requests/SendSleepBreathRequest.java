@@ -18,7 +18,7 @@ public class SendSleepBreathRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsSleepBreath();
+        return supportProvider.getDeviceState().supportsSleepBreath();
     }
 
     @Override

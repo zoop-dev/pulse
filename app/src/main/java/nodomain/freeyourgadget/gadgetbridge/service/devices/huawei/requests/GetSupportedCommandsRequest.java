@@ -82,7 +82,7 @@ public class GetSupportedCommandsRequest extends Request {
             throw new ResponseTypeMismatchException(receivedPacket, DeviceConfig.SupportedCommands.Response.class);
 
         for (DeviceConfig.SupportedCommands.Response.CommandsList commandsList : ((DeviceConfig.SupportedCommands.Response) receivedPacket).commandsLists) {
-            supportProvider.getHuaweiCoordinator().addCommandsForService(
+            supportProvider.getDeviceState().addCommandsForService(
                     commandsList.service,
                     commandsList.commands
             );
@@ -92,8 +92,8 @@ public class GetSupportedCommandsRequest extends Request {
             GetSupportedCommandsRequest nextRequest = new GetSupportedCommandsRequest(supportProvider, activatedServices);
             this.nextRequest(nextRequest);
         } else {
-            supportProvider.getHuaweiCoordinator().printCommandsPerService();
-            if(supportProvider.getHuaweiCoordinator().supportsExpandCapability()) {
+            supportProvider.getDeviceState().printCommandsPerService();
+            if(supportProvider.getDeviceState().supportsExpandCapability()) {
                 GetExpandCapabilityRequest nextRequest = new GetExpandCapabilityRequest(supportProvider);
                 this.nextRequest(nextRequest);
             } else {

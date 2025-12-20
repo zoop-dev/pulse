@@ -39,7 +39,7 @@ public class SendFitnessGoalRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsMotionGoal();
+        return supportProvider.getDeviceState().supportsMotionGoal();
     }
 
     @Override

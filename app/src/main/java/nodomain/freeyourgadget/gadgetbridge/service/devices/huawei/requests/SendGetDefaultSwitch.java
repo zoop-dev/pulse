@@ -36,7 +36,7 @@ public class SendGetDefaultSwitch extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportDefaultSwitch();
+        return supportProvider.getDeviceState().supportDefaultSwitch();
     }
 
     @Override

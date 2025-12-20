@@ -36,7 +36,7 @@ public class GetContactsCount extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsContacts();
+        return supportProvider.getDeviceState().supportsContacts();
     }
 
     @Override
@@ -56,6 +56,6 @@ public class GetContactsCount extends Request {
             throw new ResponseTypeMismatchException(receivedPacket, Contacts.ContactsCount.Response.class);
 
         int count = ((Contacts.ContactsCount.Response) receivedPacket).maxCount;
-        this.supportProvider.getHuaweiCoordinator().saveMaxContactsCount(count);
+        this.supportProvider.getDeviceState().saveMaxContactsCount(count);
     }
 }

@@ -38,7 +38,7 @@ public class SetTruSleepRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsTruSleep();
+        return supportProvider.getDeviceState().supportsTruSleep();
     }
 
     @Override

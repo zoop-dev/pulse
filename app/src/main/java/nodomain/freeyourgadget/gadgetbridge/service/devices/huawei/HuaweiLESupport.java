@@ -66,7 +66,7 @@ public class HuaweiLESupport extends AbstractBTLESingleDeviceSupport {
     @Override
     public void setContext(GBDevice gbDevice, BluetoothAdapter btAdapter, Context context) {
         super.setContext(gbDevice, btAdapter, context);
-        supportProvider.setContext(context);
+        supportProvider.setContext(gbDevice, context);
     }
 
     @Override

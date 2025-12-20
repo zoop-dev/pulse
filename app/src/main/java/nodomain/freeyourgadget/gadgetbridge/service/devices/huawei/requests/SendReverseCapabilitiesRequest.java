@@ -36,7 +36,7 @@ public class SendReverseCapabilitiesRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsReverseCapabilities();
+        return supportProvider.getDeviceState().supportsReverseCapabilities();
     }
 
     @Override

@@ -24,14 +24,8 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiLECoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 
 public class HuaweiWatchGT2eCoordinator extends HuaweiLECoordinator {
-    @Override
-    public DeviceType getDeviceType() {
-        return DeviceType.HUAWEIWATCHGT2E;
-    }
-
     @Override
     protected Pattern getSupportedDeviceName() {
         return Pattern.compile(HuaweiConstants.HU_WATCHGT2E_NAME + ".*", Pattern.CASE_INSENSITIVE);

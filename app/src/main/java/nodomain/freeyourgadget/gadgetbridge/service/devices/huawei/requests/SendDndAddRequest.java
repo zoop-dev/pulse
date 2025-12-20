@@ -43,7 +43,7 @@ public class SendDndAddRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsDoNotDisturb(supportProvider.getDevice());
+        return supportProvider.getDeviceState().supportsDoNotDisturb(supportProvider.getDevice());
     }
 
     @Override
@@ -78,7 +78,7 @@ public class SendDndAddRequest extends Request {
                     end,
                     cycle,
                     statusDndLiftWrist ? dndLiftWristType : 0x00,
-                    supportProvider.getHuaweiCoordinator().supportsQueryDndLiftWristDisturbType()
+                    supportProvider.getDeviceState().supportsQueryDndLiftWristDisturbType()
             ).serialize();
         } catch (HuaweiPacket.CryptoException e) {
             throw new RequestCreationException(e);

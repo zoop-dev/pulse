@@ -34,8 +34,8 @@ public class GetSmartAlarmList extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsChangingAlarm() &&
-                supportProvider.getHuaweiCoordinator().supportsSmartAlarm(supportProvider.getDevice());
+        return supportProvider.getDeviceState().supportsChangingAlarm() &&
+                supportProvider.getDeviceState().supportsSmartAlarm(supportProvider.getDevice());
     }
 
     @Override

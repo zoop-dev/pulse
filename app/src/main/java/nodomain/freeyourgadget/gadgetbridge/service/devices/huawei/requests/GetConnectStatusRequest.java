@@ -36,7 +36,7 @@ public class GetConnectStatusRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsConnectStatus();
+        return supportProvider.getDeviceState().supportsConnectStatus();
     }
 
     @Override

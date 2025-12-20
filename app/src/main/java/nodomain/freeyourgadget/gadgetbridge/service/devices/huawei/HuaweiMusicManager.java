@@ -97,7 +97,7 @@ public class HuaweiMusicManager {
             return;
         }
         int count = this.frameCount;
-        if (support.getHuaweiCoordinator().supportsMoreMusic()) {
+        if (support.getDeviceState().supportsMoreMusic()) {
             count = Math.min(this.frameCount, 250);
         }
         if (this.currentFrame < count) {
@@ -200,7 +200,7 @@ public class HuaweiMusicManager {
         //TODO: research and use pageStruct. It may/should be used to retrieve music data from devices by pages.
         // without it list can be incomplete, but I can't confirm this.
         LOG.info("FrameCount: {}, pageStruct: {}", frameCount, pageStruct);
-        support.getHuaweiCoordinator().setMusicInfoParams(capabilities);
+        support.getDeviceState().setMusicInfoParams(capabilities);
         if(syncMusicData) {
             this.frameCount = frameCount;
             this.currentFrame = 0;
@@ -210,8 +210,8 @@ public class HuaweiMusicManager {
                 formats = String.join(",", capabilities.supportedFormats);
             }
             int maxPlaylistCount = 0;
-            if(support.getCoordinator().getHuaweiCoordinator().getExtendedMusicInfoParams() != null) {
-                maxPlaylistCount = support.getCoordinator().getHuaweiCoordinator().getExtendedMusicInfoParams().maxPlaylistCount;
+            if(support.getDeviceState().getExtendedMusicInfoParams() != null) {
+                maxPlaylistCount = support.getDeviceState().getExtendedMusicInfoParams().maxPlaylistCount;
             }
             sendMusicSyncStart(support.getContext().getString(R.string.music_huawei_device_info, formats, capabilities.availableSpace), capabilities.maxMusicCount, maxPlaylistCount);
             syncMusicList();
@@ -250,7 +250,7 @@ public class HuaweiMusicManager {
 
     public void onMusicListResponse(int startFrame, int endFrame, List<GBDeviceMusic> list) {
         sendMusicList(list);
-        if (support.getHuaweiCoordinator().supportsMoreMusic() || !(endFrame == this.endFrame || list.size() == 1)) {
+        if (support.getDeviceState().supportsMoreMusic() || !(endFrame == this.endFrame || list.size() == 1)) {
             if (list.size() == 2) {
                 this.endFrame = list.get(1).getId();
             }

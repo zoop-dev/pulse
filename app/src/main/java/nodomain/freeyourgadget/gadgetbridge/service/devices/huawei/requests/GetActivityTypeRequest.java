@@ -42,7 +42,7 @@ public class GetActivityTypeRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsActivityType();
+        return supportProvider.getDeviceState().supportsActivityType();
     }
 
     @Override

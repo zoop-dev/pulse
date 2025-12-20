@@ -88,14 +88,14 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
 
     @Override
     public String getPackage() {
-        if (manager.getSupportProvider().getHuaweiCoordinator().supportsExternalCalendarService())
+        if (manager.getSupportProvider().getDeviceState().supportsExternalCalendarService())
             return "com.huawei.ohos.calendar";
         return "in.huawei.calendar";
     }
 
     @Override
     public String getFingerprint() {
-        if (manager.getSupportProvider().getHuaweiCoordinator().supportsExternalCalendarService())
+        if (manager.getSupportProvider().getDeviceState().supportsExternalCalendarService())
             return "com.huawei.ohos.calendar_BCgpfcWNSKWgvxsSILxooQZyAmKYsFQnMTibnfrKQqK9M0ABtXH+GbsOscsnVvVc5qIDiFEyEOYMSF7gJ7Vb5Mc=";
         return "SystemApp";
     }
@@ -476,7 +476,7 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
 
                         // NOTE: scheduleCount is a max number of events to send. It suitable only if supportsExternalCalendarService not set
                         //external calendar synchronization only supported on Harmony devices. I don't know how to deal with this.
-                        if (!manager.getSupportProvider().getHuaweiCoordinator().supportsExternalCalendarService()) {
+                        if (!manager.getSupportProvider().getDeviceState().supportsExternalCalendarService()) {
                             if (!syncCalendarEvents(majorVersion, minorVersion, scheduleCount)) {
                                 sendCalendarCmd((byte) 0x01, (byte) 0x04, null);  //No sync required
                             }

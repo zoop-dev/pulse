@@ -37,7 +37,7 @@ public class SendSetUpDeviceStatusRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsMultiDevice();
+        return supportProvider.getDeviceState().supportsMultiDevice();
     }
 
     @Override

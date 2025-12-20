@@ -36,7 +36,7 @@ public class SetTimeZoneIdRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsTimeAndZoneId();
+        return supportProvider.getDeviceState().supportsTimeAndZoneId();
     }
 
     @Override

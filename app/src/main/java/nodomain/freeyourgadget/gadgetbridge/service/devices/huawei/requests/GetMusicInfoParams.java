@@ -36,7 +36,7 @@ public class GetMusicInfoParams extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsMusicUploading();
+        return supportProvider.getDeviceState().supportsMusicUploading();
     }
 
     @Override

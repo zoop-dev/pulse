@@ -37,7 +37,7 @@ public class AcceptAgreementsRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsAcceptAgreement();
+        return supportProvider.getDeviceState().supportsAcceptAgreement();
     }
 
     @Override

@@ -154,14 +154,14 @@ public class HuaweiOTAManager {
             cleanup();
             return;
         }
-        if (!support.getHuaweiCoordinator().supportsOTAUpdate()) {
+        if (!support.getDeviceState().supportsOTAUpdate()) {
             LOG.info("OTA update is not supported");
             cleanup();
             return;
         }
         setDeviceBusy();
 
-        if (support.getHuaweiCoordinator().supportsOTANotify()) {
+        if (support.getDeviceState().supportsOTANotify()) {
             try {
                 SendOTANotifyNewVersion notifyNewVersion = new SendOTANotifyNewVersion(support, this.fwInfo.versionName, this.fwInfo.size, (byte) 1, (byte) 2);
                 notifyNewVersion.doPerform();
@@ -181,7 +181,7 @@ public class HuaweiOTAManager {
 
     private void startFWCheck(HuaweiOTAFileList.OTAFileInfo fwInfo, Uri uri) {
         downloadProgress = 0;
-        if (support.getHuaweiCoordinator().supportsOTADeviceRequest()) {
+        if (support.getDeviceState().supportsOTADeviceRequest()) {
             try {
                 SendOTAProgress progressReq = new SendOTAProgress(support, (byte) 0, (byte) 0, (byte) 0);
                 progressReq.doPerform();
@@ -298,8 +298,8 @@ public class HuaweiOTAManager {
         int data = buffer.getInt();
 
         int signature = 256;
-        if (support.getHuaweiCoordinator().supportsOTASignature()) {
-            signature = support.getHuaweiCoordinator().getOtaSignatureLength();
+        if (support.getDeviceState().supportsOTASignature()) {
+            signature = support.getDeviceState().getOtaSignatureLength();
         }
         LOG.info("data: {}, signature: {}", data, signature);
         return (short) (data + signature);
@@ -354,7 +354,7 @@ public class HuaweiOTAManager {
 
     public void onFwCheckFail() {
         LOG.info("onFwCheckFail");
-        if (support.getHuaweiCoordinator().supportsOTADeviceRequest()) {
+        if (support.getDeviceState().supportsOTADeviceRequest()) {
             try {
                 SendOTAProgress progressReq = new SendOTAProgress(support, (byte) downloadProgress, (byte) 2, (byte) 0);
                 progressReq.doPerform();
@@ -375,7 +375,7 @@ public class HuaweiOTAManager {
 
         this.state = 3;
 
-        if (support.getHuaweiCoordinator().supportsOTADeviceRequest()) {
+        if (support.getDeviceState().supportsOTADeviceRequest()) {
             try {
                 SendOTAGetMode sendOTAGetMode = new SendOTAGetMode(support);
                 sendOTAGetMode.doPerform();
@@ -391,7 +391,7 @@ public class HuaweiOTAManager {
     public void onFwCheckProgress(int val) {
         LOG.info("onFwCheckProgress: {}", val);
         downloadProgress = val;
-        if (support.getHuaweiCoordinator().supportsOTADeviceRequest()) {
+        if (support.getDeviceState().supportsOTADeviceRequest()) {
             try {
                 SendOTAProgress progressReq = new SendOTAProgress(support, (byte) downloadProgress, (byte) 1, (byte) 0);
                 progressReq.doPerform();
@@ -413,7 +413,7 @@ public class HuaweiOTAManager {
         }
         if (this.state == 1) {
             this.state = 2;
-            if (support.getHuaweiCoordinator().supportsOTANotify()) {
+            if (support.getDeviceState().supportsOTANotify()) {
                 try {
                     SendOTANotifyNewVersion notifyNewVersion = new SendOTANotifyNewVersion(support, fwInfo.versionName, fwInfo.size, (byte) 1, (byte) 0);
                     notifyNewVersion.doPerform();
@@ -533,7 +533,7 @@ public class HuaweiOTAManager {
             return;
         }
         if (this.state == 1) {
-            if (support.getHuaweiCoordinator().supportsOTAUpdate()) {
+            if (support.getDeviceState().supportsOTAUpdate()) {
                 try {
                     SendOTAStartQuery sendOTAStartQuery = new SendOTAStartQuery(support, fwInfo.versionName, (short) 256, (byte) 2, false);
                     sendOTAStartQuery.doPerform();

@@ -38,7 +38,7 @@ public class SetWearLocationRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsWearLocation(supportProvider.getDevice());
+        return supportProvider.getDeviceState().supportsWearLocation(supportProvider.getDevice());
     }
 
     @Override

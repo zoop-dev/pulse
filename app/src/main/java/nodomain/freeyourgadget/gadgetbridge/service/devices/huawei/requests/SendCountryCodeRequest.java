@@ -21,15 +21,15 @@ public class SendCountryCodeRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsSendCountryCode() && supportProvider.getHuaweiCoordinator().getSendCountryCodeEnabled(supportProvider.getDevice());
+        return supportProvider.getDeviceState().supportsSendCountryCode() && supportProvider.getDeviceState().getSendCountryCodeEnabled(supportProvider.getDevice());
     }
 
     @Override
     protected List<byte[]> createRequest() throws Request.RequestCreationException {
         try {
-            final String countryCode = supportProvider.getHuaweiCoordinator().getCountryCode(supportProvider.getDevice());
+            final String countryCode = supportProvider.getDeviceState().getCountryCode(supportProvider.getDevice());
             Byte siteId = null;
-            if(supportProvider.getHuaweiCoordinator().supportsSendSiteId()) {
+            if(supportProvider.getDeviceState().supportsSendSiteId()) {
                 siteId = (byte) HuaweiUtil.getSiteIdByCountryCode(countryCode);
             }
 

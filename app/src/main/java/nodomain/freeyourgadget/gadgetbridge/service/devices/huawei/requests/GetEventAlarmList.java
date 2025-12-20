@@ -35,7 +35,7 @@ public class GetEventAlarmList extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsChangingAlarm();
+        return supportProvider.getDeviceState().supportsChangingAlarm();
     }
 
     @Override
@@ -57,7 +57,7 @@ public class GetEventAlarmList extends Request {
         // Correct for position of smart alarm
         // Note that the band uses 1 as the first index for event alarms
         int positionOffset;
-        if (supportProvider.getCoordinator().getHuaweiCoordinator().supportsSmartAlarm(supportProvider.getDevice()))
+        if (supportProvider.getDeviceState().supportsSmartAlarm(supportProvider.getDevice()))
             positionOffset = 0;
         else
             positionOffset = -1;

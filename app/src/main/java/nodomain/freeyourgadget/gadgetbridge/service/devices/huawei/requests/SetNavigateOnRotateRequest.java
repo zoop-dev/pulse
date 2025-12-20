@@ -38,7 +38,7 @@ public class SetNavigateOnRotateRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsRotateToCycleInfo();
+        return supportProvider.getDeviceState().supportsRotateToCycleInfo();
     }
 
     @Override

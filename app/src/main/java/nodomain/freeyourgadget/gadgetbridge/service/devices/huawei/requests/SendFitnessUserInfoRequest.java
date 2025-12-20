@@ -54,12 +54,12 @@ public class SendFitnessUserInfoRequest extends Request {
             birthdayEncoded += dateOfBirth.getMonthValue() << 8;
             birthdayEncoded += dateOfBirth.getDayOfMonth();
 
-            boolean unknownGenderSupported = supportProvider.getHuaweiCoordinator().supportsUnknownGender();
+            boolean unknownGenderSupported = supportProvider.getDeviceState().supportsUnknownGender();
             //TODO: discover Vo2Max capability and retrieve calculate and set proper values. Currently disabled.
             boolean vo2Supported = false;
             int vo2Max = 0;
             int vo2Time = 0;
-            boolean precisionWeightSupported = supportProvider.getHuaweiCoordinator().supportsPrecisionWeight();
+            boolean precisionWeightSupported = supportProvider.getDeviceState().supportsPrecisionWeight();
 
             UserInfo.UserInfoData userInfoData = new UserInfo.UserInfoData(
                     activityUser.getHeightCm(),

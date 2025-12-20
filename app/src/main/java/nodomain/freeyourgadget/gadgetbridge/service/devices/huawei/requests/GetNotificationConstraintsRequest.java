@@ -38,9 +38,9 @@ public class GetNotificationConstraintsRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsNotificationAlert() && supportProvider.getProtocolVersion() == 2
-                && supportProvider.getCoordinator().getDeviceType() != DeviceType.HUAWEIBANDAW70
-                && supportProvider.getCoordinator().getDeviceType() != DeviceType.HONORWATCH4; // Bit of a workaround, there is probably some capabilities this actually depends on
+        return supportProvider.getDeviceState().supportsNotificationAlert() && supportProvider.getProtocolVersion() == 2
+                && supportProvider.getDevice().getType() != DeviceType.HUAWEIBANDAW70
+                && supportProvider.getDevice().getType() != DeviceType.HONORWATCH4; // Bit of a workaround, there is probably some capabilities this actually depends on
     }
 
     @Override
@@ -59,6 +59,6 @@ public class GetNotificationConstraintsRequest extends Request {
         if (!(receivedPacket instanceof NotificationConstraints.Response))
             throw new ResponseTypeMismatchException(receivedPacket, NotificationConstraints.Response.class);
 
-        supportProvider.getHuaweiCoordinator().saveNotificationConstraints(((NotificationConstraints.Response) receivedPacket).constraints);
+        supportProvider.getDeviceState().saveNotificationConstraints(((NotificationConstraints.Response) receivedPacket).constraints);
     }
 }

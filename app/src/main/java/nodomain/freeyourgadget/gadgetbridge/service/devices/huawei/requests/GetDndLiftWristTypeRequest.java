@@ -40,7 +40,7 @@ public class GetDndLiftWristTypeRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsQueryDndLiftWristDisturbType();
+        return supportProvider.getDeviceState().supportsQueryDndLiftWristDisturbType();
     }
 
     @Override

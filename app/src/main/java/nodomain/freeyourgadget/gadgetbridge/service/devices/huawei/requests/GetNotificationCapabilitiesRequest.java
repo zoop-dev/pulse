@@ -37,7 +37,7 @@ public class GetNotificationCapabilitiesRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsPromptPushMessage() && supportProvider.getProtocolVersion() == 2;
+        return supportProvider.getDeviceState().supportsPromptPushMessage() && supportProvider.getProtocolVersion() == 2;
     }
 
     @Override
@@ -56,6 +56,6 @@ public class GetNotificationCapabilitiesRequest extends Request {
         if (!(receivedPacket instanceof NotificationCapabilities.Response))
             throw new ResponseTypeMismatchException(receivedPacket, NotificationCapabilities.Response.class);
 
-        supportProvider.getHuaweiCoordinator().saveNotificationCapabilities(((NotificationCapabilities.Response) receivedPacket).capabilities);
+        supportProvider.getDeviceState().saveNotificationCapabilities(((NotificationCapabilities.Response) receivedPacket).capabilities);
     }
 }

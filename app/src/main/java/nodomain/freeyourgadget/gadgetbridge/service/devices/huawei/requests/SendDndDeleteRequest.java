@@ -36,7 +36,7 @@ public class SendDndDeleteRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsDoNotDisturb(supportProvider.getDevice());
+        return supportProvider.getDeviceState().supportsDoNotDisturb(supportProvider.getDevice());
     }
 
     @Override

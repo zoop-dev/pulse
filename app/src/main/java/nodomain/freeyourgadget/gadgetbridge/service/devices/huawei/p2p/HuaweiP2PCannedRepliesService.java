@@ -107,7 +107,7 @@ public class HuaweiP2PCannedRepliesService extends HuaweiBaseP2PService {
             return;
         final GBDeviceEventUpdatePreferences gbDeviceEventUpdatePreferences = new GBDeviceEventUpdatePreferences();
 
-        for (int i = 1; i <= manager.getSupportProvider().getHuaweiCoordinator().getCannedRepliesSlotCount(manager.getSupportProvider().getDevice()); i++) {
+        for (int i = 1; i <= manager.getSupportProvider().getDeviceState().getCannedRepliesSlotCount(manager.getSupportProvider().getDevice()); i++) {
             String message = null;
             if (replies.size() >= i) {
                 if (replies.get(i - 1).contains(0x04)) {

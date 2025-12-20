@@ -36,15 +36,15 @@ public class GetOTAChangeLog extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsOTAChangelog() &&
-                supportProvider.getHuaweiCoordinator().getOtaSoftwareVersion() != null;
+        return supportProvider.getDeviceState().supportsOTAChangelog() &&
+                supportProvider.getDeviceState().getOtaSoftwareVersion() != null;
     }
 
     @Override
     protected List<byte[]> createRequest() throws RequestCreationException {
         try {
             // TODO: get proper language.
-            return new OTA.GetChangeLog.Request(paramsProvider, supportProvider.getHuaweiCoordinator().getOtaSoftwareVersion(), "en").serialize();
+            return new OTA.GetChangeLog.Request(paramsProvider, supportProvider.getDeviceState().getOtaSoftwareVersion(), "en").serialize();
         } catch (HuaweiPacket.CryptoException e) {
             throw new RequestCreationException(e);
         }

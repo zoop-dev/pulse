@@ -30,7 +30,7 @@ public class SendHeartRateZonesConfig extends Request {
     public SendHeartRateZonesConfig(HuaweiSupportProvider support) {
         super(support);
         this.serviceId = FitnessData.id;
-        this.commandId = supportProvider.getHuaweiCoordinator().supportsExtendedHeartRateZones() ?
+        this.commandId = supportProvider.getDeviceState().supportsExtendedHeartRateZones() ?
                 FitnessData.HeartRateZoneConfigPacket.id_extended :
                 FitnessData.HeartRateZoneConfigPacket.id_simple;
     }
@@ -38,17 +38,17 @@ public class SendHeartRateZonesConfig extends Request {
     @Override
     protected boolean requestSupported() {
         return
-                !supportProvider.getHuaweiCoordinator().supportsTrack() && // In this case it uses P2P
-                supportProvider.getHuaweiCoordinator().supportsHeartRateZones();
+                !supportProvider.getDeviceState().supportsTrack() && // In this case it uses P2P
+                supportProvider.getDeviceState().supportsHeartRateZones();
     }
 
     @Override
     protected List<byte[]> createRequest() throws RequestCreationException {
         try {
-            HuaweiHeartRateZonesSpec spec = new HuaweiHeartRateZonesSpec(supportProvider.getDevice(), supportProvider.getHuaweiCoordinator());
+            HuaweiHeartRateZonesSpec spec = new HuaweiHeartRateZonesSpec(supportProvider.getDevice(), supportProvider.getDeviceState());
             List<HeartRateZonesConfig> zones = spec.getDeviceConfig();
             HeartRateZonesConfig heartRateZonesConfig = HuaweiHeartRateZonesSpec.getByPosture(zones, HeartRateZonesSpec.PostureType.UPRIGHT);
-            if (supportProvider.getHuaweiCoordinator().supportsExtendedHeartRateZones()) {
+            if (supportProvider.getDeviceState().supportsExtendedHeartRateZones()) {
                 return FitnessData.HeartRateZoneConfigPacket.Request.requestExtended(paramsProvider, heartRateZonesConfig).serialize();
             } else {
                 return FitnessData.HeartRateZoneConfigPacket.Request.requestSimple(paramsProvider, heartRateZonesConfig).serialize();

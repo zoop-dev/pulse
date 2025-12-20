@@ -60,7 +60,7 @@ public class GetWorkoutDataRequest extends Request {
     @Override
     protected List<byte[]> createRequest() throws RequestCreationException {
         try {
-            return new Workout.WorkoutData.Request(paramsProvider, workoutNumbers.workoutNumber, this.number, supportProvider.getHuaweiCoordinator().isSupportsWorkoutNewSteps()).serialize();
+            return new Workout.WorkoutData.Request(paramsProvider, workoutNumbers.workoutNumber, this.number, supportProvider.getDeviceState().isSupportsWorkoutNewSteps()).serialize();
         } catch (HuaweiPacket.CryptoException e) {
             throw new RequestCreationException(e);
         }

@@ -34,7 +34,6 @@ import java.util.Locale;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.install.FwAppInstallerActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.install.InstallActivity;
-import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
@@ -112,13 +111,7 @@ public class HuaweiInstallHandler implements InstallHandler {
 
     @Override
     public void validateInstallation(InstallActivity installActivity, GBDevice device) {
-
-        final DeviceCoordinator coordinator = device.getDeviceCoordinator();
-        if (!(coordinator instanceof HuaweiCoordinatorSupplier huaweiCoordinatorSupplier)) {
-            LOG.warn("Coordinator is not a HuaweiCoordinatorSupplier: {}", coordinator.getClass());
-            installActivity.setInstallEnabled(false);
-            return;
-        }
+        final HuaweiCoordinator huaweiDeviceState = HuaweiDeviceStateManager.get(device);
 
         if (helper.isFirmware) {
             this.valid = true; //NOTE: nothing to verify for now
@@ -168,8 +161,8 @@ public class HuaweiInstallHandler implements InstallHandler {
             String deviceScreen = String.format(
                     Locale.ROOT,
                     "%d*%d",
-                    huaweiCoordinatorSupplier.getHuaweiCoordinator().getHeight(),
-                    huaweiCoordinatorSupplier.getHuaweiCoordinator().getWidth()
+                    huaweiDeviceState.getHeight(),
+                    huaweiDeviceState.getWidth()
             );
             this.valid = resolution.isValid(description.screen, deviceScreen);
 
@@ -252,9 +245,9 @@ public class HuaweiInstallHandler implements InstallHandler {
 
             LOG.debug("Initialized HuaweiInstallHandler: App");
         } else if (helper.isMusic()) {
-            HuaweiMusicUtils.MusicCapabilities capabilities = huaweiCoordinatorSupplier.getHuaweiCoordinator().getExtendedMusicInfoParams();
+            HuaweiMusicUtils.MusicCapabilities capabilities = huaweiDeviceState.getExtendedMusicInfoParams();
             if (capabilities == null) {
-                capabilities = huaweiCoordinatorSupplier.getHuaweiCoordinator().getMusicInfoParams();
+                capabilities = huaweiDeviceState.getMusicInfoParams();
             }
             AudioInfo currentMusicInfo = helper.getMusicInfo();
 

@@ -64,11 +64,11 @@ import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstant
 
 public class HuaweiSettingsCustomizer implements DeviceSpecificSettingsCustomizer {
     final GBDevice device;
-    final HuaweiCoordinator coordinator;
+    final HuaweiCoordinator deviceState;
 
     public HuaweiSettingsCustomizer(final GBDevice device) {
         this.device = device;
-        this.coordinator = ((HuaweiCoordinatorSupplier) this.device.getDeviceCoordinator()).getHuaweiCoordinator();
+        this.deviceState = HuaweiDeviceStateManager.get(device);
     }
 
     @Override
@@ -103,16 +103,16 @@ public class HuaweiSettingsCustomizer implements DeviceSpecificSettingsCustomize
         if (preference.getKey().equals(PREF_FORCE_OPTIONS)) {
             final Preference dnd = handler.findPreference("screen_do_not_disturb");
             if (dnd != null)
-                dnd.setVisible(this.coordinator.supportsDoNotDisturb(handler.getDevice()));
+                dnd.setVisible(this.deviceState.supportsDoNotDisturb(handler.getDevice()));
             final ListPreference wearLocation = handler.findPreference(PREF_WEARLOCATION);
             if (wearLocation != null)
-                wearLocation.setVisible(this.coordinator.supportsWearLocation(handler.getDevice()));
+                wearLocation.setVisible(this.deviceState.supportsWearLocation(handler.getDevice()));
             final ListPreference heartRate = handler.findPreference(PREF_HEARTRATE_AUTOMATIC_ENABLE);
             if (heartRate != null)
-                heartRate.setVisible(this.coordinator.supportsHeartRate(handler.getDevice()));
+                heartRate.setVisible(this.deviceState.supportsHeartRate(handler.getDevice()));
             final ListPreference spo2 = handler.findPreference(PREF_SPO_AUTOMATIC_ENABLE);
             if (spo2 != null)
-                spo2.setVisible(this.coordinator.supportsSPo2(handler.getDevice()));
+                spo2.setVisible(this.deviceState.supportsSPo2(handler.getDevice()));
         }
     }
 
@@ -152,10 +152,10 @@ public class HuaweiSettingsCustomizer implements DeviceSpecificSettingsCustomize
 
         final Preference forceOptions = handler.findPreference(PREF_FORCE_OPTIONS);
         if (forceOptions != null) {
-            boolean supportsSmartAlarm = this.coordinator.supportsSmartAlarm();
-            boolean supportsWearLocation = this.coordinator.supportsWearLocation();
-            boolean supportsHeartRate = this.coordinator.supportsHeartRate();
-            boolean supportsSpO2 = this.coordinator.supportsSPo2();
+            boolean supportsSmartAlarm = this.deviceState.supportsSmartAlarm();
+            boolean supportsWearLocation = this.deviceState.supportsWearLocation();
+            boolean supportsHeartRate = this.deviceState.supportsHeartRate();
+            boolean supportsSpO2 = this.deviceState.supportsSPo2();
             forceOptions.setVisible(!supportsSmartAlarm || !supportsWearLocation || !supportsHeartRate || !supportsSpO2);
             final SwitchPreferenceCompat forceSmartAlarm = handler.findPreference(PREF_FORCE_ENABLE_SMART_ALARM);
             if(forceSmartAlarm != null)
@@ -172,14 +172,14 @@ public class HuaweiSettingsCustomizer implements DeviceSpecificSettingsCustomize
         }
 
         final SwitchPreferenceCompat sleepBreath = handler.findPreference(PREF_HUAWEI_SLEEP_BREATH);
-        if (sleepBreath != null && !(coordinator.supportsSleepBreath() || coordinator.supportsSleepApnea())) {
+        if (sleepBreath != null && !(deviceState.supportsSleepBreath() || deviceState.supportsSleepApnea())) {
             sleepBreath.setVisible(false);
         }
 
         final SwitchPreferenceCompat reparseWorkout = handler.findPreference("huawei_reparse_workout_data");
         if (reparseWorkout != null) {
             reparseWorkout.setVisible(false);
-            if (this.coordinator.supportsWorkouts())
+            if (this.deviceState.supportsWorkouts())
                 reparseWorkout.setVisible(true);
         }
 

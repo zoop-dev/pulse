@@ -36,7 +36,7 @@ public class GetSettingRelatedRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsSettingRelated();
+        return supportProvider.getDeviceState().supportsSettingRelated();
     }
 
     @Override
@@ -55,8 +55,8 @@ public class GetSettingRelatedRequest extends Request {
 
         LOG.debug("handle Setting Related");
 
-        supportProvider.getHuaweiCoordinator().setSupportsTruSleepNewSync(((DeviceConfig.SettingRelated.Response) receivedPacket).truSleepNewSync);
-        supportProvider.getHuaweiCoordinator().setSupportsRriNewSync(((DeviceConfig.SettingRelated.Response) receivedPacket).rriNewSync);
-        supportProvider.getHuaweiCoordinator().setSupportsGpsNewSync(((DeviceConfig.SettingRelated.Response) receivedPacket).gpsNewSync);
+        supportProvider.getDeviceState().setSupportsTruSleepNewSync(((DeviceConfig.SettingRelated.Response) receivedPacket).truSleepNewSync);
+        supportProvider.getDeviceState().setSupportsRriNewSync(((DeviceConfig.SettingRelated.Response) receivedPacket).rriNewSync);
+        supportProvider.getDeviceState().setSupportsGpsNewSync(((DeviceConfig.SettingRelated.Response) receivedPacket).gpsNewSync);
     }
 }

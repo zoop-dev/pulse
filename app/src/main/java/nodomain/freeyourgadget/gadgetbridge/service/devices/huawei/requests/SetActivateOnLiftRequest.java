@@ -38,7 +38,7 @@ public class SetActivateOnLiftRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsActivateOnLift();
+        return supportProvider.getDeviceState().supportsActivateOnLift();
     }
 
     @Override

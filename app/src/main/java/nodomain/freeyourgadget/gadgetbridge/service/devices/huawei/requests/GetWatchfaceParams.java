@@ -34,7 +34,7 @@ public class GetWatchfaceParams extends Request{
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsWatchfaceParams();
+        return supportProvider.getDeviceState().supportsWatchfaceParams();
     }
 
     @Override
@@ -52,6 +52,6 @@ public class GetWatchfaceParams extends Request{
             throw new ResponseTypeMismatchException(receivedPacket, Watchface.WatchfaceParams.Response.class);
 
         Watchface.WatchfaceParams.Response resp = (Watchface.WatchfaceParams.Response)(receivedPacket);
-        supportProvider.getHuaweiCoordinator().setWatchfaceDeviceParams(resp.params);
+        supportProvider.getDeviceState().setWatchfaceDeviceParams(resp.params);
     }
 }

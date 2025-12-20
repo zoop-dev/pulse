@@ -88,7 +88,7 @@ public class HuaweiNotificationsManager {
     }
 
     public void onDeleteNotification(int id) {
-        if (!support.getHuaweiCoordinator().supportsNotificationsRepeatedNotify() && !support.getHuaweiCoordinator().supportsNotificationsRemoveSingle()) {
+        if (!support.getDeviceState().supportsNotificationsRepeatedNotify() && !support.getDeviceState().supportsNotificationsRemoveSingle()) {
             LOG.info("Delete notification is not supported");
             return;
         }
@@ -122,7 +122,7 @@ public class HuaweiNotificationsManager {
 
     void onReplyResponse(Notifications.NotificationReply.ReplyResponse response) {
         LOG.info(" KEY: {}, Text: {}", response.key, response.text);
-        if(!this.support.getHuaweiCoordinator().supportsNotificationsReplyActions()) {
+        if(!this.support.getDeviceState().supportsNotificationsReplyActions()) {
             LOG.info("Reply is not supported");
             return;
         }

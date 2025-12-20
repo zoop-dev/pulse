@@ -65,7 +65,7 @@ public class GetExpandCapabilityRequest extends Request {
         if (!(receivedPacket instanceof DeviceConfig.ExpandCapability.Response))
             throw new ResponseTypeMismatchException(receivedPacket, DeviceConfig.ExpandCapability.Response.class);
 
-        supportProvider.getHuaweiCoordinator().saveExpandCapabilities(((DeviceConfig.ExpandCapability.Response) receivedPacket).expandCapabilities);
+        supportProvider.getDeviceState().saveExpandCapabilities(((DeviceConfig.ExpandCapability.Response) receivedPacket).expandCapabilities);
 
         dynamicServicesReq.call();
     }

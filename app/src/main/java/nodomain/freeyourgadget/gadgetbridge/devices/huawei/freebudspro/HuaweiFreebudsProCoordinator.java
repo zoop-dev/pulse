@@ -28,7 +28,6 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiFreebudsCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiHeadphonesCapabilities;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiFreebudsSupport;
 
@@ -53,11 +52,6 @@ public class HuaweiFreebudsProCoordinator extends HuaweiFreebudsCoordinator {
     @Override
     public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return HuaweiFreebudsSupport.class;
-    }
-
-    @Override
-    public DeviceType getDeviceType() {
-        return DeviceType.HUAWEI_FREEBUDS_PRO;
     }
 
     @Override

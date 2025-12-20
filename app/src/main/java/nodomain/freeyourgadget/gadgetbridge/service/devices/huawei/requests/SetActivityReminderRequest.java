@@ -42,7 +42,7 @@ public class SetActivityReminderRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsActivityReminder();
+        return supportProvider.getDeviceState().supportsActivityReminder();
     }
 
     @Override

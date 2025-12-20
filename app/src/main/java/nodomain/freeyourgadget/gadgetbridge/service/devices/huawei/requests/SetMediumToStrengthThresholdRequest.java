@@ -37,14 +37,14 @@ public class SetMediumToStrengthThresholdRequest extends Request {
 
     @Override
     protected boolean requestSupported() {
-        return supportProvider.getHuaweiCoordinator().supportsFitnessThresholdValue();
+        return supportProvider.getDeviceState().supportsFitnessThresholdValue();
     }
 
     @Override
     protected List<byte[]> createRequest() throws RequestCreationException {
         try {
             //Hardcoded value till interface enable threshold values
-            if(supportProvider.getHuaweiCoordinator().supportsFitnessThresholdValueV2()) {
+            if(supportProvider.getDeviceState().supportsFitnessThresholdValueV2()) {
                 return new MediumToStrengthThreshold.Request(paramsProvider,
                         (byte) 0x6E,
                         (byte) 0x3C,

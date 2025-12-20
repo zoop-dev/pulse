@@ -85,7 +85,7 @@ public class HuaweiDataSyncManager {
     }
 
     public boolean sendConfigCommand(String srcPackage, String dstPackage, HuaweiDataSyncCommon.ConfigCommandData data) {
-        if(!this.support.getHuaweiCoordinator().supportsDeviceCommandConfig()) {
+        if(!this.support.getDeviceState().supportsDeviceCommandConfig()) {
             LOG.info("sendConfigCommand is not supported");
             return false;
         }
@@ -100,7 +100,7 @@ public class HuaweiDataSyncManager {
     }
 
     public boolean sendEventCommand(String srcPackage, String dstPackage, HuaweiDataSyncCommon.EventCommandData data) {
-        if(!this.support.getHuaweiCoordinator().supportsDeviceCommandEvent()) {
+        if(!this.support.getDeviceState().supportsDeviceCommandEvent()) {
             LOG.info("sendEventCommand is not supported");
             return false;
         }
@@ -115,7 +115,7 @@ public class HuaweiDataSyncManager {
     }
 
     public boolean sendDataCommand(String srcPackage, String dstPackage, HuaweiDataSyncCommon.DataCommandData data) {
-        if(!this.support.getHuaweiCoordinator().supportsDeviceCommandData()) {
+        if(!this.support.getDeviceState().supportsDeviceCommandData()) {
             LOG.info("sendDataCommand is not supported");
             return false;
         }
@@ -130,7 +130,7 @@ public class HuaweiDataSyncManager {
     }
 
     public boolean sendDictDataCommand(String srcPackage, String dstPackage, HuaweiDataSyncCommon.DictDataCommandData data) {
-        if(!this.support.getHuaweiCoordinator().supportsDeviceCommandDictData()) {
+        if(!this.support.getDeviceState().supportsDeviceCommandDictData()) {
             LOG.info("sendDictDataCommand is not supported");
             return false;
         }

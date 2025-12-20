@@ -19,7 +19,6 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huawei.freearc;
 
 import androidx.annotation.NonNull;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -28,7 +27,6 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiFreebudsCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiHeadphonesCapabilities;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiFreebudsSupport;
 
@@ -50,11 +48,6 @@ public class HuaweiFreearcCoordinator extends HuaweiFreebudsCoordinator {
     @Override
     public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return HuaweiFreebudsSupport.class;
-    }
-
-    @Override
-    public DeviceType getDeviceType() {
-        return DeviceType.HUAWEI_FREEARC;
     }
 
     @Override
