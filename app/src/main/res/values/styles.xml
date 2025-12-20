@@ -30,6 +30,7 @@
         <item name="chart_awake_sleep">@color/chart_awake_sleep_light</item>
         <item name="chart_activity">@color/chart_activity_light</item>
         <item name="chart_not_worn">@color/chart_not_worn_light</item>
+        <item name="spo2_avg_color">@color/spo2_avg_color_light</item>
         <item name="training_acute_load">@color/training_load</item>
         <item name="alternate_row_background">@color/alternate_row_background_light</item>
         <item name="row_separator">@color/row_separator_light</item>
@@ -75,6 +76,7 @@
         <item name="chart_awake_sleep">@color/chart_awake_sleep_dark</item>
         <item name="chart_activity">@color/chart_activity_dark</item>
         <item name="chart_not_worn">@color/chart_not_worn_dark</item>
+        <item name="spo2_avg_color">@color/spo2_avg_color_dark</item>
         <item name="training_acute_load">@color/training_load_dark</item>
         <item name="alternate_row_background">@color/alternate_row_background_dark</item>
         <item name="row_separator">@color/row_separator_dark</item>
@@ -117,6 +119,7 @@
         <item name="deviceIconOnPrimary">?attr/colorOnPrimary</item>
         <item name="deviceIconLight">?attr/colorPrimaryVariant</item>
         <item name="deviceIconDark">?attr/colorPrimaryDark</item>
+        <item name="spo2_avg_color">@color/spo2_avg_color_light</item>
     </style>
     <style name="GadgetbridgeThemeDynamicDark" parent="Theme.Material3.DynamicColors.Dark">
         <item name="textColorPrimary">@color/primarytext_dark</item>
@@ -138,6 +141,7 @@
         <item name="deviceIconOnPrimary">?attr/colorOnPrimary</item>
         <item name="deviceIconLight">?attr/colorPrimaryVariant</item>
         <item name="deviceIconDark">?attr/colorPrimaryDark</item>
+        <item name="spo2_avg_color">@color/spo2_avg_color_dark</item>
     </style>
     <style name="GadgetbridgeThemeDynamicDarkAmoled" parent="GadgetbridgeThemeDynamicDark">
         <item name="android:windowBackground">@android:color/black</item>

@@ -18,6 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.activities.charts;
 
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,11 +102,13 @@ public class Spo2PeriodFragment extends AbstractChartFragment<Spo2PeriodFragment
 
     @Override
     protected void init() {
+        TypedValue runningColor = new TypedValue();
         BACKGROUND_COLOR = GBApplication.getBackgroundColor(requireContext());
         LEGEND_TEXT_COLOR = GBApplication.getTextColor(requireContext());
         CHART_TEXT_COLOR = GBApplication.getSecondaryTextColor(requireContext());
-        SPO2_COLOR = ContextCompat.getColor(getContext(), R.color.spo2_color);
-        SPO2_AVG_COLOR = ContextCompat.getColor(getContext(), R.color.spo2_avg_color);
+        SPO2_COLOR = ContextCompat.getColor(requireContext(), R.color.spo2_color);
+        requireContext().getTheme().resolveAttribute(R.attr.spo2_avg_color, runningColor, true);
+        SPO2_AVG_COLOR = runningColor.data;
     }
 
     @Override

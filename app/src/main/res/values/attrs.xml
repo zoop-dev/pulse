@@ -15,6 +15,7 @@
     <attr name="chart_awake_sleep" format="color" />
     <attr name="chart_activity" format="color" />
     <attr name="chart_not_worn" format="color" />
+    <attr name="spo2_avg_color" format="color" />
     <attr name="training_acute_load" format="color" />
     <attr name="alternate_row_background" format="color" />
 
