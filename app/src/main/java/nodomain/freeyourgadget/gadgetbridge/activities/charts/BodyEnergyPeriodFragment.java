@@ -80,7 +80,7 @@ public class BodyEnergyPeriodFragment extends AbstractChartFragment<BodyEnergyPe
         BACKGROUND_COLOR = GBApplication.getBackgroundColor(requireContext());
         LEGEND_TEXT_COLOR = GBApplication.getTextColor(requireContext());
         CHART_TEXT_COLOR = GBApplication.getSecondaryTextColor(requireContext());
-        BODY_ENERGY_COLOR = ContextCompat.getColor(getContext(), R.color.body_energy_level_color);
+        BODY_ENERGY_COLOR = ContextCompat.getColor(requireContext(), R.color.body_energy_level_color);
     }
 
     @Override
@@ -193,22 +193,27 @@ public class BodyEnergyPeriodFragment extends AbstractChartFragment<BodyEnergyPe
         };
         bodyEnergyChart.getXAxis().setValueFormatter(formatter);
 
-        CandleDataSet candleDataSet = new CandleDataSet(candleEntries, getString(R.string.body_energy));
-        candleDataSet.setDrawValues(false);
-        candleDataSet.setDrawIcons(false);
-        candleDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-        candleDataSet.setShadowColor(BODY_ENERGY_COLOR);
-        candleDataSet.setShadowWidth(2f);
-        candleDataSet.setDecreasingColor(BODY_ENERGY_COLOR);
-        candleDataSet.setDecreasingPaintStyle(Paint.Style.FILL);
-        candleDataSet.setIncreasingColor(BODY_ENERGY_COLOR);
-        candleDataSet.setIncreasingPaintStyle(Paint.Style.FILL);
-        candleDataSet.setNeutralColor(BODY_ENERGY_COLOR);
-        candleDataSet.setBarSpace(0.3f);
-        candleDataSet.setShowCandleBar(true);
+        if (!candleEntries.isEmpty()) {
+            CandleDataSet candleDataSet = new CandleDataSet(candleEntries, getString(R.string.body_energy));
+            candleDataSet.setDrawValues(false);
+            candleDataSet.setDrawIcons(false);
+            candleDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+            candleDataSet.setShadowColor(BODY_ENERGY_COLOR);
+            candleDataSet.setShadowWidth(2f);
+            candleDataSet.setDecreasingColor(BODY_ENERGY_COLOR);
+            candleDataSet.setDecreasingPaintStyle(Paint.Style.FILL);
+            candleDataSet.setIncreasingColor(BODY_ENERGY_COLOR);
+            candleDataSet.setIncreasingPaintStyle(Paint.Style.FILL);
+            candleDataSet.setNeutralColor(BODY_ENERGY_COLOR);
+            candleDataSet.setBarSpace(0.3f);
+            candleDataSet.setShowCandleBar(true);
 
-        CandleData candleData = new CandleData(candleDataSet);
-        bodyEnergyChart.setData(candleData);
+            CandleData candleData = new CandleData(candleDataSet);
+            bodyEnergyChart.setData(candleData);
+        } else {
+            bodyEnergyChart.setData(null);
+        }
+
     }
 
     private void setupChart() {
