@@ -15,7 +15,13 @@
  */
 package nodomain.freeyourgadget.gadgetbridge.daogen;
 
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
@@ -27,7 +33,10 @@ import de.greenrobot.daogenerator.Schema;
  * Generates entities and DAOs for the example project DaoExample.
  * Automatically run during build.
  */
+@SuppressWarnings({"UnusedReturnValue", "SameParameterValue", "unused"})
 public class GBDaoGenerator {
+    private static final String OUTPUT_DIR = "app/build/generated/sources/gbdao";
+    private static final String LEGACY_DIR = "app/src/main/java/nodomain/freeyourgadget/gadgetbridge/entities";
 
     private static final String VALID_FROM_UTC = "validFromUTC";
     private static final String VALID_TO_UTC = "validToUTC";
@@ -72,7 +81,7 @@ public class GBDaoGenerator {
         deviceAttributes.addStringProperty("volatileIdentifier");
 
         Entity tag = addTag(schema);
-        Entity userDefinedActivityOverlay = addActivityDescription(schema, tag, user);
+        addActivityDescription(schema, tag, user);
 
         addMakibesHR3ActivitySample(schema, user, device);
         addOVTouch26ActivitySample(schema, user, device);
@@ -222,7 +231,66 @@ public class GBDaoGenerator {
         addGenericTrainingLoadChronicSample(schema, user, device);
         addGenericWeightSample(schema, user, device);
 
-        new DaoGenerator().generateAll(schema, "app/src/main/java");
+        deleteOldFiles();
+
+        new DaoGenerator().generateAll(schema, OUTPUT_DIR);
+    }
+
+    private static void deleteOldFiles() throws IOException {
+        // Cleanup the legacy directory to avoid classpath conflicts during build for users that pull the latest changes
+        // FIXME: Remove this eventually, and app/src/main/java/nodomain/freeyourgadget/gadgetbridge/entities/.gitignore as well
+        if (new File(LEGACY_DIR, "DaoSession.java").isFile()) {
+            Files.walkFileTree(new File(LEGACY_DIR).toPath(), new SimpleFileVisitor<>() {
+                @SuppressWarnings("NullableProblems")
+                @Override
+                public FileVisitResult preVisitDirectory(final Path dir, final BasicFileAttributes attrs) {
+                    if (Files.isSymbolicLink(dir)) {
+                        return FileVisitResult.SKIP_SUBTREE;
+                    }
+                    return FileVisitResult.CONTINUE;
+                }
+
+                @SuppressWarnings("NullableProblems")
+                @Override
+                public FileVisitResult visitFile(final Path path, final BasicFileAttributes attrs) throws IOException {
+                    final File file = path.toFile();
+                    if (!file.isFile()) {
+                        return FileVisitResult.SKIP_SUBTREE;
+                    }
+                    if (file.getName().endsWith(".java")) {
+                        if (!file.getName().startsWith("Abstract") && !file.getName().equals("GenericActivitySample.java")) {
+                            System.out.println("Deleting legacy file: " + path);
+                            Files.delete(path);
+                        }
+                    }
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+        }
+
+        Files.walkFileTree(new File(OUTPUT_DIR).toPath(), new SimpleFileVisitor<>() {
+            @SuppressWarnings("NullableProblems")
+            @Override
+            public FileVisitResult preVisitDirectory(final Path dir, final BasicFileAttributes attrs) {
+                if (Files.isSymbolicLink(dir)) {
+                    return FileVisitResult.SKIP_SUBTREE;
+                }
+                return FileVisitResult.CONTINUE;
+            }
+
+            @SuppressWarnings("NullableProblems")
+            @Override
+            public FileVisitResult visitFile(final Path path, final BasicFileAttributes attrs) throws IOException {
+                if (!path.toFile().isFile()) {
+                    return FileVisitResult.SKIP_SUBTREE;
+                }
+                if (path.toString().endsWith(".java")) {
+                    System.out.println("Deleting: " + path);
+                    Files.delete(path);
+                }
+                return FileVisitResult.CONTINUE;
+            }
+        });
     }
 
     private static Entity addTag(Schema schema) {
@@ -439,10 +507,12 @@ public class GBDaoGenerator {
         addCommonTimeSampleProperties("AbstractRespiratoryRateSample", sleepRespiratoryRateSample, user, device);
         sleepRespiratoryRateSample.addIntProperty("utcOffset").notNull();
         sleepRespiratoryRateSample.addIntProperty("rate").notNull().codeBeforeGetter(
-                "@Override\n" +
-                        "    public float getRespiratoryRate() {\n" +
-                        "        return (float) getRate();\n" +
-                        "    }\n\n"
+                """
+                        @Override
+                            public float getRespiratoryRate() {
+                                return (float) getRate();
+                            }
+                        """
         );
         return sleepRespiratoryRateSample;
     }
@@ -1209,9 +1279,11 @@ public class GBDaoGenerator {
         activitySample.setSuperclass(superClass);
         activitySample.addImport(MAIN_PACKAGE + ".devices.SampleProvider");
         activitySample.setJavaDoc(
-                "This class represents a sample specific to the device. Values like activity kind or\n" +
-                        "intensity, are device specific. Normalized values can be retrieved through the\n" +
-                        "corresponding {@link SampleProvider}.");
+                """
+                                This class represents a sample specific to the device. Values like activity kind or
+                                intensity, are device specific. Normalized values can be retrieved through the
+                                corresponding {@link SampleProvider}.
+                        """);
         activitySample.addIntProperty("timestamp").notNull().codeBeforeGetterAndSetter(OVERRIDE).primaryKey();
         Property deviceId = activitySample.addLongProperty("deviceId").primaryKey().notNull().codeBeforeGetterAndSetter(OVERRIDE).getProperty();
         activitySample.addToOne(device, deviceId);
@@ -1369,7 +1441,7 @@ public class GBDaoGenerator {
         Entity notificatonFilterEntry = addEntity(schema, "NotificationFilterEntry");
         notificatonFilterEntry.addIdProperty().autoincrement();
         Property notificationFilterId = notificatonFilterEntry.addLongProperty("notificationFilterId").notNull().getProperty();
-        notificatonFilterEntry.addStringProperty("notificationFilterContent").notNull().getProperty();
+        notificatonFilterEntry.addStringProperty("notificationFilterContent").notNull();
         notificatonFilterEntry.addToOne(notificationFilterEntity, notificationFilterId);
     }
 
@@ -1567,16 +1639,20 @@ public class GBDaoGenerator {
         activitySample.addIntProperty(SAMPLE_RAW_INTENSITY).notNull().codeBeforeGetterAndSetter(OVERRIDE);
         activitySample.addIntProperty(SAMPLE_STEPS).notNull().codeBeforeGetterAndSetter(OVERRIDE);
         activitySample.addIntProperty("calories").notNull().codeBeforeGetter(
-                "@Override\n" +
-                "    public int getActiveCalories() {\n" +
-                "        return getCalories();\n" +
-                "    }\n"
+                """
+                        @Override
+                            public int getActiveCalories() {
+                                return getCalories();
+                            }
+                        """
         );
         activitySample.addIntProperty("distance").notNull().codeBeforeGetter(
-                "@Override\n" +
-                "    public int getDistanceCm() {\n" +
-                "        return getDistance() == HuaweiActivitySample.NOT_MEASURED ? HuaweiActivitySample.NOT_MEASURED : getDistance() * 100;\n" +
-                "    }\n"
+                """
+                        @Override
+                            public int getDistanceCm() {
+                                return getDistance() == HuaweiActivitySample.NOT_MEASURED ? HuaweiActivitySample.NOT_MEASURED : getDistance() * 100;
+                            }
+                        """
         );
         activitySample.addIntProperty("spo").notNull();
         activitySample.addIntProperty("heartRate").notNull();
@@ -1683,7 +1759,7 @@ public class GBDaoGenerator {
         sample.addDoubleProperty("valenceCharacter");
         sample.addIntProperty("originStatus");
         sample.addDoubleProperty("arousalCharacter");
-        
+
         return sample;
     }
 

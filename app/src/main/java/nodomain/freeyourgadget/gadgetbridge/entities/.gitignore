@@ -1,3 +1,5 @@
+# As of #5066 this file should not be needed anymore, but keeping it around
+# to avoid issues with older checkouts.
 *.java
 !Abstract*.java
 !GenericActivitySample.java

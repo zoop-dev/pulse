@@ -139,6 +139,7 @@ android {
 
     sourceSets {
         main {
+            java.srcDirs += "build/generated/sources/gbdao"
             res.srcDirs += "build/generated/res/changelog"
         }
     }
