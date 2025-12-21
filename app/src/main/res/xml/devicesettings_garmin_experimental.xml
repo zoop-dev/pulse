@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_settings_applications"
+        android:key="garmin_experimental_app_management"
+        android:layout="@layout/preference_checkbox"
+        android:summary="Allow installed app management from Gadgetbridge. Not heavily tested. Uninstalling system apps might be dangerous."
+        android:title="App management" />
+</androidx.preference.PreferenceScreen>

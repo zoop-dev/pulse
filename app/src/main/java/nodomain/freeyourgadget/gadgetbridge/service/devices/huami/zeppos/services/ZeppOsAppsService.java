@@ -201,6 +201,11 @@ public class ZeppOsAppsService extends AbstractZeppOsService {
     public void deleteApp(final int appId) {
         LOG.info("Delete app {}", String.format("0x%08x", appId));
 
+        if (!getCoordinator().experimentalSettingEnabled(getSupport().getDevice(), "zepp_os_experimental_app_management")) {
+            LOG.warn("Experimental app management not enabled");
+            return;
+        }
+
         final ByteBuffer buf = ByteBuffer.allocate(20).order(ByteOrder.LITTLE_ENDIAN);
 
         buf.put(CMD_APPS);

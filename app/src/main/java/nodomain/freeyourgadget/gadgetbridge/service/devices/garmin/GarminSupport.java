@@ -103,8 +103,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitWeather;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.ConfigurationMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.DownloadRequestMessage;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.FitDataMessage;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.FitDefinitionMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.GFDIMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.MusicControlEntityUpdateMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.ProtobufMessage;
@@ -516,11 +514,18 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
     @Override
     public void onAppStart(final UUID uuid, final boolean start) {
-
+        if (!getCoordinator().experimentalSettingEnabled(getDevice(), "garmin_experimental_app_management")) {
+            LOG.warn("Experimental app management not enabled");
+        }
     }
 
     @Override
     public void onAppDelete(final UUID uuid) {
+        if (!getCoordinator().experimentalSettingEnabled(getDevice(), "garmin_experimental_app_management")) {
+            LOG.warn("Experimental app management not enabled");
+            return;
+        }
+
         final GdiInstalledAppsService.InstalledAppsService.InstalledApp app = installedApps.get(uuid);
 
         if (app == null) {

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_settings_applications"
+        android:key="zepp_os_experimental_app_management"
+        android:layout="@layout/preference_checkbox"
+        android:summary="Allow installed app management from Gadgetbridge. Not heavily tested. Uninstalling system apps might be dangerous."
+        android:title="App management" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_voice"
+        android:key="zepp_os_experimental_assistant"
+        android:layout="@layout/preference_checkbox"
+        android:summary="Enable Alexa / Zepp Flow manual debug options and voice receiving. Not yet functional."
+        android:title="Assistant service" />
+</androidx.preference.PreferenceScreen>

@@ -739,6 +739,8 @@
     <string name="title_activity_sleepmonitor">Sleep monitor</string>
     <string name="pref_write_logfiles">Write log files</string>
     <string name="pref_cache_weather">Cache weather information</string>
+    <string name="pref_experimental_settings_title">Experimental settings</string>
+    <string name="pref_experimental_settings_summary">Experimental settings might be unstable or not work as expected. Proceed at your own risk.</string>
     <string name="pref_cache_weather_summary">Weather information will be cached across application restarts.</string>
     <string name="pref_write_logfiles_not_available">File logging initialization failed, writing log files is currently not available. Restart the application to attempt to initialize the log files again.</string>
     <string name="initializing">Initializing</string>

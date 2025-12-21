@@ -1595,11 +1595,24 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
                     );
                 }
             }
-            if(BuildConfig.DEBUG) {
+            if (BuildConfig.DEBUG) {
                 deviceSpecificSettings.addRootScreen(
                         DeviceSpecificSettingsScreen.DEVELOPER,
                         R.xml.devicesettings_stress_test
                 );
+            }
+            if (GBApplication.getPrefs().experimentalSettings()) {
+                final int[] experimentalSettings = coordinator.getSupportedDeviceSpecificExperimentalSettings(device);
+                if (experimentalSettings != null && experimentalSettings.length > 0) {
+                    deviceSpecificSettings.addRootScreen(
+                            DeviceSpecificSettingsScreen.EXPERIMENTAL,
+                            R.xml.devicesettings_experimental_warning
+                    );
+                    deviceSpecificSettings.addRootScreen(
+                            DeviceSpecificSettingsScreen.EXPERIMENTAL,
+                            experimentalSettings
+                    );
+                }
             }
         }
 

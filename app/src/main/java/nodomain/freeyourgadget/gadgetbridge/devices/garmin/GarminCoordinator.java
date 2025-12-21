@@ -224,6 +224,11 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
+    public int[] getSupportedDeviceSpecificExperimentalSettings(final GBDevice device) {
+        return new int[]{R.xml.devicesettings_garmin_experimental};
+    }
+
+    @Override
     public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
         final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
 
@@ -307,9 +312,8 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public boolean supportsAppsManagement(@NonNull final GBDevice device) {
-        // FIXME: disabled until better polished
-        //return supports(device, GarminCapability.CONNECTIQ_APP_MANAGEMENT);
-        return false;
+        // FIXME: experimental until better polished
+        return experimentalSettingEnabled(device, "garmin_experimental_app_management");
     }
 
     @Override

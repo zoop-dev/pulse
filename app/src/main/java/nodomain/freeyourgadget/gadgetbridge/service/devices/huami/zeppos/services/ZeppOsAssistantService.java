@@ -206,7 +206,7 @@ public class ZeppOsAssistantService extends AbstractZeppOsService {
         }
         voiceBuffer.clear();
 
-        if (ZeppOsCoordinator.experimentalFeatures(getSupport().getDevice())) {
+        if (getCoordinator().experimentalSettingEnabled(getSupport().getDevice(), "zepp_os_experimental_assistant")) {
             requestCapabilities(builder);
         }
     }

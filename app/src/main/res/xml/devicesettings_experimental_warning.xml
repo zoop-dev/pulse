@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:icon="@drawable/ic_warning"
+        android:key="pref_experimental_warning"
+        android:summary="@string/pref_experimental_settings_summary" />
+</androidx.preference.PreferenceScreen>

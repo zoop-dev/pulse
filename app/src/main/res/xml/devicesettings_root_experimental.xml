@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceScreen
+        android:icon="@drawable/ic_warning_gray"
+        android:key="pref_screen_experimental"
+        android:persistent="false"
+        android:title="@string/pref_experimental_settings_title">
+    </PreferenceScreen>
+</androidx.preference.PreferenceScreen>

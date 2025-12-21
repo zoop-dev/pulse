@@ -805,6 +805,12 @@ public interface DeviceCoordinator {
     int[] getSupportedDeviceSpecificAuthenticationSettings();
 
     /**
+     * Returns device specific experimental settings. This screen is only shown when the global experimental settings
+     * is enabled.
+     */
+    int[] getSupportedDeviceSpecificExperimentalSettings(final GBDevice device);
+
+    /**
      * Indicates which device specific settings the device supports (not per device type or family, but unique per device).
      *
      * @deprecated use getDeviceSpecificSettings

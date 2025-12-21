@@ -187,4 +187,8 @@ public class GBPrefs extends Prefs {
     public boolean refreshOnSwipe() {
         return getBoolean("pref_refresh_on_swipe", true);
     }
+
+    public boolean experimentalSettings() {
+        return getBoolean("experimental_settings", false);
+    }
 }

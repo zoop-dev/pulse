@@ -278,7 +278,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
 
     @Override
     public boolean supportsAppsManagement(@NonNull final GBDevice device) {
-        return experimentalFeatures(device);
+        return experimentalSettingEnabled(device, "zepp_os_experimental_app_management");
     }
 
     @Override
@@ -386,6 +386,11 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
                 ArrayUtils.toPrimitive(settings.toArray(new Integer[0])),
                 super.getSupportedDeviceSpecificConnectionSettings()
         );
+    }
+
+    @Override
+    public int[] getSupportedDeviceSpecificExperimentalSettings(final GBDevice device) {
+        return new int[]{R.xml.devicesettings_zeppos_experimental};
     }
 
     /**
@@ -659,7 +664,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     public boolean supportsAssistant(final GBDevice device) {
-        return experimentalFeatures(device) && ZeppOsAssistantService.isSupported(getPrefs(device));
+        return experimentalSettingEnabled(device, "zepp_os_experimental_assistant") && ZeppOsAssistantService.isSupported(getPrefs(device));
     }
 
     public boolean supportsMaps(final GBDevice device) {
@@ -685,10 +690,6 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
         return getPrefs(device)
                 .getStringSet(ZeppOsFileTransferImpl.PREF_SUPPORTED_SERVICES, Collections.emptySet())
                 .contains(service);
-    }
-
-    public static boolean experimentalFeatures(final GBDevice device) {
-        return getPrefs(device).getBoolean("zepp_os_experimental_features", false);
     }
 
     @Override
