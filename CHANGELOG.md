@@ -1,5 +1,22 @@
 ### Changelog
 
+#### Next version (WIP)
+
+* Initial support for CMF Buds 2
+* Initial support for Galaxy Buds3 Pro
+* Initial support for Garmin Edge 840
+* Huawei: Sync raw ECG data (no UI)
+* Huami: Improve workout charts for activities without gps
+* Pebble: Support Signal icon with 2025 models
+* Xiaomi-protobuf: Enable active calories
+* Zepp OS: Add jump rope stats
+* Charts: Add loading indicator
+* Charts: Add weekly/monthly body energy
+* Charts: Add weekly/monthly blood oxygen
+* Add HRV summary computation for all devices that support HRV
+* Dismiss permissions screen after all permissions granted
+* Fix 0-second sleep sessions
+
 #### 0.88.0
 
 * Initial support for Amazfit GTS 4 Mini New, T-Rex 3 Pro
