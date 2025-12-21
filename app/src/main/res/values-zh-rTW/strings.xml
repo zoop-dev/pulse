@@ -3171,4 +3171,7 @@
     <string name="this_week_total">本週總計</string>
     <string name="last_week_total">上週總計</string>
     <string name="optimal">最佳的</string>
+    <string name="zepp_os_sun_moon_utc_title">請以 UTC 格式發送太陽/月亮時間</string>
+    <string name="zepp_os_sun_moon_utc_summary">如果您的手錶顯示的日月時間值不正確，請啟用此功能</string>
+    <string name="weather_condition_thunderstorm_with_rain">雷雨</string>
 </resources>
