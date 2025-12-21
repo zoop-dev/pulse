@@ -3948,4 +3948,6 @@
     <string name="prefs_earbud_lights_controls">Керування підсвічуванням навушників</string>
     <string name="prefs_earbud_lights_fade">Згасання та поступове поява</string>
     <string name="prefs_earbud_lights_steady">Стабільний</string>
+    <string name="pref_experimental_settings_title">Експериментальні налаштування</string>
+    <string name="pref_experimental_settings_summary">Експериментальні налаштування можуть бути нестабільними або працювати неналежним чином. Продовжуйте на свій страх і ризик.</string>
 </resources>
