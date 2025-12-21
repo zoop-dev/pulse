@@ -1,5 +1,5 @@
-/*  Copyright (C) 2015-2024 Andreas Shimokawa, Carsten Pfeiffer, Damien
-    Gaignon, Daniele Gobbetti, José Rebelo, Petr Vaněk
+/*  Copyright (C) 2015-2025 Andreas Shimokawa, Carsten Pfeiffer, Damien
+    Gaignon, Daniele Gobbetti, José Rebelo, Petr Vaněk, vappster
 
     This file is part of Gadgetbridge.
 
@@ -73,7 +73,10 @@ public class CheckSums {
     }
 
     public static int getCRC16ansi(byte[] seq) {
-        int crc = 0xffff;
+        return getCRC16ansi(seq, 0xffff);
+    }
+
+    public static int getCRC16ansi(byte[] seq, int crc) {
         int polynomial = 0xA001;
 
         for (int i = 0; i < seq.length; i++) {

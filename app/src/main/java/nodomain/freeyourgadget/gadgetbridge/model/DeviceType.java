@@ -334,6 +334,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.onemoresonoflow.OneMoreSonoF
 import nodomain.freeyourgadget.gadgetbridge.devices.oppo.OppoEncoAir2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.oppo.OppoEncoAirCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.oppo.OppoEncoBuds2Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.overmax.OVTouch26Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.pinetime.PineTimeJFCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.pixel.PixelBudsACoordinator;
@@ -569,6 +570,7 @@ public enum DeviceType {
     MICOMPOSITIONSCALE(MiCompositionScaleCoordinator.class),
     BFH16(BFH16DeviceCoordinator.class),
     MAKIBESHR3(MakibesHR3Coordinator.class),
+    OVTOUCH26(OVTouch26Coordinator.class),
     BANGLEJS(BangleJSCoordinator.class),
     FOSSILQHYBRID(QHybridCoordinator.class),
     TLW64(TLW64Coordinator.class),
