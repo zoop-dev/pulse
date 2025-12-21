@@ -4107,4 +4107,6 @@
     <string name="prefs_earbud_lights_controls">Ovládání světel sluchátek</string>
     <string name="prefs_earbud_lights_fade">Postupné rozsvícení a zhasnutí</string>
     <string name="prefs_earbud_lights_steady">Stálé</string>
+    <string name="pref_experimental_settings_title">Experimentální nastavení</string>
+    <string name="pref_experimental_settings_summary">Experimentální nastavení mohou být nestabilní nebo nemusí fungovat pdole očekávání. Pokračujte na vlastní nebezpečí.</string>
 </resources>
