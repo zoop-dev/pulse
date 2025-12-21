@@ -1957,6 +1957,11 @@ public class FitSession extends RecordData {
         public FitSession build() {
             return (FitSession) super.build();
         }
+
+        @Override
+        public FitSession build(final int localMessageType) {
+            return (FitSession) super.build(localMessageType);
+        }
     }
 
     // manual changes below

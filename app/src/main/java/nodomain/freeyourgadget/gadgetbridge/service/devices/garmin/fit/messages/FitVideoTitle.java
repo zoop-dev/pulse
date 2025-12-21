@@ -81,5 +81,10 @@ public class FitVideoTitle extends RecordData {
         public FitVideoTitle build() {
             return (FitVideoTitle) super.build();
         }
+
+        @Override
+        public FitVideoTitle build(final int localMessageType) {
+            return (FitVideoTitle) super.build(localMessageType);
+        }
     }
 }

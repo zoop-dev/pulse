@@ -121,5 +121,10 @@ public class FitVideoClip extends RecordData {
         public FitVideoClip build() {
             return (FitVideoClip) super.build();
         }
+
+        @Override
+        public FitVideoClip build(final int localMessageType) {
+            return (FitVideoClip) super.build(localMessageType);
+        }
     }
 }

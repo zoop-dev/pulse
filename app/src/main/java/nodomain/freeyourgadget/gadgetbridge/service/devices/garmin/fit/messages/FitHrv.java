@@ -72,5 +72,10 @@ public class FitHrv extends RecordData {
         public FitHrv build() {
             return (FitHrv) super.build();
         }
+
+        @Override
+        public FitHrv build(final int localMessageType) {
+            return (FitHrv) super.build(localMessageType);
+        }
     }
 }

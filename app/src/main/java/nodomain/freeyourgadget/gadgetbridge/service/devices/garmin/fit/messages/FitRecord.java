@@ -981,6 +981,11 @@ public class FitRecord extends RecordData {
         public FitRecord build() {
             return (FitRecord) super.build();
         }
+
+        @Override
+        public FitRecord build(final int localMessageType) {
+            return (FitRecord) super.build(localMessageType);
+        }
     }
 
     // manual changes below

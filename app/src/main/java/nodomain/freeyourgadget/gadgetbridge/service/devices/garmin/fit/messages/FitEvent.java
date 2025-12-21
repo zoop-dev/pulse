@@ -241,5 +241,10 @@ public class FitEvent extends RecordData {
         public FitEvent build() {
             return (FitEvent) super.build();
         }
+
+        @Override
+        public FitEvent build(final int localMessageType) {
+            return (FitEvent) super.build(localMessageType);
+        }
     }
 }

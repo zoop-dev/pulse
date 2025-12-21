@@ -113,5 +113,10 @@ public class FitBarometerData extends RecordData {
         public FitBarometerData build() {
             return (FitBarometerData) super.build();
         }
+
+        @Override
+        public FitBarometerData build(final int localMessageType) {
+            return (FitBarometerData) super.build(localMessageType);
+        }
     }
 }

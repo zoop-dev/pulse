@@ -92,5 +92,10 @@ public class FitBeatIntervals extends RecordData {
         public FitBeatIntervals build() {
             return (FitBeatIntervals) super.build();
         }
+
+        @Override
+        public FitBeatIntervals build(final int localMessageType) {
+            return (FitBeatIntervals) super.build(localMessageType);
+        }
     }
 }

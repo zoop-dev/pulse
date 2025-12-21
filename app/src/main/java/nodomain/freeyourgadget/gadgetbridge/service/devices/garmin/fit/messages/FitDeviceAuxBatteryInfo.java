@@ -101,5 +101,10 @@ public class FitDeviceAuxBatteryInfo extends RecordData {
         public FitDeviceAuxBatteryInfo build() {
             return (FitDeviceAuxBatteryInfo) super.build();
         }
+
+        @Override
+        public FitDeviceAuxBatteryInfo build(final int localMessageType) {
+            return (FitDeviceAuxBatteryInfo) super.build(localMessageType);
+        }
     }
 }

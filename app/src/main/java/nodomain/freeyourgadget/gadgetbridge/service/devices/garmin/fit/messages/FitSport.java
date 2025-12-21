@@ -81,5 +81,10 @@ public class FitSport extends RecordData {
         public FitSport build() {
             return (FitSport) super.build();
         }
+
+        @Override
+        public FitSport build(final int localMessageType) {
+            return (FitSport) super.build(localMessageType);
+        }
     }
 }

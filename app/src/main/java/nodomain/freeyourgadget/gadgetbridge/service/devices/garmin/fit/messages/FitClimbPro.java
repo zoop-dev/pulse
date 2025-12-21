@@ -121,5 +121,10 @@ public class FitClimbPro extends RecordData {
         public FitClimbPro build() {
             return (FitClimbPro) super.build();
         }
+
+        @Override
+        public FitClimbPro build(final int localMessageType) {
+            return (FitClimbPro) super.build(localMessageType);
+        }
     }
 }

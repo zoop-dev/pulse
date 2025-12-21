@@ -131,5 +131,10 @@ public class FitMaxMetData extends RecordData {
         public FitMaxMetData build() {
             return (FitMaxMetData) super.build();
         }
+
+        @Override
+        public FitMaxMetData build(final int localMessageType) {
+            return (FitMaxMetData) super.build(localMessageType);
+        }
     }
 }

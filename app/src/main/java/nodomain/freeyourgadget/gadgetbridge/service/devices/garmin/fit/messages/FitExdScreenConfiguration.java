@@ -91,5 +91,10 @@ public class FitExdScreenConfiguration extends RecordData {
         public FitExdScreenConfiguration build() {
             return (FitExdScreenConfiguration) super.build();
         }
+
+        @Override
+        public FitExdScreenConfiguration build(final int localMessageType) {
+            return (FitExdScreenConfiguration) super.build(localMessageType);
+        }
     }
 }

@@ -185,5 +185,10 @@ public class FitObdiiData extends RecordData {
         public FitObdiiData build() {
             return (FitObdiiData) super.build();
         }
+
+        @Override
+        public FitObdiiData build(final int localMessageType) {
+            return (FitObdiiData) super.build(localMessageType);
+        }
     }
 }

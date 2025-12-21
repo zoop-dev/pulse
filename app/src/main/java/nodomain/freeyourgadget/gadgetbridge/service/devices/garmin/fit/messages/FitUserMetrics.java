@@ -181,5 +181,10 @@ public class FitUserMetrics extends RecordData {
         public FitUserMetrics build() {
             return (FitUserMetrics) super.build();
         }
+
+        @Override
+        public FitUserMetrics build(final int localMessageType) {
+            return (FitUserMetrics) super.build(localMessageType);
+        }
     }
 }

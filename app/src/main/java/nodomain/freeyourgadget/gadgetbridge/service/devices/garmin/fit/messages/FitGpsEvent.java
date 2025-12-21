@@ -81,5 +81,10 @@ public class FitGpsEvent extends RecordData {
         public FitGpsEvent build() {
             return (FitGpsEvent) super.build();
         }
+
+        @Override
+        public FitGpsEvent build(final int localMessageType) {
+            return (FitGpsEvent) super.build(localMessageType);
+        }
     }
 }

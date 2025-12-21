@@ -181,5 +181,10 @@ public class FitConnectivity extends RecordData {
         public FitConnectivity build() {
             return (FitConnectivity) super.build();
         }
+
+        @Override
+        public FitConnectivity build(final int localMessageType) {
+            return (FitConnectivity) super.build(localMessageType);
+        }
     }
 }

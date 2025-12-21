@@ -281,5 +281,10 @@ public class FitAviationAttitude extends RecordData {
         public FitAviationAttitude build() {
             return (FitAviationAttitude) super.build();
         }
+
+        @Override
+        public FitAviationAttitude build(final int localMessageType) {
+            return (FitAviationAttitude) super.build(localMessageType);
+        }
     }
 }

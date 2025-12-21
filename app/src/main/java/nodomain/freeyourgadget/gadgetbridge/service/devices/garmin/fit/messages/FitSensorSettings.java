@@ -111,5 +111,10 @@ public class FitSensorSettings extends RecordData {
         public FitSensorSettings build() {
             return (FitSensorSettings) super.build();
         }
+
+        @Override
+        public FitSensorSettings build(final int localMessageType) {
+            return (FitSensorSettings) super.build(localMessageType);
+        }
     }
 }

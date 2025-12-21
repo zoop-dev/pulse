@@ -101,5 +101,10 @@ public class FitAntChannelId extends RecordData {
         public FitAntChannelId build() {
             return (FitAntChannelId) super.build();
         }
+
+        @Override
+        public FitAntChannelId build(final int localMessageType) {
+            return (FitAntChannelId) super.build(localMessageType);
+        }
     }
 }

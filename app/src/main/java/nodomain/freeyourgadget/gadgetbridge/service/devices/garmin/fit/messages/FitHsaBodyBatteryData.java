@@ -134,5 +134,10 @@ public class FitHsaBodyBatteryData extends RecordData {
         public FitHsaBodyBatteryData build() {
             return (FitHsaBodyBatteryData) super.build();
         }
+
+        @Override
+        public FitHsaBodyBatteryData build(final int localMessageType) {
+            return (FitHsaBodyBatteryData) super.build(localMessageType);
+        }
     }
 }

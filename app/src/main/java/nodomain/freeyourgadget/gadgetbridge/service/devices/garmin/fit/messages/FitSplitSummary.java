@@ -201,5 +201,10 @@ public class FitSplitSummary extends RecordData {
         public FitSplitSummary build() {
             return (FitSplitSummary) super.build();
         }
+
+        @Override
+        public FitSplitSummary build(final int localMessageType) {
+            return (FitSplitSummary) super.build(localMessageType);
+        }
     }
 }

@@ -61,5 +61,10 @@ public class FitEcgSmoothSample extends RecordData {
         public FitEcgSmoothSample build() {
             return (FitEcgSmoothSample) super.build();
         }
+
+        @Override
+        public FitEcgSmoothSample build(final int localMessageType) {
+            return (FitEcgSmoothSample) super.build(localMessageType);
+        }
     }
 }

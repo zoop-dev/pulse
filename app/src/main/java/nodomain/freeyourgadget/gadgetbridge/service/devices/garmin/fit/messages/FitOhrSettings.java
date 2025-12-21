@@ -71,5 +71,10 @@ public class FitOhrSettings extends RecordData {
         public FitOhrSettings build() {
             return (FitOhrSettings) super.build();
         }
+
+        @Override
+        public FitOhrSettings build(final int localMessageType) {
+            return (FitOhrSettings) super.build(localMessageType);
+        }
     }
 }

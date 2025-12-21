@@ -111,5 +111,10 @@ public class FitMesgCapabilities extends RecordData {
         public FitMesgCapabilities build() {
             return (FitMesgCapabilities) super.build();
         }
+
+        @Override
+        public FitMesgCapabilities build(final int localMessageType) {
+            return (FitMesgCapabilities) super.build(localMessageType);
+        }
     }
 }

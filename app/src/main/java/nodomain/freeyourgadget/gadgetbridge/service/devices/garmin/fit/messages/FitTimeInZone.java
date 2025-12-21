@@ -309,5 +309,10 @@ public class FitTimeInZone extends RecordData {
         public FitTimeInZone build() {
             return (FitTimeInZone) super.build();
         }
+
+        @Override
+        public FitTimeInZone build(final int localMessageType) {
+            return (FitTimeInZone) super.build(localMessageType);
+        }
     }
 }

@@ -81,5 +81,10 @@ public class FitWatchfaceSettings extends RecordData {
         public FitWatchfaceSettings build() {
             return (FitWatchfaceSettings) super.build();
         }
+
+        @Override
+        public FitWatchfaceSettings build(final int localMessageType) {
+            return (FitWatchfaceSettings) super.build(localMessageType);
+        }
     }
 }

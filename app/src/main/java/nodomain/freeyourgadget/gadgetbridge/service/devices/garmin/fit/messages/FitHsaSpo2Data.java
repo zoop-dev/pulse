@@ -113,5 +113,10 @@ public class FitHsaSpo2Data extends RecordData {
         public FitHsaSpo2Data build() {
             return (FitHsaSpo2Data) super.build();
         }
+
+        @Override
+        public FitHsaSpo2Data build(final int localMessageType) {
+            return (FitHsaSpo2Data) super.build(localMessageType);
+        }
     }
 }

@@ -281,5 +281,10 @@ public class FitDiveSummary extends RecordData {
         public FitDiveSummary build() {
             return (FitDiveSummary) super.build();
         }
+
+        @Override
+        public FitDiveSummary build(final int localMessageType) {
+            return (FitDiveSummary) super.build(localMessageType);
+        }
     }
 }

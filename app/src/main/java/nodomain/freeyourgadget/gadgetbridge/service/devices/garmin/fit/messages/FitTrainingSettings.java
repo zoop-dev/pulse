@@ -91,5 +91,10 @@ public class FitTrainingSettings extends RecordData {
         public FitTrainingSettings build() {
             return (FitTrainingSettings) super.build();
         }
+
+        @Override
+        public FitTrainingSettings build(final int localMessageType) {
+            return (FitTrainingSettings) super.build(localMessageType);
+        }
     }
 }

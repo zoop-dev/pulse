@@ -355,6 +355,11 @@ public class FitMonitoring extends RecordData {
         public FitMonitoring build() {
             return (FitMonitoring) super.build();
         }
+
+        @Override
+        public FitMonitoring build(final int localMessageType) {
+            return (FitMonitoring) super.build(localMessageType);
+        }
     }
 
     // manual changes below

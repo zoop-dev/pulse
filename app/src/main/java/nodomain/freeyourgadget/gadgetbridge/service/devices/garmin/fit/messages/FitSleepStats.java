@@ -221,5 +221,10 @@ public class FitSleepStats extends RecordData {
         public FitSleepStats build() {
             return (FitSleepStats) super.build();
         }
+
+        @Override
+        public FitSleepStats build(final int localMessageType) {
+            return (FitSleepStats) super.build(localMessageType);
+        }
     }
 }

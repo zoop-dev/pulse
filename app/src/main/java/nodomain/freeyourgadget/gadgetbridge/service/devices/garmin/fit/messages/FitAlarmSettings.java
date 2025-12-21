@@ -144,5 +144,10 @@ public class FitAlarmSettings extends RecordData {
         public FitAlarmSettings build() {
             return (FitAlarmSettings) super.build();
         }
+
+        @Override
+        public FitAlarmSettings build(final int localMessageType) {
+            return (FitAlarmSettings) super.build(localMessageType);
+        }
     }
 }

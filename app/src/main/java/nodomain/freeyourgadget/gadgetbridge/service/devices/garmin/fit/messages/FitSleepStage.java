@@ -72,5 +72,10 @@ public class FitSleepStage extends RecordData {
         public FitSleepStage build() {
             return (FitSleepStage) super.build();
         }
+
+        @Override
+        public FitSleepStage build(final int localMessageType) {
+            return (FitSleepStage) super.build(localMessageType);
+        }
     }
 }

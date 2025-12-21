@@ -91,5 +91,10 @@ public class FitCourse extends RecordData {
         public FitCourse build() {
             return (FitCourse) super.build();
         }
+
+        @Override
+        public FitCourse build(final int localMessageType) {
+            return (FitCourse) super.build(localMessageType);
+        }
     }
 }

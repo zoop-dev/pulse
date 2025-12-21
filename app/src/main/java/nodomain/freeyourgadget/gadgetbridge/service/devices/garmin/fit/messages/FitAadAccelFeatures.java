@@ -111,5 +111,10 @@ public class FitAadAccelFeatures extends RecordData {
         public FitAadAccelFeatures build() {
             return (FitAadAccelFeatures) super.build();
         }
+
+        @Override
+        public FitAadAccelFeatures build(final int localMessageType) {
+            return (FitAadAccelFeatures) super.build(localMessageType);
+        }
     }
 }

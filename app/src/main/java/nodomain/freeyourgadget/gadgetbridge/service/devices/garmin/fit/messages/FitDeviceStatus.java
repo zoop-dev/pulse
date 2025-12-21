@@ -91,5 +91,10 @@ public class FitDeviceStatus extends RecordData {
         public FitDeviceStatus build() {
             return (FitDeviceStatus) super.build();
         }
+
+        @Override
+        public FitDeviceStatus build(final int localMessageType) {
+            return (FitDeviceStatus) super.build(localMessageType);
+        }
     }
 }

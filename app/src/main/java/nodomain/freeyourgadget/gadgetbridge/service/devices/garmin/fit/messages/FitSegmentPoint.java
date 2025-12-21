@@ -132,5 +132,10 @@ public class FitSegmentPoint extends RecordData {
         public FitSegmentPoint build() {
             return (FitSegmentPoint) super.build();
         }
+
+        @Override
+        public FitSegmentPoint build(final int localMessageType) {
+            return (FitSegmentPoint) super.build(localMessageType);
+        }
     }
 }

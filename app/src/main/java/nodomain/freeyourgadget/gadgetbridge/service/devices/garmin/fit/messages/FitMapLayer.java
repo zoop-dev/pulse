@@ -181,5 +181,10 @@ public class FitMapLayer extends RecordData {
         public FitMapLayer build() {
             return (FitMapLayer) super.build();
         }
+
+        @Override
+        public FitMapLayer build(final int localMessageType) {
+            return (FitMapLayer) super.build(localMessageType);
+        }
     }
 }

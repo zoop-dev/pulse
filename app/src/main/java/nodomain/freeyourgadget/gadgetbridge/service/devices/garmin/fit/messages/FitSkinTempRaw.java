@@ -71,5 +71,10 @@ public class FitSkinTempRaw extends RecordData {
         public FitSkinTempRaw build() {
             return (FitSkinTempRaw) super.build();
         }
+
+        @Override
+        public FitSkinTempRaw build(final int localMessageType) {
+            return (FitSkinTempRaw) super.build(localMessageType);
+        }
     }
 }

@@ -71,5 +71,10 @@ public class FitHsaEvent extends RecordData {
         public FitHsaEvent build() {
             return (FitHsaEvent) super.build();
         }
+
+        @Override
+        public FitHsaEvent build(final int localMessageType) {
+            return (FitHsaEvent) super.build(localMessageType);
+        }
     }
 }

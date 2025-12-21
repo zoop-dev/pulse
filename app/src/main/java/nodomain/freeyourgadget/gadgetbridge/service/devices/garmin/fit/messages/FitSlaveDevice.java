@@ -71,5 +71,10 @@ public class FitSlaveDevice extends RecordData {
         public FitSlaveDevice build() {
             return (FitSlaveDevice) super.build();
         }
+
+        @Override
+        public FitSlaveDevice build(final int localMessageType) {
+            return (FitSlaveDevice) super.build(localMessageType);
+        }
     }
 }

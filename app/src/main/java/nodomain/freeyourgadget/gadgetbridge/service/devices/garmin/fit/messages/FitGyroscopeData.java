@@ -218,5 +218,10 @@ public class FitGyroscopeData extends RecordData {
         public FitGyroscopeData build() {
             return (FitGyroscopeData) super.build();
         }
+
+        @Override
+        public FitGyroscopeData build(final int localMessageType) {
+            return (FitGyroscopeData) super.build(localMessageType);
+        }
     }
 }

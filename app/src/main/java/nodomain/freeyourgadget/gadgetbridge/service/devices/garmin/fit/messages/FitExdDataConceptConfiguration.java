@@ -161,5 +161,10 @@ public class FitExdDataConceptConfiguration extends RecordData {
         public FitExdDataConceptConfiguration build() {
             return (FitExdDataConceptConfiguration) super.build();
         }
+
+        @Override
+        public FitExdDataConceptConfiguration build(final int localMessageType) {
+            return (FitExdDataConceptConfiguration) super.build(localMessageType);
+        }
     }
 }

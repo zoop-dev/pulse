@@ -81,5 +81,10 @@ public class FitPowerZone extends RecordData {
         public FitPowerZone build() {
             return (FitPowerZone) super.build();
         }
+
+        @Override
+        public FitPowerZone build(final int localMessageType) {
+            return (FitPowerZone) super.build(localMessageType);
+        }
     }
 }

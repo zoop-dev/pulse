@@ -111,5 +111,10 @@ public class FitTrainingFile extends RecordData {
         public FitTrainingFile build() {
             return (FitTrainingFile) super.build();
         }
+
+        @Override
+        public FitTrainingFile build(final int localMessageType) {
+            return (FitTrainingFile) super.build(localMessageType);
+        }
     }
 }

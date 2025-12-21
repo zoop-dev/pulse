@@ -132,5 +132,10 @@ public class FitCoursePoint extends RecordData {
         public FitCoursePoint build() {
             return (FitCoursePoint) super.build();
         }
+
+        @Override
+        public FitCoursePoint build(final int localMessageType) {
+            return (FitCoursePoint) super.build(localMessageType);
+        }
     }
 }

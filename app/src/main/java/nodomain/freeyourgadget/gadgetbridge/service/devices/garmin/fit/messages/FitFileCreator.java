@@ -71,5 +71,10 @@ public class FitFileCreator extends RecordData {
         public FitFileCreator build() {
             return (FitFileCreator) super.build();
         }
+
+        @Override
+        public FitFileCreator build(final int localMessageType) {
+            return (FitFileCreator) super.build(localMessageType);
+        }
     }
 }

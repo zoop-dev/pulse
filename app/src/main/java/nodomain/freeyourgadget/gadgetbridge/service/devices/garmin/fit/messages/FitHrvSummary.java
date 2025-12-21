@@ -132,5 +132,10 @@ public class FitHrvSummary extends RecordData {
         public FitHrvSummary build() {
             return (FitHrvSummary) super.build();
         }
+
+        @Override
+        public FitHrvSummary build(final int localMessageType) {
+            return (FitHrvSummary) super.build(localMessageType);
+        }
     }
 }

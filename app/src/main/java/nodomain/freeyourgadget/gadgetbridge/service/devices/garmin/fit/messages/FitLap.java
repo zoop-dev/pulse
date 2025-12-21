@@ -1512,5 +1512,10 @@ public class FitLap extends RecordData {
         public FitLap build() {
             return (FitLap) super.build();
         }
+
+        @Override
+        public FitLap build(final int localMessageType) {
+            return (FitLap) super.build(localMessageType);
+        }
     }
 }

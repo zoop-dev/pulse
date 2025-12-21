@@ -133,5 +133,10 @@ public class FitAntTx extends RecordData {
         public FitAntTx build() {
             return (FitAntTx) super.build();
         }
+
+        @Override
+        public FitAntTx build(final int localMessageType) {
+            return (FitAntTx) super.build(localMessageType);
+        }
     }
 }

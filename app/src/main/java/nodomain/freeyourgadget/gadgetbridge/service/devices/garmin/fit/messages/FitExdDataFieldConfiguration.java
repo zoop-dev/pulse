@@ -111,5 +111,10 @@ public class FitExdDataFieldConfiguration extends RecordData {
         public FitExdDataFieldConfiguration build() {
             return (FitExdDataFieldConfiguration) super.build();
         }
+
+        @Override
+        public FitExdDataFieldConfiguration build(final int localMessageType) {
+            return (FitExdDataFieldConfiguration) super.build(localMessageType);
+        }
     }
 }

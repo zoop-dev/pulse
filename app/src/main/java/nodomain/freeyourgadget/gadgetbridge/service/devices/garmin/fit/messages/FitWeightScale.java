@@ -191,5 +191,10 @@ public class FitWeightScale extends RecordData {
         public FitWeightScale build() {
             return (FitWeightScale) super.build();
         }
+
+        @Override
+        public FitWeightScale build(final int localMessageType) {
+            return (FitWeightScale) super.build(localMessageType);
+        }
     }
 }

@@ -121,5 +121,10 @@ public class FitTimestampCorrelation extends RecordData {
         public FitTimestampCorrelation build() {
             return (FitTimestampCorrelation) super.build();
         }
+
+        @Override
+        public FitTimestampCorrelation build(final int localMessageType) {
+            return (FitTimestampCorrelation) super.build(localMessageType);
+        }
     }
 }

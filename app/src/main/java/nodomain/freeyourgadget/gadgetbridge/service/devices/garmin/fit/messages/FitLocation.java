@@ -142,5 +142,10 @@ public class FitLocation extends RecordData {
         public FitLocation build() {
             return (FitLocation) super.build();
         }
+
+        @Override
+        public FitLocation build(final int localMessageType) {
+            return (FitLocation) super.build(localMessageType);
+        }
     }
 }

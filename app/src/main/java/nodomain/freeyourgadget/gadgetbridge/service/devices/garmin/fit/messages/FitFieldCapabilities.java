@@ -101,5 +101,10 @@ public class FitFieldCapabilities extends RecordData {
         public FitFieldCapabilities build() {
             return (FitFieldCapabilities) super.build();
         }
+
+        @Override
+        public FitFieldCapabilities build(final int localMessageType) {
+            return (FitFieldCapabilities) super.build(localMessageType);
+        }
     }
 }

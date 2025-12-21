@@ -161,5 +161,10 @@ public class FitEcgSummary extends RecordData {
         public FitEcgSummary build() {
             return (FitEcgSummary) super.build();
         }
+
+        @Override
+        public FitEcgSummary build(final int localMessageType) {
+            return (FitEcgSummary) super.build(localMessageType);
+        }
     }
 }

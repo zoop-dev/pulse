@@ -101,5 +101,10 @@ public class FitTankSummary extends RecordData {
         public FitTankSummary build() {
             return (FitTankSummary) super.build();
         }
+
+        @Override
+        public FitTankSummary build(final int localMessageType) {
+            return (FitTankSummary) super.build(localMessageType);
+        }
     }
 }

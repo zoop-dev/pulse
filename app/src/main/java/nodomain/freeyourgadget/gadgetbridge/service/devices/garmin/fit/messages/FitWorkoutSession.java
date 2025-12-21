@@ -121,5 +121,10 @@ public class FitWorkoutSession extends RecordData {
         public FitWorkoutSession build() {
             return (FitWorkoutSession) super.build();
         }
+
+        @Override
+        public FitWorkoutSession build(final int localMessageType) {
+            return (FitWorkoutSession) super.build(localMessageType);
+        }
     }
 }

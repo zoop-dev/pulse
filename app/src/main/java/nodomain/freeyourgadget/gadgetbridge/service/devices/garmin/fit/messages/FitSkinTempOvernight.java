@@ -111,5 +111,10 @@ public class FitSkinTempOvernight extends RecordData {
         public FitSkinTempOvernight build() {
             return (FitSkinTempOvernight) super.build();
         }
+
+        @Override
+        public FitSkinTempOvernight build(final int localMessageType) {
+            return (FitSkinTempOvernight) super.build(localMessageType);
+        }
     }
 }

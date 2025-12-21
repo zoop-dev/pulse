@@ -81,5 +81,10 @@ public class FitTankUpdate extends RecordData {
         public FitTankUpdate build() {
             return (FitTankUpdate) super.build();
         }
+
+        @Override
+        public FitTankUpdate build(final int localMessageType) {
+            return (FitTankUpdate) super.build(localMessageType);
+        }
     }
 }

@@ -218,5 +218,10 @@ public class FitMagnetometerData extends RecordData {
         public FitMagnetometerData build() {
             return (FitMagnetometerData) super.build();
         }
+
+        @Override
+        public FitMagnetometerData build(final int localMessageType) {
+            return (FitMagnetometerData) super.build(localMessageType);
+        }
     }
 }

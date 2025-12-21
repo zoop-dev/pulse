@@ -293,5 +293,10 @@ public class FitLength extends RecordData {
         public FitLength build() {
             return (FitLength) super.build();
         }
+
+        @Override
+        public FitLength build(final int localMessageType) {
+            return (FitLength) super.build(localMessageType);
+        }
     }
 }

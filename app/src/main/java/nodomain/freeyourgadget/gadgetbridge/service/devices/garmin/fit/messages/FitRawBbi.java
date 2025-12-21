@@ -155,5 +155,10 @@ public class FitRawBbi extends RecordData {
         public FitRawBbi build() {
             return (FitRawBbi) super.build();
         }
+
+        @Override
+        public FitRawBbi build(final int localMessageType) {
+            return (FitRawBbi) super.build(localMessageType);
+        }
     }
 }

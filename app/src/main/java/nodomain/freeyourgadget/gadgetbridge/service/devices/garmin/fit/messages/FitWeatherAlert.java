@@ -111,5 +111,10 @@ public class FitWeatherAlert extends RecordData {
         public FitWeatherAlert build() {
             return (FitWeatherAlert) super.build();
         }
+
+        @Override
+        public FitWeatherAlert build(final int localMessageType) {
+            return (FitWeatherAlert) super.build(localMessageType);
+        }
     }
 }

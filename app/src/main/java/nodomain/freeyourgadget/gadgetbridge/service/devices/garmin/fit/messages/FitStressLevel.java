@@ -81,6 +81,11 @@ public class FitStressLevel extends RecordData {
         public FitStressLevel build() {
             return (FitStressLevel) super.build();
         }
+
+        @Override
+        public FitStressLevel build(final int localMessageType) {
+            return (FitStressLevel) super.build(localMessageType);
+        }
     }
 
     // manual changes below

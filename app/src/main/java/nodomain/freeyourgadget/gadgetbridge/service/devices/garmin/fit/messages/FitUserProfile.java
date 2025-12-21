@@ -394,5 +394,10 @@ public class FitUserProfile extends RecordData {
         public FitUserProfile build() {
             return (FitUserProfile) super.build();
         }
+
+        @Override
+        public FitUserProfile build(final int localMessageType) {
+            return (FitUserProfile) super.build(localMessageType);
+        }
     }
 }

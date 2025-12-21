@@ -1133,5 +1133,10 @@ public class FitSegmentLap extends RecordData {
         public FitSegmentLap build() {
             return (FitSegmentLap) super.build();
         }
+
+        @Override
+        public FitSegmentLap build(final int localMessageType) {
+            return (FitSegmentLap) super.build(localMessageType);
+        }
     }
 }

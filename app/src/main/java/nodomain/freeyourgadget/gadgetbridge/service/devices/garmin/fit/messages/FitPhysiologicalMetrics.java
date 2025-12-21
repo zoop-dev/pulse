@@ -111,5 +111,10 @@ public class FitPhysiologicalMetrics extends RecordData {
         public FitPhysiologicalMetrics build() {
             return (FitPhysiologicalMetrics) super.build();
         }
+
+        @Override
+        public FitPhysiologicalMetrics build(final int localMessageType) {
+            return (FitPhysiologicalMetrics) super.build(localMessageType);
+        }
     }
 }

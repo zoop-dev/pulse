@@ -81,5 +81,10 @@ public class FitMonitoringHrData extends RecordData {
         public FitMonitoringHrData build() {
             return (FitMonitoringHrData) super.build();
         }
+
+        @Override
+        public FitMonitoringHrData build(final int localMessageType) {
+            return (FitMonitoringHrData) super.build(localMessageType);
+        }
     }
 }

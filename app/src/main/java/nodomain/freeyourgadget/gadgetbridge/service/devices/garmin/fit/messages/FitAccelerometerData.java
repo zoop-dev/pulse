@@ -281,5 +281,10 @@ public class FitAccelerometerData extends RecordData {
         public FitAccelerometerData build() {
             return (FitAccelerometerData) super.build();
         }
+
+        @Override
+        public FitAccelerometerData build(final int localMessageType) {
+            return (FitAccelerometerData) super.build(localMessageType);
+        }
     }
 }

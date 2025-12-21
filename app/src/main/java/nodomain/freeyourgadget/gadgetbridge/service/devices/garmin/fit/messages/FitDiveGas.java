@@ -101,5 +101,10 @@ public class FitDiveGas extends RecordData {
         public FitDiveGas build() {
             return (FitDiveGas) super.build();
         }
+
+        @Override
+        public FitDiveGas build(final int localMessageType) {
+            return (FitDiveGas) super.build(localMessageType);
+        }
     }
 }

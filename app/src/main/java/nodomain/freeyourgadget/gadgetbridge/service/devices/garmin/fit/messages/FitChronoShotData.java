@@ -81,5 +81,10 @@ public class FitChronoShotData extends RecordData {
         public FitChronoShotData build() {
             return (FitChronoShotData) super.build();
         }
+
+        @Override
+        public FitChronoShotData build(final int localMessageType) {
+            return (FitChronoShotData) super.build(localMessageType);
+        }
     }
 }

@@ -101,5 +101,10 @@ public class FitHrmProfile extends RecordData {
         public FitHrmProfile build() {
             return (FitHrmProfile) super.build();
         }
+
+        @Override
+        public FitHrmProfile build(final int localMessageType) {
+            return (FitHrmProfile) super.build(localMessageType);
+        }
     }
 }

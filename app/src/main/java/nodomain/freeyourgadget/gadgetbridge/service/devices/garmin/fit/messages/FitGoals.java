@@ -183,5 +183,10 @@ public class FitGoals extends RecordData {
         public FitGoals build() {
             return (FitGoals) super.build();
         }
+
+        @Override
+        public FitGoals build(final int localMessageType) {
+            return (FitGoals) super.build(localMessageType);
+        }
     }
 }

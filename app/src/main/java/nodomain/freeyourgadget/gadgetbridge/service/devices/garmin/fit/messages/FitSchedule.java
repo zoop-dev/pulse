@@ -121,5 +121,10 @@ public class FitSchedule extends RecordData {
         public FitSchedule build() {
             return (FitSchedule) super.build();
         }
+
+        @Override
+        public FitSchedule build(final int localMessageType) {
+            return (FitSchedule) super.build(localMessageType);
+        }
     }
 }

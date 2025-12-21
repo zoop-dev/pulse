@@ -91,5 +91,10 @@ public class FitMetZone extends RecordData {
         public FitMetZone build() {
             return (FitMetZone) super.build();
         }
+
+        @Override
+        public FitMetZone build(final int localMessageType) {
+            return (FitMetZone) super.build(localMessageType);
+        }
     }
 }

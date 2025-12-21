@@ -81,5 +81,10 @@ public class FitSpeedZone extends RecordData {
         public FitSpeedZone build() {
             return (FitSpeedZone) super.build();
         }
+
+        @Override
+        public FitSpeedZone build(final int localMessageType) {
+            return (FitSpeedZone) super.build(localMessageType);
+        }
     }
 }

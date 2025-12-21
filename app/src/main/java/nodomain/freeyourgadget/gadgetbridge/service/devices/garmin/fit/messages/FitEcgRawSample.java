@@ -61,5 +61,10 @@ public class FitEcgRawSample extends RecordData {
         public FitEcgRawSample build() {
             return (FitEcgRawSample) super.build();
         }
+
+        @Override
+        public FitEcgRawSample build(final int localMessageType) {
+            return (FitEcgRawSample) super.build(localMessageType);
+        }
     }
 }

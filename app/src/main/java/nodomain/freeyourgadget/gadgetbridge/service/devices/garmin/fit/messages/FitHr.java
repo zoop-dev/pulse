@@ -144,5 +144,10 @@ public class FitHr extends RecordData {
         public FitHr build() {
             return (FitHr) super.build();
         }
+
+        @Override
+        public FitHr build(final int localMessageType) {
+            return (FitHr) super.build(localMessageType);
+        }
     }
 }

@@ -111,5 +111,10 @@ public class FitOneDSensorCalibration extends RecordData {
         public FitOneDSensorCalibration build() {
             return (FitOneDSensorCalibration) super.build();
         }
+
+        @Override
+        public FitOneDSensorCalibration build(final int localMessageType) {
+            return (FitOneDSensorCalibration) super.build(localMessageType);
+        }
     }
 }

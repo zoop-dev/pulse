@@ -241,5 +241,10 @@ public class FitWorkoutStep extends RecordData {
         public FitWorkoutStep build() {
             return (FitWorkoutStep) super.build();
         }
+
+        @Override
+        public FitWorkoutStep build(final int localMessageType) {
+            return (FitWorkoutStep) super.build(localMessageType);
+        }
     }
 }

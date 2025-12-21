@@ -132,5 +132,10 @@ public class FitFileId extends RecordData {
         public FitFileId build() {
             return (FitFileId) super.build();
         }
+
+        @Override
+        public FitFileId build(final int localMessageType) {
+            return (FitFileId) super.build(localMessageType);
+        }
     }
 }

@@ -81,5 +81,10 @@ public class FitCadenceZone extends RecordData {
         public FitCadenceZone build() {
             return (FitCadenceZone) super.build();
         }
+
+        @Override
+        public FitCadenceZone build(final int localMessageType) {
+            return (FitCadenceZone) super.build(localMessageType);
+        }
     }
 }

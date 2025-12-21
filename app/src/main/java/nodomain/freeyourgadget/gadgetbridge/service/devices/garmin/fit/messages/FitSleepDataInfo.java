@@ -111,5 +111,10 @@ public class FitSleepDataInfo extends RecordData {
         public FitSleepDataInfo build() {
             return (FitSleepDataInfo) super.build();
         }
+
+        @Override
+        public FitSleepDataInfo build(final int localMessageType) {
+            return (FitSleepDataInfo) super.build(localMessageType);
+        }
     }
 }

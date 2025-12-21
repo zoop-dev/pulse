@@ -154,5 +154,10 @@ public class FitHsaGyroscopeData extends RecordData {
         public FitHsaGyroscopeData build() {
             return (FitHsaGyroscopeData) super.build();
         }
+
+        @Override
+        public FitHsaGyroscopeData build(final int localMessageType) {
+            return (FitHsaGyroscopeData) super.build(localMessageType);
+        }
     }
 }

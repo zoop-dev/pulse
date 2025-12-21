@@ -71,5 +71,10 @@ public class FitRespirationRate extends RecordData {
         public FitRespirationRate build() {
             return (FitRespirationRate) super.build();
         }
+
+        @Override
+        public FitRespirationRate build(final int localMessageType) {
+            return (FitRespirationRate) super.build(localMessageType);
+        }
     }
 }

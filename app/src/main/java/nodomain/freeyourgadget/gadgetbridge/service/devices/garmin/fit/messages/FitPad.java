@@ -51,5 +51,10 @@ public class FitPad extends RecordData {
         public FitPad build() {
             return (FitPad) super.build();
         }
+
+        @Override
+        public FitPad build(final int localMessageType) {
+            return (FitPad) super.build(localMessageType);
+        }
     }
 }

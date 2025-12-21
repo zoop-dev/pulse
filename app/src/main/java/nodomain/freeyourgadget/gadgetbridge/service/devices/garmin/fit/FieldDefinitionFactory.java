@@ -83,6 +83,6 @@ public class FieldDefinitionFactory {
         SWIM_STYLE,
         LOCATION_SYMBOL,
         COURSE_POINT,
-        WEATHER_REPORT;
+        WEATHER_REPORT,
     }
 }

@@ -123,5 +123,10 @@ public class FitDeveloperData extends RecordData {
         public FitDeveloperData build() {
             return (FitDeveloperData) super.build();
         }
+
+        @Override
+        public FitDeveloperData build(final int localMessageType) {
+            return (FitDeveloperData) super.build(localMessageType);
+        }
     }
 }

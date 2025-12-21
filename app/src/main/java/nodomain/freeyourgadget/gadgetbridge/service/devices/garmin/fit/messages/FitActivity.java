@@ -131,5 +131,10 @@ public class FitActivity extends RecordData {
         public FitActivity build() {
             return (FitActivity) super.build();
         }
+
+        @Override
+        public FitActivity build(final int localMessageType) {
+            return (FitActivity) super.build(localMessageType);
+        }
     }
 }

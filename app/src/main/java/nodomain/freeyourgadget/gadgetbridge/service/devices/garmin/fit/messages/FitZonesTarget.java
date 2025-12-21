@@ -101,5 +101,10 @@ public class FitZonesTarget extends RecordData {
         public FitZonesTarget build() {
             return (FitZonesTarget) super.build();
         }
+
+        @Override
+        public FitZonesTarget build(final int localMessageType) {
+            return (FitZonesTarget) super.build(localMessageType);
+        }
     }
 }

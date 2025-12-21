@@ -61,5 +61,10 @@ public class FitSleepDataRaw extends RecordData {
         public FitSleepDataRaw build() {
             return (FitSleepDataRaw) super.build();
         }
+
+        @Override
+        public FitSleepDataRaw build(final int localMessageType) {
+            return (FitSleepDataRaw) super.build(localMessageType);
+        }
     }
 }

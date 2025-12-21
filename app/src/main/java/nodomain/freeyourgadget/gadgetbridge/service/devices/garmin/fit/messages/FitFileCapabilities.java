@@ -111,5 +111,10 @@ public class FitFileCapabilities extends RecordData {
         public FitFileCapabilities build() {
             return (FitFileCapabilities) super.build();
         }
+
+        @Override
+        public FitFileCapabilities build(final int localMessageType) {
+            return (FitFileCapabilities) super.build(localMessageType);
+        }
     }
 }

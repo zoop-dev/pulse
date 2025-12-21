@@ -393,5 +393,10 @@ public class FitBikeProfile extends RecordData {
         public FitBikeProfile build() {
             return (FitBikeProfile) super.build();
         }
+
+        @Override
+        public FitBikeProfile build(final int localMessageType) {
+            return (FitBikeProfile) super.build(localMessageType);
+        }
     }
 }

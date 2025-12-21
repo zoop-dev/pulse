@@ -81,5 +81,10 @@ public class FitSoftware extends RecordData {
         public FitSoftware build() {
             return (FitSoftware) super.build();
         }
+
+        @Override
+        public FitSoftware build(final int localMessageType) {
+            return (FitSoftware) super.build(localMessageType);
+        }
     }
 }

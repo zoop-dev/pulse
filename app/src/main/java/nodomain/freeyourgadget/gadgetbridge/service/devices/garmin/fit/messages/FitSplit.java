@@ -241,5 +241,10 @@ public class FitSplit extends RecordData {
         public FitSplit build() {
             return (FitSplit) super.build();
         }
+
+        @Override
+        public FitSplit build(final int localMessageType) {
+            return (FitSplit) super.build(localMessageType);
+        }
     }
 }

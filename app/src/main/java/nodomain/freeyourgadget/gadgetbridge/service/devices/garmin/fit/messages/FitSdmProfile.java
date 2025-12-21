@@ -131,5 +131,10 @@ public class FitSdmProfile extends RecordData {
         public FitSdmProfile build() {
             return (FitSdmProfile) super.build();
         }
+
+        @Override
+        public FitSdmProfile build(final int localMessageType) {
+            return (FitSdmProfile) super.build(localMessageType);
+        }
     }
 }

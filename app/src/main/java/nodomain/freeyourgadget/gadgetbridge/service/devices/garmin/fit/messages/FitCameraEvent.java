@@ -101,5 +101,10 @@ public class FitCameraEvent extends RecordData {
         public FitCameraEvent build() {
             return (FitCameraEvent) super.build();
         }
+
+        @Override
+        public FitCameraEvent build(final int localMessageType) {
+            return (FitCameraEvent) super.build(localMessageType);
+        }
     }
 }

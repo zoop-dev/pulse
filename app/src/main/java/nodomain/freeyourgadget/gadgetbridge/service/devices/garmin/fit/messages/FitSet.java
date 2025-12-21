@@ -184,5 +184,10 @@ public class FitSet extends RecordData {
         public FitSet build() {
             return (FitSet) super.build();
         }
+
+        @Override
+        public FitSet build(final int localMessageType) {
+            return (FitSet) super.build(localMessageType);
+        }
     }
 }

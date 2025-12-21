@@ -151,5 +151,10 @@ public class FitJump extends RecordData {
         public FitJump build() {
             return (FitJump) super.build();
         }
+
+        @Override
+        public FitJump build(final int localMessageType) {
+            return (FitJump) super.build(localMessageType);
+        }
     }
 }

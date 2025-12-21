@@ -154,5 +154,10 @@ public class FitHsaAccelerometerData extends RecordData {
         public FitHsaAccelerometerData build() {
             return (FitHsaAccelerometerData) super.build();
         }
+
+        @Override
+        public FitHsaAccelerometerData build(final int localMessageType) {
+            return (FitHsaAccelerometerData) super.build(localMessageType);
+        }
     }
 }

@@ -133,5 +133,10 @@ public class FitMemoGlob extends RecordData {
         public FitMemoGlob build() {
             return (FitMemoGlob) super.build();
         }
+
+        @Override
+        public FitMemoGlob build(final int localMessageType) {
+            return (FitMemoGlob) super.build(localMessageType);
+        }
     }
 }

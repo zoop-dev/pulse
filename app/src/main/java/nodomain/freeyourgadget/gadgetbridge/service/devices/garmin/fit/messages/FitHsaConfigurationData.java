@@ -92,5 +92,10 @@ public class FitHsaConfigurationData extends RecordData {
         public FitHsaConfigurationData build() {
             return (FitHsaConfigurationData) super.build();
         }
+
+        @Override
+        public FitHsaConfigurationData build(final int localMessageType) {
+            return (FitHsaConfigurationData) super.build(localMessageType);
+        }
     }
 }

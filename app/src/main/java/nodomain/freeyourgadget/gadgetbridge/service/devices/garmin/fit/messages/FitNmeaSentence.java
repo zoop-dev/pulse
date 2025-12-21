@@ -81,5 +81,10 @@ public class FitNmeaSentence extends RecordData {
         public FitNmeaSentence build() {
             return (FitNmeaSentence) super.build();
         }
+
+        @Override
+        public FitNmeaSentence build(final int localMessageType) {
+            return (FitNmeaSentence) super.build(localMessageType);
+        }
     }
 }

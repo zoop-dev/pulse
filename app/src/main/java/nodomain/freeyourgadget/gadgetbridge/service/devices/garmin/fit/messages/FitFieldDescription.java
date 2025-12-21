@@ -191,5 +191,10 @@ public class FitFieldDescription extends RecordData {
         public FitFieldDescription build() {
             return (FitFieldDescription) super.build();
         }
+
+        @Override
+        public FitFieldDescription build(final int localMessageType) {
+            return (FitFieldDescription) super.build(localMessageType);
+        }
     }
 }

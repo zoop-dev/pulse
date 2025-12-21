@@ -152,5 +152,10 @@ public class FitGpsMetadata extends RecordData {
         public FitGpsMetadata build() {
             return (FitGpsMetadata) super.build();
         }
+
+        @Override
+        public FitGpsMetadata build(final int localMessageType) {
+            return (FitGpsMetadata) super.build(localMessageType);
+        }
     }
 }

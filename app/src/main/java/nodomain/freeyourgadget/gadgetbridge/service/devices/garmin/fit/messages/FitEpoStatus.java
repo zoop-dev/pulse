@@ -91,5 +91,10 @@ public class FitEpoStatus extends RecordData {
         public FitEpoStatus build() {
             return (FitEpoStatus) super.build();
         }
+
+        @Override
+        public FitEpoStatus build(final int localMessageType) {
+            return (FitEpoStatus) super.build(localMessageType);
+        }
     }
 }

@@ -161,5 +161,10 @@ public class FitTotals extends RecordData {
         public FitTotals build() {
             return (FitTotals) super.build();
         }
+
+        @Override
+        public FitTotals build(final int localMessageType) {
+            return (FitTotals) super.build(localMessageType);
+        }
     }
 }

@@ -92,5 +92,10 @@ public class FitHsaRespirationData extends RecordData {
         public FitHsaRespirationData build() {
             return (FitHsaRespirationData) super.build();
         }
+
+        @Override
+        public FitHsaRespirationData build(final int localMessageType) {
+            return (FitHsaRespirationData) super.build(localMessageType);
+        }
     }
 }

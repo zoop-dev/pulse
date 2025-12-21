@@ -401,5 +401,10 @@ public class FitDiveSettings extends RecordData {
         public FitDiveSettings build() {
             return (FitDiveSettings) super.build();
         }
+
+        @Override
+        public FitDiveSettings build(final int localMessageType) {
+            return (FitDiveSettings) super.build(localMessageType);
+        }
     }
 }

@@ -121,5 +121,10 @@ public class FitSegmentLeaderboardEntry extends RecordData {
         public FitSegmentLeaderboardEntry build() {
             return (FitSegmentLeaderboardEntry) super.build();
         }
+
+        @Override
+        public FitSegmentLeaderboardEntry build(final int localMessageType) {
+            return (FitSegmentLeaderboardEntry) super.build(localMessageType);
+        }
     }
 }

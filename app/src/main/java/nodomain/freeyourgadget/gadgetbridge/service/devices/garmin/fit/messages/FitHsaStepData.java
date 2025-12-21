@@ -92,5 +92,10 @@ public class FitHsaStepData extends RecordData {
         public FitHsaStepData build() {
             return (FitHsaStepData) super.build();
         }
+
+        @Override
+        public FitHsaStepData build(final int localMessageType) {
+            return (FitHsaStepData) super.build(localMessageType);
+        }
     }
 }

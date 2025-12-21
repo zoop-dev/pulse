@@ -121,5 +121,10 @@ public class FitDeviceUsed extends RecordData {
         public FitDeviceUsed build() {
             return (FitDeviceUsed) super.build();
         }
+
+        @Override
+        public FitDeviceUsed build(final int localMessageType) {
+            return (FitDeviceUsed) super.build(localMessageType);
+        }
     }
 }

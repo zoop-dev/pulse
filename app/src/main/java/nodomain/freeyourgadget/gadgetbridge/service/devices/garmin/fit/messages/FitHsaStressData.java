@@ -92,5 +92,10 @@ public class FitHsaStressData extends RecordData {
         public FitHsaStressData build() {
             return (FitHsaStressData) super.build();
         }
+
+        @Override
+        public FitHsaStressData build(final int localMessageType) {
+            return (FitHsaStressData) super.build(localMessageType);
+        }
     }
 }

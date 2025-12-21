@@ -251,5 +251,10 @@ public class FitDeviceInfo extends RecordData {
         public FitDeviceInfo build() {
             return (FitDeviceInfo) super.build();
         }
+
+        @Override
+        public FitDeviceInfo build(final int localMessageType) {
+            return (FitDeviceInfo) super.build(localMessageType);
+        }
     }
 }

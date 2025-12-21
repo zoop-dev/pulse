@@ -192,5 +192,10 @@ public class FitDiveAlarm extends RecordData {
         public FitDiveAlarm build() {
             return (FitDiveAlarm) super.build();
         }
+
+        @Override
+        public FitDiveAlarm build(final int localMessageType) {
+            return (FitDiveAlarm) super.build(localMessageType);
+        }
     }
 }

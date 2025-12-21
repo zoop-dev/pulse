@@ -161,5 +161,10 @@ public class FitBloodPressure extends RecordData {
         public FitBloodPressure build() {
             return (FitBloodPressure) super.build();
         }
+
+        @Override
+        public FitBloodPressure build(final int localMessageType) {
+            return (FitBloodPressure) super.build(localMessageType);
+        }
     }
 }

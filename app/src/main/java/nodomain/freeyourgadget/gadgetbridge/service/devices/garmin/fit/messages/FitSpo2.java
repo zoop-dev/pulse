@@ -91,5 +91,10 @@ public class FitSpo2 extends RecordData {
         public FitSpo2 build() {
             return (FitSpo2) super.build();
         }
+
+        @Override
+        public FitSpo2 build(final int localMessageType) {
+            return (FitSpo2) super.build(localMessageType);
+        }
     }
 }

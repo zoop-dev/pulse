@@ -141,5 +141,10 @@ public class FitSegmentId extends RecordData {
         public FitSegmentId build() {
             return (FitSegmentId) super.build();
         }
+
+        @Override
+        public FitSegmentId build(final int localMessageType) {
+            return (FitSegmentId) super.build(localMessageType);
+        }
     }
 }

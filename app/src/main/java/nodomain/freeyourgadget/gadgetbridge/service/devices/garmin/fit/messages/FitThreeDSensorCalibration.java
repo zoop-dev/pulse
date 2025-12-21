@@ -143,5 +143,10 @@ public class FitThreeDSensorCalibration extends RecordData {
         public FitThreeDSensorCalibration build() {
             return (FitThreeDSensorCalibration) super.build();
         }
+
+        @Override
+        public FitThreeDSensorCalibration build(final int localMessageType) {
+            return (FitThreeDSensorCalibration) super.build(localMessageType);
+        }
     }
 }

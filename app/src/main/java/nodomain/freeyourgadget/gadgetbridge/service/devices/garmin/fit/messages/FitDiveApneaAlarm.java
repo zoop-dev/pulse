@@ -192,5 +192,10 @@ public class FitDiveApneaAlarm extends RecordData {
         public FitDiveApneaAlarm build() {
             return (FitDiveApneaAlarm) super.build();
         }
+
+        @Override
+        public FitDiveApneaAlarm build(final int localMessageType) {
+            return (FitDiveApneaAlarm) super.build(localMessageType);
+        }
     }
 }

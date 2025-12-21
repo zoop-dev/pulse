@@ -131,5 +131,10 @@ public class FitChronoShotSession extends RecordData {
         public FitChronoShotSession build() {
             return (FitChronoShotSession) super.build();
         }
+
+        @Override
+        public FitChronoShotSession build(final int localMessageType) {
+            return (FitChronoShotSession) super.build(localMessageType);
+        }
     }
 }

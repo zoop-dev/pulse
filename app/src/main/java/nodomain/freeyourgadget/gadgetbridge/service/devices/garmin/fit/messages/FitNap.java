@@ -131,5 +131,10 @@ public class FitNap extends RecordData {
         public FitNap build() {
             return (FitNap) super.build();
         }
+
+        @Override
+        public FitNap build(final int localMessageType) {
+            return (FitNap) super.build(localMessageType);
+        }
     }
 }

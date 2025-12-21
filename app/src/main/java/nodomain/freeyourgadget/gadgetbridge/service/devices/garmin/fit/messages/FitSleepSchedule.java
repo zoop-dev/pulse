@@ -81,5 +81,10 @@ public class FitSleepSchedule extends RecordData {
         public FitSleepSchedule build() {
             return (FitSleepSchedule) super.build();
         }
+
+        @Override
+        public FitSleepSchedule build(final int localMessageType) {
+            return (FitSleepSchedule) super.build(localMessageType);
+        }
     }
 }

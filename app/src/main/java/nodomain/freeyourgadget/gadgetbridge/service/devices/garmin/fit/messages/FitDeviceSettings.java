@@ -430,5 +430,10 @@ public class FitDeviceSettings extends RecordData {
         public FitDeviceSettings build() {
             return (FitDeviceSettings) super.build();
         }
+
+        @Override
+        public FitDeviceSettings build(final int localMessageType) {
+            return (FitDeviceSettings) super.build(localMessageType);
+        }
     }
 }

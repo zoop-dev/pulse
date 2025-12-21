@@ -141,5 +141,10 @@ public class FitWorkout extends RecordData {
         public FitWorkout build() {
             return (FitWorkout) super.build();
         }
+
+        @Override
+        public FitWorkout build(final int localMessageType) {
+            return (FitWorkout) super.build(localMessageType);
+        }
     }
 }

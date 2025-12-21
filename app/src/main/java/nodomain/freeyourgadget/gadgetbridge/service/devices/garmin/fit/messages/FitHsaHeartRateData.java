@@ -102,5 +102,10 @@ public class FitHsaHeartRateData extends RecordData {
         public FitHsaHeartRateData build() {
             return (FitHsaHeartRateData) super.build();
         }
+
+        @Override
+        public FitHsaHeartRateData build(final int localMessageType) {
+            return (FitHsaHeartRateData) super.build(localMessageType);
+        }
     }
 }

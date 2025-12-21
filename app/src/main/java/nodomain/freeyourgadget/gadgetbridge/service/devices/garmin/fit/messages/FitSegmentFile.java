@@ -185,5 +185,10 @@ public class FitSegmentFile extends RecordData {
         public FitSegmentFile build() {
             return (FitSegmentFile) super.build();
         }
+
+        @Override
+        public FitSegmentFile build(final int localMessageType) {
+            return (FitSegmentFile) super.build(localMessageType);
+        }
     }
 }

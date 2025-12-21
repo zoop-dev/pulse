@@ -91,5 +91,10 @@ public class FitExerciseTitle extends RecordData {
         public FitExerciseTitle build() {
             return (FitExerciseTitle) super.build();
         }
+
+        @Override
+        public FitExerciseTitle build(final int localMessageType) {
+            return (FitExerciseTitle) super.build(localMessageType);
+        }
     }
 }

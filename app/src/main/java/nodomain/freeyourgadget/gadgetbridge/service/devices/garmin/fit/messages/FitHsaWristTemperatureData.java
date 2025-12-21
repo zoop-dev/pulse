@@ -92,5 +92,10 @@ public class FitHsaWristTemperatureData extends RecordData {
         public FitHsaWristTemperatureData build() {
             return (FitHsaWristTemperatureData) super.build();
         }
+
+        @Override
+        public FitHsaWristTemperatureData build(final int localMessageType) {
+            return (FitHsaWristTemperatureData) super.build(localMessageType);
+        }
     }
 }
