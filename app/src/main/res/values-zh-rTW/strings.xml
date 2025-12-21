@@ -372,7 +372,7 @@
     <string name="charts_legend_heartrate">心率</string>
     <string name="live_activity_heart_rate">心率</string>
     <string name="activity_prefs_calories_burnt">每日目標：卡路里消耗</string>
-    <string name="activity_prefs_distance_meters">每日目標：距離（公尺）</string>
+    <string name="activity_prefs_distance_meters">每日目標：距離(公尺)</string>
     <string name="activity_prefs_activetime_minutes">每日目標：活動時間（分鐘）</string>
     <string name="pref_screen_notification_profile_alarm_clock">鬧鐘</string>
     <string name="pref_title_contextual_arabic">阿拉伯語的文句</string>
@@ -641,7 +641,7 @@
     <string name="prefs_activity_in_device_card_sleep_title_summary">顯示睡眠時間</string>
     <string name="prefs_activity_in_device_card_distance_title_summary">距離是根據步數和步長計算出的（可以在設定 - 關於你中調整）</string>
     <string name="prefs_activity_in_device_card_steps_title_summary">顯示總步數</string>
-    <string name="discover_unsupported_devices_description">啟用此選項將在掃描時顯示所有發現的藍芽裝置。短按會將設備名稱和 mac 位址複製到剪貼簿。長按將開啟「新增測試裝置」對話框。有可能導致應用程式凍結。</string>
+    <string name="discover_unsupported_devices_description">啟用此選項後，掃描時將顯示所有已發現的藍牙裝置。短按可將裝置名稱和 MAC 位址複製到剪貼簿。長按將開啟「新增測試設備」對話方塊。可能會導致應用程式卡頓。</string>
     <string name="discover_unsupported_devices">探索不支援的裝置</string>
     <string name="pref_theme_system">根據系統</string>
     <string name="discovery_bluetooth_scan">藍牙掃描：</string>
@@ -1065,9 +1065,9 @@
     <string name="power_mode_saving">省電</string>
     <string name="power_mode_watch">只看</string>
     <string name="femometer_measurement_mode_title">測量模式</string>
-    <string name="femometer_measurement_mode_quick">快速模式（30 秒）</string>
-    <string name="femometer_measurement_mode_normal">正常模式（60 秒 - 90 秒）</string>
-    <string name="femometer_measurement_mode_precise">精確模式（3 分鐘）</string>
+    <string name="femometer_measurement_mode_quick">快速模式(30 秒)</string>
+    <string name="femometer_measurement_mode_normal">正常模式(60 秒 - 90 秒)</string>
+    <string name="femometer_measurement_mode_precise">精確模式(3 分鐘)</string>
     <string name="preferences_makibes_hr3_settings">Makibes HR3 設定</string>
     <string name="zetime_title_heartrate">心率設定</string>
     <string name="zetime_analog_mode">類比模式</string>
@@ -1522,7 +1522,7 @@
     <string name="yard">碼</string>
     <string name="cyclingPowerMax">最大騎行功率</string>
     <string name="workout_set_i">設置 %1d</string>
-    <string name="meters_second">米/秒</string>
+    <string name="meters_second">公尺/秒</string>
     <string name="km_h">公里/小時</string>
     <string name="mi_h">米/小時</string>
     <string name="swim_style">游泳風格</string>
@@ -1924,7 +1924,7 @@
     <string name="device_name_cycling_sensor">自行車感應器</string>
     <string name="devicetype_cycling_sensor">自行車速度感應器</string>
     <string name="pref_summary_wheel_diameter">輪徑以英寸計。通常為29、27.5或26。</string>
-    <string name="pref_title_wheel_diameter">輪徑</string>
+    <string name="pref_title_wheel_diameter">輪胎直徑</string>
     <string name="pref_summary_cycling_persistence_interval">當前循環數據應寫入數據庫的時間間隔（以秒為單位）</string>
     <string name="pref_title_cycling_persistence_interval">持續時間</string>
     <string name="chart_cycling_point_label_distance">今天：%1$.1f 公里\n總計：%2$.1f 公里</string>
@@ -2568,7 +2568,7 @@
     <string name="pref_device_action_dnd_off">請勿打擾 - 關閉</string>
     <string name="pref_device_action_dnd_priority">請勿打擾 - 僅限優先</string>
     <string name="pref_device_action_dnd_alarms">請勿打擾 - 僅限警報</string>
-    <string name="distance_format_meters">###m</string>
+    <string name="distance_format_meters">###公尺</string>
     <string name="huawei_trusleep_summary">即時監測您的睡眠品質。</string>
     <string name="pref_activity_recognition_mode_ask">問</string>
     <string name="pref_summary_opentracks_packagename">用於在外部健身應用程式中啟動/停止 GPS 路徑錄製。</string>
@@ -3174,4 +3174,9 @@
     <string name="zepp_os_sun_moon_utc_title">請以 UTC 格式發送太陽/月亮時間</string>
     <string name="zepp_os_sun_moon_utc_summary">如果您的手錶顯示的日月時間值不正確，請啟用此功能</string>
     <string name="weather_condition_thunderstorm_with_rain">雷雨</string>
+    <string name="idasen_pref_mid_height">中間位置高度(公分)</string>
+    <string name="idasen_pref_sit_height">坐姿高度(公分)</string>
+    <string name="idasen_pref_stand_height">站立高度(公分)</string>
+    <string name="unit_millimeter">公釐</string>
+    <string name="centimeters_second">公分/秒</string>
 </resources>
