@@ -4109,4 +4109,6 @@
     <string name="prefs_earbud_lights_controls">耳机灯光控制</string>
     <string name="prefs_earbud_lights_fade">淡入淡出</string>
     <string name="prefs_earbud_lights_steady">稳定</string>
+    <string name="pref_experimental_settings_title">实验设置</string>
+    <string name="pref_experimental_settings_summary">实验设置可能不稳定或者不按预期工作。继续进行后果自负。</string>
 </resources>
