@@ -4021,4 +4021,6 @@
     <string name="prefs_earbud_lights_controls">Ohrhörer-Beleuchtung steuern</string>
     <string name="prefs_earbud_lights_fade">Ein- und ausblenden</string>
     <string name="prefs_earbud_lights_steady">Dauerlicht</string>
+    <string name="pref_experimental_settings_title">Experimentelle Einstellungen</string>
+    <string name="pref_experimental_settings_summary">Experimentelle Einstellungen können instabil sein oder nicht wie erwartet funktionieren. Die Verwendung erfolgt auf eigene Gefahr.</string>
 </resources>
