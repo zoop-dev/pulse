@@ -243,16 +243,18 @@ public class MarstekB2500DeviceSupport extends AbstractBTLESingleDeviceSupport {
         getDevice().setBatteryLevel(battery_pct);
         getDevice().sendDeviceUpdateIntent(getContext());
 
-        Intent intent = new Intent(SolarEquipmentStatusActivity.ACTION_SEND_SOLAR_EQUIPMENT_STATUS);
-        intent.putExtra(SolarEquipmentStatusActivity.EXTRA_BATTERY_WH, battery_wh);
-        intent.putExtra(SolarEquipmentStatusActivity.EXTRA_BATTERY_PCT, battery_pct);
-        intent.putExtra(SolarEquipmentStatusActivity.EXTRA_PANEL1_WATT, p1_watt);
-        intent.putExtra(SolarEquipmentStatusActivity.EXTRA_PANEL2_WATT, p2_watt);
-        intent.putExtra(SolarEquipmentStatusActivity.EXTRA_TEMP1, temperature_sensor_1);
-        intent.putExtra(SolarEquipmentStatusActivity.EXTRA_TEMP2, temperature_sensor_2);
-        intent.putExtra(SolarEquipmentStatusActivity.EXTRA_OUTPUT1_WATT, output_to_inverter_1_watt);
-        intent.putExtra(SolarEquipmentStatusActivity.EXTRA_OUTPUT2_WATT, output_to_inverter_2_watt);
-        intent.putExtra(SolarEquipmentStatusActivity.EXTRA_DEBUG, debug);
+        Intent intent = new Intent(SolarEquipmentStatusActivity.ACTION_SEND_SOLAR_EQUIPMENT_STATUS)
+                .putExtra(SolarEquipmentStatusActivity.EXTRA_BATTERY_WH, battery_wh)
+                .putExtra(SolarEquipmentStatusActivity.EXTRA_BATTERY_PCT, battery_pct)
+                .putExtra(SolarEquipmentStatusActivity.EXTRA_PANEL1_WATT, p1_watt)
+                .putExtra(SolarEquipmentStatusActivity.EXTRA_PANEL2_WATT, p2_watt)
+                .putExtra(SolarEquipmentStatusActivity.EXTRA_PANEL3_WATT, -1)
+                .putExtra(SolarEquipmentStatusActivity.EXTRA_PANEL4_WATT, -1)
+                .putExtra(SolarEquipmentStatusActivity.EXTRA_TEMP1, temperature_sensor_1)
+                .putExtra(SolarEquipmentStatusActivity.EXTRA_TEMP2, temperature_sensor_2)
+                .putExtra(SolarEquipmentStatusActivity.EXTRA_OUTPUT1_WATT, output_to_inverter_1_watt)
+                .putExtra(SolarEquipmentStatusActivity.EXTRA_OUTPUT2_WATT, output_to_inverter_2_watt)
+                .putExtra(SolarEquipmentStatusActivity.EXTRA_DEBUG, debug);
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
         getContext().sendBroadcast(intent);
     }
