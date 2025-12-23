@@ -74,6 +74,7 @@ public class AppNotificationType extends HashMap<String, NotificationType> {
         put("io.element.android.x", NotificationType.ELEMENT);
         put("chat.fluffy.fluffychat", NotificationType.ELEMENT);
         put("chat.schildi.android", NotificationType.ELEMENT);
+        put("de.spiritcroc.riotx", NotificationType.ELEMENT);
 
         // Signal
         put("org.thoughtcrime.securesms", NotificationType.SIGNAL);
