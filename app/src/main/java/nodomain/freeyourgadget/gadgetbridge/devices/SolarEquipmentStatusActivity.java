@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.marstek;
+package nodomain.freeyourgadget.gadgetbridge.devices;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -23,6 +23,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +52,8 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
     public static String EXTRA_BATTERY_WH = "battery_wh";
     public static String EXTRA_PANEL1_WATT = "panel1_watt";
     public static String EXTRA_PANEL2_WATT = "panel2_watt";
+    public static String EXTRA_PANEL3_WATT = "panel3_watt";
+    public static String EXTRA_PANEL4_WATT = "panel4_watt";
     public static String EXTRA_OUTPUT1_WATT = "output1_watt";
     public static String EXTRA_OUTPUT2_WATT = "output2_watt";
     public static String EXTRA_TEMP1 = "temp1";
@@ -71,19 +74,56 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
                     int battery_wh = extras.getInt(EXTRA_BATTERY_WH);
                     int panel1_watt = extras.getInt(EXTRA_PANEL1_WATT);
                     int panel2_watt = extras.getInt(EXTRA_PANEL2_WATT);
+                    int panel3_watt = extras.getInt(EXTRA_PANEL3_WATT);
+                    int panel4_watt = extras.getInt(EXTRA_PANEL4_WATT);
                     int temp1 = extras.getInt(EXTRA_TEMP1);
                     int temp2 = extras.getInt(EXTRA_TEMP2);
                     int output1_watt = extras.getInt(EXTRA_OUTPUT1_WATT);
                     int output2_watt = extras.getInt(EXTRA_OUTPUT2_WATT);
                     String debug = extras.getString(EXTRA_DEBUG);
-                    updateGaugeWidget("battery", battery_pct + "%\n" + battery_wh + "Wh", (float) (battery_pct / 100.0));
-                    updateGaugeWidget("panel1", panel1_watt + "W", (float) (panel1_watt / 380.0));
-                    updateGaugeWidget("panel2", panel2_watt + "W", (float) (panel2_watt / 380.0));
+
+                    if (battery_wh >0) {
+                        updateGaugeWidget("battery", battery_pct + "%\n" + battery_wh + "Wh", (float) (battery_pct / 100.0));
+                    }
+                    else {
+                        updateGaugeWidget("battery", battery_pct + "%", (float) (battery_pct / 100.0));
+                    }
+                    if (panel1_watt >= 0) {
+                        updateGaugeWidget("panel1", panel1_watt + "W", (float) (panel1_watt / 380.0));
+                    } else {
+                        removeWidget("panel1");
+                    }
+                    if (panel2_watt >= 0) {
+                        updateGaugeWidget("panel2", panel2_watt + "W", (float) (panel2_watt / 380.0));
+                    } else {
+                        removeWidget("panel2");
+                    }
+                    if (panel3_watt >= 0) {
+                        updateGaugeWidget("panel3", panel3_watt + "W", (float) (panel3_watt / 380.0));
+                    } else {
+                        removeWidget("panel3");
+                    }
+                    if (panel4_watt >= 0) {
+                        updateGaugeWidget("panel4", panel4_watt + "W", (float) (panel4_watt / 380.0));
+                    } else {
+                        removeWidget("panel4");
+                    }
                     updateGaugeWidget("temp1", temp1 + "°C", (float) ((temp1 + 20) / 100.0));
                     updateGaugeWidget("temp2", temp2 + "°C", (float) ((temp2 + 20) / 100.0));
-                    updateGaugeWidget("output1", output1_watt + "W", (float) (output1_watt / 400.0));
-                    updateGaugeWidget("output2", output2_watt + "W", (float) (output2_watt / 400.0));
-                    updateTextWidget("debug",debug);
+                    if (output1_watt >= 0) {
+                        updateGaugeWidget("output1", output1_watt + "W", (float) (output1_watt / 400.0));
+                    } else {
+                        removeWidget("output1");
+                    }
+                    if (output2_watt >= 0) {
+                        updateGaugeWidget("output2", output2_watt + "W", (float) (output1_watt / 400.0));
+                    }
+                    if (debug != null) {
+                        updateTextWidget("debug", debug);
+                    }
+                    else {
+                        removeWidget("debug");
+                    }
                     swipeLayout.setRefreshing(false);
                 }
             }
@@ -172,6 +212,17 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
         }
     }
 
+    private void removeWidget(String name) {
+        View view = widgetMap.get(name);
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null) {
+                ((ViewGroup) parent.getParent()).removeView(parent);
+                widgetMap.remove(name);
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Bundle extras = getIntent().getExtras();
@@ -183,6 +234,8 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
         gridLayout = findViewById(R.id.solarequipmentview_gridlayout);
         createWidget("panel1", "Panel 1", 1);
         createWidget("panel2", "Panel 2", 1);
+        createWidget("panel3", "Panel 3", 1);
+        createWidget("panel4", "Panel 4", 1);
         createWidget("battery", "Battery", 2);
         createWidget("temp1", "Temp 1", 1);
         createWidget("temp2", "Temp 2", 1);

@@ -150,6 +150,7 @@ public interface DeviceCoordinator {
         BIKE_COMPUTER,
         SMART_CLOCK,
         THERMOMETER,
+        PV_EQUIPMENT,
     }
 
     /**

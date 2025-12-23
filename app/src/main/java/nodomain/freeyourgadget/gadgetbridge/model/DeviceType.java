@@ -431,6 +431,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR12Coordina
 import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.H59Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.YawellR10Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.YawellR11Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.zendure.SolarFlowDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.zetime.ZeTimeCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.gatt_client.BleGattClientCoordinator;
 
@@ -853,6 +854,7 @@ public enum DeviceType {
     COOSPO_HW807(CoospoHW807Coordinator.class),
     COOSPO_H9Z(CoospoH9ZCoordinator.class),
     GENERIC_WEIGHT_SCALE(GenericWeightScaleCoordinator.class),
+    SOLARFLOW(SolarFlowDeviceCoordinator.class),
     TEST(TestDeviceCoordinator.class);
 
     private DeviceCoordinator coordinator;

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".devices.marstek.SolarEquipmentStatusActivity">
+    tools:context=".devices.SolarEquipmentStatusActivity">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
