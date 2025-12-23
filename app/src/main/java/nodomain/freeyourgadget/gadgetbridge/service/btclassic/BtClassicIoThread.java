@@ -87,7 +87,7 @@ public abstract class BtClassicIoThread extends GBDeviceIoThread {
 
     @Override
     public void run() {
-        LOG.debug("started thread {}", getName());
+        LOG.debug("Started thread {} for {}", getName(), gbDevice.getAddress());
         mIsConnected = connect();
         if (!mIsConnected) {
             if (GBApplication.getPrefs().getAutoReconnect(getDevice()) && !mQuit) {

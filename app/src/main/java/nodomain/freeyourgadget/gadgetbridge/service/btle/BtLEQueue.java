@@ -65,8 +65,9 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
  */
 @SuppressLint("MissingPermission") // if we're using this, we have bluetooth permissions
 public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
-    private static final Logger LOG = LoggerFactory.getLogger(BtLEQueue.class);
+    private final Logger LOG;
     private static final byte[] EMPTY = new byte[0];
+    private static final AtomicLong QUEUE_COUNTER = new AtomicLong(0L);
     private static final AtomicLong THREAD_COUNTER = new AtomicLong(0L);
 
     private final Object mGattMonitor;
@@ -101,7 +102,7 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
     private class DispatchRunnable implements Runnable {
         @Override
         public void run() {
-            LOG.debug("started thread {}", Thread.currentThread().getName());
+            LOG.debug("started thread {} for {}", Thread.currentThread().getName(), mGbDevice.getAddress());
             boolean crashed = false;
 
             while (!mDisposed.get() && !crashed) {
@@ -216,6 +217,12 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
     };
 
     BtLEQueue(GBDevice gbDevice, Set<? extends BluetoothGattService> supportedServerServices, AbstractBTLEDeviceSupport deviceSupport) {
+        final long threadIdx = THREAD_COUNTER.getAndIncrement();
+
+        LOG = LoggerFactory.getLogger(BtLEQueue.class.getName() + "(" + QUEUE_COUNTER.getAndIncrement() + ")");
+
+        LOG.debug("Initializing queue for {} with threadIdx={}", gbDevice.getAddress(), threadIdx);
+
         // 1) apply all settings
         mBluetoothAdapter = deviceSupport.getBluetoothAdapter();
         mContext = deviceSupport.getContext();
@@ -227,8 +234,6 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
         mSupportedServerServices = supportedServerServices;
         // #5414 - some older android versions misbehave with the new constructor
         connectionForceLegacyGatt = deviceSupport.getDevicePrefs().getConnectionForceLegacyGatt();
-
-        long threadIdx = THREAD_COUNTER.getAndIncrement();
 
         // 2) create new objects
         mDisposed = new AtomicBoolean(false);
@@ -243,12 +248,12 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
         mDispatchThread.start();
 
         // 4) handler thread ensure serial processing and informative thread name in the log
-        if(GBApplication.isRunningOreoOrLater() && !connectionForceLegacyGatt){
+        if (GBApplication.isRunningOreoOrLater() && !connectionForceLegacyGatt) {
             mReceiverThread = new HandlerThread("BtLEQueue_" + threadIdx + "_in");
             mReceiverThread.setUncaughtExceptionHandler(this);
             mReceiverThread.start();
             mReceiverHandler = new Handler(mReceiverThread.getLooper());
-            mReceiverHandler.post(() -> LOG.debug("started thread {}", Thread.currentThread().getName()));
+            mReceiverHandler.post(() -> LOG.debug("started thread {} for {}", Thread.currentThread().getName(), gbDevice.getAddress()));
         } else {
             mReceiverThread = null;
             mReceiverHandler = null;

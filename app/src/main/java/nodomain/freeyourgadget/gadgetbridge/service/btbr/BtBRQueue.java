@@ -43,7 +43,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public final class BtBRQueue {
-    private static final Logger LOG = LoggerFactory.getLogger(BtBRQueue.class);
+    private final Logger LOG;
+    private static final AtomicLong QUEUE_COUNTER = new AtomicLong(0L);
     private static final AtomicLong THREAD_COUNTER = new AtomicLong(0L);
     public static final int HANDLER_SUBJECT_CONNECT = 0;
     public static final int HANDLER_SUBJECT_PERFORM_TRANSACTION = 1;
@@ -68,7 +69,7 @@ public final class BtBRQueue {
         return new Thread("BtBRQueue_read_" + THREAD_COUNTER.getAndIncrement()) {
             @Override
             public void run() {
-                LOG.debug("started thread {}", getName());
+                LOG.debug("started thread {} for {}", getName(), mGbDevice.getAddress());
                 final byte[] buffer = new byte[mBufferSize];
                 int nRead;
 
@@ -115,6 +116,8 @@ public final class BtBRQueue {
     }
 
     public BtBRQueue(BluetoothAdapter btAdapter, GBDevice gbDevice, Context context, SocketCallback socketCallback, @NonNull UUID supportedService, int bufferSize) {
+        LOG = LoggerFactory.getLogger(BtBRQueue.class.getName() + "(" + QUEUE_COUNTER.getAndIncrement() + ")");
+
         mBtAdapter = btAdapter;
         mGbDevice = gbDevice;
         mContext = context;
@@ -126,9 +129,10 @@ public final class BtBRQueue {
         mWriteHandlerThread.start();
 
         new Handler(mWriteHandlerThread.getLooper()).post(()
-                -> LOG.debug("started thread {}", Thread.currentThread().getName()));
+                -> LOG.debug("started thread {} for {}", Thread.currentThread().getName(), gbDevice.getAddress()));
 
-        LOG.debug("Write handler thread is prepared, creating write handler");
+        LOG.debug("Write handler thread for {} is prepared, creating write handler", gbDevice.getAddress());
+
         mWriteHandler = new Handler(mWriteHandlerThread.getLooper()) {
             @SuppressLint("MissingPermission")
             @Override

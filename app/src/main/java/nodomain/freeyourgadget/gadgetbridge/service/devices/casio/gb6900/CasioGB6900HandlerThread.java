@@ -46,7 +46,7 @@ public class CasioGB6900HandlerThread extends GBDeviceIoThread {
 
     @Override
     public void run() {
-        LOG.debug("started thread {}", getName());
+        LOG.debug("started thread {} for {}", getName(), gbDevice.getAddress());
 
         mQuit = false;
 

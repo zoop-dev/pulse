@@ -245,7 +245,7 @@ class PebbleIoThread extends GBDeviceIoThread {
 
     @Override
     public void run() {
-        LOG.debug("started thread {}", getName());
+        LOG.debug("started thread {} for {}", getName(), gbDevice.getAddress());
 
         mIsConnected = connect();
         if (!mIsConnected) {

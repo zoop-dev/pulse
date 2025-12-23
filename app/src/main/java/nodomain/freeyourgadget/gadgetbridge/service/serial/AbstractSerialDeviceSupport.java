@@ -109,8 +109,9 @@ public abstract class AbstractSerialDeviceSupport extends AbstractDeviceSupport 
      */
     public synchronized GBDeviceIoThread getDeviceIOThread() {
         if (gbDeviceIOThread == null || !gbDeviceIOThread.isAlive()) {
-            LOG.debug("Creating new IO thread");
-            gbDeviceIOThread = createDeviceIOThread();
+            LOG.debug("Creating new IO thread for {}", gbDevice.getAddress());
+            final Thread thread = (gbDeviceIOThread = createDeviceIOThread());
+            LOG.debug("New IO thread: {}", thread.getName());
         }
         return gbDeviceIOThread;
     }
