@@ -28,6 +28,8 @@ import java.util.List;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.activities.HeartRateUtils;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.test.TestDeviceRand;
@@ -35,10 +37,18 @@ import nodomain.freeyourgadget.gadgetbridge.entities.AbstractActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
+import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
+import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class TestSampleProvider extends AbstractSampleProvider<TestSampleProvider.TestActivitySample> {
+    private final int maxHeartRateValue;
+    private final int minHeartRateValue;
+
     public TestSampleProvider(final GBDevice device, final DaoSession session) {
         super(device, session);
+        final Prefs prefs = GBApplication.getPrefs();
+        minHeartRateValue = prefs.getInt(GBPrefs.CHART_MIN_HEART_RATE, HeartRateUtils.MIN_HEART_RATE_VALUE);
+        maxHeartRateValue = prefs.getInt(GBPrefs.CHART_MAX_HEART_RATE, HeartRateUtils.MAX_HEART_RATE_VALUE);
     }
 
     @Override
@@ -105,7 +115,7 @@ public class TestSampleProvider extends AbstractSampleProvider<TestSampleProvide
         float dayActivityFactor = TestDeviceRand.randFloat(timestamp_from * 1000L, 0f, 1f);
         int steps = (int) (TestDeviceRand.randInt(timestamp_from * 1000L, 0, 100) * dayActivityFactor);
         int intensity = TestDeviceRand.randInt(timestamp_from * 1000L, 0, 100);
-        int hr = TestDeviceRand.randInt(timestamp_from * 1000L, 90, 153);
+        int hr = TestDeviceRand.randInt(timestamp_from * 1000L, minHeartRateValue, maxHeartRateValue);
 
         final long bedtimeHour = TestDeviceRand.randInt(timestamp_from, 21, 22);
         final long bedtimeMinute = TestDeviceRand.randInt(timestamp_from, 0, 59);
@@ -160,6 +170,7 @@ public class TestSampleProvider extends AbstractSampleProvider<TestSampleProvide
             steps += (int) (TestDeviceRand.randInt(ts, -steps, 100 - steps) * dayActivityFactor);
             intensity += TestDeviceRand.randInt(ts, -1, 1);
             hr += TestDeviceRand.randInt(ts, -2, 2);
+            hr = Math.min(maxHeartRateValue, Math.max(minHeartRateValue, hr));
         }
 
         return samples;

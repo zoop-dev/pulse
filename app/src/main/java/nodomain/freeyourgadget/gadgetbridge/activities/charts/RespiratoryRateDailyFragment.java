@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.LegendEntry;
@@ -26,8 +28,8 @@ import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
-import nodomain.freeyourgadget.gadgetbridge.entities.AbstractRespiratoryRateSample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.RespiratoryRateSample;
 
 public class RespiratoryRateDailyFragment extends RespiratoryRateFragment<RespiratoryRateFragment.RespiratoryRateDay> {
     protected static final Logger LOG = LoggerFactory.getLogger(RespiratoryRateDailyFragment.class);
@@ -76,15 +78,12 @@ public class RespiratoryRateDailyFragment extends RespiratoryRateFragment<Respir
         String formattedDate = new SimpleDateFormat("E, MMM dd").format(chartsHost.getEndDate());
         mDateView.setText(formattedDate);
         List<RespiratoryRateDay> stepsDayList = getMyRespiratoryRateDaysData(db, day, device);
-        final RespiratoryRateDay RespiratoryRateDay;
         if (stepsDayList.isEmpty()) {
             LOG.error("Failed to get RespiratoryRateDay for {}", day);
-            List<? extends AbstractRespiratoryRateSample> s = new ArrayList<>();
-            RespiratoryRateDay = new RespiratoryRateDay(day, new ArrayList<>(), new ArrayList<>(), true);
+            return new RespiratoryRateDay(day, new ArrayList<>(), new ArrayList<>(), true);
         } else {
-            RespiratoryRateDay = stepsDayList.get(0);
+            return stepsDayList.get(0);
         }
-        return RespiratoryRateDay;
     }
 
     @Override
@@ -99,7 +98,7 @@ public class RespiratoryRateDailyFragment extends RespiratoryRateFragment<Respir
         final List<LegendEntry> legendEntries = new ArrayList<>(1);
         final LegendEntry respiratoryRateEntry = new LegendEntry();
         respiratoryRateEntry.label = getString(R.string.respiratoryrate);
-        respiratoryRateEntry.formColor = getResources().getColor(R.color.respiratory_rate_color);
+        respiratoryRateEntry.formColor = ContextCompat.getColor(requireContext(), R.color.respiratory_rate_color);
         legendEntries.add(respiratoryRateEntry);
         respiratoryRateChart.getLegend().setTextColor(TEXT_COLOR);
         respiratoryRateChart.getLegend().setCustom(legendEntries);
@@ -108,7 +107,7 @@ public class RespiratoryRateDailyFragment extends RespiratoryRateFragment<Respir
         List<Entry> lineEntries = new ArrayList<>();
         final TimestampTranslation tsTranslation = new TimestampTranslation();
         int lastTsShorten = 0;
-        for (final AbstractRespiratoryRateSample sample : respiratoryRateDay.respiratoryRateSamples) {
+        for (final RespiratoryRateSample sample : respiratoryRateDay.respiratoryRateSamples) {
             int ts = (int) (sample.getTimestamp() / 1000L);
             int tsShorten = tsTranslation.shorten(ts);
             if (lastTsShorten == 0 || (tsShorten - lastTsShorten) <= 300) {
@@ -136,12 +135,12 @@ public class RespiratoryRateDailyFragment extends RespiratoryRateFragment<Respir
         }
 
         final LineDataSet lineDataSet = new LineDataSet(lineEntries, getString(R.string.respiratoryrate));
-        lineDataSet.setColor(getResources().getColor(R.color.respiratory_rate_color));
+        lineDataSet.setColor(ContextCompat.getColor(requireContext(), R.color.respiratory_rate_color));
         lineDataSet.setDrawCircles(false);
         lineDataSet.setLineWidth(2f);
         lineDataSet.setFillAlpha(255);
         lineDataSet.setDrawCircles(false);
-        lineDataSet.setCircleColor(getResources().getColor(R.color.respiratory_rate_color));
+        lineDataSet.setCircleColor(ContextCompat.getColor(requireContext(), R.color.respiratory_rate_color));
         lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         lineDataSet.setDrawValues(false);
         lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
@@ -153,12 +152,12 @@ public class RespiratoryRateDailyFragment extends RespiratoryRateFragment<Respir
 
     protected LineDataSet createDataSet(final List<Entry> values) {
         final LineDataSet lineDataSet = new LineDataSet(values, getString(R.string.respiratoryrate));
-        lineDataSet.setColor(getResources().getColor(R.color.respiratory_rate_color));
+        lineDataSet.setColor(ContextCompat.getColor(requireContext(), R.color.respiratory_rate_color));
         lineDataSet.setDrawCircles(false);
         lineDataSet.setLineWidth(2f);
         lineDataSet.setFillAlpha(255);
         lineDataSet.setDrawCircles(false);
-        lineDataSet.setCircleColor(getResources().getColor(R.color.respiratory_rate_color));
+        lineDataSet.setCircleColor(ContextCompat.getColor(requireContext(), R.color.respiratory_rate_color));
         lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         lineDataSet.setDrawValues(false);
         lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);

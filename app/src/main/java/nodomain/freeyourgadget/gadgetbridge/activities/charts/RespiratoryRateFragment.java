@@ -28,10 +28,9 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.entities.AbstractRespiratoryRateSample;
+import nodomain.freeyourgadget.gadgetbridge.model.RespiratoryRateSample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
-import nodomain.freeyourgadget.gadgetbridge.model.RespiratoryRateSample;
 
 abstract class RespiratoryRateFragment<T extends ChartsData> extends AbstractChartFragment<T> {
     protected static final Logger LOG = LoggerFactory.getLogger(RespiratoryRateFragment.class);
@@ -53,9 +52,9 @@ abstract class RespiratoryRateFragment<T extends ChartsData> extends AbstractCha
     protected void init() {
         TEXT_COLOR = GBApplication.getTextColor(requireContext());
         CHART_TEXT_COLOR = GBApplication.getSecondaryTextColor(requireContext());
-        BACKGROUND_COLOR = GBApplication.getBackgroundColor(getContext());
-        LEGEND_TEXT_COLOR = DESCRIPTION_COLOR = GBApplication.getTextColor(getContext());
-        CHART_TEXT_COLOR = GBApplication.getSecondaryTextColor(getContext());
+        BACKGROUND_COLOR = GBApplication.getBackgroundColor(requireContext());
+        LEGEND_TEXT_COLOR = DESCRIPTION_COLOR = GBApplication.getTextColor(requireContext());
+        CHART_TEXT_COLOR = GBApplication.getSecondaryTextColor(requireContext());
     }
 
     protected List<RespiratoryRateFragment.RespiratoryRateDay> getMyRespiratoryRateDaysData(DBHandler db, Calendar day, GBDevice device) {
@@ -64,7 +63,7 @@ abstract class RespiratoryRateFragment<T extends ChartsData> extends AbstractCha
 
         final boolean supportsDayRespiratoryRate = device.getDeviceCoordinator().supportsDayRespiratoryRate(device);
 
-        List<RespiratoryRateDay> daysData = new ArrayList<>();;
+        List<RespiratoryRateDay> daysData = new ArrayList<>();
         for (int counter = 0; counter < TOTAL_DAYS; counter++) {
             int startTs;
             int endTs;
@@ -78,7 +77,7 @@ abstract class RespiratoryRateFragment<T extends ChartsData> extends AbstractCha
             List<? extends ActivitySample> activitySamples = getAllActivitySamples(db, device, startTs, endTs);
             SleepAnalysis sleepAnalysis = new SleepAnalysis();
             List<SleepAnalysis.SleepSession> sleepSessions = sleepAnalysis.calculateSleepSessions(activitySamples);
-            List<? extends AbstractRespiratoryRateSample> samples = getRespiratoryRateSamples(db, device, startTs, endTs);
+            List<? extends RespiratoryRateSample> samples = getRespiratoryRateSamples(db, device, startTs, endTs);
             Calendar d = (Calendar) day.clone();
             daysData.add(new RespiratoryRateDay(d, samples, sleepSessions, supportsDayRespiratoryRate));
             day.add(Calendar.DATE, 1);
@@ -86,13 +85,9 @@ abstract class RespiratoryRateFragment<T extends ChartsData> extends AbstractCha
         return daysData;
     }
 
-    protected List<? extends AbstractRespiratoryRateSample> getSamplesOfDay(DBHandler db, GBDevice device, int startTs, int endTs) {
-        return getRespiratoryRateSamples(db, device, startTs, endTs);
-    }
-
-    protected List<AbstractRespiratoryRateSample> getRespiratoryRateSamples(DBHandler db, GBDevice device, int tsFrom, int tsTo) {
+    protected List<? extends RespiratoryRateSample> getRespiratoryRateSamples(DBHandler db, GBDevice device, int tsFrom, int tsTo) {
         TimeSampleProvider<? extends RespiratoryRateSample> provider = device.getDeviceCoordinator().getRespiratoryRateSampleProvider(device, db.getDaoSession());
-        return (List<AbstractRespiratoryRateSample>) provider.getAllSamples(tsFrom * 1000L, tsTo * 1000L);
+        return provider.getAllSamples(tsFrom * 1000L, tsTo * 1000L);
     }
 
     protected List<? extends ActivitySample> getAllActivitySamples(DBHandler db, GBDevice device, int startTs, int endTs) {
@@ -106,11 +101,11 @@ abstract class RespiratoryRateFragment<T extends ChartsData> extends AbstractCha
         public int rateLowest;
         public int rateHighest;
         public Calendar day;
-        List<? extends AbstractRespiratoryRateSample> respiratoryRateSamples;
+        List<? extends RespiratoryRateSample> respiratoryRateSamples;
         List<SleepAnalysis.SleepSession> sleepSessions;
 
         protected RespiratoryRateDay(Calendar day,
-                                     List<? extends AbstractRespiratoryRateSample> respiratoryRateSamples,
+                                     List<? extends RespiratoryRateSample> respiratoryRateSamples,
                                      List<SleepAnalysis.SleepSession> sleepSessions,
                                      boolean supportsDayRespiratoryRate) {
             this.day = day;
@@ -123,7 +118,7 @@ abstract class RespiratoryRateFragment<T extends ChartsData> extends AbstractCha
             float lowest = 0;
             float highest = 0;
             if (!this.respiratoryRateSamples.isEmpty()) {
-                for (AbstractRespiratoryRateSample sample : this.respiratoryRateSamples) {
+                for (RespiratoryRateSample sample : this.respiratoryRateSamples) {
                     if (isSleepSample(sample, supportsDayRespiratoryRate)) {
                         sleepRateTotal += sample.getRespiratoryRate();
                         sleepCounter++;
@@ -149,7 +144,7 @@ abstract class RespiratoryRateFragment<T extends ChartsData> extends AbstractCha
             this.rateHighest = (int) highest;
         }
 
-        private boolean isSleepSample(AbstractRespiratoryRateSample sample, boolean supportsDayRespiratoryRate) {
+        private boolean isSleepSample(RespiratoryRateSample sample, boolean supportsDayRespiratoryRate) {
             if (!supportsDayRespiratoryRate) {
                 return true;
             }
