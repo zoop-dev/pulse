@@ -111,7 +111,7 @@ public class AutoConnectIntervalReceiver extends BroadcastReceiver {
         am.setAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
                 Calendar.getInstance().
-                getTimeInMillis() + delay * 1000,
+                getTimeInMillis() + delay * 1000L,
                 pendingIntent
         );
         mScheduled = true;
