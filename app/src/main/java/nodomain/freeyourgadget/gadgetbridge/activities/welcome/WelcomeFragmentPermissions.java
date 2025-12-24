@@ -97,7 +97,19 @@ public class WelcomeFragmentPermissions extends Fragment {
         }
 
         // Set up RecyclerView
-        permissionAdapter = new PermissionAdapter(PermissionsUtils.getRequiredPermissionsList(requireActivity()), requireContext());
+        final ArrayList<PermissionsUtils.PermissionDetails> requiredPermissionsList = PermissionsUtils.getRequiredPermissionsList(requireActivity());
+        requiredPermissionsList.sort((p1, p2) -> {
+            final boolean p1Granted = PermissionsUtils.checkPermission(requireContext(), p1.permission());
+            final boolean p2Granted = PermissionsUtils.checkPermission(requireContext(), p2.permission());
+
+            // Ungranted at the top
+            if (p1Granted && !p2Granted) return 1;
+            if (!p1Granted && p2Granted) return -1;
+
+            // Both granted or both ungranted -> sort by name
+            return p1.title().compareToIgnoreCase(p2.title());
+        });
+        permissionAdapter = new PermissionAdapter(requiredPermissionsList, requireContext());
         binding.permissionsList.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.permissionsList.setAdapter(permissionAdapter);
 
