@@ -1,4 +1,4 @@
-/*  Copyright (C) 2024 Andreas Shimokawa
+/*  Copyright (C) 2025 Andreas Shimokawa
 
     This file is part of Gadgetbridge.
 
@@ -84,6 +84,13 @@ public class SolarFlowDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public int getBondingStyle() {
         return BONDING_STYLE_NONE;
+    }
+
+    @Override
+    public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
+        return new int[]{
+                R.xml.devicesettings_battery_minimum_charge,
+        };
     }
 
     @Override

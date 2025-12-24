@@ -1,4 +1,4 @@
-/*  Copyright (C) 2024 Andreas Shimokawa
+/*  Copyright (C) 2025 Andreas Shimokawa
 
     This file is part of Gadgetbridge.
 
@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.zendure;
 
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BATTERY_MINIMUM_CHARGE;
+
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Intent;
@@ -31,10 +33,12 @@ import org.slf4j.LoggerFactory;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.devices.SolarEquipmentStatusActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 
 public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
@@ -54,6 +58,7 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private int batteryTemp;
     private int hyperTmp;
     private int electricLevel = -1;
+    private String deviceId;
 
     public SolarFlowDeviceSupport() {
         super(LOG);
@@ -70,7 +75,7 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 String method = jsonMessage.getString("method");
 
                 if (method.equals("BLESPP")) {
-                    String deviceId = jsonMessage.getString("deviceId");
+                    deviceId = jsonMessage.getString("deviceId");
                     JSONObject sendMessage = new JSONObject()
                             .put("messageId", messageId++)
                             .put("method", "BLESPP_OK");
@@ -137,7 +142,36 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     @Override
     public void onSendConfiguration(final String config) {
-        LOG.warn("Unknown config changed: {}", config);
+        Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress()));
+        switch (config) {
+            case PREF_BATTERY_MINIMUM_CHARGE:
+                int minSoc = devicePrefs.getInt(PREF_BATTERY_MINIMUM_CHARGE, 10);
+                if (minSoc < 0) minSoc = 0;
+                if (minSoc > 50) minSoc = 50;
+                sendWriteProperty("minSoc", minSoc*10);
+                return;
+            default:
+                LOG.warn("Unknown config changed: {}", config);
+        }
+    }
+
+    private void sendWriteProperty(String property, Object value) {
+        try {
+            JSONObject sendMessageSetProperty = new JSONObject()
+                    .put("messageId", messageId++)
+                    .put("method", "write")
+                    .put("timestamp", System.currentTimeMillis() / 1000)
+                    .put("deviceId", deviceId)
+                    .put("properties", new JSONObject()
+                            .put(property, value));
+
+            sendMessage(sendMessageSetProperty);
+        } catch (JSONException e) {
+            LOG.error("JSON error while constructing write property json: {}", e.getMessage());
+        }
+
+
+
     }
 
     private void sendMessage(JSONObject message) {
