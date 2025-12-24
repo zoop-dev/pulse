@@ -18,8 +18,10 @@ package nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches
 
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.GloryFitCoordinator
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import java.util.regex.Pattern
 
+/// #5063
 class S52Coordinator : GloryFitCoordinator() {
     override fun getManufacturer(): String {
         return "Unspecified"
@@ -31,5 +33,15 @@ class S52Coordinator : GloryFitCoordinator() {
 
     override fun getDeviceNameResource(): Int {
         return R.string.devicetype_s52
+    }
+
+    override fun getBondingStyle(): Int {
+        // #5063 - It seems to fail to pair
+        return BONDING_STYLE_NONE
+    }
+
+    override fun getAlarmSlotCount(device: GBDevice): Int {
+        // #5063 - alarms from app do not work
+        return 0
     }
 }
