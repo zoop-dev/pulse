@@ -21,8 +21,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.webkit.PermissionRequest
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -161,15 +159,12 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
             }
         }
 
-        val mainLooper = Looper.getMainLooper()
-        Handler(mainLooper).postDelayed({
-            webView!!.loadUrl(url)
-        }, 100)
-
         webView!!.webChromeClient = object : GBChromeClient() {
             override fun onPermissionRequest(request: PermissionRequest) {
                 request.grant(request.resources)
             }
         }
+
+        webView!!.loadUrl(url)
     }
 }

@@ -25,8 +25,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Base64;
 import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
@@ -220,13 +218,7 @@ public class AppsManagementActivity extends AbstractGBActivity {
         Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(mGBDevice.getAddress()));
         String url = devicePrefs.getString(PREF_BANGLEJS_WEBVIEW_URL, "").trim();
         if (url.isEmpty()) url = "https://banglejs.com/apps/android.html";
-        final String finalUrl = url;
-
-        final Looper mainLooper = Looper.getMainLooper();
-        new Handler(mainLooper).postDelayed(() -> {
-            webView.loadUrl(finalUrl);
-        }, 1000);
-
+        webView.loadUrl(url);
 
         webView.setWebChromeClient(new GBChromeClient() {
             @Override
