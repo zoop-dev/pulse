@@ -90,6 +90,7 @@ public class SolarFlowDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
         return new int[]{
                 R.xml.devicesettings_battery_minimum_charge,
+                R.xml.devicesettings_battery_maximum_charge,
         };
     }
 

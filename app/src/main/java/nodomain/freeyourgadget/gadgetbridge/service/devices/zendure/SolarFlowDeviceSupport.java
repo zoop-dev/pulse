@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.zendure;
 
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BATTERY_MAXIMUM_CHARGE;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BATTERY_MINIMUM_CHARGE;
 
 import android.bluetooth.BluetoothGatt;
@@ -59,6 +60,7 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private int hyperTmp;
     private int electricLevel = -1;
     private String deviceId;
+    private int firmwareVersion = -1;
 
     public SolarFlowDeviceSupport() {
         super(LOG);
@@ -74,47 +76,49 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
             if (jsonMessage.has("method")) {
                 String method = jsonMessage.getString("method");
 
-                if (method.equals("BLESPP")) {
-                    deviceId = jsonMessage.getString("deviceId");
-                    JSONObject sendMessage = new JSONObject()
-                            .put("messageId", messageId++)
-                            .put("method", "BLESPP_OK");
+                switch (method) {
+                    case "BLESPP" -> {
+                        deviceId = jsonMessage.getString("deviceId");
+                        JSONObject sendMessage = new JSONObject()
+                                .put("messageId", messageId++)
+                                .put("method", "BLESPP_OK");
 
-                    sendMessage(sendMessage);
+                        sendMessage(sendMessage);
 
-                    JSONObject sendMessageGetInfo = new JSONObject()
-                            .put("messageId", messageId++)
-                            .put("method", "getInfo")
-                            .put("timestamp", System.currentTimeMillis() / 1000);
-                    sendMessage(sendMessageGetInfo);
-
-                    JSONObject sendMessageGetAllInfos = new JSONObject()
-                            .put("messageId", messageId++)
-                            .put("deviceId", deviceId)
-                            .put("method", "read")
-                            .put("properties", new JSONArray().put("getAll"))
-                            .put("timestamp", System.currentTimeMillis() / 1000);
-                    sendMessage(sendMessageGetAllInfos);
-                } else if (method.equals("report")) {
-                    long messageIdReport = jsonMessage.getLong("messageId");
-                    if (messageIdReport != this.messageIdReport) {
-                        if (this.messageIdReport != -1) {
-                            reportToStatusActivity();
-                        } else {
-                            TransactionBuilder builder = createTransactionBuilder("setInitialized");
-                            builder.setDeviceState(GBDevice.State.INITIALIZED);
-                            builder.queue();
+                        JSONObject sendMessageGetInfo = new JSONObject()
+                                .put("messageId", messageId++)
+                                .put("method", "getInfo")
+                                .put("timestamp", System.currentTimeMillis() / 1000);
+                        sendMessage(sendMessageGetInfo);
+                    }
+                    case "getInfo-rsp" -> {
+                        JSONObject sendMessageGetAllInfos = new JSONObject()
+                                .put("messageId", messageId++)
+                                .put("deviceId", deviceId)
+                                .put("method", "read")
+                                .put("properties", new JSONArray().put("getAll"))
+                                .put("timestamp", System.currentTimeMillis() / 1000);
+                        sendMessage(sendMessageGetAllInfos);
+                    }
+                    case "report" -> {
+                        long messageIdReport = jsonMessage.getLong("messageId");
+                        if (messageIdReport != this.messageIdReport) {
+                            if (this.messageIdReport != -1) {
+                                reportToStatusActivity();
+                            } else {
+                                TransactionBuilder builder = createTransactionBuilder("setInitialized");
+                                builder.setDeviceState(GBDevice.State.INITIALIZED);
+                                builder.queue();
+                            }
+                            this.messageIdReport = messageIdReport;
                         }
-                        this.messageIdReport = messageIdReport;
-
+                        if (jsonMessage.has("properties")) {
+                            return handleReportProperties(jsonMessage.getJSONObject("properties"));
+                        }
+                        if (jsonMessage.has("packData")) {
+                            return handleReportPackData(jsonMessage.getJSONArray("packData"));
+                        }
                     }
-                    if (jsonMessage.has("properties")) {
-                        return handleReportProperties(jsonMessage.getJSONObject("properties"));
-                    }
-                    if (jsonMessage.has("packData")) {
-                        return handleReportPackData(jsonMessage.getJSONArray("packData"));
-                    }
-
                 }
             }
         } catch (JSONException e) {
@@ -144,14 +148,19 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
     public void onSendConfiguration(final String config) {
         Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress()));
         switch (config) {
-            case PREF_BATTERY_MINIMUM_CHARGE:
+            case PREF_BATTERY_MINIMUM_CHARGE -> {
                 int minSoc = devicePrefs.getInt(PREF_BATTERY_MINIMUM_CHARGE, 10);
                 if (minSoc < 0) minSoc = 0;
                 if (minSoc > 50) minSoc = 50;
-                sendWriteProperty("minSoc", minSoc*10);
-                return;
-            default:
-                LOG.warn("Unknown config changed: {}", config);
+                sendWriteProperty("minSoc", minSoc * 10);
+            }
+            case PREF_BATTERY_MAXIMUM_CHARGE -> {
+                int socSet = devicePrefs.getInt(PREF_BATTERY_MAXIMUM_CHARGE, 100);
+                if (socSet < 70) socSet = 70;
+                if (socSet > 100) socSet = 100;
+                sendWriteProperty("socSet", socSet * 10);
+            }
+            default -> LOG.warn("Unknown config changed: {}", config);
         }
     }
 
@@ -199,12 +208,20 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 int electricLevel = properties.getInt("electricLevel");
                 if (electricLevel != this.electricLevel) {
                     this.electricLevel = electricLevel;
-                    getDevice().setBatteryLevel(electricLevel);
-                    getDevice().sendDeviceUpdateIntent(getContext());
+                    getDevice().setBatteryLevel(electricLevel); // update event will be sent when firmware gets read
                 }
             }
             if (properties.has("outputHomePower")) {
                 outputHomePower = properties.getInt("outputHomePower");
+            }
+            if (properties.has("MASTER")) {
+                int firmwareVersion = properties.getInt("MASTER");
+                if (firmwareVersion != this.firmwareVersion) {
+                    this.firmwareVersion = firmwareVersion;
+                    String firmwareString = ((firmwareVersion & 0xf000) >> 12) + "." + ((firmwareVersion & 0x0f00) >> 8) + "." + (firmwareVersion & 0x00ff);
+                    getDevice().setFirmwareVersion(firmwareString);
+                    getDevice().sendDeviceUpdateIntent(getContext());
+                }
             }
 
         } catch (JSONException e) {
