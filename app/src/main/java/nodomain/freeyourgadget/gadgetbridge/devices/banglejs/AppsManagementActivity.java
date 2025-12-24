@@ -26,12 +26,14 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.View;
 import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
 import android.webkit.PermissionRequest;
 import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -106,8 +108,10 @@ public class AppsManagementActivity extends AbstractGBActivity {
 
     @Override
     protected void onDestroy() {
-        webView.destroy();
-        webView = null;
+        if (webView != null) {
+            webView.destroy();
+            webView = null;
+        }
         LocalBroadcastManager.getInstance(this).unregisterReceiver(deviceUpdateReceiver);
         super.onDestroy();
         finish();
@@ -189,8 +193,20 @@ public class AppsManagementActivity extends AbstractGBActivity {
     }
 
     private void initViews() {
-        //https://stackoverflow.com/questions/4325639/android-calling-javascript-functions-in-webview
         webView = findViewById(R.id.webview);
+        LinearLayout permissionMissingAlert = findViewById(R.id.permission_missing_alert);
+        if (GBApplication.hasInternetAccess() && !GBApplication.hasDirectInternetAccess()) {
+            // Using the internethelper add-on app, check whether the Bangle.js app loader is allowed in settings
+            boolean appLoaderAllowed = GBApplication.getPrefs().getBoolean("pref_key_internethelper_allow_bangle_app_loader", false);
+            if (!appLoaderAllowed) {
+                webView.setVisibility(View.GONE);
+                permissionMissingAlert.setVisibility(View.VISIBLE);
+                return;
+            }
+        }
+        webView.setVisibility(View.VISIBLE);
+        permissionMissingAlert.setVisibility(View.GONE);
+        //https://stackoverflow.com/questions/4325639/android-calling-javascript-functions-in-webview
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDatabaseEnabled(true);

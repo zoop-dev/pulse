@@ -4474,4 +4474,6 @@
     <string name="notification_channel_pebble_js_runner">Pebble JS runner</string>
     <string name="notification_pebble_js_service_title">Pebble JavaScript service</string>
     <string name="notification_pebble_js_service_text">Running Pebble app/watchface JavaScript</string>
+    <string name="internet_helper_banglejs_permission_missing_title">Permission missing</string>
+    <string name="internet_helper_banglejs_permission_missing_text">Access to the Bangle.js app loader is currently not allowed by your settings. Please go to the internet helper settings in the external integrations settings to enable it.</string>
 </resources>
