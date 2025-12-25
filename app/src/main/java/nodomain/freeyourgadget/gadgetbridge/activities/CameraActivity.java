@@ -19,12 +19,14 @@ package nodomain.freeyourgadget.gadgetbridge.activities;
 import android.Manifest;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -54,9 +56,12 @@ public class CameraActivity extends AppCompatActivity {
     private static final Logger LOG = LoggerFactory.getLogger(CameraActivity.class);
 
     public static final String intentExtraEvent = "EVENT";
+    private static final String PREF_CAMERA_LENS = "camera_lens_facing";
 
     private ListenableFuture<ProcessCameraProvider> cameraProviderListenableFuture;
     private ImageCapture imageCapture;
+    private ProcessCameraProvider cameraProvider;
+    private int currentLensFacing;
 
     private boolean reportClosing = true;
 
@@ -86,18 +91,15 @@ public class CameraActivity extends AppCompatActivity {
             LOG.info("Requesting camera permission");
 
             ActivityResultLauncher<String> requestPermissionLauncher =
-                    registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
-                        @Override
-                        public void onActivityResult(Boolean isGranted) {
-                            if (isGranted) {
-                                initCamera();
-                            } else {
-                                LOG.error("Did not receive camera permission");
-                                GB.toast(getString(R.string.toast_camera_permission_required), Toast.LENGTH_SHORT, GB.ERROR);
-                                GBApplication.deviceService().onCameraStatusChange(GBDeviceEventCameraRemote.Event.EXCEPTION, null);
-                                reportClosing = false;
-                                finish();
-                            }
+                    registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                        if (isGranted) {
+                            initCamera();
+                        } else {
+                            LOG.error("Did not receive camera permission");
+                            GB.toast(getString(R.string.toast_camera_permission_required), Toast.LENGTH_SHORT, GB.ERROR);
+                            GBApplication.deviceService().onCameraStatusChange(GBDeviceEventCameraRemote.Event.EXCEPTION, null);
+                            reportClosing = false;
+                            finish();
                         }
                     });
             requestPermissionLauncher.launch(Manifest.permission.CAMERA);
@@ -108,44 +110,49 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     private void initCamera() {
+        // Load saved camera preference
+        currentLensFacing = GBApplication.getPrefs().getPreferences()
+                .getInt(PREF_CAMERA_LENS, CameraSelector.LENS_FACING_BACK);
+
         cameraProviderListenableFuture = ProcessCameraProvider.getInstance(this);
-        cameraProviderListenableFuture.addListener(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ProcessCameraProvider cameraProvider = cameraProviderListenableFuture.get();
-
-                    PreviewView previewView = findViewById(R.id.preview);
-
-                    Preview preview = new Preview.Builder().build();
-
-                    CameraSelector cameraSelector = new CameraSelector.Builder()
-                            .requireLensFacing(CameraSelector.LENS_FACING_BACK) // TODO: make setting
-                            .build();
-
-                    preview.setSurfaceProvider(previewView.getSurfaceProvider());
-
-                    imageCapture = new ImageCapture.Builder()
-                            .setTargetRotation(preview.getTargetRotation())
-                            .build();
-
-                    cameraProvider.bindToLifecycle(
-                            CameraActivity.this,
-                            cameraSelector,
-                            imageCapture,
-                            preview
-                    );
-                } catch (ExecutionException | InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+        cameraProviderListenableFuture.addListener(() -> {
+            try {
+                cameraProvider = cameraProviderListenableFuture.get();
+                bindCamera();
+            } catch (ExecutionException | InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }, ContextCompat.getMainExecutor(this));
 
         handleIntent(getIntent());
     }
 
+    private void bindCamera() {
+        final PreviewView previewView = findViewById(R.id.preview);
+
+        final Preview preview = new Preview.Builder().build();
+
+        final CameraSelector cameraSelector = new CameraSelector.Builder()
+                .requireLensFacing(currentLensFacing)
+                .build();
+
+        preview.setSurfaceProvider(previewView.getSurfaceProvider());
+
+        imageCapture = new ImageCapture.Builder()
+                .setTargetRotation(preview.getTargetRotation())
+                .build();
+
+        cameraProvider.unbindAll();
+        cameraProvider.bindToLifecycle(
+                CameraActivity.this,
+                cameraSelector,
+                imageCapture,
+                preview
+        );
+    }
+
     @Override
-    protected void onNewIntent(Intent intent) {
+    protected void onNewIntent(@NonNull Intent intent) {
         super.onNewIntent(intent);
         handleIntent(intent);
     }
@@ -209,6 +216,40 @@ public class CameraActivity extends AppCompatActivity {
                     GBApplication.deviceService().onCameraStatusChange(GBDeviceEventCameraRemote.Event.EXCEPTION, null);
                 }
             });
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_camera, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull final MenuItem item) {
+        if (item.getItemId() == R.id.menu_camera_switch) {
+            switchCamera();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void switchCamera() {
+        // Toggle between front and back camera
+        if (currentLensFacing == CameraSelector.LENS_FACING_BACK) {
+            currentLensFacing = CameraSelector.LENS_FACING_FRONT;
+        } else {
+            currentLensFacing = CameraSelector.LENS_FACING_BACK;
+        }
+
+        // Save preference
+        GBApplication.getPrefs().getPreferences().edit()
+                .putInt(PREF_CAMERA_LENS, currentLensFacing)
+                .apply();
+
+        // Rebind camera
+        if (cameraProvider != null) {
+            bindCamera();
         }
     }
 
