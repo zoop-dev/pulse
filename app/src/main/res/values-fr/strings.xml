@@ -3845,7 +3845,7 @@ Temps de sommeil préféré en heures</string>
     <string name="map_theme_biker">Cycliste</string>
     <string name="pref_header_auto_export_db">Exporter automatiquement la base de donnée</string>
     <string name="pref_header_auto_export_zip">Exporter automatiquement en zip</string>
-    <string name="prefs_device_support_settings"></string>
+    <string name="prefs_device_support_settings"/>
     <string name="pref_experimental_settings_title">Paramètres expérimentaux</string>
     <string name="pref_experimental_settings_summary">Les paramètres expérimentaux peuvent être instables ou ne pas marcher comme prévu. Continuez à vos risques et périls.</string>
     <string name="save">Sauvegarder</string>
