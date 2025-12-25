@@ -5,11 +5,13 @@
 * Initial support for CMF Buds 2
 * Initial support for Galaxy Buds3 Pro
 * Initial support for Garmin Edge 840
+* Initial support for Zendure SolarFlow (test only 800 Pro)
 * Huawei: Sync raw ECG data (no UI)
 * Huami: Improve workout charts for activities without gps
 * Pebble: Support Signal icon with 2025 models
 * Xiaomi-protobuf: Enable active calories
 * Zepp OS: Add jump rope stats
+* Marstek B2500: Support setting solar panel peak power
 * Charts: Add loading indicator
 * Charts: Add weekly/monthly body energy
 * Charts: Add weekly/monthly blood oxygen
