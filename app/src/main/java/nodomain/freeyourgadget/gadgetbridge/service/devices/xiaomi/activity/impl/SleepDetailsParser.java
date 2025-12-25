@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl;
 
+import android.content.Context;
 import android.widget.Toast;
 
 import org.slf4j.Logger;
@@ -40,7 +41,6 @@ import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiSleepStageSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiSleepTimeSample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityFileId;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityParser;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -49,7 +49,7 @@ public class SleepDetailsParser extends XiaomiActivityParser {
     private static final Logger LOG = LoggerFactory.getLogger(SleepDetailsParser.class);
 
     @Override
-    public boolean parse(final XiaomiSupport support, final XiaomiActivityFileId fileId, final byte[] bytes) {
+    public boolean parse(final Context context, final GBDevice gbDevice, final XiaomiActivityFileId fileId, final byte[] bytes) {
         // Seems to come both as DetailType.DETAILS (version 2) and DetailType.SUMMARY (version 4, 5)
         final int version = fileId.getVersion();
         final int headerSize;
@@ -314,7 +314,6 @@ public class SleepDetailsParser extends XiaomiActivityParser {
         // save all the samples that we got
         try (DBHandler handler = GBApplication.acquireDB()) {
             final DaoSession session = handler.getDaoSession();
-            final GBDevice gbDevice = support.getDevice();
 
             final XiaomiSleepTimeSampleProvider sampleProvider = new XiaomiSleepTimeSampleProvider(gbDevice, session);
 
@@ -337,7 +336,7 @@ public class SleepDetailsParser extends XiaomiActivityParser {
                 sampleProvider.addSample(summary);
             }
         } catch (final Exception e) {
-            GB.toast(support.getContext(), "Error saving sleep sample", Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(context, "Error saving sleep sample", Toast.LENGTH_LONG, GB.ERROR);
             LOG.error("Error saving sleep sample", e);
             persistSuccess = false;
         }
@@ -348,7 +347,6 @@ public class SleepDetailsParser extends XiaomiActivityParser {
             // Save the sleep stage samples
             try (DBHandler handler = GBApplication.acquireDB()) {
                 final DaoSession session = handler.getDaoSession();
-                final GBDevice gbDevice = support.getDevice();
                 final Device device = DBHelper.getDevice(gbDevice, session);
                 final User user = DBHelper.getUser(session);
 
@@ -361,7 +359,7 @@ public class SleepDetailsParser extends XiaomiActivityParser {
 
                 sampleProvider.addSamples(stages);
             } catch (final Exception e) {
-                GB.toast(support.getContext(), "Error saving sleep stage samples", Toast.LENGTH_LONG, GB.ERROR);
+                GB.toast(context, "Error saving sleep stage samples", Toast.LENGTH_LONG, GB.ERROR);
                 LOG.error("Error saving sleep stage samples", e);
                 persistSuccess = false;
             }
@@ -370,7 +368,6 @@ public class SleepDetailsParser extends XiaomiActivityParser {
         // Save the heart pulse samples
         try (DBHandler handler = GBApplication.acquireDB()) {
             final DaoSession session = handler.getDaoSession();
-            final GBDevice gbDevice = support.getDevice();
             final Device device = DBHelper.getDevice(gbDevice, session);
             final User user = DBHelper.getUser(session);
 
@@ -383,7 +380,7 @@ public class SleepDetailsParser extends XiaomiActivityParser {
 
             sampleProvider.addSamples(heartPulseSamples);
         } catch (final Exception e) {
-            GB.toast(support.getContext(), "Error saving heart pulse samples", Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(context, "Error saving heart pulse samples", Toast.LENGTH_LONG, GB.ERROR);
             LOG.error("Error saving heart pulse samples", e);
             persistSuccess = false;
         }

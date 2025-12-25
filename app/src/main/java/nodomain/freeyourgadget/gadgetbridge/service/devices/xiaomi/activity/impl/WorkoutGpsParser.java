@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl;
 
+import android.content.Context;
 import android.widget.Toast;
 
 import org.slf4j.Logger;
@@ -35,11 +36,11 @@ import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.export.ActivityTrackExporter;
 import nodomain.freeyourgadget.gadgetbridge.export.GPXExporter;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityFileFetcher;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityFileId;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityParser;
@@ -51,7 +52,7 @@ public class WorkoutGpsParser extends XiaomiActivityParser {
     private static final Logger LOG = LoggerFactory.getLogger(WorkoutGpsParser.class);
 
     @Override
-    public boolean parse(final XiaomiSupport support, final XiaomiActivityFileId fileId, final byte[] bytes) {
+    public boolean parse(final Context context, final GBDevice gbDevice, final XiaomiActivityFileId fileId, final byte[] bytes) {
         final int version = fileId.getVersion();
         final int headerSize;
         final int sampleSize;
@@ -119,7 +120,7 @@ public class WorkoutGpsParser extends XiaomiActivityParser {
 
        try (DBHandler dbHandler = GBApplication.acquireDB()) {
             final DaoSession session = dbHandler.getDaoSession();
-            final Device device = DBHelper.getDevice(support.getDevice(), session);
+            final Device device = DBHelper.getDevice(gbDevice, session);
             final User user = DBHelper.getUser(session);
 
             // Find the matching summary
@@ -128,10 +129,10 @@ public class WorkoutGpsParser extends XiaomiActivityParser {
             // Set the info on the activity track
             activityTrack.setUser(user);
             activityTrack.setDevice(device);
-            activityTrack.setName(ActivityKind.fromCode(summary.getActivityKind()).getLabel(support.getContext()));
+            activityTrack.setName(ActivityKind.fromCode(summary.getActivityKind()).getLabel(context));
 
             // The file was already persisted by XiaomiActivityFileFetcher - just use the existing file
-            final File rawBytesFile = XiaomiActivityFileFetcher.getRawFile(support, fileId);
+            final File rawBytesFile = XiaomiActivityFileFetcher.getRawFile(gbDevice, fileId);
 
             // Save the gpx file
             final GPXExporter exporter = new GPXExporter();
@@ -144,7 +145,7 @@ public class WorkoutGpsParser extends XiaomiActivityParser {
                 exporter.performExport(activityTrack, gpxTargetFile);
             } catch (final ActivityTrackExporter.GPXTrackEmptyException ex) {
                 exportGpxSuccess = false;
-                GB.toast(support.getContext(), "This activity does not contain GPX tracks.", Toast.LENGTH_LONG, GB.ERROR, ex);
+                GB.toast(context, "This activity does not contain GPX tracks.", Toast.LENGTH_LONG, GB.ERROR, ex);
             }
 
             if (exportGpxSuccess) {
@@ -155,7 +156,7 @@ public class WorkoutGpsParser extends XiaomiActivityParser {
             }
             session.getBaseActivitySummaryDao().insertOrReplace(summary);
         } catch (final Exception e) {
-            GB.toast(support.getContext(), "Error saving workout gps", Toast.LENGTH_LONG, GB.ERROR, e);
+            GB.toast(context, "Error saving workout gps", Toast.LENGTH_LONG, GB.ERROR, e);
             return false;
         }
 

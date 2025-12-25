@@ -19,6 +19,6 @@ public class XiaomiActivityParserTest extends TestBase {
         final XiaomiActivityFileId fileId = XiaomiActivityFileId.from(fileIdBytes);
         final XiaomiActivityParser parser = XiaomiActivityParser.create(fileId);
 
-        parser.parse(null, fileId, data);
+        parser.parse(null, null, fileId, data);
     }
 }

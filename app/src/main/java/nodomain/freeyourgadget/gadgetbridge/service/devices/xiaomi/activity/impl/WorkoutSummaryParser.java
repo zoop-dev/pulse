@@ -77,6 +77,7 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.WORKOUT_LOAD;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl.XiaomiSimpleActivityParser.XIAOMI_WORKOUT_TYPE;
 
+import android.content.Context;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -94,10 +95,10 @@ import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityFileId;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityParser;
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
@@ -107,7 +108,7 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
     private static final Logger LOG = LoggerFactory.getLogger(WorkoutSummaryParser.class);
 
     @Override
-    public boolean parse(final XiaomiSupport support, final XiaomiActivityFileId fileId, final byte[] bytes) {
+    public boolean parse(final Context context, final GBDevice gbDevice, final XiaomiActivityFileId fileId, final byte[] bytes) {
         BaseActivitySummary summary = new BaseActivitySummary();
 
         summary.setStartTime(fileId.getTimestamp()); // due to a bug this has to be set
@@ -119,7 +120,7 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
             summary = parseBinaryData(summary, true);
         } catch (final Exception e) {
             LOG.error("Failed to parse workout summary", e);
-            GB.toast(support.getContext(), "Failed to parse workout summary", Toast.LENGTH_LONG, GB.ERROR, e);
+            GB.toast(context, "Failed to parse workout summary", Toast.LENGTH_LONG, GB.ERROR, e);
             return false;
         }
 
@@ -133,7 +134,7 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
 
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             final DaoSession session = dbHandler.getDaoSession();
-            final Device device = DBHelper.getDevice(support.getDevice(), session);
+            final Device device = DBHelper.getDevice(gbDevice, session);
             final User user = DBHelper.getUser(session);
 
             final BaseActivitySummary existingSummary = findOrCreateBaseActivitySummary(session, device, user, fileId);
@@ -144,7 +145,7 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
 
             session.getBaseActivitySummaryDao().insertOrReplace(existingSummary);
         } catch (final Exception e) {
-            GB.toast(support.getContext(), "Error saving activity summary", Toast.LENGTH_LONG, GB.ERROR, e);
+            GB.toast(context, "Error saving activity summary", Toast.LENGTH_LONG, GB.ERROR, e);
             return false;
         }
 

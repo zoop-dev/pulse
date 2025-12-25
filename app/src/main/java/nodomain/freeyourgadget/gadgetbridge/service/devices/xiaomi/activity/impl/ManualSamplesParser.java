@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl;
 
+import android.content.Context;
 import android.widget.Toast;
 
 import org.slf4j.Logger;
@@ -35,7 +36,6 @@ import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiManualSample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityFileId;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityParser;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -44,7 +44,7 @@ public class ManualSamplesParser extends XiaomiActivityParser {
     private static final Logger LOG = LoggerFactory.getLogger(ManualSamplesParser.class);
 
     @Override
-    public boolean parse(final XiaomiSupport support, final XiaomiActivityFileId fileId, final byte[] bytes) {
+    public boolean parse(final Context context, final GBDevice gbDevice, final XiaomiActivityFileId fileId, final byte[] bytes) {
         if (fileId.getVersion() != 2) {
             LOG.warn("Unknown manual samples version {}", fileId.getVersion());
             return false;
@@ -110,7 +110,6 @@ public class ManualSamplesParser extends XiaomiActivityParser {
         try (DBHandler handler = GBApplication.acquireDB()) {
             final DaoSession session = handler.getDaoSession();
 
-            final GBDevice gbDevice = support.getDevice();
             final Device device = DBHelper.getDevice(gbDevice, session);
             final User user = DBHelper.getUser(session);
 
@@ -122,7 +121,7 @@ public class ManualSamplesParser extends XiaomiActivityParser {
             final XiaomiManualSampleProvider sampleProvider = new XiaomiManualSampleProvider(gbDevice, session);
             sampleProvider.addSamples(samples);
         } catch (final Exception e) {
-            GB.toast(support.getContext(), "Error saving manual samples", Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(context, "Error saving manual samples", Toast.LENGTH_LONG, GB.ERROR);
             LOG.error("Error saving manual samples", e);
             return false;
         }

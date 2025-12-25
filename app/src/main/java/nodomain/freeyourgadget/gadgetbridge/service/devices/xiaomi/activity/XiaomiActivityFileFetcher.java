@@ -144,7 +144,7 @@ public class XiaomiActivityFileFetcher {
         }
 
         try {
-            if (activityParser.parse(mHealthService.getSupport(), fileId, data)) {
+            if (activityParser.parse(mHealthService.getSupport().getContext(), mHealthService.getSupport().getDevice(), fileId, data)) {
                 LOG.info("Successfully parsed {}", fileId);
             } else {
                 LOG.warn("Failed to parse {}", fileId);
@@ -202,9 +202,8 @@ public class XiaomiActivityFileFetcher {
     }
 
     @Nullable
-    public static File getRawFile(final XiaomiSupport support, final XiaomiActivityFileId fileId) {
+    public static File getRawFile(final GBDevice device, final XiaomiActivityFileId fileId) {
         try {
-            final GBDevice device = support.getDevice();
             final File exportDirectory = device.getDeviceCoordinator().getWritableExportDirectory(device, true);
             final File targetDir = new File(exportDirectory, "rawFetchOperations");
             final File outputFile = fileId.getOutputFile(targetDir);
@@ -220,7 +219,7 @@ public class XiaomiActivityFileFetcher {
 
     protected void dumpBytesToExternalStorage(final XiaomiActivityFileId fileId, final byte[] bytes) {
         try {
-            final File outputFile = getRawFile(mHealthService.getSupport(), fileId);
+            final File outputFile = getRawFile(mHealthService.getSupport().getDevice(), fileId);
             final File parentFile = outputFile.getParentFile();
             if (parentFile != null) {
                 //noinspection ResultOfMethodCallIgnored

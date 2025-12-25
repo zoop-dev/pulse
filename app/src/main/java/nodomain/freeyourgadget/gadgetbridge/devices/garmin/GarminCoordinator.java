@@ -269,6 +269,7 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
 
         final List<Integer> developer = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DEVELOPER);
         developer.add(R.xml.devicesettings_import_activity_files);
+        developer.add(R.xml.devicesettings_reprocess_activity_files);
         developer.add(R.xml.devicesettings_keep_activity_data_on_device);
         developer.add(R.xml.devicesettings_fetch_unknown_files);
         developer.add(R.xml.devicesettings_install_unsupported_files);

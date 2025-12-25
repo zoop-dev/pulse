@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl;
 
+import android.content.Context;
 import android.widget.Toast;
 
 import org.slf4j.Logger;
@@ -38,7 +39,6 @@ import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityFileId;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityParser;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -47,7 +47,7 @@ public class DailyDetailsParser extends XiaomiActivityParser {
     private static final Logger LOG = LoggerFactory.getLogger(DailyDetailsParser.class);
 
     @Override
-    public boolean parse(final XiaomiSupport support, final XiaomiActivityFileId fileId, final byte[] bytes) {
+    public boolean parse(final Context context, final GBDevice gbDevice, final XiaomiActivityFileId fileId, final byte[] bytes) {
         final int version = fileId.getVersion();
         final int headerSize;
         switch (version) {
@@ -182,7 +182,6 @@ public class DailyDetailsParser extends XiaomiActivityParser {
         try (DBHandler handler = GBApplication.acquireDB()) {
             final DaoSession session = handler.getDaoSession();
 
-            final GBDevice gbDevice = support.getDevice();
             final DeviceCoordinator coordinator = gbDevice.getDeviceCoordinator();
             final SampleProvider<XiaomiActivitySample> sampleProvider = (SampleProvider<XiaomiActivitySample>) coordinator.getSampleProvider(gbDevice, session);
             final Device device = DBHelper.getDevice(gbDevice, session);
@@ -197,7 +196,7 @@ public class DailyDetailsParser extends XiaomiActivityParser {
 
             return true;
         } catch (final Exception e) {
-            GB.toast(support.getContext(), "Error saving activity samples", Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(context, "Error saving activity samples", Toast.LENGTH_LONG, GB.ERROR);
             LOG.error("Error saving activity samples", e);
             return false;
         }

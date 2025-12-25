@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl;
 
+import android.content.Context;
 import android.widget.Toast;
 
 import org.slf4j.Logger;
@@ -31,7 +32,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.XiaomiDailySummarySam
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiDailySummarySample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityFileId;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityParser;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -40,7 +40,7 @@ public class DailySummaryParser extends XiaomiActivityParser {
     private static final Logger LOG = LoggerFactory.getLogger(DailySummaryParser.class);
 
     @Override
-    public boolean parse(final XiaomiSupport support, final XiaomiActivityFileId fileId, final byte[] bytes) {
+    public boolean parse(final Context context, final GBDevice device, final XiaomiActivityFileId fileId, final byte[] bytes) {
         final int version = fileId.getVersion();
         final int headerSize;
         switch (version) {
@@ -113,7 +113,6 @@ public class DailySummaryParser extends XiaomiActivityParser {
 
         try (DBHandler handler = GBApplication.acquireDB()) {
             final DaoSession session = handler.getDaoSession();
-            final GBDevice device = support.getDevice();
 
             sample.setDevice(DBHelper.getDevice(device, session));
             sample.setUser(DBHelper.getUser(session));
@@ -121,7 +120,7 @@ public class DailySummaryParser extends XiaomiActivityParser {
             final XiaomiDailySummarySampleProvider sampleProvider = new XiaomiDailySummarySampleProvider(device, session);
             sampleProvider.addSample(sample);
         } catch (final Exception e) {
-            GB.toast(support.getContext(), "Error saving daily summary", Toast.LENGTH_LONG, GB.ERROR);
+            GB.toast(context, "Error saving daily summary", Toast.LENGTH_LONG, GB.ERROR);
             LOG.error("Error saving daily summary", e);
             return false;
         }

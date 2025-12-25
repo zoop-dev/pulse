@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity;
 
+import android.content.Context;
+
 import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
@@ -29,8 +31,8 @@ import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl.ManualSamplesParser;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl.DailyDetailsParser;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl.DailySummaryParser;
@@ -42,7 +44,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl
 public abstract class XiaomiActivityParser {
     private static final Logger LOG = LoggerFactory.getLogger(XiaomiActivityParser.class);
 
-    public abstract boolean parse(final XiaomiSupport support, final XiaomiActivityFileId fileId, final byte[] bytes);
+    public abstract boolean parse(final Context context, GBDevice device, final XiaomiActivityFileId fileId, final byte[] bytes);
 
     protected BaseActivitySummary findOrCreateBaseActivitySummary(final DaoSession session,
                                                                   final Device device,

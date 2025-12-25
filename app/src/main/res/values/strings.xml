@@ -3971,6 +3971,8 @@
     <string name="battery_percentage_str">%1$s%%</string>
     <string name="pref_import_activity_files_title">Import activity files</string>
     <string name="pref_import_activity_files_summary">Manually import activity files from the phone storage</string>
+    <string name="pref_reprocess_activity_files_title">Reprocess activity files</string>
+    <string name="pref_reprocess_activity_files_summary">Reprocess all activity files from the phone storage</string>
     <string name="pref_fetch_unknown_files_title">Fetch unknown files</string>
     <string name="pref_fetch_unknown_files_summary">Fetch unknown activity files from the watch. They will not be processed, but will be saved in the phone.</string>
     <string name="pref_install_unsupported_files_title">Install unsupported files</string>
