@@ -55,12 +55,14 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private int solarPower2 = -1;
     private int solarPower3 = -1;
     private int solarPower4 = -1;
+    private int gridOffPower = -1;
     private int outputHomePower = -1;
     private int batteryTemp;
     private int hyperTmp;
     private int electricLevel = -1;
     private String deviceId;
     private int firmwareVersion = -1;
+
 
     public SolarFlowDeviceSupport() {
         super(LOG);
@@ -201,6 +203,9 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
             if (properties.has("solarPower4")) {
                 solarPower4 = properties.getInt("solarPower4");
             }
+            if (properties.has("gridOffPower")) {
+                gridOffPower = properties.getInt("gridOffPower");
+            }
             if (properties.has("hyperTmp")) {
                 hyperTmp = (properties.getInt("hyperTmp") - 2731) / 10;
             }
@@ -260,7 +265,7 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 .putExtra(SolarEquipmentStatusActivity.EXTRA_TEMP1, hyperTmp)
                 .putExtra(SolarEquipmentStatusActivity.EXTRA_TEMP2, batteryTemp)
                 .putExtra(SolarEquipmentStatusActivity.EXTRA_OUTPUT1_WATT, outputHomePower)
-                .putExtra(SolarEquipmentStatusActivity.EXTRA_OUTPUT2_WATT, -1)
+                .putExtra(SolarEquipmentStatusActivity.EXTRA_OUTPUT2_WATT, gridOffPower)
                 .putExtra(SolarEquipmentStatusActivity.EXTRA_PANEL1_WATT, solarPower1)
                 .putExtra(SolarEquipmentStatusActivity.EXTRA_PANEL2_WATT, solarPower2)
                 .putExtra(SolarEquipmentStatusActivity.EXTRA_PANEL3_WATT, solarPower3)
