@@ -3936,7 +3936,7 @@
     <string name="activity_type_mountain_bike">Mountainbike</string>
     <string name="activity_type_ultra_run">Ultra-run</string>
     <string name="activity_type_virtual_run">Virtueel hardlopen</string>
-    <string name="activity_type_xc_skate_ski"></string>
+    <string name="activity_type_xc_skate_ski"/>
     <string name="this_week_total">Deze week totaal</string>
     <string name="last_week_total">Vorige week totaal</string>
     <string name="low">Laag</string>
@@ -4035,7 +4035,7 @@
     <string name="recovery_heart_rate">Herstel hartslag</string>
     <string name="huawei_send_gps_and_time_title">Stuur GPS en tijd naar apparaat</string>
     <string name="huawei_send_gps_and_time_summary">Stuur GPS en tijd naar het apparaat voor het weerbericht en zoekoptimalisatie. Locatie dient in de instellingen ingesteld te worden</string>
-    <string name="garmin_mlr_protocol"></string>
+    <string name="garmin_mlr_protocol"/>
     <string name="feature_experimental_unstable">Experimenteel, kan instabiel zijn</string>
     <string name="heart_rate_settings">Hartslaginstellingen</string>
     <string name="heart_rate_settings_summary">Toon de hartslaginstellingen en -zones voor de huidge training</string>
