@@ -4483,4 +4483,6 @@
     <string name="internet_helper_banglejs_permission_missing_title">Permission missing</string>
     <string name="internet_helper_banglejs_permission_missing_text">Access to the Bangle.js app loader is currently not allowed by your settings. Please go to the internet helper settings in the external integrations settings to enable it.</string>
     <string name="devicetype_solarflow">SolarFlow</string>
+    <string name="eco">Eco</string>
+    <string name="prefs_title_offgrid_mode">Off-grid mode</string>
 </resources>

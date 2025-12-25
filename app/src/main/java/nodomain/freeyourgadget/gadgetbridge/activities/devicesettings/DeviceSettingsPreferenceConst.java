@@ -680,6 +680,7 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_BATTERY_MAXIMUM_CHARGE = "battery_maximum_charge";
     public static final String PREF_BATTERY_ALLOW_PASS_THROUGH = "battery_allow_pass_through";
     public static final String PREF_OUTPUT_POWER_GRID = "output_power_grid";
+    public static final String PREF_OFFGRID_MODE = "offgrid_mode";
 
     public static final String PREF_DISPLAY_ENABLED = "display_enabled";
     public static final String PREF_DISPLAY_ENABLED_ALL_DAY = "display_all_day";

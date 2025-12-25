@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ListPreference
+        android:defaultValue="@string/p_off"
+        android:entries="@array/offgrid_mode_on_off_eco"
+        android:entryValues="@array/offgrid_mode_on_off_eco_values"
+        android:key="offgrid_mode"
+        app:useSimpleSummaryProvider="true"
+        android:title="@string/prefs_title_offgrid_mode" />
+
+</androidx.preference.PreferenceScreen>

@@ -18,6 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.zendure;
 
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BATTERY_MAXIMUM_CHARGE;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BATTERY_MINIMUM_CHARGE;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_OFFGRID_MODE;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_OUTPUT_POWER_GRID;
 
 import android.bluetooth.BluetoothGatt;
@@ -58,6 +59,7 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private int solarPower3 = -1;
     private int solarPower4 = -1;
     private int gridOffPower = -1;
+    private int gridOffMode = -1;
     private int outputHomePower = -1;
     private int minSoc = -1;
     private int socSet = -1;
@@ -178,6 +180,15 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 if (outputLimit > 2400) outputLimit = 2400;
                 sendWriteProperty("outputLimit", outputLimit);
             }
+            case PREF_OFFGRID_MODE -> {
+                String offGridMode = devicePrefs.getString(PREF_OFFGRID_MODE, "off");
+                int gridOffMode = switch (offGridMode) {
+                    case "on" -> 0;
+                    case "eco" -> 1;
+                    default -> 2;
+                };
+                sendWriteProperty("gridOffMode", gridOffMode);
+            }
             default -> LOG.warn("Unknown config changed: {}", config);
         }
     }
@@ -196,7 +207,6 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
         } catch (JSONException e) {
             LOG.error("JSON error while constructing write property json: {}", e.getMessage());
         }
-
 
 
     }
@@ -221,6 +231,9 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
             }
             if (properties.has("gridOffPower")) {
                 gridOffPower = properties.getInt("gridOffPower");
+            }
+            if (properties.has("gridOffMode")) {
+                gridOffMode = properties.getInt("gridOffMode");
             }
             if (properties.has("outputHomePower")) {
                 outputHomePower = properties.getInt("outputHomePower");
@@ -306,6 +319,12 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
         devicePrefsEdit.putString(PREF_BATTERY_MINIMUM_CHARGE, String.valueOf(minSoc));
         devicePrefsEdit.putString(PREF_BATTERY_MAXIMUM_CHARGE, String.valueOf(socSet));
         devicePrefsEdit.putString(PREF_OUTPUT_POWER_GRID, String.valueOf(outputLimit));
+        String offGridMode = switch (gridOffMode) {
+            case 0 -> "on";
+            case 1 -> "eco";
+            default -> "off";
+        };
+        devicePrefsEdit.putString(PREF_OFFGRID_MODE, offGridMode);
         devicePrefsEdit.apply();
         devicePrefsEdit.commit();
     }

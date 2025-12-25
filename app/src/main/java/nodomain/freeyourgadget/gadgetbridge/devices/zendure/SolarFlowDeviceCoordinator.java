@@ -93,6 +93,7 @@ public class SolarFlowDeviceCoordinator extends AbstractBLEDeviceCoordinator {
                 R.xml.devicesettings_battery_minimum_charge,
                 R.xml.devicesettings_battery_maximum_charge,
                 R.xml.devicesettings_output_power_grid,
+                R.xml.devicesettings_offgrid_mode_on_off_eco
         };
     }
 
