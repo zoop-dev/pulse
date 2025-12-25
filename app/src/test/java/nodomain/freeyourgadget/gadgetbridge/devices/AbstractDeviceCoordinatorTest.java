@@ -35,7 +35,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("P80", DeviceType.COLMI_P80);
             put("BT103(ID-AB01)", DeviceType.OUKITEL_BT103);
             put("P66D(ID-AB01)", DeviceType.DOTN_P66D);
-            put("R1(ID-10B5)", DeviceType.R1);
+            put("R1(ID-10B5)", DeviceType.R1); // #5621
             put("IMIKI FRAME 2", DeviceType.IMIKI_FRAME_2);
             put("HAYLOU Watch 2 Pro", DeviceType.HAYLOU_WATCH_2_PRO);
             put("Y66(ID-AB01)", DeviceType.Y66);
@@ -99,6 +99,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("IMP-2027", DeviceType.VIVITAR_HR_BP_MONITOR_ACTIVITY_TRACKER); // #3925
             put("CMF Buds Pro 2", DeviceType.NOTHING_CMF_BUDS_PRO_2); // #3924
             put("CMF Watch Pro 2-0DCA", DeviceType.NOTHING_CMF_WATCH_PRO_2); // #3899
+            put("CMF Watch 3 Pro-D286", DeviceType.NOTHING_CMF_WATCH_PRO_3); // #5596
             put("vívomove Trend", DeviceType.GARMIN_VIVOMOVE_TREND); // #3875
             put("fenix 5", DeviceType.GARMIN_FENIX_5); // #3869
             put("Forerunner 255S", DeviceType.GARMIN_FORERUNNER_255S); // #3841
@@ -159,7 +160,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("M4-4711", DeviceType.FITPRO);
             put("C20", DeviceType.C20); // #4070
             put("C 20", DeviceType.C20); // #5495
-            put("OV-Touch2.6_LE", DeviceType.OVTOUCH26);
+            put("OV-Touch2.6_LE", DeviceType.OVTOUCH26); // #5628
         }};
 
         for (Map.Entry<String, DeviceType> e : bluetoothNameToExpectedType.entrySet()) {

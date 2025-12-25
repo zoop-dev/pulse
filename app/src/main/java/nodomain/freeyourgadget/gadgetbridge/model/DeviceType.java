@@ -41,6 +41,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.casio.gbx100.CasioGBX100Devi
 import nodomain.freeyourgadget.gadgetbridge.devices.casio.gwb5600.CasioGMWB5000DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.casio.gwb5600.CasioGWB5600DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.cmfwatchpro.CmfWatchPro2Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.cmfwatchpro.CmfWatchPro3Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.cmfwatchpro.CmfWatchProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.coospo.CoospoH6Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.coospo.CoospoH9ZCoordinator;
@@ -707,6 +708,7 @@ public enum DeviceType {
     NOTHING_CMF_BUDS_PRO_2(CmfBudsPro2Coordinator.class),
     NOTHING_CMF_WATCH_PRO(CmfWatchProCoordinator.class),
     NOTHING_CMF_WATCH_PRO_2(CmfWatchPro2Coordinator.class),
+    NOTHING_CMF_WATCH_PRO_3(CmfWatchPro3Coordinator.class),
     GALAXY_BUDS_PRO(GalaxyBudsProDeviceCoordinator.class),
     GALAXY_BUDS_LIVE(GalaxyBudsLiveDeviceCoordinator.class),
     GALAXY_BUDS(GalaxyBudsDeviceCoordinator.class),
