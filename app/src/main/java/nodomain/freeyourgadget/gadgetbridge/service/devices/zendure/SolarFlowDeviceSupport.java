@@ -18,6 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.zendure;
 
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BATTERY_MAXIMUM_CHARGE;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BATTERY_MINIMUM_CHARGE;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_OUTPUT_POWER_GRID;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -161,6 +162,12 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 if (socSet < 70) socSet = 70;
                 if (socSet > 100) socSet = 100;
                 sendWriteProperty("socSet", socSet * 10);
+            }
+            case PREF_OUTPUT_POWER_GRID -> {
+                int outputLimit = devicePrefs.getInt(PREF_OUTPUT_POWER_GRID, 800);
+                if (outputLimit < 0) outputLimit = 0;
+                if (outputLimit > 2400) outputLimit = 2400;
+                sendWriteProperty("outputLimit", outputLimit);
             }
             default -> LOG.warn("Unknown config changed: {}", config);
         }

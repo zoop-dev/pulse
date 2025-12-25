@@ -2184,6 +2184,7 @@
     <string name="devicetype_coospo_hw807" translatable="false">Coospo HW807</string>
     <string name="devicetype_garmin_hrm_200" translatable="false">Garmin HRM 200</string>
     <string name="devicetype_coospo_h9z" translatable="false">Coospo H9Z</string>
+    <string name="devicetype_solarflow">SolarFlow</string>
     <!-- Menus on the smart device -->
     <string name="menuitem_nothing">Nothing</string>
     <string name="menuitem_status">Status</string>
@@ -4133,6 +4134,7 @@
     <string name="discharge_interval_4">Discharge interval 4</string>
     <string name="discharge_interval_5">Discharge interval 5</string>
     <string name="power_w">Power in W</string>
+    <string name="output_power_grid">Output power to grid in W</string>
     <string name="manual_discharge_summary">when disabled, this assumes intelligent discharge controlled by an external power meter (not supported by Gadgetbridge)</string>
     <string name="manual_discharge">Manual discharge intervals</string>
     <string name="summary_battery_discharge_intervals_set">Send configuration below to device</string>
