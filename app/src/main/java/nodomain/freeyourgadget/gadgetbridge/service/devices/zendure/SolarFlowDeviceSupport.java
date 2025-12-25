@@ -23,6 +23,7 @@ import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.Dev
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -50,7 +51,7 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(SolarFlowDeviceSupport.class);
     private long messageId = 1;
 
-    // cached values from various messages
+    // cached values from various messages, named after keys from JSON
     private long messageIdReport = -1;
     private int solarPower1 = -1;
     private int solarPower2 = -1;
@@ -58,11 +59,15 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private int solarPower4 = -1;
     private int gridOffPower = -1;
     private int outputHomePower = -1;
+    private int minSoc = -1;
+    private int socSet = -1;
+    private int outputLimit = -1;
     private int batteryTemp;
     private int hyperTmp;
     private int electricLevel = -1;
     private String deviceId;
     private int firmwareVersion = -1;
+    private boolean isSettingsSynced = false;
 
 
     public SolarFlowDeviceSupport() {
@@ -106,12 +111,16 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     case "report" -> {
                         long messageIdReport = jsonMessage.getLong("messageId");
                         if (messageIdReport != this.messageIdReport) {
-                            if (this.messageIdReport != -1) {
-                                reportToStatusActivity();
-                            } else {
+                            if (this.messageIdReport == -1) { // first report
                                 TransactionBuilder builder = createTransactionBuilder("setInitialized");
                                 builder.setDeviceState(GBDevice.State.INITIALIZED);
                                 builder.queue();
+                            } else {
+                                reportToStatusActivity();
+                                if (!isSettingsSynced) {
+                                    syncSettingsToPrefs();
+                                    isSettingsSynced = true;
+                                }
                             }
                             this.messageIdReport = messageIdReport;
                         }
@@ -213,6 +222,18 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
             if (properties.has("gridOffPower")) {
                 gridOffPower = properties.getInt("gridOffPower");
             }
+            if (properties.has("outputHomePower")) {
+                outputHomePower = properties.getInt("outputHomePower");
+            }
+            if (properties.has("outputLimit")) {
+                outputLimit = properties.getInt("outputLimit");
+            }
+            if (properties.has("minSoc")) {
+                minSoc = properties.getInt("minSoc");
+            }
+            if (properties.has("socSet")) {
+                socSet = properties.getInt("socSet");
+            }
             if (properties.has("hyperTmp")) {
                 hyperTmp = (properties.getInt("hyperTmp") - 2731) / 10;
             }
@@ -222,9 +243,6 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     this.electricLevel = electricLevel;
                     getDevice().setBatteryLevel(electricLevel); // update event will be sent when firmware gets read
                 }
-            }
-            if (properties.has("outputHomePower")) {
-                outputHomePower = properties.getInt("outputHomePower");
             }
             if (properties.has("MASTER")) {
                 int firmwareVersion = properties.getInt("MASTER");
@@ -280,5 +298,15 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
         getContext().sendBroadcast(intent);
+    }
+
+    private void syncSettingsToPrefs() {
+        Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress()));
+        SharedPreferences.Editor devicePrefsEdit = devicePrefs.getPreferences().edit();
+        devicePrefsEdit.putString(PREF_BATTERY_MINIMUM_CHARGE, String.valueOf(minSoc));
+        devicePrefsEdit.putString(PREF_BATTERY_MAXIMUM_CHARGE, String.valueOf(socSet));
+        devicePrefsEdit.putString(PREF_OUTPUT_POWER_GRID, String.valueOf(outputLimit));
+        devicePrefsEdit.apply();
+        devicePrefsEdit.commit();
     }
 }
