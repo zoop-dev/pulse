@@ -6,5 +6,6 @@
         android:inputType="number"
         android:key="battery_maximum_charge"
         android:title="@string/battery_maximum_charge"
+        android:icon="@drawable/ic_battery_charging_full"
         app:useSimpleSummaryProvider="true" />
 </androidx.preference.PreferenceScreen>

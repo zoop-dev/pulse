@@ -316,8 +316,8 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private void syncSettingsToPrefs() {
         Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress()));
         SharedPreferences.Editor devicePrefsEdit = devicePrefs.getPreferences().edit();
-        devicePrefsEdit.putString(PREF_BATTERY_MINIMUM_CHARGE, String.valueOf(minSoc));
-        devicePrefsEdit.putString(PREF_BATTERY_MAXIMUM_CHARGE, String.valueOf(socSet));
+        devicePrefsEdit.putString(PREF_BATTERY_MINIMUM_CHARGE, String.valueOf(minSoc/10));
+        devicePrefsEdit.putString(PREF_BATTERY_MAXIMUM_CHARGE, String.valueOf(socSet/10));
         devicePrefsEdit.putString(PREF_OUTPUT_POWER_GRID, String.valueOf(outputLimit));
         String offGridMode = switch (gridOffMode) {
             case 0 -> "on";
