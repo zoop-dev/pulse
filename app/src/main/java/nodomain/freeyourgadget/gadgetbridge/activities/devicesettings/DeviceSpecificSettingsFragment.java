@@ -1365,15 +1365,19 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         setInputTypeFor(PREF_CALENDAR_SYNC_EVENTS_AMOUNT, InputType.TYPE_CLASS_NUMBER);
         setInputTypeFor(PREF_CALENDAR_MAX_TITLE_LENGTH, InputType.TYPE_CLASS_NUMBER);
         setInputTypeFor(PREF_CALENDAR_MAX_DESC_LENGTH, InputType.TYPE_CLASS_NUMBER);
+
         setNumericInputTypeWithRangeFor(PREF_BATTERY_DISCHARGE_INTERVAL1_WATT, 80, 800, false);
         setNumericInputTypeWithRangeFor(PREF_BATTERY_DISCHARGE_INTERVAL2_WATT, 80, 800, false);
         setNumericInputTypeWithRangeFor(PREF_BATTERY_DISCHARGE_INTERVAL3_WATT, 80, 800, false);
         setNumericInputTypeWithRangeFor(PREF_BATTERY_DISCHARGE_INTERVAL4_WATT, 80, 800, false);
         setNumericInputTypeWithRangeFor(PREF_BATTERY_DISCHARGE_INTERVAL5_WATT, 80, 800, false);
         setNumericInputTypeWithRangeFor(PREF_OUTPUT_POWER_GRID, 0, 2400, false);
-
         setNumericInputTypeWithRangeFor(PREF_BATTERY_MINIMUM_CHARGE, 0, 100, false);
         setNumericInputTypeWithRangeFor(PREF_BATTERY_MAXIMUM_CHARGE, 0, 100, false);
+        setNumericInputTypeWithRangeFor(PREF_SOLAR_PANEL1_PEAK_W, 0,1000,false);
+        setNumericInputTypeWithRangeFor(PREF_SOLAR_PANEL2_PEAK_W, 0,1000,false);
+        setNumericInputTypeWithRangeFor(PREF_SOLAR_PANEL3_PEAK_W, 0,1000,false);
+        setNumericInputTypeWithRangeFor(PREF_SOLAR_PANEL4_PEAK_W, 0,1000,false);
 
         new PasswordCapabilityImpl().registerPreferences(getContext(), coordinator.getPasswordCapability(), this);
         new HeartRateCapability().registerPreferences(getContext(), coordinator.getHeartRateMeasurementIntervals(), this);

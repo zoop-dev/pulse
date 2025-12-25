@@ -90,6 +90,10 @@ public class SolarFlowDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
         return new int[]{
+                R.xml.devicesettings_solar_panel1_peak_w,
+                R.xml.devicesettings_solar_panel2_peak_w,
+                R.xml.devicesettings_solar_panel3_peak_w,
+                R.xml.devicesettings_solar_panel4_peak_w,
                 R.xml.devicesettings_battery_minimum_charge,
                 R.xml.devicesettings_battery_maximum_charge,
                 R.xml.devicesettings_output_power_grid,

@@ -16,6 +16,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices;
 
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_SOLAR_PANEL1_PEAK_W;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_SOLAR_PANEL2_PEAK_W;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_SOLAR_PANEL3_PEAK_W;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_SOLAR_PANEL4_PEAK_W;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -45,6 +50,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.GaugeDrawer;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
+import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class SolarEquipmentStatusActivity extends AbstractGBActivity {
     public static String ACTION_SEND_SOLAR_EQUIPMENT_STATUS = "send_solar_equipment_status";
@@ -54,11 +60,19 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
     public static String EXTRA_PANEL2_WATT = "panel2_watt";
     public static String EXTRA_PANEL3_WATT = "panel3_watt";
     public static String EXTRA_PANEL4_WATT = "panel4_watt";
+    public static String EXTRA_PANEL1_WATT_PEAK = "panel1_watt_peak";
+    public static String EXTRA_PANEL2_WATT_PEAK = "panel2_watt_peak";
+    public static String EXTRA_PANEL3_WATT_PEAK = "panel3_watt_peak";
+    public static String EXTRA_PANEL4_WATT_PEAK = "panel4_watt_peak";
     public static String EXTRA_OUTPUT1_WATT = "output1_watt";
     public static String EXTRA_OUTPUT2_WATT = "output2_watt";
     public static String EXTRA_TEMP1 = "temp1";
     public static String EXTRA_TEMP2 = "temp2";
     public static String EXTRA_DEBUG = "debug";
+    private int panel1_watt_peak;
+    private int panel2_watt_peak;
+    private int panel3_watt_peak;
+    private int panel4_watt_peak;
 
     private final Map<String, View> widgetMap = new HashMap<>();
     private GridLayout gridLayout;
@@ -88,23 +102,23 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
                     else {
                         updateGaugeWidget("battery", battery_pct + "%", (float) (battery_pct / 100.0));
                     }
-                    if (panel1_watt >= 0) {
-                        updateGaugeWidget("panel1", panel1_watt + "W", (float) (panel1_watt / 380.0));
+                    if (panel1_watt >= 0 && panel1_watt_peak > 0) {
+                        updateGaugeWidget("panel1", panel1_watt + "W", (float) (panel1_watt / panel1_watt_peak));
                     } else {
                         removeWidget("panel1");
                     }
-                    if (panel2_watt >= 0) {
-                        updateGaugeWidget("panel2", panel2_watt + "W", (float) (panel2_watt / 380.0));
+                    if (panel2_watt >= 0 && panel2_watt_peak > 0) {
+                        updateGaugeWidget("panel2", panel2_watt + "W", (float) (panel2_watt / panel2_watt_peak));
                     } else {
                         removeWidget("panel2");
                     }
-                    if (panel3_watt >= 0) {
-                        updateGaugeWidget("panel3", panel3_watt + "W", (float) (panel3_watt / 380.0));
+                    if (panel3_watt >= 0 && panel3_watt_peak > 0) {
+                        updateGaugeWidget("panel3", panel3_watt + "W", (float) (panel3_watt / panel3_watt_peak));
                     } else {
                         removeWidget("panel3");
                     }
-                    if (panel4_watt >= 0) {
-                        updateGaugeWidget("panel4", panel4_watt + "W", (float) (panel4_watt / 380.0));
+                    if (panel4_watt >= 0 && panel4_watt_peak > 0) {
+                        updateGaugeWidget("panel4", panel4_watt + "W", (float) (panel4_watt / panel4_watt_peak));
                     } else {
                         removeWidget("panel4");
                     }
@@ -228,6 +242,13 @@ public class SolarEquipmentStatusActivity extends AbstractGBActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             gBDevice = extras.getParcelable(GBDevice.EXTRA_DEVICE);
+            if (gBDevice != null) {
+                Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(gBDevice.getAddress()));
+                panel1_watt_peak = devicePrefs.getInt(PREF_SOLAR_PANEL1_PEAK_W, 400);
+                panel2_watt_peak = devicePrefs.getInt(PREF_SOLAR_PANEL2_PEAK_W, 400);
+                panel3_watt_peak = devicePrefs.getInt(PREF_SOLAR_PANEL3_PEAK_W, 400);
+                panel4_watt_peak = devicePrefs.getInt(PREF_SOLAR_PANEL4_PEAK_W, 400);
+            }
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solar_equipment_status);

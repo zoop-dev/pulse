@@ -681,6 +681,10 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_BATTERY_ALLOW_PASS_THROUGH = "battery_allow_pass_through";
     public static final String PREF_OUTPUT_POWER_GRID = "output_power_grid";
     public static final String PREF_OFFGRID_MODE = "offgrid_mode";
+    public static final String PREF_SOLAR_PANEL1_PEAK_W = "solar_panel1_peak_w";
+    public static final String PREF_SOLAR_PANEL2_PEAK_W = "solar_panel2_peak_w";
+    public static final String PREF_SOLAR_PANEL3_PEAK_W = "solar_panel3_peak_w";
+    public static final String PREF_SOLAR_PANEL4_PEAK_W = "solar_panel4_peak_w";
 
     public static final String PREF_DISPLAY_ENABLED = "display_enabled";
     public static final String PREF_DISPLAY_ENABLED_ALL_DAY = "display_all_day";
