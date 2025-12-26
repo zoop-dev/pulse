@@ -1901,7 +1901,7 @@
     <string name="anaerobicTrainingEffect">Effetto Anaerobico</string>
     <string name="currentWorkoutLoad">Carico Allenamento</string>
     <string name="debugactivity_confirm_remove_device_preferences_title">Rimuovere le preferenze del dispositivo\?</string>
-    <string name="debugactivity_confirm_remove_device_preferences">Così si ripristineranno le preferenze per tutti i dispositivi collegati. Sei sicuro\?</string>
+    <string name="debugactivity_confirm_remove_device_preferences">Così si ripristineranno le preferenze per tutti i dispositivi collegati. Sei sicuro?</string>
     <string name="pref_alert_tone">Tono di Avviso</string>
     <string name="pref_vibrate_for_alert">Vibra per gli Avvisi</string>
     <string name="pref_text_to_speech">Sintesi Vocale</string>
