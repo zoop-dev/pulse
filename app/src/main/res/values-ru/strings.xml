@@ -1608,7 +1608,7 @@
     <string name="icelandic">Исландский</string>
     <string name="menuitem_brightness">Яркость</string>
     <string name="debugactivity_confirm_remove_device_preferences_title">Удалить настройки устройства\?</string>
-    <string name="debugactivity_confirm_remove_device_preferences">Это приведет к сбросу настроек устройства для всех подключённых устройств. Вы уверены\?</string>
+    <string name="debugactivity_confirm_remove_device_preferences">Это приведет к сбросу настроек устройства для всех подключённых устройств. Вы уверены?</string>
     <string name="bengali">Бенгальский</string>
     <string name="world_clock_no_free_slots_description">Устройство не имеет свободных слотов для мировых часов (всего слотов: %1$s)</string>
     <string name="world_clock_timezone">Часовой пояс</string>
