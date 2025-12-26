@@ -133,9 +133,9 @@ public class Spo2ChartFragment extends AbstractChartFragment<Spo2ChartFragment.S
         binding.manualMeasurementsList.removeAllViews();
         binding.manualMeasurements.setVisibility(View.GONE);
         final String emptyValue = requireContext().getString(R.string.stats_empty_value);
-        binding.spo2Minimum.setText(data.minimum > 0 ? String.valueOf(data.minimum) : emptyValue);
-        binding.spo2Maximum.setText(data.maximum > 0 ? String.valueOf(data.maximum) : emptyValue);
-        binding.spo2Average.setText(data.average > 0 ? String.valueOf(data.average) : emptyValue);
+        binding.spo2Minimum.setText(data.minimum > 0 ? getString(R.string.battery_percentage_str, String.valueOf(data.minimum)) : emptyValue);
+        binding.spo2Maximum.setText(data.maximum > 0 ? getString(R.string.battery_percentage_str, String.valueOf(data.maximum)) : emptyValue);
+        binding.spo2Average.setText(data.average > 0 ? getString(R.string.battery_percentage_str, String.valueOf(data.average)) : emptyValue);
         binding.spo2LineChart.setData(null); // workaround for https://github.com/PhilJay/MPAndroidChart/issues/2317
         binding.spo2LineChart.getAxisLeft().removeAllLimitLines();
         Date date = new Date((long) getTSEnd() * 1000);

@@ -35,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -198,10 +199,11 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
         int restingCalories = data.restingBurnt;
         int activeCalories = data.activeBurnt;
         int totalCalories = activeCalories + restingCalories;
-        caloriesActive.setText(String.valueOf(activeCalories));
-        metabolicRate.setText(String.valueOf(data.restingMetabolicRate));
-        caloriesResting.setText(String.valueOf(restingCalories));
-        caloriesActiveGoal.setText(String.valueOf(ACTIVE_CALORIES_GOAL));
+        final String kcal = getString(R.string.calories_unit);
+        caloriesActive.setText(String.format(Locale.getDefault(), "%d %s", activeCalories, kcal));
+        metabolicRate.setText(String.format(Locale.getDefault(), "%d %s", data.restingMetabolicRate, kcal));
+        caloriesResting.setText(String.format(Locale.getDefault(), "%d %s", restingCalories, kcal));
+        caloriesActiveGoal.setText(String.format(Locale.getDefault(), "%d %s", ACTIVE_CALORIES_GOAL, kcal));
 
         if (gaugeViewMode.equals(GaugeViewMode.TOTAL_CALORIES_SEGMENT)) {
             int[] colors = new int[] {

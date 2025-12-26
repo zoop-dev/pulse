@@ -212,9 +212,9 @@ public class Spo2PeriodFragment extends AbstractChartFragment<Spo2PeriodFragment
         final int minimum = minAccumulator.getCount() > 0 ? (int) Math.round(minAccumulator.getMin()) : DATA_INVALID;
         final int maximum = maxAccumulator.getCount() > 0 ? (int) Math.round(maxAccumulator.getMax()) : DATA_INVALID;
 
-        spo2Minimum.setText(minimum > 0 ? String.valueOf(minimum) : emptyValue);
-        spo2Maximum.setText(maximum > 0 ? String.valueOf(maximum) : emptyValue);
-        spo2Average.setText(average > 0 ? String.valueOf(average) : emptyValue);
+        spo2Minimum.setText(minimum > 0 ? getString(R.string.battery_percentage_str, String.valueOf(minimum)) : emptyValue);
+        spo2Maximum.setText(maximum > 0 ? getString(R.string.battery_percentage_str, String.valueOf(maximum)) : emptyValue);
+        spo2Average.setText(average > 0 ? getString(R.string.battery_percentage_str, String.valueOf(average)) : emptyValue);
 
         final String fmt = TOTAL_DAYS == 7 ? "EEE" : "dd";
         SimpleDateFormat formatDay = new SimpleDateFormat(fmt, Locale.getDefault());
