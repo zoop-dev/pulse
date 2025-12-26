@@ -44,6 +44,7 @@ import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
@@ -60,6 +61,7 @@ public class TemperatureChartFragment extends AbstractChartFragment<TemperatureC
 
     protected final int TOTAL_DAYS = getRangeDays();
 
+    private final boolean isMetric = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, "metric").equals("metric");
 
     @Override
     protected void init() {
@@ -84,7 +86,6 @@ public class TemperatureChartFragment extends AbstractChartFragment<TemperatureC
         return new TemperatureChartsDataBuilder(samples).build();
     }
 
-
     @Override
     protected void updateChartsnUIThread(final TemperatureChartsData temperatureData) {
         mTemperatureChart.setData(null); // workaround for https://github.com/PhilJay/MPAndroidChart/issues/2317
@@ -92,8 +93,8 @@ public class TemperatureChartFragment extends AbstractChartFragment<TemperatureC
         mTemperatureChart.getXAxis().setAvoidFirstLastClipping(true);
 
         // Using approximately the range of survivable body-temperatures (in celsius), rounded to multiples of 5
-        mTemperatureChart.getAxisLeft().setAxisMinimum(30f);
-        mTemperatureChart.getAxisLeft().setAxisMaximum(45f);
+        mTemperatureChart.getAxisLeft().setAxisMinimum((float) (isMetric ? 30f : celsiusToFahrenheit(30d)));
+        mTemperatureChart.getAxisLeft().setAxisMaximum((float) (isMetric ? 45f : celsiusToFahrenheit(45f)));
 
         mTemperatureChart.setData(temperatureData.getData());
     }
@@ -178,12 +179,15 @@ public class TemperatureChartFragment extends AbstractChartFragment<TemperatureC
 
         public TemperatureChartsData build() {
             TimestampTranslation tsTranslation = new TimestampTranslation();
-            List<Entry> entries = new ArrayList<Entry>();
+            List<Entry> entries = new ArrayList<>();
             long firstTs = 0;
 
             for (TemperatureSample sample : samples) {
                 int timestamp_in_seconds = (int) (sample.getTimestamp() / 1000L);
-                entries.add(new Entry(tsTranslation.shorten(timestamp_in_seconds), sample.getTemperature()));
+                entries.add(new Entry(
+                        tsTranslation.shorten(timestamp_in_seconds),
+                        (float) (isMetric ? sample.getTemperature() : celsiusToFahrenheit(sample.getTemperature()))
+                ));
                 if (firstTs == 0) {
                     firstTs = sample.getTimestamp();
                 }
@@ -242,4 +246,7 @@ public class TemperatureChartFragment extends AbstractChartFragment<TemperatureC
         }
     }
 
+    public static double celsiusToFahrenheit(final double celsius) {
+        return ((celsius * (9d/5d)) + 32d);
+    }
 }

@@ -23,22 +23,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.test.TestDeviceRand;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 
 public class TestTemperatureSampleProvider extends AbstractTestSampleProvider<TemperatureSample> {
+    private final GBDevice device;
+
+    public TestTemperatureSampleProvider(final GBDevice device) {
+        this.device = device;
+    }
+
     @NonNull
     @Override
     public List<TemperatureSample> getAllSamples(final long timestampFrom, final long timestampTo) {
         final List<TemperatureSample> samples = new ArrayList<>();
 
-        int temp = TestDeviceRand.randInt(timestampFrom, 33, 40);
+        float temp = TestDeviceRand.randInt(timestampFrom, 33, 40);
 
-        for (long ts = timestampFrom; ts < timestampTo; ts += 120 * 60 * 1000L) {
+        final boolean continuous = device.getDeviceCoordinator().supportsContinuousTemperature(device);
+
+        final long temperatureTimeStep = continuous ? 15 * 60 * 1000L : 120 * 60 * 1000L;
+        final float temperatureValueStep = continuous ? 0.2f : 1f;
+
+        for (long ts = timestampFrom; ts < timestampTo; ts += temperatureTimeStep) {
             if (TestDeviceRand.randBool(ts, 0.3f)) {
                 samples.add(new TestTemperatureSample(ts, temp));
             }
-            temp += TestDeviceRand.randInt(ts, 33 - temp, 40 - temp);
-            break;
+            temp += (TestDeviceRand.randInt(ts, 33 - Math.round(temp), 40 - Math.round(temp)) * temperatureValueStep);
         }
 
         return samples;

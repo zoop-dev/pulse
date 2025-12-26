@@ -45,6 +45,7 @@ import java.util.Locale;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.HeartRateUtils;
+import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
@@ -68,6 +69,7 @@ public class TemperatureDailyFragment extends AbstractChartFragment<TemperatureD
     private TextView tempMaximum;
     private LineChart tempLineChart;
 
+    private final boolean isMetric = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, "metric").equals("metric");
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -190,11 +192,12 @@ public class TemperatureDailyFragment extends AbstractChartFragment<TemperatureD
         for (int i =0; i < samples.size(); i++) {
             TemperatureSample sample = samples.get(i);
             int timestamp_in_seconds = (int) (sample.getTimestamp() / 1000L);
-            lineEntries.add(new Entry(tsTranslation.shorten(timestamp_in_seconds), sample.getTemperature()));
-            accumulator.add(sample.getTemperature());
+            final float temperature = isMetric ? sample.getTemperature() : celsiusToFahrenheit(sample.getTemperature());
+            lineEntries.add(new Entry(tsTranslation.shorten(timestamp_in_seconds), temperature));
+            accumulator.add(temperature);
         }
 
-        LineDataSet dataSet = new LineDataSet(lineEntries, "Heart Rate");
+        LineDataSet dataSet = new LineDataSet(lineEntries, "Temperature");
         dataSet.setLineWidth(1.5f);
         dataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         dataSet.setCubicIntensity(0.1f);
@@ -208,18 +211,20 @@ public class TemperatureDailyFragment extends AbstractChartFragment<TemperatureD
         final double minimum = accumulator.getCount() > 0 ? accumulator.getMin() : -1;
         final double maximum = accumulator.getCount() > 0 ? accumulator.getMax() : -1;
 
-        tempAverage.setText(average > 0 ? String.format(Locale.ROOT, "%.1f", average) : "-");
-        tempMinimum.setText(minimum > 0 ? String.format(Locale.ROOT, "%.1f", minimum) : "-");
-        tempMaximum.setText(maximum > 0 ? String.format(Locale.ROOT, "%.1f", maximum) : "-");
+        final String unit = getString(isMetric ? R.string.unit_celsius : R.string.unit_fahrenheit);
+        tempAverage.setText(average > 0 ? String.format(Locale.ROOT, "%.1f %s", average, unit) : "-");
+        tempMinimum.setText(minimum > 0 ? String.format(Locale.ROOT, "%.1f %s", minimum, unit) : "-");
+        tempMaximum.setText(maximum > 0 ? String.format(Locale.ROOT, "%.1f %s", maximum, unit) : "-");
 
+        final int axisGap = (isMetric ? 3 : 6);
         if (minimum > 0) {
-            long axisMin = Math.max(Math.round(minimum) - 3, 0);
+            long axisMin = Math.max(Math.round(minimum) - axisGap, 0);
             tempLineChart.getAxisLeft().setAxisMinimum(axisMin);
             tempLineChart.getAxisRight().setAxisMinimum(axisMin);
         }
         if (maximum > 0) {
-            tempLineChart.getAxisLeft().setAxisMaximum(Math.round(maximum) + 3);
-            tempLineChart.getAxisRight().setAxisMaximum(Math.round(maximum) + 3);
+            tempLineChart.getAxisLeft().setAxisMaximum(Math.round(maximum) + axisGap);
+            tempLineChart.getAxisRight().setAxisMaximum(Math.round(maximum) + axisGap);
         }
 
         tempLineChart.getXAxis().setValueFormatter(new SampleXLabelFormatter(tsTranslation, "HH:mm"));
@@ -235,6 +240,10 @@ public class TemperatureDailyFragment extends AbstractChartFragment<TemperatureD
             tempLineChart.getAxisLeft().addLimitLine(averageLine);
         }
 
+    }
+
+    public static float celsiusToFahrenheit(final float celsius) {
+        return ((celsius * (9f/5f)) + 32f);
     }
 
     protected static class TemperatureChartData extends ChartsData {
