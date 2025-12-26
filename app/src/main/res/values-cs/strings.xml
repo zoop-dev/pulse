@@ -1900,7 +1900,7 @@
     <string name="low_power_gps">GPS s nízkou spotřebou energie</string>
     <string name="accuracy_first">Upřednostnit přesnost</string>
     <string name="speed_first">Upřednostnit rychlost</string>
-    <string name="debugactivity_confirm_remove_device_preferences">Tím se resetují předvolby zařízení pro všechna připojená zařízení. Jste si jisti\?</string>
+    <string name="debugactivity_confirm_remove_device_preferences">Tím se resetují předvolby zařízení pro všechna připojená zařízení. Jste si jisti?</string>
     <string name="fw_upgrade_notice_amazfit_gtr3">Chystáte se nainstalovat firmware %s na váš Amazfit GTR 3.
 \n
 \nVáš náramek se po instalaci souboru .zip restartuje.
