@@ -17,10 +17,6 @@
 package nodomain.freeyourgadget.gadgetbridge.service.btbr;
 
 import android.bluetooth.BluetoothSocket;
-import android.content.Context;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
@@ -28,7 +24,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 
-import java.io.IOException;
 import java.util.function.Predicate;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -131,7 +126,6 @@ public class TransactionBuilder {
     /**
      * To be used as the final step to execute the transaction by the queue.
      * @throws IllegalStateException if this builder has already been queued
-     * @see #queueConnected()
      */
     public void queue() {
         if (mQueued) {
@@ -150,20 +144,5 @@ public class TransactionBuilder {
 
     public String getTaskName() {
         return mTransaction.getTaskName();
-    }
-
-    /// Ensures that the device is connected and (only then) performs the actions of the given
-    /// transaction builder.
-    ///
-    /// @throws IOException if unable to connect to the device
-    /// @throws IllegalStateException if this builder has already been queued
-    /// @see #queue()
-    public void queueConnected() throws IOException {
-        if (!mDeviceSupport.isConnected()) {
-            if (!mDeviceSupport.connect()) {
-                throw new IOException("Unable to connect to device: " + mDeviceSupport.getDevice());
-            }
-        }
-        queue();
     }
 }

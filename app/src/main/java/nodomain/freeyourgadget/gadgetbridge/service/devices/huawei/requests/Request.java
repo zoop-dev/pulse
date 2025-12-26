@@ -340,7 +340,7 @@ public class Request {
             this.builderLe.wait(millis);
     }
 
-    private void performConnected() throws IOException {
+    private void performConnected() {
         LOG.debug("Perform connected");
 
         // Start the timeout timer
@@ -348,9 +348,9 @@ public class Request {
             handler.postDelayed(this.timeoutRunner, this.timeout);
 
         if (!this.supportProvider.isBLE()) {
-            builderBr.queueConnected();
+            builderBr.queue();
         } else {
-            builderLe.queueConnected();
+            builderLe.queue();
         }
     }
 
