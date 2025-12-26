@@ -87,7 +87,7 @@ public class TestDeviceCoordinator extends AbstractDeviceCoordinator {
 
     @Override
     public String getManufacturer() {
-        return "Gadgetbridge";
+        return "Generic";
     }
 
     @NonNull

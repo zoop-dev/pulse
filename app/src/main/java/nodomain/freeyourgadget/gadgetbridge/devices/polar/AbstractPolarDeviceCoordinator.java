@@ -41,7 +41,7 @@ public abstract class AbstractPolarDeviceCoordinator extends AbstractBLEDeviceCo
 
     @Override
     public String getManufacturer() {
-        return "Polar Electro Oy";
+        return "Polar";
     }
 
     @Override

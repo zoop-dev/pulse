@@ -41,7 +41,7 @@ public class H59Coordinator extends AbstractYawellRingCoordinator {
 
     @Override
     public String getManufacturer() {
-        return "Brandless";
+        return "Unknown";
     }
 
     @Override

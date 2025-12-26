@@ -24,7 +24,7 @@ import java.util.regex.Pattern
 /// #5063
 class S52Coordinator : GloryFitCoordinator() {
     override fun getManufacturer(): String {
-        return "Unspecified"
+        return "GloryFit"
     }
 
     override fun getSupportedDeviceName(): Pattern? {

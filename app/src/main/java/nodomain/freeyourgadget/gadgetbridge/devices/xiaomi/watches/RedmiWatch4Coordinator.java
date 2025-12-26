@@ -26,6 +26,11 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class RedmiWatch4Coordinator extends XiaomiCoordinator {
     @Override
+    public String getManufacturer() {
+        return "Redmi";
+    }
+
+    @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_redmi_watch_4;
     }

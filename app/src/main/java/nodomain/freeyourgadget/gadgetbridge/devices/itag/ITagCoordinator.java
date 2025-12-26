@@ -60,7 +60,7 @@ public class ITagCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public String getManufacturer() {
-        return "Unspecified"; //TODO: Show chip manufacturer?
+        return "Unknown"; //TODO: Show chip manufacturer?
     }
 
     @Override

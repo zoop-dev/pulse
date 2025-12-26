@@ -36,6 +36,11 @@ public class RedmiWatch2LiteCoordinator extends XiaomiCoordinator {
     }
 
     @Override
+    public String getManufacturer() {
+        return "Redmi";
+    }
+
+    @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_redmi_watch_2_lite;
     }

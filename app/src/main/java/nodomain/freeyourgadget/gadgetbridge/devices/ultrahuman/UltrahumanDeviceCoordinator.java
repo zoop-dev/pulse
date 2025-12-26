@@ -144,7 +144,7 @@ public class UltrahumanDeviceCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public String getManufacturer() {
-        return "Ultrahuman Healthcare Pvt Ltd";
+        return "Ultrahuman";
     }
 
     @Override

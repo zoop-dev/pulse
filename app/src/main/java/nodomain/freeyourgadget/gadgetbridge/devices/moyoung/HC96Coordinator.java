@@ -43,7 +43,7 @@ public class HC96Coordinator extends AbstractMoyoungDeviceCoordinator {
 
     @Override
     public String getManufacturer() {
-        return "Unspecified";
+        return "Mo Young / Da Fit";
     }
 
     @Override

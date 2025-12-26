@@ -88,7 +88,7 @@ public class No1F1Coordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public String getManufacturer() {
-        return "NO1";
+        return "No.1";
     }
 
     @Override

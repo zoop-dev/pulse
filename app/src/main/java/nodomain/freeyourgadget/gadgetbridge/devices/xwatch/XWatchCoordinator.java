@@ -58,7 +58,7 @@ public class XWatchCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public String getManufacturer() {
-        return "Generic";
+        return "Unknown";
     }
 
     @Override

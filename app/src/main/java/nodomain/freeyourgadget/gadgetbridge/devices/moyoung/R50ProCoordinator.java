@@ -41,7 +41,7 @@ public class R50ProCoordinator extends AbstractMoyoungDeviceCoordinator {
 
     @Override
     public String getManufacturer() {
-        return "Unspecified";
+        return "Mo Young / Da Fit";
     }
 
     @Override

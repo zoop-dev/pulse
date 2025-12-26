@@ -41,6 +41,11 @@ public class RedmiWatch3Coordinator extends XiaomiCoordinator {
     }
 
     @Override
+    public String getManufacturer() {
+        return "Redmi";
+    }
+
+    @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_redmiwatch3;
     }

@@ -34,7 +34,7 @@ public class ThermalPrinterCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public String getManufacturer() {
-        return "";
+        return "Unknown";
     }
 
     @NonNull

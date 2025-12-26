@@ -54,9 +54,4 @@ public class Q8Coordinator extends HPlusCoordinator {
     public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
         return Q8Support.class;
     }
-
-    @Override
-    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceKind.FITNESS_BAND;
-    }
 }

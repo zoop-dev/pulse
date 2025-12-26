@@ -6,7 +6,7 @@ import java.util.regex.Pattern
 
 class R1Coordinator : GloryFitCoordinator() {
     override fun getManufacturer(): String {
-        return "Gloryfit"
+        return "GloryFit"
     }
 
     override fun getSupportedDeviceName(): Pattern? {

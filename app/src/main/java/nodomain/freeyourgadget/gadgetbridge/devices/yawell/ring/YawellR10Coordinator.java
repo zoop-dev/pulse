@@ -30,6 +30,11 @@ public class YawellR10Coordinator extends AbstractYawellRingCoordinator {
     }
 
     @Override
+    public String getManufacturer() {
+        return "Yawell";
+    }
+
+    @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_yawell_r10;
     }

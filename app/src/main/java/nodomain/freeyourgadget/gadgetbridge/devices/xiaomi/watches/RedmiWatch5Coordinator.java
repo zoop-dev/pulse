@@ -31,6 +31,11 @@ public class RedmiWatch5Coordinator extends XiaomiCoordinator {
     }
 
     @Override
+    public String getManufacturer() {
+        return "Redmi";
+    }
+
+    @Override
     protected Pattern getSupportedDeviceName() {
         return Pattern.compile("^Redmi Watch 5 [0-9A-F]{4}$");
     }
