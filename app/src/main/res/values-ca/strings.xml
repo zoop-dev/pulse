@@ -1419,7 +1419,7 @@
 \n
 \nPROCEDEIXI SOTA LA SEVA RESPONSABILITAT.</string>
     <string name="appmanager_app_download">Descarregar a cache</string>
-    <string name="debugactivity_confirm_remove_device_preferences">Això reestablirà les preferències del dispositiu per a tots els dispositius, n\'està segur\?</string>
+    <string name="debugactivity_confirm_remove_device_preferences">Això reestablirà les preferències del dispositiu per a tots els dispositius, n\'està segur?</string>
     <string name="debugactivity_confirm_remove_device_preferences_title">Eliminar preferències del dispositiu\?</string>
     <string name="appmanager_downloaded_to_cache">Descarregat %s a cache</string>
     <string name="appmanager_download_app_error">Error descarregant la app</string>
