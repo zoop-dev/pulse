@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:title="@string/phone_calls">
+
+    <Preference
+        android:icon="@drawable/ic_file_upload"
+        android:key="pref_debug_call_send"
+        android:persistent="false"
+        android:title="Send CallSpec" />
+
+    <Preference
+        android:icon="@drawable/ic_refresh"
+        android:key="pref_debug_call_reset"
+        android:persistent="false"
+        android:title="@string/reset_fields" />
+
+    <PreferenceCategory
+        android:key="pref_debug_header_callspec"
+        android:title="CallSpec"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            android:defaultValue="INCOMING"
+            android:entries="@array/empty_array"
+            android:entryValues="@array/empty_array"
+            android:key="pref_debug_call_command"
+            android:title="command"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="6365553226"
+            android:key="pref_debug_call_number"
+            android:title="number"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="Mr. Plow"
+            android:key="pref_debug_call_name"
+            android:title="name"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:key="pref_debug_call_source_name"
+            android:title="sourceName"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:key="pref_debug_call_source_app_id"
+            android:title="sourceAppId"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:key="pref_debug_call_key"
+            android:title="key"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:key="pref_debug_call_channel_id"
+            android:title="channelId"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:key="pref_debug_call_category"
+            android:title="category"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="pref_debug_call_is_voip"
+            android:layout="@layout/preference_checkbox"
+            android:title="isVoip"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="pref_debug_call_dnd_suppressed_bool"
+            android:layout="@layout/preference_checkbox"
+            android:title="dndSuppressed"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

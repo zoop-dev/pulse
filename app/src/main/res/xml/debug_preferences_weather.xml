@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/menuitem_weather">
+
+    <PreferenceCategory
+        android:key="pref_header_weather"
+        android:title="@string/menuitem_weather">
+
+        <Preference
+            android:icon="@drawable/ic_file_upload"
+            android:key="pref_debug_weather_send"
+            android:persistent="false"
+            android:title="Send weather to devices" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:icon="@drawable/ic_database"
+            android:key="cache_weather"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/pref_cache_weather_summary"
+            android:title="@string/pref_cache_weather" />
+
+        <Preference
+            android:icon="@drawable/ic_add_gray"
+            android:key="pref_debug_weather_add_test"
+            android:persistent="false"
+            android:title="Add test weather to cache" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_header_cached_weather"
+        android:title="Cache">
+
+        <!-- to be filled up dynamically -->
+
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

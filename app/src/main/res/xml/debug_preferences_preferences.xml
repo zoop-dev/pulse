@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:title="@string/menuitem_settings">
+
+    <Preference
+        android:icon="@drawable/ic_settings_applications"
+        android:key="pref_debug_preferences_version"
+        android:persistent="false"
+        android:selectable="false"
+        android:title="Preferences version" />
+
+    <Preference
+        android:icon="@drawable/ic_settings"
+        android:key="pref_debug_global_preferences"
+        android:persistent="false"
+        android:title="@string/global_preferences" />
+
+    <PreferenceCategory
+        android:key="pref_header_device_preferences"
+        android:title="@string/bottom_nav_devices"
+        app:iconSpaceReserved="false">
+
+        <!-- to be dynamically filled -->
+
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

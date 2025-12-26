@@ -57,10 +57,10 @@ class WeatherSpec() : Parcelable {
 
     // Forecasts from the next day onward, in chronological order, one entry per day.
     // It should not include the current or previous days
-    var forecasts: ArrayList<Daily?> = ArrayList()
+    var forecasts: ArrayList<Daily> = ArrayList()
 
     // Hourly forecasts
-    var hourly: ArrayList<Hourly?> = ArrayList()
+    var hourly: ArrayList<Hourly> = ArrayList()
 
     constructor(parcel: Parcel) : this() {
         val version = parcel.readInt()
@@ -642,6 +642,59 @@ class WeatherSpec() : Parcelable {
                 level++
             }
             return level
+        }
+
+        fun createTestWeather(): WeatherSpec {
+            val weather = WeatherSpec()
+
+            weather.location = "Green Hill"
+            weather.timestamp = 1764364324
+            weather.currentTemp = 15 + 273
+            weather.todayMinTemp = 10 + 273
+            weather.todayMaxTemp = 25 + 273
+            weather.currentConditionCode = 601 // snow
+            weather.currentCondition = "Snowy"
+            weather.windDirection = 12
+            weather.precipProbability = 99
+            weather.windSpeed = 10f
+            weather.feelsLikeTemp = 13 + 273
+            weather.currentHumidity = 70
+            weather.latitude = 38.250137f
+            weather.longitude = -122.410805f
+            weather.dewPoint = 10 + 273
+            val airQuality = AirQuality()
+            airQuality.aqi = 50
+            weather.airQuality = airQuality
+            weather.currentHumidity = 30
+
+            weather.hourly = ArrayList()
+            for (i in 0..23) {
+                val gbForecast = Hourly()
+                gbForecast.temp = 10 + i + 273
+                gbForecast.conditionCode = 800 // clear
+                gbForecast.precipProbability = 50 + i
+                gbForecast.windDirection = 30 + i
+                gbForecast.windSpeed = 20f + i
+                gbForecast.humidity = 10 + i
+                gbForecast.uvIndex = 2f + i
+
+                weather.hourly.add(gbForecast)
+            }
+
+            weather.forecasts = ArrayList()
+            for (i in 0..4) {
+                val gbForecast = Daily()
+                gbForecast.minTemp = 10 + i + 273
+                gbForecast.maxTemp = 25 + i + 273
+                gbForecast.conditionCode = 800 // clear
+                gbForecast.precipProbability = 50 + i
+                val airQualityDaily = AirQuality()
+                airQualityDaily.aqi = 120 + i
+                gbForecast.airQuality = airQualityDaily
+                weather.forecasts.add(gbForecast)
+            }
+
+            return weather
         }
     }
 }

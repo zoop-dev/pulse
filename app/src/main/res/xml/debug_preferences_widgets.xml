@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/menuitem_widgets">
+
+    <Preference
+        android:icon="@drawable/ic_settings"
+        android:key="pref_debug_widgets_prefs_show"
+        android:persistent="false"
+        android:title="Show widgets preferences" />
+
+    <Preference
+        android:icon="@drawable/ic_delete_forever"
+        android:key="pref_debug_widgets_prefs_delete"
+        android:persistent="false"
+        android:title="Delete widgets preferences" />
+
+    <PreferenceCategory
+        android:key="pref_header_widgets"
+        android:title="Widgets">
+
+        <!-- to be filled up dynamically -->
+
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

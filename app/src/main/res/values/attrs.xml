@@ -19,6 +19,7 @@
     <attr name="training_acute_load" format="color" />
     <attr name="alternate_row_background" format="color" />
 
+    <attr name="checkmarkColor" format="color" />
     <attr name="deviceIconPrimary" format="color" />
     <attr name="deviceIconOnPrimary" format="color" />
     <attr name="deviceIconLight" format="color" />

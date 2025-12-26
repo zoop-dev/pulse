@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:title="@string/menuitem_music">
+
+    <Preference
+        android:icon="@drawable/ic_file_upload"
+        android:key="pref_debug_music_send_musicspec"
+        android:persistent="false"
+        android:title="Send MusicSpec" />
+
+    <Preference
+        android:icon="@drawable/ic_file_upload"
+        android:key="pref_debug_music_send_musicstatespec"
+        android:persistent="false"
+        android:title="Send MusicStateSpec" />
+
+    <Preference
+        android:icon="@drawable/ic_download"
+        android:key="pref_debug_music_pull"
+        android:persistent="false"
+        android:title="Pull fields from phone" />
+
+    <Preference
+        android:icon="@drawable/ic_refresh"
+        android:key="pref_debug_music_reset"
+        android:persistent="false"
+        android:title="@string/reset_fields" />
+
+    <PreferenceCategory
+        android:key="pref_header_musicspec"
+        android:title="MusicSpec"
+        app:iconSpaceReserved="false">
+
+        <EditTextPreference
+            android:defaultValue="The Artist"
+            android:key="pref_debug_music_artist"
+            android:title="artist"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="The Album"
+            android:key="pref_debug_music_album"
+            android:title="album"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="The Track Name"
+            android:key="pref_debug_music_track"
+            android:title="track"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="120"
+            android:inputType="number"
+            android:key="pref_debug_music_duration"
+            android:title="duration"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="5"
+            android:inputType="number"
+            android:key="pref_debug_music_trackCount"
+            android:title="trackCount"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="2"
+            android:inputType="number"
+            android:key="pref_debug_music_trackNr"
+            android:title="trackNr"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_header_musicstatespec"
+        android:title="MusicStateSpec"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            android:defaultValue="STATE_PLAYING"
+            android:entries="@array/empty_array"
+            android:entryValues="@array/empty_array"
+            android:key="pref_debug_music_state"
+            android:title="state"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="30"
+            android:inputType="number"
+            android:key="pref_debug_music_position"
+            android:title="position"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="100"
+            android:inputType="number"
+            android:key="pref_debug_music_playRate"
+            android:title="playRate"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="pref_debug_music_shuffle_bool"
+            android:layout="@layout/preference_checkbox"
+            android:title="shuffle"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="pref_debug_music_repeat_bool"
+            android:layout="@layout/preference_checkbox"
+            android:title="repeat"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

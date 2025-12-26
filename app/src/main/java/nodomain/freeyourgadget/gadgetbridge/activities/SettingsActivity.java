@@ -66,8 +66,6 @@ import nodomain.freeyourgadget.gadgetbridge.activities.charts.ChartsPreferencesA
 import nodomain.freeyourgadget.gadgetbridge.activities.discovery.DiscoveryPairingPreferenceActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsSettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.TimeChangeReceiver;
-import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
-import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherCacheManager;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
@@ -184,17 +182,6 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
                     pref.setEnabled(false);
                     pref.setSummary(R.string.pref_write_logfiles_not_available);
                 }
-            }
-
-            pref = findPreference("cache_weather");
-            if (pref != null) {
-                pref.setOnPreferenceChangeListener((preference, newVal) -> {
-                    boolean doEnable = Boolean.TRUE.equals(newVal);
-
-                    Weather.initializeCache(new WeatherCacheManager(requireContext().getCacheDir(), doEnable));
-
-                    return true;
-                });
             }
 
             pref = findPreference("language");

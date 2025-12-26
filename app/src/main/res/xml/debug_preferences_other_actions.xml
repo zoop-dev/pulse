@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:title="@string/debug_other_actions">
+
+    <Preference
+        android:icon="@drawable/ic_access_time"
+        android:key="pref_debug_set_time"
+        android:persistent="false"
+        android:title="Set time" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_show_chart"
+        android:key="activity_list_debug_extra_time_range"
+        android:layout="@layout/preference_checkbox"
+        android:summary="Takes long to generate when used"
+        android:title="Activity summary extra date range" />
+
+    <PreferenceCategory
+        android:key="pref_debug_header_fetch_recorded_data"
+        android:title="Data fetch"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            android:icon="@drawable/ic_timer"
+            android:key="pref_debug_set_activity_fetch_time"
+            android:persistent="false"
+            android:title="Set activity fetch time" />
+
+        <Preference
+            android:icon="@drawable/ic_download"
+            android:key="pref_debug_fetch_debug_logs"
+            android:persistent="false"
+            android:title="Fetch debug logs" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_debug_header_reset"
+        android:title="@string/reset"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            android:icon="@drawable/ic_refresh"
+            android:key="pref_debug_reboot"
+            android:persistent="false"
+            android:title="Reboot" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_warning_gray"
+            android:key="dangerous_actions"
+            android:layout="@layout/preference_checkbox"
+            android:persistent="false"
+            android:title="@string/dangerous_actions" />
+
+        <Preference
+            android:dependency="dangerous_actions"
+            android:icon="@drawable/ic_delete"
+            android:key="pref_debug_factory_reset"
+            android:persistent="false"
+            android:title="@string/factory_reset" />
+
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

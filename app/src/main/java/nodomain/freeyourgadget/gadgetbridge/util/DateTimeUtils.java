@@ -20,6 +20,8 @@ package nodomain.freeyourgadget.gadgetbridge.util;
 import android.content.Context;
 import android.text.format.DateUtils;
 
+import androidx.annotation.NonNull;
+
 import com.github.pfichtner.durationformatter.DurationFormatter;
 
 import java.text.FieldPosition;
@@ -39,8 +41,8 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 
 public class DateTimeUtils {
-    private static SimpleDateFormat DAY_STORAGE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-    private static SimpleDateFormat HOURS_MINUTES_FORMAT = new SimpleDateFormat("HH:mm", Locale.US);
+    private static final SimpleDateFormat DAY_STORAGE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+    private static final SimpleDateFormat HOURS_MINUTES_FORMAT = new SimpleDateFormat("HH:mm", Locale.US);
     public static SimpleDateFormat ISO_8601_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.US){
         //see https://github.com/Freeyourgadget/Gadgetbridge/issues/1076#issuecomment-383834116 and https://stackoverflow.com/a/30221245
 
@@ -53,6 +55,7 @@ public class DateTimeUtils {
 
         }
 
+        @NonNull
         @Override
         public StringBuffer format(Date date, StringBuffer toAppendTo, FieldPosition pos) {
             StringBuffer rfcFormat = super.format(date, toAppendTo, pos);
@@ -118,13 +121,22 @@ public class DateTimeUtils {
         Calendar cal = GregorianCalendar.getInstance();
         cal.setTime(date);
         cal.add(GregorianCalendar.DAY_OF_YEAR, offset);
-        Date newDate = cal.getTime();
-        return newDate;
+        return cal.getTime();
     }
 
     public static Date dayStart(final Date date) {
         final Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
+    }
+
+    public static Date dayStart(final int year, final int monthOfYear, final int dayOfMonth) {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.set(year, monthOfYear, dayOfMonth);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -189,10 +201,6 @@ public class DateTimeUtils {
         return cal.getTime();
     }
 
-    public static String dayToString(Date date) {
-        return DAY_STORAGE_FORMAT.format(date);
-    }
-
     public static Date dayFromString(String day) throws ParseException {
         return DAY_STORAGE_FORMAT.parse(day);
     }
@@ -225,9 +233,6 @@ public class DateTimeUtils {
     /**
      * Calculates new timestamp with a month offset (positive to add or negative to remove)
      * from a given time
-     *
-     * @param time
-     * @param month
      */
     public static int shiftMonths(int time, int month) {
         Calendar day = Calendar.getInstance();
@@ -239,25 +244,12 @@ public class DateTimeUtils {
     /**
      * Calculates new timestamp with a day offset (positive to add or negative to remove)
      * from a given time
-     *
-     * @param time
-     * @param days
      */
     public static int shiftDays(int time, int days) {
         Calendar day = Calendar.getInstance();
         day.setTimeInMillis(time * 1000L);
         day.add(Calendar.DAY_OF_YEAR, days);
         return (int) (day.getTimeInMillis() / 1000);
-    }
-
-    /**
-     * Calculates difference in days between two timestamps
-     *
-     * @param time1
-     * @param time2
-     */
-    public static int  getDaysBetweenTimes(int time1, int time2) {
-        return (int) TimeUnit.MILLISECONDS.toDays((time2 - time1) * 1000L);
     }
 
     /**
@@ -322,10 +314,11 @@ public class DateTimeUtils {
     }
 
     public static String formatDaysUntil(int days, int endTs) {
-        Date to = new Date((long) endTs * 1000);
-        Date from = org.apache.commons.lang3.time.DateUtils.addDays(to, - (days - 1));
-        String toFormattedDate = new SimpleDateFormat("E, MMM dd").format(to);
-        String fromFormattedDate = new SimpleDateFormat("E, MMM dd").format(from);
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E, MMM dd", Locale.getDefault());
+        final Date to = new Date((long) endTs * 1000);
+        final Date from = org.apache.commons.lang3.time.DateUtils.addDays(to, - (days - 1));
+        final String toFormattedDate = simpleDateFormat.format(to);
+        final String fromFormattedDate = simpleDateFormat.format(from);
         return fromFormattedDate + " - " + toFormattedDate;
     }
 

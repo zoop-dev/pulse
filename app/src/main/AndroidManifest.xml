@@ -664,10 +664,14 @@
             dialog when changing orientation
         -->
         <activity
-            android:name=".activities.DebugActivity"
+            android:name=".activities.debug.DebugActivityV2"
             android:label="@string/title_activity_debug"
             android:parentActivityName=".activities.ControlCenterv2"
-            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.debug.preferences.PreferenceManagerActivity"
+            android:label="@string/menuitem_settings"
+            android:parentActivityName=".activities.debug.DebugActivityV2"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.AboutActivity"

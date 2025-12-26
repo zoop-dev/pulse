@@ -17,6 +17,7 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.files;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -87,6 +88,7 @@ public class FileManagerActivity extends AbstractGBActivity implements MenuProvi
         fileListView.setAdapter(appListAdapter);
 
         searchView = findViewById(R.id.fileListSearchView);
+        searchView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         searchView.setIconifiedByDefault(false);
         searchView.setVisibility(View.GONE);
         searchView.setIconified(false);

@@ -1,0 +1,29 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="nodomain.freeyourgadget.gadgetbridge.activities.debug.preferences.PreferenceManagerActivity">
+    <item
+        android:id="@+id/debug_preferences_search"
+        android:icon="@drawable/ic_search"
+        android:title="@string/search"
+        app:iconTint="?attr/actionmenu_icon_color"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/debug_preferences_export"
+        android:icon="@drawable/ic_file_upload"
+        android:title="@string/file_export"
+        app:iconTint="?attr/actionmenu_icon_color"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/debug_preferences_import"
+        android:icon="@drawable/ic_download"
+        android:title="@string/file_import"
+        app:iconTint="?attr/actionmenu_icon_color"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/debug_preferences_reset"
+        android:icon="@drawable/ic_file_upload"
+        android:title="@string/reset"
+        app:iconTint="?attr/actionmenu_icon_color"
+        app:showAsAction="never" />
+</menu>

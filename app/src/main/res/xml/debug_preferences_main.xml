@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <Preference
+        android:icon="@drawable/ic_add"
+        android:key="pref_debug_add_test_device"
+        android:persistent="false"
+        android:title="@string/add_test_device" />
+
+    <PreferenceCategory
+        android:key="pref_header_logs"
+        android:title="@string/pref_app_logs_title">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_settings_applications"
+            android:key="log_to_file"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/pref_write_logfiles" />
+
+        <Preference
+            android:dependency="log_to_file"
+            android:icon="@drawable/ic_share"
+            android:key="pref_debug_share_logs"
+            android:persistent="false"
+            android:title="@string/share_log" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_header_debug"
+        android:title="@string/action_debug">
+
+        <Preference
+            android:fragment="nodomain.freeyourgadget.gadgetbridge.activities.debug.NotificationsDebugFragment"
+            android:icon="@drawable/ic_notifications"
+            android:key="pref_debug_notifications"
+            android:persistent="false"
+            android:title="@string/menuitem_notifications" />
+
+        <Preference
+            android:fragment="nodomain.freeyourgadget.gadgetbridge.activities.debug.CallsDebugFragment"
+            android:icon="@drawable/ic_phone"
+            android:key="pref_debug_calls"
+            android:persistent="false"
+            android:title="@string/phone_calls" />
+
+        <Preference
+            android:fragment="nodomain.freeyourgadget.gadgetbridge.activities.debug.MusicDebugFragment"
+            android:icon="@drawable/ic_music_note"
+            android:key="pref_debug_music"
+            android:persistent="false"
+            android:title="@string/menuitem_music" />
+
+        <Preference
+            android:fragment="nodomain.freeyourgadget.gadgetbridge.activities.debug.WeatherDebugFragment"
+            android:icon="@drawable/ic_wb_sunny"
+            android:key="pref_debug_weather"
+            android:persistent="false"
+            android:title="@string/menuitem_weather" />
+
+        <Preference
+            android:fragment="nodomain.freeyourgadget.gadgetbridge.activities.debug.DatabaseDebugFragment"
+            android:icon="@drawable/ic_database"
+            android:key="pref_debug_database"
+            android:persistent="false"
+            android:title="@string/database" />
+
+        <Preference
+            android:fragment="nodomain.freeyourgadget.gadgetbridge.activities.debug.PreferencesDebugFragment"
+            android:icon="@drawable/ic_settings_applications"
+            android:key="pref_debug_preferences"
+            android:persistent="false"
+            android:title="@string/menuitem_settings" />
+
+        <Preference
+            android:fragment="nodomain.freeyourgadget.gadgetbridge.activities.debug.CompanionDebugFragment"
+            android:icon="@drawable/ic_devices_other"
+            android:key="pref_debug_companion_devices"
+            android:persistent="false"
+            android:title="@string/companion_pairing_request_title"
+            tools:ignore="NewApi" />
+
+        <Preference
+            android:fragment="nodomain.freeyourgadget.gadgetbridge.activities.debug.WidgetsDebugFragment"
+            android:icon="@drawable/ic_widgets"
+            android:key="pref_debug_widgets"
+            android:persistent="false"
+            android:title="@string/menuitem_widgets" />
+
+        <Preference
+            android:fragment="nodomain.freeyourgadget.gadgetbridge.activities.debug.LocationDebugFragment"
+            android:icon="@drawable/ic_gps_location"
+            android:key="pref_debug_location"
+            android:persistent="false"
+            android:title="@string/pref_header_location" />
+
+        <Preference
+            android:fragment="nodomain.freeyourgadget.gadgetbridge.activities.debug.OtherDebugFragment"
+            android:icon="@drawable/ic_developer_mode"
+            android:key="pref_debug_other"
+            android:persistent="false"
+            android:title="@string/debug_other_actions" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_header_activities"
+        android:title="Activities">
+
+        <Preference
+            android:icon="@drawable/ic_camera_remote"
+            android:key="pref_debug_activity_camera"
+            android:persistent="false"
+            android:title="@string/pref_camera_remote_title" />
+
+        <Preference
+            android:icon="@drawable/ic_open_in_browser"
+            android:key="pref_debug_activity_welcome"
+            android:persistent="false"
+            android:title="@string/first_start_welcome_title" />
+
+        <Preference
+            android:icon="@drawable/ic_shield"
+            android:key="pref_debug_activity_permissions"
+            android:persistent="false"
+            android:title="@string/first_start_permissions_title" />
+
+    </PreferenceCategory>
+</androidx.preference.PreferenceScreen>

@@ -370,13 +370,6 @@
             android:summary="@string/pref_crash_notification_summary"
             android:title="@string/pref_crash_notification_title"
             app:iconSpaceReserved="false" />
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="cache_weather"
-            android:layout="@layout/preference_checkbox"
-            android:summary="@string/pref_cache_weather_summary"
-            android:title="@string/pref_cache_weather"
-            app:iconSpaceReserved="false" />
 
         <PreferenceScreen
             android:key="pref_screen_intent_api"

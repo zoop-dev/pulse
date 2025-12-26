@@ -785,11 +785,11 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             return START_STICKY;
         }
 
-        LOG.debug("Service startcommand: " + action);
-
         // when we get past this, we should have valid mDeviceSupport and mGBDevice instances
 
         GBDevice targetDevice = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE);
+
+        LOG.debug("Service startcommand: {}{}", action, targetDevice != null ? " (" + targetDevice.getAddress() + ")" : "");
 
         Prefs prefs = getPrefs();
         switch (action) {

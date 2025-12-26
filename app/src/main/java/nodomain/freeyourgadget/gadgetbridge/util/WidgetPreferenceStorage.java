@@ -142,17 +142,17 @@ public class WidgetPreferenceStorage {
         editor.apply();
     }
 
-    public void showAppWidgetsPrefs(Context context) {
+    public String getAppWidgetsPrefs(Context context) {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         String savedWidgetsPreferencesData = sharedPrefs.getString(PREFS_WIDGET_SETTINGS, "");
-        JSONArray savedWidgetsPreferencesDataArray = null;
-        try {
-            savedWidgetsPreferencesDataArray = new JSONArray(savedWidgetsPreferencesData);
-        } catch (
-                JSONException e) {
-            LOG.error(e.getMessage());
+        if (savedWidgetsPreferencesData.isBlank()) {
+            return "";
         }
-        GB.toast("Saved app widget preferences: " + savedWidgetsPreferencesDataArray, Toast.LENGTH_SHORT, GB.INFO);
+        try {
+            return new JSONArray(savedWidgetsPreferencesData).toString();
+        } catch (JSONException e) {
+            return e.getMessage();
+        }
     }
 
     @Nullable

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        android:icon="@drawable/ic_file_upload"
+        android:key="pref_debug_notifications_send"
+        android:persistent="false"
+        android:title="Send NotificationSpec" />
+
+    <Preference
+        android:icon="@drawable/ic_arrow_upload_progress"
+        android:key="pref_debug_pebblekit_notification"
+        android:persistent="false"
+        android:title="Send PebbleKit notification" />
+
+    <Preference
+        android:icon="@drawable/ic_notifications"
+        android:key="pref_debug_create_test_notification"
+        android:persistent="false"
+        android:title="Create test notification" />
+
+    <Preference
+        android:icon="@drawable/ic_refresh"
+        android:key="pref_debug_notifications_reset"
+        android:persistent="false"
+        android:title="@string/reset_fields" />
+
+    <PreferenceCategory
+        android:key="pref_debug_header_notificationspec"
+        android:title="NotificationSpec"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            android:defaultValue="UNKNOWN"
+            android:entries="@array/empty_array"
+            android:entryValues="@array/empty_array"
+            android:key="pref_debug_notifications_type"
+            android:title="type"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:key="pref_debug_notifications_sender"
+            android:title="sender"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="Title"
+            android:key="pref_debug_notifications_title"
+            android:title="title"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="Subject"
+            android:key="pref_debug_notifications_subject"
+            android:title="subject"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="Notification body"
+            android:key="pref_debug_notifications_body"
+            android:title="body"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="pref_debug_notifications_attachedActions_reply"
+            android:layout="@layout/preference_checkbox"
+            android:title="attachedActions - REPLY"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="pref_debug_notifications_picturePath_bool"
+            android:layout="@layout/preference_checkbox"
+            android:title="picturePath - Include picture"
+            app:iconSpaceReserved="false" />
+
+        <EditTextPreference
+            android:key="pref_debug_notifications_phoneNumber"
+            android:title="phoneNumber"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="Gadgetbridge"
+            android:key="pref_debug_notifications_sourceName"
+            android:title="sourceName"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="@string/applicationId"
+            android:key="pref_debug_notifications_sourceAppId"
+            android:title="sourceAppId"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="0"
+            android:key="pref_debug_notifications_flags"
+            android:title="flags"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="0|nodomain.freeyourgadget.gadgetbridge|-493519667|null|10679"
+            android:key="pref_debug_notifications_key"
+            android:title="key"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="the_channel"
+            android:key="pref_debug_notifications_channelId"
+            android:title="channelId"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:key="pref_debug_notifications_category"
+            android:title="category"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="0"
+            android:key="pref_debug_notifications_iconId"
+            android:title="iconId"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="pref_debug_notifications_dndSuppressed"
+            android:layout="@layout/preference_checkbox"
+            android:title="dndSuppressed"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

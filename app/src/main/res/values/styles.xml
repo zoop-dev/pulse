@@ -35,6 +35,7 @@
         <item name="alternate_row_background">@color/alternate_row_background_light</item>
         <item name="row_separator">@color/row_separator_light</item>
 
+        <item name="checkmarkColor">#669900</item>
         <item name="deviceIconPrimary">#2196f3</item>
         <item name="deviceIconOnPrimary">#ffffff</item>
         <item name="deviceIconLight">#1f7fdb</item>
@@ -81,6 +82,7 @@
         <item name="alternate_row_background">@color/alternate_row_background_dark</item>
         <item name="row_separator">@color/row_separator_dark</item>
 
+        <item name="checkmarkColor">#669900</item>
         <item name="deviceIconPrimary">#2196f3</item>
         <item name="deviceIconOnPrimary">#ffffff</item>
         <item name="deviceIconLight">#1f7fdb</item>
@@ -115,6 +117,7 @@
         <item name="android:navigationBarColor">?attr/colorSurface</item>
         <!-- FIXME: SDK 21 to 27 has light navbar on light background -->
         <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+        <item name="checkmarkColor">?attr/colorPrimary</item>
         <item name="deviceIconPrimary">?attr/colorPrimary</item>
         <item name="deviceIconOnPrimary">?attr/colorOnPrimary</item>
         <item name="deviceIconLight">?attr/colorPrimaryVariant</item>
@@ -137,6 +140,7 @@
         <item name="preferenceTheme">@style/AppPreferenceThemeOverlay</item>
         <item name="android:navigationBarColor">?attr/colorSurface</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
+        <item name="checkmarkColor">?attr/colorPrimary</item>
         <item name="deviceIconPrimary">?attr/colorPrimary</item>
         <item name="deviceIconOnPrimary">?attr/colorOnPrimary</item>
         <item name="deviceIconLight">?attr/colorPrimaryVariant</item>

@@ -42,7 +42,7 @@ public class SpinnerWithIconItem {
 
     @Override
     public String toString() {
-        return text + " " + id + " " + imageId;
+        return text;
     }
 
 }

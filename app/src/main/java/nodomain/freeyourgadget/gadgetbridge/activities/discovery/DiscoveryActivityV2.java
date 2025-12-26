@@ -44,7 +44,6 @@ import android.os.ParcelUuid;
 import android.os.Parcelable;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Pair;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -52,10 +51,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -76,7 +73,6 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -84,12 +80,9 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.AuthKeyActivity;
-import nodomain.freeyourgadget.gadgetbridge.activities.DebugActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.adapter.DeviceCandidateAdapter;
 import nodomain.freeyourgadget.gadgetbridge.adapter.SimpleIconListAdapter;
-import nodomain.freeyourgadget.gadgetbridge.adapter.SpinnerWithIconAdapter;
-import nodomain.freeyourgadget.gadgetbridge.adapter.SpinnerWithIconItem;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
@@ -102,6 +95,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.BondingUtil;
 import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
+import nodomain.freeyourgadget.gadgetbridge.util.TestDeviceDialog;
 
 
 public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterView.OnItemClickListener,
@@ -130,8 +124,6 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
     private boolean scanning;
 
     private ActivityResultLauncher<Intent> authKeyLauncher;
-
-    private long selectedUnsupportedDeviceKey = DebugActivity.SELECT_DEVICE;
 
     private final Runnable stopRunnable = () -> {
         stopDiscovery();
@@ -783,56 +775,13 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
     private void showUnsupportedDeviceDialog(final GBDeviceCandidate deviceCandidate) {
         LOG.info("Unsupported device candidate selected: {}", deviceCandidate);
 
-        final Map<String, Pair<Long, Integer>> allDevices = DebugActivity.getAllSupportedDevices(getApplicationContext());
-
-        final LinearLayout linearLayout = new LinearLayout(DiscoveryActivityV2.this);
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-
-        final ArrayList<SpinnerWithIconItem> deviceListArray = new ArrayList<>();
-        for (Map.Entry<String, Pair<Long, Integer>> item : allDevices.entrySet()) {
-            deviceListArray.add(new SpinnerWithIconItem(item.getKey(), item.getValue().first, item.getValue().second));
-        }
-        final SpinnerWithIconAdapter deviceListAdapter = new SpinnerWithIconAdapter(
-                DiscoveryActivityV2.this,
-                R.layout.spinner_with_image_layout,
-                R.id.spinner_item_text,
-                deviceListArray
-        );
-
-        final Spinner deviceListSpinner = new Spinner(DiscoveryActivityV2.this);
-        deviceListSpinner.setAdapter(deviceListAdapter);
-        deviceListSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(final AdapterView<?> parent, final View view, final int pos, final long id) {
-                final SpinnerWithIconItem selectedItem = (SpinnerWithIconItem) parent.getItemAtPosition(pos);
-                selectedUnsupportedDeviceKey = selectedItem.getId();
-            }
-
-            @Override
-            public void onNothingSelected(final AdapterView<?> arg0) {
-            }
-        });
-        linearLayout.addView(deviceListSpinner);
-
-        final LinearLayout macLayout = new LinearLayout(DiscoveryActivityV2.this);
-        macLayout.setOrientation(LinearLayout.HORIZONTAL);
-        macLayout.setPadding(20, 0, 20, 0);
-        linearLayout.addView(macLayout);
-
-        new MaterialAlertDialogBuilder(DiscoveryActivityV2.this)
-                .setCancelable(true)
-                .setTitle(R.string.add_test_device)
-                .setView(linearLayout)
-                .setPositiveButton(R.string.ok, (dialog, which) -> {
-                    if (selectedUnsupportedDeviceKey != DebugActivity.SELECT_DEVICE) {
-                        final DeviceType deviceType = DeviceType.values()[(int) selectedUnsupportedDeviceKey];
-                        DeviceHelper.getInstance().setForcedDeviceType(deviceCandidate.getMacAddress().toLowerCase(), deviceType);
-                        preparePair(deviceCandidate);
-                    }
-                })
-                .setNegativeButton(R.string.Cancel, (dialog, which) -> {
-                })
-                .show();
+        new TestDeviceDialog(this, deviceCandidate.getMacAddress())
+                .show((macAddress, deviceType) -> {
+                    LOG.debug("Force-pairing {} as {}", deviceCandidate, deviceType);
+                    DeviceHelper.getInstance().setForcedDeviceType(deviceCandidate.getMacAddress().toLowerCase(), deviceType);
+                    preparePair(deviceCandidate);
+                    return kotlin.Unit.INSTANCE;
+                });
     }
 
     @Override

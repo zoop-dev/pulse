@@ -49,10 +49,12 @@ public class MediaManager {
         this.context = context;
     }
 
+    @Nullable
     public MusicSpec getBufferMusicSpec() {
         return bufferMusicSpec;
     }
 
+    @Nullable
     public MusicStateSpec getBufferMusicStateSpec() {
         return bufferMusicStateSpec;
     }

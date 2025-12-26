@@ -17,7 +17,12 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.model;
 
+import androidx.annotation.NonNull;
+
+import nodomain.freeyourgadget.gadgetbridge.util.GBToStringBuilder;
+
 public class CallSpec {
+    // TODO: Migrate all usages to the enum..
     public static final int CALL_UNDEFINED = 0;
     public static final int CALL_ACCEPT = 1;
     public static final int CALL_INCOMING = 2;
@@ -44,4 +49,35 @@ public class CallSpec {
 
     public int command;
     public int dndSuppressed;
+
+    public enum Command {
+        UNDEFINED,
+        ACCEPT,
+        INCOMING,
+        OUTGOING,
+        REJECT,
+        START,
+        END,
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        final GBToStringBuilder tsb = new GBToStringBuilder(this);
+        tsb.append("command", Command.values()[command]);
+        tsb.append("number", number);
+        tsb.append("name", name);
+        tsb.append("sourceName", sourceName);
+        tsb.append("sourceAppId", sourceAppId);
+        tsb.append("key", key);
+        tsb.append("channelId", channelId);
+        tsb.append("category", category);
+        if (isVoip) {
+            tsb.append("isVoip", isVoip);
+        }
+        if (dndSuppressed != 0) {
+            tsb.append("dndSuppressed", dndSuppressed);
+        }
+        return tsb.toString();
+    }
 }

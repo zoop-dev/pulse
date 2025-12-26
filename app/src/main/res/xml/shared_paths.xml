@@ -6,4 +6,5 @@
     <cache-path name="raw" path="raw/" />
     <cache-path name="gpx" path="gpx/" />
     <cache-path name="audio" path="audio/" />
+    <cache-path name="images" path="images/" />
 </paths>

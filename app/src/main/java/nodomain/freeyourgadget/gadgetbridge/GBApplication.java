@@ -141,7 +141,7 @@ public class GBApplication extends Application {
     private static final Lock dbLock = new ReentrantLock();
     private static DeviceService deviceService;
     private static SharedPreferences sharedPrefs;
-    private static final String PREFS_VERSION = "shared_preferences_version";
+    public static final String PREFS_VERSION = "shared_preferences_version";
     //if preferences have to be migrated, increment the following and add the migration logic in migratePrefs below; see http://stackoverflow.com/questions/16397848/how-can-i-migrate-android-preferences-with-a-new-version
     private static final int CURRENT_PREFS_VERSION = 54;
 

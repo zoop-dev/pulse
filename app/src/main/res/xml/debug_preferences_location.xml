@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/pref_header_location">
+
+    <PreferenceCategory
+        android:key="pref_header_location_opentracks"
+        android:title="OpenTracks">
+
+        <Preference
+            android:icon="@drawable/ic_gps_location"
+            android:key="pref_debug_opentracks_status"
+            android:persistent="false"
+            android:title="@string/status" />
+
+        <Preference
+            android:icon="@drawable/ic_play"
+            android:key="pref_debug_opentracks_start"
+            android:persistent="false"
+            android:title="@string/start" />
+
+        <Preference
+            android:icon="@drawable/ic_stop"
+            android:key="pref_debug_opentracks_stop"
+            android:persistent="false"
+            android:title="@string/stop" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_header_location_gps_listener"
+        android:title="GPS Listener">
+
+        <Preference
+            android:icon="@drawable/ic_stop"
+            android:key="pref_debug_gps_listener_stop"
+            android:persistent="false"
+            android:title="@string/stop" />
+
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

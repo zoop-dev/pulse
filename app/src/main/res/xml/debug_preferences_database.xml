@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:title="@string/database">
+
+    <Preference
+        android:icon="@drawable/ic_database"
+        android:key="pref_debug_database_version"
+        android:persistent="false"
+        android:selectable="false"
+        android:title="Database version" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_warning_gray"
+        android:key="dangerous_actions"
+        android:layout="@layout/preference_checkbox"
+        android:persistent="false"
+        android:title="@string/dangerous_actions" />
+
+    <Preference
+        android:dependency="dangerous_actions"
+        android:icon="@drawable/ic_delete_forever"
+        android:key="pref_debug_delete_old_database"
+        android:persistent="false"
+        android:title="@string/activity_DB_delete_legacy_button" />
+
+    <Preference
+        android:dependency="dangerous_actions"
+        android:icon="@drawable/ic_delete_forever"
+        android:key="pref_debug_empty_database"
+        android:persistent="false"
+        android:summary="@string/activity_db_management_empty_db_warning"
+        android:title="@string/activity_db_management_empty_DB" />
+
+    <PreferenceCategory
+        android:key="pref_header_database_tables"
+        android:title="Tables"
+        app:iconSpaceReserved="false">
+
+        <!-- to be dynamically filled -->
+
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

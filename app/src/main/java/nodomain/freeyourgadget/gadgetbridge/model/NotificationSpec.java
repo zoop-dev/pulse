@@ -24,9 +24,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class NotificationSpec {
     public int flags;
     private static final AtomicInteger c = new AtomicInteger((int) (System.currentTimeMillis()/1000));
-    private int id;
+    private final int id;
     public String key;
-    public long when;
+    public final long when;
     public String sender;
     public String phoneNumber;
     public String title;
@@ -59,11 +59,15 @@ public class NotificationSpec {
     }
 
     public NotificationSpec(int id) {
+        this(id, System.currentTimeMillis());
+    }
+
+    public NotificationSpec(int id, long when) {
         if (id != -1)
             this.id = id;
         else
             this.id = c.incrementAndGet();
-        this.when = System.currentTimeMillis();
+        this.when = when;
     }
 
     public int getId() {

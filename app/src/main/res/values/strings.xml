@@ -102,7 +102,7 @@
     <string name="debugactivity_really_factoryreset_title">Really factory reset?</string>
     <string name="debugactivity_really_factoryreset">Doing a factory reset will delete all data from the connected device (if supported). Xiaomi/Huami devices also change Bluetooth MAC address, so they appear as a new devices to Gadgetbridge.</string>
     <string name="debugactivity_confirm_remove_device_preferences_title">Remove device preferences?</string>
-    <string name="debugactivity_confirm_remove_device_preferences">This will reset the device preferences for all connected devices. Are you sure?</string>
+    <string name="debugactivity_confirm_remove_device_preferences">This will reset the device preferences for this device. Are you sure?</string>
     <!-- Strings related to AppManager -->
     <string name="title_activity_appmanager">App Manager</string>
     <string name="appmanager_cached_watchapps_watchfaces">Apps in cache</string>
@@ -1345,7 +1345,6 @@
     <string name="action_db_management">Data management</string>
     <string name="title_activity_db_management">Data management</string>
     <string name="activity_db_management_import_export_explanation">The export/import operations use the following path (see below) to a directory on your device. This directory is accessible to other Android apps and your computer. Do note, that this directory and all containing files are deleted if you uninstall Gadgetbridge. The data includes:\n Export_preference - global settings\n Export_preference_MAC - device specific settings\n Gadgetbridge - device and activity database\n Gadgetbridge_date - database exported on a date\n *.gpx - GPS recordings\n *.log - log files\nExpect to find your exported files (or place the files you want to import) there:</string>
-    <string name="activity_db_management_merge_old_title">Legacy database delete</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Cannot access export path. Please contact the developers.</string>
     <string name="dbmanagementactivity_exported_to">Exported to: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Error exporting DB: %1$s</string>
@@ -1392,10 +1391,6 @@
     <string name="set">Set</string>
     <string name="activity_data_management_directory_content_title">Export/Import directory content</string>
     <string name="activity_DB_ShowContentButton">Show Export/Import directory content</string>
-    <string name="activity_db_management_clean_export_directory_label">Delete files in Export/Import directory</string>
-    <string name="activity_DB_clean_export_directory_warning_title">Delete files in the Export/Import directory?</string>
-    <string name="activity_DB_clean_export_directory_warning_message">Really delete files in the Export/Import directory?</string>
-    <string name="activity_db_management_clean_export_directory_text">Exported files in the Export/Import directory are accessible by any app on your device. You might like to remove these files after synchronisation or backup. Make sure to have a backup before deleting them. GPX files, sub-directories and auto-exported database file (if exist) will not be deleted. The path to the Export/Import directory is:</string>
     <string name="dbmanagementactivity_export_finished">Deletion finished</string>
     <!-- Strings related to Vibration Activity -->
     <string name="title_activity_vibration">Vibration</string>
@@ -1943,7 +1938,7 @@
     <string name="devicetype_garmin_quatix_8" translatable="false">Garmin Quatix 8</string>
     <string name="devicetype_garmin_descent_mk3" translatable="false">Garmin Descent Mk3</string>
     <string name="devicetype_garmin_descent_g2" translatable="false">Garmin Descent G2</string>
-    <string name="devicetype_garmin_inReach_mini_2" translatable="false">inReach Mini 2</string>
+    <string name="devicetype_garmin_inReach_mini_2" translatable="false">Garmin inReach Mini 2</string>
     <string name="devicetype_garmin_instinct" translatable="false">Garmin Instinct</string>
     <string name="devicetype_garmin_instinct_solar" translatable="false">Garmin Instinct Solar</string>
     <string name="devicetype_garmin_instinct_2" translatable="false">Garmin Instinct 2</string>
@@ -2033,7 +2028,7 @@
     <string name="devicetype_polarh9" translatable="false">Polar H9</string>
     <string name="devicetype_polarh10" translatable="false">Polar H10</string>
     <string name="devicetype_sonyswr12" translatable="false">Sony SWR12</string>
-    <string name="devicetype_waspos" translatable="false">Wasp-os</string>
+    <string name="devicetype_waspos" translatable="false">Wasp-OS</string>
     <string name="devicetype_smaq2oss" translatable="false">SMA-Q2 OSS</string>
     <string name="devicetype_fitpro" translatable="false">FitPro</string>
     <string name="devicetype_colacao21" translatable="false">ColaCao 2021</string>
@@ -2325,7 +2320,6 @@
     <string name="preferences_rtl_settings">Right To Left Support</string>
     <string name="share_log">Share log</string>
     <string name="share_log_warning">Please keep in mind Gadgetbridge logs files that may contain lots of personal info, including but not limited to health data, unique identifiers (such as a device\'s MAC address), music preferences, etc. Consider editing the file and removing this info before sending the file to a public issue report.</string>
-    <string name="share_log_not_enabled_message">You must first enable logging in the Settings - Write log files</string>
     <string name="warning">Warning!</string>
     <string name="note">Note</string>
     <string name="no_data">No data</string>
@@ -3490,6 +3484,7 @@
 
     <string name="info_no_devices_connected">No devices connected</string>
     <string name="info_connected_count">%d devices connected</string>
+    <string name="controlcenter_test_new_function">Test new function</string>
     <string name="controlcenter_set_parent_folder">Set parent folder</string>
     <string name="controlcenter_set_preferences">Set preferences</string>
     <string name="controlcenter_toggle_details">Toggle details</string>
@@ -3529,7 +3524,7 @@
     <string name="weekly_total">Weekly total</string>
     <string name="prefs_hourly_chime">Hourly chime</string>
     <string name="prefs_hourly_chime_summary">The watch will beep once an hour</string>
-    <string name="devicetype_flipper_zero" translatable="false">Flipper zero</string>
+    <string name="devicetype_flipper_zero" translatable="false">Flipper Zero</string>
     <string name="activity_prefs_allow_bluetooth_intent_api">Bluetooth Intent API</string>
     <string name="activity_prefs_summary_allow_bluetooth_intent_api">Allow controlling Bluetooth connection via Intent API</string>
     <string name="intent_api_allow_activity_sync_title">Allow activity sync trigger</string>
@@ -4488,4 +4483,18 @@
     <string name="solar_panel2_peak_w">Solar panel 2 peak W</string>
     <string name="solar_panel3_peak_w">Solar panel 3 peak W</string>
     <string name="solar_panel4_peak_w">Solar panel 4 peak W</string>
+    <string name="all_manufacturers">All manufacturers</string>
+    <string name="device_manufacturer">Manufacturer</string>
+    <string name="debug_selected_device">Debug device</string>
+    <string name="device_mac_address">MAC address</string>
+    <string name="database">Database</string>
+    <string name="file_export">Export</string>
+    <string name="file_import">Import</string>
+    <string name="global_preferences">Global preferences</string>
+    <string name="export_success">Export successful</string>
+    <string name="import_success">Import successful</string>
+    <string name="reset_fields">Reset fields</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="dangerous_actions">Dangerous actions</string>
+    <string name="debug_other_actions">Other actions</string>
 </resources>

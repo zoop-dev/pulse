@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/companion_pairing_request_title">
+
+    <PreferenceCategory
+        android:key="pref_header_companion_devices"
+        android:title="@string/companion_pairing_request_title">
+
+        <!-- to be filled up dynamically -->
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_header_other_devices"
+        android:title="@string/Other">
+
+        <!-- to be filled up dynamically -->
+
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

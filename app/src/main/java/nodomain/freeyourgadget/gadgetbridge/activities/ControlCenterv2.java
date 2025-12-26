@@ -65,6 +65,7 @@ import java.util.Objects;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.debug.DebugActivityV2;
 import nodomain.freeyourgadget.gadgetbridge.activities.discovery.DiscoveryActivityV2;
 import nodomain.freeyourgadget.gadgetbridge.activities.welcome.WelcomeActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -344,7 +345,7 @@ public class ControlCenterv2 extends AppCompatActivity
             startActivityForResult(settingsIntent, MENU_REFRESH_CODE);
             return false;
         } else if (itemId == R.id.action_debug) {
-            final Intent debugIntent = new Intent(this, DebugActivity.class);
+            final Intent debugIntent = new Intent(this, DebugActivityV2.class);
             startActivity(debugIntent);
             return false;
         } else if (itemId == R.id.action_data_management) {
