@@ -1921,7 +1921,7 @@
     <string name="intent_api_broadcast_export_title">Broadcast op database export</string>
     <string name="intent_api_broadcast_export_summary">Een Intent uitzenden wanneer het exporteren van de database is voltooid</string>
     <string name="debugactivity_confirm_remove_device_preferences_title">Apparaatvoorkeuren verwijderen\?</string>
-    <string name="debugactivity_confirm_remove_device_preferences">Hiermee worden de apparaatvoorkeuren voor alle aangesloten apparaten gereset. Weet je het zeker\?</string>
+    <string name="debugactivity_confirm_remove_device_preferences">Hiermee worden de apparaatvoorkeuren voor alle aangesloten apparaten gereset. Weet je het zeker?</string>
     <string name="fw_upgrade_notice_amazfit_gts4_mini">U staat op het punt de %s-firmware op uw Amazfit GTS 4 Mini te installeren.
 \n
 \nDe band zal opnieuw opstarten na het installeren van het .zip-bestand.
