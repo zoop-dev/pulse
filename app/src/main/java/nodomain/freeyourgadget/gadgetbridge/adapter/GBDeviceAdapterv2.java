@@ -607,7 +607,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                                                      new MaterialAlertDialogBuilder(context)
                                                              .setCancelable(true)
                                                              .setTitle(context.getString(R.string.controlcenter_find_device))
-                                                             .setMessage(context.getString(R.string.find_lost_device_message, device.getName()))
+                                                             .setMessage(context.getString(R.string.find_lost_device_message, device.getAliasOrName()))
                                                              .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                                                  @Override
                                                                  public void onClick(DialogInterface dialog, int which) {
@@ -982,7 +982,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
     private void showRemoveDeviceDialog(final GBDevice device) {
         MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context)
                 .setCancelable(true)
-                .setTitle(context.getString(R.string.controlcenter_delete_device_name, device.getName()))
+                .setTitle(context.getString(R.string.controlcenter_delete_device_name, device.getAliasOrName()))
                 .setMessage(R.string.controlcenter_delete_device_dialogmessage)
                 .setPositiveButton(R.string.Delete,
                         (dialog, which) -> removeDevice(device, true))
