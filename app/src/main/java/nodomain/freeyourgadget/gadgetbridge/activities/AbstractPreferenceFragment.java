@@ -279,10 +279,19 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragmentCompa
                 return;
             }
 
+            // Skip internal programmatic preferences that aren't in XML
+            final Set<String> internalPreferences = Set.of(
+                "health_connect_last_granted_permissions",
+                "health_connect_prompt_for_full_dao_reset"
+            );
+            if (internalPreferences.contains(key)) {
+                LOG.trace("Internal preference {} changed, ignoring in UI update", key);
+                return;
+            }
+
             final Preference preference = findPreference(key);
             if (preference == null) {
                 LOG.warn("Preference {} not found", key);
-
                 return;
             }
 
@@ -292,6 +301,11 @@ public abstract class AbstractPreferenceFragment extends PreferenceFragmentCompa
                 switchPreference.setChecked(prefs.getBoolean(key, switchPreference.isChecked()));
             } else if (preference instanceof ListPreference listPreference) {
                 listPreference.setValue(prefs.getString(key, listPreference.getValue()));
+            } else if (preference instanceof MultiSelectListPreference multiSelectListPreference) {
+                Set<String> values = prefs.getStringSet(key, multiSelectListPreference.getValues());
+                if (values != null) {
+                    multiSelectListPreference.setValues(values);
+                }
             } else if (preference instanceof EditTextPreference editTextPreference) {
                 editTextPreference.setText(prefs.getString(key, editTextPreference.getText()));
             } else if (preference instanceof XTimePreference xTimePreference) {

@@ -82,6 +82,7 @@ public class GB {
     public static final String NOTIFICATION_CHANNEL_ID_FULL_BATTERY = "full_battery";
     public static final String NOTIFICATION_CHANNEL_ID_GPS = "gps";
     public static final String NOTIFICATION_CHANNEL_ID_PEBBLE_JS = "pebble_js";
+    public static final String NOTIFICATION_CHANNEL_ID_HEALTH_CONNECT_SYNC = "gadgetbridge_health_connect_sync";
 
     public static final int NOTIFICATION_ID = 1;
     public static final int NOTIFICATION_ID_INSTALL = 2;
@@ -180,6 +181,12 @@ public class GB {
                     context.getString(R.string.notification_channel_pebble_js_runner),
                     NotificationManager.IMPORTANCE_MIN);
             notificationManager.createNotificationChannel(channelPebbleJs);
+
+            NotificationChannel channelHealthConnectSync = new NotificationChannel(
+                    NOTIFICATION_CHANNEL_ID_HEALTH_CONNECT_SYNC,
+                    context.getString(R.string.notification_channel_health_connect_sync_name),
+                    NotificationManager.IMPORTANCE_LOW);
+            notificationManager.createNotificationChannel(channelHealthConnectSync);
         }
 
         notificationChannelsCreated = true;

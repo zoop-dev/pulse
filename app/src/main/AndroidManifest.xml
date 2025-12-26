@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+
     <!--
         Comment in for testing Pebble Emulator
         <uses-permission android:name="android.permission.INTERNET" />
@@ -107,6 +108,25 @@
 
     <!-- Needed to show notification with targetSdkVersion 33 with Android 13 -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+    <!-- Needed for Health Connect See this for more: https://developer.android.com/health-and-fitness/guides/health-connect/plan/data-types#alpha10 -->
+    <uses-permission android:name="android.permission.health.WRITE_HEART_RATE"/>
+    <uses-permission android:name="android.permission.health.WRITE_STEPS"/>
+    <uses-permission android:name="android.permission.health.WRITE_EXERCISE"/>
+    <uses-permission android:name="android.permission.health.WRITE_SLEEP"/>
+    <uses-permission android:name="android.permission.health.WRITE_TOTAL_CALORIES_BURNED"/>
+    <uses-permission android:name="android.permission.health.WRITE_DISTANCE"/>
+    <uses-permission android:name="android.permission.health.WRITE_VO2_MAX"/>
+    <uses-permission android:name="android.permission.health.WRITE_HEART_RATE_VARIABILITY"/>
+    <uses-permission android:name="android.permission.health.WRITE_WEIGHT"/>
+    <uses-permission android:name="android.permission.health.WRITE_OXYGEN_SATURATION"/>
+    <uses-permission android:name="android.permission.health.WRITE_BODY_TEMPERATURE" />
+    <uses-permission android:name="android.permission.health.WRITE_SKIN_TEMPERATURE" />
+    <uses-permission android:name="android.permission.health.WRITE_ELEVATION_GAINED" />
+    <uses-permission android:name="android.permission.health.WRITE_SPEED" />
+    <uses-permission android:name="android.permission.health.WRITE_POWER" />
+    <uses-permission android:name="android.permission.health.WRITE_EXERCISE_ROUTE" />
+    <uses-sdk tools:overrideLibrary="androidx.health.connect.client"/>
 
     <uses-feature
         android:name="android.hardware.bluetooth"
@@ -216,6 +236,10 @@
         <activity
             android:name=".activities.InternetHelperPreferencesActivity"
             android:label="@string/prefs_internet_helper_title"
+            android:parentActivityName=".activities.SettingsActivity" />
+        <activity
+            android:name=".activities.preferences.HealthConnectPreferencesActivity"
+            android:label="@string/healthconnect_settings"
             android:parentActivityName=".activities.SettingsActivity" />
         <activity
             android:name=".activities.AboutUserPreferencesActivity"
@@ -559,7 +583,12 @@
         <service
             android:name="androidx.work.impl.foreground.SystemForegroundService"
             android:foregroundServiceType="dataSync"
-            android:exported="false" />
+            tools:node="merge"
+            android:exported="false">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Used for syncing data with Health Connect" />
+        </service>
         <service
             android:name=".externalevents.NotificationListener"
             android:label="@string/app_name"
@@ -1042,6 +1071,41 @@
             android:name=".devices.cycling_sensor.activity.CyclingLiveDataActivity"
             android:launchMode="singleInstance"
             android:exported="true" />
+
+        <!-- For supported versions through Android 13, create an activity to show the rationale
+       of Health Connect permissions once users click the privacy policy link. -->
+        <activity
+            android:name=".activities.PermissionsRationaleActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+            </intent-filter>
+        </activity>
+
+        <!-- For versions starting Android 14, create an activity alias to show the rationale
+             of Health Connect permissions once users click the privacy policy link. -->
+        <activity-alias
+            android:name="ViewPermissionUsageActivity"
+            android:exported="true"
+            android:targetActivity=".activities.PermissionsRationaleActivity"
+            android:permission="android.permission.START_VIEW_PERMISSION_USAGE">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
+                <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
+            </intent-filter>
+        </activity-alias>
     </application>
 
+    <queries>
+        <package android:name="com.google.android.apps.healthdata" />
+
+        <!--
+             This is required such that the app can query and resolve packages that have written
+             Health Connect data, and obtain their friendly App Name and Icon to show for data
+             attribution in the app
+        -->
+        <intent>
+            <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+        </intent>
+    </queries>
 </manifest>

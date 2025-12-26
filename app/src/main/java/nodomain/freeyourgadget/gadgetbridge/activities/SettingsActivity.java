@@ -65,6 +65,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.automations.AutomationsSe
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.ChartsPreferencesActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.discovery.DiscoveryPairingPreferenceActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsSettingsActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.preferences.HealthConnectPreferencesActivity;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.TimeChangeReceiver;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -361,6 +362,15 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
                         return true;
                     });
                 }
+            }
+
+            pref = findPreference("pref_category_healthconnect");
+            if (pref != null) {
+                pref.setOnPreferenceClickListener(preference -> {
+                    Intent enableIntent = new Intent(requireContext(), HealthConnectPreferencesActivity.class);
+                    startActivity(enableIntent);
+                    return true;
+                });
             }
 
             pref = findPreference("pref_category_notifications");

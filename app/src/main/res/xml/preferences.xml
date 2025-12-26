@@ -324,6 +324,11 @@
             android:key="pref_category_sleepasandroid"
             android:title="@string/sleepasandroid_settings" />
 
+        <Preference
+            android:icon="@drawable/ic_heart"
+            android:key="pref_category_healthconnect"
+            android:title="@string/healthconnect_settings" />
+
         <PreferenceScreen
             android:icon="@drawable/ic_partly_cloudy_day"
             android:key="pref_screen_weather"

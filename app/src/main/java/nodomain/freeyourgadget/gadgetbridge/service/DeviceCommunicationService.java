@@ -88,6 +88,7 @@ import nodomain.freeyourgadget.gadgetbridge.externalevents.IntentApiReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.KeyMissingReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.LineageOsWeatherReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.MusicPlaybackReceiver;
+import nodomain.freeyourgadget.gadgetbridge.externalevents.NewDataReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.OmniJawsObserver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.OsmandEventReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.PebbleReceiver;
@@ -272,6 +273,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
 
     private VolumeChangeReceiver mVolumeChangeReceiver = null;
     private HrvCacheInvalidationReceiver mHrvCacheInvalidationReceiver = null;
+    private NewDataReceiver mNewDataReceiver = null;
 
     private final List<CalendarReceiver> mCalendarReceiver = new ArrayList<>();
     private CMWeatherReceiver mCMWeatherReceiver = null;
@@ -1410,6 +1412,10 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             if (mVolumeChangeReceiver ==  null && features.supportsMusicInfo()) {
                 mVolumeChangeReceiver = new VolumeChangeReceiver();
                 mVolumeChangeReceiver.registerReceiver(this);
+            }
+            if (mNewDataReceiver ==  null) {
+                mNewDataReceiver = new NewDataReceiver();
+                mNewDataReceiver.registerReceiver(this);
             }
             if (mTimeChangeReceiver == null) {
                 mTimeChangeReceiver = new TimeChangeReceiver();

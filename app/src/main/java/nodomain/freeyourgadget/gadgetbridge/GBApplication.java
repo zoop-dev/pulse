@@ -126,6 +126,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.LimitedQueue;
 import nodomain.freeyourgadget.gadgetbridge.util.PermissionsUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.backup.PeriodicZipExporter;
+import nodomain.freeyourgadget.gadgetbridge.util.healthconnect.HealthConnectPermissionManager;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 /**
@@ -357,6 +358,10 @@ public class GBApplication extends Application {
         startNotificationCollectorMonitorService();
 
         BondingUtil.StartObservingAll(getBaseContext());
+
+        if (prefs.getBoolean(GBPrefs.HEALTH_CONNECT_ENABLED, false)) {
+            HealthConnectPermissionManager.checkAndRectifyPermissions(this);
+        }
     }
 
     private void startNotificationCollectorMonitorService() {

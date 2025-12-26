@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        android:key="pref_key_healthconnect_general"
+        android:title="@string/pref_header_general"
+        app:iconSpaceReserved="false">
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_heart"
+            android:key="health_connect_enabled"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/pref_health_connect_enabled"
+            app:iconSpaceReserved="true" />
+
+        <Preference
+            android:icon="@drawable/ic_settings"
+            android:key="health_connect_manual_settings"
+            android:title="@string/pref_health_connect_manual_settings"
+            app:iconSpaceReserved="true" />
+
+        <Preference
+            android:icon="@drawable/ic_settings"
+            android:key="health_connect_settings"
+            android:title="@string/pref_health_connect_settings"
+            android:summary="@string/pref_health_connect_settings_summary"
+            app:iconSpaceReserved="true" />
+
+        <Preference
+            android:icon="@drawable/ic_info"
+            android:key="health_connect_disable_notice"
+            android:summary="@string/pref_health_connect_disable_notice" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_key_healthconnect_sync"
+        android:title="@string/pref_header_sync"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            android:key="health_connect_sync_status"
+            android:title="@string/health_connect_sync_status_title"
+            android:selectable="false"
+            app:iconSpaceReserved="false" />
+
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="health_connect_sync_on_event"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/pref_health_connect_sync_on_event_title"
+            android:summary="@string/pref_health_connect_sync_on_event_summary"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="health_connect_detailed_workout_sync"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/pref_health_connect_detailed_workout_sync_title"
+            android:summary="@string/pref_health_connect_detailed_workout_sync_summary"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            android:icon="@drawable/ic_info"
+            android:key="health_connect_sync_notice"
+            android:summary="@string/pref_health_connect_sync_notice" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_key_healthconnect_devices"
+        android:title="@string/bottom_nav_devices"
+        app:iconSpaceReserved="false">
+    <MultiSelectListPreference
+        android:dialogTitle="@string/pref_health_connect_device_selection"
+        android:entries="@array/empty_array"
+        android:entryValues="@array/empty_array"
+        android:key="health_connect_devices_multiselect"
+        android:title="@string/pref_health_connect_device_selection"
+        android:summary="@string/pref_health_connect_device_selection_summary"
+        app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+</androidx.preference.PreferenceScreen>

@@ -5343,4 +5343,11 @@
         <item>never</item>
     </string-array>
 
+    <string-array name="health_connect_initial_sync_periods">
+        <item>@string/health_connect_initial_sync_3_days</item>
+        <item>@string/health_connect_initial_sync_7_days</item>
+        <item>@string/health_connect_initial_sync_30_days</item>
+        <item>@string/health_connect_initial_sync_all</item>
+    </string-array>
+
 </resources>

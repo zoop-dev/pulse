@@ -96,6 +96,28 @@ class OtherDebugFragment : AbstractDebugFragment() {
             }
         }
 
+        onClick(PREF_DEBUG_RESET_HC_SYNC_STATE) {
+            MaterialAlertDialogBuilder(requireActivity())
+                .setCancelable(true)
+                .setTitle("Reset HC sync state")
+                .setMessage("Reset Health Connect sync state? This will allow all data to be re-synced.")
+                .setPositiveButton(R.string.ok) { _, _ ->
+                    try {
+                        val db = GBApplication.acquireDB()
+                        try {
+                            db.daoSession.healthConnectSyncStateDao.deleteAll()
+                            GB.toast("Health Connect sync state reset successfully", Toast.LENGTH_SHORT, GB.INFO)
+                        } finally {
+                            GBApplication.releaseDB()
+                        }
+                    } catch (e: Exception) {
+                        GB.toast("Failed to reset Health Connect sync state", Toast.LENGTH_LONG, GB.ERROR, e)
+                    }
+                }
+                .setNegativeButton(R.string.Cancel) { _, _ -> }
+                .show()
+        }
+
         onClick(PREF_DEBUG_FACTORY_RESET) {
             MaterialAlertDialogBuilder(requireActivity())
                 .setCancelable(true)
@@ -119,6 +141,7 @@ class OtherDebugFragment : AbstractDebugFragment() {
         private const val PREF_DEBUG_FETCH_DEBUG_LOGS = "pref_debug_fetch_debug_logs"
         private const val PREF_DEBUG_HEADER_RESET = "pref_debug_header_reset"
         private const val PREF_DEBUG_REBOOT = "pref_debug_reboot"
+        private const val PREF_DEBUG_RESET_HC_SYNC_STATE = "pref_debug_reset_hc_sync_state"
         private const val PREF_DEBUG_FACTORY_RESET = "pref_debug_factory_reset"
     }
 }
