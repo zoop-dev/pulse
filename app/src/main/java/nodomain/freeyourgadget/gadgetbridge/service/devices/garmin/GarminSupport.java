@@ -177,7 +177,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     }
 
     public void addFileToDownloadList(FileTransferHandler.DirectoryEntry directoryEntry) {
-        if (newSyncProtocol()) {
+        if (newSyncProtocol() && directoryEntry.getFiletype() != FileType.FILETYPE.DEVICE_XML) {
             if (directoryEntry.getFiletype() == FileType.FILETYPE.DIRECTORY) {
                 LOG.debug("Got directory entry, syncing with new protocol");
                 sendOutgoingMessage(
@@ -346,7 +346,6 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
     @Override
     public void onSetCallState(CallSpec callSpec) {
-        LOG.info("INCOMING CALLSPEC: {}", callSpec.command);
         sendOutgoingMessage("send call", notificationsHandler.onSetCallState(callSpec));
     }
 
@@ -422,7 +421,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                     }
                 }
 
-                if (!getKeepActivityDataOnDevice()) { // delete file from watch upon successful download
+                if (entry.getFiletype() != FileType.FILETYPE.DEVICE_XML && !getKeepActivityDataOnDevice()) { // delete file from watch upon successful download
                     sendOutgoingMessage("archive file " + entry.getFileIndex(), new SetFileFlagsMessage(entry.getFileIndex(), SetFileFlagsMessage.FileFlags.ARCHIVE));
                 }
             } else if (fileDownloadedDeviceEvent.localPath != null) {
@@ -463,7 +462,8 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     @Override
     public void onFetchRecordedData(final int dataTypes) {
         if (dataTypes == RecordedDataTypes.TYPE_DEBUGLOGS) {
-            sendOutgoingMessage("fetch debug data", fileTransferHandler.initiateDebugDownload());
+            addFileToDownloadList(fileTransferHandler.getDeviceXmlDirectoryEntry());
+            processDownloadQueue();
             return;
         }
 
@@ -754,6 +754,8 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     private void processDownloadQueue() {
         if (!filesToDownload.isEmpty() && currentlyDownloading == null) {
             if (!gbDevice.isBusy()) {
+                LOG.debug("Starting download queue");
+
                 isBusyFetching = true;
                 transferNotification.start(
                         R.string.busy_task_fetch_activity_data,
@@ -797,6 +799,8 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                                     ).build()
                             )
                     );
+                } else {
+                    LOG.error("Unexpected FileToDownload");
                 }
 
                 return;

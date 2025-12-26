@@ -108,10 +108,8 @@ public class FileTransferHandler implements MessageHandler {
         return new DownloadRequestMessage(0, 0, DownloadRequestMessage.REQUEST_TYPE.NEW, 0, 0);
     }
 
-    public DownloadRequestMessage initiateDebugDownload() {
-        DirectoryEntry deviceXml = new DirectoryEntry(0xFFFD, FileType.FILETYPE.DEVICE_XML, 0xFFFD, 0, 0, 0, new Date());
-        download.setCurrentlyDownloading(new FileFragment(deviceXml));
-        return new DownloadRequestMessage(deviceXml.getFileIndex(), 0, DownloadRequestMessage.REQUEST_TYPE.NEW, 0, 0);
+    public DirectoryEntry getDeviceXmlDirectoryEntry() {
+        return new DirectoryEntry(0xFFFD, FileType.FILETYPE.DEVICE_XML, 0xFFFD, 0, 0, 0, new Date());
     }
 
 //    public DownloadRequestMessage downloadSettings() {
