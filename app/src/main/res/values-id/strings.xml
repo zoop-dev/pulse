@@ -1399,7 +1399,7 @@
 \nLANJUTKAN DENGAN RISIKO ANDA SENDIRI!</string>
     <string name="power_mode_normal">Normal</string>
     <string name="debugactivity_confirm_remove_device_preferences_title">Hapus preferensi perangkat\?</string>
-    <string name="debugactivity_confirm_remove_device_preferences">Ini akan mengatur ulang preferensi perangkat untuk semua perangkat yang terhubung. Apakah Anda yakin\?</string>
+    <string name="debugactivity_confirm_remove_device_preferences">Ini akan mengatur ulang preferensi perangkat untuk semua perangkat yang terhubung. Apakah Anda yakin?</string>
     <string name="appmanager_item_outdated">(lawas)</string>
     <string name="fw_upgrade_notice_amazfitcor">Anda akan memasang perangkat tegar %s pada Amazfit Cor Anda. 
 \n 
