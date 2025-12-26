@@ -1900,7 +1900,7 @@
     <string name="low_power_gps">GPS s nízkou spotřebou energie</string>
     <string name="accuracy_first">Upřednostnit přesnost</string>
     <string name="speed_first">Upřednostnit rychlost</string>
-    <string name="debugactivity_confirm_remove_device_preferences">Tím se resetují předvolby zařízení pro všechna připojená zařízení. Jste si jisti?</string>
+    <string name="debugactivity_confirm_remove_device_preferences">Tím se resetují předvolby tohoto zařízení. Jste si jisti?</string>
     <string name="fw_upgrade_notice_amazfit_gtr3">Chystáte se nainstalovat firmware %s na váš Amazfit GTR 3.
 \n
 \nVáš náramek se po instalaci souboru .zip restartuje.
@@ -4149,4 +4149,19 @@
     <string name="solar_panel2_peak_w">Špičkový výkon solárního panelu 2 ve W</string>
     <string name="solar_panel3_peak_w">Špičkový výkon solárního panelu 3 ve W</string>
     <string name="solar_panel4_peak_w">Špičkový výkon solárního panelu 4 ve W</string>
+    <string name="controlcenter_test_new_function">Otestovat novou funkci</string>
+    <string name="all_manufacturers">Všichni výrobci</string>
+    <string name="device_manufacturer">Výrobce</string>
+    <string name="debug_selected_device">Ladicí zařízení</string>
+    <string name="device_mac_address">MAC adresa</string>
+    <string name="database">Databáze</string>
+    <string name="file_export">Export</string>
+    <string name="file_import">Import</string>
+    <string name="global_preferences">Globální předvolby</string>
+    <string name="export_success">Export byl úspěšný</string>
+    <string name="import_success">Import byl úspěšný</string>
+    <string name="reset_fields">Resetovat pole</string>
+    <string name="are_you_sure">Jste si jisti?</string>
+    <string name="dangerous_actions">Nebezpečné akce</string>
+    <string name="debug_other_actions">Další akce</string>
 </resources>
