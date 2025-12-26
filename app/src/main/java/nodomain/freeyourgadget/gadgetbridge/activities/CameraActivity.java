@@ -52,7 +52,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventCameraRemote;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
-public class CameraActivity extends AppCompatActivity {
+public class CameraActivity extends AbstractGBActivity {
     private static final Logger LOG = LoggerFactory.getLogger(CameraActivity.class);
 
     public static final String intentExtraEvent = "EVENT";
