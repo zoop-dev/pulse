@@ -39,7 +39,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.MenuProvider;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -90,11 +89,6 @@ public class ControlCenterv2 extends AppCompatActivity
     private FragmentStateAdapter pagerAdapter;
     private SwipeRefreshLayout swipeLayout;
     private AlertDialog clDialog;
-
-    //needed for KK compatibility
-    static {
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-    }
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
