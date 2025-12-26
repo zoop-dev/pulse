@@ -256,7 +256,7 @@
 \nFORTSÄTT PÅ EGEN RISK!</string>
     <string name="appmanager_app_share">Dela</string>
     <string name="debugactivity_confirm_remove_device_preferences_title">Ta bort enhetsinställningar\?</string>
-    <string name="debugactivity_confirm_remove_device_preferences">Det här kommer återställa enhetsinställningarna för all anslutna enheter. Är du säker\?</string>
+    <string name="debugactivity_confirm_remove_device_preferences">Det här kommer återställa enhetsinställningarna för all anslutna enheter. Är du säker?</string>
     <string name="fw_upgrade_notice_amazfit_band7">Du är på väg att installera %s firmware på din Amazfit Band 7.
 \n
 \nDitt band kommer att starta om efter installation av .zip-filen.
