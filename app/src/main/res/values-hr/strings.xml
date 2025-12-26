@@ -707,7 +707,7 @@
     <string name="preferences_category_device_specific_settings">Postavke specifične za uređaj</string>
     <string name="horizontal">Horizontalno</string>
     <string name="vertical">Okomito</string>
-    <string name="discovery_connected_devices_hint">Učinite svoj uređaj vidljivim. Trenutno povezani uređaji vjerojatno neće biti otkriveni. Aktivirajte lokaciju (npr. GPS) na Androidu 6+. Onemogućite Privacy Guard za Gadgetbridge jer se može srušiti i ponovno pokrenuti vaš telefon. Ako se uređaj ne pronađe nakon nekoliko minuta, pokušajte ponovno nakon ponovnog pokretanja mobilnog uređaja.</string>
+    <string name="discovery_connected_devices_hint">Učinite svoj uređaj vidljivim. Trenutno povezani uređaji vjerojatno neće biti otkriveni. Aktivirajte lokaciju (npr. GPS). Onemogućite Privacy Guard za Gadgetbridge jer se može srušiti i ponovno pokrenuti vaš telefon. Ako se uređaj ne pronađe nakon nekoliko minuta, pokušajte ponovno nakon ponovnog pokretanja mobilnog uređaja.</string>
     <string name="watch9_pairing_tap_hint">Kada vaš sat vibrira, protresite uređaj ili pritisnite njegov gumb.</string>
     <string name="title_activity_sleepmonitor">Nadzor spavanja</string>
     <string name="pref_write_logfiles">Pisanje datoteka dnevnika</string>
