@@ -45,13 +45,13 @@ object InternetHelperSingleton {
 
     private val internetHelperConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName?, service: IBinder?) {
-            LOG.info("internet helper service bound")
+            LOG.info("Internet helper service successfully bound")
             internetHelperBound = true
             internetHelper = IHttpService.Stub.asInterface(service)
         }
 
         override fun onServiceDisconnected(className: ComponentName?) {
-            LOG.info("internet helper service unbound")
+            LOG.info("Internet helper service unbound")
             internetHelper = null
             internetHelperBound = false
         }
@@ -75,11 +75,11 @@ object InternetHelperSingleton {
                 val intent1 = Intent("nodomain.freeyourgadget.internethelper.HttpService")
                 intent1.setPackage("nodomain.freeyourgadget.internethelper")
                 context.bindService(intent1, internetHelperConnection, Context.BIND_AUTO_CREATE)
-                LOG.info("WEBVIEW: Internet helper bound successfully.")
+                LOG.info("Internet helper binding initiated")
             } catch (_: PackageManager.NameNotFoundException) {
-                LOG.info("WEBVIEW: Internet helper not installed, only mimicked HTTP requests will work.")
+                LOG.info("Internet helper not installed, only mimicked HTTP requests will work")
             } catch (_: SecurityException) {
-                LOG.info("WEBVIEW: Permission for internet helper not granted, only mimicked HTTP requests will work.")
+                LOG.info("Permission for internet helper not granted, only mimicked HTTP requests will work")
             }
         }
         return internetHelperBound
