@@ -1915,7 +1915,7 @@
     <string name="pref_summary_notification_media_ignores_application_list">在应用程序列表之前处理媒体通知。如果这个偏好没有被选中，媒体应用需要在应用列表中被允许，媒体控制才能在设备上工作。</string>
     <string name="pref_title_notification_media_ignores_application_list">媒体通知忽略应用列表</string>
     <string name="debugactivity_confirm_remove_device_preferences_title">移除设备首选项？</string>
-    <string name="debugactivity_confirm_remove_device_preferences">这将重置所有已连接设备的设备首选项。是否确定？</string>
+    <string name="debugactivity_confirm_remove_device_preferences">这将重置此设备的设备首选项。是否确定？</string>
     <string name="fw_upgrade_notice_amazfit_band7">您即将安装 %s 固件在您的 跃我手环7 上。
 \n
 \n您的手表将在安装了 .zip 文件后重启。
@@ -4151,4 +4151,19 @@
     <string name="solar_panel2_peak_w">太阳能面板 2 峰值功率</string>
     <string name="solar_panel3_peak_w">太阳能面板 3 峰值红绿</string>
     <string name="solar_panel4_peak_w">太阳能面板 4 峰值功率</string>
+    <string name="controlcenter_test_new_function">测试新功能</string>
+    <string name="all_manufacturers">所有制造商</string>
+    <string name="device_manufacturer">制造商</string>
+    <string name="debug_selected_device">调试设备</string>
+    <string name="device_mac_address">MAC 地址</string>
+    <string name="database">数据库</string>
+    <string name="file_export">导出</string>
+    <string name="file_import">导入</string>
+    <string name="global_preferences">全局首选项</string>
+    <string name="export_success">导出成功</string>
+    <string name="import_success">导入成功</string>
+    <string name="reset_fields">重置字段</string>
+    <string name="are_you_sure">确定吗？</string>
+    <string name="dangerous_actions">危险操作</string>
+    <string name="debug_other_actions">其他操作</string>
 </resources>
