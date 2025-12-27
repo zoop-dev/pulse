@@ -4497,4 +4497,5 @@
     <string name="are_you_sure">Are you sure?</string>
     <string name="dangerous_actions">Dangerous actions</string>
     <string name="debug_other_actions">Other actions</string>
+    <string name="prefs_title_battery_allow_bypass_mode">Allow battery bypass</string>
 </resources>

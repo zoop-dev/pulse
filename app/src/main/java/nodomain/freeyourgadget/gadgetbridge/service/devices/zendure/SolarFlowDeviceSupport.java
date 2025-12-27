@@ -17,6 +17,7 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.zendure;
 
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_ALWAYS_ON_DISPLAY;
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BATTERY_ALLOW_BYPASS;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BATTERY_MAXIMUM_CHARGE;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BATTERY_MINIMUM_CHARGE;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_OFFGRID_MODE;
@@ -62,6 +63,7 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private int gridOffPower = -1;
     private int gridOffMode = -1;
     private int outputHomePower = -1;
+    private int gridReverse = -1;
     private int minSoc = -1;
     private int socSet = -1;
     private int outputLimit = -1;
@@ -177,6 +179,15 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 if (socSet > 100) socSet = 100;
                 sendWriteProperty("socSet", socSet * 10);
             }
+            case PREF_BATTERY_ALLOW_BYPASS -> {
+                String batteryAllowBypass = devicePrefs.getString(PREF_BATTERY_ALLOW_BYPASS, "never");
+                int gridReverse = switch (batteryAllowBypass) {
+                    case "auto" -> 0;
+                    case "always" -> 1;
+                    default -> 2;
+                };
+                sendWriteProperty("gridReverse", gridReverse);
+            }
             case PREF_OUTPUT_POWER_GRID -> {
                 int outputLimit = devicePrefs.getInt(PREF_OUTPUT_POWER_GRID, 800);
                 if (outputLimit < 0) outputLimit = 0;
@@ -255,7 +266,10 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 socSet = properties.getInt("socSet");
             }
             if (properties.has("hyperTmp")) {
-                hyperTmp = (properties.getInt("hyperTmp") - 2731) / 10;
+                hyperTmp = properties.getInt("hyperTmp");
+            }
+            if (properties.has("gridReverse")) {
+                gridReverse = properties.getInt("gridReverse");
             }
             if (properties.has("electricLevel")) {
                 int electricLevel = properties.getInt("electricLevel");
@@ -273,9 +287,7 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     getDevice().sendDeviceUpdateIntent(getContext());
                 }
             }
-            if (properties.has("lampSwitch")) {
-                lampSwitch = properties.getInt("lampSwitch");
-            }
+
 
         } catch (JSONException e) {
             LOG.error("JSON error while parsing report: {}", e.getMessage());
@@ -310,7 +322,7 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private void reportToStatusActivity() {
         Intent intent = new Intent(SolarEquipmentStatusActivity.ACTION_SEND_SOLAR_EQUIPMENT_STATUS)
                 .putExtra(SolarEquipmentStatusActivity.EXTRA_BATTERY_PCT, electricLevel)
-                .putExtra(SolarEquipmentStatusActivity.EXTRA_TEMP1, hyperTmp)
+                .putExtra(SolarEquipmentStatusActivity.EXTRA_TEMP1, (hyperTmp - 2731) / 10)
                 .putExtra(SolarEquipmentStatusActivity.EXTRA_TEMP2, batteryTemp)
                 .putExtra(SolarEquipmentStatusActivity.EXTRA_OUTPUT1_WATT, outputHomePower)
                 .putExtra(SolarEquipmentStatusActivity.EXTRA_OUTPUT2_WATT, gridOffPower)
@@ -326,16 +338,26 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private void syncSettingsToPrefs() {
         Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress()));
         SharedPreferences.Editor devicePrefsEdit = devicePrefs.getPreferences().edit();
+
         devicePrefsEdit.putString(PREF_BATTERY_MINIMUM_CHARGE, String.valueOf(minSoc/10));
         devicePrefsEdit.putString(PREF_BATTERY_MAXIMUM_CHARGE, String.valueOf(socSet/10));
         devicePrefsEdit.putString(PREF_OUTPUT_POWER_GRID, String.valueOf(outputLimit));
         devicePrefsEdit.putBoolean(PREF_ALWAYS_ON_DISPLAY, lampSwitch != 0);
+
         String offGridMode = switch (gridOffMode) {
             case 0 -> "on";
             case 1 -> "eco";
             default -> "off";
         };
         devicePrefsEdit.putString(PREF_OFFGRID_MODE, offGridMode);
+
+        String batteryAllowBypass = switch (gridReverse) {
+            case 0 -> "auto";
+            case 1 -> "always";
+            default -> "never";
+        };
+        devicePrefsEdit.putString(PREF_BATTERY_ALLOW_BYPASS, batteryAllowBypass);
+
         devicePrefsEdit.apply();
         devicePrefsEdit.commit();
     }

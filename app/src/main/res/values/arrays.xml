@@ -5322,9 +5322,23 @@
         <item>@string/off</item>
         <item>@string/eco</item>
     </string-array>
+
     <string-array name="offgrid_mode_on_off_eco_values">
         <item>on</item>
         <item>off</item>
         <item>eco</item>
     </string-array>
+
+    <string-array name="battery_allow_bypass">
+        <item>@string/automatic</item>
+        <item>@string/always</item>
+        <item>@string/never</item>
+    </string-array>
+
+    <string-array name="battery_allow_bypass_values">
+        <item>auto</item>
+        <item>always</item>
+        <item>never</item>
+    </string-array>
+
 </resources>

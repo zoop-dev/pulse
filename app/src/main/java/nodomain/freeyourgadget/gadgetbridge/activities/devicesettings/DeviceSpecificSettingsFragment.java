@@ -1004,6 +1004,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_BATTERY_MINIMUM_CHARGE);
         addPreferenceHandlerFor(PREF_BATTERY_MAXIMUM_CHARGE);
         addPreferenceHandlerFor(PREF_BATTERY_ALLOW_PASS_THROUGH);
+        addPreferenceHandlerFor(PREF_BATTERY_ALLOW_BYPASS);
         addPreferenceHandlerFor(PREF_OUTPUT_POWER_GRID);
         addPreferenceHandlerFor(PREF_OFFGRID_MODE);
 
