@@ -72,6 +72,10 @@ public class EmojiConverter {
             {"\uD83D\uDE43", "(-:"},  // upside_down_face
             {"\u2639", ":-("},        // frowning_face
             {"\u2764", "<3"},         // heart
+            {"\u27A1", "->"},         // right arrow
+            {"\u2B05", "<-"},         // left arrow
+            {"\uD83d\uDC48", "<-@"},  // finger point left
+            {"\uD83d\uDC49", "@->"},  // finger point right
     };
 
     private static EmojiManager emojiManagerInstance;
