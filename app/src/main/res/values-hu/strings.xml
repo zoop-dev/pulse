@@ -4006,4 +4006,5 @@
     <string name="are_you_sure">Biztos benne?</string>
     <string name="dangerous_actions">Veszélyes műveletek</string>
     <string name="debug_other_actions">Egyéb műveletek</string>
+    <string name="prefs_title_battery_allow_bypass_mode">Akkumulátor-megkerülés engedélyezése</string>
 </resources>
