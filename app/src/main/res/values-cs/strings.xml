@@ -4164,4 +4164,5 @@
     <string name="are_you_sure">Jste si jisti?</string>
     <string name="dangerous_actions">Nebezpečné akce</string>
     <string name="debug_other_actions">Další akce</string>
+    <string name="prefs_title_battery_allow_bypass_mode">Povolit obejití baterie</string>
 </resources>
