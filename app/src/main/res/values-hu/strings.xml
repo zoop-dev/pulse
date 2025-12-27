@@ -1161,7 +1161,7 @@
     <string name="appmanager_download_started">Az alkalmazás letöltése elindult</string>
     <string name="power_saving">Energiatakarékos</string>
     <string name="gadgetbridge_running_banglejs_main">A Bangle.js fut</string>
-    <string name="debugactivity_confirm_remove_device_preferences">Ez a művelet az összes párosított eszköz beállítását alap helyzetbe helyezi. Biztos benne?</string>
+    <string name="debugactivity_confirm_remove_device_preferences">Ez a művelet visszaállítja ennek az eszköznek a beállításait. Biztos benne?</string>
     <string name="gps_bds">GPS + BDS</string>
     <string name="low_power_gps">Alacsony energiájú GPS</string>
     <string name="heartrate_bpm_110">110 bpm</string>
@@ -3991,4 +3991,19 @@
     <string name="solar_panel2_peak_w">2. napelem csúcsteljesítménye (W)</string>
     <string name="solar_panel3_peak_w">3. napelem csúcsteljesítménye (W)</string>
     <string name="solar_panel4_peak_w">4. napelem csúcsteljesítménye (W)</string>
+    <string name="controlcenter_test_new_function">Új funkció tesztelése</string>
+    <string name="all_manufacturers">Összes gyártó</string>
+    <string name="device_manufacturer">Gyártó</string>
+    <string name="debug_selected_device">Eszköz hibakeresése</string>
+    <string name="device_mac_address">MAC-cím</string>
+    <string name="database">Adatbázis</string>
+    <string name="file_export">Exportálás</string>
+    <string name="file_import">Importálás</string>
+    <string name="global_preferences">Globális beállítások</string>
+    <string name="export_success">Sikeres exportálás</string>
+    <string name="import_success">Sikeres importálás</string>
+    <string name="reset_fields">Mezők visszaállítása</string>
+    <string name="are_you_sure">Biztos benne?</string>
+    <string name="dangerous_actions">Veszélyes műveletek</string>
+    <string name="debug_other_actions">Egyéb műveletek</string>
 </resources>
