@@ -28,7 +28,9 @@ import android.widget.Toast
 import androidx.core.net.toUri
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity
+import nodomain.freeyourgadget.gadgetbridge.database.DBHelper
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler
+import nodomain.freeyourgadget.gadgetbridge.entities.PebbleAppstoreIdEntry
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService
 import nodomain.freeyourgadget.gadgetbridge.util.GB
@@ -39,6 +41,7 @@ import org.json.JSONObject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
+import java.util.UUID
 
 class RebbleAppStoreActivity : AbstractGBActivity()  {
     val LOG: Logger = LoggerFactory.getLogger(RebbleAppStoreActivity::class.java)
@@ -95,6 +98,8 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
         if (response != null) {
             val dataArray = response.getJSONArray("data")
             val firstAppObject = dataArray.getJSONObject(0)
+            val appUUID = firstAppObject.getString("uuid")
+            DBHelper.store(PebbleAppstoreIdEntry(appUUID, storeId, System.currentTimeMillis(), false));
             val latestRelease = firstAppObject.getJSONObject("latest_release")
             val pbwFile = latestRelease.getString("pbw_file")
             downloadInstallWatchapp(pbwFile.toUri())

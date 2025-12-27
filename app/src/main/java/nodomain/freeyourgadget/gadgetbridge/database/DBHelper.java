@@ -41,6 +41,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.UUID;
 
 import de.greenrobot.dao.Property;
 import de.greenrobot.dao.query.Query;
@@ -60,6 +61,8 @@ import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.DeviceAttributes;
 import nodomain.freeyourgadget.gadgetbridge.entities.DeviceAttributesDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.DeviceDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.PebbleAppstoreIdEntry;
+import nodomain.freeyourgadget.gadgetbridge.entities.PebbleAppstoreIdEntryDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.Reminder;
 import nodomain.freeyourgadget.gadgetbridge.entities.ReminderDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.Tag;
@@ -723,6 +726,20 @@ public class DBHelper {
         return Collections.emptyList();
     }
 
+    public static PebbleAppstoreIdEntry getPebbleAppstoreIdByUUID(@NonNull String appUUID) {
+        try (DBHandler db = GBApplication.acquireDB()) {
+            final DaoSession daoSession = db.getDaoSession();
+            final PebbleAppstoreIdEntryDao entryDao = daoSession.getPebbleAppstoreIdEntryDao();
+            final QueryBuilder<PebbleAppstoreIdEntry> qb = entryDao.queryBuilder();
+            qb.where(PebbleAppstoreIdEntryDao.Properties.Uuid.eq(appUUID));
+            return qb.build().unique();
+        } catch (final Exception e) {
+            LOG.error("Error reading appstoreId from db", e);
+        }
+
+        return null;
+    }
+
     public static void store(final Reminder reminder) {
         try (DBHandler db = GBApplication.acquireDB()) {
             final DaoSession daoSession = db.getDaoSession();
@@ -745,6 +762,15 @@ public class DBHelper {
         try (DBHandler db = GBApplication.acquireDB()) {
             final DaoSession daoSession = db.getDaoSession();
             daoSession.insertOrReplace(contact);
+        } catch (final Exception e) {
+            LOG.error("Error acquiring database", e);
+        }
+    }
+
+    public static void store(final PebbleAppstoreIdEntry entry) {
+        try (DBHandler db = GBApplication.acquireDB()) {
+            final DaoSession daoSession = db.getDaoSession();
+            daoSession.insertOrReplace(entry);
         } catch (final Exception e) {
             LOG.error("Error acquiring database", e);
         }

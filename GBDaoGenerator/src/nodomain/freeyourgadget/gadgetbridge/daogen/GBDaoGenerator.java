@@ -67,7 +67,7 @@ public class GBDaoGenerator {
     private static final String TIMESTAMP_TO = "timestampTo";
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(122, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(123, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -213,6 +213,7 @@ public class GBDaoGenerator {
         addAppSpecificNotificationSettings(schema, device);
         addCyclingSample(schema, user, device);
         addAudioRecordings(schema, device);
+        addPebbleAppstoreIdEntry(schema);
 
         Entity notificationFilter = addNotificationFilters(schema);
 
@@ -1459,6 +1460,19 @@ public class GBDaoGenerator {
         Property notificationFilterMode = notificatonFilter.addIntProperty("notificationFilterMode").notNull().getProperty();
         Property notificationFilterSubMode = notificatonFilter.addIntProperty("notificationFilterSubMode").notNull().getProperty();
         return notificatonFilter;
+    }
+
+    private static void addPebbleAppstoreIdEntry(Schema schema) {
+        Entity pebbleAppstoreIdEntry = addEntity(schema, "PebbleAppstoreIdEntry");
+        Property uuidProperty = pebbleAppstoreIdEntry.addStringProperty("uuid").notNull().getProperty();
+        pebbleAppstoreIdEntry.addStringProperty("appstoreId").notNull();
+        pebbleAppstoreIdEntry.addLongProperty("lastUpdateCheck").notNull();
+        pebbleAppstoreIdEntry.addBooleanProperty("updateAvailable").notNull();
+
+        Index indexUnique = new Index();
+        indexUnique.addProperty(uuidProperty);
+        indexUnique.makeUnique();
+        pebbleAppstoreIdEntry.addIndex(indexUnique);
     }
 
     private static void addActivitySummary(Schema schema, Entity user, Entity device) {

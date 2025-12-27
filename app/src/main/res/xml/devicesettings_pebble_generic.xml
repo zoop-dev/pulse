@@ -6,7 +6,14 @@
         android:defaultValue="false"
         android:key="pebble_enable_background_javascript"
         android:layout="@layout/preference_checkbox"
-        android:summary="@string/pref_summary_pebble_enable_bgjs"
         android:title="@string/pref_title_pebble_enable_bgjs"
+        android:summary="@string/pref_summary_pebble_enable_bgjs"
+        app:iconSpaceReserved="false" />
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="pebble_enable_finding_app_updates"
+        android:layout="@layout/preference_checkbox"
+        android:title="@string/pref_title_pebble_search_app_updates"
+        android:summary="@string/pref_summary_pebble_search_app_updates"
         app:iconSpaceReserved="false" />
 </androidx.preference.PreferenceScreen>
