@@ -3528,7 +3528,7 @@
 
     <string-array name="nothing_ear1_audio_mode_values">
         <item>anc</item>
-        <item>anc-light</item>
+        <item>anclight</item>
         <item>transparency</item>
         <item>off</item>
     </string-array>
