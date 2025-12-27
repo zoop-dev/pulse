@@ -286,7 +286,7 @@ dependencies {
     //implementation 'org.bouncycastle:bcprov-jdk18on:1.76'
 
     // Android SDK bundles org.json, but we need an actual implementation to replace the stubs in tests
-    testImplementation 'org.json:json:20250517'
+    testImplementation 'org.json:json:20251224'
 
     // Needed for Armenian transliteration
     implementation 'org.ahocorasick:ahocorasick:0.6.3'
