@@ -39,6 +39,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("IMIKI FRAME 2", DeviceType.IMIKI_FRAME_2);
             put("HAYLOU Watch 2 Pro", DeviceType.HAYLOU_WATCH_2_PRO);
             put("Y66(ID-AB01)", DeviceType.Y66);
+            put("S10", DeviceType.QECNATO_S10);
             put("S52", DeviceType.S52);
             put("R11C_B200", DeviceType.YAWELL_R11);
             put("R11_B200", DeviceType.YAWELL_R11);
