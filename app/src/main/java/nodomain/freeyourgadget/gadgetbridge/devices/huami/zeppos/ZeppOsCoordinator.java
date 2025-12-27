@@ -444,7 +444,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
             display.add(R.xml.devicesettings_liftwrist_display_sensitivity_with_smart);
             display.add(R.xml.devicesettings_password);
             display.add(R.xml.devicesettings_huami2021_watchface);
-            display.add(R.xml.devicesettings_always_on_display);
+            display.add(R.xml.devicesettings_always_on_display_mode);
             display.add(R.xml.devicesettings_screen_timeout);
             if (supportsAutoBrightness(device)) {
                 display.add(R.xml.devicesettings_screen_brightness_withauto);

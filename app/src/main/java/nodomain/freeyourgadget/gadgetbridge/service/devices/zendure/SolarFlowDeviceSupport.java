@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.zendure;
 
+import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_ALWAYS_ON_DISPLAY;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BATTERY_MAXIMUM_CHARGE;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_BATTERY_MINIMUM_CHARGE;
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_OFFGRID_MODE;
@@ -69,6 +70,8 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private int electricLevel = -1;
     private String deviceId;
     private int firmwareVersion = -1;
+    private int lampSwitch = -1;
+
     private boolean isSettingsSynced = false;
 
 
@@ -189,6 +192,10 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 };
                 sendWriteProperty("gridOffMode", gridOffMode);
             }
+            case PREF_ALWAYS_ON_DISPLAY -> {
+                boolean lampSwitch = devicePrefs.getBoolean(PREF_ALWAYS_ON_DISPLAY, true);
+                sendWriteProperty("lampSwitch", lampSwitch ? 1 : 0);
+            }
             default -> LOG.warn("Unknown config changed: {}", config);
         }
     }
@@ -266,6 +273,9 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     getDevice().sendDeviceUpdateIntent(getContext());
                 }
             }
+            if (properties.has("lampSwitch")) {
+                lampSwitch = properties.getInt("lampSwitch");
+            }
 
         } catch (JSONException e) {
             LOG.error("JSON error while parsing report: {}", e.getMessage());
@@ -319,6 +329,7 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
         devicePrefsEdit.putString(PREF_BATTERY_MINIMUM_CHARGE, String.valueOf(minSoc/10));
         devicePrefsEdit.putString(PREF_BATTERY_MAXIMUM_CHARGE, String.valueOf(socSet/10));
         devicePrefsEdit.putString(PREF_OUTPUT_POWER_GRID, String.valueOf(outputLimit));
+        devicePrefsEdit.putBoolean(PREF_ALWAYS_ON_DISPLAY, lampSwitch != 0);
         String offGridMode = switch (gridOffMode) {
             case 0 -> "on";
             case 1 -> "eco";

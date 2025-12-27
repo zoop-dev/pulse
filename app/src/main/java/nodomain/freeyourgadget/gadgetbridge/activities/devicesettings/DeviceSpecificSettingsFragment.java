@@ -953,6 +953,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_GPS_SATELLITE_SEARCH);
         addPreferenceHandlerFor(PREF_AGPS_EXPIRY_REMINDER_ENABLED);
         addPreferenceHandlerFor(PREF_AGPS_EXPIRY_REMINDER_TIME);
+        addPreferenceHandlerFor(PREF_ALWAYS_ON_DISPLAY);
         addPreferenceHandlerFor(PREF_ALWAYS_ON_DISPLAY_FOLLOW_WATCHFACE);
         addPreferenceHandlerFor(PREF_ALWAYS_ON_DISPLAY_STYLE);
         addPreferenceHandlerFor(PREF_WEARDIRECTION);
