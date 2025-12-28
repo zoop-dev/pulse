@@ -4007,4 +4007,6 @@
     <string name="dangerous_actions">Veszélyes műveletek</string>
     <string name="debug_other_actions">Egyéb műveletek</string>
     <string name="prefs_title_battery_allow_bypass_mode">Akkumulátor-megkerülés engedélyezése</string>
+    <string name="pref_title_pebble_search_app_updates">Alkalmazásfrissítések keresése</string>
+    <string name="pref_summary_pebble_search_app_updates">Az alkalmazáskezelő megnyitásakor az óraalkalmazás és a számlap frissítéseinek automatikus keresése</string>
 </resources>
