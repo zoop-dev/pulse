@@ -4,10 +4,12 @@ import android.os.Bundle
 import androidx.preference.PreferenceCategory
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec
+import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.UUID
+import java.util.concurrent.TimeUnit
 
 class WeatherSpecDebugFragment : AbstractDebugFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -34,7 +36,7 @@ class WeatherSpecDebugFragment : AbstractDebugFragment() {
     }
 
     private fun addPreference(title: String, summary: Any?, onClickFunction: (() -> Unit)? = null) {
-        addDynamicPref(preferenceScreen, title, summary?.toString() ?: "<null>", R.drawable.ic_widgets) {
+        addDynamicPref(preferenceScreen, title, summary?.toString() ?: "<null>") {
             onClickFunction?.invoke()
         }
     }
@@ -52,8 +54,11 @@ class WeatherSpecDebugFragment : AbstractDebugFragment() {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z", Locale.ROOT)
 
         addPreference("Location", weatherSpec.location)
-        addPreference("Location", weatherSpec.location)
-        addPreference("Timestamp", sdf.format(Date(weatherSpec.timestamp * 1000L)))
+        addPreference("Timestamp", String.format(
+            "%s (%s)",
+            sdf.format(Date(weatherSpec.timestamp * 1000L)),
+            DateTimeUtils.formatDurationHoursMinutes(System.currentTimeMillis() - weatherSpec.timestamp * 1000L, TimeUnit.MILLISECONDS)
+        ))
         addPreference("Current Temp", "${weatherSpec.currentTemp} K (${weatherSpec.currentTemp - 273} °C)")
         addPreference("Max Temp", "${weatherSpec.todayMaxTemp} K (${weatherSpec.todayMaxTemp - 273} °C)")
         addPreference("Min Temp", "${weatherSpec.todayMinTemp} K (${weatherSpec.todayMinTemp - 273} °C)")

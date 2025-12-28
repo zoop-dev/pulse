@@ -40,7 +40,7 @@ class WidgetsDebugFragment : AbstractDebugFragment() {
         }
 
         for ((i, appWidgetID) in appWidgetIDs.withIndex()) {
-            addDynamicPref(widgetsHeader, "Widget $i", "id = $appWidgetID") {
+            addDynamicPref(widgetsHeader, "Widget $i", "id = $appWidgetID", R.drawable.ic_widgets) {
                 val items: MutableList<RunnableListIconItem?> = ArrayList(4)
 
                 items.add(
