@@ -50,6 +50,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.language.impl.GreekTransliterat
 import nodomain.freeyourgadget.gadgetbridge.util.language.impl.HebrewTransliterator;
 import nodomain.freeyourgadget.gadgetbridge.util.language.impl.HungarianTransliterator;
 import nodomain.freeyourgadget.gadgetbridge.util.language.impl.IcelandicTransliterator;
+import nodomain.freeyourgadget.gadgetbridge.util.language.impl.ItalianTransliterator;
 import nodomain.freeyourgadget.gadgetbridge.util.language.impl.KoreanTransliterator;
 import nodomain.freeyourgadget.gadgetbridge.util.language.impl.LatvianTransliterator;
 import nodomain.freeyourgadget.gadgetbridge.util.language.impl.LithuanianTransliterator;
@@ -79,6 +80,7 @@ public class LanguageUtils {
         put("hebrew", new HebrewTransliterator());
         put("hungarian", new HungarianTransliterator());
         put("icelandic", new IcelandicTransliterator());
+        put("italian", new ItalianTransliterator());
         put("korean", new KoreanTransliterator());
         put("latvian", new LatvianTransliterator());
         put("lithuanian", new LithuanianTransliterator());
