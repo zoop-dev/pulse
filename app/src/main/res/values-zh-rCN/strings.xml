@@ -4167,4 +4167,6 @@
     <string name="dangerous_actions">危险操作</string>
     <string name="debug_other_actions">其他操作</string>
     <string name="prefs_title_battery_allow_bypass_mode">阴虚电池旁路</string>
+    <string name="pref_title_pebble_search_app_updates">搜索应用更新</string>
+    <string name="pref_summary_pebble_search_app_updates">打开应用管理器时，自动搜索手表应用和表盘的更新</string>
 </resources>
