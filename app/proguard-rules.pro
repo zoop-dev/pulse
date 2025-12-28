@@ -73,8 +73,10 @@
   @com.google.gson.annotations.SerializedName <fields>;
 }
 -keep class nodomain.freeyourgadget.gadgetbridge.service.devices.gree.messages.** {*; }
-# Somehow the rule above was not enough for some
 -keep class nodomain.freeyourgadget.gadgetbridge.devices.pinetime.InfiniTimeDFU* { *; }
 
 # Keep generated protobuf classes
--keep class nodomain.freeyourgadget.gadgetbridge.proto.** { *; }
+-keep class * extends com.google.protobuf.GeneratedMessageLite { *; }
+
+# Keep debug preference fragments that might only be referenced from xml
+-keep class nodomain.freeyourgadget.gadgetbridge.activities.debug.** extends androidx.fragment.app.Fragment { *; }
