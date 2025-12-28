@@ -4006,4 +4006,6 @@
     <string name="dangerous_actions">Небезпечні дії</string>
     <string name="debug_other_actions">Інші дії</string>
     <string name="prefs_title_battery_allow_bypass_mode">Дозволити обхід батареї</string>
+    <string name="pref_title_pebble_search_app_updates">Пошук оновлень програм</string>
+    <string name="pref_summary_pebble_search_app_updates">Автоматичний пошук оновлень програм для годинника та циферблатів під час відкриття менеджера програм</string>
 </resources>
