@@ -4166,4 +4166,5 @@
     <string name="are_you_sure">确定吗？</string>
     <string name="dangerous_actions">危险操作</string>
     <string name="debug_other_actions">其他操作</string>
+    <string name="prefs_title_battery_allow_bypass_mode">阴虚电池旁路</string>
 </resources>
