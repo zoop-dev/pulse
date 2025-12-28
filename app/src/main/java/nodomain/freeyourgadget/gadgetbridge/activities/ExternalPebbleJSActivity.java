@@ -52,6 +52,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.webview.GBChromeClient;
 import nodomain.freeyourgadget.gadgetbridge.webview.GBWebClient;
+import nodomain.freeyourgadget.gadgetbridge.webview.RequestInterceptorInterface;
 
 public class ExternalPebbleJSActivity extends AbstractGBActivity {
 
@@ -115,7 +116,8 @@ public class ExternalPebbleJSActivity extends AbstractGBActivity {
         setContentView(R.layout.activity_legacy_external_pebble_js);
         myWebView = findViewById(R.id.configureWebview);
         myWebView.clearCache(true);
-        myWebView.setWebViewClient(new GBWebClient(GBWebClient.REQUEST_TYPE_PEBBLE_APP_CONFIG));
+        GBWebClient gbWebClient = new GBWebClient(GBWebClient.REQUEST_TYPE_PEBBLE_APP_CONFIG);
+        myWebView.setWebViewClient(gbWebClient);
         myWebView.setWebChromeClient(new GBChromeClient());
         WebSettings webSettings = myWebView.getSettings();
         //noinspection SetJavaScriptEnabled
@@ -132,6 +134,7 @@ public class ExternalPebbleJSActivity extends AbstractGBActivity {
         JSInterface gbJSInterface = new JSInterface(device, uuid);
         myWebView.addJavascriptInterface(gbJSInterface, "GBjs");
         myWebView.addJavascriptInterface(new ActivityJSInterface(), "GBActivity");
+        myWebView.addJavascriptInterface(new RequestInterceptorInterface(gbWebClient), "GBReqInt");
 
         myWebView.loadUrl("file:///android_asset/app_config/configure.html?rand=" + Math.random() * 500);
     }

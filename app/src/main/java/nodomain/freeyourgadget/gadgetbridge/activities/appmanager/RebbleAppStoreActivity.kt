@@ -38,6 +38,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.InternetUtils
 import nodomain.freeyourgadget.gadgetbridge.util.PebbleUtils
 import nodomain.freeyourgadget.gadgetbridge.webview.GBChromeClient
 import nodomain.freeyourgadget.gadgetbridge.webview.GBWebClient
+import nodomain.freeyourgadget.gadgetbridge.webview.RequestInterceptorInterface
 import org.json.JSONObject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -135,7 +136,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
         settings.loadWithOverviewMode = true
         settings.useWideViewPort = true
 
-        webView!!.webViewClient = object : GBWebClient(REQUEST_TYPE_PEBBLE_APP_STORE) {
+        val gbWebClient = object : GBWebClient(REQUEST_TYPE_PEBBLE_APP_STORE) {
             override fun shouldOverrideUrlLoading(
                 wv: WebView,
                 request: WebResourceRequest
@@ -170,6 +171,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
                 view.loadUrl("about:blank")
             }
         }
+        webView!!.webViewClient = gbWebClient
 
         webView!!.webChromeClient = object : GBChromeClient() {
             override fun onPermissionRequest(request: PermissionRequest) {
@@ -177,6 +179,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
             }
         }
 
+        webView!!.addJavascriptInterface(RequestInterceptorInterface(gbWebClient), "GBReqInt")
         webView!!.loadUrl(url)
     }
 }

@@ -33,6 +33,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 import nodomain.freeyourgadget.gadgetbridge.webview.GBChromeClient
 import nodomain.freeyourgadget.gadgetbridge.webview.GBWebClient
+import nodomain.freeyourgadget.gadgetbridge.webview.RequestInterceptorInterface
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.UUID
@@ -102,6 +103,7 @@ class PebbleJsService : Service() {
                 LOG.info("WEBVIEW starting for device ${device.address}")
                 WebView.setWebContentsDebuggingEnabled(true)
                 val uiContext = applicationContext.createConfigurationContext(resources.configuration)
+                val gbWebClient = GBWebClient(GBWebClient.REQUEST_TYPE_PEBBLE_BACKGROUND_JS)
                 val wv = WebView(uiContext).apply {
                     settings.javaScriptEnabled = true
                     settings.domStorageEnabled = true
@@ -111,10 +113,11 @@ class PebbleJsService : Service() {
                     settings.allowFileAccessFromFileURLs = true
                     settings.allowUniversalAccessFromFileURLs = true
                     visibility = View.GONE
-                    webViewClient = GBWebClient(GBWebClient.REQUEST_TYPE_PEBBLE_BACKGROUND_JS)
+                    webViewClient = gbWebClient
                     webChromeClient = GBChromeClient()
+                    addJavascriptInterface(RequestInterceptorInterface(gbWebClient), "GBReqInt")
+                    setWillNotDraw(true)
                 }
-                wv.setWillNotDraw(true)
                 wv.clearCache(true)
                 wv.resumeTimers()
                 webviews[device.address] = wv

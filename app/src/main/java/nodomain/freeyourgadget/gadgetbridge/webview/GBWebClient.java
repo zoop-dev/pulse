@@ -18,6 +18,7 @@
 package nodomain.freeyourgadget.gadgetbridge.webview;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.webkit.WebResourceRequest;
@@ -39,7 +40,10 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -65,9 +69,52 @@ public class GBWebClient extends WebViewClient {
             "rawgit.com",           //for trekvolle
     };
 
+    private final Map<String, List<Entry>> postData = new HashMap<>();
+    private record Entry(long timestamp, String body) {}
+
     public GBWebClient(int type) {
         super();
         requestType = type;
+    }
+
+    /**
+     * Stores HTTP POST body strings for later retrieval in mimicReply()
+     */
+    public synchronized void storePostBody(String url, String body) {
+        long now = System.currentTimeMillis();
+
+        // Cleanup expired entries (more than a minute old)
+        Iterator<Map.Entry<String, List<Entry>>> mapIt = postData.entrySet().iterator();
+        while (mapIt.hasNext()) {
+            Map.Entry<String, List<Entry>> mapEntry = mapIt.next();
+            List<Entry> list = mapEntry.getValue();
+            list.removeIf(e -> now - e.timestamp > 60*1000);
+            if (list.isEmpty()) {
+                mapIt.remove();
+            }
+        }
+
+        // Add new entry
+        postData
+                .computeIfAbsent(url, k -> new ArrayList<>())
+                .add(new Entry(now, body));
+    }
+
+    /**
+     * Returns the earliest known HTTP POST body for a certain URL
+     */
+    private synchronized String getFirstPostForUrl(String url) {
+        List<Entry> list = postData.get(url);
+        if (list == null || list.isEmpty()) {
+            return null;
+        }
+
+        Entry first = list.remove(0);
+        if (list.isEmpty()) {
+            postData.remove(url);
+        }
+
+        return first.body;
     }
 
     @Override
@@ -135,7 +182,13 @@ public class GBWebClient extends WebViewClient {
             if (!forceLocal && !directInternetAccess && InternetHelperSingleton.INSTANCE.ensureInternetHelperBound()) {
                 LOG.debug("WEBVIEW forwarding request to the internet helper");
                 try {
-                    WebResourceResponse wrr = InternetHelperSingleton.INSTANCE.send(requestedUri, HttpRequest.Method.valueOf(method), requestHeaders, null, "application/octet-stream", false);
+                    HttpRequest.Method requestMethod = HttpRequest.Method.valueOf(method);
+                    String body = null;
+                    if (requestMethod == HttpRequest.Method.POST) {
+                        body = getFirstPostForUrl(requestedUri.toString());
+                        LOG.debug("WEBVIEW POSTing with body: {}", body);
+                    }
+                    WebResourceResponse wrr = InternetHelperSingleton.INSTANCE.send(requestedUri, requestMethod, requestHeaders, body, "application/octet-stream", false);
                     if (wrr != null && wrr.getStatusCode() < 400)
                         return wrr;
                     else
@@ -190,6 +243,57 @@ public class GBWebClient extends WebViewClient {
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
         return shouldOverrideUrlLoading(view, request.getUrl().toString());
+    }
+
+    @Override
+    public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        injectPostInterceptor(view);
+    }
+
+    @Override
+    public void onPageFinished(WebView view, String url) {
+        injectPostInterceptor(view);
+    }
+
+    private void injectPostInterceptor(WebView view) {
+        // Inject JavaScript for capturing POST body data, which we need when forwarding
+        // requests to the internet helper
+        view.evaluateJavascript(
+            """
+            (function () {
+               if (window.__p) return; window.__p = 1;
+               const sb = b => b instanceof FormData
+                 ? [...b].map(e => e.map(encodeURIComponent).join('=')).join('&')
+                 : b ? b.toString() : null;
+
+               const send = (u, b) => GBReqInt.onPostBody(new URL(u, location.href).toString(), sb(b));
+
+               const xo = XMLHttpRequest.prototype.open;
+               const xs = XMLHttpRequest.prototype.send;
+               XMLHttpRequest.prototype.open = function (m, u) {
+                 this._m = m; this._u = u; return xo.apply(this, arguments);
+               };
+               XMLHttpRequest.prototype.send = function (b) {
+                 if (this._m === 'POST') send(this._u, b);
+                 return xs.apply(this, arguments);
+               };
+
+               const f = window.fetch;
+               window.fetch = function (i, o = {}) {
+                 if ((o.method || 'GET') === 'POST')
+                   send(typeof i === 'string' ? i : i.url, o.body);
+                 return f.apply(this, arguments);
+               };
+
+               document.addEventListener('submit', e => {
+                 const f = e.target;
+                 if (f.method && f.method.toUpperCase() === 'POST')
+                   send(f.action || location.href, new FormData(f));
+               }, true);
+            })();
+            """,
+            null
+        );
     }
 
     private WebResourceResponse mimicRawGitResponse(String path) {

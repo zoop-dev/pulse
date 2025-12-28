@@ -54,6 +54,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.banglejs.BangleJSDev
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.webview.GBChromeClient;
 import nodomain.freeyourgadget.gadgetbridge.webview.GBWebClient;
+import nodomain.freeyourgadget.gadgetbridge.webview.RequestInterceptorInterface;
 
 public class AppsManagementActivity extends AbstractGBActivity {
     private static final Logger LOG = LoggerFactory.getLogger(AppsManagementActivity.class);
@@ -218,7 +219,7 @@ public class AppsManagementActivity extends AbstractGBActivity {
         webView.addJavascriptInterface(new WebViewInterface(this), "Android");
         webView.setWebContentsDebuggingEnabled(true); // FIXME
 
-        webView.setWebViewClient(new GBWebClient(GBWebClient.REQUEST_TYPE_BANGLE_APP_LOADER){
+        GBWebClient gbWebClient = new GBWebClient(GBWebClient.REQUEST_TYPE_BANGLE_APP_LOADER){
             @Override
             public void onPageFinished(WebView view, String weburl){
                 //webView.loadUrl("javascript:showToast('WebView in Espruino')");
@@ -229,7 +230,10 @@ public class AppsManagementActivity extends AbstractGBActivity {
                 Toast.makeText(AppsManagementActivity.this, "Error:" + description, Toast.LENGTH_SHORT).show();
                 view.loadUrl("about:blank");
             }
-        });
+        };
+        webView.setWebViewClient(gbWebClient);
+
+        webView.addJavascriptInterface(new RequestInterceptorInterface(gbWebClient), "GBReqInt");
 
         Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(mGBDevice.getAddress()));
         String url = devicePrefs.getString(PREF_BANGLEJS_WEBVIEW_URL, "").trim();
