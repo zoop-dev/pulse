@@ -35,13 +35,13 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 import nodomain.freeyourgadget.gadgetbridge.util.InternetUtils
+import nodomain.freeyourgadget.gadgetbridge.util.PebbleUtils
 import nodomain.freeyourgadget.gadgetbridge.webview.GBChromeClient
 import nodomain.freeyourgadget.gadgetbridge.webview.GBWebClient
 import org.json.JSONObject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
-import java.util.UUID
 
 class RebbleAppStoreActivity : AbstractGBActivity()  {
     val LOG: Logger = LoggerFactory.getLogger(RebbleAppStoreActivity::class.java)
@@ -99,10 +99,17 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
             val dataArray = response.getJSONArray("data")
             val firstAppObject = dataArray.getJSONObject(0)
             val appUUID = firstAppObject.getString("uuid")
+            // Cache appstore ID for app update checks
             DBHelper.store(PebbleAppstoreIdEntry(appUUID, storeId, System.currentTimeMillis(), false));
+            // Find and install pbw file
             val latestRelease = firstAppObject.getJSONObject("latest_release")
             val pbwFile = latestRelease.getString("pbw_file")
             downloadInstallWatchapp(pbwFile.toUri())
+            // Download and cache preview image
+            val previewUrl = firstAppObject.getJSONObject("list_image").getString("144x144")
+            val cacheDir: File? = PebbleUtils.getPbwCacheDir()
+            val previewImgFile = File(cacheDir, appUUID + "_preview.png")
+            InternetUtils.downloadBinaryFile(previewUrl.toUri(), previewImgFile) { }
         }
     }
 
