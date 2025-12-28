@@ -403,7 +403,7 @@
     <string name="pref_auto_fetch_limit_fetches_summary">Pobieranie co %d minut(y)</string>
     <string name="horizontal">Poziomo</string>
     <string name="vertical">Pionowo</string>
-    <string name="discovery_connected_devices_hint">Upewnij się, że urządzenie (opaska/smartwatch) jest wykrywalne. Aktualnie połączone urządzenia prawdopodobnie nie będą wykrywalne. Na Androidzie 6+ włącz dostęp do lokalizacji (GPS). Wyłącz Privacy Guard dla Gadgetbridge, ponieważ mogą ze sobą kolidować i zrestartuj telefon. Jeżeli urządzenie nie zostanie wykryte w przeciągu paru minut, spróbuj ponownie po ponownym uruchomieniu telefonu.</string>
+    <string name="discovery_connected_devices_hint">Ustaw urządzenie w trybie wykrywania. Obecnie połączone urządzenia prawdopodobnie nie zostaną wykryte. Włącz lokalizację (np. GPS). Wyłącz funkcję Privacy Guard dla aplikacji Gadgetbridge, ponieważ może ona spowodować błąd i ponowne uruchomienie telefonu. Jeśli po kilku minutach nie zostanie znalezione żadne urządzenie, spróbuj ponownie po zrestartowaniu telefonu.</string>
     <string name="watch9_pairing_tap_hint">Jeśli Twój zegarek (opaska) wibruje, potrząśnij nim lub wciśnij na nim przycisk.</string>
     <string name="stats_x_axis_label">Całkowicie minut</string>
     <string name="notif_battery_low">%1$s rozładowana bateria</string>
@@ -1839,7 +1839,7 @@
     <string name="gps_bds">GPS + BDS</string>
     <string name="speed_first">Najpierw prędkość</string>
     <string name="debugactivity_confirm_remove_device_preferences_title">Usunąć preferencje urządzenia\?</string>
-    <string name="debugactivity_confirm_remove_device_preferences">Usunie to wszystkie preferencje dla wszystkich podłączonych urządzeń, kontynuować?</string>
+    <string name="debugactivity_confirm_remove_device_preferences">Spowoduje to zresetowanie preferencji dla tego urządzenia. Czy na pewno?</string>
     <string name="pref_vibrate_for_alert">Wibracje dla alertów</string>
     <string name="appmanager_app_start">Start</string>
     <string name="appmanager_downloaded_to_cache">Pobrano %s do cache</string>
@@ -4130,4 +4130,24 @@
     <string name="prefs_earbud_lights_steady">Stałe oświetlenie słuchawek</string>
     <string name="pref_experimental_settings_title">Ustawienia eksperymentalne</string>
     <string name="pref_experimental_settings_summary">Ustawienia eksperymentalne mogą być niestabilne lub nie działać zgodnie z oczekiwaniami. Korzystasz z nich na własne ryzyko.</string>
+    <string name="save">Zapisz</string>
+    <string name="devicetype_solarflow">SolarFlow</string>
+    <string name="controlcenter_test_new_function">Przetestuj nową funkcję</string>
+    <string name="camera_switch">Przełącz aparat</string>
+    <string name="pref_reprocess_activity_files_title">Przetwórz ponownie pliki aktywności</string>
+    <string name="pref_reprocess_activity_files_summary">Przetwórz ponownie wszystkie pliki aktywności z pamięci telefonu</string>
+    <string name="output_power_grid">Moc wyjściowa do sieci (W)</string>
+    <string name="battery_maximum_charge">Maksymalny poziom naładowania baterii (%)</string>
+    <string name="activity_title_rebble_app_store">Sklep z aplikacjami Rebble</string>
+    <string name="prefs_internet_helper_title">Asystent internetowy</string>
+    <string name="prefs_internet_helper_summary">Skonfiguruj adresy URL, które mogą być wywoływane przez aplikację dodatkową Asystent internetowy</string>
+    <string name="internet_helper_pref_app_req_title">Wymagana dodatkowa aplikacja</string>
+    <string name="internet_helper_pref_app_req_summary">Ta funkcja wymaga zainstalowania dodatkowej aplikacji. Dotknij tutaj, aby przejść do strony pobierania.</string>
+    <string name="internet_helper_pref_intercept_supported_title">Przechwytuj obsługiwane żądania</string>
+    <string name="internet_helper_pref_intercept_supported_summary">Niektóre żądania internetowe mogą być przechwytywane i obsługiwane lokalnie, bez przesyłania jakichkolwiek danych do Internetu.</string>
+    <string name="internet_helper_pref_allowed_connections">Dozwolone połączenia</string>
+    <string name="internet_helper_pref_pebble_app_store_title">Sklep z aplikacjami Pebble</string>
+    <string name="internet_helper_pref_pebble_app_store_summary">Uzyskaj dostęp do sklepu Pebble, aby instalować i aktualizować aplikacje</string>
+    <string name="internet_helper_pref_pebble_background_js_title">Żądania z aplikacji Pebble</string>
+    <string name="internet_helper_pref_pebble_background_js_summary">Zezwalaj aplikacjom i tarczom zegarka Pebble na dostęp do Internetu</string>
 </resources>
