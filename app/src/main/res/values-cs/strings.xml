@@ -4165,4 +4165,6 @@
     <string name="dangerous_actions">Nebezpečné akce</string>
     <string name="debug_other_actions">Další akce</string>
     <string name="prefs_title_battery_allow_bypass_mode">Povolit obejití baterie</string>
+    <string name="pref_title_pebble_search_app_updates">Vyhledat aktualizace aplikace</string>
+    <string name="pref_summary_pebble_search_app_updates">Při otevření správce aplikací automaticky vyhledávat aktualizace aplikací a ciferníků na hodinkách</string>
 </resources>
