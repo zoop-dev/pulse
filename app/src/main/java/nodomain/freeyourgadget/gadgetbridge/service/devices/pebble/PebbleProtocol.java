@@ -431,6 +431,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
     private static final UUID UUID_M7S = UUID.fromString("03adc57a-569b-4669-9a80-b505eaea314d");
     private static final UUID UUID_YWEATHER = UUID.fromString("35a28a4d-0c9f-408f-9c6d-551e65f03186");
     private static final UUID UUID_REALWEATHER = UUID.fromString("1f0b0701-cc8f-47ec-86e7-7181397f9a52");
+    private static final UUID UUID_TOTK = UUID.fromString("c234bf39-a905-48a4-9972-2931aadf4d9e");
 
     private static final UUID UUID_ZERO = new UUID(0, 0);
 
@@ -461,6 +462,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
             mAppMessageHandlers.put(UUID_M7S, new AppMessageHandlerM7S(UUID_M7S, PebbleProtocol.this));
             mAppMessageHandlers.put(UUID_YWEATHER, new AppMessageHandlerRealWeather(UUID_YWEATHER, PebbleProtocol.this));
             mAppMessageHandlers.put(UUID_REALWEATHER, new AppMessageHandlerRealWeather(UUID_REALWEATHER, PebbleProtocol.this));
+            mAppMessageHandlers.put(UUID_TOTK, new AppMessageHandlerTearsOfTheKingdom(UUID_TOTK, PebbleProtocol.this));
         }
     }
 
