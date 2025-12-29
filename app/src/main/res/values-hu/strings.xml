@@ -1139,7 +1139,7 @@
     <string name="save_configuration">Beállítás mentése</string>
     <string name="watchface_widget_type_active_mins">Aktív percek</string>
     <string name="pref_canned_message">Üzenet</string>
-    <string name="menuitem_pomodoro">Pomodoro követő</string>
+    <string name="menuitem_pomodoro">Pomodoro Tracker</string>
     <string name="watchface_dialog_widget_preset_top">Felső</string>
     <string name="pref_message_privacy_mode_complete">Az összes tartalom elrejtése</string>
     <string name="zepp_os_watchface_minimalist">Minimalist</string>
