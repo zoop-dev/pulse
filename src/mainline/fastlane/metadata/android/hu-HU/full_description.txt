@@ -1,0 +1,9 @@
+Használja okosóráját, aktivitásmérőjét és egyéb Bluetooth-eszközeit a gyártó zárt forráskódú alkalmazása nélkül, valamint anélkül, hogy fiókot kellene létrehoznia vagy bármilyen adatát továbbítania kellene a gyártó kiszolgálóira.
+A támogatott eszközök teljes listájáért tekintse meg a következő weboldalt: https://gadgetbridge.org/gadgets/.
+
+Értesítéseket kaphat a csuklóján, és (az eszköztől függően):
+
+- Adatokat gyűjthet az eszköz érzékelőiből.
+- Vezérelheti az Android-eszközén lejátszott zenét.
+- Megtekintheti az időjárást.
+- Útvonal-útmutatást kaphat.
