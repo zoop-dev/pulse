@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.externalevents;
 import static nodomain.freeyourgadget.gadgetbridge.impl.GBDevice.State.WAITING_FOR_RECONNECT;
 import static nodomain.freeyourgadget.gadgetbridge.impl.GBDevice.State.WAITING_FOR_SCAN;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -63,11 +64,20 @@ public class BluetoothConnectReceiver extends BroadcastReceiver {
        observedDevice(address);
     }
 
-    public static void observedDevice(String address) {
+    public static void observedDevice(final String address) {
         final DeviceManager manager = GBApplication.app().getDeviceManager();
         final GBDevice gbDevice = manager.getDeviceByAddress(address);
         if (gbDevice == null) {
             LOG.debug("observed non-GB device {}", address);
+            return;
+        }
+
+        final BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        if (adapter == null) {
+            LOG.warn("Bluetooth adapter not found - ignoring observed device");
+            return;
+        } else if (!adapter.isEnabled()) {
+            LOG.warn("Bluetooth adapter is disabled - ignoring observed device");
             return;
         }
 
