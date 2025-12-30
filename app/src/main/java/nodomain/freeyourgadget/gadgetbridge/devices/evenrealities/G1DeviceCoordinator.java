@@ -80,6 +80,12 @@ public class G1DeviceCoordinator extends AbstractBLEDeviceCoordinator {
         return BONDING_STYLE_LAZY;
     }
 
+    @Override
+    public int getReconnectionDelay() {
+        // 125ms.
+        return 125;
+    }
+
     private int getDeviceIndexForAddress(String address) {
         return GBApplication.getDeviceSpecificSharedPrefs(address)
                             .getInt(G1Constants.Side.getIndexKey(),

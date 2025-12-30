@@ -712,7 +712,7 @@ public interface DeviceCoordinator {
     boolean supportsWeather(@NonNull GBDevice device);
 
     /**
-     * Indicates whether the device supports being found by vibrating, 
+     * Indicates whether the device supports being found by vibrating,
      * making some sound or lighting up
      */
     boolean supportsFindDevice(@NonNull GBDevice device);
@@ -946,4 +946,9 @@ public interface DeviceCoordinator {
     HeartRateZonesSpec getHeartRateZonesSpec(@NonNull GBDevice device);
 
     Set<BarcodeFormat> getSupportedBarcodeFormats(@NonNull final GBDevice device);
+
+    /**
+     * @return delay in ms for this device to wait before a reconnection attempt is made.
+     */
+    int getReconnectionDelay();
 }

@@ -40,10 +40,12 @@ import nodomain.freeyourgadget.gadgetbridge.service.DeviceCommunicationService;
 public class AutoConnectIntervalReceiver extends BroadcastReceiver {
 
     private final DeviceCommunicationService service;
-    private static int mDelay = 4;
+    // Delay is in milliseconds
+    private static int mDelay = Integer.MAX_VALUE;
 
     /// don't increase {@link #mDelay} while alarm is already scheduled
     private static volatile boolean mScheduled = false;
+    private static volatile boolean mBackingOff = false;
 
     private static final Logger LOG = LoggerFactory.getLogger(AutoConnectIntervalReceiver.class);
 
@@ -71,13 +73,19 @@ public class AutoConnectIntervalReceiver extends BroadcastReceiver {
                     allDevicesInitialized = false;
                     if (device.getState() == GBDevice.State.WAITING_FOR_RECONNECT) {
                         scheduleAutoConnect = true;
+                        // If we are not backing off, find the device with the lowest reconnect delay
+                        // to set the value to.
+                        if (!mBackingOff) {
+                            mDelay = Math.min(mDelay, device.getDeviceCoordinator().getReconnectionDelay());
+                        }
                     }
                 }
             }
 
             if (allDevicesInitialized) {
                 LOG.info("will reset connection delay, all devices are initialized!");
-                mDelay = 4;
+                mDelay = Integer.MAX_VALUE;
+                mBackingOff = false;
                 return;
             }
             if (scheduleAutoConnect && !mScheduled) {
@@ -95,15 +103,15 @@ public class AutoConnectIntervalReceiver extends BroadcastReceiver {
     }
 
     private void scheduleReconnect() {
-        mDelay *= 2;
-        if (mDelay > 64) {
-            mDelay = 64;
-        }
         scheduleReconnect(mDelay);
+
+        // Exponential backoff with a limit of 64 seconds.
+        mBackingOff = true;
+        mDelay = Math.min(mDelay * 2, 64000);
     }
 
     private void scheduleReconnect(int delay) {
-        LOG.info("scheduling reconnect in {} seconds", delay);
+        LOG.info("scheduling reconnect in {}ms", delay);
         AlarmManager am = (AlarmManager) (GBApplication.getContext().getSystemService(Context.ALARM_SERVICE));
         Intent intent = new Intent("GB_RECONNECT");
         intent.setPackage(BuildConfig.APPLICATION_ID);
@@ -111,7 +119,7 @@ public class AutoConnectIntervalReceiver extends BroadcastReceiver {
         am.setAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
                 Calendar.getInstance().
-                getTimeInMillis() + delay * 1000L,
+                getTimeInMillis() + delay,
                 pendingIntent
         );
         mScheduled = true;
