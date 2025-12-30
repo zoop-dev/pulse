@@ -335,56 +335,70 @@ object WeatherMapper {
     @JvmStatic
     fun mapToCmfCondition(openWeatherMapCondition: Int): Byte {
         /* deducted values:
-    1 = sunny
-    2 = cloudy
-    3 = overcast
-    4 = showers
-    5 = snow showers
-    6 = fog
+        1 = sunny - sun with rays
+        2 = cloudy - cloud
+        3 = overcast - two clouds
+        4 = showers - cloud with rain
+        5 = snow showers - showflake
+        6 = fog - multiple lines showing "fog"
 
-    9 = thunder showers
+        9 = thunder showers - lightning
 
-    14 = sleet
+        14 = sleet - cloud with dots under
 
-    19 = hot (extreme)
-    20 = cold (extreme)
+        19 = hot (extreme) - flame
+        20 = cold (extreme) - snowman
 
-    21 = strong wind
-    22 = (night) sunny - with moon
-    23 = (night) sunny with stars
-    24 = (night) cloudy - with moon
-    25 = sun with haze
-    26 = cloudy (sun with cloud)
- */
+        21 = strong wind - wind moving icon
+        22 = night haze - with moon haze
+        23 = clear night - moon with star
+        24 = cloudy night - moon with cloud
+        25 = sun with haze
+        26 = cloudy  - sun with cloud
+     */
         return when (openWeatherMapCondition) {
-            210, 200, 201, 202, 230, 231, 232, 211, 212, 221 -> 9
+            // Group 2xx: Thunderstorm
+            200, 201, 202, 210, 211, 212, 221, 230, 231, 232 -> 9 // Thunderstorm - only one thunderstorm icon on watch
+            // Group 3xx: Drizzle
+            300, 301, 302, 310, 311, 312, 313, 314, 321 -> 4 // showers
+            // Group 5xx: Rain
+            500, 501, 502, 503, 504, 520, 521, 522, 531 -> 4 // showers
+            511 -> 11 // freezing rain, icon used by openweathermap
+            // Group 6xx: Snow
+            600, 601, 602, 620, 621, 622 -> 11 // snow showers
+            611, 612, 613, 615, 616 -> 14 // Sleet
+            // Group 7xx: Atmosphere
+            701, 711, 731, 741, 751, 761, 762 -> 6 // fog
+            721 -> 25 // haze (day & night)
+            781, 771 -> 21 // strong wind (tornado, squalls)
+            // Group 800: Clear
+            800 -> 1 // clear (day & night)
+            // Group 80x: Clouds
+            801, 802 -> 26 // sun/moon with cloud (night & day)
+            803 -> 2 // cloudy
+            804 -> 3 // overcast
 
-            901, 781, 900, 771, 960, 961, 902, 962 -> 21
+            // Other codes
+            900 -> 9 // thunderstorm
+            901, 902, 962, 905 -> 21 // strong wind (tropical storm, hurricane, windy)
+            903 -> 20 // cold
+            904 -> 19 // hot
+            906 -> 11 // hail, snow showers (or should it be sleet?)
 
-            300, 301, 302, 310, 311, 312, 313, 314, 321, 500, 501, 502, 503, 504, 520, 521, 522, 531 -> 4
-
-            906, 615, 616, 511 -> 14
-
-            611, 612, 600, 601, 602, 620, 621, 622 -> 5
-
-
-            701, 711, 721, 731, 741, 751, 761, 762 -> 6
-
-            800 -> 1
-
-            904 -> 19
-
-            801, 802 -> 26
-            803 -> 2
-
-            804 -> 3
-
-            905, 951, 952, 953, 954, 955, 956, 957, 958, 959 -> 21
-
-            903 -> 20
-            else -> 20
+            // strong wind (calm, light,gentle,moderate,fresh,strong-breeze, high,severe,windcase-gale, (violent) storm)
+            951, 952, 953, 954, 955, 956, 957, 958, 959, 960, 961 -> 21
+            else -> 0 // no data icon
         }
     }
+
+    @JvmStatic
+    fun cmfConditionToNight(cmfCondition: Byte): Byte {
+        if (cmfCondition.toInt() == 1) return 23 // clear --> clear night
+        if (cmfCondition.toInt() == 26) return 24 // sun with cloud --> moon with cloud
+        if (cmfCondition.toInt() == 25) return 22 // sun with haze --> moon with haze
+        return cmfCondition
+    }
+
 
     @JvmStatic
     fun mapToFitProCondition(openWeatherMapCondition: Int): Byte {

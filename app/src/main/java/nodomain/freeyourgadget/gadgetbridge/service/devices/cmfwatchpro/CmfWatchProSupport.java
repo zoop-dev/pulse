@@ -44,6 +44,9 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -829,8 +832,19 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
         final boolean supportsSunriseSunset = getCoordinator().supportsSunriseSunset();
         final int payloadLength = (7 * 9) + (24 * 2) + (supportsSunriseSunset ? 32 : 30) + (supportsSunriseSunset ? 7 * 8 : 0);
         final ByteBuffer buf = ByteBuffer.allocate(payloadLength).order(ByteOrder.BIG_ENDIAN);
+
+        long currentTime = System.currentTimeMillis() / 1000;
+        long sunrise = weatherSpec.getSunRise(); // epoch seconds
+        long sunset  = weatherSpec.getSunSet();  // epoch seconds
+        boolean isDay = currentTime >= sunrise && currentTime < sunset;
+
         // start with the current day's weather
-        buf.put(WeatherMapper.mapToCmfCondition(weatherSpec.getCurrentConditionCode()));
+        // Condition
+        byte cmfCondition = WeatherMapper.mapToCmfCondition(weatherSpec.getCurrentConditionCode());
+        // If the sun has set, use moon icons where possible
+        if (!isDay) cmfCondition = WeatherMapper.cmfConditionToNight(cmfCondition);
+        buf.put(cmfCondition);
+        // Temperatures, humidity, aqi, uv and wind speed
         buf.put((byte) (weatherSpec.getCurrentTemp() - 273 + 100)); // convert Kelvin to C, add 100
         buf.put((byte) (weatherSpec.getTodayMaxTemp() - 273 + 100)); // convert Kelvin to C, add 100
         buf.put((byte) (weatherSpec.getTodayMinTemp() - 273 + 100)); // convert Kelvin to C, add 100
@@ -845,11 +859,12 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
         for (int i = 0; i < 6; i++) {
             if (i < maxForecastsAvailable) {
                 WeatherSpec.Daily forecastDay = weatherSpec.getForecasts().get(i);
+                // The watch can only show one icon for future days and this is the "day" icon:
                 buf.put(WeatherMapper.mapToCmfCondition(forecastDay.getConditionCode()));  // weather condition flag
                 buf.put((byte) (forecastDay.getMaxTemp() - 273 + 100)); // temp in C (not shown in future days' forecasts)
                 buf.put((byte) (forecastDay.getMaxTemp() - 273 + 100)); // max temp in C, + 100
                 buf.put((byte) (forecastDay.getMinTemp() - 273 + 100)); // min temp in C, + 100
-                buf.put((byte) forecastDay.getHumidity()); // humidity as a %
+                buf.put((byte) forecastDay.getHumidity()); // humidity as a %, not shown by watch?
                 buf.putShort((short) (forecastDay.getAirQuality() != null ? forecastDay.getAirQuality().getAqi() : 0));
                 buf.put((byte) forecastDay.getUvIndex()); // UV index isn't shown. uvi decimal/100, so 0x07 = 700 UVI.
                 buf.put((byte) forecastDay.getWindSpeed()); // isn't shown by watch, unsure of correct units
@@ -866,18 +881,52 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
             }
 
         }
-        // now add the hourly data for today - just condition and temperature
+
+        // hourly data for next 24 hours, the current hour (or hours before that) should not be included! only condition and temperature
         int maxHourlyForecastsAvailable = weatherSpec.getHourly().size();
-        for (int i = 0; i < 24; i++) {
-            if (i < maxHourlyForecastsAvailable) {
-                WeatherSpec.Hourly forecastHr = weatherSpec.getHourly().get(i);
-                buf.put((byte) (forecastHr.getTemp() - 273 + 100)); // temperature
-                buf.put((byte) forecastHr.getConditionCode()); // condition
-            } else {
-                buf.put((byte) (weatherSpec.getCurrentTemp() - 273 + 100)); // assume current temp
-                buf.put(WeatherMapper.mapToCmfCondition(weatherSpec.getCurrentConditionCode())); // current condition
+        int writtenHourlyForecasts = 0;
+        long nextHour = ((currentTime + 3600 - 1) / 3600) * 3600;
+
+        // sunset/sunrise stuff, since we only show 24h, only today and tomorrow is important
+        WeatherSpec.Daily tomorrow = weatherSpec.getForecasts().get(0); // Weatherspec is today, forecasts is tomorrow and onward
+        LocalDate tomorrowDate = Instant.ofEpochSecond(tomorrow.getSunRise()).atZone(ZoneOffset.UTC).toLocalDate();
+
+        for (int i = 0; i < maxHourlyForecastsAvailable && writtenHourlyForecasts < 24; i++) {
+            WeatherSpec.Hourly forecastHr = weatherSpec.getHourly().get(i);
+            // Skip current / past hours
+            if (forecastHr.getTimestamp() < nextHour) {
+                continue;
             }
+
+            // Temperature
+            buf.put((byte) (forecastHr.getTemp() - 273 + 100));
+
+            // If the checked forecast-hour is more the current day sunset, check if the day has ended, if so update the sunset/sunrise to be for tomorrow
+            if (forecastHr.getTimestamp() > sunset) {
+                LocalDate forecastHrDate = Instant.ofEpochSecond(forecastHr.getTimestamp()).atZone(ZoneOffset.UTC).toLocalDate();
+                if (forecastHrDate.equals(tomorrowDate)) {
+                    sunrise = tomorrow.getSunRise();
+                    sunset = tomorrow.getSunSet();
+                }
+            }
+            isDay = forecastHr.getTimestamp() >= sunrise && forecastHr.getTimestamp() < sunset;
+
+            // Get condition
+            cmfCondition = WeatherMapper.mapToCmfCondition(forecastHr.getConditionCode());
+            // If the sun has set, use moon icons where possible
+            if (!isDay) cmfCondition = WeatherMapper.cmfConditionToNight(cmfCondition);
+            buf.put(cmfCondition); // condition
+
+            writtenHourlyForecasts++;
         }
+
+        // Pad if fewer than 24 entries were written
+        while (writtenHourlyForecasts < 24) {
+            buf.put((byte) 0x01);
+            buf.put((byte) 0x00);
+            writtenHourlyForecasts++;
+        }
+
         // place name - watch scrolls after ~10 chars. Pad up to 32 bytes.
         final byte[] locationNameBytes = nodomain.freeyourgadget.gadgetbridge.util.StringUtils.truncateToBytes(weatherSpec.getLocation(), 30);
         buf.put(locationNameBytes);
