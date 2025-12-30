@@ -211,6 +211,7 @@
     <string name="pref_header_audio">Audio</string>
     <string name="pref_header_calendar">Calendar</string>
     <string name="pref_header_connection">Connection</string>
+    <string name="pref_header_dashboard">Dashboard</string>
     <string name="pref_header_display">Display</string>
     <string name="pref_header_generic">Generic</string>
     <string name="pref_header_health">Health</string>
@@ -4291,10 +4292,20 @@
     <string name="pref_even_realities_g1_screen_location_summary">Changes the vertical location of the display</string>
     <string name="pref_even_realities_g1_screen_depth_title">Screen Depth</string>
     <string name="pref_even_realities_g1_screen_depth_summary">Changes the binocular separation and apparent depth of the display</string>
+    <string name="pref_even_realities_g1_screen_activation_angle_enable_title">Show on Head Up</string>
+    <string name="pref_even_realities_g1_screen_activation_angle_enable_summary">Enable auto showing the dashboard when the wearer looks up</string>
     <string name="pref_even_realities_g1_screen_activation_angle_title">Activation Angle</string>
     <string name="pref_even_realities_g1_screen_activation_angle_summary">Changes how high the wearer needs to lift their head for the dashboard to be shown</string>
     <string name="pref_even_realities_g1_screen_calibrate_angle_title">Calibrate Angle</string>
     <string name="pref_even_realities_g1_screen_calibrate_angle_summary">Zeroes the angle of the glasses, look straight ahead and tap here</string>
+    <string name="pref_even_realities_g1_touch_double_left_title">Double tap left</string>
+    <string name="pref_even_realities_g1_touch_double_left_summary">When the left touch pad is double tapped, take this action: %s</string>
+    <string name="pref_even_realities_g1_touch_double_right_title">Double tap right</string>
+    <string name="pref_even_realities_g1_touch_double_right_summary">When the right pad is double tapped, take this action: %s</string>
+    <string name="pref_even_realities_g1_touch_long_left_title">Long press left</string>
+    <string name="pref_even_realities_g1_touch_long_left_summary">When the left touch pad is long pressed, take this action: %s</string>
+    <string name="pref_even_realities_g1_touch_long_right_title">Long press right</string>
+    <string name="pref_even_realities_g1_touch_long_right_summary">When the right pad is long pressed, take this action: %s</string>
     <string name="even_realities_frame_shape_G1A">G1A/Round</string>
     <string name="even_realities_frame_shape_G1B">G1B/Square</string>
     <string name="even_realities_frame_color_grey">Grey</string>
@@ -4303,6 +4314,7 @@
     <string name="even_realities_frame_description">%1$s %2$s (%3$s: %4$s)</string>
     <string name="even_realities_left_lens">Left Lens</string>
     <string name="even_realities_right_lens">Right Lens</string>
+    <string name="even_realities_no_calendar_events">No upcoming events</string>
     <string name="pref_aawireless_dongle_confirmation">After toggling dongle mode, you will need to pair the device again. Please wait at least 30 seconds for the setting to be applied.</string>
     <string name="switch_to_next_phone">Next phone</string>
     <string name="toggle_standby_on_off">Standby on/off</string>

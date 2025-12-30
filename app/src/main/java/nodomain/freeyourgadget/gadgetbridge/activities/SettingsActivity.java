@@ -73,6 +73,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class SettingsActivity extends AbstractSettingsActivityV2 {
     public static final String PREF_MEASUREMENT_SYSTEM = "measurement_system";
+    public static final String PREF_LANGUAGE = "language";
 
     @Override
     protected PreferenceFragmentCompat newFragment() {
@@ -185,13 +186,14 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
                 }
             }
 
-            pref = findPreference("language");
+            pref = findPreference(PREF_LANGUAGE);
             if (pref != null) {
                 pref.setOnPreferenceChangeListener((preference, newVal) -> {
                     String newLang = newVal.toString();
                     try {
                         GBApplication.setLanguage(newLang);
                         requireActivity().recreate();
+                        invokeLater(() -> GBApplication.deviceService().onSendConfiguration(PREF_LANGUAGE));
                     } catch (Exception ex) {
                         GB.toast(requireContext().getApplicationContext(),
                                 "Error setting language: " + ex.getLocalizedMessage(),

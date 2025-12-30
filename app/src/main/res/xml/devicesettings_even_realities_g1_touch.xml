@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:title="@string/pref_even_realities_g1_touch_double_left_title"
+        android:summary="@string/pref_even_realities_g1_touch_double_left_summary"
+        android:defaultValue="@string/menuitem_nothing"
+        android:entries="@array/pref_device_even_realities_g1_double_tap"
+        android:entryValues="@array/pref_device_even_realities_g1_double_tap"
+        android:key="pref_even_realities_g1_touch_double_left"
+
+        android:icon="@drawable/ic_touch_double_left"
+    />
+
+    <ListPreference
+        android:defaultValue="@string/menuitem_nothing"
+        android:entries="@array/pref_device_even_realities_g1_double_tap"
+        android:entryValues="@array/pref_device_even_realities_g1_double_tap"
+        android:icon="@drawable/ic_touch_double"
+        android:key="pref_even_realities_g1_touch_double_right"
+        android:summary="@string/pref_even_realities_g1_touch_double_right_summary"
+        android:title="@string/pref_even_realities_g1_touch_double_right_title" />
+
+    <ListPreference
+        android:title="@string/pref_even_realities_g1_touch_long_left_title"
+        android:summary="@string/pref_even_realities_g1_touch_long_left_summary"
+        android:defaultValue="@string/menuitem_nothing"
+        android:entries="@array/pref_device_even_realities_g1_double_tap"
+        android:entryValues="@array/pref_device_even_realities_g1_double_tap"
+        android:key="pref_even_realities_g1_touch_long_left"
+        android:icon="@drawable/ic_touch_long_left"
+    />
+
+    <ListPreference
+        android:title="@string/pref_even_realities_g1_touch_long_right_title"
+        android:summary="@string/pref_even_realities_g1_touch_long_right_summary"
+        android:defaultValue="@string/menuitem_nothing"
+        android:entries="@array/pref_device_even_realities_g1_long_press"
+        android:entryValues="@array/pref_device_even_realities_g1_long_press"
+        android:key="pref_even_realities_g1_touch_long_right"
+        android:icon="@drawable/ic_touch_long"
+    />
+</PreferenceScreen>

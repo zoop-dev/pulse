@@ -63,7 +63,7 @@ public class G1SideManager {
     private final BiFunction<String, Integer, TransactionBuilder> createTransactionBuilder;
     private final BluetoothGattCharacteristic rx;
     private final BluetoothGattCharacteristic tx;
-    private final Set<G1Communications.CommandHandler> commandHandlers;
+    private final Set<G1CommandHandler> commandHandlers;
     private boolean isSilentModeEnabled;
     private GBDevice.State connectingState;
     private boolean debugEnabled;
@@ -154,55 +154,55 @@ public class G1SideManager {
     }
 
     private void initializeCommon(TransactionBuilder transaction) {
-        sendInTransaction(transaction, new G1Communications.CommandGetBatteryInfo(this::handleBatteryPayload));
-        sendInTransaction(transaction, new G1Communications.CommandGetFirmwareInfo(this::handleFirmwareInfoPayload));
-        sendInTransaction(transaction, new G1Communications.CommandGetSilentModeSettings(this::handleSilentStatusPayload));
+        sendInTransaction(transaction, new G1Communications.CommandInfoBatteryAndFirmwareGet(this::handleBatteryPayload));
+        sendInTransaction(transaction, new G1Communications.CommandSystemFirmwareBuildStringGet(this::handleFirmwareInfoPayload));
+        sendInTransaction(transaction, new G1Communications.CommandSilentModeGet(this::handleSilentStatusPayload));
     }
 
     public void initializeLeft(TransactionBuilder transaction) {
         initializeCommon(transaction);
 
         // These can be sent to both, but the left lens is used as the master for these settings.
-        sendInTransaction(transaction, new G1Communications.CommandGetBrightnessSettings(this::handleBrightnessSettingsPayload));
-        sendInTransaction(transaction, new G1Communications.CommandGetSerialNumber(this::handleSerialNumberPayload));
+        sendInTransaction(transaction, new G1Communications.CommandBrightnessGet(this::handleBrightnessSettingsPayload));
+        sendInTransaction(transaction, new G1Communications.CommandInfoSerialNumberGlassesGet(this::handleSerialNumberPayload));
     }
 
     public void initializeRight(TransactionBuilder transaction) {
         initializeCommon(transaction);
 
         // This settings are only sent to the right lens in the official app, so we copy that.
-        sendInTransaction(transaction, new G1Communications.CommandGetHeadGestureSettings(this::handleHeadGestureSettingsPayload));
+        sendInTransaction(transaction, new G1Communications.CommandHeadUpAngleGet(this::handleHeadGestureSettingsPayload));
         // This setting uses the right lens as the master for the setting simply to balance the amount
         // of commands being sent to the left vs right.
-        sendInTransaction(transaction, new G1Communications.CommandGetDisplaySettings(this::handleDisplaySettingsPayload));
-        sendInTransaction(transaction, new G1Communications.CommandGetWearDetectionSettings(this::handleWearDetectionSettingsPayload));
-        sendInTransaction(transaction, new G1Communications.CommandGetNotificationDisplaySettings(this::handleNotificationDisplaySettingsPayload));
+        sendInTransaction(transaction, new G1Communications.CommandHardwareDisplayGet(this::handleDisplaySettingsPayload));
+        sendInTransaction(transaction, new G1Communications.CommandWearDetectionGet(this::handleWearDetectionSettingsPayload));
+        sendInTransaction(transaction, new G1Communications.CommandNotificationAutoDisplayGet(this::handleNotificationDisplaySettingsPayload));
     }
 
     public void onSendConfiguration(String config) {
         DevicePrefs prefs = getDevicePrefs();
         switch (config) {
             case DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_ACTIVATION_ANGLE:
-                send(new G1Communications.CommandSetHeadGestureSettings(
+                send(new G1Communications.CommandHeadUpAngleSet(
                         (byte)prefs.getInt(DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_ACTIVATION_ANGLE, 40)));
                 break;
             case DeviceSettingsPreferenceConst.PREF_SCREEN_AUTO_BRIGHTNESS:
             case DeviceSettingsPreferenceConst.PREF_SCREEN_BRIGHTNESS:
-                send(new G1Communications.CommandSetBrightnessSettings(
+                send(new G1Communications.CommandBrightnessSet(
                         prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SCREEN_AUTO_BRIGHTNESS, true),
                         (byte)prefs.getInt(DeviceSettingsPreferenceConst.PREF_SCREEN_BRIGHTNESS, 0x2A)));// TODO: Add a constant for the max value?
                 break;
             case DeviceSettingsPreferenceConst.PREF_WEAR_SENSOR_TOGGLE:
-                send(new G1Communications.CommandSetWearDetectionSettings(
+                send(new G1Communications.CommandWearDetectionSet(
                         prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_WEAR_SENSOR_TOGGLE, true)));
                 break;
             case DeviceSettingsPreferenceConst.PREF_DEVICE_LOGS_TOGGLE:
                 this.debugEnabled = prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_DEVICE_LOGS_TOGGLE, false);
-                send(new G1Communications.CommandSetDebugLogSettings(this.debugEnabled));
+                send(new G1Communications.CommandSystemDebugLoggingSet(this.debugEnabled));
                 break;
             case DeviceSettingsPreferenceConst.PREF_SCREEN_ON_ON_NOTIFICATIONS:
             case DeviceSettingsPreferenceConst.PREF_SCREEN_ON_ON_NOTIFICATIONS_TIMEOUT:
-                send(new G1Communications.CommandSetNotificationDisplaySettings(
+                send(new G1Communications.CommandNotificationAutoDisplaySet(
                         prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SCREEN_ON_ON_NOTIFICATIONS, true),
                         (byte)prefs.getInt(DeviceSettingsPreferenceConst.PREF_SCREEN_ON_ON_NOTIFICATIONS_TIMEOUT, 5)));
                 break;
@@ -211,18 +211,18 @@ public class G1SideManager {
 
     public void onToggleSilentMode() {
         isSilentModeEnabled = !isSilentModeEnabled;
-        send(new G1Communications.CommandSetSilentModeSettings(isSilentModeEnabled));
+        send(new G1Communications.CommandSilentModeSet(isSilentModeEnabled));
     }
 
-    public void send(G1Communications.CommandHandler command) {
+    public void send(G1CommandHandler command) {
         TransactionBuilder transaction =
-                createTransactionBuilder.apply(command.getName(), mySide.getDeviceIndex());
+                createTransactionBuilder.apply(command.getName() + "_" + mySide.getName(), mySide.getDeviceIndex());
         sendInTransaction(transaction, command);
         transaction.queue();
     }
 
-    private void sendInTransaction(TransactionBuilder transaction, G1Communications.CommandHandler command) {
-        LOG.debug("Send command {} on side {}", command.getName(), mySide.getDeviceIndex());
+    private void sendInTransaction(TransactionBuilder transaction, G1CommandHandler command) {
+        LOG.debug("Send command {} on side {}", command.getName(), mySide.getName());
 
         // Write the packet to the BLE txn.
         transaction.write(tx, command.serialize());
@@ -247,7 +247,7 @@ public class G1SideManager {
                 // the lock.
                 if (retry) {
                     LOG.debug("Retry {} command {} on side {}", command.getRetryCount(),
-                             command.getName(), mySide.getDeviceIndex());
+                             command.getName(), mySide.getName());
                     // TODO: This will change the global sequence number of the command, is this
                     //  what the stock app does on retry? Or does it resend with the same one.
                     send(command);
@@ -256,7 +256,7 @@ public class G1SideManager {
         }
     }
 
-    private void registerResponseHandler(G1Communications.CommandHandler commandHandler) {
+    private void registerResponseHandler(G1CommandHandler commandHandler) {
         synchronized (commandHandlers) {
             commandHandlers.add(commandHandler);
         }
@@ -279,10 +279,10 @@ public class G1SideManager {
     }
 
     public boolean handlePayload(byte[] payload) {
-        for (G1Communications.CommandHandler commandHandler : commandHandlers) {
+        for (G1CommandHandler commandHandler : commandHandlers) {
             if (commandHandler.responseMatches(payload)) {
                 LOG.debug("Got response payload for command {} on side {}: {}",
-                          commandHandler.getName(), mySide.getDeviceIndex(),
+                          commandHandler.getName(), mySide.getName(),
                           Logging.formatBytes(payload));
                 synchronized (commandHandlers) {
                     commandHandlers.remove(commandHandler);
@@ -296,23 +296,24 @@ public class G1SideManager {
 
         // The glasses will send unprompted messages indicating certain events happening.
         // ex. glasses are taken off, glasses are charging, or touch pad was pressed.
-        if (G1Communications.DeviceEvent.messageMatches(payload)) {
+        if (G1Communications.MessageEvent.messageMatches(payload)) {
             return handleDeviceEventPayload(payload);
         }
 
-        if (G1Communications.DebugLog.messageMatches(payload)) {
+        if (G1Communications.MessageDebug.messageMatches(payload)) {
             return handleDebugLogPayload(payload);
         }
 
         LOG.debug("Unhandled payload on side {}: {}",
-                  mySide.getDeviceIndex(), Logging.formatBytes(payload));
+                  mySide.getName(), Logging.formatBytes(payload));
 
         // Not handled by any handlers.
         return false;
     }
 
     private boolean handleBatteryPayload(byte[] payload) {
-        updateBatteryLevel(G1Communications.CommandGetBatteryInfo.getBatteryPercent(payload));
+        updateBatteryLevel(
+                G1Communications.CommandInfoBatteryAndFirmwareGet.getBatteryPercent(payload));
         return true;
     }
 
@@ -335,11 +336,11 @@ public class G1SideManager {
     }
 
     private boolean handleSerialNumberPayload(byte[] payload) {
-        String serialNumber = G1Communications.CommandGetSerialNumber.getSerialNumber(payload);
+        String serialNumber = G1Communications.CommandInfoSerialNumberGlassesGet.getSerialNumber(payload);
 
         // Parse the hardware information out of the serial number.
-        int shape = G1Communications.CommandGetSerialNumber.getFrameType(payload);
-        int color = G1Communications.CommandGetSerialNumber.getFrameColor(payload);
+        int shape = G1Communications.CommandInfoSerialNumberGlassesGet.getFrameType(payload);
+        int color = G1Communications.CommandInfoSerialNumberGlassesGet.getFrameColor(payload);
         if (shape != -1 && color != -1) {
             GBDeviceEventVersionInfo fwInfo = new GBDeviceEventVersionInfo();
             fwInfo.hwVersion = GBApplication.getContext().getString(
@@ -357,16 +358,16 @@ public class G1SideManager {
     }
 
     private boolean handleSilentStatusPayload(byte[] payload) {
-        isSilentModeEnabled = G1Communications.CommandGetSilentModeSettings.isEnabled(payload);
+        isSilentModeEnabled = G1Communications.CommandSilentModeGet.isEnabled(payload);
         return true;
     }
     private boolean handleDisplaySettingsPayload(byte[] payload) {
         GBDeviceEventUpdatePreferences prefsEvent = new GBDeviceEventUpdatePreferences();
         prefsEvent.preferences.put(DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_HEIGHT,
-                                   G1Communications.CommandGetDisplaySettings.getHeight(payload));
+                                   G1Communications.CommandHardwareDisplayGet.getHeight(payload));
         // Depth is indexed is 1-9, so subtract 1 to map it to the 0-8 of the slider.
         prefsEvent.preferences.put(DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_DEPTH,
-                                   G1Communications.CommandGetDisplaySettings.getDepth(payload) - 1);
+                                   G1Communications.CommandHardwareDisplayGet.getDepth(payload) - 1);
         evaluateGBDeviceEvent(prefsEvent);
         return true;
     }
@@ -375,7 +376,7 @@ public class G1SideManager {
         GBDeviceEventUpdatePreferences prefsEvent = new GBDeviceEventUpdatePreferences();
         prefsEvent.preferences.put(
                 DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_ACTIVATION_ANGLE,
-                G1Communications.CommandGetHeadGestureSettings.getActivationAngle(payload));
+                G1Communications.CommandHeadUpAngleGet.getActivationAngle(payload));
         evaluateGBDeviceEvent(prefsEvent);
         return true;
     }
@@ -383,9 +384,9 @@ public class G1SideManager {
     private boolean handleBrightnessSettingsPayload(byte[] payload) {
         GBDeviceEventUpdatePreferences prefsEvent = new GBDeviceEventUpdatePreferences();
         prefsEvent.preferences.put(DeviceSettingsPreferenceConst.PREF_SCREEN_AUTO_BRIGHTNESS,
-                                   G1Communications.CommandGetBrightnessSettings.isAutoBrightnessEnabled(payload));
+                                   G1Communications.CommandBrightnessGet.isAutoBrightnessEnabled(payload));
         prefsEvent.preferences.put(DeviceSettingsPreferenceConst.PREF_SCREEN_BRIGHTNESS,
-                                   G1Communications.CommandGetBrightnessSettings.getBrightnessLevel(payload));
+                                   G1Communications.CommandBrightnessGet.getBrightnessLevel(payload));
         evaluateGBDeviceEvent(prefsEvent);
         return true;
     }
@@ -393,7 +394,7 @@ public class G1SideManager {
     private boolean handleWearDetectionSettingsPayload(byte[] payload) {
         GBDeviceEventUpdatePreferences prefsEvent = new GBDeviceEventUpdatePreferences();
         prefsEvent.preferences.put(DeviceSettingsPreferenceConst.PREF_WEAR_SENSOR_TOGGLE,
-                                   G1Communications.CommandGetWearDetectionSettings.isEnabled(payload));
+                                   G1Communications.CommandWearDetectionGet.isEnabled(payload));
         evaluateGBDeviceEvent(prefsEvent);
         return true;
     }
@@ -401,40 +402,41 @@ public class G1SideManager {
     private boolean handleNotificationDisplaySettingsPayload(byte[] payload) {
         GBDeviceEventUpdatePreferences prefsEvent = new GBDeviceEventUpdatePreferences();
         prefsEvent.preferences.put(DeviceSettingsPreferenceConst.PREF_SCREEN_ON_ON_NOTIFICATIONS,
-                                   G1Communications.CommandGetNotificationDisplaySettings.isEnabled(payload));
+                                   G1Communications.CommandNotificationAutoDisplayGet.isEnabled(payload));
         prefsEvent.preferences.put(
                 DeviceSettingsPreferenceConst.PREF_SCREEN_ON_ON_NOTIFICATIONS_TIMEOUT,
-                Integer.toString(G1Communications.CommandGetNotificationDisplaySettings.getTimeout(payload)));
+                Integer.toString(
+                        G1Communications.CommandNotificationAutoDisplayGet.getTimeout(payload)));
         evaluateGBDeviceEvent(prefsEvent);
         return true;
     }
     private boolean handleDeviceEventPayload(byte[] payload) {
-        switch (G1Communications.DeviceEvent.getEventId(payload)) {
-            case G1Constants.DeviceEventId.GLASSES_CHARGING:
+        switch (G1Communications.MessageEvent.getEventId(payload)) {
+            case G1Constants.EventId.STATE_CHARGING:
                 updateBatteryState(
-                        G1Communications.DeviceEvent.getValue(payload) == 0x01
+                        G1Communications.MessageEvent.getValue(payload) == 0x01
                             ? BatteryState.BATTERY_CHARGING
                             : BatteryState.BATTERY_NORMAL);
                 break;
-            case G1Constants.DeviceEventId.GLASSES_SIDE_BATTERY_LEVEL:
-                updateBatteryLevel(G1Communications.DeviceEvent.getValue(payload));
+            case G1Constants.EventId.INFO_BATTERY_LEVEL:
+                updateBatteryLevel(G1Communications.MessageEvent.getValue(payload));
                 break;
-            case G1Constants.DeviceEventId.CASE_CHARGING:
+            case G1Constants.EventId.STATE_CASE_CHARGING:
                 updateBatteryState(
-                        G1Communications.DeviceEvent.getValue(payload) == 0x01
+                        G1Communications.MessageEvent.getValue(payload) == 0x01
                             ? BatteryState.BATTERY_CHARGING
                             : BatteryState.BATTERY_NORMAL,
                         G1Constants.CASE_BATTERY_INDEX);
                 break;
-            case G1Constants.DeviceEventId.CASE_BATTERY_LEVEL:
-                updateBatteryLevel(G1Communications.DeviceEvent.getValue(payload),
+            case G1Constants.EventId.INFO_CASE_BATTERY_LEVEL:
+                updateBatteryLevel(G1Communications.MessageEvent.getValue(payload),
                                    G1Constants.CASE_BATTERY_INDEX);
                 break;
-            case G1Constants.DeviceEventId.GLASSES_NOT_WORN_NO_CASE:
+            case G1Constants.EventId.STATE_NOT_WORN_NO_CASE:
                 updateBatteryState(BatteryState.NO_BATTERY, G1Constants.CASE_BATTERY_INDEX);
                 break;
             default:
-                LOG.debug("Device Event on side {}: {}", mySide.getDeviceIndex(),
+                LOG.debug("Device Event on side {}: {}", mySide.getName(),
                           Logging.formatBytes(payload));
                 return false;
         }
@@ -449,7 +451,7 @@ public class G1SideManager {
             getDevicePrefs().getPreferences().edit().putBoolean(
                     DeviceSettingsPreferenceConst.PREF_DEVICE_LOGS_TOGGLE, this.debugEnabled).apply();
         }
-        LOG.info("{}: {}", mySide, G1Communications.DebugLog.getMessage(payload));
+        LOG.info("{}: {}", mySide, G1Communications.MessageDebug.getMessage(payload));
         return true;
     }
 }

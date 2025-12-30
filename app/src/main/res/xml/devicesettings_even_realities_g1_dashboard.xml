@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- TODO: There is a setting to enable and disable this. Figure out how it works.-->
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:enabled="false"
+        android:disableDependentsState="false"
+        android:icon="@drawable/ic_head_up"
+        android:key="pref_even_realities_g1_screen_activation_angle_enable"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_even_realities_g1_screen_activation_angle_enable_summary"
+        android:title="@string/pref_even_realities_g1_screen_activation_angle_enable_title" />
+    <!--        android:dependency="pref_even_realities_g1_screen_activation_angle_enable"-->
+    <SeekBarPreference
+        android:defaultValue="40"
+        android:icon="@drawable/ic_angle"
+        android:key="pref_even_realities_g1_screen_activation_angle"
+        android:max="60"
+        android:summary="@string/pref_even_realities_g1_screen_activation_angle_summary"
+        android:title="@string/pref_even_realities_g1_screen_activation_angle_title"
+        app:showSeekBarValue="true" />
+    <Preference
+        android:defaultValue="0"
+        android:dependency="pref_even_realities_g1_screen_activation_angle_enable"
+        android:icon="@drawable/ic_angle_calibrate"
+        android:enabled="false"
+        android:key="pref_even_realities_g1_screen_calibrate_angle"
+        android:summary="@string/pref_even_realities_g1_screen_calibrate_angle_summary"
+        android:title="@string/pref_even_realities_g1_screen_calibrate_angle_title" />
+    <!--    </PreferenceCategory>-->
+</PreferenceScreen>

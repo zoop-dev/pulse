@@ -706,7 +706,12 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_CONNECTION_FORCE_LEGACY_GATT = "connection_force_legacy_gatt";
     public static final String PREF_EVEN_REALITIES_SCREEN_HEIGHT = "pref_even_realities_g1_screen_height";
     public static final String PREF_EVEN_REALITIES_SCREEN_DEPTH = "pref_even_realities_g1_screen_depth";
+    public static final String PREF_EVEN_REALITIES_SCREEN_ACTIVATION_ANGLE_ENABLE = "pref_even_realities_g1_screen_activation_angle_enable";
     public static final String PREF_EVEN_REALITIES_SCREEN_ACTIVATION_ANGLE = "pref_even_realities_g1_screen_activation_angle";
+    public static final String PREF_EVEN_REALITIES_TOUCH_DOUBLE_LEFT = "pref_even_realities_g1_touch_double_left";
+    public static final String PREF_EVEN_REALITIES_TOUCH_DOUBLE_RIGHT = "pref_even_realities_g1_touch_double_right";
+    public static final String PREF_EVEN_REALITIES_TOUCH_LONG_LEFT = "pref_even_realities_g1_touch_long_left";
+    public static final String PREF_EVEN_REALITIES_TOUCH_LONG_RIGHT = "pref_even_realities_g1_touch_long_right";
 
     public static final String PREF_DEVICE_STRESS_TEST_CONNECT_COUNT = "pref_device_stress_test_connect_count";
     public static final String PREF_DEVICE_STRESS_TEST_CONNECT_PARALLEL = "pref_device_stress_test_connect_parallel";

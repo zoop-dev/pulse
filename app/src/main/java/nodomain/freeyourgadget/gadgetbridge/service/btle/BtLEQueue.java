@@ -431,7 +431,13 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
         }
 
         if (forceDisconnect) {
-            BluetoothDevice device = mBluetoothGatt.getDevice();
+            // TODO: There is likely a race condition, the device and the gatt object should not be
+            // null at this point. For multi queue objects, this seems to break, don't remove this
+            // check.
+            BluetoothDevice device = null;
+            if (mBluetoothGatt != null) {
+                device = mBluetoothGatt.getDevice();
+            }
             LOG.warn("unhealthy disconnect {} {}", device == null ?  "<UNKNOWN>" : device.getAddress(),
                     BleNamesResolver.getStatusString(status));
         } else if (mBluetoothGatt != null) {

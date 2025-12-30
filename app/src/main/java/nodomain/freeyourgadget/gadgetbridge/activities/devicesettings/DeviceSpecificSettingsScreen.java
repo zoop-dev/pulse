@@ -30,6 +30,7 @@ public enum DeviceSpecificSettingsScreen {
     CALENDAR("pref_screen_calendar", R.xml.devicesettings_root_calendar),
     CALLS_AND_NOTIFICATIONS("pref_screen_calls_and_notifications", R.xml.devicesettings_root_calls_and_notifications),
     CONNECTION("pref_screen_connection", R.xml.devicesettings_root_connection),
+    DASHBOARD("pref_screen_dashboard", R.xml.devicesettings_root_dashboard),
     DEVELOPER("pref_screen_developer", R.xml.devicesettings_root_developer),
     DISPLAY("pref_screen_display", R.xml.devicesettings_root_display),
     GENERIC("pref_screen_generic", R.xml.devicesettings_root_generic),

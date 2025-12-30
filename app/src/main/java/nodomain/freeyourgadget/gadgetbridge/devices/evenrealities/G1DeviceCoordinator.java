@@ -76,6 +76,11 @@ public class G1DeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.SMART_GLASSES;
+    }
+
+    @Override
     public int getBondingStyle() {
         return BONDING_STYLE_LAZY;
     }
@@ -194,21 +199,40 @@ public class G1DeviceCoordinator extends AbstractBLEDeviceCoordinator {
         });
     }
 
-
     @Override
     public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
         final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
-        if (device.isConnected()) {
-            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_screen_on_on_notifications);
-            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_screen_on_on_notifications_timeout);
-            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_even_realities_g1_display);
-            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_timeformat);
 
-            final List<Integer> developer =
-                    deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DEVELOPER);
-            developer.add(R.xml.devicesettings_header_system);
-            developer.add(R.xml.devicesettings_debug_logs_toggle);
-        }
+        final List<Integer> dashboard =
+                deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DASHBOARD);
+        dashboard.add(R.xml.devicesettings_timeformat);
+        dashboard.add(R.xml.devicesettings_even_realities_g1_dashboard);
+
+        final List<Integer> display = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DISPLAY);
+        display.add(R.xml.devicesettings_even_realities_g1_display);
+
+        final List<Integer> notifications = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.NOTIFICATIONS);
+        notifications.add(R.xml.devicesettings_screen_on_on_notifications);
+        notifications.add(R.xml.devicesettings_screen_on_on_notifications_timeout);
+
+        final List<Integer> touch = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.TOUCH_OPTIONS);
+        touch.add(R.xml.devicesettings_even_realities_g1_touch);
+
+        final List<Integer> calendar = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.CALENDAR);
+        calendar.add(R.xml.devicesettings_sync_calendar);
+
+        final List<Integer> developer =
+                deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DEVELOPER);
+        developer.add(R.xml.devicesettings_header_system);
+        developer.add(R.xml.devicesettings_debug_logs_toggle);
+
+        deviceSpecificSettings.addConnectedPreferences(DeviceSpecificSettingsScreen.DASHBOARD.getKey(),
+                                                       DeviceSpecificSettingsScreen.DISPLAY.getKey(),
+                                                       DeviceSpecificSettingsScreen.NOTIFICATIONS.getKey(),
+                                                       DeviceSpecificSettingsScreen.TOUCH_OPTIONS.getKey(),
+                                                       DeviceSpecificSettingsScreen.DEVELOPER.getKey()
+        );
+
         return deviceSpecificSettings;
     }
 
@@ -222,7 +246,7 @@ public class G1DeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceKind.SMART_GLASSES;
+    public boolean supportsCalendarEvents(final GBDevice device) {
+        return true;
     }
 }

@@ -1,0 +1,30 @@
+<vector android:height="24dp" android:tint="?attr/colorControlNormal"
+    android:viewportHeight="24" android:viewportWidth="24"
+    android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Side Lines -->
+    <path
+        android:strokeWidth="2"
+        android:pathData="
+            M3,4v16
+            M21,4v16"
+        android:strokeColor="#000000"/>
+
+    <!-- Horizontal Lines -->
+    <path
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:pathData="
+            M4,4h16
+            M4,20h16"
+        android:strokeColor="#000000"/>
+
+    <!-- Screen Lines -->
+    <path
+        android:strokeWidth="1.5"
+        android:pathData="
+            M6,9h10
+            M6,12h7
+            M6,15h9"
+        android:strokeColor="#000000"/>
+</vector>

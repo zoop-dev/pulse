@@ -28,8 +28,9 @@ public class G1Constants {
     // expensive from a battery budget than just sending the heartbeat message.
     public static final int HEART_BEAT_BASE_DELAY_MS = 8000;
     public static final int HEART_BEAT_TARGET_DELAY_MS = 25000;
+    public static final int HEART_BEAT_MAX_DELAY_MODIFIER_MS = 10000;
     public static final int DEFAULT_COMMAND_TIMEOUT_MS = 5000;
-    public static final int DISPLAY_SETTINGS_PREVIEW_DELAY = 3000;
+    public static final int DISPLAY_SETTINGS_PREVIEW_DELAY = 5000;
     public static final int DEFAULT_RETRY_COUNT = 5;
     public static final int CASE_BATTERY_INDEX = 2;
     public static final String INTENT_TOGGLE_SILENT_MODE = "nodomain.freeyourgadget.gadgetbridge.evenrealities.silent_mode";
@@ -41,6 +42,11 @@ public class G1Constants {
     // the notification filtering to happen on the phone side.
     public static final Pair<String, String>
             FIXED_NOTIFICATION_APP_ID = new Pair<>("nodomain.freeyourgadget.gadget", "Name");
+
+    // Only 4 pages with two events each is supported.
+    public static final int MAX_CALENDAR_EVENTS = 8;
+    // Show calendar events for 5 minutes after they have started.
+    public static final int CALENDAR_EVENT_CLEAR_DELAY = 5 * 1000 * 60;
 
     // Extract the L or R at the end of the device prefix.
     public static Side getSideFromFullName(String deviceName) {
@@ -74,11 +80,11 @@ public class G1Constants {
         RIGHT(1, "right");
 
         private final int deviceIndex;
-        private final String stringPrefix;
+        private final String name;
 
-        Side(int deviceIndex, String stringPrefix) {
+        Side(int deviceIndex, String name) {
             this.deviceIndex = deviceIndex;
-            this.stringPrefix = stringPrefix;
+            this.name = name;
         }
 
         public int getDeviceIndex() {
@@ -90,11 +96,15 @@ public class G1Constants {
         }
 
         public String getAddressKey() {
-            return stringPrefix + "_address";
+            return name + "_address";
         }
 
         public String getNameKey() {
-            return stringPrefix + "_name";
+            return name + "_name";
+        }
+
+        public String getName() {
+            return name;
         }
     }
 
@@ -107,75 +117,164 @@ public class G1Constants {
     }
 
     public static class CommandStatus {
-        public static final byte FAILED = (byte)0xCA;
-        public static final byte DATA_CONTINUES = (byte)0xCA;
         public static final byte SUCCESS = (byte)0xC9;
+        public static final byte FAIL = (byte)0xCA;
+        public static final byte DATA_CONTINUES = (byte)0xCB;
     }
 
-    // TODO: Lifted these from a different project, some of them are wrong.
-    public enum CommandId {
-        DASHBOARD_CONFIG((byte) 0x06),
-        SYNC_SEQUENCE((byte) 0x22), // 0x05
-        DASHBOARD_SHOWN((byte) 0x22), // 0x0A
-        SYSTEM((byte) 0x23),
-        HEARTBEAT((byte) 0x25),
-        BATTERY_LEVEL((byte) 0x2C),
-        SET_MTU((byte) 0x4D),
-        NOTIFICATION((byte) 0x4B),
-        FW_INFO_RESPONSE((byte) 0x6E),
-        DEBUG_LOG((byte) 0xF4),
-        DEVICE_EVENT((byte) 0xF5),
-        GET_SILENT_MODE_SETTINGS((byte) 0x2B), // There is more info in this one
-        SET_SILENT_MODE_SETTINGS((byte) 0x03),
-        GET_DISPLAY_SETTINGS((byte) 0x3B),
-        SET_DISPLAY_SETTINGS((byte) 0x26),
-        GET_HEAD_GESTURE_SETTINGS((byte) 0x32),
-        SET_HEAD_GESTURE_SETTINGS((byte) 0x0B),
-        GET_BRIGHTNESS_SETTINGS((byte) 0x29),
-        SET_BRIGHTNESS_SETTINGS((byte) 0x01),
-        GET_WEAR_DETECTION_SETTINGS((byte) 0x3A),
-        SET_WEAR_DETECTION_SETTINGS((byte) 0x27),
-        GET_SERIAL_NUMBER((byte) 0x34),
-        GET_NOTIFICATION_DISPLAY_SETTINGS((byte) 0x3C),
-        SET_NOTIFICATION_DISPLAY_SETTINGS((byte) 0x4F),
-        SET_NOTIFICATION_APP_SETTINGS((byte) 0x04),
-        SEND_NOTIFICATION((byte) 0x4B),
-        SEND_CLEAR_NOTIFICATION((byte) 0x4C);
+    public static class MessageId {
+        public static final byte STATUS = (byte)0x22;
+        public static final byte AUDIO = (byte)0xF1;
+        public static final byte DEBUG = (byte)0xF4;
+        public static final byte EVENT = (byte)0xF5;
+    };
 
-        final public byte id;
+    public static class CommandId {
+        public static final byte ANTI_SHAKE_GET = (byte)0x2A;
+        public static final byte BITMAP_SHOW = (byte)0x16;
+        public static final byte BITMAP_HIDE = (byte)0x18;
+        public static final byte BRIGHTNESS_GET = (byte)0x29;
+        public static final byte BRIGHTNESS_SET = (byte)0x01;
+        public static final byte DASHBOARD_SET = (byte)0x06;
+        public static final byte DASHBOARD_QUICK_NOTE_CONTROL = (byte)0x1E;
+        public static final byte DASHBOARD_CALENDAR_NEXT_UP_SET = (byte)0x58;
+        public static final byte FILE_UPLOAD = (byte)0x15;
+        public static final byte FILE_UPLOAD_COMPLETE = (byte)0x20;
+        public static final byte HARDWARE_GET = (byte)0x3F;
+        public static final byte HARDWARE_SET = (byte)0x26;
+        public static final byte HARDWARE_DISPLAY_GET = (byte)0x3B;
+        public static final byte HEAD_UP_ANGLE_GET = (byte)0x32;
+        public static final byte HEAD_UP_ANGLE_SET = (byte)0x0B;
+        public static final byte HEAD_UP_ACTION_SET = (byte)0x08;
+        public static final byte HEAD_UP_CALIBRATION_CONTROL = (byte)0x10;
+        public static final byte INFO_BATTERY_AND_FIRMWARE_GET = (byte)0x2C;
+        public static final byte INFO_MAC_ADDRESS_GET = (byte)0x2D;
+        public static final byte INFO_SERIAL_NUMBER_LENS_GET = (byte)0x33;
+        public static final byte INFO_SERIAL_NUMBER_GLASSES_GET = (byte)0x34;
+        public static final byte INFO_ESB_CHANNEL_GET = (byte)0x35;
+        public static final byte INFO_ESB_NOTIFICATION_COUNT_GET = (byte)0x36;
+        public static final byte INFO_TIME_SINCE_BOOT_GET = (byte)0x37;
+        public static final byte INFO_BURIED_POINT_GET = (byte)0x3E;
+        public static final byte LANGUAGE_SET = (byte)0x3D;
+        public static final byte MICROPHONE_SET = (byte)0x0E;
+        public static final byte MTU_SET = (byte)0x4D;
+        public static final byte NAVIGATION_CONTROL = (byte)0x0A;
+        public static final byte NOTIFICATION_APP_LIST_GET = (byte)0x2E;
+        public static final byte NOTIFICATION_APP_LIST_SET = (byte)0x04;
+        public static final byte NOTIFICATION_APPLE_GET = (byte)0x38;
+        public static final byte NOTIFICATION_AUTO_DISPLAY_GET = (byte)0x3C;
+        public static final byte NOTIFICATION_AUTO_DISPLAY_SET = (byte)0x4F;
+        public static final byte NOTIFICATION_SEND_CONTROL = (byte)0x4B;
+        public static final byte NOTIFICATION_CLEAR_CONTROL = (byte)0x4C;
+        public static final byte SILENT_MODE_GET = (byte)0x2B;
+        public static final byte SILENT_MODE_SET = (byte)0x03;
+        public static final byte STATUS_GET = (byte)0x22;
+        public static final byte STATUS_RUNNING_APP_GET = (byte)0x39;
+        public static final byte SYSTEM_CONTROL = (byte)0x23;
+        public static final byte TELEPROMPTER_CONTROL = (byte)0x09;
+        public static final byte TELEPROMPTER_SUSPEND = (byte)0x24;
+        public static final byte TELEPROMPTER_POSITION_SET = (byte)0x25;
+        public static final byte TEXT_SET = (byte)0x4E;
+        public static final byte TIMER_CONTROL = (byte)0x07;
+        public static final byte TRANSCRIBE_CONTROL = (byte)0x0D;
+        public static final byte TRANSLATE_CONTROL = (byte)0x0F;
+        public static final byte TUTORIAL_CONTROL = (byte)0x1F;
+        public static final byte UNPAIR = (byte)0x47;
+        public static final byte UPGRADE_CONTROL = (byte)0x17;
+        public static final byte WEAR_DETECTION_GET = (byte)0x3A;
+        public static final byte WEAR_DETECTION_SET = (byte)0x27;
+        public static final byte UNKNOWN = (byte)0x50;
+    };
 
-        CommandId(byte id) {
-            this.id = id;
-        }
+    public static class DashboardMode {
+        public static final byte FULL = 0x00;
+        public static final byte DUAL = 0x01;
+        public static final byte MINIMAl = 0x02;
     }
 
-    public static class DashboardConfig {
-        public static final byte SUB_COMMAND_SET_TIME_AND_WEATHER = 0x01;
-        public static final byte SUB_COMMAND_SET_MODE = 0x06;
-
-        public static final byte MODE_FULL = 0x00;
-        public static final byte MODE_DUAL = 0x01;
-        public static final byte MODE_MINIMAl = 0x02;
-
-        public static final byte PANE_NOTES = 0x00;
-        public static final byte PANE_STOCKS = 0x01;
-        public static final byte PANE_NEWS = 0x02;
-        public static final byte PANE_CALENDAR = 0x03;
-        public static final byte PANE_NAVIGATION = 0x04;
-        public static final byte PANE_EMPTY = 0x05;
-
+    public static class DashboardPaneMode {
+        public static final byte QUICK_NOTES = 0x00;
+        public static final byte STOCKS = 0x01;
+        public static final byte NEWS = 0x02;
+        public static final byte CALENDAR = 0x03;
+        public static final byte MAP = 0x04;
+        public static final byte EMPTY = 0x05;
     }
 
-    public enum SystemSubCommand {
-        RESET((byte) 0x72),
-        GET_FW_INFO((byte) 0x74),
-        SET_DEBUG_LOGGING((byte) 0x6C);
+    public static class DashboardSetSubcommand {
+        public static final byte TIME_AND_WEATHER = 0x01;
+        public static final byte WEATHER = 0x02;
+        public static final byte CALENDAR = 0x03;
+        public static final byte STOCKS = 0x04;
+        public static final byte NEWS = 0x05;
+        public static final byte MODE = 0x06;
+        public static final byte MAP = 0x07;
+    }
 
-        final public byte id;
+    public static class DashboardQuickNoteSubcommand {
+        public static final byte AUDIO_METADATA_GET = 0x01;
+        public static final byte AUDIO_FILE_GET = 0x02;
+        // This one has additional subcommands to delete, update or add a note.
+        public static final byte NOTE_TEXT_EDIT = 0x03;
+        public static final byte AUDIO_FILE_DELETE = 0x04;
+        // Does this delete the metadata?
+        public static final byte AUDIO_RECORD_DELETE = 0x05;
+        // Set or clear a checkmark in front of the entry.
+        public static final byte NOTE_STATUS_EDIT = 0x07;
+        public static final byte NOTE_ADD = 0x08;
+        public static final byte UNKNOWN = 0x09;
+        public static final byte NOTE_STATUS_EDIT_2 = 0x0A;
+    }
 
-        SystemSubCommand(byte id) {
-            this.id = id;
-        }
+    public static class HardwareSubcommand {
+//        public static final byte UNKNOWN = 0x01;
+        public static final byte DISPLAY = 0x02;
+//        public static final byte MIC_MUTEX_RELEASE = 0x03;
+        public static final byte LUM_GEAR = 0x04;
+        public static final byte DOUBLE_TAP_ACTION = 0x05;
+        public static final byte LUM_COEFFICIENT = 0x06;
+        public static final byte LONG_PRESS_ACTION = 0x07;
+        public static final byte HEAD_UP_MIC_ACTIVATION = 0x08;
+    }
+
+    public static class SystemSubcommand {
+        public static final byte DEBUG_LOGGING_SET = 0x6C;
+        public static final byte REBOOT = 0x72;
+        public static final byte FIRMWARE_BUILD_STRING_GET = 0x74;
+    }
+
+    public static final byte SYSTEM_FIRMWARE_BUILD_STRING_PREFIX = 0x6E;
+
+    public static class LanguageId {
+        public static final byte CHINESE = 0x01;
+        public static final byte ENGLISH = 0x02;
+        public static final byte JAPANESE = 0x03;
+        public static final byte KOREAN = 0x04;
+        public static final byte FRENCH = 0x05;
+        public static final byte GERMAN = 0x06;
+        public static final byte SPANISH = 0x07;
+        public static final byte ITALIAN = 0x0E;
+    }
+
+    public static class NavigationSubcommand {
+        public static final byte INIT = 0x00;
+        public static final byte TRIP_STATUS = 0x01;
+        public static final byte MAP_OVERVIEW = 0x02;
+        public static final byte PANORAMIC_MAP = 0x03;
+        public static final byte SYNC = 0x04;
+        public static final byte EXIT = 0x05;
+        public static final byte ARRIVED = 0x06;
+    }
+
+    public static class TextDisplayStyle {
+//        public static final byte UNKNOWN = 0x00;
+//        public static final byte UNKNOWN = 0x10;
+//        public static final byte UNKNOWN = 0x20;
+        public static final byte AI_DISPLAY_AUTO_SCROLL = 0x30;
+        public static final byte AI_DISPLAY_COMPLETE = 0x40;
+        public static final byte AI_DISPLAY_MANUAL_SCROLL = 0x50;
+        public static final byte AI_NETWORK_ERROR = 0x60;
+        public static final byte TEXT_ONY = 0x70;
     }
 
     public static class SilentStatus {
@@ -188,35 +287,40 @@ public class G1Constants {
         public static final byte DISABLE = (byte)0x31;
     }
 
-    public static class DeviceEventId {
+    public static class EventId {
         // Used to indicate a double tap, but it was used to close the dashboard.
-        public static final byte DOUBLE_TAP_FOR_EXIT = 0x00;
-        public static final byte UNKNOWN_1 = 0x01;
-        public static final byte HEAD_UP = 0x02;
-        public static final byte HEAD_DOWN = 0x03;
-        public static final byte SILENT_MODE_ENABLED = 0x04;
-        public static final byte SILENT_MODE_DISABLED = 0x05;
-        public static final byte GLASSES_WORN = 0x06;
-        public static final byte GLASSES_NOT_WORN_NO_CASE = 0x07;
-        public static final byte CASE_LID_OPEN = 0x08;
+        public static final byte ACTION_DOUBLE_TAP_FOR_EXIT = 0x00;
+        public static final byte ACTION_SINGLE_TAP = 0x01;
+        public static final byte ACTION_HEAD_UP = 0x02;
+        public static final byte ACTION_HEAD_DOWN = 0x03;
+        public static final byte ACTION_SILENT_MODE_ENABLED = 0x04;
+        public static final byte ACTION_SILENT_MODE_DISABLED = 0x05;
+        public static final byte STATE_WORN = 0x06;
+        public static final byte STATE_NOT_WORN_NO_CASE = 0x07;
+        public static final byte STATE_IN_CASE_LID_OPEN = 0x08;
         // Sent with a payload of 00 or 01 to indicate charging state.
-        public static final byte GLASSES_CHARGING = 0x09;
+        public static final byte STATE_CHARGING = 0x09;
         // Comes with a payload 00 - 64
-        public static final byte GLASSES_SIDE_BATTERY_LEVEL = 0x0A;
-        public static final byte CASE_LID_CLOSE = 0x0B;
+        public static final byte INFO_BATTERY_LEVEL = 0x0A;
+        public static final byte STATE_IN_CASE_LID_CLOSED = 0x0B;
         public static final byte UNKNOWN_4 = 0x0C;
         public static final byte UNKNOWN_5 = 0x0D;
         // Sent with a payload of 00 or 01 to indicate charging state.
-        public static final byte CASE_CHARGING = 0x0E;
+        public static final byte STATE_CASE_CHARGING = 0x0E;
         // Comes with a payload 00 - 64
-        public static final byte CASE_BATTERY_LEVEL = 0x0F;
+        public static final byte INFO_CASE_BATTERY_LEVEL = 0x0F;
         public static final byte UNKNOWN_6 = 0x10;
-        public static final byte BINDING_SUCCESS = 0x11;
-        public static final byte DASHBOARD_SHOW = 0x1E;
-        public static final byte DASHBOARD_CLOSE = 0x1F;
+        public static final byte ACTION_BINDING_SUCCESS = 0x11;
+        // ACTION_LONG_PRESS_HELD will be sent when the long press is started, ACTION_LONG_PRESS and
+        // ACTION_LONG_PRESS_RELEASED will be sent on release.
+        public static final byte ACTION_LONG_PRESS = 0x12;
+        public static final byte ACTION_LONG_PRESS_HELD = 0x17;
+        public static final byte ACTION_LONG_PRESS_RELEASED = 0x18;
+        public static final byte ACTION_DOUBLE_TAP_DASHBOARD_SHOW = 0x1E;
+        public static final byte ACTION_DOUBLE_TAP_DASHBOARD_CLOSE = 0x1F;
         // Used to initiate translate or transcribe in the official app.
         // For us it's strictly a double tap that only sends the event.
-        public static final byte DOUBLE_TAP_FOR_ACTION = 0x20;
+        public static final byte ACTION_DOUBLE_TAP = 0x20;
     }
 
     public static class TemperatureUnit {
