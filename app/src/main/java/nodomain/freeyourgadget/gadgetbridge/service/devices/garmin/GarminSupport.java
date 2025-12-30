@@ -312,19 +312,15 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             }
         }
 
-        final List<GBDeviceEvent> events = parsedMessage.getGBDeviceEvent();
-        for (final GBDeviceEvent event : events) {
-            evaluateGBDeviceEvent(event);
-        }
-
         sendAck("send status", parsedMessage); //send status message
 
         sendOutgoingMessage("send reply", parsedMessage); //send reply if any
 
         sendOutgoingMessage("send followup", followup); //send followup message if any
 
-        if (parsedMessage instanceof GenericStatusMessage && ((GenericStatusMessage) parsedMessage).getGarminMessage() == GFDIMessage.GarminMessage.CONFIGURATION) { //the last forced message exchange
-            completeInitialization();
+        final List<GBDeviceEvent> events = parsedMessage.getGBDeviceEvent();
+        for (final GBDeviceEvent event : events) {
+            evaluateGBDeviceEvent(event);
         }
 
         processDownloadQueue();
@@ -358,6 +354,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             }
         } else if (deviceEvent instanceof CapabilitiesDeviceEvent) {
             final Set<GarminCapability> capabilities = ((CapabilitiesDeviceEvent) deviceEvent).capabilities;
+            completeInitialization();
             if (capabilities.contains(GarminCapability.REALTIME_SETTINGS)) {
                 final String language = Locale.getDefault().getLanguage();
                 final String country = Locale.getDefault().getCountry();
@@ -722,6 +719,11 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     }
 
     private void completeInitialization() {
+        if (gbDevice.getState() == GBDevice.State.INITIALIZED) {
+            LOG.error("completeInitialization() was called, but the device is already initialized. This should never happen! Please report this to the project.");
+            LOG.warn("preventing double initialization");
+            return;
+        }
         sendOutgoingMessage("request supported file types", new SupportedFileTypesMessage());
         sendDeviceSettings();
 

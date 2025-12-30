@@ -16,10 +16,17 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.vivomovehr;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminPreferences;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.CapabilitiesDeviceEvent;
 
 public enum GarminCapability {
     CONNECT_MOBILE_FIT_LINK,
@@ -187,6 +194,22 @@ public enum GarminCapability {
         return result;
     }
 
+    public static Set<GarminCapability> setFromLong(final long capabilitiesMask) {
+        final Set<GarminCapability> result =
+                new HashSet<>(GarminCapability.values().length);
+
+        for (int i = 0; i < Long.SIZE; i++) {
+            if ((capabilitiesMask & (1L << i)) != 0) {
+                GarminCapability cap = FROM_ORDINAL.get(i);
+                if (cap != null) {
+                    result.add(cap);
+                }
+            }
+        }
+        return result;
+    }
+
+
     public static byte[] setToBinary(final Set<GarminCapability> capabilities) {
         final GarminCapability[] values = values();
         final byte[] result = new byte[(values.length + 7) / 8];
@@ -212,5 +235,16 @@ public enum GarminCapability {
             result.append(cap.name());
         }
         return result.toString();
+    }
+
+    public static List<GBDeviceEvent> getGBDeviceEvent(final Set<GarminCapability> capabilities) {
+        final Set<Object> capabilitiesPref = new HashSet<>();
+        for (final GarminCapability capability : capabilities) {
+            capabilitiesPref.add(capability.name());
+        }
+        return Arrays.asList(
+                new CapabilitiesDeviceEvent(capabilities),
+                new GBDeviceEventUpdatePreferences(GarminPreferences.PREF_GARMIN_CAPABILITIES, capabilitiesPref)
+        );
     }
 }

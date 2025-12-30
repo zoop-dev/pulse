@@ -35,14 +35,7 @@ public class ConfigurationMessage extends GFDIMessage {
 
     @Override
     public List<GBDeviceEvent> getGBDeviceEvent() {
-        final Set<Object> capabilitiesPref = new HashSet<>();
-        for (final GarminCapability capability : capabilities) {
-            capabilitiesPref.add(capability.name());
-        }
-        return Arrays.asList(
-                new CapabilitiesDeviceEvent(capabilities),
-                new GBDeviceEventUpdatePreferences(GarminPreferences.PREF_GARMIN_CAPABILITIES, capabilitiesPref)
-        );
+        return GarminCapability.getGBDeviceEvent(capabilities);
     }
 
     @Override

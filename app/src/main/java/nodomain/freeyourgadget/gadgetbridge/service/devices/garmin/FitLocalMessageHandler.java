@@ -6,7 +6,10 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
+import nodomain.freeyourgadget.gadgetbridge.devices.vivomovehr.GarminCapability;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitLocalMessageBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.GlobalFITMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.FitDataMessage;
@@ -44,12 +47,30 @@ public class FitLocalMessageHandler implements MessageHandler{
     }
 
     private void parseIncomingFitDataMessage(FitDataMessage incoming) {
+        final List<GBDeviceEvent> deviceEventList = new ArrayList<>();
         recordDataList = (incoming).applyDefinitions(recordDefinitionList);
         for(RecordData d: recordDataList){
             LOG.info("Incoming FitDataMessage: {}", d);
+            List<GBDeviceEvent> processed = processRecordData(d);
+            if(processed!=null) {
+                deviceEventList.addAll(processed);
+            }
         }
-        LOG.info("Incoming FitDataMessages are not processed any further, just logged.");
+        LOG.info("Some incoming FitDataMessages are not processed any further, just logged.");
+        for (final GBDeviceEvent event : deviceEventList) {
+            deviceSupport.evaluateGBDeviceEvent(event);
+        }
         unregisterSelf();
+    }
+
+    private List<GBDeviceEvent> processRecordData(RecordData d) {
+        if (d.getRecordDefinition().getGlobalFITMessage() == GlobalFITMessage.CAPABILITIES) {
+            //TODO: we are not sure this is correct!
+            return GarminCapability.getGBDeviceEvent(
+                    GarminCapability.setFromLong((Long) d.getFieldByName("connectivity_supported"))
+            );
+        }
+        return null;
     }
 
     private void unregisterSelf() {
