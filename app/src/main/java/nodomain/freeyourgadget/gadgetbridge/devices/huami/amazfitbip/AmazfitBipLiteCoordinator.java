@@ -76,6 +76,7 @@ public class AmazfitBipLiteCoordinator extends AmazfitBipCoordinator {
         //calendar.add(R.xml.devicesettings_reserve_reminders_calendar);
         final List<Integer> connection = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.CONNECTION);
         connection.add(R.xml.devicesettings_disconnectnotification);
+        connection.add(R.xml.devicesettings_expose_hr_thirdparty);
         connection.add(R.xml.devicesettings_bt_connected_advertisement);
         connection.add(R.xml.devicesettings_overwrite_settings_on_connection);
         final List<Integer> developer = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DEVELOPER);
