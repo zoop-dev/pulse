@@ -1,8 +1,10 @@
-package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http;
+package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,10 +18,11 @@ import java.util.stream.Collectors;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiHttpService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminPrefs;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminSupport;
-import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.GarminHttpRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.GarminHttpResponse;
 
-public class OauthHandler {
-    private static final Logger LOG = LoggerFactory.getLogger(OauthHandler.class);
+public class OauthInterceptor implements HttpInterceptor {
+    private static final Logger LOG = LoggerFactory.getLogger(OauthInterceptor.class);
 
     private static final Gson GSON = new GsonBuilder()
             //.serializeNulls()
@@ -27,11 +30,18 @@ public class OauthHandler {
 
     private final GarminSupport deviceSupport;
 
-    public OauthHandler(final GarminSupport deviceSupport) {
+    public OauthInterceptor(final GarminSupport deviceSupport) {
         this.deviceSupport = deviceSupport;
     }
 
-    public GarminHttpResponse handleRequest(final GarminHttpRequest request) {
+    @Override
+    public boolean supports(@NotNull final GarminHttpRequest request) {
+        return request.getPath().startsWith("/api/oauth") || request.getPath().startsWith("/oauthTokenExchangeService");
+    }
+
+    @Override
+    @Nullable
+    public GarminHttpResponse handle(@NotNull final GarminHttpRequest request) {
         if (request.getRawRequest().getMethod() != GdiHttpService.HttpService.Method.POST) {
             LOG.warn("Known OAuth requests should be POST");
             return null;

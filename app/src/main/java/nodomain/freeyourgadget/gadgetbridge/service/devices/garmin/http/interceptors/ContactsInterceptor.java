@@ -1,5 +1,7 @@
-package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http;
+package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,18 +16,27 @@ import nodomain.freeyourgadget.gadgetbridge.entities.Contact;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GarminContacts;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.GarminHttpRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.GarminHttpResponse;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
-public class ContactsHandler {
-    private static final Logger LOG = LoggerFactory.getLogger(ContactsHandler.class);
+public class ContactsInterceptor implements HttpInterceptor {
+    private static final Logger LOG = LoggerFactory.getLogger(ContactsInterceptor.class);
 
     private final GarminSupport deviceSupport;
 
-    public ContactsHandler(final GarminSupport deviceSupport) {
+    public ContactsInterceptor(final GarminSupport deviceSupport) {
         this.deviceSupport = deviceSupport;
     }
 
-    public GarminHttpResponse handleRequest(final GarminHttpRequest request) {
+    @Override
+    public boolean supports(@NotNull final GarminHttpRequest request) {
+        return request.getPath().startsWith("/device-gateway/usercontact/");
+    }
+
+    @Override
+    @Nullable
+    public GarminHttpResponse handle(@NotNull final GarminHttpRequest request) {
         if (!request.getPath().equals("/device-gateway/usercontact/contacts")) {
             LOG.warn("Unknown contacts path {}", request.getPath());
             return null;

@@ -1,4 +1,4 @@
-package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http;
+package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,10 +25,12 @@ import java.util.UUID;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiHttpService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.GarminHttpRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.GarminHttpResponse;
 import nodomain.freeyourgadget.gadgetbridge.util.NotificationUtils;
 
-public class ImageServiceHandler {
-    private static final Logger LOG = LoggerFactory.getLogger(ImageServiceHandler.class);
+public class ImageServiceInterceptor implements HttpInterceptor {
+    private static final Logger LOG = LoggerFactory.getLogger(ImageServiceInterceptor.class);
 
     private static final Gson GSON = new GsonBuilder()
             //.serializeNulls()
@@ -34,11 +38,18 @@ public class ImageServiceHandler {
 
     private final GarminSupport deviceSupport;
 
-    public ImageServiceHandler(final GarminSupport deviceSupport) {
+    public ImageServiceInterceptor(final GarminSupport deviceSupport) {
         this.deviceSupport = deviceSupport;
     }
 
-    public GarminHttpResponse handleRequest(final GarminHttpRequest request) {
+    @Override
+    public boolean supports(@NotNull final GarminHttpRequest request) {
+        return request.getPath().startsWith("/image-service/");
+    }
+
+    @Override
+    @Nullable
+    public GarminHttpResponse handle(@NotNull final GarminHttpRequest request) {
         if (request.getRawRequest().getMethod() != GdiHttpService.HttpService.Method.GET) {
             LOG.warn("Known image service requests should be GET");
             return null;

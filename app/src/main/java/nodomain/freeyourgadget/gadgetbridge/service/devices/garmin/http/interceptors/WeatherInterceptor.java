@@ -1,4 +1,4 @@
-package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http;
+package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors;
 
 import android.location.Location;
 
@@ -9,6 +9,8 @@ import net.e175.klaus.solarpositioning.DeltaT;
 import net.e175.klaus.solarpositioning.SPA;
 import net.e175.klaus.solarpositioning.SunriseTransitSet;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,18 +29,27 @@ import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.GarminHttpRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.GarminHttpResponse;
 import nodomain.freeyourgadget.gadgetbridge.webview.CurrentPosition;
 
 @SuppressWarnings("unused")
-public class WeatherHandler {
-    private static final Logger LOG = LoggerFactory.getLogger(WeatherHandler.class);
+public class WeatherInterceptor implements HttpInterceptor {
+    private static final Logger LOG = LoggerFactory.getLogger(WeatherInterceptor.class);
 
     private static final Gson GSON = new GsonBuilder()
             //.serializeNulls()
             .create();
 
-    // These get requested on connection at most every 5 minutes
-    public static GarminHttpResponse handleWeatherRequest(final GarminHttpRequest request) {
+    @Override
+    public boolean supports(@NotNull final GarminHttpRequest request) {
+        return request.getPath().startsWith("/weather/");
+    }
+
+    /// These get requested on connection at most every 5 minutes
+    @Override
+    @Nullable
+    public GarminHttpResponse handle(@NotNull final GarminHttpRequest request) {
         final String path = request.getPath();
         final Map<String, String> query = request.getQuery();
 

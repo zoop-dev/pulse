@@ -1,7 +1,11 @@
-package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.agps;
+package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors;
+
+import android.net.Uri;
 
 import androidx.documentfile.provider.DocumentFile;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +22,8 @@ import java.util.concurrent.Callable;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminPreferences;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.agps.GarminAgpsFile;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.agps.GarminAgpsStatus;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.GarminHttpRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.GarminHttpResponse;
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
@@ -25,16 +31,23 @@ import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
-public class AgpsHandler {
-    private static final Logger LOG = LoggerFactory.getLogger(AgpsHandler.class);
+public class AgpsInterceptor implements HttpInterceptor {
+    private static final Logger LOG = LoggerFactory.getLogger(AgpsInterceptor.class);
     private static final String QUERY_CONSTELLATIONS = "constellations";
     private final GarminSupport deviceSupport;
 
-    public AgpsHandler(GarminSupport deviceSupport) {
+    public AgpsInterceptor(final GarminSupport deviceSupport) {
         this.deviceSupport = deviceSupport;
     }
 
-    public GarminHttpResponse handleAgpsRequest(final GarminHttpRequest request) {
+    @Override
+    public boolean supports(@NotNull final GarminHttpRequest request) {
+        return request.getPath().startsWith("/ephemeris/");
+    }
+
+    @Override
+    @Nullable
+    public GarminHttpResponse handle(@NotNull final GarminHttpRequest request) {
         saveKnownUrl(request.getUrl());
 
         try {

@@ -1,5 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http;
 
+import androidx.annotation.Nullable;
+
 import com.google.protobuf.ByteString;
 
 import org.slf4j.Logger;
@@ -7,27 +9,34 @@ import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.zip.GZIPOutputStream;
 
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiHttpService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.agps.AgpsHandler;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors.AgpsInterceptor;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors.ContactsInterceptor;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors.HttpInterceptor;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors.ImageServiceInterceptor;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors.OauthInterceptor;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors.WeatherInterceptor;
 
 public class HttpHandler {
     private static final Logger LOG = LoggerFactory.getLogger(HttpHandler.class);
 
-    private final AgpsHandler agpsHandler;
-    private final ContactsHandler contactsHandler;
-    private final OauthHandler oauthHandler;
-    private final ImageServiceHandler imageServiceHandler;
+    private final List<HttpInterceptor> interceptors;
 
     public HttpHandler(GarminSupport deviceSupport) {
-        agpsHandler = new AgpsHandler(deviceSupport);
-        contactsHandler = new ContactsHandler(deviceSupport);
-        oauthHandler = new OauthHandler(deviceSupport);
-        imageServiceHandler = new ImageServiceHandler(deviceSupport);
+        interceptors = Arrays.asList(
+                new WeatherInterceptor(),
+                new AgpsInterceptor(deviceSupport),
+                new ImageServiceInterceptor(deviceSupport),
+                new ContactsInterceptor(deviceSupport),
+                new OauthInterceptor(deviceSupport)
+        );
     }
 
     public GdiHttpService.HttpService handle(final GdiHttpService.HttpService httpService) {
@@ -59,26 +68,7 @@ public class HttpHandler {
 
         final GarminHttpRequest request = new GarminHttpRequest(rawRequest);
 
-        final GarminHttpResponse response;
-        if (request.getPath().startsWith("/weather/")) {
-            LOG.info("Got weather request for {}", request.getPath());
-            response = WeatherHandler.handleWeatherRequest(request);
-        } else if (request.getPath().startsWith("/ephemeris/")) {
-            LOG.info("Got AGPS request for {}", request.getPath());
-            response = agpsHandler.handleAgpsRequest(request);
-        } else if (request.getPath().startsWith("/device-gateway/usercontact/")) {
-            LOG.info("Got contacts request for {}", request.getPath());
-            response = contactsHandler.handleRequest(request);
-        } else if (request.getPath().startsWith("/api/oauth") || request.getPath().startsWith("/oauthTokenExchangeService")) {
-            LOG.info("Got OAuth request for {}", request.getPath());
-            response = oauthHandler.handleRequest(request);
-        } else if (request.getPath().startsWith("/image-service/")) {
-            LOG.info("Got image service request for {}", request.getPath());
-            response = imageServiceHandler.handleRequest(request);
-        } else {
-            LOG.warn("Unhandled path {}", request.getPath());
-            response = null;
-        }
+        final GarminHttpResponse response = handleRequest(request);
 
         if (response == null) {
             return GdiHttpService.HttpService.RawResponse.newBuilder()
@@ -89,6 +79,22 @@ public class HttpHandler {
         LOG.debug("Http response status={}", response.getStatus());
 
         return createRawResponse(request, response);
+    }
+
+    @Nullable
+    private GarminHttpResponse handleRequest(final GarminHttpRequest request) {
+        final Optional<HttpInterceptor> interceptorOpt = interceptors.stream()
+                .filter(it -> it.supports(request))
+                .findFirst();
+
+        if (interceptorOpt.isEmpty()) {
+            LOG.warn("No interceptor for {}", request.getPath());
+            return null;
+        }
+
+        final HttpInterceptor interceptor = interceptorOpt.get();
+        LOG.debug("Handling request to {}", interceptor.getClass().getSimpleName());
+        return interceptor.handle(request);
     }
 
     private static GdiHttpService.HttpService.RawResponse createRawResponse(
