@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.aawireless;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -87,15 +88,18 @@ public class AAWirelessSupport extends AbstractBTBRDeviceSupport {
     @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
         packetBuffer.clear();
+        sendCommand(builder, CMD_STATUS_REQUEST, new byte[0]);
+        return builder;
+    }
 
+    @Override
+    public void setContext(final GBDevice gbDevice, final BluetoothAdapter btAdapter, final Context context) {
+        super.setContext(gbDevice, btAdapter, context);
         final IntentFilter commandFilter = new IntentFilter();
         commandFilter.addAction(AAWirelessPrefs.ACTION_PHONE_SWITCH);
         commandFilter.addAction(AAWirelessPrefs.ACTION_PHONE_SORT);
         commandFilter.addAction(AAWirelessPrefs.ACTION_PHONE_DELETE);
         ContextCompat.registerReceiver(getContext(), commandReceiver, commandFilter, ContextCompat.RECEIVER_NOT_EXPORTED);
-
-        sendCommand(builder, CMD_STATUS_REQUEST, new byte[0]);
-        return builder;
     }
 
     @Override
