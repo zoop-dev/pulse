@@ -1859,6 +1859,7 @@
     <string name="devicetype_amazfit_gtr4" translatable="false">Amazfit GTR 4</string>
     <string name="devicetype_amazfit_trex_2" translatable="false">Amazfit T-Rex 2</string>
     <string name="devicetype_amazfit_trex_3" translatable="false">Amazfit T-Rex 3</string>
+    <string name="devicetype_amazfit_active_max" translatable="false">Amazfit Active Max</string>
     <string name="devicetype_amazfit_trex_3_pro_44mm" translatable="false">Amazfit T-Rex 3 Pro (44mm)</string>
     <string name="devicetype_amazfit_trex_3_pro_48mm" translatable="false">Amazfit T-Rex 3 Pro (48mm)</string>
     <string name="devicetype_amazfit_trex_ultra" translatable="false">Amazfit T-Rex Ultra</string>
