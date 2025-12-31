@@ -166,6 +166,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivosport.Gar
 import nodomain.freeyourgadget.gadgetbridge.devices.generic_headphones.GenericHeadphonesCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.generic_hr.GenericHeartRateCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.generic_scale.GenericWeightScaleCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.D3Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.DotnP66DCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.HaylouWatch2ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.ImikiFrame2Coordinator;
@@ -803,6 +804,7 @@ public enum DeviceType {
     IMIKI_FRAME_2(ImikiFrame2Coordinator.class),
     HAYLOU_WATCH_2_PRO(HaylouWatch2ProCoordinator.class),
     S52(S52Coordinator.class),
+    D3(D3Coordinator.class),
     Y66(Y66Coordinator.class),
     REALME_BUDS_T110(RealmeBudsT110Coordinator.class),
     REALME_BUDS_T100(RealmeBudsT100Coordinator.class),
