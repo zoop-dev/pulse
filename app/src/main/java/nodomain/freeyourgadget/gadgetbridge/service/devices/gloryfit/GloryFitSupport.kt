@@ -49,6 +49,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.wena3.protocol.packets.notification.defines.VibrationKind
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol
 import nodomain.freeyourgadget.gadgetbridge.util.MediaManager
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.coerceIn
 import org.apache.commons.lang3.ArrayUtils
 import org.apache.commons.lang3.StringUtils
 import org.slf4j.Logger
@@ -59,7 +60,6 @@ import java.util.Calendar
 import java.util.GregorianCalendar
 import java.util.Locale
 import java.util.UUID
-import nodomain.freeyourgadget.gadgetbridge.util.kotlin.coerceIn
 
 class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
     init {
@@ -126,6 +126,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         }
         setEnableCallRejection(builder)
         setEnableSmsReply(builder)
+        setSosContact(builder)
 
         // FIXME this is probably too early
         builder.setDeviceState(GBDevice.State.INITIALIZED)
@@ -414,6 +415,11 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
                 setSpo2Measurement(builder)
             }
 
+            DeviceSettingsPreferenceConst.PREF_SOS_CONTACT_NAME,
+            DeviceSettingsPreferenceConst.PREF_SOS_CONTACT_NUMBER -> {
+                setSosContact(builder)
+            }
+
             DeviceSettingsPreferenceConst.PREF_ENABLE_SMS_QUICK_REPLY -> {
                 setEnableSmsReply(builder)
             }
@@ -473,21 +479,12 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         val encodedContacts: MutableList<ByteArray> = mutableListOf()
 
         for (contact in contacts) {
-            val numberBytes = contact.number.toByteArray()
-            val nameBytes = nodomain.freeyourgadget.gadgetbridge.util.StringUtils.truncateUtf16BE(contact.name, 20)
+            val numberNameBytes = encodeContact(contact.name, contact.number) ?: continue
 
-            if (numberBytes.size > 15) {
-                LOG.warn("Contact number length {} too long, skipping", contact.number.length)
-                continue
-            }
-
-            val buf = ByteBuffer.allocate(4 + numberBytes.size + nameBytes.size).order(ByteOrder.BIG_ENDIAN)
+            val buf = ByteBuffer.allocate(2 + numberNameBytes.size).order(ByteOrder.BIG_ENDIAN)
             buf.put(CMD_CONTACTS)
             buf.put(CONTACTS_ADD)
-            buf.put(numberBytes.size.toByte())
-            buf.put(nameBytes.size.toByte())
-            buf.put(numberBytes)
-            buf.put(nameBytes)
+            buf.put(numberNameBytes)
 
             encodedContacts.add(buf.array())
         }
@@ -556,6 +553,24 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
             )
         )
         builder.queue()
+    }
+
+    private fun encodeContact(name: String, number: String): ByteArray? {
+        val numberBytes = number.toByteArray()
+        val nameBytes = nodomain.freeyourgadget.gadgetbridge.util.StringUtils.truncateUtf16BE(name, 20)
+
+        if (numberBytes.size > 15) {
+            LOG.warn("Contact number length {} too long, skipping", number.length)
+            return null
+        }
+
+        val buf = ByteBuffer.allocate(2 + numberBytes.size + nameBytes.size).order(ByteOrder.BIG_ENDIAN)
+        buf.put(numberBytes.size.toByte())
+        buf.put(nameBytes.size.toByte())
+        buf.put(numberBytes)
+        buf.put(nameBytes)
+
+        return buf.array()
     }
 
     override fun onSetAlarms(alarms: ArrayList<out Alarm>) {
@@ -1181,6 +1196,50 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         )
     }
 
+    private fun setSosContact(builder: TransactionBuilder) {
+        if (!GBApplication.getPrefs().experimentalSettings()) {
+            LOG.warn("Experimental settings disabled, ignoring SOS contact")
+            return
+        }
+
+        val name = devicePrefs.getString(DeviceSettingsPreferenceConst.PREF_SOS_CONTACT_NAME, "")
+        val number = devicePrefs.getString(DeviceSettingsPreferenceConst.PREF_SOS_CONTACT_NUMBER, "")
+
+        if (name.isBlank() || number.isBlank()) {
+            LOG.warn("SOS contact number or name is blank, ignoring")
+            return
+        }
+
+        val numberNameBytes = encodeContact(name, number) ?: return
+
+        LOG.debug("Setting SOS contact name = {}, number = {}", name, number)
+
+        // Clear
+        builder.write(
+            UUID_CHARACTERISTIC_GLORYFIT_DATA_WRITE,
+            *byteArrayOf(CMD_CONTACTS, CONTACT_SOS_CLEAR)
+        )
+
+        // Set - 37 ac 01 37 ac 06 10 35 3536363636004a0061006e006500200044006f006500000000000000000000000000
+        builder.write(
+            UUID_CHARACTERISTIC_GLORYFIT_DATA_WRITE,
+            *ByteBuffer.allocate(244).order(ByteOrder.LITTLE_ENDIAN).apply {
+                put(CMD_CONTACTS)
+                put(CONTACT_SOS_SET)
+                put(0x01.toByte())
+                put(CMD_CONTACTS)
+                put(CONTACT_SOS_SET)
+                put(numberNameBytes)
+            }.array()
+        )
+
+        // End - 37 ad fd c1
+        builder.write(
+            UUID_CHARACTERISTIC_GLORYFIT_DATA_WRITE,
+            *byteArrayOf(CMD_CONTACTS, CONTACT_SOS_END, 0xfd.toByte(), 0xc1.toByte())
+        )
+    }
+
     private fun rearmBatteryStateRequestTimer() {
         mHandler.removeCallbacks(mBatteryStateRequestRunnable)
         val devicePrefs = getDevicePrefs()
@@ -1313,6 +1372,9 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         const val CONTACTS_START: Byte = 0xfa.toByte()
         const val CONTACTS_ADD: Byte = 0xfb.toByte()
         const val CONTACTS_END: Byte = 0xfc.toByte()
+        const val CONTACT_SOS_CLEAR: Byte = 0xae.toByte()
+        const val CONTACT_SOS_SET: Byte = 0xac.toByte()
+        const val CONTACT_SOS_END: Byte = 0xad.toByte()
         const val CMD_FACTORY_RESET: Byte = 0xad.toByte()
     }
 }

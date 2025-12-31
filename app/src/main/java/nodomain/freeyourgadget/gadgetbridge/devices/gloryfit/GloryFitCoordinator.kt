@@ -188,6 +188,10 @@ abstract class GloryFitCoordinator : AbstractBLEDeviceCoordinator() {
         )
     }
 
+    override fun getSupportedDeviceSpecificExperimentalSettings(device: GBDevice): IntArray? {
+        return intArrayOf(R.xml.devicesettings_sos_contact)
+    }
+
     override fun getDeviceSpecificSettings(device: GBDevice): DeviceSpecificSettings {
         val deviceSpecificSettings = DeviceSpecificSettings()
 

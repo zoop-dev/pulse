@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:title="@string/pref_sos_contact_title">
+
+    <PreferenceCategory
+        android:key="pref_header_sos_contact"
+        android:title="@string/pref_sos_contact_title"
+        app:iconSpaceReserved="false">
+
+        <EditTextPreference
+            android:key="sos_contact_name"
+            android:maxLength="20"
+            android:title="@string/contact_name"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:key="sos_contact_number"
+            android:maxLength="15"
+            android:title="@string/contact_phone_number"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+</androidx.preference.PreferenceScreen>

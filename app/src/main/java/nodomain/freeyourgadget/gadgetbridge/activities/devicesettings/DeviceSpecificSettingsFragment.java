@@ -842,6 +842,8 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_MEDIA_PLAYBACK_MODE);
         addPreferenceHandlerFor(PREF_SHOKZ_EQUALIZER_BLUETOOTH);
         addPreferenceHandlerFor(PREF_SHOKZ_EQUALIZER_MP3);
+        addPreferenceHandlerFor(PREF_SOS_CONTACT_NAME);
+        addPreferenceHandlerFor(PREF_SOS_CONTACT_NUMBER);
 
         addPreferenceHandlerFor(PREF_SHOKZ_CONTROLS_LONG_PRESS_MULTI_FUNCTION);
         addPreferenceHandlerFor(PREF_SHOKZ_CONTROLS_SIMULTANEOUS_VOLUME_UP_DOWN);
