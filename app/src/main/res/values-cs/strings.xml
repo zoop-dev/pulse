@@ -4167,4 +4167,5 @@
     <string name="prefs_title_battery_allow_bypass_mode">Povolit obejití baterie</string>
     <string name="pref_title_pebble_search_app_updates">Vyhledat aktualizace aplikace</string>
     <string name="pref_summary_pebble_search_app_updates">Při otevření správce aplikací automaticky vyhledávat aktualizace aplikací a ciferníků na hodinkách</string>
+    <string name="pref_sos_contact_title">SOS kontakt</string>
 </resources>
