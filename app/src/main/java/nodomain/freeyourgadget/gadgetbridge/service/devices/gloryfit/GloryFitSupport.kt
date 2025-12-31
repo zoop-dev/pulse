@@ -59,7 +59,7 @@ import java.util.Calendar
 import java.util.GregorianCalendar
 import java.util.Locale
 import java.util.UUID
-import kotlin.math.roundToInt
+import nodomain.freeyourgadget.gadgetbridge.util.kotlin.coerceIn
 
 class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
     init {
@@ -944,10 +944,10 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         buf.put(CMD_USER_INFO)
         buf.putShort(activityUser.heightCm.coerceIn(91, 241).toShort())
         buf.putShort(activityUser.weightKg.coerceIn(20, 255).toShort())
-        buf.put(0x05) // ?
+        buf.put(devicePrefs.screenTimeout.coerceIn(5, 15, 5).toByte())
         buf.put(0x00) // ?
         buf.put(0x00) // ?
-        buf.putShort(((activityUser.stepsGoal / 1000.0).roundToInt() * 1000).coerceIn(1000, 30000).toShort())
+        buf.putShort(activityUser.stepsGoal.coerceIn(1000, 30000, 1000).toShort())
         buf.put(if (raiseHandToActivateDisplay) 0x01 else 0x00)
         buf.put(heartRateAlertHigh)
         buf.put(0x00) // ?
@@ -970,7 +970,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
     fun setGoalSteps(builder: TransactionBuilder) {
         val activityUser = ActivityUser()
 
-        val stepsCoerced = ((activityUser.stepsGoal / 1000.0).roundToInt() * 1000).coerceIn(1000, 30000).toShort()
+        val stepsCoerced = activityUser.stepsGoal.coerceIn(1000, 30000, 1000).toShort()
 
         LOG.debug("Setting steps goal to {}", stepsCoerced)
 
@@ -988,7 +988,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
     fun setGoalCalories(builder: TransactionBuilder) {
         val activityUser = ActivityUser()
 
-        val caloriesCoerced = ((activityUser.caloriesBurntGoal / 50.0).roundToInt() * 50).coerceIn(50, 1000).toShort()
+        val caloriesCoerced = activityUser.caloriesBurntGoal.coerceIn(50, 1000, 50).toShort()
 
         LOG.debug("Setting calories goal to {}", caloriesCoerced)
 
@@ -1004,8 +1004,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
     fun setGoalDistance(builder: TransactionBuilder) {
         val activityUser = ActivityUser()
 
-        val distanceCoerced =
-            ((activityUser.distanceGoalMeters / 1000f).roundToInt() * 1000).coerceIn(1000, 20000).toShort()
+        val distanceCoerced = activityUser.distanceGoalMeters.coerceIn(1000, 20000, 1000).toShort()
 
         LOG.debug("Setting distance goal to {}", distanceCoerced)
 
@@ -1037,7 +1036,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         val buf = ByteBuffer.allocate(12).order(ByteOrder.BIG_ENDIAN)
         buf.put(CMD_SEDENTARY_REMINDER)
         buf.put(if (enabled) 0x01 else 0x00)
-        buf.put(((duration / 5.0).roundToInt() * 5).coerceIn(30, 180).toByte())
+        buf.put(duration.coerceIn(30, 180, 5).toByte())
         buf.put(0x02) // ?
         buf.put(0x03) // ?
         buf.put(0x01) // ?

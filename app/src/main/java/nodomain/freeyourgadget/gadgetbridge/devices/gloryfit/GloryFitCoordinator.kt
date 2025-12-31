@@ -196,6 +196,7 @@ abstract class GloryFitCoordinator : AbstractBLEDeviceCoordinator() {
 
         val display = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DISPLAY)
         display.add(R.xml.devicesettings_liftwrist_display_noshed)
+        display.add(R.xml.devicesettings_screen_timeout)
 
         val health = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH)
         health.add(R.xml.devicesettings_heartrate_automatic_enable)

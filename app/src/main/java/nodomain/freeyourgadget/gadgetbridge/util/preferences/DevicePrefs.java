@@ -156,4 +156,8 @@ public class DevicePrefs extends Prefs {
     public int getHeartRateLowThreshold() {
         return getInt(DeviceSettingsPreferenceConst.PREF_HEARTRATE_ALERT_LOW_THRESHOLD, 0);
     }
+
+    public int getScreenTimeout() {
+        return getInt(PREF_SCREEN_TIMEOUT, 5);
+    }
 }

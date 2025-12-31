@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.gloryfit
 
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import kotlinx.parcelize.Parcelize
 import nodomain.freeyourgadget.gadgetbridge.R
@@ -62,6 +63,19 @@ class GloryFitSettingsCustomizer : DeviceSpecificSettingsCustomizer {
         dndStart?.isVisible = false
         val dndEnd = handler.findPreference<Preference>(DeviceSettingsPreferenceConst.PREF_INACTIVITY_DND_END)
         dndEnd?.isVisible = false
+
+        handler.findPreference<ListPreference>(DeviceSettingsPreferenceConst.PREF_SCREEN_TIMEOUT)?.let {
+            it.entries = arrayOf(
+                handler.context.getString(R.string.seconds_5),
+                handler.context.getString(R.string.seconds_10),
+                handler.context.getString(R.string.seconds_15),
+            )
+            it.entryValues = arrayOf(
+                "5",
+                "10",
+                "15",
+            )
+        }
     }
 
     override fun getPreferenceKeysWithSummary(): Set<String> {
