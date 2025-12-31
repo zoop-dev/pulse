@@ -737,7 +737,6 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
 
         gbDevice.setUpdateState(GBDevice.State.INITIALIZED, getContext());
-        gbDevice.sendDeviceUpdateIntent(getContext());
 
 
         if (mFirstConnect) {
@@ -877,7 +876,6 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                     GB.signalActivityDataFinish(getDevice());
                     transferNotification.finish();
                     getDevice().sendDeviceUpdateIntent(getContext());
-                    isBusyFetching = false;
                 }
             });
         }
