@@ -212,6 +212,14 @@ public class GBApplication extends Application {
         LocalBroadcastManager.getInstance(context).sendBroadcast(quitIntent);
         GBApplication.deviceService().quit();
 
+        if (lockHandler != null) {
+            try {
+                lockHandler.closeDb();
+            } catch (final Exception e) {
+                GB.log("Failed to close DB before restart", GB.ERROR, e);
+            }
+        }
+
         final Intent startActivity = new Intent(context, ControlCenterv2.class);
         final PendingIntent pendingIntent = PendingIntent.getActivity(
                 context,

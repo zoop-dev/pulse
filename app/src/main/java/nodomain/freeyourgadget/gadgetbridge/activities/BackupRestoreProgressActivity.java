@@ -125,11 +125,11 @@ public class BackupRestoreProgressActivity extends AbstractGBActivity {
                                     .setTitle(R.string.backup_restore_restart_title)
                                     .setMessage(message.toString())
                                     .setOnCancelListener((dialog -> {
-                                        finish();
+                                        finishAffinity();
                                         GBApplication.restart();
                                     }))
                                     .setPositiveButton(R.string.ok, (dialog, which) -> {
-                                        finish();
+                                        finishAffinity();
                                         GBApplication.restart();
                                     }).show();
                             break;

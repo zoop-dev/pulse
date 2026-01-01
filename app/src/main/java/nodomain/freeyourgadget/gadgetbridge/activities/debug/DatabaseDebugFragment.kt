@@ -85,6 +85,7 @@ class DatabaseDebugFragment : AbstractDebugFragment() {
                         Toast.LENGTH_SHORT,
                         GB.INFO
                     )
+                    requireActivity().finishAffinity()
                     GBApplication.restart()
                 } else {
                     GB.toast(
