@@ -46,8 +46,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 public class GalaxyBudsProtocol extends GBDeviceProtocol {
     private static final Logger LOG = LoggerFactory.getLogger(GalaxyBudsProtocol.class);
 
-    final UUID UUID_GALAXY_BUDS_DEVICE_CTRL = UUID.fromString("00001102-0000-1000-8000-00805f9b34fd");
-    final UUID UUID_GALAXY_BUDS_LIVE_DEVICE_CTRL = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    public static final UUID UUID_GALAXY_BUDS_DEVICE_CTRL = UUID.fromString("00001102-0000-1000-8000-00805f9b34fd");
+    public static final UUID UUID_GALAXY_BUDS_LIVE_DEVICE_CTRL = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     private static final byte SOM_BUDS = (byte) 0xFE;
     private static final byte EOM_BUDS = (byte) 0xEE;
