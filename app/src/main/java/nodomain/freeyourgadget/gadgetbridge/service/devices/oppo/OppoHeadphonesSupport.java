@@ -16,29 +16,78 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.oppo;
 
-import nodomain.freeyourgadget.gadgetbridge.service.AbstractHeadphoneSerialDeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
+import android.os.Handler;
 
-public class OppoHeadphonesSupport extends AbstractHeadphoneSerialDeviceSupport {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.UUID;
+
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractHeadphoneSerialDeviceSupportV2;
+
+public class OppoHeadphonesSupport extends AbstractHeadphoneSerialDeviceSupportV2<OppoHeadphonesProtocol> {
+    private static final Logger LOG = LoggerFactory.getLogger(OppoHeadphonesSupport.class);
+
+    private final Handler handler = new Handler();
+
+    // Some devices will not reply to the first battery request, so we need to retry a few times
+    private int batteryRetries = 0;
+    private final Runnable batteryReqRunnable = () -> {
+        final int batteryCount = getDevice().getDeviceCoordinator().getBatteryCount(getDevice());
+        boolean knownBattery = false;
+        for (int i = 0; i < batteryCount; i++) {
+            if (getDevice().getBatteryState(i) != BatteryState.UNKNOWN) {
+                knownBattery = true;
+                break;
+            }
+        }
+        if (!knownBattery) {
+            if (batteryRetries++ < 2) {
+                LOG.warn("Battery request retry {}", batteryRetries);
+                final TransactionBuilder builder = createTransactionBuilder("battery retry");
+                builder.write(mDeviceProtocol.encodeBatteryReq());
+                builder.queue();
+                scheduleBatteryRequestRetry();
+            } else {
+                LOG.error("Failed to get battery after {} tries", batteryRetries);
+                // Since this is not fatal, we stay connected
+            }
+        }
+    };
+
+    public OppoHeadphonesSupport() {
+        addSupportedService(UUID.fromString("0000079a-d102-11e1-9b23-00025b00a5a5"));
+    }
+
     @Override
-    protected GBDeviceProtocol createDeviceProtocol() {
+    protected OppoHeadphonesProtocol createDeviceProtocol() {
         return new OppoHeadphonesProtocol(getDevice());
     }
 
     @Override
-    protected GBDeviceIoThread createDeviceIOThread() {
-        return new OppoHeadphonesIoThread(
-                getDevice(),
-                getContext(),
-                (OppoHeadphonesProtocol) getDeviceProtocol(),
-                OppoHeadphonesSupport.this,
-                getBluetoothAdapter()
-        );
+    protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
+        builder.write(mDeviceProtocol.encodeFirmwareVersionReq());
+        builder.write(mDeviceProtocol.encodeConfigurationReq());
+        builder.write(mDeviceProtocol.encodeBatteryReq());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
+        scheduleBatteryRequestRetry();
+        return builder;
     }
 
     @Override
-    public boolean useAutoConnect() {
-        return false;
+    public void dispose() {
+        synchronized (ConnectionMonitor) {
+            handler.removeCallbacksAndMessages(null);
+            super.dispose();
+        }
+    }
+
+    private void scheduleBatteryRequestRetry() {
+        LOG.info("Scheduling battery request retry");
+
+        handler.postDelayed(batteryReqRunnable, 2000);
     }
 }
