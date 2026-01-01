@@ -28,6 +28,7 @@ public class HuaweiGpsParser {
         public int timestamp;
         public double latitude;
         public double longitude;
+        public boolean pause;
         public boolean altitudeSupported;
         public double altitude;
 
@@ -38,6 +39,7 @@ public class HuaweiGpsParser {
                     "timestamp=" + timestamp +
                     ", longitude=" + longitude +
                     ", latitude=" + latitude +
+                    ", pause=" + pause +
                     ", altitudeSupported=" + altitudeSupported +
                     ", altitude=" + altitude +
                     '}';
@@ -90,10 +92,12 @@ public class HuaweiGpsParser {
         ArrayList<GpsPoint> retv = new ArrayList<>(buffer.remaining() / data_size);
         while (buffer.remaining() > data_size) {
             short time_delta = buffer.getShort();
-            buffer.getShort(); // Unknown value
+            buffer.getShort(); // Unknown value, possible "bearing" (buffer.getShort() & 0xFFFF) * 0.01.
             float lon_delta = buffer.getFloat();
             float lat_delta = buffer.getFloat();
-            buffer.get(); buffer.get(); buffer.get(); // Unknown values
+            buffer.get(); // Unknown values, possible "accuracy"
+            buffer.get(); // Unknown values, possible "velocity"  (buffer.get() & 0xFF) * 0.1
+            byte pause = buffer.get();
 
             time = time + time_delta;
             lat = lat + lat_delta;
@@ -101,12 +105,17 @@ public class HuaweiGpsParser {
 
             GpsPoint point = new GpsPoint();
             point.timestamp = time;
+            // NOTE: instead of 6383807.0d should be 6378245.0 (Krassovsky 1940 ellipsoid).
+            // According to my research it provides better result. But I am not sure.
+            // Additional research required.
             point.latitude = (lat / 6383807.0d + lat_start) / 0.017453292519943d;
             point.longitude = (lon / 6383807.0d / Math.cos(lat_start) + lon_start) / 0.017453292519943d;
+            point.pause = pause == 1;
             point.altitudeSupported = alt_support;
             if (alt_support) {
+                // NOTE: in the modern devices e.g Watch Gt6 Pro altitude values absent or completely broken.
                 alt = buffer.getShort();
-                buffer.getShort(); // Unknown values
+                buffer.getShort(); // Unknown values related to altitude.
                 point.altitude = alt;
             }
             retv.add(point);

@@ -78,6 +78,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiEmotionsSampleP
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiGpsParser;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiHrvValueSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPdrParser;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiSequenceDataFileParser;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiSleepApneaSampleProvider;
@@ -99,7 +100,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiActivitySample;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiEcgDataSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiEcgDataSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiEcgSummarySample;
@@ -109,7 +109,6 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiHrvValueSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepApneaSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStageSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStatsSample;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStatsSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiStressSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiTemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutDataSample;
@@ -3467,9 +3466,37 @@ public class HuaweiSupportProvider {
         }
     }
 
-
     public void endOfWorkoutSync() {
         this.syncState.stopWorkoutSync();
+    }
+
+    public void downloadWorkoutPdrFiles(short workoutId, Long databaseId) {
+        if(!getHuaweiCoordinator().isSupportsGpsNewSync())
+            return;
+        huaweiFileDownloadManager.addToQueue(HuaweiFileDownloadManager.FileRequest.workoutPdrFileRequest(
+                workoutId,
+                databaseId,
+                new HuaweiFileDownloadManager.FileDownloadCallback() {
+                    @Override
+                    public void downloadComplete(HuaweiFileDownloadManager.FileRequest fileRequest) {
+                        if (fileRequest.getData().length == 0) {
+                            LOG.debug("PDR file empty");
+                            return;
+                        }
+
+                        LOG.debug("Parsing PDR file");
+                        HuaweiPdrParser.PdrPoint[] points = HuaweiPdrParser.parseHuaweiPdr(fileRequest.getData());
+                        LOG.info("Points: ", points);
+                        //TODO: postprocess and combine with Gps data
+                    }
+
+                    @Override
+                    public void downloadException(HuaweiFileDownloadManager.HuaweiFileDownloadException e) {
+                        super.downloadException(e);
+                        LOG.debug("Error download PDR file");
+                    }
+                }
+        ), true);
     }
 
     public void downloadWorkoutGpsFiles(short workoutId, Long databaseId, Runnable extraCallbackAction) {

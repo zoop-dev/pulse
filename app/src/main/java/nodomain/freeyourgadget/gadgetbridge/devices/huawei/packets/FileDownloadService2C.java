@@ -35,6 +35,7 @@ public class FileDownloadService2C {
         SLEEP_DATA,
         RRI,
         GPS,
+        PDR,
         SEQUENCE_DATA,
         ECG_ANALYSIS_DATA,
         UNKNOWN; // Never use this as input
@@ -45,6 +46,7 @@ public class FileDownloadService2C {
                 case SLEEP_DATA -> (byte) 0x0f;
                 case RRI -> (byte) 0x10;
                 case GPS -> (byte) 0x11;
+                case PDR -> (byte)0x12;
                 case SEQUENCE_DATA -> (byte) 0x16;
                 case ECG_ANALYSIS_DATA -> (byte) 0x18;
                 default -> throw new RuntimeException();
@@ -57,6 +59,7 @@ public class FileDownloadService2C {
                 case 0x0f -> FileType.SLEEP_DATA;
                 case 0x10 -> FileType.RRI;
                 case 0x11 -> FileType.GPS;
+                case 0x12 -> FileType.PDR;
                 case 0x16 -> FileType.SEQUENCE_DATA;
                 case 0x18 -> FileType.ECG_ANALYSIS_DATA;
                 default -> FileType.UNKNOWN;

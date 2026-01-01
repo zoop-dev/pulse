@@ -123,6 +123,7 @@ public class HuaweiFileDownloadManager {
         SLEEP_DATA,
         RRI,
         GPS,
+        PDR,
         SEQUENCE_DATA,
         ECG_ANALYSIS_DATA,
         UNKNOWN // Never for input!
@@ -231,6 +232,10 @@ public class HuaweiFileDownloadManager {
                 return new FileRequest(String.format(Locale.getDefault(), "%d_gps.bin", workoutId), FileType.GPS, true, workoutId, databaseId, fileDownloadCallback);
             else
                 return new FileRequest(null, FileType.GPS, false, workoutId, databaseId, fileDownloadCallback);
+        }
+
+        public static FileRequest workoutPdrFileRequest(short workoutId, Long databaseId, FileDownloadCallback fileDownloadCallback) {
+            return new FileRequest(String.format(Locale.getDefault(), "%d_pdr.bin", workoutId), FileType.PDR, true, workoutId, databaseId, fileDownloadCallback);
         }
 
         // Retrieved
