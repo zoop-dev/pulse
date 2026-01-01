@@ -19,11 +19,9 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huawei;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.text.TextUtils;
 
 import java.nio.ByteBuffer;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
@@ -31,42 +29,13 @@ import java.util.TreeMap;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
-import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.GBException;
-import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.CameraActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
-import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.App;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Notifications;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Notifications.NotificationConstraintsType;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Watchface;
-import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiActivitySampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictData;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiDictDataValuesDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiEcgDataSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiEcgSummarySample;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiEcgSummarySampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiEmotionsSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiHrvValueSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStageSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStatsSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiStressSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiTemperatureSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutDataSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutPaceSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSpO2SampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummaryAdditionalValuesSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySample;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSwimSegmentsSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZonesSpec;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -131,75 +100,6 @@ public class HuaweiCoordinator {
                 // These are the non-numeric capabilities, which have been set already
             }
         }
-    }
-
-    protected void deleteDevice(@NonNull GBDevice gbDevice, @NonNull Device device, @NonNull DaoSession session) throws GBException {
-        long deviceId = device.getId();
-        QueryBuilder<?> qb = session.getHuaweiActivitySampleDao().queryBuilder();
-        qb.where(HuaweiActivitySampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-
-        QueryBuilder<?> sleepQb = session.getHuaweiSleepStageSampleDao().queryBuilder();
-        sleepQb.where(HuaweiSleepStageSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-
-        QueryBuilder<?> sleepStatsQb = session.getHuaweiSleepStatsSampleDao().queryBuilder();
-        sleepStatsQb.where(HuaweiSleepStatsSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-
-        QueryBuilder<?> stressQb = session.getHuaweiStressSampleDao().queryBuilder();
-        stressQb.where(HuaweiStressSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-
-        QueryBuilder<?> hrvQb = session.getHuaweiHrvValueSampleDao().queryBuilder();
-        hrvQb.where(HuaweiHrvValueSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-
-        session.getHuaweiTemperatureSampleDao().queryBuilder().where(HuaweiTemperatureSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-
-        session.getHuaweiEmotionsSampleDao().queryBuilder().where(HuaweiEmotionsSampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-
-        QueryBuilder<HuaweiWorkoutSummarySample> qb2 = session.getHuaweiWorkoutSummarySampleDao().queryBuilder();
-        List<HuaweiWorkoutSummarySample> workouts = qb2.where(HuaweiWorkoutSummarySampleDao.Properties.DeviceId.eq(deviceId)).build().list();
-        for (HuaweiWorkoutSummarySample sample : workouts) {
-            session.getHuaweiWorkoutSummaryAdditionalValuesSampleDao().queryBuilder().where(
-                    HuaweiWorkoutSummaryAdditionalValuesSampleDao.Properties.WorkoutId.eq(sample.getWorkoutId())
-            ).buildDelete().executeDeleteWithoutDetachingEntities();
-
-            session.getHuaweiWorkoutDataSampleDao().queryBuilder().where(
-                    HuaweiWorkoutDataSampleDao.Properties.WorkoutId.eq(sample.getWorkoutId())
-            ).buildDelete().executeDeleteWithoutDetachingEntities();
-
-            session.getHuaweiWorkoutPaceSampleDao().queryBuilder().where(
-                    HuaweiWorkoutPaceSampleDao.Properties.WorkoutId.eq(sample.getWorkoutId())
-            ).buildDelete().executeDeleteWithoutDetachingEntities();
-
-            session.getHuaweiWorkoutSwimSegmentsSampleDao().queryBuilder().where(
-                    HuaweiWorkoutSwimSegmentsSampleDao.Properties.WorkoutId.eq(sample.getWorkoutId())
-            ).buildDelete().executeDeleteWithoutDetachingEntities();
-
-            session.getHuaweiWorkoutSpO2SampleDao().queryBuilder().where(
-                    HuaweiWorkoutSpO2SampleDao.Properties.WorkoutId.eq(sample.getWorkoutId())
-            ).buildDelete().executeDeleteWithoutDetachingEntities();
-        }
-
-        session.getHuaweiWorkoutSummarySampleDao().queryBuilder().where(HuaweiWorkoutSummarySampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-
-        session.getBaseActivitySummaryDao().queryBuilder().where(BaseActivitySummaryDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-
-        QueryBuilder<HuaweiDictData> qb3 = session.getHuaweiDictDataDao().queryBuilder();
-        List<HuaweiDictData> dictData = qb3.where(HuaweiDictDataDao.Properties.DeviceId.eq(deviceId)).build().list();
-        for (HuaweiDictData data : dictData) {
-            session.getHuaweiDictDataValuesDao().queryBuilder().where(
-                    HuaweiDictDataValuesDao.Properties.DictId.eq(data.getDictId())
-            ).buildDelete().executeDeleteWithoutDetachingEntities();
-        }
-
-        session.getHuaweiDictDataDao().queryBuilder().where(HuaweiDictDataDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
-
-        QueryBuilder<HuaweiEcgSummarySample> qb4 = session.getHuaweiEcgSummarySampleDao().queryBuilder();
-        List<HuaweiEcgSummarySample> ecgSummary = qb4.where(HuaweiEcgSummarySampleDao.Properties.DeviceId.eq(deviceId)).build().list();
-        for (HuaweiEcgSummarySample sample : ecgSummary) {
-            session.getHuaweiEcgDataSampleDao().queryBuilder().where(
-                    HuaweiEcgDataSampleDao.Properties.EcgId.eq(sample.getEcgId())
-            ).buildDelete().executeDeleteWithoutDetachingEntities();
-        }
-        session.getHuaweiEcgSummarySampleDao().queryBuilder().where(HuaweiEcgSummarySampleDao.Properties.DeviceId.eq(deviceId)).buildDelete().executeDeleteWithoutDetachingEntities();
     }
 
     private SharedPreferences getCapabilitiesSharedPreferences() {
@@ -314,135 +214,6 @@ public class HuaweiCoordinator {
 
     private int getNotificationConstraint(byte which) {
         return notificationConstraints.getShort(which);
-    }
-
-    public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
-        final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
-
-        // Health
-        if (supportsInactivityWarnings())
-            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_inactivity_sheduled);
-        if (supportsTruSleep())
-            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_trusleep);
-        if (supportsHeartRate()) {
-            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_heartrate_automatic_enable);
-            if (supportsRealtimeHeartRate())
-                deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_heart_rate_realtime);
-            if (supportsHighHeartRateAlert())
-                deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_heart_rate_huawei_high_alert);
-            if (supportsLowHeartRateAlert())
-                deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_heart_rate_huawei_low_alert);
-        }
-        if (supportsSPo2()) {
-            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_spo_automatic_enable);
-            if (supportsLowSPo2Alert())
-                deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_spo_low_alert);
-        }
-        if (supportsTemperature()) {
-            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_temperature_automatic_enable);
-        }
-        if (supportsAutoStress()) {
-            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_stress);
-        }
-        if (supportsArrhythmia() && isShowForceCountrySpecificFeatures(device)) {
-            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_arrhythmia);
-        }
-        if (supportsECG() && isShowForceCountrySpecificFeatures(device)) {
-            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_ecg);
-        }
-        if (supportsArterialStiffnessDetection() && isShowForceCountrySpecificFeatures(device)) {
-            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_arterial_stiffness_detection);
-        }
-        if (supportsThreeCircle() || supportsThreeCircleLite()) {
-            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH, R.xml.devicesettings_huawei_activity_reminders);
-        }
-
-        // Notifications
-        final List<Integer> notifications = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.NOTIFICATIONS);
-        notifications.add(R.xml.devicesettings_notifications_enable);
-        if (supportsNotificationsRepeatedNotify() || supportsNotificationsRemoveSingle()) {
-            notifications.add(R.xml.devicesettings_autoremove_notifications);
-        }
-        if (supportsNotificationPicture()) {
-            notifications.add(R.xml.devicesettings_notifications_pictures);
-        }
-        if (getCannedRepliesSlotCount(device) > 0) {
-            notifications.add(R.xml.devicesettings_canned_reply_16);
-        }
-        if (supportsNotificationOnBluetoothLoss())
-            notifications.add(R.xml.devicesettings_disconnectnotification_noshed);
-        if (supportsDoNotDisturb(device))
-            notifications.add(R.xml.devicesettings_donotdisturb_allday_liftwirst_notwear);
-        if (supportsNotificationsAddIconTimestamp() && device.isConnected()) {
-            notifications.add(R.xml.devicesettings_upload_notifications_app_icon);
-        }
-
-        // Workout
-        if (supportsSendingGps())
-            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.WORKOUT, R.xml.devicesettings_workout_send_gps_to_band);
-
-        if (supportsTrack() || supportsHeartRateZones())
-            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.WORKOUT, R.xml.devicesettings_heartrate_settings);
-
-        // Other
-        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_find_phone);
-        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_disable_find_phone_with_dnd);
-        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_allow_accept_calls);
-        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_allow_reject_calls);
-
-        // Camera control
-        if (supportsCameraRemote())
-            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_camera_remote);
-
-        //Contacts
-        if (getContactsSlotCount(device) > 0) {
-            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_contacts);
-        }
-
-        //Music
-        if (supportsMusicUploading() && getMusicInfoParams() != null && device.isConnected()) {
-            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_musicmanagement);
-        }
-
-        if (supportsSendCountryCode()) {
-            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_huawei_features);
-        }
-
-        // Time
-        if (supportsDateFormat()) {
-            final List<Integer> dateTime = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DATE_TIME);
-            dateTime.add(R.xml.devicesettings_dateformat);
-            dateTime.add(R.xml.devicesettings_timeformat);
-        }
-
-        //Calendar
-        if (supportsP2PService() && supportsCalendar()) {
-            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.CALENDAR, R.xml.devicesettings_sync_calendar);
-        }
-
-        // Display
-        if (supportsWearLocation(device))
-            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DISPLAY, R.xml.devicesettings_wearlocation);
-        if (supportsAutoWorkMode())
-            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DISPLAY, R.xml.devicesettings_workmode);
-        if (supportsActivateOnLift())
-            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DISPLAY, R.xml.devicesettings_liftwrist_display_noshed);
-        if (supportsRotateToCycleInfo())
-            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DISPLAY, R.xml.devicesettings_rotatewrist_cycleinfo);
-        // Currently on main setting menu.
-        /*if (supportsLanguageSetting())
-            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DISPLAY, R.xml.devicesettings_language_generic);*/
-        if (supportsTemperature()) {
-            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DISPLAY, R.xml.devicesettings_temperature_scale_cf);
-        }
-
-        // Developer
-        final List<Integer> developer = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DEVELOPER);
-        developer.add(R.xml.devicesettings_huawei_debug);
-        if (supportsGpsAndTimeToDevice())
-            developer.add(R.xml.devicesettings_huawei_gps_and_time);
-
-        return deviceSpecificSettings;
     }
 
     public boolean supportsDateFormat() {
@@ -1141,39 +912,6 @@ public class HuaweiCoordinator {
         return supportsCannedReplies() ? 10 : 0;
     }
 
-    public String[] getSupportedLanguageSettings(GBDevice device) {
-        return new String[]{
-                "auto",
-                "ar_SA",
-                "cs_CZ",
-                "da_DK",
-                "de_DE",
-                "el_GR",
-                "en_GB",
-                "en_US",
-                "es_ES",
-                "fr_FR",
-                "he_IL",
-                "it_IT",
-                "id_ID",
-                "ko_KO",
-                "nl_NL",
-                "pl_PL",
-                "pt_PT",
-                "pt_BR",
-                "ro_RO",
-                "ru_RU",
-                "sv_SE",
-                "th_TH",
-                "ja_JP",
-                "tr_TR",
-                "uk_UA",
-                "zh_CN",
-                "zh_TW",
-        };
-
-    }
-
     public short getWidth() {
         return (short) watchfaceDeviceParams.width;
     }
@@ -1221,25 +959,20 @@ public class HuaweiCoordinator {
         return true;
     }
 
-    public boolean getSupportsAppsManagement(GBDevice device) {
+    public boolean getSupportsAppsManagement() {
         return true;
     }
 
-    public boolean getSupportsInstalledAppManagement(GBDevice device) {
+    public boolean getSupportsInstalledAppManagement() {
         return this.supportsAppParams(); // NOTE: this check can be incorrect. But looks like it works
     }
 
-    public boolean getSupportsCachedAppManagement(GBDevice device) {
+    public boolean getSupportsCachedAppManagement() {
         return false;
     }
 
     public boolean getSupportsFlashing() {
         return true;
-    }
-
-    public InstallHandler getInstallHandler(Uri uri, Context context) {
-        HuaweiInstallHandler handler = new HuaweiInstallHandler(uri, context);
-        return handler.isValid() ? handler : null;
     }
 
     public boolean getSupportsTruSleepNewSync() {
@@ -1290,7 +1023,7 @@ public class HuaweiCoordinator {
         this.otaSignatureLength = otaSignatureLength;
     }
 
-    public boolean getSupportsNewTrueSleep(final GBDevice device) {
+    public boolean getSupportsNewTrueSleep() {
         return supportsTruSleep() && supportsDictSleepSync();
     }
 
@@ -1310,7 +1043,7 @@ public class HuaweiCoordinator {
         return getDeviceSpecificSharedPreferences(gbDevice).getBoolean("pref_huawei_force_features_settings_switch", false) || getSendCountryCodeEnabled(gbDevice);
     }
 
-    public boolean supportsNavigation(@NonNull GBDevice device) {
+    public boolean supportsNavigation() {
         return navigationAvailable;
     }
 

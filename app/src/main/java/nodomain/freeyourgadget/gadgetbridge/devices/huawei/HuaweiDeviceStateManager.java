@@ -16,26 +16,19 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.huawei;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class HuaweiDeviceStateManager {
-    private static final Map<String, HuaweiCoordinator> STATES = new HashMap<>();
+    private static final Map<String, HuaweiCoordinator> STATES = new ConcurrentHashMap<>();
 
     public static HuaweiCoordinator get(final GBDevice device) {
         return get(device.getAddress());
     }
 
     public static HuaweiCoordinator get(final String macAddress) {
-        if (STATES.containsKey(macAddress)) {
-            return STATES.get(macAddress);
-        }
-
-        final HuaweiCoordinator huaweiDeviceState = new HuaweiCoordinator(macAddress);
-        STATES.put(macAddress, huaweiDeviceState);
-
-        return huaweiDeviceState;
+        return STATES.computeIfAbsent(macAddress, HuaweiCoordinator::new);
     }
 }
