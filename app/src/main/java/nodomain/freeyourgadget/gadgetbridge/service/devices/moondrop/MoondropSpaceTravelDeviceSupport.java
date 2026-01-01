@@ -16,28 +16,22 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.moondrop;
 
-import nodomain.freeyourgadget.gadgetbridge.service.AbstractHeadphoneSerialDeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractHeadphoneSerialDeviceSupportV2;
 
-public class MoondropSpaceTravelDeviceSupport extends AbstractHeadphoneSerialDeviceSupport {
+public class MoondropSpaceTravelDeviceSupport extends AbstractHeadphoneSerialDeviceSupportV2<MoondropSpaceTravelProtocol> {
     @Override
-    public boolean useAutoConnect() {
-        return false;
-    }
-
-    @Override
-    protected GBDeviceProtocol createDeviceProtocol() {
+    protected MoondropSpaceTravelProtocol createDeviceProtocol() {
         return new MoondropSpaceTravelProtocol(getDevice());
     }
 
     @Override
-    protected GBDeviceIoThread createDeviceIOThread() {
-        return new MoondropSpaceTravelIOThread(
-                getDevice(),
-                getContext(),
-                (MoondropSpaceTravelProtocol)getDeviceProtocol(),
-                MoondropSpaceTravelDeviceSupport.this,
-                getBluetoothAdapter());
+    protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
+        builder.write(mDeviceProtocol.encodeGetEqualizerPreset());
+        builder.write(mDeviceProtocol.encodeGetTouchActions());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
+
+        return builder;
     }
 }
