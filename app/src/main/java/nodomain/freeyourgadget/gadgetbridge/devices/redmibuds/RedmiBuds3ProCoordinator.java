@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds.RedmiBuds3ProDeviceSupport;
@@ -34,6 +35,10 @@ public class RedmiBuds3ProCoordinator extends AbstractRedmiBudsCoordinator {
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_redmibuds3pro_headphones);
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_redmibuds3pro_sound);
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_redmibuds3pro_gestures);
+        deviceSpecificSettings.addSubScreen(
+                DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS,
+                R.xml.devicesettings_headphones
+        );
         return deviceSpecificSettings;
     }
 

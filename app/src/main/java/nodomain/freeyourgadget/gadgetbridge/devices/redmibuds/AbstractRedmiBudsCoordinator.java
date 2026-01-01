@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices.redmibuds;
 import androidx.annotation.NonNull;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLClassicDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
@@ -53,6 +54,13 @@ public abstract class AbstractRedmiBudsCoordinator extends AbstractBLClassicDevi
         BatteryConfig battery2 = new BatteryConfig(1, R.drawable.ic_nothing_ear_l, R.string.left_earbud);
         BatteryConfig battery3 = new BatteryConfig(2, R.drawable.ic_nothing_ear_r, R.string.right_earbud);
         return new BatteryConfig[]{battery1, battery2, battery3};
+    }
+
+    @Override
+    public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
+        final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
+        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_headphones);
+        return deviceSpecificSettings;
     }
 
     @Override

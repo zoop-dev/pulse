@@ -54,7 +54,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 public class RedmiBudsProtocol extends GBDeviceProtocol {
 
     private static final Logger LOG = LoggerFactory.getLogger(RedmiBudsProtocol.class);
-    final UUID UUID_DEVICE_CTRL = UUID.fromString("0000fd2d-0000-1000-8000-00805f9b34fb");
+    public static final UUID UUID_DEVICE_CTRL = UUID.fromString("0000fd2d-0000-1000-8000-00805f9b34fb");
 
     private byte sequenceNumber = 0;
 

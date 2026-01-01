@@ -16,25 +16,24 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.redmibuds;
 
-import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractSerialDeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractHeadphoneSerialDeviceSupportV2;
 
-public class RedmiBudsDeviceSupport extends AbstractSerialDeviceSupport {
+public class RedmiBudsDeviceSupport extends AbstractHeadphoneSerialDeviceSupportV2<RedmiBudsProtocol> {
+    public RedmiBudsDeviceSupport() {
+        addSupportedService(RedmiBudsProtocol.UUID_DEVICE_CTRL);
+    }
+
     @Override
-    protected GBDeviceProtocol createDeviceProtocol() {
+    protected RedmiBudsProtocol createDeviceProtocol() {
         return new RedmiBudsProtocol(getDevice());
     }
 
     @Override
-    protected GBDeviceIoThread createDeviceIOThread() {
-        return new RedmiBudsIOThread(getDevice(), getContext(),
-                (RedmiBudsProtocol) getDeviceProtocol(),
-                RedmiBudsDeviceSupport.this, getBluetoothAdapter());
-    }
-
-    @Override
-    public boolean useAutoConnect() {
-        return false;
+    protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
+        builder.write(mDeviceProtocol.encodeStartAuthentication());
+        builder.setDeviceState(GBDevice.State.INITIALIZING);
+        return builder;
     }
 }

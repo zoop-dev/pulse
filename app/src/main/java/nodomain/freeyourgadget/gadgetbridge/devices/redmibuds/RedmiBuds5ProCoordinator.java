@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class RedmiBuds5ProCoordinator extends AbstractRedmiBudsCoordinator {
@@ -40,6 +41,10 @@ public class RedmiBuds5ProCoordinator extends AbstractRedmiBudsCoordinator {
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_redmibuds5pro_headphones);
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_redmibuds5pro_gestures);
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_redmibuds5pro_sound);
+        deviceSpecificSettings.addSubScreen(
+                DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS,
+                R.xml.devicesettings_headphones
+        );
         return deviceSpecificSettings;
     }
 
