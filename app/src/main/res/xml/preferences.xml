@@ -387,6 +387,13 @@
             android:key="pref_category_internethelper"
             android:title="@string/prefs_internet_helper_title"
             android:summary="@string/prefs_internet_helper_summary" />
+
+        <!-- FIXME: Use Endurain logo and translate strings -->
+        <PreferenceScreen
+            android:icon="@drawable/ic_shoe"
+            android:key="pref_category_endurain"
+            android:title="Endurain"
+            android:summary="Configure how to reach and use this self-hosted online fitness tracker" />
     </PreferenceScreen>
 
     <Preference

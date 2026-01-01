@@ -117,6 +117,10 @@ android {
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "GIT_HASH_SHORT", "\"${getGitHashShort()}\""
         buildConfigField "boolean", "INTERNET_ACCESS", "false"
+
+        manifestPlaceholders = [
+            appAuthRedirectScheme: "${applicationId}"
+        ]
     }
 
     signingConfigs {
@@ -285,6 +289,9 @@ dependencies {
     implementation libs.bundles.mapsforge
     implementation libs.androidsvg
     implementation libs.jsoup
+
+    // AppAuth is used for OAuth/PKCE/OIDC functionality, like required by the Endurain integration
+    implementation 'net.openid:appauth:0.11.1'
 
     // Bouncy Castle is included directly in GB, to avoid pulling the entire dependency
     // It's included in the org.bouncycastle.shaded package, to fix conflicts with roboelectric
