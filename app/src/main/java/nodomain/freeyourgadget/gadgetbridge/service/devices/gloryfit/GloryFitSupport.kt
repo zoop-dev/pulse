@@ -365,6 +365,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
             ActivityUser.PREF_USER_GENDER,
             DeviceSettingsPreferenceConst.PREF_HEARTRATE_ALERT_HIGH_THRESHOLD,
             DeviceSettingsPreferenceConst.PREF_HEARTRATE_ALERT_LOW_THRESHOLD,
+            DeviceSettingsPreferenceConst.PREF_SCREEN_TIMEOUT,
             DeviceSettingsPreferenceConst.PREF_LIFTWRIST_NOSHED -> {
                 setUserInfo(builder)
             }
