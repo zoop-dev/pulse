@@ -25,9 +25,6 @@ import android.os.ParcelUuid;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.apache.commons.lang3.ArrayUtils;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -41,7 +38,9 @@ import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.HeartRateCapability;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
@@ -184,7 +183,7 @@ public class CmfWatchProCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsFlashing(@NonNull GBDevice device) {
+    public boolean supportsFlashing(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -194,7 +193,7 @@ public class CmfWatchProCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsAlarmTitle(final GBDevice device) {
+    public boolean supportsAlarmTitle(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -204,22 +203,22 @@ public class CmfWatchProCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsAppsManagement(final GBDevice device) {
+    public boolean supportsAppsManagement(@NonNull final GBDevice device) {
         return false; // TODO for watchface management
     }
 
     @Override
-    public boolean supportsCachedAppManagement(GBDevice device) {
+    public boolean supportsCachedAppManagement(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsInstalledAppManagement(GBDevice device) {
+    public boolean supportsInstalledAppManagement(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsWatchfaceManagement(GBDevice device) {
+    public boolean supportsWatchfaceManagement(@NonNull final GBDevice device) {
         return supportsAppsManagement(device);
     }
 
@@ -229,37 +228,37 @@ public class CmfWatchProCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsAppListFetching(final GBDevice device) {
+    public boolean supportsAppListFetching(@NonNull final GBDevice device) {
         return false; // TODO it does not, but we can fake it for watchfaces
     }
 
     @Override
-    public boolean supportsActivityDataFetching(final GBDevice device) {
+    public boolean supportsActivityDataFetching(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsActivityTracking(@NonNull GBDevice device) {
+    public boolean supportsActivityTracking(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsActivityTracks(final GBDevice device) {
+    public boolean supportsActivityTracks(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsStressMeasurement(@NonNull GBDevice device) {
+    public boolean supportsStressMeasurement(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsSpo2(GBDevice device) {
+    public boolean supportsSpo2(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsMusicInfo(@NonNull GBDevice device) {
+    public boolean supportsMusicInfo(@NonNull final GBDevice device) {
         return true;
     }
 
@@ -269,57 +268,57 @@ public class CmfWatchProCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsHeartRateMeasurement(final GBDevice device) {
+    public boolean supportsHeartRateMeasurement(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsManualHeartRateMeasurement(final GBDevice device) {
+    public boolean supportsManualHeartRateMeasurement(@NonNull final GBDevice device) {
         return false;
     }
 
     @Override
-    public boolean supportsRemSleep(@NonNull GBDevice device) {
+    public boolean supportsRemSleep(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsWeather(final GBDevice device) {
+    public boolean supportsWeather(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsFindDevice(@NonNull GBDevice device) {
+    public boolean supportsFindDevice(@NonNull final GBDevice device) {
         return true;
     }
 
+
     @Override
-    public int[] getSupportedDeviceSpecificSettings(final GBDevice device) {
-        final List<Integer> settings = new ArrayList<>();
+    public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
+        final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
 
-        settings.add(R.xml.devicesettings_header_time);
-        settings.add(R.xml.devicesettings_timeformat);
+        final List<Integer> dateTime = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DATE_TIME);
+        dateTime.add(R.xml.devicesettings_timeformat);
 
-        settings.add(R.xml.devicesettings_header_display);
-        settings.add(R.xml.devicesettings_workout_activity_types);
-        settings.add(R.xml.devicesettings_liftwrist_display_noshed);
+        final List<Integer> display = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DISPLAY);
+        display.add(R.xml.devicesettings_workout_activity_types);
+        display.add(R.xml.devicesettings_liftwrist_display_noshed);
 
-        settings.add(R.xml.devicesettings_header_health);
-        settings.add(R.xml.devicesettings_heartrate_sleep_alert_activity_stress_spo2);
-        settings.add(R.xml.devicesettings_inactivity_dnd);
-        settings.add(R.xml.devicesettings_hydration_reminder_dnd);
+        final List<Integer> health = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH);
+        health.add(R.xml.devicesettings_heartrate_sleep_alert_activity_stress_spo2);
+        health.add(R.xml.devicesettings_inactivity_dnd);
+        health.add(R.xml.devicesettings_hydration_reminder_dnd);
 
-        settings.add(R.xml.devicesettings_header_notifications);
-        settings.add(R.xml.devicesettings_send_app_notifications);
-        settings.add(R.xml.devicesettings_bluetooth_calls);
-        settings.add(R.xml.devicesettings_transliteration);
+        final List<Integer> notifications = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS);
+        notifications.add(R.xml.devicesettings_send_app_notifications);
+        notifications.add(R.xml.devicesettings_bluetooth_calls);
+        notifications.add(R.xml.devicesettings_transliteration);
 
-        settings.add(R.xml.devicesettings_header_other);
         if (getContactsSlotCount(device) > 0) {
-            settings.add(R.xml.devicesettings_contacts);
+            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_contacts);
         }
 
-        return ArrayUtils.toPrimitive(settings.toArray(new Integer[0]));
+        return deviceSpecificSettings;
     }
 
     @Override
@@ -365,7 +364,7 @@ public class CmfWatchProCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+    public DeviceKind getDeviceKind(@NonNull final GBDevice device) {
         return DeviceKind.WATCH;
     }
 }
