@@ -61,6 +61,8 @@ public class SoundcoreLiberty3ProCoordinator extends AbstractBLClassicDeviceCoor
         deviceSpecificSettings.addSubScreen(DeviceSpecificSettingsScreen.TOUCH_OPTIONS, R.xml.devicesettings_sony_headphones_ambient_sound_control_button_modes);
         deviceSpecificSettings.addSubScreen(DeviceSpecificSettingsScreen.TOUCH_OPTIONS, R.xml.devicesettings_soundcore_liberty_touch_options);
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_soundcore_liberty);
+        deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS);
+        deviceSpecificSettings.addSubScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS, R.xml.devicesettings_headphones);
         return deviceSpecificSettings;
     }
 
