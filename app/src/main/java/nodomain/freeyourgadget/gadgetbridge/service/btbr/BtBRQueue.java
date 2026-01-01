@@ -59,6 +59,7 @@ public final class BtBRQueue {
 
     private final Context mContext;
     private final int mBufferSize;
+    private final int mConnectDelayMillis;
 
     private final Handler mWriteHandler;
     private final HandlerThread mWriteHandlerThread = new HandlerThread("BtBRQueue_write_" + THREAD_COUNTER.getAndIncrement(), Process.THREAD_PRIORITY_BACKGROUND);
@@ -115,7 +116,13 @@ public final class BtBRQueue {
         };
     }
 
-    public BtBRQueue(BluetoothAdapter btAdapter, GBDevice gbDevice, Context context, SocketCallback socketCallback, @NonNull UUID supportedService, int bufferSize) {
+    public BtBRQueue(BluetoothAdapter btAdapter,
+                     GBDevice gbDevice,
+                     Context context,
+                     SocketCallback socketCallback,
+                     @NonNull UUID supportedService,
+                     int bufferSize,
+                     int connectDelayMillis) {
         LOG = LoggerFactory.getLogger(BtBRQueue.class.getName() + "(" + QUEUE_COUNTER.getAndIncrement() + ")");
 
         mBtAdapter = btAdapter;
@@ -124,6 +131,7 @@ public final class BtBRQueue {
         mCallback = socketCallback;
         mService = supportedService;
         mBufferSize = bufferSize;
+        mConnectDelayMillis = connectDelayMillis;
         mDisposed = new AtomicBoolean(false);
 
         mWriteHandlerThread.start();
@@ -149,7 +157,18 @@ public final class BtBRQueue {
                             return;
                         }
 
+                        if (mConnectDelayMillis > 0) {
+                            LOG.debug("Waiting {} ms before connecting to RFCOMM socket", mConnectDelayMillis);
+                            try {
+                                Thread.sleep(mConnectDelayMillis);
+                            } catch (final InterruptedException e) {
+                                LOG.error("Interrupted while waiting for connect", e);
+                            }
+                        }
+
                         try {
+                            LOG.debug("Connecting to RFCOMM socket for {}", mGbDevice.getName());
+
                             mBtSocket.connect();
 
                             LOG.info("Connected to RFCOMM socket for {}", mGbDevice.getName());

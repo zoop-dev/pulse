@@ -46,7 +46,7 @@ public class TestBtBRQueue {
         BluetoothAdapter btAdapter = Mockito.mock(BluetoothAdapter.class);
         when(btAdapter.getRemoteDevice((String) any())).thenReturn(btDevice);
 
-        BtBRQueue queue = new BtBRQueue(btAdapter, device, null, null, UUID.randomUUID(), 512);
+        BtBRQueue queue = new BtBRQueue(btAdapter, device, null, null, UUID.randomUUID(), 512, 0);
         Assert.assertTrue(queue.connect());
     }
 
@@ -60,7 +60,7 @@ public class TestBtBRQueue {
         BluetoothAdapter btAdapter = Mockito.mock(BluetoothAdapter.class);
         when(btAdapter.getRemoteDevice((String) any())).thenReturn(btDevice);
 
-        BtBRQueue queue = new BtBRQueue(btAdapter, device, null, null, UUID.randomUUID(), 512);
+        BtBRQueue queue = new BtBRQueue(btAdapter, device, null, null, UUID.randomUUID(), 512, 0);
         Assert.assertTrue(queue.connect());
 
         queue.disconnect();

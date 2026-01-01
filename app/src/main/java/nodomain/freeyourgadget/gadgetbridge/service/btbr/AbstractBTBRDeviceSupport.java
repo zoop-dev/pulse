@@ -83,7 +83,15 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
             }
 
             if (mQueue == null) {
-                mQueue = new BtBRQueue(getBluetoothAdapter(), getDevice(), getContext(), this, supportedService, getBufferSize());
+                mQueue = new BtBRQueue(
+                        getBluetoothAdapter(),
+                        getDevice(),
+                        getContext(),
+                        this,
+                        supportedService,
+                        getBufferSize(),
+                        getConnectDelayMillis()
+                );
             }
             return mQueue.connect();
         }
@@ -155,6 +163,14 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
 
     protected int getBufferSize() {
         return mBufferSize;
+    }
+
+    /**
+     * Some devices fail to connect to the btrfcomm socket if we connect too fast. Increase this delay
+     * to wait a few milliseconds.
+     */
+    protected int getConnectDelayMillis() {
+        return 0;
     }
 
     /**

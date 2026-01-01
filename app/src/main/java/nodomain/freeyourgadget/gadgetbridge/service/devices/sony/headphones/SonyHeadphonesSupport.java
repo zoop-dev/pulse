@@ -83,6 +83,12 @@ public class SonyHeadphonesSupport extends AbstractHeadphoneSerialDeviceSupportV
     }
 
     @Override
+    protected int getConnectDelayMillis() {
+        // Connecting too fast fails with an IOException
+        return 500;
+    }
+
+    @Override
     public void evaluateGBDeviceEvent(GBDeviceEvent deviceEvent) {
         if (deviceEvent instanceof SonyHeadphonesEnqueueRequestEvent enqueueRequestEvent) {
             mDeviceProtocol.enqueueRequests(enqueueRequestEvent.getRequests());
