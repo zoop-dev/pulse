@@ -1,23 +1,25 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.soundcore.q30;
 
-import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractSerialDeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
+import java.util.UUID;
 
-public class SoundcoreQ30DeviceSupport extends AbstractSerialDeviceSupport {
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractHeadphoneSerialDeviceSupportV2;
+
+public class SoundcoreQ30DeviceSupport extends AbstractHeadphoneSerialDeviceSupportV2<SoundcoreQ30Protocol> {
+    public SoundcoreQ30DeviceSupport() {
+        addSupportedService(UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"));
+    }
 
     @Override
-    protected GBDeviceProtocol createDeviceProtocol() {
+    protected SoundcoreQ30Protocol createDeviceProtocol() {
         return new SoundcoreQ30Protocol(getDevice());
     }
 
     @Override
-    protected GBDeviceIoThread createDeviceIOThread() {
-        return new SoundcoreQ30IOThread(getDevice(), getContext(), (SoundcoreQ30Protocol) getDeviceProtocol(),this, getBluetoothAdapter());
-    }
-
-    @Override
-    public boolean useAutoConnect() {
-        return false;
+    protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
+        builder.write(mDeviceProtocol.encodeDeviceInfoRequest());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
+        return builder;
     }
 }
