@@ -86,6 +86,8 @@ public class BackupRestoreProgressActivity extends AbstractGBActivity {
         final TextView backupRestoreProgressText = binding.backupRestoreProgressText;
         final TextView backupRestoreProgressPercentage = binding.backupRestoreProgressPercentage;
 
+        backupRestoreProgressBar.setKeepScreenOn(true);
+
         final Handler mHandler = new Handler(getMainLooper());
 
         final ZipBackupCallback zipBackupCallback = new ZipBackupCallback() {
@@ -135,6 +137,7 @@ public class BackupRestoreProgressActivity extends AbstractGBActivity {
                             break;
                         case "export":
                             backupRestoreProgressText.setText(R.string.backup_restore_export_complete);
+                            backupRestoreProgressBar.setKeepScreenOn(false);
                             break;
                     }
                 });
