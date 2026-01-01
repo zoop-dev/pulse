@@ -57,6 +57,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.prot
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.protocol.impl.v1.SonyProtocolImplV1;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.protocol.impl.v2.SonyProtocolImplV2;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class SonyHeadphonesProtocol extends GBDeviceProtocol {
     private static final Logger LOG = LoggerFactory.getLogger(SonyHeadphonesProtocol.class);
@@ -78,6 +79,7 @@ public class SonyHeadphonesProtocol extends GBDeviceProtocol {
     public GBDeviceEvent[] decodeResponse(byte[] res) {
         final Message message = Message.fromBytes(res);
         if (message == null) {
+            LOG.warn("Failed to decode message from {}", GB.hexdump(res));
             return null;
         }
 
