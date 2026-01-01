@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
@@ -59,36 +60,38 @@ public class CmfPreferences {
     }
 
     protected void onSendConfiguration(final String config) {
+        final TransactionBuilder builder = mSupport.createTransactionBuilder("set config " + config);
+
         switch (config) {
             case ActivityUser.PREF_USER_STEPS_GOAL:
             case ActivityUser.PREF_USER_DISTANCE_METERS:
             case ActivityUser.PREF_USER_CALORIES_BURNT:
-                setGoals();
-                return;
+                setGoals(builder);
+                break;
             case SettingsActivity.PREF_MEASUREMENT_SYSTEM:
-                setMeasurementSystem();
-                return;
+                setMeasurementSystem(builder);
+                break;
             case DeviceSettingsPreferenceConst.PREF_LANGUAGE:
-                setLanguage();
-                return;
+                setLanguage(builder);
+                break;
             case DeviceSettingsPreferenceConst.PREF_TIMEFORMAT:
-                setTimeFormat();
-                return;
+                setTimeFormat(builder);
+                break;
             case DeviceSettingsPreferenceConst.PREF_LIFTWRIST_NOSHED:
-                setDisplayOnLift();
-                return;
+                setDisplayOnLift(builder);
+                break;
             case DeviceSettingsPreferenceConst.PREF_HEARTRATE_ALERT_LOW_THRESHOLD:
             case DeviceSettingsPreferenceConst.PREF_HEARTRATE_ALERT_HIGH_THRESHOLD:
             case DeviceSettingsPreferenceConst.PREF_HEARTRATE_ALERT_ACTIVE_HIGH_THRESHOLD:
             case DeviceSettingsPreferenceConst.PREF_SPO2_LOW_ALERT_THRESHOLD:
-                setHeartAlerts();
-                return;
+                setHeartAlerts(builder);
+                break;
             case DeviceSettingsPreferenceConst.PREF_SPO2_ALL_DAY_MONITORING:
-                setSpo2MonitoringInterval();
-                return;
+                setSpo2MonitoringInterval(builder);
+                break;
             case DeviceSettingsPreferenceConst.PREF_HEARTRATE_STRESS_MONITORING:
-                setStressMonitoringInterval();
-                return;
+                setStressMonitoringInterval(builder);
+                break;
             case DeviceSettingsPreferenceConst.PREF_INACTIVITY_ENABLE:
             case DeviceSettingsPreferenceConst.PREF_INACTIVITY_THRESHOLD:
             case DeviceSettingsPreferenceConst.PREF_INACTIVITY_START:
@@ -96,26 +99,30 @@ public class CmfPreferences {
             case DeviceSettingsPreferenceConst.PREF_INACTIVITY_DND:
             case DeviceSettingsPreferenceConst.PREF_INACTIVITY_DND_START:
             case DeviceSettingsPreferenceConst.PREF_INACTIVITY_DND_END:
-                setStandingReminder();
+                setStandingReminder(builder);
             case DeviceSettingsPreferenceConst.PREF_HYDRATION_SWITCH:
             case DeviceSettingsPreferenceConst.PREF_HYDRATION_PERIOD:
             case DeviceSettingsPreferenceConst.PREF_HYDRATION_DND:
             case DeviceSettingsPreferenceConst.PREF_HYDRATION_DND_START:
             case DeviceSettingsPreferenceConst.PREF_HYDRATION_DND_END:
-                setHydrationReminder();
-                return;
+                setHydrationReminder(builder);
+                break;
             case HuamiConst.PREF_WORKOUT_ACTIVITY_TYPES_SORTABLE:
-                setActivityTypes();
-                return;
+                setActivityTypes(builder);
+                break;
             case DeviceSettingsPreferenceConst.PREF_BLUETOOTH_CALLS_ENABLED:
-                setCallReminders();
-                return;
+                setCallReminders(builder);
+                break;
+            default:
+                LOG.warn("Unknown config changed: {}", config);
         }
 
-        LOG.warn("Unknown config changed: {}", config);
+        if (!builder.isEmpty()) {
+            builder.queue();
+        }
     }
 
-    private void setGoals() {
+    protected void setGoals(final TransactionBuilder builder) {
         final ActivityUser activityUser = new ActivityUser();
 
         if (activityUser.getStepsGoal() <= 0) {
@@ -150,25 +157,22 @@ public class CmfPreferences {
         buf.putShort((short) activityUser.getDistanceGoalMeters());
         buf.putShort((short) activityUser.getCaloriesBurntGoal());
 
-        mSupport.sendCommand("set goals", CmfCommand.GOALS_SET, buf.array());
+        mSupport.sendCommand(builder, CmfCommand.GOALS_SET, buf.array());
     }
 
-    private void setMeasurementSystem() {
-        final Prefs prefs = mSupport.getDevicePrefs();
-        final String measurementSystem = prefs.getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, "metric");
+    protected void setMeasurementSystem(final TransactionBuilder builder) {
+        final String measurementSystem = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, "metric");
 
         LOG.debug("Setting measurement system to {}", measurementSystem);
 
         final byte unitByte = (byte) ("metric".equals(measurementSystem) ? 0x00 : 0x01);
 
         final byte[] cmd = new byte[]{0x01, unitByte};
-        final TransactionBuilder builder = mSupport.createTransactionBuilder("set measurement system");
         mSupport.sendCommand(builder, CmfCommand.UNIT_LENGTH, cmd);
         mSupport.sendCommand(builder, CmfCommand.UNIT_TEMPERATURE, cmd);
-        builder.queue();
     }
 
-    private void setLanguage() {
+    protected void setLanguage(final TransactionBuilder builder) {
         String localeString = mSupport.getDevicePrefs().getString(
                 DeviceSettingsPreferenceConst.PREF_LANGUAGE, DeviceSettingsPreferenceConst.PREF_LANGUAGE_AUTO
         );
@@ -205,28 +209,28 @@ public class CmfPreferences {
         LOG.info("Set language: {} -> {}", localeString, languageCommand);
 
         // FIXME watch ignores language?
-        mSupport.sendCommand("set language", CmfCommand.LANGUAGE_SET, languageCommand.getBytes());
+        mSupport.sendCommand(builder, CmfCommand.LANGUAGE_SET, languageCommand.getBytes());
     }
 
-    private void setTimeFormat() {
+    protected void setTimeFormat(final TransactionBuilder builder) {
         final String timeFormat = mSupport.getDevicePrefs().getTimeFormat();
 
         LOG.info("Setting time format to {}", timeFormat);
 
         final byte timeFormatByte = (byte) (timeFormat.equals("24h") ? 0x00 : 0x01);
 
-        mSupport.sendCommand("set time format", CmfCommand.TIME_FORMAT, timeFormatByte);
+        mSupport.sendCommand(builder, CmfCommand.TIME_FORMAT, timeFormatByte);
     }
 
-    private void setDisplayOnLift() {
+    protected void setDisplayOnLift(final TransactionBuilder builder) {
         final Prefs prefs = mSupport.getDevicePrefs();
 
         boolean enabled = prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_LIFTWRIST_NOSHED, false);
 
-        mSupport.sendCommand("set display on lift", CmfCommand.WAKE_ON_WRIST_RAISE, (byte) (enabled ? 0x01 : 0x00));
+        mSupport.sendCommand(builder, CmfCommand.WAKE_ON_WRIST_RAISE, (byte) (enabled ? 0x01 : 0x00));
     }
 
-    private void setHeartAlerts() {
+    protected void setHeartAlerts(final TransactionBuilder builder) {
         final Prefs prefs = mSupport.getDevicePrefs();
 
         final int hrAlertActiveHigh = prefs.getInt(DeviceSettingsPreferenceConst.PREF_HEARTRATE_ALERT_ACTIVE_HIGH_THRESHOLD, 0);
@@ -251,30 +255,30 @@ public class CmfPreferences {
             buf.put((byte) 0x00); // ?
         }
 
-        mSupport.sendCommand("set heart monitoring alerts", CmfCommand.HEART_MONITORING_ALERTS, buf.array());
+        mSupport.sendCommand(builder, CmfCommand.HEART_MONITORING_ALERTS, buf.array());
     }
 
-    private void setSpo2MonitoringInterval() {
+    protected void setSpo2MonitoringInterval(final TransactionBuilder builder) {
         final Prefs prefs = mSupport.getDevicePrefs();
         final boolean enabled = prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SPO2_ALL_DAY_MONITORING, false);
 
         LOG.debug("Set SpO2 monitoring = {}", enabled);
 
         final byte[] cmd = new byte[]{0x02, (byte) (enabled ? 0x01 : 0x00)};
-        mSupport.sendCommand("set spo2 monitoring", CmfCommand.HEART_MONITORING_ENABLED_SET, cmd);
+        mSupport.sendCommand(builder, CmfCommand.HEART_MONITORING_ENABLED_SET, cmd);
     }
 
-    private void setStressMonitoringInterval() {
+    protected void setStressMonitoringInterval(final TransactionBuilder builder) {
         final Prefs prefs = mSupport.getDevicePrefs();
         final boolean enabled = prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_HEARTRATE_STRESS_MONITORING, false);
 
         LOG.debug("Set stress monitoring = {}", enabled);
 
         final byte[] cmd = new byte[]{0x04, (byte) (enabled ? 0x01 : 0x00)};
-        mSupport.sendCommand("set stress monitoring", CmfCommand.HEART_MONITORING_ENABLED_SET, cmd);
+        mSupport.sendCommand(builder, CmfCommand.HEART_MONITORING_ENABLED_SET, cmd);
     }
 
-    private void setStandingReminder() {
+    protected void setStandingReminder(final TransactionBuilder builder) {
         final Prefs prefs = mSupport.getDevicePrefs();
         final boolean enabled = prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_INACTIVITY_ENABLE, false);
         final int threshold = prefs.getInt(DeviceSettingsPreferenceConst.PREF_INACTIVITY_THRESHOLD, 60);
@@ -303,10 +307,10 @@ public class CmfPreferences {
             buf.putInt(0);
         }
 
-        mSupport.sendCommand("set standing reminders", CmfCommand.STANDING_REMINDER_SET, buf.array());
+        mSupport.sendCommand(builder, CmfCommand.STANDING_REMINDER_SET, buf.array());
     }
 
-    private void setHydrationReminder() {
+    protected void setHydrationReminder(final TransactionBuilder builder) {
         final Prefs prefs = mSupport.getDevicePrefs();
         final boolean enabled = prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_HYDRATION_SWITCH, false);
         final int threshold = prefs.getInt(DeviceSettingsPreferenceConst.PREF_HYDRATION_PERIOD, 60);
@@ -335,21 +339,17 @@ public class CmfPreferences {
             buf.putInt(0);
         }
 
-        mSupport.sendCommand("set hydration reminders", CmfCommand.WATER_REMINDER_SET, buf.array());
+        mSupport.sendCommand(builder, CmfCommand.WATER_REMINDER_SET, buf.array());
     }
 
-    private void setCallReminders() {
+    protected void setCallReminders(final TransactionBuilder builder) {
         final Prefs prefs = mSupport.getDevicePrefs();
         final boolean enabled = prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_BLUETOOTH_CALLS_ENABLED, false);
 
-        final TransactionBuilder builder = mSupport.createTransactionBuilder("set call reminders = " + enabled);
-
         mSupport.sendCommand(builder, CmfCommand.CALL_REMINDER_REQUEST, new byte[]{0x01, (byte) (enabled ? 0x01 : 0x00)});
-
-        builder.queue();
     }
 
-    private void setActivityTypes() {
+    protected void setActivityTypes(final TransactionBuilder builder) {
         final Prefs prefs = mSupport.getDevicePrefs();
         List<String> activityTypes = new ArrayList<>(prefs.getList(HuamiConst.PREF_WORKOUT_ACTIVITY_TYPES_SORTABLE, Collections.emptyList()));
 
@@ -370,7 +370,7 @@ public class CmfPreferences {
             buf.put(CmfActivityType.valueOf(activityType.toUpperCase(Locale.ROOT)).getCode());
         }
 
-        mSupport.sendCommand("set activity types", CmfCommand.SPORTS_SET, buf.array());
+        mSupport.sendCommand(builder, CmfCommand.SPORTS_SET, buf.array());
     }
 
     protected boolean onCommand(final CmfCommand cmd, final byte[] payload) {
@@ -378,15 +378,7 @@ public class CmfPreferences {
         return false;
     }
 
-    private Context getContext() {
-        return mSupport.getContext();
-    }
-
-    private GBDevice getDevice() {
-        return mSupport.getDevice();
-    }
-
-    private static final Map<String, String> LANGUAGES = new HashMap<String, String>() {{
+    private static final Map<String, String> LANGUAGES = new HashMap<>() {{
         put("ar", "ar_SA");
         put("de", "de_DE");
         put("en", "en_US");

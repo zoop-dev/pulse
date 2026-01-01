@@ -398,6 +398,18 @@ public class CmfWatchProSupport extends AbstractBTLESingleDeviceSupport implemen
                 //sendCommand(phase2builder, CmfCommand.CONTACTS_GET);
                 //sendCommand(phase2builder, CmfCommand.ALARMS_GET);
                 //sendCommand(phase2builder, CmfCommand.CALL_REMINDER_REQUEST, 0x00);
+                preferences.setGoals(phase2builder);
+                preferences.setMeasurementSystem(phase2builder);
+                preferences.setLanguage(phase2builder);
+                preferences.setTimeFormat(phase2builder);
+                preferences.setDisplayOnLift(phase2builder);
+                preferences.setHeartAlerts(phase2builder);
+                preferences.setSpo2MonitoringInterval(phase2builder);
+                preferences.setStressMonitoringInterval(phase2builder);
+                preferences.setStandingReminder(phase2builder);
+                preferences.setHydrationReminder(phase2builder);
+                preferences.setActivityTypes(phase2builder);
+                preferences.setCallReminders(phase2builder);
                 // TODO premature to mark as initialized?
                 phase2builder.setDeviceState(GBDevice.State.INITIALIZED);
                 phase2builder.queue();

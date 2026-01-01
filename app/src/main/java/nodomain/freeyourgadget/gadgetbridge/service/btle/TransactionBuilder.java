@@ -372,6 +372,10 @@ public class TransactionBuilder {
         return mTransaction.getTaskName();
     }
 
+    public boolean isEmpty() {
+        return mTransaction.isEmpty();
+    }
+
     /// Ensures that the device is connected and (only then) performs the actions of the given
     /// transaction builder.
     /// <p>
