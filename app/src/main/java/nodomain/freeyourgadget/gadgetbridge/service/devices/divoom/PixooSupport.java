@@ -22,39 +22,27 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
-import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractSerialDeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractSerialDeviceSupportV2;
 
-public class PixooSupport extends AbstractSerialDeviceSupport {
+public class PixooSupport extends AbstractSerialDeviceSupportV2<PixooProtocol> {
     @Override
-    public void onSendConfiguration(String config) {
-        super.onSendConfiguration(config);
-    }
-
-    @Override
-    public synchronized PixooIOThread getDeviceIOThread() {
-        return (PixooIOThread) super.getDeviceIOThread();
-    }
-
-    @Override
-    public boolean useAutoConnect() {
-        return false;
-    }
-
-    @Override
-    protected GBDeviceProtocol createDeviceProtocol() {
+    protected PixooProtocol createDeviceProtocol() {
         return new PixooProtocol(getDevice());
     }
 
     @Override
-    public void onInstallApp(Uri uri, @NonNull final Bundle options) {
-        getDeviceIOThread().write(((PixooProtocol) getDeviceProtocol()).encodeShowFrame(uri));
+    public void onInstallApp(final Uri uri, @NonNull final Bundle options) {
+        final TransactionBuilder builder = createTransactionBuilder("show frame");
+        builder.write(mDeviceProtocol.encodeShowFrame(uri));
+        builder.queue();
     }
 
     @Override
-    protected GBDeviceIoThread createDeviceIOThread() {
-        return new PixooIOThread(getDevice(), getContext(), (PixooProtocol) getDeviceProtocol(),
-                PixooSupport.this, getBluetoothAdapter());
+    protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
+        builder.write(mDeviceProtocol.encodeReqestAlarms());
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
+        return builder;
     }
 }
