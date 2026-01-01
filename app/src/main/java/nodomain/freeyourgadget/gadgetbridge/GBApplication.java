@@ -77,6 +77,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.slf4j.LoggerFactory;
+import androidx.lifecycle.ProcessLifecycleOwner;
 
 import java.io.File;
 import java.io.IOException;
@@ -158,6 +159,8 @@ public class GBApplication extends Application {
     public static final String ACTION_LANGUAGE_CHANGE = "nodomain.freeyourgadget.gadgetbridge.gbapplication.action.language_change";
     public static final String ACTION_THEME_CHANGE = "nodomain.freeyourgadget.gadgetbridge.gbapplication.action.theme_change";
     public static final String ACTION_NEW_DATA = "nodomain.freeyourgadget.gadgetbridge.action.new_data";
+    public static final String ACTION_APP_IS_IN_FOREGROUND = "nodomain.freeyourgadget.gadgetbridge.action.app_foreground";
+    public static final String ACTION_APP_IS_IN_BACKGROUND = "nodomain.freeyourgadget.gadgetbridge.action.app_background";
 
     private static GBApplication app;
 
@@ -294,6 +297,7 @@ public class GBApplication extends Application {
     public void onCreate() {
         app = this;
         super.onCreate();
+        ProcessLifecycleOwner.get().getLifecycle().addObserver(new AppLifecycleObserver());
 
         if (lockHandler != null) {
             // guard against multiple invocations (robolectric)
