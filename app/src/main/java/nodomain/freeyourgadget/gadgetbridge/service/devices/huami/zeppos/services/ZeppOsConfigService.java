@@ -30,7 +30,6 @@ import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -42,9 +41,6 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -83,11 +79,20 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsS
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiLanguageType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.config.ConfigBoolean;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.config.ConfigByte;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.config.ConfigByteList;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.config.ConfigDatetimeHhMm;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.config.ConfigInt;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.config.ConfigShort;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.config.ConfigString;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.config.ConfigStringList;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.config.ConfigTimestamp;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.MapUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
-import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
+@SuppressWarnings({"unused", "MismatchedQueryAndUpdateOfCollection"})
 public class ZeppOsConfigService extends AbstractZeppOsService {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsConfigService.class);
 
@@ -424,11 +429,13 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
         STRING(0x20),
         STRING_LIST(0x21),
         SHORT(0x01),
+        // TODO 0x02
         INT(0x03),
         BYTE(0x10),
         BYTE_LIST(0x11),
         DATETIME_HH_MM(0x30),
         TIMESTAMP_MILLIS(0x40),
+        // TODO 0x50
         ;
 
         private final byte value;
@@ -641,7 +648,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
     /**
      * Map of pref key to config.
      */
-    private static final Map<String, ConfigArg> PREF_TO_CONFIG = new HashMap<String, ConfigArg>() {{
+    private static final Map<String, ConfigArg> PREF_TO_CONFIG = new HashMap<>() {{
         for (final ConfigArg arg : ConfigArg.values()) {
             if (arg.getPrefKey() != null) {
                 if (containsKey(arg.getPrefKey())) {
@@ -667,7 +674,13 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
             return false;
         }
 
-        switch (configArg.getConfigType(mGroupVersions)) {
+        final ConfigType configType = configArg.getConfigType(mGroupVersions);
+        if (configType == null) {
+            LOG.error("Unknown config type for {}", configArg);
+            return false;
+        }
+
+        switch (configType) {
             case BOOL:
                 setter.setBoolean(configArg, prefs.getBoolean(key, false));
                 return true;
@@ -970,6 +983,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
         }
     }
 
+    @SuppressWarnings({"SwitchStatementWithTooFewBranches", "EnhancedSwitchMigration"})
     public class ConfigParser {
         private final ConfigGroup configGroup;
         private final boolean includesConstraints;
@@ -994,13 +1008,13 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
                 final byte configArgByte = buf.get();
                 final ZeppOsConfigService.ConfigArg configArg = ZeppOsConfigService.ConfigArg.fromCode(configGroup, configArgByte);
                 if (configArg == null) {
-                    LOG.error("Unknown config {} for {}", String.format("0x%02x", configArgByte), configGroup);
+                    LOG.error("Unknown config arg for {}: {}", configGroup, String.format("0x%02x", configArgByte));
                 }
 
                 final byte configTypeByte = buf.get();
                 final ConfigType configType = ConfigType.fromValue(configTypeByte);
                 if (configType == null) {
-                    LOG.error("Unknown type {} for {}", String.format("0x%02x", configTypeByte), configArg);
+                    LOG.error("Unknown type {} for {} - aborting", String.format("0x%02x", configTypeByte), configArg);
                     // Abort, since we don't know how to parse this type or how many bytes it is
                     // Return whatever we parsed so far, since that's still valid
                     return prefs;
@@ -1050,10 +1064,6 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
                         break;
                     case SHORT:
                         final ConfigShort valShort = ConfigShort.consume(buf, includesConstraints);
-                        if (valShort == null) {
-                            LOG.error("Failed to parse {} for {}", configType, configArg);
-                            return prefs;
-                        }
                         LOG.info("Got {} ({}) = {}", configArg, String.format("0x%02x", configArgByte), valShort);
                         if (configArg != null) {
                             argPrefs = convertShortToPrefs(configArg, valShort);
@@ -1061,10 +1071,6 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
                         break;
                     case INT:
                         final ConfigInt valInt = ConfigInt.consume(buf, includesConstraints);
-                        if (valInt == null) {
-                            LOG.error("Failed to parse {} for {}", configType, configArg);
-                            return prefs;
-                        }
                         LOG.info("Got {} ({}) = {}", configArg, String.format("0x%02x", configArgByte), valInt);
                         if (configArg != null) {
                             argPrefs = convertIntToPrefs(configArg, valInt);
@@ -1072,10 +1078,6 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
                         break;
                     case BYTE:
                         final ConfigByte valByte = ConfigByte.consume(buf, includesConstraints);
-                        if (valByte == null) {
-                            LOG.error("Failed to parse {} for {}", configType, configArg);
-                            return prefs;
-                        }
                         LOG.info("Got {} ({}) = {}", configArg, String.format("0x%02x", configArgByte), valByte);
                         if (configArg != null) {
                             argPrefs = convertByteToPrefs(configArg, valByte);
@@ -1083,10 +1085,6 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
                         break;
                     case BYTE_LIST:
                         final ConfigByteList valByteList = ConfigByteList.consume(buf, includesConstraints);
-                        if (valByteList == null) {
-                            LOG.error("Failed to parse {} for {}", configType, configArg);
-                            return prefs;
-                        }
                         LOG.info("Got {} ({}) = {}", configArg, String.format("0x%02x", configArgByte), valByteList);
                         if (configArg != null) {
                             argPrefs = convertByteListToPrefs(configArg, valByteList);
@@ -1105,10 +1103,6 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
                         break;
                     case TIMESTAMP_MILLIS:
                         final ConfigTimestamp valTimestamp = ConfigTimestamp.consume(buf);
-                        if (valTimestamp == null) {
-                            LOG.error("Failed to parse {} for {}", configType, configArg);
-                            return prefs;
-                        }
                         LOG.info("Got {} ({}) = {}", configArg, String.format("0x%02x", configArgByte), valTimestamp);
                         if (configArg != null) {
                             argPrefs = convertTimestampToPrefs(configArg, valTimestamp);
@@ -1410,6 +1404,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
             return prefs;
         }
 
+        @SuppressWarnings("ReplaceNullCheck")
         private List<String> decodeByteValues(final byte[] values, final ValueDecoder<Byte> decoder) {
             final List<String> decoded = new ArrayList<>(values.length);
             for (final byte b : values) {
@@ -1452,376 +1447,6 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
         }
     }
 
-    private static class ConfigBoolean {
-        private final boolean value;
-
-        public ConfigBoolean(final boolean value) {
-            this.value = value;
-        }
-
-        public boolean getValue() {
-            return value;
-        }
-
-        private static ConfigBoolean consume(final ByteBuffer buf) {
-            return new ConfigBoolean(buf.get() == 1);
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return String.format("ConfigBoolean{value=%s}", value);
-        }
-    }
-
-    private static class ConfigString {
-        private final String value;
-        private final int maxLength;
-
-        public ConfigString(final String value, final int maxLength) {
-            this.value = value;
-            this.maxLength = maxLength;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        public int getMaxLength() {
-            return maxLength;
-        }
-
-        private static ConfigString consume(final ByteBuffer buf, final boolean includesConstraints) {
-            final String value = StringUtils.untilNullTerminator(buf);
-            if (value == null) {
-                LOG.error("Null terminator not found in buffer");
-                return null;
-            }
-
-            if (!includesConstraints) {
-                return new ConfigString(value, -1);
-            }
-
-            final int maxLength = buf.get() & 0xff;
-
-            return new ConfigString(value, maxLength);
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return String.format("ConfigString{value=%s}", value);
-        }
-    }
-
-    private static class ConfigStringList {
-        private final String value;
-        private final List<String> possibleValues;
-
-        public ConfigStringList(final String value, final List<String> possibleValues) {
-            this.value = value;
-            this.possibleValues = possibleValues;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        public List<String> getPossibleValues() {
-            return possibleValues;
-        }
-
-        private static ConfigStringList consume(final ByteBuffer buf, final boolean includesConstraints) {
-            final String value = StringUtils.untilNullTerminator(buf);
-            if (value == null) {
-                LOG.error("Null terminator not found in buffer");
-                return null;
-            }
-
-            final List<String> possibleValues = new ArrayList<>();
-            if (includesConstraints) {
-                final int unknown1 = buf.get() & 0xff; // ?
-                final int numPossibleValues = buf.get() & 0xff;
-
-                for (int i = 0; i < numPossibleValues; i++) {
-                    final String possibleValue = StringUtils.untilNullTerminator(buf);
-                    possibleValues.add(possibleValue);
-                }
-            }
-
-            return new ConfigStringList(value, possibleValues);
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return String.format("ConfigStringList{value=%s, possibleValues=%s}", value, possibleValues);
-        }
-    }
-
-    private static class ConfigShort {
-        private final short value;
-        private final short min;
-        private final short max;
-        private final boolean minMaxKnown;
-
-        public ConfigShort(final short value) {
-            this.value = value;
-            this.min = this.max = 0;
-            minMaxKnown = false;
-        }
-
-        public ConfigShort(final short value, final short min, final short max) {
-            this.value = value;
-            this.min = min;
-            this.max = max;
-            this.minMaxKnown = true;
-        }
-
-        public short getValue() {
-            return value;
-        }
-
-        public short getMin() {
-            return min;
-        }
-
-        public short getMax() {
-            return max;
-        }
-
-        public boolean isMinMaxKnown() {
-            return minMaxKnown;
-        }
-
-        private static ConfigShort consume(final ByteBuffer buf, final boolean includesConstraints) {
-            final short value = buf.getShort();
-
-            if (!includesConstraints) {
-                return new ConfigShort(value);
-            }
-
-            final short min = buf.getShort();
-            final short max = buf.getShort();
-
-            return new ConfigShort(value, min, max);
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            if (isMinMaxKnown()) {
-                return String.format(Locale.ROOT, "ConfigShort{value=%d, min=%d, max=%d}", value, min, max);
-            } else {
-                return String.format(Locale.ROOT, "ConfigShort{value=%d}", value);
-            }
-        }
-    }
-
-    private static class ConfigInt {
-        private final int value;
-        private final int min;
-        private final int max;
-        private final boolean minMaxKnown;
-
-        public ConfigInt(final int value) {
-            this.value = value;
-            this.min = this.max = 0;
-            minMaxKnown = false;
-        }
-
-        public ConfigInt(final int value, final int min, final int max) {
-            this.value = value;
-            this.min = min;
-            this.max = max;
-            this.minMaxKnown = true;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-        public int getMin() {
-            return min;
-        }
-
-        public int getMax() {
-            return max;
-        }
-
-        public boolean isMinMaxKnown() {
-            return minMaxKnown;
-        }
-
-        private static ConfigInt consume(final ByteBuffer buf, final boolean includesConstraints) {
-            final int value = buf.getInt();
-
-            if (!includesConstraints) {
-                return new ConfigInt(value);
-            }
-
-            final int min = buf.getInt();
-            final int max = buf.getInt();
-
-            return new ConfigInt(value, min, max);
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            if (isMinMaxKnown()) {
-                return String.format(Locale.ROOT, "ConfigInt{value=%d, min=%d, max=%d}", value, min, max);
-            } else {
-                return String.format(Locale.ROOT, "ConfigInt{value=%d}", value);
-            }
-        }
-    }
-
-    private static class ConfigTimestamp {
-        private final long value;
-
-        public ConfigTimestamp(final long value) {
-            this.value = value;
-        }
-
-        public long getValue() {
-            return value;
-        }
-
-        private static ConfigTimestamp consume(final ByteBuffer buf) {
-            final long value = buf.getLong();
-
-            return new ConfigTimestamp(value);
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return String.format(Locale.ROOT, "ConfigTimestamp{value=%s}", new Date(value));
-        }
-    }
-
-    private static class ConfigByte {
-        private final byte value;
-        private final byte[] possibleValues;
-
-        public ConfigByte(final byte value, final byte[] possibleValues) {
-            this.value = value;
-            this.possibleValues = possibleValues;
-        }
-
-        public byte getValue() {
-            return value;
-        }
-
-        public byte[] getPossibleValues() {
-            return possibleValues;
-        }
-
-        private static ConfigByte consume(final ByteBuffer buf, final boolean includesConstraints) {
-            final byte value = buf.get();
-
-            if (includesConstraints) {
-                final int numPossibleValues = buf.get() & 0xff;
-                final byte[] possibleValues = new byte[numPossibleValues];
-
-                for (int i = 0; i < numPossibleValues; i++) {
-                    possibleValues[i] = buf.get();
-                }
-
-                return new ConfigByte(value, possibleValues);
-            }
-
-            return new ConfigByte(value, new byte[0]);
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return String.format("ConfigByte{value=0x%02x, possibleValues=%s}", value, GB.hexdump(possibleValues));
-        }
-    }
-
-    private static class ConfigByteList {
-        private final byte[] values;
-        private final byte[] possibleValues;
-
-        public ConfigByteList(final byte[] values, final byte[] possibleValues) {
-            this.values = values;
-            this.possibleValues = possibleValues;
-        }
-
-        public byte[] getValues() {
-            return values;
-        }
-
-        @Nullable
-        public byte[] getPossibleValues() {
-            return possibleValues;
-        }
-
-        private static ConfigByteList consume(final ByteBuffer buf, final boolean includesConstraints) {
-            final int numValues = buf.get() & 0xff;
-            final byte[] values = new byte[numValues];
-            for (int i = 0; i < numValues; i++) {
-                values[i] = buf.get();
-            }
-
-            if (includesConstraints) {
-                final int numPossibleValues = buf.get() & 0xff;
-                final byte[] possibleValues = new byte[numPossibleValues];
-
-                for (int i = 0; i < numPossibleValues; i++) {
-                    possibleValues[i] = buf.get();
-                }
-
-                return new ConfigByteList(values, possibleValues);
-            }
-
-            return new ConfigByteList(values, null);
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            if (possibleValues != null) {
-                return String.format("ConfigByteList{values=%s, possibleValues=%s}", GB.hexdump(values), GB.hexdump(possibleValues));
-            } else {
-                return String.format("ConfigByteList{values=%s}", GB.hexdump(values));
-            }
-        }
-    }
-
-    private static class ConfigDatetimeHhMm {
-        final String value;
-
-        public ConfigDatetimeHhMm(final String value) {
-            this.value = value;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        private static ConfigDatetimeHhMm consume(final ByteBuffer buf) {
-            final DateFormat df = new SimpleDateFormat("HH:mm", Locale.getDefault());
-            final String hhmm = String.format(Locale.ROOT, "%02d:%02d", buf.get(), buf.get());
-            try {
-                df.parse(hhmm);
-            } catch (final ParseException e) {
-                LOG.error("Failed to parse HH:mm from {}", hhmm);
-                return null;
-            }
-            return new ConfigDatetimeHhMm(hhmm);
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return String.format("ConfigDatetimeHhMm{value=%s}", value);
-        }
-    }
-
     private interface ValueDecoder<T> {
         String decode(T val);
     }
@@ -1833,13 +1458,13 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
 
     public static Byte languageLocaleToByte(final String locale) {
         if (HuamiLanguageType.idLookup.containsKey(locale)) {
-            return (byte) (int) HuamiLanguageType.idLookup.get(locale);
+            return (byte) (int) Objects.requireNonNull(HuamiLanguageType.idLookup.get(locale));
         }
 
         // value doesn't match a known language, attempt to parse it as hex
         final Matcher matcher = Pattern.compile("^0[xX]([0-9a-fA-F]{1,2})$").matcher(locale);
         if (matcher.find()) {
-            return (byte) Integer.parseInt(matcher.group(1), 16);
+            return (byte) Integer.parseInt(Objects.requireNonNull(matcher.group(1)), 16);
         }
 
         return null;
@@ -1978,7 +1603,9 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
 
     public static String decodeEnum(final Map<Byte, Enum<?>> map, final byte b) {
         if (map.containsKey(b)) {
-            return map.get(b).name().toLowerCase(Locale.ROOT);
+            return Objects.requireNonNull(map.get(b))
+                    .name()
+                    .toLowerCase(Locale.ROOT);
         }
 
         return null;
@@ -1999,7 +1626,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
         // Byte doesn't match a known enum value, attempt to parse it as hex
         final Matcher matcher = Pattern.compile("^0[xX]([0-9a-fA-F]{1,2})$").matcher(val);
         if (matcher.find()) {
-            return (byte) Integer.parseInt(matcher.group(1), 16);
+            return (byte) Integer.parseInt(Objects.requireNonNull(matcher.group(1)), 16);
         }
 
         return null;
