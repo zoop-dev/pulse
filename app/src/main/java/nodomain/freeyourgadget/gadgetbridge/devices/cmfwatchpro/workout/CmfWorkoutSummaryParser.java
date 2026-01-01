@@ -26,8 +26,11 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.HR_ZONE_FAT_BURN;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.HR_ZONE_MAXIMUM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.HR_ZONE_WARM_UP;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.PACE_AVG_SECONDS_KM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.RECOVERY_TIME;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.STEPS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.TRAINING_EFFECT_AEROBIC;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.TRAINING_EFFECT_ANAEROBIC;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.TRAINING_LOAD;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_BPM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KCAL;
@@ -106,7 +109,11 @@ public class CmfWorkoutSummaryParser implements ActivitySummaryParser {
             final int distanceMeters = buf.getInt();
             summaryData.add(DISTANCE_METERS, distanceMeters, UNIT_METERS);
 
-            buf.get(new byte[8]); //?
+
+            final int averagePace = buf.getShort();
+            summaryData.add(PACE_AVG_SECONDS_KM, averagePace, UNIT_SECONDS);
+            buf.get(new byte[2]); //?
+            buf.get(new byte[4]); //?
 
             final int endTime = buf.getInt();
             summary.setEndTime(new Date(endTime * 1000L));
@@ -119,7 +126,10 @@ public class CmfWorkoutSummaryParser implements ActivitySummaryParser {
                 final int trainingLoad = buf.getShort();
                 summaryData.add(TRAINING_LOAD, trainingLoad, UNIT_NONE);
 
-                buf.get(new byte[4]); //?
+                final int effectAerobic = buf.getShort();
+                summaryData.add(TRAINING_EFFECT_AEROBIC, effectAerobic / 100f, UNIT_NONE);
+                final int effectAnaerobic = buf.getShort();
+                summaryData.add(TRAINING_EFFECT_ANAEROBIC, effectAnaerobic / 100f, UNIT_NONE);
 
                 final int recoveryTimeMinutes = buf.getShort();
                 summaryData.add(RECOVERY_TIME, recoveryTimeMinutes * 60, UNIT_SECONDS);
