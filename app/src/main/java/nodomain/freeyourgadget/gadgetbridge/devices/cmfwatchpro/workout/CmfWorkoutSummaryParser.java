@@ -165,7 +165,7 @@ public class CmfWorkoutSummaryParser implements ActivitySummaryParser {
                     }
                 }
 
-                final int activityScore = buf.getShort();
+                final int activityScore = buf.getInt();
                 summaryData.add(ACTIVE_SCORE, Math.round(activityScore / 1000f), UNIT_NONE);
             }
         } catch (final Exception e) {

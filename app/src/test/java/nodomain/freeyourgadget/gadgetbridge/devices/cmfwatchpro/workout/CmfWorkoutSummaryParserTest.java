@@ -105,6 +105,6 @@ public class CmfWorkoutSummaryParserTest extends TestBase {
 
         assertEquals(100d, summaryData.getNumber(ActivitySummaryEntries.TRAINING_LOAD, -1));
         assertEquals(56 * 60 * 60d + 17 * 60d, summaryData.getNumber(ActivitySummaryEntries.RECOVERY_TIME, -1)); // 56.3h
-        assertEquals(7d, summaryData.getNumber(ActivitySummaryEntries.ACTIVE_SCORE, -1)); // FIXME should be +73
+        assertEquals(73d, summaryData.getNumber(ActivitySummaryEntries.ACTIVE_SCORE, -1)); // +73
     }
 }
