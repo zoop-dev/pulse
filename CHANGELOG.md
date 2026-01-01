@@ -4,8 +4,8 @@
 
 * Initial support for CMF Buds 2
 * Initial support for Galaxy Buds3 Pro
-* Initial support for Garmin Edge 840
-* Initial support for Zendure SolarFlow (test only 800 Pro)
+* Initial support for Garmin Edge 840 and Forerunner 920
+* Initial support for Zendure SolarFlow (tested only 800 Pro)
 * Huawei: Sync raw ECG data (no UI)
 * Huami: Improve workout charts for activities without gps
 * Pebble: Support Signal icon with 2025 models

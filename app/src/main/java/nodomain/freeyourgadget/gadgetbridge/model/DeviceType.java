@@ -119,6 +119,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.Ga
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner645MusicCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner735XTCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner745Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner920Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner945Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner955Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner965Coordinator;
@@ -652,6 +653,7 @@ public enum DeviceType {
     GARMIN_FORERUNNER_645_MUSIC(GarminForerunner645MusicCoordinator.class),
     GARMIN_FORERUNNER_735XT(GarminForerunner735XTCoordinator.class),
     GARMIN_FORERUNNER_745(GarminForerunner745Coordinator.class),
+    GARMIN_FORERUNNER_920(GarminForerunner920Coordinator.class),
     GARMIN_FORERUNNER_945(GarminForerunner945Coordinator.class),
     GARMIN_FORERUNNER_955(GarminForerunner955Coordinator.class),
     GARMIN_FORERUNNER_965(GarminForerunner965Coordinator.class),

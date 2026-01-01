@@ -1973,6 +1973,7 @@
     <string name="devicetype_garmin_forerunner_645_music" translatable="false">Garmin Forerunner 645 Music</string>
     <string name="devicetype_garmin_forerunner_735xt" translatable="false">Garmin Forerunner 735XT</string>
     <string name="devicetype_garmin_forerunner_745" translatable="false">Garmin Forerunner 745</string>
+    <string name="devicetype_garmin_forerunner_920" translatable="false">Garmin Forerunner 920</string>
     <string name="devicetype_garmin_forerunner_945" translatable="false">Garmin Forerunner 945</string>
     <string name="devicetype_garmin_forerunner_955" translatable="false">Garmin Forerunner 955</string>
     <string name="devicetype_garmin_forerunner_965" translatable="false">Garmin Forerunner 965</string>
