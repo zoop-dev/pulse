@@ -858,7 +858,7 @@
     <string name="Steps">Kroky</string>
     <string name="Activity">Aktivita</string>
     <string name="Speed">Rychlost</string>
-    <string name="Elevation">Elevace</string>
+    <string name="Elevation">Převýšení</string>
     <string name="Distance">Vzdálenost</string>
     <string name="Swimming">Plavání</string>
     <string name="Strokes">Tempo</string>
@@ -4168,4 +4168,18 @@
     <string name="pref_title_pebble_search_app_updates">Vyhledat aktualizace aplikace</string>
     <string name="pref_summary_pebble_search_app_updates">Při otevření správce aplikací automaticky vyhledávat aktualizace aplikací a ciferníků na hodinkách</string>
     <string name="pref_sos_contact_title">SOS kontakt</string>
+    <string name="pref_summary_calendar_sync_choose">Vyberte, které kalendáře a barevné štítky chcete synchronizovat do zařízení</string>
+    <string name="pref_title_calendar_sync_choose">Kalendáře k synchronizaci</string>
+    <string name="pref_title_calendar_sync_colors">Barvy událostí k synchronizaci</string>
+    <string name="pref_summary_calendar_sync_canceled">Zrušené události kalendáře budou synchronizovány do zařízení</string>
+    <string name="pref_title_calendar_sync_canceled">Synchronizovat zrušené události</string>
+    <string name="pref_summary_calendar_sync_declined">Odmítnuté události kalendáře budou synchronizovány do zařízení</string>
+    <string name="pref_title_calendar_sync_declined">Synchronizovat odmítnuté události</string>
+    <string name="pref_summary_calendar_sync_focus_time">Události kalendáře označené jako „Čas na soustředění“ budou synchronizovány do zařízení</string>
+    <string name="pref_title_calendar_sync_focus_time">Synchronizovat události s časem na soustředění</string>
+    <string name="pref_summary_calendar_sync_all_day">Události kalendáře označené jako „Celý den“ budou synchronizovány do zařízení</string>
+    <string name="pref_title_calendar_sync_all_day">Synchronizovat celodenní události</string>
+    <string name="pref_summary_calendar_sync_working_location">Události kalendáře, které jsou zvláštními „Pracovními lokacemi“ budou synchronizovány do zařízení</string>
+    <string name="pref_title_calendar_sync_working_location">Synchronizovat události s pracovními lokacemi</string>
+    <string name="done">Hotovo</string>
 </resources>
