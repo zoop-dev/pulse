@@ -22,6 +22,10 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
+/**
+ * @deprecated Use {@link nodomain.freeyourgadget.gadgetbridge.service.btbr.AbstractBTBRDeviceSupport}
+ */
+@Deprecated
 public abstract class GBDeviceIoThread extends Thread {
     private static final AtomicLong THREAD_COUNTER = new AtomicLong(0L);
 
