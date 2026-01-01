@@ -1,28 +1,27 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.onemore_sonoflow;
 
-import nodomain.freeyourgadget.gadgetbridge.service.AbstractHeadphoneSerialDeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractHeadphoneSerialDeviceSupportV2;
 
-public class OneMoreSonoFlowSupport extends AbstractHeadphoneSerialDeviceSupport {
+public class OneMoreSonoFlowSupport extends AbstractHeadphoneSerialDeviceSupportV2<OneMoreSonoFlowProtocol> {
     @Override
-    protected GBDeviceProtocol createDeviceProtocol() {
+    protected OneMoreSonoFlowProtocol createDeviceProtocol() {
         return new OneMoreSonoFlowProtocol(getDevice());
     }
 
     @Override
-    protected GBDeviceIoThread createDeviceIOThread() {
-        return new OneMoreSonoFlowIOThread(
-            getDevice(),
-            getContext(),
-            (OneMoreSonoFlowProtocol) getDeviceProtocol(),
-            OneMoreSonoFlowSupport.this,
-            getBluetoothAdapter()
-        );
-    }
+    protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
+        // get some device information
+        // TODO: we might not receive some responses, it might be worth requesting them again if that's a significant issue
+        //  https://codeberg.org/Freeyourgadget/Gadgetbridge/pulls/4637#issuecomment-3035556
+        builder.write(OneMorePacket.createGetDeviceInfoPacket());
+        builder.write(OneMorePacket.createGetNoiseControlModePacket());
+        builder.write(OneMorePacket.createGetLdacModePacket());
+        builder.write(OneMorePacket.createGetDualDeviceModePacket());
 
-    @Override
-    public boolean useAutoConnect() {
-        return false;
+        builder.setDeviceState(GBDevice.State.INITIALIZED);
+
+        return builder;
     }
 }
