@@ -79,12 +79,14 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsS
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiLanguageType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.config.ConfigIntUnbound;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.config.ConfigBoolean;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.config.ConfigByte;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.config.ConfigByteList;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.config.ConfigDatetimeHhMm;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.config.ConfigInt;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.config.ConfigShort;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.config.ConfigShortList;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.config.ConfigString;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.config.ConfigStringList;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.config.ConfigTimestamp;
@@ -362,7 +364,13 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
     }
 
     public void requestConfig(final ZeppOsTransactionBuilder builder, final ConfigGroup config) {
-        requestConfig(builder, config, true, ZeppOsConfigService.ConfigArg.getAllArgsForConfigGroup(config));
+        if (BuildConfig.DEBUG && getSupport().getDevicePrefs().getBoolean("zepp_os_request_all_config_args", false)) {
+            LOG.debug("Requesting all config args for {}", config);
+            requestConfig(builder, config, true, Collections.emptyList());
+        } else {
+            // More conservative approach, since we may get config types we don't know how to parse
+            requestConfig(builder, config, true, ZeppOsConfigService.ConfigArg.getAllArgsForConfigGroup(config));
+        }
     }
 
     public void requestConfig(final ZeppOsTransactionBuilder builder,
@@ -429,13 +437,13 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
         STRING(0x20),
         STRING_LIST(0x21),
         SHORT(0x01),
-        // TODO 0x02
+        SHORT_LIST(0x02),
         INT(0x03),
         BYTE(0x10),
         BYTE_LIST(0x11),
         DATETIME_HH_MM(0x30),
         TIMESTAMP_MILLIS(0x40),
-        // TODO 0x50
+        INT_UNBOUND(0x50),
         ;
 
         private final byte value;
@@ -461,6 +469,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
 
     public enum ConfigArg {
         // AGPS
+        AGPS_UNK_0x08(ConfigGroup.AGPS, ConfigType.INT_UNBOUND, 0x08, null), // TODO ?
         AGPS_UPDATE_TIME(ConfigGroup.AGPS, ConfigType.TIMESTAMP_MILLIS, 0x09, PREF_AGPS_UPDATE_TIME),
         AGPS_EXPIRE_TIME(ConfigGroup.AGPS, ConfigType.TIMESTAMP_MILLIS, 0x0a, PREF_AGPS_EXPIRE_TIME),
 
@@ -543,6 +552,7 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
         WORKOUT_DETECTION_ALERT(ConfigGroup.WORKOUT, ConfigType.BOOL, 0x41, PREF_WORKOUT_DETECTION_ALERT),
         WORKOUT_DETECTION_SENSITIVITY(ConfigGroup.WORKOUT, ConfigType.BYTE, 0x42, PREF_WORKOUT_DETECTION_SENSITIVITY),
         WORKOUT_POOL_SWIMMING_SIZE(ConfigGroup.WORKOUT, ConfigType.BYTE, 0x51, null), // TODO ?
+        WORKOUT_HEART_RATE_ZONES(ConfigGroup.WORKOUT, ConfigType.SHORT_LIST, 0x05, null),
 
         // System
         TIME_FORMAT(ConfigGroup.SYSTEM, ConfigType.BYTE, 0x01, PREF_TIMEFORMAT),
@@ -1069,6 +1079,13 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
                             argPrefs = convertShortToPrefs(configArg, valShort);
                         }
                         break;
+                    case SHORT_LIST:
+                        final ConfigShortList valShortList = ConfigShortList.consume(buf, includesConstraints);
+                        LOG.info("Got {} ({}) = {}", configArg, String.format("0x%02x", configArgByte), valShortList);
+                        if (configArg != null) {
+                            // TODO
+                        }
+                        break;
                     case INT:
                         final ConfigInt valInt = ConfigInt.consume(buf, includesConstraints);
                         LOG.info("Got {} ({}) = {}", configArg, String.format("0x%02x", configArgByte), valInt);
@@ -1106,6 +1123,13 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
                         LOG.info("Got {} ({}) = {}", configArg, String.format("0x%02x", configArgByte), valTimestamp);
                         if (configArg != null) {
                             argPrefs = convertTimestampToPrefs(configArg, valTimestamp);
+                        }
+                        break;
+                    case INT_UNBOUND:
+                        final ConfigIntUnbound valIntUnbound = ConfigIntUnbound.consume(buf, includesConstraints);
+                        LOG.info("Got {} ({}) = {}", configArg, String.format("0x%02x", configArgByte), valIntUnbound);
+                        if (configArg != null) {
+                            // TODO
                         }
                         break;
                     default:
@@ -1391,13 +1415,15 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
                     decoder = null;
             }
 
-            if (decoder != null) {
-                prefs = singletonMap(configArg.getPrefKey(), decoder.decode(value.getValue()));
-                if (includesConstraints) {
-                    prefs.put(
-                            DeviceSettingsUtils.getPrefPossibleValuesKey(configArg.getPrefKey()),
-                            TextUtils.join(",", decodeByteValues(possibleValues, decoder))
-                    );
+            if (configArg.getPrefKey() != null) {
+                if (decoder != null) {
+                    prefs = singletonMap(configArg.getPrefKey(), decoder.decode(value.getValue()));
+                    if (includesConstraints) {
+                        prefs.put(
+                                DeviceSettingsUtils.getPrefPossibleValuesKey(configArg.getPrefKey()),
+                                TextUtils.join(",", decodeByteValues(possibleValues, decoder))
+                        );
+                    }
                 }
             }
 

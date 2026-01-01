@@ -320,7 +320,20 @@ public class ZeppOsSupport extends AbstractDeviceSupport
 
     @Override
     public void onTestNewFunction() {
-
+        //final ZeppOsTransactionBuilder builder = createZeppOsTransactionBuilder("test new function");
+        //configService.requestConfig(
+        //        builder,
+        //        ZeppOsConfigService.ConfigGroup.AGPS,
+        //        true,
+        //        Collections.singletonList(ZeppOsConfigService.ConfigArg.AGPS_UNK_0x08)
+        //);
+        //configService.requestConfig(
+        //        builder,
+        //        ZeppOsConfigService.ConfigGroup.WORKOUT,
+        //        true,
+        //        Collections.singletonList(ZeppOsConfigService.ConfigArg.WORKOUT_HEART_RATE_ZONES)
+        //);
+        //builder.queue();
     }
 
     @Override

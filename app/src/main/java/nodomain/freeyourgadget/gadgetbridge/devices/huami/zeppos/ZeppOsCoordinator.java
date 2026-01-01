@@ -35,6 +35,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
@@ -549,6 +550,9 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
         }
         developer.add(R.xml.devicesettings_keep_activity_data_on_device);
         developer.add(R.xml.devicesettings_huami2021_fetch_operation_time_unit);
+        if (BuildConfig.DEBUG) {
+            developer.add(R.xml.devicesettings_zeppos_request_all_configs);
+        }
 
         return deviceSpecificSettings;
     }

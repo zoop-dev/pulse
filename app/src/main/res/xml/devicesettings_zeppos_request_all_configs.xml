@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_settings_applications"
+        android:key="zepp_os_request_all_config_args"
+        android:layout="@layout/preference_checkbox"
+        android:summary="Some may fail to be parsed - check the logs for errors."
+        android:title="Request all config args" />
+</androidx.preference.PreferenceScreen>
