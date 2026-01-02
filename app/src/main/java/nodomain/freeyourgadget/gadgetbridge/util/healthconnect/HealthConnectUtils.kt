@@ -36,6 +36,7 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBHelper
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractSampleProvider
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider
+import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao
 import nodomain.freeyourgadget.gadgetbridge.entities.HealthConnectSyncState
 import nodomain.freeyourgadget.gadgetbridge.entities.HealthConnectSyncStateDao
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
@@ -266,11 +267,8 @@ class HealthConnectUtils {
                 manufacturer = deviceCoordinator.manufacturer,
                 model = gbDevice.model
             )
-            // Filter out WORKOUTS - it's only for permission grouping, actual workout syncing happens via ACTIVITY data type
-            val dataTypesToSync = HealthConnectPermissionManager.HealthConnectDataType.entries
-                .filter { it != HealthConnectPermissionManager.HealthConnectDataType.WORKOUTS }
 
-            dataTypeLoop@ for (dataType in dataTypesToSync) {
+            dataTypeLoop@ for (dataType in HealthConnectPermissionManager.HealthConnectDataType.entries) {
                 // Check if worker has been cancelled
                 if (worker?.isStopped == true) {
                     LOG.info("$HC_SYNC_TAG Worker has been cancelled, aborting sync")
@@ -569,16 +567,6 @@ class HealthConnectUtils {
                             currentSliceStartTs, currentSliceEndTs, grantedPermissions, activityBasedSamples
                         ))
                     }
-
-                    // Sync explicitly recorded workouts (independent from activityBasedSamples)
-                    // RecordedWorkoutSyncer queries BaseActivitySummary directly from database
-                    val coordinator = gbDevice.deviceCoordinator
-                    if (coordinator.supportsActivityTracks(gbDevice)) {
-                        sliceStats.add(RecordedWorkoutSyncer.sync(
-                            healthConnectClient, gbDevice, metadata, offset,
-                            currentSliceStartTs, currentSliceEndTs, grantedPermissions, context
-                        ))
-                    }
                 }
                 HealthConnectPermissionManager.HealthConnectDataType.SLEEP -> {
                     if (!activityBasedSamples.isNullOrEmpty()) {
@@ -609,9 +597,14 @@ class HealthConnectUtils {
                     currentSliceStartTs, currentSliceEndTs, grantedPermissions
                 ))
                 HealthConnectPermissionManager.HealthConnectDataType.WORKOUTS -> {
-                    // Should never reach here - WORKOUTS is filtered from iteration
-                    // Workouts are synced via ACTIVITY using RecordedWorkoutSyncer (requires activityBasedSamples)
-                    error("WORKOUTS should not be processed - it's filtered from dataTypesToSync")
+                    // Sync explicitly recorded workouts from BaseActivitySummary
+                    val coordinator = gbDevice.deviceCoordinator
+                    if (coordinator.supportsActivityTracks(gbDevice)) {
+                        sliceStats.add(RecordedWorkoutSyncer.sync(
+                            healthConnectClient, gbDevice, metadata, offset,
+                            currentSliceStartTs, currentSliceEndTs, grantedPermissions, context
+                        ))
+                    }
                 }
             }
 
@@ -685,6 +678,21 @@ class HealthConnectUtils {
                 }
                 return latestMilli?.let { Instant.ofEpochMilli(it) }
             }
+
+            if (dataType == HealthConnectPermissionManager.HealthConnectDataType.WORKOUTS) {
+                // For WORKOUTS, query BaseActivitySummary directly
+                if (!deviceCoordinator.supportsActivityTracks(device)) {
+                    return null
+                }
+                val deviceEntity = DBHelper.getDevice(device, db.daoSession) ?: return null
+                val latestWorkout = db.daoSession.baseActivitySummaryDao?.queryBuilder()
+                    ?.where(BaseActivitySummaryDao.Properties.DeviceId.eq(deviceEntity.id))
+                    ?.orderDesc(BaseActivitySummaryDao.Properties.EndTime)
+                    ?.limit(1)
+                    ?.unique()
+                return latestWorkout?.endTime?.toInstant()
+            }
+
             val provider = getProviderForDataType(deviceCoordinator, device, db, dataType)
             return when (provider) {
                 is TimeSampleProvider<*> -> {
