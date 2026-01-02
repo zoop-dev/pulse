@@ -4189,4 +4189,18 @@
     <string name="pref_title_pebble_search_app_updates">Sprawdź aktualizacje aplikacji</string>
     <string name="pref_summary_pebble_search_app_updates">Automatycznie sprawdzaj aktualizacje aplikacji i tarcz po otwarciu menedżera</string>
     <string name="pref_sos_contact_title">Kontakt alarmowy</string>
+    <string name="pref_summary_calendar_sync_choose">Wybierz kalendarze i etykiety kolorów do synchronizacji z urządzeniem</string>
+    <string name="pref_title_calendar_sync_choose">Kalendarze do synchronizacji</string>
+    <string name="pref_title_calendar_sync_colors">Kolory wydarzeń do synchronizacji</string>
+    <string name="pref_summary_calendar_sync_canceled">Anulowane wydarzenia z kalendarza będą synchronizowane z urządzeniem</string>
+    <string name="pref_title_calendar_sync_canceled">Synchronizuj anulowane wydarzenia</string>
+    <string name="pref_summary_calendar_sync_declined">Odrzucone wydarzenia z kalendarza będą synchronizowane z urządzeniem</string>
+    <string name="pref_title_calendar_sync_declined">Synchronizuj odrzucone wydarzenia</string>
+    <string name="pref_summary_calendar_sync_focus_time">Wydarzenia z kalendarza oznaczone jako „Czas skupienia” będą synchronizowane z urządzeniem</string>
+    <string name="pref_title_calendar_sync_focus_time">Synchronizuj wydarzenia „Czas skupienia”</string>
+    <string name="pref_summary_calendar_sync_all_day">Wydarzenia z kalendarza oznaczone jako „Całodniowe” będą synchronizowane z urządzeniem</string>
+    <string name="pref_title_calendar_sync_all_day">Synchronizuj wydarzenia całodniowe</string>
+    <string name="pref_summary_calendar_sync_working_location">Wydarzenia z kalendarza oznaczone jako „Miejsce pracy” będą synchronizowane z urządzeniem</string>
+    <string name="pref_title_calendar_sync_working_location">Synchronizuj wydarzenia „Miejsce pracy”</string>
+    <string name="done">Gotowe</string>
 </resources>
