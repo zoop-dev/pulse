@@ -627,24 +627,7 @@ class HealthConnectUtils {
             db: DBHandler,
             dataType: HealthConnectPermissionManager.HealthConnectDataType
         ): Instant? {
-            if (dataType == HealthConnectPermissionManager.HealthConnectDataType.HRV) {
-                val summaryProvider = deviceCoordinator.getHrvSummarySampleProvider(device, db.daoSession)
-                val valueProvider = deviceCoordinator.getHrvValueSampleProvider(device, db.daoSession)
-
-                val summaryTsMilliFiltered = summaryProvider?.firstSample?.timestamp?.takeIf { it > 0 }
-                val valueTsMilliFiltered = valueProvider?.firstSample?.timestamp?.takeIf { it > 0 }
-
-                val earliestMilli = when {
-                    summaryTsMilliFiltered != null && valueTsMilliFiltered != null -> minOf(summaryTsMilliFiltered, valueTsMilliFiltered)
-                    summaryTsMilliFiltered != null -> summaryTsMilliFiltered
-                    else -> valueTsMilliFiltered
-                }
-                return earliestMilli?.let { Instant.ofEpochMilli(it) }
-            }
-
-            val provider = getProviderForDataType(deviceCoordinator, device, db, dataType)
-
-            return when (provider) {
+            return when (val provider = getProviderForDataType(deviceCoordinator, device, db, dataType)) {
                 is TimeSampleProvider<*> -> {
                     provider.firstSample?.timestamp?.takeIf { it > 0 }?.let { Instant.ofEpochMilli(it) }
                 }
@@ -664,21 +647,6 @@ class HealthConnectUtils {
             db: DBHandler,
             dataType: HealthConnectPermissionManager.HealthConnectDataType
         ): Instant? {
-             if (dataType == HealthConnectPermissionManager.HealthConnectDataType.HRV) {
-                val summaryProvider = deviceCoordinator.getHrvSummarySampleProvider(device, db.daoSession)
-                val valueProvider = deviceCoordinator.getHrvValueSampleProvider(device, db.daoSession)
-
-                val summaryTsMilliFiltered = summaryProvider?.latestSample?.timestamp?.takeIf { it > 0 }
-                val valueTsMilliFiltered = valueProvider?.latestSample?.timestamp?.takeIf { it > 0 }
-
-                val latestMilli = when {
-                    summaryTsMilliFiltered != null && valueTsMilliFiltered != null -> maxOf(summaryTsMilliFiltered, valueTsMilliFiltered)
-                    summaryTsMilliFiltered != null -> summaryTsMilliFiltered
-                    else -> valueTsMilliFiltered
-                }
-                return latestMilli?.let { Instant.ofEpochMilli(it) }
-            }
-
             if (dataType == HealthConnectPermissionManager.HealthConnectDataType.WORKOUTS) {
                 // For WORKOUTS, query BaseActivitySummary directly
                 if (!deviceCoordinator.supportsActivityTracks(device)) {
@@ -693,8 +661,7 @@ class HealthConnectUtils {
                 return latestWorkout?.endTime?.toInstant()
             }
 
-            val provider = getProviderForDataType(deviceCoordinator, device, db, dataType)
-            return when (provider) {
+            return when (val provider = getProviderForDataType(deviceCoordinator, device, db, dataType)) {
                 is TimeSampleProvider<*> -> {
                     provider.latestSample?.timestamp?.takeIf { it > 0 }?.let { Instant.ofEpochMilli(it) }
                 }
@@ -717,8 +684,7 @@ class HealthConnectUtils {
             return when (dataType) {
                 HealthConnectPermissionManager.HealthConnectDataType.ACTIVITY, HealthConnectPermissionManager.HealthConnectDataType.SLEEP -> coordinator.getSampleProvider(device, db.daoSession)
                 HealthConnectPermissionManager.HealthConnectDataType.VO2MAX -> coordinator.getVo2MaxSampleProvider(device, db.daoSession)
-                // For HRV, either summary or value provider can be used, prefer summary if available
-                HealthConnectPermissionManager.HealthConnectDataType.HRV -> coordinator.getHrvSummarySampleProvider(device, db.daoSession) ?: coordinator.getHrvValueSampleProvider(device, db.daoSession)
+                HealthConnectPermissionManager.HealthConnectDataType.HRV -> coordinator.getHrvValueSampleProvider(device, db.daoSession)
                 HealthConnectPermissionManager.HealthConnectDataType.WEIGHT -> coordinator.getWeightSampleProvider(device, db.daoSession)
                 // For SpO2 and Temperature, there might be a specific provider or fallback to general sample provider
                 HealthConnectPermissionManager.HealthConnectDataType.SPO2 -> coordinator.getSpo2SampleProvider(device, db.daoSession) // Potentially add fallback if needed: ?: coordinator.getSampleProvider(device, db.daoSession)
