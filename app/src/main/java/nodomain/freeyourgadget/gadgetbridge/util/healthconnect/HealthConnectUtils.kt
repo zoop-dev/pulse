@@ -602,6 +602,11 @@ class HealthConnectUtils {
                     healthConnectClient, gbDevice, metadata, offset,
                     currentSliceStartTs, currentSliceEndTs, grantedPermissions
                 ))
+                HealthConnectPermissionManager.HealthConnectDataType.WORKOUTS -> {
+                    // WORKOUTS are synced as part of ACTIVITY data type via RecordedWorkoutSyncer
+                    // This branch exists for exhaustiveness but is not expected to be called directly
+                    CompanionLogger.debug("$HC_SYNC_TAG WORKOUTS data type encountered in syncDataTypeSlice - workouts are synced via ACTIVITY data type")
+                }
             }
 
             return sliceStats
@@ -704,6 +709,11 @@ class HealthConnectUtils {
                 // For SpO2 and Temperature, there might be a specific provider or fallback to general sample provider
                 HealthConnectPermissionManager.HealthConnectDataType.SPO2 -> coordinator.getSpo2SampleProvider(device, db.daoSession) // Potentially add fallback if needed: ?: coordinator.getSampleProvider(device, db.daoSession)
                 HealthConnectPermissionManager.HealthConnectDataType.TEMPERATURE -> coordinator.getTemperatureSampleProvider(device, db.daoSession) // Potentially add fallback: ?: coordinator.getSampleProvider(device, db.daoSession)
+                HealthConnectPermissionManager.HealthConnectDataType.WORKOUTS -> {
+                    // WORKOUTS use BaseActivitySummary which is accessed via DBHandler, not a sample provider
+                    // This function is only called for timestamp retrieval, which isn't applicable to workouts
+                    null
+                }
             }
         }
 

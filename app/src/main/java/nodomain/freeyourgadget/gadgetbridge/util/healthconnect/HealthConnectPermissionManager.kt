@@ -21,6 +21,7 @@ import androidx.core.content.edit
 import androidx.fragment.app.FragmentActivity
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.permission.HealthPermission
+import androidx.health.connect.client.permission.HealthPermission.Companion.PERMISSION_WRITE_EXERCISE_ROUTE
 import androidx.health.connect.client.records.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -61,7 +62,11 @@ object HealthConnectPermissionManager {
         HealthPermission.getWritePermission(WeightRecord::class),
         HealthPermission.getWritePermission(OxygenSaturationRecord::class),
         HealthPermission.getWritePermission(BodyTemperatureRecord::class),
-        HealthPermission.getWritePermission(SkinTemperatureRecord::class)
+        HealthPermission.getWritePermission(SkinTemperatureRecord::class),
+        HealthPermission.getWritePermission(ElevationGainedRecord::class),
+        HealthPermission.getWritePermission(PowerRecord::class),
+        HealthPermission.getWritePermission(SpeedRecord::class),
+        PERMISSION_WRITE_EXERCISE_ROUTE
     )
 
     enum class HealthConnectDataType {
@@ -71,7 +76,8 @@ object HealthConnectPermissionManager {
         HRV,
         WEIGHT,
         SPO2,
-        TEMPERATURE
+        TEMPERATURE,
+        WORKOUTS
     }
 
     @JvmStatic
@@ -92,6 +98,16 @@ object HealthConnectPermissionManager {
             HealthConnectDataType.TEMPERATURE -> setOf(
                 HealthPermission.getWritePermission(BodyTemperatureRecord::class),
                 HealthPermission.getWritePermission(SkinTemperatureRecord::class)
+            )
+            HealthConnectDataType.WORKOUTS -> setOf(
+                HealthPermission.getWritePermission(ExerciseSessionRecord::class),
+                HealthPermission.getWritePermission(DistanceRecord::class),
+                HealthPermission.getWritePermission(HeartRateRecord::class),
+                HealthPermission.getWritePermission(TotalCaloriesBurnedRecord::class),
+                HealthPermission.getWritePermission(ElevationGainedRecord::class),
+                HealthPermission.getWritePermission(SpeedRecord::class),
+                HealthPermission.getWritePermission(PowerRecord::class),
+                PERMISSION_WRITE_EXERCISE_ROUTE
             )
         }
     }
