@@ -266,7 +266,11 @@ class HealthConnectUtils {
                 manufacturer = deviceCoordinator.manufacturer,
                 model = gbDevice.model
             )
-            dataTypeLoop@ for (dataType in HealthConnectPermissionManager.HealthConnectDataType.entries) {
+            // Filter out WORKOUTS - it's only for permission grouping, actual workout syncing happens via ACTIVITY data type
+            val dataTypesToSync = HealthConnectPermissionManager.HealthConnectDataType.entries
+                .filter { it != HealthConnectPermissionManager.HealthConnectDataType.WORKOUTS }
+
+            dataTypeLoop@ for (dataType in dataTypesToSync) {
                 // Check if worker has been cancelled
                 if (worker?.isStopped == true) {
                     LOG.info("$HC_SYNC_TAG Worker has been cancelled, aborting sync")
@@ -554,6 +558,7 @@ class HealthConnectUtils {
 
             when (dataType) {
                 HealthConnectPermissionManager.HealthConnectDataType.ACTIVITY -> {
+                    // Sync activity samples (steps, heart rate) if available
                     if (!activityBasedSamples.isNullOrEmpty()) {
                         sliceStats.add(StepsSyncer.sync(
                             healthConnectClient, gbDevice, metadata, offset,
@@ -563,15 +568,16 @@ class HealthConnectUtils {
                             healthConnectClient, gbDevice, metadata, offset,
                             currentSliceStartTs, currentSliceEndTs, grantedPermissions, activityBasedSamples
                         ))
+                    }
 
-                        // Workout syncing: only sync explicitly recorded workouts from BaseActivitySummary
-                        val coordinator = gbDevice.deviceCoordinator
-                        if (coordinator.supportsActivityTracks(gbDevice)) {
-                            sliceStats.add(RecordedWorkoutSyncer.sync(
-                                healthConnectClient, gbDevice, metadata, offset,
-                                currentSliceStartTs, currentSliceEndTs, grantedPermissions, context
-                            ))
-                        }
+                    // Sync explicitly recorded workouts (independent from activityBasedSamples)
+                    // RecordedWorkoutSyncer queries BaseActivitySummary directly from database
+                    val coordinator = gbDevice.deviceCoordinator
+                    if (coordinator.supportsActivityTracks(gbDevice)) {
+                        sliceStats.add(RecordedWorkoutSyncer.sync(
+                            healthConnectClient, gbDevice, metadata, offset,
+                            currentSliceStartTs, currentSliceEndTs, grantedPermissions, context
+                        ))
                     }
                 }
                 HealthConnectPermissionManager.HealthConnectDataType.SLEEP -> {
@@ -603,9 +609,9 @@ class HealthConnectUtils {
                     currentSliceStartTs, currentSliceEndTs, grantedPermissions
                 ))
                 HealthConnectPermissionManager.HealthConnectDataType.WORKOUTS -> {
-                    // WORKOUTS are synced as part of ACTIVITY data type via RecordedWorkoutSyncer
-                    // This branch exists for exhaustiveness but is not expected to be called directly
-                    CompanionLogger.debug("$HC_SYNC_TAG WORKOUTS data type encountered in syncDataTypeSlice - workouts are synced via ACTIVITY data type")
+                    // Should never reach here - WORKOUTS is filtered from iteration
+                    // Workouts are synced via ACTIVITY using RecordedWorkoutSyncer (requires activityBasedSamples)
+                    error("WORKOUTS should not be processed - it's filtered from dataTypesToSync")
                 }
             }
 
