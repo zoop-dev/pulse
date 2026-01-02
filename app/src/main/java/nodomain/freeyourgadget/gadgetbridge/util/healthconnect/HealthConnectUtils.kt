@@ -634,6 +634,16 @@ class HealthConnectUtils {
                 is AbstractSampleProvider<*> -> { // For ActivitySample based providers
                     provider.firstActivitySample?.timestamp?.takeIf { it > 0 }?.let { Instant.ofEpochSecond(it.toLong()) }
                 }
+                is BaseActivitySummaryDao -> {
+                    val deviceEntity = DBHelper.getDevice(device, db.daoSession) ?: return null
+                    return db.daoSession.baseActivitySummaryDao?.queryBuilder()
+                        ?.where(BaseActivitySummaryDao.Properties.DeviceId.eq(deviceEntity.id))
+                        ?.orderAsc(BaseActivitySummaryDao.Properties.StartTime)
+                        ?.limit(1)
+                        ?.list()
+                        ?.firstOrNull()
+                        ?.startTime?.toInstant()
+                }
                 else -> {
                     CompanionLogger.error("No suitable provider found or provider is null for getFirstSampleTimestamp, dataType: {}, device: {}", dataType, device.name)
                     null
@@ -647,26 +657,22 @@ class HealthConnectUtils {
             db: DBHandler,
             dataType: HealthConnectPermissionManager.HealthConnectDataType
         ): Instant? {
-            if (dataType == HealthConnectPermissionManager.HealthConnectDataType.WORKOUTS) {
-                // For WORKOUTS, query BaseActivitySummary directly
-                if (!deviceCoordinator.supportsActivityTracks(device)) {
-                    return null
-                }
-                val deviceEntity = DBHelper.getDevice(device, db.daoSession) ?: return null
-                val latestWorkout = db.daoSession.baseActivitySummaryDao?.queryBuilder()
-                    ?.where(BaseActivitySummaryDao.Properties.DeviceId.eq(deviceEntity.id))
-                    ?.orderDesc(BaseActivitySummaryDao.Properties.EndTime)
-                    ?.limit(1)
-                    ?.unique()
-                return latestWorkout?.endTime?.toInstant()
-            }
-
             return when (val provider = getProviderForDataType(deviceCoordinator, device, db, dataType)) {
                 is TimeSampleProvider<*> -> {
                     provider.latestSample?.timestamp?.takeIf { it > 0 }?.let { Instant.ofEpochMilli(it) }
                 }
                 is AbstractSampleProvider<*> -> { // For ActivitySample based providers
                     provider.latestActivitySample?.timestamp?.takeIf { it > 0 }?.let { Instant.ofEpochSecond(it.toLong()) }
+                }
+                is BaseActivitySummaryDao -> {
+                    val deviceEntity = DBHelper.getDevice(device, db.daoSession) ?: return null
+                    return db.daoSession.baseActivitySummaryDao?.queryBuilder()
+                        ?.where(BaseActivitySummaryDao.Properties.DeviceId.eq(deviceEntity.id))
+                        ?.orderDesc(BaseActivitySummaryDao.Properties.StartTime)
+                        ?.limit(1)
+                        ?.list()
+                        ?.firstOrNull()
+                        ?.startTime?.toInstant()
                 }
                 else -> {
                     CompanionLogger.error("No suitable provider found or provider is null for getLastSampleTimestamp, dataType: {}, device: {}", dataType, device.name)
@@ -689,11 +695,7 @@ class HealthConnectUtils {
                 // For SpO2 and Temperature, there might be a specific provider or fallback to general sample provider
                 HealthConnectPermissionManager.HealthConnectDataType.SPO2 -> coordinator.getSpo2SampleProvider(device, db.daoSession) // Potentially add fallback if needed: ?: coordinator.getSampleProvider(device, db.daoSession)
                 HealthConnectPermissionManager.HealthConnectDataType.TEMPERATURE -> coordinator.getTemperatureSampleProvider(device, db.daoSession) // Potentially add fallback: ?: coordinator.getSampleProvider(device, db.daoSession)
-                HealthConnectPermissionManager.HealthConnectDataType.WORKOUTS -> {
-                    // WORKOUTS use BaseActivitySummary which is accessed via DBHandler, not a sample provider
-                    // This function is only called for timestamp retrieval, which isn't applicable to workouts
-                    null
-                }
+                HealthConnectPermissionManager.HealthConnectDataType.WORKOUTS -> db.daoSession.baseActivitySummaryDao
             }
         }
 
