@@ -4170,4 +4170,18 @@
     <string name="pref_title_pebble_search_app_updates">搜索应用更新</string>
     <string name="pref_summary_pebble_search_app_updates">打开应用管理器时，自动搜索手表应用和表盘的更新</string>
     <string name="pref_sos_contact_title">紧急联系人</string>
+    <string name="pref_summary_calendar_sync_choose">选择同步到设备的日历和颜色标签</string>
+    <string name="pref_title_calendar_sync_choose">要同步的日历</string>
+    <string name="pref_title_calendar_sync_colors">要同步的活动颜色</string>
+    <string name="pref_summary_calendar_sync_canceled">被取消的日历活动会被同步到设备</string>
+    <string name="pref_title_calendar_sync_canceled">同步被取消的活动</string>
+    <string name="pref_summary_calendar_sync_declined">已拒绝的日历活动会同步到设备</string>
+    <string name="pref_title_calendar_sync_declined">同步拒绝的活动</string>
+    <string name="pref_summary_calendar_sync_focus_time">被标记为“专注时间”的日历活动会同步到设备</string>
+    <string name="pref_title_calendar_sync_focus_time">同步专注时间活动</string>
+    <string name="pref_summary_calendar_sync_all_day">被标记为“全天”的日历活动会同步到设备</string>
+    <string name="pref_title_calendar_sync_all_day">同步全天活动</string>
+    <string name="pref_summary_calendar_sync_working_location">特殊“工作地点”的日历活动会同步到设备</string>
+    <string name="pref_title_calendar_sync_working_location">同步工作地点活动</string>
+    <string name="done">完成</string>
 </resources>
