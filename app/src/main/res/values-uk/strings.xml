@@ -4009,4 +4009,18 @@
     <string name="pref_title_pebble_search_app_updates">Пошук оновлень програм</string>
     <string name="pref_summary_pebble_search_app_updates">Автоматичний пошук оновлень програм для годинника та циферблатів під час відкриття менеджера програм</string>
     <string name="pref_sos_contact_title">Контакт екстреної допомоги</string>
+    <string name="pref_summary_calendar_sync_choose">Виберіть календарі та кольорові мітки для синхронізації з пристроєм</string>
+    <string name="pref_title_calendar_sync_choose">Календарі для синхронізації</string>
+    <string name="pref_title_calendar_sync_colors">Кольори подій для синхронізації</string>
+    <string name="pref_summary_calendar_sync_canceled">Скасовані події календаря будуть синхронізовані з пристроєм</string>
+    <string name="pref_title_calendar_sync_canceled">Синхронізувати скасовані події</string>
+    <string name="pref_summary_calendar_sync_declined">Події календаря, які ви відхилили, будуть синхронізовані з пристроєм</string>
+    <string name="pref_title_calendar_sync_declined">Синхронізувати відхилені події</string>
+    <string name="pref_summary_calendar_sync_focus_time">Події календаря з тегом «Час фокусування» будуть синхронізовані з пристроєм</string>
+    <string name="pref_title_calendar_sync_focus_time">Синхронізувати події часу зосередження уваги</string>
+    <string name="pref_summary_calendar_sync_all_day">Події календаря, позначені як «Увесь день», будуть синхронізовані з пристроєм</string>
+    <string name="pref_title_calendar_sync_all_day">Синхронізувати події протягом усього дня</string>
+    <string name="pref_summary_calendar_sync_working_location">Події календаря, які є спеціальними «Робочими місцями», будуть синхронізовані з пристроєм</string>
+    <string name="pref_title_calendar_sync_working_location">Синхронізація подій робочого місця</string>
+    <string name="done">Готово</string>
 </resources>
