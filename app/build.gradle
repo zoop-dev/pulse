@@ -279,7 +279,7 @@ dependencies {
     implementation 'com.github.mapsforge.mapsforge:mapsforge-themes:0.26.1'
     implementation 'com.github.mapsforge.mapsforge:mapsforge-map-android:0.26.1'
     implementation 'com.caverock:androidsvg:1.4'
-    implementation 'org.jsoup:jsoup:1.21.2'
+    implementation 'org.jsoup:jsoup:1.22.1'
 
     // Bouncy Castle is included directly in GB, to avoid pulling the entire dependency
     // It's included in the org.bouncycastle.shaded package, to fix conflicts with roboelectric
