@@ -419,9 +419,6 @@ public class HealthConnectPreferencesActivity extends AbstractSettingsActivityV2
             if (syncOnEventPref != null) {
                 syncOnEventPref.setEnabled(true);
             }
-
-            if (healthConnectManualSettings != null) healthConnectManualSettings.setEnabled(enabled);
-            if (healthConnectSettings != null) healthConnectSettings.setEnabled(enabled);
         }
 
 
