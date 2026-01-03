@@ -111,6 +111,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.FossilHRInstallHandl
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.HybridHRActivitySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.HybridHRSpo2SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.NotificationHRConfiguration;
+import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.QHybridConstants;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
@@ -121,6 +122,7 @@ import nodomain.freeyourgadget.gadgetbridge.externalevents.NotificationListener;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
 import nodomain.freeyourgadget.gadgetbridge.model.ItemWithDetails;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
@@ -794,9 +796,19 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
     }
 
     public void setInstalledApplications(List<ApplicationInformation> installedApplications) {
+        final List<GBDeviceApp> systemApps = Collections.singletonList(
+                new GBDeviceApp(
+                        UUID.nameUUIDFromBytes("workoutApp".getBytes(StandardCharsets.UTF_8)),
+                        "workoutApp",
+                        "",
+                        "",
+                        GBDeviceApp.Type.APP_ACTIVITYTRACKER
+                )
+        );
+
         this.installedApplications = installedApplications;
         GBDeviceEventAppInfo appInfoEvent = new GBDeviceEventAppInfo();
-        appInfoEvent.apps = new GBDeviceApp[installedApplications.size()];
+        appInfoEvent.apps = new GBDeviceApp[installedApplications.size() + systemApps.size()];
         for (int i = 0; i < installedApplications.size(); i++) {
             String appName = installedApplications.get(i).getAppName();
             String appVersion = installedApplications.get(i).getAppVersion();
@@ -807,8 +819,28 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
             } else {
                 appType = GBDeviceApp.Type.WATCHFACE;
             }
-            appInfoEvent.apps[i] = new GBDeviceApp(appUUID, appName, "(unknown)", appVersion, appType);
+
+            final GBDeviceApp app = new GBDeviceApp(appUUID, appName, "(unknown)", appVersion, appType);
+            if (getDeviceSupport().getDevice().getType() == DeviceType.FOSSILQHYBRID) {
+                if ((app.getType() == GBDeviceApp.Type.WATCHFACE) && (!QHybridConstants.HYBRIDHR_WATCHFACE_VERSION.equals(appVersion))) {
+                    app.setUpToDate(false);
+                }
+                try {
+                    if ((app.getType() == GBDeviceApp.Type.APP_GENERIC) && ((new Version(app.getVersion())).smallerThan(new Version(QHybridConstants.KNOWN_WAPP_VERSIONS.get(app.getName()))))) {
+                        app.setUpToDate(false);
+                    }
+                } catch (final IllegalArgumentException e) {
+                    LOG.warn("Couldn't read app version", e);
+                }
+            }
+
+            appInfoEvent.apps[i] = app;
         }
+
+        for (int i = installedApplications.size(), j = 0; i < appInfoEvent.apps.length && j < systemApps.size(); i++, j++) {
+            appInfoEvent.apps[i] = systemApps.get(j);
+        }
+
         getDeviceSupport().evaluateGBDeviceEvent(appInfoEvent);
     }
 

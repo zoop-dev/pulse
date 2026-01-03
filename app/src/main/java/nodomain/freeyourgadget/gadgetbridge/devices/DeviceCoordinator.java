@@ -620,10 +620,15 @@ public interface DeviceCoordinator {
 
     /**
      * Returns the Activity class that will be used to download apps/watchfaces.
-     *
-     * @return
      */
+    @Nullable
     Class<? extends Activity> getAppStoreActivity(GBDevice device);
+
+    /**
+     * Returns the Activity class that will be used to configure apps.
+     */
+    @Nullable
+    Class<? extends Activity> getAppConfigurationActivity(GBDevice device);
 
     /**
      * Returns the device app cache directory.

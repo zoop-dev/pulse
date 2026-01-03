@@ -57,6 +57,7 @@ import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.ExternalPebbleJSActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
@@ -584,6 +585,12 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     @Nullable
     @Override
     public Class<? extends Activity> getAppStoreActivity(final GBDevice device) {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public Class<? extends Activity> getAppConfigurationActivity(final GBDevice device) {
         return null;
     }
 

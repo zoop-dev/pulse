@@ -36,18 +36,10 @@ public class GBDeviceEventAppInfo extends GBDeviceEvent {
 
     @Override
     public void evaluate(final Context context, final GBDevice device) {
-        LOG.info("Got event for APP_INFO");
+        LOG.info("Got event for APP_INFO with {} apps", apps.length);
 
-        Intent appInfoIntent = new Intent(AbstractAppManagerFragment.ACTION_REFRESH_APPLIST);
-        int appCount = apps.length;
-        appInfoIntent.putExtra("app_count", appCount);
-        for (int i = 0; i < appCount; i++) {
-            appInfoIntent.putExtra("app_name" + i, apps[i].getName());
-            appInfoIntent.putExtra("app_creator" + i, apps[i].getCreator());
-            appInfoIntent.putExtra("app_version" + i, apps[i].getVersion());
-            appInfoIntent.putExtra("app_uuid" + i, apps[i].getUUID().toString());
-            appInfoIntent.putExtra("app_type" + i, apps[i].getType().ordinal());
-        }
+        final Intent appInfoIntent = new Intent(AbstractAppManagerFragment.ACTION_REFRESH_APPLIST);
+        appInfoIntent.putExtra(AbstractAppManagerFragment.EXTRA_APP_LIST, apps);
         LocalBroadcastManager.getInstance(context).sendBroadcast(appInfoIntent);
     }
 }

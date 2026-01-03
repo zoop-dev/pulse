@@ -33,6 +33,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -92,12 +93,12 @@ import nodomain.freeyourgadget.gadgetbridge.util.InternetHelperSingleton;
 import nodomain.freeyourgadget.gadgetbridge.util.InternetUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.PebbleUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Version;
-import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 
 public abstract class AbstractAppManagerFragment extends Fragment {
     public static final String ACTION_REFRESH_APPLIST
             = "nodomain.freeyourgadget.gadgetbridge.appmanager.action.refresh_applist";
+    public static final String EXTRA_APP_LIST = "app_list";
     private static final Logger LOG = LoggerFactory.getLogger(AbstractAppManagerFragment.class);
     private static final int CHILD_ACTIVITY_WATCHFACE_EDITOR = 0;
 
@@ -197,13 +198,23 @@ public abstract class AbstractAppManagerFragment extends Fragment {
         final Map<UUID, GBDeviceApp> cachedAppsMap = getCachedAppsMap(null);
 
         appList.clear();
-        int appCount = intent.getIntExtra("app_count", 0);
-        for (int i = 0; i < appCount; i++) {
-            String appName = intent.getStringExtra("app_name" + i);
-            String appCreator = intent.getStringExtra("app_creator" + i);
-            String appVersion = intent.getStringExtra("app_version" + i);
-            UUID uuid = UUID.fromString(intent.getStringExtra("app_uuid" + i));
-            GBDeviceApp.Type appType = GBDeviceApp.Type.values()[intent.getIntExtra("app_type" + i, 0)];
+        final Parcelable[] parcelables = intent.getParcelableArrayExtra(EXTRA_APP_LIST);
+        if (parcelables == null) {
+            LOG.error("App list is null - this should never happen");
+            return;
+        }
+        final GBDeviceApp[] apps = new GBDeviceApp[parcelables.length];
+
+        for (int i = 0; i < parcelables.length; i++) {
+            apps[i] = (GBDeviceApp) parcelables[i];
+        }
+
+        for (final GBDeviceApp appFromIntent : apps) {
+            String appName = appFromIntent.getName();
+            String appCreator = appFromIntent.getCreator();
+            String appVersion = appFromIntent.getVersion();
+            UUID uuid = appFromIntent.getUUID();
+            GBDeviceApp.Type appType = appFromIntent.getType();
             Bitmap previewImage = getAppPreviewImage(uuid.toString());
 
             // Fill out information from the cached app if missing
@@ -223,29 +234,12 @@ public abstract class AbstractAppManagerFragment extends Fragment {
             }
 
             GBDeviceApp app = new GBDeviceApp(uuid, appName, appCreator, appVersion, appType, previewImage);
+            app.setConfigurable(appFromIntent.isConfigurable());
+            app.setUpToDate(appFromIntent.isUpToDate());
             app.setOnDevice(true);
-            if (mGBDevice.getType() == DeviceType.FOSSILQHYBRID) {
-                if ((app.getType() == GBDeviceApp.Type.WATCHFACE) && (!QHybridConstants.HYBRIDHR_WATCHFACE_VERSION.equals(appVersion))) {
-                    app.setUpToDate(false);
-                }
-                try {
-                    if ((app.getType() == GBDeviceApp.Type.APP_GENERIC) && ((new Version(app.getVersion())).smallerThan(new Version(QHybridConstants.KNOWN_WAPP_VERSIONS.get(app.getName()))))) {
-                        app.setUpToDate(false);
-                    }
-                } catch (IllegalArgumentException e) {
-                    LOG.warn("App JSON: " + app.getJSON().toString());
-                    LOG.warn("Couldn't read app version", e);
-                }
-            }
 
             if (filterApp(app)) {
                 appList.add(app);
-            }
-        }
-        if (mGBDevice.getType() == DeviceType.FOSSILQHYBRID) {
-            List<GBDeviceApp> systemApps = getSystemAppsInCategory();
-            for (GBDeviceApp systemApp : systemApps) {
-                appList.add(systemApp);
             }
         }
     }
@@ -273,7 +267,7 @@ public abstract class AbstractAppManagerFragment extends Fragment {
             }
             switch (action) {
                 case ACTION_REFRESH_APPLIST: {
-                    if (intent.hasExtra("app_count")) {
+                    if (intent.hasExtra(EXTRA_APP_LIST)) {
                         LOG.info("got app info from device");
                         if (!isCacheManager()) {
                             LOG.info("will refresh list based on data from device");
@@ -715,9 +709,9 @@ public abstract class AbstractAppManagerFragment extends Fragment {
             GBApplication.deviceService(mGBDevice).onAppDelete(selectedApp.getUUID());
             return true;
         } else if (itemId == R.id.appmanager_app_configure) {
-            GBApplication.deviceService(mGBDevice).onAppStart(selectedApp.getUUID(), true);
+            final Class<? extends Activity> appConfigurationActivity = mGBDevice.getDeviceCoordinator().getAppConfigurationActivity(mGBDevice);
 
-            final Intent startIntent = new Intent(getContext().getApplicationContext(), ExternalPebbleJSActivity.class);
+            final Intent startIntent = new Intent(requireContext().getApplicationContext(), appConfigurationActivity);
             startIntent.putExtra(DeviceService.EXTRA_APP_UUID, selectedApp.getUUID());
             startIntent.putExtra(GBDevice.EXTRA_DEVICE, mGBDevice);
             startActivity(startIntent);

@@ -53,8 +53,6 @@ public class AppManagerFragmentInstalledApps extends AbstractAppManagerFragment 
                     systemApps.add(new GBDeviceApp(PebbleProtocol.UUID_WEATHER, "Weather (System)", "Pebble Inc.", "", GBDeviceApp.Type.APP_SYSTEM));
                 }
             }
-        } else if (mGBDevice.getType() == DeviceType.FOSSILQHYBRID) {
-            systemApps.add(new GBDeviceApp(UUID.nameUUIDFromBytes("workoutApp".getBytes(StandardCharsets.UTF_8)), "workoutApp", "", "", GBDeviceApp.Type.APP_ACTIVITYTRACKER));
         }
 
         return systemApps;

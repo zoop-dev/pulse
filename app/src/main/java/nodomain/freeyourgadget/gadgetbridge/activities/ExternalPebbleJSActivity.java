@@ -109,6 +109,9 @@ public class ExternalPebbleJSActivity extends AbstractGBActivity {
 
         Objects.requireNonNull(currentDevice, "Must provide a device when invoking this activity");
         Objects.requireNonNull(currentUUID, "Must provide a uuid when invoking this activity");
+
+        GBApplication.deviceService(currentDevice).onAppStart(currentUUID, true);
+
         setupWebView(currentDevice, currentUUID);
     }
 
