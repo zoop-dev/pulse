@@ -86,6 +86,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.SimpleTimeZone;
 
 import de.greenrobot.dao.query.QueryBuilder;
@@ -1770,16 +1771,11 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private List<LoyaltyCard> filterSupportedCards(final List<LoyaltyCard> cards) {
+        final Set<BarcodeFormat> supportedBarcodeFormats = getDevice().getDeviceCoordinator().getSupportedBarcodeFormats(getDevice());
+
         final List<LoyaltyCard> ret = new ArrayList<>();
         for (final LoyaltyCard card : cards) {
-            // we hardcode here what is supported
-            if (card.getBarcodeFormat() == BarcodeFormat.CODE_39 ||
-                    card.getBarcodeFormat() == BarcodeFormat.CODABAR ||
-                    card.getBarcodeFormat() == BarcodeFormat.EAN_8 ||
-                    card.getBarcodeFormat() == BarcodeFormat.EAN_13 ||
-                    card.getBarcodeFormat() == BarcodeFormat.UPC_A ||
-                    card.getBarcodeFormat() == BarcodeFormat.UPC_E ||
-                    card.getBarcodeFormat() == BarcodeFormat.QR_CODE) {
+            if (supportedBarcodeFormats.contains(card.getBarcodeFormat())) {
                 ret.add(card);
             }
         }

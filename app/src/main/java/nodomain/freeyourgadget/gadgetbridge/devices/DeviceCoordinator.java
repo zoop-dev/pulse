@@ -40,6 +40,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.HeartRateCapability;
+import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.BarcodeFormat;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.password.PasswordCapabilityImpl;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.widgets.WidgetManager;
 import nodomain.freeyourgadget.gadgetbridge.entities.CyclingSample;
@@ -931,4 +932,6 @@ public interface DeviceCoordinator {
     DeviceKind getDeviceKind(@NonNull GBDevice device);
 
     HeartRateZonesSpec getHeartRateZonesSpec(@NonNull GBDevice device);
+
+    Set<BarcodeFormat> getSupportedBarcodeFormats(@NonNull final GBDevice device);
 }

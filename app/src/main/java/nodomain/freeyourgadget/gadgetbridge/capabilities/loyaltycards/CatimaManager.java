@@ -86,8 +86,14 @@ public class CatimaManager {
             }
         }
 
+        final Set<BarcodeFormat> supportedBarcodeFormats = gbDevice.getDeviceCoordinator().getSupportedBarcodeFormats(gbDevice);
+
         final ArrayList<LoyaltyCard> cardsToSync = new ArrayList<>();
         for (final LoyaltyCard card : cards) {
+            if (!supportedBarcodeFormats.contains(card.getBarcodeFormat())) {
+                LOG.debug("Ignoring card {} - unsupported barcode format {}", card.getId(), card.getBarcodeFormat());
+                continue;
+            }
             if (syncGroupsOnly && !cardsInGroupsToSync.contains(card.getId())) {
                 continue;
             }

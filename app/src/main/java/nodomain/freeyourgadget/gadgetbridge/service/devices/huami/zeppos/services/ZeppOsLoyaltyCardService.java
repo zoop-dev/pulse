@@ -24,9 +24,11 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.BarcodeFormat;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.LoyaltyCard;
@@ -57,6 +59,7 @@ public class ZeppOsLoyaltyCardService extends AbstractZeppOsService {
     private final List<Integer> supportedColors = new ArrayList<>();
 
     public static final String PREF_VERSION = "zepp_os_loyalty_cards_version";
+    public static final String PREF_FORMATS = "zepp_os_loyalty_cards_formats";
 
     public ZeppOsLoyaltyCardService(final ZeppOsSupport support) {
         super(support, false);
@@ -71,14 +74,18 @@ public class ZeppOsLoyaltyCardService extends AbstractZeppOsService {
     public void handlePayload(final byte[] payload) {
         switch (payload[0]) {
             case CMD_CAPABILITIES_RESPONSE:
+                final GBDeviceEventUpdatePreferences updatePreferences = new GBDeviceEventUpdatePreferences();
+
                 supportedFormats.clear();
                 supportedColors.clear();
 
                 final int version = payload[1];
-                getSupport().evaluateGBDeviceEvent(new GBDeviceEventUpdatePreferences(PREF_VERSION, version));
+                updatePreferences.withPreference(PREF_VERSION, version);
 
                 if (version != 1 || payload[2] != 1) {
                     LOG.warn("Unexpected loyalty cards service version {}, {}", version, payload[2]);
+                    // Persist the preference, so it's marked as not supported
+                    getSupport().evaluateGBDeviceEvent(updatePreferences);
                     return;
                 }
 
@@ -94,6 +101,7 @@ public class ZeppOsLoyaltyCardService extends AbstractZeppOsService {
                     }
                     supportedFormats.add(barcodeFormat);
                 }
+                updatePreferences.withPreference(PREF_FORMATS, supportedFormats.stream().map(Enum::name).collect(Collectors.toSet()));
 
                 final byte numSupportedColors = payload[pos++];
                 final Map<Byte, Integer> colorCodes = MapUtils.reverse(COLOR_CODES);
@@ -113,6 +121,8 @@ public class ZeppOsLoyaltyCardService extends AbstractZeppOsService {
                         supportedFormats,
                         supportedColors
                 );
+
+                getSupport().evaluateGBDeviceEvent(updatePreferences);
 
                 return;
             case CMD_SET_ACK:
@@ -243,7 +253,7 @@ public class ZeppOsLoyaltyCardService extends AbstractZeppOsService {
         return Objects.requireNonNull(COLOR_CODES.get(nearestColor));
     }
 
-    private static final Map<BarcodeFormat, Byte> BARCODE_FORMAT_CODES = new HashMap<BarcodeFormat, Byte>() {{
+    private static final Map<BarcodeFormat, Byte> BARCODE_FORMAT_CODES = new HashMap<>() {{
         put(BarcodeFormat.CODE_128, (byte) 0x00);
         put(BarcodeFormat.CODE_39, (byte) 0x01);
         put(BarcodeFormat.ITF, (byte) 0x02);
@@ -258,7 +268,7 @@ public class ZeppOsLoyaltyCardService extends AbstractZeppOsService {
     /**
      * Map or RGB color to color byte - the watches only support color presets.
      */
-    private static final Map<Integer, Byte> COLOR_CODES = new HashMap<Integer, Byte>() {{
+    private static final Map<Integer, Byte> COLOR_CODES = new HashMap<>() {{
         put(0x66c6ea, (byte) 0x00); // Light blue
         put(0x008fc5, (byte) 0x01); // Blue
         put(0xc19ffd, (byte) 0x02); // Light purple
@@ -274,6 +284,7 @@ public class ZeppOsLoyaltyCardService extends AbstractZeppOsService {
     }};
 
     public static boolean isSupported(final Prefs devicePrefs) {
-        return devicePrefs.getInt(PREF_VERSION, 0) == 1;
+        return devicePrefs.getInt(PREF_VERSION, 0) == 1 &&
+                !devicePrefs.getStringSet(PREF_FORMATS, Collections.emptySet()).isEmpty();
     }
 }
