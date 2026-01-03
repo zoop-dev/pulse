@@ -49,27 +49,6 @@ object HealthConnectPermissionManager {
     const val PREF_KEY_LAST_GRANTED_HC_PERMISSIONS = "health_connect_last_granted_permissions"
     const val PREF_KEY_HC_PROMPT_FOR_FULL_DAO_RESET = "health_connect_prompt_for_full_dao_reset"
 
-    @JvmStatic
-    val requiredHealthConnectPermissions: Set<String> = setOf(
-        HealthPermission.getWritePermission(StepsRecord::class),
-        HealthPermission.getWritePermission(HeartRateRecord::class),
-        HealthPermission.getWritePermission(ExerciseSessionRecord::class),
-        HealthPermission.getWritePermission(SleepSessionRecord::class),
-        HealthPermission.getWritePermission(TotalCaloriesBurnedRecord::class),
-        HealthPermission.getWritePermission(DistanceRecord::class),
-        HealthPermission.getWritePermission(Vo2MaxRecord::class),
-        HealthPermission.getWritePermission(HeartRateVariabilityRmssdRecord::class),
-        HealthPermission.getWritePermission(WeightRecord::class),
-        HealthPermission.getWritePermission(OxygenSaturationRecord::class),
-        HealthPermission.getWritePermission(BodyTemperatureRecord::class),
-        HealthPermission.getWritePermission(SkinTemperatureRecord::class),
-        HealthPermission.getWritePermission(ElevationGainedRecord::class),
-        HealthPermission.getWritePermission(PowerRecord::class),
-        HealthPermission.getWritePermission(SpeedRecord::class),
-        HealthPermission.getWritePermission(RespiratoryRateRecord::class),
-        PERMISSION_WRITE_EXERCISE_ROUTE
-    )
-
     enum class HealthConnectDataType {
         ACTIVITY,
         SLEEP,
@@ -113,6 +92,13 @@ object HealthConnectPermissionManager {
                 PERMISSION_WRITE_EXERCISE_ROUTE
             )
         }
+    }
+
+    @JvmStatic
+    fun getRequiredHealthConnectPermissions(): Set<String> {
+        return HealthConnectDataType.entries
+            .flatMap { getRequiredPermissionsForDataType(it) }
+            .toSet()
     }
 
     // Helper data class for internal processing
@@ -198,7 +184,7 @@ object HealthConnectPermissionManager {
         }
 
         val oldRelevantPermissions = prefs.getStringSet(PREF_KEY_LAST_GRANTED_HC_PERMISSIONS, emptySet()) ?: emptySet()
-        val newRelevantPermissions = grantedPermissionsFromFlow.intersect(requiredHealthConnectPermissions)
+        val newRelevantPermissions = grantedPermissionsFromFlow.intersect(getRequiredHealthConnectPermissions())
 
         val analysis = analyzePermissionChange(context, newRelevantPermissions, oldRelevantPermissions)
 
@@ -248,7 +234,7 @@ object HealthConnectPermissionManager {
         }
 
         val oldPermissions = GBApplication.getPrefs().preferences.getStringSet(PREF_KEY_LAST_GRANTED_HC_PERMISSIONS, emptySet()) ?: emptySet()
-        val newPermissions = currentPermissions.intersect(requiredHealthConnectPermissions)
+        val newPermissions = currentPermissions.intersect(getRequiredHealthConnectPermissions())
 
         if (newPermissions != oldPermissions) {
             LOG.info("Health Connect permissions changed outside of app flow. Old: ${oldPermissions.size}, New: ${newPermissions.size}")
@@ -278,7 +264,7 @@ object HealthConnectPermissionManager {
             try {
                 val oldRelevantPermissions = prefs.getStringSet(PREF_KEY_LAST_GRANTED_HC_PERMISSIONS, emptySet()) ?: emptySet()
                 val systemGrantedPermissions = healthConnectClient.permissionController.getGrantedPermissions()
-                val newRelevantSystemPermissions = systemGrantedPermissions.intersect(requiredHealthConnectPermissions)
+                val newRelevantSystemPermissions = systemGrantedPermissions.intersect(getRequiredHealthConnectPermissions())
 
                 val analysis = analyzePermissionChange(context, newRelevantSystemPermissions, oldRelevantPermissions)
 
