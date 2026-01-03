@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceGroup
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
@@ -104,6 +105,15 @@ abstract class AbstractDebugFragment : AbstractPreferenceFragment() {
         group?.addPreference(pref)
 
         return pref
+    }
+
+    protected fun addDynamicCategory(title: String) {
+        val pref = PreferenceCategory(requireContext())
+        pref.key = "${PREF_DYNAMIC_PREFIX}_category_${UUID.randomUUID()})"
+        pref.title = title
+        pref.isPersistent = false
+        pref.isIconSpaceReserved = false
+        preferenceScreen?.addPreference(pref)
     }
 
     protected fun goTo(fragment: AbstractDebugFragment) {

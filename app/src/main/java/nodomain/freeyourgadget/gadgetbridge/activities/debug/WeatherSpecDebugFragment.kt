@@ -1,14 +1,12 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.debug
 
 import android.os.Bundle
-import androidx.preference.PreferenceCategory
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 class WeatherSpecDebugFragment : AbstractDebugFragment() {
@@ -39,15 +37,6 @@ class WeatherSpecDebugFragment : AbstractDebugFragment() {
         addDynamicPref(preferenceScreen, title, summary?.toString() ?: "<null>") {
             onClickFunction?.invoke()
         }
-    }
-
-    private fun addCategory(title: String) {
-        val pref = PreferenceCategory(requireContext())
-        pref.key = "${PREF_DYNAMIC_PREFIX}_category_${UUID.randomUUID()})"
-        pref.title = title
-        pref.isPersistent = false
-        pref.isIconSpaceReserved = false
-        preferenceScreen?.addPreference(pref)
     }
 
     private fun showMainWeather(weatherSpec: WeatherSpec) {
@@ -132,7 +121,7 @@ class WeatherSpecDebugFragment : AbstractDebugFragment() {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z", Locale.ROOT)
 
         for ((i, daily) in weatherSpec.forecasts.withIndex()) {
-            addCategory("Day $i")
+            addDynamicCategory("Day $i")
             addPreference("Max Temp", "${daily.maxTemp} K (${daily.maxTemp - 273} °C)")
             addPreference("Min Temp", "${daily.minTemp} K (${daily.minTemp - 273} °C)")
             addPreference("Condition Code", daily.conditionCode)
@@ -170,7 +159,7 @@ class WeatherSpecDebugFragment : AbstractDebugFragment() {
     private fun showHours(weatherSpec: WeatherSpec) {
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z", Locale.ROOT)
         for ((i, hourly) in weatherSpec.hourly.withIndex()) {
-            addCategory("Hour $i - ${sdf.format(Date(hourly.timestamp * 1000L))}")
+            addDynamicCategory("Hour $i - ${sdf.format(Date(hourly.timestamp * 1000L))}")
             addPreference("Max Temp", "${hourly.temp} K (${hourly.temp - 273} °C)")
             addPreference("Condition Code", hourly.conditionCode)
             addPreference("Humidity", hourly.humidity)

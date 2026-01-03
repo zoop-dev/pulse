@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/healthconnect_settings">
+
+    <Preference
+        android:icon="@drawable/ic_refresh"
+        android:key="pref_debug_reset_hc_sync_state"
+        android:persistent="false"
+        android:summary="Reset Health Connect sync state and allow re-syncing all data"
+        android:title="Reset HC sync state" />
+
+</androidx.preference.PreferenceScreen>

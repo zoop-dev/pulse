@@ -97,6 +97,13 @@
             android:title="@string/pref_header_location" />
 
         <Preference
+            android:fragment="nodomain.freeyourgadget.gadgetbridge.activities.debug.HealthConnectDebugFragment"
+            android:icon="@drawable/ic_heart"
+            android:key="pref_debug_health_connect"
+            android:persistent="false"
+            android:title="@string/healthconnect_settings" />
+
+        <Preference
             android:fragment="nodomain.freeyourgadget.gadgetbridge.activities.debug.OtherDebugFragment"
             android:icon="@drawable/ic_developer_mode"
             android:key="pref_debug_other"

@@ -46,13 +46,6 @@
             android:persistent="false"
             android:title="Reboot" />
 
-        <Preference
-            android:icon="@drawable/ic_refresh"
-            android:key="pref_debug_reset_hc_sync_state"
-            android:persistent="false"
-            android:summary="Reset Health Connect sync state and allow re-syncing all data"
-            android:title="Reset HC sync state" />
-
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:icon="@drawable/ic_warning_gray"
