@@ -66,6 +66,7 @@ object HealthConnectPermissionManager {
         HealthPermission.getWritePermission(ElevationGainedRecord::class),
         HealthPermission.getWritePermission(PowerRecord::class),
         HealthPermission.getWritePermission(SpeedRecord::class),
+        HealthPermission.getWritePermission(RespiratoryRateRecord::class),
         PERMISSION_WRITE_EXERCISE_ROUTE
     )
 
@@ -77,6 +78,7 @@ object HealthConnectPermissionManager {
         WEIGHT,
         SPO2,
         TEMPERATURE,
+        RESPIRATORY_RATE,
         WORKOUTS
     }
 
@@ -95,6 +97,7 @@ object HealthConnectPermissionManager {
             HealthConnectDataType.HRV -> setOf(HealthPermission.getWritePermission(HeartRateVariabilityRmssdRecord::class))
             HealthConnectDataType.WEIGHT -> setOf(HealthPermission.getWritePermission(WeightRecord::class))
             HealthConnectDataType.SPO2 -> setOf(HealthPermission.getWritePermission(OxygenSaturationRecord::class))
+            HealthConnectDataType.RESPIRATORY_RATE -> setOf(HealthPermission.getWritePermission(RespiratoryRateRecord::class))
             HealthConnectDataType.TEMPERATURE -> setOf(
                 HealthPermission.getWritePermission(BodyTemperatureRecord::class),
                 HealthPermission.getWritePermission(SkinTemperatureRecord::class)
