@@ -466,16 +466,18 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
         //
         // Workout
         //
-        if (hasDisplay()) {
+        if (hasDisplay() || supportsWorkoutActivityTypesConfiguration()) {
             final List<Integer> workout = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.WORKOUT);
-            if (hasGps(device)) {
-                workout.add(R.xml.devicesettings_gps_agps);
-            } else {
-                // If the device has GPS, it doesn't report workout start/end to the phone
-                workout.add(R.xml.devicesettings_workout_start_on_phone);
-                workout.add(R.xml.devicesettings_workout_send_gps_to_band);
+            if (hasDisplay()) {
+                if (hasGps(device)) {
+                    workout.add(R.xml.devicesettings_gps_agps);
+                } else {
+                    // If the device has GPS, it doesn't report workout start/end to the phone
+                    workout.add(R.xml.devicesettings_workout_start_on_phone);
+                    workout.add(R.xml.devicesettings_workout_send_gps_to_band);
+                }
+                workout.add(R.xml.devicesettings_workout_keep_screen_on);
             }
-            workout.add(R.xml.devicesettings_workout_keep_screen_on);
             workout.add(R.xml.devicesettings_workout_detection);
         }
 
@@ -647,6 +649,14 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
 
     public boolean supportsWifiHotspot(final GBDevice device) {
         return false;
+    }
+
+    public boolean supportsWorkoutActivityTypesConfiguration() {
+        return hasDisplay();
+    }
+
+    public boolean supportsWorkoutDetectionCategories() {
+        return hasDisplay();
     }
 
     public boolean supportsFtpServer(final GBDevice device) {

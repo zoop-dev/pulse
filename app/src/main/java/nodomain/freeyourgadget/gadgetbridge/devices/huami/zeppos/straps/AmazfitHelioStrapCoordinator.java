@@ -53,6 +53,16 @@ public class AmazfitHelioStrapCoordinator extends ZeppOsCoordinator {
     }
 
     @Override
+    public boolean supportsWorkoutActivityTypesConfiguration() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsWorkoutDetectionCategories() {
+        return false;
+    }
+
+    @Override
     public DeviceKind getDeviceKind(@NonNull GBDevice device) {
         return DeviceKind.FITNESS_BAND;
     }

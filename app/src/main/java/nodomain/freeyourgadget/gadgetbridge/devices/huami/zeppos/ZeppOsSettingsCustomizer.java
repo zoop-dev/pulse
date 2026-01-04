@@ -54,9 +54,11 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class ZeppOsSettingsCustomizer extends HuamiSettingsCustomizer {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsSettingsCustomizer.class);
+    private final GBDevice device;
 
     public ZeppOsSettingsCustomizer(final GBDevice device, final List<HuamiVibrationPatternNotificationType> vibrationPatternNotificationTypes) {
         super(device, vibrationPatternNotificationTypes);
+        this.device = device;
     }
 
     @Override
@@ -200,6 +202,15 @@ public class ZeppOsSettingsCustomizer extends HuamiSettingsCustomizer {
                     configScreen.getKey(),
                     configScreen.getValue().toArray(new String[0])
             );
+        }
+
+        // Hide workout detection categories for devices without display (e.g., Helio Strap)
+        final ZeppOsCoordinator coordinator = (ZeppOsCoordinator) device.getDeviceCoordinator();
+        if (!coordinator.supportsWorkoutDetectionCategories()) {
+            final Preference workoutCategoriesPref = handler.findPreference("workout_detection_categories");
+            if (workoutCategoriesPref != null) {
+                workoutCategoriesPref.setVisible(false);
+            }
         }
 
         // Hides the headers if none of the preferences under them are available
