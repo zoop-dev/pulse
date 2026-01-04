@@ -55,47 +55,47 @@ public class Roidmi3Protocol extends RoidmiProtocol {
     @Override
     public GBDeviceEvent[] decodeResponse(byte[] res) {
         if (res.length <= PACKET_MIN_LENGTH) {
-            LOG.info("Response too small");
+            LOG.warn("Response too small");
             return null;
         }
 
         if (calcChecksum(res) != res[res.length - 1]) {
-            LOG.info("Invalid response checksum");
+            LOG.warn("Invalid response checksum");
             return null;
         }
 
         if (res[0] + 2 != res.length) {
-            LOG.info("Packet length doesn't match");
+            LOG.warn("Packet length doesn't match");
             return null;
         }
 
         if (res[2] != (byte) 0x81) {
-            LOG.warn("Potentially unsupported response: " + GB.hexdump(res, 0, res.length));
+            LOG.warn("Potentially unsupported response: {}", GB.hexdump(res, 0, res.length));
         }
 
         switch(res[1]) {
             case RESPONSE_VOLTAGE:
                 final String voltageHex = GB.hexdump(res, 3, 2);
                 final float voltage = Float.parseFloat(voltageHex) / 100.0f;
-                LOG.debug("Got voltage: " + voltage);
+                LOG.debug("Got voltage: {}", voltage);
                 GBDeviceEventBatteryInfo evBattery = new GBDeviceEventBatteryInfo();
                 evBattery.state = BatteryState.NO_BATTERY;
                 evBattery.level = GBDevice.BATTERY_UNKNOWN;
                 evBattery.voltage = voltage;
                 return new GBDeviceEvent[]{evBattery};
             case RESPONSE_COLOR:
-                LOG.debug("Got color: #" + GB.hexdump(res, 3, 3));
+                LOG.debug("Got color: #{}", GB.hexdump(res, 3, 3));
                 final int color = 0xFF000000 | ((res[3] << 16) & 0xFF0000) | ((res[4] << 8) & 0xFF00) | (res[5] & 0xFF);
                 final GBDeviceEventLEDColor evColor = new GBDeviceEventLEDColor(color);
                 return new GBDeviceEvent[]{evColor};
             case RESPONSE_FREQUENCY:
                 final String frequencyHex = GB.hexdump(res, 3, 2);
                 final float frequency = Float.parseFloat(frequencyHex) / 10.0f;
-                LOG.debug("Got frequency: " + frequency);
+                LOG.debug("Got frequency: {}", frequency);
                 final GBDeviceEventFmFrequency evFrequency = new GBDeviceEventFmFrequency(frequency);
                 return new GBDeviceEvent[]{evFrequency};
             default:
-                LOG.error("Unrecognized response: " + GB.hexdump(res, 0, res.length));
+                LOG.error("Unrecognized response: {}", GB.hexdump(res, 0, res.length));
         }
 
         return null;
@@ -136,6 +136,11 @@ public class Roidmi3Protocol extends RoidmiProtocol {
     }
 
     @Override
+    public int minPacketLength() {
+        return PACKET_MIN_LENGTH;
+    }
+
+    @Override
     public byte[] packetHeader() {
         return new byte[0];
     }
@@ -148,6 +153,11 @@ public class Roidmi3Protocol extends RoidmiProtocol {
     @Override
     public byte[] encodeGetVoltage() {
         return encodeCommand(COMMAND_GET_VOLTAGE);
+    }
+
+    @Override
+    public boolean supportsBatteryVoltage() {
+        return true;
     }
 
     public byte[] encodeDenoise(final boolean enabled) {

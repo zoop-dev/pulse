@@ -22,54 +22,59 @@ import android.os.Handler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import nodomain.freeyourgadget.gadgetbridge.devices.roidmi.RoidmiConst;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractSerialDeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
+import java.nio.ByteBuffer;
 
-public class RoidmiSupport extends AbstractSerialDeviceSupport {
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractHeadphoneSerialDeviceSupportV2;
+import nodomain.freeyourgadget.gadgetbridge.util.ArrayUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
+
+public class RoidmiSupport extends AbstractHeadphoneSerialDeviceSupportV2<RoidmiProtocol> {
     private static final Logger LOG = LoggerFactory.getLogger(RoidmiSupport.class);
 
     private final Handler handler = new Handler();
+
+    private final ByteBuffer packetBuffer = ByteBuffer.allocate(2048);
+
     private int infoRequestTries = 0;
-    private final Runnable infosRunnable = new Runnable() {
-        @Override
-        public void run() {
-            infoRequestTries += 1;
+    private final Runnable infosRunnable = () -> {
+        infoRequestTries += 1;
 
-            try {
-                boolean infoMissing = false;
+        boolean infoMissing = false;
 
-                if (getDevice().getExtraInfo("led_color") == null) {
-                    infoMissing = true;
-                    onSendConfiguration(RoidmiConst.ACTION_GET_LED_COLOR);
-                }
+        final TransactionBuilder builder = createTransactionBuilder("request missing infos");
 
-                if (getDevice().getExtraInfo("fm_frequency") == null) {
-                    infoMissing = true;
+        if (getDevice().getExtraInfo("led_color") == null) {
+            infoMissing = true;
+            builder.write(mDeviceProtocol.encodeGetLedColor());
+        }
 
-                    onSendConfiguration(RoidmiConst.ACTION_GET_FM_FREQUENCY);
-                }
+        if (getDevice().getExtraInfo("fm_frequency") == null) {
+            infoMissing = true;
 
-                if (getDevice().getType() == DeviceType.ROIDMI3) {
-                    if (getDevice().getBatteryVoltage() == -1) {
-                        infoMissing = true;
+            builder.write(mDeviceProtocol.encodeGetFmFrequency());
+        }
 
-                        onSendConfiguration(RoidmiConst.ACTION_GET_VOLTAGE);
-                    }
-                }
+        if (mDeviceProtocol.supportsBatteryVoltage()) {
+            if (getDevice().getBatteryVoltage() == -1) {
+                infoMissing = true;
 
-                if (infoMissing) {
-                    if (infoRequestTries < 6) {
-                        requestDeviceInfos(500 + infoRequestTries * 120);
-                    } else {
-                        LOG.error("Failed to get Roidmi infos after 6 tries");
-                    }
-                }
-            } catch (final Exception e) {
-                LOG.error("Failed to get Roidmi infos", e);
+                builder.write(mDeviceProtocol.encodeGetVoltage());
             }
+        }
+
+        if (infoMissing) {
+            if (infoRequestTries < 6) {
+                builder.queue();
+                requestDeviceInfos(500 + infoRequestTries * 120);
+            } else {
+                LOG.error("Failed to get Roidmi infos after 6 tries");
+            }
+        } else {
+            builder.setDeviceState(GBDevice.State.INITIALIZED);
+            builder.queue();
         }
     };
 
@@ -78,22 +83,31 @@ public class RoidmiSupport extends AbstractSerialDeviceSupport {
     }
 
     @Override
-    public boolean connect() {
+    protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
+        packetBuffer.clear();
+        getDevice().setFirmwareVersion("N/A");
+        builder.write(mDeviceProtocol.encodeGetLedColor());
+        builder.write(mDeviceProtocol.encodeGetFmFrequency());
+        if (mDeviceProtocol.supportsBatteryVoltage()) {
+            builder.write(mDeviceProtocol.encodeGetVoltage());
+        }
+        requestDeviceInfos(1500);
+        return builder;
+    }
+
+    @Override
+    public void dispose() {
         synchronized (ConnectionMonitor) {
-            final RoidmiIoThread deviceIOThread = getDeviceIOThread();
-            if (!deviceIOThread.isAlive()) {
-                deviceIOThread.start();
-                requestDeviceInfos(1500);
-            }
-            return true;
+            handler.removeCallbacksAndMessages(null);
+            super.dispose();
         }
     }
 
     @Override
-    protected GBDeviceProtocol createDeviceProtocol() {
+    protected RoidmiProtocol createDeviceProtocol() {
         final DeviceType deviceType = getDevice().getType();
 
-        switch(deviceType) {
+        switch (deviceType) {
             case ROIDMI:
                 return new Roidmi1Protocol(getDevice());
             case ROIDMI3:
@@ -106,40 +120,55 @@ public class RoidmiSupport extends AbstractSerialDeviceSupport {
     }
 
     @Override
-    public void onSendConfiguration(final String config) {
-        LOG.debug("onSendConfiguration {}", config);
+    public void onSocketRead(final byte[] data) {
+        packetBuffer.put(data);
+        packetBuffer.flip();
 
-        final RoidmiIoThread roidmiIoThread = getDeviceIOThread();
-        final RoidmiProtocol roidmiProtocol = (RoidmiProtocol) getDeviceProtocol();
+        while (packetBuffer.hasRemaining()) {
+            final int start = packetBuffer.position();
+            packetBuffer.mark();
 
-        switch (config) {
-            case RoidmiConst.ACTION_GET_LED_COLOR:
-                roidmiIoThread.write(roidmiProtocol.encodeGetLedColor());
+            if (packetBuffer.remaining() < mDeviceProtocol.minPacketLength()) {
+                // not enough bytes for min packet
+                packetBuffer.reset();
                 break;
-            case RoidmiConst.ACTION_GET_FM_FREQUENCY:
-                roidmiIoThread.write(roidmiProtocol.encodeGetFmFrequency());
+            }
+
+            final byte[] expectedHeader = mDeviceProtocol.packetHeader();
+            if (expectedHeader.length > 0) {
+                final byte[] header = new byte[expectedHeader.length];
+                packetBuffer.get(header);
+                if (!ArrayUtils.equals(header, expectedHeader, 0)) {
+                    LOG.warn("Unexpected header {}", GB.hexdump(header));
+                    // Skip 1 byte
+                    packetBuffer.reset();
+                    packetBuffer.position(packetBuffer.position() + 1);
+                    continue;
+                }
+            }
+
+            final int payloadLength = packetBuffer.get() & 0xff;
+
+            final byte[] expectedTrailer = mDeviceProtocol.packetTrailer();
+            if (packetBuffer.remaining() < payloadLength + 1 + expectedTrailer.length) {
+                // not enough bytes
+                packetBuffer.reset();
                 break;
-            case RoidmiConst.ACTION_GET_VOLTAGE:
-                roidmiIoThread.write(roidmiProtocol.encodeGetVoltage());
-                break;
-            default:
-                LOG.error("Invalid Roidmi configuration {}", config);
-                break;
+            }
+
+            // header + payload length + payload + checksum + trailer
+            final byte[] packet = new byte[expectedHeader.length + 1 + payloadLength + 1 + expectedTrailer.length];
+            packetBuffer.position(start);
+            packetBuffer.get(packet);
+
+            // Handle it upstream, to the protocol
+            try {
+                super.onSocketRead(packet);
+            } catch (final Exception e) {
+                LOG.error("Failed to handle command", e);
+            }
         }
-    }
 
-    @Override
-    protected GBDeviceIoThread createDeviceIOThread() {
-        return new RoidmiIoThread(getDevice(), getContext(), (RoidmiProtocol) getDeviceProtocol(), RoidmiSupport.this, getBluetoothAdapter());
-    }
-
-    @Override
-    public synchronized RoidmiIoThread getDeviceIOThread() {
-        return (RoidmiIoThread) super.getDeviceIOThread();
-    }
-
-    @Override
-    public boolean useAutoConnect() {
-        return false;
+        packetBuffer.compact();
     }
 }

@@ -47,7 +47,13 @@ public abstract class RoidmiProtocol extends GBDeviceProtocol {
 
     public abstract byte[] encodeGetFmFrequency();
 
+    public boolean supportsBatteryVoltage() {
+        return false;
+    }
+
     public abstract byte[] encodeGetVoltage();
+
+    public abstract int minPacketLength();
 
     public abstract byte[] packetHeader();
 

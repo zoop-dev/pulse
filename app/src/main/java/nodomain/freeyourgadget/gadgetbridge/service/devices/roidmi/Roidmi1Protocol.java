@@ -26,6 +26,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.roidmi.RoidmiConst;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
+@SuppressWarnings("unused")
 public class Roidmi1Protocol extends RoidmiProtocol {
     private static final Logger LOG = LoggerFactory.getLogger(Roidmi1Protocol.class);
 
@@ -58,43 +59,43 @@ public class Roidmi1Protocol extends RoidmiProtocol {
     @Override
     public GBDeviceEvent[] decodeResponse(final byte[] responseData) {
         if (responseData.length <= PACKET_MIN_LENGTH) {
-            LOG.info("Response too small");
+            LOG.warn("Response too small");
             return null;
         }
 
         for (int i = 0; i < packetHeader().length; i++) {
             if (responseData[i] != packetHeader()[i]) {
-                LOG.info("Invalid response header");
+                LOG.warn("Invalid response header");
                 return null;
             }
         }
 
         for (int i = 0; i < packetTrailer().length; i++) {
             if (responseData[responseData.length - packetTrailer().length + i] != packetTrailer()[i]) {
-                LOG.info("Invalid response trailer");
+                LOG.warn("Invalid response trailer");
                 return null;
             }
         }
 
         if (calcChecksum(responseData) != responseData[responseData.length - packetTrailer().length - 1]) {
-            LOG.info("Invalid response checksum");
+            LOG.warn("Invalid response checksum");
             return null;
         }
 
         switch (responseData[3]) {
             case COMMAND_GET_COLOR:
                 final int color = responseData[5];
-                LOG.debug("Got color: " + color);
+                LOG.debug("Got color: {}", color);
                 final GBDeviceEventLEDColor evColor = new GBDeviceEventLEDColor(RoidmiConst.COLOR_PRESETS[color - 1]);
                 return new GBDeviceEvent[]{evColor};
             case COMMAND_GET_FREQUENCY:
                 final String frequencyHex = GB.hexdump(responseData, 4, 2);
                 final float frequency = Float.parseFloat(frequencyHex) / 10.0f;
-                LOG.debug("Got frequency: " + frequency);
+                LOG.debug("Got frequency: {}", frequency);
                 final GBDeviceEventFmFrequency evFrequency = new GBDeviceEventFmFrequency(frequency);
                 return new GBDeviceEvent[]{evFrequency};
             default:
-                LOG.error("Unrecognized response type 0x" + GB.hexdump(responseData, packetHeader().length, 1));
+                LOG.error("Unrecognized response type 0x{}", GB.hexdump(responseData, packetHeader().length, 1));
                 return null;
         }
     }
@@ -139,6 +140,11 @@ public class Roidmi1Protocol extends RoidmiProtocol {
     @Override
     public byte[] encodeGetVoltage() {
         return null;
+    }
+
+    @Override
+    public int minPacketLength() {
+        return PACKET_MIN_LENGTH;
     }
 
     @Override
