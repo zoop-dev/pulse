@@ -428,6 +428,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watches.XiaomiWatchS4
 import nodomain.freeyourgadget.gadgetbridge.devices.xwatch.XWatchCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR02Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR03Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.YawellR05Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR06Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR07Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.ColmiR09Coordinator;
@@ -820,6 +821,7 @@ public enum DeviceType {
     FEMOMETER_VINCA2(FemometerVinca2DeviceCoordinator.class),
     PIXOO(PixooCoordinator.class),
     HAMA_FIT6900(HamaFit6900DeviceCoordinator.class),
+    YAWELL_R05(YawellR05Coordinator.class),
     YAWELL_R10(YawellR10Coordinator.class),
     YAWELL_R11(YawellR11Coordinator.class),
     COLMI_R02(ColmiR02Coordinator.class),
