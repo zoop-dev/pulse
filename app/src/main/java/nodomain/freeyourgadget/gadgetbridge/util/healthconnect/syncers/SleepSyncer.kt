@@ -122,8 +122,9 @@ internal object SleepSyncer : ContextualActivitySampleSyncer {
         val sessionBoundaryStart = analysisSession.sleepStart.toInstant()
         val sessionBoundaryEndInclusive = analysisSession.sleepEnd.toInstant()
 
-        // Check if session overlaps with the current slice
-        if (!sessionBoundaryStart.isBefore(sliceEndBoundary) || !sessionBoundaryEndInclusive.isAfter(sliceStartBoundary)) {
+        // Check if session overlaps with the current slice (inclusive boundaries [sliceStart, sliceEnd])
+        // Skip if: sessionStart > sliceEnd OR sessionEnd < sliceStart
+        if (sessionBoundaryStart.isAfter(sliceEndBoundary) || sessionBoundaryEndInclusive.isBefore(sliceStartBoundary)) {
             LOG.debug(
                 "Skipping sleep session (identified by SleepAnalysis) for device '{}' (Timeframe: {} to {}) as it does not overlap with current slice ({} to {}).",
                 deviceName,

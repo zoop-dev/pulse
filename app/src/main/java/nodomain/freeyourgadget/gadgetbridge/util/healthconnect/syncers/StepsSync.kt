@@ -69,8 +69,9 @@ internal object StepsSyncer : ActivitySampleSyncer {
                 val endTs = Instant.ofEpochSecond(currentSample.timestamp.toLong())
                 val startTs = endTs.minus(1, ChronoUnit.MINUTES)
 
-                // Ensure the record's interval [startTs, endTs) overlaps with the slice [sliceStartBoundary, sliceEndBoundary)
-                if (endTs.isAfter(sliceStartBoundary) && startTs.isBefore(sliceEndBoundary)) {
+                // Use inclusive boundaries [sliceStart, sliceEnd] for the slice
+                // Overlap check: interval overlaps if endTs > sliceStart AND startTs <= sliceEnd
+                if (endTs.isAfter(sliceStartBoundary) && !startTs.isAfter(sliceEndBoundary)) {
                     stepsRecordList.add(StepsRecord(startTs, offset, endTs, offset, stepsInMinute, metadata))
                 } else {
                     skippedCount++

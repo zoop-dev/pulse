@@ -102,7 +102,8 @@ internal abstract class AbstractTimeSampleSyncer<TSample : TimeSample, TRecord :
 
         val recordsToInsert = samples.filter {
             val timestamp = Instant.ofEpochMilli(it.timestamp)
-            if (timestamp.isBefore(sliceStartBoundary) || !timestamp.isBefore(sliceEndBoundary)) {
+            // Use inclusive boundaries [sliceStart, sliceEnd] to ensure last sample is included
+            if (timestamp.isBefore(sliceStartBoundary) || timestamp.isAfter(sliceEndBoundary)) {
                 logger.debug(
                     "Skipping sample for at {} as it's outside the slice {} - {}.",
                     timestamp,

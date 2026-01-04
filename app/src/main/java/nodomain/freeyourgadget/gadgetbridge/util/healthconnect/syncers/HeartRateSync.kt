@@ -77,8 +77,8 @@ internal object HeartRateSyncer : ActivitySampleSyncer {
         for (gbSample in validHRSamples) {
             val currentSampleTimestamp = Instant.ofEpochSecond(gbSample.timestamp.toLong())
 
-            // Ensure sample is strictly within the slice [sliceStartBoundary, sliceEndBoundary)
-            if (currentSampleTimestamp.isBefore(sliceStartBoundary) || !currentSampleTimestamp.isBefore(sliceEndBoundary)) {
+            // Use inclusive boundaries [sliceStart, sliceEnd] for the slice
+            if (currentSampleTimestamp.isBefore(sliceStartBoundary) || currentSampleTimestamp.isAfter(sliceEndBoundary)) {
                 skippedCount++
                 continue
             }
