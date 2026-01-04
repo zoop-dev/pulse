@@ -672,11 +672,11 @@ class HealthConnectUtils {
                     val deviceEntity = DBHelper.getDevice(device, db.daoSession) ?: return null
                     return db.daoSession.baseActivitySummaryDao?.queryBuilder()
                         ?.where(BaseActivitySummaryDao.Properties.DeviceId.eq(deviceEntity.id))
-                        ?.orderDesc(BaseActivitySummaryDao.Properties.StartTime)
+                        ?.orderDesc(BaseActivitySummaryDao.Properties.EndTime)
                         ?.limit(1)
                         ?.list()
                         ?.firstOrNull()
-                        ?.startTime?.toInstant()
+                        ?.endTime?.toInstant()
                 }
                 else -> {
                     CompanionLogger.error("No suitable provider found or provider is null for getLastSampleTimestamp, dataType: {}, device: {}", dataType, device.name)
