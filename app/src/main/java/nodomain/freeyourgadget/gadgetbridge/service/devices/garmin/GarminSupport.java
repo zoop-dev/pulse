@@ -196,6 +196,11 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         synchronized (ConnectionMonitor) {
             LOG.info("Garmin dispose()");
             GBLocationService.stop(getContext(), getDevice());
+            try {
+                LocalBroadcastManager.getInstance(GBApplication.getContext()).unregisterReceiver(broadcastReceiver);
+            } catch (final Exception e) {
+                LOG.error("Failed to unregister broadcast receiver", e);
+            }
             super.dispose();
         }
     }
@@ -628,6 +633,10 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             return;
         if (message.getOutgoingMessage() != null)
             LOG.debug("OUTGOING message {}: {}", message, GB.hexdump(message.getOutgoingMessage()));
+        if (communicator == null) {
+            LOG.error("communicator is null");
+            return;
+        }
         communicator.sendMessage(taskName, message.getOutgoingMessage());
     }
 
