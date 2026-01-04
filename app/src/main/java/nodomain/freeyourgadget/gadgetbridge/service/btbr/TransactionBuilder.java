@@ -24,6 +24,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.function.Predicate;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -35,6 +38,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetDeviceStateA
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetDeviceBusyAction;
 
 public class TransactionBuilder {
+    private static final Logger LOG = LoggerFactory.getLogger(TransactionBuilder.class);
+
     private final AbstractBTBRDeviceSupport mDeviceSupport;
     private final Transaction mTransaction;
     private boolean mQueued;
@@ -46,6 +51,14 @@ public class TransactionBuilder {
 
     @NonNull
     public TransactionBuilder write(byte... data) {
+        if (data == null) {
+            final NullPointerException e = new NullPointerException("data cannot be null");
+            LOG.error("Attempting to write null data - this is likely a bug in Gadgetbridge", e);
+            // We do not crash, since a lot of legacy devices migrated in #5652 might write nulls, since the old
+            // implementation handled that
+            return this;
+        }
+
         WriteAction action = new WriteAction(data);
         return add(action);
     }
