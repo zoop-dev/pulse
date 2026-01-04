@@ -767,7 +767,11 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
 
         if (mFirstConnect) {
+            // sendOutgoingMessage("set pair start", new SystemEventMessage(SystemEventMessage.GarminSystemEventType.PAIR_START, 0));
+            sendOutgoingMessage("set pair complete", new SystemEventMessage(SystemEventMessage.GarminSystemEventType.PAIR_COMPLETE, 0));
             sendOutgoingMessage("set sync complete", new SystemEventMessage(SystemEventMessage.GarminSystemEventType.SYNC_COMPLETE, 0));
+            // sendOutgoingMessage("set tutorial complete", new SystemEventMessage(SystemEventMessage.GarminSystemEventType.TUTORIAL_COMPLETE, 0));
+            sendOutgoingMessage("set setup wizard complete", new SystemEventMessage(SystemEventMessage.GarminSystemEventType.SETUP_WIZARD_COMPLETE, 0));
             this.mFirstConnect = false;
         }
     }
@@ -1228,7 +1232,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     @Override
     public boolean connectFirstTime() {
         mFirstConnect = true;
-        return super.connect();
+        return connect();
     }
 
     @Override
