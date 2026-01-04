@@ -102,6 +102,7 @@ import java.util.concurrent.TimeUnit;
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.DeviceDeleteActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.WorkoutListActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.BatteryInfoActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.ConfigureAlarms;
@@ -128,7 +129,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 import nodomain.freeyourgadget.gadgetbridge.model.DailyTotals;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
-import nodomain.freeyourgadget.gadgetbridge.util.BondingUtil;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FormatUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -1006,19 +1006,10 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
     }
 
     private void removeDevice(GBDevice device, boolean deleteFiles) {
-        try {
-            DeviceCoordinator coordinator = device.getDeviceCoordinator();
-            coordinator.deleteDevice(device, deleteFiles);
-            BondingUtil.Unpair(context, device.getAddress());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                removeDynamicShortcut(device);
-            }
-        } catch (Exception ex) {
-            GB.toast(context, context.getString(R.string.error_deleting_device, ex.getLocalizedMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
-        } finally {
-            Intent refreshIntent = new Intent(DeviceManager.ACTION_REFRESH_DEVICELIST);
-            LocalBroadcastManager.getInstance(context).sendBroadcast(refreshIntent);
-        }
+        final Intent intent = new Intent(context, DeviceDeleteActivity.class);
+        intent.putExtra(DeviceDeleteActivity.EXTRA_DEVICE, device);
+        intent.putExtra(DeviceDeleteActivity.EXTRA_DELETE_FILES, deleteFiles);
+        context.startActivity(intent);
     }
 
     private boolean deviceHasFiles(final GBDevice device) {
@@ -1596,13 +1587,6 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                 .setIcon(Icon.createWithResource(context, coordinator.getDefaultIconResource()))
                 .build()
         );
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.R)
-    void removeDynamicShortcut(GBDevice device) {
-        final ShortcutManager shortcutManager = (ShortcutManager) context.getApplicationContext().getSystemService(Context.SHORTCUT_SERVICE);
-
-        shortcutManager.removeDynamicShortcuts(Collections.singletonList(device.getAddress()));
     }
 
     /**

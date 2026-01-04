@@ -201,7 +201,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
 
     @Override
     public final void deleteDevice(final GBDevice gbDevice, boolean deleteFiles) throws GBException {
-        LOG.info("will try to delete device: {}", gbDevice.getName());
+        LOG.info("Will try to delete device: {}", gbDevice.getName());
         if (gbDevice.isConnected() || gbDevice.isConnecting()) {
             GBApplication.deviceService(gbDevice).disconnect();
         }
@@ -210,7 +210,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
         Set<String> lastDeviceAddresses = prefs.getStringSet(GBPrefs.LAST_DEVICE_ADDRESSES, Collections.emptySet());
         if (lastDeviceAddresses.contains(gbDevice.getAddress())) {
             LOG.debug("#1605 removing last device (one of last devices)");
-            lastDeviceAddresses = new HashSet<String>(lastDeviceAddresses);
+            lastDeviceAddresses = new HashSet<>(lastDeviceAddresses);
             lastDeviceAddresses.remove(gbDevice.getAddress());
             prefs.getPreferences().edit().putStringSet(GBPrefs.LAST_DEVICE_ADDRESSES, lastDeviceAddresses).apply();
         }
@@ -222,14 +222,10 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
             Device device = DBHelper.findDevice(gbDevice, session);
             if (device != null) {
                 deleteDevice(gbDevice, device, session);
-                QueryBuilder<?> qb = session.getDeviceAttributesDao().queryBuilder();
-                qb.where(DeviceAttributesDao.Properties.DeviceId.eq(device.getId())).buildDelete().executeDeleteWithoutDetachingEntities();
-                QueryBuilder<?> batteryLevelQueryBuilder = session.getBatteryLevelDao().queryBuilder();
-                batteryLevelQueryBuilder.where(BatteryLevelDao.Properties.DeviceId.eq(device.getId())).buildDelete().executeDeleteWithoutDetachingEntities();
-                QueryBuilder<?> alarmDeviceQueryBuilder = session.getAlarmDao().queryBuilder();
-                alarmDeviceQueryBuilder.where(AlarmDao.Properties.DeviceId.eq(device.getId())).buildDelete().executeDeleteWithoutDetachingEntities();
-                QueryBuilder<?> healthSyncStateQueryBuilder = session.getHealthConnectSyncStateDao().queryBuilder();
-                healthSyncStateQueryBuilder.where(HealthConnectSyncStateDao.Properties.DeviceId.eq(device.getId())).buildDelete().executeDeleteWithoutDetachingEntities();
+                deleteBy(session.getDeviceAttributesDao(), DeviceAttributesDao.Properties.DeviceId, device.getId());
+                deleteBy(session.getBatteryLevelDao(), BatteryLevelDao.Properties.DeviceId, device.getId());
+                deleteBy(session.getAlarmDao(), AlarmDao.Properties.DeviceId, device.getId());
+                deleteBy(session.getHealthConnectSyncStateDao(), HealthConnectSyncStateDao.Properties.DeviceId, device.getId());
                 session.getDeviceDao().delete(device);
             } else {
                 LOG.info("device to delete not found in db: {}", gbDevice);
@@ -243,8 +239,14 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
         }
     }
 
+    protected void deleteBy(final AbstractDao<?, ?> dao, final Property property, final Object value) {
+        LOG.debug("Deleting from {} where {}={}", dao.getTablename(), property.columnName, value);
+        dao.queryBuilder().where(property.eq(value)).buildDelete().executeDeleteWithoutDetachingEntities();
+    }
 
     private void deleteDeviceFiles(final GBDevice gbDevice) {
+        LOG.debug("Deleting device files for {}", gbDevice);
+
         File export = new File("(export)");
         try {
             export = getWritableExportDirectory(gbDevice, false);
@@ -275,9 +277,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
         final Map<AbstractDao<?, ?>, Property> daoMap = getAllDeviceDao(session);
 
         for (final Map.Entry<AbstractDao<?, ?>, Property> e : daoMap.entrySet()) {
-            e.getKey().queryBuilder()
-                    .where(e.getValue().eq(deviceId))
-                    .buildDelete().executeDeleteWithoutDetachingEntities();
+            deleteBy(e.getKey(), e.getValue(), deviceId);
         }
     }
 

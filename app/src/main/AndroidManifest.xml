@@ -724,7 +724,11 @@
             android:name=".activities.BatteryInfoActivity"
             android:label="@string/battery_detail_activity_title"
             android:parentActivityName=".activities.ControlCenterv2" />
-
+        <activity
+            android:exported="false"
+            android:name=".activities.DeviceDeleteActivity"
+            android:label="@string/controlcenter_delete_device"
+            android:parentActivityName=".activities.ControlCenterv2" />
         <activity
             android:name=".activities.workouts.WorkoutDetailsActivity"
             android:label="@string/activity_summary_detail"
