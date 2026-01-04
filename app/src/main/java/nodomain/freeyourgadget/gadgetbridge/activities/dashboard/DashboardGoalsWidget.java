@@ -38,6 +38,7 @@ import org.slf4j.LoggerFactory;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.DashboardFragment;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 /**
@@ -67,6 +68,11 @@ public class DashboardGoalsWidget extends AbstractDashboardWidget {
         args.putSerializable(ARG_DASHBOARD_DATA, dashboardData);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    protected boolean isSupportedBy(final GBDevice device) {
+        return device.getDeviceCoordinator().supportsActivityTracking(device);
     }
 
     @Override

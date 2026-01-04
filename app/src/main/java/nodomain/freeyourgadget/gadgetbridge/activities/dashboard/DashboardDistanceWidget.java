@@ -20,6 +20,7 @@ import android.os.Bundle;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.DashboardFragment;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.util.FormatUtils;
 
 /**
@@ -51,6 +52,11 @@ public class DashboardDistanceWidget extends AbstractGaugeWidget {
     protected void populateData(final DashboardFragment.DashboardData dashboardData) {
         dashboardData.getDistanceTotal();
         dashboardData.getDistanceGoalFactor();
+    }
+
+    @Override
+    protected boolean isSupportedBy(final GBDevice device) {
+        return device.getDeviceCoordinator().supportsStepCounter(device);
     }
 
     @Override

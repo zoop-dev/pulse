@@ -22,6 +22,7 @@ import java.util.Locale;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.DashboardFragment;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 /**
  * A simple {@link AbstractDashboardWidget} subclass.
@@ -46,6 +47,11 @@ public class DashboardActiveTimeWidget extends AbstractGaugeWidget {
         args.putSerializable(ARG_DASHBOARD_DATA, dashboardData);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    protected boolean isSupportedBy(final GBDevice device) {
+        return device.getDeviceCoordinator().supportsStepCounter(device);
     }
 
     @Override

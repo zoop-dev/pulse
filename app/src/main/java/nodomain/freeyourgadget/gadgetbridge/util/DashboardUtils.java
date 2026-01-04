@@ -54,7 +54,7 @@ public class DashboardUtils {
         int totalSteps = 0;
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             for (GBDevice dev : devices) {
-                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActivityTracking(dev)) {
+                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsStepCounter(dev)) {
                     totalSteps += (int) getDailyTotals(dev, dbHandler, dashboardData.timeTo).getSteps();
                 }
             }
@@ -123,7 +123,7 @@ public class DashboardUtils {
         long totalSleepMinutes = 0;
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             for (GBDevice dev : devices) {
-                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActivityTracking(dev)) {
+                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsSleepMeasurement(dev)) {
                     totalSleepMinutes += getSleep(dev, dbHandler, dashboardData.timeTo);
                 }
             }
@@ -150,7 +150,7 @@ public class DashboardUtils {
         long totalDistanceCm = 0;
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             for (GBDevice dev : devices) {
-                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActivityTracking(dev)) {
+                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsStepCounter(dev)) {
                     final DailyTotals dailyTotals = getDailyTotals(dev, dbHandler, dashboardData.timeTo);
                     if (dailyTotals.getSteps() > 0 && dailyTotals.getDistance() > 0) {
                         totalDistanceCm += dailyTotals.getDistance();
@@ -188,7 +188,7 @@ public class DashboardUtils {
         long totalActiveMinutes = 0;
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             for (GBDevice dev : devices) {
-                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActivityTracking(dev)) {
+                if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsStepCounter(dev)) {
                     totalActiveMinutes += getActiveMinutes(dev, dbHandler, dashboardData);
                 }
             }

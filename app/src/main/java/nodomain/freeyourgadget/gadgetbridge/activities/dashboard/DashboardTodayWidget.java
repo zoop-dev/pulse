@@ -94,6 +94,11 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
     }
 
     @Override
+    protected boolean isSupportedBy(final GBDevice device) {
+        return device.getDeviceCoordinator().supportsActivityTracking(device);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         todayView = inflater.inflate(R.layout.dashboard_widget_today, container, false);
         todayChart = todayView.findViewById(R.id.dashboard_today_chart);
