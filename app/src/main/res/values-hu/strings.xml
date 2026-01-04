@@ -49,14 +49,14 @@
     <!--Strings related to Settings-->
     <string name="title_activity_settings">Beállítások</string>
     <string name="pref_header_general">Általános beállítások</string>
-    <string name="pref_title_general_autoconnectonbluetooth">Kapcsolódás a Gadgetbridge eszköz(ök)höz a Bluetooth bekapcsolásakor</string>
+    <string name="pref_title_general_autoconnectonbluetooth">Kapcsolódás a Gadgetbridge-eszköz(ök)höz a Bluetooth bekapcsolásakor</string>
     <string name="pref_title_general_autostartonboot">Automatikus indítás</string>
     <string name="pref_title_general_autoreconnect">Automatikus újrakapcsolódás</string>
     <string name="pref_title_audio_player">Előnyben részesített zenelejátszó</string>
     <string name="pref_default">Alapértelmezett</string>
     <string name="pref_header_datetime">Dátum és idő</string>
     <string name="pref_title_datetime_syctimeonconnect">Idő szinkronizálása</string>
-    <string name="pref_summary_datetime_syctimeonconnect">Idő szinkronizálása kapcsolódáskor a Gadgetbridge eszköz(ök)kel, amikor az idő vagy az időzóna megváltozik az Android-eszközön, és időszakosan</string>
+    <string name="pref_summary_datetime_syctimeonconnect">Idő szinkronizálása kapcsolódáskor a Gadgetbridge-eszköz(ök)kel, amikor az idő vagy az időzóna megváltozik az Android-eszközön, és időszakosan</string>
     <string name="pref_title_theme">Téma</string>
     <string name="pref_theme_light">Világos</string>
     <string name="pref_theme_dark">Sötét</string>
@@ -1869,7 +1869,7 @@
     <string name="pref_title_middle_button_function_short">Középső gomb röviden</string>
     <string name="prefs_button_double_press_action_selection_title">2. esemény művelet</string>
     <string name="prefs_button_triple_press_action_selection_title">3. esemény művelet</string>
-    <string name="gpx_receiver_activity_title">GadgetBridge GPX-vevő</string>
+    <string name="gpx_receiver_activity_title">Gadgetbridge GPX-vevő</string>
     <string name="gpx_receiver_overwrite_some_files">Néhány fájl már létezik. Felülírja?</string>
     <string name="error_version_check_extreme_caution">FIGYELEM: Hiba történt a verzióinformáció ellenőrzésénél! Nem szabad folytatni! „%s” verzió nevét láttam</string>
     <string name="share_log_warning">Ne feledje, hogy a Gadgetbridge olyan fájlokat naplóz, amelyek sok személyes adatot tartalmazhatnak, többek között egészségügyi adatokat, egyedi azonosítókat (például az eszköz MAC-címét), zenei beállításokat stb. Fontolja meg a fájl szerkesztését és ezen információk eltávolítását, mielőtt elküldi a fájlt egy nyilvános hibajelentésre.</string>
@@ -3189,7 +3189,7 @@
     <string name="soundcore_equalizer_band6">6. sáv</string>
     <string name="soundcore_equalizer_band7">7. sáv</string>
     <string name="huawei_reparse_workout_data">Edzésadatok javítása</string>
-    <string name="info_menu_structure_set">Menüelrendezési .json-fájl beállítása a GadgetBridge-ben</string>
+    <string name="info_menu_structure_set">Menüelrendezési .json-fájl beállítása a Gadgetbridge-ben</string>
     <string name="activity_type_worn">Viselt</string>
     <string name="max_val">Maximális: %d</string>
     <string name="workoutSets">Sorozatok</string>
@@ -3602,7 +3602,7 @@
     <string name="map_theme_biker">Motoros</string>
     <string name="map_theme_indigo">Indigó</string>
     <string name="pref_title_block_screenshot">Képernyőkép készítésének megakadályozása</string>
-    <string name="pref_summary_block_screenshots">Megakadályozza a képernyőképek készítését és megjelenítését nem biztonságos kijelzőn. A teljes hatályba lépéshez újra kell indítani a GadgetBridge-et.</string>
+    <string name="pref_summary_block_screenshots">Megakadályozza a képernyőképek készítését és megjelenítését nem biztonságos kijelzőn. A teljes hatályba lépéshez újra kell indítani a Gadgetbridge-et.</string>
     <string name="phone_calls">Telefonhívások</string>
     <string name="pref_title_notifications_when_screen_saver">…képernyővédő bekapcsolásakor is</string>
     <string name="pref_title_screen_on_on_notifications_timeout">Értesítés kijelzési ideje</string>
@@ -3844,7 +3844,7 @@
     <string name="pref_printer_print_received_text">A Gadgetbridge alkalmazással megosztott szöveg nyomtatása</string>
     <string name="error_queue_is_dead">A GB-feldolgozási sora leállt</string>
     <string name="error_sender_is_dead">A Gadgetbridge küldőszála leállt</string>
-    <string name="error_receiver_is_dead">A GadgetBridge fogadószála leállt</string>
+    <string name="error_receiver_is_dead">A Gadgetbridge fogadószála leállt</string>
     <string name="submit_button_text">Küldés</string>
     <string name="auth_key_required_message">A hitelesítési kulcs nem lehet üres</string>
     <string name="invalid_auth_key_message">Érvénytelen hitelesítési kulcs – próbálja újra</string>
@@ -4085,5 +4085,5 @@
     <string name="health_connect_sync_error_for_device">Szinkronizálási hiba a következőnél: %1$s (%2$s): %3$s</string>
     <string name="health_connect_permission_denied">Hozzáférés megtagadva: %1$s. Ellenőrizze a Health Connect engedélyeit.</string>
     <string name="health_connect_sleep_session_title">Alvási ciklus ekkortól: %1$s</string>
-    <string name="health_connect_sleep_session_notes">Alvási adatok a következő Gadgetbridge eszközről: %1$s.</string>
+    <string name="health_connect_sleep_session_notes">Alvási adatok a következő Gadgetbridge-eszközről: %1$s.</string>
 </resources>
