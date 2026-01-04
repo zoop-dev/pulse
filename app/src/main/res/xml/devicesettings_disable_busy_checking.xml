@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_block"
+        android:key="pref_device_debug_remove_busy_checking"
+        android:layout="@layout/preference_checkbox"
+        android:summary="Remove the BUSY_CHECKING flag from the ServiceDeviceSupport"
+        android:title="Bypass BUSY_CHECKING" />
+</PreferenceScreen>

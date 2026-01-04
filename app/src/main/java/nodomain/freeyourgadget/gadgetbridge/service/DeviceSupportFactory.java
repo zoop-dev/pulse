@@ -33,11 +33,14 @@ import androidx.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.PebbleSupport;
+import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 import java.lang.reflect.Constructor;
 import java.util.EnumSet;
@@ -97,7 +100,15 @@ public class DeviceSupportFactory {
 
         try {
             final DeviceSupport supportInstance = (DeviceSupport) supportClass.newInstance();
-            return new ServiceDeviceSupport(supportInstance, coordinator.getInitialFlags());
+            final EnumSet<ServiceDeviceSupport.Flags> initialFlags = coordinator.getInitialFlags();
+            if (BuildConfig.DEBUG && initialFlags.contains(ServiceDeviceSupport.Flags.BUSY_CHECKING)) {
+                final DevicePrefs devicePrefs = GBApplication.getDevicePrefs(device);
+                if (devicePrefs.getBoolean("pref_device_debug_remove_busy_checking", false)) {
+                    LOG.warn("Removing BUSY_CHECKING flag from {}", device.getAddress());
+                    initialFlags.remove(ServiceDeviceSupport.Flags.BUSY_CHECKING);
+                }
+            }
+            return new ServiceDeviceSupport(supportInstance, initialFlags);
         } catch (ReflectiveOperationException e) {
             LOG.error("error calling DeviceSupport constructor for {} with zero arguments", device.getAddress());
             throw new GBException(e);

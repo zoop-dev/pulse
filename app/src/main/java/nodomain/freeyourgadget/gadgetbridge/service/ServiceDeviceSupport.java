@@ -52,7 +52,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
  * Wraps another device support instance and supports busy-checking and throttling of events.
  */
 public class ServiceDeviceSupport implements DeviceSupport {
-    public static enum Flags {
+    public enum Flags {
         THROTTLING,
         BUSY_CHECKING,
     }
@@ -151,7 +151,7 @@ public class ServiceDeviceSupport implements DeviceSupport {
             return false;
         }
         if (getDevice().isBusy()) {
-            LOG.info("Ignoring " + notificationKind + " because we're busy with " + getDevice().getBusyTask());
+            LOG.info("Ignoring {} because we're busy with {}", notificationKind, getDevice().getBusyTask());
             return true;
         }
         return false;
@@ -164,7 +164,7 @@ public class ServiceDeviceSupport implements DeviceSupport {
         long currentTime = System.currentTimeMillis();
         if ((currentTime - lastNotificationTime) < THROTTLING_THRESHOLD) {
             if (notificationKind != null && notificationKind.equals(lastNotificationKind)) {
-                LOG.info("Ignoring " + notificationKind + " because of throttling threshold reached");
+                LOG.info("Ignoring {} because of throttling threshold reached", notificationKind);
                 return true;
             }
         }

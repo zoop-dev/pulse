@@ -1614,9 +1614,14 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
                 }
             }
             if (BuildConfig.DEBUG) {
+                final int[] debugSettings = coordinator.getSupportedDebugSettings(device);
                 deviceSpecificSettings.addRootScreen(
                         DeviceSpecificSettingsScreen.DEVELOPER,
-                        R.xml.devicesettings_stress_test
+                        R.xml.devicesettings_header_debug
+                );
+                deviceSpecificSettings.addRootScreen(
+                        DeviceSpecificSettingsScreen.DEVELOPER,
+                        debugSettings
                 );
             }
             if (GBApplication.getPrefs().experimentalSettings()) {

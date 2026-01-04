@@ -969,6 +969,14 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
         return new int[0];
     }
 
+    @Override
+    public int[] getSupportedDebugSettings(final GBDevice device) {
+        return new int[] {
+                R.xml.devicesettings_stress_test,
+                R.xml.devicesettings_disable_busy_checking,
+        };
+    }
+
     public boolean experimentalSettingEnabled(final GBDevice device, final String key) {
         return GBApplication.getPrefs().experimentalSettings() && GBApplication.getDevicePrefs(device).getBoolean(key, false);
     }
