@@ -252,6 +252,7 @@ public class PBWReader {
             case "diorite" -> new String[]{"diorite/", "aplite/"};
             case "emery" -> new String[]{"emery/", "basalt/"};
             case "flint" -> new String[]{"flint/", "diorite/", "aplite/"};
+            case "gabbro" -> new String[]{"gabbro", "chalk/"};
             default -> new String[]{"aplite/"};
         };
 

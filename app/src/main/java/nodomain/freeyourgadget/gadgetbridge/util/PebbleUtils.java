@@ -58,6 +58,8 @@ public class PebbleUtils {
             return "emery";
         } else if (hwRev.startsWith("asterix")) {
             return "flint";
+        } else if (hwRev.startsWith("getafix")) {
+            return "gabbro";
         }
         return DEFAULT_PLATFORM;
     }
@@ -74,10 +76,14 @@ public class PebbleUtils {
             return "pebble_time_round_black_20mm";
         } else if (hwRev.startsWith("silk")) {
             return "pebble2_black";
-        } else if (hwRev.startsWith("robert") || hwRev.startsWith("obelix")) {
+        } else if (hwRev.startsWith("robert")) {
             return "pebble_time2_black";
         } else if (hwRev.startsWith("asterix")) {
-            return "pebble2_duo_black";
+            return "coredevices_p2d_black";
+        } else if (hwRev.startsWith("obelix")) {
+            return "coredevices_pt2_black_grey";
+        } else if (hwRev.startsWith("getafix")) {
+            return "coredevices_ptr2_black";
         }
         return DEFAULT_MODEL;
     }
