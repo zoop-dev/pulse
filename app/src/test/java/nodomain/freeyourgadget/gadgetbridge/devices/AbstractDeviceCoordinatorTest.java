@@ -65,6 +65,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("Edge Explore", DeviceType.GARMIN_EDGE_EXPLORE); // #4855
             put("Edge Explore 2", DeviceType.GARMIN_EDGE_EXPLORE_2); // #4855
             put("Redmi Smart Band 3 CCF1", DeviceType.REDMISMARTBAND3);
+            put("fenix 5s", DeviceType.GARMIN_FENIX_5S); // matrix
             put("fenix 6 Pro", DeviceType.GARMIN_FENIX_6_PRO); // #5536
             put("fenix 6X Pro", DeviceType.GARMIN_FENIX_6X_PRO);
             put("fenix 6X Sapphire", DeviceType.GARMIN_FENIX_6X_SAPPHIRE); // #5496
