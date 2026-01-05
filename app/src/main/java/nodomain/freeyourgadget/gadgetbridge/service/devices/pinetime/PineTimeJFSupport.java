@@ -254,6 +254,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                     percent, speed, averageSpeed, segment, totalSegments));
         }
     };
+
     private final ResourceUploadProgressListener resourceUploadProgressListener = new ResourceUploadProgressListener() {
         private final LocalBroadcastManager manager = LocalBroadcastManager.getInstance(getContext());
 
@@ -363,15 +364,31 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
         addSupportedService(PineTimeJFConstants.UUID_CHARACTERISTIC_ALERT_NOTIFICATION_EVENT);
         addSupportedService(PineTimeJFConstants.UUID_SERVICE_MOTION);
         addSupportedService(PineTimeJFConstants.UUID_SERVICE_HEART_RATE);
+        addSupportedService(AdaBleFsProfile.UUID_SERVICE_FS);
 
         IntentListener mListener = new IntentListener() {
             @Override
             public void notify(Intent intent) {
                 String action = intent.getAction();
+                LOG.info("IntentListener received an intent with ACTION={}", action);
                 if (DeviceInfoProfile.ACTION_DEVICE_INFO.equals(action)) {
-                    handleDeviceInfo((nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfo) intent.getParcelableExtra(DeviceInfoProfile.EXTRA_DEVICE_INFO));
+                    handleDeviceInfo(intent.getParcelableExtra(DeviceInfoProfile.EXTRA_DEVICE_INFO));
                 } else if (BatteryInfoProfile.ACTION_BATTERY_INFO.equals(action)) {
-                    handleBatteryInfo((nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfo) intent.getParcelableExtra(BatteryInfoProfile.EXTRA_BATTERY_INFO));
+                    handleBatteryInfo(intent.getParcelableExtra(BatteryInfoProfile.EXTRA_BATTERY_INFO));
+                } else if (PineTimeJFConstants.ACTION_UPLOAD_PROGRESS.equals(action)) {
+                    LocalBroadcastManager manager = LocalBroadcastManager.getInstance(getContext());
+                    boolean ongoing = intent.getBooleanExtra("ongoing", true);
+                    String progressText = "";
+                    if (ongoing) {
+                        String filename = intent.getStringExtra("filename");
+                        int currentActionNr = intent.getIntExtra("currentActionNr", 0);
+                        int allActionsCount = intent.getIntExtra("allActionsCount", 0);
+                        progressText = String.format("Performing action %d of %d\nCurrent filename: %s", currentActionNr, allActionsCount, filename);
+                    } else {
+                        progressText = getContext().getString(R.string.devicestatus_upload_completed);
+                        gbDevice.unsetBusyTask();
+                    }
+                    manager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_TEXT).putExtra(GB.DISPLAY_MESSAGE_MESSAGE, progressText));
                 }
             }
         };
@@ -388,8 +405,8 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
         addSupportedProfile(batteryInfoProfile);
 
         adaBleFsProfile = new AdaBleFsProfile<>(this);
+        adaBleFsProfile.addListener(mListener);
         addSupportedProfile(adaBleFsProfile);
-        addSupportedService(AdaBleFsProfile.UUID_CHARACTERISTIC_FS_TRANSFER);
     }
 
     private void handleBatteryInfo(nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfo info) {
@@ -647,6 +664,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
         setInitialized(builder);
         batteryInfoProfile.requestBatteryInfo(builder);
         batteryInfoProfile.enableNotify(builder, true);
+        adaBleFsProfile.enableNotify(builder, true);
 
         builder.requestMtu(256);
         return builder;

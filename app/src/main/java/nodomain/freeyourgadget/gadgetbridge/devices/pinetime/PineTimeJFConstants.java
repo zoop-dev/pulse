@@ -63,4 +63,5 @@ public class PineTimeJFConstants {
     public static final UUID UUID_SERVICE_HEART_RATE = GattService.UUID_SERVICE_HEART_RATE;
     public static final UUID UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT = UUID.fromString("00002a37-0000-1000-8000-00805f9b34fb");
 
+    public static final String ACTION_UPLOAD_PROGRESS = "PINETIME_UPLOAD_PROGRESS";
 }
