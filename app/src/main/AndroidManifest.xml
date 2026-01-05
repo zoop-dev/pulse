@@ -260,7 +260,7 @@
             android:label="@string/healthconnect_settings"
             android:parentActivityName=".activities.SettingsActivity" />
         <activity
-            android:name=".activities.EndurainPreferencesActivity"
+            android:name=".activities.endurain.EndurainPreferencesActivity"
             android:label="Endurain"
             android:parentActivityName=".activities.SettingsActivity" />
         <activity
