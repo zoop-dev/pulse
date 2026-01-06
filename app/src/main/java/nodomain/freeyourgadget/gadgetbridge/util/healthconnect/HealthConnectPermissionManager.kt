@@ -59,6 +59,7 @@ object HealthConnectPermissionManager {
         TEMPERATURE,
         RESPIRATORY_RATE,
         RESTING_HEART_RATE,
+        BLOOD_GLUCOSE,
         WORKOUTS
     }
 
@@ -79,6 +80,7 @@ object HealthConnectPermissionManager {
             HealthConnectDataType.SPO2 -> setOf(HealthPermission.getWritePermission(OxygenSaturationRecord::class))
             HealthConnectDataType.RESPIRATORY_RATE -> setOf(HealthPermission.getWritePermission(RespiratoryRateRecord::class))
             HealthConnectDataType.RESTING_HEART_RATE -> setOf(HealthPermission.getWritePermission(RestingHeartRateRecord::class))
+            HealthConnectDataType.BLOOD_GLUCOSE -> setOf(HealthPermission.getWritePermission(BloodGlucoseRecord::class))
             HealthConnectDataType.TEMPERATURE -> setOf(
                 HealthPermission.getWritePermission(BodyTemperatureRecord::class),
                 HealthPermission.getWritePermission(SkinTemperatureRecord::class)
