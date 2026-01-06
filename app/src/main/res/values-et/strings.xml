@@ -1132,4 +1132,21 @@
     <string name="title_activity_file_installer">Failist paigaldaja</string>
     <string name="title_activity_gps_track_installer">GPS-i radade paigaldaja</string>
     <string name="pref_theme_dynamic">Dünaamilised värvid</string>
+    <string name="meters">m</string>
+    <string name="cm">sm</string>
+    <string name="steps_unit">sammu</string>
+    <string name="meters_second">m/sek</string>
+    <string name="km_h">km/t</string>
+    <string name="seconds">sek</string>
+    <string name="calories_unit">kcal</string>
+    <string name="seconds_km">sek/km</string>
+    <string name="minutes_km">min/km</string>
+    <string name="Swimming">Ujumine</string>
+    <string name="Distance">Vahemaa</string>
+    <string name="Elevation">Kõrgus</string>
+    <string name="Speed">Kiirus</string>
+    <string name="Steps">Sammud</string>
+    <string name="activity_detail_start_label">Algus</string>
+    <string name="activity_detail_end_label">Lõpp</string>
+    <string name="activity_detail_duration_label">Kestus</string>
 </resources>
