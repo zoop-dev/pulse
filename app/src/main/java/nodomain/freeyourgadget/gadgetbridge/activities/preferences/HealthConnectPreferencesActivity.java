@@ -78,7 +78,7 @@ public class HealthConnectPreferencesActivity extends AbstractSettingsActivityV2
     public static class HealthConnectPreferencesFragment extends AbstractPreferenceFragment implements HealthConnectInitialSyncDialog.InitialSyncDialogListener {
         protected static final Logger LOG = LoggerFactory.getLogger(HealthConnectPreferencesFragment.class);
 
-        private static final String HEALTH_CONNECT_SYNC_WORKER_TAG = "HealthConnectSyncWorker";
+        public static final String HEALTH_CONNECT_SYNC_WORKER_TAG = "HealthConnectSyncWorker";
         private static final String HEALTH_CONNECT_ONETIME_WORK_NAME = "HealthConnectSyncWorker_OneTime";
         private static final String HC_DEVICE_SELECT_DIALOG_TAG = "HC_DEVICE_SELECT_DIALOG";
         private static final String HC_INITIAL_SYNC_DIALOG_TAG = "HC_INITIAL_SYNC_DIALOG_TAG";

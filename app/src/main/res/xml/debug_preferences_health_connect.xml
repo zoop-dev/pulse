@@ -4,6 +4,13 @@
 
     <Preference
         android:icon="@drawable/ic_refresh"
+        android:key="pref_debug_manual_sync_trigger"
+        android:persistent="false"
+        android:summary="Trigger a manual sync for all devices selected for HC"
+        android:title="Trigger manual sync" />
+
+    <Preference
+        android:icon="@drawable/ic_delete"
         android:key="pref_debug_reset_hc_sync_state"
         android:persistent="false"
         android:summary="Reset Health Connect sync state and allow re-syncing all data"

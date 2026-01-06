@@ -14,7 +14,7 @@
             app:iconSpaceReserved="true" />
 
         <Preference
-            android:icon="@drawable/ic_settings"
+            android:icon="@drawable/ic_database"
             android:key="health_connect_manual_settings"
             android:title="@string/pref_health_connect_manual_settings"
             app:iconSpaceReserved="true" />
