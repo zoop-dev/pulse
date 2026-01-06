@@ -23,6 +23,11 @@ class DatabaseDebugFragment : AbstractDebugFragment() {
         addTables()
     }
 
+    override fun onResume() {
+        super.onResume()
+        addTables()
+    }
+
     private fun addTables() {
         val tablesHeader: PreferenceCategory = findPreference(PREF_HEADER_DATABASE_TABLES)!!
         removeDynamicPrefs(tablesHeader)

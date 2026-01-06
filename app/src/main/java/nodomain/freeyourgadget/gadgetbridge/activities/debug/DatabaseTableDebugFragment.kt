@@ -5,19 +5,41 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
 import android.widget.TextView
+import android.widget.Toast
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
+import nodomain.freeyourgadget.gadgetbridge.util.GB
+import kotlin.io.use
 import kotlin.use
 
 class DatabaseTableDebugFragment : AbstractDebugFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        setPreferencesFromResource(R.xml.debug_preferences_empty, rootKey)
+        setPreferencesFromResource(R.xml.debug_preferences_database_table, rootKey)
 
         val tableName = arguments?.getString("tableName")!!
 
         preferenceScreen?.title = tableName
+
+        try {
+            GBApplication.acquireDB().use { db ->
+                val cursor = db.database.rawQuery(
+                    "SELECT COUNT(*) as \"count\" FROM $tableName;",
+                    null
+                )
+
+                cursor.use {
+                    it.moveToNext()
+                    findPreference<Preference>(PREF_DEBUG_DATABASE_COUNT)?.summary = it.getInt(it.getColumnIndexOrThrow("count")).toString()
+                }
+            }
+        } catch (e: Exception) {
+            GB.log("Error accessing database", GB.ERROR, e)
+        }
+
+        onClick(PREF_DEBUG_DROP_TABLE) { dropTable(tableName) }
 
         val ddl = getTableDdl(tableName)
 
@@ -105,5 +127,31 @@ class DatabaseTableDebugFragment : AbstractDebugFragment() {
         }
 
         return sb.toString().trim()
+    }
+
+    private fun dropTable(tableName: String) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setCancelable(true)
+            .setIcon(R.drawable.ic_warning)
+            .setTitle("Drop $tableName")
+            .setMessage("Drop $tableName? All data in this table will be lost, and the table must be re-created manually.")
+            .setPositiveButton(R.string.Delete) { _, _ ->
+                try {
+                    GBApplication.acquireDB().use { db ->
+                        db.database.execSQL("DROP TABLE IF EXISTS $tableName;")
+                    }
+                    parentFragmentManager.popBackStack()
+                } catch (e: Exception) {
+                    GB.toast("Failed to drop table", Toast.LENGTH_LONG, GB.ERROR, e)
+                }
+            }
+            .setNegativeButton(R.string.Cancel) { _, _ -> }
+            .show()
+
+    }
+
+    companion object {
+        private const val PREF_DEBUG_DATABASE_COUNT = "pref_debug_database_count"
+        private const val PREF_DEBUG_DROP_TABLE = "pref_debug_drop_table"
     }
 }
