@@ -32,6 +32,10 @@ import androidx.work.WorkManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collections;
+import java.util.Locale;
+import java.util.Set;
+
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
@@ -73,36 +77,41 @@ public class NewDataReceiver extends BroadcastReceiver {
                 prefs.getBoolean(GBPrefs.HEALTH_CONNECT_SYNC_ON_EVENT, false)) {
 
             // Extract device from the intent
-            GBDevice device = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE);
-            String deviceAddress = device != null ? device.getAddress() : null;
-
-            if (deviceAddress != null && !deviceAddress.isEmpty()) {
-                // For device-specific syncs, use a device-specific work name and APPEND policy
-                // This ensures each device's HC sync is queued and executed sequentially
-                String workName = HEALTH_CONNECT_SYNC_WORKER_TAG + "_" + deviceAddress;
-
-                OneTimeWorkRequest syncRequest = new OneTimeWorkRequest.Builder(HealthConnectSyncWorker.class)
-                    .addTag(HEALTH_CONNECT_SYNC_WORKER_TAG)
-                    .setInputData(
-                        new Data.Builder()
-                            .putString(HealthConnectSyncWorker.INPUT_DEVICE_ADDRESS, deviceAddress)
-                            .build()
-                    )
-                    .build();
-
-                LOG.debug("Scheduling HC sync for device: {} with work name: {}", deviceAddress, workName);
-
-                // Use APPEND so multiple syncs for the same device queue up
-                WorkManager.getInstance(context).enqueueUniqueWork(
-                    workName,
-                    ExistingWorkPolicy.APPEND,
-                    syncRequest
-                );
-            } else {
+            final GBDevice device = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE);
+            final String deviceAddress = device != null ? device.getAddress() : null;
+            if (deviceAddress == null || deviceAddress.isBlank()) {
                 // This shouldn't happen for ACTION_NEW_DATA, but handle gracefully
                 LOG.warn("ACTION_NEW_DATA received without device information, skipping HC sync");
+                return;
             }
+
+            final Set<String> hcDevices = prefs.getStringSet(GBPrefs.HEALTH_CONNECT_DEVICE_SELECTION, Collections.emptySet());
+            if (!hcDevices.contains(deviceAddress.toUpperCase(Locale.ROOT))) {
+                LOG.debug("Ignoring new data for {} - not configured for HC sync", deviceAddress);
+                return;
+            }
+
+            // For device-specific syncs, use a device-specific work name and APPEND policy
+            // This ensures each device's HC sync is queued and executed sequentially
+            String workName = HEALTH_CONNECT_SYNC_WORKER_TAG + "_" + deviceAddress;
+
+            OneTimeWorkRequest syncRequest = new OneTimeWorkRequest.Builder(HealthConnectSyncWorker.class)
+                .addTag(HEALTH_CONNECT_SYNC_WORKER_TAG)
+                .setInputData(
+                    new Data.Builder()
+                        .putString(HealthConnectSyncWorker.INPUT_DEVICE_ADDRESS, deviceAddress)
+                        .build()
+                )
+                .build();
+
+            LOG.debug("Scheduling HC sync for device: {} with work name: {}", deviceAddress, workName);
+
+            // Use APPEND so multiple syncs for the same device queue up
+            WorkManager.getInstance(context).enqueueUniqueWork(
+                workName,
+                ExistingWorkPolicy.APPEND,
+                syncRequest
+            );
         }
     }
-
 }

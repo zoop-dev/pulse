@@ -141,13 +141,19 @@ class HealthConnectUtils {
             try {
                 val prefs = GBApplication.getPrefs()
                 val grantedPermissions = prefs.preferences.getStringSet(PREF_KEY_LAST_GRANTED_HC_PERMISSIONS, emptySet()) ?: emptySet()
+                val hcDevices = prefs.getStringSet(GBPrefs.HEALTH_CONNECT_DEVICE_SELECTION, emptySet())
 
                 // If a specific device address is provided, sync only that device
                 // Otherwise, sync all selected devices from preferences
                 val selectedDevices = if (deviceAddress != null && deviceAddress.isNotEmpty()) {
-                    setOf(deviceAddress)
+                    if (hcDevices.contains(deviceAddress.uppercase())) {
+                        setOf(deviceAddress)
+                    } else {
+                        LOG.error("Attempting to sync {}, which is not configured for HC - refusing", deviceAddress)
+                        emptySet()
+                    }
                 } else {
-                    prefs.getStringSet("health_connect_devices_multiselect", HashSet(20))
+                    prefs.getStringSet(GBPrefs.HEALTH_CONNECT_DEVICE_SELECTION, emptySet())
                 }
 
                 if (selectedDevices.isNullOrEmpty()) {
