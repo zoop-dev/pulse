@@ -88,6 +88,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.communicator.
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.CapabilitiesDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.FileDownloadedDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.IncomingFitDefinitionDeviceEvent;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.MaxPacketSizeDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.NotificationSubscriptionDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.SupportedFileTypesDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.WeatherRequestDeviceEvent;
@@ -422,6 +423,9 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                     enable,
                     0
             ));
+        } else if (deviceEvent instanceof MaxPacketSizeDeviceEvent maxPacketSizeDeviceEvent) {
+            LOG.debug("Got new max packet size of {}", maxPacketSizeDeviceEvent.getMaxPacketSize());
+            fileTransferHandler.setMaxPacketSize(maxPacketSizeDeviceEvent.getMaxPacketSize());
         } else if (deviceEvent instanceof SupportedFileTypesDeviceEvent) {
             this.supportedFileTypeList.clear();
             this.supportedFileTypeList.addAll(((SupportedFileTypesDeviceEvent) deviceEvent).getSupportedFileTypes());

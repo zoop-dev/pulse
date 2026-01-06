@@ -20,18 +20,9 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public abstract class GFDIMessage {
     protected static final Logger LOG = LoggerFactory.getLogger(GFDIMessage.class);
-    private static int maxPacketSize = 375; //safe default?
     protected final ByteBuffer response = ByteBuffer.allocate(10 * 1024); // FIXME we should allocate the minimum necessary for each message
     protected GFDIStatusMessage statusMessage;
     protected GarminMessage garminMessage;
-
-    public static int getMaxPacketSize() {
-        return maxPacketSize;
-    }
-
-    public static void setMaxPacketSize(int maxPacketSize) {
-        GFDIMessage.maxPacketSize = maxPacketSize;
-    }
 
     public static GFDIMessage parseIncoming(byte[] message) {
         final MessageReader messageReader = new MessageReader(message);

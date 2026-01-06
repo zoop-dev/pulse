@@ -4,12 +4,13 @@ import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.os.Build;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.MaxPacketSizeDeviceEvent;
 
 public class DeviceInformationMessage extends GFDIMessage {
 
@@ -39,8 +40,6 @@ public class DeviceInformationMessage extends GFDIMessage {
         this.bluetoothFriendlyName = bluetoothFriendlyName;
         this.deviceName = deviceName;
         this.deviceModel = deviceModel;
-
-        GFDIMessage.setMaxPacketSize(maxPacketSize);
         this.statusMessage = getStatusMessage();
         this.generateOutgoing = generateOutgoing;
     }
@@ -109,7 +108,13 @@ public class DeviceInformationMessage extends GFDIMessage {
         versionCmd.fwVersion = getSoftwareVersionStr();
         versionCmd.fwVersion2 = incomingUnitNumber;
         versionCmd.hwVersion = deviceModel;
-        return Collections.singletonList(versionCmd);
+
+        final MaxPacketSizeDeviceEvent maxPacketSizeDeviceEvent = new MaxPacketSizeDeviceEvent(incomingMaxPacketSize);
+
+        return Arrays.asList(
+                versionCmd,
+                maxPacketSizeDeviceEvent
+        );
     }
 
     private String getSoftwareVersionStr() {

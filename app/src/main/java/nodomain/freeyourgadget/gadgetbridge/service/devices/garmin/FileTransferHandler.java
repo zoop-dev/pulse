@@ -59,8 +59,9 @@ public class FileTransferHandler implements MessageHandler {
     private final GarminSupport deviceSupport;
     private final Download download;
     private final Upload upload;
+    private int maxPacketSize = 375;
 
-    private static final Set<FileType.FILETYPE> FILE_TYPES_TO_PROCESS = new HashSet<FileType.FILETYPE>() {{
+    private static final Set<FileType.FILETYPE> FILE_TYPES_TO_PROCESS = new HashSet<>() {{
         add(FileType.FILETYPE.DIRECTORY);
         add(FileType.FILETYPE.ACTIVITY);
         add(FileType.FILETYPE.MONITOR);
@@ -83,6 +84,10 @@ public class FileTransferHandler implements MessageHandler {
 
     public boolean isUploading() {
         return upload.getCurrentlyUploading() != null;
+    }
+
+    public void setMaxPacketSize(final int maxPacketSize) {
+        this.maxPacketSize = maxPacketSize;
     }
 
     @Override
@@ -353,9 +358,8 @@ public CreateFileMessage initiateUpload(byte[] fileAsByteArray, FileType.FILETYP
 
     }
 
-    public static class FileFragment {
+    public class FileFragment {
         private final DirectoryEntry directoryEntry;
-        private final int maxBlockSize = 500; //TODO: why 500?
         private int dataSize;
         private ByteBuffer dataHolder;
         private int runningCrc;
@@ -372,10 +376,6 @@ public CreateFileMessage initiateUpload(byte[] fileAsByteArray, FileType.FILETYP
             this.dataHolder.flip(); //we'll be only reading from here on
             this.dataHolder.compact();
             this.setRunningCrc(0);
-        }
-
-        private int getMaxBlockSize() {
-            return Math.min(maxBlockSize, GFDIMessage.getMaxPacketSize()); //TODO: can we use GFDIMessage.getMaxPacketSize() directly?
         }
 
         private void setSize(DownloadRequestStatusMessage downloadRequestStatusMessage) {
@@ -400,7 +400,7 @@ public CreateFileMessage initiateUpload(byte[] fileAsByteArray, FileType.FILETYP
 
         private FileTransferDataMessage take() {
             final int currentOffset = this.dataHolder.position();
-            final byte[] chunk = new byte[Math.min(this.dataHolder.remaining(), getMaxBlockSize() - 13)]; //actual payload in FileTransferDataMessage
+            final byte[] chunk = new byte[Math.min(this.dataHolder.remaining(), maxPacketSize - 13)]; //actual payload in FileTransferDataMessage
             this.dataHolder.get(chunk);
             setRunningCrc(ChecksumCalculator.computeCrc(getRunningCrc(), chunk, 0, chunk.length));
             return new FileTransferDataMessage(chunk, currentOffset, getRunningCrc());

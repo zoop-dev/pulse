@@ -1,0 +1,23 @@
+package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents;
+
+import android.content.Context;
+
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+
+public class MaxPacketSizeDeviceEvent extends GBDeviceEvent {
+    private final int maxPacketSize;
+
+    public MaxPacketSizeDeviceEvent(final int maxPacketSize) {
+        this.maxPacketSize = maxPacketSize;
+    }
+
+    public int getMaxPacketSize() {
+        return maxPacketSize;
+    }
+
+    @Override
+    public void evaluate(final Context context, final GBDevice device) {
+        // Handled in support class
+    }
+}
