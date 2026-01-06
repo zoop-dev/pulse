@@ -152,6 +152,7 @@ public interface DeviceCoordinator {
         SMART_CLOCK,
         THERMOMETER,
         PV_EQUIPMENT,
+        GLUCOSE_METER,
     }
 
     /**
@@ -285,6 +286,7 @@ public interface DeviceCoordinator {
     boolean supportsActiveCalories(@NonNull GBDevice device);
     boolean supportsTrainingLoad(@NonNull GBDevice device);
     boolean supportsWorkoutLoad(@NonNull GBDevice device);
+    boolean supportsGlucoseMeasurement(@NonNull GBDevice device);
 
     /**
      * Returns true if measurement and fetching of body temperature is supported by the device

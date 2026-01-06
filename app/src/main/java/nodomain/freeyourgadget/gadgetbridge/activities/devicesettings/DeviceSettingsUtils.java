@@ -21,6 +21,7 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.Spanned;
 
+import androidx.annotation.StringRes;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.MultiSelectListPreference;
@@ -283,10 +284,12 @@ public final class DeviceSettingsUtils {
         });
     }
 
-    public static void populateWithBpmRange(final CharSequence prefKey,
-                                            final DeviceSpecificSettingsHandler handler,
-                                            final int rangeMin,
-                                            final int rangeMax) {
+    public static void populateWithRange(final CharSequence prefKey,
+                                         final DeviceSpecificSettingsHandler handler,
+                                         final int rangeMin,
+                                         final int rangeMax,
+                                         @StringRes final int stringRes,
+                                         final boolean includeOff) {
         final Preference pref = handler.findPreference(prefKey);
         if (pref == null) {
             return;
@@ -296,14 +299,16 @@ public final class DeviceSettingsUtils {
             throw new IllegalArgumentException("Invalid range [" + rangeMin + ", " + rangeMax + "]");
         }
 
-        final CharSequence[] entries = new CharSequence[rangeMax - rangeMin + 2];
-        final CharSequence[] values = new CharSequence[rangeMax - rangeMin + 2];
+        final int numEntries = rangeMax - rangeMin + (includeOff ? 2 : 1);
+        final CharSequence[] entries = new CharSequence[numEntries];
+        final CharSequence[] values = new CharSequence[numEntries];
         entries[0] = handler.getContext().getString(R.string.off);
         values[0] = "0";
 
-        for (int i = 1, bpm = rangeMin; bpm <= rangeMax; i++, bpm++) {
-            entries[i] = handler.getContext().getString(R.string.bpm_value_unit, bpm);
-            values[i] = String.valueOf(bpm);
+        final int start = includeOff ? 1 : 0;
+        for (int i = start, value = rangeMin; value <= rangeMax - start; i++, value++) {
+            entries[i] = handler.getContext().getString(stringRes, value);
+            values[i] = String.valueOf(value);
         }
 
         if (pref instanceof ListPreference) {

@@ -20,6 +20,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 
 import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.EventHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -45,7 +46,9 @@ public interface DeviceSupport extends EventHandler {
      * @param btAdapter the bluetooth adapter to use
      * @param context   the android context, e.g. to look up resources
      */
-    void setContext(GBDevice gbDevice, BluetoothAdapter btAdapter, Context context);
+    void setContext(@NonNull GBDevice gbDevice,
+                    @NonNull BluetoothAdapter btAdapter,
+                    @NonNull Context context);
 
     /**
      * Returns whether a transport-level connection is established with the device

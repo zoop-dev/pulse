@@ -67,7 +67,7 @@ public class GBDaoGenerator {
     private static final String TIMESTAMP_TO = "timestampTo";
 
     public static void main(String[] args) throws Exception {
-        final Schema schema = new Schema(123, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(124, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -231,6 +231,7 @@ public class GBDaoGenerator {
         addGenericTrainingLoadAcuteSample(schema, user, device);
         addGenericTrainingLoadChronicSample(schema, user, device);
         addGenericWeightSample(schema, user, device);
+        addGlucoseSample(schema, user, device);
 
         deleteOldFiles();
 
@@ -2199,6 +2200,13 @@ public class GBDaoGenerator {
         Entity sample = addEntity(schema, "GenericWeightSample");
         addCommonTimeSampleProperties("AbstractWeightSample", sample, user, device);
         sample.addFloatProperty(SAMPLE_WEIGHT_KG).notNull().codeBeforeGetter(OVERRIDE);
+        return sample;
+    }
+
+    private static Entity addGlucoseSample(Schema schema, Entity user, Entity device) {
+        Entity sample = addEntity(schema, "GlucoseSample");
+        addCommonTimeSampleProperties("AbstractTimeSample", sample, user, device);
+        sample.addDoubleProperty("valueMgDl").notNull();
         return sample;
     }
 }

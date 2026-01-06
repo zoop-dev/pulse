@@ -1,4 +1,4 @@
-/*  Copyright (C) 2025 José Rebelo
+/*  Copyright (C) 2026 José Rebelo
 
     This file is part of Gadgetbridge.
 
@@ -14,9 +14,8 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.gloryfit
+package nodomain.freeyourgadget.gadgetbridge.devices.onetouch
 
-import androidx.preference.ListPreference
 import androidx.preference.Preference
 import kotlinx.parcelize.Parcelize
 import nodomain.freeyourgadget.gadgetbridge.R
@@ -27,7 +26,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpec
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs
 
 @Parcelize
-class GloryFitSettingsCustomizer : DeviceSpecificSettingsCustomizer {
+class OneTouchSettingsCustomizer : DeviceSpecificSettingsCustomizer {
     override fun onPreferenceChange(
         preference: Preference,
         handler: DeviceSpecificSettingsHandler
@@ -42,44 +41,27 @@ class GloryFitSettingsCustomizer : DeviceSpecificSettingsCustomizer {
         genericDevicePrefs: Prefs,
         rootKey: String?
     ) {
+        // FIXME: Read-only for now
+        handler.findPreference<Preference>(DeviceSettingsPreferenceConst.PREF_GLUCOSE_THRESHOLD_LOW)?.isSelectable = false
+        handler.findPreference<Preference>(DeviceSettingsPreferenceConst.PREF_GLUCOSE_THRESHOLD_HIGH)?.isSelectable = false
+
         DeviceSettingsUtils.populateWithRange(
-            DeviceSettingsPreferenceConst.PREF_HEARTRATE_ALERT_HIGH_THRESHOLD,
+            DeviceSettingsPreferenceConst.PREF_GLUCOSE_THRESHOLD_LOW,
             handler,
-            100,
-            200,
-            R.string.bpm_value_unit,
-            true
+            60,
+            110,
+            R.string.glucose_value_mg_dl,
+            false
         )
 
         DeviceSettingsUtils.populateWithRange(
-            DeviceSettingsPreferenceConst.PREF_HEARTRATE_ALERT_LOW_THRESHOLD,
+            DeviceSettingsPreferenceConst.PREF_GLUCOSE_THRESHOLD_HIGH,
             handler,
-            40,
-            100,
-            R.string.bpm_value_unit,
-            true
+            90,
+            300,
+            R.string.glucose_value_mg_dl,
+            false
         )
-
-        // Inactivity reminders
-        val dndEnabled = handler.findPreference<Preference>(DeviceSettingsPreferenceConst.PREF_INACTIVITY_DND)
-        dndEnabled?.summary = handler.context.getString(R.string.mi2_prefs_inactivity_warnings_dnd_lunch_break_summary)
-        val dndStart = handler.findPreference<Preference>(DeviceSettingsPreferenceConst.PREF_INACTIVITY_DND_START)
-        dndStart?.isVisible = false
-        val dndEnd = handler.findPreference<Preference>(DeviceSettingsPreferenceConst.PREF_INACTIVITY_DND_END)
-        dndEnd?.isVisible = false
-
-        handler.findPreference<ListPreference>(DeviceSettingsPreferenceConst.PREF_SCREEN_TIMEOUT)?.let {
-            it.entries = arrayOf(
-                handler.context.getString(R.string.seconds_5),
-                handler.context.getString(R.string.seconds_10),
-                handler.context.getString(R.string.seconds_15),
-            )
-            it.entryValues = arrayOf(
-                "5",
-                "10",
-                "15",
-            )
-        }
     }
 
     override fun getPreferenceKeysWithSummary(): Set<String> {

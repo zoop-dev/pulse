@@ -697,6 +697,11 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
+    public boolean supportsGlucoseMeasurement(@NonNull final GBDevice device) {
+        return false;
+    }
+
+    @Override
     public boolean supportsTemperatureMeasurement(@NonNull final GBDevice device) {
         return false;
     }

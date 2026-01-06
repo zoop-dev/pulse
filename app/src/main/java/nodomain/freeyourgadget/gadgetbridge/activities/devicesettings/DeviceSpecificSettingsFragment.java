@@ -637,6 +637,8 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_SPO2_LOW_ALERT_THRESHOLD);
         addPreferenceHandlerFor(PREF_HRV_ALL_DAY_MONITORING);
         addPreferenceHandlerFor(PREF_TEMPERATURE_ALL_DAY_MONITORING);
+        addPreferenceHandlerFor(PREF_GLUCOSE_THRESHOLD_HIGH);
+        addPreferenceHandlerFor(PREF_GLUCOSE_THRESHOLD_LOW);
         addPreferenceHandlerFor(PREF_DO_NOT_DISTURB_NOAUTO);
         addPreferenceHandlerFor(PREF_DO_NOT_DISTURB_NOAUTO_START);
         addPreferenceHandlerFor(PREF_DO_NOT_DISTURB_NOAUTO_END);

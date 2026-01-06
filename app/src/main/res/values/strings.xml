@@ -757,6 +757,7 @@
     <string name="pref_write_logfiles_not_available">File logging initialization failed, writing log files is currently not available. Restart the application to attempt to initialize the log files again.</string>
     <string name="initializing">Initializing</string>
     <string name="busy_task_fetch_activity_data">Fetching activity data</string>
+    <string name="busy_task_fetch_glucose_data">Fetching glucose data</string>
     <string name="busy_task_fetch_sports_summaries">Fetching sports summaries</string>
     <string name="busy_task_fetch_sports_details">Fetching sports details</string>
     <string name="busy_task_fetch_sports_details_interrupted">Fetching sports details was interrupted</string>
@@ -930,6 +931,8 @@
     <string name="prefs_heartrate_alert_high_threshold">High heart rate alert threshold</string>
     <string name="prefs_heartrate_alert_active_high_threshold">High activity heart rate alert threshold</string>
     <string name="prefs_heartrate_alert_low_threshold">Low heart rate alert threshold</string>
+    <string name="glucose_level_threshold_high">High glucose threshold</string>
+    <string name="glucose_level_threshold_low">Low glucose threshold</string>
     <string name="prefs_stress_monitoring_title">Stress monitoring</string>
     <string name="prefs_stress_monitoring_description">Monitor stress level while resting</string>
     <string name="prefs_relaxation_reminder_title">Relaxation reminder</string>
@@ -1801,6 +1804,7 @@
     <string name="very_high">Very High</string>
     <string name="training_daily_load">Daily Load</string>
     <string name="bpm_value_unit">%1$d bpm</string>
+    <string name="glucose_value_mg_dl">%1$d mg/dL</string>
     <string name="steps_distance_unit">%1$,.2f km</string>
     <string name="body_energy_gained">Gained</string>
     <string name="body_energy_lost">Lost</string>
@@ -4386,6 +4390,7 @@
     <string name="cannot_open_help_url">Could not open URL</string>
     <string name="auth_settings">Authentication settings</string>
     <string name="devicetype_shokz_openswim_pro" translatable="false">Shokz OpenSwim Pro</string>
+    <string name="devicetype_onetouch" translatable="false">OneTouch Glucose Meter</string>
     <string name="equalizer_preset_standard">Standard</string>
     <string name="media_playback_mode">Playback mode</string>
     <string name="media_playback_mode_normal">Normal</string>

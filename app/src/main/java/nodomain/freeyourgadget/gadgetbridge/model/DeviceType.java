@@ -340,6 +340,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.nothing.EarACoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.nothing.EarStickCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.nut.NutCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.onemoresonoflow.OneMoreSonoFlowCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.onetouch.OneTouchCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.oppo.OppoEncoAir2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.oppo.OppoEncoAirCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.oppo.OppoEncoBuds2Coordinator;
@@ -751,6 +752,7 @@ public enum DeviceType {
     SONY_WH_CH720N(SonyWHCH720NCoordinator.class),
     PIXEL_BUDS_A(PixelBudsACoordinator.class),
     SHOKZ_OPENSWIM_PRO(ShokzOpenSwimProCoordinator.class),
+    ONETOUCH(OneTouchCoordinator.class),
     SOUNDCORE_LIBERTY3_PRO(SoundcoreLiberty3ProCoordinator.class),
     SOUNDCORE_LIBERTY4_NC(SoundcoreLiberty4NCCoordinator.class),
     SOUNDCORE_MOTION300(SoundcoreMotion300Coordinator.class),
