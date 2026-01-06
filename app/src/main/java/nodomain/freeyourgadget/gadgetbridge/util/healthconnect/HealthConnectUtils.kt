@@ -531,6 +531,12 @@ class HealthConnectUtils {
             }
 
             val initialSyncPrefs = context.getSharedPreferences(GBPrefs.HEALTH_CONNECT_SETTINGS, Context.MODE_PRIVATE)
+            val initialSyncStartTs = initialSyncPrefs.getLong(GBPrefs.HEALTH_CONNECT_INITIAL_SYNC_START_TS, -1L)
+
+            if (initialSyncStartTs != -1L) {
+                CompanionLogger.info("$HC_SYNC_TAG Using initial sync start timestamp for {}({}): {} ({})", gbDevice.aliasOrName, dataType.name, initialSyncStartTs, Instant.ofEpochSecond(initialSyncStartTs))
+                return Instant.ofEpochSecond(initialSyncStartTs)
+            }
 
             val firstTs = getFirstSampleTimestamp(deviceCoordinator, gbDevice, db, dataType)
             if (firstTs != null) {
