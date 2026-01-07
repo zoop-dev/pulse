@@ -4086,4 +4086,22 @@
     <string name="health_connect_permission_denied">Hozzáférés megtagadva: %1$s. Ellenőrizze a Health Connect engedélyeit.</string>
     <string name="health_connect_sleep_session_title">Alvási ciklus ekkortól: %1$s</string>
     <string name="health_connect_sleep_session_notes">Alvási adatok a következő Gadgetbridge-eszközről: %1$s.</string>
+    <string name="pref_header_dashboard">Műszerfal</string>
+    <string name="glucose_value_mg_dl">%1$d mg/dL</string>
+    <string name="device_delete_in_progress">Eszköz törlése…</string>
+    <string name="device_deleted_successfully">Az eszköz sikeresen törölve lett</string>
+    <string name="even_realities_no_calendar_events">Nincsenek közelgő események</string>
+    <string name="busy_task_fetch_glucose_data">Vércukorszint-adatok lekérése</string>
+    <string name="glucose_level_threshold_high">Magas vércukorszint-küszöbérték</string>
+    <string name="glucose_level_threshold_low">Alacsony vércukorszint-küszöbérték</string>
+    <string name="pref_even_realities_g1_screen_activation_angle_enable_title">Megjelenítés felnézéskor</string>
+    <string name="pref_even_realities_g1_screen_activation_angle_enable_summary">A műszerfal automatikus megjelenítése, amikor a viselő felnéz</string>
+    <string name="pref_even_realities_g1_touch_double_left_title">Dupla koppintás a bal oldalon</string>
+    <string name="pref_even_realities_g1_touch_double_left_summary">A bal oldali érintőfelület dupla koppintásakor végrehajtandó művelet: %s</string>
+    <string name="pref_even_realities_g1_touch_double_right_title">Dupla koppintás a jobb oldalon</string>
+    <string name="pref_even_realities_g1_touch_double_right_summary">A jobb oldali érintőfelület dupla koppintásakor végrehajtandó művelet: %s</string>
+    <string name="pref_even_realities_g1_touch_long_left_title">Hosszú nyomás a bal oldalon</string>
+    <string name="pref_even_realities_g1_touch_long_left_summary">A bal oldali érintőfelület hosszú nyomásakor végrehajtandó művelet: %s</string>
+    <string name="pref_even_realities_g1_touch_long_right_title">Hosszú nyomás a jobb oldalon</string>
+    <string name="pref_even_realities_g1_touch_long_right_summary">A jobb oldali érintőfelület hosszú nyomásakor végrehajtandó művelet: %s</string>
 </resources>
