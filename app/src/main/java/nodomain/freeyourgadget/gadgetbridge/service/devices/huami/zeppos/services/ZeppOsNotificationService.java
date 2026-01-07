@@ -497,7 +497,7 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
         //    LOG.error("Failed to dump bytes to storage", e);
         //}
 
-        sendFile(url, filename, tga, false, success -> ackNotificationAfterIconSent(packageName, success));
+        sendFile(url, filename, tga, success -> ackNotificationAfterIconSent(packageName, success));
     }
 
     private void sendNotificationPicture(final String packageName, final int notificationId, final byte pictureFormat, final int width) {
@@ -527,6 +527,11 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
         final int targetWidth = width + 10;
         final int targetHeight = (int) Math.round(bmp.getHeight() * ((double) targetWidth / bmp.getWidth()));
         final byte[] tga = format.encode(bmp, targetWidth, targetHeight);
+        if (tga == null) {
+            LOG.warn("Failed to encode tga from {}", picturePath);
+            ackNotificationAfterPictureSent(packageName, notificationId, false);
+            return;
+        }
 
         final String url = String.format(
                 Locale.ROOT,
@@ -539,13 +544,12 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
         );
         final String filename = String.format(Locale.ROOT, "picture_%d.tga", notificationId);
 
-        sendFile(url, filename, tga, true, success -> ackNotificationAfterPictureSent(packageName, notificationId, success));
+        sendFile(url, filename, tga, success -> ackNotificationAfterPictureSent(packageName, notificationId, success));
     }
 
     private void sendFile(final String url,
                           final String filename,
                           final byte[] bytes,
-                          final boolean compress,
                           final Consumer<Boolean> uploadFinishCallback) {
         if (getSupport().getMTU() < 247) {
             LOG.warn("Sending files requires high MTU, current MTU is {}", getSupport().getMTU());

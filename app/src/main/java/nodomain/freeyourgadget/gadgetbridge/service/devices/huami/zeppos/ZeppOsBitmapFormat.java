@@ -9,18 +9,19 @@ import com.android.nQuant.PnnLABQuantizer;
 
 import java.nio.ByteBuffer;
 
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.util.BitmapUtil;
 
 public enum ZeppOsBitmapFormat {
-    TGA_RGB565_GCNANOLITE(0x04, "SOMHP".getBytes()) {
+    TGA_RGB565_GCNANOLITE(0x04) {
         @Override
         public byte[] encode(final Bitmap bmp, final int width, final int height) {
-            return BitmapUtil.convertToTgaRGB565(bmp, width, height, getTgaIdBytes());
+            return BitmapUtil.convertToTgaRGB565(bmp, width, height, getTgaIdBytes(width));
         }
     },
 
     // Zepp OS 4
-    TGA_L8_ARGB8888_GCNANOLITE(0x05, new byte[]{'S', 'O', 'M', 'H', (byte) 0x80}) {
+    TGA_L8_ARGB8888_GCNANOLITE(0x05) {
         @Override
         public byte[] encode(final Bitmap bmp, final int width, final int height) {
             final Bitmap resizedBmp = BitmapUtil.convert(bmp, Bitmap.Config.ARGB_8888, width, height);
@@ -61,37 +62,36 @@ public enum ZeppOsBitmapFormat {
                 }
             }
 
-            return BitmapUtil.buildTga(imageDataBuf.array(), 8, paletteBytes, width, height, getTgaIdBytes());
+            return BitmapUtil.buildTga(imageDataBuf.array(), 8, paletteBytes, width, height, getTgaIdBytes(width));
         }
     },
 
-    TGA_RGB565_DAVE2D(0x08, "SOMH6".getBytes()) {
+    TGA_RGB565_DAVE2D(0x08) {
         @Override
         public byte[] encode(final Bitmap bmp, final int width, final int height) {
-            return BitmapUtil.convertToTgaRGB565(bmp, width, height, getTgaIdBytes());
+            return BitmapUtil.convertToTgaRGB565(bmp, width, height, getTgaIdBytes(width));
         }
     },
 
     ;
 
     private final byte code;
-    private final byte[] tgaId;
 
-    ZeppOsBitmapFormat(final int code, final byte[] tgaId) {
+    ZeppOsBitmapFormat(final int code) {
         this.code = (byte) code;
-        this.tgaId = tgaId;
     }
 
     public byte getCode() {
         return code;
     }
 
-    public byte[] getTgaIdBytes() {
-        // Without the expected tga id and format string they seem to get corrupted,
-        // but the encoding seems to actually be the same...?
-        // The TGA needs to have this ID, or the band does not accept it
+    public byte[] getTgaIdBytes(final int width) {
         final byte[] tgaIdBytes = new byte[46];
-        System.arraycopy(tgaId, 0, tgaIdBytes, 0, tgaId.length);
+        tgaIdBytes[0] = 'S';
+        tgaIdBytes[1] = 'O';
+        tgaIdBytes[2] = 'M';
+        tgaIdBytes[3] = 'H';
+        BLETypeConversions.writeUint32(tgaIdBytes, 4, width);
         return tgaIdBytes;
     }
 
