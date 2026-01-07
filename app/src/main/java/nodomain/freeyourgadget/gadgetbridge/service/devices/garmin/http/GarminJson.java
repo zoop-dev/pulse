@@ -35,7 +35,7 @@ public class GarminJson {
     private static final byte TYPE_SINT64 = 0x0e;
     private static final byte TYPE_DOUBLE = 0x0f;
 
-    public static byte[] encode(final Object object) throws GarminJsonException {
+    public static byte[] encode(final JsonElement object) throws GarminJsonException {
         try {
             // First pass: collect all strings
             Set<String> strings = new LinkedHashSet<>();
@@ -161,7 +161,7 @@ public class GarminJson {
         }
     }
 
-    public static Object decode(final byte[] bytes) throws GarminJsonException {
+    public static JsonElement decode(final byte[] bytes) throws GarminJsonException {
         final ByteBuffer buffer = ByteBuffer.wrap(bytes).order(ByteOrder.BIG_ENDIAN);
 
         // Parse string section if present
@@ -193,8 +193,12 @@ public class GarminJson {
         }
 
         final int dataSectionLength = buffer.getInt();
-        if (buffer.position() + dataSectionLength != bytes.length) {
-            throw new GarminJsonException("Data section length does not match");
+        if (buffer.position() + dataSectionLength > bytes.length) {
+            throw new GarminJsonException(String.format(
+                    "Not enough bytes to decode data section: length=%d, remaining=%d",
+                    dataSectionLength,
+                    bytes.length - buffer.position()
+            ));
         }
 
         final Object rootObject = decodeValue(buffer, strings);
@@ -253,12 +257,12 @@ public class GarminJson {
         }
     }
 
-    private static void collectStrings(final Object rootObj, final Set<String> strings) {
-        final Queue<Object> queue = new LinkedList<>();
+    private static void collectStrings(final JsonElement rootObj, final Set<String> strings) {
+        final Queue<JsonElement> queue = new LinkedList<>();
         queue.add(rootObj);
 
         while (!queue.isEmpty()) {
-            final Object obj = queue.poll();
+            final JsonElement obj = queue.poll();
 
             if (obj instanceof JsonObject jsonObj) {
                 for (final Map.Entry<String, JsonElement> entry : jsonObj.entrySet()) {
@@ -278,8 +282,10 @@ public class GarminJson {
                         queue.add(element);
                     }
                 }
-            } else if (obj instanceof String str) {
-                strings.add(str);
+            } else if (obj instanceof JsonPrimitive primitive) {
+                if (primitive.isString()) {
+                    strings.add(primitive.getAsString());
+                }
             }
         }
     }
