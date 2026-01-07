@@ -21,6 +21,7 @@ import android.bluetooth.BluetoothGattCharacteristic
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import com.google.protobuf.LazyStringArrayList.emptyList
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.devices.pinetime.PineTimeJFConstants
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
@@ -29,7 +30,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEQueue
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.AbstractBleProfile
 import nodomain.freeyourgadget.gadgetbridge.util.GBZipFile
-import nodomain.freeyourgadget.gadgetbridge.util.RemoteFileSystemCache
 import nodomain.freeyourgadget.gadgetbridge.util.UriHelper
 import nodomain.freeyourgadget.gadgetbridge.util.ZipFileException
 import org.json.JSONObject
@@ -74,35 +74,79 @@ class AdaBleFsProfile<T : AbstractBTLESingleDeviceSupport>(support: T) : Abstrac
     private var currentBuilder: TransactionBuilder? = null
     private var device: GBDevice? = null
     private val adaBleFsQueue: ArrayDeque<AdaBleFsAction> = ArrayDeque()
-    private var offsetToWriteTo = 0
-    private var chunkSize = 240  // Maximum possible within MTU
-    private val remoteFs = RemoteFileSystemCache()
+    private var currentAction: AdaBleFsAction? = null
+    private var bytesWritten = 0
+    private var bytesProgress = 0
+    private var bytesTotal = 0
+    private var chunkSize = 235  // Maximum possible within MTU
+    private var watchFsContents: MutableList<String> = ArrayList()
     private var listingDirectory: List<String> = emptyList()
     private var allActionsCount = 0
     private var currentActionNr = 0
 
     fun loadResources(uri: Uri, context: Context, queue: BtLEQueue) {
         btleQueue = queue
+        watchFsContents = ArrayList()
         try {
+            // Retrieve directory listing for finding and deleting existing files
+            adaBleFsQueue.addFirst(
+                AdaBleFsAction(
+                    AdaBleFsAction.Method.LIST_DIRECTORY,
+                    "/"
+                )
+            )
+            allActionsCount++
             val uriHelper = UriHelper.get(uri, context)
             val zipPackage = GBZipFile(uriHelper.openInputStream())
             val resourcesManifest = JSONObject(String(zipPackage.getFileFromZip("resources.json")))
-            val resources = resourcesManifest.getJSONArray("resources")
-            // TODO: add support for deleting files in the obsolete_files array
+            // Delete files declared obsolete in the manifest
+            var resources = resourcesManifest.getJSONArray("obsolete_files")
             for (i in 0 until resources.length()) {
                 val fileItem = resources.getJSONObject(i)
                 val filePath = fileItem.getString("path")
-                val fileName = fileItem.getString("filename")
-                LOG.info("Adding to queue: UPLOAD, $fileName, $filePath")
+                LOG.info("Adding to queue: DELETE (obsolete), $filePath")
                 adaBleFsQueue.add(
                     AdaBleFsAction(
-                        AdaBleFsAction.Method.UPLOAD,
-                        filePath,
-                        zipPackage.getFileFromZip(fileName)
+                        AdaBleFsAction.Method.DELETE,
+                        filePath
                     )
                 )
                 allActionsCount += 1
             }
+            // Upload new/updated resource files
+            resources = resourcesManifest.getJSONArray("resources")
+            for (i in 0 until resources.length()) {
+                val fileItem = resources.getJSONObject(i)
+                val filePath = fileItem.getString("path")
+                val fileName = fileItem.getString("filename")
+                LOG.info("Adding to queue: DELETE, $filePath")
+                adaBleFsQueue.add(
+                    AdaBleFsAction(
+                        AdaBleFsAction.Method.DELETE,
+                        filePath
+                    )
+                )
+                allActionsCount += 1
+                val fileData = zipPackage.getFileFromZip(fileName)
+                bytesTotal += fileData.size
+                LOG.info("Adding to queue: UPLOAD, $fileName, $filePath, ${fileData.size} bytes")
+                adaBleFsQueue.add(
+                    AdaBleFsAction(
+                        AdaBleFsAction.Method.UPLOAD,
+                        filePath,
+                        fileData
+                    )
+                )
+                allActionsCount += 1
+            }
+            // This directory listing is only useful to get some data in the log
+            adaBleFsQueue.add(
+                AdaBleFsAction(
+                    AdaBleFsAction.Method.LIST_DIRECTORY,
+                    "/"
+                )
+            )
+            allActionsCount++
         } catch (e: ZipFileException) {
             LOG.error("Unable to read the zip file.", e)
         } catch (e: FileNotFoundException) {
@@ -122,17 +166,19 @@ class AdaBleFsProfile<T : AbstractBTLESingleDeviceSupport>(support: T) : Abstrac
 
     @Throws(IOException::class)
     private fun startNextAdaFsAction() {
-        val nextAction = adaBleFsQueue.firstOrNull()// ?: return
-        if (nextAction == null) {
-            notify(createIntent("", false))
+        try {
+            currentAction = adaBleFsQueue.removeFirst()
+        } catch (e: NoSuchElementException) {
+            notify(createIntent(false))
             return
         }
         currentActionNr++
-        when (nextAction.method) {
+        when (currentAction!!.method) {
             AdaBleFsAction.Method.UPLOAD -> uploadFileStart()
             AdaBleFsAction.Method.DELETE -> deleteFile()
+            AdaBleFsAction.Method.LIST_DIRECTORY -> listDirectoryFromQueue()
             else -> {
-                LOG.warn("Skipping unimplemented AdaBleFsAction method ${nextAction.method}")
+                LOG.warn("Skipping unimplemented AdaBleFsAction method ${currentAction!!.method}")
             }
         }
     }
@@ -176,7 +222,6 @@ class AdaBleFsProfile<T : AbstractBTLESingleDeviceSupport>(support: T) : Abstrac
             else -> LOG.warn("Unknown BLE FS response: ${returned[0]}")
         }
         if (actionResult) {
-            adaBleFsQueue.removeFirst()
             startNextAdaFsAction()
         }
     }
@@ -199,7 +244,21 @@ class AdaBleFsProfile<T : AbstractBTLESingleDeviceSupport>(support: T) : Abstrac
         val fileSize = returned.sliceArray(24..27).foldIndexed(0) { i, acc, b -> acc or ((b.toInt() and 0xFF) shl (8 * i)) }
         val path = String(returned.copyOfRange(28, 28 + pathLength), Charsets.UTF_8)
 
-        remoteFs.updateEntry(path, AdaFsEntry(path, isDirectory, fileSize, timestamp, flags))
+        val absPath = "/" + (listingDirectory + path).filter { it.isNotEmpty() }.joinToString("/")
+        LOG.debug("LISTDIR: $absPath, $fileSize bytes")
+        if (path.isNotEmpty() && path != "." && path != "..") {
+            watchFsContents.add(absPath)
+            if (isDirectory) {
+                LOG.info("Adding to queue: LISTDIR, $absPath")
+                adaBleFsQueue.addFirst(
+                    AdaBleFsAction(
+                        AdaBleFsAction.Method.LIST_DIRECTORY,
+                        absPath
+                    )
+                )
+                allActionsCount++
+            }
+        }
         return entryNum == totalEntries
     }
 
@@ -210,28 +269,32 @@ class AdaBleFsProfile<T : AbstractBTLESingleDeviceSupport>(support: T) : Abstrac
     @Throws(IOException::class)
     private fun checkContinueFileUpload(returned: ByteArray): Boolean {
         checkStatus(returned[1])
-        offsetToWriteTo = ByteBuffer.wrap(returned, 4, 4).order(ByteOrder.LITTLE_ENDIAN).int
+        val offset = ByteBuffer.wrap(returned, 4, 4).order(ByteOrder.LITTLE_ENDIAN).int
         val sizeLeft = ByteBuffer.wrap(returned, 16, 4).order(ByteOrder.LITTLE_ENDIAN).int
-        LOG.debug("Status from watch: ${returned[1]}, offset=$offsetToWriteTo, sizeLeft=$sizeLeft")
-        if (sizeLeft > 0) uploadNextFileChunk()
-        return sizeLeft == 0
+        LOG.debug("Status from watch: ${returned[1]}, offset=$offset, sizeLeft=$sizeLeft")
+        if (bytesWritten < currentAction!!.data.size) {
+            uploadNextFileChunk()
+            return false
+        }
+        return true
     }
 
     @Throws(IOException::class)
     private fun uploadFileStart() {
-        val nextAction = adaBleFsQueue.first()
         val unixTime = System.currentTimeMillis() / 1000L
-        val pathBytes = nextAction.filenameorpath.toByteArray()
+        val pathBytes = currentAction!!.filenameorpath.toByteArray()
         val buffer = ByteBuffer.allocate(1 + 1 + 2 + 4 + 8 + 4 + pathBytes.size).order(ByteOrder.LITTLE_ENDIAN)
         buffer.put(REQUEST_WRITE_FILE_START)
         buffer.put(PADDING_BYTE)
         buffer.putShort(pathBytes.size.toShort())
         buffer.putInt(0)
         buffer.putLong(unixTime)
-        buffer.putInt(nextAction.data.size)
+        buffer.putInt(currentAction!!.data.size)
         buffer.put(pathBytes)
 
-        LOG.info("Sending start packet for ${nextAction.filenameorpath} (${nextAction.data.size} bytes)")
+        bytesWritten = 0
+        LOG.info("Sending start packet for ${currentAction!!.filenameorpath} (${currentAction!!.data.size} bytes)")
+        notify(createIntent(true))
         currentBuilder = performInitialized("Upload file start")
         currentBuilder?.write(UUID_CHARACTERISTIC_FS_TRANSFER, *buffer.array())
         currentBuilder?.queue()
@@ -239,46 +302,51 @@ class AdaBleFsProfile<T : AbstractBTLESingleDeviceSupport>(support: T) : Abstrac
 
     @Throws(IOException::class)
     private fun uploadNextFileChunk() {
-        val nextAction = adaBleFsQueue.first()
-        val toSendSize = minOf(chunkSize, nextAction.data.size - offsetToWriteTo)
+        val toSendSize = minOf(chunkSize, currentAction!!.data.size - bytesWritten)
         val buffer = ByteBuffer.allocate(2 + 2 + 4 + 4 + toSendSize).order(ByteOrder.LITTLE_ENDIAN)
         buffer.put(REQUEST_WRITE_FILE_DATA)
         buffer.put(REQUEST_CONTINUED)
         buffer.put(PADDING_BYTE)
         buffer.put(PADDING_BYTE)
-        buffer.putInt(offsetToWriteTo + toSendSize)  // next chunk offset
+        buffer.putInt(bytesWritten)
         buffer.putInt(toSendSize)
-        buffer.put(nextAction.data, offsetToWriteTo, toSendSize)
+        buffer.put(currentAction!!.data, bytesWritten, toSendSize)
 
-        val percentage = (((offsetToWriteTo+toSendSize).toFloat() / nextAction.data.size.toFloat()) * 100).roundToInt()
-        LOG.info("Sending chunk of $toSendSize bytes ($percentage%) for ${nextAction.filenameorpath}, next chunk starts at offset $offsetToWriteTo")
-        notify(createIntent(nextAction.filenameorpath, true))
+        bytesProgress += toSendSize
+        val percentage = ((bytesProgress.toFloat() / bytesTotal.toFloat()) * 100).roundToInt()
+        LOG.info("Sending chunk of $toSendSize bytes for ${currentAction!!.filenameorpath}, at offset $bytesWritten")
+        notify(createIntent(true))
         currentBuilder = performInitialized("Upload file chunk")
         currentBuilder?.write(UUID_CHARACTERISTIC_FS_TRANSFER, *buffer.array())
         currentBuilder?.setProgress(R.string.uploading_resources, true, percentage)
         currentBuilder?.queue()
+        bytesWritten += toSendSize
     }
 
     @Throws(IOException::class)
     private fun deleteFile() {
-        val nextAction = adaBleFsQueue.first()
-        val pathBytes = nextAction.filenameorpath.toByteArray()
+        if (!watchFsContents.contains(currentAction!!.filenameorpath)) {
+            LOG.info("Not deleting non-existent file: ${currentAction!!.filenameorpath}")
+            startNextAdaFsAction()
+            return
+        }
+        val pathBytes = currentAction!!.filenameorpath.toByteArray()
         val buffer = ByteBuffer.allocate(2 + 2 + pathBytes.size).order(ByteOrder.LITTLE_ENDIAN)
         buffer.put(REQUEST_DELETE_FILE)
         buffer.put(PADDING_BYTE)
         buffer.putShort(pathBytes.size.toShort())
         buffer.put(pathBytes)
 
-        currentBuilder = performInitialized("Delete file or directory")
+        notify(createIntent(true))
+        currentBuilder = performInitialized("Delete file or directory: ${currentAction!!.filenameorpath}")
         currentBuilder?.write(UUID_CHARACTERISTIC_FS_TRANSFER, *buffer.array())
         currentBuilder?.queue()
     }
 
     @Throws(IOException::class)
     private fun makeDirectory() {
-        val nextAction = adaBleFsQueue.first()
         val unixTime = System.currentTimeMillis() / 1000L
-        val pathBytes = nextAction.filenameorpath.toByteArray()
+        val pathBytes = currentAction!!.filenameorpath.toByteArray()
         val buffer = ByteBuffer.allocate(2 + 2 + 4 + 8 + pathBytes.size).order(ByteOrder.LITTLE_ENDIAN)
         buffer.put(REQUEST_MAKE_DIRECTORY)
         buffer.put(PADDING_BYTE)
@@ -287,6 +355,7 @@ class AdaBleFsProfile<T : AbstractBTLESingleDeviceSupport>(support: T) : Abstrac
         buffer.putLong(unixTime)
         buffer.put(pathBytes)
 
+        notify(createIntent(true))
         currentBuilder = performInitialized("Create directory")
         currentBuilder?.write(UUID_CHARACTERISTIC_FS_TRANSFER, *buffer.array())
         currentBuilder?.queue()
@@ -294,9 +363,8 @@ class AdaBleFsProfile<T : AbstractBTLESingleDeviceSupport>(support: T) : Abstrac
 
     @Throws(IOException::class)
     private fun moveFileOrDirectory() {
-        val nextAction = adaBleFsQueue.first()
-        val firstPathBytes = nextAction.filenameorpath.toByteArray()
-        val secondPathBytes = nextAction.secondFilenameorpath.toByteArray()
+        val firstPathBytes = currentAction!!.filenameorpath.toByteArray()
+        val secondPathBytes = currentAction!!.secondFilenameorpath.toByteArray()
         val buffer = ByteBuffer.allocate(2 + 4 + firstPathBytes.size + secondPathBytes.size).order(ByteOrder.LITTLE_ENDIAN)
         buffer.put(REQUEST_MOVE_FILE_DIRECTORY)
         buffer.put(PADDING_BYTE)
@@ -306,31 +374,33 @@ class AdaBleFsProfile<T : AbstractBTLESingleDeviceSupport>(support: T) : Abstrac
         buffer.put(PADDING_BYTE)
         buffer.put(secondPathBytes)
 
+        notify(createIntent(true))
         currentBuilder = performInitialized("Move file or directory")
         currentBuilder?.write(UUID_CHARACTERISTIC_FS_TRANSFER, *buffer.array())
         currentBuilder?.queue()
     }
 
     @Throws(IOException::class)
-    private fun requestListDirectory(path: String) {
-        val pathBytes = path.toByteArray()
+    private fun listDirectoryFromQueue() {
+        listingDirectory = currentAction!!.filenameorpath.split("/").filter { it.isNotEmpty() }
+        val pathBytes = currentAction!!.filenameorpath.toByteArray()
         val buffer = ByteBuffer.allocate(2 + 2 + pathBytes.size).order(ByteOrder.LITTLE_ENDIAN)
         buffer.put(REQUEST_LIST_DIRECTORY)
         buffer.put(PADDING_BYTE)
         buffer.putShort(pathBytes.size.toShort())
         buffer.put(pathBytes)
 
+        notify(createIntent(true))
         currentBuilder = performInitialized("List directory")
         currentBuilder?.write(UUID_CHARACTERISTIC_FS_TRANSFER, *buffer.array())
         currentBuilder?.queue()
-
-        listingDirectory = path.split("/")
     }
 
-    private fun createIntent(filename: String, ongoing: Boolean): Intent {
+    private fun createIntent(ongoing: Boolean): Intent {
         val intent = Intent(PineTimeJFConstants.ACTION_UPLOAD_PROGRESS)
         intent.putExtra("ongoing", ongoing)
-        intent.putExtra("filename", filename)
+        intent.putExtra("filename", currentAction!!.filenameorpath)
+        intent.putExtra("currentAction", currentAction!!.method.toString())
         intent.putExtra("currentActionNr", currentActionNr)
         intent.putExtra("allActionsCount", allActionsCount)
         return intent

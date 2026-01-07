@@ -95,7 +95,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDevic
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.ResourceUploadProgressListener;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.adablefs.AdaBleFsProfile;
@@ -114,7 +113,6 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
 
     private final DeviceInfoProfile<PineTimeJFSupport> deviceInfoProfile;
     private final BatteryInfoProfile<PineTimeJFSupport> batteryInfoProfile;
-
     private final AdaBleFsProfile<PineTimeJFSupport> adaBleFsProfile;
 
     private final int MaxNotificationLength = 100;
@@ -255,102 +253,6 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
         }
     };
 
-    private final ResourceUploadProgressListener resourceUploadProgressListener = new ResourceUploadProgressListener() {
-        private final LocalBroadcastManager manager = LocalBroadcastManager.getInstance(getContext());
-
-        /**
-         * Sets the progress bar to indeterminate or not, also makes it visible
-         *
-         * @param indeterminate if indeterminate
-         */
-        public void setIndeterminate(boolean indeterminate) {
-            manager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_BAR).putExtra(GB.PROGRESS_BAR_INDETERMINATE, indeterminate));
-        }
-
-        /**
-         * Sets the status text and logs it
-         */
-        public void setProgress(int progress) {
-            manager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_BAR).putExtra(GB.PROGRESS_BAR_PROGRESS, progress));
-        }
-
-        /**
-         * Sets the text that describes progress
-         *
-         * @param progressText text to display
-         */
-        public void setProgressText(String progressText) {
-            manager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_TEXT).putExtra(GB.DISPLAY_MESSAGE_MESSAGE, progressText));
-        }
-
-        @Override
-        public void onDeviceConnecting(final String mac) {
-            this.setIndeterminate(true);
-            this.setProgressText(getContext().getString(R.string.devicestatus_connecting));
-        }
-
-        @Override
-        public void onDeviceConnected(final String mac) {
-            this.setIndeterminate(true);
-            this.setProgressText(getContext().getString(R.string.devicestatus_connected));
-        }
-
-        @Override
-        public void onUploadStarting(final String mac) {
-            this.setIndeterminate(true);
-            this.setProgressText(getContext().getString(R.string.devicestatus_upload_starting));
-        }
-
-        @Override
-        public void onDeviceDisconnecting(final String mac) {
-            this.setProgressText(getContext().getString(R.string.devicestatus_disconnecting));
-        }
-
-        @Override
-        public void onDeviceDisconnected(final String mac) {
-            this.setIndeterminate(true);
-            this.setProgressText(getContext().getString(R.string.devicestatus_disconnected));
-        }
-
-        @Override
-        public void onUploadCompleted(final String mac) {
-            this.setProgressText(getContext().getString(R.string.devicestatus_upload_completed));
-            this.setIndeterminate(false);
-            this.setProgress(100);
-
-            handler = null;
-            controller = null;
-            gbDevice.unsetBusyTask();
-            // TODO: Request reconnection
-        }
-
-        @Override
-        public void onUploadAborted(final String mac) {
-            this.setProgressText(getContext().getString(R.string.devicestatus_upload_aborted));
-            gbDevice.unsetBusyTask();
-        }
-
-        @Override
-        public void onError(final String mac, int error, int errorType, final String message) {
-            this.setProgressText(getContext().getString(R.string.devicestatus_upload_failed));
-            gbDevice.unsetBusyTask();
-        }
-
-        @Override
-        public void onProgressChanged(final String mac,
-                                      int percent,
-                                      float speed,
-                                      float averageSpeed,
-                                      int segment,
-                                      int totalSegments) {
-            this.setProgress(percent);
-            this.setIndeterminate(false);
-            this.setProgressText(String.format(Locale.ENGLISH,
-                    getContext().getString(R.string.firmware_update_progress),
-                    percent, speed, averageSpeed, segment, totalSegments));
-        }
-    };
-
     public PineTimeJFSupport() {
         super(LOG);
         addSupportedService(GattService.UUID_SERVICE_ALERT_NOTIFICATION);
@@ -366,30 +268,27 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
         addSupportedService(PineTimeJFConstants.UUID_SERVICE_HEART_RATE);
         addSupportedService(AdaBleFsProfile.UUID_SERVICE_FS);
 
-        IntentListener mListener = new IntentListener() {
-            @Override
-            public void notify(Intent intent) {
-                String action = intent.getAction();
-                LOG.info("IntentListener received an intent with ACTION={}", action);
-                if (DeviceInfoProfile.ACTION_DEVICE_INFO.equals(action)) {
-                    handleDeviceInfo(intent.getParcelableExtra(DeviceInfoProfile.EXTRA_DEVICE_INFO));
-                } else if (BatteryInfoProfile.ACTION_BATTERY_INFO.equals(action)) {
-                    handleBatteryInfo(intent.getParcelableExtra(BatteryInfoProfile.EXTRA_BATTERY_INFO));
-                } else if (PineTimeJFConstants.ACTION_UPLOAD_PROGRESS.equals(action)) {
-                    LocalBroadcastManager manager = LocalBroadcastManager.getInstance(getContext());
-                    boolean ongoing = intent.getBooleanExtra("ongoing", true);
-                    String progressText = "";
-                    if (ongoing) {
-                        String filename = intent.getStringExtra("filename");
-                        int currentActionNr = intent.getIntExtra("currentActionNr", 0);
-                        int allActionsCount = intent.getIntExtra("allActionsCount", 0);
-                        progressText = String.format("Performing action %d of %d\nCurrent filename: %s", currentActionNr, allActionsCount, filename);
-                    } else {
-                        progressText = getContext().getString(R.string.devicestatus_upload_completed);
-                        gbDevice.unsetBusyTask();
-                    }
-                    manager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_TEXT).putExtra(GB.DISPLAY_MESSAGE_MESSAGE, progressText));
+        IntentListener mListener = intent -> {
+            String action = intent.getAction();
+            if (DeviceInfoProfile.ACTION_DEVICE_INFO.equals(action)) {
+                handleDeviceInfo(intent.getParcelableExtra(DeviceInfoProfile.EXTRA_DEVICE_INFO));
+            } else if (BatteryInfoProfile.ACTION_BATTERY_INFO.equals(action)) {
+                handleBatteryInfo(intent.getParcelableExtra(BatteryInfoProfile.EXTRA_BATTERY_INFO));
+            } else if (PineTimeJFConstants.ACTION_UPLOAD_PROGRESS.equals(action)) {
+                LocalBroadcastManager manager = LocalBroadcastManager.getInstance(getContext());
+                boolean ongoing = intent.getBooleanExtra("ongoing", true);
+                String progressText = "";
+                if (ongoing) {
+                    String filename = intent.getStringExtra("filename");
+                    String currentAction = intent.getStringExtra("currentAction");
+                    int currentActionNr = intent.getIntExtra("currentActionNr", 0);
+                    int allActionsCount = intent.getIntExtra("allActionsCount", 0);
+                    progressText = String.format("Performing action %d of %d\n%s %s", currentActionNr, allActionsCount, currentAction, filename);
+                } else {
+                    progressText = getContext().getString(R.string.devicestatus_upload_completed);
+                    gbDevice.unsetBusyTask();
                 }
+                manager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_TEXT).putExtra(GB.DISPLAY_MESSAGE_MESSAGE, progressText));
             }
         };
 
