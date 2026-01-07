@@ -4085,4 +4085,10 @@
     <string name="health_connect_permission_denied">Дозвіл відхилено: %1$s. Перевірте дозволи Health Connect.</string>
     <string name="health_connect_sleep_session_title">Сеанс сну від %1$s</string>
     <string name="health_connect_sleep_session_notes">Дані сну з пристрою Gadgetbridge: %1$s.</string>
+    <string name="busy_task_fetch_glucose_data">Отримання даних про глюкозу</string>
+    <string name="glucose_level_threshold_high">Високий поріг глюкози</string>
+    <string name="glucose_level_threshold_low">Низький поріг глюкози</string>
+    <string name="glucose_value_mg_dl">%1$d мг/дл</string>
+    <string name="device_delete_in_progress">Видалення пристрою…</string>
+    <string name="device_deleted_successfully">Пристрій успішно видалено</string>
 </resources>
