@@ -7,13 +7,14 @@ import androidx.preference.PreferenceCategory
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.debug.preferences.PreferenceManagerActivity
+import nodomain.freeyourgadget.gadgetbridge.prefs.GBPrefsMigrator
 
 class PreferencesDebugFragment : AbstractDebugFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.debug_preferences_preferences, rootKey)
 
         findPreference<Preference>(PREF_DEBUG_PREFERENCES_VERSION)!!.summary = GBApplication.getPrefs().getString(
-            GBApplication.PREFS_VERSION,
+            GBPrefsMigrator.PREFS_VERSION,
             getString(R.string.unknown)
         )
 

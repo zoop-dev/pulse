@@ -89,7 +89,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceService;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherCacheManager;
-import nodomain.freeyourgadget.gadgetbridge.prefs.migrators.PreferenceMigrator55;
+import nodomain.freeyourgadget.gadgetbridge.prefs.GBPrefsMigrator;
 import nodomain.freeyourgadget.gadgetbridge.service.NotificationCollectorMonitorService;
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.BondingUtil;
@@ -118,9 +118,6 @@ public class GBApplication extends Application {
     private static final Lock dbLock = new ReentrantLock();
     private static DeviceService deviceService;
     private static SharedPreferences sharedPrefs;
-    public static final String PREFS_VERSION = "shared_preferences_version";
-    //if preferences have to be migrated, increment the following and add the migration logic in migratePrefs below; see http://stackoverflow.com/questions/16397848/how-can-i-migrate-android-preferences-with-a-new-version
-    private static final int CURRENT_PREFS_VERSION = 55;
 
     private static final LimitedQueue<Integer, String> mIDSenderLookup = new LimitedQueue<>(16);
     private static GBPrefs prefs;
@@ -294,13 +291,7 @@ public class GBApplication extends Application {
         // slf4j may be implicitly initialized before we properly configured it.
         setupLogging(isFileLoggingEnabled());
 
-        if (getPrefsFileVersion() != CURRENT_PREFS_VERSION) {
-            migratePrefs(getPrefsFileVersion());
-        }
-
-        // Uncomment the line below to force a device key migration, after you updated
-        // the devicetype.json file
-        //migrateDeviceTypes();
+        migratePrefsIfNeeded();
 
         setupExceptionHandler(prefs.getBoolean("crash_notification", isDebug()));
 
@@ -743,25 +734,9 @@ public class GBApplication extends Application {
         return result;
     }
 
-    private int getPrefsFileVersion() {
-        try {
-            return Integer.parseInt(sharedPrefs.getString(PREFS_VERSION, "0")); //0 is legacy
-        } catch (Exception e) {
-            //in version 1 this was an int
-            return 1;
-        }
-    }
-
     @VisibleForTesting
-    protected void migratePrefs(int oldVersion) {
-        SharedPreferences.Editor editor = sharedPrefs.edit();
-
-        if (oldVersion < 55) {
-            new PreferenceMigrator55().migrate(oldVersion, sharedPrefs, editor);
-        }
-
-        editor.putString(PREFS_VERSION, Integer.toString(CURRENT_PREFS_VERSION));
-        editor.apply();
+    protected void migratePrefsIfNeeded() {
+        GBPrefsMigrator.migratePrefsIfNeeded(sharedPrefs);
     }
 
     public static SharedPreferences getDeviceSpecificSharedPrefs(CharSequence deviceIdentifier) {
