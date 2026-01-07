@@ -4246,4 +4246,10 @@
     <string name="health_connect_permission_denied">权限被拒：%1$s。请检查 Health Connect 权限。</string>
     <string name="health_connect_sleep_session_title">从 %1$s 起的睡眠会话</string>
     <string name="health_connect_sleep_session_notes">来自 Gadgetbridge 设备的睡眠数据：%1$s。</string>
+    <string name="busy_task_fetch_glucose_data">正赛获取血糖数据</string>
+    <string name="glucose_level_threshold_high">高血糖阈值</string>
+    <string name="glucose_level_threshold_low">低血糖阈值</string>
+    <string name="glucose_value_mg_dl">%1$d mg/dL</string>
+    <string name="device_delete_in_progress">正在删除设备…</string>
+    <string name="device_deleted_successfully">成功删除了设备</string>
 </resources>
