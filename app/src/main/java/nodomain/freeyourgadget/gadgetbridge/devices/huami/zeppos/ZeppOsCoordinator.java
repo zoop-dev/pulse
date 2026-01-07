@@ -256,7 +256,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
 
     @Override
     public boolean supportsHrvMeasurement(@NonNull final GBDevice device) {
-        return !hasDisplay() || supportsDisplayItem(device, "hrv");
+        return !hasDisplay() || supportsDisplayItem(device, "hrv") || supportsDisplayItem(device, "readiness");
     }
 
     @Override
