@@ -29,17 +29,25 @@ public class ActivitySummaryTableBuilder {
 
     public void addToSummaryData(final ActivitySummaryData summaryData) {
         final int numColumns = headerColumns.size();
-        final boolean[] anyNonNull = new boolean[numColumns];
+        final boolean[] anyNonNullOrZero = new boolean[numColumns];
 
         for (final List<ActivitySummaryValue> row : rows.values()) {
             for (int i = 0; i < numColumns; i++) {
-                anyNonNull[i] |= row.get(i) != null;
+                final ActivitySummaryValue cell = row.get(i);
+                if (cell == null || cell.value() == null) {
+                    continue;
+                }
+                if (cell.value() instanceof Number number && number.doubleValue() != 0) {
+                    anyNonNullOrZero[i] |= true;
+                } else if (cell.value() instanceof String string && !string.equals("-")) {
+                    anyNonNullOrZero[i] |= true;
+                }
             }
         }
 
         final List<ActivitySummaryValue> finalHeader = new ArrayList<>(numColumns);
         for (int i = 0; i < numColumns; i++) {
-            if (anyNonNull[i]) {
+            if (anyNonNullOrZero[i]) {
                 finalHeader.add(new ActivitySummaryValue(headerColumns.get(i)));
             }
         }
@@ -60,7 +68,7 @@ public class ActivitySummaryTableBuilder {
             final List<ActivitySummaryValue> finalRow = new ArrayList<>(numColumns);
 
             for (int i = 0; i < numColumns; i++) {
-                if (anyNonNull[i]) {
+                if (anyNonNullOrZero[i]) {
                     finalRow.add(row.get(i));
                 }
             }

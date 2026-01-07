@@ -647,33 +647,63 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             tableBuilder.addToSummaryData(summaryData);
         }
 
-        // FIXME: For now we only support swimming intervals
         final boolean anyValidLaps = laps.stream()
-                .anyMatch(lap -> lap.getTotalDistance() != null && lap.getTotalDistance() != 0 && lap.getSwimStyle() != null);
+                .filter(lap -> (lap.getTotalTimerTime() != null && lap.getTotalTimerTime() != 0))
+                .count() > 1;
+        final boolean anySwimmingLaps = laps.stream()
+                .anyMatch(lap -> lap.getSwimStyle() != null);
 
         if (anyValidLaps) {
-            final ActivitySummaryTableBuilder tableBuilder = new ActivitySummaryTableBuilder(GROUP_INTERVALS, "intervals_header", Arrays.asList(
-                    "#",
-                    "swimming_stroke",
-                    "Distance",
-                    "pref_header_time"
-            ));
+            // Unfortunately our tables do not yet scroll horizontally, so can't always add all possible columns
+            final List<String> header = new ArrayList<>();
+            header.add("#");
+            if (anySwimmingLaps) {
+                header.add("swimming_stroke");
+                header.add("Distance");
+            } else {
+                header.add("Distance");
+                header.add(ActivityKind.isPaceActivity(activityKind) ? "Pace" : "Speed");
+            }
+            header.add("heart_rate");
+            header.add("pref_header_time");
+
+            final ActivitySummaryTableBuilder tableBuilder = new ActivitySummaryTableBuilder(GROUP_INTERVALS, "intervals_header", header);
 
             int i = 1;
             for (final FitLap lap : laps) {
-                if (lap.getTotalDistance() == null || lap.getTotalDistance() == 0) {
+                if (lap.getTotalTimerTime() == null || lap.getTotalTimerTime() == 0) {
                     continue;
                 }
 
-                tableBuilder.addRow(
-                        "interval_" + i,
-                        Arrays.asList(
-                                new ActivitySummaryValue(i, UNIT_NONE),
-                                new ActivitySummaryValue(lap.getSwimStyle() != null ? context.getString(lap.getSwimStyle().getNameResId()) : null, UNIT_NONE),
-                                new ActivitySummaryValue(lap.getTotalDistance(), UNIT_METERS),
-                                new ActivitySummaryValue(lap.getTotalTimerTime(), UNIT_SECONDS)
-                        )
-                );
+                final List<ActivitySummaryValue> row = new ArrayList<>();
+
+                final Double speedValue;
+                final String speedUnit;
+                if (lap.getEnhancedAvgSpeed() != null) {
+                    if (ActivityKind.isPaceActivity(activityKind)) {
+                        speedValue = (double) Math.round((60 / (lap.getEnhancedAvgSpeed() * 3.6)) * 60);
+                        speedUnit = UNIT_SECONDS;
+                    } else {
+                        speedValue = Math.round((lap.getEnhancedAvgSpeed() * 3600 / 1000) * 100.0) / 100.0;
+                        speedUnit = UNIT_KMPH;
+                    }
+                } else {
+                    speedValue = null;
+                    speedUnit = UNIT_NONE;
+                }
+
+                row.add(new ActivitySummaryValue(i, UNIT_NONE));
+                if (anySwimmingLaps) {
+                    row.add(new ActivitySummaryValue(lap.getSwimStyle() != null ? context.getString(lap.getSwimStyle().getNameResId()) : null, UNIT_NONE));
+                    row.add(new ActivitySummaryValue(lap.getTotalDistance(), UNIT_METERS));
+                } else {
+                    row.add(new ActivitySummaryValue(lap.getTotalDistance(), UNIT_METERS));
+                    row.add(new ActivitySummaryValue(speedValue, speedUnit));
+                }
+                row.add(new ActivitySummaryValue(lap.getAvgHeartRate(), UNIT_BPM));
+                row.add(new ActivitySummaryValue(lap.getTotalTimerTime(), UNIT_SECONDS));
+
+                tableBuilder.addRow("interval_" + i, row);
 
                 i++;
             }
