@@ -4244,4 +4244,22 @@
     <string name="health_connect_permission_denied">Oprávnění zamítnuto: %1$s. Zkontrolujte prosím oprávnění Health Connect.</string>
     <string name="health_connect_sleep_session_title">Relace spánku od %1$s</string>
     <string name="health_connect_sleep_session_notes">Data o spánku ze zařízení Gadgetbridge: %1$s.</string>
+    <string name="pref_header_dashboard">Nástěnka</string>
+    <string name="busy_task_fetch_glucose_data">Stahuji data o glukóze</string>
+    <string name="glucose_level_threshold_high">Práh vysoké glukózy</string>
+    <string name="glucose_level_threshold_low">Práh nízké glukózy</string>
+    <string name="glucose_value_mg_dl">%1$d mg/dL</string>
+    <string name="device_delete_in_progress">Odstraňování zařízení…</string>
+    <string name="device_deleted_successfully">Zařízení úspěšně odstraněno</string>
+    <string name="pref_even_realities_g1_screen_activation_angle_enable_title">Zobrazit na Head Up</string>
+    <string name="pref_even_realities_g1_screen_activation_angle_enable_summary">Povolit automatické zobrazení nástěnky, když se podíváte nahoru</string>
+    <string name="pref_even_realities_g1_touch_double_left_title">Dvojité klepnutí vlevo</string>
+    <string name="pref_even_realities_g1_touch_double_left_summary">Po dvojitém klepnutí na levou dotykovou destičku provést tuto akci: %s</string>
+    <string name="pref_even_realities_g1_touch_double_right_title">Dvojité klepnutí vpravo</string>
+    <string name="pref_even_realities_g1_touch_double_right_summary">Po dvojitém klepnutí na pravou dotykovou destičku provést tuto akci: %s</string>
+    <string name="pref_even_realities_g1_touch_long_left_title">Dlouhé podržení vlevo</string>
+    <string name="pref_even_realities_g1_touch_long_left_summary">Po dlouhém podržení na levé dotykové destičce provést tuto akci: %s</string>
+    <string name="pref_even_realities_g1_touch_long_right_title">Dlouhé podržení vpravo</string>
+    <string name="pref_even_realities_g1_touch_long_right_summary">Po dlouhém podržení na pravé dotykové destičce provést tuto akci: %s</string>
+    <string name="even_realities_no_calendar_events">Žádné nadcházející události</string>
 </resources>
