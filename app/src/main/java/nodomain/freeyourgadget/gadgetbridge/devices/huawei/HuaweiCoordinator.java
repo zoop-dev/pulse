@@ -1028,6 +1028,12 @@ public class HuaweiCoordinator {
         return false;
     }
 
+    public boolean supportsAltitude() {
+        if (supportsExpandCapability())
+            return supportsExpandCapability(72);
+        return false;
+    }
+
     public boolean supportsArterialStiffnessDetection() {
         if (supportsExpandCapability())
             return supportsExpandCapability(75);

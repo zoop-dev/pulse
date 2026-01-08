@@ -29,10 +29,18 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCoordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiDictTypes;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTLV;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiP2PManager;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.dictionarysync.HuaweiDictionarySyncAltitude;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.dictionarysync.HuaweiDictionarySyncArterialStiffness;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.dictionarysync.HuaweiDictionarySyncBloodPressure;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.dictionarysync.HuaweiDictionarySyncEmotion;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.dictionarysync.HuaweiDictionarySyncHRV;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.dictionarysync.HuaweiDictionarySyncInterface;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.dictionarysync.HuaweiDictionarySyncLakeLouiseAMS;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.dictionarysync.HuaweiDictionarySyncSkinTemperature;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.dictionarysync.HuaweiDictionarySyncSleepApnea;
 
 public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
     private final Logger LOG = LoggerFactory.getLogger(HuaweiP2PDataDictionarySyncService.class);
@@ -46,7 +54,9 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
 
     public interface DictionarySyncCallback {
         long onGetLastDataSyncTimestamp(int dictClass);
+
         void onData(int dictClass, List<HuaweiP2PDataDictionarySyncService.DictData> dictData);
+
         void onComplete(boolean complete);
     }
 
@@ -79,33 +89,38 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
                 (byte) value};
     }
 
-    public List<Integer> checkSupported(HuaweiCoordinator coordinator, List<Integer> list) {
-        List<Integer> result = new ArrayList<>();
+    private List<HuaweiDictionarySyncInterface> getSyncHandlers() {
+        List<HuaweiDictionarySyncInterface> ret = new ArrayList<>();
+        ret.add(new HuaweiDictionarySyncSkinTemperature());
+        ret.add(new HuaweiDictionarySyncHRV());
+        ret.add(new HuaweiDictionarySyncEmotion());
+        ret.add(new HuaweiDictionarySyncSleepApnea());
+        ret.add(new HuaweiDictionarySyncArterialStiffness());
+        ret.add(new HuaweiDictionarySyncAltitude());
+        ret.add(new HuaweiDictionarySyncBloodPressure());
+        ret.add(new HuaweiDictionarySyncLakeLouiseAMS());
+        return ret;
+    }
 
-        for(Integer cl: list) {
-            if((cl == HuaweiDictTypes.BODY_TEMPERATURE_CLASS || cl == HuaweiDictTypes.SKIN_TEMPERATURE_CLASS) && coordinator.supportsTemperature()) {
-                result.add(cl);
-            } else if(cl == HuaweiDictTypes.BLOOD_PRESSURE_CLASS && coordinator.supportsBloodPressure()) {
-                result.add(cl);
-            } else if(cl == HuaweiDictTypes.HRV_CLASS && coordinator.supportsHRV()) {
-                result.add(cl);
-            } else if(cl == HuaweiDictTypes.EMOTION_CLASS && coordinator.supportsEmotion()) {
-                result.add(cl);
-            } else if(cl == HuaweiDictTypes.SLEEP_APNEA_CLASS && coordinator.supportsSleepApnea()) {
-                result.add(cl);
+    public Map<Integer, HuaweiDictionarySyncInterface> getAllSupported(HuaweiCoordinator coordinator) {
+        List<HuaweiDictionarySyncInterface> handlers = getSyncHandlers();
+        Map<Integer, HuaweiDictionarySyncInterface> ret = new HashMap<>();
+        for(HuaweiDictionarySyncInterface i: handlers) {
+            if(i.supports(coordinator)) {
+                ret.put(i.getDataClass(), i);
             }
         }
-        return result;
+        return ret;
     }
 
     public void startSync(List<Integer> dictClasses, DictionarySyncCallback callback) {
         LOG.info("P2PDataDictionarySyncService startSync {}", dictClasses);
-        if(callback == null) {
+        if (callback == null) {
             LOG.error("P2PDataDictionarySyncService  startSync callback is null");
             return;
         }
         classesToSync = dictClasses;
-        if(classesToSync.isEmpty()) {
+        if (classesToSync.isEmpty()) {
             callback.onComplete(false);
             return;
         }
@@ -115,7 +130,7 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
     private void sendSyncRequest(int dictClass, long startTime, DictionarySyncCallback callback) {
 
         LOG.info("P2PDataDictionarySyncService class {}", dictClass);
-        if(callback == null) {
+        if (callback == null) {
             LOG.error("P2PDataDictionarySyncService sendSyncRequest callback is null");
             return;
         }
@@ -126,21 +141,21 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
             return;
         }
 
-        if(currentRequests.containsKey(dictClass)) {
+        if (currentRequests.containsKey(dictClass)) {
             LOG.info("P2PDataDictionarySyncService current class in progress");
             callback.onComplete(false);
             return;
         }
-        if(startTime == 0) {
+        if (startTime == 0) {
             startTime = callback.onGetLastDataSyncTimestamp(dictClass);
         }
-        if(startTime < 0) {
+        if (startTime < 0) {
             LOG.info("P2PDataDictionarySyncService start time is less then 0");
             callback.onComplete(false);
             return;
         }
 
-        if(startTime > 0) {
+        if (startTime > 0) {
             startTime += 1000;
         }
 
@@ -210,7 +225,7 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
             @NonNull
             @Override
             public String toString() {
-                final StringBuffer sb = new StringBuffer("HuaweiDictDataValue{");
+                final StringBuilder sb = new StringBuilder("HuaweiDictDataValue{");
                 sb.append("dataType=").append(dataType);
                 sb.append(", tag=").append(tag);
                 sb.append(", value=");
@@ -241,7 +256,9 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
             this.data = data;
         }
 
-        public int getDictClass() { return dictClass; }
+        public int getDictClass() {
+            return dictClass;
+        }
 
         public long getStartTimestamp() {
             return startTimestamp;
@@ -262,13 +279,11 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
         @NonNull
         @Override
         public String toString() {
-            final StringBuffer sb = new StringBuffer("HuaweiDictSample{");
-            sb.append("startTime=").append(startTimestamp);
-            sb.append(", endTime=").append(endTimestamp);
-            sb.append(", modifyTime=").append(modifyTimestamp);
-            sb.append(", data=").append(data);
-            sb.append('}');
-            return sb.toString();
+            return "HuaweiDictSample{" + "startTime=" + startTimestamp +
+                    ", endTime=" + endTimestamp +
+                    ", modifyTime=" + modifyTimestamp +
+                    ", data=" + data +
+                    '}';
         }
     }
 
@@ -284,16 +299,16 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
                 int operation = tlv.getInteger(0x01);
                 int dictClass = tlv.getInteger(0x02);
 
-                if(!currentRequests.containsKey(dictClass)) {
+                if (!currentRequests.containsKey(dictClass)) {
                     return;
                 }
                 callback = currentRequests.remove(dictClass);
 
-                if(callback == null) {
+                if (callback == null) {
                     return;
                 }
 
-                if(operation != 1) {
+                if (operation != 1) {
                     return;
                     //I never see value differ from 1. So I don't know how to interpret others. Just ignore for now
                     //callback.onComplete(true);
@@ -301,7 +316,7 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
 
                 //NOTE: all tags with high bit set should be parsed as container
 
-                List<DictData> result =  new ArrayList<>();
+                List<DictData> result = new ArrayList<>();
 
                 long lastTimestamp = 0;
 
@@ -335,7 +350,7 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
                 if (!result.isEmpty()) {
                     sendSyncRequest(dictClass, lastTimestamp, callback);
                 } else {
-                    if(classesToSync.isEmpty()) {
+                    if (classesToSync.isEmpty()) {
                         classesToSync = null;
                         callback.onComplete(true);
                     } else {
@@ -344,7 +359,7 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
                 }
             } catch (HuaweiPacket.MissingTagException e) {
                 LOG.error("P2PDataDictionarySyncService parse error", e);
-                if(callback != null) {
+                if (callback != null) {
                     callback.onComplete(false);
                 }
             }
