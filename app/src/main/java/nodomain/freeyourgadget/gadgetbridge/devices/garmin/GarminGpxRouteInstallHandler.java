@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.garmin;
 
-import static nodomain.freeyourgadget.gadgetbridge.devices.vivomovehr.GarminCapability.COURSE_DOWNLOAD;
+import static nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminCapability.COURSE_DOWNLOAD;
 
 import android.content.Context;
 import android.net.Uri;

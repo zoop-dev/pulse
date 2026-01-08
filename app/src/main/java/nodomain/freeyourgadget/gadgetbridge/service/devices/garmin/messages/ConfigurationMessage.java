@@ -1,15 +1,10 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
-import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
-import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminPreferences;
-import nodomain.freeyourgadget.gadgetbridge.devices.vivomovehr.GarminCapability;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.CapabilitiesDeviceEvent;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminCapability;
 
 
 public class ConfigurationMessage extends GFDIMessage {
