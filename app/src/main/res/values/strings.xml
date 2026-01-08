@@ -4623,4 +4623,6 @@
     <string name="health_connect_permission_denied">Permission denied: %1$s. Please check Health Connect permissions.</string>
     <string name="health_connect_sleep_session_title">Sleep Session from %1$s</string>
     <string name="health_connect_sleep_session_notes">Sleep data from Gadgetbridge device: %1$s.</string>
+    <string name="infinitime_filesystem_access_disabled">Filesystem access is disabled in InfiniTime</string>
+    <string name="infinitime_resource_upload_progress_status">Performing action %d of %d\n%s %s</string>
 </resources>

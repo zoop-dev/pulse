@@ -269,26 +269,33 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
         addSupportedService(AdaBleFsProfile.UUID_SERVICE_FS);
 
         IntentListener mListener = intent -> {
+            LocalBroadcastManager manager = LocalBroadcastManager.getInstance(getContext());
             String action = intent.getAction();
             if (DeviceInfoProfile.ACTION_DEVICE_INFO.equals(action)) {
                 handleDeviceInfo(intent.getParcelableExtra(DeviceInfoProfile.EXTRA_DEVICE_INFO));
             } else if (BatteryInfoProfile.ACTION_BATTERY_INFO.equals(action)) {
                 handleBatteryInfo(intent.getParcelableExtra(BatteryInfoProfile.EXTRA_BATTERY_INFO));
             } else if (PineTimeJFConstants.ACTION_UPLOAD_PROGRESS.equals(action)) {
-                LocalBroadcastManager manager = LocalBroadcastManager.getInstance(getContext());
-                boolean ongoing = intent.getBooleanExtra("ongoing", true);
-                String progressText = "";
-                if (ongoing) {
-                    String filename = intent.getStringExtra("filename");
-                    String currentAction = intent.getStringExtra("currentAction");
-                    int currentActionNr = intent.getIntExtra("currentActionNr", 0);
-                    int allActionsCount = intent.getIntExtra("allActionsCount", 0);
-                    progressText = String.format("Performing action %d of %d\n%s %s", currentActionNr, allActionsCount, currentAction, filename);
-                } else {
-                    progressText = getContext().getString(R.string.devicestatus_upload_completed);
-                    gbDevice.unsetBusyTask();
-                }
+                String filename = intent.getStringExtra("filename");
+                String currentAction = intent.getStringExtra("currentAction");
+                int currentActionNr = intent.getIntExtra("currentActionNr", 0);
+                int allActionsCount = intent.getIntExtra("allActionsCount", 0);
+                String progressText = String.format(getContext().getString(R.string.infinitime_resource_upload_progress_status), currentActionNr, allActionsCount, currentAction, filename);
                 manager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_TEXT).putExtra(GB.DISPLAY_MESSAGE_MESSAGE, progressText));
+            } else if (PineTimeJFConstants.ACTION_UPLOAD_FINISHED.equals(action)) {
+                String progressText = getContext().getString(R.string.devicestatus_upload_completed);
+                manager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_TEXT).putExtra(GB.DISPLAY_MESSAGE_MESSAGE, progressText));
+                manager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_BAR).putExtra(GB.PROGRESS_BAR_INDETERMINATE, false));
+                manager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_BAR).putExtra(GB.PROGRESS_BAR_PROGRESS, 100));
+                GB.updateInstallNotification(progressText, false, 0, getContext());
+                gbDevice.unsetBusyTask();
+            } else if (PineTimeJFConstants.ACTION_UPLOAD_ERROR.equals(action)) {
+                String errorMsg = intent.getStringExtra("errorMsg");
+                manager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_TEXT).putExtra(GB.DISPLAY_MESSAGE_MESSAGE, errorMsg));
+                manager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_BAR).putExtra(GB.PROGRESS_BAR_INDETERMINATE, false));
+                manager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_BAR).putExtra(GB.PROGRESS_BAR_PROGRESS, 0));
+                GB.updateInstallNotification(getContext().getString(R.string.devicestatus_upload_failed), false, 0, getContext());
+                gbDevice.unsetBusyTask();
             }
         };
 
@@ -406,8 +413,8 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
                 iconname = "uturn";
                 break;
             case NavigationInfoSpec.ACTION_ROUNDABOUT_RIGHT:
-		iconname = "roundabout-right";
-		break;
+                iconname = "roundabout-right";
+                break;
             case NavigationInfoSpec.ACTION_ROUNDABOUT_LEFT:
                 iconname = "roundabout-left";
                 break;
@@ -522,7 +529,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
             } else {
                 LocalBroadcastManager.getInstance(getContext()).sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_TEXT)
                         .putExtra(GB.DISPLAY_MESSAGE_MESSAGE, getContext().getString(R.string.fwinstaller_firmware_not_compatible_to_device)));
-	    }
+            }
         } catch (Exception ex) {
             GB.toast(getContext(), getContext().getString(R.string.updatefirmwareoperation_write_failed) + ":" + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
             if (gbDevice.isBusy() && gbDevice.getBusyTask().equals("firmware upgrade")) {

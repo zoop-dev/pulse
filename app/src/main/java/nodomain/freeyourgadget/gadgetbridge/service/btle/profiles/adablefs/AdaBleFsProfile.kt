@@ -169,7 +169,7 @@ class AdaBleFsProfile<T : AbstractBTLESingleDeviceSupport>(support: T) : Abstrac
         try {
             currentAction = adaBleFsQueue.removeFirst()
         } catch (e: NoSuchElementException) {
-            notify(createIntent(false))
+            notify(createSuccessIntent())
             return
         }
         currentActionNr++
@@ -185,6 +185,17 @@ class AdaBleFsProfile<T : AbstractBTLESingleDeviceSupport>(support: T) : Abstrac
 
     override fun enableNotify(builder: TransactionBuilder, enable: Boolean) {
         builder.notify(UUID_CHARACTERISTIC_FS_TRANSFER, enable)
+    }
+
+    override fun onCharacteristicWrite(
+        gatt: BluetoothGatt?,
+        characteristic: BluetoothGattCharacteristic?,
+        status: Int
+    ): Boolean {
+        if (status == 0x08) {  // BluetoothGatt.GATT_INSUFFICIENT_AUTHORIZATION
+            notify(createErrorIntent(context.getString(R.string.infinitime_filesystem_access_disabled)))
+        }
+        return super.onCharacteristicWrite(gatt, characteristic, status)
     }
 
     override fun onCharacteristicChanged(
@@ -294,7 +305,7 @@ class AdaBleFsProfile<T : AbstractBTLESingleDeviceSupport>(support: T) : Abstrac
 
         bytesWritten = 0
         LOG.info("Sending start packet for ${currentAction!!.filenameorpath} (${currentAction!!.data.size} bytes)")
-        notify(createIntent(true))
+        notify(createProgressIntent())
         currentBuilder = performInitialized("Upload file start")
         currentBuilder?.write(UUID_CHARACTERISTIC_FS_TRANSFER, *buffer.array())
         currentBuilder?.queue()
@@ -315,7 +326,7 @@ class AdaBleFsProfile<T : AbstractBTLESingleDeviceSupport>(support: T) : Abstrac
         bytesProgress += toSendSize
         val percentage = ((bytesProgress.toFloat() / bytesTotal.toFloat()) * 100).roundToInt()
         LOG.info("Sending chunk of $toSendSize bytes for ${currentAction!!.filenameorpath}, at offset $bytesWritten")
-        notify(createIntent(true))
+        notify(createProgressIntent())
         currentBuilder = performInitialized("Upload file chunk")
         currentBuilder?.write(UUID_CHARACTERISTIC_FS_TRANSFER, *buffer.array())
         currentBuilder?.setProgress(R.string.uploading_resources, true, percentage)
@@ -337,7 +348,7 @@ class AdaBleFsProfile<T : AbstractBTLESingleDeviceSupport>(support: T) : Abstrac
         buffer.putShort(pathBytes.size.toShort())
         buffer.put(pathBytes)
 
-        notify(createIntent(true))
+        notify(createProgressIntent())
         currentBuilder = performInitialized("Delete file or directory: ${currentAction!!.filenameorpath}")
         currentBuilder?.write(UUID_CHARACTERISTIC_FS_TRANSFER, *buffer.array())
         currentBuilder?.queue()
@@ -355,7 +366,7 @@ class AdaBleFsProfile<T : AbstractBTLESingleDeviceSupport>(support: T) : Abstrac
         buffer.putLong(unixTime)
         buffer.put(pathBytes)
 
-        notify(createIntent(true))
+        notify(createProgressIntent())
         currentBuilder = performInitialized("Create directory")
         currentBuilder?.write(UUID_CHARACTERISTIC_FS_TRANSFER, *buffer.array())
         currentBuilder?.queue()
@@ -374,7 +385,7 @@ class AdaBleFsProfile<T : AbstractBTLESingleDeviceSupport>(support: T) : Abstrac
         buffer.put(PADDING_BYTE)
         buffer.put(secondPathBytes)
 
-        notify(createIntent(true))
+        notify(createProgressIntent())
         currentBuilder = performInitialized("Move file or directory")
         currentBuilder?.write(UUID_CHARACTERISTIC_FS_TRANSFER, *buffer.array())
         currentBuilder?.queue()
@@ -390,15 +401,14 @@ class AdaBleFsProfile<T : AbstractBTLESingleDeviceSupport>(support: T) : Abstrac
         buffer.putShort(pathBytes.size.toShort())
         buffer.put(pathBytes)
 
-        notify(createIntent(true))
+        notify(createProgressIntent())
         currentBuilder = performInitialized("List directory")
         currentBuilder?.write(UUID_CHARACTERISTIC_FS_TRANSFER, *buffer.array())
         currentBuilder?.queue()
     }
 
-    private fun createIntent(ongoing: Boolean): Intent {
+    private fun createProgressIntent(): Intent {
         val intent = Intent(PineTimeJFConstants.ACTION_UPLOAD_PROGRESS)
-        intent.putExtra("ongoing", ongoing)
         intent.putExtra("filename", currentAction!!.filenameorpath)
         intent.putExtra("currentAction", currentAction!!.method.toString())
         intent.putExtra("currentActionNr", currentActionNr)
@@ -406,4 +416,14 @@ class AdaBleFsProfile<T : AbstractBTLESingleDeviceSupport>(support: T) : Abstrac
         return intent
     }
 
+    private fun createSuccessIntent(): Intent {
+        val intent = Intent(PineTimeJFConstants.ACTION_UPLOAD_FINISHED)
+        return intent
+    }
+
+    private fun createErrorIntent(errorMsg: String): Intent {
+        val intent = Intent(PineTimeJFConstants.ACTION_UPLOAD_ERROR)
+        intent.putExtra("errorMsg", errorMsg)
+        return intent
+    }
 }
