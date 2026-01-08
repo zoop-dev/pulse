@@ -18,12 +18,20 @@ package nodomain.freeyourgadget.gadgetbridge.deviceevents;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
 import nodomain.freeyourgadget.gadgetbridge.model.ItemWithDetails;
 
 public class GBDeviceEventUpdateDeviceInfo extends GBDeviceEvent {
     public ItemWithDetails item;
+
+    @NonNull
+    @Override
+    public String toString() {
+        return super.toString() + (item != null ? ("item: " + item.getName() + "=" + item.getDetails()) : "<null>");
+    }
 
     public GBDeviceEventUpdateDeviceInfo(final ItemWithDetails item) {
         this.item = item;

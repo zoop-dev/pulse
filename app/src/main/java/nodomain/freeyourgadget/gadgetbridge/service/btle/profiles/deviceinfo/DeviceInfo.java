@@ -19,7 +19,11 @@ package nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class DeviceInfo implements Parcelable{
+import androidx.annotation.NonNull;
+
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
+
+public class DeviceInfo implements Parcelable {
     private String manufacturerName;
     private String modelNumber;
     private String serialNumber;
@@ -28,7 +32,7 @@ public class DeviceInfo implements Parcelable{
     private String softwareRevision;
     private String systemId;
     private String regulatoryCertificationDataList;
-    private String pnpId;
+    private byte[] pnpId;
 
     public DeviceInfo() {
     }
@@ -42,7 +46,11 @@ public class DeviceInfo implements Parcelable{
         softwareRevision = in.readString();
         systemId = in.readString();
         regulatoryCertificationDataList = in.readString();
-        pnpId = in.readString();
+        final int pnpLength = in.readInt();
+        if (pnpLength >= 0) {
+            pnpId = new byte[pnpLength];
+            in.readByteArray(pnpId);
+        }
     }
 
     @Override
@@ -55,7 +63,12 @@ public class DeviceInfo implements Parcelable{
         dest.writeString(softwareRevision);
         dest.writeString(systemId);
         dest.writeString(regulatoryCertificationDataList);
-        dest.writeString(pnpId);
+        if (pnpId != null) {
+            dest.writeInt(pnpId.length);
+            dest.writeByteArray(pnpId);
+        } else {
+            dest.writeInt(-1);
+        }
     }
 
     @Override
@@ -139,14 +152,15 @@ public class DeviceInfo implements Parcelable{
         this.regulatoryCertificationDataList = regulatoryCertificationDataList;
     }
 
-    public String getPnpId() {
+    public byte[] getPnpId() {
         return pnpId;
     }
 
-    public void setPnpId(String pnpId) {
+    public void setPnpId(byte[] pnpId) {
         this.pnpId = pnpId;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "DeviceInfo{" +
@@ -158,7 +172,7 @@ public class DeviceInfo implements Parcelable{
                 ", softwareRevision='" + softwareRevision + '\'' +
                 ", systemId='" + systemId + '\'' +
                 ", regulatoryCertificationDataList='" + regulatoryCertificationDataList + '\'' +
-                ", pnpId='" + pnpId + '\'' +
+                ", pnpId='" + GB.hexdump(pnpId) + '\'' +
                 '}';
     }
 }

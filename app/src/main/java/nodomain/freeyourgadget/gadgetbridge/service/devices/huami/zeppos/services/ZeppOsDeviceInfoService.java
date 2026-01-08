@@ -16,17 +16,31 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services;
 
+import androidx.annotation.Nullable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.List;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdateDeviceInfo;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsDeviceInfo;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsDeviceSources;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 public class ZeppOsDeviceInfoService extends AbstractZeppOsService {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsDeviceInfoService.class);
@@ -35,6 +49,8 @@ public class ZeppOsDeviceInfoService extends AbstractZeppOsService {
 
     private static final byte CMD_REQUEST = 0x01;
     private static final byte CMD_REPLY = 0x02;
+
+    public static String PREF_KEY_DEVICE_PNP_ID = "zepp_os_pnp_id";
 
     public ZeppOsDeviceInfoService(final ZeppOsSupport support) {
         super(support, false);
@@ -52,14 +68,19 @@ public class ZeppOsDeviceInfoService extends AbstractZeppOsService {
             return;
         }
 
-        final GBDeviceEventVersionInfo versionInfo = decodeDeviceInfo(payload);
-        evaluateGBDeviceEvent(versionInfo);
+        final List<GBDeviceEvent> events = decodeDeviceInfo(payload);
+        for (GBDeviceEvent event : events) {
+            evaluateGBDeviceEvent(event);
+        }
     }
 
-    public static GBDeviceEventVersionInfo decodeDeviceInfo(final byte[] payload) {
+    public static List<GBDeviceEvent> decodeDeviceInfo(final byte[] payload) {
         final ByteBuffer buf = ByteBuffer.wrap(payload).order(ByteOrder.LITTLE_ENDIAN);
 
         final GBDeviceEventVersionInfo versionInfo = new GBDeviceEventVersionInfo();
+
+        final List<GBDeviceEvent> events = new ArrayList<>(2);
+        events.add(versionInfo);
 
         if (buf.get() != CMD_REPLY) {
             throw new IllegalArgumentException("not a device info reply payload");
@@ -68,7 +89,7 @@ public class ZeppOsDeviceInfoService extends AbstractZeppOsService {
         final byte one = buf.get();
         if (one != 1) {
             LOG.warn("Unexpected device info payload 2nd byte {}", String.format("0x%02x", one));
-            return versionInfo;
+            return events;
         }
 
         // Active 2:    0x00000000000000ff
@@ -96,7 +117,56 @@ public class ZeppOsDeviceInfoService extends AbstractZeppOsService {
             versionInfo.fwVersion = StringUtils.untilNullTerminator(buf);
         }
 
-        return versionInfo;
+        if ((flags & 16) != 0 && buf.remaining() >= 7) {
+            final byte[] pnpId = new byte[7];
+            buf.get(pnpId);
+
+            events.add(new GBDeviceEventUpdatePreferences(
+                    PREF_KEY_DEVICE_PNP_ID,
+                    GB.hexdump(pnpId)
+            ));
+
+            final ZeppOsDeviceInfo deviceInfo = getDeviceInfo(pnpId);
+
+            LOG.debug("Got PNP ID={} -> {}", GB.hexdump(pnpId), deviceInfo);
+
+            if (deviceInfo != null) {
+                events.add(new GBDeviceEventUpdateDeviceInfo("PRODUCT_ID: ", String.valueOf(deviceInfo.getProductId())));
+                events.add(new GBDeviceEventUpdateDeviceInfo("PRODUCT_VERSION: ", String.valueOf(deviceInfo.getProductVersion())));
+                events.add(new GBDeviceEventUpdateDeviceInfo("DEVICE_SOURCE: ", String.valueOf(deviceInfo.getDeviceSource())));
+            }
+        }
+
+        return events;
+    }
+
+    @Nullable
+    public static ZeppOsDeviceInfo getDeviceInfo(final GBDevice gbDevice) {
+        final DevicePrefs devicePrefs = GBApplication.getDevicePrefs(gbDevice);
+        final String pnpHex = devicePrefs.getString(PREF_KEY_DEVICE_PNP_ID, null);
+        if (pnpHex == null || pnpHex.length() != 14) {
+            LOG.error("Unknown or invalid PNP ID for {}: {}", gbDevice, pnpHex);
+            return null;
+        }
+
+        final byte[] pnpId = GB.hexStringToByteArray(pnpHex);
+
+        return getDeviceInfo(pnpId);
+    }
+
+    @Nullable
+    public static ZeppOsDeviceInfo getDeviceInfo(final byte[] pnpId) {
+        final int productId = BLETypeConversions.toUint16(pnpId, 3);
+        final int productVersion = BLETypeConversions.toUint16(pnpId, 5);
+
+        LOG.debug(
+                "Resolving source from pnpId={} for productId={}, productVersion={}",
+                GB.hexdump(pnpId),
+                productId,
+                productVersion
+        );
+
+        return ZeppOsDeviceSources.INSTANCE.resolve(productId, productVersion);
     }
 
     public void requestDeviceInfo(final ZeppOsTransactionBuilder builder) {

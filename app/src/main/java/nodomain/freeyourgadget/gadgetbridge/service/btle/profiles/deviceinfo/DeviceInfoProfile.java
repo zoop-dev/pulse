@@ -168,14 +168,8 @@ public class DeviceInfoProfile<T extends AbstractBTLESingleDeviceSupport> extend
     }
 
     private void handlePnpId(final byte[] value) {
-        if (value.length == 7) {
-//            int vendorSource
-//
-//            deviceInfo.setPnpId(pnpId);
-            notify(createIntent(deviceInfo));
-        } else {
-            // TODO: LOG warning
-        }
+        deviceInfo.setPnpId(value);
+        notify(createIntent(deviceInfo));
     }
 
     private Intent createIntent(final DeviceInfo deviceInfo) {
