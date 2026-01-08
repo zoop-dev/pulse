@@ -26,6 +26,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import nodomain.freeyourgadget.gadgetbridge.R
@@ -76,6 +77,8 @@ class DeviceDeleteActivity : AbstractGBActivity() {
     }
 
     private suspend fun performDeviceDelete(): Exception? = withContext(Dispatchers.IO) {
+        val start = System.currentTimeMillis()
+
         try {
             val coordinator = device.deviceCoordinator
 
@@ -92,6 +95,15 @@ class DeviceDeleteActivity : AbstractGBActivity() {
         } catch (ex: Exception) {
             LOG.error("Error deleting device", ex)
             return@withContext ex
+        }
+
+        val end = System.currentTimeMillis()
+
+        LOG.debug("Deleting the device took {}ms", end - start)
+
+        if (end - start < 1000L) {
+            // Add a small delay to prevent the activity from blinking too fast
+            delay(1000L - (end - start))
         }
 
         return@withContext null
@@ -130,10 +142,6 @@ class DeviceDeleteActivity : AbstractGBActivity() {
             )
             binding.deleteStatusText.text = errorMsg
         }
-    }
-
-    private fun updateStatus(msg: String) {
-        binding.deleteStatusText.text = msg
     }
 
     companion object {
