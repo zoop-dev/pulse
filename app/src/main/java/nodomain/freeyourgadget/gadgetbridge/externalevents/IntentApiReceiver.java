@@ -175,6 +175,7 @@ public class IntentApiReceiver extends BroadcastReceiver {
                         .loadLabel(context.getPackageManager())
                         .toString();
                 notificationSpec.attachedActions = new ArrayList<>();
+                notificationSpec.picturePath = intent.getStringExtra("picturePath");
                 if (notificationSpec.type == NotificationType.GENERIC_SMS) {
                     // REPLY action
                     NotificationSpec.Action replyAction = new NotificationSpec.Action();
