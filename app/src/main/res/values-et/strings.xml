@@ -159,7 +159,7 @@
     <string name="pref_title_notifications_timeout">Lühim aeg teavituste vahel</string>
     <string name="pref_summary_pebble_forcele">Kasuta eksperimentaalset Pebble LE tuge kõikide Pebble\'de jaoks tavalise Bluetoothi asemel. See nõuab sidumist tavalise Bluetoothi kaudu ja seejärel Bluetooth LE sidumist</string>
     <string name="pref_title_pebble_mtu_limit">Pebble 2/LE GATT MTU limiit</string>
-    <string name="pref_summary_pebble_mtu_limit">Kui Pebble 2/Pebble LE ei taha ootuspäraselt töötada proovi seada MTUle limiit vahemikus 20–512</string>
+    <string name="pref_summary_pebble_mtu_limit">Kui Pebble 2/Pebble LE ei taha ootuspäraselt töötada proovi seada MTUle piirang vahemikus 20-512</string>
     <string name="pref_title_pebble_enable_applogs">Lülita sisse kellarakenduste logimine</string>
     <string name="pref_title_pebble_gatt_clientonly">Ainult GATT klient</string>
     <string name="pref_summary_pebble_gatt_clientonly">See on ainult Pebble 2le ja eksperimentaalne, katseta kui on ilmnenud ühenduvusprobleeme</string>
@@ -308,16 +308,16 @@
     <string name="pref_screen_notification_profile_generic_navigation">Navigeerimine</string>
     <string name="pref_screen_notification_profile_generic_social">Sotsiaalvõrgud</string>
     <string name="interval_one_minute">kord minutis</string>
-    <string name="interval_five_minutes">iga 5 minuti tagant</string>
-    <string name="interval_ten_minutes">iga 10 minuti tagant</string>
-    <string name="interval_thirty_minutes">iga 30 minuti tagnt</string>
+    <string name="interval_five_minutes">iga 5 minuti järel</string>
+    <string name="interval_ten_minutes">iga 10 minuti järel</string>
+    <string name="interval_thirty_minutes">iga 30 minuti järel</string>
     <string name="interval_one_hour">kord tunnis</string>
     <string name="stats_x_axis_label">Minuteid kokku</string>
     <string name="stats_y_axis_label">Samme minutis</string>
     <string name="control_center_find_lost_device">Leia kaotatud seade</string>
     <string name="title_activity_charts">Aktiivsus ja uni</string>
     <string name="title_activity_set_alarm">Seadista äratused</string>
-    <string name="controlcenter_start_configure_alarms">Seadista äratused</string>
+    <string name="controlcenter_start_configure_alarms">Seadista äratusi</string>
     <string name="title_activity_alarm_details">Äratuse info</string>
     <string name="alarm_sun_short">P</string>
     <string name="alarm_mon_short">E</string>
@@ -420,8 +420,8 @@
     <string name="pref_screen_notification_profile_calendar">Kalendri teavitus</string>
     <string name="pref_screen_notification_profile_low_power">Madala akutaseme hoiatus</string>
     <string name="pref_screen_notification_profile_anti_loss">Kaotamisvastane hoiatus</string>
-    <string name="interval_fifteen_minutes">iga 15 minuti tgant</string>
-    <string name="interval_forty_five_minutes">Iga 45 minuti tagant</string>
+    <string name="interval_fifteen_minutes">iga 15 minuti järel</string>
+    <string name="interval_forty_five_minutes">Iga 45 minuti järel</string>
     <string name="pref_title_authkey">Autentimise võti</string>
     <string name="dutch">hollandi</string>
     <string name="turkish">türgi</string>
@@ -496,7 +496,7 @@
     <string name="pref_title_relax_firmware_checks">Lülita see sisse kui sa tahad paigaldada enda seadmele püsivara, mis pole sellele mõeldud (täiesti omal vastutusel)</string>
     <string name="pref_screen_notification_profile_inactivity">Inaktiivsushoiatus</string>
     <string name="sleep_activity_date_range">%1$s-ist %2$s-ni</string>
-    <string name="discovery_need_to_enter_authkey">See seade vajab salajast võtit, tehke pikk puudutus seadmel, et see sisestada. Lisainformatsioon vikis.</string>
+    <string name="discovery_need_to_enter_authkey">See seade vajab salajast võtit, sisestamiseks puuduta pikalt seadme ekraani. Lisateavet leiad veebisaidist.</string>
     <string name="miband_pairing_tap_hint">Kui teie Mi Band väriseb ja vilgub vajutage ekraanile paar korda.</string>
     <string name="miband_pairing_using_dummy_userdata">Puuduvad korrektsed kasutaja andmed, kasutan vaikeväärtuseid.</string>
     <string name="find_my_phone_notification">Leia mu telefon</string>
@@ -534,7 +534,7 @@
     <string name="pref_title_sync_caldendar">Sünkrooni kalendrisündmused</string>
     <string name="pref_summary_sync_calendar">Lülitab sisse kalendri märguanded, isegi siis kui seade pole ühenduses</string>
     <string name="pref_summary_custom_deviceicon">Näita seadmespetsiifilist ikooni teavitustes Gadgetbridge\'i ikooni asemel kui seade on ühendatud</string>
-    <string name="pref_title_weather_summary">Kasutatakse LineageOS\'i süsteemi poolt pakutava ilmateate jaoks, teised Androidi versioonid peavad kasutama näiteks rakendust \"Weather notification\". Lisainfo Gadgetbridge\'i vikis.</string>
+    <string name="pref_title_weather_summary">Kasutatakse LineageOS-i süsteemi poolt pakutava ilmateate jaoks, teised Androidi versioonid peavad kasutama näiteks rakendust „Breezy Weather“. Lisainfo Gadgetbridge\'i vikis.</string>
     <string name="fw_upgrade_notice_amazfit_trex">Olete paigaldamas %s püsivara enda Amazfit T-Rex\'ile. 
 \n 
 \nPalun veenduge, et enne paigaldate .fw faili, pärast seda .res faili ja viimasena .gps faili. Teie kell taaskäivitub pärast .fw faili paigaldust. 
@@ -732,11 +732,11 @@
     <string name="error_version_check_extreme_caution">HOIATUS: Viga versiooniinfot kontrollides! Te ei tohiks jätkata! Nägin versiooninime \"%s\"</string>
     <string name="permission_granting_mandatory">Kõik need ligipääsud on vajalikud ning rakendus võib valesti käituda, kui ligipääsu ei anna</string>
     <plurals name="widget_alarm_target_hours">
-        <item quantity="one">%d tund</item>
-        <item quantity="other">%d tundi</item>
+        <item quantity="one">%1$d:%2$02d tund</item>
+        <item quantity="other">%1$d:%2$02d tundi</item>
     </plurals>
     <string name="cannot_connect">Ei saa ühendust luua: %1$s</string>
-    <string name="dbaccess_error_executing">Viga käitades \'%1$s\'</string>
+    <string name="dbaccess_error_executing">Viga „%1$s“ käivitamisel</string>
     <string name="user_feedback_miband_activity_data_transfer">Hakkan tõstma %1$s andmed, alustades %2$s</string>
     <string name="user_feedback_miband_set_alarms_failed">Tekkis viga äratusi seades, proovi uuesti.</string>
     <string name="alarm_snooze">Uinak</string>
@@ -779,7 +779,7 @@
     <string name="mi2_prefs_button_press_count_max_delay">Maksimaalne ajavahe vajutustel</string>
     <string name="prefs_disconnect_notification">Ühenduse katkemise teavitused</string>
     <string name="prefs_find_phone_summary">Kasuta Band\'i, et mängida teie telefoni helinat.</string>
-    <string name="prefs_enable_find_phone">Lülita sisse \\\'Otsi telefoni\\\'</string>
+    <string name="prefs_enable_find_phone">Lülita sisse „Otsi telefoni“</string>
     <string name="prefs_find_phone">Otsi telefoni</string>
     <string name="miband_prefs_device_time_offset_hours">Seadme kellaaja nihe (nt. vahetustega töö jaoks)</string>
     <string name="miband_prefs_hr_sleep_detection">Kasuta südame löögisageduse andurit, et muuta unetuvastust paremaks</string>
@@ -820,7 +820,7 @@
     <string name="button_watchface_preview">Eelvaata kellast</string>
     <string name="pref_dashboard_widget_today_24h_title">24h režiim</string>
     <string name="pref_dashboard_first_summary">Gadgetbridge\'i käivitumisel kuva seadmete akna asemel juhtpaneel</string>
-    <string name="pref_dashboard_select_devices_title">Vali seadmed...</string>
+    <string name="pref_dashboard_select_devices_title">Vali seadmed…</string>
     <string name="pref_dashboard_cards_title">Kuva kaartidel vidinad</string>
     <string name="pref_dashboard_devices_to_include">Kaasatavad seadmed</string>
     <string name="pref_description_dashboard">Vidinad, kaasatavad seadmed</string>
@@ -892,7 +892,7 @@
     <string name="calendar_three_months">3 kuud</string>
     <string name="calendar_six_months">6 kuud</string>
     <string name="calendar_year">Aasta</string>
-    <string name="debugactivity_confirm_remove_device_preferences">Järgnevaga lähtestad kõigi ühendatud seadmete seadmekohased eelistused. Oled sa kindel?</string>
+    <string name="debugactivity_confirm_remove_device_preferences">Järgnevaga lähtestad selle seadme seadmekohased eelistused. Oled sa kindel?</string>
     <string name="appmanager_item_outdated">(aegunud)</string>
     <string name="title_activity_notification_management">Märguannete seaded</string>
     <string name="check_all_applications">Märgi kõik rakendused</string>
@@ -910,7 +910,7 @@
     <string name="fw_upgrade_notice_amazfitbip3pro">Oled paigaldamas %s püsivara oma Amazfit Bip 3 PRO kellale.\n\nPaigalda .fw fail ja pärast seda .res fail. Pärast .fw faili paigaldamist kell taaskäivitub.\n\nMärkus: .res faili ei pea paigaldama, kui tegu on juba paigaldatud versiooniga..\n\nJÄTKA OMAL VASTUTUSEL!</string>
     <string name="pref_summary_notification_wake_on_open">Ärata ja ava Android-seade, kui nutiseade saadab tagasi vastuse OPEN. Peab olema usaldusväärses olekus.</string>
     <string name="notification_gps_title">Gadgetbridge GPS</string>
-    <string name="huawei_trusleep_warning">Hoiatus: selle lubamisel kuvatakse Gadgetbridge\'is kogu uni kerge unena! Klõpsa siin, kui nõustud sellega.</string>
+    <string name="huawei_trusleep_warning">Hoiatus: TruSleep™ pole täielikult implementeeritud. Mõne seadme puhul saad ta sisse lülitada ja siis kuvatakse Gadgetbridge\'is kogu uni kerge unena!</string>
     <string name="loyalty_cards_catima_not_compatible">Paigaldatud Catima versioon ei ühildu Gadgetbridge\'iga. Värskenda Catima ja Gadgetbridge uusimatele versioonidele.</string>
     <string name="pref_theme_dynamic_colors_not_available_warning">Dünaamilised värvid pole sinu seadmes saadaval, seda funktsiooni toetab ainult Android 12+. Gadgetbridge kasutab Material 3 vaikevärve.</string>
     <string name="loyalty_cards_catima_permissions_summary">Gadgetbridge vajab Catima kaartide sünkroonimiseks lugemisõigusi. Nende andmiseks puuduta seda nuppu.</string>
@@ -1052,7 +1052,7 @@
     <string name="pref_calendar_maximum_title_characters_title">Tähemärkide suurim arv sündmuse pealkirjas</string>
     <string name="pref_calendar_maximum_description_characters_title">Tähemärkide suurim arv sündmuse kirjelduses</string>
     <string name="pref_calendar_target_app_title">Nutikella sihtrakendus kalendrisündmuste jaoks</string>
-    <string name="single_band"/>
+    <string name="single_band">Üks käevõru</string>
     <string name="dbmanagementactivity_overwrite">Kirjuta üle</string>
     <string name="kind_firmware">Püsivara</string>
     <string name="kind_font">Kirjatüüp</string>
@@ -1149,4 +1149,46 @@
     <string name="activity_detail_start_label">Algus</string>
     <string name="activity_detail_end_label">Lõpp</string>
     <string name="activity_detail_duration_label">Kestus</string>
+    <string name="buttons_on_left">Nupud vasakul</string>
+    <string name="buttons_on_right">Nupud paremal</string>
+    <string name="pairing_even_realities_g1_working">Paardun seadmega %1s…</string>
+    <string name="pairing_even_realities_g1_final_connect">Seadistan seadmeid, palun oota…</string>
+    <string name="pref_cache_weather">Puhverda ilmateadet</string>
+    <string name="pref_experimental_settings_title">Katselised seadistused</string>
+    <string name="pref_experimental_settings_summary">Katselised seadistused võivad ebastabiilsed või sootuks mitte toimida. Jätkad omal vastutusel.</string>
+    <string name="pref_cache_weather_summary">Ilmaennustuse teavet puhverdatakse kasutamiseks pärast uuesti käivitamist.</string>
+    <string name="busy_task_busy">Hõivatud…</string>
+    <string name="busy_task_configuring">Seadistan</string>
+    <string name="busy_task_downloading">Allalaadimisel</string>
+    <string name="busy_task_fetch_configuration">Laadin seadistust</string>
+    <string name="prefs_weardirection">Kandmise suund</string>
+    <string name="prefs_wearmode">Kandmisviis</string>
+    <string name="busy_task_setting_alarms">Seadistan äratust</string>
+    <string name="busy_task_syncing">Sünkroonin</string>
+    <string name="pref_screen_notification_profile_schedule">Ajaplaan</string>
+    <string name="pref_screen_notification_profile_todo_list">Ülesannete loend</string>
+    <string name="vibration_profile_default">Vaikimisi</string>
+    <string name="pref_screen_notification_profile_event_reminder">Sündmuse meeldetuletus</string>
+    <string name="interval_twenty_minutes">iga 20 minuti järel</string>
+    <string name="spo2_perc_75">75%</string>
+    <string name="spo2_perc_80">80%</string>
+    <string name="spo2_perc_90">90%</string>
+    <string name="spo2_off">Väljas</string>
+    <string name="spo2_perc_85">85%</string>
+    <string name="interval_1_hour">iga 1 tunni järel</string>
+    <string name="interval_2_hour">iga 2 tunni järel</string>
+    <string name="interval_3_hour">iga 3 tunni järel</string>
+    <string name="interval_4_hour">iga 4 tunni järel</string>
+    <string name="interval_6_hour">iga 6 tunni järel</string>
+    <string name="title_activity_set_reminders">Seadista meeldetuletusi</string>
+    <string name="title_activity_set_contacts">Seadista kontakte</string>
+    <string name="pref_world_clocks_title">Maailmakellad</string>
+    <string name="pref_world_clocks_summary">Seadista muude ajavööndite kelli</string>
+    <string name="pref_contacts_title">Kontaktid</string>
+    <string name="pref_contacts_summary">Seadista kontakte kellas</string>
+    <string name="reminder_repeat">Korda</string>
+    <string name="controlcenter_start_configure_reminders">Seadista meeldetuletusi</string>
+    <string name="reminder_date">Kuupäev</string>
+    <string name="reminder_time">Kellaaeg</string>
+    <string name="reminder_message">Sõnum</string>
 </resources>
