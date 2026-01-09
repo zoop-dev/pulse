@@ -302,6 +302,11 @@
             android:launchMode="singleTop"
             android:parentActivityName=".activities.ControlCenterv2" />
         <activity
+            android:name=".activities.appmanager.config.DynamicAppConfigActivity"
+            android:label="@string/app_configure"
+            android:launchMode="singleTop"
+            android:parentActivityName=".activities.appmanager.AppManagerActivity" />
+        <activity
             android:name=".activities.appmanager.RebbleAppStoreActivity"
             android:label="@string/activity_title_rebble_app_store"
             android:parentActivityName=".activities.appmanager.AppManagerActivity" />

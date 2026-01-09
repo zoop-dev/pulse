@@ -50,6 +50,7 @@ import java.util.stream.Collectors;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.config.DynamicAppConfig;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventAppInfo;
@@ -121,6 +122,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
+import nodomain.freeyourgadget.gadgetbridge.util.UuidUtil;
 import nodomain.freeyourgadget.gadgetbridge.util.notifications.GBProgressNotification;
 
 import static nodomain.freeyourgadget.gadgetbridge.GBApplication.ACTION_APP_IS_IN_BACKGROUND;
@@ -584,38 +586,50 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         );
     }
 
+    @Override
+    public void onAppConfigRequest(final UUID uuid) {
+        sendOutgoingMessage("app config request " + uuid, protocolBufferHandler.prepareProtobufRequest(
+                protocolBufferHandler.getAppConfigHandler().onAppConfigRequest(uuid)
+        ));
+    }
+
+    @Override
+    public void onAppConfigSet(final UUID uuid, final ArrayList<DynamicAppConfig> configs) {
+        sendOutgoingMessage("app config set " + uuid, protocolBufferHandler.prepareProtobufRequest(
+                protocolBufferHandler.getAppConfigHandler().onAppConfigSet(uuid, configs)
+        ));
+    }
+
     public void onAppListReceived(final List<GdiInstalledAppsService.InstalledAppsService.InstalledApp> apps) {
         installedApps.clear();
 
         final List<GBDeviceApp> gbApps = new ArrayList<>(apps.size());
 
         for (final GdiInstalledAppsService.InstalledAppsService.InstalledApp installedApp : apps) {
-            GBDeviceApp.Type type;
+            final boolean isSystemApp = !installedApp.hasFileName();
+            final GBDeviceApp.Type type = switch (installedApp.getType()) {
+                case WATCH_FACE -> isSystemApp ? GBDeviceApp.Type.WATCHFACE_SYSTEM : GBDeviceApp.Type.WATCHFACE;
+                case DATA_FIELD, ACTIVITY -> isSystemApp ? GBDeviceApp.Type.UNKNOWN /* otherwise too many appear */: GBDeviceApp.Type.APP_ACTIVITYTRACKER;
+                case AUDIO_CONTENT_PROVIDER -> isSystemApp ? GBDeviceApp.Type.APP_SYSTEM : GBDeviceApp.Type.APP_GENERIC;
+                case WATCH_APP -> isSystemApp ? GBDeviceApp.Type.APP_SYSTEM : GBDeviceApp.Type.APP_GENERIC;
+                default -> GBDeviceApp.Type.UNKNOWN;
+            };
 
-            switch (installedApp.getType()) {
-                case WATCH_FACE:
-                    type = GBDeviceApp.Type.WATCHFACE;
-                    break;
-                case DATA_FIELD:
-                case ACTIVITY:
-                    type = GBDeviceApp.Type.APP_ACTIVITYTRACKER;
-                    break;
-                default:
-                    // FIXME we set everything else as app generic otherwise they get filtered, add new types
-                    type = GBDeviceApp.Type.APP_GENERIC;
-            }
-
-            final UUID uuid = UUID.nameUUIDFromBytes(installedApp.getStoreAppId().toByteArray());
+            final UUID uuid = UuidUtil.fromBytes(installedApp.getStoreAppId().toByteArray());
             installedApps.put(uuid, installedApp);
-            gbApps.add(new GBDeviceApp(
+            final GBDeviceApp gbDeviceApp = new GBDeviceApp(
                     uuid,
-                    installedApp.getName() + " (" + installedApp.getType() + ")",
+                    installedApp.getName(),
                     "",
-                    String.valueOf(installedApp.getVersion()),
+                    installedApp.getVersion() != 0 ? String.valueOf(installedApp.getVersion()) : null,
                     type
-            ));
-            gbApps.sort(Comparator.comparing(GBDeviceApp::getName));
+            );
+            gbDeviceApp.setConfigurable(type == GBDeviceApp.Type.APP_GENERIC);
+            gbDeviceApp.setCanBeStarted(false); // we do not support starting
+            gbApps.add(gbDeviceApp);
         }
+
+        gbApps.sort(Comparator.comparing(GBDeviceApp::getName));
 
         final GBDeviceEventAppInfo appInfoCmd = new GBDeviceEventAppInfo();
         appInfoCmd.apps = gbApps.toArray(new GBDeviceApp[0]);
@@ -1430,7 +1444,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             @Override
             public void onMessage(final byte[] value) {
                 if (!started) {
-                    if (!ArrayUtils.equals(new byte[]{0,0,0}, value, 0)) {
+                    if (!ArrayUtils.equals(new byte[]{0, 0, 0}, value, 0)) {
                         LOG.error("Got unexpected first message");
                         if (currentlyDownloading != null && currentlyDownloading.getSyncFile() != null) {
                             transferNotification.incrementTotalProgress(currentlyDownloading.getSyncFile().getSize());

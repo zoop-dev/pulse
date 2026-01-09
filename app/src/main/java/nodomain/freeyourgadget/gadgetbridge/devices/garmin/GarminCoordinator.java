@@ -18,6 +18,7 @@ import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.AppManagerActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.config.DynamicAppConfigActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
@@ -324,6 +325,12 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public Class<? extends Activity> getAppsManagementActivity(final GBDevice device) {
         return AppManagerActivity.class;
+    }
+
+    @Nullable
+    @Override
+    public Class<? extends Activity> getAppConfigurationActivity(final GBDevice device) {
+        return DynamicAppConfigActivity.class;
     }
 
     @Override

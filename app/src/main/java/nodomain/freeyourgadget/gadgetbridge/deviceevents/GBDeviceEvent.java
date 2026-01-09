@@ -44,7 +44,7 @@ public abstract class GBDeviceEvent {
         return getClass().getSimpleName() + ": ";
     }
 
-    public abstract void evaluate(final Context context, final GBDevice device);
+    public abstract void evaluate(@NonNull final Context context, @NonNull final GBDevice device);
 
     /**
      * Helper method to run specific actions configured in the device preferences, upon wear state

@@ -10,6 +10,7 @@ import "garmin/gdi_file_sync_service.proto";
 import "garmin/gdi_find_my_watch.proto";
 import "garmin/gdi_core.proto";
 import "garmin/gdi_http_service.proto";
+import "garmin/gdi_app_config_service.proto";
 import "garmin/gdi_installed_apps_service.proto";
 import "garmin/gdi_data_transfer_service.proto";
 import "garmin/gdi_sms_notification.proto";
@@ -21,6 +22,7 @@ import "garmin/gdi_ecg_service.proto";
 message Smart {
     optional CalendarService calendar_service = 1;
     optional HttpService http_service = 2;
+    optional AppConfigService app_config_service = 4;
     optional InstalledAppsService installed_apps_service = 3;
     optional DataTransferService data_transfer_service = 7;
     optional DeviceStatusService device_status_service = 8;

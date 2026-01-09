@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.UUID;
 
+import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.config.DynamicAppConfig;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.LoyaltyCard;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventCameraRemote;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -298,6 +299,22 @@ public class ServiceDeviceSupport implements DeviceSupport {
             return;
         }
         delegate.onAppConfiguration(uuid, config, id);
+    }
+
+    @Override
+    public void onAppConfigRequest(final UUID uuid) {
+        if (checkBusy("app config request")) {
+            return;
+        }
+        delegate.onAppConfigRequest(uuid);
+    }
+
+    @Override
+    public void onAppConfigSet(final UUID uuid, final ArrayList<DynamicAppConfig> configs) {
+        if (checkBusy("app config set")) {
+            return;
+        }
+        delegate.onAppConfigSet(uuid, configs);
     }
 
     @Override

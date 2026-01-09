@@ -54,9 +54,6 @@ public class AppManagerFragmentInstalledWatchfaces extends AbstractAppManagerFra
 
     @Override
     protected boolean filterApp(GBDeviceApp gbDeviceApp) {
-        if (gbDeviceApp.getType() == GBDeviceApp.Type.WATCHFACE) {
-            return true;
-        }
-        return false;
+        return gbDeviceApp.getType() == GBDeviceApp.Type.WATCHFACE;
     }
 }

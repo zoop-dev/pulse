@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.config.DynamicAppConfig;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.LoyaltyCard;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventCameraRemote;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
@@ -95,6 +96,10 @@ public interface EventHandler {
     void onAppDelete(UUID uuid);
 
     void onAppConfiguration(UUID appUuid, String config, Integer id);
+
+    void onAppConfigRequest(final UUID uuid);
+
+    void onAppConfigSet(final UUID uuid, final ArrayList<DynamicAppConfig> configs);
 
     void onAppReorder(UUID[] uuids);
 

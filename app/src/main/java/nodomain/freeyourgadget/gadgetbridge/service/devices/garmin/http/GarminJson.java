@@ -162,6 +162,10 @@ public class GarminJson {
     }
 
     public static JsonElement decode(final byte[] bytes) throws GarminJsonException {
+        if (bytes.length < 4 + 4 + 1) {
+            throw new GarminJsonException("Not enough bytes for GarminJson in " + GB.hexdump(bytes));
+        }
+
         final ByteBuffer buffer = ByteBuffer.wrap(bytes).order(ByteOrder.BIG_ENDIAN);
 
         // Parse string section if present

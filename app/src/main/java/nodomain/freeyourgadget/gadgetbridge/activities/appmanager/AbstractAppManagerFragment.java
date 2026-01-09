@@ -235,6 +235,7 @@ public abstract class AbstractAppManagerFragment extends Fragment {
 
             GBDeviceApp app = new GBDeviceApp(uuid, appName, appCreator, appVersion, appType, previewImage);
             app.setConfigurable(appFromIntent.isConfigurable());
+            app.setCanBeStarted(appFromIntent.isCanBeStarted());
             app.setUpToDate(appFromIntent.isUpToDate());
             app.setOnDevice(true);
 
@@ -591,6 +592,10 @@ public abstract class AbstractAppManagerFragment extends Fragment {
         if (!selectedApp.isOnDevice() || selectedApp.getType() != GBDeviceApp.Type.APP_GENERIC) {
             menu.removeItem(R.id.appmanager_app_start);
         }
+        if (!selectedApp.isCanBeStarted()) {
+            menu.removeItem(R.id.appmanager_watchface_activate);
+            menu.removeItem(R.id.appmanager_app_start);
+        }
         if (!selectedApp.isInCache()) {
             menu.removeItem(R.id.appmanager_app_edit);
             menu.removeItem(R.id.appmanager_app_reinstall);
@@ -714,6 +719,7 @@ public abstract class AbstractAppManagerFragment extends Fragment {
             final Intent startIntent = new Intent(requireContext().getApplicationContext(), appConfigurationActivity);
             startIntent.putExtra(DeviceService.EXTRA_APP_UUID, selectedApp.getUUID());
             startIntent.putExtra(GBDevice.EXTRA_DEVICE, mGBDevice);
+            startIntent.putExtra("app_name", selectedApp.getName()); // FIXME: use constant
             startActivity(startIntent);
             return true;
         } else if (itemId == R.id.appmanager_app_openinstore) {

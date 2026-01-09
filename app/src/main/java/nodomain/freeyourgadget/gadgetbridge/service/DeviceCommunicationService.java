@@ -73,6 +73,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.HeartRateUtils;
+import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.config.DynamicAppConfig;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.LoyaltyCard;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventCameraRemote;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
@@ -1114,6 +1115,17 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                     id = intentCopy.getIntExtra(EXTRA_APP_CONFIG_ID, 0);
                 }
                 deviceSupport.onAppConfiguration(uuid, config, id);
+                break;
+            }
+            case ACTION_APP_CONFIG_REQUEST: {
+                UUID uuid = (UUID) intentCopy.getSerializableExtra(EXTRA_APP_UUID);
+                deviceSupport.onAppConfigRequest(uuid);
+                break;
+            }
+            case ACTION_APP_CONFIG_SET: {
+                UUID uuid = (UUID) intentCopy.getSerializableExtra(EXTRA_APP_UUID);
+                ArrayList<DynamicAppConfig> configs = intentCopy.getParcelableArrayListExtra(EXTRA_APP_CONFIG);
+                deviceSupport.onAppConfigSet(uuid, configs);
                 break;
             }
             case ACTION_APP_REORDER: {

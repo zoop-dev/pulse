@@ -37,6 +37,7 @@ public class GBDeviceApp implements Parcelable {
     private final boolean inCache;
     private boolean isOnDevice;
     private boolean configurable;
+    private boolean canBeStarted = true;
     private final Bitmap previewImage;
     private boolean isUpToDate = true;
 
@@ -105,6 +106,7 @@ public class GBDeviceApp implements Parcelable {
         this.inCache = in.readInt() != 0;
         this.isOnDevice = in.readInt() != 0;
         this.configurable = in.readInt() != 0;
+        this.canBeStarted = in.readInt() != 0;
         this.previewImage = in.readParcelable(GBDeviceApp.class.getClassLoader());
         this.isUpToDate = in.readInt() != 0;
     }
@@ -184,6 +186,14 @@ public class GBDeviceApp implements Parcelable {
         return isUpToDate;
     }
 
+    public boolean isCanBeStarted() {
+        return canBeStarted;
+    }
+
+    public void setCanBeStarted(boolean canBeStarted) {
+        this.canBeStarted = canBeStarted;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -199,6 +209,7 @@ public class GBDeviceApp implements Parcelable {
         dest.writeInt(inCache ? 1 : 0);
         dest.writeInt(isOnDevice ? 1 : 0);
         dest.writeInt(configurable ? 1 : 0);
+        dest.writeInt(canBeStarted ? 1 : 0);
         dest.writeParcelable(previewImage, 0);
         dest.writeInt(isUpToDate ? 1 : 0);
     }

@@ -66,6 +66,7 @@ public class ProtocolBufferHandler implements MessageHandler {
     private final Map<Integer, ProtobufFragment> chunkedFragmentsMap;
     private final int maxChunkSize = 375; //tested on Vívomove Style
     private int lastProtobufRequestId;
+    private final AppConfigHandler appConfigHandler;
     private final HttpHandler httpHandler;
     private final DataTransferHandler dataTransferHandler;
     private final FileSyncServiceHandler fileSyncServiceHandler;
@@ -76,6 +77,7 @@ public class ProtocolBufferHandler implements MessageHandler {
     public ProtocolBufferHandler(GarminSupport deviceSupport) {
         this.deviceSupport = deviceSupport;
         chunkedFragmentsMap = new HashMap<>();
+        appConfigHandler = new AppConfigHandler(deviceSupport);
         httpHandler = new HttpHandler(deviceSupport);
         dataTransferHandler = new DataTransferHandler();
         fileSyncServiceHandler = new FileSyncServiceHandler(deviceSupport);
@@ -218,6 +220,9 @@ public class ProtocolBufferHandler implements MessageHandler {
                 } else {
                     LOG.warn("Ignoring zip transfer service - new sync protocol is disabled");
                 }
+            }
+            if (smart.hasAppConfigService()) {
+                processed = appConfigHandler.process(smart.getAppConfigService());
             }
             if (processed) {
                 message.setStatusMessage(new ProtobufStatusMessage(
@@ -657,6 +662,10 @@ public class ProtocolBufferHandler implements MessageHandler {
 
     public FileSyncServiceHandler getFileSyncServiceHandler() {
         return fileSyncServiceHandler;
+    }
+
+    public AppConfigHandler getAppConfigHandler() {
+        return appConfigHandler;
     }
 
     private class ProtobufFragment {

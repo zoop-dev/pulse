@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.config.DynamicAppConfig;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.LoyaltyCard;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
@@ -423,6 +424,16 @@ public abstract class AbstractDeviceSupport implements DeviceSupport {
     @Override
     public void onAppConfiguration(UUID appUuid, String config, Integer id) {
 
+    }
+
+    @Override
+    public void onAppConfigRequest(final UUID appId) {
+
+    }
+
+    @Override
+    public void onAppConfigSet(final UUID appId, final ArrayList<DynamicAppConfig> configs) {
+        
     }
 
     /**

@@ -41,6 +41,7 @@ import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.appmanager.config.DynamicAppConfig;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.LoyaltyCard;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventCameraRemote;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
@@ -367,6 +368,23 @@ public class GBDeviceService implements DeviceService {
         if (id != null) {
             intent.putExtra(EXTRA_APP_CONFIG_ID, id);
         }
+        invokeService(intent);
+    }
+
+    @Override
+    public void onAppConfigRequest(final UUID uuid) {
+        Intent intent = createIntent().setAction(ACTION_APP_CONFIG_REQUEST)
+                .putExtra(EXTRA_APP_UUID, uuid);
+
+        invokeService(intent);
+    }
+
+    @Override
+    public void onAppConfigSet(final UUID uuid, final ArrayList<DynamicAppConfig> configs) {
+        Intent intent = createIntent().setAction(ACTION_APP_CONFIG_SET)
+                .putExtra(EXTRA_APP_UUID, uuid)
+                .putParcelableArrayListExtra(EXTRA_APP_CONFIG, configs);
+
         invokeService(intent);
     }
 
