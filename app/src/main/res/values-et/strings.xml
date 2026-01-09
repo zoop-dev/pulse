@@ -1191,4 +1191,9 @@
     <string name="reminder_date">Kuupäev</string>
     <string name="reminder_time">Kellaaeg</string>
     <string name="reminder_message">Sõnum</string>
+    <string name="watchface_setting_wrist_flick_hour">Tunniseier (-360 to 360)</string>
+    <string name="watchface_setting_wrist_flick_minute">Minutiseier (-360 to 360)</string>
+    <string name="watchface_setting_wrist_flick_duration">Kestus (msek)</string>
+    <string name="watchface_widget_type_chance_rain">Vihma tõenäosus</string>
+    <string name="watchface_widget_type_uv_index">UV indeks</string>
 </resources>
