@@ -110,6 +110,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <!-- Needed for Health Connect See this for more: https://developer.android.com/health-and-fitness/guides/health-connect/plan/data-types#alpha10 -->
+    <uses-permission android:name="android.permission.health.WRITE_ACTIVE_CALORIES_BURNED"/>
     <uses-permission android:name="android.permission.health.WRITE_HEART_RATE"/>
     <uses-permission android:name="android.permission.health.WRITE_STEPS"/>
     <uses-permission android:name="android.permission.health.WRITE_EXERCISE"/>
@@ -129,6 +130,8 @@
     <uses-permission android:name="android.permission.health.WRITE_RESPIRATORY_RATE" />
     <uses-permission android:name="android.permission.health.WRITE_RESTING_HEART_RATE" />
     <uses-permission android:name="android.permission.health.WRITE_BLOOD_GLUCOSE" />
+    <uses-permission android:name="android.permission.health.WRITE_STEPS_CADENCE" />
+    <uses-permission android:name="android.permission.health.WRITE_CYCLING_PEDALING_CADENCE" />
     <uses-sdk tools:overrideLibrary="androidx.health.connect.client"/>
 
     <uses-feature

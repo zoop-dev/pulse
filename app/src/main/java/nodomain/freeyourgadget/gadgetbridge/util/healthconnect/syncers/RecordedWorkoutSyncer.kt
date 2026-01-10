@@ -21,6 +21,8 @@ import android.content.Context
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.permission.HealthPermission
 import androidx.health.connect.client.permission.HealthPermission.Companion.PERMISSION_WRITE_EXERCISE_ROUTE
+import androidx.health.connect.client.records.ActiveCaloriesBurnedRecord
+import androidx.health.connect.client.records.CyclingPedalingCadenceRecord
 import androidx.health.connect.client.records.DistanceRecord
 import androidx.health.connect.client.records.ElevationGainedRecord
 import androidx.health.connect.client.records.ExerciseRoute
@@ -29,6 +31,8 @@ import androidx.health.connect.client.records.HeartRateRecord
 import androidx.health.connect.client.records.PowerRecord
 import androidx.health.connect.client.records.Record
 import androidx.health.connect.client.records.SpeedRecord
+import androidx.health.connect.client.records.StepsCadenceRecord
+import androidx.health.connect.client.records.StepsRecord
 import androidx.health.connect.client.records.TotalCaloriesBurnedRecord
 import androidx.health.connect.client.records.metadata.Metadata
 import androidx.health.connect.client.units.Energy
@@ -158,6 +162,7 @@ internal object RecordedWorkoutSyncer {
                         }
                     }
                     processAggregateWorkout(
+                        gbDevice,
                         workout,
                         workoutStartInstant,
                         workoutEndInstant,
@@ -325,12 +330,15 @@ internal object RecordedWorkoutSyncer {
         val summaryData = parseSummaryData(workout.summaryData)
         if (summaryData != null) {
             addDistanceRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
-            addCaloriesRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
+            addCaloriesRecords(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
             addElevationGainedRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
+            addStepsRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
+            addCadenceRecords(summaryData, exerciseType, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
         }
     }
 
     private fun processAggregateWorkout(
+        gbDevice: GBDevice,
         workout: BaseActivitySummary,
         workoutStartInstant: Instant,
         workoutEndInstant: Instant,
@@ -355,13 +363,39 @@ internal object RecordedWorkoutSyncer {
             )
         )
 
-        val summaryData = parseSummaryData(workout.summaryData)
+        // Parse summary data - if JSON is empty, try to parse from raw binary data
+        var summaryData = parseSummaryData(workout.summaryData)
+        if (summaryData == null && workout.rawSummaryData != null) {
+            LOG.debug("SUMMARY_DATA is empty for device '{}', parsing from RAW_SUMMARY_DATA", deviceName)
+            try {
+                val coordinator = gbDevice.deviceCoordinator
+                val activitySummaryParser = coordinator.getActivitySummaryParser(gbDevice, context)
+                if (activitySummaryParser != null) {
+                    activitySummaryParser.parseBinaryData(workout, false)
+                    summaryData = parseSummaryData(workout.summaryData)
+                    if (summaryData != null) {
+                        LOG.debug("Successfully parsed RAW_SUMMARY_DATA for device '{}'", deviceName)
+                    } else {
+                        LOG.warn("Failed to parse RAW_SUMMARY_DATA for device '{}': summaryData still null after parsing", deviceName)
+                    }
+                } else {
+                    LOG.warn("No ActivitySummaryParser available for device '{}'", deviceName)
+                }
+            } catch (e: Exception) {
+                LOG.error("Error parsing RAW_SUMMARY_DATA for device '{}'", deviceName, e)
+            }
+        }
+
         if (summaryData != null) {
             addDistanceRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
             addHeartRateRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
             addSpeedRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
-            addCaloriesRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
+            addCaloriesRecords(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
             addElevationGainedRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
+            addStepsRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
+            addCadenceRecords(summaryData, exerciseType, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
+        } else {
+            LOG.warn("No summary data available for workout on device '{}' at {}", deviceName, workoutStartInstant)
         }
     }
 
@@ -617,7 +651,7 @@ internal object RecordedWorkoutSyncer {
         }
     }
 
-    private fun addCaloriesRecord(
+    private fun addCaloriesRecords(
         summaryData: ActivitySummaryData,
         startTime: Instant,
         endTime: Instant,
@@ -627,25 +661,61 @@ internal object RecordedWorkoutSyncer {
         recordsToInsert: MutableList<Record>,
         deviceName: String
     ) {
-        val caloriesPermission = HealthPermission.getWritePermission(TotalCaloriesBurnedRecord::class)
+        // Most fitness trackers report "caloriesBurnt" as active calories (exercise calories)
+        // Try dedicated active_calories field first, fall back to caloriesBurnt
+        val activeCaloriesPermission = HealthPermission.getWritePermission(ActiveCaloriesBurnedRecord::class)
+        if (activeCaloriesPermission in grantedPermissions) {
+            var activeCalories = summaryData.getNumber(ActivitySummaryEntries.CALORIES_ACTIVE, 0.0).toDouble()
 
-        if (caloriesPermission !in grantedPermissions) {
-            return
+            // If no dedicated active_calories field, use caloriesBurnt (which represents active calories for most devices)
+            if (activeCalories == 0.0) {
+                activeCalories = summaryData.getNumber(ActivitySummaryEntries.CALORIES_BURNT, 0.0).toDouble()
+            }
+
+            if (activeCalories > 0) {
+                recordsToInsert.add(
+                    ActiveCaloriesBurnedRecord(
+                        startTime = startTime,
+                        startZoneOffset = offset,
+                        endTime = endTime,
+                        endZoneOffset = offset,
+                        energy = Energy.kilocalories(activeCalories),
+                        metadata = metadata
+                    )
+                )
+                LOG.debug("Added ActiveCaloriesBurnedRecord ({} kcal) for workout at {} for device '{}'.", activeCalories, startTime, deviceName)
+            } else {
+                LOG.debug("No active calories data in workout summary for device '{}' at {}.", deviceName, startTime)
+            }
+        } else {
+            LOG.debug("Permission for ActiveCaloriesBurnedRecord not granted for device '{}'.", deviceName)
         }
 
-        val caloriesBurnt = summaryData.getNumber(ActivitySummaryEntries.CALORIES_BURNT, 0.0)
-        if (caloriesBurnt.toDouble() > 0) {
-            recordsToInsert.add(
-                TotalCaloriesBurnedRecord(
-                    startTime = startTime,
-                    startZoneOffset = offset,
-                    endTime = endTime,
-                    endZoneOffset = offset,
-                    energy = Energy.kilocalories(caloriesBurnt.toDouble()),
-                    metadata = metadata
+        // Only sync TotalCaloriesBurnedRecord if we have both active AND resting calories
+        // Otherwise, syncing the same value as both active and total would be misleading
+        val totalCaloriesPermission = HealthPermission.getWritePermission(TotalCaloriesBurnedRecord::class)
+        if (totalCaloriesPermission in grantedPermissions) {
+            val activeCalories = summaryData.getNumber(ActivitySummaryEntries.CALORIES_ACTIVE, 0.0).toDouble()
+            val restingCalories = summaryData.getNumber(ActivitySummaryEntries.CALORIES_RESTING, 0.0).toDouble()
+
+            if (activeCalories > 0 && restingCalories > 0) {
+                val totalCalories = activeCalories + restingCalories
+                recordsToInsert.add(
+                    TotalCaloriesBurnedRecord(
+                        startTime = startTime,
+                        startZoneOffset = offset,
+                        endTime = endTime,
+                        endZoneOffset = offset,
+                        energy = Energy.kilocalories(totalCalories),
+                        metadata = metadata
+                    )
                 )
-            )
-            LOG.debug("Added TotalCaloriesBurnedRecord ({} kcal) for workout at {} for device '{}'.", caloriesBurnt, startTime, deviceName)
+                LOG.debug("Added TotalCaloriesBurnedRecord ({} kcal = {} active + {} resting) for workout at {} for device '{}'.",
+                    totalCalories, activeCalories, restingCalories, startTime, deviceName)
+            } else {
+                LOG.debug("Not syncing TotalCaloriesBurnedRecord - need both active and resting calories (have: active={}, resting={}) for device '{}'",
+                    activeCalories, restingCalories, deviceName)
+            }
         }
     }
 
@@ -685,6 +755,105 @@ internal object RecordedWorkoutSyncer {
                 )
             )
             LOG.debug("Added ElevationGainedRecord ({} m) for workout at {} for device '{}'.", elevationGain, startTime, deviceName)
+        }
+    }
+
+    private fun addStepsRecord(
+        summaryData: ActivitySummaryData,
+        startTime: Instant,
+        endTime: Instant,
+        offset: ZoneOffset,
+        metadata: Metadata,
+        grantedPermissions: Set<String>,
+        recordsToInsert: MutableList<Record>,
+        deviceName: String
+    ) {
+        val stepsPermission = HealthPermission.getWritePermission(StepsRecord::class)
+        if (stepsPermission !in grantedPermissions) {
+            return
+        }
+
+        val steps = summaryData.getNumber(ActivitySummaryEntries.STEPS, 0.0).toLong()
+        if (steps > 0) {
+            recordsToInsert.add(
+                StepsRecord(
+                    startTime = startTime,
+                    startZoneOffset = offset,
+                    endTime = endTime,
+                    endZoneOffset = offset,
+                    count = steps,
+                    metadata = metadata
+                )
+            )
+            LOG.debug("Added StepsRecord ({} steps) for workout at {} for device '{}'.", steps, startTime, deviceName)
+        }
+    }
+
+    private fun addCadenceRecords(
+        summaryData: ActivitySummaryData,
+        exerciseType: Int,
+        startTime: Instant,
+        endTime: Instant,
+        offset: ZoneOffset,
+        metadata: Metadata,
+        grantedPermissions: Set<String>,
+        recordsToInsert: MutableList<Record>,
+        deviceName: String
+    ) {
+        val cadenceAvg = summaryData.getNumber(ActivitySummaryEntries.CADENCE_AVG, 0.0)
+        if (cadenceAvg.toDouble() <= 0) {
+            return
+        }
+
+        // Determine if this is a cycling or walking/running workout
+        val isCyclingWorkout = when (exerciseType) {
+            ExerciseSessionRecord.EXERCISE_TYPE_BIKING,
+            ExerciseSessionRecord.EXERCISE_TYPE_BIKING_STATIONARY -> true
+            else -> false
+        }
+
+        if (isCyclingWorkout) {
+            val cyclingCadencePermission = HealthPermission.getWritePermission(CyclingPedalingCadenceRecord::class)
+            if (cyclingCadencePermission in grantedPermissions) {
+                val midTime = startTime.plusSeconds((endTime.epochSecond - startTime.epochSecond) / 2)
+                recordsToInsert.add(
+                    CyclingPedalingCadenceRecord(
+                        startTime = midTime,
+                        startZoneOffset = offset,
+                        endTime = midTime,
+                        endZoneOffset = offset,
+                        samples = listOf(
+                            CyclingPedalingCadenceRecord.Sample(
+                                time = midTime,
+                                revolutionsPerMinute = cadenceAvg.toDouble()
+                            )
+                        ),
+                        metadata = metadata
+                    )
+                )
+                LOG.debug("Added CyclingPedalingCadenceRecord (avg: {} rpm) for workout at {} for device '{}'.", cadenceAvg, startTime, deviceName)
+            }
+        } else {
+            val stepsCadencePermission = HealthPermission.getWritePermission(StepsCadenceRecord::class)
+            if (stepsCadencePermission in grantedPermissions) {
+                val midTime = startTime.plusSeconds((endTime.epochSecond - startTime.epochSecond) / 2)
+                recordsToInsert.add(
+                    StepsCadenceRecord(
+                        startTime = midTime,
+                        startZoneOffset = offset,
+                        endTime = midTime,
+                        endZoneOffset = offset,
+                        samples = listOf(
+                            StepsCadenceRecord.Sample(
+                                time = midTime,
+                                rate = cadenceAvg.toDouble()
+                            )
+                        ),
+                        metadata = metadata
+                    )
+                )
+                LOG.debug("Added StepsCadenceRecord (avg: {} steps/min) for workout at {} for device '{}'.", cadenceAvg, startTime, deviceName)
+            }
         }
     }
 }

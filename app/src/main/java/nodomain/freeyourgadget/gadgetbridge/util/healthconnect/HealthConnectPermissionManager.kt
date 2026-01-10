@@ -90,9 +90,13 @@ object HealthConnectPermissionManager {
                 HealthPermission.getWritePermission(DistanceRecord::class),
                 HealthPermission.getWritePermission(HeartRateRecord::class),
                 HealthPermission.getWritePermission(TotalCaloriesBurnedRecord::class),
+                HealthPermission.getWritePermission(ActiveCaloriesBurnedRecord::class),
                 HealthPermission.getWritePermission(ElevationGainedRecord::class),
                 HealthPermission.getWritePermission(SpeedRecord::class),
                 HealthPermission.getWritePermission(PowerRecord::class),
+                HealthPermission.getWritePermission(StepsRecord::class),
+                HealthPermission.getWritePermission(StepsCadenceRecord::class),
+                HealthPermission.getWritePermission(CyclingPedalingCadenceRecord::class),
                 PERMISSION_WRITE_EXERCISE_ROUTE
             )
         }
