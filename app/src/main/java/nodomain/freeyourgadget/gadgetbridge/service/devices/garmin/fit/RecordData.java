@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit;
 
 import androidx.annotation.NonNull;
 
+import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -18,8 +19,11 @@ import nodomain.freeyourgadget.gadgetbridge.util.GBToStringBuilder;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes.BaseType.STRING;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RecordData {
+    private static final Logger LOG = LoggerFactory.getLogger(RecordData.class);
 
     private final RecordDefinition recordDefinition;
     private final RecordHeader recordHeader;
@@ -140,6 +144,59 @@ public class RecordData {
                 return fieldData.decode();
             }
         }
+        return null;
+    }
+
+    public <T> T getFieldByNumber(int number, final Class<T> clazz) {
+        return safeCast(getFieldByNumber(number), clazz);
+    }
+
+    public <T> T[] getArrayFieldByNumber(int number, final Class<T> clazz) {
+        final Object object = getFieldByNumber(number);
+        if (object == null)
+            return null;
+        if (!object.getClass().isArray()) {
+            final T casted = safeCast(object, clazz);
+            if (casted != null) {
+                @SuppressWarnings("unchecked")
+                final T[] ret = (T[]) Array.newInstance(clazz, 1);
+                ret[0] = casted;
+                return ret;
+            }
+        }
+
+        final Object[] objectsArray = (Object[]) object;
+
+        @SuppressWarnings("unchecked")
+        final T[] ret = (T[]) Array.newInstance(clazz, objectsArray.length);
+
+        for (int i = 0; i < objectsArray.length; i++) {
+            ret[i] = safeCast(objectsArray[i], clazz);
+            if (ret[i] == null) {
+                // One of the safe casts failed - abort
+                return null;
+            }
+        }
+
+        return ret;
+    }
+
+    private <T> T safeCast(final Object object, final Class<T> clazz) {
+        if (object == null) {
+            return null;
+        }
+        if (clazz.isInstance(object)) {
+            return clazz.cast(object);
+        }
+
+        LOG.error(
+                "Unable to cast {} ({}) to {}, returning null - this is likely a bug. Record: {}",
+                object,
+                object.getClass().getSimpleName(),
+                clazz.getSimpleName(),
+                this
+        );
+
         return null;
     }
 
@@ -290,6 +347,7 @@ public class RecordData {
             return fieldDefinition.decode(valueHolder);
         }
 
+        @NonNull
         public String toString() {
             return "(" + fieldDefinition.getBaseType().name() + "/" + size + ")";
         }

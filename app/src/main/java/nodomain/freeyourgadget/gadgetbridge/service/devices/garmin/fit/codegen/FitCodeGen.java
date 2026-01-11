@@ -52,7 +52,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 @RequiresApi(api = Build.VERSION_CODES.CUR_DEVELOPMENT)
 public class FitCodeGen {
     private static final String COPYRIGHT_HEADER = """
-            /*  Copyright (C) 2025 Freeyourgadget
+            /*  Copyright (C) 2026 Freeyourgadget
             
                 This file is part of Gadgetbridge.
             
@@ -126,7 +126,8 @@ public class FitCodeGen {
         final String result = template
                 .replace("${copyrightHeader}", (existingHeader.isEmpty() ? COPYRIGHT_HEADER : existingHeader).strip())
                 .replace("${generatorClass}", Objects.requireNonNull(getClass().getCanonicalName()))
-                .replace("${switchCases}", String.join("\n", switchCases));
+                .replace("${switchCases}", String.join("\n", switchCases))
+                .replaceAll("\\R", System.lineSeparator());
 
         FileUtils.copyStringToFile(result, factoryFile, "replace");
     }
@@ -246,18 +247,7 @@ public class FitCodeGen {
                         
                             @Nullable
                             public ${fieldType}[] ${getterName}() {
-                                final Object object = getFieldByNumber(${primitiveNumber});
-                                if (object == null)
-                                    return null;
-                                if (!object.getClass().isArray()) {
-                                    return new ${fieldType}[]{(${fieldType}) object};
-                                }
-                                final Object[] objectsArray = (Object[]) object;
-                                final ${fieldType}[] ret = new ${fieldType}[objectsArray.length];
-                                for (int i = 0; i < objectsArray.length; i++) {
-                                    ret[i] = (${fieldType}) objectsArray[i];
-                                }
-                                return ret;
+                                return getArrayFieldByNumber(${primitiveNumber}, ${fieldType}.class);
                             }
                         """;
             } else {
@@ -266,7 +256,7 @@ public class FitCodeGen {
                         
                             @Nullable
                             public ${fieldType} ${getterName}() {
-                                return (${fieldType}) getFieldByNumber(${primitiveNumber});
+                                return getFieldByNumber(${primitiveNumber}, ${fieldType}.class);
                             }
                         """;
             }
@@ -344,7 +334,9 @@ public class FitCodeGen {
             sb.append("}\n");
         }
 
-        FileUtils.copyStringToFile(sb.toString(), outputFile, "replace");
+        final String output = sb.toString().replaceAll("\\R", System.lineSeparator());
+
+        FileUtils.copyStringToFile(output, outputFile, "replace");
     }
 
     public Class<?> getFieldType(final GlobalFITMessage.FieldDefinitionPrimitive primitive) {
