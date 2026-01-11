@@ -1419,7 +1419,7 @@
 \n
 \nPROCEDEIXI SOTA LA SEVA RESPONSABILITAT.</string>
     <string name="appmanager_app_download">Descarregar a cache</string>
-    <string name="debugactivity_confirm_remove_device_preferences">Això reestablirà les preferències del dispositiu per a tots els dispositius, n\'està segur?</string>
+    <string name="debugactivity_confirm_remove_device_preferences">Açò restablirà les preferències del dispositiu per a aquest dispositiu. Estàs segur?</string>
     <string name="debugactivity_confirm_remove_device_preferences_title">Eliminar preferències del dispositiu\?</string>
     <string name="appmanager_downloaded_to_cache">Descarregat %s a cache</string>
     <string name="appmanager_download_app_error">Error descarregant la app</string>
@@ -1672,4 +1672,12 @@
     <string name="pref_blacklist_calendars_summary">Els calendari de la llista negra no es sincronitzaran al dispositiu</string>
     <string name="pref_summary_canned_replies">Resposta del rellotge amb missatges predefinits</string>
     <string name="pref_header_intent_api">API d\'Intenció</string>
+    <string name="pref_header_sync">Sincronització</string>
+    <string name="pref_header_dashboard">Panell de Control</string>
+    <string name="pref_title_preview_message_in_title">Mostra una previsualització del missatge al títol</string>
+    <string name="pref_summary_preview_message_in_title">Mostra una previsualització del missatge en el títol de la notificació sempre que estiga permès pel dispositiu</string>
+    <string name="pref_title_casio_alert_calendar">Alertes de notificacions de calendari</string>
+    <string name="pref_summary_casio_alert_calendar">Alerta (vibra/sona) per a les notificacions de calendari</string>
+    <string name="pref_title_casio_alert_call">Alerta de cridades entrants</string>
+    <string name="pref_summary_casio_alert_call">Alerta (vibra/sona) quan hi hagin trucades entrants</string>
 </resources>
