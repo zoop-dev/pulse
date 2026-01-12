@@ -475,8 +475,8 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(107, BaseType.UINT16, "max_power_position", FieldDefinitionFactory.FIELD.ARRAY), // watt
             new FieldDefinitionPrimitive(108, BaseType.UINT8, "avg_cadence_position", FieldDefinitionFactory.FIELD.ARRAY), // rpm
             new FieldDefinitionPrimitive(109, BaseType.UINT8, "max_cadence_position", FieldDefinitionFactory.FIELD.ARRAY), // rpm
-            new FieldDefinitionPrimitive(110, BaseType.UINT32, "enhanced_avg_speed", 100, 0), // m/s
-            new FieldDefinitionPrimitive(111, BaseType.UINT32, "enhanced_max_speed", 100, 0), // m/s
+            new FieldDefinitionPrimitive(110, BaseType.UINT32, "enhanced_avg_speed", 1000, 0), // m/s
+            new FieldDefinitionPrimitive(111, BaseType.UINT32, "enhanced_max_speed", 1000, 0), // m/s
             new FieldDefinitionPrimitive(112, BaseType.UINT32, "enhanced_avg_altitude", 5, 500), // m
             new FieldDefinitionPrimitive(113, BaseType.UINT32, "enhanced_min_altitude", 5, 500), // m
             new FieldDefinitionPrimitive(114, BaseType.UINT32, "enhanced_max_altitude", 5, 500), // m
