@@ -11,12 +11,13 @@ import java.util.GregorianCalendar;
 
 public class DurationXLabelFormatter extends ValueFormatter {
     @SuppressLint("SimpleDateFormat")
-    private final SimpleDateFormat annotationDateFormat;
+    private final SimpleDateFormat annotationDateFormatMmSs = new SimpleDateFormat("mm:ss");
+    @SuppressLint("SimpleDateFormat")
+    private final SimpleDateFormat annotationDateFormatHhMmSs = new SimpleDateFormat("HH:mm:ss");
 
     private final Calendar cal = GregorianCalendar.getInstance();
 
-    public DurationXLabelFormatter(String simpleDateFormatPattern) {
-        this.annotationDateFormat = new SimpleDateFormat(simpleDateFormatPattern);
+    public DurationXLabelFormatter() {
     }
 
     // TODO: this does not work. Cannot use precomputed labels
@@ -26,6 +27,6 @@ public class DurationXLabelFormatter extends ValueFormatter {
         final int ts = (int) value;
         cal.setTimeInMillis(ts);
         final Date date = cal.getTime();
-        return annotationDateFormat.format(date);
+        return (ts >= 3600000 ? annotationDateFormatHhMmSs : annotationDateFormatMmSs).format(date);
     }
 }

@@ -63,7 +63,7 @@ class WorkoutChartsActivity : AbstractGBActivity(), MenuProvider {
             isEnabled = true
             textColor = chartTextColor
             position = XAxis.XAxisPosition.BOTTOM
-            valueFormatter = DurationXLabelFormatter("mm:ss")
+            valueFormatter = DurationXLabelFormatter()
         }
         binding.workoutDataChart.axisLeft.apply {
             setDrawGridLines(false)

@@ -479,7 +479,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             isEnabled = true
             textColor = chartTextColor
             position = XAxis.XAxisPosition.BOTTOM
-            valueFormatter = DurationXLabelFormatter("mm:ss")
+            valueFormatter = DurationXLabelFormatter()
         }
         lineChart.axisLeft.apply {
             setDrawGridLines(false)
