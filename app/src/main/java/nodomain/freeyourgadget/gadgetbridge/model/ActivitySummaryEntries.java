@@ -38,6 +38,7 @@ public class ActivitySummaryEntries {
 
     public static final String TOTAL_ASCENT = "activityTotalAscent";
     public static final String TOTAL_DESCENT = "activityTotalDescent";
+    public static final String AVERAGE_ASCENT_VELOCITY = "average_ascent_velocity";
     public static final String ASCENT_DISTANCE = "ascentDistance";
     public static final String ASCENT_METERS = "ascentMeters";
     public static final String ASCENT_SECONDS = "ascentSeconds";
@@ -219,6 +220,7 @@ public class ActivitySummaryEntries {
     public static final String UNIT_SECONDS_PER_M = "seconds_m";
     public static final String UNIT_CENTIMETERS_PER_SECOND = "centimeters_second";
     public static final String UNIT_METERS_PER_SECOND = "meters_second";
+    public static final String UNIT_METERS_PER_HOUR = "meters_per_hour";
     public static final String UNIT_KMPH = "km_h";
     public static final String UNIT_SPM = "spm";
     public static final String UNIT_STEPS = "steps_unit";

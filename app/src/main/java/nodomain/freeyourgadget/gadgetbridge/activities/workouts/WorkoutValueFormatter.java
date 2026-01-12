@@ -5,6 +5,7 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KILOMETERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_LB;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS_PER_HOUR;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS_PER_SECOND;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_100_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_100_YARDS;
@@ -113,6 +114,12 @@ public class WorkoutValueFormatter {
                     } else { //metric
                         value = value * 3.6;
                         unit = "km_h";
+                    }
+                    break;
+                case UNIT_METERS_PER_HOUR:
+                    if (units.equals(UNIT_IMPERIAL)) {
+                        value = value * 3.28084D;
+                        unit = "foot_per_hour";
                     }
                     break;
                 case UNIT_SECONDS_PER_M:

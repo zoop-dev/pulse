@@ -143,6 +143,7 @@ object ActivitySummaryGroup {
                     ActivitySummaryEntries.FLAT_DISTANCE,
                     ActivitySummaryEntries.ELEVATION_GAIN,
                     ActivitySummaryEntries.ELEVATION_LOSS,
+                    ActivitySummaryEntries.AVERAGE_ASCENT_VELOCITY,
                 )
             )
 

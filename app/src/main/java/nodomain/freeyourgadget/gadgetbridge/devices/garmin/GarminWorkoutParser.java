@@ -317,6 +317,9 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         if (session.getTotalDescent() != null && !ActivityKind.isDiving(activityKind)) {
             summaryData.add(TOTAL_DESCENT, session.getTotalDescent(), UNIT_METERS);
         }
+        if (session.getAvgVam() != null && !ActivityKind.isDiving(activityKind)) {
+            summaryData.add(AVERAGE_ASCENT_VELOCITY, session.getAvgVam() * 3600, UNIT_METERS_PER_HOUR);
+        }
         if (session.getAvgSwimCadence() != null) {
             summaryData.add(SWIM_AVG_CADENCE, session.getAvgSwimCadence(), UNIT_STROKES_PER_LENGTH);
         }
