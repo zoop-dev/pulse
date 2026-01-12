@@ -98,6 +98,10 @@ public class ActivitySummaryEntries {
     public static final String FRONT_GEAR_SHIFTS = "front_gear_shifts";
     public static final String REAR_GEAR_SHIFTS = "rear_gear_shifts";
     public static final String ACTIVE_SCORE = "workout_active_score";
+    public static final String SOLAR_INTENSITY = "solar_intensity";
+    public static final String BATTERY_GAIN = "battery_gain";
+    public static final String MOUNTAIN_BIKE_GRIT_SCORE = "mountain_bike_grit_score";
+    public static final String MOUNTAIN_BIKE_FLOW_SCORE = "mountain_bike_flow_score";
 
     public static final String AVG_VERTICAL_OSCILLATION = "vertical_oscillation";
     public static final String AVG_GROUND_CONTACT_TIME = "ground_contact_time";
@@ -124,6 +128,9 @@ public class ActivitySummaryEntries {
     public static final String HR_ZONE_EXTREME = "hrZoneExtreme";
     public static final String HR_ZONE_MAXIMUM = "hrZoneMaximum";
 
+    public static final String TEMPERATURE_AVG = "avg_temperature";
+    public static final String TEMPERATURE_MIN = "min_temperature";
+    public static final String TEMPERATURE_MAX = "max_temperature";
     public static final String RESPIRATION_AVG = "average_respiration_rate";
     public static final String RESPIRATION_MAX = "max_respiration_rate";
     public static final String RESPIRATION_MIN = "min_respiration_rate";
@@ -164,6 +171,7 @@ public class ActivitySummaryEntries {
     public static final String SWOLF_MIN = "swolfMin";
     public static final String SWIM_AVG_CADENCE = "swim_avg_cadence";
 
+    public static final String CALORIES_CONSUMED = "calories_consumed";
     public static final String CALORIES_BURNT = "caloriesBurnt";
     public static final String CALORIES_ACTIVE = "active_calories";
     public static final String CALORIES_RESTING = "restingCalories";
@@ -172,6 +180,7 @@ public class ActivitySummaryEntries {
     public static final String WORKOUT_LOAD = "currentWorkoutLoad";
     public static final String MAXIMUM_OXYGEN_UPTAKE = "maximumOxygenUptake";
     public static final String RECOVERY_TIME = "recoveryTime";
+    public static final String FLUID_CONSUMED = "fluid_consumed";
     public static final String ESTIMATED_SWEAT_LOSS = "estimatedSweatLoss";
     public static final String LACTATE_THRESHOLD_HR = "lactateThresholdHeartRate";
 
@@ -247,6 +256,7 @@ public class ActivitySummaryEntries {
     public static final String GROUP_POWER = "workout_power";
     public static final String GROUP_HEART_RATE = "heart_rate";
     public static final String GROUP_RESPIRATORY_RATE = "respiratoryrate";
+    public static final String GROUP_TEMPERATURE = "menuitem_temperature";
     public static final String GROUP_OTHER = "Other";
     public static final String GROUP_HEART_RATE_ZONES = "HeartRateZones";
     public static final String GROUP_STROKES = "Strokes";

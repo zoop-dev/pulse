@@ -352,7 +352,9 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(168, BaseType.SINT32, "training_load_peak", 65536, 0),
             new FieldDefinitionPrimitive(169, BaseType.UINT16, "enhanced_avg_respiration_rate", 100, 0), // breaths/min
             new FieldDefinitionPrimitive(170, BaseType.UINT16, "enhanced_max_respiration_rate", 100, 0), // breaths/min
+            new FieldDefinitionPrimitive(177, BaseType.UINT16, "calories_consumed"), // kcal
             new FieldDefinitionPrimitive(178, BaseType.UINT16, "estimated_sweat_loss"), // ml
+            new FieldDefinitionPrimitive(179, BaseType.UINT16, "fluid_consumed"), // ml
             new FieldDefinitionPrimitive(180, BaseType.UINT16, "enhanced_min_respiration_rate", 100, 0), // breaths/min
             new FieldDefinitionPrimitive(181, BaseType.FLOAT32, "total_grit"),
             new FieldDefinitionPrimitive(182, BaseType.FLOAT32, "total_flow"),
@@ -369,6 +371,8 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(198, BaseType.UINT8, "hrv_rmssd"), // ms
             new FieldDefinitionPrimitive(199, BaseType.UINT8, "total_fractional_ascent", 100, 0), // m
             new FieldDefinitionPrimitive(200, BaseType.UINT8, "total_fractional_descent", 100, 0), // m
+            new FieldDefinitionPrimitive(203, BaseType.UINT32, "battery_gain"), // minutes
+            new FieldDefinitionPrimitive(204, BaseType.UINT16, "solar_intensity", 100, 0), // %
             new FieldDefinitionPrimitive(205, BaseType.UINT8, "beginning_potential"),
             new FieldDefinitionPrimitive(206, BaseType.UINT8, "ending_potential"),
             new FieldDefinitionPrimitive(207, BaseType.UINT8, "min_stamina"),

@@ -971,8 +971,18 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Integer getCaloriesConsumed() {
+        return (Integer) getFieldByNumber(177);
+    }
+
+    @Nullable
     public Integer getEstimatedSweatLoss() {
         return (Integer) getFieldByNumber(178);
+    }
+
+    @Nullable
+    public Integer getFluidConsumed() {
+        return (Integer) getFieldByNumber(179);
     }
 
     @Nullable
@@ -1053,6 +1063,16 @@ public class FitSession extends RecordData {
     @Nullable
     public Float getTotalFractionalDescent() {
         return (Float) getFieldByNumber(200);
+    }
+
+    @Nullable
+    public Long getBatteryGain() {
+        return (Long) getFieldByNumber(203);
+    }
+
+    @Nullable
+    public Float getSolarIntensity() {
+        return (Float) getFieldByNumber(204);
     }
 
     @Nullable
@@ -1818,8 +1838,18 @@ public class FitSession extends RecordData {
             return this;
         }
 
+        public Builder setCaloriesConsumed(final Integer value) {
+            setFieldByNumber(177, value);
+            return this;
+        }
+
         public Builder setEstimatedSweatLoss(final Integer value) {
             setFieldByNumber(178, value);
+            return this;
+        }
+
+        public Builder setFluidConsumed(final Integer value) {
+            setFieldByNumber(179, value);
             return this;
         }
 
@@ -1900,6 +1930,16 @@ public class FitSession extends RecordData {
 
         public Builder setTotalFractionalDescent(final Float value) {
             setFieldByNumber(200, value);
+            return this;
+        }
+
+        public Builder setBatteryGain(final Long value) {
+            setFieldByNumber(203, value);
+            return this;
+        }
+
+        public Builder setSolarIntensity(final Float value) {
+            setFieldByNumber(204, value);
             return this;
         }
 

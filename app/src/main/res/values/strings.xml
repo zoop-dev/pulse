@@ -2594,6 +2594,9 @@
     <string name="distance_avg">Distance AVG</string>
     <string name="distance_total">Distance Total</string>
     <string name="activeSeconds">Active</string>
+    <string name="calories_consumed">Calories consumed</string>
+    <string name="mountain_bike_grit_score">Grit score</string>
+    <string name="mountain_bike_flow_score">Flow score</string>
     <string name="caloriesBurnt">Calories</string>
     <string name="restingCalories">Resting Calories</string>
     <string name="metabolic_rate">Metabolic Rate</string>
@@ -2610,6 +2613,9 @@
     <string name="averageHR">Avg Heart Rate</string>
     <string name="maxHR">Max Heart Rate</string>
     <string name="minHR">Min Heart Rate</string>
+    <string name="avg_temperature">Avg Temperature</string>
+    <string name="min_temperature">Min Temperature</string>
+    <string name="max_temperature">Max Temperature</string>
     <string name="averageKMPaceSeconds">Avg Pace</string>
     <string name="HeartRateZones">Heart Rate Zones</string>
     <string name="hrZoneNa">N/A</string>
@@ -2633,6 +2639,7 @@
     <string name="anaerobicTrainingEffect">Anaerobic Effect</string>
     <string name="currentWorkoutLoad">Workout Load</string>
     <string name="maximumOxygenUptake">Maximum Oxygen Uptake</string>
+    <string name="fluid_consumed">Fluid consumed</string>
     <string name="estimatedSweatLoss">Estimated Sweat Loss</string>
     <string name="lactateThresholdHeartRate">Lactate Threshold Heart Rate</string>
     <string name="recoveryTime">Recovery Time</string>
@@ -2760,6 +2767,8 @@
     <string name="front_gear_shifts">Front shifts</string>
     <string name="rear_gear_shifts">Rear shifts</string>
     <string name="workout_active_score">Active Score</string>
+    <string name="solar_intensity">Solar intensity</string>
+    <string name="battery_gain">Battery gain</string>
     <string name="vertical_oscillation">Vertical Oscillation</string>
     <string name="ground_contact_time">Ground Contact Time</string>
     <string name="vertical_ratio">Vertical Ratio</string>

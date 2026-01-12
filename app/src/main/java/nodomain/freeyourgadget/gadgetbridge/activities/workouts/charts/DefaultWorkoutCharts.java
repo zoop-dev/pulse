@@ -322,7 +322,7 @@ public class DefaultWorkoutCharts {
         return new WorkoutChart(
                 "temperature",
                 context.getString(R.string.menuitem_temperature),
-                ActivitySummaryEntries.GROUP_OTHER,
+                ActivitySummaryEntries.GROUP_TEMPERATURE,
                 new LineData(dataset),
                 integerFormatter,
                 getUnitString(context, UNIT_CELSIUS),

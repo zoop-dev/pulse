@@ -255,11 +255,15 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         }
         summaryData.add(STEP_LENGTH_AVG, session.getAvgStepLength(), UNIT_MM);
         if (session.getTotalCalories() != null) {
+            summaryData.add(CALORIES_CONSUMED, session.getCaloriesConsumed(), UNIT_KCAL);
             summaryData.add(CALORIES_BURNT, session.getTotalCalories(), UNIT_KCAL);
             if (session.getRestingCalories() != null) {
                 summaryData.add(CALORIES_ACTIVE, session.getTotalCalories() - session.getRestingCalories(), UNIT_KCAL);
                 summaryData.add(CALORIES_RESTING, session.getRestingCalories(), UNIT_KCAL);
             }
+        }
+        if (session.getFluidConsumed() != null) {
+            summaryData.add(FLUID_CONSUMED, session.getFluidConsumed(), UNIT_ML);
         }
         if (session.getEstimatedSweatLoss() != null) {
             summaryData.add(ESTIMATED_SWEAT_LOSS, session.getEstimatedSweatLoss(), UNIT_ML);
@@ -579,10 +583,22 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                 summaryData.add(BOTTOM_TIME, diveSummary.getBottomTime(), UNIT_SECONDS);
             }
         }
+        summaryData.add(TEMPERATURE_MIN, session.getMinTemperature(), UNIT_CELSIUS);
+        summaryData.add(TEMPERATURE_MAX, session.getMaxTemperature(), UNIT_CELSIUS);
+        summaryData.add(TEMPERATURE_AVG, session.getAvgTemperature(), UNIT_CELSIUS);
+
+        // MTB-specific metrics
+        summaryData.add("activity_type_mountain_bike", MOUNTAIN_BIKE_GRIT_SCORE, session.getTotalGrit(), UNIT_NONE);
+        summaryData.add("activity_type_mountain_bike", MOUNTAIN_BIKE_FLOW_SCORE, session.getAvgFlow(), UNIT_NONE);
 
         summaryData.add(TRAINING_LOAD, safeRound(session.getTrainingLoadPeak()), UNIT_NONE);
         summaryData.add(INTENSITY_FACTOR, session.getIntensityFactor(), UNIT_NONE);
         summaryData.add(TRAINING_STRESS_SCORE, session.getTrainingStressScore(), UNIT_NONE);
+
+        summaryData.add(SOLAR_INTENSITY, safeRound(session.getSolarIntensity()), UNIT_PERCENTAGE);
+        if (session.getBatteryGain() != null) {
+            summaryData.add(BATTERY_GAIN, session.getBatteryGain() * 60, UNIT_SECONDS);
+        }
 
         if (!diveGases.isEmpty()) {
             final ActivitySummaryTableBuilder tableBuilder = new ActivitySummaryTableBuilder(GAS, "gases_header", Arrays.asList(

@@ -25,6 +25,13 @@ object ActivitySummaryGroup {
                 }
             }
 
+        // Ensure "other" is at the end
+        val other = activeGroups[ActivitySummaryEntries.GROUP_OTHER]
+        if (other != null) {
+            activeGroups.remove(ActivitySummaryEntries.GROUP_OTHER)
+            activeGroups[ActivitySummaryEntries.GROUP_OTHER] = other
+        }
+
         // activeGroups is already ordered
         return activeGroups
     }
@@ -295,6 +302,15 @@ object ActivitySummaryGroup {
                     ActivitySummaryEntries.MOVEMENT_CONTINUITY,
                     ActivitySummaryEntries.MOVEMENT_RHYTHM,
                     ActivitySummaryEntries.MOVEMENT_SPEED_DECAY,
+                )
+            )
+
+            // Temperature
+            put(
+                ActivitySummaryEntries.GROUP_TEMPERATURE, listOf<String>(
+                    ActivitySummaryEntries.TEMPERATURE_MIN,
+                    ActivitySummaryEntries.TEMPERATURE_MAX,
+                    ActivitySummaryEntries.TEMPERATURE_AVG,
                 )
             )
 
