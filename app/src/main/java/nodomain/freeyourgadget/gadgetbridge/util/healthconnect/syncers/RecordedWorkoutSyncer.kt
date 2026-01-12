@@ -46,6 +46,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind
+import nodomain.freeyourgadget.gadgetbridge.util.FileUtils
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs
 import nodomain.freeyourgadget.gadgetbridge.util.healthconnect.HealthConnectUtils
@@ -240,8 +241,8 @@ internal object RecordedWorkoutSyncer {
             return null
         }
 
-        val trackFile = File(trackFilePath)
-        if (!trackFile.exists() || !trackFile.canRead()) {
+        val trackFile = FileUtils.tryFixPath(File(trackFilePath))
+        if (trackFile == null || (!trackFile.exists() || !trackFile.canRead())) {
             LOG.warn("Track file does not exist or cannot be read: $trackFilePath")
             return null
         }

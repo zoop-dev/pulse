@@ -596,7 +596,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
 
             R.id.activity_action_dev_inspect_file -> {
                 val intent = Intent(requireContext(), FitViewerActivity::class.java).apply {
-                    putExtra(FitViewerActivity.EXTRA_PATH, workout.summary.rawDetailsPath)
+                    putExtra(FitViewerActivity.EXTRA_PATH, File(workout.summary.rawDetailsPath).absolutePath)
                 }
                 startActivity(intent)
                 true
@@ -663,7 +663,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
 
         val hasGpx = workoutHasGps(workout.summary)
         val hasRawSummary = workout.summary.rawSummaryData != null
-        val hasRawDetails = workout.summary.rawDetailsPath?.let { File(it).exists() } ?: false
+        val hasRawDetails = workout.summary.rawDetailsPath?.let { FileUtils.tryFixPath(File(it)) != null } ?: false
 
         val overflowMenu = menu.findItem(R.id.activity_detail_overflowMenu)?.subMenu
         if (overflowMenu != null) {
@@ -808,9 +808,14 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             GB.toast(requireContext(), "No raw details in this activity", Toast.LENGTH_LONG, GB.WARN)
             return
         }
+        val file = FileUtils.tryFixPath(File(workout.summary.rawDetailsPath))
+        if (file == null) {
+            GB.toast(requireContext(), "No raw details in this activity", Toast.LENGTH_LONG, GB.WARN)
+            return
+        }
 
         try {
-            AndroidUtils.shareFile(requireContext(), File(workout.summary.rawDetailsPath))
+            AndroidUtils.shareFile(requireContext(), file)
         } catch (e: Exception) {
             GB.toast(
                 requireContext(),
