@@ -4264,4 +4264,16 @@
     <string name="pref_even_realities_g1_touch_long_right_title">长按右边</string>
     <string name="pref_even_realities_g1_touch_long_right_summary">长按右触控板两次时，采取该操作：%s</string>
     <string name="even_realities_no_calendar_events">无即将来临的活动</string>
+    <string name="average_ascent_velocity">平均上升速度</string>
+    <string name="calories_consumed">消耗的卡路里</string>
+    <string name="mountain_bike_grit_score">Grit 分值</string>
+    <string name="mountain_bike_flow_score">Flow 分值</string>
+    <string name="avg_temperature">平均气温</string>
+    <string name="min_temperature">最低气温</string>
+    <string name="max_temperature">最高气温</string>
+    <string name="fluid_consumed">消耗的液体</string>
+    <string name="meters_per_hour">米/秒</string>
+    <string name="foot_per_hour">英尺/时</string>
+    <string name="solar_intensity">阳光强度</string>
+    <string name="battery_gain">电量增加</string>
 </resources>
