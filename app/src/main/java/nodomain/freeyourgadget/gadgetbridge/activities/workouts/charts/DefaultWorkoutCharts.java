@@ -60,6 +60,7 @@ public class DefaultWorkoutCharts {
         boolean hasCadenceValues = false;
         boolean hasElevationValues = false;
         final Accumulator cadenceAccumulator = new Accumulator();
+        final Accumulator temperatureAccumulator = new Accumulator();
 
         for (int i = 0; i <= activityPoints.size() - 1; i++) {
             final ActivityPoint point = activityPoints.get(i);
@@ -106,6 +107,7 @@ public class DefaultWorkoutCharts {
             // Temperature
             if (point.getTemperature() > -273) {
                 temperatureDataPoints.add(new Entry(tsShorten, (float) point.getTemperature()));
+                temperatureAccumulator.add(point.getTemperature());
             }
         }
 
@@ -138,7 +140,7 @@ public class DefaultWorkoutCharts {
         }
 
         if (!temperatureDataPoints.isEmpty()) {
-            charts.add(createTemperatureChart(context, temperatureDataPoints));
+            charts.add(createTemperatureChart(context, temperatureDataPoints, temperatureAccumulator));
         }
 
         return charts;
@@ -307,7 +309,8 @@ public class DefaultWorkoutCharts {
     }
 
     private static WorkoutChart createTemperatureChart(final Context context,
-                                                     final List<Entry> temperatureDataPoints) {
+                                                       final List<Entry> temperatureDataPoints,
+                                                       final Accumulator temperatureAccumulator) {
         final String label = String.format("%s(%s)", context.getString(R.string.menuitem_temperature), getUnitString(context, UNIT_CELSIUS));
         final LineDataSet dataset = createLineDataSet(context, temperatureDataPoints, label, ContextCompat.getColor(context, R.color.chart_line_heart_rate));
         final ValueFormatter integerFormatter = new ValueFormatter() {
@@ -326,10 +329,10 @@ public class DefaultWorkoutCharts {
                 lineChart -> {
                     YAxis yAxisLeft = lineChart.getAxisLeft();
                     yAxisLeft.setAxisMinimum(0);
-                    yAxisLeft.setAxisMaximum(35);
+                    yAxisLeft.setAxisMaximum((float) Math.max(35, temperatureAccumulator.getMax() + 5));
                     YAxis yAxisRight = lineChart.getAxisRight();
                     yAxisRight.setAxisMinimum(0);
-                    yAxisRight.setAxisMaximum(35);
+                    yAxisRight.setAxisMaximum((float) Math.max(35, temperatureAccumulator.getMax() + 5));
                     return kotlin.Unit.INSTANCE;
                 }
         );
