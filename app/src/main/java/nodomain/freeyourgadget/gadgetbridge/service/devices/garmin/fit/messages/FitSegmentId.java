@@ -41,47 +41,47 @@ public class FitSegmentId extends RecordData {
 
     @Nullable
     public String getName() {
-        return (String) getFieldByNumber(0);
+        return getFieldByNumber(0, String.class);
     }
 
     @Nullable
     public String getUuid() {
-        return (String) getFieldByNumber(1);
+        return getFieldByNumber(1, String.class);
     }
 
     @Nullable
     public Integer getSport() {
-        return (Integer) getFieldByNumber(2);
+        return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
     public Integer getEnabled() {
-        return (Integer) getFieldByNumber(3);
+        return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
     public Long getUserProfilePrimaryKey() {
-        return (Long) getFieldByNumber(4);
+        return getFieldByNumber(4, Long.class);
     }
 
     @Nullable
     public Long getDeviceId() {
-        return (Long) getFieldByNumber(5);
+        return getFieldByNumber(5, Long.class);
     }
 
     @Nullable
     public Integer getDefaultRaceLeader() {
-        return (Integer) getFieldByNumber(6);
+        return getFieldByNumber(6, Integer.class);
     }
 
     @Nullable
     public Integer getDeleteStatus() {
-        return (Integer) getFieldByNumber(7);
+        return getFieldByNumber(7, Integer.class);
     }
 
     @Nullable
     public Integer getSelectionType() {
-        return (Integer) getFieldByNumber(8);
+        return getFieldByNumber(8, Integer.class);
     }
 
     /**

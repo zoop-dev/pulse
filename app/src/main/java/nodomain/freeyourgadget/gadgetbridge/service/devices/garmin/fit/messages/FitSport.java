@@ -41,17 +41,17 @@ public class FitSport extends RecordData {
 
     @Nullable
     public Integer getSport() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Integer getSubSport() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public String getName() {
-        return (String) getFieldByNumber(3);
+        return getFieldByNumber(3, String.class);
     }
 
     /**

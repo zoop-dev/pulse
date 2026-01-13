@@ -41,22 +41,22 @@ public class FitExerciseTitle extends RecordData {
 
     @Nullable
     public Integer getExerciseCategory() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Integer getExerciseName() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public String getWktStepName() {
-        return (String) getFieldByNumber(2);
+        return getFieldByNumber(2, String.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

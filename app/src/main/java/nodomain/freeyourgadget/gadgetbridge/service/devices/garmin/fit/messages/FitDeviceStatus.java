@@ -41,22 +41,22 @@ public class FitDeviceStatus extends RecordData {
 
     @Nullable
     public Float getBatteryVoltage() {
-        return (Float) getFieldByNumber(0);
+        return getFieldByNumber(0, Float.class);
     }
 
     @Nullable
     public Integer getBatteryLevel() {
-        return (Integer) getFieldByNumber(2);
+        return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
     public Integer getTemperature() {
-        return (Integer) getFieldByNumber(3);
+        return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

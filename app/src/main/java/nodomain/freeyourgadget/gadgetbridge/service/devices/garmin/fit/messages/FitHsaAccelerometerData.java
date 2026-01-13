@@ -41,70 +41,37 @@ public class FitHsaAccelerometerData extends RecordData {
 
     @Nullable
     public Integer getTimestampMs() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Integer getSamplingInterval() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Number[] getAccelX() {
-        final Object object = getFieldByNumber(2);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(2, Number.class);
     }
 
     @Nullable
     public Number[] getAccelY() {
-        final Object object = getFieldByNumber(3);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(3, Number.class);
     }
 
     @Nullable
     public Number[] getAccelZ() {
-        final Object object = getFieldByNumber(4);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(4, Number.class);
     }
 
     @Nullable
     public Long getTimestamp32k() {
-        return (Long) getFieldByNumber(5);
+        return getFieldByNumber(5, Long.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

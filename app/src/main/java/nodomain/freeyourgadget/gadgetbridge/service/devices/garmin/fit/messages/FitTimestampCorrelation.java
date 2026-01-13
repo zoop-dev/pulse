@@ -41,37 +41,37 @@ public class FitTimestampCorrelation extends RecordData {
 
     @Nullable
     public Float getFractionalTimestamp() {
-        return (Float) getFieldByNumber(0);
+        return getFieldByNumber(0, Float.class);
     }
 
     @Nullable
     public Long getSystemTimestamp() {
-        return (Long) getFieldByNumber(1);
+        return getFieldByNumber(1, Long.class);
     }
 
     @Nullable
     public Float getFractionalSystemTimestamp() {
-        return (Float) getFieldByNumber(2);
+        return getFieldByNumber(2, Float.class);
     }
 
     @Nullable
     public Long getLocalTimestamp() {
-        return (Long) getFieldByNumber(3);
+        return getFieldByNumber(3, Long.class);
     }
 
     @Nullable
     public Integer getTimestampMs() {
-        return (Integer) getFieldByNumber(4);
+        return getFieldByNumber(4, Integer.class);
     }
 
     @Nullable
     public Integer getSystemTimestampMs() {
-        return (Integer) getFieldByNumber(5);
+        return getFieldByNumber(5, Integer.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

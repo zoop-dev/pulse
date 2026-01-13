@@ -41,37 +41,37 @@ public class FitClimbPro extends RecordData {
 
     @Nullable
     public Double getPositionLat() {
-        return (Double) getFieldByNumber(0);
+        return getFieldByNumber(0, Double.class);
     }
 
     @Nullable
     public Double getPositionLong() {
-        return (Double) getFieldByNumber(1);
+        return getFieldByNumber(1, Double.class);
     }
 
     @Nullable
     public Integer getClimbProEvent() {
-        return (Integer) getFieldByNumber(2);
+        return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
     public Integer getClimbNumber() {
-        return (Integer) getFieldByNumber(3);
+        return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
     public Integer getClimbCategory() {
-        return (Integer) getFieldByNumber(4);
+        return getFieldByNumber(4, Integer.class);
     }
 
     @Nullable
     public Float getCurrentDist() {
-        return (Float) getFieldByNumber(5);
+        return getFieldByNumber(5, Float.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

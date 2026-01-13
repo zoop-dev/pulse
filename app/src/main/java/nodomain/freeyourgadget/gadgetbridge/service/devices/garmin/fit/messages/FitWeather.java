@@ -46,97 +46,97 @@ public class FitWeather extends RecordData {
 
     @Nullable
     public Type getWeatherReport() {
-        return (Type) getFieldByNumber(0);
+        return getFieldByNumber(0, Type.class);
     }
 
     @Nullable
     public Integer getTemperature() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Condition getCondition() {
-        return (Condition) getFieldByNumber(2);
+        return getFieldByNumber(2, Condition.class);
     }
 
     @Nullable
     public Integer getWindDirection() {
-        return (Integer) getFieldByNumber(3);
+        return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
     public Float getWindSpeed() {
-        return (Float) getFieldByNumber(4);
+        return getFieldByNumber(4, Float.class);
     }
 
     @Nullable
     public Integer getPrecipitationProbability() {
-        return (Integer) getFieldByNumber(5);
+        return getFieldByNumber(5, Integer.class);
     }
 
     @Nullable
     public Integer getTemperatureFeelsLike() {
-        return (Integer) getFieldByNumber(6);
+        return getFieldByNumber(6, Integer.class);
     }
 
     @Nullable
     public Integer getRelativeHumidity() {
-        return (Integer) getFieldByNumber(7);
+        return getFieldByNumber(7, Integer.class);
     }
 
     @Nullable
     public String getLocation() {
-        return (String) getFieldByNumber(8);
+        return getFieldByNumber(8, String.class);
     }
 
     @Nullable
     public Long getObservedAtTime() {
-        return (Long) getFieldByNumber(9);
+        return getFieldByNumber(9, Long.class);
     }
 
     @Nullable
     public Long getObservedLocationLat() {
-        return (Long) getFieldByNumber(10);
+        return getFieldByNumber(10, Long.class);
     }
 
     @Nullable
     public Long getObservedLocationLong() {
-        return (Long) getFieldByNumber(11);
+        return getFieldByNumber(11, Long.class);
     }
 
     @Nullable
     public DayOfWeek getDayOfWeek() {
-        return (DayOfWeek) getFieldByNumber(12);
+        return getFieldByNumber(12, DayOfWeek.class);
     }
 
     @Nullable
     public Integer getHighTemperature() {
-        return (Integer) getFieldByNumber(13);
+        return getFieldByNumber(13, Integer.class);
     }
 
     @Nullable
     public Integer getLowTemperature() {
-        return (Integer) getFieldByNumber(14);
+        return getFieldByNumber(14, Integer.class);
     }
 
     @Nullable
     public Integer getDewPoint() {
-        return (Integer) getFieldByNumber(15);
+        return getFieldByNumber(15, Integer.class);
     }
 
     @Nullable
     public Float getUvIndex() {
-        return (Float) getFieldByNumber(16);
+        return getFieldByNumber(16, Float.class);
     }
 
     @Nullable
     public AQI_LEVELS getAirQuality() {
-        return (AQI_LEVELS) getFieldByNumber(17);
+        return getFieldByNumber(17, AQI_LEVELS.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

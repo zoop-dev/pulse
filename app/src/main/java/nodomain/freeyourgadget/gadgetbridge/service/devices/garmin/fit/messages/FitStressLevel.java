@@ -41,17 +41,17 @@ public class FitStressLevel extends RecordData {
 
     @Nullable
     public Integer getStressLevelValue() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Long getStressLevelTime() {
-        return (Long) getFieldByNumber(1);
+        return getFieldByNumber(1, Long.class);
     }
 
     @Nullable
     public Integer getBodyEnergy() {
-        return (Integer) getFieldByNumber(3);
+        return getFieldByNumber(3, Integer.class);
     }
 
     /**

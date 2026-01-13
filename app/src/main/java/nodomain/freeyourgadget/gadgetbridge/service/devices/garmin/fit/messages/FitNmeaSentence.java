@@ -41,17 +41,17 @@ public class FitNmeaSentence extends RecordData {
 
     @Nullable
     public Integer getTimestampMs() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public String getSentence() {
-        return (String) getFieldByNumber(1);
+        return getFieldByNumber(1, String.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

@@ -42,79 +42,57 @@ public class FitSet extends RecordData {
 
     @Nullable
     public Double getDuration() {
-        return (Double) getFieldByNumber(0);
+        return getFieldByNumber(0, Double.class);
     }
 
     @Nullable
     public Integer getRepetitions() {
-        return (Integer) getFieldByNumber(3);
+        return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
     public Float getWeight() {
-        return (Float) getFieldByNumber(4);
+        return getFieldByNumber(4, Float.class);
     }
 
     @Nullable
     public Integer getSetType() {
-        return (Integer) getFieldByNumber(5);
+        return getFieldByNumber(5, Integer.class);
     }
 
     @Nullable
     public Long getStartTime() {
-        return (Long) getFieldByNumber(6);
+        return getFieldByNumber(6, Long.class);
     }
 
     @Nullable
     public ExerciseCategory[] getCategory() {
-        final Object object = getFieldByNumber(7);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new ExerciseCategory[]{(ExerciseCategory) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final ExerciseCategory[] ret = new ExerciseCategory[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (ExerciseCategory) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(7, ExerciseCategory.class);
     }
 
     @Nullable
     public Number[] getCategorySubtype() {
-        final Object object = getFieldByNumber(8);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(8, Number.class);
     }
 
     @Nullable
     public Integer getWeightDisplayUnit() {
-        return (Integer) getFieldByNumber(9);
+        return getFieldByNumber(9, Integer.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(10);
+        return getFieldByNumber(10, Integer.class);
     }
 
     @Nullable
     public Integer getWktStepIndex() {
-        return (Integer) getFieldByNumber(11);
+        return getFieldByNumber(11, Integer.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(254);
+        return getFieldByNumber(254, Long.class);
     }
 
     /**

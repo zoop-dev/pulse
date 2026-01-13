@@ -41,78 +41,67 @@ public class FitDiveApneaAlarm extends RecordData {
 
     @Nullable
     public Double getDepth() {
-        return (Double) getFieldByNumber(0);
+        return getFieldByNumber(0, Double.class);
     }
 
     @Nullable
     public Long getTime() {
-        return (Long) getFieldByNumber(1);
+        return getFieldByNumber(1, Long.class);
     }
 
     @Nullable
     public Boolean getEnabled() {
-        return (Boolean) getFieldByNumber(2);
+        return getFieldByNumber(2, Boolean.class);
     }
 
     @Nullable
     public Integer getAlarmType() {
-        return (Integer) getFieldByNumber(3);
+        return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
     public Integer getSound() {
-        return (Integer) getFieldByNumber(4);
+        return getFieldByNumber(4, Integer.class);
     }
 
     @Nullable
     public Number[] getDiveTypes() {
-        final Object object = getFieldByNumber(5);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(5, Number.class);
     }
 
     @Nullable
     public Long getId() {
-        return (Long) getFieldByNumber(6);
+        return getFieldByNumber(6, Long.class);
     }
 
     @Nullable
     public Boolean getPopupEnabled() {
-        return (Boolean) getFieldByNumber(7);
+        return getFieldByNumber(7, Boolean.class);
     }
 
     @Nullable
     public Boolean getTriggerOnDescent() {
-        return (Boolean) getFieldByNumber(8);
+        return getFieldByNumber(8, Boolean.class);
     }
 
     @Nullable
     public Boolean getTriggerOnAscent() {
-        return (Boolean) getFieldByNumber(9);
+        return getFieldByNumber(9, Boolean.class);
     }
 
     @Nullable
     public Boolean getRepeating() {
-        return (Boolean) getFieldByNumber(10);
+        return getFieldByNumber(10, Boolean.class);
     }
 
     @Nullable
     public Double getSpeed() {
-        return (Double) getFieldByNumber(11);
+        return getFieldByNumber(11, Double.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

@@ -41,12 +41,12 @@ public class FitSkinTempRaw extends RecordData {
 
     @Nullable
     public Float getDeviation() {
-        return (Float) getFieldByNumber(1);
+        return getFieldByNumber(1, Float.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

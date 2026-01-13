@@ -41,32 +41,32 @@ public class FitPhysiologicalMetrics extends RecordData {
 
     @Nullable
     public Float getAerobicEffect() {
-        return (Float) getFieldByNumber(4);
+        return getFieldByNumber(4, Float.class);
     }
 
     @Nullable
     public Double getMetMax() {
-        return (Double) getFieldByNumber(7);
+        return getFieldByNumber(7, Double.class);
     }
 
     @Nullable
     public Integer getRecoveryTime() {
-        return (Integer) getFieldByNumber(9);
+        return getFieldByNumber(9, Integer.class);
     }
 
     @Nullable
     public Integer getLactateThresholdHeartRate() {
-        return (Integer) getFieldByNumber(14);
+        return getFieldByNumber(14, Integer.class);
     }
 
     @Nullable
     public Float getAnaerobicEffect() {
-        return (Float) getFieldByNumber(20);
+        return getFieldByNumber(20, Float.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

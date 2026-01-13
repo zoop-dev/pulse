@@ -42,12 +42,12 @@ public class FitSleepStage extends RecordData {
 
     @Nullable
     public SleepStage getSleepStage() {
-        return (SleepStage) getFieldByNumber(0);
+        return getFieldByNumber(0, SleepStage.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

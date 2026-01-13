@@ -41,57 +41,57 @@ public class FitTotals extends RecordData {
 
     @Nullable
     public Long getTimerTime() {
-        return (Long) getFieldByNumber(0);
+        return getFieldByNumber(0, Long.class);
     }
 
     @Nullable
     public Long getDistance() {
-        return (Long) getFieldByNumber(1);
+        return getFieldByNumber(1, Long.class);
     }
 
     @Nullable
     public Long getCalories() {
-        return (Long) getFieldByNumber(2);
+        return getFieldByNumber(2, Long.class);
     }
 
     @Nullable
     public Integer getSport() {
-        return (Integer) getFieldByNumber(3);
+        return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
     public Long getElapsedTime() {
-        return (Long) getFieldByNumber(4);
+        return getFieldByNumber(4, Long.class);
     }
 
     @Nullable
     public Integer getSessions() {
-        return (Integer) getFieldByNumber(5);
+        return getFieldByNumber(5, Integer.class);
     }
 
     @Nullable
     public Long getActiveTime() {
-        return (Long) getFieldByNumber(6);
+        return getFieldByNumber(6, Long.class);
     }
 
     @Nullable
     public Integer getSportIndex() {
-        return (Integer) getFieldByNumber(9);
+        return getFieldByNumber(9, Integer.class);
     }
 
     @Nullable
     public String getActivityProfile() {
-        return (String) getFieldByNumber(10);
+        return getFieldByNumber(10, String.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

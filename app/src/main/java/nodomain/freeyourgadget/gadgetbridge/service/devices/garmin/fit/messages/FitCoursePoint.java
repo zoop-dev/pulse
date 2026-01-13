@@ -42,42 +42,42 @@ public class FitCoursePoint extends RecordData {
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(1);
+        return getFieldByNumber(1, Long.class);
     }
 
     @Nullable
     public Double getPositionLat() {
-        return (Double) getFieldByNumber(2);
+        return getFieldByNumber(2, Double.class);
     }
 
     @Nullable
     public Double getPositionLong() {
-        return (Double) getFieldByNumber(3);
+        return getFieldByNumber(3, Double.class);
     }
 
     @Nullable
     public Double getDistance() {
-        return (Double) getFieldByNumber(4);
+        return getFieldByNumber(4, Double.class);
     }
 
     @Nullable
     public CoursePoint getType() {
-        return (CoursePoint) getFieldByNumber(5);
+        return getFieldByNumber(5, CoursePoint.class);
     }
 
     @Nullable
     public String getName() {
-        return (String) getFieldByNumber(6);
+        return getFieldByNumber(6, String.class);
     }
 
     @Nullable
     public Integer getFavorite() {
-        return (Integer) getFieldByNumber(8);
+        return getFieldByNumber(8, Integer.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

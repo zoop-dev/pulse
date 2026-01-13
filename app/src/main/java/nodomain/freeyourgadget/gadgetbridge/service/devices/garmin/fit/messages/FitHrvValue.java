@@ -41,12 +41,12 @@ public class FitHrvValue extends RecordData {
 
     @Nullable
     public Float getValue() {
-        return (Float) getFieldByNumber(0);
+        return getFieldByNumber(0, Float.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

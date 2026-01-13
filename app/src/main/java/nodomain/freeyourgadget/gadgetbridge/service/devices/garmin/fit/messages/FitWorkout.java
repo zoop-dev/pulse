@@ -41,47 +41,47 @@ public class FitWorkout extends RecordData {
 
     @Nullable
     public Integer getSport() {
-        return (Integer) getFieldByNumber(4);
+        return getFieldByNumber(4, Integer.class);
     }
 
     @Nullable
     public Long getCapabilities() {
-        return (Long) getFieldByNumber(5);
+        return getFieldByNumber(5, Long.class);
     }
 
     @Nullable
     public Integer getNumValidSteps() {
-        return (Integer) getFieldByNumber(6);
+        return getFieldByNumber(6, Integer.class);
     }
 
     @Nullable
     public String getName() {
-        return (String) getFieldByNumber(8);
+        return getFieldByNumber(8, String.class);
     }
 
     @Nullable
     public Integer getSubSport() {
-        return (Integer) getFieldByNumber(11);
+        return getFieldByNumber(11, Integer.class);
     }
 
     @Nullable
     public Float getPoolLength() {
-        return (Float) getFieldByNumber(14);
+        return getFieldByNumber(14, Float.class);
     }
 
     @Nullable
     public Integer getPoolLengthUnit() {
-        return (Integer) getFieldByNumber(15);
+        return getFieldByNumber(15, Integer.class);
     }
 
     @Nullable
     public String getNotes() {
-        return (String) getFieldByNumber(17);
+        return getFieldByNumber(17, String.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

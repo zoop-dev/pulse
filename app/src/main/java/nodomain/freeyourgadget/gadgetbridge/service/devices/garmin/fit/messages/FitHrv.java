@@ -41,18 +41,7 @@ public class FitHrv extends RecordData {
 
     @Nullable
     public Number[] getTime() {
-        final Object object = getFieldByNumber(0);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(0, Number.class);
     }
 
     /**

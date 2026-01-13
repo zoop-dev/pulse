@@ -41,17 +41,17 @@ public class FitVideo extends RecordData {
 
     @Nullable
     public String getUrl() {
-        return (String) getFieldByNumber(0);
+        return getFieldByNumber(0, String.class);
     }
 
     @Nullable
     public String getHostingProvider() {
-        return (String) getFieldByNumber(1);
+        return getFieldByNumber(1, String.class);
     }
 
     @Nullable
     public Long getDuration() {
-        return (Long) getFieldByNumber(2);
+        return getFieldByNumber(2, Long.class);
     }
 
     /**

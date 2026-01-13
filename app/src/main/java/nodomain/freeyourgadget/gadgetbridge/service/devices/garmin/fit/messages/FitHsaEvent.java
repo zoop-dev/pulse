@@ -41,12 +41,12 @@ public class FitHsaEvent extends RecordData {
 
     @Nullable
     public Integer getEventId() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

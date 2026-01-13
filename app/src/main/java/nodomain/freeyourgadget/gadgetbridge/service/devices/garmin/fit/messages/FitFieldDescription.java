@@ -41,72 +41,72 @@ public class FitFieldDescription extends RecordData {
 
     @Nullable
     public Integer getDeveloperDataIndex() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Integer getFieldDefinitionNumber() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Integer getFitBaseTypeId() {
-        return (Integer) getFieldByNumber(2);
+        return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
     public String getFieldName() {
-        return (String) getFieldByNumber(3);
+        return getFieldByNumber(3, String.class);
     }
 
     @Nullable
     public Integer getArray() {
-        return (Integer) getFieldByNumber(4);
+        return getFieldByNumber(4, Integer.class);
     }
 
     @Nullable
     public String getComponents() {
-        return (String) getFieldByNumber(5);
+        return getFieldByNumber(5, String.class);
     }
 
     @Nullable
     public Integer getScale() {
-        return (Integer) getFieldByNumber(6);
+        return getFieldByNumber(6, Integer.class);
     }
 
     @Nullable
     public Integer getOffset() {
-        return (Integer) getFieldByNumber(7);
+        return getFieldByNumber(7, Integer.class);
     }
 
     @Nullable
     public String getUnits() {
-        return (String) getFieldByNumber(8);
+        return getFieldByNumber(8, String.class);
     }
 
     @Nullable
     public String getBits() {
-        return (String) getFieldByNumber(9);
+        return getFieldByNumber(9, String.class);
     }
 
     @Nullable
     public String getAccumulate() {
-        return (String) getFieldByNumber(10);
+        return getFieldByNumber(10, String.class);
     }
 
     @Nullable
     public Integer getFitBaseUnitId() {
-        return (Integer) getFieldByNumber(13);
+        return getFieldByNumber(13, Integer.class);
     }
 
     @Nullable
     public Integer getNativeMesgNum() {
-        return (Integer) getFieldByNumber(14);
+        return getFieldByNumber(14, Integer.class);
     }
 
     @Nullable
     public Integer getNativeFieldNum() {
-        return (Integer) getFieldByNumber(15);
+        return getFieldByNumber(15, Integer.class);
     }
 
     /**

@@ -41,12 +41,12 @@ public class FitFileCreator extends RecordData {
 
     @Nullable
     public Integer getSoftwareVersion() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Integer getHardwareVersion() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     /**

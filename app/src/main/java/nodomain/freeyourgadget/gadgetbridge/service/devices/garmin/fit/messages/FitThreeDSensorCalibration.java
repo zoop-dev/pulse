@@ -41,59 +41,37 @@ public class FitThreeDSensorCalibration extends RecordData {
 
     @Nullable
     public Integer getSensorType() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Long getCalibrationFactor() {
-        return (Long) getFieldByNumber(1);
+        return getFieldByNumber(1, Long.class);
     }
 
     @Nullable
     public Long getCalibrationDivisor() {
-        return (Long) getFieldByNumber(2);
+        return getFieldByNumber(2, Long.class);
     }
 
     @Nullable
     public Long getLevelShift() {
-        return (Long) getFieldByNumber(3);
+        return getFieldByNumber(3, Long.class);
     }
 
     @Nullable
     public Number[] getOffsetCal() {
-        final Object object = getFieldByNumber(4);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(4, Number.class);
     }
 
     @Nullable
     public Number[] getOrientationMatrix() {
-        final Object object = getFieldByNumber(5);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(5, Number.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

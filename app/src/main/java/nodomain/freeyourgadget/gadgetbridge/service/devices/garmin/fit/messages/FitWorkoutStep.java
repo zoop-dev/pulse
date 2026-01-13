@@ -41,97 +41,97 @@ public class FitWorkoutStep extends RecordData {
 
     @Nullable
     public String getWktStepName() {
-        return (String) getFieldByNumber(0);
+        return getFieldByNumber(0, String.class);
     }
 
     @Nullable
     public Integer getDurationType() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Long getDurationValue() {
-        return (Long) getFieldByNumber(2);
+        return getFieldByNumber(2, Long.class);
     }
 
     @Nullable
     public Integer getTargetType() {
-        return (Integer) getFieldByNumber(3);
+        return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
     public Long getTargetValue() {
-        return (Long) getFieldByNumber(4);
+        return getFieldByNumber(4, Long.class);
     }
 
     @Nullable
     public Long getCustomTargetValueLow() {
-        return (Long) getFieldByNumber(5);
+        return getFieldByNumber(5, Long.class);
     }
 
     @Nullable
     public Long getCustomTargetValueHigh() {
-        return (Long) getFieldByNumber(6);
+        return getFieldByNumber(6, Long.class);
     }
 
     @Nullable
     public Integer getIntensity() {
-        return (Integer) getFieldByNumber(7);
+        return getFieldByNumber(7, Integer.class);
     }
 
     @Nullable
     public String getNotes() {
-        return (String) getFieldByNumber(8);
+        return getFieldByNumber(8, String.class);
     }
 
     @Nullable
     public Integer getEquipment() {
-        return (Integer) getFieldByNumber(9);
+        return getFieldByNumber(9, Integer.class);
     }
 
     @Nullable
     public Integer getExerciseCategory() {
-        return (Integer) getFieldByNumber(10);
+        return getFieldByNumber(10, Integer.class);
     }
 
     @Nullable
     public Integer getExerciseName() {
-        return (Integer) getFieldByNumber(11);
+        return getFieldByNumber(11, Integer.class);
     }
 
     @Nullable
     public Float getExerciseWeight() {
-        return (Float) getFieldByNumber(12);
+        return getFieldByNumber(12, Float.class);
     }
 
     @Nullable
     public Integer getWeightDisplayUnit() {
-        return (Integer) getFieldByNumber(13);
+        return getFieldByNumber(13, Integer.class);
     }
 
     @Nullable
     public Integer getSecondaryTargetType() {
-        return (Integer) getFieldByNumber(19);
+        return getFieldByNumber(19, Integer.class);
     }
 
     @Nullable
     public Long getSecondaryTargetValue() {
-        return (Long) getFieldByNumber(20);
+        return getFieldByNumber(20, Long.class);
     }
 
     @Nullable
     public Long getSecondaryCustomTargetValueLow() {
-        return (Long) getFieldByNumber(21);
+        return getFieldByNumber(21, Long.class);
     }
 
     @Nullable
     public Long getSecondaryCustomTargetValueHigh() {
-        return (Long) getFieldByNumber(22);
+        return getFieldByNumber(22, Long.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

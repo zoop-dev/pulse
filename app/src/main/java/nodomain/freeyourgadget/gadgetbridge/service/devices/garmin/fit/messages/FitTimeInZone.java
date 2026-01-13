@@ -41,175 +41,87 @@ public class FitTimeInZone extends RecordData {
 
     @Nullable
     public Integer getReferenceMessage() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Integer getReferenceIndex() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Double[] getTimeInZone() {
-        final Object object = getFieldByNumber(2);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Double[]{(Double) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Double[] ret = new Double[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Double) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(2, Double.class);
     }
 
     @Nullable
     public Number[] getTimeInSpeedZone() {
-        final Object object = getFieldByNumber(3);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(3, Number.class);
     }
 
     @Nullable
     public Number[] getTimeInCadenceZone() {
-        final Object object = getFieldByNumber(4);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(4, Number.class);
     }
 
     @Nullable
     public Number[] getTimeInPowerZone() {
-        final Object object = getFieldByNumber(5);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(5, Number.class);
     }
 
     @Nullable
     public Integer[] getHrZoneHighBoundary() {
-        final Object object = getFieldByNumber(6);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Integer[]{(Integer) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Integer[] ret = new Integer[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Integer) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(6, Integer.class);
     }
 
     @Nullable
     public Number[] getSpeedZoneHighBoundary() {
-        final Object object = getFieldByNumber(7);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(7, Number.class);
     }
 
     @Nullable
     public Number[] getCadenceZoneHighBoundary() {
-        final Object object = getFieldByNumber(8);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(8, Number.class);
     }
 
     @Nullable
     public Number[] getPowerZoneHighBoundary() {
-        final Object object = getFieldByNumber(9);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(9, Number.class);
     }
 
     @Nullable
     public Integer getHrCalcType() {
-        return (Integer) getFieldByNumber(10);
+        return getFieldByNumber(10, Integer.class);
     }
 
     @Nullable
     public Integer getMaxHeartRate() {
-        return (Integer) getFieldByNumber(11);
+        return getFieldByNumber(11, Integer.class);
     }
 
     @Nullable
     public Integer getRestingHeartRate() {
-        return (Integer) getFieldByNumber(12);
+        return getFieldByNumber(12, Integer.class);
     }
 
     @Nullable
     public Integer getThresholdHeartRate() {
-        return (Integer) getFieldByNumber(13);
+        return getFieldByNumber(13, Integer.class);
     }
 
     @Nullable
     public Integer getPwrCalcType() {
-        return (Integer) getFieldByNumber(14);
+        return getFieldByNumber(14, Integer.class);
     }
 
     @Nullable
     public Integer getFunctionalThresholdPower() {
-        return (Integer) getFieldByNumber(15);
+        return getFieldByNumber(15, Integer.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

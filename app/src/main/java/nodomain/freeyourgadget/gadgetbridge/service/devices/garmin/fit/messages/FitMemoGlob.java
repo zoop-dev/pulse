@@ -41,54 +41,32 @@ public class FitMemoGlob extends RecordData {
 
     @Nullable
     public Number[] getMemo() {
-        final Object object = getFieldByNumber(0);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(0, Number.class);
     }
 
     @Nullable
     public Integer getMesgNum() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Integer getParentIndex() {
-        return (Integer) getFieldByNumber(2);
+        return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
     public Integer getFieldNum() {
-        return (Integer) getFieldByNumber(3);
+        return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
     public Number[] getData() {
-        final Object object = getFieldByNumber(4);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(4, Number.class);
     }
 
     @Nullable
     public Long getPartIndex() {
-        return (Long) getFieldByNumber(250);
+        return getFieldByNumber(250, Long.class);
     }
 
     /**

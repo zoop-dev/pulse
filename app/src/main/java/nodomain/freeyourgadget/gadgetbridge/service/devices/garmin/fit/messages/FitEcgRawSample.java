@@ -41,7 +41,7 @@ public class FitEcgRawSample extends RecordData {
 
     @Nullable
     public Float getValue() {
-        return (Float) getFieldByNumber(0);
+        return getFieldByNumber(0, Float.class);
     }
 
     /**

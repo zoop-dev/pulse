@@ -41,37 +41,37 @@ public class FitSchedule extends RecordData {
 
     @Nullable
     public Integer getManufacturer() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Integer getProduct() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Long getSerialNumber() {
-        return (Long) getFieldByNumber(2);
+        return getFieldByNumber(2, Long.class);
     }
 
     @Nullable
     public Long getTimeCreated() {
-        return (Long) getFieldByNumber(3);
+        return getFieldByNumber(3, Long.class);
     }
 
     @Nullable
     public Boolean getCompleted() {
-        return (Boolean) getFieldByNumber(4);
+        return getFieldByNumber(4, Boolean.class);
     }
 
     @Nullable
     public Integer getType() {
-        return (Integer) getFieldByNumber(5);
+        return getFieldByNumber(5, Integer.class);
     }
 
     @Nullable
     public Long getScheduledTime() {
-        return (Long) getFieldByNumber(6);
+        return getFieldByNumber(6, Long.class);
     }
 
     /**

@@ -41,42 +41,42 @@ public class FitSdmProfile extends RecordData {
 
     @Nullable
     public Boolean getEnabled() {
-        return (Boolean) getFieldByNumber(0);
+        return getFieldByNumber(0, Boolean.class);
     }
 
     @Nullable
     public Integer getSdmAntId() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Float getSdmCalFactor() {
-        return (Float) getFieldByNumber(2);
+        return getFieldByNumber(2, Float.class);
     }
 
     @Nullable
     public Double getOdometer() {
-        return (Double) getFieldByNumber(3);
+        return getFieldByNumber(3, Double.class);
     }
 
     @Nullable
     public Integer getSpeedSource() {
-        return (Integer) getFieldByNumber(4);
+        return getFieldByNumber(4, Integer.class);
     }
 
     @Nullable
     public Integer getSdmAntIdTransType() {
-        return (Integer) getFieldByNumber(5);
+        return getFieldByNumber(5, Integer.class);
     }
 
     @Nullable
     public Integer getOdometerRollover() {
-        return (Integer) getFieldByNumber(7);
+        return getFieldByNumber(7, Integer.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

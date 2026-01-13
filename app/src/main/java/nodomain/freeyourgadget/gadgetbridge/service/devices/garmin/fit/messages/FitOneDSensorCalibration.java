@@ -41,32 +41,32 @@ public class FitOneDSensorCalibration extends RecordData {
 
     @Nullable
     public Integer getSensorType() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Long getCalibrationFactor() {
-        return (Long) getFieldByNumber(1);
+        return getFieldByNumber(1, Long.class);
     }
 
     @Nullable
     public Long getCalibrationDivisor() {
-        return (Long) getFieldByNumber(2);
+        return getFieldByNumber(2, Long.class);
     }
 
     @Nullable
     public Long getLevelShift() {
-        return (Long) getFieldByNumber(3);
+        return getFieldByNumber(3, Long.class);
     }
 
     @Nullable
     public Long getOffsetCal() {
-        return (Long) getFieldByNumber(4);
+        return getFieldByNumber(4, Long.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

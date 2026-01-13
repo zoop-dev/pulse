@@ -44,158 +44,147 @@ public class FitMonitoring extends RecordData {
 
     @Nullable
     public Integer getDeviceIndex() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Integer getCalories() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Long getDistance() {
-        return (Long) getFieldByNumber(2);
+        return getFieldByNumber(2, Long.class);
     }
 
     @Nullable
     public Long getCycles() {
-        return (Long) getFieldByNumber(3);
+        return getFieldByNumber(3, Long.class);
     }
 
     @Nullable
     public Long getActiveTime() {
-        return (Long) getFieldByNumber(4);
+        return getFieldByNumber(4, Long.class);
     }
 
     @Nullable
     public Integer getActivityType() {
-        return (Integer) getFieldByNumber(5);
+        return getFieldByNumber(5, Integer.class);
     }
 
     @Nullable
     public Integer getActivitySubtype() {
-        return (Integer) getFieldByNumber(6);
+        return getFieldByNumber(6, Integer.class);
     }
 
     @Nullable
     public Integer getActivityLevel() {
-        return (Integer) getFieldByNumber(7);
+        return getFieldByNumber(7, Integer.class);
     }
 
     @Nullable
     public Integer getDistance16() {
-        return (Integer) getFieldByNumber(8);
+        return getFieldByNumber(8, Integer.class);
     }
 
     @Nullable
     public Integer getCycles16() {
-        return (Integer) getFieldByNumber(9);
+        return getFieldByNumber(9, Integer.class);
     }
 
     @Nullable
     public Integer getActiveTime16() {
-        return (Integer) getFieldByNumber(10);
+        return getFieldByNumber(10, Integer.class);
     }
 
     @Nullable
     public Long getLocalTimestamp() {
-        return (Long) getFieldByNumber(11);
+        return getFieldByNumber(11, Long.class);
     }
 
     @Nullable
     public Float getTemperature() {
-        return (Float) getFieldByNumber(12);
+        return getFieldByNumber(12, Float.class);
     }
 
     @Nullable
     public Float getTemperatureMin() {
-        return (Float) getFieldByNumber(14);
+        return getFieldByNumber(14, Float.class);
     }
 
     @Nullable
     public Float getTemperatureMax() {
-        return (Float) getFieldByNumber(15);
+        return getFieldByNumber(15, Float.class);
     }
 
     @Nullable
     public Number[] getActivityTime() {
-        final Object object = getFieldByNumber(16);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(16, Number.class);
     }
 
     @Nullable
     public Integer getActiveCalories() {
-        return (Integer) getFieldByNumber(19);
+        return getFieldByNumber(19, Integer.class);
     }
 
     @Nullable
     public Integer getDurationMin() {
-        return (Integer) getFieldByNumber(29);
+        return getFieldByNumber(29, Integer.class);
     }
 
     @Nullable
     public Integer getCurrentActivityTypeIntensity() {
-        return (Integer) getFieldByNumber(24);
+        return getFieldByNumber(24, Integer.class);
     }
 
     @Nullable
     public Integer getTimestamp16() {
-        return (Integer) getFieldByNumber(26);
+        return getFieldByNumber(26, Integer.class);
     }
 
     @Nullable
     public Integer getTimestampMin8() {
-        return (Integer) getFieldByNumber(25);
+        return getFieldByNumber(25, Integer.class);
     }
 
     @Nullable
     public Integer getHeartRate() {
-        return (Integer) getFieldByNumber(27);
+        return getFieldByNumber(27, Integer.class);
     }
 
     @Nullable
     public Float getIntensity() {
-        return (Float) getFieldByNumber(28);
+        return getFieldByNumber(28, Float.class);
     }
 
     @Nullable
     public Long getDuration() {
-        return (Long) getFieldByNumber(30);
+        return getFieldByNumber(30, Long.class);
     }
 
     @Nullable
     public Double getAscent() {
-        return (Double) getFieldByNumber(31);
+        return getFieldByNumber(31, Double.class);
     }
 
     @Nullable
     public Double getDescent() {
-        return (Double) getFieldByNumber(32);
+        return getFieldByNumber(32, Double.class);
     }
 
     @Nullable
     public Integer getModerateActivityMinutes() {
-        return (Integer) getFieldByNumber(33);
+        return getFieldByNumber(33, Integer.class);
     }
 
     @Nullable
     public Integer getVigorousActivityMinutes() {
-        return (Integer) getFieldByNumber(34);
+        return getFieldByNumber(34, Integer.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

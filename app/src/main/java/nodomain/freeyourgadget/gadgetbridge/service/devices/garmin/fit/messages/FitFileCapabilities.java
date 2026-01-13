@@ -41,32 +41,32 @@ public class FitFileCapabilities extends RecordData {
 
     @Nullable
     public Integer getType() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Integer getFlags() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public String getDirectory() {
-        return (String) getFieldByNumber(2);
+        return getFieldByNumber(2, String.class);
     }
 
     @Nullable
     public Integer getMaxCount() {
-        return (Integer) getFieldByNumber(3);
+        return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
     public Long getMaxSize() {
-        return (Long) getFieldByNumber(4);
+        return getFieldByNumber(4, Long.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

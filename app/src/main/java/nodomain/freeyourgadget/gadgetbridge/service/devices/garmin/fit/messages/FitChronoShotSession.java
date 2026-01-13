@@ -41,42 +41,42 @@ public class FitChronoShotSession extends RecordData {
 
     @Nullable
     public Double getMinSpeed() {
-        return (Double) getFieldByNumber(0);
+        return getFieldByNumber(0, Double.class);
     }
 
     @Nullable
     public Double getMaxSpeed() {
-        return (Double) getFieldByNumber(1);
+        return getFieldByNumber(1, Double.class);
     }
 
     @Nullable
     public Double getAvgSpeed() {
-        return (Double) getFieldByNumber(2);
+        return getFieldByNumber(2, Double.class);
     }
 
     @Nullable
     public Integer getShotCount() {
-        return (Integer) getFieldByNumber(3);
+        return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
     public Integer getProjectileType() {
-        return (Integer) getFieldByNumber(4);
+        return getFieldByNumber(4, Integer.class);
     }
 
     @Nullable
     public Double getGrainWeight() {
-        return (Double) getFieldByNumber(5);
+        return getFieldByNumber(5, Double.class);
     }
 
     @Nullable
     public Double getStandardDeviation() {
-        return (Double) getFieldByNumber(6);
+        return getFieldByNumber(6, Double.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

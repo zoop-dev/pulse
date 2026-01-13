@@ -41,65 +41,32 @@ public class FitMonitoringInfo extends RecordData {
 
     @Nullable
     public Long getLocalTimestamp() {
-        return (Long) getFieldByNumber(0);
+        return getFieldByNumber(0, Long.class);
     }
 
     @Nullable
     public Number[] getActivityType() {
-        final Object object = getFieldByNumber(1);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(1, Number.class);
     }
 
     @Nullable
     public Number[] getStepsToDistance() {
-        final Object object = getFieldByNumber(3);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(3, Number.class);
     }
 
     @Nullable
     public Number[] getStepsToCalories() {
-        final Object object = getFieldByNumber(4);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(4, Number.class);
     }
 
     @Nullable
     public Integer getRestingMetabolicRate() {
-        return (Integer) getFieldByNumber(5);
+        return getFieldByNumber(5, Integer.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

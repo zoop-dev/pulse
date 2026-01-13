@@ -41,22 +41,22 @@ public class FitMetZone extends RecordData {
 
     @Nullable
     public Integer getHighBpm() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Float getCalories() {
-        return (Float) getFieldByNumber(2);
+        return getFieldByNumber(2, Float.class);
     }
 
     @Nullable
     public Float getFatCalories() {
-        return (Float) getFieldByNumber(3);
+        return getFieldByNumber(3, Float.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

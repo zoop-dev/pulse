@@ -41,37 +41,37 @@ public class FitSegmentLeaderboardEntry extends RecordData {
 
     @Nullable
     public String getName() {
-        return (String) getFieldByNumber(0);
+        return getFieldByNumber(0, String.class);
     }
 
     @Nullable
     public Integer getType() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Long getGroupPrimaryKey() {
-        return (Long) getFieldByNumber(2);
+        return getFieldByNumber(2, Long.class);
     }
 
     @Nullable
     public Long getActivityId() {
-        return (Long) getFieldByNumber(3);
+        return getFieldByNumber(3, Long.class);
     }
 
     @Nullable
     public Double getSegmentTime() {
-        return (Double) getFieldByNumber(4);
+        return getFieldByNumber(4, Double.class);
     }
 
     @Nullable
     public String getActivityIdString() {
-        return (String) getFieldByNumber(5);
+        return getFieldByNumber(5, String.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

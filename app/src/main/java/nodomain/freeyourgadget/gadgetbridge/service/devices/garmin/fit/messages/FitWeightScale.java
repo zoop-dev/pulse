@@ -41,72 +41,72 @@ public class FitWeightScale extends RecordData {
 
     @Nullable
     public Float getWeight() {
-        return (Float) getFieldByNumber(0);
+        return getFieldByNumber(0, Float.class);
     }
 
     @Nullable
     public Float getPercentFat() {
-        return (Float) getFieldByNumber(1);
+        return getFieldByNumber(1, Float.class);
     }
 
     @Nullable
     public Float getPercentHydration() {
-        return (Float) getFieldByNumber(2);
+        return getFieldByNumber(2, Float.class);
     }
 
     @Nullable
     public Float getVisceralFatMass() {
-        return (Float) getFieldByNumber(3);
+        return getFieldByNumber(3, Float.class);
     }
 
     @Nullable
     public Float getBoneMass() {
-        return (Float) getFieldByNumber(4);
+        return getFieldByNumber(4, Float.class);
     }
 
     @Nullable
     public Float getMuscleMass() {
-        return (Float) getFieldByNumber(5);
+        return getFieldByNumber(5, Float.class);
     }
 
     @Nullable
     public Float getBasalMet() {
-        return (Float) getFieldByNumber(7);
+        return getFieldByNumber(7, Float.class);
     }
 
     @Nullable
     public Integer getPhysiqueRating() {
-        return (Integer) getFieldByNumber(8);
+        return getFieldByNumber(8, Integer.class);
     }
 
     @Nullable
     public Float getActiveMet() {
-        return (Float) getFieldByNumber(9);
+        return getFieldByNumber(9, Float.class);
     }
 
     @Nullable
     public Integer getMetabolicAge() {
-        return (Integer) getFieldByNumber(10);
+        return getFieldByNumber(10, Integer.class);
     }
 
     @Nullable
     public Integer getVisceralFatRating() {
-        return (Integer) getFieldByNumber(11);
+        return getFieldByNumber(11, Integer.class);
     }
 
     @Nullable
     public Integer getUserProfileIndex() {
-        return (Integer) getFieldByNumber(12);
+        return getFieldByNumber(12, Integer.class);
     }
 
     @Nullable
     public Float getBmi() {
-        return (Float) getFieldByNumber(13);
+        return getFieldByNumber(13, Float.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

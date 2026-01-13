@@ -41,32 +41,32 @@ public class FitWeatherAlert extends RecordData {
 
     @Nullable
     public String getReportId() {
-        return (String) getFieldByNumber(0);
+        return getFieldByNumber(0, String.class);
     }
 
     @Nullable
     public Long getIssueTime() {
-        return (Long) getFieldByNumber(1);
+        return getFieldByNumber(1, Long.class);
     }
 
     @Nullable
     public Long getExpireTime() {
-        return (Long) getFieldByNumber(2);
+        return getFieldByNumber(2, Long.class);
     }
 
     @Nullable
     public Integer getSeverity() {
-        return (Integer) getFieldByNumber(3);
+        return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
     public Integer getType() {
-        return (Integer) getFieldByNumber(4);
+        return getFieldByNumber(4, Integer.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

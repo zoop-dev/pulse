@@ -42,47 +42,47 @@ public class FitLocation extends RecordData {
 
     @Nullable
     public String getName() {
-        return (String) getFieldByNumber(0);
+        return getFieldByNumber(0, String.class);
     }
 
     @Nullable
     public Double getPositionLat() {
-        return (Double) getFieldByNumber(1);
+        return getFieldByNumber(1, Double.class);
     }
 
     @Nullable
     public Double getPositionLong() {
-        return (Double) getFieldByNumber(2);
+        return getFieldByNumber(2, Double.class);
     }
 
     @Nullable
     public LocationSymbol getSymbol() {
-        return (LocationSymbol) getFieldByNumber(3);
+        return getFieldByNumber(3, LocationSymbol.class);
     }
 
     @Nullable
     public Float getAltitude() {
-        return (Float) getFieldByNumber(4);
+        return getFieldByNumber(4, Float.class);
     }
 
     @Nullable
     public Integer getEnhancedAltitude() {
-        return (Integer) getFieldByNumber(5);
+        return getFieldByNumber(5, Integer.class);
     }
 
     @Nullable
     public String getDescription() {
-        return (String) getFieldByNumber(6);
+        return getFieldByNumber(6, String.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

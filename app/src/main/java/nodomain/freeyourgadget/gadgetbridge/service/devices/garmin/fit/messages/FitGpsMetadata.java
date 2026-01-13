@@ -41,58 +41,47 @@ public class FitGpsMetadata extends RecordData {
 
     @Nullable
     public Integer getTimestampMs() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Double getPositionLat() {
-        return (Double) getFieldByNumber(1);
+        return getFieldByNumber(1, Double.class);
     }
 
     @Nullable
     public Double getPositionLong() {
-        return (Double) getFieldByNumber(2);
+        return getFieldByNumber(2, Double.class);
     }
 
     @Nullable
     public Double getEnhancedAltitude() {
-        return (Double) getFieldByNumber(3);
+        return getFieldByNumber(3, Double.class);
     }
 
     @Nullable
     public Double getEnhancedSpeed() {
-        return (Double) getFieldByNumber(4);
+        return getFieldByNumber(4, Double.class);
     }
 
     @Nullable
     public Float getHeading() {
-        return (Float) getFieldByNumber(5);
+        return getFieldByNumber(5, Float.class);
     }
 
     @Nullable
     public Long getUtcTimestamp() {
-        return (Long) getFieldByNumber(6);
+        return getFieldByNumber(6, Long.class);
     }
 
     @Nullable
     public Number[] getVelocity() {
-        final Object object = getFieldByNumber(7);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(7, Number.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

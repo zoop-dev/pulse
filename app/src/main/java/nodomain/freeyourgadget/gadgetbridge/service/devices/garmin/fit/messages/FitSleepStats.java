@@ -41,87 +41,87 @@ public class FitSleepStats extends RecordData {
 
     @Nullable
     public Integer getCombinedAwakeScore() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Integer getAwakeTimeScore() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Integer getAwakeningsCountScore() {
-        return (Integer) getFieldByNumber(2);
+        return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
     public Integer getDeepSleepScore() {
-        return (Integer) getFieldByNumber(3);
+        return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
     public Integer getSleepDurationScore() {
-        return (Integer) getFieldByNumber(4);
+        return getFieldByNumber(4, Integer.class);
     }
 
     @Nullable
     public Integer getLightSleepScore() {
-        return (Integer) getFieldByNumber(5);
+        return getFieldByNumber(5, Integer.class);
     }
 
     @Nullable
     public Integer getOverallSleepScore() {
-        return (Integer) getFieldByNumber(6);
+        return getFieldByNumber(6, Integer.class);
     }
 
     @Nullable
     public Integer getSleepQualityScore() {
-        return (Integer) getFieldByNumber(7);
+        return getFieldByNumber(7, Integer.class);
     }
 
     @Nullable
     public Integer getSleepRecoveryScore() {
-        return (Integer) getFieldByNumber(8);
+        return getFieldByNumber(8, Integer.class);
     }
 
     @Nullable
     public Integer getRemSleepScore() {
-        return (Integer) getFieldByNumber(9);
+        return getFieldByNumber(9, Integer.class);
     }
 
     @Nullable
     public Integer getSleepRestlessnessScore() {
-        return (Integer) getFieldByNumber(10);
+        return getFieldByNumber(10, Integer.class);
     }
 
     @Nullable
     public Integer getAwakeningsCount() {
-        return (Integer) getFieldByNumber(11);
+        return getFieldByNumber(11, Integer.class);
     }
 
     @Nullable
     public Integer getUnk12() {
-        return (Integer) getFieldByNumber(12);
+        return getFieldByNumber(12, Integer.class);
     }
 
     @Nullable
     public Integer getUnk13() {
-        return (Integer) getFieldByNumber(13);
+        return getFieldByNumber(13, Integer.class);
     }
 
     @Nullable
     public Integer getInterruptionsScore() {
-        return (Integer) getFieldByNumber(14);
+        return getFieldByNumber(14, Integer.class);
     }
 
     @Nullable
     public Float getAverageStressDuringSleep() {
-        return (Float) getFieldByNumber(15);
+        return getFieldByNumber(15, Float.class);
     }
 
     @Nullable
     public Integer getUnk16() {
-        return (Integer) getFieldByNumber(16);
+        return getFieldByNumber(16, Integer.class);
     }
 
     /**

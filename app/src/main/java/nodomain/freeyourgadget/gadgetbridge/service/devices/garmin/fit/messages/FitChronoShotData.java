@@ -41,17 +41,17 @@ public class FitChronoShotData extends RecordData {
 
     @Nullable
     public Double getShotSpeed() {
-        return (Double) getFieldByNumber(0);
+        return getFieldByNumber(0, Double.class);
     }
 
     @Nullable
     public Integer getShotNum() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

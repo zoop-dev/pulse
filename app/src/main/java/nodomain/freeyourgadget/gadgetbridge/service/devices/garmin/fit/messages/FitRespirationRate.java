@@ -41,12 +41,12 @@ public class FitRespirationRate extends RecordData {
 
     @Nullable
     public Float getRespirationRate() {
-        return (Float) getFieldByNumber(0);
+        return getFieldByNumber(0, Float.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

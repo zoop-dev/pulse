@@ -41,27 +41,27 @@ public class FitCameraEvent extends RecordData {
 
     @Nullable
     public Integer getTimestampMs() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Integer getCameraEventType() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public String getCameraFileUuid() {
-        return (String) getFieldByNumber(2);
+        return getFieldByNumber(2, String.class);
     }
 
     @Nullable
     public Integer getCameraOrientation() {
-        return (Integer) getFieldByNumber(3);
+        return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

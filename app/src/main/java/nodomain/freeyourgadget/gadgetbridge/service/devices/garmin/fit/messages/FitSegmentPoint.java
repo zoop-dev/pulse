@@ -41,48 +41,37 @@ public class FitSegmentPoint extends RecordData {
 
     @Nullable
     public Double getPositionLat() {
-        return (Double) getFieldByNumber(1);
+        return getFieldByNumber(1, Double.class);
     }
 
     @Nullable
     public Double getPositionLong() {
-        return (Double) getFieldByNumber(2);
+        return getFieldByNumber(2, Double.class);
     }
 
     @Nullable
     public Double getDistance() {
-        return (Double) getFieldByNumber(3);
+        return getFieldByNumber(3, Double.class);
     }
 
     @Nullable
     public Float getAltitude() {
-        return (Float) getFieldByNumber(4);
+        return getFieldByNumber(4, Float.class);
     }
 
     @Nullable
     public Number[] getLeaderTime() {
-        final Object object = getFieldByNumber(5);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(5, Number.class);
     }
 
     @Nullable
     public Double getEnhancedAltitude() {
-        return (Double) getFieldByNumber(6);
+        return getFieldByNumber(6, Double.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

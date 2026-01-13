@@ -41,77 +41,77 @@ public class FitSplitSummary extends RecordData {
 
     @Nullable
     public Integer getSplitType() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Integer getNumSplits() {
-        return (Integer) getFieldByNumber(3);
+        return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
     public Double getTotalTimerTime() {
-        return (Double) getFieldByNumber(4);
+        return getFieldByNumber(4, Double.class);
     }
 
     @Nullable
     public Double getTotalDistance() {
-        return (Double) getFieldByNumber(5);
+        return getFieldByNumber(5, Double.class);
     }
 
     @Nullable
     public Double getAvgSpeed() {
-        return (Double) getFieldByNumber(6);
+        return getFieldByNumber(6, Double.class);
     }
 
     @Nullable
     public Double getMaxSpeed() {
-        return (Double) getFieldByNumber(7);
+        return getFieldByNumber(7, Double.class);
     }
 
     @Nullable
     public Integer getTotalAscent() {
-        return (Integer) getFieldByNumber(8);
+        return getFieldByNumber(8, Integer.class);
     }
 
     @Nullable
     public Integer getTotalDescent() {
-        return (Integer) getFieldByNumber(9);
+        return getFieldByNumber(9, Integer.class);
     }
 
     @Nullable
     public Integer getAvgHeartRate() {
-        return (Integer) getFieldByNumber(10);
+        return getFieldByNumber(10, Integer.class);
     }
 
     @Nullable
     public Integer getMaxHeartRate() {
-        return (Integer) getFieldByNumber(11);
+        return getFieldByNumber(11, Integer.class);
     }
 
     @Nullable
     public Double getAvgVertSpeed() {
-        return (Double) getFieldByNumber(12);
+        return getFieldByNumber(12, Double.class);
     }
 
     @Nullable
     public Long getTotalCalories() {
-        return (Long) getFieldByNumber(13);
+        return getFieldByNumber(13, Long.class);
     }
 
     @Nullable
     public Double getTotalMovingTime() {
-        return (Double) getFieldByNumber(77);
+        return getFieldByNumber(77, Double.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

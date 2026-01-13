@@ -41,17 +41,17 @@ public class FitVideoTitle extends RecordData {
 
     @Nullable
     public Integer getMessageCount() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public String getText() {
-        return (String) getFieldByNumber(1);
+        return getFieldByNumber(1, String.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

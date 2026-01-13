@@ -41,184 +41,162 @@ public class FitBikeProfile extends RecordData {
 
     @Nullable
     public String getName() {
-        return (String) getFieldByNumber(0);
+        return getFieldByNumber(0, String.class);
     }
 
     @Nullable
     public Integer getSport() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Integer getSubSport() {
-        return (Integer) getFieldByNumber(2);
+        return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
     public Double getOdometer() {
-        return (Double) getFieldByNumber(3);
+        return getFieldByNumber(3, Double.class);
     }
 
     @Nullable
     public Integer getBikeSpdAntId() {
-        return (Integer) getFieldByNumber(4);
+        return getFieldByNumber(4, Integer.class);
     }
 
     @Nullable
     public Integer getBikeCadAntId() {
-        return (Integer) getFieldByNumber(5);
+        return getFieldByNumber(5, Integer.class);
     }
 
     @Nullable
     public Integer getBikeSpdcadAntId() {
-        return (Integer) getFieldByNumber(6);
+        return getFieldByNumber(6, Integer.class);
     }
 
     @Nullable
     public Integer getBikePowerAntId() {
-        return (Integer) getFieldByNumber(7);
+        return getFieldByNumber(7, Integer.class);
     }
 
     @Nullable
     public Float getCustomWheelsize() {
-        return (Float) getFieldByNumber(8);
+        return getFieldByNumber(8, Float.class);
     }
 
     @Nullable
     public Float getAutoWheelsize() {
-        return (Float) getFieldByNumber(9);
+        return getFieldByNumber(9, Float.class);
     }
 
     @Nullable
     public Float getBikeWeight() {
-        return (Float) getFieldByNumber(10);
+        return getFieldByNumber(10, Float.class);
     }
 
     @Nullable
     public Float getPowerCalFactor() {
-        return (Float) getFieldByNumber(11);
+        return getFieldByNumber(11, Float.class);
     }
 
     @Nullable
     public Boolean getAutoWheelCal() {
-        return (Boolean) getFieldByNumber(12);
+        return getFieldByNumber(12, Boolean.class);
     }
 
     @Nullable
     public Boolean getAutoPowerZero() {
-        return (Boolean) getFieldByNumber(13);
+        return getFieldByNumber(13, Boolean.class);
     }
 
     @Nullable
     public Integer getId() {
-        return (Integer) getFieldByNumber(14);
+        return getFieldByNumber(14, Integer.class);
     }
 
     @Nullable
     public Boolean getSpdEnabled() {
-        return (Boolean) getFieldByNumber(15);
+        return getFieldByNumber(15, Boolean.class);
     }
 
     @Nullable
     public Boolean getCadEnabled() {
-        return (Boolean) getFieldByNumber(16);
+        return getFieldByNumber(16, Boolean.class);
     }
 
     @Nullable
     public Boolean getSpdcadEnabled() {
-        return (Boolean) getFieldByNumber(17);
+        return getFieldByNumber(17, Boolean.class);
     }
 
     @Nullable
     public Boolean getPowerEnabled() {
-        return (Boolean) getFieldByNumber(18);
+        return getFieldByNumber(18, Boolean.class);
     }
 
     @Nullable
     public Float getCrankLength() {
-        return (Float) getFieldByNumber(19);
+        return getFieldByNumber(19, Float.class);
     }
 
     @Nullable
     public Boolean getEnabled() {
-        return (Boolean) getFieldByNumber(20);
+        return getFieldByNumber(20, Boolean.class);
     }
 
     @Nullable
     public Integer getBikeSpdAntIdTransType() {
-        return (Integer) getFieldByNumber(21);
+        return getFieldByNumber(21, Integer.class);
     }
 
     @Nullable
     public Integer getBikeCadAntIdTransType() {
-        return (Integer) getFieldByNumber(22);
+        return getFieldByNumber(22, Integer.class);
     }
 
     @Nullable
     public Integer getBikeSpdcadAntIdTransType() {
-        return (Integer) getFieldByNumber(23);
+        return getFieldByNumber(23, Integer.class);
     }
 
     @Nullable
     public Integer getBikePowerAntIdTransType() {
-        return (Integer) getFieldByNumber(24);
+        return getFieldByNumber(24, Integer.class);
     }
 
     @Nullable
     public Integer getOdometerRollover() {
-        return (Integer) getFieldByNumber(37);
+        return getFieldByNumber(37, Integer.class);
     }
 
     @Nullable
     public Integer getFrontGearNum() {
-        return (Integer) getFieldByNumber(38);
+        return getFieldByNumber(38, Integer.class);
     }
 
     @Nullable
     public Number[] getFrontGear() {
-        final Object object = getFieldByNumber(39);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(39, Number.class);
     }
 
     @Nullable
     public Integer getRearGearNum() {
-        return (Integer) getFieldByNumber(40);
+        return getFieldByNumber(40, Integer.class);
     }
 
     @Nullable
     public Number[] getRearGear() {
-        final Object object = getFieldByNumber(41);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(41, Number.class);
     }
 
     @Nullable
     public Boolean getShimanoDi2Enabled() {
-        return (Boolean) getFieldByNumber(44);
+        return getFieldByNumber(44, Boolean.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

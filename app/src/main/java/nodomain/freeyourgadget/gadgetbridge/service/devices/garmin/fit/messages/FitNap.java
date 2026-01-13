@@ -41,42 +41,42 @@ public class FitNap extends RecordData {
 
     @Nullable
     public Long getStartTimestamp() {
-        return (Long) getFieldByNumber(0);
+        return getFieldByNumber(0, Long.class);
     }
 
     @Nullable
     public Integer getUnknown1() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Long getEndTimestamp() {
-        return (Long) getFieldByNumber(2);
+        return getFieldByNumber(2, Long.class);
     }
 
     @Nullable
     public Integer getUnknown3() {
-        return (Integer) getFieldByNumber(3);
+        return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
     public Integer getUnknown4() {
-        return (Integer) getFieldByNumber(4);
+        return getFieldByNumber(4, Integer.class);
     }
 
     @Nullable
     public Integer getUnknown6() {
-        return (Integer) getFieldByNumber(6);
+        return getFieldByNumber(6, Integer.class);
     }
 
     @Nullable
     public Long getTimestamp7() {
-        return (Long) getFieldByNumber(7);
+        return getFieldByNumber(7, Long.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

@@ -41,97 +41,97 @@ public class FitEvent extends RecordData {
 
     @Nullable
     public Integer getEvent() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Integer getEventType() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Integer getData16() {
-        return (Integer) getFieldByNumber(2);
+        return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
     public Long getData() {
-        return (Long) getFieldByNumber(3);
+        return getFieldByNumber(3, Long.class);
     }
 
     @Nullable
     public Integer getEventGroup() {
-        return (Integer) getFieldByNumber(4);
+        return getFieldByNumber(4, Integer.class);
     }
 
     @Nullable
     public Integer getScore() {
-        return (Integer) getFieldByNumber(7);
+        return getFieldByNumber(7, Integer.class);
     }
 
     @Nullable
     public Integer getOpponentScore() {
-        return (Integer) getFieldByNumber(8);
+        return getFieldByNumber(8, Integer.class);
     }
 
     @Nullable
     public Integer getFrontGearNum() {
-        return (Integer) getFieldByNumber(9);
+        return getFieldByNumber(9, Integer.class);
     }
 
     @Nullable
     public Integer getFrontGear() {
-        return (Integer) getFieldByNumber(10);
+        return getFieldByNumber(10, Integer.class);
     }
 
     @Nullable
     public Integer getRearGearNum() {
-        return (Integer) getFieldByNumber(11);
+        return getFieldByNumber(11, Integer.class);
     }
 
     @Nullable
     public Integer getRearGear() {
-        return (Integer) getFieldByNumber(12);
+        return getFieldByNumber(12, Integer.class);
     }
 
     @Nullable
     public Integer getDeviceIndex() {
-        return (Integer) getFieldByNumber(13);
+        return getFieldByNumber(13, Integer.class);
     }
 
     @Nullable
     public Integer getActivityType() {
-        return (Integer) getFieldByNumber(14);
+        return getFieldByNumber(14, Integer.class);
     }
 
     @Nullable
     public Long getStartTimestamp() {
-        return (Long) getFieldByNumber(15);
+        return getFieldByNumber(15, Long.class);
     }
 
     @Nullable
     public Integer getRadarThreatLevelMax() {
-        return (Integer) getFieldByNumber(21);
+        return getFieldByNumber(21, Integer.class);
     }
 
     @Nullable
     public Integer getRadarThreatCount() {
-        return (Integer) getFieldByNumber(22);
+        return getFieldByNumber(22, Integer.class);
     }
 
     @Nullable
     public Float getRadarThreatAvgApproachSpeed() {
-        return (Float) getFieldByNumber(23);
+        return getFieldByNumber(23, Float.class);
     }
 
     @Nullable
     public Float getRadarThreatMaxApproachSpeed() {
-        return (Float) getFieldByNumber(24);
+        return getFieldByNumber(24, Float.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

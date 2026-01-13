@@ -41,37 +41,37 @@ public class FitVideoClip extends RecordData {
 
     @Nullable
     public Integer getClipNumber() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Long getStartTimestamp() {
-        return (Long) getFieldByNumber(1);
+        return getFieldByNumber(1, Long.class);
     }
 
     @Nullable
     public Integer getStartTimestampMs() {
-        return (Integer) getFieldByNumber(2);
+        return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
     public Long getEndTimestamp() {
-        return (Long) getFieldByNumber(3);
+        return getFieldByNumber(3, Long.class);
     }
 
     @Nullable
     public Integer getEndTimestampMs() {
-        return (Integer) getFieldByNumber(4);
+        return getFieldByNumber(4, Integer.class);
     }
 
     @Nullable
     public Long getClipStart() {
-        return (Long) getFieldByNumber(6);
+        return getFieldByNumber(6, Long.class);
     }
 
     @Nullable
     public Long getClipEnd() {
-        return (Long) getFieldByNumber(7);
+        return getFieldByNumber(7, Long.class);
     }
 
     /**

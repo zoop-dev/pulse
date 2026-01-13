@@ -41,97 +41,97 @@ public class FitSplit extends RecordData {
 
     @Nullable
     public Integer getSplitType() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Double getTotalElapsedTime() {
-        return (Double) getFieldByNumber(1);
+        return getFieldByNumber(1, Double.class);
     }
 
     @Nullable
     public Double getTotalTimerTime() {
-        return (Double) getFieldByNumber(2);
+        return getFieldByNumber(2, Double.class);
     }
 
     @Nullable
     public Double getTotalDistance() {
-        return (Double) getFieldByNumber(3);
+        return getFieldByNumber(3, Double.class);
     }
 
     @Nullable
     public Double getAvgSpeed() {
-        return (Double) getFieldByNumber(4);
+        return getFieldByNumber(4, Double.class);
     }
 
     @Nullable
     public Long getStartTime() {
-        return (Long) getFieldByNumber(9);
+        return getFieldByNumber(9, Long.class);
     }
 
     @Nullable
     public Integer getTotalAscent() {
-        return (Integer) getFieldByNumber(13);
+        return getFieldByNumber(13, Integer.class);
     }
 
     @Nullable
     public Integer getTotalDescent() {
-        return (Integer) getFieldByNumber(14);
+        return getFieldByNumber(14, Integer.class);
     }
 
     @Nullable
     public Double getStartPositionLat() {
-        return (Double) getFieldByNumber(21);
+        return getFieldByNumber(21, Double.class);
     }
 
     @Nullable
     public Double getStartPositionLong() {
-        return (Double) getFieldByNumber(22);
+        return getFieldByNumber(22, Double.class);
     }
 
     @Nullable
     public Double getEndPositionLat() {
-        return (Double) getFieldByNumber(23);
+        return getFieldByNumber(23, Double.class);
     }
 
     @Nullable
     public Double getEndPositionLong() {
-        return (Double) getFieldByNumber(24);
+        return getFieldByNumber(24, Double.class);
     }
 
     @Nullable
     public Double getMaxSpeed() {
-        return (Double) getFieldByNumber(25);
+        return getFieldByNumber(25, Double.class);
     }
 
     @Nullable
     public Double getAvgVertSpeed() {
-        return (Double) getFieldByNumber(26);
+        return getFieldByNumber(26, Double.class);
     }
 
     @Nullable
     public Long getEndTime() {
-        return (Long) getFieldByNumber(27);
+        return getFieldByNumber(27, Long.class);
     }
 
     @Nullable
     public Long getTotalCalories() {
-        return (Long) getFieldByNumber(28);
+        return getFieldByNumber(28, Long.class);
     }
 
     @Nullable
     public Double getStartElevation() {
-        return (Double) getFieldByNumber(74);
+        return getFieldByNumber(74, Double.class);
     }
 
     @Nullable
     public Double getTotalMovingTime() {
-        return (Double) getFieldByNumber(110);
+        return getFieldByNumber(110, Double.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

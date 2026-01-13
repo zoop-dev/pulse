@@ -41,17 +41,17 @@ public class FitSleepSchedule extends RecordData {
 
     @Nullable
     public Long getBedTime() {
-        return (Long) getFieldByNumber(0);
+        return getFieldByNumber(0, Long.class);
     }
 
     @Nullable
     public Long getWakeTime() {
-        return (Long) getFieldByNumber(1);
+        return getFieldByNumber(1, Long.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

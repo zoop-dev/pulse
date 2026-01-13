@@ -41,67 +41,67 @@ public class FitMapLayer extends RecordData {
 
     @Nullable
     public Integer getReliefShading() {
-        return (Integer) getFieldByNumber(2);
+        return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
     public Integer getOrientation() {
-        return (Integer) getFieldByNumber(11);
+        return getFieldByNumber(11, Integer.class);
     }
 
     @Nullable
     public Integer getUserLocations() {
-        return (Integer) getFieldByNumber(13);
+        return getFieldByNumber(13, Integer.class);
     }
 
     @Nullable
     public Integer getAutoZoom() {
-        return (Integer) getFieldByNumber(14);
+        return getFieldByNumber(14, Integer.class);
     }
 
     @Nullable
     public Integer getGuideText() {
-        return (Integer) getFieldByNumber(15);
+        return getFieldByNumber(15, Integer.class);
     }
 
     @Nullable
     public Integer getTrackLog() {
-        return (Integer) getFieldByNumber(16);
+        return getFieldByNumber(16, Integer.class);
     }
 
     @Nullable
     public Integer getCourses() {
-        return (Integer) getFieldByNumber(20);
+        return getFieldByNumber(20, Integer.class);
     }
 
     @Nullable
     public Integer getSpotSoundings() {
-        return (Integer) getFieldByNumber(23);
+        return getFieldByNumber(23, Integer.class);
     }
 
     @Nullable
     public Integer getLightSectors() {
-        return (Integer) getFieldByNumber(24);
+        return getFieldByNumber(24, Integer.class);
     }
 
     @Nullable
     public Integer getSegments() {
-        return (Integer) getFieldByNumber(27);
+        return getFieldByNumber(27, Integer.class);
     }
 
     @Nullable
     public Integer getContours() {
-        return (Integer) getFieldByNumber(28);
+        return getFieldByNumber(28, Integer.class);
     }
 
     @Nullable
     public Integer getPopularity() {
-        return (Integer) getFieldByNumber(31);
+        return getFieldByNumber(31, Integer.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

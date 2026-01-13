@@ -42,42 +42,42 @@ public class FitHrvSummary extends RecordData {
 
     @Nullable
     public Float getWeeklyAverage() {
-        return (Float) getFieldByNumber(0);
+        return getFieldByNumber(0, Float.class);
     }
 
     @Nullable
     public Float getLastNightAverage() {
-        return (Float) getFieldByNumber(1);
+        return getFieldByNumber(1, Float.class);
     }
 
     @Nullable
     public Float getLastNight5MinHigh() {
-        return (Float) getFieldByNumber(2);
+        return getFieldByNumber(2, Float.class);
     }
 
     @Nullable
     public Float getBaselineLowUpper() {
-        return (Float) getFieldByNumber(3);
+        return getFieldByNumber(3, Float.class);
     }
 
     @Nullable
     public Float getBaselineBalancedLower() {
-        return (Float) getFieldByNumber(4);
+        return getFieldByNumber(4, Float.class);
     }
 
     @Nullable
     public Float getBaselineBalancedUpper() {
-        return (Float) getFieldByNumber(5);
+        return getFieldByNumber(5, Float.class);
     }
 
     @Nullable
     public HrvStatus getStatus() {
-        return (HrvStatus) getFieldByNumber(6);
+        return getFieldByNumber(6, HrvStatus.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

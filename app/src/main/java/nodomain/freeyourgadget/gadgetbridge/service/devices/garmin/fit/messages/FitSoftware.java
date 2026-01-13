@@ -41,17 +41,17 @@ public class FitSoftware extends RecordData {
 
     @Nullable
     public Float getVersion() {
-        return (Float) getFieldByNumber(3);
+        return getFieldByNumber(3, Float.class);
     }
 
     @Nullable
     public String getPartNumber() {
-        return (String) getFieldByNumber(5);
+        return getFieldByNumber(5, String.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

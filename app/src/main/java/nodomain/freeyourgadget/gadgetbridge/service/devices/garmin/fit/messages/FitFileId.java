@@ -42,42 +42,42 @@ public class FitFileId extends RecordData {
 
     @Nullable
     public FILETYPE getType() {
-        return (FILETYPE) getFieldByNumber(0);
+        return getFieldByNumber(0, FILETYPE.class);
     }
 
     @Nullable
     public Integer getManufacturer() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Integer getProduct() {
-        return (Integer) getFieldByNumber(2);
+        return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
     public Long getSerialNumber() {
-        return (Long) getFieldByNumber(3);
+        return getFieldByNumber(3, Long.class);
     }
 
     @Nullable
     public Long getTimeCreated() {
-        return (Long) getFieldByNumber(4);
+        return getFieldByNumber(4, Long.class);
     }
 
     @Nullable
     public Integer getNumber() {
-        return (Integer) getFieldByNumber(5);
+        return getFieldByNumber(5, Integer.class);
     }
 
     @Nullable
     public Integer getManufacturerPartner() {
-        return (Integer) getFieldByNumber(6);
+        return getFieldByNumber(6, Integer.class);
     }
 
     @Nullable
     public String getProductName() {
-        return (String) getFieldByNumber(8);
+        return getFieldByNumber(8, String.class);
     }
 
     /**

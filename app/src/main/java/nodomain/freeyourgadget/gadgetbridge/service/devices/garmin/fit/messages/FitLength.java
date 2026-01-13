@@ -41,134 +41,112 @@ public class FitLength extends RecordData {
 
     @Nullable
     public Integer getEvent() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Integer getEventType() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Long getStartTime() {
-        return (Long) getFieldByNumber(2);
+        return getFieldByNumber(2, Long.class);
     }
 
     @Nullable
     public Double getTotalElapsedTime() {
-        return (Double) getFieldByNumber(3);
+        return getFieldByNumber(3, Double.class);
     }
 
     @Nullable
     public Double getTotalTimerTime() {
-        return (Double) getFieldByNumber(4);
+        return getFieldByNumber(4, Double.class);
     }
 
     @Nullable
     public Integer getTotalStrokes() {
-        return (Integer) getFieldByNumber(5);
+        return getFieldByNumber(5, Integer.class);
     }
 
     @Nullable
     public Float getAvgSpeed() {
-        return (Float) getFieldByNumber(6);
+        return getFieldByNumber(6, Float.class);
     }
 
     @Nullable
     public Integer getSwimStroke() {
-        return (Integer) getFieldByNumber(7);
+        return getFieldByNumber(7, Integer.class);
     }
 
     @Nullable
     public Integer getAvgSwimmingCadence() {
-        return (Integer) getFieldByNumber(9);
+        return getFieldByNumber(9, Integer.class);
     }
 
     @Nullable
     public Integer getEventGroup() {
-        return (Integer) getFieldByNumber(10);
+        return getFieldByNumber(10, Integer.class);
     }
 
     @Nullable
     public Integer getTotalCalories() {
-        return (Integer) getFieldByNumber(11);
+        return getFieldByNumber(11, Integer.class);
     }
 
     @Nullable
     public Integer getLengthType() {
-        return (Integer) getFieldByNumber(12);
+        return getFieldByNumber(12, Integer.class);
     }
 
     @Nullable
     public Integer getPlayerScore() {
-        return (Integer) getFieldByNumber(18);
+        return getFieldByNumber(18, Integer.class);
     }
 
     @Nullable
     public Integer getOpponentScore() {
-        return (Integer) getFieldByNumber(19);
+        return getFieldByNumber(19, Integer.class);
     }
 
     @Nullable
     public Number[] getStrokeCount() {
-        final Object object = getFieldByNumber(20);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(20, Number.class);
     }
 
     @Nullable
     public Number[] getZoneCount() {
-        final Object object = getFieldByNumber(21);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(21, Number.class);
     }
 
     @Nullable
     public Float getEnhancedAvgRespirationRate() {
-        return (Float) getFieldByNumber(22);
+        return getFieldByNumber(22, Float.class);
     }
 
     @Nullable
     public Float getEnhancedMaxRespirationRate() {
-        return (Float) getFieldByNumber(23);
+        return getFieldByNumber(23, Float.class);
     }
 
     @Nullable
     public Integer getAvgRespirationRate() {
-        return (Integer) getFieldByNumber(24);
+        return getFieldByNumber(24, Integer.class);
     }
 
     @Nullable
     public Integer getMaxRespirationRate() {
-        return (Integer) getFieldByNumber(25);
+        return getFieldByNumber(25, Integer.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

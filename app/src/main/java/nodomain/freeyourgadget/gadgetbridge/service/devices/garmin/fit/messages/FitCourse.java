@@ -41,22 +41,22 @@ public class FitCourse extends RecordData {
 
     @Nullable
     public Integer getSport() {
-        return (Integer) getFieldByNumber(4);
+        return getFieldByNumber(4, Integer.class);
     }
 
     @Nullable
     public String getName() {
-        return (String) getFieldByNumber(5);
+        return getFieldByNumber(5, String.class);
     }
 
     @Nullable
     public Long getCapabilities() {
-        return (Long) getFieldByNumber(6);
+        return getFieldByNumber(6, Long.class);
     }
 
     @Nullable
     public Integer getSubSport() {
-        return (Integer) getFieldByNumber(7);
+        return getFieldByNumber(7, Integer.class);
     }
 
     /**

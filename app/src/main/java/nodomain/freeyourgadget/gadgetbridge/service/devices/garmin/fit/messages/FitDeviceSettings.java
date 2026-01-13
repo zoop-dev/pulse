@@ -41,241 +41,142 @@ public class FitDeviceSettings extends RecordData {
 
     @Nullable
     public Integer getActiveTimeZone() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Long getUtcOffset() {
-        return (Long) getFieldByNumber(1);
+        return getFieldByNumber(1, Long.class);
     }
 
     @Nullable
     public Number[] getTimeOffset() {
-        final Object object = getFieldByNumber(2);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(2, Number.class);
     }
 
     @Nullable
     public Number[] getTimeMode() {
-        final Object object = getFieldByNumber(4);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(4, Number.class);
     }
 
     @Nullable
     public Number[] getTimeZoneOffset() {
-        final Object object = getFieldByNumber(5);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(5, Number.class);
     }
 
     @Nullable
     public Number[] getAlarmsTime() {
-        final Object object = getFieldByNumber(8);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(8, Number.class);
     }
 
     @Nullable
     public Number[] getAlarmsUnk5() {
-        final Object object = getFieldByNumber(9);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(9, Number.class);
     }
 
     @Nullable
     public Integer getBacklightMode() {
-        return (Integer) getFieldByNumber(12);
+        return getFieldByNumber(12, Integer.class);
     }
 
     @Nullable
     public Number[] getAlarmsEnabled() {
-        final Object object = getFieldByNumber(28);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(28, Number.class);
     }
 
     @Nullable
     public Integer getActivityTrackerEnabled() {
-        return (Integer) getFieldByNumber(36);
+        return getFieldByNumber(36, Integer.class);
     }
 
     @Nullable
     public Long getClockTime() {
-        return (Long) getFieldByNumber(39);
+        return getFieldByNumber(39, Long.class);
     }
 
     @Nullable
     public Number[] getPagesEnabled() {
-        final Object object = getFieldByNumber(40);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(40, Number.class);
     }
 
     @Nullable
     public Integer getMoveAlertEnabled() {
-        return (Integer) getFieldByNumber(46);
+        return getFieldByNumber(46, Integer.class);
     }
 
     @Nullable
     public Integer getDateMode() {
-        return (Integer) getFieldByNumber(47);
+        return getFieldByNumber(47, Integer.class);
     }
 
     @Nullable
     public Integer getDisplayOrientation() {
-        return (Integer) getFieldByNumber(55);
+        return getFieldByNumber(55, Integer.class);
     }
 
     @Nullable
     public Integer getMountingSide() {
-        return (Integer) getFieldByNumber(56);
+        return getFieldByNumber(56, Integer.class);
     }
 
     @Nullable
     public Number[] getDefaultPage() {
-        final Object object = getFieldByNumber(57);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(57, Number.class);
     }
 
     @Nullable
     public Integer getAutosyncMinSteps() {
-        return (Integer) getFieldByNumber(58);
+        return getFieldByNumber(58, Integer.class);
     }
 
     @Nullable
     public Integer getAutosyncMinTime() {
-        return (Integer) getFieldByNumber(59);
+        return getFieldByNumber(59, Integer.class);
     }
 
     @Nullable
     public Integer getLactateThresholdAutodetectEnabled() {
-        return (Integer) getFieldByNumber(80);
+        return getFieldByNumber(80, Integer.class);
     }
 
     @Nullable
     public Integer getBleAutoUploadEnabled() {
-        return (Integer) getFieldByNumber(86);
+        return getFieldByNumber(86, Integer.class);
     }
 
     @Nullable
     public Integer getAutoSyncFrequency() {
-        return (Integer) getFieldByNumber(89);
+        return getFieldByNumber(89, Integer.class);
     }
 
     @Nullable
     public Long getAutoActivityDetect() {
-        return (Long) getFieldByNumber(90);
+        return getFieldByNumber(90, Long.class);
     }
 
     @Nullable
     public Number[] getAlarmsRepeat() {
-        final Object object = getFieldByNumber(92);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(92, Number.class);
     }
 
     @Nullable
     public Integer getNumberOfScreens() {
-        return (Integer) getFieldByNumber(94);
+        return getFieldByNumber(94, Integer.class);
     }
 
     @Nullable
     public Integer getSmartNotificationDisplayOrientation() {
-        return (Integer) getFieldByNumber(95);
+        return getFieldByNumber(95, Integer.class);
     }
 
     @Nullable
     public Integer getTapInterface() {
-        return (Integer) getFieldByNumber(134);
+        return getFieldByNumber(134, Integer.class);
     }
 
     @Nullable
     public Integer getTapSensitivity() {
-        return (Integer) getFieldByNumber(174);
+        return getFieldByNumber(174, Integer.class);
     }
 
     /**

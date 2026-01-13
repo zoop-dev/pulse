@@ -41,27 +41,27 @@ public class FitDeviceAuxBatteryInfo extends RecordData {
 
     @Nullable
     public Integer getDeviceIndex() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Float getBatteryVoltage() {
-        return (Float) getFieldByNumber(1);
+        return getFieldByNumber(1, Float.class);
     }
 
     @Nullable
     public Integer getBatteryStatus() {
-        return (Integer) getFieldByNumber(2);
+        return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
     public Integer getBatteryIdentifier() {
-        return (Integer) getFieldByNumber(3);
+        return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

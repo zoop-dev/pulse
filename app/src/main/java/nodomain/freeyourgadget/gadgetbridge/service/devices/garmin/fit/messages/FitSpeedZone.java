@@ -41,17 +41,17 @@ public class FitSpeedZone extends RecordData {
 
     @Nullable
     public Float getHighValue() {
-        return (Float) getFieldByNumber(0);
+        return getFieldByNumber(0, Float.class);
     }
 
     @Nullable
     public String getName() {
-        return (String) getFieldByNumber(1);
+        return getFieldByNumber(1, String.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

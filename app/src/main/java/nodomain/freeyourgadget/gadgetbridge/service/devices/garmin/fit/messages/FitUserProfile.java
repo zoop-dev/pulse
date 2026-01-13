@@ -43,178 +43,167 @@ public class FitUserProfile extends RecordData {
 
     @Nullable
     public String getFriendlyName() {
-        return (String) getFieldByNumber(0);
+        return getFieldByNumber(0, String.class);
     }
 
     @Nullable
     public Integer getGender() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Integer getAge() {
-        return (Integer) getFieldByNumber(2);
+        return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
     public Integer getHeight() {
-        return (Integer) getFieldByNumber(3);
+        return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
     public Float getWeight() {
-        return (Float) getFieldByNumber(4);
+        return getFieldByNumber(4, Float.class);
     }
 
     @Nullable
     public Language getLanguage() {
-        return (Language) getFieldByNumber(5);
+        return getFieldByNumber(5, Language.class);
     }
 
     @Nullable
     public Type getElevSetting() {
-        return (Type) getFieldByNumber(6);
+        return getFieldByNumber(6, Type.class);
     }
 
     @Nullable
     public Type getWeightSetting() {
-        return (Type) getFieldByNumber(7);
+        return getFieldByNumber(7, Type.class);
     }
 
     @Nullable
     public Integer getRestingHeartRate() {
-        return (Integer) getFieldByNumber(8);
+        return getFieldByNumber(8, Integer.class);
     }
 
     @Nullable
     public Integer getDefaultMaxRunningHeartRate() {
-        return (Integer) getFieldByNumber(9);
+        return getFieldByNumber(9, Integer.class);
     }
 
     @Nullable
     public Integer getDefaultMaxBikingHeartRate() {
-        return (Integer) getFieldByNumber(10);
+        return getFieldByNumber(10, Integer.class);
     }
 
     @Nullable
     public Integer getDefaultMaxHeartRate() {
-        return (Integer) getFieldByNumber(11);
+        return getFieldByNumber(11, Integer.class);
     }
 
     @Nullable
     public Integer getHrSetting() {
-        return (Integer) getFieldByNumber(12);
+        return getFieldByNumber(12, Integer.class);
     }
 
     @Nullable
     public Type getSpeedSetting() {
-        return (Type) getFieldByNumber(13);
+        return getFieldByNumber(13, Type.class);
     }
 
     @Nullable
     public Type getDistSetting() {
-        return (Type) getFieldByNumber(14);
+        return getFieldByNumber(14, Type.class);
     }
 
     @Nullable
     public Integer getPowerSetting() {
-        return (Integer) getFieldByNumber(16);
+        return getFieldByNumber(16, Integer.class);
     }
 
     @Nullable
     public Integer getActivityClass() {
-        return (Integer) getFieldByNumber(17);
+        return getFieldByNumber(17, Integer.class);
     }
 
     @Nullable
     public Integer getPositionSetting() {
-        return (Integer) getFieldByNumber(18);
+        return getFieldByNumber(18, Integer.class);
     }
 
     @Nullable
     public Type getTemperatureSetting() {
-        return (Type) getFieldByNumber(21);
+        return getFieldByNumber(21, Type.class);
     }
 
     @Nullable
     public Integer getLocalId() {
-        return (Integer) getFieldByNumber(22);
+        return getFieldByNumber(22, Integer.class);
     }
 
     @Nullable
     public Number[] getGlobalId() {
-        final Object object = getFieldByNumber(23);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(23, Number.class);
     }
 
     @Nullable
     public Integer getYearOfBirth() {
-        return (Integer) getFieldByNumber(24);
+        return getFieldByNumber(24, Integer.class);
     }
 
     @Nullable
     public Long getWakeTime() {
-        return (Long) getFieldByNumber(28);
+        return getFieldByNumber(28, Long.class);
     }
 
     @Nullable
     public Long getSleepTime() {
-        return (Long) getFieldByNumber(29);
+        return getFieldByNumber(29, Long.class);
     }
 
     @Nullable
     public Type getHeightSetting() {
-        return (Type) getFieldByNumber(30);
+        return getFieldByNumber(30, Type.class);
     }
 
     @Nullable
     public Integer getUserRunningStepLength() {
-        return (Integer) getFieldByNumber(31);
+        return getFieldByNumber(31, Integer.class);
     }
 
     @Nullable
     public Integer getUserWalkingStepLength() {
-        return (Integer) getFieldByNumber(32);
+        return getFieldByNumber(32, Integer.class);
     }
 
     @Nullable
     public Float getLtspeed() {
-        return (Float) getFieldByNumber(37);
+        return getFieldByNumber(37, Float.class);
     }
 
     @Nullable
     public Long getTimeLastLthrUpdate() {
-        return (Long) getFieldByNumber(41);
+        return getFieldByNumber(41, Long.class);
     }
 
     @Nullable
     public Type getDepthSetting() {
-        return (Type) getFieldByNumber(47);
+        return getFieldByNumber(47, Type.class);
     }
 
     @Nullable
     public Long getDiveCount() {
-        return (Long) getFieldByNumber(49);
+        return getFieldByNumber(49, Long.class);
     }
 
     @Nullable
     public Integer getGenderX() {
-        return (Integer) getFieldByNumber(62);
+        return getFieldByNumber(62, Integer.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

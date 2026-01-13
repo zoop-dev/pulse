@@ -41,91 +41,47 @@ public class FitSegmentFile extends RecordData {
 
     @Nullable
     public String getFileUuid() {
-        return (String) getFieldByNumber(1);
+        return getFieldByNumber(1, String.class);
     }
 
     @Nullable
     public Integer getEnabled() {
-        return (Integer) getFieldByNumber(3);
+        return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
     public Long getUserProfilePrimaryKey() {
-        return (Long) getFieldByNumber(4);
+        return getFieldByNumber(4, Long.class);
     }
 
     @Nullable
     public Number[] getLeaderType() {
-        final Object object = getFieldByNumber(7);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(7, Number.class);
     }
 
     @Nullable
     public Number[] getLeaderGroupPrimaryKey() {
-        final Object object = getFieldByNumber(8);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(8, Number.class);
     }
 
     @Nullable
     public Number[] getLeaderActivityId() {
-        final Object object = getFieldByNumber(9);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(9, Number.class);
     }
 
     @Nullable
     public String[] getLeaderActivityIdString() {
-        final Object object = getFieldByNumber(10);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new String[]{(String) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final String[] ret = new String[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (String) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(10, String.class);
     }
 
     @Nullable
     public Integer getDefaultRaceLeader() {
-        return (Integer) getFieldByNumber(11);
+        return getFieldByNumber(11, Integer.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

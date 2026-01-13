@@ -41,102 +41,102 @@ public class FitDeviceInfo extends RecordData {
 
     @Nullable
     public Integer getDeviceIndex() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Integer getDeviceType() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Integer getManufacturer() {
-        return (Integer) getFieldByNumber(2);
+        return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
     public Long getSerialNumber() {
-        return (Long) getFieldByNumber(3);
+        return getFieldByNumber(3, Long.class);
     }
 
     @Nullable
     public Integer getProduct() {
-        return (Integer) getFieldByNumber(4);
+        return getFieldByNumber(4, Integer.class);
     }
 
     @Nullable
     public Integer getSoftwareVersion() {
-        return (Integer) getFieldByNumber(5);
+        return getFieldByNumber(5, Integer.class);
     }
 
     @Nullable
     public Integer getHardwareVersion() {
-        return (Integer) getFieldByNumber(6);
+        return getFieldByNumber(6, Integer.class);
     }
 
     @Nullable
     public Long getCumOperatingTime() {
-        return (Long) getFieldByNumber(7);
+        return getFieldByNumber(7, Long.class);
     }
 
     @Nullable
     public Float getBatteryVoltage() {
-        return (Float) getFieldByNumber(10);
+        return getFieldByNumber(10, Float.class);
     }
 
     @Nullable
     public Integer getBatteryStatus() {
-        return (Integer) getFieldByNumber(11);
+        return getFieldByNumber(11, Integer.class);
     }
 
     @Nullable
     public Integer getSensorPosition() {
-        return (Integer) getFieldByNumber(18);
+        return getFieldByNumber(18, Integer.class);
     }
 
     @Nullable
     public String getDescriptor() {
-        return (String) getFieldByNumber(19);
+        return getFieldByNumber(19, String.class);
     }
 
     @Nullable
     public Integer getAntTransmissionType() {
-        return (Integer) getFieldByNumber(20);
+        return getFieldByNumber(20, Integer.class);
     }
 
     @Nullable
     public Integer getAntDeviceNumber() {
-        return (Integer) getFieldByNumber(21);
+        return getFieldByNumber(21, Integer.class);
     }
 
     @Nullable
     public Integer getAntNetwork() {
-        return (Integer) getFieldByNumber(22);
+        return getFieldByNumber(22, Integer.class);
     }
 
     @Nullable
     public Long getAntId() {
-        return (Long) getFieldByNumber(24);
+        return getFieldByNumber(24, Long.class);
     }
 
     @Nullable
     public Integer getSourceType() {
-        return (Integer) getFieldByNumber(25);
+        return getFieldByNumber(25, Integer.class);
     }
 
     @Nullable
     public String getProductName() {
-        return (String) getFieldByNumber(27);
+        return getFieldByNumber(27, String.class);
     }
 
     @Nullable
     public Integer getBatteryLevel() {
-        return (Integer) getFieldByNumber(32);
+        return getFieldByNumber(32, Integer.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

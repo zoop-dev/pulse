@@ -41,44 +41,22 @@ public class FitCapabilities extends RecordData {
 
     @Nullable
     public Number[] getLanguages() {
-        final Object object = getFieldByNumber(0);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(0, Number.class);
     }
 
     @Nullable
     public Number[] getSports() {
-        final Object object = getFieldByNumber(1);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(1, Number.class);
     }
 
     @Nullable
     public Long getWorkoutsSupported() {
-        return (Long) getFieldByNumber(21);
+        return getFieldByNumber(21, Long.class);
     }
 
     @Nullable
     public Long getConnectivitySupported() {
-        return (Long) getFieldByNumber(23);
+        return getFieldByNumber(23, Long.class);
     }
 
     /**

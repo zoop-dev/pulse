@@ -41,22 +41,22 @@ public class FitTrainingSettings extends RecordData {
 
     @Nullable
     public Double getTargetDistance() {
-        return (Double) getFieldByNumber(31);
+        return getFieldByNumber(31, Double.class);
     }
 
     @Nullable
     public Float getTargetSpeed() {
-        return (Float) getFieldByNumber(32);
+        return getFieldByNumber(32, Float.class);
     }
 
     @Nullable
     public Long getTargetTime() {
-        return (Long) getFieldByNumber(33);
+        return getFieldByNumber(33, Long.class);
     }
 
     @Nullable
     public Double getPreciseTargetSpeed() {
-        return (Double) getFieldByNumber(153);
+        return getFieldByNumber(153, Double.class);
     }
 
     /**

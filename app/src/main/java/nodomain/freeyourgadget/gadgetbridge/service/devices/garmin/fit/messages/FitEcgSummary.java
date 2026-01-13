@@ -41,57 +41,57 @@ public class FitEcgSummary extends RecordData {
 
     @Nullable
     public Integer getUnknown0() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Integer getUnknown1() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Float getUnknown2() {
-        return (Float) getFieldByNumber(2);
+        return getFieldByNumber(2, Float.class);
     }
 
     @Nullable
     public Float getUnknown3() {
-        return (Float) getFieldByNumber(3);
+        return getFieldByNumber(3, Float.class);
     }
 
     @Nullable
     public Long getEcgTimestamp() {
-        return (Long) getFieldByNumber(4);
+        return getFieldByNumber(4, Long.class);
     }
 
     @Nullable
     public Long getLocalTimestamp() {
-        return (Long) getFieldByNumber(5);
+        return getFieldByNumber(5, Long.class);
     }
 
     @Nullable
     public Integer getUnknown6() {
-        return (Integer) getFieldByNumber(6);
+        return getFieldByNumber(6, Integer.class);
     }
 
     @Nullable
     public Float getAverageHeartRate() {
-        return (Float) getFieldByNumber(7);
+        return getFieldByNumber(7, Float.class);
     }
 
     @Nullable
     public String getUnknown10() {
-        return (String) getFieldByNumber(10);
+        return getFieldByNumber(10, String.class);
     }
 
     @Nullable
     public Integer getUnknown11() {
-        return (Integer) getFieldByNumber(11);
+        return getFieldByNumber(11, Integer.class);
     }
 
     @Nullable
     public Integer getUnknown12() {
-        return (Integer) getFieldByNumber(12);
+        return getFieldByNumber(12, Integer.class);
     }
 
     /**

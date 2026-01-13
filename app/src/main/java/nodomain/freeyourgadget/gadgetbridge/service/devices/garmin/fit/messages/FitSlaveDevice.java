@@ -41,12 +41,12 @@ public class FitSlaveDevice extends RecordData {
 
     @Nullable
     public Integer getManufacturer() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Integer getProduct() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     /**

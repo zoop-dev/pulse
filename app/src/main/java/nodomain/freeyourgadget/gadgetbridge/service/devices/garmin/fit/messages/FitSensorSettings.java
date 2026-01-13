@@ -41,32 +41,32 @@ public class FitSensorSettings extends RecordData {
 
     @Nullable
     public Long getAntId() {
-        return (Long) getFieldByNumber(0);
+        return getFieldByNumber(0, Long.class);
     }
 
     @Nullable
     public String getName() {
-        return (String) getFieldByNumber(2);
+        return getFieldByNumber(2, String.class);
     }
 
     @Nullable
     public Integer getUseForSpeed() {
-        return (Integer) getFieldByNumber(45);
+        return getFieldByNumber(45, Integer.class);
     }
 
     @Nullable
     public Integer getUseForDistance() {
-        return (Integer) getFieldByNumber(46);
+        return getFieldByNumber(46, Integer.class);
     }
 
     @Nullable
     public Integer getConnectionType() {
-        return (Integer) getFieldByNumber(51);
+        return getFieldByNumber(51, Integer.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

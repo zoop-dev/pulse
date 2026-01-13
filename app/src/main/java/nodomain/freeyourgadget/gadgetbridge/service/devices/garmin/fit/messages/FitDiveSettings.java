@@ -41,177 +41,177 @@ public class FitDiveSettings extends RecordData {
 
     @Nullable
     public String getName() {
-        return (String) getFieldByNumber(0);
+        return getFieldByNumber(0, String.class);
     }
 
     @Nullable
     public Integer getModel() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Integer getGfLow() {
-        return (Integer) getFieldByNumber(2);
+        return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
     public Integer getGfHigh() {
-        return (Integer) getFieldByNumber(3);
+        return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
     public Integer getWaterType() {
-        return (Integer) getFieldByNumber(4);
+        return getFieldByNumber(4, Integer.class);
     }
 
     @Nullable
     public Float getWaterDensity() {
-        return (Float) getFieldByNumber(5);
+        return getFieldByNumber(5, Float.class);
     }
 
     @Nullable
     public Float getPo2Warn() {
-        return (Float) getFieldByNumber(6);
+        return getFieldByNumber(6, Float.class);
     }
 
     @Nullable
     public Float getPo2Critical() {
-        return (Float) getFieldByNumber(7);
+        return getFieldByNumber(7, Float.class);
     }
 
     @Nullable
     public Float getPo2Deco() {
-        return (Float) getFieldByNumber(8);
+        return getFieldByNumber(8, Float.class);
     }
 
     @Nullable
     public Integer getSafetyStopEnabled() {
-        return (Integer) getFieldByNumber(9);
+        return getFieldByNumber(9, Integer.class);
     }
 
     @Nullable
     public Float getBottomDepth() {
-        return (Float) getFieldByNumber(10);
+        return getFieldByNumber(10, Float.class);
     }
 
     @Nullable
     public Long getBottomTime() {
-        return (Long) getFieldByNumber(11);
+        return getFieldByNumber(11, Long.class);
     }
 
     @Nullable
     public Integer getApneaCountdownEnabled() {
-        return (Integer) getFieldByNumber(12);
+        return getFieldByNumber(12, Integer.class);
     }
 
     @Nullable
     public Long getApneaCountdownTime() {
-        return (Long) getFieldByNumber(13);
+        return getFieldByNumber(13, Long.class);
     }
 
     @Nullable
     public Integer getBacklightMode() {
-        return (Integer) getFieldByNumber(14);
+        return getFieldByNumber(14, Integer.class);
     }
 
     @Nullable
     public Integer getBacklightBrightness() {
-        return (Integer) getFieldByNumber(15);
+        return getFieldByNumber(15, Integer.class);
     }
 
     @Nullable
     public Integer getBacklightTimeout() {
-        return (Integer) getFieldByNumber(16);
+        return getFieldByNumber(16, Integer.class);
     }
 
     @Nullable
     public Integer getRepeatDiveInterval() {
-        return (Integer) getFieldByNumber(17);
+        return getFieldByNumber(17, Integer.class);
     }
 
     @Nullable
     public Integer getSafetyStopTime() {
-        return (Integer) getFieldByNumber(18);
+        return getFieldByNumber(18, Integer.class);
     }
 
     @Nullable
     public Integer getHeartRateSourceType() {
-        return (Integer) getFieldByNumber(19);
+        return getFieldByNumber(19, Integer.class);
     }
 
     @Nullable
     public Integer getHeartRateSource() {
-        return (Integer) getFieldByNumber(20);
+        return getFieldByNumber(20, Integer.class);
     }
 
     @Nullable
     public Integer getTravelGas() {
-        return (Integer) getFieldByNumber(21);
+        return getFieldByNumber(21, Integer.class);
     }
 
     @Nullable
     public Integer getCcrLowSetpointSwitchMode() {
-        return (Integer) getFieldByNumber(22);
+        return getFieldByNumber(22, Integer.class);
     }
 
     @Nullable
     public Float getCcrLowSetpoint() {
-        return (Float) getFieldByNumber(23);
+        return getFieldByNumber(23, Float.class);
     }
 
     @Nullable
     public Double getCcrLowSetpointDepth() {
-        return (Double) getFieldByNumber(24);
+        return getFieldByNumber(24, Double.class);
     }
 
     @Nullable
     public Integer getCcrHighSetpointSwitchMode() {
-        return (Integer) getFieldByNumber(25);
+        return getFieldByNumber(25, Integer.class);
     }
 
     @Nullable
     public Float getCcrHighSetpoint() {
-        return (Float) getFieldByNumber(26);
+        return getFieldByNumber(26, Float.class);
     }
 
     @Nullable
     public Double getCcrHighSetpointDepth() {
-        return (Double) getFieldByNumber(27);
+        return getFieldByNumber(27, Double.class);
     }
 
     @Nullable
     public Integer getGasConsumptionDisplay() {
-        return (Integer) getFieldByNumber(29);
+        return getFieldByNumber(29, Integer.class);
     }
 
     @Nullable
     public Integer getUpKeyEnabled() {
-        return (Integer) getFieldByNumber(30);
+        return getFieldByNumber(30, Integer.class);
     }
 
     @Nullable
     public Integer getDiveSounds() {
-        return (Integer) getFieldByNumber(35);
+        return getFieldByNumber(35, Integer.class);
     }
 
     @Nullable
     public Float getLastStopMultiple() {
-        return (Float) getFieldByNumber(36);
+        return getFieldByNumber(36, Float.class);
     }
 
     @Nullable
     public Integer getNoFlyTimeMode() {
-        return (Integer) getFieldByNumber(37);
+        return getFieldByNumber(37, Integer.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

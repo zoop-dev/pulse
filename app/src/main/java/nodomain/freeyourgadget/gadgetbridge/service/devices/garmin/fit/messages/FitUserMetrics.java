@@ -41,67 +41,67 @@ public class FitUserMetrics extends RecordData {
 
     @Nullable
     public Integer getVo2Max() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Integer getAge() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Float getHeight() {
-        return (Float) getFieldByNumber(2);
+        return getFieldByNumber(2, Float.class);
     }
 
     @Nullable
     public Float getWeight() {
-        return (Float) getFieldByNumber(3);
+        return getFieldByNumber(3, Float.class);
     }
 
     @Nullable
     public Integer getGender() {
-        return (Integer) getFieldByNumber(4);
+        return getFieldByNumber(4, Integer.class);
     }
 
     @Nullable
     public Integer getMaxHr() {
-        return (Integer) getFieldByNumber(6);
+        return getFieldByNumber(6, Integer.class);
     }
 
     @Nullable
     public Integer getRemainingRecoveryTime() {
-        return (Integer) getFieldByNumber(8);
+        return getFieldByNumber(8, Integer.class);
     }
 
     @Nullable
     public Integer getInitialBodyBattery() {
-        return (Integer) getFieldByNumber(15);
+        return getFieldByNumber(15, Integer.class);
     }
 
     @Nullable
     public Long getStartOfActivity() {
-        return (Long) getFieldByNumber(16);
+        return getFieldByNumber(16, Long.class);
     }
 
     @Nullable
     public Integer getBeginningPotential() {
-        return (Integer) getFieldByNumber(32);
+        return getFieldByNumber(32, Integer.class);
     }
 
     @Nullable
     public Long getEndOfPreviousActivity() {
-        return (Long) getFieldByNumber(35);
+        return getFieldByNumber(35, Long.class);
     }
 
     @Nullable
     public Long getWakeUpTime() {
-        return (Long) getFieldByNumber(39);
+        return getFieldByNumber(39, Long.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**

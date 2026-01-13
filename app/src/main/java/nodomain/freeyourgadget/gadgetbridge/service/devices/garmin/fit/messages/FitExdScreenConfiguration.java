@@ -41,22 +41,22 @@ public class FitExdScreenConfiguration extends RecordData {
 
     @Nullable
     public Integer getScreenIndex() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Integer getFieldCount() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Integer getLayout() {
-        return (Integer) getFieldByNumber(2);
+        return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
     public Boolean getScreenEnabled() {
-        return (Boolean) getFieldByNumber(3);
+        return getFieldByNumber(3, Boolean.class);
     }
 
     /**

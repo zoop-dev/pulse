@@ -41,7 +41,7 @@ public class FitSleepDataRaw extends RecordData {
 
     @Nullable
     public Integer getBytes() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     /**

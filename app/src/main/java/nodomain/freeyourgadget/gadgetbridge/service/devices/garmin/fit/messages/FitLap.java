@@ -42,842 +42,622 @@ public class FitLap extends RecordData {
 
     @Nullable
     public Integer getEvent() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Integer getEventType() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Long getStartTime() {
-        return (Long) getFieldByNumber(2);
+        return getFieldByNumber(2, Long.class);
     }
 
     @Nullable
     public Double getStartLat() {
-        return (Double) getFieldByNumber(3);
+        return getFieldByNumber(3, Double.class);
     }
 
     @Nullable
     public Double getStartLong() {
-        return (Double) getFieldByNumber(4);
+        return getFieldByNumber(4, Double.class);
     }
 
     @Nullable
     public Double getEndLat() {
-        return (Double) getFieldByNumber(5);
+        return getFieldByNumber(5, Double.class);
     }
 
     @Nullable
     public Double getEndLong() {
-        return (Double) getFieldByNumber(6);
+        return getFieldByNumber(6, Double.class);
     }
 
     @Nullable
     public Double getTotalElapsedTime() {
-        return (Double) getFieldByNumber(7);
+        return getFieldByNumber(7, Double.class);
     }
 
     @Nullable
     public Double getTotalTimerTime() {
-        return (Double) getFieldByNumber(8);
+        return getFieldByNumber(8, Double.class);
     }
 
     @Nullable
     public Double getTotalDistance() {
-        return (Double) getFieldByNumber(9);
+        return getFieldByNumber(9, Double.class);
     }
 
     @Nullable
     public Long getTotalCycles() {
-        return (Long) getFieldByNumber(10);
+        return getFieldByNumber(10, Long.class);
     }
 
     @Nullable
     public Integer getTotalCalories() {
-        return (Integer) getFieldByNumber(11);
+        return getFieldByNumber(11, Integer.class);
     }
 
     @Nullable
     public Integer getTotalFatCalories() {
-        return (Integer) getFieldByNumber(12);
+        return getFieldByNumber(12, Integer.class);
     }
 
     @Nullable
     public Float getAvgSpeed() {
-        return (Float) getFieldByNumber(13);
+        return getFieldByNumber(13, Float.class);
     }
 
     @Nullable
     public Float getMaxSpeed() {
-        return (Float) getFieldByNumber(14);
+        return getFieldByNumber(14, Float.class);
     }
 
     @Nullable
     public Integer getAvgHeartRate() {
-        return (Integer) getFieldByNumber(15);
+        return getFieldByNumber(15, Integer.class);
     }
 
     @Nullable
     public Integer getMaxHeartRate() {
-        return (Integer) getFieldByNumber(16);
+        return getFieldByNumber(16, Integer.class);
     }
 
     @Nullable
     public Integer getAvgCadence() {
-        return (Integer) getFieldByNumber(17);
+        return getFieldByNumber(17, Integer.class);
     }
 
     @Nullable
     public Integer getMaxCadence() {
-        return (Integer) getFieldByNumber(18);
+        return getFieldByNumber(18, Integer.class);
     }
 
     @Nullable
     public Integer getAvgPower() {
-        return (Integer) getFieldByNumber(19);
+        return getFieldByNumber(19, Integer.class);
     }
 
     @Nullable
     public Integer getMaxPower() {
-        return (Integer) getFieldByNumber(20);
+        return getFieldByNumber(20, Integer.class);
     }
 
     @Nullable
     public Integer getTotalAscent() {
-        return (Integer) getFieldByNumber(21);
+        return getFieldByNumber(21, Integer.class);
     }
 
     @Nullable
     public Integer getTotalDescent() {
-        return (Integer) getFieldByNumber(22);
+        return getFieldByNumber(22, Integer.class);
     }
 
     @Nullable
     public Integer getIntensity() {
-        return (Integer) getFieldByNumber(23);
+        return getFieldByNumber(23, Integer.class);
     }
 
     @Nullable
     public Integer getLapTrigger() {
-        return (Integer) getFieldByNumber(24);
+        return getFieldByNumber(24, Integer.class);
     }
 
     @Nullable
     public Integer getSport() {
-        return (Integer) getFieldByNumber(25);
+        return getFieldByNumber(25, Integer.class);
     }
 
     @Nullable
     public Integer getEventGroup() {
-        return (Integer) getFieldByNumber(26);
+        return getFieldByNumber(26, Integer.class);
     }
 
     @Nullable
     public Integer getNumLengths() {
-        return (Integer) getFieldByNumber(32);
+        return getFieldByNumber(32, Integer.class);
     }
 
     @Nullable
     public Integer getNormalizedPower() {
-        return (Integer) getFieldByNumber(33);
+        return getFieldByNumber(33, Integer.class);
     }
 
     @Nullable
     public Integer getLeftRightBalance() {
-        return (Integer) getFieldByNumber(34);
+        return getFieldByNumber(34, Integer.class);
     }
 
     @Nullable
     public Integer getFirstLengthIndex() {
-        return (Integer) getFieldByNumber(35);
+        return getFieldByNumber(35, Integer.class);
     }
 
     @Nullable
     public Integer getAvgStrokeDistance() {
-        return (Integer) getFieldByNumber(37);
+        return getFieldByNumber(37, Integer.class);
     }
 
     @Nullable
     public SwimStyle getSwimStyle() {
-        return (SwimStyle) getFieldByNumber(38);
+        return getFieldByNumber(38, SwimStyle.class);
     }
 
     @Nullable
     public Integer getSubSport() {
-        return (Integer) getFieldByNumber(39);
+        return getFieldByNumber(39, Integer.class);
     }
 
     @Nullable
     public Integer getNumActiveLengths() {
-        return (Integer) getFieldByNumber(40);
+        return getFieldByNumber(40, Integer.class);
     }
 
     @Nullable
     public Long getTotalWork() {
-        return (Long) getFieldByNumber(41);
+        return getFieldByNumber(41, Long.class);
     }
 
     @Nullable
     public Float getAvgAltitude() {
-        return (Float) getFieldByNumber(42);
+        return getFieldByNumber(42, Float.class);
     }
 
     @Nullable
     public Float getMaxAltitude() {
-        return (Float) getFieldByNumber(43);
+        return getFieldByNumber(43, Float.class);
     }
 
     @Nullable
     public Integer getGpsAccuracy() {
-        return (Integer) getFieldByNumber(44);
+        return getFieldByNumber(44, Integer.class);
     }
 
     @Nullable
     public Float getAvgGrade() {
-        return (Float) getFieldByNumber(45);
+        return getFieldByNumber(45, Float.class);
     }
 
     @Nullable
     public Float getAvgPosGrade() {
-        return (Float) getFieldByNumber(46);
+        return getFieldByNumber(46, Float.class);
     }
 
     @Nullable
     public Float getAvgNegGrade() {
-        return (Float) getFieldByNumber(47);
+        return getFieldByNumber(47, Float.class);
     }
 
     @Nullable
     public Float getMaxPosGrade() {
-        return (Float) getFieldByNumber(48);
+        return getFieldByNumber(48, Float.class);
     }
 
     @Nullable
     public Float getMaxNegGrade() {
-        return (Float) getFieldByNumber(49);
+        return getFieldByNumber(49, Float.class);
     }
 
     @Nullable
     public Integer getAvgTemperature() {
-        return (Integer) getFieldByNumber(50);
+        return getFieldByNumber(50, Integer.class);
     }
 
     @Nullable
     public Integer getMaxTemperature() {
-        return (Integer) getFieldByNumber(51);
+        return getFieldByNumber(51, Integer.class);
     }
 
     @Nullable
     public Double getTotalMovingTime() {
-        return (Double) getFieldByNumber(52);
+        return getFieldByNumber(52, Double.class);
     }
 
     @Nullable
     public Float getAvgPosVerticalSpeed() {
-        return (Float) getFieldByNumber(53);
+        return getFieldByNumber(53, Float.class);
     }
 
     @Nullable
     public Float getAvgNegVerticalSpeed() {
-        return (Float) getFieldByNumber(54);
+        return getFieldByNumber(54, Float.class);
     }
 
     @Nullable
     public Float getMaxPosVerticalSpeed() {
-        return (Float) getFieldByNumber(55);
+        return getFieldByNumber(55, Float.class);
     }
 
     @Nullable
     public Float getMaxNegVerticalSpeed() {
-        return (Float) getFieldByNumber(56);
+        return getFieldByNumber(56, Float.class);
     }
 
     @Nullable
     public Number[] getTimeInHrZone() {
-        final Object object = getFieldByNumber(57);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(57, Number.class);
     }
 
     @Nullable
     public Number[] getTimeInSpeedZone() {
-        final Object object = getFieldByNumber(58);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(58, Number.class);
     }
 
     @Nullable
     public Number[] getTimeInCadenceZone() {
-        final Object object = getFieldByNumber(59);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(59, Number.class);
     }
 
     @Nullable
     public Number[] getTimeInPowerZone() {
-        final Object object = getFieldByNumber(60);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(60, Number.class);
     }
 
     @Nullable
     public Integer getRepetitionNum() {
-        return (Integer) getFieldByNumber(61);
+        return getFieldByNumber(61, Integer.class);
     }
 
     @Nullable
     public Float getMinAltitude() {
-        return (Float) getFieldByNumber(62);
+        return getFieldByNumber(62, Float.class);
     }
 
     @Nullable
     public Integer getMinHeartRate() {
-        return (Integer) getFieldByNumber(63);
+        return getFieldByNumber(63, Integer.class);
     }
 
     @Nullable
     public Integer getWktStepIndex() {
-        return (Integer) getFieldByNumber(71);
+        return getFieldByNumber(71, Integer.class);
     }
 
     @Nullable
     public Integer getAvgSwolf() {
-        return (Integer) getFieldByNumber(73);
+        return getFieldByNumber(73, Integer.class);
     }
 
     @Nullable
     public Integer getOpponentScore() {
-        return (Integer) getFieldByNumber(74);
+        return getFieldByNumber(74, Integer.class);
     }
 
     @Nullable
     public Number[] getStrokeCount() {
-        final Object object = getFieldByNumber(75);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(75, Number.class);
     }
 
     @Nullable
     public Number[] getZoneCount() {
-        final Object object = getFieldByNumber(76);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(76, Number.class);
     }
 
     @Nullable
     public Float getAvgVerticalOscillation() {
-        return (Float) getFieldByNumber(77);
+        return getFieldByNumber(77, Float.class);
     }
 
     @Nullable
     public Float getAvgStanceTimePercent() {
-        return (Float) getFieldByNumber(78);
+        return getFieldByNumber(78, Float.class);
     }
 
     @Nullable
     public Float getAvgStanceTime() {
-        return (Float) getFieldByNumber(79);
+        return getFieldByNumber(79, Float.class);
     }
 
     @Nullable
     public Float getAvgFractionalCadence() {
-        return (Float) getFieldByNumber(80);
+        return getFieldByNumber(80, Float.class);
     }
 
     @Nullable
     public Float getMaxFractionalCadence() {
-        return (Float) getFieldByNumber(81);
+        return getFieldByNumber(81, Float.class);
     }
 
     @Nullable
     public Float getTotalFractionalCycles() {
-        return (Float) getFieldByNumber(82);
+        return getFieldByNumber(82, Float.class);
     }
 
     @Nullable
     public Integer getPlayerScore() {
-        return (Integer) getFieldByNumber(83);
+        return getFieldByNumber(83, Integer.class);
     }
 
     @Nullable
     public Number[] getAvgTotalHemoglobinConc() {
-        final Object object = getFieldByNumber(84);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(84, Number.class);
     }
 
     @Nullable
     public Number[] getMinTotalHemoglobinConc() {
-        final Object object = getFieldByNumber(85);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(85, Number.class);
     }
 
     @Nullable
     public Number[] getMaxTotalHemoglobinConc() {
-        final Object object = getFieldByNumber(86);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(86, Number.class);
     }
 
     @Nullable
     public Number[] getAvgSaturatedHemoglobinPercent() {
-        final Object object = getFieldByNumber(87);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(87, Number.class);
     }
 
     @Nullable
     public Number[] getMinSaturatedHemoglobinPercent() {
-        final Object object = getFieldByNumber(88);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(88, Number.class);
     }
 
     @Nullable
     public Number[] getMaxSaturatedHemoglobinPercent() {
-        final Object object = getFieldByNumber(89);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(89, Number.class);
     }
 
     @Nullable
     public Float getAvgLeftTorqueEffectiveness() {
-        return (Float) getFieldByNumber(91);
+        return getFieldByNumber(91, Float.class);
     }
 
     @Nullable
     public Float getAvgRightTorqueEffectiveness() {
-        return (Float) getFieldByNumber(92);
+        return getFieldByNumber(92, Float.class);
     }
 
     @Nullable
     public Float getAvgLeftPedalSmoothness() {
-        return (Float) getFieldByNumber(93);
+        return getFieldByNumber(93, Float.class);
     }
 
     @Nullable
     public Float getAvgRightPedalSmoothness() {
-        return (Float) getFieldByNumber(94);
+        return getFieldByNumber(94, Float.class);
     }
 
     @Nullable
     public Float getAvgCombinedPedalSmoothness() {
-        return (Float) getFieldByNumber(95);
+        return getFieldByNumber(95, Float.class);
     }
 
     @Nullable
     public Double getTimeStanding() {
-        return (Double) getFieldByNumber(98);
+        return getFieldByNumber(98, Double.class);
     }
 
     @Nullable
     public Integer getStandCount() {
-        return (Integer) getFieldByNumber(99);
+        return getFieldByNumber(99, Integer.class);
     }
 
     @Nullable
     public Integer getAvgLeftPco() {
-        return (Integer) getFieldByNumber(100);
+        return getFieldByNumber(100, Integer.class);
     }
 
     @Nullable
     public Integer getAvgRightPco() {
-        return (Integer) getFieldByNumber(101);
+        return getFieldByNumber(101, Integer.class);
     }
 
     @Nullable
     public Number[] getAvgLeftPowerPhase() {
-        final Object object = getFieldByNumber(102);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(102, Number.class);
     }
 
     @Nullable
     public Number[] getAvgLeftPowerPhasePeak() {
-        final Object object = getFieldByNumber(103);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(103, Number.class);
     }
 
     @Nullable
     public Number[] getAvgRightPowerPhase() {
-        final Object object = getFieldByNumber(104);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(104, Number.class);
     }
 
     @Nullable
     public Number[] getAvgRightPowerPhasePeak() {
-        final Object object = getFieldByNumber(105);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(105, Number.class);
     }
 
     @Nullable
     public Number[] getAvgPowerPosition() {
-        final Object object = getFieldByNumber(106);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(106, Number.class);
     }
 
     @Nullable
     public Number[] getMaxPowerPosition() {
-        final Object object = getFieldByNumber(107);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(107, Number.class);
     }
 
     @Nullable
     public Number[] getAvgCadencePosition() {
-        final Object object = getFieldByNumber(108);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(108, Number.class);
     }
 
     @Nullable
     public Number[] getMaxCadencePosition() {
-        final Object object = getFieldByNumber(109);
-        if (object == null)
-            return null;
-        if (!object.getClass().isArray()) {
-            return new Number[]{(Number) object};
-        }
-        final Object[] objectsArray = (Object[]) object;
-        final Number[] ret = new Number[objectsArray.length];
-        for (int i = 0; i < objectsArray.length; i++) {
-            ret[i] = (Number) objectsArray[i];
-        }
-        return ret;
+        return getArrayFieldByNumber(109, Number.class);
     }
 
     @Nullable
     public Double getEnhancedAvgSpeed() {
-        return (Double) getFieldByNumber(110);
+        return getFieldByNumber(110, Double.class);
     }
 
     @Nullable
     public Double getEnhancedMaxSpeed() {
-        return (Double) getFieldByNumber(111);
+        return getFieldByNumber(111, Double.class);
     }
 
     @Nullable
     public Double getEnhancedAvgAltitude() {
-        return (Double) getFieldByNumber(112);
+        return getFieldByNumber(112, Double.class);
     }
 
     @Nullable
     public Double getEnhancedMinAltitude() {
-        return (Double) getFieldByNumber(113);
+        return getFieldByNumber(113, Double.class);
     }
 
     @Nullable
     public Double getEnhancedMaxAltitude() {
-        return (Double) getFieldByNumber(114);
+        return getFieldByNumber(114, Double.class);
     }
 
     @Nullable
     public Integer getAvgLevMotorPower() {
-        return (Integer) getFieldByNumber(115);
+        return getFieldByNumber(115, Integer.class);
     }
 
     @Nullable
     public Integer getMaxLevMotorPower() {
-        return (Integer) getFieldByNumber(116);
+        return getFieldByNumber(116, Integer.class);
     }
 
     @Nullable
     public Float getLevBatteryConsumption() {
-        return (Float) getFieldByNumber(117);
+        return getFieldByNumber(117, Float.class);
     }
 
     @Nullable
     public Float getAvgVerticalRatio() {
-        return (Float) getFieldByNumber(118);
+        return getFieldByNumber(118, Float.class);
     }
 
     @Nullable
     public Float getAvgStanceTimeBalance() {
-        return (Float) getFieldByNumber(119);
+        return getFieldByNumber(119, Float.class);
     }
 
     @Nullable
     public Float getAvgStepLength() {
-        return (Float) getFieldByNumber(120);
+        return getFieldByNumber(120, Float.class);
     }
 
     @Nullable
     public Float getAvgVam() {
-        return (Float) getFieldByNumber(121);
+        return getFieldByNumber(121, Float.class);
     }
 
     @Nullable
     public Double getAvgDepth() {
-        return (Double) getFieldByNumber(122);
+        return getFieldByNumber(122, Double.class);
     }
 
     @Nullable
     public Double getMaxDepth() {
-        return (Double) getFieldByNumber(123);
+        return getFieldByNumber(123, Double.class);
     }
 
     @Nullable
     public Integer getMinTemperature() {
-        return (Integer) getFieldByNumber(124);
+        return getFieldByNumber(124, Integer.class);
     }
 
     @Nullable
     public Float getEnhancedAvgRespirationRate() {
-        return (Float) getFieldByNumber(136);
+        return getFieldByNumber(136, Float.class);
     }
 
     @Nullable
     public Float getEnhancedMaxRespirationRate() {
-        return (Float) getFieldByNumber(137);
+        return getFieldByNumber(137, Float.class);
     }
 
     @Nullable
     public Integer getAvgRespirationRate() {
-        return (Integer) getFieldByNumber(147);
+        return getFieldByNumber(147, Integer.class);
     }
 
     @Nullable
     public Integer getMaxRespirationRate() {
-        return (Integer) getFieldByNumber(148);
+        return getFieldByNumber(148, Integer.class);
     }
 
     @Nullable
     public Float getTotalGrit() {
-        return (Float) getFieldByNumber(149);
+        return getFieldByNumber(149, Float.class);
     }
 
     @Nullable
     public Float getTotalFlow() {
-        return (Float) getFieldByNumber(150);
+        return getFieldByNumber(150, Float.class);
     }
 
     @Nullable
     public Integer getJumpCount() {
-        return (Integer) getFieldByNumber(151);
+        return getFieldByNumber(151, Integer.class);
     }
 
     @Nullable
     public Float getAvgGrit() {
-        return (Float) getFieldByNumber(153);
+        return getFieldByNumber(153, Float.class);
     }
 
     @Nullable
     public Float getAvgFlow() {
-        return (Float) getFieldByNumber(154);
+        return getFieldByNumber(154, Float.class);
     }
 
     @Nullable
     public Float getTotalFractionalAscent() {
-        return (Float) getFieldByNumber(156);
+        return getFieldByNumber(156, Float.class);
     }
 
     @Nullable
     public Float getTotalFractionalDescent() {
-        return (Float) getFieldByNumber(157);
+        return getFieldByNumber(157, Float.class);
     }
 
     @Nullable
     public Float getAvgCoreTemperature() {
-        return (Float) getFieldByNumber(158);
+        return getFieldByNumber(158, Float.class);
     }
 
     @Nullable
     public Float getMinCoreTemperature() {
-        return (Float) getFieldByNumber(159);
+        return getFieldByNumber(159, Float.class);
     }
 
     @Nullable
     public Float getMaxCoreTemperature() {
-        return (Float) getFieldByNumber(160);
+        return getFieldByNumber(160, Float.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     @Nullable
     public Integer getMessageIndex() {
-        return (Integer) getFieldByNumber(254);
+        return getFieldByNumber(254, Integer.class);
     }
 
     /**

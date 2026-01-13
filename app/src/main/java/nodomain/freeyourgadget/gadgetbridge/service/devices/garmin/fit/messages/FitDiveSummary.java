@@ -41,117 +41,117 @@ public class FitDiveSummary extends RecordData {
 
     @Nullable
     public Integer getReferenceMesg() {
-        return (Integer) getFieldByNumber(0);
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
     public Integer getReferenceIndex() {
-        return (Integer) getFieldByNumber(1);
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
     public Double getAvgDepth() {
-        return (Double) getFieldByNumber(2);
+        return getFieldByNumber(2, Double.class);
     }
 
     @Nullable
     public Double getMaxDepth() {
-        return (Double) getFieldByNumber(3);
+        return getFieldByNumber(3, Double.class);
     }
 
     @Nullable
     public Long getSurfaceInterval() {
-        return (Long) getFieldByNumber(4);
+        return getFieldByNumber(4, Long.class);
     }
 
     @Nullable
     public Integer getStartCns() {
-        return (Integer) getFieldByNumber(5);
+        return getFieldByNumber(5, Integer.class);
     }
 
     @Nullable
     public Integer getEndCns() {
-        return (Integer) getFieldByNumber(6);
+        return getFieldByNumber(6, Integer.class);
     }
 
     @Nullable
     public Integer getStartN2() {
-        return (Integer) getFieldByNumber(7);
+        return getFieldByNumber(7, Integer.class);
     }
 
     @Nullable
     public Integer getEndN2() {
-        return (Integer) getFieldByNumber(8);
+        return getFieldByNumber(8, Integer.class);
     }
 
     @Nullable
     public Integer getO2Toxicity() {
-        return (Integer) getFieldByNumber(9);
+        return getFieldByNumber(9, Integer.class);
     }
 
     @Nullable
     public Long getDiveNumber() {
-        return (Long) getFieldByNumber(10);
+        return getFieldByNumber(10, Long.class);
     }
 
     @Nullable
     public Double getBottomTime() {
-        return (Double) getFieldByNumber(11);
+        return getFieldByNumber(11, Double.class);
     }
 
     @Nullable
     public Float getAvgPressureSac() {
-        return (Float) getFieldByNumber(12);
+        return getFieldByNumber(12, Float.class);
     }
 
     @Nullable
     public Float getAvgVolumeSac() {
-        return (Float) getFieldByNumber(13);
+        return getFieldByNumber(13, Float.class);
     }
 
     @Nullable
     public Float getAvgRmv() {
-        return (Float) getFieldByNumber(14);
+        return getFieldByNumber(14, Float.class);
     }
 
     @Nullable
     public Double getDescentTime() {
-        return (Double) getFieldByNumber(15);
+        return getFieldByNumber(15, Double.class);
     }
 
     @Nullable
     public Double getAscentTime() {
-        return (Double) getFieldByNumber(16);
+        return getFieldByNumber(16, Double.class);
     }
 
     @Nullable
     public Double getAvgAscentRate() {
-        return (Double) getFieldByNumber(17);
+        return getFieldByNumber(17, Double.class);
     }
 
     @Nullable
     public Double getAvgDescentRate() {
-        return (Double) getFieldByNumber(22);
+        return getFieldByNumber(22, Double.class);
     }
 
     @Nullable
     public Double getMaxAscentRate() {
-        return (Double) getFieldByNumber(23);
+        return getFieldByNumber(23, Double.class);
     }
 
     @Nullable
     public Double getMaxDescentRate() {
-        return (Double) getFieldByNumber(24);
+        return getFieldByNumber(24, Double.class);
     }
 
     @Nullable
     public Double getHangTime() {
-        return (Double) getFieldByNumber(25);
+        return getFieldByNumber(25, Double.class);
     }
 
     @Nullable
     public Long getTimestamp() {
-        return (Long) getFieldByNumber(253);
+        return getFieldByNumber(253, Long.class);
     }
 
     /**
