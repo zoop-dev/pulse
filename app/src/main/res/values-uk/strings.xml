@@ -4103,4 +4103,16 @@
     <string name="pref_even_realities_g1_touch_long_right_title">Тривале натискання праворуч</string>
     <string name="pref_even_realities_g1_touch_long_right_summary">Коли правий блок керування довго натискається, виконайте таку дію: %s</string>
     <string name="even_realities_no_calendar_events">Немає майбутніх подій</string>
+    <string name="average_ascent_velocity">Середня швидкість підйому</string>
+    <string name="calories_consumed">Споживані калорії</string>
+    <string name="mountain_bike_grit_score">Оцінка зернистості</string>
+    <string name="mountain_bike_flow_score">Оцінка потоку</string>
+    <string name="avg_temperature">Середня температура</string>
+    <string name="min_temperature">Мінімальна температура</string>
+    <string name="max_temperature">Максимальна температура</string>
+    <string name="fluid_consumed">Споживана рідина</string>
+    <string name="meters_per_hour">м/год</string>
+    <string name="foot_per_hour">футів/год</string>
+    <string name="solar_intensity">Інтенсивність сонячного світла</string>
+    <string name="battery_gain">Посилення заряду батареї</string>
 </resources>
