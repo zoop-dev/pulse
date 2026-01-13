@@ -137,13 +137,39 @@ public class RecordData {
         }
     }
 
-    public Object getFieldByNumber(int number) {
-        for (FieldData fieldData :
-                fieldDataList) {
+    /**
+     * Returns the field that matches the given **native** number, taking into account dev fields. If a dev field exists that
+     * has the same native number as a native field, it has precedence.
+     */
+    public Object getFieldByNumber(final int number) {
+        // Developer fields are all added after regular fields in the constructor
+        final int regularFieldCount = recordDefinition.getFieldDefinitions() != null ?
+                recordDefinition.getFieldDefinitions().size() : 0;
+
+        // First, check whether we have a developer field that maps to the native field. If it exists, it has priority
+        final List<DevFieldDefinition> devFieldDefinitions = recordDefinition.getDevFieldDefinitions();
+        if (devFieldDefinitions != null) {
+            for (int i = 0; i < devFieldDefinitions.size(); i++) {
+                final DevFieldDefinition devField = devFieldDefinitions.get(i);
+
+                if (devField.getNativeMesgNum() == globalFITMessage.getNumber() && devField.getNativeFieldNum() == number) {
+                    // Get the corresponding FieldData for this developer field
+                    final int fieldDataIndex = regularFieldCount + i;
+                    if (fieldDataIndex < fieldDataList.size()) {
+                        return fieldDataList.get(fieldDataIndex).decode();
+                    }
+                }
+            }
+        }
+
+        // Next, check whether there is any native field that matches the number
+        for (int i = 0; i < regularFieldCount; i++) {
+            final FieldData fieldData = fieldDataList.get(i);
             if (fieldData.getNumber() == number) {
                 return fieldData.decode();
             }
         }
+
         return null;
     }
 

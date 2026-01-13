@@ -13,6 +13,8 @@ public class DevFieldDefinition {
     private final int developerDataIndex;
     private BaseType baseType;
     private String name;
+    private int nativeMesgNum = -1;
+    private int nativeFieldNum = -1;
 
     public DevFieldDefinition(int fieldDefinitionNumber, int size, int developerDataIndex, String name) {
         this.fieldDefinitionNumber = fieldDefinitionNumber;
@@ -57,6 +59,22 @@ public class DevFieldDefinition {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getNativeMesgNum() {
+        return nativeMesgNum;
+    }
+
+    public void setNativeMesgNum(final int nativeMesgNum) {
+        this.nativeMesgNum = nativeMesgNum;
+    }
+
+    public int getNativeFieldNum() {
+        return nativeFieldNum;
+    }
+
+    public void setNativeFieldNum(final int nativeFieldNum) {
+        this.nativeFieldNum = nativeFieldNum;
     }
 
     @Override

@@ -512,6 +512,8 @@ public class GarminSupportTest extends TestBase {
 
         FitFile fitFile = FitFile.parseIncoming(fileContents);
         Assert.assertEquals(expectedOutput, fitFile.toString());
+        // Field 0 is not overwritten by the developer field
+        Assert.assertNull(fitFile.getRecords().get(3).getFieldByNumber(0));
         getAllFitFieldValues(fitFile);
     }
 
@@ -615,11 +617,6 @@ public class GarminSupportTest extends TestBase {
                 } catch (Exception e) {
                     String recordName = record.getClass().getSimpleName();
                     String message = methodName + " failed for " + recordName;
-                    if ("FitRecord".equals(recordName) && "getLatitude".equals(methodName)) {
-                        // TODO GarminSupportTest.TestFitFileDevelopersField -> FitRecord / getLatitude
-                        // FIXME java.lang.ClassCastException: class java.lang.Integer cannot be cast to class java.lang.Double
-                        continue;
-                    }
                     throw new AssertionError(message, e);
                 }
             }

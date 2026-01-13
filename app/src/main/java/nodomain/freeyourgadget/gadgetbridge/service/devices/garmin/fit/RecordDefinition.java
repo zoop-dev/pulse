@@ -118,6 +118,16 @@ public class RecordDefinition {
                     BaseType baseType = BaseType.fromIdentifier((int) recordData.getFieldByName("fit_base_type_id"));
                     devFieldDef.setBaseType(baseType);
                     devFieldDef.setName((String) recordData.getFieldByName("field_name"));
+
+                    final Object nativeMesgNum = recordData.getFieldByName("native_mesg_num");
+                    final Object nativeFieldNum = recordData.getFieldByName("native_field_num");
+
+                    if (nativeMesgNum instanceof Integer integer) {
+                        devFieldDef.setNativeMesgNum(integer);
+                    }
+                    if (nativeFieldNum instanceof Integer integer) {
+                        devFieldDef.setNativeFieldNum(integer);
+                    }
                 }
             } catch (Exception e) {
                 //ignore
