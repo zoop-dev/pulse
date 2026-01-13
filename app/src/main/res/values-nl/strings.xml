@@ -4276,4 +4276,8 @@
     <string name="min_temperature">Minimale temperatuur</string>
     <string name="max_temperature">Maximale temperatuur</string>
     <string name="fluid_consumed">Vochtinname</string>
+    <string name="meters_per_hour">m/u</string>
+    <string name="foot_per_hour">vt/u</string>
+    <string name="solar_intensity">Zonne-intensiteit</string>
+    <string name="battery_gain">Batterijladingtoename</string>
 </resources>
