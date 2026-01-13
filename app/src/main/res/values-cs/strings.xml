@@ -844,7 +844,7 @@
     <string name="about_additional_device_support">Podpora dalších zařízení</string>
     <string name="about_contributors">Přispěvatelé</string>
     <string name="about_core_team_title">Centrální tým (v pořadí příspěvku prvního kódu)</string>
-    <string name="about_description_generic">Svobodná a lokální náhrada za uzavřenou aplikaci vašich hodinek/náramku.</string>
+    <string name="about_description_generic">Bezcloudová svobodná náhrada za uzavřené Android aplikace gadgetů od jejich výrobců.</string>
     <string name="about_activity_title_generic">O aplikaci Gadgetbridge</string>
     <string name="about_title">O aplikaci</string>
     <string name="menuitem_worldclock">Světový Čas</string>
