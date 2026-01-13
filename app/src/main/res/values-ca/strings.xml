@@ -1680,4 +1680,10 @@
     <string name="pref_summary_casio_alert_calendar">Alerta (vibra/sona) per a les notificacions de calendari</string>
     <string name="pref_title_casio_alert_call">Alerta de cridades entrants</string>
     <string name="pref_summary_casio_alert_call">Alerta (vibra/sona) quan hi hagin trucades entrants</string>
+    <string name="pref_title_casio_alert_email">Alerta de notificacions de correu</string>
+    <string name="pref_summary_casio_alert_email">Alerta (vibra/sona) quan hi hagin notificacions de correu electrònic</string>
+    <string name="pref_title_casio_alert_sms">Alerta de notificacions SMS</string>
+    <string name="pref_summary_casio_alert_sms">Alerta (vibra/sona) quan hi hagin notificacions per SMS (missatges de text)</string>
+    <string name="pref_title_casio_alert_other">Alerta per a \"altres\" notificacions</string>
+    <string name="pref_summary_casio_alert_other">Alerta (vibra/sona) per a notificacions en la categoria d\'\"altres\"</string>
 </resources>
