@@ -4283,4 +4283,16 @@
     <string name="pref_even_realities_g1_touch_long_right_title">Długie naciśnięcie (prawa strona)</string>
     <string name="pref_even_realities_g1_touch_long_right_summary">Po długim naciśnięciu prawego panelu wykonaj akcję: %s</string>
     <string name="even_realities_no_calendar_events">Brak nadchodzących wydarzeń</string>
+    <string name="average_ascent_velocity">Śr. prędkość wznoszenia</string>
+    <string name="calories_consumed">Spożyte kalorie</string>
+    <string name="mountain_bike_grit_score">Trudność trasy (Grit)</string>
+    <string name="mountain_bike_flow_score">Płynność jazdy (Flow)</string>
+    <string name="avg_temperature">Średnia temperatura</string>
+    <string name="min_temperature">Temperatura minimalna</string>
+    <string name="max_temperature">Temperatura maksymalna</string>
+    <string name="fluid_consumed">Spożyte płyny</string>
+    <string name="meters_per_hour">m/h</string>
+    <string name="foot_per_hour">ft/h</string>
+    <string name="solar_intensity">Intensywność nasłonecznienia</string>
+    <string name="battery_gain">Zysk baterii</string>
 </resources>
