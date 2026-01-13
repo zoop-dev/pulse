@@ -4268,4 +4268,12 @@
     <string name="health_connect_permission_denied">Toegang geweigerd: %1$s. Controleer de Health Connect-permissies.</string>
     <string name="health_connect_sleep_session_title">Slaapsessie van %1$s</string>
     <string name="health_connect_sleep_session_notes">Slaapgegevens van Gadgetbridge-apparaat: %1$s.</string>
+    <string name="average_ascent_velocity">Gemiddelde stijgsnelheid</string>
+    <string name="calories_consumed">Calorie-inname</string>
+    <string name="mountain_bike_grit_score">Gritscore</string>
+    <string name="mountain_bike_flow_score">Flowscore</string>
+    <string name="avg_temperature">Gemiddelde temperatuur</string>
+    <string name="min_temperature">Minimale temperatuur</string>
+    <string name="max_temperature">Maximale temperatuur</string>
+    <string name="fluid_consumed">Vochtinname</string>
 </resources>
