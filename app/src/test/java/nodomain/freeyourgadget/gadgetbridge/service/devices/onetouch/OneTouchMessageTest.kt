@@ -485,7 +485,7 @@ class OneTouchMessageTest: TestBase() {
         assertTrue(message is OneTouchMessage.ReadingCountRet)
         
         val countRet = message as OneTouchMessage.ReadingCountRet
-        assertEquals(62, countRet.count)
+        assertEquals(62.toShort(), countRet.count)
     }
 
     // ==================== Invalid Packet Tests ====================
