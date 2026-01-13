@@ -887,10 +887,10 @@
     <string name="averageStrokeDistance">Průměrná Délka Záběru</string>
     <string name="averageStride">Průměrný Krok</string>
     <string name="averageKMPaceSeconds">Prům. tempo</string>
-    <string name="averageHR">Prům. tepová frekvence</string>
+    <string name="averageHR">Průměrná tepová frekvence</string>
     <string name="totalStride">Celkově ujito</string>
-    <string name="maxPace">Nejrychlejší Tempo</string>
-    <string name="minPace">Nejpomalejší Tempo</string>
+    <string name="maxPace">Nejrychlejší tempo</string>
+    <string name="minPace">Nejpomalejší tempo</string>
     <string name="maxSpeed">Maximální</string>
     <string name="caloriesBurnt">Kalorie</string>
     <string name="activeSeconds">Aktivní</string>
@@ -4262,4 +4262,16 @@
     <string name="pref_even_realities_g1_touch_long_right_title">Dlouhé podržení vpravo</string>
     <string name="pref_even_realities_g1_touch_long_right_summary">Po dlouhém podržení na pravé dotykové destičce provést tuto akci: %s</string>
     <string name="even_realities_no_calendar_events">Žádné nadcházející události</string>
+    <string name="average_ascent_velocity">Průměrná rychlost stoupání</string>
+    <string name="calories_consumed">Spotřebováno kalorií</string>
+    <string name="mountain_bike_grit_score">Skóre odolnosti</string>
+    <string name="mountain_bike_flow_score">Skóre Flow</string>
+    <string name="avg_temperature">Průměrná teplota</string>
+    <string name="min_temperature">Min. teplota</string>
+    <string name="max_temperature">Max. teplota</string>
+    <string name="fluid_consumed">Spotřebováno tekutin</string>
+    <string name="meters_per_hour">m/h</string>
+    <string name="foot_per_hour">ft/h</string>
+    <string name="solar_intensity">Intenzita slunce</string>
+    <string name="battery_gain">Zisk baterie</string>
 </resources>
