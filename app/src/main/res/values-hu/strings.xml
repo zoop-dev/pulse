@@ -4104,4 +4104,16 @@
     <string name="pref_even_realities_g1_touch_long_left_summary">A bal oldali érintőfelület hosszú nyomásakor végrehajtandó művelet: %s</string>
     <string name="pref_even_realities_g1_touch_long_right_title">Hosszú nyomás a jobb oldalon</string>
     <string name="pref_even_realities_g1_touch_long_right_summary">A jobb oldali érintőfelület hosszú nyomásakor végrehajtandó művelet: %s</string>
+    <string name="average_ascent_velocity">Átlagos emelkedési sebesség</string>
+    <string name="calories_consumed">Kalóriafogyasztás</string>
+    <string name="mountain_bike_grit_score">Grit-pontszám</string>
+    <string name="mountain_bike_flow_score">Áramlási pontszám</string>
+    <string name="avg_temperature">Átlagos hőmérséklet</string>
+    <string name="min_temperature">Legkisebb hőmérséklet</string>
+    <string name="max_temperature">Legnagyobb hőmérséklet</string>
+    <string name="fluid_consumed">Folyadékfogyasztás</string>
+    <string name="meters_per_hour">m/h</string>
+    <string name="foot_per_hour">ft/h</string>
+    <string name="solar_intensity">Napenergia intenzitása</string>
+    <string name="battery_gain">Akkumulátor-nyereség</string>
 </resources>
