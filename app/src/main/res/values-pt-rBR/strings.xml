@@ -851,7 +851,7 @@
     <string name="about_additional_device_support">Suporte a dispositivos adicionais</string>
     <string name="about_contributors">Contribuidores</string>
     <string name="about_core_team_title">Equipe Core (na ordem da primeira contribuição de código)</string>
-    <string name="about_description_generic">Um substituto livre, protegido por copyleft, sem acesso à nuvem para os aplicativos Android de código fechado dos fornecedores de gadgets.</string>
+    <string name="about_description_generic">Um substituto livre, protegido por copyleft, sem nuvem, aos aplicativos Android de código fechado das fabricantes de acessórios.</string>
     <string name="about_activity_title_generic">Sobre o Gadgetbridge</string>
     <string name="about_title">Sobre</string>
     <string name="pref_title_weather_summary">Usado para o provedor de meteorologia LineageOS, outras versões do Android precisam usar um aplicativo como o Weather notification. Encontre mais informações na wiki do Gadgetbridge.</string>
@@ -1383,14 +1383,14 @@
     <string name="about_description_main_nopebble">Substituto para aplicativo não open source de dispositivos Android dos fabricantes, sem necessitar de nuvem e possui código livre. Atualizações Nightly (diárias) de Gadgetbridge. Essa versão tem o provedor Pebble renomeado para prevenir conflitos, então algumas integrações do Pebble não funcionarão, mas pode ser instalado com Gadgetbridge já existente.</string>
     <string name="about_description_main_nightly">Substituto para aplicativos não open source de dispositivos Android dos fabricantes, sem necessitar de nuvem e código livre. Atualizações Nightly (diárias) de Gadgetbridge. Não pode ser instalado se você já tem ou o aplicativo Gadgetbridge, ou Pebble, devido a um conflito no provedor Pebble.</string>
     <string name="world_clock_no_free_slots_title">Não há espaço</string>
-    <string name="about_description_banglejs_main">App de Android para Bangle.js construída sobre o projeto Gadgetbridge, com acesso à Internet adicionado. \n \nDevido a políticas da Google Play Store, não estamos autorizados a um link para doações no próprio aplicativo, porém se você gostou deste aplicativo por favor considere fazer uma doação através da página do Gadgetbridge mostrada abaixo.</string>
-    <string name="application_name_banglejs_main">Bangle.js Gadgetbridge</string>
-    <string name="title_activity_controlcenter_banglejs_main">Bangle.js Gadgetbridge</string>
-    <string name="about_activity_title_banglejs_main">Sobre Bangle.js Gadgetbridge</string>
+    <string name="about_description_banglejs_main">App acompanhante do Bangle.js para Android, construído em cima do projeto do Gadgetbridge, com acesso à internet adicionado.\n\nDevido às políticas da Google Play Store, não podemos ter um link para doações no próprio aplicativo, porém se você gostou deste aplicativo, considere fazer uma doação através da página do Gadgetbridge mostrada abaixo.</string>
+    <string name="application_name_banglejs_main">Gadgetbridge do Bangle.js</string>
+    <string name="title_activity_controlcenter_banglejs_main">Gadgetbridge do Bangle.js</string>
+    <string name="about_activity_title_banglejs_main">Sobre o Gadgetbridge do Bangle.js</string>
     <string name="gadgetbridge_running_banglejs_main">Bangle.js em execução</string>
     <string name="application_name_main_nightly">Gadgetbridge (Nightly)</string>
     <string name="title_activity_controlcenter_main_nightly">Gadgetbridge Nightly</string>
-    <string name="about_activity_title_main_nightly">Sobre Gadgetbridge Nightly</string>
+    <string name="about_activity_title_main_nightly">Sobre o Gadgetbridge Nightly</string>
     <string name="gadgetbridge_running_main_nightly">Nightly GB em execução</string>
     <string name="application_name_main_nopebble">Gadgetbridge (Nightly, Sem provedor Pebble)</string>
     <string name="title_activity_controlcenter_main_nopebble">Gadgetbridge Nightly Sem Pebble</string>
@@ -1402,18 +1402,16 @@
     <string name="world_clock_label">Etiqueta</string>
     <string name="accuracy">Precisão</string>
     <string name="balanced">Equilibrado</string>
-    <string name="about_description_banglejs_nightly">Aplicativo companheiro Android para Bangle.js construído em cima do projeto Gadgetbridge, com acesso adicional à Internet.
-\n
-\nDevido às políticas Google Play Store, não somos permitidos ter um link de doação no próprio aplicativo, mas se você gosta deste aplicativo, por favor, considere doar através da página inicial do Gadgetbridge abaixo.</string>
+    <string name="about_description_banglejs_nightly">App acompanhante do Bangle.js para Android, construído em cima do projeto do Gadgetbridge, com acesso à internet adicionado.\n\nDevido às políticas da Google Play Store, não podemos ter um link para doações no próprio aplicativo, porém se você gostou deste aplicativo, considere fazer uma doação através da página do Gadgetbridge mostrada abaixo.</string>
     <string name="single_band">Banda única</string>
-    <string name="about_activity_title_banglejs_nightly">Sobre o Bangle.js Gadgetbridge (Nightly)</string>
+    <string name="about_activity_title_banglejs_nightly">Sobre o Gadgetbridge do Bangle.js (Nightly)</string>
     <string name="power_saving">Economia de energia</string>
-    <string name="gadgetbridge_running_banglejs_nightly">Nightly Bangle.js em execução</string>
+    <string name="gadgetbridge_running_banglejs_nightly">Bangle.js Nightly em execução</string>
     <string name="controlcenter_get_heartrate_measurement">Obter medição da frequência cardíaca</string>
-    <string name="title_activity_controlcenter_banglejs_nightly">Bangle.js Gadgetbridge (Nightly)</string>
+    <string name="title_activity_controlcenter_banglejs_nightly">Gadgetbridge do Bangle.js (Nightly)</string>
     <string name="action_changelog">Registro de mudanças</string>
     <string name="custom">Personalizado</string>
-    <string name="application_name_banglejs_nightly">Bangle.js Gadgetbridge (Nightly)</string>
+    <string name="application_name_banglejs_nightly">Gadgetbridge do Bangle.js (Nightly)</string>
     <string name="pref_header_health">Saúde</string>
     <string name="error_showing_changelog">Erro ao exibir o registro de mudanças</string>
     <string name="appmanager_watchface_activate">Ativar</string>
