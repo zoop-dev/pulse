@@ -4115,5 +4115,5 @@
     <string name="meters_per_hour">m/h</string>
     <string name="foot_per_hour">ft/h</string>
     <string name="solar_intensity">Napenergia intenzitása</string>
-    <string name="battery_gain">Akkumulátor-nyereség</string>
+    <string name="battery_gain">Akkumulátornyereség</string>
 </resources>
