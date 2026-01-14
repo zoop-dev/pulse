@@ -333,7 +333,7 @@ internal object RecordedWorkoutSyncer {
             addCaloriesRecords(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
             addElevationGainedRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
             addStepsRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
-            addCadenceRecords(summaryData, exerciseType, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
+            addCadenceRecords(summaryData, activityKind, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
         }
     }
 
@@ -393,7 +393,7 @@ internal object RecordedWorkoutSyncer {
             addCaloriesRecords(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
             addElevationGainedRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
             addStepsRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
-            addCadenceRecords(summaryData, exerciseType, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
+            addCadenceRecords(summaryData, activityKind, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
         } else {
             LOG.warn("No summary data available for workout on device '{}' at {}", deviceName, workoutStartInstant)
         }
@@ -791,7 +791,7 @@ internal object RecordedWorkoutSyncer {
 
     private fun addCadenceRecords(
         summaryData: ActivitySummaryData,
-        exerciseType: Int,
+        activityKind: ActivityKind,
         startTime: Instant,
         endTime: Instant,
         offset: ZoneOffset,
@@ -805,54 +805,60 @@ internal object RecordedWorkoutSyncer {
             return
         }
 
-        // Determine if this is a cycling or walking/running workout
-        val isCyclingWorkout = when (exerciseType) {
-            ExerciseSessionRecord.EXERCISE_TYPE_BIKING,
-            ExerciseSessionRecord.EXERCISE_TYPE_BIKING_STATIONARY -> true
-            else -> false
-        }
+        // Check the cycle unit to determine if cadence syncing is appropriate
+        val cycleUnit = ActivityKind.getCycleUnit(activityKind)
 
-        if (isCyclingWorkout) {
-            val cyclingCadencePermission = HealthPermission.getWritePermission(CyclingPedalingCadenceRecord::class)
-            if (cyclingCadencePermission in grantedPermissions) {
-                val midTime = startTime.plusSeconds((endTime.epochSecond - startTime.epochSecond) / 2)
-                recordsToInsert.add(
-                    CyclingPedalingCadenceRecord(
-                        startTime = midTime,
-                        startZoneOffset = offset,
-                        endTime = midTime,
-                        endZoneOffset = offset,
-                        samples = listOf(
-                            CyclingPedalingCadenceRecord.Sample(
-                                time = midTime,
-                                revolutionsPerMinute = cadenceAvg.toDouble()
-                            )
-                        ),
-                        metadata = metadata
+        when (cycleUnit) {
+            ActivityKind.CycleUnit.STEPS -> {
+                // Sync as StepsCadenceRecord for step-based activities (walking, running, hiking)
+                val stepsCadencePermission = HealthPermission.getWritePermission(StepsCadenceRecord::class)
+                if (stepsCadencePermission in grantedPermissions) {
+                    val midTime = startTime.plusSeconds((endTime.epochSecond - startTime.epochSecond) / 2)
+                    recordsToInsert.add(
+                        StepsCadenceRecord(
+                            startTime = midTime,
+                            startZoneOffset = offset,
+                            endTime = midTime,
+                            endZoneOffset = offset,
+                            samples = listOf(
+                                StepsCadenceRecord.Sample(
+                                    time = midTime,
+                                    rate = cadenceAvg.toDouble()
+                                )
+                            ),
+                            metadata = metadata
+                        )
                     )
-                )
-                LOG.debug("Added CyclingPedalingCadenceRecord (avg: {} rpm) for workout at {} for device '{}'.", cadenceAvg, startTime, deviceName)
+                    LOG.debug("Added StepsCadenceRecord (avg: {} steps/min) for workout at {} for device '{}'.", cadenceAvg, startTime, deviceName)
+                }
             }
-        } else {
-            val stepsCadencePermission = HealthPermission.getWritePermission(StepsCadenceRecord::class)
-            if (stepsCadencePermission in grantedPermissions) {
-                val midTime = startTime.plusSeconds((endTime.epochSecond - startTime.epochSecond) / 2)
-                recordsToInsert.add(
-                    StepsCadenceRecord(
-                        startTime = midTime,
-                        startZoneOffset = offset,
-                        endTime = midTime,
-                        endZoneOffset = offset,
-                        samples = listOf(
-                            StepsCadenceRecord.Sample(
-                                time = midTime,
-                                rate = cadenceAvg.toDouble()
-                            )
-                        ),
-                        metadata = metadata
+            ActivityKind.CycleUnit.REVOLUTIONS -> {
+                // Sync as CyclingPedalingCadenceRecord for cycling activities
+                val cyclingCadencePermission = HealthPermission.getWritePermission(CyclingPedalingCadenceRecord::class)
+                if (cyclingCadencePermission in grantedPermissions) {
+                    val midTime = startTime.plusSeconds((endTime.epochSecond - startTime.epochSecond) / 2)
+                    recordsToInsert.add(
+                        CyclingPedalingCadenceRecord(
+                            startTime = midTime,
+                            startZoneOffset = offset,
+                            endTime = midTime,
+                            endZoneOffset = offset,
+                            samples = listOf(
+                                CyclingPedalingCadenceRecord.Sample(
+                                    time = midTime,
+                                    revolutionsPerMinute = cadenceAvg.toDouble()
+                                )
+                            ),
+                            metadata = metadata
+                        )
                     )
-                )
-                LOG.debug("Added StepsCadenceRecord (avg: {} steps/min) for workout at {} for device '{}'.", cadenceAvg, startTime, deviceName)
+                    LOG.debug("Added CyclingPedalingCadenceRecord (avg: {} rpm) for workout at {} for device '{}'.", cadenceAvg, startTime, deviceName)
+                }
+            }
+            else -> {
+                // Skip cadence syncing for other cycle units (strokes, jumps, reps, swings, none)
+                // Health Connect doesn't have dedicated cadence records for these activity types
+                LOG.debug("Skipping cadence sync for {} activity (cycle unit: {}) - no appropriate Health Connect record type.", activityKind, cycleUnit)
             }
         }
     }
