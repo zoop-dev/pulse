@@ -57,7 +57,7 @@ object ActivitySummaryGroup {
                 ActivitySummaryEntries.GROUP_ACTIVITY, listOf<String>(
                     ActivitySummaryEntries.ACTIVE_SECONDS,
                     ActivitySummaryEntries.DISTANCE_METERS,
-                    ActivitySummaryEntries.CALORIES_ACTIVE,
+                    ActivitySummaryEntries.CALORIES_BURNT,
                     ActivitySummaryEntries.HR_AVG,
                     ActivitySummaryEntries.STEPS,
                     ActivitySummaryEntries.STRIDE_TOTAL,

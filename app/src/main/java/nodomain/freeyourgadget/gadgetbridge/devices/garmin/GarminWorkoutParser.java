@@ -256,9 +256,9 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         summaryData.add(STEP_LENGTH_AVG, session.getAvgStepLength(), UNIT_MM);
         if (session.getTotalCalories() != null) {
             summaryData.add(CALORIES_CONSUMED, session.getCaloriesConsumed(), UNIT_KCAL);
-            summaryData.add(CALORIES_BURNT, session.getTotalCalories(), UNIT_KCAL);
+            summaryData.add(CALORIES_TOTAL, session.getTotalCalories(), UNIT_KCAL);
             if (session.getRestingCalories() != null) {
-                summaryData.add(CALORIES_ACTIVE, session.getTotalCalories() - session.getRestingCalories(), UNIT_KCAL);
+                summaryData.add(CALORIES_BURNT, session.getTotalCalories() - session.getRestingCalories(), UNIT_KCAL);
                 summaryData.add(CALORIES_RESTING, session.getRestingCalories(), UNIT_KCAL);
             }
         }

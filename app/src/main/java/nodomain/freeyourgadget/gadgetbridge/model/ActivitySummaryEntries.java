@@ -173,8 +173,8 @@ public class ActivitySummaryEntries {
     public static final String SWIM_AVG_CADENCE = "swim_avg_cadence";
 
     public static final String CALORIES_CONSUMED = "calories_consumed";
-    public static final String CALORIES_BURNT = "caloriesBurnt";
-    public static final String CALORIES_ACTIVE = "active_calories";
+    public static final String CALORIES_BURNT = "active_calories";
+    public static final String CALORIES_TOTAL = "caloriesBurnt";
     public static final String CALORIES_RESTING = "restingCalories";
     public static final String TRAINING_EFFECT_AEROBIC = "aerobicTrainingEffect";
     public static final String TRAINING_EFFECT_ANAEROBIC = "anaerobicTrainingEffect";
