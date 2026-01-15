@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -52,6 +53,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.DashboardFragment;
 import nodomain.freeyourgadget.gadgetbridge.activities.HeartRateUtils;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.StepAnalysis;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
+import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
@@ -546,15 +548,17 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
             List<ActivitySession> stepSessions = new ArrayList<>();
             List<BaseActivitySummary> activitySummaries = null;
             try (DBHandler dbHandler = GBApplication.acquireDB()) {
+                final List<Long> deviceIds = new LinkedList<>();
                 for (GBDevice dev : devices) {
                     if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActivityTracking(dev)) {
                         List<? extends ActivitySample> activitySamples = DashboardUtils.getAllSamples(dbHandler, dev, dashboardData);
                         allActivitySamples.addAll(activitySamples);
                         StepAnalysis stepAnalysis = new StepAnalysis();
                         stepSessions.addAll(stepAnalysis.calculateStepSessions(activitySamples));
+                        deviceIds.add(DBHelper.getDevice(dev, dbHandler.getDaoSession()).getId());
                     }
                 }
-                activitySummaries = DashboardUtils.getWorkoutSamples(dbHandler, dashboardData);
+                activitySummaries = deviceIds.isEmpty() ? new ArrayList<>() : DashboardUtils.getWorkoutSamples(dbHandler, dashboardData, deviceIds);
             } catch (Exception e) {
                 LOG.warn("Could not retrieve activity amounts: ", e);
             }

@@ -235,10 +235,13 @@ public class DashboardUtils {
         return coordinator.getSampleProvider(device, db.getDaoSession());
     }
 
-    public static List<BaseActivitySummary> getWorkoutSamples(DBHandler db, DashboardFragment.DashboardData dashboardData) {
+    public static List<BaseActivitySummary> getWorkoutSamples(DBHandler db,
+                                                              DashboardFragment.DashboardData dashboardData,
+                                                              List<Long> deviceIds) {
         return db.getDaoSession().getBaseActivitySummaryDao().queryBuilder().where(
                 BaseActivitySummaryDao.Properties.StartTime.gt(new Date(dashboardData.timeFrom * 1000L)),
-                BaseActivitySummaryDao.Properties.EndTime.lt(new Date(dashboardData.timeTo * 1000L))
+                BaseActivitySummaryDao.Properties.EndTime.lt(new Date(dashboardData.timeTo * 1000L)),
+                BaseActivitySummaryDao.Properties.DeviceId.in(deviceIds)
         ).build().list();
     }
 }
