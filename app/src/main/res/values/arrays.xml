@@ -1111,6 +1111,7 @@
         <item>@string/menuitem_water_time</item>
         <item>@string/activity_type_meditation</item>
         <item>@string/menuitem_zepp_flow</item>
+        <item>@string/menuitem_jet_lag_manager</item>
         <item>@string/menuitem_golf</item>
         <item>@string/menuitem_bio_charge</item>
         <item>@string/menuitem_breathing</item>
@@ -1181,6 +1182,7 @@
         <item>water_time</item>
         <item>meditation</item>
         <item>zepp_flow</item>
+        <item>jet_lag_manager</item>
         <item>golf</item>
         <item>bio_charge</item>
         <item>breathing2</item>

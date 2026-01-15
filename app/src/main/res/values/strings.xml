@@ -2265,6 +2265,7 @@
     <string name="menuitem_takephoto">Camera Remote</string>
     <string name="menuitem_alexa">Alexa</string>
     <string name="menuitem_zepp_flow">Zepp Flow</string>
+    <string name="menuitem_jet_lag_manager">Jet Lag Manager</string>
     <string name="menuitem_dnd">DND</string>
     <string name="menuitem_stopwatch">Stopwatch</string>
     <string name="menuitem_goal">Activity Goal</string>
