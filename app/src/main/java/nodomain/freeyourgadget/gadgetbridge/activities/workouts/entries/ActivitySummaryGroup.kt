@@ -318,9 +318,10 @@ object ActivitySummaryGroup {
             // Other
             put(
                 ActivitySummaryEntries.GROUP_OTHER, listOf<String>(
+                    ActivitySummaryEntries.FLUID_CONSUMED,
                     ActivitySummaryEntries.ESTIMATED_SWEAT_LOSS,
                     ActivitySummaryEntries.CALORIES_BURNT,
-                    ActivitySummaryEntries.CALORIES_ACTIVE,
+                    ActivitySummaryEntries.CALORIES_TOTAL,
                     ActivitySummaryEntries.CALORIES_RESTING,
                     ActivitySummaryEntries.STRIDE_AVG,
                     ActivitySummaryEntries.STRIDE_MAX,
