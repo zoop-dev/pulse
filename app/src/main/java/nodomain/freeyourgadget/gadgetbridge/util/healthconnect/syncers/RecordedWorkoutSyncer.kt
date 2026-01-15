@@ -102,6 +102,8 @@ internal object RecordedWorkoutSyncer {
 
         LOG.info("Found ${workouts.size} workout(s) from BaseActivitySummary for device '$deviceName' in slice: $sliceStartBoundary to $sliceEndBoundary.")
 
+        parseWorkoutSummaries(workouts, gbDevice, context, deviceName)
+
         var workoutsProcessedInThisSlice = 0
         val workoutRecordList = mutableListOf<Record>()
 
@@ -239,6 +241,30 @@ internal object RecordedWorkoutSyncer {
         }
     }
 
+    private fun parseWorkoutSummaries(
+        workouts: List<BaseActivitySummary>,
+        gbDevice: GBDevice,
+        context: Context,
+        deviceName: String
+    ) {
+        val coordinator = gbDevice.deviceCoordinator
+        val activitySummaryParser = coordinator.getActivitySummaryParser(gbDevice, context)
+
+        if (activitySummaryParser == null) {
+            LOG.warn("No ActivitySummaryParser available for device '{}'", deviceName)
+            return
+        }
+
+        for (workout in workouts) {
+            try {
+                activitySummaryParser.parseWorkout(workout, true)
+                LOG.debug("Parsed workout summary for device '{}' at {}", deviceName, workout.startTime)
+            } catch (e: Exception) {
+                LOG.error("Error parsing workout summary for device '{}' at {}", deviceName, workout.startTime, e)
+            }
+        }
+    }
+
     private fun loadActivityPoints(workout: BaseActivitySummary, deviceName: String): List<ActivityPoint>? {
         val trackFilePath = workout.rawDetailsPath
         if (trackFilePath.isNullOrBlank()) {
@@ -363,29 +389,7 @@ internal object RecordedWorkoutSyncer {
             )
         )
 
-        // Parse summary data - if JSON is empty, try to parse from raw binary data
-        var summaryData = parseSummaryData(workout.summaryData)
-        if (summaryData == null && workout.rawSummaryData != null) {
-            LOG.debug("SUMMARY_DATA is empty for device '{}', parsing from RAW_SUMMARY_DATA", deviceName)
-            try {
-                val coordinator = gbDevice.deviceCoordinator
-                val activitySummaryParser = coordinator.getActivitySummaryParser(gbDevice, context)
-                if (activitySummaryParser != null) {
-                    activitySummaryParser.parseBinaryData(workout, false)
-                    summaryData = parseSummaryData(workout.summaryData)
-                    if (summaryData != null) {
-                        LOG.debug("Successfully parsed RAW_SUMMARY_DATA for device '{}'", deviceName)
-                    } else {
-                        LOG.warn("Failed to parse RAW_SUMMARY_DATA for device '{}': summaryData still null after parsing", deviceName)
-                    }
-                } else {
-                    LOG.warn("No ActivitySummaryParser available for device '{}'", deviceName)
-                }
-            } catch (e: Exception) {
-                LOG.error("Error parsing RAW_SUMMARY_DATA for device '{}'", deviceName, e)
-            }
-        }
-
+        val summaryData = parseSummaryData(workout.summaryData)
         if (summaryData != null) {
             addDistanceRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
             addHeartRateRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
