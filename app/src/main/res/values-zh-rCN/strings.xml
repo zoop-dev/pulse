@@ -4272,8 +4272,9 @@
     <string name="min_temperature">最低气温</string>
     <string name="max_temperature">最高气温</string>
     <string name="fluid_consumed">消耗的液体</string>
-    <string name="meters_per_hour">米/秒</string>
+    <string name="meters_per_hour">米/小时</string>
     <string name="foot_per_hour">英尺/时</string>
     <string name="solar_intensity">阳光强度</string>
     <string name="battery_gain">电量增加</string>
+    <string name="menuitem_jet_lag_manager">时差管理器</string>
 </resources>
