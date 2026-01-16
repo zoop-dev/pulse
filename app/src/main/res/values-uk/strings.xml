@@ -4115,4 +4115,5 @@
     <string name="foot_per_hour">футів/год</string>
     <string name="solar_intensity">Інтенсивність сонячного світла</string>
     <string name="battery_gain">Посилення заряду батареї</string>
+    <string name="menuitem_jet_lag_manager">Менеджер з перепаду часових поясів</string>
 </resources>
