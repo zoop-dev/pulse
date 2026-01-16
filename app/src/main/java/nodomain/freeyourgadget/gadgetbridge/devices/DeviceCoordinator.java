@@ -234,14 +234,14 @@ public interface DeviceCoordinator {
     boolean supportsDebugLogs(@NonNull GBDevice device);
 
     /**
-     * Returns true if activity data fetching is supported by the device
+     * Returns true if data fetching (activity or otherwise) is supported by the device
      * (with this coordinator).
      * This enables the sync button in control center and the device can thus be asked to send the data
      * (as opposed the device pushing the data to us by itself)
      *
      * @return
      */
-    boolean supportsActivityDataFetching(@NonNull GBDevice device);
+    boolean supportsDataFetching(@NonNull GBDevice device);
 
     /**
      * Returns true if activity tracking is supported by the device
@@ -367,19 +367,7 @@ public interface DeviceCoordinator {
     boolean supportsWeightMeasurement(@NonNull GBDevice device);
 
     /**
-     * Returns true if activity data fetching is supported AND possible at this
-     * very moment. This will consider the device state (being connected/disconnected/busy...)
-     * etc.
-     *
-     * @param device
-     * @return
-     */
-    boolean allowFetchActivityData(GBDevice device);
-
-    /**
      * Returns the sample provider for the device being supported.
-     *
-     * @return
      */
     SampleProvider<? extends ActivitySample> getSampleProvider(GBDevice device, DaoSession session);
 

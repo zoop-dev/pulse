@@ -478,7 +478,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         );
 
         //fetch activity data
-        holder.fetchActivityDataBox.setVisibility((device.isInitialized() && coordinator.supportsActivityDataFetching(device)) ? View.VISIBLE : View.GONE);
+        holder.fetchActivityDataBox.setVisibility((device.isInitialized() && coordinator.supportsDataFetching(device)) ? View.VISIBLE : View.GONE);
         holder.fetchActivityData.setOnClickListener(new View.OnClickListener()
 
                                                     {

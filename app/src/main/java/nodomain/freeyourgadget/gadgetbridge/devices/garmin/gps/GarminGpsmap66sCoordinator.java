@@ -10,7 +10,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class GarminGpsmap66sCoordinator extends GarminCoordinator {
     @Override
-    public boolean supportsActivityDataFetching(@NonNull final GBDevice device) {
+    public boolean supportsDataFetching(@NonNull final GBDevice device) {
         // for gps tracks
         return true;
     }

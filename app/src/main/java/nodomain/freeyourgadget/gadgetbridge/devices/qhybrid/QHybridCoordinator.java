@@ -94,7 +94,7 @@ public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityDataFetching(final GBDevice device) {
+    public boolean supportsDataFetching(@NonNull final GBDevice device) {
         return isFossilHybrid(device) && device.getState() == GBDevice.State.INITIALIZED;
     }
 

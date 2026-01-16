@@ -107,7 +107,7 @@ public abstract class AbstractYawellRingCoordinator extends AbstractBLEDeviceCoo
     }
 
     @Override
-    public boolean supportsActivityDataFetching(final GBDevice device) {
+    public boolean supportsDataFetching(@NonNull final GBDevice device) {
         return true;
     }
 

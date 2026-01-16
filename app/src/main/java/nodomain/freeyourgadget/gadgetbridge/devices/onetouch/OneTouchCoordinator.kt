@@ -83,7 +83,7 @@ class OneTouchCoordinator : AbstractBLEDeviceCoordinator() {
         }
     }
 
-    override fun supportsActivityDataFetching(device: GBDevice): Boolean {
+    override fun supportsDataFetching(device: GBDevice): Boolean {
         return true
     }
 

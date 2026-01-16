@@ -284,7 +284,7 @@ public class TestDeviceCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityDataFetching(@NonNull final GBDevice device) {
+    public boolean supportsDataFetching(@NonNull final GBDevice device) {
         return supports(device, TestFeature.ACTIVITY_DATA_FETCHING);
     }
 

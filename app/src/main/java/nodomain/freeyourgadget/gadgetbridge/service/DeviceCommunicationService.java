@@ -157,7 +157,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
 
     private static class FeatureSet {
         private boolean supportsWeather = false;
-        private boolean supportsActivityDataFetching = false;
+        private boolean supportsDataFetching = false;
         private boolean supportsCalendarEvents = false;
         private boolean supportsMusicInfo = false;
         private boolean supportsNavigation = false;
@@ -172,12 +172,12 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             this.supportsWeather = supportsWeather;
         }
 
-        public boolean supportsActivityDataFetching() {
-            return supportsActivityDataFetching;
+        public boolean supportsDataFetching() {
+            return supportsDataFetching;
         }
 
-        public void setSupportsActivityDataFetching(boolean supportsActivityDataFetching) {
-            this.supportsActivityDataFetching = supportsActivityDataFetching;
+        public void setSupportsDataFetching(boolean supportsDataFetching) {
+            this.supportsDataFetching = supportsDataFetching;
         }
 
         public boolean supportsCalendarEvents() {
@@ -217,8 +217,8 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             if (operand.supportsWeather(device)) {
                 setSupportsWeather(true);
             }
-            if (operand.supportsActivityDataFetching(device)) {
-                setSupportsActivityDataFetching(true);
+            if (operand.supportsDataFetching(device)) {
+                setSupportsDataFetching(true);
             }
             if (operand.supportsMusicInfo(device)) {
                 setSupportsMusicInfo(true);
@@ -1503,7 +1503,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 }
             }
 
-            if (features.supportsActivityDataFetching() && mGBAutoFetchReceiver == null) {
+            if (features.supportsDataFetching() && mGBAutoFetchReceiver == null) {
                 mGBAutoFetchReceiver = new GBAutoFetchReceiver();
                 ContextCompat.registerReceiver(this, mGBAutoFetchReceiver, new IntentFilter("android.intent.action.USER_PRESENT"), ContextCompat.RECEIVER_EXPORTED);
             }

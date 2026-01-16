@@ -53,11 +53,9 @@ import java.util.regex.Pattern;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
-import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.ExternalPebbleJSActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.DefaultChartsProvider;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.DeviceChartsProvider;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
@@ -289,11 +287,6 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
      */
     public Map<AbstractDao<?, ?>, Property> getAllDeviceDao(@NonNull final DaoSession session) {
         return Collections.emptyMap();
-    }
-
-    @Override
-    public boolean allowFetchActivityData(GBDevice device) {
-        return device.isInitialized() && !device.isBusy() && supportsActivityDataFetching(device);
     }
 
     @Override
@@ -622,7 +615,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityDataFetching(@NonNull final GBDevice device) {
+    public boolean supportsDataFetching(@NonNull final GBDevice device) {
         return false;
     }
 

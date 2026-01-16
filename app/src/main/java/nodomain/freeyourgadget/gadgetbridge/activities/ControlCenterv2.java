@@ -263,7 +263,7 @@ public class ControlCenterv2 extends AppCompatActivity
                 // Hide 'refreshing' animation immediately if no health devices are connected
                 List<GBDevice> devices1 = GBApplication.app().getDeviceManager().getDevices();
                 for (GBDevice dev : devices1) {
-                    if (dev.getDeviceCoordinator().supportsActivityDataFetching(dev) && dev.isInitialized()) {
+                    if (dev.getDeviceCoordinator().supportsDataFetching(dev) && dev.isInitialized()) {
                         return;
                     }
                 }

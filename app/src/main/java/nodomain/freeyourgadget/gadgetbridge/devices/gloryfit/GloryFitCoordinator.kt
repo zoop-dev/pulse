@@ -94,7 +94,7 @@ abstract class GloryFitCoordinator : AbstractBLEDeviceCoordinator() {
         return false
     }
 
-    override fun supportsActivityDataFetching(device: GBDevice): Boolean {
+    override fun supportsDataFetching(device: GBDevice): Boolean {
         return true
     }
 

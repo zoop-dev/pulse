@@ -76,7 +76,7 @@ public class LefunDeviceCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityDataFetching(@NonNull final GBDevice device) {
+    public boolean supportsDataFetching(@NonNull final GBDevice device) {
         return true;
     }
 

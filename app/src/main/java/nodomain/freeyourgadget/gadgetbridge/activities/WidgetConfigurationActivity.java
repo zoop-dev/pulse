@@ -74,7 +74,7 @@ public class WidgetConfigurationActivity extends Activity implements GBActivity 
         allDevices = GBApplication.app().getDeviceManager().getDevices().stream()
                 .filter(device -> {
                     final DeviceCoordinator coordinator = device.getDeviceCoordinator();
-                    return coordinator.supportsActivityDataFetching(device) || coordinator.supportsActivityTracking(device);
+                    return coordinator.supportsDataFetching(device) || coordinator.supportsActivityTracking(device);
                 }).collect(Collectors.toList());
 
         List<String> list = new ArrayList<>();

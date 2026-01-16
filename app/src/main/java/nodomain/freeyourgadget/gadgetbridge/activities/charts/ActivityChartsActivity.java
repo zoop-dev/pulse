@@ -372,12 +372,11 @@ public class ActivityChartsActivity extends AbstractGBActivity implements Charts
 
     protected boolean supportsRefresh() {
         final DeviceCoordinator coordinator = getDevice().getDeviceCoordinator();
-        return coordinator.supportsActivityDataFetching(getDevice());
+        return coordinator.supportsDataFetching(getDevice());
     }
 
     protected boolean allowRefresh() {
-        final DeviceCoordinator coordinator = getDevice().getDeviceCoordinator();
-        return coordinator.allowFetchActivityData(getDevice()) && supportsRefresh();
+        return getDevice().isInitialized() && !getDevice().isBusy() && supportsRefresh();
     }
 
     protected int getRecordedDataType() {

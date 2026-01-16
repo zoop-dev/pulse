@@ -102,7 +102,7 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
     }
 
     @Override
-    public boolean supportsActivityDataFetching(@NonNull final GBDevice device) {
+    public boolean supportsDataFetching(@NonNull final GBDevice device) {
         return true;
     }
 

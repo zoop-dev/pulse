@@ -58,7 +58,7 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsActivityDataFetching(@NonNull final GBDevice device) {
+    public boolean supportsDataFetching(@NonNull final GBDevice device) {
         return true;
     }
 

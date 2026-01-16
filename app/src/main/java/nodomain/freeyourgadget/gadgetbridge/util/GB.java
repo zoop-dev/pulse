@@ -244,7 +244,7 @@ public class GB {
                         PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE
                 );
                 builder.addAction(R.drawable.ic_notification_disconnected, context.getString(R.string.controlcenter_disconnect), disconnectPendingIntent);
-                if (device.getDeviceCoordinator().supportsActivityDataFetching(device)) {
+                if (device.getDeviceCoordinator().supportsDataFetching(device)) {
                     deviceCommunicationServiceIntent.setAction(DeviceService.ACTION_FETCH_RECORDED_DATA);
                     deviceCommunicationServiceIntent.putExtra(EXTRA_RECORDED_DATA_TYPES, ActivityKind.ACTIVITY);
                     PendingIntent fetchPendingIntent = PendingIntent.getService(
@@ -275,7 +275,7 @@ public class GB {
                     isConnected = false;
                 }
 
-                anyDeviceSupportesActivityDataFetching |= device.getDeviceCoordinator().supportsActivityDataFetching(device);
+                anyDeviceSupportesActivityDataFetching |= device.getDeviceCoordinator().supportsDataFetching(device);
 
                 String deviceName = device.getAliasOrName();
                 String text = device.getStateString(context);
