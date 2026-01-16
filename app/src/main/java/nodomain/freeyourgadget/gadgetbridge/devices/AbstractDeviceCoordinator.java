@@ -58,6 +58,8 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.ExternalPebbleJSActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.charts.DefaultChartsProvider;
+import nodomain.freeyourgadget.gadgetbridge.activities.charts.DeviceChartsProvider;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
@@ -699,6 +701,11 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     @Override
     public boolean supportsGlucoseMeasurement(@NonNull final GBDevice device) {
         return false;
+    }
+
+    @Override
+    public DeviceChartsProvider getChartsProvider() {
+        return DefaultChartsProvider.INSTANCE;
     }
 
     @Override

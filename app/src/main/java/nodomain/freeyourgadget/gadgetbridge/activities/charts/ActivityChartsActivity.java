@@ -50,12 +50,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -67,7 +62,6 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBFragment;
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityAmounts;
@@ -75,11 +69,8 @@ import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.LimitedQueue;
-import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class ActivityChartsActivity extends AbstractGBActivity implements ChartsHost {
-    private static final Logger LOG = LoggerFactory.getLogger(ActivityChartsActivity.class);
-
     public static final String STATE_START_DATE = "stateStartDate";
     public static final String STATE_END_DATE = "stateEndDate";
 
@@ -261,81 +252,17 @@ public class ActivityChartsActivity extends AbstractGBActivity implements Charts
         return new SectionsStateAdapter(this);
     }
     protected List<String> fillChartsTabsList() {
-        return fillChartsTabsList(getDevice(), this);
+        return fillChartsTabsList(getDevice());
     }
 
-    private static List<String> fillChartsTabsList(final GBDevice device, final Context context) {
-        final List<String> tabList;
-        final Prefs prefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(device.getAddress()));
-        final String myTabs = prefs.getString(DeviceSettingsPreferenceConst.PREFS_DEVICE_CHARTS_TABS, null);
-
-        if (myTabs == null) {
-            //make list mutable to be able to remove items later
-            tabList = new ArrayList<>(Arrays.asList(context.getResources().getStringArray(R.array.pref_charts_tabs_items_default)));
-        } else {
-            tabList = new ArrayList<>(Arrays.asList(myTabs.split(",")));
-        }
+    private static List<String> fillChartsTabsList(final GBDevice device) {
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
-        if (!coordinator.supportsActivityTabs(device)) {
-            tabList.remove("activity");
-            tabList.remove("activitylist");
-        }
-        if (!coordinator.supportsSleepMeasurement(device)) {
-            tabList.remove("sleep");
-        }
-        if (!coordinator.supportsStressMeasurement(device)) {
-            tabList.remove("stress");
-        }
-        if (!coordinator.supportsPai(device)) {
-            tabList.remove("pai");
-        }
-        if (!coordinator.supportsSpo2(device)) {
-            tabList.remove("spo2");
-        }
-        if (!coordinator.supportsStepCounter(device)) {
-            tabList.remove("stepsweek");
-        }
-        if (!coordinator.supportsSpeedzones(device)) {
-            tabList.remove("speedzones");
-        }
-        if (!coordinator.supportsRealtimeData(device)) {
-            tabList.remove("livestats");
-        }
-        if (!coordinator.supportsTemperatureMeasurement(device)) {
-            tabList.remove("temperature");
-        }
-        if (!coordinator.supportsCyclingData(device)) {
-            tabList.remove("cycling");
-        }
-        if (!coordinator.supportsWeightMeasurement(device)) {
-            tabList.remove("weight");
-        }
-        if (!coordinator.supportsHrvMeasurement(device)) {
-            tabList.remove("hrvstatus");
-        }
-        if (!coordinator.supportsHeartRateMeasurement(device)) {
-            tabList.remove("heartrate");
-        }
-        if (!coordinator.supportsBodyEnergy(device)) {
-            tabList.remove("bodyenergy");
-        }
-        if (!coordinator.supportsVO2Max(device)) {
-            tabList.remove("vo2max");
-        }
-        if (!coordinator.supportsTrainingLoad(device)) {
-            tabList.remove("load");
-        }
-        if (!coordinator.supportsActiveCalories(device)) {
-            tabList.remove("calories");
-        }
-        if (!coordinator.supportsRespiratoryRate(device)) {
-            tabList.remove("respiratoryrate");
-        }
-        return tabList;
+
+        return coordinator.getChartsProvider().getSupportedCharts(device);
     }
 
     public static int getChartsTabIndex(final String tab, final GBDevice device, final Context context) {
-        final List<String> enabledTabsList = fillChartsTabsList(device, context);
+        final List<String> enabledTabsList = fillChartsTabsList(device);
         return enabledTabsList.indexOf(tab);
     }
 
@@ -466,48 +393,13 @@ public class ActivityChartsActivity extends AbstractGBActivity implements Charts
     }
 
     public CharSequence getPageTitle(int position) {
-        switch (enabledTabsList.get(position)) {
-            case "activity":
-                return getString(R.string.activity_sleepchart_activity_and_sleep);
-            case "activitylist":
-                return getString(R.string.charts_activity_list);
-            case "sleep":
-                return getString(R.string.sleepchart_your_sleep);
-            case "heartrate":
-                return getString(R.string.menuitem_hr);
-            case "hrvstatus":
-                return getString(R.string.pref_header_hrv_status);
-            case "bodyenergy":
-                return getString(R.string.body_energy);
-            case "vo2max":
-                return getString(R.string.menuitem_vo2_max);
-            case "stress":
-                return getString(R.string.menuitem_stress);
-            case "pai":
-                return getString(getDevice().getDeviceCoordinator().getPaiName());
-            case "stepsweek":
-                return getString(R.string.steps);
-            case "speedzones":
-                return getString(R.string.stats_title);
-            case "livestats":
-                return getString(R.string.liveactivity_live_activity);
-            case "spo2":
-                return getString(R.string.pref_header_spo2);
-            case "temperature":
-                return getString(R.string.menuitem_temperature);
-            case "cycling":
-                return getString(R.string.title_cycling);
-            case "weight":
-                return getString(R.string.menuitem_weight);
-            case "calories":
-                return getString(R.string.calories);
-            case "respiratoryrate":
-                return getString(R.string.respiratoryrate);
-            case "load":
-                return getString(R.string.pref_header_training_load);
-        }
-
-        return String.format(Locale.getDefault(), "Unknown %d", position);
+        final DeviceCoordinator coordinator = getDevice().getDeviceCoordinator();
+        final DeviceChartsProvider chartsProvider = coordinator.getChartsProvider();
+        return chartsProvider.getChartLabel(
+                this,
+                getDevice(),
+                enabledTabsList.get(position)
+        );
     }
 
     /**
@@ -523,49 +415,12 @@ public class ActivityChartsActivity extends AbstractGBActivity implements Charts
         @Override
         public Fragment createFragment(int position) {
             final DeviceCoordinator coordinator = getDevice().getDeviceCoordinator();
-            // getItem is called to instantiate the fragment for the given page.
-            switch (enabledTabsList.get(position)) {
-                case "activity":
-                    return new ActivitySleepChartFragment();
-                case "activitylist":
-                    return new ActivityListingChartFragment();
-                case "sleep":
-                    return SleepCollectionFragment.newInstance(enabledTabsList.size() == 1);
-                case "heartrate":
-                    return HeartRateCollectionFragment.newInstance(enabledTabsList.size() == 1);
-                case "hrvstatus":
-                    return new HRVStatusFragment();
-                case "bodyenergy":
-                    return BodyEnergyCollectionFragment.newInstance(enabledTabsList.size() == 1);
-                case "vo2max":
-                    return new VO2MaxFragment();
-                case "load":
-                    return new LoadFragment();
-                case "stress":
-                    return StressCollectionFragment.newInstance(enabledTabsList.size() == 1);
-                case "pai":
-                    return new PaiChartFragment();
-                case "stepsweek":
-                    return StepsCollectionFragment.newInstance(enabledTabsList.size() == 1);
-                case "speedzones":
-                    return new SpeedZonesFragment();
-                case "livestats":
-                    return new LiveActivityFragment();
-                case "spo2":
-                    return Spo2CollectionFragment.newInstance(enabledTabsList.size() == 1);
-                case "temperature":
-                    return coordinator.supportsContinuousTemperature(getDevice())? new TemperatureDailyFragment(): new TemperatureChartFragment();
-                case "cycling":
-                    return new CyclingChartFragment();
-                case "weight":
-                    return new WeightChartFragment();
-                case "calories":
-                    return CaloriesCollectionFragment.newInstance(enabledTabsList.size() == 1);
-                case "respiratoryrate":
-                    return RespiratoryRateCollectionFragment.newInstance(enabledTabsList.size() == 1);
-            }
-
-            return new ActivityChartsActivity.UnknownFragment();
+            final DeviceChartsProvider chartsProvider = coordinator.getChartsProvider();
+            return chartsProvider.getChartFragment(
+                    getDevice(),
+                    enabledTabsList.get(position),
+                    enabledTabsList.size() == 1
+            );
         }
 
         @Override

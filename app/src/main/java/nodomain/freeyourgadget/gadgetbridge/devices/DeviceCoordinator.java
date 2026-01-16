@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.GBException;
+import nodomain.freeyourgadget.gadgetbridge.activities.charts.DeviceChartsProvider;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.HeartRateCapability;
@@ -287,6 +288,8 @@ public interface DeviceCoordinator {
     boolean supportsTrainingLoad(@NonNull GBDevice device);
     boolean supportsWorkoutLoad(@NonNull GBDevice device);
     boolean supportsGlucoseMeasurement(@NonNull GBDevice device);
+
+    DeviceChartsProvider getChartsProvider();
 
     /**
      * Returns true if measurement and fetching of body temperature is supported by the device
