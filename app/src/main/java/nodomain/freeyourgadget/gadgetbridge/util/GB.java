@@ -66,6 +66,7 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventScreenshot
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
+import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceCommunicationService;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
@@ -246,7 +247,7 @@ public class GB {
                 builder.addAction(R.drawable.ic_notification_disconnected, context.getString(R.string.controlcenter_disconnect), disconnectPendingIntent);
                 if (device.getDeviceCoordinator().supportsDataFetching(device)) {
                     deviceCommunicationServiceIntent.setAction(DeviceService.ACTION_FETCH_RECORDED_DATA);
-                    deviceCommunicationServiceIntent.putExtra(EXTRA_RECORDED_DATA_TYPES, ActivityKind.ACTIVITY);
+                    deviceCommunicationServiceIntent.putExtra(EXTRA_RECORDED_DATA_TYPES, RecordedDataTypes.TYPE_SYNC);
                     PendingIntent fetchPendingIntent = PendingIntent.getService(
                             context,
                             1,
@@ -305,7 +306,7 @@ public class GB {
                 Intent deviceCommunicationServiceIntent = new Intent(context, DeviceCommunicationService.class);
                 deviceCommunicationServiceIntent.setPackage(BuildConfig.APPLICATION_ID);
                 deviceCommunicationServiceIntent.setAction(DeviceService.ACTION_FETCH_RECORDED_DATA);
-                deviceCommunicationServiceIntent.putExtra(EXTRA_RECORDED_DATA_TYPES, ActivityKind.ACTIVITY);
+                deviceCommunicationServiceIntent.putExtra(EXTRA_RECORDED_DATA_TYPES, RecordedDataTypes.TYPE_SYNC);
                 PendingIntent fetchPendingIntent = PendingIntent.getService(
                         context,
                         1,
