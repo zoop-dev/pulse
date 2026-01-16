@@ -4274,4 +4274,5 @@
     <string name="foot_per_hour">ft/h</string>
     <string name="solar_intensity">Intenzita slunce</string>
     <string name="battery_gain">Zisk baterie</string>
+    <string name="menuitem_jet_lag_manager">Správce pásmové nemoci</string>
 </resources>
