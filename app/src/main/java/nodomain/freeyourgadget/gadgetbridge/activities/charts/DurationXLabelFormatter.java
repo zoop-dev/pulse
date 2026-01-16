@@ -1,32 +1,25 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.charts;
 
-import android.annotation.SuppressLint;
-
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class DurationXLabelFormatter extends ValueFormatter {
-    @SuppressLint("SimpleDateFormat")
-    private final SimpleDateFormat annotationDateFormatMmSs = new SimpleDateFormat("mm:ss");
-    @SuppressLint("SimpleDateFormat")
-    private final SimpleDateFormat annotationDateFormatHhMmSs = new SimpleDateFormat("HH:mm:ss");
-
-    private final Calendar cal = GregorianCalendar.getInstance();
-
     public DurationXLabelFormatter() {
     }
 
     // TODO: this does not work. Cannot use precomputed labels
     @Override
     public String getFormattedValue(final float value) {
-        cal.clear();
-        final int ts = (int) value;
-        cal.setTimeInMillis(ts);
-        final Date date = cal.getTime();
-        return (ts >= 3600000 ? annotationDateFormatHhMmSs : annotationDateFormatMmSs).format(date);
+        final long shortenSeconds = Math.round(value / 1000);
+        final long hours = shortenSeconds / 3600;
+        final long minutes = (shortenSeconds % 3600) / 60;
+        final long seconds = shortenSeconds % 60;
+
+        if (hours > 0) {
+            return String.format(Locale.ROOT, "%02d:%02d:%02d", hours, minutes, seconds);
+        } else {
+            return String.format(Locale.ROOT, "%02d:%02d", minutes, seconds);
+        }
     }
 }
