@@ -21,7 +21,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
+import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
@@ -161,6 +163,18 @@ public class CommunicatorV2 implements ICommunicator {
             final int handle = ((value[0] & MlrCommunicator.HANDLE_MASK) >> 4) | MlrCommunicator.MLR_FLAG_MASK;
             final MlrCommunicator mlrComm = mlrCommunicators.get(handle);
             if (mlrComm != null) {
+                if (BuildConfig.DEBUG) {
+                    final int packetPercentageIn = mSupport.getDevicePrefs().getInt("pref_debug_drop_packet_percentage_in", 0);
+                    if (packetPercentageIn > 0 && ThreadLocalRandom.current().nextInt(100) < packetPercentageIn) {
+                        LOG.warn(
+                                "Simulating dropped inbound packet handle={}, dataLen={}",
+                                handle,
+                                value.length
+                        );
+                        return true;
+                    }
+                }
+
                 mlrComm.onPacketReceived(value);
                 return true;
             }
@@ -639,9 +653,18 @@ public class CommunicatorV2 implements ICommunicator {
     }
 
     private MlrCommunicator createMlrCommunicator(final int handle, final ServiceCallback callback) {
-        final MlrCommunicator.MessageSender messageSender = (taskName, packet) -> mSupport.createTransactionBuilder(taskName)
-                .write(characteristicSend, packet)
-                .queue();
+        final MlrCommunicator.MessageSender messageSender = (taskName, packet) -> {
+            if (BuildConfig.DEBUG) {
+                final int packetPercentageOut = mSupport.getDevicePrefs().getInt("pref_debug_drop_packet_percentage_out", 0);
+                if (packetPercentageOut > 0 && ThreadLocalRandom.current().nextInt(100) < packetPercentageOut) {
+                    LOG.warn("Simulating dropped outbound packet for {} ({})", taskName, GB.hexdump(packet));
+                    return;
+                }
+            }
+            mSupport.createTransactionBuilder(taskName)
+                    .write(characteristicSend, packet)
+                    .queue();
+        };
 
         return new MlrCommunicator(handle, maxWriteSize, messageSender, callback::onMessage);
     }

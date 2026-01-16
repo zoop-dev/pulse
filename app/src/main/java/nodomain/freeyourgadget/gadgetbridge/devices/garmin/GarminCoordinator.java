@@ -8,6 +8,8 @@ import android.app.Activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -226,6 +228,14 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public int[] getSupportedDeviceSpecificExperimentalSettings(final GBDevice device) {
         return new int[]{R.xml.devicesettings_garmin_experimental};
+    }
+
+    @Override
+    public int[] getSupportedDebugSettings(final GBDevice device) {
+        return ArrayUtils.add(
+                super.getSupportedDebugSettings(device),
+                R.xml.devicesettings_debug_drop_packets
+        );
     }
 
     @Override

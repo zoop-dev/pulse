@@ -821,7 +821,8 @@ public interface DeviceCoordinator {
     int[] getSupportedDeviceSpecificAuthenticationSettings();
 
     /**
-     * Returns device specific debug settings. This section is only shown in debug builds.
+     * Returns device specific debug settings. This section is only shown in debug builds, and all behavior-altering
+     * preferences should be gate-kept by the BuildConfig.DEBUG flag.
      */
     int[] getSupportedDebugSettings(final GBDevice device);
 

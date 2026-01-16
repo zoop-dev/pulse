@@ -81,12 +81,12 @@ public class MlrCommunicator {
             int position = 0;
             while (remainingBytes > 0) {
                 final byte[] fragment = Arrays.copyOfRange(message, position, position + Math.min(remainingBytes, maxPacketSize - 2));
-                fragmentQueue.add(new Fragment(taskName, i++, fragment));
+                fragmentQueue.add(new Fragment(taskName, i++, fragment, 0));
                 position += fragment.length;
                 remainingBytes -= fragment.length;
             }
         } else {
-            fragmentQueue.add(new Fragment(taskName, 0, message));
+            fragmentQueue.add(new Fragment(taskName, 0, message, 0));
         }
 
         runProtocol();
@@ -219,9 +219,11 @@ public class MlrCommunicator {
         // Send next fragment if available
         final Fragment fragment = fragmentQueue.poll();
         if (fragment != null) {
+            // Update the fragment with the current reqNum before storing it
+            final Fragment fragmentWithReqNum = new Fragment(fragment.taskName, fragment.num, fragment.data, nextRcvSeq);
             final byte[] packet = createPacket(nextRcvSeq, nextSendSeq, fragment.data);
             messageSender.sendPacket(fragment.taskName + " (" + fragment.num + ")", packet);
-            sentFragments[nextSendSeq] = fragment;
+            sentFragments[nextSendSeq] = fragmentWithReqNum;
 
             nextSendSeq = (nextSendSeq + 1) % (MAX_SEQ_NUM + 1);
 
@@ -278,7 +280,8 @@ public class MlrCommunicator {
                 LOG.error("Attempting to re-send null fragment at index {}", i);
                 continue;
             }
-            final byte[] packet = createPacket(nextRcvSeq, i, fragment.data);
+            // Use the original reqNum that was stored when the fragment was first sent
+            final byte[] packet = createPacket(fragment.reqNum, i, fragment.data);
             messageSender.sendPacket("retransmission " + fragment.taskName + " (" + fragment.num + ")", packet);
         }
 
@@ -307,6 +310,6 @@ public class MlrCommunicator {
         void onDataReceived(final byte[] data);
     }
 
-    private record Fragment(String taskName, int num, byte[] data) {
+    private record Fragment(String taskName, int num, byte[] data, int reqNum) {
     }
 }

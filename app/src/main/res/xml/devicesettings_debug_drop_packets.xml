@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <SeekBarPreference
+        android:defaultValue="0"
+        android:icon="@drawable/ic_file_upload"
+        android:key="pref_debug_drop_packet_percentage_out"
+        android:max="100"
+        android:summary="Probability of failing to send a packet"
+        android:title="Simulate packet loss - outbound"
+        app:showSeekBarValue="true" />
+    <SeekBarPreference
+        android:defaultValue="0"
+        android:icon="@drawable/ic_download"
+        android:key="pref_debug_drop_packet_percentage_in"
+        android:max="100"
+        android:summary="Probability of failing to receive a packet"
+        android:title="Simulate packet loss - inbound"
+        app:showSeekBarValue="true" />
+</androidx.preference.PreferenceScreen>
