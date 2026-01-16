@@ -669,12 +669,7 @@ internal object RecordedWorkoutSyncer {
         // Try dedicated active_calories field first, fall back to caloriesBurnt
         val activeCaloriesPermission = HealthPermission.getWritePermission(ActiveCaloriesBurnedRecord::class)
         if (activeCaloriesPermission in grantedPermissions) {
-            var activeCalories = summaryData.getNumber(ActivitySummaryEntries.CALORIES_ACTIVE, 0.0).toDouble()
-
-            // If no dedicated active_calories field, use caloriesBurnt (which represents active calories for most devices)
-            if (activeCalories == 0.0) {
-                activeCalories = summaryData.getNumber(ActivitySummaryEntries.CALORIES_BURNT, 0.0).toDouble()
-            }
+            var activeCalories = summaryData.getNumber(ActivitySummaryEntries.CALORIES_BURNT, 0.0).toDouble()
 
             if (activeCalories > 0) {
                 recordsToInsert.add(
@@ -699,7 +694,7 @@ internal object RecordedWorkoutSyncer {
         // Otherwise, syncing the same value as both active and total would be misleading
         val totalCaloriesPermission = HealthPermission.getWritePermission(TotalCaloriesBurnedRecord::class)
         if (totalCaloriesPermission in grantedPermissions) {
-            val activeCalories = summaryData.getNumber(ActivitySummaryEntries.CALORIES_ACTIVE, 0.0).toDouble()
+            val activeCalories = summaryData.getNumber(ActivitySummaryEntries.CALORIES_BURNT, 0.0).toDouble()
             val restingCalories = summaryData.getNumber(ActivitySummaryEntries.CALORIES_RESTING, 0.0).toDouble()
 
             if (activeCalories > 0 && restingCalories > 0) {
