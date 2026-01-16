@@ -600,7 +600,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
 
         summaryData.add(SOLAR_INTENSITY, safeRound(session.getSolarIntensity()), UNIT_PERCENTAGE);
         if (session.getBatteryGain() != null) {
-            summaryData.add(BATTERY_GAIN, session.getBatteryGain() * 60, UNIT_SECONDS);
+            summaryData.add(BATTERY_GAIN, session.getBatteryGain(), UNIT_SECONDS);
         }
 
         if (!diveGases.isEmpty()) {
