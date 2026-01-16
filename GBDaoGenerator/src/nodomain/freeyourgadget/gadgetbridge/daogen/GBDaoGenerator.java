@@ -67,6 +67,11 @@ public class GBDaoGenerator {
     private static final String TIMESTAMP_TO = "timestampTo";
 
     public static void main(String[] args) throws Exception {
+        File outputDir = new File(OUTPUT_DIR);
+        if (!outputDir.exists()) {
+            outputDir.mkdirs();
+        }
+
         final Schema schema = new Schema(124, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
