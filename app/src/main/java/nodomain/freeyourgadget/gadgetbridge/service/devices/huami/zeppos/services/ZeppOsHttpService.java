@@ -38,6 +38,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsS
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsWeatherHandler;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.http.HttpAppsSettingsHandler;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.HttpUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
@@ -152,6 +153,7 @@ public class ZeppOsHttpService extends AbstractZeppOsService {
             return;
         }
 
+        final String host = url.getHost();
         final String path = url.getPath();
         final Map<String, String> query = HttpUtils.urlQueryParameters(url);
 
@@ -163,6 +165,13 @@ public class ZeppOsHttpService extends AbstractZeppOsService {
             }
 
             LOG.error("Weather handler is null");
+        } else if (host.equals("api-mifit.huami.com") && path.startsWith("/apps/")) {
+            final String response = HttpAppsSettingsHandler.handleHttpRequest(path, query);
+            if (response != null) {
+                replySimpleHttpSuccess(requestId, 200, response);
+            } else {
+                replyHttpNoInternet(requestId);
+            }
         }
 
         LOG.error("Unhandled simple request URL {}", url);
