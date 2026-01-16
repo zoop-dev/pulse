@@ -18,7 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices.test;
 
 public enum TestFeature {
     ACTIVITY_DATA_FETCHING,
-    ACTIVITY_TABS,
+    CHARTS,
     ACTIVITY_TRACKING,
     ACTIVITY_TRACKS,
     ALARM_DESCRIPTION,

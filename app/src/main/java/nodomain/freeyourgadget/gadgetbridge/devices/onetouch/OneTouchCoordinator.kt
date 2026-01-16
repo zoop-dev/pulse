@@ -87,24 +87,8 @@ class OneTouchCoordinator : AbstractBLEDeviceCoordinator() {
         return true
     }
 
-    override fun supportsActivityTracking(device: GBDevice): Boolean {
+    override fun supportsCharts(device: GBDevice): Boolean {
         return false // TODO charts are not yet implemented
-    }
-
-    override fun supportsActivityTabs(device: GBDevice): Boolean {
-        return false
-    }
-
-    override fun supportsSleepMeasurement(device: GBDevice): Boolean {
-        return false
-    }
-
-    override fun supportsStepCounter(device: GBDevice): Boolean {
-        return false
-    }
-
-    override fun supportsSpeedzones(device: GBDevice): Boolean {
-        return false
     }
 
     override fun supportsGlucoseMeasurement(device: GBDevice): Boolean {

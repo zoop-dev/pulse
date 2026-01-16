@@ -283,7 +283,7 @@ public interface DeviceCoordinator {
     boolean supportsSleepMeasurement(@NonNull GBDevice device);
     boolean supportsStepCounter(@NonNull GBDevice device);
     boolean supportsSpeedzones(@NonNull GBDevice device);
-    boolean supportsActivityTabs(@NonNull GBDevice device);
+    boolean supportsCharts(@NonNull GBDevice device);
     boolean supportsActiveCalories(@NonNull GBDevice device);
     boolean supportsTrainingLoad(@NonNull GBDevice device);
     boolean supportsWorkoutLoad(@NonNull GBDevice device);

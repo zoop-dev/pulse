@@ -1581,10 +1581,15 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
                 );
             }
 
+            if (coordinator.supportsCharts(device)) {
+                deviceSpecificSettings.addRootScreen(
+                        DeviceSpecificSettingsScreen.ACTIVITY_INFO,
+                        R.xml.devicesettings_chartstabs
+                );
+            }
             if (coordinator.supportsActivityTracking(device)) {
                 deviceSpecificSettings.addRootScreen(
                         DeviceSpecificSettingsScreen.ACTIVITY_INFO,
-                        R.xml.devicesettings_chartstabs,
                         R.xml.devicesettings_device_card_activity_card_preferences
                 );
             }

@@ -47,24 +47,8 @@ abstract class CoospoHeartRateCoordinator: AbstractBLEDeviceCoordinator() {
         return true
     }
 
-    override fun supportsActivityTracking(device: GBDevice): Boolean {
+    override fun supportsCharts(device: GBDevice): Boolean {
         return true
-    }
-
-    override fun supportsActivityTabs(device: GBDevice): Boolean {
-        return false
-    }
-
-    override fun supportsSleepMeasurement(device: GBDevice): Boolean {
-        return false
-    }
-
-    override fun supportsStepCounter(device: GBDevice): Boolean {
-        return false
-    }
-
-    override fun supportsSpeedzones(device: GBDevice): Boolean {
-        return false
     }
 
     override fun getSampleProvider(device: GBDevice, session: DaoSession): SampleProvider<out AbstractActivitySample>? {

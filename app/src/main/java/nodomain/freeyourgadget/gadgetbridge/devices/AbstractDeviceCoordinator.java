@@ -675,17 +675,38 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityTabs(@NonNull GBDevice device) {
-        return supportsActivityTracking(device);
+    public boolean supportsCharts(@NonNull GBDevice device) {
+        // All the default charts (see DefaultChartsProvider)
+        return supportsActivityTracking(device) ||
+                supportsSleepMeasurement(device) ||
+                supportsHrvMeasurement(device) ||
+                supportsBodyEnergy(device) ||
+                supportsVO2Max(device) ||
+                supportsTrainingLoad(device) ||
+                supportsHeartRateMeasurement(device) ||
+                supportsStepCounter(device) ||
+                supportsStressMeasurement(device) ||
+                supportsPai(device) ||
+                supportsSpeedzones(device) ||
+                supportsRealtimeData(device) ||
+                supportsSpo2(device) ||
+                supportsTemperatureMeasurement(device) ||
+                supportsWeightMeasurement(device) ||
+                supportsActiveCalories(device) ||
+                supportsCyclingData(device) ||
+                supportsRespiratoryRate(device);
     }
+
     @Override
     public boolean supportsSleepMeasurement(@NonNull GBDevice device) {
         return supportsActivityTracking(device);
     }
+
     @Override
     public boolean supportsStepCounter(@NonNull GBDevice device) {
         return supportsActivityTracking(device);
     }
+
     @Override
     public boolean supportsSpeedzones(@NonNull GBDevice device) {
         return supportsActivityTracking(device);

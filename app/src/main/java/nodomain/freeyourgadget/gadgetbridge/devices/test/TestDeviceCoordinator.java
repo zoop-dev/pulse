@@ -309,8 +309,8 @@ public class TestDeviceCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityTabs(@NonNull GBDevice device) {
-        return supports(getTestDevice(), TestFeature.ACTIVITY_TABS);
+    public boolean supportsCharts(@NonNull GBDevice device) {
+        return supports(getTestDevice(), TestFeature.CHARTS);
     }
 
     @Override

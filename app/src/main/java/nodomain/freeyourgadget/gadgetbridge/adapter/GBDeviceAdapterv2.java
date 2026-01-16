@@ -553,7 +553,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         );
 
         //show graphs
-        holder.showActivityGraphs.setVisibility(coordinator.supportsActivityTracking(device) ? View.VISIBLE : View.GONE);
+        holder.showActivityGraphs.setVisibility(coordinator.supportsCharts(device) ? View.VISIBLE : View.GONE);
         holder.showActivityGraphs.setOnClickListener(new View.OnClickListener()
 
                                                      {

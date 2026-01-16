@@ -17,7 +17,7 @@ object DefaultChartsProvider : DeviceChartsProvider {
         if (coordinator.supportsCyclingData(device)) {
             supportedCharts.add("cycling")
         }
-        if (coordinator.supportsActivityTabs(device)) {
+        if (coordinator.supportsActivityTracking(device)) {
             supportedCharts.add("activity")
             supportedCharts.add("activitylist")
         }
