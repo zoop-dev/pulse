@@ -10,20 +10,36 @@
         android:selectable="false"
         android:title="Number of records" />
 
-    <SwitchPreferenceCompat
-        android:defaultValue="false"
-        android:icon="@drawable/ic_warning_gray"
-        android:key="dangerous_actions"
-        android:layout="@layout/preference_checkbox"
-        android:persistent="false"
-        android:title="@string/dangerous_actions" />
-
     <Preference
-        android:dependency="dangerous_actions"
-        android:icon="@drawable/ic_delete_forever"
-        android:key="pref_debug_drop_table"
+        android:icon="@drawable/ic_file_upload"
+        android:key="pref_debug_export_table"
         android:persistent="false"
-        android:summary="Warning! By pushing this button the table will be dropped to the database and must be re-created."
-        android:title="Drop table" />
+        android:title="@string/file_export" />
+
+    <PreferenceCategory
+        android:key="pref_header_dangerous_actions"
+        android:title="@string/dangerous_actions">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_warning_gray"
+            android:key="dangerous_actions"
+            android:layout="@layout/preference_checkbox"
+            android:persistent="false"
+            android:title="@string/dangerous_actions" />
+
+        <Preference
+            android:dependency="dangerous_actions"
+            android:icon="@drawable/ic_delete_forever"
+            android:key="pref_debug_drop_table"
+            android:persistent="false"
+            android:summary="Warning! By pushing this button the table will be dropped to the database and must be re-created."
+            android:title="Drop table" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_header_sql"
+        android:title="SQL"
+        app:iconSpaceReserved="false" />
 
 </androidx.preference.PreferenceScreen>

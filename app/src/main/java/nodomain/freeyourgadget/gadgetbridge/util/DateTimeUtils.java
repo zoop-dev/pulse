@@ -189,6 +189,16 @@ public class DateTimeUtils {
         return calendar.getTime();
     }
 
+    public static Date dayEnd(final int year, final int monthOfYear, final int dayOfMonth) {
+        final Calendar calendar = Calendar.getInstance();
+        calendar.set(year, monthOfYear, dayOfMonth);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        return calendar.getTime();
+    }
+
     public static Date parseTimeStamp(int timestamp) {
         GregorianCalendar cal = (GregorianCalendar) GregorianCalendar.getInstance();
         cal.setTimeInMillis(timestamp * 1000L); // make sure it's converted to long

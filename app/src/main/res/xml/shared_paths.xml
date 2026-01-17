@@ -5,6 +5,7 @@
     <files-path name="gpx" path="./" />
     <cache-path name="raw" path="raw/" />
     <cache-path name="gpx" path="gpx/" />
+    <cache-path name="csv" path="csv/" />
     <cache-path name="audio" path="audio/" />
     <cache-path name="images" path="images/" />
 </paths>

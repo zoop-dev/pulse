@@ -4603,6 +4603,8 @@
     <string name="health_connect_initial_sync_dialog_message">Choose how much data to sync for the initial Health Connect synchronization:</string>
     <string name="health_connect_initial_sync_preset">Sync last:</string>
     <string name="health_connect_initial_sync_select_date">Select Date</string>
+    <string name="export_select_start_date">Start date</string>
+    <string name="export_select_end_date">End date</string>
     <string name="health_connect_initial_sync_3_days">3 days</string>
     <string name="health_connect_initial_sync_7_days">7 days</string>
     <string name="health_connect_initial_sync_30_days">30 days</string>
