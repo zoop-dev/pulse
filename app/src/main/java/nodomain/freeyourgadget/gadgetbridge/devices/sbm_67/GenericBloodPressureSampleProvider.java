@@ -22,35 +22,35 @@ import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractTimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.SBM67BloodPressureSample;
-import nodomain.freeyourgadget.gadgetbridge.entities.SBM67BloodPressureSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.GenericBloodPressureSample;
+import nodomain.freeyourgadget.gadgetbridge.entities.GenericBloodPressureSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class SBM67BloodPressureSampleProvider extends AbstractTimeSampleProvider<SBM67BloodPressureSample> {
-    public SBM67BloodPressureSampleProvider(final GBDevice device, final DaoSession session) {
+public class GenericBloodPressureSampleProvider extends AbstractTimeSampleProvider<GenericBloodPressureSample> {
+    public GenericBloodPressureSampleProvider(final GBDevice device, final DaoSession session) {
         super(device, session);
     }
 
     @NonNull
     @Override
-    public AbstractDao<SBM67BloodPressureSample, ?> getSampleDao() {
-        return getSession().getSBM67BloodPressureSampleDao();
+    public AbstractDao<GenericBloodPressureSample, ?> getSampleDao() {
+        return getSession().getGenericBloodPressureSampleDao();
     }
 
     @NonNull
     @Override
     protected Property getTimestampSampleProperty() {
-        return SBM67BloodPressureSampleDao.Properties.Timestamp;
+        return GenericBloodPressureSampleDao.Properties.Timestamp;
     }
 
     @NonNull
     @Override
     protected Property getDeviceIdentifierSampleProperty() {
-        return SBM67BloodPressureSampleDao.Properties.DeviceId;
+        return GenericBloodPressureSampleDao.Properties.DeviceId;
     }
 
     @Override
-    public SBM67BloodPressureSample createSample() {
-        return new SBM67BloodPressureSample();
+    public GenericBloodPressureSample createSample() {
+        return new GenericBloodPressureSample();
     }
 }

@@ -32,7 +32,7 @@ public class SBM67Coordinator extends AbstractBLEDeviceCoordinator {
     @Nullable
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("^(SBM67|BPM Smart)$", Pattern.CASE_INSENSITIVE);
+        return Pattern.compile("^(SBM67|BPM Smart)$");
     }
 
     @Override
@@ -58,7 +58,12 @@ public class SBM67Coordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public int getBondingStyle() {
-        return BONDING_STYLE_NONE;
+        return BONDING_STYLE_BOND;
+    }
+
+    @Override
+    public int getBatteryCount(GBDevice device) {
+        return 0; // it does not report battery %
     }
 
     @Override
@@ -67,7 +72,7 @@ public class SBM67Coordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public SBM67BloodPressureSampleProvider getBloodPressureSampleProvider(GBDevice device, DaoSession session) {
-        return new SBM67BloodPressureSampleProvider(device, session);
+    public GenericBloodPressureSampleProvider getBloodPressureSampleProvider(final GBDevice device, final DaoSession session) {
+        return new GenericBloodPressureSampleProvider(device, session);
     }
 }
