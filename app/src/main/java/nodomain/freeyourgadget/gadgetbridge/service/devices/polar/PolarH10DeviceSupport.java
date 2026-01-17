@@ -3,6 +3,8 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.polar;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 
+import androidx.annotation.CallSuper;
+
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +42,8 @@ public class PolarH10DeviceSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(PolarH10DeviceSupport.class);
     private final GBDeviceEventVersionInfo versionCmd = new GBDeviceEventVersionInfo();
     private final GBDeviceEventBatteryInfo batteryCmd = new GBDeviceEventBatteryInfo();
+
+    private boolean newSamples = false;
 
     public static final UUID UUID_SERVICE_DEVICE_INFORMATION = GattService.UUID_SERVICE_DEVICE_INFORMATION;
     public static final UUID UUID_SERVICE_BATTERY_SERVICE = GattService.UUID_SERVICE_BATTERY_SERVICE;
@@ -106,6 +110,32 @@ public class PolarH10DeviceSupport extends AbstractBTLESingleDeviceSupport {
         return builder;
     }
 
+    @CallSuper
+    @Override
+    public void disconnect() {
+        if (newSamples) {
+            // Since we always receive samples in realtime, signal that there are new samples when we disconnect
+            GB.signalActivityDataFinish(getDevice());
+            newSamples = false;
+        }
+
+        super.disconnect();
+    }
+
+    @CallSuper
+    @Override
+    public void dispose() {
+        synchronized (ConnectionMonitor) {
+            if (newSamples) {
+                // Since we always receive samples in realtime, signal that there are new samples when we disconnect
+                GB.signalActivityDataFinish(getDevice());
+                newSamples = false;
+            }
+
+            super.dispose();
+        }
+    }
+
     @Override
     public boolean onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value) {
         if (super.onCharacteristicChanged(gatt, characteristic, value)) {
@@ -161,6 +191,8 @@ public class PolarH10DeviceSupport extends AbstractBTLESingleDeviceSupport {
                 final HeartRrIntervalSampleProvider rrIntervalSampleProvider = new HeartRrIntervalSampleProvider(this.getDevice(), db.getDaoSession());
                 rrIntervalSampleProvider.persistForDevice(getContext(), getDevice(), rrIntervalSampleList);
             }
+
+            newSamples = true;
         } catch (Exception e) {
             LOG.error("Error acquiring database", e);
         }

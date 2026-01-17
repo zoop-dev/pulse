@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin;
 import android.content.Intent;
 import android.widget.Toast;
 
+import androidx.annotation.CallSuper;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
@@ -44,12 +45,13 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.Batter
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfoProfile;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.heartrate.HeartRate;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.heartrate.HeartRateProfile;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.heartrate.SensorContact;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class GarminSupportHrm extends GarminSupport {
     private final BatteryInfoProfile<GarminSupportHrm> batteryInfoProfile;
     private final HeartRateProfile<GarminSupportHrm> heartRateProfile;
+
+    private boolean newSamples = false;
 
     public GarminSupportHrm() {
         addSupportedService(BatteryInfoProfile.SERVICE_UUID);
@@ -78,6 +80,32 @@ public class GarminSupportHrm extends GarminSupport {
         }
 
         return builder;
+    }
+
+    @CallSuper
+    @Override
+    public void disconnect() {
+        if (newSamples) {
+            // Since we always receive samples in realtime, signal that there are new samples when we disconnect
+            GB.signalActivityDataFinish(getDevice());
+            newSamples = false;
+        }
+
+        super.disconnect();
+    }
+
+    @CallSuper
+    @Override
+    public void dispose() {
+        synchronized (ConnectionMonitor) {
+            if (newSamples) {
+                // Since we always receive samples in realtime, signal that there are new samples when we disconnect
+                GB.signalActivityDataFinish(getDevice());
+                newSamples = false;
+            }
+
+            super.dispose();
+        }
     }
 
     final class BatteryListener implements IntentListener {
@@ -134,6 +162,8 @@ public class GarminSupportHrm extends GarminSupport {
                 }
 
                 publish(sample);
+
+                newSamples = true;
             }
         }
 

@@ -36,6 +36,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.Dev
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.heartrate.HeartRate
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.heartrate.HeartRateProfile
+import nodomain.freeyourgadget.gadgetbridge.util.GB
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -46,6 +47,8 @@ class GenericHeartRateSupport : AbstractBTLESingleDeviceSupport(LOG) {
 
     private val versionCmd = GBDeviceEventVersionInfo()
     private val batteryCmd = GBDeviceEventBatteryInfo()
+
+    private var newSamples = false
 
     init {
         val mListener = IntentListener { intent: Intent? ->
@@ -102,6 +105,28 @@ class GenericHeartRateSupport : AbstractBTLESingleDeviceSupport(LOG) {
         return builder
     }
 
+    override fun disconnect() {
+        if (newSamples) {
+            // Since we always receive samples in realtime, signal that there are new samples when we disconnect
+            GB.signalActivityDataFinish(device)
+            newSamples = false
+        }
+
+        super.disconnect()
+    }
+
+    override fun dispose() {
+        synchronized (ConnectionMonitor) {
+            if (newSamples) {
+                // Since we always receive samples in realtime, signal that there are new samples when we disconnect
+                GB.signalActivityDataFinish(device)
+                newSamples = false
+            }
+
+            super.dispose()
+        }
+    }
+
     private fun handleDeviceInfo(deviceInfo: DeviceInfo) {
         LOG.debug("Device info: {}", deviceInfo)
 
@@ -155,6 +180,8 @@ class GenericHeartRateSupport : AbstractBTLESingleDeviceSupport(LOG) {
                     rrIntervalSampleProvider.persistForDevice(context, device, rrIntervalSampleList)
                 }
             }
+
+            newSamples = true
         } catch (e: Exception) {
             LOG.error("Failed to save heartRate sample", e)
         }
