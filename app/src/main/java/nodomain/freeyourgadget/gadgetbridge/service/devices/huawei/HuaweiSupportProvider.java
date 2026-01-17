@@ -66,9 +66,9 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventDisplayMes
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCompatTemperatureSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants;
-import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCoordinatorSupplier;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiState;
-import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCoordinatorSupplier.HuaweiDeviceType;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCoordinator.HuaweiDeviceType;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCrypto;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiDeviceStateManager;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiDictTypes;
@@ -266,7 +266,7 @@ public class HuaweiSupportProvider {
 
     private GBDevice gbDevice;
     private Context context;
-    private HuaweiCoordinatorSupplier.HuaweiDeviceType huaweiType;
+    private HuaweiCoordinator.HuaweiDeviceType huaweiType;
 
     private final Handler handler = new Handler(Looper.getMainLooper());
     private final Runnable batteryRunner = () -> {
@@ -333,8 +333,8 @@ public class HuaweiSupportProvider {
 
     HuaweiStressCalibration stressCalibration = null;
 
-    public HuaweiCoordinatorSupplier getCoordinator() {
-        return ((HuaweiCoordinatorSupplier) this.gbDevice.getDeviceCoordinator());
+    public HuaweiCoordinator getCoordinator() {
+        return ((HuaweiCoordinator) this.gbDevice.getDeviceCoordinator());
     }
 
     public HuaweiState getDeviceState() {
@@ -803,7 +803,7 @@ public class HuaweiSupportProvider {
         paramsProvider.setSecretKey(authKey);
     }
 
-    public HuaweiCoordinatorSupplier.HuaweiDeviceType getHuaweiType() {
+    public HuaweiCoordinator.HuaweiDeviceType getHuaweiType() {
         return this.huaweiType;
     }
 

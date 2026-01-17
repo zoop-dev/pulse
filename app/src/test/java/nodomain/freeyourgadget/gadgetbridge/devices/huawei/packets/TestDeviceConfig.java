@@ -17,7 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets;
 
-import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCoordinatorSupplier;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCrypto;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTLV;
@@ -85,7 +85,7 @@ public class TestDeviceConfig {
 
         byte[] serialized = new byte[] {(byte) 0x5a, (byte) 0x00, (byte) 0x0b, (byte) 0x00, (byte) 0x01, (byte) 0x01, (byte) 0x01, (byte) 0x00, (byte) 0x02, (byte) 0x00, (byte) 0x03, (byte) 0x00, (byte) 0x04, (byte) 0x00, (byte) 0xf1, (byte) 0x3b};
         DeviceConfig.LinkParams.Request request = new DeviceConfig.LinkParams.Request(
-                secretsProvider, HuaweiCoordinatorSupplier.HuaweiDeviceType.BLE
+                secretsProvider, HuaweiCoordinator.HuaweiDeviceType.BLE
         );
 
         Assert.assertEquals(0x01, request.serviceId);
@@ -350,7 +350,7 @@ public class TestDeviceConfig {
         // Outdated
         //byte[] serialized = new byte[] {(byte) 0x5A, (byte) 0x00, (byte) 0x3A, (byte) 0x00, (byte) 0x01, (byte) 0x07, (byte) 0x7C, (byte) 0x01, (byte) 0x01, (byte) 0x7D, (byte) 0x10, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x7E, (byte) 0x20, (byte) 0x10, (byte) 0x9B, (byte) 0x27, (byte) 0x5D, (byte) 0xB1, (byte) 0x3C, (byte) 0xFD, (byte) 0x40, (byte) 0x4B, (byte) 0xA8, (byte) 0xAC, (byte) 0xAF, (byte) 0x8A, (byte) 0xB6, (byte) 0xA5, (byte) 0x3D, (byte) 0x40, (byte) 0x30, (byte) 0x2C, (byte) 0x79, (byte) 0x98, (byte) 0x6D, (byte) 0xEC, (byte) 0xD1, (byte) 0x39, (byte) 0xE6, (byte) 0xFE, (byte) 0x5C, (byte) 0xE8, (byte) 0xB2, (byte) 0xF3, (byte) 0x9E, (byte) 0x3E, (byte) 0x1B};
         DeviceConfig.ProductInfo.Request request = new DeviceConfig.ProductInfo.Request (
-                secretsProvider, HuaweiCoordinatorSupplier.HuaweiDeviceType.BLE
+                secretsProvider, HuaweiCoordinator.HuaweiDeviceType.BLE
         );
 
         Assert.assertEquals(0x01, request.serviceId);

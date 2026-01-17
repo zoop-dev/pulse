@@ -22,7 +22,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiBRSupport;
 
-public abstract class HuaweiBRCoordinator extends HuaweiCoordinatorSupplier {
+public abstract class HuaweiBRCoordinator extends HuaweiCoordinator {
     @Override
     public ConnectionType getConnectionType() {
         return ConnectionType.BT_CLASSIC;

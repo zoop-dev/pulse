@@ -77,7 +77,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZonesSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiWorkoutGbParser;
 
-public abstract class HuaweiCoordinatorSupplier extends AbstractDeviceCoordinator {
+public abstract class HuaweiCoordinator extends AbstractDeviceCoordinator {
 
     public enum HuaweiDeviceType {
         AW(0),     //BLE behind
