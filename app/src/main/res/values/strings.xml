@@ -1908,6 +1908,7 @@
     <string name="devicetype_amazfit_helio_strap" translatable="false">Amazfit Helio Strap</string>
     <string name="devicetype_amazfit_helio_ring" translatable="false">Amazfit Helio Ring</string>
     <string name="devicetype_zepp_e" translatable="false">Zepp E</string>
+    <string name="devicetype_garmin_lily_2" translatable="false">Garmin Lily 2</string>
     <string name="devicetype_garmin_lily_2_active" translatable="false">Garmin Lily 2 Active</string>
     <string name="devicetype_garmin_vivomove_hr" translatable="false">Garmin Vívomove HR</string>
     <string name="devicetype_garmin_vivomove_style" translatable="false">Garmin Vívomove Style</string>

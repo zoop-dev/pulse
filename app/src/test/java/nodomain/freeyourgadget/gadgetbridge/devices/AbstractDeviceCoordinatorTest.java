@@ -77,6 +77,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("Edge 130", DeviceType.GARMIN_EDGE_130); // matrix
             put("Edge 840", DeviceType.GARMIN_EDGE_840); // matrix
             put("Edge 1040", DeviceType.GARMIN_EDGE_1040); // matrix
+            put("Lily 2", DeviceType.GARMIN_LILY_2); // matrix
             put("Lily 2 Active", DeviceType.GARMIN_LILY_2_ACTIVE);
             put("Instinct 3 - 45mm", DeviceType.GARMIN_INSTINCT_3); // #4923
             put("Instinct E - 45mm", DeviceType.GARMIN_INSTINCT_E); // #4526
