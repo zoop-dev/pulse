@@ -1841,6 +1841,7 @@
     <string name="devicetype_miband2" translatable="false">Mi Band 2</string>
     <string name="devicetype_miband3" translatable="false">Mi Band 3</string>
     <string name="devicetype_miband4" translatable="false">Mi Band 4</string>
+    <string name="devicetype_miband4c" translatable="false">Mi Band 4C</string>
     <string name="devicetype_miband5" translatable="false">Mi Band 5</string>
     <string name="devicetype_miband6" translatable="false">Mi Band 6</string>
     <string name="devicetype_miband7" translatable="false">Xiaomi Smart Band 7</string>
