@@ -111,7 +111,7 @@ public class HuaweiInstallHandler implements InstallHandler {
 
     @Override
     public void validateInstallation(InstallActivity installActivity, GBDevice device) {
-        final HuaweiCoordinator huaweiDeviceState = HuaweiDeviceStateManager.get(device);
+        final HuaweiState huaweiDeviceState = HuaweiDeviceStateManager.get(device);
 
         if (helper.isFirmware) {
             this.valid = true; //NOTE: nothing to verify for now

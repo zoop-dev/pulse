@@ -44,8 +44,8 @@ import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.Dev
 
 import androidx.annotation.NonNull;
 
-public class HuaweiCoordinator {
-    Logger LOG = LoggerFactory.getLogger(HuaweiCoordinator.class);
+public class HuaweiState {
+    Logger LOG = LoggerFactory.getLogger(HuaweiState.class);
 
     TreeMap<Integer, byte[]> commandsPerService = new TreeMap<>();
     // Each byte of expandCapabilities represent a "service"
@@ -77,7 +77,7 @@ public class HuaweiCoordinator {
 
     private boolean navigationAvailable = false;
 
-    public HuaweiCoordinator(final String address) {
+    public HuaweiState(final String address) {
         this.address = address;
 
         // Set non-numeric capabilities

@@ -10,7 +10,7 @@ import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
-import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiState;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiHrvValueSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiUtil;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
@@ -30,8 +30,8 @@ public class HuaweiDictionarySyncHRV implements  HuaweiDictionarySyncInterface {
     }
 
     @Override
-    public boolean supports(HuaweiCoordinator coordinator) {
-        return coordinator.supportsHRV();
+    public boolean supports(HuaweiState state) {
+        return state.supportsHRV();
     }
 
     @Override

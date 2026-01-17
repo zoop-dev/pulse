@@ -10,7 +10,7 @@ import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
-import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiState;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiDictTypes;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTemperatureSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiUtil;
@@ -29,8 +29,8 @@ public class HuaweiDictionarySyncSkinTemperature implements  HuaweiDictionarySyn
     }
 
     @Override
-    public boolean supports(HuaweiCoordinator coordinator) {
-        return coordinator.supportsTemperature();
+    public boolean supports(HuaweiState state) {
+        return state.supportsTemperature();
     }
 
     @Override

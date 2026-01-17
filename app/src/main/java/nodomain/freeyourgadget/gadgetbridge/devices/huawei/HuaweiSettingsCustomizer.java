@@ -64,7 +64,7 @@ import static nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstant
 
 public class HuaweiSettingsCustomizer implements DeviceSpecificSettingsCustomizer {
     final GBDevice device;
-    final HuaweiCoordinator deviceState;
+    final HuaweiState deviceState;
 
     public HuaweiSettingsCustomizer(final GBDevice device) {
         this.device = device;

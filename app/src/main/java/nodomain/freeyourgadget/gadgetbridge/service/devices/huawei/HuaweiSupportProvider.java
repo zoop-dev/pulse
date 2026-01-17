@@ -67,7 +67,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCompatTemperatureSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCoordinatorSupplier;
-import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiState;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCoordinatorSupplier.HuaweiDeviceType;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCrypto;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiDeviceStateManager;
@@ -337,7 +337,7 @@ public class HuaweiSupportProvider {
         return ((HuaweiCoordinatorSupplier) this.gbDevice.getDeviceCoordinator());
     }
 
-    public HuaweiCoordinator getDeviceState() {
+    public HuaweiState getDeviceState() {
         return HuaweiDeviceStateManager.get(getDevice());
     }
 

@@ -11,7 +11,7 @@ import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
-import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiState;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiSleepApneaSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiUtil;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
@@ -31,8 +31,8 @@ public class HuaweiDictionarySyncSleepApnea implements  HuaweiDictionarySyncInte
     }
 
     @Override
-    public boolean supports(HuaweiCoordinator coordinator) {
-        return coordinator.supportsSleepApnea();
+    public boolean supports(HuaweiState state) {
+        return state.supportsSleepApnea();
     }
 
     @Override

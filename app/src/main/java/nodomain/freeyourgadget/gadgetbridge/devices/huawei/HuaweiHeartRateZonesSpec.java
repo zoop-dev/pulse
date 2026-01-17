@@ -31,11 +31,11 @@ public class HuaweiHeartRateZonesSpec extends HeartRateZonesSpec {
     public static final int HUAWEI_CALCULATE_METHOD_HRR = 1;
     public static final int HUAWEI_CALCULATE_METHOD_LTHR = 3;
 
-    private final HuaweiCoordinator coordinator;
+    private final HuaweiState state;
 
-    public HuaweiHeartRateZonesSpec(GBDevice device, HuaweiCoordinator coordinator) {
+    public HuaweiHeartRateZonesSpec(GBDevice device, HuaweiState state) {
         super(device);
-        this.coordinator = coordinator;
+        this.state = state;
     }
 
     @Override
@@ -67,11 +67,11 @@ public class HuaweiHeartRateZonesSpec extends HeartRateZonesSpec {
 
         int age = new ActivityUser().getAge();
 
-        if (!coordinator.supportsTrack() && coordinator.supportsHeartRateZones()) {
+        if (!state.supportsTrack() && state.supportsHeartRateZones()) {
             List<HeartRateZones> zones = new ArrayList<>();
             int maxHRThreshold = (HeartRateZonesUtils.MAXIMUM_HEART_RATE - age) - getHRCorrection(HeartRateZonesSpec.PostureType.UPRIGHT);
             zones.add(loadOrCreateZones(HeartRateZonesSpec.PostureType.UPRIGHT, HeartRateZones.CalculationMethod.MHR, maxHRThreshold));
-            if (coordinator.supportsExtendedHeartRateZones())
+            if (state.supportsExtendedHeartRateZones())
                 zones.add(loadOrCreateZones(HeartRateZonesSpec.PostureType.UPRIGHT, HeartRateZones.CalculationMethod.HRR, maxHRThreshold));
             res.add(loadOrCreateHeartRateZonesConfig(HeartRateZonesSpec.PostureType.UPRIGHT,
                     true,
@@ -82,7 +82,7 @@ public class HuaweiHeartRateZonesSpec extends HeartRateZonesSpec {
             return res;
         }
 
-        if (!coordinator.supportsTrack())
+        if (!state.supportsTrack())
             return null;
 
         res.add(loadOrCreateHeartRateZonesConfig(HeartRateZonesSpec.PostureType.UPRIGHT,

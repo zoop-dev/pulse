@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiState;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PDataDictionarySyncService;
 
@@ -23,8 +23,8 @@ public class HuaweiDictionarySyncArterialStiffness implements  HuaweiDictionaryS
     }
 
     @Override
-    public boolean supports(HuaweiCoordinator coordinator) {
-        return false; // coordinator.supportsArterialStiffnessDetection()
+    public boolean supports(HuaweiState state) {
+        return false; // state.supportsArterialStiffnessDetection()
     }
 
     @Override

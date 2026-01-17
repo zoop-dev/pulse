@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -163,7 +162,7 @@ public abstract class HuaweiCoordinatorSupplier extends AbstractDeviceCoordinato
     @Override
     protected void deleteDevice(@NonNull final GBDevice gbDevice, @NonNull final Device device, @NonNull final DaoSession session) {
         // Clear capabilities shared preferences
-        GBApplication.getContext().getSharedPreferences(HuaweiCoordinator.getCapabilitiesSharedPreferencesName(gbDevice.getAddress()), Context.MODE_PRIVATE).edit().clear().apply();
+        GBApplication.getContext().getSharedPreferences(HuaweiState.getCapabilitiesSharedPreferencesName(gbDevice.getAddress()), Context.MODE_PRIVATE).edit().clear().apply();
         // Before #5629, we would persist capabilities per device type, so clear those as well if they exist
         GBApplication.getContext().getSharedPreferences("huawei_coordinator_capatilities" + gbDevice.getType().name(), Context.MODE_PRIVATE).edit().clear().apply();
 
@@ -435,7 +434,7 @@ public abstract class HuaweiCoordinatorSupplier extends AbstractDeviceCoordinato
 
     @Override
     public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
-        final HuaweiCoordinator deviceState = HuaweiDeviceStateManager.get(device);
+        final HuaweiState deviceState = HuaweiDeviceStateManager.get(device);
 
         final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
 

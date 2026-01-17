@@ -22,13 +22,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class HuaweiDeviceStateManager {
-    private static final Map<String, HuaweiCoordinator> STATES = new ConcurrentHashMap<>();
+    private static final Map<String, HuaweiState> STATES = new ConcurrentHashMap<>();
 
-    public static HuaweiCoordinator get(final GBDevice device) {
+    public static HuaweiState get(final GBDevice device) {
         return get(device.getAddress());
     }
 
-    public static HuaweiCoordinator get(final String macAddress) {
-        return STATES.computeIfAbsent(macAddress, HuaweiCoordinator::new);
+    public static HuaweiState get(final String macAddress) {
+        return STATES.computeIfAbsent(macAddress, HuaweiState::new);
     }
 }

@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiState;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiTLV;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiP2PManager;
@@ -102,11 +102,11 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
         return ret;
     }
 
-    public Map<Integer, HuaweiDictionarySyncInterface> getAllSupported(HuaweiCoordinator coordinator) {
+    public Map<Integer, HuaweiDictionarySyncInterface> getAllSupported(HuaweiState state) {
         List<HuaweiDictionarySyncInterface> handlers = getSyncHandlers();
         Map<Integer, HuaweiDictionarySyncInterface> ret = new HashMap<>();
         for(HuaweiDictionarySyncInterface i: handlers) {
-            if(i.supports(coordinator)) {
+            if(i.supports(state)) {
                 ret.put(i.getDataClass(), i);
             }
         }
