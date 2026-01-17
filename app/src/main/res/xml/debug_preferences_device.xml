@@ -14,11 +14,12 @@
         android:title="@string/prefs_device_alias"
         app:iconSpaceReserved="false" />
 
-    <Preference
+    <EditTextPreference
         android:key="pref_debug_device_mac_address"
         android:persistent="false"
         android:title="@string/device_mac_address"
-        app:iconSpaceReserved="false" />
+        app:iconSpaceReserved="false"
+        app:useSimpleSummaryProvider="true" />
 
     <Preference
         android:key="pref_debug_device_type"

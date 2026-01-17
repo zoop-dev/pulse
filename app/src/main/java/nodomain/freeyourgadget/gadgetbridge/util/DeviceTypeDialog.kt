@@ -24,6 +24,7 @@ import nodomain.freeyourgadget.gadgetbridge.databinding.DialogTestDeviceBinding
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceManager
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType
+import nodomain.freeyourgadget.gadgetbridge.util.preferences.MacAddressInputFilter
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.Random
@@ -233,32 +234,7 @@ class DeviceTypeDialog(
             editText.isEnabled = false
         }
 
-        // help the user to input a properly formated MAC - see BluetoothAdapter.checkBluetoothAddress
-        // for Bangle.js builds: also support pebble emulator addresses
-        editText.filters = arrayOf(object : InputFilter {
-            @Suppress("KotlinConstantConditions")
-            override fun filter(
-                source: CharSequence,
-                start: Int, end: Int,
-                dest: Spanned,
-                dstart: Int, dend: Int
-            ): CharSequence {
-                val builder = StringBuilder()
-                for (i in start..<end) {
-                    val c = source[i]
-                    if ((c in '0'..'9') || (c in 'A'..'F') || c == ':') {
-                        builder.append(c)
-                    } else if (c in 'a'..'f') {
-                        builder.append((c.code - 'a'.code + 'A'.code).toChar())
-                    } else if (BuildConfig.INTERNET_ACCESS) {
-                        builder.append(c)
-                    } else if (c == '-') {
-                        builder.append(':')
-                    }
-                }
-                return builder
-            }
-        })
+        editText.filters = arrayOf(MacAddressInputFilter())
 
         editText.setText(selectedTestDeviceMAC)
         editText.addTextChangedListener(object : TextWatcher {

@@ -39,7 +39,18 @@ class DeviceDebugFragment : AbstractDebugFragment() {
         } else {
             findPreference<Preference>(PREF_DEBUG_DEVICE_ALIAS)?.summary = gbDevice.alias ?: getString(R.string.not_set)
         }
-        findPreference<Preference>(PREF_DEBUG_DEVICE_MAC_ADDRESS)?.summary = gbDevice.address
+
+        // TODO: MAC Address
+        findPreference<EditTextPreference>(PREF_DEBUG_DEVICE_MAC_ADDRESS)?.text = gbDevice.address
+        findPreference<EditTextPreference>(PREF_DEBUG_DEVICE_MAC_ADDRESS)?.isSelectable = false
+        //findPreference<EditTextPreference>(PREF_DEBUG_DEVICE_MAC_ADDRESS)!!.setOnBindEditTextListener { editText ->
+        //    editText.inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+        //    editText.filters = arrayOf(MacAddressInputFilter())
+        //    editText.addTextChangedListener(MacAddressTextWatcher(editText))
+        //}
+        //findPreference<EditTextPreference>(PREF_DEBUG_DEVICE_MAC_ADDRESS)!!.setOnPreferenceChangeListener { _: Preference?, newMacAddress: Any? ->
+        //    setDeviceMacAddress(gbDevice, newMacAddress as String)
+        //}
 
         // Device Type
         findPreference<Preference>(PREF_DEBUG_DEVICE_TYPE)?.summary = gbDevice.type.name
@@ -84,6 +95,11 @@ class DeviceDebugFragment : AbstractDebugFragment() {
                 addDynamicPref(headerCoordinator, method.name, "Error: ${e.message}")
             }
         }
+    }
+
+    private fun setDeviceMacAddress(gbDevice: GBDevice, newAddress: String): Boolean {
+        // TODO
+        return false
     }
 
     private fun setDeviceType(gbDevice: GBDevice, newType: DeviceType) {
