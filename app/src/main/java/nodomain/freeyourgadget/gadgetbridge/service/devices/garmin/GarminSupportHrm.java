@@ -42,7 +42,9 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfoProfile;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.heartrate.HeartRate;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.heartrate.HeartRateProfile;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.heartrate.SensorContact;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class GarminSupportHrm extends GarminSupport {
@@ -104,8 +106,8 @@ public class GarminSupportHrm extends GarminSupport {
     final class HeartRateListener implements IntentListener {
         @Override
         public void notify(Intent intent) {
-            int hr = intent.getIntExtra(HeartRateProfile.EXTRA_HEART_RATE, -1);
-            if (hr > 0) {
+            final HeartRate heartRate = intent.getParcelableExtra(HeartRateProfile.EXTRA_HEART_RATE);
+            if (heartRate != null && heartRate.isValid()) {
                 final GarminActivitySample sample;
                 try (DBHandler handler = GBApplication.acquireDB()) {
                     final DaoSession session = handler.getDaoSession();
@@ -118,7 +120,7 @@ public class GarminSupportHrm extends GarminSupport {
                     sample.setActiveCalories(ActivitySample.NOT_MEASURED);
                     sample.setDevice(device);
                     sample.setDistanceCm(ActivitySample.NOT_MEASURED);
-                    sample.setHeartRate(hr);
+                    sample.setHeartRate(heartRate.getHeartRate());
                     sample.setRawIntensity(ActivitySample.NOT_MEASURED);
                     sample.setRawKind(ActivityKind.UNKNOWN.getCode());
                     sample.setSteps(ActivitySample.NOT_MEASURED);

@@ -24,15 +24,19 @@ import android.content.Intent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.util.ArrayList;
+
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.AbstractBleProfile;
 
 /**
- * https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile=org.bluetooth.service.heart_rate.xml
+ * https://www.bluetooth.com/specifications/specs/html/?src=HRS_v1.0/out/en/index-en.html
+ *
  * @see GattService#UUID_SERVICE_HEART_RATE
  */
 public class HeartRateProfile<T extends AbstractBTLESingleDeviceSupport> extends AbstractBleProfile<T> {
@@ -56,7 +60,7 @@ public class HeartRateProfile<T extends AbstractBTLESingleDeviceSupport> extends
     }
 
     protected void writeToControlPoint(byte value, TransactionBuilder builder) {
-        writeToControlPoint(new byte[] { value }, builder);
+        writeToControlPoint(new byte[]{value}, builder);
     }
 
     protected void writeToControlPoint(byte[] value, TransactionBuilder builder) {
@@ -78,39 +82,76 @@ public class HeartRateProfile<T extends AbstractBTLESingleDeviceSupport> extends
             return false;
         }
 
-        final int flag = value[0];
+        final long timestamp = System.currentTimeMillis();
+
+        final ByteBuffer buf = ByteBuffer.wrap(value).order(ByteOrder.LITTLE_ENDIAN);
+        final int flag = buf.get();
+
         final int heartRate;
         if ((flag & 0x01) != 0) {
-            heartRate = BLETypeConversions.toUint16(value, 1);
+            heartRate = buf.getShort() & 0xffff;
         } else {
-            heartRate = BLETypeConversions.toUnsigned(value, 1);
+            heartRate = buf.get() & 0xff;
         }
 
-        if ((flag & 0x04) != 0){
+        final SensorContact sensorContact;
+        if ((flag & 0x04) != 0) {
             //  Sensor Contact supported
-            if ((flag & 0x02) == 0){
+            if ((flag & 0x02) == 0) {
                 // Sensor Contact NOT detected - no or poor contact with the skin
-                LOG.debug("Got poor contact heartRate: {}", heartRate);
-                return true;
+                sensorContact = SensorContact.CONTACT_NOT_DETECTED;
+            } else {
+                sensorContact = SensorContact.CONTACT_DETECTED;
+            }
+        } else {
+            sensorContact = SensorContact.NOT_SUPPORTED;
+        }
+
+        // Energy Expended (UINT16, unit: kilo Joules since last reset)
+        final int energyExpended;
+        if ((flag & 0x08) != 0) {
+            energyExpended = buf.getShort() & 0xffff;
+        } else {
+            energyExpended = -1;
+        }
+
+        // RR-Interval (UINT16 array, unit: 1/1024 second)
+        final ArrayList<Integer> rrIntervals = new ArrayList<>();
+        if ((flag & 0x10) != 0) {
+            while (buf.hasRemaining()) {
+                rrIntervals.add(((buf.getShort() & 0xffff) * 1000) / 1024);
             }
         }
-        if ((flag & 0x08) != 0){
-            // TODO: Energy Expended present (UINT16, unit: kilo Joules since last reset)
-        }
-        if ((flag & 0x10) != 0){
-            // TODO: RR-Interval present (UINT16 array, unit: 1/1024 second)
-        }
 
-        LOG.debug("Got heartRate: {}", heartRate);
+        LOG.debug(
+                "Got heartRate={}, sensorContact={}, energyExpended={}, rrIntervals={}",
+                heartRate,
+                sensorContact,
+                energyExpended,
+                rrIntervals
+        );
 
-        notify(createIntent(heartRate));
+        notify(createIntent(timestamp, heartRate, sensorContact, energyExpended, rrIntervals));
 
         return true;
     }
 
-    private Intent createIntent(final int heartRate) {
+    private Intent createIntent(final long timestamp,
+                                final int heartRate,
+                                final SensorContact sensorContact,
+                                final int energyExpended,
+                                final ArrayList<Integer> rrIntervals) {
         final Intent intent = new Intent(ACTION_HEART_RATE);
-        intent.putExtra(EXTRA_HEART_RATE, heartRate);
+        intent.putExtra(
+                EXTRA_HEART_RATE,
+                new HeartRate(
+                        timestamp,
+                        heartRate,
+                        sensorContact,
+                        energyExpended,
+                        rrIntervals
+                )
+        );
         return intent;
     }
 }

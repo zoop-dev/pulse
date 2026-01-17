@@ -27,6 +27,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
+import nodomain.freeyourgadget.gadgetbridge.entities.HeartRrIntervalSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.PolarH10ActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
@@ -74,6 +75,7 @@ public abstract class AbstractPolarDeviceCoordinator extends AbstractBLEDeviceCo
     public Map<AbstractDao<?, ?>, Property> getAllDeviceDao(@NonNull final DaoSession session) {
         Map<AbstractDao<?, ?>, Property> map = new HashMap<>(1);
         map.put(session.getPolarH10ActivitySampleDao(), PolarH10ActivitySampleDao.Properties.DeviceId);
+        map.put(session.getHeartRrIntervalSampleDao(), HeartRrIntervalSampleDao.Properties.DeviceId);
         return map;
     }
 

@@ -72,7 +72,7 @@ public class GBDaoGenerator {
             outputDir.mkdirs();
         }
 
-        final Schema schema = new Schema(124, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(125, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -103,6 +103,7 @@ public class GBDaoGenerator {
         addXiaomiActivitySample(schema, user, device);
         addXiaomiSleepTimeSamples(schema, user, device);
         addHeartPulseSamples(schema, user, device);
+        addHeartRrIntervalSamples(schema, user, device);
         addXiaomiSleepStageSamples(schema, user, device);
         addXiaomiManualSamples(schema, user, device);
         addXiaomiDailySummarySamples(schema, user, device);
@@ -563,6 +564,14 @@ public class GBDaoGenerator {
     private static Entity addHeartPulseSamples(Schema schema, Entity user, Entity device) {
         Entity sample = addEntity(schema, "HeartPulseSample");
         addCommonTimeSampleProperties("AbstractTimeSample", sample, user, device);
+        return sample;
+    }
+
+    private static Entity addHeartRrIntervalSamples(Schema schema, Entity user, Entity device) {
+        Entity sample = addEntity(schema, "HeartRrIntervalSample");
+        addCommonTimeSampleProperties("AbstractTimeSample", sample, user, device);
+        sample.addIntProperty("seq").notNull().primaryKey();
+        sample.addIntProperty("rrMillis").notNull();
         return sample;
     }
 

@@ -9,6 +9,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider
 import nodomain.freeyourgadget.gadgetbridge.entities.AbstractActivitySample
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericHeartRateSampleDao
+import nodomain.freeyourgadget.gadgetbridge.entities.HeartRrIntervalSampleDao
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport
@@ -70,6 +71,7 @@ class GenericHeartRateCoordinator : AbstractBLEDeviceCoordinator() {
         return object : HashMap<AbstractDao<*, *>, Property>() {
             init {
                 put(session.genericHeartRateSampleDao, GenericHeartRateSampleDao.Properties.DeviceId)
+                put(session.heartRrIntervalSampleDao, HeartRrIntervalSampleDao.Properties.DeviceId)
             }
         }
     }

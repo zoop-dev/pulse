@@ -3,10 +3,12 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.polar;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Calendar;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -15,7 +17,9 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
+import nodomain.freeyourgadget.gadgetbridge.devices.HeartRrIntervalSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.polar.PolarH10ActivitySampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.entities.HeartRrIntervalSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.PolarH10ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
@@ -25,11 +29,14 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.IntentListener;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfoProfile;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile;
-import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.heartrate.HeartRateProfile;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.heartrate.SensorContact;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class PolarH10DeviceSupport extends AbstractBTLESingleDeviceSupport {
     private final DeviceInfoProfile<PolarH10DeviceSupport> deviceInfoProfile;
     private final BatteryInfoProfile<PolarH10DeviceSupport> batteryInfoProfile;
+    private final HeartRateProfile<PolarH10DeviceSupport> heartRateProfile;
     private static final Logger LOG = LoggerFactory.getLogger(PolarH10DeviceSupport.class);
     private final GBDeviceEventVersionInfo versionCmd = new GBDeviceEventVersionInfo();
     private final GBDeviceEventBatteryInfo batteryCmd = new GBDeviceEventBatteryInfo();
@@ -56,6 +63,9 @@ public class PolarH10DeviceSupport extends AbstractBTLESingleDeviceSupport {
                 handleBatteryInfo(Objects.requireNonNull(intent.getParcelableExtra(BatteryInfoProfile.EXTRA_BATTERY_INFO)));
             }
 
+            if (HeartRateProfile.ACTION_HEART_RATE.equals(action)) {
+                handleHeartRate(Objects.requireNonNull(intent.getParcelableExtra(HeartRateProfile.EXTRA_HEART_RATE)));
+            }
         };
 
         deviceInfoProfile = new DeviceInfoProfile<>(this);
@@ -66,6 +76,9 @@ public class PolarH10DeviceSupport extends AbstractBTLESingleDeviceSupport {
         batteryInfoProfile.addListener(mListener);
         addSupportedProfile(batteryInfoProfile);
 
+        heartRateProfile = new HeartRateProfile<>(this);
+        heartRateProfile.addListener(mListener);
+        addSupportedProfile(heartRateProfile);
     }
 
     @Override
@@ -82,7 +95,7 @@ public class PolarH10DeviceSupport extends AbstractBTLESingleDeviceSupport {
         batteryInfoProfile.requestBatteryInfo(builder);
         batteryInfoProfile.enableNotify(builder, true);
 
-        builder.notify(UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT, true);
+        heartRateProfile.enableNotify(builder, true);
 
         // Set defaults
         getDevice().setFirmwareVersion("N/A");
@@ -99,32 +112,9 @@ public class PolarH10DeviceSupport extends AbstractBTLESingleDeviceSupport {
             return true;
         }
 
-        UUID characteristicUUID = characteristic.getUuid();
-
-        if (characteristicUUID.equals(UUID_CHARACTERISTIC_HEART_RATE_MEASUREMENT)) {
-            int heartrate = Byte.toUnsignedInt(value[1]);
-            LOG.debug("onCharacteristicChanged: HeartRateMeasurement:HeartRate={}", heartrate);
-            this.processSamples(heartrate);
-            return true;
-        }
-
-        LOG.info("Characteristic changed UUID: {}", characteristicUUID);
-        LOG.info("Characteristic changed value: {}", StringUtils.bytesToHex(value));
+        LOG.warn("Unhandled characteristic change: {} = {}", characteristic.getUuid(), GB.hexdump(value));
 
         return false;
-    }
-
-    private void processSamples(int hr) {
-        int timestamp = (int) (Calendar.getInstance().getTimeInMillis() / 1000L);
-        try (DBHandler db = GBApplication.acquireDB()) {
-            PolarH10ActivitySampleProvider sampleProvider = new PolarH10ActivitySampleProvider(this.getDevice(), db.getDaoSession());
-            Long userId = DBHelper.getUser(db.getDaoSession()).getId();
-            Long deviceId = DBHelper.getDevice(getDevice(), db.getDaoSession()).getId();
-            PolarH10ActivitySample sample = new PolarH10ActivitySample(timestamp, deviceId, userId, hr);
-            sampleProvider.addGBActivitySamples(new PolarH10ActivitySample[]{sample});
-        } catch (Exception e) {
-            LOG.error("Error acquiring database", e);
-        }
     }
 
     private void handleDeviceInfo(nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfo info) {
@@ -143,5 +133,36 @@ public class PolarH10DeviceSupport extends AbstractBTLESingleDeviceSupport {
         handleGBDeviceEvent(batteryCmd);
     }
 
+    private void handleHeartRate(nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.heartrate.HeartRate info) {
+        LOG.debug("Heart Rate: {}", info);
 
+        if (info == null || info.getSensorContact() == SensorContact.CONTACT_NOT_DETECTED || info.getHeartRate() <= 0) {
+            return;
+        }
+
+        try (DBHandler db = GBApplication.acquireDB()) {
+            final PolarH10ActivitySampleProvider polarSampleProvider = new PolarH10ActivitySampleProvider(this.getDevice(), db.getDaoSession());
+            final Long userId = DBHelper.getUser(db.getDaoSession()).getId();
+            final Long deviceId = DBHelper.getDevice(getDevice(), db.getDaoSession()).getId();
+            final PolarH10ActivitySample sample = new PolarH10ActivitySample((int) (info.getTimestamp() / 1000), deviceId, userId, info.getHeartRate());
+            polarSampleProvider.addGBActivitySamples(new PolarH10ActivitySample[]{sample});
+
+            final ArrayList<@NotNull Integer> rrIntervals = info.getRrIntervals();
+            if (!rrIntervals.isEmpty()) {
+                final List<HeartRrIntervalSample> rrIntervalSampleList = new ArrayList<>();
+                for (int i = 0; i < rrIntervals.size(); i++) {
+                    final HeartRrIntervalSample rrSample = new HeartRrIntervalSample();
+                    rrSample.setTimestamp(info.getTimestamp());
+                    rrSample.setSeq(i);
+                    rrSample.setRrMillis(rrIntervals.get(i));
+                    rrIntervalSampleList.add(rrSample);
+                }
+
+                final HeartRrIntervalSampleProvider rrIntervalSampleProvider = new HeartRrIntervalSampleProvider(this.getDevice(), db.getDaoSession());
+                rrIntervalSampleProvider.persistForDevice(getContext(), getDevice(), rrIntervalSampleList);
+            }
+        } catch (Exception e) {
+            LOG.error("Error acquiring database", e);
+        }
+    }
 }
