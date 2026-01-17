@@ -4295,4 +4295,7 @@
     <string name="foot_per_hour">ft/h</string>
     <string name="solar_intensity">Intensywność nasłonecznienia</string>
     <string name="battery_gain">Zysk baterii</string>
+    <string name="prefs_device_alias">Pseudonim urządzenia</string>
+    <string name="set_device_type">Ustaw typ urządzenia</string>
+    <string name="menuitem_jet_lag_manager">Asystent jet lagu</string>
 </resources>
