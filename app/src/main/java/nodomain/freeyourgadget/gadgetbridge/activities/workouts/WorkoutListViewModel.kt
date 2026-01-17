@@ -12,6 +12,7 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBHelper
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
+import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryJsonSummary
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser
 import org.slf4j.LoggerFactory
@@ -184,14 +185,14 @@ class WorkoutListViewModel : ViewModel() {
                     val summarySubData = activitySummaryJsonSummary.getSummaryData(false)
 
                     if (summarySubData != null) {
-                        if (summarySubData.has("caloriesBurnt")) {
-                            caloriesBurntSum += summarySubData.getNumber("caloriesBurnt", 0).toDouble()
+                        if (summarySubData.has(ActivitySummaryEntries.CALORIES_BURNT)) {
+                            caloriesBurntSum += summarySubData.getNumber(ActivitySummaryEntries.CALORIES_BURNT, 0).toDouble()
                         }
-                        if (summarySubData.has("distanceMeters")) {
-                            distanceSum += summarySubData.getNumber("distanceMeters", 0).toDouble()
+                        if (summarySubData.has(ActivitySummaryEntries.DISTANCE_METERS)) {
+                            distanceSum += summarySubData.getNumber(ActivitySummaryEntries.DISTANCE_METERS, 0).toDouble()
                         }
-                        if (summarySubData.has("activeSeconds")) {
-                            activeSecondsSum += summarySubData.getNumber("activeSeconds", 0).toLong()
+                        if (summarySubData.has(ActivitySummaryEntries.ACTIVE_SECONDS)) {
+                            activeSecondsSum += summarySubData.getNumber(ActivitySummaryEntries.ACTIVE_SECONDS, 0).toLong()
                         }
                     }
                 }
