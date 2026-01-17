@@ -4277,4 +4277,9 @@
     <string name="menuitem_jet_lag_manager">Správce pásmové nemoci</string>
     <string name="prefs_device_alias">Přezdívka zařízení</string>
     <string name="set_device_type">Nastavit typ zařízení</string>
+    <string name="uploading_resources">Nahrávání zdrojů…</string>
+    <string name="export_select_start_date">Datum začátku</string>
+    <string name="export_select_end_date">Datum konce</string>
+    <string name="infinitime_filesystem_access_disabled">Přístup k souborovému systému je zakázán v InfiniTime</string>
+    <string name="infinitime_resource_upload_progress_status">Provádím akci %d z %d\n%s %s</string>
 </resources>
