@@ -75,6 +75,13 @@
             android:title="@string/menuitem_settings" />
 
         <Preference
+            android:fragment="nodomain.freeyourgadget.gadgetbridge.activities.debug.DeviceListDebugFragment"
+            android:icon="@drawable/ic_devices_wearables"
+            android:key="pref_debug_devices"
+            android:persistent="false"
+            android:title="@string/bottom_nav_devices" />
+
+        <Preference
             android:fragment="nodomain.freeyourgadget.gadgetbridge.activities.debug.CompanionDebugFragment"
             android:icon="@drawable/ic_devices_other"
             android:key="pref_debug_companion_devices"

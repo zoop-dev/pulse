@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        android:key="pref_debug_device_name"
+        android:persistent="false"
+        android:title="@string/prefs_device_name"
+        app:iconSpaceReserved="false" />
+
+    <Preference
+        android:key="pref_debug_device_alias"
+        android:persistent="false"
+        android:title="@string/prefs_device_alias"
+        app:iconSpaceReserved="false" />
+
+    <Preference
+        android:key="pref_debug_device_mac_address"
+        android:persistent="false"
+        android:title="@string/device_mac_address"
+        app:iconSpaceReserved="false" />
+
+    <Preference
+        android:key="pref_debug_device_type"
+        android:persistent="false"
+        android:title="@string/watchface_dialog_widget_type"
+        app:iconSpaceReserved="false" />
+
+    <PreferenceCategory
+        android:key="pref_header_details"
+        android:title="Details"
+        app:iconSpaceReserved="false">
+
+        <!-- to be filled up dynamically -->
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_header_coordinator"
+        android:title="Coordinator"
+        app:iconSpaceReserved="false">
+
+        <!-- to be filled up dynamically -->
+
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

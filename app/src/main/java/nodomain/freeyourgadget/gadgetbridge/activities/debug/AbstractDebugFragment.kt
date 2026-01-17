@@ -7,6 +7,7 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceGroup
+import androidx.preference.SwitchPreferenceCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
@@ -114,6 +115,32 @@ abstract class AbstractDebugFragment : AbstractPreferenceFragment() {
         pref.isPersistent = false
         pref.isIconSpaceReserved = false
         preferenceScreen?.addPreference(pref)
+    }
+
+    protected fun addDynamicCheckbox(
+        group: PreferenceGroup? = preferenceScreen,
+        title: String,
+        summary: String = "",
+        icon: Int = 0,
+        checked: Boolean,
+    ): Preference {
+        val pref = SwitchPreferenceCompat(requireContext())
+        pref.setKey("${PREF_DYNAMIC_PREFIX}_${UUID.randomUUID()}")
+        pref.layoutResource = R.layout.preference_checkbox
+        pref.isPersistent = false
+        pref.isSelectable = false
+        pref.title = title
+        pref.summary = summary
+        if (icon != 0) {
+            pref.setIcon(icon)
+        } else if (!title.isEmpty()) {
+            pref.isIconSpaceReserved = false
+        }
+        pref.isChecked = checked
+
+        group?.addPreference(pref)
+
+        return pref
     }
 
     protected fun goTo(fragment: AbstractDebugFragment) {
