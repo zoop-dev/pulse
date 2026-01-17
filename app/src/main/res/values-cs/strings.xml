@@ -4275,4 +4275,6 @@
     <string name="solar_intensity">Intenzita slunce</string>
     <string name="battery_gain">Zisk baterie</string>
     <string name="menuitem_jet_lag_manager">Správce pásmové nemoci</string>
+    <string name="prefs_device_alias">Přezdívka zařízení</string>
+    <string name="set_device_type">Nastavit typ zařízení</string>
 </resources>
