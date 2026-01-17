@@ -568,7 +568,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         );
 
         //show activity tracks
-        holder.showActivityTracks.setVisibility(coordinator.supportsActivityTracks(device) ? View.VISIBLE : View.GONE);
+        holder.showActivityTracks.setVisibility(coordinator.supportsRecordedActivities(device) ? View.VISIBLE : View.GONE);
         holder.showActivityTracks.setOnClickListener(new View.OnClickListener()
                                                      {
                                                          @Override

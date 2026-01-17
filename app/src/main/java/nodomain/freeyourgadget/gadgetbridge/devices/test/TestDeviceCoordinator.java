@@ -173,7 +173,7 @@ public class TestDeviceCoordinator extends AbstractDeviceCoordinator {
     @Nullable
     @Override
     public ActivitySummaryParser getActivitySummaryParser(final GBDevice device, final Context context) {
-        return supportsActivityTracks(device) ? new TestActivitySummaryParser() : super.getActivitySummaryParser(device, context);
+        return this.supportsRecordedActivities(device) ? new TestActivitySummaryParser() : super.getActivitySummaryParser(device, context);
     }
 
     @Override
@@ -324,8 +324,8 @@ public class TestDeviceCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityTracks(@NonNull final GBDevice device) {
-        return supports(device, TestFeature.ACTIVITY_TRACKS);
+    public boolean supportsRecordedActivities(@NonNull final GBDevice device) {
+        return supports(device, TestFeature.RECORDED_ACTIVITIES);
     }
 
     @Override

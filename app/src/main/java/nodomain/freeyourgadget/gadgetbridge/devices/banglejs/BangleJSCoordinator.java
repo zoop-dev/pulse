@@ -137,7 +137,7 @@ public class BangleJSCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityTracks(final GBDevice device) {
+    public boolean supportsRecordedActivities(final GBDevice device) {
         return true;
     }
 

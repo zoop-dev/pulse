@@ -618,7 +618,7 @@ class HealthConnectUtils {
                 HealthConnectPermissionManager.HealthConnectDataType.WORKOUTS -> {
                     // Sync explicitly recorded workouts from BaseActivitySummary
                     val coordinator = gbDevice.deviceCoordinator
-                    if (coordinator.supportsActivityTracks(gbDevice)) {
+                    if (coordinator.supportsRecordedActivities(gbDevice)) {
                         sliceStats.add(RecordedWorkoutSyncer.sync(
                             healthConnectClient, gbDevice, metadata, offset,
                             currentSliceStartTs, currentSliceEndTs, grantedPermissions, context

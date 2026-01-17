@@ -104,7 +104,7 @@ public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public boolean supportsActivityTracks(final GBDevice device) {
+    public boolean supportsRecordedActivities(final GBDevice device) {
         return isHybridHR(device);
     }
 

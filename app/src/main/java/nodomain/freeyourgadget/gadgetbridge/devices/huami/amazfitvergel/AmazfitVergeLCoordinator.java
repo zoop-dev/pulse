@@ -67,7 +67,7 @@ public class AmazfitVergeLCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsActivityTracks(final GBDevice device) {
+    public boolean supportsRecordedActivities(final GBDevice device) {
         return true;
     }
 

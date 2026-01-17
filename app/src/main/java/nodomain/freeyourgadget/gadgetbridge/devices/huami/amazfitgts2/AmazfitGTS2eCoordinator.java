@@ -63,7 +63,7 @@ public class AmazfitGTS2eCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsActivityTracks(final GBDevice device) {
+    public boolean supportsRecordedActivities(final GBDevice device) {
         return true;
     }
 

@@ -262,12 +262,12 @@ public interface DeviceCoordinator {
     boolean supportsCyclingData(@NonNull GBDevice device);
 
     /**
-     * Indicates whether the device supports recording dedicated activity tracks, like
+     * Indicates whether the device supports recording dedicated activities, like
      * walking, hiking, running, swimming, etc. and retrieving the recorded
      * data. This is different from the constant activity tracking since the tracks are
-     * usually recorded with additional features, like e.g. GPS.
+     * usually recorded with higher precision and additional features, like e.g. GPS.
      */
-    boolean supportsActivityTracks(@NonNull GBDevice device);
+    boolean supportsRecordedActivities(@NonNull GBDevice device);
 
     /**
      * Returns true if stress measurement and fetching is supported by the device

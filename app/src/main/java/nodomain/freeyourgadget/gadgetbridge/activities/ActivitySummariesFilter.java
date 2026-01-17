@@ -395,7 +395,7 @@ public class ActivitySummariesFilter extends AbstractGBActivity {
                 Device dbDevice = DBHelper.findDevice(device, daoSession);
                 int icon = device.getDeviceCoordinator().getDefaultIconResource();
                 if (dbDevice != null && coordinator != null
-                        && coordinator.supportsActivityTracks(device)
+                        && coordinator.supportsRecordedActivities(device)
                         && !newMap.containsKey(device.getAliasOrName())) {
                     newMap.put(device.getAliasOrName(), new Pair<>(dbDevice.getId(), icon));
                 }

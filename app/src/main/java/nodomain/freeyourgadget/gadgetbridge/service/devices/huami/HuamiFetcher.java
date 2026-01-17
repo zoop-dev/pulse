@@ -58,7 +58,7 @@ public class HuamiFetcher {
             this.fetchOperationQueue.add(new FetchActivityOperation(this));
         }
 
-        if ((dataTypes & RecordedDataTypes.TYPE_GPS_TRACKS) != 0 && coordinator.supportsActivityTracks(gbDevice)) {
+        if ((dataTypes & RecordedDataTypes.TYPE_GPS_TRACKS) != 0 && coordinator.supportsRecordedActivities(gbDevice)) {
             this.fetchOperationQueue.add(new FetchSportsSummaryOperation(this, 1));
         }
 

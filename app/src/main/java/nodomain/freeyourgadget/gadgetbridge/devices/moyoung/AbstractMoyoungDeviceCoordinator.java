@@ -162,7 +162,7 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
     }
 
     @Override
-    public boolean supportsActivityTracks(@NonNull final GBDevice device) {
+    public boolean supportsRecordedActivities(@NonNull final GBDevice device) {
         return true;
     }
 
