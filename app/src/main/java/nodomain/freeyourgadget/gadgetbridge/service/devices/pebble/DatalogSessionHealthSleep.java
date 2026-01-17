@@ -73,6 +73,7 @@ class DatalogSessionHealthSleep extends DatalogSessionPebbleHealth {
         }
 
         store(sleepRecords);
+        GB.signalActivityDataFinish(getDevice());
         return new GBDeviceEvent[]{null};
     }
 

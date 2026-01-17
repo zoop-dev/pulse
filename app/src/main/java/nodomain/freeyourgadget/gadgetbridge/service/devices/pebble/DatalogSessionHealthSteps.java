@@ -89,6 +89,8 @@ class DatalogSessionHealthSteps extends DatalogSessionPebbleHealth {
 
             store(stepsRecords);
         }
+
+        GB.signalActivityDataFinish(getDevice());
         return new GBDeviceEvent[]{null};//ACK by default
     }
 
