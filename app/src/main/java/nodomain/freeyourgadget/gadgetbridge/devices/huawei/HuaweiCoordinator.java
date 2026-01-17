@@ -103,7 +103,11 @@ public class HuaweiCoordinator {
     }
 
     private SharedPreferences getCapabilitiesSharedPreferences() {
-        return GBApplication.getContext().getSharedPreferences("huawei_coordinator_capabilities_" + address.toLowerCase(Locale.ROOT).replace(":", "_"), Context.MODE_PRIVATE);
+        return GBApplication.getContext().getSharedPreferences(getCapabilitiesSharedPreferencesName(address), Context.MODE_PRIVATE);
+    }
+
+    public static String getCapabilitiesSharedPreferencesName(String address) {
+        return "huawei_coordinator_capabilities_" + address.toLowerCase(Locale.ROOT).replace(":", "_");
     }
 
     private SharedPreferences getDeviceSpecificSharedPreferences(GBDevice gbDevice) {

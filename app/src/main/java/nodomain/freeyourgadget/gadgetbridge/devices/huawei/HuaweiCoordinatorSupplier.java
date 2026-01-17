@@ -27,12 +27,13 @@ import androidx.annotation.NonNull;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import de.greenrobot.dao.query.QueryBuilder;
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
@@ -75,8 +76,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.model.StressSample;
 import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZonesSpec;
-import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiLESupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiWorkoutGbParser;
 
 public abstract class HuaweiCoordinatorSupplier extends AbstractDeviceCoordinator {
@@ -151,7 +150,6 @@ public abstract class HuaweiCoordinatorSupplier extends AbstractDeviceCoordinato
         };
     }
 
-    @SuppressWarnings("ArraysAsListWithZeroOrOneArgument")
     @Override
     public int[] getSupportedDeviceSpecificAuthenticationSettings() {
         final List<Integer> settings = new ArrayList<>();
@@ -164,6 +162,11 @@ public abstract class HuaweiCoordinatorSupplier extends AbstractDeviceCoordinato
 
     @Override
     protected void deleteDevice(@NonNull final GBDevice gbDevice, @NonNull final Device device, @NonNull final DaoSession session) {
+        // Clear capabilities shared preferences
+        GBApplication.getContext().getSharedPreferences(HuaweiCoordinator.getCapabilitiesSharedPreferencesName(gbDevice.getAddress()), Context.MODE_PRIVATE).edit().clear().apply();
+        // Before #5629, we would persist capabilities per device type, so clear those as well if they exist
+        GBApplication.getContext().getSharedPreferences("huawei_coordinator_capatilities" + gbDevice.getType().name(), Context.MODE_PRIVATE).edit().clear().apply();
+
         final long deviceId = device.getId();
 
         deleteBy(session.getHuaweiActivitySampleDao(), HuaweiActivitySampleDao.Properties.DeviceId, deviceId);
