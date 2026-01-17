@@ -1652,7 +1652,7 @@ Temps de sommeil préféré en heures</string>
     <string name="open_fw_installer_info_text_title">Installateur de fichier</string>
     <string name="open_fw_installer_select_file">Sélectionner un fichier à envoyer à votre appareil : %s</string>
     <string name="open_fw_installer_warning_title">Avertissement</string>
-    <string name="open_fw_installer_info_text">L\'installateur de firmware/façade de montre/application/fichier vous permet d\'envoyer/installer des fichiers compatibles (firmwares, façades de montre, applications, GPS, ressources, polices, …) dans l\'appareil. Pour plus d\'information se reporter au wiki : https ://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
+    <string name="open_fw_installer_info_text">L\'installateur de firmware/façade de montre/application/fichier vous permet d\'envoyer/installer des fichiers compatibles (firmwares, façades de montre, applications, GPS, ressources, polices, …) dans l\'appareil. Pour plus d\'information se reporter au site web : https://gadgetbridge.org/internals/features/installer/</string>
     <string name="open_fw_installer_warning_text">Cette fonction a la capacité de rendre inopérant/endommager votre appareil. Cela étant dit, cela ne s\'est jamais produit pour aucun des développeurs, mais rappelez-vous que vous faites cela à vos risques et périls.</string>
     <string name="open_fw_installer_ensure_device_connected">Assurez-vous que l\'appareil %s est bien connecté</string>
     <string name="open_fw_installer_connect_maximum_one_device">Merci de connecter UN SEUL appareil vers lequel vous souhaitez envoyer le fichier.</string>
@@ -1922,7 +1922,7 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_title_notification_media_ignores_application_list">Liste des applications dont les notifications média doivent être ignorées</string>
     <string name="pref_summary_notification_media_ignores_application_list">Traiter les notifications média avant la liste des app. Si la préférence n\'est pas cochée, les applications média doivent être autorisées dans la liste des applications pour que les contrôles média fonctionnent sur l\'appareil.</string>
     <string name="debugactivity_confirm_remove_device_preferences_title">Supprimer les préférences de l\'appareil \?</string>
-    <string name="debugactivity_confirm_remove_device_preferences">Cela supprimera toutes les préférences appareil pour tous les appareils connectés. Etes-vous sûr ?</string>
+    <string name="debugactivity_confirm_remove_device_preferences">Cela supprimera toutes les préférences pour cet appareil. Etes-vous sûr ?</string>
     <string name="menuitem_eject_water">Éjecter l\'eau</string>
     <string name="fw_upgrade_notice_amazfit_band7">Vous êtes sur le point d\'installer le micro-logiciel %s dans votre Amazfit Band 7.
 \n
@@ -4023,4 +4023,32 @@ Temps de sommeil préféré en heures</string>
     <string name="health_connect_sync_error_for_device">Erreur de sync pour %1$s (%2$s) : %3$s</string>
     <string name="health_connect_sleep_session_title">Session sommeil à partir de %1$s</string>
     <string name="health_connect_sleep_session_notes">Données de sommeil depuis dispositif Gadgetbridge : %1$s.</string>
+    <string name="title_activity_gps_track_installer">Installateur de suivi GPS</string>
+    <string name="pref_summary_calendar_sync_focus_time">Les événements de calendrier qui sont marqués comme « temps de concentration » seront synchronisés avec l’appareil</string>
+    <string name="pref_title_calendar_sync_focus_time">Synchroniser les événements temps de concentration</string>
+    <string name="pref_summary_calendar_sync_working_location">Les événements du calendrier qui sont des « lieux de travail » spéciaux seront synchronisés avec l’appareil</string>
+    <string name="pref_title_calendar_sync_working_location">Synchroniser les événements des lieux de travail</string>
+    <string name="activity_type_anchor">Mouillage</string>
+    <string name="calories_consumed">Calories consommées</string>
+    <string name="active_calories_avg">Moyenne active</string>
+    <string name="active_calories_total">Total active</string>
+    <string name="avg_temperature">Température moyenne</string>
+    <string name="min_temperature">Tempéraure minimale</string>
+    <string name="max_temperature">Température maximale</string>
+    <string name="meters_per_hour">m/h</string>
+    <string name="foot_per_hour">ft/h</string>
+    <string name="unit_millimeter">mm</string>
+    <string name="solar_intensity">Intensité solaire</string>
+    <string name="battery_gain">Gain de batterie</string>
+    <string name="minutes_100m">min/100m</string>
+    <string name="minutes_100yd">min/100yd</string>
+    <string name="swim_style_butterfly">Papillon</string>
+    <string name="prefs_active_noise_cancelling_level_normal">Normal</string>
+    <string name="prefs_active_noise_cancelling_level_ultra">Ultra</string>
+    <string name="work_info_running_percentage">%1$s (%2$d%%)</string>
+    <string name="internet_helper_pref_app_req_title">App complémentaire requise</string>
+    <string name="internet_helper_pref_app_req_summary">Cette fonctionnalité nécessite l’installation d’une application complémentaire. Appuyez ici pour aller à la page de téléchargement.</string>
+    <string name="internet_helper_pref_pebble_app_store_title">Magasin d\'application Pebble</string>
+    <string name="eco">Eco</string>
+    <string name="healthconnect_settings">Health Connect</string>
 </resources>
