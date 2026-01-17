@@ -95,7 +95,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.BondingUtil;
 import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
-import nodomain.freeyourgadget.gadgetbridge.util.TestDeviceDialog;
+import nodomain.freeyourgadget.gadgetbridge.util.DeviceTypeDialog;
 
 
 public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterView.OnItemClickListener,
@@ -775,8 +775,8 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
     private void showUnsupportedDeviceDialog(final GBDeviceCandidate deviceCandidate) {
         LOG.info("Unsupported device candidate selected: {}", deviceCandidate);
 
-        new TestDeviceDialog(this, deviceCandidate.getMacAddress())
-                .show((macAddress, deviceType) -> {
+        new DeviceTypeDialog(this, R.string.add_test_device, deviceCandidate.getMacAddress())
+                .show(null, (macAddress, deviceType) -> {
                     LOG.debug("Force-pairing {} as {}", deviceCandidate, deviceType);
                     DeviceHelper.getInstance().setForcedDeviceType(deviceCandidate.getMacAddress().toLowerCase(), deviceType);
                     preparePair(deviceCandidate);

@@ -380,9 +380,9 @@ public class IntentApiReceiver extends BroadcastReceiver {
             return;
         }
 
-        LOG.info("Quitting GB after device type update");
+        LOG.info("Restarting GB after device type update");
 
-        GBApplication.quit();
+        GBApplication.restart();
     }
 
     /**

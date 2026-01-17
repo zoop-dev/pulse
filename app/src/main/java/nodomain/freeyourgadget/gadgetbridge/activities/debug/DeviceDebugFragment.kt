@@ -1,12 +1,22 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.debug
 
+import android.content.DialogInterface
 import android.os.Bundle
+import android.widget.Toast
+import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
+import nodomain.freeyourgadget.gadgetbridge.database.DBHelper
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
+import nodomain.freeyourgadget.gadgetbridge.model.DeviceType
+import nodomain.freeyourgadget.gadgetbridge.util.DeviceTypeDialog
+import nodomain.freeyourgadget.gadgetbridge.util.GB
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+
 
 class DeviceDebugFragment : AbstractDebugFragment() {
     private lateinit var gbDevice: GBDevice
@@ -24,12 +34,29 @@ class DeviceDebugFragment : AbstractDebugFragment() {
         preferenceScreen?.title = gbDevice.aliasOrName
 
         findPreference<Preference>(PREF_DEBUG_DEVICE_NAME)?.summary = gbDevice.name ?: "<null>"
-        findPreference<Preference>(PREF_DEBUG_DEVICE_ALIAS)?.summary = gbDevice.alias ?: getString(R.string.not_set)
+        if (gbDevice.alias.isNullOrEmpty()) {
+            findPreference<Preference>(PREF_DEBUG_DEVICE_ALIAS)?.summary = getString(R.string.not_set)
+        } else {
+            findPreference<Preference>(PREF_DEBUG_DEVICE_ALIAS)?.summary = gbDevice.alias ?: getString(R.string.not_set)
+        }
         findPreference<Preference>(PREF_DEBUG_DEVICE_MAC_ADDRESS)?.summary = gbDevice.address
+
+        // Device Type
         findPreference<Preference>(PREF_DEBUG_DEVICE_TYPE)?.summary = gbDevice.type.name
+        findPreference<Preference>(PREF_DEBUG_DEVICE_TYPE)?.setOnPreferenceClickListener {
+            DeviceTypeDialog(requireActivity(), R.string.set_device_type, gbDevice.address)
+                .show(gbDevice.type) { _: String, deviceType: DeviceType ->
+                    setDeviceType(gbDevice, deviceType)
+                }
+            true
+        }
 
         val headerDetails = findPreference<PreferenceCategory>(PREF_HEADER_DETAILS)
         for (detail in gbDevice.deviceInfos) {
+            if (detail.name.startsWith("ADDR:")) {
+                // We already show the address above
+                continue
+            }
             addDynamicPref(headerDetails, detail.name.replace(": *$".toRegex(), ""), detail.details)
         }
 
@@ -57,6 +84,46 @@ class DeviceDebugFragment : AbstractDebugFragment() {
                 addDynamicPref(headerCoordinator, method.name, "Error: ${e.message}")
             }
         }
+    }
+
+    private fun setDeviceType(gbDevice: GBDevice, newType: DeviceType) {
+        LOG.debug("Setting device {} type from {} to {}", gbDevice.address, gbDevice.type, newType)
+
+        if (gbDevice.type == newType) {
+            GB.toast("Type is the same!", Toast.LENGTH_SHORT, GB.INFO)
+            return
+        }
+
+        try {
+            GBApplication.acquireDB().use { dbHandler ->
+                val session = dbHandler.getDaoSession()
+                DBHelper.updateDeviceType(session, gbDevice.address, newType)
+            }
+        } catch (e: java.lang.Exception) {
+            LOG.error("Failed to update device type", e)
+            GB.toast("Failed to update device type", Toast.LENGTH_LONG, GB.ERROR)
+            return
+        }
+
+        LOG.info("Restarting GB after device type update")
+
+        restart()
+    }
+
+    private fun restart() {
+        MaterialAlertDialogBuilder(requireActivity())
+            .setCancelable(false)
+            .setIcon(R.drawable.ic_sync)
+            .setTitle(R.string.backup_restore_restart_title)
+            .setMessage(getString(R.string.backup_restore_restart_summary, getString(R.string.app_name)))
+            .setOnCancelListener((DialogInterface.OnCancelListener { _: DialogInterface? ->
+                requireActivity().finishAffinity()
+                GBApplication.restart()
+            }))
+            .setPositiveButton(R.string.ok) { _: DialogInterface?, _: Int ->
+                requireActivity().finishAffinity()
+                GBApplication.restart()
+            }.show()
     }
 
     companion object {

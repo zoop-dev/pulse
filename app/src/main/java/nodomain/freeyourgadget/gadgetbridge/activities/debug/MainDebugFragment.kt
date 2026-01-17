@@ -16,7 +16,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.welcome.WelcomeActivity
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventCameraRemote
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils
 import nodomain.freeyourgadget.gadgetbridge.util.GB
-import nodomain.freeyourgadget.gadgetbridge.util.TestDeviceDialog
+import nodomain.freeyourgadget.gadgetbridge.util.DeviceTypeDialog
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
@@ -31,8 +31,8 @@ class MainDebugFragment : AbstractDebugFragment() {
         setPreferencesFromResource(R.xml.debug_preferences_main, rootKey)
 
         onClick(PREF_DEBUG_ADD_TEST_DEVICE) {
-            TestDeviceDialog(requireActivity(), null).show { address, deviceType ->
-                TestDeviceDialog.createTestDevice(requireContext(), deviceType, address, null)
+            DeviceTypeDialog(requireActivity(), R.string.add_test_device, null).show { address, deviceType ->
+                DeviceTypeDialog.createTestDevice(requireContext(), deviceType, address, null)
             }
         }
 

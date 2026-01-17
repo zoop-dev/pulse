@@ -1837,6 +1837,7 @@
     <string name="devicetype_unknown">Unknown Device</string>
     <string name="devicetype_test" translatable="false">Test Device</string>
     <string name="add_test_device">Add test device</string>
+    <string name="set_device_type">Set device type</string>
     <string name="devicetype_pebble" translatable="false">Pebble</string>
     <string name="devicetype_miband" translatable="false">Mi Band</string>
     <string name="devicetype_miband2" translatable="false">Mi Band 2</string>
