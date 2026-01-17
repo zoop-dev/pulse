@@ -4117,4 +4117,6 @@
     <string name="solar_intensity">Napenergia intenzitása</string>
     <string name="battery_gain">Akkumulátortöltöttség-növekedés</string>
     <string name="menuitem_jet_lag_manager">Időeltolódás-kezelő</string>
+    <string name="prefs_device_alias">Eszköz álneve</string>
+    <string name="set_device_type">Eszköz típusának beállítása</string>
 </resources>
