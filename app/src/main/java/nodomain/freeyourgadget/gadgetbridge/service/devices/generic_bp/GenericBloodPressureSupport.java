@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.service.devices.sbm_67;
+package nodomain.freeyourgadget.gadgetbridge.service.devices.generic_bp;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -53,16 +53,16 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.Dev
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
-public class SBM67DeviceSupport extends AbstractBTLESingleDeviceSupport implements IntentListener {
-    private static final Logger LOG = LoggerFactory.getLogger(nodomain.freeyourgadget.gadgetbridge.service.devices.sbm_67.SBM67DeviceSupport.class);
+public class GenericBloodPressureSupport extends AbstractBTLESingleDeviceSupport implements IntentListener {
+    private static final Logger LOG = LoggerFactory.getLogger(GenericBloodPressureSupport.class);
 
-    private final DeviceInfoProfile<SBM67DeviceSupport> deviceInfoProfile;
-    private final BloodPressureProfile<SBM67DeviceSupport> bloodPressureProfile;
+    private final DeviceInfoProfile<GenericBloodPressureSupport> deviceInfoProfile;
+    private final BloodPressureProfile<GenericBloodPressureSupport> bloodPressureProfile;
     private final BroadcastReceiver commandReceiver;
 
     private final List<BloodPressureMeasurement> measurements = new ArrayList<>();
 
-    public SBM67DeviceSupport() {
+    public GenericBloodPressureSupport() {
         super(LOG);
 
         addSupportedService(GattService.UUID_SERVICE_BLOOD_PRESSURE);

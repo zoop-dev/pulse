@@ -26,7 +26,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.sbm_67.SBM67DeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.generic_bp.GenericBloodPressureSupport;
 
 public class SBM67Coordinator extends AbstractBLEDeviceCoordinator {
     @Nullable
@@ -43,7 +43,7 @@ public class SBM67Coordinator extends AbstractBLEDeviceCoordinator {
     @NonNull
     @Override
     public Class<? extends DeviceSupport> getDeviceSupportClass(GBDevice device) {
-        return SBM67DeviceSupport.class;
+        return GenericBloodPressureSupport.class;
     }
 
     @Override
