@@ -139,6 +139,7 @@ public class GBDaoGenerator {
         addPineTimeActivitySample(schema, user, device);
         addPolarH10ActivitySample(schema, user, device);
         addWithingsSteelHRActivitySample(schema, user, device);
+        addSBM67BloodPressureSample(schema, user, device);
         addHybridHRActivitySample(schema, user, device);
         addHybridHRSpo2Sample(schema, user, device);
         addVivomoveHrActivitySample(schema, user, device);
@@ -2242,5 +2243,18 @@ public class GBDaoGenerator {
         addCommonTimeSampleProperties("AbstractTimeSample", sample, user, device);
         sample.addDoubleProperty("valueMgDl").notNull();
         return sample;
+    }
+
+    private static Entity addSBM67BloodPressureSample(Schema schema, Entity user, Entity device) {
+        Entity bloodPressureSample = addEntity(schema, "SBM67BloodPressureSample");
+        addCommonTimeSampleProperties("AbstractBloodPressureSample", bloodPressureSample, user, device);
+        addBloodPressureProperies(bloodPressureSample);
+        bloodPressureSample.addIntProperty("userIndex"); //device can store measurements for up to 4 users
+        bloodPressureSample.addIntProperty("meanArterialPressure");
+        bloodPressureSample.addIntProperty("pulse");
+        bloodPressureSample.addIntProperty("readingStatus");
+        bloodPressureSample.addBooleanProperty("heartRhythmDisorder");
+        bloodPressureSample.addBooleanProperty("restingIndicator");
+        return bloodPressureSample;
     }
 }

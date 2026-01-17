@@ -1,0 +1,73 @@
+/*  Copyright (C) 2023 Daniele Gobbetti
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>. */
+package nodomain.freeyourgadget.gadgetbridge.devices.sbm_67;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import java.util.regex.Pattern;
+
+import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.sbm_67.SBM67DeviceSupport;
+
+public class SBM67Coordinator extends AbstractBLEDeviceCoordinator {
+    @Nullable
+    @Override
+    protected Pattern getSupportedDeviceName() {
+        return Pattern.compile("^(SBM67|BPM Smart)$", Pattern.CASE_INSENSITIVE);
+    }
+
+    @Override
+    public String getManufacturer() {
+        return "Sanitas";
+    }
+
+    @NonNull
+    @Override
+    public Class<? extends DeviceSupport> getDeviceSupportClass(GBDevice device) {
+        return SBM67DeviceSupport.class;
+    }
+
+    @Override
+    public int getDeviceNameResource() {
+        return R.string.devicetype_sanitas_sbm_67;
+    }
+
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.BLOOD_PRESSURE_METER;
+    }
+
+    @Override
+    public int getBondingStyle() {
+        return BONDING_STYLE_NONE;
+    }
+
+    @Override
+    public boolean supportsBloodPressureMeasurement(@NonNull final GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public SBM67BloodPressureSampleProvider getBloodPressureSampleProvider(GBDevice device, DaoSession session) {
+        return new SBM67BloodPressureSampleProvider(device, session);
+    }
+}

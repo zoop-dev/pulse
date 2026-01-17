@@ -85,6 +85,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
+import nodomain.freeyourgadget.gadgetbridge.model.BloodPressureSample;
 import nodomain.freeyourgadget.gadgetbridge.model.BodyEnergySample;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.HeartRateSample;
@@ -294,6 +295,11 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     @Override
     @Nullable
     public SampleProvider<? extends ActivitySample> getSampleProvider(final GBDevice device, final DaoSession session) {
+        return null;
+    }
+
+    @Override
+    public TimeSampleProvider<? extends BloodPressureSample> getBloodPressureSampleProvider(final GBDevice device, final DaoSession session) {
         return null;
     }
 
@@ -628,6 +634,11 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
 
     @Override
     public boolean supportsRecordedActivities(@NonNull final GBDevice device) {
+        return false;
+    }
+
+    @Override
+    public boolean supportsBloodPressureMeasurement(@NonNull final GBDevice device) {
         return false;
     }
 

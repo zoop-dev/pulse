@@ -56,6 +56,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
+import nodomain.freeyourgadget.gadgetbridge.model.BloodPressureSample;
 import nodomain.freeyourgadget.gadgetbridge.model.BodyEnergySample;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.HeartRateSample;
@@ -154,6 +155,7 @@ public interface DeviceCoordinator {
         THERMOMETER,
         PV_EQUIPMENT,
         GLUCOSE_METER,
+        BLOOD_PRESSURE_METER,
     }
 
     /**
@@ -316,6 +318,12 @@ public interface DeviceCoordinator {
     boolean supportsHeartRateStats(@NonNull GBDevice device);
 
     /**
+     * Returns true if blood pressure measurement (systolic, diastolic, pulse) measurement and
+     * fetching is supported by the device (with this coordinator).
+     */
+    boolean supportsBloodPressureMeasurement(@NonNull GBDevice device);
+
+    /**
      * Returns true if PAI (Personal Activity Intelligence) measurement and fetching is supported by
      * the device (with this coordinator).
      */
@@ -475,6 +483,11 @@ public interface DeviceCoordinator {
     TimeSampleProvider<? extends RestingMetabolicRateSample> getRestingMetabolicRateProvider(GBDevice device, DaoSession session);
 
     TimeSampleProvider<? extends SleepScoreSample> getSleepScoreProvider(GBDevice device, DaoSession session);
+
+    /**
+     * Returns the sample provider for blood pressure data, for the device being supported.
+     */
+    TimeSampleProvider<? extends BloodPressureSample> getBloodPressureSampleProvider(GBDevice device, DaoSession session);
 
     /**
      * Returns the {@link ActivitySummaryParser} for the device being supported.
