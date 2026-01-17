@@ -2163,6 +2163,7 @@
     <string name="devicetype_colmi_i28_ultra" translatable="false">Colmi i28 Ultra</string>
     <string name="devicetype_colmi_p76" translatable="false">Colmi P76</string>
     <string name="devicetype_colmi_v72" translatable="false">Colmi V72</string>
+    <string name="devicetype_colmi_v73" translatable="false">Colmi V73</string>
     <string name="devicetype_colmi_v76" translatable="false">Colmi V76</string>
     <string name="devicetype_colmi_v89" translatable="false">Colmi V89</string>
     <string name="devicetype_colmi_p80" translatable="false">Colmi P80</string>
