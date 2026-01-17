@@ -56,7 +56,7 @@ public abstract class AbstractPolarDeviceCoordinator extends AbstractBLEDeviceCo
     }
 
     @Override
-    public boolean supportsActivityTracking(@NonNull GBDevice device) {
+    public boolean supportsCharts(@NonNull GBDevice device) {
         return true;
     }
 
