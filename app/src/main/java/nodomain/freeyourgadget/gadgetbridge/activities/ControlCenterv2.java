@@ -258,17 +258,24 @@ public class ControlCenterv2 extends AppCompatActivity
         swipeLayout.setEnabled(prefs.refreshOnSwipe());
         swipeLayout.setOnRefreshListener(() -> {
             if (prefs.refreshOnSwipe()) {
+                List<GBDevice> devices1 = GBApplication.app().getDeviceManager().getDevices();
+                final boolean anyConnected = devices1.stream().anyMatch(GBDevice::isInitialized);
+                if (!anyConnected) {
+                    // No devices are connected at all
+                    GB.toast(getString(R.string.info_no_devices_connected), Toast.LENGTH_LONG, GB.WARN);
+                    swipeLayout.setRefreshing(false);
+                    return;
+                }
                 // Fetch activity for all connected devices
                 GBApplication.deviceService().onFetchRecordedData(RecordedDataTypes.TYPE_SYNC);
-                // Hide 'refreshing' animation immediately if no health devices are connected
-                List<GBDevice> devices1 = GBApplication.app().getDeviceManager().getDevices();
-                for (GBDevice dev : devices1) {
-                    if (dev.getDeviceCoordinator().supportsDataFetching(dev) && dev.isInitialized()) {
-                        return;
-                    }
+
+                // Hide 'refreshing' animation immediately if no devices are connected that support sync
+                final boolean anySupported = devices1.stream().filter(GBDevice::isInitialized)
+                        .anyMatch(dev -> dev.getDeviceCoordinator().supportsDataFetching(dev));
+                if (!anySupported) {
+                    swipeLayout.setRefreshing(false);
+                    GB.toast(getString(R.string.info_no_devices_to_sync), Toast.LENGTH_LONG, GB.WARN);
                 }
-                swipeLayout.setRefreshing(false);
-                GB.toast(getString(R.string.info_no_devices_connected), Toast.LENGTH_LONG, GB.WARN);
             } else {
                 swipeLayout.setRefreshing(false);
             }
