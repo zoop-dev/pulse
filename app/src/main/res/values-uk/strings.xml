@@ -4123,4 +4123,13 @@
     <string name="export_select_end_date">Дата завершення</string>
     <string name="infinitime_filesystem_access_disabled">Доступ до файлової системи вимкнено в InfiniTime</string>
     <string name="infinitime_resource_upload_progress_status">Виконання дії %d з %d\n%s %s</string>
+    <string name="internet_firewall_title">Брандмауер</string>
+    <string name="internet_firewall_summary">Налаштуйте, до яких доменів можна отримати доступ через Інтернет</string>
+    <string name="internet_firewall_domain">Домен</string>
+    <string name="internet_firewall_action">Дія</string>
+    <string name="internet_firewall_allow">Дозволити</string>
+    <string name="internet_firewall_block">Блок</string>
+    <string name="internet_firewall_no_domains">Правил домену не знайдено. Дія за замовчуванням: %s</string>
+    <string name="internet_firewall_add_domain">Додати домен</string>
+    <string name="internet_firewall_edit_domain">Редагувати домен</string>
 </resources>
