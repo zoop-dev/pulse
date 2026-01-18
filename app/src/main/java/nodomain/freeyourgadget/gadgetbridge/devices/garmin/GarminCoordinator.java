@@ -277,6 +277,12 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
         final List<Integer> connection = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.CONNECTION);
         connection.add(R.xml.devicesettings_high_mtu);
 
+        if (GBApplication.hasInternetAccess()) {
+            final List<Integer> internet = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.INTERNET);
+            internet.add(R.xml.devicesettings_device_internet_access);
+            internet.add(R.xml.devicesettings_device_internet_firewall);
+        }
+
         final List<Integer> developer = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DEVELOPER);
         developer.add(R.xml.devicesettings_import_activity_files);
         developer.add(R.xml.devicesettings_reprocess_activity_files);

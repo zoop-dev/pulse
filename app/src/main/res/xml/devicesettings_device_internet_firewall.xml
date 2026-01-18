@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:dependency="device_internet_access"
+        android:icon="@drawable/ic_shield"
+        android:key="pref_key_internet_firewall"
+        android:summary="@string/internet_firewall_summary"
+        android:title="@string/internet_firewall_title" />
+</androidx.preference.PreferenceScreen>

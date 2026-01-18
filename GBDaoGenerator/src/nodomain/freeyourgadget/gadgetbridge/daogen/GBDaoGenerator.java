@@ -72,7 +72,7 @@ public class GBDaoGenerator {
             outputDir.mkdirs();
         }
 
-        final Schema schema = new Schema(125, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(126, MAIN_PACKAGE + ".entities");
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -80,6 +80,7 @@ public class GBDaoGenerator {
         Entity deviceAttributes = addDeviceAttributes(schema);
         Entity device = addDevice(schema, deviceAttributes);
         addHealthConnectSyncState(schema, device);
+        addInternetFirewallRule(schema, device);
 
         // yeah deep shit, has to be here (after device) for db upgrade and column order
         // because addDevice adds a property to deviceAttributes also....
@@ -1340,6 +1341,25 @@ public class GBDaoGenerator {
         healthConnectSyncState.addStringProperty("dataType").primaryKey().notNull();
         healthConnectSyncState.addToOne(device, deviceId);
         healthConnectSyncState.addLongProperty("lastSyncTimestamp").notNull();
+    }
+
+    private static void addInternetFirewallRule(Schema schema, Entity device) {
+        Entity firewall = addEntity(schema, "InternetFirewallRule");
+        firewall.addIdProperty().autoincrement();
+
+        Property domain = firewall.addStringProperty("domain").notNull().getProperty();
+        firewall.addStringProperty("action").notNull();
+
+        // Might be null for global rules
+        Property deviceId = firewall.addLongProperty("deviceId").getProperty();
+        firewall.addToOne(device, deviceId);
+
+        final Index indexUnique = new Index();
+        indexUnique.addProperty(domain);
+        indexUnique.addProperty(deviceId);
+        indexUnique.makeUnique();
+
+        firewall.addIndex(indexUnique);
     }
 
     private static void addAlarms(Schema schema, Entity user, Entity device) {

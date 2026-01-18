@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceScreen
+        android:icon="@drawable/ic_language"
+        android:key="pref_screen_internet"
+        android:persistent="false"
+        android:title="@string/permission_internet_access_title" />
+</androidx.preference.PreferenceScreen>

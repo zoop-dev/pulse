@@ -244,6 +244,10 @@
             android:label="@string/prefs_internet_helper_title"
             android:parentActivityName=".activities.SettingsActivity" />
         <activity
+            android:name=".activities.internet.InternetFirewallActivity"
+            android:label="@string/internet_firewall_title"
+            android:parentActivityName=".activities.InternetHelperPreferencesActivity" />
+        <activity
             android:name=".activities.preferences.HealthConnectPreferencesActivity"
             android:label="@string/healthconnect_settings"
             android:parentActivityName=".activities.SettingsActivity" />

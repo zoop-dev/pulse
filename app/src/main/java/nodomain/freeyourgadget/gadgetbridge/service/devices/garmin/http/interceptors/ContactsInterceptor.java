@@ -31,7 +31,8 @@ public class ContactsInterceptor implements HttpInterceptor {
 
     @Override
     public boolean supports(@NotNull final GarminHttpRequest request) {
-        return request.getPath().startsWith("/device-gateway/usercontact/");
+        return "connectapi.garmin.com".equals(request.getDomain()) &&
+                request.getPath().startsWith("/device-gateway/usercontact/");
     }
 
     @Override

@@ -30,6 +30,7 @@ import android.webkit.WebView
 import androidx.core.app.NotificationCompat
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
+import nodomain.freeyourgadget.gadgetbridge.internet.InternetRequestType
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 import nodomain.freeyourgadget.gadgetbridge.webview.GBChromeClient
 import nodomain.freeyourgadget.gadgetbridge.webview.GBWebClient
@@ -103,7 +104,7 @@ class PebbleJsService : Service() {
                 LOG.info("WEBVIEW starting for device ${device.address}")
                 WebView.setWebContentsDebuggingEnabled(true)
                 val uiContext = applicationContext.createConfigurationContext(resources.configuration)
-                val gbWebClient = GBWebClient(GBWebClient.REQUEST_TYPE_PEBBLE_BACKGROUND_JS)
+                val gbWebClient = GBWebClient(InternetRequestType.PEBBLE_BACKGROUND_JS, device)
                 val wv = WebView(uiContext).apply {
                     settings.javaScriptEnabled = true
                     settings.domStorageEnabled = true

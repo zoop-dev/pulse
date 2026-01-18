@@ -4526,6 +4526,15 @@
     <string name="internet_helper_pref_pebble_app_config_summary">Allow access to webpages that are needed for configuring apps and watchfaces</string>
     <string name="internet_helper_pref_bangle_app_loader_title">Bangle app loader</string>
     <string name="internet_helper_pref_bangle_app_loader_summary">Access the Bangle app loader website</string>
+    <string name="internet_firewall_title">Firewall</string>
+    <string name="internet_firewall_summary">Configure which domains can be accessed through the internet</string>
+    <string name="internet_firewall_domain">Domain</string>
+    <string name="internet_firewall_action">Action</string>
+    <string name="internet_firewall_allow">Allow</string>
+    <string name="internet_firewall_block">Block</string>
+    <string name="internet_firewall_no_domains">No domain rules found. Default action: %s</string>
+    <string name="internet_firewall_add_domain">Add domain</string>
+    <string name="internet_firewall_edit_domain">Edit domain</string>
     <string name="rebble_appstore_download_failed_wrong_content_type">Download failed, wrong content-type: %1$s</string>
     <string name="rebble_appstore_download_failed">Download failed: %1$s</string>
     <string name="rebble_appstore_fetch_app_info_failed_content_type">Fetching app info failed, wrong content-type: %1$s</string>

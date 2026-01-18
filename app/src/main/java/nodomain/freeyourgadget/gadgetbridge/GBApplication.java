@@ -328,6 +328,9 @@ public class GBApplication extends Application {
         if (prefs.getBoolean(GBPrefs.HEALTH_CONNECT_ENABLED, false)) {
             HealthConnectPermissionManager.checkAndRectifyPermissions(this);
         }
+
+        // Ensure the InternetHelper is bound, so that it works on first usage
+        InternetHelperSingleton.INSTANCE.ensureInternetHelperBound();
     }
 
     private void startNotificationCollectorMonitorService() {

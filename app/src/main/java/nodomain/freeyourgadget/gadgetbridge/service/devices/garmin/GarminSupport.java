@@ -191,6 +191,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     public void setContext(final GBDevice gbDevice, final BluetoothAdapter btAdapter, final Context context) {
         super.setContext(gbDevice, btAdapter, context);
         this.mediaManager = new MediaManager(context);
+        this.protocolBufferHandler.setContext(gbDevice, btAdapter, context);
         this.transferNotification = new GBProgressNotification(context, GB.NOTIFICATION_CHANNEL_ID_TRANSFER);
     }
 

@@ -31,6 +31,7 @@ import net.e175.klaus.solarpositioning.SPA;
 import net.e175.klaus.solarpositioning.SunriseTransitSet;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,6 +48,9 @@ import java.util.List;
 import java.util.Map;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.internet.InternetFirewall;
+import nodomain.freeyourgadget.gadgetbridge.internet.InternetRequestType;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
@@ -57,14 +61,9 @@ import nodomain.freeyourgadget.internethelper.aidl.http.HttpRequest;
 public class GBWebClient extends WebViewClient {
     private static final Logger LOG = LoggerFactory.getLogger(GBWebClient.class);
 
-    public static int REQUEST_TYPE_OTHER = 0;
-    public static int REQUEST_TYPE_PEBBLE_APP_STORE = 1;
-    public static int REQUEST_TYPE_PEBBLE_APP_CONFIG = 2;
-    public static int REQUEST_TYPE_PEBBLE_BACKGROUND_JS = 3;
-    public static int REQUEST_TYPE_BANGLE_APP_LOADER = 4;
-    private int requestType;
+    private final InternetFirewall firewall;
 
-    private String[] LocallySupportedDomains = new String[]{
+    private final String[] LocallySupportedDomains = new String[]{
             "openweathermap.org",   //for weather :)
             "rawgit.com",           //for trekvolle
     };
@@ -72,9 +71,9 @@ public class GBWebClient extends WebViewClient {
     private final Map<String, List<Entry>> postData = new HashMap<>();
     private record Entry(long timestamp, String body) {}
 
-    public GBWebClient(int type) {
+    public GBWebClient(final InternetRequestType type, @NotNull final GBDevice device) {
         super();
-        requestType = type;
+        this.firewall = new InternetFirewall(type, device);
     }
 
     /**
@@ -155,24 +154,11 @@ public class GBWebClient extends WebViewClient {
         }
 
         // Handle predefined groups
-        if (requestType == REQUEST_TYPE_PEBBLE_APP_STORE) {
-            matchFound = true;
-            urlIsAllowed = prefs.getBoolean("pref_key_internethelper_allow_pebble_appstore", false);
-        } else if (requestType == REQUEST_TYPE_PEBBLE_APP_CONFIG) {
-            matchFound = true;
-            urlIsAllowed = prefs.getBoolean("pref_key_internethelper_allow_pebble_configs", false);
-        } else if (requestType == REQUEST_TYPE_PEBBLE_BACKGROUND_JS) {
-            matchFound = true;
-            urlIsAllowed = prefs.getBoolean("pref_key_internethelper_allow_pebble_background_js", false);
-        } else if (requestType == REQUEST_TYPE_BANGLE_APP_LOADER) {
-            matchFound = true;
-            urlIsAllowed = prefs.getBoolean("pref_key_internethelper_allow_bangle_app_loader", false);
-        }
+        urlIsAllowed = firewall.isAllowed(requestedUri);
 
         // Handle OpenWeatherMap locally
         boolean forceLocal = false;
         if (locallySupported && prefs.getBoolean("pref_key_internethelper_force_local", true)) {
-            matchFound = true;
             urlIsAllowed = true;
             forceLocal = true;
         }

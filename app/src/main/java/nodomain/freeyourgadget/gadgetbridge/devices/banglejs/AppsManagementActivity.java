@@ -50,6 +50,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.internet.InternetRequestType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.banglejs.BangleJSDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.webview.GBChromeClient;
@@ -219,7 +220,7 @@ public class AppsManagementActivity extends AbstractGBActivity {
         webView.addJavascriptInterface(new WebViewInterface(this), "Android");
         webView.setWebContentsDebuggingEnabled(true); // FIXME
 
-        GBWebClient gbWebClient = new GBWebClient(GBWebClient.REQUEST_TYPE_BANGLE_APP_LOADER){
+        GBWebClient gbWebClient = new GBWebClient(InternetRequestType.BANGLE_APP_LOADER, mGBDevice){
             @Override
             public void onPageFinished(WebView view, String weburl){
                 //webView.loadUrl("javascript:showToast('WebView in Espruino')");

@@ -57,7 +57,7 @@ message HttpService {
     optional uint32 httpStatus = 2;
     optional bytes body = 3;
     optional bytes headers = 4;
-    optional bytes size = 5;
+    optional uint32 size = 5;
     optional ResponseType responseType = 6;
   }
 

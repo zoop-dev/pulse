@@ -44,7 +44,8 @@ public class ImageServiceInterceptor implements HttpInterceptor {
 
     @Override
     public boolean supports(@NotNull final GarminHttpRequest request) {
-        return request.getPath().startsWith("/image-service/");
+        return "api.gcs.garmin.com".equals(request.getDomain()) &&
+                request.getPath().startsWith("/image-service/");
     }
 
     @Override

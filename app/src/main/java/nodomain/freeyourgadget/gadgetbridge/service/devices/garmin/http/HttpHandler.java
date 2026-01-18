@@ -2,12 +2,20 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http;
 
 import androidx.annotation.Nullable;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import com.google.protobuf.ByteString;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,23 +27,27 @@ import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiHttpService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors.AgpsInterceptor;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors.ContactsInterceptor;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors.FirewallInterceptor;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors.HttpInterceptor;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors.ImageServiceInterceptor;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors.OauthInterceptor;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors.WeatherInterceptor;
 
+@SuppressWarnings("ClassCanBeRecord")
 public class HttpHandler {
     private static final Logger LOG = LoggerFactory.getLogger(HttpHandler.class);
 
     private final List<HttpInterceptor> interceptors;
 
-    public HttpHandler(GarminSupport deviceSupport) {
-        interceptors = Arrays.asList(
+    public HttpHandler(final GarminSupport deviceSupport) {
+        this.interceptors = Arrays.asList(
                 new WeatherInterceptor(),
                 new AgpsInterceptor(deviceSupport),
                 new ImageServiceInterceptor(deviceSupport),
                 new ContactsInterceptor(deviceSupport),
-                new OauthInterceptor(deviceSupport)
+                new OauthInterceptor(deviceSupport),
+                // Should always be the last one
+                new FirewallInterceptor(deviceSupport)
         );
     }
 
@@ -76,8 +88,6 @@ public class HttpHandler {
                     .build();
         }
 
-        LOG.debug("Http response status={}", response.getStatus());
-
         return createRawResponse(request, response);
     }
 
@@ -94,7 +104,13 @@ public class HttpHandler {
 
         final HttpInterceptor interceptor = interceptorOpt.get();
         LOG.debug("Handling request to {}", interceptor.getClass().getSimpleName());
-        return interceptor.handle(request);
+        final GarminHttpResponse response = interceptor.handle(request);
+        if (response != null) {
+            LOG.debug("Response from interceptor: {}, {} bytes", response.getStatus(), response.getBody().length);
+        } else {
+            LOG.debug("No response from interceptor");
+        }
+        return response;
     }
 
     private static GdiHttpService.HttpService.RawResponse createRawResponse(
@@ -163,8 +179,81 @@ public class HttpHandler {
     }
 
     public GdiHttpService.HttpService.WebResponse handleWebRequest(final GdiHttpService.HttpService.WebRequest webRequest) {
-        LOG.debug("Got webRequest: {} - {}", webRequest.getMethod(), webRequest.getUrl());
+        LOG.debug("Got webRequest: {} {}", webRequest.getMethod(), webRequest.getUrl());
 
-        return null;
+        try {
+            final GarminHttpRequest request = new GarminHttpRequest(webRequest);
+
+            final GarminHttpResponse response = handleRequest(request);
+
+            if (response == null) {
+                return GdiHttpService.HttpService.WebResponse.newBuilder()
+                        .setStatus(GdiHttpService.HttpService.Status.UNKNOWN_STATUS)
+                        .setHttpStatus(0)
+                        .build();
+            }
+
+            final byte[] headers;
+            if (webRequest.getHttpHeadersInResponse()) {
+                byte[] encodedHeaders = null;
+                try {
+                    final JsonObject jsonObject = new JsonObject();
+                    for (Map.Entry<String, String> e : response.getHeaders().entrySet()) {
+                        jsonObject.addProperty(e.getKey(), e.getValue());
+                    }
+                    encodedHeaders = GarminJson.encode(jsonObject);
+                } catch (final GarminJsonException e) {
+                    LOG.error("Failed to encode headers", e);
+                }
+                headers = encodedHeaders;
+            } else {
+                headers = null;
+            }
+
+            if (response.getBody().length > webRequest.getMaxResponseLength()) {
+                // TODO figure out the compression algorithm
+                return GdiHttpService.HttpService.WebResponse.newBuilder()
+                        .setStatus(GdiHttpService.HttpService.Status.FILE_TOO_LARGE)
+                        .setHttpStatus(0)
+                        .build();
+            }
+
+            final JsonElement jsonElement;
+            if ("application/json".equals(response.getHeaders().get("content-type"))) {
+                try (final InputStreamReader reader = new InputStreamReader(new ByteArrayInputStream(response.getBody()))) {
+                    jsonElement = JsonParser.parseReader(reader);
+                } catch (IOException e) {
+                    LOG.error("Failed to decode body as json", e);
+                    return GdiHttpService.HttpService.WebResponse.newBuilder()
+                            .setStatus(GdiHttpService.HttpService.Status.DATA_TRANSFER_ITEM_FAILURE)
+                            .setHttpStatus(0)
+                            .build();
+                }
+            } else if (webRequest.getResponseType() == GdiHttpService.HttpService.ResponseType.JSON) {
+                // We got non-json
+                return GdiHttpService.HttpService.WebResponse.newBuilder()
+                        .setStatus(GdiHttpService.HttpService.Status.DATA_TRANSFER_ITEM_FAILURE)
+                        .setHttpStatus(response.getStatus())
+                        .build();
+            } else {
+                jsonElement = new JsonPrimitive(new String(response.getBody(), StandardCharsets.UTF_8));
+            }
+            final byte[] body = GarminJson.encode(jsonElement);
+
+            final GdiHttpService.HttpService.WebResponse.Builder builder = GdiHttpService.HttpService.WebResponse.newBuilder()
+                    .setStatus(GdiHttpService.HttpService.Status.OK)
+                    .setHttpStatus(response.getStatus())
+                    .setBody(ByteString.copyFrom(body))
+                    .setSize(0); // 0 for non-compressed
+
+            if (headers != null) {
+                builder.setHeaders(ByteString.copyFrom(headers));
+            }
+
+            return builder.build();
+        } catch (final GarminJsonException e) {
+            LOG.error("Garmin json error (?)", e);
+            return null;
+        }
     }
 }

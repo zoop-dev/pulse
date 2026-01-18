@@ -32,6 +32,7 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBHelper
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler
 import nodomain.freeyourgadget.gadgetbridge.entities.PebbleAppstoreIdEntry
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
+import nodomain.freeyourgadget.gadgetbridge.internet.InternetRequestType
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 import nodomain.freeyourgadget.gadgetbridge.util.InternetUtils
@@ -46,7 +47,7 @@ import java.io.File
 
 class RebbleAppStoreActivity : AbstractGBActivity()  {
     val LOG: Logger = LoggerFactory.getLogger(RebbleAppStoreActivity::class.java)
-    private var mGBDevice: GBDevice? = null
+    private lateinit var mGBDevice: GBDevice
     private var webView: WebView? = null
     private var url = "https://apps.rebble.io/en_US/watchfaces"
 
@@ -54,12 +55,10 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_banglejs_apps_management)
 
-        val extras = intent.extras
-        if (extras != null) {
-            mGBDevice = extras.getParcelable(GBDevice.EXTRA_DEVICE)
-            url = extras.getString(DeviceService.EXTRA_URI, url)
-        }
-        requireNotNull(mGBDevice) { "Must provide a device when invoking this activity" }
+        val gbDevice: GBDevice? = intent?.extras?.getParcelable(GBDevice.EXTRA_DEVICE)
+        requireNotNull(gbDevice) { "Must provide a device when invoking this activity" }
+        mGBDevice = gbDevice
+        url = intent?.extras?.getString(DeviceService.EXTRA_URI, url)!!
         initViews()
     }
 
@@ -136,7 +135,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
         settings.loadWithOverviewMode = true
         settings.useWideViewPort = true
 
-        val gbWebClient = object : GBWebClient(REQUEST_TYPE_PEBBLE_APP_STORE) {
+        val gbWebClient = object : GBWebClient(InternetRequestType.PEBBLE_APP_STORE, mGBDevice) {
             override fun shouldOverrideUrlLoading(
                 wv: WebView,
                 request: WebResourceRequest

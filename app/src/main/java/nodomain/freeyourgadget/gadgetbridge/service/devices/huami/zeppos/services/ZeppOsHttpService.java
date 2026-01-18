@@ -156,7 +156,7 @@ public class ZeppOsHttpService extends AbstractZeppOsService {
 
         final String host = url.getHost();
         final String path = url.getPath();
-        final Map<String, String> query = HttpUtils.urlQueryParameters(url);
+        final Map<String, String> query = HttpUtils.urlQueryParameters(url.getQuery());
 
         final int statusCode;
         final String response;

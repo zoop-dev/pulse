@@ -79,6 +79,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.ConfigureWorldClocks;
 import nodomain.freeyourgadget.gadgetbridge.activities.NotificationsAppIconUploadActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.app_specific_notifications.AppSpecificNotificationSettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.audiorecordings.AudioRecordingsActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.internet.InternetFirewallActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.loyaltycards.LoyaltyCardsSettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.loyaltycards.LoyaltyCardsSettingsConst;
 import nodomain.freeyourgadget.gadgetbridge.activities.multipoint.MultipointPairingActivity;
@@ -1503,6 +1504,16 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         if (loyaltyCards != null) {
             loyaltyCards.setOnPreferenceClickListener(preference -> {
                 final Intent intent = new Intent(getContext(), LoyaltyCardsSettingsActivity.class);
+                intent.putExtra(GBDevice.EXTRA_DEVICE, getDevice());
+                startActivity(intent);
+                return true;
+            });
+        }
+
+        final Preference firewallPref = findPreference("pref_key_internet_firewall");
+        if (firewallPref != null) {
+            firewallPref.setOnPreferenceClickListener(preference -> {
+                final Intent intent = new Intent(getContext(), InternetFirewallActivity.class);
                 intent.putExtra(GBDevice.EXTRA_DEVICE, getDevice());
                 startActivity(intent);
                 return true;

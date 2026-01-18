@@ -42,7 +42,8 @@ public class AgpsInterceptor implements HttpInterceptor {
 
     @Override
     public boolean supports(@NotNull final GarminHttpRequest request) {
-        return request.getPath().startsWith("/ephemeris/");
+        return "api.gcs.garmin.com".equals(request.getDomain()) &&
+                request.getPath().startsWith("/ephemeris/");
     }
 
     @Override

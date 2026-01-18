@@ -44,6 +44,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceManager;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.internet.InternetRequestType;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceCommunicationService;
@@ -119,7 +120,7 @@ public class ExternalPebbleJSActivity extends AbstractGBActivity {
         setContentView(R.layout.activity_legacy_external_pebble_js);
         myWebView = findViewById(R.id.configureWebview);
         myWebView.clearCache(true);
-        GBWebClient gbWebClient = new GBWebClient(GBWebClient.REQUEST_TYPE_PEBBLE_APP_CONFIG);
+        GBWebClient gbWebClient = new GBWebClient(InternetRequestType.PEBBLE_APP_CONFIG, device);
         myWebView.setWebViewClient(gbWebClient);
         myWebView.setWebChromeClient(new GBChromeClient());
         WebSettings webSettings = myWebView.getSettings();

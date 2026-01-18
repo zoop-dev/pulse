@@ -43,7 +43,8 @@ public class WeatherInterceptor implements HttpInterceptor {
 
     @Override
     public boolean supports(@NotNull final GarminHttpRequest request) {
-        return request.getPath().startsWith("/weather/");
+        return "api.gcs.garmin.com".equals(request.getDomain()) &&
+                request.getPath().startsWith("/weather/");
     }
 
     /// These get requested on connection at most every 5 minutes

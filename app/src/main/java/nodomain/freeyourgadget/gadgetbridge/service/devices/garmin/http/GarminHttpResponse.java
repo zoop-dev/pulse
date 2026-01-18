@@ -11,6 +11,9 @@ public class GarminHttpResponse {
 
     private Callable<Void> onDataSuccessfullySentListener;
 
+    public GarminHttpResponse() {
+    }
+
     public int getStatus() {
         return status;
     }

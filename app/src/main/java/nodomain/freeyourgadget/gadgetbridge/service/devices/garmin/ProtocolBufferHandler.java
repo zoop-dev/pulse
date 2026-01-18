@@ -2,6 +2,8 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin;
 
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_SYNC_CALENDAR;
 
+import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
@@ -33,6 +35,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminPreferences;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminRealtimeSettingsFragment;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.gps.GBLocationProviderType;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.gps.GBLocationService;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiAuthenticationService;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiCalendarService;
@@ -53,6 +56,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.HttpHand
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.GFDIMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.ProtobufMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.status.ProtobufStatusMessage;
+import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
+import nodomain.freeyourgadget.gadgetbridge.util.notifications.GBProgressNotification;
 import nodomain.freeyourgadget.gadgetbridge.webview.CurrentPosition;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -67,7 +72,7 @@ public class ProtocolBufferHandler implements MessageHandler {
     private final int maxChunkSize = 375; //tested on Vívomove Style
     private int lastProtobufRequestId;
     private final AppConfigHandler appConfigHandler;
-    private final HttpHandler httpHandler;
+    private HttpHandler httpHandler;
     private final DataTransferHandler dataTransferHandler;
     private final FileSyncServiceHandler fileSyncServiceHandler;
     private final EcgServiceHandler ecgServiceHandler;
@@ -78,10 +83,14 @@ public class ProtocolBufferHandler implements MessageHandler {
         this.deviceSupport = deviceSupport;
         chunkedFragmentsMap = new HashMap<>();
         appConfigHandler = new AppConfigHandler(deviceSupport);
-        httpHandler = new HttpHandler(deviceSupport);
         dataTransferHandler = new DataTransferHandler();
         fileSyncServiceHandler = new FileSyncServiceHandler(deviceSupport);
         ecgServiceHandler = new EcgServiceHandler(deviceSupport);
+    }
+
+    public void setContext(final GBDevice gbDevice, final BluetoothAdapter btAdapter, final Context context) {
+        // http handler needs the device
+        httpHandler = new HttpHandler(deviceSupport);
     }
 
     private int getNextProtobufRequestId() {
