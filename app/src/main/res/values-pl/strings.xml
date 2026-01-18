@@ -3226,7 +3226,7 @@
     <string name="midFootLandings">Mid foot landings</string>
     <string name="foreFootLandings">Fore foot landings</string>
     <string name="backFootLandings">Back foot landings</string>
-    <string name="moondrop_touch_trigger">Akcja</string>
+    <string name="moondrop_touch_trigger">Wyzwalacz</string>
     <string name="activity_type_transition">Transition</string>
     <string name="activity_type_tactical">Tactical</string>
     <string name="activity_type_push_run_speed">Push - Run Speed</string>
@@ -4303,4 +4303,14 @@
     <string name="export_select_end_date">Data zakończenia</string>
     <string name="infinitime_filesystem_access_disabled">Dostęp do systemu plików jest wyłączony w InfiniTime</string>
     <string name="infinitime_resource_upload_progress_status">Wykonywanie czynności %d z %d\n%s %s</string>
+    <string name="info_no_devices_to_sync">Połączone urządzenia nie obsługują synchronizacji danych</string>
+    <string name="internet_firewall_title">Zapora sieciowa</string>
+    <string name="internet_firewall_summary">Skonfiguruj domeny, do których można uzyskiwać dostęp przez internet</string>
+    <string name="internet_firewall_domain">Domena</string>
+    <string name="internet_firewall_action">Akcja</string>
+    <string name="internet_firewall_allow">Zezwalaj</string>
+    <string name="internet_firewall_block">Zablokuj</string>
+    <string name="internet_firewall_no_domains">Nie znaleziono reguł dla domen. Domyślna akcja: %s</string>
+    <string name="internet_firewall_add_domain">Dodaj domenę</string>
+    <string name="internet_firewall_edit_domain">Edytuj domenę</string>
 </resources>
