@@ -36,17 +36,14 @@ object ZeppOsWeatherHandlerV5 {
         }
 
         // /weather/v5/<LOCALE>/<LONGITUDE>/<LATITUDE>/
-        if (!Regex("^/weather/v5/[^/]+/[^/]+/[^/]+/?$").matches(path)) {
+        if (!Regex("^/weather/v5/[^/]+/[^/]*/[^/]*/?$").matches(path)) {
             LOG.error("Unknown path: {}", path)
             return null
         }
 
         val pathParts = path.trim('/').split("/")
-        val locale = pathParts[2]
-        val longitude = pathParts[3]
-        val latitude = pathParts[4]
 
-        LOG.debug("Weather request: locale={}, lon={}, lat={}", locale, longitude, latitude)
+        LOG.debug("Weather request: {}", pathParts)
 
         val datasetsParam = query["datasets"]
         if (datasetsParam.isNullOrBlank()) {
