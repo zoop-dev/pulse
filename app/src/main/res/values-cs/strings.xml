@@ -4282,4 +4282,14 @@
     <string name="export_select_end_date">Datum konce</string>
     <string name="infinitime_filesystem_access_disabled">Přístup k souborovému systému je zakázán v InfiniTime</string>
     <string name="infinitime_resource_upload_progress_status">Provádím akci %d z %d\n%s %s</string>
+    <string name="info_no_devices_to_sync">Připojená zařízení nepodporují synchronizaci dat</string>
+    <string name="internet_firewall_title">Firewall</string>
+    <string name="internet_firewall_summary">Nastavte, ke kterým doménám bude možné se připojit skrze internet</string>
+    <string name="internet_firewall_domain">Doména</string>
+    <string name="internet_firewall_action">Akce</string>
+    <string name="internet_firewall_allow">Povolit</string>
+    <string name="internet_firewall_block">Zablokovat</string>
+    <string name="internet_firewall_no_domains">Nenalezena žádná pravidla domén. Výchozí akce: %s</string>
+    <string name="internet_firewall_add_domain">Přidat doménu</string>
+    <string name="internet_firewall_edit_domain">Upravit doménu</string>
 </resources>
