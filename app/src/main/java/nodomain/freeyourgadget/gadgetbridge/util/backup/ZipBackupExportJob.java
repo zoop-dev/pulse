@@ -23,6 +23,7 @@ import android.net.Uri;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -61,7 +62,8 @@ public class ZipBackupExportJob extends AbstractZipBackupJob {
     @Override
     public void run() {
         try (final OutputStream outputStream = getContext().getContentResolver().openOutputStream(mUri, "wt");
-             final ZipOutputStream zipOut = new ZipOutputStream(outputStream)) {
+             final BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream, 1024 * 1024);
+             final ZipOutputStream zipOut = new ZipOutputStream(bufferedOutputStream)) {
 
             if (isAborted()) return;
 
@@ -101,8 +103,13 @@ public class ZipBackupExportJob extends AbstractZipBackupJob {
 
             addMetadata(zipOut);
 
+            LOG.debug("Finishing zip");
+
             zipOut.finish();
-            zipOut.flush();
+
+            LOG.debug("Flushing output stream");
+
+            bufferedOutputStream.flush();
 
             if (isAborted()) return;
 
