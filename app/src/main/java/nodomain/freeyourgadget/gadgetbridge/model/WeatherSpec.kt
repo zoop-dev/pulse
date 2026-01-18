@@ -21,6 +21,12 @@ package nodomain.freeyourgadget.gadgetbridge.model
 import android.location.Location
 import android.os.Parcel
 import android.os.Parcelable
+import net.e175.klaus.solarpositioning.DeltaT
+import net.e175.klaus.solarpositioning.SPA
+import net.e175.klaus.solarpositioning.SunriseTransitSet
+import java.util.Date
+import java.util.GregorianCalendar
+import kotlin.math.floor
 
 // FIXME: document me and my fields, including units
 /**
@@ -487,6 +493,10 @@ class WeatherSpec() : Parcelable {
             return toBeaufort(this.windSpeed)
         }
 
+        fun lunarDay(): Int {
+            return toLunarDay(moonPhase.toDouble())
+        }
+
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
             if (javaClass != other?.javaClass) return false
@@ -644,6 +654,45 @@ class WeatherSpec() : Parcelable {
             return level
         }
 
+        fun toLunarDay(phaseDegrees: Double): Int {
+            val synodicMonth = 29.53059
+            val normalized = ((phaseDegrees % 360) + 360) % 360
+            return floor((normalized / 360.0) * synodicMonth).toInt() + 1
+        }
+
+        fun sunriseTransitSet(date: GregorianCalendar, location: Location): SunriseTransitSet {
+            return SPA.calculateSunriseTransitSet(
+                date.toZonedDateTime(),
+                location.latitude,
+                location.longitude,
+                DeltaT.estimate(date.toZonedDateTime().toLocalDate())
+            )
+        }
+
+        fun sunriseComputed(sunRise: Int, date: GregorianCalendar, location: Location?): Date? {
+            if (sunRise > 0) {
+                return Date(sunRise * 1000L)
+            }
+            if (location == null) {
+                return null
+            }
+            return sunriseTransitSet(date, location).sunrise?.let {
+                return Date.from(it.toInstant())
+            }
+        }
+
+        fun sunsetComputed(sunSet: Int, date: GregorianCalendar, location: Location?): Date? {
+            if (sunSet > 0) {
+                return Date(sunSet * 1000L)
+            }
+            if (location == null) {
+                return null
+            }
+            return sunriseTransitSet(date, location).sunset?.let {
+                return Date.from(it.toInstant())
+            }
+        }
+
         fun createTestWeather(): WeatherSpec {
             val weather = WeatherSpec()
 
@@ -668,8 +717,11 @@ class WeatherSpec() : Parcelable {
             weather.currentHumidity = 30
 
             weather.hourly = ArrayList()
+            var hourlyTimestamp = weather.timestamp + 3600
+
             for (i in 0..23) {
                 val gbForecast = Hourly()
+                gbForecast.timestamp = hourlyTimestamp
                 gbForecast.temp = 10 + i + 273
                 gbForecast.conditionCode = 800 // clear
                 gbForecast.precipProbability = 50 + i
@@ -679,6 +731,8 @@ class WeatherSpec() : Parcelable {
                 gbForecast.uvIndex = 2f + i
 
                 weather.hourly.add(gbForecast)
+
+                hourlyTimestamp += 3600
             }
 
             weather.forecasts = ArrayList()
