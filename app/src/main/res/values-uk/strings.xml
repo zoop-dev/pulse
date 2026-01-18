@@ -4116,4 +4116,11 @@
     <string name="solar_intensity">Інтенсивність сонячного світла</string>
     <string name="battery_gain">Посилення заряду батареї</string>
     <string name="menuitem_jet_lag_manager">Менеджер з перепаду часових поясів</string>
+    <string name="uploading_resources">Завантаження ресурсів…</string>
+    <string name="prefs_device_alias">Псевдонім пристрою</string>
+    <string name="set_device_type">Встановити тип пристрою</string>
+    <string name="export_select_start_date">Дата початку</string>
+    <string name="export_select_end_date">Дата завершення</string>
+    <string name="infinitime_filesystem_access_disabled">Доступ до файлової системи вимкнено в InfiniTime</string>
+    <string name="infinitime_resource_upload_progress_status">Виконання дії %d з %d\n%s %s</string>
 </resources>
