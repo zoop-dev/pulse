@@ -2871,6 +2871,7 @@
     <string name="sports_activity_quick_filter_last_month">Previous month</string>
     <string name="sports_activity_quick_filter_7days">7 days</string>
     <string name="sports_activity_quick_filter_30days">30 days</string>
+    <string name="sports_activity_quick_filter_distant_past">Distant past (all workouts)</string>
     <string name="sports_activity_quick_filter_select">Time period</string>
     <string name="sports_activity_confirm_delete_title">Delete %d activities</string>
     <string name="sports_activity_confirm_delete_description">Are you sure you want to delete %d activities?</string>

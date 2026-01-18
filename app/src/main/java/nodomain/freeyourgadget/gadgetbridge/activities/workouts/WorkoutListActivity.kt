@@ -29,6 +29,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes
 import nodomain.freeyourgadget.gadgetbridge.util.ActivitySummaryUtils
 import nodomain.freeyourgadget.gadgetbridge.util.GB
+import nodomain.freeyourgadget.gadgetbridge.util.WorkoutFilterUtils
 import org.slf4j.LoggerFactory
 import java.io.File
 import java.util.BitSet
@@ -127,6 +128,9 @@ class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
         gbDevice = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE)
             ?: throw IllegalArgumentException("Must provide a device when invoking this activity")
         deviceFilter = getDeviceId(gbDevice!!)
+
+        // Load and apply saved quick filter
+        applySavedQuickFilter()
 
         val filterLocal = IntentFilter(GBDevice.ACTION_DEVICE_CHANGED)
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filterLocal)
@@ -471,6 +475,14 @@ class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
                 itemsFilter
             )
         }
+    }
+
+    private fun applySavedQuickFilter() {
+        val savedFilter = GBApplication.getPrefs().preferences.getString("workout_list_quick_filter", "noselection")
+        val dateRange = WorkoutFilterUtils.getDateRangeForFilter(savedFilter) ?: return
+
+        dateFromFilter = dateRange.first
+        dateToFilter = dateRange.second
     }
 
     companion object {
