@@ -4277,4 +4277,11 @@
     <string name="solar_intensity">阳光强度</string>
     <string name="battery_gain">电量增加</string>
     <string name="menuitem_jet_lag_manager">时差管理器</string>
+    <string name="uploading_resources">上传资源中…</string>
+    <string name="prefs_device_alias">设备别名</string>
+    <string name="set_device_type">设置设备类型</string>
+    <string name="export_select_start_date">开始日期</string>
+    <string name="export_select_end_date">结束日期</string>
+    <string name="infinitime_filesystem_access_disabled">Infinitime 禁用了文件系统访问</string>
+    <string name="infinitime_resource_upload_progress_status">正在执行第 %d 项操作，共 %d 项\n%s %s</string>
 </resources>
