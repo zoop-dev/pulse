@@ -4119,4 +4119,9 @@
     <string name="menuitem_jet_lag_manager">Időeltolódás-kezelő</string>
     <string name="prefs_device_alias">Eszköz álneve</string>
     <string name="set_device_type">Eszköz típusának beállítása</string>
+    <string name="infinitime_filesystem_access_disabled">A fájlrendszerhez való hozzáférés le van tiltva az InfiniTime-ban</string>
+    <string name="infinitime_resource_upload_progress_status">%d / %d művelet végrehajtása\n%s %s</string>
+    <string name="uploading_resources">Erőforrások feltöltése…</string>
+    <string name="export_select_start_date">Kezdés dátuma</string>
+    <string name="export_select_end_date">Befejezés dátuma</string>
 </resources>
