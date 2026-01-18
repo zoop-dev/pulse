@@ -4298,4 +4298,9 @@
     <string name="prefs_device_alias">Pseudonim urządzenia</string>
     <string name="set_device_type">Ustaw typ urządzenia</string>
     <string name="menuitem_jet_lag_manager">Asystent jet lagu</string>
+    <string name="uploading_resources">Przesyłanie zasobów…</string>
+    <string name="export_select_start_date">Data rozpoczęcia</string>
+    <string name="export_select_end_date">Data zakończenia</string>
+    <string name="infinitime_filesystem_access_disabled">Dostęp do systemu plików jest wyłączony w InfiniTime</string>
+    <string name="infinitime_resource_upload_progress_status">Wykonywanie czynności %d z %d\n%s %s</string>
 </resources>
