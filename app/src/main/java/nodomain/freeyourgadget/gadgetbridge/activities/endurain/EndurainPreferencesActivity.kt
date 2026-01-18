@@ -17,6 +17,8 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.endurain
 
 import android.os.Bundle
+import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
@@ -31,13 +33,35 @@ class EndurainPreferencesActivity : AbstractSettingsActivityV2() {
 
     class EndurainPreferencesFragment : AbstractPreferenceFragment() {
 
+        private val vm: EndurainSetupViewModel by viewModels()
+
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.endurain_preferences, rootKey)
 
             updateNetworkWarning()
             wireLoginPreference()
-            hideLogoffPreference()
+            wireLogoutPreference()
             updateStatus()
+            setupLoginResultListener()
+        }
+
+        private fun setupLoginResultListener() {
+            parentFragmentManager.setFragmentResultListener(
+                "endurain_login_result",
+                this
+            ) { _, bundle ->
+                val success = bundle.getBoolean("success", false)
+                if (success) {
+                    updateStatus()
+                    updateLogoutPreferenceVisibility()
+                }
+            }
+        }
+
+        override fun onResume() {
+            super.onResume()
+            updateStatus()
+            updateLogoutPreferenceVisibility()
         }
 
         private fun updateNetworkWarning() {
@@ -53,13 +77,41 @@ class EndurainPreferencesActivity : AbstractSettingsActivityV2() {
             }
         }
 
-        private fun hideLogoffPreference() {
-            findPreference<Preference>("pref_key_log_out")?.isVisible = false
+        private fun wireLogoutPreference() {
+            findPreference<Preference>("pref_key_log_out")?.setOnPreferenceClickListener {
+                performLogout()
+                true
+            }
+        }
+
+        private fun performLogout() {
+            vm.logout { success ->
+                activity?.runOnUiThread {
+                    if (success) {
+                        Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
+                        updateStatus()
+                        updateLogoutPreferenceVisibility()
+                    } else {
+                        Toast.makeText(requireContext(), "Logout failed", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
+        private fun updateLogoutPreferenceVisibility() {
+            findPreference<Preference>("pref_key_log_out")?.isVisible = vm.isLoggedIn()
+            findPreference<Preference>("pref_key_log_in")?.isVisible = !vm.isLoggedIn()
         }
 
         private fun updateStatus() {
-            findPreference<Preference>("pref_key_status")?.summary =
-                "Not logged in, integration is disabled"
+            val statusPref = findPreference<Preference>("pref_key_status")
+            val server = GBApplication.getPrefs().preferences.getString("endurain_server", null)
+
+            if (vm.isLoggedIn() && server != null) {
+                statusPref?.summary = "Logged in to $server"
+            } else {
+                statusPref?.summary = "Not logged in, integration is disabled"
+            }
         }
     }
 }

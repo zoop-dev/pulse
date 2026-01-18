@@ -50,6 +50,7 @@ robolectric = "4.16.1"
 searchpreference = "2.7.3"
 slf4j = "2.0.18"
 solarpositioning = "0.1.10"
+security-crypto = "1.1.0"
 
 [libraries]
 ahocorasick = { group = "org.ahocorasick", name = "ahocorasick", version.ref = "ahocorasick" }
@@ -112,6 +113,7 @@ robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "
 searchpreference = { group = "com.github.ByteHamster", name = "SearchPreference", version.ref = "searchpreference" }
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
 solarpositioning = { group = "net.e175.klaus", name = "solarpositioning", version.ref = "solarpositioning" }
+androidx-security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "security-crypto" }
 
 [bundles]
 android-emojify = [

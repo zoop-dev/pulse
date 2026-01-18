@@ -16,54 +16,180 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities.endurain
 
+import android.app.Application
 import androidx.core.net.toUri
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import androidx.lifecycle.AndroidViewModel
 import nodomain.freeyourgadget.gadgetbridge.util.InternetUtils
-import org.json.JSONObject
+import org.slf4j.LoggerFactory
 
-class EndurainSetupViewModel : ViewModel() {
+class EndurainSetupViewModel(application: Application) : AndroidViewModel(application) {
 
-    enum class Step { SERVER, LOGIN_TYPE, LOCAL_LOGIN, SSO_LOGIN, DONE }
+    private val LOG = LoggerFactory.getLogger(EndurainSetupViewModel::class.java)
+    private val tokenManager = EndurainTokenManager(application)
+    private lateinit var apiClient: EndurainApiClient
 
-    var step: Step = Step.SERVER
-    var server: String = ""
-    var localLoginEnabled: Boolean = false
-    var ssoEnabled: Boolean = false
-
-    fun fetchServerCapabilities(
-        server: String,
-        onResult: (Boolean) -> Unit
-    ) {
-        viewModelScope.launch {
-            val ok = withContext(Dispatchers.IO) {
-                val uri = "$server/api/v1/public/server_settings"
-                val json: JSONObject? =
-                    InternetUtils.doJsonRequest(uri.toUri())
-                if (json == null) return@withContext false
-                localLoginEnabled = json.optBoolean("local_login_enabled")
-                ssoEnabled = json.optBoolean("sso_enabled")
-                true
-            }
-            onResult(ok)
-        }
+    enum class Step {
+        SERVER,
+        LOGIN_TYPE,
+        LOCAL_LOGIN,
+        MFA_VERIFY,
+        SSO_LOGIN
     }
 
-    fun performLocalLogin(
-        server: String,
-        user: String,
-        pass: String,
-        onResult: (Boolean) -> Unit
-    ) {
-        viewModelScope.launch {
-            val success = withContext(Dispatchers.IO) {
-                // TODO real API call
-                user.isNotBlank() && pass.isNotBlank()
+    var step = Step.SERVER
+    var server = ""
+    var localLoginEnabled = false
+    var ssoEnabled = false
+    var pendingMfaUsername: String? = null
+
+    /**
+     * Fetch server capabilities to determine available login methods
+     */
+    fun fetchServerCapabilities(serverUrl: String, callback: (Boolean) -> Unit) {
+        Thread {
+            try {
+                // Fetch server settings from the public endpoint
+                val settingsUri = "$serverUrl/api/v1/public/server_settings".toUri()
+                val settingsResponse = InternetUtils.doJsonRequest(
+                    uri = settingsUri,
+                    method = "GET",
+                    allowInsecure = false
+                )
+
+                if (settingsResponse != null) {
+                    // Parse server settings to determine available authentication methods
+                    localLoginEnabled = settingsResponse.optBoolean("local_login_enabled", true)
+                    ssoEnabled = settingsResponse.optBoolean("sso_enabled", false)
+
+                    LOG.info("Server capabilities - Local login: $localLoginEnabled, SSO: $ssoEnabled")
+
+                    // Validate that at least one auth method is available
+                    if (!localLoginEnabled && !ssoEnabled) {
+                        LOG.warn("Server has no authentication methods enabled, defaulting to local login")
+                        localLoginEnabled = true
+                    }
+
+                    callback(true)
+                } else {
+                    LOG.error("Failed to fetch server settings")
+                    // Default to local login on failure
+                    localLoginEnabled = true
+                    ssoEnabled = false
+                    callback(false)
+                }
+            } catch (e: Exception) {
+                LOG.error("Error fetching server capabilities", e)
+                // Default to local login on error
+                localLoginEnabled = true
+                ssoEnabled = false
+                callback(false)
             }
-            onResult(success)
-        }
+        }.start()
+    }
+
+    /**
+     * Perform local username/password login
+     */
+    fun performLocalLogin(
+        serverUrl: String,
+        username: String,
+        password: String,
+        callback: (Boolean) -> Unit
+    ) {
+        Thread {
+            try {
+                apiClient = EndurainApiClient(serverUrl, tokenManager)
+                val response = apiClient.login(username, password)
+
+                when {
+                    response == null -> {
+                        LOG.error("Login failed: null response")
+                        callback(false)
+                    }
+                    response.mfa_required == true -> {
+                        LOG.info("MFA required for user: ${response.username}")
+                        pendingMfaUsername = response.username ?: username
+                        step = Step.MFA_VERIFY
+                        callback(true) // Return true to indicate MFA step is needed
+                    }
+                    response.access_token != null -> {
+                        LOG.info("Login successful")
+                        tokenManager.saveTokens(
+                            response.access_token,
+                            response.refresh_token!!
+                        )
+                        callback(true)
+                    }
+                    else -> {
+                        LOG.error("Login failed: ${response.detail}")
+                        callback(false)
+                    }
+                }
+            } catch (e: Exception) {
+                LOG.error("Login error", e)
+                callback(false)
+            }
+        }.start()
+    }
+
+    /**
+     * Verify MFA code
+     */
+    fun verifyMfa(mfaCode: String, callback: (Boolean) -> Unit) {
+        Thread {
+            try {
+                val username = pendingMfaUsername
+                if (username == null) {
+                    LOG.error("No pending MFA username")
+                    callback(false)
+                    return@Thread
+                }
+
+                val response = apiClient.verifyMfa(username, mfaCode)
+
+                if (response?.access_token != null) {
+                    LOG.info("MFA verification successful")
+                    tokenManager.saveTokens(
+                        response.access_token,
+                        response.refresh_token!!
+                    )
+                    pendingMfaUsername = null
+                    callback(true)
+                } else {
+                    LOG.error("MFA verification failed")
+                    callback(false)
+                }
+            } catch (e: Exception) {
+                LOG.error("MFA verification error", e)
+                callback(false)
+            }
+        }.start()
+    }
+
+    /**
+     * Check if user is currently logged in
+     */
+    fun isLoggedIn(): Boolean {
+        return tokenManager.getAccessToken() != null && !tokenManager.isTokenExpired()
+    }
+
+    /**
+     * Logout and clear tokens
+     */
+    fun logout(callback: (Boolean) -> Unit) {
+        Thread {
+            try {
+                if (::apiClient.isInitialized) {
+                    apiClient.logout()
+                } else {
+                    tokenManager.clearTokens()
+                }
+                callback(true)
+            } catch (e: Exception) {
+                LOG.error("Logout error", e)
+                tokenManager.clearTokens() // Clear tokens anyway
+                callback(true)
+            }
+        }.start()
     }
 }

@@ -261,6 +261,7 @@ dependencies {
     implementation libs.androidx.viewpager2
     implementation libs.androidx.work.runtime.ktx
     implementation libs.androidx.lifecycle.process
+    implementation libs.androidx.security.crypto
 
     implementation libs.material
     implementation libs.flexbox
@@ -289,9 +290,6 @@ dependencies {
     implementation libs.bundles.mapsforge
     implementation libs.androidsvg
     implementation libs.jsoup
-
-    // AppAuth is used for OAuth/PKCE/OIDC functionality, like required by the Endurain integration
-    implementation 'net.openid:appauth:0.11.1'
 
     // Bouncy Castle is included directly in GB, to avoid pulling the entire dependency
     // It's included in the org.bouncycastle.shaded package, to fix conflicts with roboelectric
