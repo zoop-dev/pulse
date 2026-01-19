@@ -4124,4 +4124,14 @@
     <string name="uploading_resources">Erőforrások feltöltése…</string>
     <string name="export_select_start_date">Kezdés dátuma</string>
     <string name="export_select_end_date">Befejezés dátuma</string>
+    <string name="info_no_devices_to_sync">Az összekapcsolt eszközök nem támogatják az adatok szinkronizálását</string>
+    <string name="internet_firewall_title">Tűzfal</string>
+    <string name="internet_firewall_summary">Konfigurálja, hogy mely domainek legyenek elérhetők az interneten keresztül</string>
+    <string name="internet_firewall_domain">Domain</string>
+    <string name="internet_firewall_action">Művelet</string>
+    <string name="internet_firewall_allow">Engedélyezés</string>
+    <string name="internet_firewall_block">Tiltás</string>
+    <string name="internet_firewall_no_domains">Nem találhatók domain-szabályok. Alapértelmezett művelet: %s</string>
+    <string name="internet_firewall_add_domain">Domain hozzáadása</string>
+    <string name="internet_firewall_edit_domain">Domain szerkesztése</string>
 </resources>
