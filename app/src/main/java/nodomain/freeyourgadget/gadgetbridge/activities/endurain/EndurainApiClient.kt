@@ -21,6 +21,7 @@ import androidx.core.net.toUri
 import com.google.gson.Gson
 import nodomain.freeyourgadget.gadgetbridge.util.InternetUtils
 import org.slf4j.LoggerFactory
+import java.io.File
 
 enum class AuthType {
     NONE,
@@ -252,5 +253,33 @@ class EndurainApiClient(
             LOG.error("Authenticated request error", e)
             return null
         }
+    }
+
+    /**
+     * Upload activity file (GPX)
+     */
+    fun uploadActivity(file: File, callback: (Boolean) -> Unit) {
+        Thread {
+            try {
+                val uri = "$baseUrl/api/v1/activities/create/upload".toUri()
+                val headers = buildHeaders(AuthType.AUTH_TOKEN)
+
+                InternetUtils.uploadBinaryFile(
+                    uri = uri,
+                    file = file,
+                    requestHeaders = headers
+                ) { success, responseText ->
+                    if (success && responseText != null) {
+                        callback(true)
+                    } else {
+                        LOG.error("Activity upload failed")
+                        callback(false)
+                    }
+                }
+            } catch (e: Exception) {
+                LOG.error("Activity upload error", e)
+                callback(false)
+            }
+        }.start()
     }
 }

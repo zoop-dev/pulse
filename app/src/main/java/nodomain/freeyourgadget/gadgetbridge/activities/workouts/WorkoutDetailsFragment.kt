@@ -41,6 +41,7 @@ import androidx.core.content.FileProvider
 import androidx.core.graphics.createBitmap
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.github.mikephil.charting.charts.BarLineChartBase
@@ -58,6 +59,9 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.ActivitySummariesChartFragment
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.DurationXLabelFormatter
+import nodomain.freeyourgadget.gadgetbridge.activities.endurain.EndurainApiClient
+import nodomain.freeyourgadget.gadgetbridge.activities.endurain.EndurainSetupViewModel
+import nodomain.freeyourgadget.gadgetbridge.activities.endurain.EndurainTokenManager
 import nodomain.freeyourgadget.gadgetbridge.activities.fit.FitViewerActivity
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.ChartDataRepository
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.DefaultWorkoutCharts
@@ -543,6 +547,11 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
                 true
             }
 
+            R.id.activity_action_upload_to_endurain -> {
+                uploadToEndurain()
+                true
+            }
+
             R.id.activity_action_dev_inspect_file -> {
                 val intent = Intent(requireContext(), FitViewerActivity::class.java).apply {
                     putExtra(FitViewerActivity.EXTRA_PATH, File(workout.summary.rawDetailsPath).absolutePath)
@@ -626,6 +635,16 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             val devToolsMenu = overflowMenu.findItem(R.id.activity_action_dev_tools)
             val devToolsSubMenu = devToolsMenu?.subMenu
             devToolsMenu?.isVisible = devToolsSubMenu != null && devToolsSubMenu.hasVisibleItems()
+        }
+
+        val endurainVm: EndurainSetupViewModel by viewModels()
+        val server = GBApplication.getPrefs().preferences.getString("endurain_server", null)
+        if (server != null) {
+            endurainVm.performTokenRefresh(server) {
+                activity?.runOnUiThread {
+                    overflowMenu?.findItem(R.id.activity_action_upload_to_endurain)?.isVisible = hasGpx && endurainVm.isLoggedIn()
+                }
+            }
         }
     }
 
@@ -725,6 +744,35 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             GB.toast(
                 requireContext(),
                 "Unable to share GPX track: ${e.localizedMessage}",
+                Toast.LENGTH_LONG,
+                GB.ERROR,
+                e
+            )
+        }
+    }
+
+    private fun uploadToEndurain() {
+        val workout = currentWorkout ?: return
+        val gpxFile = ActivitySummaryUtils.getGpxFile(workout.summary)
+
+        if (gpxFile == null) {
+            GB.toast("No GPX track in this activity", Toast.LENGTH_LONG, GB.INFO)
+            return
+        }
+
+        try {
+            val tokenManager = EndurainTokenManager(requireContext())
+            val serverUrl = GBApplication.getPrefs().preferences.getString("endurain_server", null)
+            val apiClient = EndurainApiClient(serverUrl!!, tokenManager)
+            apiClient.uploadActivity(gpxFile) { success ->
+                if (success)
+                    GB.toast("Successfully uploaded to Endurain", Toast.LENGTH_SHORT, GB.INFO)
+                else
+                    GB.toast("Error while uploading to Endurain", Toast.LENGTH_SHORT, GB.INFO)
+            }
+        } catch (e: Exception) {
+            GB.toast(
+                "Unable to upload GPX file to Endurain: ${e.localizedMessage}",
                 Toast.LENGTH_LONG,
                 GB.ERROR,
                 e

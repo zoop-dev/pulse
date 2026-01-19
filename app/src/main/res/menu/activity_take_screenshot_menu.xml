@@ -51,6 +51,12 @@
                 app:showAsAction="never" />
 
             <item
+                android:id="@+id/activity_action_upload_to_endurain"
+                android:icon="@drawable/ic_file_upload"
+                android:title="Upload to Endurain"
+                app:showAsAction="never" />
+
+            <item
                 android:id="@+id/activity_action_dev_tools"
                 android:icon="@drawable/ic_developer_mode"
                 android:title="@string/dev_tools"

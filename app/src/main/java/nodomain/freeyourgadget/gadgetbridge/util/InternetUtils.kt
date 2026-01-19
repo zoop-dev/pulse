@@ -32,6 +32,7 @@ import org.json.JSONObject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.security.SecureRandom
@@ -147,6 +148,83 @@ class InternetUtils {
             } catch (e: Exception) {
                 LOG.error("Downloading $uri failed: ", e)
             }
+        }
+
+        fun uploadBinaryFile(
+            uri: Uri,
+            file: File,
+            requestHeaders: Map<String, String> = emptyMap(),
+            allowInsecure: Boolean = false,
+            onComplete: (success: Boolean, response: String?) -> Unit
+        ) {
+            try {
+                if (!file.exists() || !file.canRead()) {
+                    LOG.error("File does not exist or cannot be read: ${file.path}")
+                    onComplete(false, null)
+                    return
+                }
+
+                val fileName = file.name
+                val mimeType = when (fileName.substringAfterLast('.', "").lowercase()) {
+                    "gpx" -> "application/gpx+xml"
+                    else -> "application/octet-stream"
+                }
+
+                val boundary = "----GadgetbridgeFormBoundary${System.currentTimeMillis()}"
+                val multipartBody = buildMultipartBody(file, fileName, mimeType, boundary)
+
+                val headers = requestHeaders.toMutableMap()
+                headers["Content-Type"] = "multipart/form-data; boundary=$boundary"
+
+                val response = if (GBApplication.hasDirectInternetAccess()) {
+                    directRequest(
+                        uri = uri,
+                        method = "POST",
+                        requestHeaders = headers,
+                        body = multipartBody,
+                        allowInsecure = allowInsecure
+                    )
+                } else {
+                    InternetHelperSingleton.send(
+                        uri,
+                        HttpRequest.Method.POST,
+                        headers,
+                        multipartBody.toByteArray(),
+                        allowInsecure
+                    )
+                }
+
+                val responseText = response?.data?.bufferedReader()?.use { it.readText() }
+                onComplete(response != null, responseText)
+            } catch (e: Exception) {
+                LOG.error("Uploading $uri failed: ", e)
+                onComplete(false, null)
+            }
+        }
+
+        private fun buildMultipartBody(
+            file: File,
+            fileName: String,
+            mimeType: String,
+            boundary: String
+        ): String {
+            val fileBytes = file.readBytes()
+            val output = ByteArrayOutputStream()
+            val writer = output.bufferedWriter()
+
+            writer.write("--$boundary\r\n")
+            writer.write("Content-Disposition: form-data; name=\"file\"; filename=\"$fileName\"\r\n")
+            writer.write("Content-Type: $mimeType\r\n")
+            writer.write("\r\n")
+            writer.flush()
+
+            output.write(fileBytes)
+
+            writer.write("\r\n")
+            writer.write("--$boundary--\r\n")
+            writer.flush()
+
+            return output.toString("UTF-8")
         }
 
         /**
