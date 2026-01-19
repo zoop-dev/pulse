@@ -22,11 +22,17 @@ import com.google.gson.Gson
 import nodomain.freeyourgadget.gadgetbridge.util.InternetUtils
 import org.slf4j.LoggerFactory
 
+enum class AuthType {
+    NONE,
+    AUTH_TOKEN,
+    REFRESH_TOKEN
+}
+
 data class LoginResponse(
     val session_id: String? = null,
     val access_token: String? = null,
     val refresh_token: String? = null,
-    val expires_in: Long? = null,
+    val expires_in: Int? = null,
     val token_type: String? = null,
     val mfa_required: Boolean? = null,
     val username: String? = null,
@@ -36,10 +42,6 @@ data class LoginResponse(
 data class MfaVerifyRequest(
     val username: String,
     val mfa_code: String
-)
-
-data class TokenRefreshRequest(
-    val refresh_token: String
 )
 
 data class TokenExchangeRequest(
@@ -56,11 +58,21 @@ class EndurainApiClient(
     /**
      * Build headers with authentication tokens
      */
-    private fun buildHeaders(): Map<String, String> {
+    private fun buildHeaders(auth: AuthType): MutableMap<String, String> {
         val headers = mutableMapOf("X-Client-Type" to "mobile")
 
-        tokenManager.getAccessToken()?.let { token ->
-            headers["Authorization"] = "Bearer $token"
+        when (auth) {
+            AuthType.AUTH_TOKEN -> {
+                tokenManager.getAccessToken()?.let { token ->
+                    headers["Authorization"] = "Bearer $token"
+                }
+            }
+            AuthType.REFRESH_TOKEN -> {
+                tokenManager.getRefreshToken()?.let { token ->
+                    headers["Authorization"] = "Bearer $token"
+                }
+            }
+            else -> {}
         }
 
         return headers
@@ -76,15 +88,14 @@ class EndurainApiClient(
             // Form-encoded body
             val body = "username=${Uri.encode(username)}&password=${Uri.encode(password)}"
 
-            val headers = mapOf("X-Client-Type" to "mobile")
+            val headers = buildHeaders(AuthType.NONE)
+            headers["Content-Type"] = "application/x-www-form-urlencoded"
 
             val responseText = InternetUtils.doStringRequest(
                 uri = uri,
                 method = "POST",
                 requestHeaders = headers,
-                body = body,
-                bodyContentType = "application/x-www-form-urlencoded",
-                allowInsecure = false
+                body = body
             )
 
             return if (responseText != null) {
@@ -109,15 +120,14 @@ class EndurainApiClient(
             val request = MfaVerifyRequest(username, mfaCode)
             val body = gson.toJson(request)
 
-            val headers = mapOf("X-Client-Type" to "mobile")
+            val headers = buildHeaders(AuthType.NONE)
+            headers["Content-Type"] = "application/json"
 
             val responseText = InternetUtils.doStringRequest(
                 uri = uri,
                 method = "POST",
                 requestHeaders = headers,
-                body = body,
-                bodyContentType = "application/json",
-                allowInsecure = false
+                body = body
             )
 
             return if (responseText != null) {
@@ -137,26 +147,16 @@ class EndurainApiClient(
      */
     fun refreshToken(): LoginResponse? {
         try {
-            val refreshToken = tokenManager.getRefreshToken()
-            if (refreshToken == null) {
-                LOG.error("No refresh token available")
-                return null
-            }
-
             val uri = "$baseUrl/api/v1/auth/refresh".toUri()
 
-            val request = TokenRefreshRequest(refreshToken)
-            val body = gson.toJson(request)
-
-            val headers = buildHeaders()
+            val headers = buildHeaders(AuthType.REFRESH_TOKEN)
+            headers["Content-Type"] = "application/json"
 
             val responseText = InternetUtils.doStringRequest(
                 uri = uri,
                 method = "POST",
                 requestHeaders = headers,
-                body = body,
-                bodyContentType = "application/json",
-                allowInsecure = false
+                body = "{}"
             )
 
             return if (responseText != null) {
@@ -178,15 +178,14 @@ class EndurainApiClient(
         try {
             val uri = "$baseUrl/api/v1/auth/logout".toUri()
 
-            val headers = buildHeaders()
+            val headers = buildHeaders(AuthType.AUTH_TOKEN)
+            headers["Content-Type"] = "application/json"
 
             InternetUtils.doStringRequest(
                 uri = uri,
                 method = "POST",
                 requestHeaders = headers,
-                body = null,
-                bodyContentType = "application/json",
-                allowInsecure = false
+                body = "{}"
             )
 
             tokenManager.clearTokens()
@@ -207,15 +206,14 @@ class EndurainApiClient(
             val request = TokenExchangeRequest(codeVerifier)
             val body = gson.toJson(request)
 
-            val headers = mapOf("X-Client-Type" to "mobile")
+            val headers = buildHeaders(AuthType.NONE)
+            headers["Content-Type"] = "application/json"
 
             val responseText = InternetUtils.doStringRequest(
                 uri = uri,
                 method = "POST",
                 requestHeaders = headers,
-                body = body,
-                bodyContentType = "application/json",
-                allowInsecure = false
+                body = body
             )
 
             return if (responseText != null) {
@@ -241,15 +239,14 @@ class EndurainApiClient(
         try {
             val uri = "$baseUrl$endpoint".toUri()
 
-            val headers = buildHeaders()
+            val headers = buildHeaders(AuthType.AUTH_TOKEN)
+            headers["Content-Type"] = "application/json"
 
             return InternetUtils.doStringRequest(
                 uri = uri,
                 method = method,
                 requestHeaders = headers,
-                body = body,
-                bodyContentType = "application/json",
-                allowInsecure = false
+                body = body
             )
         } catch (e: Exception) {
             LOG.error("Authenticated request error", e)

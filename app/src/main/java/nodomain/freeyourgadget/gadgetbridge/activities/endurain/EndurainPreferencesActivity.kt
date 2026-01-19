@@ -42,7 +42,20 @@ class EndurainPreferencesActivity : AbstractSettingsActivityV2() {
             wireLoginPreference()
             wireLogoutPreference()
             updateStatus()
+            updateLogoutPreferenceVisibility()
             setupLoginResultListener()
+
+            // Refresh auth token
+            val vm: EndurainSetupViewModel by viewModels()
+            val server = GBApplication.getPrefs().preferences.getString("endurain_server", null)
+            if (server != null) {
+                vm.performTokenRefresh(server) {
+                    activity?.runOnUiThread {
+                        updateStatus()
+                        updateLogoutPreferenceVisibility()
+                    }
+                }
+            }
         }
 
         private fun setupLoginResultListener() {
@@ -106,9 +119,10 @@ class EndurainPreferencesActivity : AbstractSettingsActivityV2() {
         private fun updateStatus() {
             val statusPref = findPreference<Preference>("pref_key_status")
             val server = GBApplication.getPrefs().preferences.getString("endurain_server", null)
+            val tokenExpiresAt = vm.getTokenExpiresAt()
 
             if (vm.isLoggedIn() && server != null) {
-                statusPref?.summary = "Logged in to $server"
+                statusPref?.summary = "Logged in to $server\nAuth token expires: $tokenExpiresAt"
             } else {
                 statusPref?.summary = "Not logged in, integration is disabled"
             }

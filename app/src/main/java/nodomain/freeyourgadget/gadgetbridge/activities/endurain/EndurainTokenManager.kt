@@ -34,19 +34,19 @@ class EndurainTokenManager(context: Context) {
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )
 
-    fun saveTokens(accessToken: String, refreshToken: String) {
+    fun saveTokens(accessToken: String, refreshToken: String, accessTokenExpiresAt: Int) {
         sharedPreferences.edit {
             putString("access_token", accessToken)
                 .putString("refresh_token", refreshToken)
-                .putLong("expires_at", System.currentTimeMillis() + (15 * 60 * 1000))
+                .putInt("expires_at", accessTokenExpiresAt)
         }
     }
 
     fun getAccessToken(): String? = sharedPreferences.getString("access_token", null)
     fun getRefreshToken(): String? = sharedPreferences.getString("refresh_token", null)
+    fun getAccessTokenExpiresAt(): Int = sharedPreferences.getInt("expires_at", 0)
     fun isTokenExpired(): Boolean {
-        val expiresAt = sharedPreferences.getLong("expires_at", 0)
-        return System.currentTimeMillis() >= expiresAt
+        return (System.currentTimeMillis() / 1000) >= getAccessTokenExpiresAt()
     }
 
     fun clearTokens() {
