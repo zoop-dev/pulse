@@ -33,9 +33,9 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper
-import nodomain.freeyourgadget.gadgetbridge.devices.AbstractSampleProvider
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.devices.GlucoseSampleProvider
+import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao
 import nodomain.freeyourgadget.gadgetbridge.entities.HealthConnectSyncState
@@ -650,7 +650,7 @@ class HealthConnectUtils {
                 is TimeSampleProvider<*> -> {
                     provider.firstSample?.timestamp?.takeIf { it > 0 }?.let { Instant.ofEpochMilli(it) }
                 }
-                is AbstractSampleProvider<*> -> { // For ActivitySample based providers
+                is SampleProvider<*> -> { // For ActivitySample based providers
                     provider.firstActivitySample?.timestamp?.takeIf { it > 0 }?.let { Instant.ofEpochSecond(it.toLong()) }
                 }
                 is BaseActivitySummaryDao -> {
@@ -680,7 +680,7 @@ class HealthConnectUtils {
                 is TimeSampleProvider<*> -> {
                     provider.latestSample?.timestamp?.takeIf { it > 0 }?.let { Instant.ofEpochMilli(it) }
                 }
-                is AbstractSampleProvider<*> -> { // For ActivitySample based providers
+                is SampleProvider<*> -> { // For ActivitySample based providers
                     provider.latestActivitySample?.timestamp?.takeIf { it > 0 }?.let { Instant.ofEpochSecond(it.toLong()) }
                 }
                 is BaseActivitySummaryDao -> {

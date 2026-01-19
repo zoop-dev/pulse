@@ -21,12 +21,8 @@ import androidx.health.connect.client.permission.HealthPermission
 import androidx.health.connect.client.records.HeartRateRecord
 import androidx.health.connect.client.records.Record
 import androidx.health.connect.client.records.metadata.Metadata
-import nodomain.freeyourgadget.gadgetbridge.GBApplication
-import nodomain.freeyourgadget.gadgetbridge.activities.HeartRateUtils
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample
-import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs
-import nodomain.freeyourgadget.gadgetbridge.util.Prefs
 import nodomain.freeyourgadget.gadgetbridge.util.healthconnect.HealthConnectUtils
 import org.slf4j.LoggerFactory
 import java.time.Instant
@@ -56,8 +52,6 @@ internal object HeartRateSyncer : ActivitySampleSyncer {
         }
 
         // 2. Relevant Input Data Check
-        val prefs: Prefs = GBApplication.getPrefs()
-
         val validHRSamples = deviceSamples
             .filter { it.heartRate in 20..250 }
             .sortedBy { it.timestamp }
