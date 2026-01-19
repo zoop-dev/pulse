@@ -18,6 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.util
 
 import android.net.Uri
 import android.webkit.WebResourceResponse
+import nodomain.freeyourgadget.gadgetbridge.BuildConfig
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.internethelper.aidl.http.HttpRequest
 import okhttp3.Headers
@@ -43,6 +44,23 @@ class InternetUtils {
     companion object {
         private val LOG: Logger = LoggerFactory.getLogger(InternetUtils::class.java)
         private val defaultClient = OkHttpClient()
+        private const val USER_AGENT = "Gadgetbridge/${BuildConfig.VERSION_NAME} (${BuildConfig.GIT_HASH_SHORT})"
+
+        /**
+         * Returns a new Map containing the User-Agent header.
+         * If the provided Map already contains a User-Agent, it is kept intact.
+         */
+        fun headersWithUserAgent(
+            requestHeaders: Map<String, String>
+        ): Map<String, String> {
+            val hasUserAgent = requestHeaders.keys.any { it.equals("User-Agent", ignoreCase = true) }
+
+            return if (hasUserAgent) {
+                requestHeaders
+            } else {
+                requestHeaders + ("User-Agent" to USER_AGENT)
+            }
+        }
 
         /**
          * Performs an HTTP request to the given URI, optionally allowing insecure connections.
@@ -61,7 +79,7 @@ class InternetUtils {
                 InternetHelperSingleton.send(
                     uri,
                     HttpRequest.Method.valueOf(method),
-                    requestHeaders,
+                    headersWithUserAgent(requestHeaders),
                     body,
                     bodyContentType,
                     allowInsecure,
@@ -84,7 +102,7 @@ class InternetUtils {
             val text = doStringRequest(
                 uri,
                 method,
-                requestHeaders,
+                headersWithUserAgent(requestHeaders),
                 body,
                 bodyContentType,
                 allowInsecure
@@ -107,7 +125,7 @@ class InternetUtils {
                     directRequest(
                         uri = uri,
                         method = "GET",
-                        requestHeaders = emptyMap(),
+                        requestHeaders = mapOf("User-Agent" to USER_AGENT),
                         body = null,
                         bodyContentType = "application/octet-stream",
                         allowInsecure = false
@@ -116,7 +134,7 @@ class InternetUtils {
                     InternetHelperSingleton.send(
                         uri,
                         HttpRequest.Method.GET,
-                        requestHeaders = emptyMap(),
+                        requestHeaders = mapOf("User-Agent" to USER_AGENT),
                         null,
                         "application/octet-stream",
                         false
@@ -153,7 +171,7 @@ class InternetUtils {
             val builder = Request.Builder().url(uri.toString())
 
             // Apply request headers
-            for ((key, value) in requestHeaders) {
+            for ((key, value) in headersWithUserAgent(requestHeaders)) {
                 builder.addHeader(key, value)
             }
 
