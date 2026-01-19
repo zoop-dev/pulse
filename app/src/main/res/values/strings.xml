@@ -2780,8 +2780,12 @@
     <string name="solar_intensity">Solar intensity</string>
     <string name="battery_gain">Battery gain</string>
     <string name="vertical_oscillation">Vertical Oscillation</string>
+    <string name="max_vertical_oscillation">Max Vertical Oscillation</string>
+    <string name="min_vertical_oscillation">Min Vertical Oscillation</string>
     <string name="ground_contact_time">Ground Contact Time</string>
+    <string name="min_ground_contact_time">Min Ground Contact Time</string>
     <string name="vertical_ratio">Vertical Ratio</string>
+    <string name="min_vertical_ratio">Min Vertical Ratio</string>
     <string name="ground_contact_time_balance">Ground Contact Time Balance</string>
     <string name="running_step_speed_loss">Step Speed Loss</string>
     <string name="running_step_speed_loss_percentage">Step Speed Loss %</string>

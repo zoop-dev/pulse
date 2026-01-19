@@ -67,13 +67,18 @@ public class XiaomiSimpleActivityParser {
         final Map<String, Number> hrZones = new HashMap<>(5);
 
         for (int i = 0; i < dataEntries.size(); i++) {
+            final int before = buf.position();
+
             final XiaomiSimpleDataEntry dataEntry = dataEntries.get(i);
 
             final Number value = dataEntry.get(buf);
+            final int fieldSize = buf.position() - before;
             if (value == null) {
-                LOG.debug("Skipping unknown field {}", i);
+                LOG.debug("Field {} = {} unknown bytes, skipping", i, fieldSize);
                 continue;
             }
+
+            LOG.debug("Field {} = {} as {} ({}b)", i, value, dataEntry, fieldSize);
 
             // Each bit in the header marks whether the data is valid or not, in order of the fields
             final boolean validData = (header[i / 8] & (1 << (7 - (i % 8)))) != 0;
@@ -169,6 +174,11 @@ public class XiaomiSimpleActivityParser {
             return this;
         }
 
+        public Builder addShort(final String key, final String unit, final double multiplier) {
+            dataEntries.add(new XiaomiSimpleDataEntry(key, unit, ByteBuffer::getShort, multiplier));
+            return this;
+        }
+
         public Builder addInt(final String key, final String unit) {
             dataEntries.add(new XiaomiSimpleDataEntry(key, unit, ByteBuffer::getInt));
             return this;
@@ -181,9 +191,7 @@ public class XiaomiSimpleActivityParser {
 
         public Builder addUnknown(final int sizeBytes) {
             dataEntries.add(new XiaomiSimpleDataEntry(null, null, buf -> {
-                for (int i = 0; i < sizeBytes; i++) {
-                    buf.get();
-                }
+                buf.get(new byte[sizeBytes]);
                 return null;
             }));
             return this;

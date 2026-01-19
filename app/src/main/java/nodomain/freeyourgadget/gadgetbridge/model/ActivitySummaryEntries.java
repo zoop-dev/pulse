@@ -105,8 +105,12 @@ public class ActivitySummaryEntries {
     public static final String MOUNTAIN_BIKE_FLOW_SCORE = "mountain_bike_flow_score";
 
     public static final String AVG_VERTICAL_OSCILLATION = "vertical_oscillation";
+    public static final String MAX_VERTICAL_OSCILLATION = "max_vertical_oscillation";
+    public static final String MIN_VERTICAL_OSCILLATION = "min_vertical_oscillation";
     public static final String AVG_GROUND_CONTACT_TIME = "ground_contact_time";
+    public static final String MIN_GROUND_CONTACT_TIME = "min_ground_contact_time";
     public static final String AVG_VERTICAL_RATIO = "vertical_ratio";
+    public static final String MIN_VERTICAL_RATIO = "min_vertical_ratio";
     public static final String AVG_GROUND_CONTACT_TIME_BALANCE = "ground_contact_time_balance";
     public static final String STEP_SPEED_LOSS = "running_step_speed_loss";
     public static final String STEP_SPEED_LOSS_PERCENTAGE = "running_step_speed_loss_percentage";

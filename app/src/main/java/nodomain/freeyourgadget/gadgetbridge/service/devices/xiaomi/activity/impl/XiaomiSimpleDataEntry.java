@@ -16,17 +16,25 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl;
 
+import androidx.annotation.NonNull;
+
 import java.nio.ByteBuffer;
 
 public class XiaomiSimpleDataEntry {
     private final String key;
     private final String unit;
+    private final double multiplier;
     private final Getter getter;
 
     public XiaomiSimpleDataEntry(final String key, final String unit, final Getter getter) {
+        this(key, unit, getter, 1);
+    }
+
+    public XiaomiSimpleDataEntry(final String key, final String unit, final Getter getter, final double multiplier) {
         this.key = key;
         this.unit = unit;
         this.getter = getter;
+        this.multiplier = multiplier;
     }
 
     public String getKey() {
@@ -38,10 +46,26 @@ public class XiaomiSimpleDataEntry {
     }
 
     public Number get(final ByteBuffer buf) {
-        return getter.get(buf);
+        final Number value = getter.get(buf);
+        if (value == null) {
+            return value;
+        }
+        if (multiplier != 1) {
+            return value.doubleValue() * multiplier;
+        }
+        return value;
     }
 
     public interface Getter {
         Number get(ByteBuffer buf);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "XiaomiSimpleDataEntry{" +
+                "key='" + key + '\'' +
+                ", unit='" + unit + '\'' +
+                '}';
     }
 }
