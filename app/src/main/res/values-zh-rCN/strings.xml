@@ -4284,4 +4284,14 @@
     <string name="export_select_end_date">结束日期</string>
     <string name="infinitime_filesystem_access_disabled">Infinitime 禁用了文件系统访问</string>
     <string name="infinitime_resource_upload_progress_status">正在执行第 %d 项操作，共 %d 项\n%s %s</string>
+    <string name="info_no_devices_to_sync">连接的设备不支持数据同步</string>
+    <string name="internet_firewall_title">防火墙</string>
+    <string name="internet_firewall_summary">配置哪些域名可以通过互联网访问</string>
+    <string name="internet_firewall_domain">域名</string>
+    <string name="internet_firewall_action">操作</string>
+    <string name="internet_firewall_allow">允许</string>
+    <string name="internet_firewall_block">拦截</string>
+    <string name="internet_firewall_no_domains">未找到域名规则。默认操作：%s</string>
+    <string name="internet_firewall_add_domain">添加域名</string>
+    <string name="internet_firewall_edit_domain">编辑域名</string>
 </resources>
