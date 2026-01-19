@@ -857,8 +857,8 @@
     <string name="averageStrokesPerSecond">Середня кількість гребків</string>
     <string name="averageStrokeDistance">Середня відстань гребка</string>
     <string name="averageStride">Середній крок</string>
-    <string name="averageKMPaceSeconds">Середній Темп</string>
-    <string name="averageHR">Середній Оцінка Пульс</string>
+    <string name="averageKMPaceSeconds">Середній темп</string>
+    <string name="averageHR">Середній пульс</string>
     <string name="totalStride">Звичайний крок</string>
     <string name="maxPace">Найшвидший темп</string>
     <string name="minPace">Найповільніший темп</string>
@@ -1285,11 +1285,11 @@
     <string name="mi2_prefs_do_not_disturb_lift_wrist">Вмикати екран у разі підняття руки під час режиму «Не турбувати»</string>
     <string name="averageAltitude">Середня</string>
     <string name="minSpeed">Найнижча</string>
-    <string name="maxHR">Максимальна частота серцевих скорочень</string>
+    <string name="maxHR">Максимальний пульс</string>
     <string name="spm">кроків/хв</string>
     <string name="averageCadence">Середній Каденс</string>
     <string name="maxCadence">Найвищий темп</string>
-    <string name="minHR">Мінімальна частота серцевих скорочень</string>
+    <string name="minHR">Мінімальний пульс</string>
     <string name="maxStride">Максимальний крок</string>
     <string name="minStride">Мінімальний крок</string>
     <string name="minCadence">Найнижчий темп</string>
@@ -3313,8 +3313,8 @@
     <string name="menuitem_zepp_flow">Зепп Флоу</string>
     <string name="zepp_os_sun_moon_utc_title">Надсилати час сонця/місяця в UTC</string>
     <string name="zepp_os_sun_moon_utc_summary">Увімкніть цю функцію, якщо ваш годинник відображає неправильні значення сонячного та місячного часу</string>
-    <string name="active_calories_avg">Активний середній показник</string>
-    <string name="active_calories_total">Активний загальний</string>
+    <string name="active_calories_avg">Середня активність</string>
+    <string name="active_calories_total">Загальна активність</string>
     <string name="resting_calories_total">Загальний результат у стані спокою</string>
     <string name="calorie_over_goal">Вище цілі: %1$d ккал</string>
     <string name="calorie_under_goal">Нижче цільового показника: %1$d ккал</string>
