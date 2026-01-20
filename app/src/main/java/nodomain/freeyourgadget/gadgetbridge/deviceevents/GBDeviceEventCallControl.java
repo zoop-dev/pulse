@@ -45,7 +45,7 @@ public class GBDeviceEventCallControl extends GBDeviceEvent {
         LOG.info("Got event for CALL_CONTROL");
         if (event == GBDeviceEventCallControl.Event.IGNORE) {
             LOG.info("Sending intent for mute");
-            final Intent broadcastIntent = new Intent(context.getPackageName() + ".MUTE_CALL");
+            final Intent broadcastIntent = new Intent("nodomain.freeyourgadget.gadgetbridge.MUTE_CALL");
             broadcastIntent.setPackage(context.getPackageName());
             context.sendBroadcast(broadcastIntent);
             return;

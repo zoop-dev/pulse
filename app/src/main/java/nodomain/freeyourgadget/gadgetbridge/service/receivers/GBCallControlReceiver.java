@@ -45,6 +45,8 @@ public class GBCallControlReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         GBDeviceEventCallControl.Event callCmd = GBDeviceEventCallControl.Event.values()[intent.getIntExtra("event", 0)];
 
+        LOG.debug("Got call control event: {}", callCmd);
+
         if (GBApplication.isRunningPieOrLater()) {
             handleCallCmdTelecomManager(callCmd);
         } else {
