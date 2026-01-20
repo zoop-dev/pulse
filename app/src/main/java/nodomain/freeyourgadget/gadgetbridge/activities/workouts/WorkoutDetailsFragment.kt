@@ -329,11 +329,10 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
 
     private fun addGroupContent(entries: List<Pair<String, ActivitySummaryEntry>>) {
         val gridTableBuilder = GridTableBuilder(requireContext(), workoutValueFormatter)
-        // Map keys from string resource names to actual human-readable labels
-        val mappedLabels = entries.map { Pair.of(workoutValueFormatter.getStringResourceByName(it.key), it.value) }
-            .toList()
-        val gridLayout = gridTableBuilder.buildGridLayout(mappedLabels)
-        binding.summaryDetails.addView(gridLayout)
+        for ((key, entry) in entries) {
+            gridTableBuilder.addEntry(workoutValueFormatter.getStringResourceByName(key), entry)
+        }
+        binding.summaryDetails.addView(gridTableBuilder.build())
     }
 
     @Suppress("SameParameterValue")

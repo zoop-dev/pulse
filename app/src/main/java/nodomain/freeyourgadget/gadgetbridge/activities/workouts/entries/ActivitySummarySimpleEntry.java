@@ -12,6 +12,8 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.WorkoutValueFormatter;
 
 public class ActivitySummarySimpleEntry extends ActivitySummaryEntry {
+    public static final ActivitySummarySimpleEntry EMPTY = new ActivitySummarySimpleEntry("-", "string");
+
     private final Object value;
     private final String unit;
 

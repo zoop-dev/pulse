@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
-import androidx.gridlayout.widget.GridLayout;
 
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -40,7 +39,6 @@ import java.util.Locale;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.HeartRateUtils;
-import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryEntry;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummarySimpleEntry;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
@@ -130,19 +128,19 @@ public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeri
     @Override
     protected void init() {
         Prefs prefs = GBApplication.getPrefs();
-        CHART_TEXT_COLOR = GBApplication.getSecondaryTextColor(getContext());
-        DESCRIPTION_COLOR = LEGEND_TEXT_COLOR = TEXT_COLOR = GBApplication.getTextColor(getContext());
+        CHART_TEXT_COLOR = GBApplication.getSecondaryTextColor(requireContext());
+        DESCRIPTION_COLOR = LEGEND_TEXT_COLOR = TEXT_COLOR = GBApplication.getTextColor(requireContext());
         if (prefs.getBoolean("chart_heartrate_color", false)) {
-            HEARTRATE_COLOR = ContextCompat.getColor(getContext(), R.color.chart_heartrate_alternative);
+            HEARTRATE_COLOR = ContextCompat.getColor(requireContext(), R.color.chart_heartrate_alternative);
         } else {
-            HEARTRATE_COLOR = ContextCompat.getColor(getContext(), R.color.chart_heartrate);
+            HEARTRATE_COLOR = ContextCompat.getColor(requireContext(), R.color.chart_heartrate);
         }
-        HEARTRATE_MIN_COLOR = ContextCompat.getColor(getContext(), R.color.chart_heartrate_minimum);
-        HEARTRATE_MAX_COLOR = ContextCompat.getColor(getContext(), R.color.chart_heartrate_maximum);
-        HEARTRATE_RESTING_COLOR = ContextCompat.getColor(getContext(), R.color.chart_heartrate_resting);
+        HEARTRATE_MIN_COLOR = ContextCompat.getColor(requireContext(), R.color.chart_heartrate_minimum);
+        HEARTRATE_MAX_COLOR = ContextCompat.getColor(requireContext(), R.color.chart_heartrate_maximum);
+        HEARTRATE_RESTING_COLOR = ContextCompat.getColor(requireContext(), R.color.chart_heartrate_resting);
     }
 
-    private HeartRateData fetchHeartRateDataForDay(ChartsHost chartsHost, DBHandler db, GBDevice device, int startTs) {
+    private HeartRateData fetchHeartRateDataForDay(DBHandler db, GBDevice device, int startTs) {
         int endTs = startTs + SEC_PER_DAY - 1;
         List<? extends ActivitySample> samples = getActivitySamples(db, device, startTs, endTs);
         final HeartRateUtils heartRateUtilsInstance = HeartRateUtils.getInstance();
@@ -180,7 +178,7 @@ public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeri
 
         List<HeartRateData> result = new ArrayList<>();
         for (int i = 0; i < TOTAL_DAYS; i++) {
-            HeartRateData dayData = fetchHeartRateDataForDay(chartsHost, db, device, startTs + i * SEC_PER_DAY);
+            HeartRateData dayData = fetchHeartRateDataForDay(db, device, startTs + i * SEC_PER_DAY);
             result.add(dayData);
         }
         return new HeartRatePeriodData(result);
@@ -293,36 +291,31 @@ public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeri
     private void setStatistics(int average, int minimum, int maximum, int resting) {
         hrStatsContainer.removeAllViews();
 
-        final List<Pair<String, ActivitySummaryEntry>> entries = new ArrayList<>();
+        final GridTableBuilder builder = new GridTableBuilder(requireContext());
 
-        final ActivitySummarySimpleEntry empty = new ActivitySummarySimpleEntry("-", "string");
-
-        entries.add(Pair.of(
+        builder.addEntry(
                 getString(R.string.hr_minimum),
-                minimum > 0 ? new ActivitySummarySimpleEntry(minimum, UNIT_BPM) : empty
-        ));
+                minimum > 0 ? new ActivitySummarySimpleEntry(minimum, UNIT_BPM) : null
+        );
 
-        entries.add(Pair.of(
+        builder.addEntry(
                 getString(R.string.hr_maximum),
-                maximum > 0 ? new ActivitySummarySimpleEntry(maximum, UNIT_BPM) : empty
-        ));
+                maximum > 0 ? new ActivitySummarySimpleEntry(maximum, UNIT_BPM) : null
+        );
 
-        entries.add(Pair.of(
+        builder.addEntry(
                 getString(R.string.hr_average),
-                average > 0 ? new ActivitySummarySimpleEntry(average, UNIT_BPM) : empty
-        ));
+                average > 0 ? new ActivitySummarySimpleEntry(average, UNIT_BPM) : null
+        );
 
         if (supportsHeartRateRestingMeasurement()) {
-            entries.add(Pair.of(
+            builder.addEntry(
                     getString(R.string.hr_resting),
-                    resting > 0 ? new ActivitySummarySimpleEntry(resting, UNIT_BPM) : empty
-            ));
+                    resting > 0 ? new ActivitySummarySimpleEntry(resting, UNIT_BPM) : null
+            );
         }
 
-        // Build and add the grid
-        final GridTableBuilder builder = new GridTableBuilder(requireContext());
-        final GridLayout gridLayout = builder.buildGridLayout(entries);
-        hrStatsContainer.addView(gridLayout);
+        hrStatsContainer.addView(builder.build());
 
         if (minimum > 0) {
             hrLineChart.getAxisLeft().setAxisMinimum(Math.max(minimum - 30, 0));

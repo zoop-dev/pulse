@@ -6,10 +6,16 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.ActivityChartsActivity.UnknownFragment
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst
+import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryEntry
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import java.util.Locale
 
-object DefaultChartsProvider : DeviceChartsProvider {
+open class DefaultChartsProvider : DeviceChartsProvider {
+    companion object {
+        @JvmField
+        val INSTANCE = DefaultChartsProvider()
+    }
+
     override fun getSupportedCharts(device: GBDevice): List<String> {
         val coordinator = device.deviceCoordinator
         val supportedCharts = mutableListOf<String>()

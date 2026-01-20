@@ -17,6 +17,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities.charts;
 
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_BPM;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -56,6 +58,7 @@ import java.util.concurrent.TimeUnit;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.HeartRateUtils;
+import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummarySimpleEntry;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.SleepAnalysis.SleepSession;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.sleep.AbstractOverlayData;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.sleep.OverlayDataFloat;
@@ -78,6 +81,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.model.TimeSample;
 import nodomain.freeyourgadget.gadgetbridge.util.Accumulator;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.GridTableBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 
@@ -420,10 +424,34 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
         int heartRateMax = mcd.getHeartRateAxisMax();
         int heartRateAvg = Math.round(mcd.getHeartRateAverage());
         float intensityTotal = mcd.getIntensityTotal();
-        binding.sleepHrLowest.setText(String.valueOf(heartRateMin > 0 ? heartRateMin : "-"));
-        binding.sleepHrHighest.setText(String.valueOf(heartRateMax > 0 ? heartRateMax : "-"));
-        binding.sleepHrAverage.setText(String.valueOf(heartRateAvg > 0 ? heartRateAvg : "-"));
-        binding.sleepMovementIntensity.setText(intensityTotal > 0 ? new DecimalFormat("###.#").format(intensityTotal) : "-");
+
+        // Build stats grid programmatically
+        binding.sleepStatsContainer.removeAllViews();
+        final GridTableBuilder statsBuilder = new GridTableBuilder(requireContext());
+
+        statsBuilder.addEntry(
+                getString(R.string.minHR),
+                heartRateMin > 0 ? new ActivitySummarySimpleEntry(heartRateMin, UNIT_BPM) : null
+        );
+
+        statsBuilder.addEntry(
+                getString(R.string.maxHR),
+                heartRateMax > 0 ? new ActivitySummarySimpleEntry(heartRateMax, UNIT_BPM) : null
+        );
+
+        statsBuilder.addEntry(
+                getString(R.string.averageHR),
+                heartRateAvg > 0 ? new ActivitySummarySimpleEntry(heartRateAvg, UNIT_BPM) : null
+        );
+
+        if (intensityTotal > 0) {
+            statsBuilder.addEntry(
+                    getString(R.string.movement_intensity),
+                    new ActivitySummarySimpleEntry(new DecimalFormat("###.#").format(intensityTotal), "string")
+            );
+        }
+
+        binding.sleepStatsContainer.addView(statsBuilder.build());
 
         if (supportsHeartrate(getChartsHost().getDevice()) && SHOW_CHARTS_AVERAGE) {
             if (mcd.getHeartRateAxisMax() != 0 || mcd.getHeartRateAxisMin() != 0) {
