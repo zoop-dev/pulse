@@ -4313,4 +4313,9 @@
     <string name="internet_firewall_no_domains">Nie znaleziono reguł dla domen. Domyślna akcja: %s</string>
     <string name="internet_firewall_add_domain">Dodaj domenę</string>
     <string name="internet_firewall_edit_domain">Edytuj domenę</string>
+    <string name="busy_task_fetch_blood_pressure_data">Pobieranie danych o ciśnieniu krwi</string>
+    <string name="max_vertical_oscillation">Maks. oscylacja pionowa</string>
+    <string name="min_vertical_oscillation">Min. oscylacja pionowa</string>
+    <string name="min_ground_contact_time">Min. czas kontaktu z podłożem</string>
+    <string name="min_vertical_ratio">Min. odchylenie do długości kroku</string>
 </resources>
