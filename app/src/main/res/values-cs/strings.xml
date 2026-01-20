@@ -4292,4 +4292,8 @@
     <string name="internet_firewall_no_domains">Nenalezena žádná pravidla domén. Výchozí akce: %s</string>
     <string name="internet_firewall_add_domain">Přidat doménu</string>
     <string name="internet_firewall_edit_domain">Upravit doménu</string>
+    <string name="max_vertical_oscillation">Maximální vertikální oscilace</string>
+    <string name="min_vertical_oscillation">Minimální vertikální oscilace</string>
+    <string name="min_ground_contact_time">Minimální čas kontaktu se zemí</string>
+    <string name="min_vertical_ratio">Minimální vertikální poměr</string>
 </resources>
