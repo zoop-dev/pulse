@@ -3060,7 +3060,8 @@
     <string name="devicetype_galaxybuds_2" translatable="false">Galaxy Buds2</string>
     <string name="devicetype_galaxybuds_2_pro" translatable="false">Galaxy Buds2 Pro</string>
     <string name="devicetype_galaxybuds_3_pro" translatable="false">Galaxy Buds3 Pro</string>
-    <string name="devicetype_sanitas_sbm_67" translatable="false">Sanitas SBM 67</string>
+    <string name="devicetype_sanitas_sbm_67" translatable="false">Sanitas SBM67</string>
+    <string name="devicetype_silvercrest_sbm_67" translatable="false">SilverCrest SBM67</string>
     <string name="nothing_prefs_inear_summary">Play/pause the music depending if you wear the earbuds</string>
     <string name="nothing_prefs_inear_title">In-Ear detection</string>
     <string name="prefs_in_ear_detection_summary">Play calls through your earbuds when they are in your ears</string>

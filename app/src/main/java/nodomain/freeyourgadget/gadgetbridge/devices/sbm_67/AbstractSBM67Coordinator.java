@@ -17,38 +17,21 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.sbm_67;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
-import java.util.regex.Pattern;
-
-import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.generic_bp.GenericBloodPressureSupport;
 
-public class SBM67Coordinator extends AbstractBLEDeviceCoordinator {
-    @Nullable
-    @Override
-    protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("^(SBM67|BPM Smart)$");
-    }
-
-    @Override
-    public String getManufacturer() {
-        return "Sanitas";
-    }
-
+/**
+ * SBM67 devices seem to be sold under multiple brands, with slightly different bluetooth names and bonding behaviors.
+ */
+public abstract class AbstractSBM67Coordinator extends AbstractBLEDeviceCoordinator {
     @NonNull
     @Override
     public Class<? extends DeviceSupport> getDeviceSupportClass(GBDevice device) {
         return GenericBloodPressureSupport.class;
-    }
-
-    @Override
-    public int getDeviceNameResource() {
-        return R.string.devicetype_sanitas_sbm_67;
     }
 
     @Override
@@ -57,13 +40,14 @@ public class SBM67Coordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public int getBondingStyle() {
-        return BONDING_STYLE_BOND;
+    public int getBatteryCount(GBDevice device) {
+        return 0; // it does not report battery %
     }
 
     @Override
-    public int getBatteryCount(GBDevice device) {
-        return 0; // it does not report battery %
+    public boolean suggestUnbindBeforePair() {
+        // Works just fine if already paired
+        return false;
     }
 
     @Override

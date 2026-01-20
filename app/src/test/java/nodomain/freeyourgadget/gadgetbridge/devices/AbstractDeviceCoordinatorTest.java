@@ -75,8 +75,8 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("fenix 6X Sapphire", DeviceType.GARMIN_FENIX_6X_SAPPHIRE); // #5496
             put("fenix 6S Pro Solar", DeviceType.GARMIN_FENIX_6S_PRO_SOLAR); // #5568
             put("R50Pro", DeviceType.R50PRO);
-            put("SBM67", DeviceType.SBM_67);
-            put("BPM Smart", DeviceType.SBM_67);
+            put("SBM67", DeviceType.SILVERCREST_SBM_67);
+            put("BPM Smart", DeviceType.SANITAS_SBM_67);
             put("R11_0500", DeviceType.YAWELL_R11); // #4711
             put("Edge 130", DeviceType.GARMIN_EDGE_130); // matrix
             put("Edge 840", DeviceType.GARMIN_EDGE_840); // matrix

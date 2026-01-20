@@ -365,7 +365,8 @@ import nodomain.freeyourgadget.gadgetbridge.devices.redmibuds.RedmiBuds6ActiveCo
 import nodomain.freeyourgadget.gadgetbridge.devices.redmibuds.RedmiBuds6ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.roidmi.Roidmi1Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.roidmi.Roidmi3Coordinator;
-import nodomain.freeyourgadget.gadgetbridge.devices.sbm_67.SBM67Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.sbm_67.SanitasSBM67Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.sbm_67.SilverCrestSBM67Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.scannable.ScannableDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.shokz.ShokzOpenSwimProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.smaq2oss.SMAQ2OSSCoordinator;
@@ -882,7 +883,8 @@ public enum DeviceType {
     COOSPO_H9Z(CoospoH9ZCoordinator.class),
     GENERIC_WEIGHT_SCALE(GenericWeightScaleCoordinator.class),
     SOLARFLOW(SolarFlowDeviceCoordinator.class),
-    SBM_67(SBM67Coordinator.class),
+    SANITAS_SBM_67(SanitasSBM67Coordinator.class),
+    SILVERCREST_SBM_67(SilverCrestSBM67Coordinator.class),
     TEST(TestDeviceCoordinator.class);
 
     private DeviceCoordinator coordinator;
