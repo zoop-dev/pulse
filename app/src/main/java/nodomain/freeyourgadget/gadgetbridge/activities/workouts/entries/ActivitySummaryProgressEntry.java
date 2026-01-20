@@ -46,7 +46,7 @@ public class ActivitySummaryProgressEntry extends ActivitySummarySimpleEntry {
         final TextView labelTextView = new TextView(context);
         labelTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         labelTextView.setTextSize(12);
-        labelTextView.setText(workoutValueFormatter.getStringResourceByName(key));
+        labelTextView.setText(key);
 
         // Value
         final TextView valueTextView = new TextView(context);

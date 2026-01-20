@@ -53,7 +53,7 @@ public class ActivitySummarySimpleEntry extends ActivitySummaryEntry {
         final TextView labelTextView = new TextView(context);
         labelTextView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         labelTextView.setTextSize(12);
-        labelTextView.setText(workoutValueFormatter.getStringResourceByName(key));
+        labelTextView.setText(key);
 
         if (getColumnSpan() == 1) {
             linearLayout.addView(valueTextView);

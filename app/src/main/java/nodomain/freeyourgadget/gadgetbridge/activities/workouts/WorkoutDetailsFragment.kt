@@ -40,9 +40,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.graphics.createBitmap
 import androidx.core.view.MenuProvider
-import androidx.core.view.isNotEmpty
 import androidx.fragment.app.Fragment
-import androidx.gridlayout.widget.GridLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.github.mikephil.charting.charts.BarLineChartBase
@@ -67,7 +65,6 @@ import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.DefaultWo
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.WorkoutChartsActivity
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryEntry
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryGroup
-import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummarySimpleEntry
 import nodomain.freeyourgadget.gadgetbridge.databinding.FragmentWorkoutDetailsBinding
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary
 import nodomain.freeyourgadget.gadgetbridge.entities.Device
@@ -82,6 +79,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils
 import nodomain.freeyourgadget.gadgetbridge.util.GB
+import nodomain.freeyourgadget.gadgetbridge.util.GridTableBuilder
 import org.apache.commons.lang3.StringUtils
 import org.apache.commons.lang3.tuple.Pair
 import org.slf4j.LoggerFactory
@@ -123,7 +121,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentWorkoutDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -251,7 +249,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             endTime.time - startTime.time, TimeUnit.MILLISECONDS
         )
 
-        view?.let { view ->
+        view?.let {
             binding.itemImage.setImageResource(
                 ActivityKind.fromCode(summary.activityKind).icon
             )
@@ -330,62 +328,15 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
     }
 
     private fun addGroupContent(entries: List<Pair<String, ActivitySummaryEntry>>) {
-        val gridLayout = GridLayout(context).apply {
-            setBackgroundColor(resources.getColor(R.color.gauge_line_color))
-            columnCount = 2
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-        }
-
-        val totalCells = entries.sumOf { it.right.columnSpan }.let { it + (it and 1) }
-        var cellNumber = 0
-
-        for ((key, entry) in entries) {
-            val columnSpan = entry.columnSpan
-            if (columnSpan == 2 && cellNumber % 2 != 0) {
-                cellNumber++
-            }
-
-            val linearLayout = generateLinearLayout(cellNumber, cellNumber + 2 >= totalCells, columnSpan)
-            entry.populate(key, linearLayout, workoutValueFormatter)
-            gridLayout.addView(linearLayout)
-            cellNumber += columnSpan
-        }
-
-        if (gridLayout.isNotEmpty()) {
-            if (cellNumber % 2 != 0) {
-                val emptyLayout = generateLinearLayout(cellNumber, true, 1)
-                ActivitySummarySimpleEntry(null, "", "string").populate("", emptyLayout, workoutValueFormatter)
-                gridLayout.addView(emptyLayout)
-            }
-            binding.summaryDetails.addView(gridLayout)
-        }
+        val gridTableBuilder = GridTableBuilder(requireContext(), workoutValueFormatter)
+        // Map keys from string resource names to actual human-readable labels
+        val mappedLabels = entries.map { Pair.of(workoutValueFormatter.getStringResourceByName(it.key), it.value) }
+            .toList()
+        val gridLayout = gridTableBuilder.buildGridLayout(mappedLabels)
+        binding.summaryDetails.addView(gridLayout)
     }
 
-    private fun generateLinearLayout(i: Int, lastRow: Boolean, columnSize: Int): LinearLayout {
-        return LinearLayout(context).apply {
-            val layoutParams = GridLayout.LayoutParams(
-                GridLayout.spec(GridLayout.UNDEFINED, GridLayout.FILL, 1f),
-                GridLayout.spec(GridLayout.UNDEFINED, columnSize, GridLayout.FILL, 1f)
-            )
-            layoutParams.width = 0
-            this.layoutParams = layoutParams
-            orientation = LinearLayout.VERTICAL
-            gravity = Gravity.CENTER
-            setPadding(dpToPx(15), dpToPx(15), dpToPx(15), dpToPx(15))
-            setBackgroundColor(GBApplication.getWindowBackgroundColor(context))
-
-            val marginLeft = if (i % 2 == 0) 0 else 1
-            val marginRight = if (i % 2 == 0) 1 else 0
-            val marginTop = 2
-            val marginBottom = if (lastRow) 2 else 0
-
-            layoutParams.setMargins(dpToPx(marginLeft), dpToPx(marginTop), dpToPx(marginRight), dpToPx(marginBottom))
-        }
-    }
-
+    @Suppress("SameParameterValue")
     private fun dpToPx(dp: Int): Int {
         val density = resources.displayMetrics.density
         return (dp * density).toInt()
@@ -421,6 +372,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         }
     }
 
+    @Suppress("KotlinConstantConditions")
     private fun addChart(
         chartsLayout: LinearLayout,
         includeHeader: Boolean,
@@ -456,7 +408,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             )
         }
 
-        val chartTextColor = GBApplication.getSecondaryTextColor(context);
+        val chartTextColor = GBApplication.getSecondaryTextColor(context)
         val lineChart: BarLineChartBase<*> = when (chart.chartData) {
             is ScatterData -> ScatterChart(requireContext())
             else -> LineChart(requireContext())
