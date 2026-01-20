@@ -403,7 +403,7 @@
     <string name="discovery_bonding_failed_immediately">La connessione con %1$s è subito fallita.</string>
     <string name="discovery_trying_to_connect_to">Tentativo di connessione con: %1$s</string>
     <string name="discovery_enable_bluetooth">Abilitare Bluetooth per l\'individuazione dei dispositivi.</string>
-    <string name="discovery_dont_pair">Non connettersi</string>
+    <string name="discovery_dont_pair">Non accoppiare</string>
     <string name="controlcenter_connect">Connetti…</string>
     <string name="fw_upgrade_notice_amazfitbip">Stai per installare il firmware %s sul tuo Amazfit Bip.
 \n
