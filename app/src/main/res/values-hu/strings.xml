@@ -4134,4 +4134,8 @@
     <string name="internet_firewall_no_domains">Nem találhatók domain-szabályok. Alapértelmezett művelet: %s</string>
     <string name="internet_firewall_add_domain">Domain hozzáadása</string>
     <string name="internet_firewall_edit_domain">Domain szerkesztése</string>
+    <string name="min_vertical_oscillation">Legkisebb függőleges oszcilláció</string>
+    <string name="max_vertical_oscillation">Legnagyobb függőleges oszcilláció</string>
+    <string name="min_ground_contact_time">Legrövidebb talajjal való érintkezési idő</string>
+    <string name="min_vertical_ratio">Legkisebb függőleges sebesség</string>
 </resources>
