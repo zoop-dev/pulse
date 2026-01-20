@@ -54,8 +54,8 @@ class GenericWeightScaleCoordinator : AbstractBLEDeviceCoordinator() {
     }
 
     override fun getWeightSampleProvider(
-        device: GBDevice?, session: DaoSession?
-    ): TimeSampleProvider<out WeightSample?>? {
+        device: GBDevice, session: DaoSession
+    ): TimeSampleProvider<out WeightSample?> {
         return GenericWeightSampleProvider(device, session)
     }
 

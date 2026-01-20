@@ -478,7 +478,7 @@ public interface DeviceCoordinator {
     /**
      * Returns the sample provider for weight data, for the device being supported.
      */
-    TimeSampleProvider<? extends WeightSample> getWeightSampleProvider(GBDevice device, DaoSession session);
+    TimeSampleProvider<? extends WeightSample> getWeightSampleProvider(@NonNull GBDevice device, @NonNull DaoSession session);
 
     TimeSampleProvider<? extends RestingMetabolicRateSample> getRestingMetabolicRateProvider(GBDevice device, DaoSession session);
 

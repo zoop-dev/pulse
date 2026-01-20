@@ -45,7 +45,7 @@ class GenericWeightScaleMeasurementActivity : AbstractGBActivity() {
     private val weightUpdatedReceiver: WeightUpdatedReceiver = WeightUpdatedReceiver()
     private var actual: TextView? = null
     private var save: Button? = null
-    private var device: GBDevice? = null
+    private lateinit var device: GBDevice
     private var unit: String? = null
 
     private var measurement: WeightScaleMeasurement? = null
@@ -57,7 +57,7 @@ class GenericWeightScaleMeasurementActivity : AbstractGBActivity() {
             ?: throw IllegalArgumentException(WeightScaleProfile.EXTRA_ADDRESS + " must not be null")
 
         val manager = GBApplication.app().deviceManager
-        device = manager.getDeviceByAddress(address)
+        device = manager.getDeviceByAddress(address)!!
 
         val settings = GBApplication.getDevicePrefs(device)
         unit = settings.getString(DeviceSettingsPreferenceConst.PREF_WEIGHT_SCALE_UNIT, null)

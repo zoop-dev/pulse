@@ -15,13 +15,17 @@
  */
 package nodomain.freeyourgadget.gadgetbridge.daogen;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.LinkedList;
+import java.util.List;
 
 import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
@@ -74,6 +78,8 @@ public class GBDaoGenerator {
 
         final Schema schema = new Schema(126, MAIN_PACKAGE + ".entities");
 
+        final List<Entity> sampleProvidersToGenerate = new LinkedList<>();
+
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
 
@@ -103,8 +109,8 @@ public class GBDaoGenerator {
         addHuamiSleepSessionSample(schema, user, device);
         addXiaomiActivitySample(schema, user, device);
         addXiaomiSleepTimeSamples(schema, user, device);
-        addHeartPulseSamples(schema, user, device);
-        addHeartRrIntervalSamples(schema, user, device);
+        sampleProvidersToGenerate.add(addHeartPulseSamples(schema, user, device));
+        sampleProvidersToGenerate.add(addHeartRrIntervalSamples(schema, user, device));
         addXiaomiSleepStageSamples(schema, user, device);
         addXiaomiManualSamples(schema, user, device);
         addXiaomiDailySummarySamples(schema, user, device);
@@ -230,20 +236,24 @@ public class GBDaoGenerator {
         addActivitySummary(schema, user, device);
         addBatteryLevel(schema, device);
 
-        addGenericHeartRateSample(schema, user, device);
-        addGenericSpo2Sample(schema, user, device);
-        addGenericStressSample(schema, user, device);
-        addGenericHrvValueSample(schema, user, device);
+        sampleProvidersToGenerate.add(addGenericHeartRateSample(schema, user, device));
+        sampleProvidersToGenerate.add(addGenericSpo2Sample(schema, user, device));
+        sampleProvidersToGenerate.add(addGenericStressSample(schema, user, device));
+        sampleProvidersToGenerate.add(addGenericHrvValueSample(schema, user, device));
         addGenericTemperatureSample(schema, user, device);
-        addGenericSleepStageSample(schema, user, device);
-        addGenericTrainingLoadAcuteSample(schema, user, device);
-        addGenericTrainingLoadChronicSample(schema, user, device);
-        addGenericWeightSample(schema, user, device);
-        addGlucoseSample(schema, user, device);
+        sampleProvidersToGenerate.add(addGenericSleepStageSample(schema, user, device));
+        sampleProvidersToGenerate.add(addGenericTrainingLoadAcuteSample(schema, user, device));
+        sampleProvidersToGenerate.add(addGenericTrainingLoadChronicSample(schema, user, device));
+        sampleProvidersToGenerate.add(addGenericWeightSample(schema, user, device));
+        sampleProvidersToGenerate.add(addGlucoseSample(schema, user, device));
 
         deleteOldFiles();
 
         new DaoGenerator().generateAll(schema, OUTPUT_DIR);
+
+        for (Entity entity : sampleProvidersToGenerate) {
+            generateSampleProvider(entity);
+        }
     }
 
     private static void deleteOldFiles() throws IOException {
@@ -2254,5 +2264,79 @@ public class GBDaoGenerator {
         bloodPressureSample.addIntProperty("pulseRate");
         bloodPressureSample.addIntProperty("measurementStatus");
         return bloodPressureSample;
+    }
+
+    private static final String SAMPLE_PROVIDER_TEMPLATE = """
+            /*  Copyright (C) 2026 Freeyourgadget
+            
+                This file is part of Gadgetbridge.
+            
+                Gadgetbridge is free software: you can redistribute it and/or modify
+                it under the terms of the GNU Affero General Public License as published
+                by the Free Software Foundation, either version 3 of the License, or
+                (at your option) any later version.
+            
+                Gadgetbridge is distributed in the hope that it will be useful,
+                but WITHOUT ANY WARRANTY; without even the implied warranty of
+                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+                GNU Affero General Public License for more details.
+            
+                You should have received a copy of the GNU Affero General Public License
+                along with this program.  If not, see <https://www.gnu.org/licenses/>. */
+            package nodomain.freeyourgadget.gadgetbridge.devices;
+        
+            import androidx.annotation.NonNull;
+        
+            import de.greenrobot.dao.AbstractDao;
+            import de.greenrobot.dao.Property;
+            import nodomain.freeyourgadget.gadgetbridge.entities.${classNameSample};
+            import nodomain.freeyourgadget.gadgetbridge.entities.${classNameDao};
+            import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
+            import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+        
+            public class ${classNameSample}Provider extends AbstractTimeSampleProvider<${classNameSample}> {
+                public ${classNameSample}Provider(@NonNull final GBDevice device, @NonNull final DaoSession session) {
+                    super(device, session);
+                }
+        
+                @NonNull
+                @Override
+                public AbstractDao<${classNameSample}, ?> getSampleDao() {
+                    return getSession().get${classNameDao}();
+                }
+        
+                @NonNull
+                @Override
+                protected Property getTimestampSampleProperty() {
+                    return ${classNameDao}.Properties.Timestamp;
+                }
+        
+                @NonNull
+                @Override
+                protected Property getDeviceIdentifierSampleProperty() {
+                    return ${classNameDao}.Properties.DeviceId;
+                }
+        
+                @NonNull
+                @Override
+                public ${classNameSample} createSample() {
+                    return new ${classNameSample}();
+                }
+            }
+            """;
+
+    private static void generateSampleProvider(final Entity entity) throws IOException {
+        final File outputDir = new File(OUTPUT_DIR + "/nodomain/freeyourgadget/gadgetbridge/devices");
+        //noinspection ResultOfMethodCallIgnored
+        outputDir.mkdirs();
+        final String generatedCode = SAMPLE_PROVIDER_TEMPLATE
+                .replace("${classNameSample}", entity.getClassName())
+                .replace("${classNameDao}", entity.getClassNameDao())
+                .replaceAll("\\R", System.lineSeparator());
+        final File file = new File(outputDir, entity.getClassName() + "Provider.java");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, false))) {
+            writer.write(generatedCode);
+        }
+        System.out.println("Written " + file.getCanonicalPath());
     }
 }
