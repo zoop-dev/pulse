@@ -4132,4 +4132,10 @@
     <string name="internet_firewall_no_domains">Правил домену не знайдено. Дія за замовчуванням: %s</string>
     <string name="internet_firewall_add_domain">Додати домен</string>
     <string name="internet_firewall_edit_domain">Редагувати домен</string>
+    <string name="busy_task_fetch_blood_pressure_data">Отримання даних про артеріальний тиск</string>
+    <string name="max_vertical_oscillation">Максимальне вертикальне коливання</string>
+    <string name="min_vertical_oscillation">Мінімальне вертикальне коливання</string>
+    <string name="min_ground_contact_time">Мінімальний час контакту з землею</string>
+    <string name="min_vertical_ratio">Мінімальне вертикальне співвідношення</string>
+    <string name="info_no_devices_to_sync">Підключені пристрої не підтримують синхронізацію даних</string>
 </resources>
