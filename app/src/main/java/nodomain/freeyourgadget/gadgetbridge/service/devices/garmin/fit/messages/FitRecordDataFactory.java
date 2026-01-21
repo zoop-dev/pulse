@@ -156,6 +156,8 @@ public class FitRecordDataFactory {
             case 337 -> new FitEcgRawSample(recordDefinition, recordHeader);
             case 338 -> new FitEcgSmoothSample(recordDefinition, recordHeader);
             case 346 -> new FitSleepStats(recordDefinition, recordHeader);
+            case 356 -> new FitFunctionalMetrics(recordDefinition, recordHeader);
+            case 369 -> new FitTrainingReadiness(recordDefinition, recordHeader);
             case 370 -> new FitHrvSummary(recordDefinition, recordHeader);
             case 371 -> new FitHrvValue(recordDefinition, recordHeader);
             case 372 -> new FitRawBbi(recordDefinition, recordHeader);
@@ -170,6 +172,7 @@ public class FitRecordDataFactory {
             case 394 -> new FitCpeStatus(recordDefinition, recordHeader);
             case 397 -> new FitSkinTempRaw(recordDefinition, recordHeader);
             case 398 -> new FitSkinTempOvernight(recordDefinition, recordHeader);
+            case 403 -> new FitEnduranceScore(recordDefinition, recordHeader);
             case 409 -> new FitHsaWristTemperatureData(recordDefinition, recordHeader);
             case 412 -> new FitNap(recordDefinition, recordHeader);
              default -> new RecordData(recordDefinition, recordHeader);

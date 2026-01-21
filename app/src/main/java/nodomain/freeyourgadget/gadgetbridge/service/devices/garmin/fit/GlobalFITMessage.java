@@ -296,12 +296,12 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(92, BaseType.UINT8, "avg_fractional_cadence", 128, 0), // rpm
             new FieldDefinitionPrimitive(93, BaseType.UINT8, "max_fractional_cadence", 128, 0), // rpm
             new FieldDefinitionPrimitive(94, BaseType.UINT8, "total_fractional_cycles", 128, 0), // cycles
-            new FieldDefinitionPrimitive(95, BaseType.UINT16, "avg_total_hemoglobin_conc", FieldDefinitionFactory.FIELD.ARRAY,100, 0), // g/dL
-            new FieldDefinitionPrimitive(96, BaseType.UINT16, "min_total_hemoglobin_conc", FieldDefinitionFactory.FIELD.ARRAY,100, 0), // g/dL
-            new FieldDefinitionPrimitive(97, BaseType.UINT16, "max_total_hemoglobin_conc", FieldDefinitionFactory.FIELD.ARRAY,100, 0), // g/dL
-            new FieldDefinitionPrimitive(98, BaseType.UINT16, "avg_saturated_hemoglobin_percent", FieldDefinitionFactory.FIELD.ARRAY,10, 0), // %
-            new FieldDefinitionPrimitive(99, BaseType.UINT16, "min_saturated_hemoglobin_percent", FieldDefinitionFactory.FIELD.ARRAY,10, 0), // %
-            new FieldDefinitionPrimitive(100, BaseType.UINT16, "max_saturated_hemoglobin_percent", FieldDefinitionFactory.FIELD.ARRAY,10, 0), // %
+            new FieldDefinitionPrimitive(95, BaseType.UINT16, "avg_total_hemoglobin_conc", FieldDefinitionFactory.FIELD.ARRAY, 100, 0), // g/dL
+            new FieldDefinitionPrimitive(96, BaseType.UINT16, "min_total_hemoglobin_conc", FieldDefinitionFactory.FIELD.ARRAY, 100, 0), // g/dL
+            new FieldDefinitionPrimitive(97, BaseType.UINT16, "max_total_hemoglobin_conc", FieldDefinitionFactory.FIELD.ARRAY, 100, 0), // g/dL
+            new FieldDefinitionPrimitive(98, BaseType.UINT16, "avg_saturated_hemoglobin_percent", FieldDefinitionFactory.FIELD.ARRAY, 10, 0), // %
+            new FieldDefinitionPrimitive(99, BaseType.UINT16, "min_saturated_hemoglobin_percent", FieldDefinitionFactory.FIELD.ARRAY, 10, 0), // %
+            new FieldDefinitionPrimitive(100, BaseType.UINT16, "max_saturated_hemoglobin_percent", FieldDefinitionFactory.FIELD.ARRAY, 10, 0), // %
             new FieldDefinitionPrimitive(101, BaseType.UINT8, "avg_left_torque_effectiveness", 2, 0), // %
             new FieldDefinitionPrimitive(102, BaseType.UINT8, "avg_right_torque_effectiveness", 2, 0), // %
             new FieldDefinitionPrimitive(103, BaseType.UINT8, "avg_left_pedal_smoothness", 2, 0), // %
@@ -437,7 +437,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(54, BaseType.SINT16, "avg_neg_vertical_speed", 1000, 0), // m/s
             new FieldDefinitionPrimitive(55, BaseType.SINT16, "max_pos_vertical_speed", 1000, 0), // m/s
             new FieldDefinitionPrimitive(56, BaseType.SINT16, "max_neg_vertical_speed", 1000, 0), // m/s
-            new FieldDefinitionPrimitive(57, BaseType.UINT32, "time_in_hr_zone", FieldDefinitionFactory.FIELD.ARRAY,1000, 0), // s
+            new FieldDefinitionPrimitive(57, BaseType.UINT32, "time_in_hr_zone", FieldDefinitionFactory.FIELD.ARRAY, 1000, 0), // s
             new FieldDefinitionPrimitive(58, BaseType.UINT32, "time_in_speed_zone", FieldDefinitionFactory.FIELD.ARRAY, 1000, 0), // s
             new FieldDefinitionPrimitive(59, BaseType.UINT32, "time_in_cadence_zone", FieldDefinitionFactory.FIELD.ARRAY, 1000, 0), // s
             new FieldDefinitionPrimitive(60, BaseType.UINT32, "time_in_power_zone", FieldDefinitionFactory.FIELD.ARRAY, 1000, 0), // s
@@ -456,12 +456,12 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(81, BaseType.UINT8, "max_fractional_cadence", 128, 0), // rpm
             new FieldDefinitionPrimitive(82, BaseType.UINT8, "total_fractional_cycles", 128, 0), // cycles
             new FieldDefinitionPrimitive(83, BaseType.UINT16, "player_score"),
-            new FieldDefinitionPrimitive(84, BaseType.UINT16, "avg_total_hemoglobin_conc", FieldDefinitionFactory.FIELD.ARRAY,100, 0), // g/dL
-            new FieldDefinitionPrimitive(85, BaseType.UINT16, "min_total_hemoglobin_conc", FieldDefinitionFactory.FIELD.ARRAY,100, 0), // g/dL
-            new FieldDefinitionPrimitive(86, BaseType.UINT16, "max_total_hemoglobin_conc", FieldDefinitionFactory.FIELD.ARRAY,100, 0), // g/dL
-            new FieldDefinitionPrimitive(87, BaseType.UINT16, "avg_saturated_hemoglobin_percent", FieldDefinitionFactory.FIELD.ARRAY,10, 0), // %
-            new FieldDefinitionPrimitive(88, BaseType.UINT16, "min_saturated_hemoglobin_percent", FieldDefinitionFactory.FIELD.ARRAY,10, 0), // %
-            new FieldDefinitionPrimitive(89, BaseType.UINT16, "max_saturated_hemoglobin_percent", FieldDefinitionFactory.FIELD.ARRAY,10, 0), // %
+            new FieldDefinitionPrimitive(84, BaseType.UINT16, "avg_total_hemoglobin_conc", FieldDefinitionFactory.FIELD.ARRAY, 100, 0), // g/dL
+            new FieldDefinitionPrimitive(85, BaseType.UINT16, "min_total_hemoglobin_conc", FieldDefinitionFactory.FIELD.ARRAY, 100, 0), // g/dL
+            new FieldDefinitionPrimitive(86, BaseType.UINT16, "max_total_hemoglobin_conc", FieldDefinitionFactory.FIELD.ARRAY, 100, 0), // g/dL
+            new FieldDefinitionPrimitive(87, BaseType.UINT16, "avg_saturated_hemoglobin_percent", FieldDefinitionFactory.FIELD.ARRAY, 10, 0), // %
+            new FieldDefinitionPrimitive(88, BaseType.UINT16, "min_saturated_hemoglobin_percent", FieldDefinitionFactory.FIELD.ARRAY, 10, 0), // %
+            new FieldDefinitionPrimitive(89, BaseType.UINT16, "max_saturated_hemoglobin_percent", FieldDefinitionFactory.FIELD.ARRAY, 10, 0), // %
             new FieldDefinitionPrimitive(91, BaseType.UINT8, "avg_left_torque_effectiveness", 2, 0), // %
             new FieldDefinitionPrimitive(92, BaseType.UINT8, "avg_right_torque_effectiveness", 2, 0), // %
             new FieldDefinitionPrimitive(93, BaseType.UINT8, "avg_left_pedal_smoothness", 2, 0), // %
@@ -522,10 +522,10 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(6, BaseType.UINT16, "speed", 1000, 0), // m/s
             new FieldDefinitionPrimitive(7, BaseType.UINT16, "power"), // watt
             new FieldDefinitionPrimitive(8, BaseType.BASE_TYPE_BYTE, 3, "compressed_speed_distance", FieldDefinitionFactory.FIELD.ARRAY, 1, 0), // 12 bit: speed|distance with scale 100|16
-            new FieldDefinitionPrimitive(9, BaseType.SINT16,"grade", 100, 0), // %
-            new FieldDefinitionPrimitive(10, BaseType.UINT8,"resistance"),
-            new FieldDefinitionPrimitive(11, BaseType.SINT32,"time_from_course", 1000, 0), // s
-            new FieldDefinitionPrimitive(12, BaseType.UINT8,"cycle_length", 100, 0), // m
+            new FieldDefinitionPrimitive(9, BaseType.SINT16, "grade", 100, 0), // %
+            new FieldDefinitionPrimitive(10, BaseType.UINT8, "resistance"),
+            new FieldDefinitionPrimitive(11, BaseType.SINT32, "time_from_course", 1000, 0), // s
+            new FieldDefinitionPrimitive(12, BaseType.UINT8, "cycle_length", 100, 0), // m
             new FieldDefinitionPrimitive(13, BaseType.SINT8, "temperature", 1, 0), // C
             new FieldDefinitionPrimitive(17, BaseType.UINT8, "speed_1s", FieldDefinitionFactory.FIELD.ARRAY, 16, 0), // m/s
             new FieldDefinitionPrimitive(18, BaseType.UINT8, "cycles"),
@@ -1205,7 +1205,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(2, BaseType.SINT32, "position_long", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(3, BaseType.UINT32, "distance", 100, 0), // m
             new FieldDefinitionPrimitive(4, BaseType.UINT16, "altitude", 5, 500), // m
-            new FieldDefinitionPrimitive(5, BaseType.UINT32, 6,"leader_time",  FieldDefinitionFactory.FIELD.ARRAY, 1000, 0), // s
+            new FieldDefinitionPrimitive(5, BaseType.UINT32, 6, "leader_time", FieldDefinitionFactory.FIELD.ARRAY, 1000, 0), // s
             new FieldDefinitionPrimitive(6, BaseType.UINT32, "enhanced_altitude", 5, 500), // m
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
@@ -1756,8 +1756,8 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(10, BaseType.UINT8, "avg_heart_rate"), // bpm
             new FieldDefinitionPrimitive(11, BaseType.UINT8, "max_heart_rate"), // bpm
             new FieldDefinitionPrimitive(12, BaseType.SINT32, "avg_vert_speed", 1000, 0), // m/s
-            new FieldDefinitionPrimitive(13, BaseType.UINT32,  "total_calories"), // kcal
-            new FieldDefinitionPrimitive(77, BaseType.UINT32,  "total_moving_time", 1000, 0), // s
+            new FieldDefinitionPrimitive(13, BaseType.UINT32, "total_calories"), // kcal
+            new FieldDefinitionPrimitive(77, BaseType.UINT32, "total_moving_time", 1000, 0), // s
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP),
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
@@ -1845,6 +1845,57 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(14, BaseType.UINT8, "interruptions_score"),
             new FieldDefinitionPrimitive(15, BaseType.UINT16, "average_stress_during_sleep", 100, 0),
             new FieldDefinitionPrimitive(16, BaseType.ENUM, "unk_16")
+    ));
+
+    // Source: #5709
+    public static GlobalFITMessage FUNCTIONAL_METRICS = new GlobalFITMessage(356, "FUNCTIONAL_METRICS", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.UINT8, "unknown_0"),
+            new FieldDefinitionPrimitive(2, BaseType.UINT32, "unknown_2"),
+            new FieldDefinitionPrimitive(3, BaseType.UINT32, "unknown_3"),
+            new FieldDefinitionPrimitive(4, BaseType.UINT16, "functional_threshold_power"), // W
+            new FieldDefinitionPrimitive(5, BaseType.UINT8, "unknown_5"),
+            new FieldDefinitionPrimitive(6, BaseType.UINT8, "unknown_6"),
+            new FieldDefinitionPrimitive(7, BaseType.UINT16, "unknown_7"),
+            new FieldDefinitionPrimitive(8, BaseType.UINT8, "unknown_8"),
+            new FieldDefinitionPrimitive(9, BaseType.UINT8, "unknown_9"),
+            new FieldDefinitionPrimitive(10, BaseType.UINT16, "unknown_10"),
+            new FieldDefinitionPrimitive(11, BaseType.ENUM, "unknown_11"),
+            new FieldDefinitionPrimitive(12, BaseType.ENUM, "unknown_12"),
+            new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
+    ));
+
+    // Source: #5710
+    public static GlobalFITMessage TRAINING_READINESS = new GlobalFITMessage(369, "TRAINING_READINESS", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.UINT8, "training_readiness"),
+            new FieldDefinitionPrimitive(1, BaseType.ENUM, "level"), // 4 high, 5 prime
+            new FieldDefinitionPrimitive(2, BaseType.ENUM, "unknown_2"),
+            new FieldDefinitionPrimitive(3, BaseType.ENUM, "unknown_3"),
+            new FieldDefinitionPrimitive(4, BaseType.UINT8, "unknown_4"),
+            new FieldDefinitionPrimitive(5, BaseType.UINT8, "unknown_5"),
+            new FieldDefinitionPrimitive(6, BaseType.ENUM, "unknown_6"),
+            new FieldDefinitionPrimitive(7, BaseType.UINT16, "unknown_7"),
+            new FieldDefinitionPrimitive(8, BaseType.UINT8, "unknown_8"),
+            new FieldDefinitionPrimitive(9, BaseType.ENUM, "unknown_9"),
+            new FieldDefinitionPrimitive(10, BaseType.UINT8, "unknown_10"),
+            new FieldDefinitionPrimitive(11, BaseType.ENUM, "unknown_11"),
+            new FieldDefinitionPrimitive(12, BaseType.UINT8, "unknown_12"),
+            new FieldDefinitionPrimitive(13, BaseType.ENUM, "unknown_13"),
+            new FieldDefinitionPrimitive(14, BaseType.UINT8, "unknown_14"),
+            new FieldDefinitionPrimitive(15, BaseType.ENUM, "unknown_15"),
+            new FieldDefinitionPrimitive(16, BaseType.UINT8, "unknown_16"),
+            new FieldDefinitionPrimitive(17, BaseType.ENUM, "unknown_17"),
+            new FieldDefinitionPrimitive(18, BaseType.ENUM, "unknown_18"),
+            new FieldDefinitionPrimitive(19, BaseType.ENUM, "unknown_19"),
+            new FieldDefinitionPrimitive(20, BaseType.UINT32, "local_timestamp"), // garmin timestamp, but in user timezone
+            new FieldDefinitionPrimitive(21, BaseType.UINT16, "unknown_21"),
+            new FieldDefinitionPrimitive(22, BaseType.UINT16, "unknown_22"),
+            new FieldDefinitionPrimitive(25, BaseType.ENUM, "unknown_25"),
+            new FieldDefinitionPrimitive(26, BaseType.ENUM, "unknown_26"),
+            new FieldDefinitionPrimitive(27, BaseType.ENUM, "unknown_27"),
+            new FieldDefinitionPrimitive(28, BaseType.ENUM, "unknown_28"),
+            new FieldDefinitionPrimitive(29, BaseType.ENUM, "unknown_29"),
+            new FieldDefinitionPrimitive(30, BaseType.ENUM, "unknown_30"),
+            new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
     public static GlobalFITMessage HRV_SUMMARY = new GlobalFITMessage(370, "HRV_SUMMARY", Arrays.asList(
@@ -1959,6 +2010,23 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(2, BaseType.FLOAT32, "average_7_day_deviation"),
             new FieldDefinitionPrimitive(3, BaseType.UINT8, "unk3"),
             new FieldDefinitionPrimitive(4, BaseType.FLOAT32, "nightly_value"),
+            new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
+    ));
+
+    // Source: #5708
+    public static GlobalFITMessage ENDURANCE_SCORE = new GlobalFITMessage(403, "ENDURANCE_SCORE", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.UINT16, "endurance_score"),
+            new FieldDefinitionPrimitive(1, BaseType.ENUM, "level"), // 6 superior 7 elite
+            new FieldDefinitionPrimitive(2, BaseType.ENUM, "unknown_2"),
+            // Matches the boundaries from https://www8.garmin.com/manuals/webhelp/GUID-C001C335-A8EC-4A41-AB0E-BAC434259F92/EN-US/GUID-573861DC-64B1-4120-847F-A944BA683DBA.html
+            new FieldDefinitionPrimitive(3, BaseType.UINT16, "lower_bound_intermediate"),
+            new FieldDefinitionPrimitive(4, BaseType.UINT16, "lower_bound_trained"),
+            new FieldDefinitionPrimitive(5, BaseType.UINT16, "lower_bound_well_trained"),
+            new FieldDefinitionPrimitive(6, BaseType.UINT16, "lower_bound_expert"),
+            new FieldDefinitionPrimitive(7, BaseType.UINT16, "lower_bound_superior"),
+            new FieldDefinitionPrimitive(8, BaseType.UINT16, "lower_bound_elite"),
+            new FieldDefinitionPrimitive(9, BaseType.UINT16, "unknown_9"),
+            new FieldDefinitionPrimitive(10, BaseType.UINT16, "unknown_10"),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
@@ -2105,6 +2173,8 @@ public class GlobalFITMessage {
         put(337, ECG_RAW_SAMPLE);
         put(338, ECG_SMOOTH_SAMPLE);
         put(346, SLEEP_STATS);
+        put(356, FUNCTIONAL_METRICS);
+        put(369, TRAINING_READINESS);
         put(370, HRV_SUMMARY);
         put(371, HRV_VALUE);
         put(372, RAW_BBI);
@@ -2119,6 +2189,7 @@ public class GlobalFITMessage {
         put(394, CPE_STATUS);
         put(397, SKIN_TEMP_RAW);
         put(398, SKIN_TEMP_OVERNIGHT);
+        put(403, ENDURANCE_SCORE);
         put(409, HSA_WRIST_TEMPERATURE_DATA);
         put(412, NAP);
     }};
