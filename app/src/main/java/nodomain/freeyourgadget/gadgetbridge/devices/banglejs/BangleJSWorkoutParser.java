@@ -9,7 +9,6 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.HR_AVG;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.HR_MAX;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.HR_MIN;
-import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.INTERNAL_HAS_GPS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.SPEED_AVG;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.SPEED_MAX;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.SPEED_MIN;
@@ -24,30 +23,30 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SPM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_STEPS;
 
-import android.content.Context;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrackProvider;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
+import nodomain.freeyourgadget.gadgetbridge.model.GpxActivityTrackProvider;
 import nodomain.freeyourgadget.gadgetbridge.util.Accumulator;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 
-public class BangleJSWorkoutParser implements ActivitySummaryParser {
+public class BangleJSWorkoutParser implements ActivitySummaryParser, ActivityTrackProvider {
     private static final Logger LOG = LoggerFactory.getLogger(BangleJSWorkoutParser.class);
-
-    private final Context mContext;
-
-    public BangleJSWorkoutParser(final Context context) {
-        this.mContext = context;
-    }
 
     @Override
     public BaseActivitySummary parseBinaryData(final BaseActivitySummary summary, final boolean forDetails) {
@@ -56,22 +55,47 @@ public class BangleJSWorkoutParser implements ActivitySummaryParser {
             return summary;
         }
 
+        final List<BangleJSActivityPoint> points = getBangleJSActivityPoints(summary);
+        if (points == null) return summary;
+
+        summary.setSummaryData(dataFromPoints(points).toString());
+        return summary;
+    }
+
+    @Nullable
+    @Override
+    public ActivityTrack getActivityTrack(@NonNull final BaseActivitySummary summary) {
+        final List<BangleJSActivityPoint> points = getBangleJSActivityPoints(summary);
+        if (points == null) {
+            // Fallback to gpx, in case the csv was deleted
+            return new GpxActivityTrackProvider().getActivityTrack(summary);
+        }
+
+        final List<ActivityPoint> activityPoints = points.stream().map(BangleJSActivityPoint::toActivityPoint).collect(Collectors.toList());
+
+        final ActivityTrack activityTrack = new ActivityTrack();
+        activityTrack.setName(summary.getName());
+        activityTrack.addTrackPoints(activityPoints);
+
+        return activityTrack;
+    }
+
+    @Nullable
+    private static List<BangleJSActivityPoint> getBangleJSActivityPoints(@NonNull final BaseActivitySummary summary) {
         if (summary.getRawDetailsPath() == null) {
-            return summary;
+            LOG.debug("Raw details path for summary {} is null", summary.getId());
+            return null;
         }
 
         final File inputFile = FileUtils.tryFixPath(new File(summary.getRawDetailsPath()));
         if (inputFile == null) {
-            return summary;
+            LOG.debug("Raw details file not found: {}", summary.getRawDetailsPath());
+            return null;
         }
 
-        final List<BangleJSActivityPoint> points = BangleJSActivityPoint.fromCsv(inputFile);
-        if (points == null) {
-            return summary;
-        }
+        LOG.debug("Loading bangle activity points from {}", inputFile);
 
-        summary.setSummaryData(dataFromPoints(points).toString());
-        return summary;
+        return BangleJSActivityPoint.fromCsv(inputFile);
     }
 
     public static ActivitySummaryData dataFromPoints(final List<BangleJSActivityPoint> points) {
@@ -167,7 +191,7 @@ public class BangleJSWorkoutParser implements ActivitySummaryParser {
 
         // TODO: Does Bangle.js report laps in recorder logs?
 
-        summaryData.add(INTERNAL_HAS_GPS, String.valueOf(hasGps));
+        summaryData.setHasGps(hasGps);
 
         return summaryData;
     }

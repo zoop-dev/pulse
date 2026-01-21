@@ -3,7 +3,6 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.banglejs;
 import static java.lang.Integer.parseInt;
 
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.HR_AVG;
-import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.INTERNAL_HAS_GPS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.SPEED_AVG;
 
 import android.content.Context;
@@ -199,7 +198,7 @@ class BangleJSActivityTrack {
             } catch (Exception ex) {
                 GB.toast(context, "Error setting user for activity track.", Toast.LENGTH_LONG, GB.ERROR, ex);
             }
-            boolean hasGPXReading = summaryData.has(INTERNAL_HAS_GPS);
+            boolean hasGPXReading = summaryData.hasGps();
             boolean hasHRMReading = summaryData.has(HR_AVG);
             for (final BangleJSActivityPoint banglePoint : banglePoints) {
                 track.addTrackPoint(banglePoint.toActivityPoint());
