@@ -4138,4 +4138,5 @@
     <string name="max_vertical_oscillation">Legnagyobb függőleges oszcilláció</string>
     <string name="min_ground_contact_time">Legrövidebb talajjal való érintkezési idő</string>
     <string name="min_vertical_ratio">Legkisebb függőleges sebesség</string>
+    <string name="busy_task_fetch_blood_pressure_data">Vérnyomásadatok lekérése</string>
 </resources>
