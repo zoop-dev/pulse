@@ -320,6 +320,12 @@ public class FileUtils {
         return out.toByteArray();
     }
 
+    public static byte[] readAll(final File inputFile) throws IOException {
+        try (InputStream inputStream = new FileInputStream(inputFile)) {
+            return FileUtils.readAll(inputStream, inputFile.length());
+        }
+    }
+
     public static List<File> listRecursive(final File dir, final FilenameFilter filter) {
         final List<File> ret = new ArrayList<>();
         listRecursive(ret, dir, filter);

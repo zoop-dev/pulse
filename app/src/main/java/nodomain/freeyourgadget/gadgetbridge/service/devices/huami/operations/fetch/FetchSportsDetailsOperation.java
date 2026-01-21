@@ -26,7 +26,9 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
@@ -201,13 +203,24 @@ public class FetchSportsDetailsOperation extends AbstractFetchOperation {
     }
 
     private String saveRawBytes() {
-        final String fileName = FileUtils.makeValidFileName(String.format("%s.bin", DateTimeUtils.formatIso8601(summary.getStartTime())));
+        final SimpleDateFormat SDF_YEAR = new SimpleDateFormat("yyyy", Locale.ROOT);
+
+        final StringBuilder sb = new StringBuilder();
+
+        sb.append("rawDetails");
+        sb.append(File.separator);
+        sb.append(SDF_YEAR.format(summary.getStartTime()));
+        sb.append(File.separator);
+        sb.append(FileUtils.makeValidFileName(String.format("%s.bin", DateTimeUtils.formatIso8601(summary.getStartTime()))));
 
         try {
-            final File targetFolder = new File(FileUtils.getExternalFilesDir(), "rawDetails");
-            //noinspection ResultOfMethodCallIgnored
-            targetFolder.mkdirs();
-            final File targetFile = new File(targetFolder, fileName);
+            final File writableExportDirectory = getDevice().getDeviceCoordinator().getWritableExportDirectory(getDevice(), true);
+            final File targetFile = new File(writableExportDirectory, sb.toString());
+            final File parent = targetFile.getParentFile();
+            if (parent != null) {
+                //noinspection ResultOfMethodCallIgnored
+                parent.mkdirs();
+            }
             final FileOutputStream outputStream = new FileOutputStream(targetFile);
             outputStream.write(buffer.toByteArray());
             outputStream.close();

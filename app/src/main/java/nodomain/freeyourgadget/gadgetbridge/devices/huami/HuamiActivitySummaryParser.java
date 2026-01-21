@@ -71,6 +71,7 @@ public class HuamiActivitySummaryParser implements ActivitySummaryParser {
         }
         summaryData = new ActivitySummaryData();
         charts.clear();
+        summaryData.setHasGps(StringUtils.isNotBlank(summary.getGpxTrack()));
         parseBinaryData(summary, startTime);
         summary.setSummaryData(summaryData.toString());
         if (forDetails && !StringUtils.isBlank(summary.getRawDetailsPath())) {
@@ -145,6 +146,7 @@ public class HuamiActivitySummaryParser implements ActivitySummaryParser {
         summary.setBaseLongitude(baseLongitude);
         summary.setBaseLatitude(baseLatitude);
         summary.setBaseAltitude(baseAltitude);
+        summaryData.setHasGps(baseLongitude != 0 || baseLatitude != 0);
 
         int steps;
         int activeSeconds;
