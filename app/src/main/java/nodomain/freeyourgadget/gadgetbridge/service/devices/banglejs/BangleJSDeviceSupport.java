@@ -909,7 +909,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         }
         if (headers == null) headers = emptyMap();
 
-        String response = InternetUtils.Companion.doStringRequest(Uri.parse(url), method, headers, body, "application/json", insecure);
+        String response = InternetUtils.Companion.doStringRequest(Uri.parse(url), method, headers, body, insecure);
         JSONObject o = new JSONObject();
         String _xmlPath = "";
         String _xmlReturn = "";

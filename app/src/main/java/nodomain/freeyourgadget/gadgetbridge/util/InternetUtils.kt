@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.util
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.webkit.WebResourceResponse
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig
@@ -70,18 +71,16 @@ class InternetUtils {
             method: String = "GET",
             requestHeaders: Map<String, String> = emptyMap(),
             body: String? = null,
-            bodyContentType: String = "text/plain",
             allowInsecure: Boolean = false
         ): String? {
             val response: WebResourceResponse? = if (GBApplication.hasDirectInternetAccess()) {
-                directRequest(uri, method, requestHeaders, body, bodyContentType, allowInsecure)
+                directRequest(uri, method, requestHeaders, body, allowInsecure)
             } else {
                 InternetHelperSingleton.send(
                     uri,
                     HttpRequest.Method.valueOf(method),
                     headersWithUserAgent(requestHeaders),
-                    body,
-                    bodyContentType,
+                    body?.toByteArray(),
                     allowInsecure,
                 )
             }
@@ -96,7 +95,6 @@ class InternetUtils {
             method: String = "GET",
             requestHeaders: Map<String, String> = emptyMap(),
             body: String? = null,
-            bodyContentType: String = "application/json",
             allowInsecure: Boolean = false
         ): JSONObject? {
             val text = doStringRequest(
@@ -104,7 +102,6 @@ class InternetUtils {
                 method,
                 headersWithUserAgent(requestHeaders),
                 body,
-                bodyContentType,
                 allowInsecure
             )
             try {
@@ -127,7 +124,6 @@ class InternetUtils {
                         method = "GET",
                         requestHeaders = mapOf("User-Agent" to USER_AGENT),
                         body = null,
-                        bodyContentType = "application/octet-stream",
                         allowInsecure = false
                     )
                 } else {
@@ -136,7 +132,6 @@ class InternetUtils {
                         HttpRequest.Method.GET,
                         requestHeaders = mapOf("User-Agent" to USER_AGENT),
                         null,
-                        "application/octet-stream",
                         false
                     )
                 }
@@ -162,7 +157,6 @@ class InternetUtils {
             method: String,
             requestHeaders: Map<String, String>,
             body: String?,
-            bodyContentType: String,
             allowInsecure: Boolean
         ): WebResourceResponse {
 
@@ -178,7 +172,7 @@ class InternetUtils {
             // Convert body string to RequestBody if allowed
             val requestBody: RequestBody? =
                 if (body != null && method.uppercase() !in listOf("GET", "HEAD")) {
-                    body.toRequestBody(bodyContentType.toMediaType())
+                    body.toRequestBody("application/octet-stream".toMediaType())
                 } else null
 
             // Configure HTTP method
@@ -238,8 +232,11 @@ class InternetUtils {
         private fun createInsecureClient(): OkHttpClient {
             return try {
                 val trustAllCerts = arrayOf<TrustManager>(
+                    @SuppressLint("CustomX509TrustManager")
                     object : X509TrustManager {
+                        @SuppressLint("TrustAllX509TrustManager")
                         override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
+                        @SuppressLint("TrustAllX509TrustManager")
                         override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) {}
                         override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
                     }

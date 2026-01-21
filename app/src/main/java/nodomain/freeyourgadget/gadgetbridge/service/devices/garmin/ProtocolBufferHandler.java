@@ -56,8 +56,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.HttpHand
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.GFDIMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.ProtobufMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.status.ProtobufStatusMessage;
-import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
-import nodomain.freeyourgadget.gadgetbridge.util.notifications.GBProgressNotification;
 import nodomain.freeyourgadget.gadgetbridge.webview.CurrentPosition;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -133,11 +131,12 @@ public class ProtocolBufferHandler implements MessageHandler {
                 return prepareProtobufResponse(processProtobufSmsNotificationMessage(smart.getSmsNotificationService()), message.getRequestId());
             }
             if (smart.hasHttpService()) {
-                final GdiHttpService.HttpService response = httpHandler.handle(smart.getHttpService());
-                if (response == null) {
-                    return null;
+                final GdiHttpService.HttpService response = httpHandler.handle(smart.getHttpService(), message.getRequestId());
+                if (response != null) {
+                    return prepareProtobufResponse(GdiSmartProto.Smart.newBuilder().setHttpService(response).build(), message.getRequestId());
                 }
-                return prepareProtobufResponse(GdiSmartProto.Smart.newBuilder().setHttpService(response).build(), message.getRequestId());
+                processed = true;
+                // Response will be async
             }
             if (smart.hasDataTransferService()) {
                 final GdiDataTransferService.DataTransferService response = dataTransferHandler.handle(smart.getDataTransferService(), message.getRequestId());
@@ -619,7 +618,7 @@ public class ProtocolBufferHandler implements MessageHandler {
         return prepareProtobufMessage(protobufPayload.toByteArray(), GFDIMessage.GarminMessage.PROTOBUF_REQUEST, requestId);
     }
 
-    private ProtobufMessage prepareProtobufResponse(GdiSmartProto.Smart protobufPayload, int requestId) {
+    public ProtobufMessage prepareProtobufResponse(GdiSmartProto.Smart protobufPayload, int requestId) {
         if (null == protobufPayload)
             return null;
         return prepareProtobufMessage(protobufPayload.toByteArray(), GFDIMessage.GarminMessage.PROTOBUF_RESPONSE, requestId);

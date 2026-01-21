@@ -51,9 +51,9 @@ public class HttpHandler {
         );
     }
 
-    public GdiHttpService.HttpService handle(final GdiHttpService.HttpService httpService) {
+    public GdiHttpService.HttpService handle(final GdiHttpService.HttpService httpService, final int messageRequestId) {
         if (httpService.hasRawRequest()) {
-            final GdiHttpService.HttpService.RawResponse rawResponse = handleRawRequest(httpService.getRawRequest());
+            final GdiHttpService.HttpService.RawResponse rawResponse = handleRawRequest(httpService.getRawRequest(), messageRequestId);
             if (rawResponse != null) {
                 return GdiHttpService.HttpService.newBuilder()
                         .setRawResponse(rawResponse)
@@ -61,7 +61,7 @@ public class HttpHandler {
             }
             return null;
         } else if (httpService.hasWebRequest()) {
-            final GdiHttpService.HttpService.WebResponse webResponse = handleWebRequest(httpService.getWebRequest());
+            final GdiHttpService.HttpService.WebResponse webResponse = handleWebRequest(httpService.getWebRequest(), messageRequestId);
             if (webResponse != null) {
                 return GdiHttpService.HttpService.newBuilder()
                         .setWebResponse(webResponse)
@@ -75,10 +75,11 @@ public class HttpHandler {
         return null;
     }
 
-    public GdiHttpService.HttpService.RawResponse handleRawRequest(final GdiHttpService.HttpService.RawRequest rawRequest) {
-        LOG.debug("Got rawRequest: {} - {}", rawRequest.getMethod(), rawRequest.getUrl());
+    public GdiHttpService.HttpService.RawResponse handleRawRequest(final GdiHttpService.HttpService.RawRequest rawRequest,
+                                                                   final int messageRequestId) {
+        LOG.debug("Got rawRequest {}: {} - {}", messageRequestId, rawRequest.getMethod(), rawRequest.getUrl());
 
-        final GarminHttpRequest request = new GarminHttpRequest(rawRequest);
+        final GarminHttpRequest request = new GarminHttpRequest(rawRequest, messageRequestId);
 
         final GarminHttpResponse response = handleRequest(request);
 
@@ -86,6 +87,11 @@ public class HttpHandler {
             return GdiHttpService.HttpService.RawResponse.newBuilder()
                     .setStatus(GdiHttpService.HttpService.Status.UNKNOWN_STATUS)
                     .build();
+        }
+
+        if (!response.isComplete()) {
+            // Async response
+            return null;
         }
 
         return createRawResponse(request, response);
@@ -106,14 +112,19 @@ public class HttpHandler {
         LOG.debug("Handling request to {}", interceptor.getClass().getSimpleName());
         final GarminHttpResponse response = interceptor.handle(request);
         if (response != null) {
-            LOG.debug("Response from interceptor: {}, {} bytes", response.getStatus(), response.getBody().length);
+            LOG.debug(
+                    "Response from interceptor: {}, {} bytes, complete={}",
+                    response.getStatus(),
+                    response.getBody().length,
+                    response.isComplete()
+            );
         } else {
             LOG.debug("No response from interceptor");
         }
         return response;
     }
 
-    private static GdiHttpService.HttpService.RawResponse createRawResponse(
+    public static GdiHttpService.HttpService.RawResponse createRawResponse(
             final GarminHttpRequest request,
             final GarminHttpResponse response
     ) {
@@ -178,11 +189,12 @@ public class HttpHandler {
                 .build();
     }
 
-    public GdiHttpService.HttpService.WebResponse handleWebRequest(final GdiHttpService.HttpService.WebRequest webRequest) {
-        LOG.debug("Got webRequest: {} {}", webRequest.getMethod(), webRequest.getUrl());
+    public GdiHttpService.HttpService.WebResponse handleWebRequest(final GdiHttpService.HttpService.WebRequest webRequest,
+                                                                   final int messageRequestId) {
+        LOG.debug("Got webRequest {}: {} {}", messageRequestId, webRequest.getMethod(), webRequest.getUrl());
 
         try {
-            final GarminHttpRequest request = new GarminHttpRequest(webRequest);
+            final GarminHttpRequest request = new GarminHttpRequest(webRequest, messageRequestId);
 
             final GarminHttpResponse response = handleRequest(request);
 
@@ -193,6 +205,69 @@ public class HttpHandler {
                         .build();
             }
 
+            if (!response.isComplete()) {
+                // Async response
+                return null;
+            }
+
+            return createWebResponse(request, response);
+        } catch (final Exception e) {
+            LOG.error("Failed to create web response", e);
+            return GdiHttpService.HttpService.WebResponse.newBuilder()
+                    .setStatus(GdiHttpService.HttpService.Status.UNKNOWN_STATUS)
+                    .setHttpStatus(0)
+                    .build();
+        }
+    }
+
+    public static GdiHttpService.HttpService createSuccessResponse(final GarminHttpRequest request,
+                                                                   final GarminHttpResponse response) {
+        if (request.getRawRequest() != null) {
+            final GdiHttpService.HttpService.RawResponse rawResponse = createRawResponse(request, response);
+            if (rawResponse != null) {
+                return GdiHttpService.HttpService.newBuilder()
+                        .setRawResponse(rawResponse)
+                        .build();
+            }
+            return null;
+        } else if (request.getWebRequest() != null) {
+            final GdiHttpService.HttpService.WebResponse webResponse = createWebResponse(request, response);
+            if (webResponse != null) {
+                return GdiHttpService.HttpService.newBuilder()
+                        .setWebResponse(webResponse)
+                        .build();
+            }
+            return null;
+        } else {
+            throw new IllegalArgumentException("Should never happen");
+        }
+    }
+
+    public static GdiHttpService.HttpService createErrorResponse(final GarminHttpRequest request) {
+        if (request.getRawRequest() != null) {
+            return GdiHttpService.HttpService.newBuilder()
+                    .setRawResponse(GdiHttpService.HttpService.RawResponse.newBuilder()
+                            .setStatus(GdiHttpService.HttpService.Status.UNKNOWN_STATUS)
+                            .build())
+                    .build();
+        } else if (request.getWebRequest() != null) {
+            return GdiHttpService.HttpService.newBuilder()
+                    .setWebResponse(GdiHttpService.HttpService.WebResponse.newBuilder()
+                            .setStatus(GdiHttpService.HttpService.Status.UNKNOWN_STATUS)
+                            .setHttpStatus(0)
+                            .build())
+                    .build();
+        } else {
+            throw new IllegalArgumentException("Should never happen");
+        }
+    }
+
+    public static GdiHttpService.HttpService.WebResponse createWebResponse(
+            final GarminHttpRequest request,
+            final GarminHttpResponse response
+    ) {
+        final GdiHttpService.HttpService.WebRequest webRequest = request.getWebRequest();
+        try {
             final byte[] headers;
             if (webRequest.getHttpHeadersInResponse()) {
                 byte[] encodedHeaders = null;

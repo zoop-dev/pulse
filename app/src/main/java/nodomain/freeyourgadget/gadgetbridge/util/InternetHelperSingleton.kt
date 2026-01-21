@@ -27,7 +27,6 @@ import android.os.ParcelFileDescriptor
 import android.os.RemoteException
 import android.webkit.WebResourceResponse
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
-import nodomain.freeyourgadget.internethelper.aidl.http.HttpHeaders
 import nodomain.freeyourgadget.internethelper.aidl.http.HttpRequest
 import nodomain.freeyourgadget.internethelper.aidl.http.HttpResponse
 import nodomain.freeyourgadget.internethelper.aidl.http.IHttpCallback
@@ -58,7 +57,6 @@ object InternetHelperSingleton {
     }
 
     fun getHttpService(): IHttpService? {
-        ensureInternetHelperBound()
         return internetHelper
     }
 
@@ -89,50 +87,45 @@ object InternetHelperSingleton {
     fun send(
         webRequest: Uri,
         method: HttpRequest.Method,
-        requestHeaders: Map<String, String>,
-        body: String?,
-        bodyContentType: String,
-        allowInsecure: Boolean,
+        requestHeaders: Map<String, String> = emptyMap(),
+        body: ByteArray?,
+        allowInsecure: Boolean = false,
     ): WebResourceResponse? {
+        if (internetHelper == null) {
+            LOG.error("Internet helper is not available")
+            return null
+        }
+
         val latch = CountDownLatch(1)
         var result: WebResourceResponse? = null
-        val request = HttpRequest(webRequest.toString(), method, body, bodyContentType, allowInsecure, HttpHeaders(requestHeaders))
+
+        // Create pipe to stream request body
+        val pipeRead: ParcelFileDescriptor?
+        val pipeWrite: ParcelFileDescriptor?
+        if (body != null) {
+            val pipes = ParcelFileDescriptor.createPipe()
+            pipeRead = pipes[0]
+            pipeWrite = pipes[1]
+        } else {
+            pipeRead = null
+            pipeWrite = null
+        }
+
+        val request = HttpRequest(
+            webRequest.toString(),
+            method,
+            requestHeaders,
+            pipeRead,
+            allowInsecure,
+        )
 
         LOG.debug("Forwarding {} request to {} to internet helper app", method.name, webRequest)
+
         try {
-            internetHelper?.get(request, object : IHttpCallback.Stub() {
+            internetHelper?.send(request, object : IHttpCallback.Stub() {
                 override fun onResponse(response: HttpResponse) {
                     try {
-                        val headers = response.headers.toMap()
-                        val contentType = response.headers["content-type"]
-                            ?.substringBefore(";")
-                            ?.trim()
-                            ?: "application/octet-stream"
-                        val encoding = response.headers["content-encoding"] ?: "UTF-8"
-                        val inputStream = ParcelFileDescriptor.AutoCloseInputStream(response.body)
-
-                        result = if (contentType.equals("text/html", ignoreCase = true)) {
-                            val rawHtml = inputStream.bufferedReader(Charset.forName(encoding)).use { it.readText() }
-                            val cleanedHtml = Jsoup.parse(rawHtml).html()
-                            WebResourceResponse(
-                                contentType,
-                                encoding,
-                                response.status,
-                                "OK",
-                                headers,
-                                cleanedHtml.byteInputStream()
-                            )
-                        } else {
-                            WebResourceResponse(
-                                contentType,
-                                encoding,
-                                response.status,
-                                "OK",
-                                headers,
-                                inputStream
-                            )
-                        }
-
+                        result = toWebResourceResponse(response)
                     } catch (e: Exception) {
                         LOG.error("Error processing HTTP response", e)
                     } finally {
@@ -141,19 +134,57 @@ object InternetHelperSingleton {
                 }
 
                 override fun onException(message: String?) {
-                    LOG.error("Error during GET request: $message")
+                    LOG.error("Request failed: $message")
                     result = null
                     latch.countDown()
                 }
             })
 
+            // Write the body to the pipe, if any
+            if (pipeWrite != null) {
+                ParcelFileDescriptor.AutoCloseOutputStream(pipeWrite).use { outputStream ->
+                    outputStream.write(body)
+                }
+            }
         } catch (e: RemoteException) {
-            LOG.error("Error initiating GET request", e)
+            LOG.error("Error sending request to InternetHelper", e)
             latch.countDown()
             return null
         }
 
         latch.await()
         return result
+    }
+
+    private fun toWebResourceResponse(response: HttpResponse): WebResourceResponse {
+        val headers = response.headers.toMap()
+        val contentType = response.headers["content-type"]
+            ?.substringBefore(";")
+            ?.trim()
+            ?: "application/octet-stream"
+        val encoding = response.headers["content-encoding"] ?: "UTF-8"
+        val inputStream = ParcelFileDescriptor.AutoCloseInputStream(response.body)
+
+        return if (contentType.equals("text/html", ignoreCase = true)) {
+            val rawHtml = inputStream.bufferedReader(Charset.forName(encoding)).use { it.readText() }
+            val cleanedHtml = Jsoup.parse(rawHtml).html()
+            WebResourceResponse(
+                contentType,
+                encoding,
+                response.status,
+                "OK",
+                headers,
+                cleanedHtml.byteInputStream()
+            )
+        } else {
+            WebResourceResponse(
+                contentType,
+                encoding,
+                response.status,
+                "OK",
+                headers,
+                inputStream
+            )
+        }
     }
 }

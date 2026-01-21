@@ -18,11 +18,15 @@ public class GarminHttpRequest {
     private final GdiHttpService.HttpService.RawRequest rawRequest;
     private final GdiHttpService.HttpService.WebRequest webRequest;
 
+    private final int messageRequestId;
+
     private final String method;
     private final Uri uri;
     private final Map<String, String> headers;
 
-    public GarminHttpRequest(final GdiHttpService.HttpService.RawRequest rawRequest) {
+    public GarminHttpRequest(final GdiHttpService.HttpService.RawRequest rawRequest,
+                             final int messageRequestId) {
+        this.messageRequestId = messageRequestId;
         this.rawRequest = rawRequest;
         this.webRequest = null;
         this.method = rawRequest.getMethod().name();
@@ -30,7 +34,9 @@ public class GarminHttpRequest {
         this.headers = headersToMap(rawRequest.getHeaderList());
     }
 
-    public GarminHttpRequest(final GdiHttpService.HttpService.WebRequest webRequest) throws GarminJsonException {
+    public GarminHttpRequest(final GdiHttpService.HttpService.WebRequest webRequest,
+                             final int messageRequestId) throws GarminJsonException {
+        this.messageRequestId = messageRequestId;
         this.rawRequest = null;
         this.webRequest = webRequest;
         this.method = webRequest.getMethod().name();
@@ -44,8 +50,16 @@ public class GarminHttpRequest {
         }
     }
 
+    public int getMessageRequestId() {
+        return messageRequestId;
+    }
+
     public GdiHttpService.HttpService.RawRequest getRawRequest() {
         return rawRequest;
+    }
+
+    public GdiHttpService.HttpService.WebRequest getWebRequest() {
+        return webRequest;
     }
 
     public Uri getUri() {

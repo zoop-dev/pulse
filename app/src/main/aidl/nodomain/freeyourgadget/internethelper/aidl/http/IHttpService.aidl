@@ -6,5 +6,5 @@ import nodomain.freeyourgadget.internethelper.aidl.http.IHttpCallback;
 interface IHttpService {
     int version();
 
-    void get(in HttpRequest request, IHttpCallback cb);
+    void send(in HttpRequest request, IHttpCallback cb);
 }

@@ -91,6 +91,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.IncomingFitDefinitionDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.MaxPacketSizeDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.NotificationSubscriptionDeviceEvent;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.ProtobufResponseEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.SupportedFileTypesDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.WeatherRequestDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitAsyncProcessor;
@@ -407,6 +408,14 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                         .build());
                 sendOutgoingMessage("init realtime settings", realtimeSettingsInit);
             }
+        } else if (deviceEvent instanceof ProtobufResponseEvent protobufResponseEvent) {
+            sendOutgoingMessage(
+                    "protobuf response event for " + protobufResponseEvent.messageId,
+                    protocolBufferHandler.prepareProtobufResponse(
+                            protobufResponseEvent.payload,
+                            protobufResponseEvent.messageId
+                    )
+            );
         } else if (deviceEvent instanceof NotificationSubscriptionDeviceEvent) {
             final boolean enable = ((NotificationSubscriptionDeviceEvent) deviceEvent).enable;
             notificationsHandler.setEnabled(enable);

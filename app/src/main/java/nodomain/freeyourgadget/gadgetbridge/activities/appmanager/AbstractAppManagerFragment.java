@@ -169,7 +169,6 @@ public abstract class AbstractAppManagerFragment extends Fragment {
                                     "GET",
                                     Collections.emptyMap(),
                                     null,
-                                    "application/json",
                                     false
                             );
                             JSONObject appEntry = (JSONObject) appstoreEntry.getJSONArray("data").get(0);

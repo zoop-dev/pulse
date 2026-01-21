@@ -39,6 +39,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -174,7 +175,7 @@ public class GBWebClient extends WebViewClient {
                         body = getFirstPostForUrl(requestedUri.toString());
                         LOG.debug("WEBVIEW POSTing with body: {}", body);
                     }
-                    WebResourceResponse wrr = InternetHelperSingleton.INSTANCE.send(requestedUri, requestMethod, requestHeaders, body, "application/octet-stream", false);
+                    WebResourceResponse wrr = InternetHelperSingleton.INSTANCE.send(requestedUri, requestMethod, requestHeaders, body != null ? body.getBytes(StandardCharsets.UTF_8) : null, false);
                     if (wrr != null && wrr.getStatusCode() < 400)
                         return wrr;
                     else
