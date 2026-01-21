@@ -2013,6 +2013,17 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
+    // Source: matrix
+    public static GlobalFITMessage HILL_SCORE = new GlobalFITMessage(403, "HILL_SCORE", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.UINT8, "hill_score"),
+            new FieldDefinitionPrimitive(1, BaseType.UINT8, "hill_strength"),
+            new FieldDefinitionPrimitive(2, BaseType.UINT8, "hill_endurance"),
+            new FieldDefinitionPrimitive(3, BaseType.ENUM, "unknown_3"), // 2?
+            new FieldDefinitionPrimitive(4, BaseType.ENUM, "unknown_4"), // 2?
+            new FieldDefinitionPrimitive(5, BaseType.ENUM, "unknown_5"),
+            new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
+    ));
+
     // Source: #5708
     public static GlobalFITMessage ENDURANCE_SCORE = new GlobalFITMessage(403, "ENDURANCE_SCORE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "endurance_score"),
@@ -2189,6 +2200,7 @@ public class GlobalFITMessage {
         put(394, CPE_STATUS);
         put(397, SKIN_TEMP_RAW);
         put(398, SKIN_TEMP_OVERNIGHT);
+        put(402, HILL_SCORE);
         put(403, ENDURANCE_SCORE);
         put(409, HSA_WRIST_TEMPERATURE_DATA);
         put(412, NAP);

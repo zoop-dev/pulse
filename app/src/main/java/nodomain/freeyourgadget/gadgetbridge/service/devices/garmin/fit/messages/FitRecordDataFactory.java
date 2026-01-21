@@ -172,6 +172,7 @@ public class FitRecordDataFactory {
             case 394 -> new FitCpeStatus(recordDefinition, recordHeader);
             case 397 -> new FitSkinTempRaw(recordDefinition, recordHeader);
             case 398 -> new FitSkinTempOvernight(recordDefinition, recordHeader);
+            case 403 -> new FitHillScore(recordDefinition, recordHeader);
             case 403 -> new FitEnduranceScore(recordDefinition, recordHeader);
             case 409 -> new FitHsaWristTemperatureData(recordDefinition, recordHeader);
             case 412 -> new FitNap(recordDefinition, recordHeader);
