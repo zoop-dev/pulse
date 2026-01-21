@@ -145,7 +145,7 @@ public class PermissionsUtils {
                     activity.getString(R.string.permission_internet_access_title),
                     activity.getString(R.string.permission_internet_access_summary)));
         }
-        if (AndroidUtils.isPackageInstalled(PACKAGE_INTERNET_HELPER)) {
+        if (!GBApplication.hasDirectInternetAccess() && AndroidUtils.isPackageInstalled(PACKAGE_INTERNET_HELPER)) {
             permissionsList.add(new PermissionDetails(
                     CUSTOM_PERM_INTERNET_HELPER,
                     activity.getString(R.string.internet_helper_permission_title),
