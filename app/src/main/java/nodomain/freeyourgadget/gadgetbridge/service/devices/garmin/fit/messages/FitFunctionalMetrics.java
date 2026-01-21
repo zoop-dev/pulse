@@ -70,17 +70,17 @@ public class FitFunctionalMetrics extends RecordData {
     }
 
     @Nullable
-    public Integer getUnknown7() {
+    public Integer getRunningLactateThresholdPower() {
         return getFieldByNumber(7, Integer.class);
     }
 
     @Nullable
-    public Integer getUnknown8() {
+    public Integer getRunningLactateThresholdHr() {
         return getFieldByNumber(8, Integer.class);
     }
 
     @Nullable
-    public Integer getUnknown9() {
+    public Integer getCyclingLactaceThresholdHr() {
         return getFieldByNumber(9, Integer.class);
     }
 
@@ -142,17 +142,17 @@ public class FitFunctionalMetrics extends RecordData {
             return this;
         }
 
-        public Builder setUnknown7(final Integer value) {
+        public Builder setRunningLactateThresholdPower(final Integer value) {
             setFieldByNumber(7, value);
             return this;
         }
 
-        public Builder setUnknown8(final Integer value) {
+        public Builder setRunningLactateThresholdHr(final Integer value) {
             setFieldByNumber(8, value);
             return this;
         }
 
-        public Builder setUnknown9(final Integer value) {
+        public Builder setCyclingLactaceThresholdHr(final Integer value) {
             setFieldByNumber(9, value);
             return this;
         }

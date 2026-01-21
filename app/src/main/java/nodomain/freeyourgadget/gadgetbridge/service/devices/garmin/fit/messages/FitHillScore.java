@@ -34,8 +34,8 @@ public class FitHillScore extends RecordData {
         super(recordDefinition, recordHeader);
 
         final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 403) {
-            throw new IllegalArgumentException("FitHillScore expects global messages of " + 403 + ", got " + globalNumber);
+        if (globalNumber != 402) {
+            throw new IllegalArgumentException("FitHillScore expects global messages of " + 402 + ", got " + globalNumber);
         }
     }
 
@@ -79,7 +79,7 @@ public class FitHillScore extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(403);
+            super(402);
         }
 
         public Builder setHillScore(final Integer value) {

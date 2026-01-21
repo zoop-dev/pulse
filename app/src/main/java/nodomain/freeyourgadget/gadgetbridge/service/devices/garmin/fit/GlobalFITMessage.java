@@ -1855,9 +1855,9 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(4, BaseType.UINT16, "functional_threshold_power"), // W
             new FieldDefinitionPrimitive(5, BaseType.UINT8, "unknown_5"),
             new FieldDefinitionPrimitive(6, BaseType.UINT8, "unknown_6"),
-            new FieldDefinitionPrimitive(7, BaseType.UINT16, "unknown_7"),
-            new FieldDefinitionPrimitive(8, BaseType.UINT8, "unknown_8"),
-            new FieldDefinitionPrimitive(9, BaseType.UINT8, "unknown_9"),
+            new FieldDefinitionPrimitive(7, BaseType.UINT16, "running_lactate_threshold_power"),
+            new FieldDefinitionPrimitive(8, BaseType.UINT8, "running_lactate_threshold_hr"),
+            new FieldDefinitionPrimitive(9, BaseType.UINT8, "cycling_lactace_threshold_hr"),
             new FieldDefinitionPrimitive(10, BaseType.UINT16, "unknown_10"),
             new FieldDefinitionPrimitive(11, BaseType.ENUM, "unknown_11"),
             new FieldDefinitionPrimitive(12, BaseType.ENUM, "unknown_12"),
@@ -2014,7 +2014,7 @@ public class GlobalFITMessage {
     ));
 
     // Source: matrix
-    public static GlobalFITMessage HILL_SCORE = new GlobalFITMessage(403, "HILL_SCORE", Arrays.asList(
+    public static GlobalFITMessage HILL_SCORE = new GlobalFITMessage(402, "HILL_SCORE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "hill_score"),
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "hill_strength"),
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "hill_endurance"),
