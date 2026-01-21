@@ -258,7 +258,7 @@ public class ActivityChartsActivity extends AbstractGBActivity implements Charts
     private static List<String> fillChartsTabsList(final GBDevice device) {
         final DeviceCoordinator coordinator = device.getDeviceCoordinator();
 
-        return coordinator.getChartsProvider().getSupportedCharts(device);
+        return coordinator.getChartsProvider().getEnabledCharts(device);
     }
 
     public static int getChartsTabIndex(final String tab, final GBDevice device, final Context context) {
@@ -272,11 +272,6 @@ public class ActivityChartsActivity extends AbstractGBActivity implements Charts
         final String dateStringTo = dateFormat.format(getEndDate());
 
         return getString(R.string.sleep_activity_date_range, dateStringFrom, dateStringTo);
-    }
-
-    protected void initDates() {
-        setEndDate(new Date());
-        setStartDate(DateTimeUtils.shiftByDays(getEndDate(), -1));
     }
 
     @Override
