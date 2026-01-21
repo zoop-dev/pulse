@@ -7,17 +7,11 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint
+import nodomain.freeyourgadget.gadgetbridge.GBApplication
+import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitRecord
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitSession
-import nodomain.freeyourgadget.gadgetbridge.util.gpx.GpxParseException
-import nodomain.freeyourgadget.gadgetbridge.util.gpx.GpxParser
 import org.slf4j.LoggerFactory
-import java.io.File
-import java.io.FileInputStream
-import java.io.IOException
 
 class MapsTrackViewModel : ViewModel() {
     private val _trackPoints = MutableLiveData<List<GPSCoordinate>>()
@@ -29,15 +23,15 @@ class MapsTrackViewModel : ViewModel() {
     private val _error = MutableLiveData<Exception?>()
     val error: LiveData<Exception?> = _error
 
-    fun loadTrackData(trackFile: File) {
+    fun loadTrackData(baseActivitySummary: BaseActivitySummary, gbDevice: GBDevice) {
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                val points = fetchTrackPoints(trackFile)
+                val points = fetchTrackPoints(baseActivitySummary, gbDevice)
                 if (points.isNotEmpty()) {
                     _trackPoints.postValue(points)
                 } else {
-                    LOG.warn("No track points found in file: ${trackFile.name}")
+                    LOG.warn("No track points found for: ${baseActivitySummary.name}")
                     _trackPoints.postValue(emptyList())
                 }
             } catch (e: Exception) {
@@ -49,51 +43,20 @@ class MapsTrackViewModel : ViewModel() {
         }
     }
 
-    private suspend fun fetchTrackPoints(trackFile: File): List<GPSCoordinate> {
+    private suspend fun fetchTrackPoints(
+        baseActivitySummary: BaseActivitySummary,
+        gbDevice: GBDevice
+    ): List<GPSCoordinate> {
+        val activityTrackProvider =
+            gbDevice.deviceCoordinator.getActivityTrackProvider(gbDevice, GBApplication.getContext())
         return withContext(Dispatchers.IO) {
-            getActivityPoints(trackFile).mapNotNull { it.location }
+            val activityTrack = activityTrackProvider
+                .getActivityTrack(baseActivitySummary) ?: return@withContext listOf()
+            return@withContext activityTrack.allPoints.mapNotNull { it.location }
         }
     }
 
     companion object {
         private val LOG = LoggerFactory.getLogger(MapsTrackViewModel::class.java)
-
-        fun getActivityPoints(trackFile: File): List<ActivityPoint> {
-            try {
-                when {
-                    trackFile.name.endsWith(".gpx") -> {
-                        FileInputStream(trackFile).use { inputStream ->
-                            val gpxParser = GpxParser(inputStream)
-                            return gpxParser.gpxFile.activityPoints
-                        }
-                    }
-
-                    trackFile.name.endsWith(".fit") -> {
-                        val fitFile = FitFile.parseIncoming(trackFile)
-                        val activityPoints = fitFile.records
-                           .filterIsInstance<FitRecord>()
-                           .map { it.toActivityPoint() }
-                        for (activityPoint in activityPoints) {
-                            if (activityPoint.location != null) {
-                                return activityPoints
-                            }
-                        }
-                        return fitFile.records.filterIsInstance<FitSession>()[0].toActivityPoints()
-                    }
-
-                    else -> {
-                        LOG.warn("Unknown file type: ${trackFile.name}")
-                    }
-                }
-            } catch (e: IOException) {
-                LOG.error("Failed to open $trackFile", e)
-            } catch (e: GpxParseException) {
-                LOG.error("Failed to parse gpx file", e)
-            } catch (e: Exception) {
-                LOG.error("Failed to parse fit file", e)
-            }
-
-            return emptyList()
-        }
     }
 }

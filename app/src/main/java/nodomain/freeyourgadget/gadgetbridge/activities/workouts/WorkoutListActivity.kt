@@ -297,8 +297,12 @@ class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
                         for (i in 0 until selectedItems!!.length()) {
                             if (selectedItems!!.get(i)) {
                                 itemAdapter?.getItem(i)?.let { summary ->
-                                    ActivitySummaryUtils.getGpxFile(summary)?.let { file ->
-                                        paths.add(file.path)
+                                    val activityTrackProvider =
+                                        gbDevice?.deviceCoordinator?.getActivityTrackProvider(gbDevice!!, this@WorkoutListActivity)
+                                    if (activityTrackProvider != null) {
+                                        ActivitySummaryUtils.getShareableGpxFile(activityTrackProvider, summary)?.let { file ->
+                                            paths.add(file.path)
+                                        }
                                     }
                                 }
                             }

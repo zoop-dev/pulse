@@ -31,10 +31,11 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity
 import nodomain.freeyourgadget.gadgetbridge.databinding.ActivityMapsTrackBinding
+import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 import nodomain.freeyourgadget.gadgetbridge.util.maps.MapsManager
 import org.slf4j.LoggerFactory
-import java.io.File
 
 class MapsTrackActivity : AbstractGBActivity(), MenuProvider {
     private lateinit var binding: ActivityMapsTrackBinding
@@ -59,23 +60,29 @@ class MapsTrackActivity : AbstractGBActivity(), MenuProvider {
         binding = ActivityMapsTrackBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val file = intent.extras?.getSerializable("file") as? File
-        if (file == null) {
-            GB.toast(this, "No file provided", Toast.LENGTH_LONG, GB.ERROR)
+        mapsManager = MapsManager(this, binding.mapView)
+        mapsManager.loadMaps()
+
+        val summary = intent.extras?.getSerializable("summary") as? BaseActivitySummary
+        if (summary == null) {
+            GB.toast(this, "No summary provided", Toast.LENGTH_LONG, GB.ERROR)
+            finish()
+            return
+        }
+        val gbDevice = intent.extras?.getParcelable<GBDevice>(GBDevice.EXTRA_DEVICE)
+        if (gbDevice == null) {
+            GB.toast(this, "No device provided", Toast.LENGTH_LONG, GB.ERROR)
             finish()
             return
         }
 
         addMenuProvider(this)
 
-        mapsManager = MapsManager(this, binding.mapView)
-        mapsManager.loadMaps()
-
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, IntentFilter().apply {
             addAction(MapsSettingsFragment.ACTION_SETTING_CHANGE)
         })
 
-        viewModel.loadTrackData(file)
+        viewModel.loadTrackData(summary, gbDevice)
 
         observeViewModel()
     }

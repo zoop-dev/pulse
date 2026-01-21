@@ -31,7 +31,7 @@ public class ActivityTrack {
     private User user;
     private String name;
     private List<ActivityPoint> currentSegment = new ArrayList<>();
-    private List<List<ActivityPoint>> segments = new ArrayList<>() {{
+    private final List<List<ActivityPoint>> segments = new ArrayList<>() {{
         add(currentSegment);
     }};
 

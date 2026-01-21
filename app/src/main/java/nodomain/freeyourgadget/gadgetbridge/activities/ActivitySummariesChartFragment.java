@@ -40,10 +40,8 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.AbstractActivityChartFragment;
@@ -52,12 +50,14 @@ import nodomain.freeyourgadget.gadgetbridge.activities.charts.ChartsHost;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.DefaultChartsData;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.SampleXLabelFormatter;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.TimestampTranslation;
-import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsTrackViewModel;
 import nodomain.freeyourgadget.gadgetbridge.database.DBAccess;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
+import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrackProvider;
 
 
 public class ActivitySummariesChartFragment extends AbstractActivityChartFragment<ChartsData> {
@@ -67,7 +67,7 @@ public class ActivitySummariesChartFragment extends AbstractActivityChartFragmen
     private View view;
 
     // If a track file is being used (takes precedence over activity data)
-    private File trackFile;
+    private BaseActivitySummary summary;
 
     // If activity data is being used
     private GBDevice gbDevice;
@@ -88,8 +88,8 @@ public class ActivitySummariesChartFragment extends AbstractActivityChartFragmen
         //      at androidx.localbroadcastmanager.content.LocalBroadcastManager.executePendingBroadcasts(LocalBroadcastManager.java:319)
     }
 
-    public void setDateAndGetData(@Nullable File trackFile, GBDevice gbDevice, long startTime, long endTime) {
-        this.trackFile = trackFile;
+    public void setDateAndGetData(@Nullable BaseActivitySummary summary, GBDevice gbDevice, long startTime, long endTime) {
+        this.summary = summary;
         this.startTime = (int) startTime;
         this.endTime = (int) endTime;
         this.gbDevice = gbDevice;
@@ -116,7 +116,7 @@ public class ActivitySummariesChartFragment extends AbstractActivityChartFragmen
         super.onViewCreated(view, savedInstanceState);
         init();
         this.view = view;
-        if (this.trackFile != null || this.gbDevice != null) {
+        if (this.summary != null || this.gbDevice != null) {
             setupChart();
             createLocalRefreshTask("getting hr and activity", getActivity()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
@@ -228,13 +228,17 @@ public class ActivitySummariesChartFragment extends AbstractActivityChartFragmen
             final DefaultChartsData<?> dcd;
             final DefaultChartsData<LineData> activitySamplesData = buildChartFromSamples(handler);
 
-            if (trackFile != null) {
-                final List<ActivityPoint> activityPoints = MapsTrackViewModel.Companion.getActivityPoints(trackFile)
-                        .stream()
-                        .filter(ap -> ap.getHeartRate() > 0)
-                        .collect(Collectors.toList());
+            if (summary != null && gbDevice != null) {
+                List<ActivityPoint> activityPoints = null;
+                final ActivityTrackProvider activityTrackProvider = gbDevice.getDeviceCoordinator().getActivityTrackProvider(gbDevice, getContext());
+                if (activityTrackProvider != null) {
+                    final ActivityTrack activityTrack = activityTrackProvider.getActivityTrack(summary);
+                    if (activityTrack != null) {
+                        activityPoints = activityTrack.getAllPoints();
+                    }
+                }
 
-                if (!activityPoints.isEmpty()) {
+                if (activityPoints != null && !activityPoints.isEmpty()) {
                     dcd = buildHeartRateChart(activityPoints, activitySamplesData);
                 } else {
                     dcd = activitySamplesData;

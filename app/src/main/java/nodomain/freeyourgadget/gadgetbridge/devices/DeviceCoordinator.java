@@ -54,6 +54,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.AbstractNotificationPattern;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrackProvider;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.model.BloodPressureSample;
@@ -497,6 +498,11 @@ public interface DeviceCoordinator {
      * @return
      */
     ActivitySummaryParser getActivitySummaryParser(final GBDevice device, final Context context);
+
+    /**
+     * Returns the {@link ActivityTrackProvider} for the device being supported.
+     */
+    ActivityTrackProvider getActivityTrackProvider(@NonNull final GBDevice device, @NonNull final Context context);
 
     /**
      * Returns true if this device/coordinator supports installing files like firmware,

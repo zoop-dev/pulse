@@ -412,6 +412,16 @@ public class FileUtils {
     }
 
     /**
+     * See {@link FileUtils#tryFixPath(File)}
+     */
+    public static File tryFixPath(final String path) {
+        if (path == null) {
+            return null;
+        }
+        return tryFixPath(new File(path));
+    }
+
+    /**
      * When migrating the database between Gadgetbridge versions or phones, we may end up with the
      * wrong path persisted in the database. Attempt to find the file in the current external data.
      *

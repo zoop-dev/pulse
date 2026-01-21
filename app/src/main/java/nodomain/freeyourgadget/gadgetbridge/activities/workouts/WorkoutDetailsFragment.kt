@@ -59,7 +59,6 @@ import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.ActivitySummariesChartFragment
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.DurationXLabelFormatter
 import nodomain.freeyourgadget.gadgetbridge.activities.fit.FitViewerActivity
-import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsTrackViewModel.Companion.getActivityPoints
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.ChartDataRepository
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.DefaultWorkoutCharts
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.WorkoutChartsActivity
@@ -91,12 +90,11 @@ import java.io.StringWriter
 import java.nio.charset.StandardCharsets
 import java.util.Locale
 import java.util.concurrent.TimeUnit
-import java.util.stream.Collectors
 
 class WorkoutDetailsFragment : Fragment(), MenuProvider {
     private var workoutId: Long = -1
     private var currentWorkout: Workout? = null
-    private var gbDevice: GBDevice? = null
+    private lateinit var gbDevice: GBDevice
 
     private lateinit var binding: FragmentWorkoutDetailsBinding
 
@@ -173,7 +171,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
                     }
                     gbDevice = getGBDevice(summary.device)
                     val parsedWorkout = try {
-                        gbDevice!!.deviceCoordinator.getActivitySummaryParser(gbDevice, requireContext())
+                        gbDevice.deviceCoordinator.getActivitySummaryParser(gbDevice, requireContext())
                             .parseWorkout(summary, true)
                     } catch (e: Exception) {
                         // Do not break completely - use any previously processed data
@@ -186,17 +184,18 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
                     }
                     if (parsedWorkout.charts.isEmpty()) {
                         try {
-                            val trackFile = ActivitySummaryUtils.getTrackFile(parsedWorkout.summary)
-                            if (trackFile != null) {
-                                val activityPoints = getActivityPoints(trackFile)
-                                    .stream()
-                                    .collect(Collectors.toList())
-                                val defaultCharts = DefaultWorkoutCharts.buildDefaultCharts(
-                                    requireContext(),
-                                    activityPoints,
-                                    ActivityKind.fromCode(parsedWorkout.summary.activityKind)
-                                )
-                                return@withContext Workout(parsedWorkout.summary, parsedWorkout.data, defaultCharts)
+                            val activityTrackProvider =
+                                gbDevice.deviceCoordinator.getActivityTrackProvider(gbDevice, requireContext())
+                            if (activityTrackProvider != null) {
+                                val activityPoints = activityTrackProvider.getActivityTrack(parsedWorkout.summary)?.allPoints
+                                if (!activityPoints.isNullOrEmpty()) {
+                                    val defaultCharts = DefaultWorkoutCharts.buildDefaultCharts(
+                                        requireContext(),
+                                        activityPoints,
+                                        ActivityKind.fromCode(parsedWorkout.summary.activityKind)
+                                    )
+                                    return@withContext Workout(parsedWorkout.summary, parsedWorkout.data, defaultCharts)
+                                }
                             }
                         } catch (e: Exception) {
                             LOG.error("Failed to build default charts", e)
@@ -342,14 +341,12 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
     }
 
     private fun updateFragments(workout: Workout) {
-        val trackFile = ActivitySummaryUtils.getTrackFile(workout.summary)
-
         // If there's a device-specific HR chart, prefer it over the default one
         if (workout.charts.any { chart -> chart.group == ActivitySummaryEntries.GROUP_HEART_RATE }) {
             binding.heartRateChartWrapper.visibility = View.GONE
         } else {
             chartFragment?.setDateAndGetData(
-                trackFile,
+                workout.summary,
                 gbDevice,
                 workout.summary.startTime.time / 1000,
                 workout.summary.endTime.time / 1000
@@ -363,9 +360,9 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             }
         }
 
-        if (workoutHasGps(workout.summary)) {
+        if (workoutHasGps(workout)) {
             showGpsCanvas()
-            gpsFragment?.setTrackData(trackFile)
+            gpsFragment?.setTrackData(workout.summary, gbDevice)
         } else {
             hideGpsCanvas()
         }
@@ -438,22 +435,23 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             textColor = chartTextColor
             isEnabled = true
             if (chart.chartYLabelFormatter != null) {
-                valueFormatter = chart.chartYLabelFormatter;
+                valueFormatter = chart.chartYLabelFormatter
             }
         }
         lineChart.axisRight.apply {
             isEnabled = false
         }
         chart.lineChart(lineChart);
-        when {
-            lineChart is LineChart && chart.chartData is LineData -> {
+        when (lineChart) {
+            is LineChart if chart.chartData is LineData -> {
                 lineChart.data = chart.chartData
             }
-            lineChart is ScatterChart && chart.chartData is ScatterData -> {
+
+            is ScatterChart if chart.chartData is ScatterData -> {
                 lineChart.data = chart.chartData
             }
         }
-        lineChart.description.isEnabled = false;
+        lineChart.description.isEnabled = false
         lineChart.onChartGestureListener = object : OnChartGestureListener {
             override fun onChartLongPressed(me: MotionEvent?) {}
             override fun onChartGestureStart(me: MotionEvent?, lastPerformedGesture: ChartTouchListener.ChartGesture?) {}
@@ -490,18 +488,16 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         }
     }
 
-    private fun workoutHasGps(summary: BaseActivitySummary): Boolean {
-        summary.gpxTrack?.let { gpxTrack ->
+    private fun workoutHasGps(workout: Workout): Boolean {
+        if (workout.data.hasGps()) {
+            return true
+        }
+
+        workout.summary.gpxTrack?.let { gpxTrack ->
             val existing = FileUtils.tryFixPath(File(gpxTrack))
             if (existing != null && existing.canRead()) {
                 return true
             }
-        }
-
-        val summaryDataJson = summary.summaryData
-        if (summaryDataJson != null && summaryDataJson.contains(ActivitySummaryEntries.INTERNAL_HAS_GPS)) {
-            val summaryData = ActivitySummaryData.fromJson(summaryDataJson)
-            return summaryData.getBoolean(ActivitySummaryEntries.INTERNAL_HAS_GPS, false)
         }
 
         return false
@@ -612,7 +608,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
     private fun updateMenuItems(menu: Menu) {
         val workout = currentWorkout ?: return
 
-        val hasGpx = workoutHasGps(workout.summary)
+        val hasGpx = workoutHasGps(workout)
         val hasRawSummary = workout.summary.rawSummaryData != null
         val hasRawDetails = workout.summary.rawDetailsPath?.let { FileUtils.tryFixPath(File(it)) != null } ?: false
 
@@ -690,7 +686,8 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
 
     private fun viewGpxTrack() {
         val workout = currentWorkout ?: return
-        val gpxFile = ActivitySummaryUtils.getGpxFile(workout.summary)
+        val activityTrackProvider = gbDevice.deviceCoordinator.getActivityTrackProvider(gbDevice, requireContext())
+        val gpxFile = ActivitySummaryUtils.getShareableGpxFile(activityTrackProvider, workout.summary)
 
         if (gpxFile == null) {
             GB.toast(requireContext(), "No GPX track in this activity", Toast.LENGTH_LONG, GB.INFO)
@@ -712,7 +709,8 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
 
     private fun shareGpxTrack() {
         val workout = currentWorkout ?: return
-        val gpxFile = ActivitySummaryUtils.getGpxFile(workout.summary)
+        val activityTrackProvider = gbDevice.deviceCoordinator.getActivityTrackProvider(gbDevice, requireContext())
+        val gpxFile = ActivitySummaryUtils.getShareableGpxFile(activityTrackProvider, workout.summary)
 
         if (gpxFile == null) {
             GB.toast(requireContext(), "No GPX track in this activity", Toast.LENGTH_LONG, GB.INFO)
@@ -798,10 +796,10 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         }
     }
 
-    private fun getGBDevice(device: Device?): GBDevice? {
-        return device?.let { findDevice ->
+    private fun getGBDevice(device: Device): GBDevice {
+        return device.let { findDevice ->
             GBApplication.app().deviceManager.devices
-                .firstOrNull { it.address.equals(findDevice.identifier, ignoreCase = true) }
+                .first { it.address.equals(findDevice.identifier, ignoreCase = true) }
         }
     }
 

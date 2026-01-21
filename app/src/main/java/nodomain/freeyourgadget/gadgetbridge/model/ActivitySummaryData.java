@@ -110,10 +110,9 @@ public class ActivitySummaryData {
 
     public Number getNumber(final String key, final Number defaultValue) {
         final ActivitySummaryEntry entry = entries.get(key);
-        if (!(entry instanceof ActivitySummarySimpleEntry)) {
+        if (!(entry instanceof ActivitySummarySimpleEntry simpleEntry)) {
             return defaultValue;
         }
-        final ActivitySummarySimpleEntry simpleEntry = (ActivitySummarySimpleEntry) entry;
         final Object value = simpleEntry.getValue();
         if (!(value instanceof Number)) {
             return defaultValue;
@@ -124,10 +123,9 @@ public class ActivitySummaryData {
 
     public boolean getBoolean(final String key, final boolean defaultValue) {
         final ActivitySummaryEntry entry = entries.get(key);
-        if (!(entry instanceof ActivitySummarySimpleEntry)) {
+        if (!(entry instanceof ActivitySummarySimpleEntry simpleEntry)) {
             return defaultValue;
         }
-        final ActivitySummarySimpleEntry simpleEntry = (ActivitySummarySimpleEntry) entry;
         final Object value = simpleEntry.getValue();
         if (value instanceof Boolean) {
             return (boolean) value;
@@ -138,6 +136,14 @@ public class ActivitySummaryData {
         }
 
         return Boolean.parseBoolean((String) value);
+    }
+
+    public boolean hasGps() {
+        return getBoolean(ActivitySummaryEntries.INTERNAL_HAS_GPS, false);
+    }
+
+    public void setHasGps(final boolean gps) {
+        add(ActivitySummaryEntries.INTERNAL_HAS_GPS, String.valueOf(gps));
     }
 
     @NonNull

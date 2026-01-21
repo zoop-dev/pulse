@@ -20,10 +20,11 @@ import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsSettingsFragment
 import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsTrackActivity
 import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsTrackViewModel
 import nodomain.freeyourgadget.gadgetbridge.databinding.FragmentWorkoutGpsBinding
+import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate
 import nodomain.freeyourgadget.gadgetbridge.util.maps.MapsManager
 import org.slf4j.LoggerFactory
-import java.io.File
 
 
 class WorkoutGpsFragment : Fragment() {
@@ -33,7 +34,8 @@ class WorkoutGpsFragment : Fragment() {
     private lateinit var mapsManager: MapsManager
     private var mapValid = true
 
-    private var inputFile: File? = null
+    private var baseActivitySummary: BaseActivitySummary? = null
+    private var gbDevice: GBDevice? = null
 
     private val mReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -54,7 +56,7 @@ class WorkoutGpsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentWorkoutGpsBinding.inflate(inflater, container, false)
 
         binding.mapView.setBuiltInZoomControls(false)
@@ -69,7 +71,7 @@ class WorkoutGpsFragment : Fragment() {
             addAction(MapsSettingsFragment.ACTION_SETTING_CHANGE)
         })
 
-        inputFile?.let { viewModel.loadTrackData(it) }
+        baseActivitySummary?.let { viewModel.loadTrackData(it, gbDevice!!) }
 
         observeViewModel()
 
@@ -112,11 +114,10 @@ class WorkoutGpsFragment : Fragment() {
         super.onDestroyView()
     }
 
-    fun setTrackData(inputFile: File?) {
-        this.inputFile = inputFile
-        if (inputFile != null) {
-            viewModel.loadTrackData(inputFile)
-        }
+    fun setTrackData(baseActivitySummary: BaseActivitySummary, gbDevice: GBDevice) {
+        this.baseActivitySummary = baseActivitySummary
+        this.gbDevice = gbDevice
+        viewModel.loadTrackData(baseActivitySummary, gbDevice)
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -182,8 +183,9 @@ class WorkoutGpsFragment : Fragment() {
             }
 
             private fun openMapActivity() {
-                val intent = Intent(getContext(), MapsTrackActivity::class.java)
-                intent.putExtra("file", inputFile)
+                val intent = Intent(requireContext(), MapsTrackActivity::class.java)
+                intent.putExtra("summary", baseActivitySummary)
+                intent.putExtra(GBDevice.EXTRA_DEVICE, gbDevice)
                 startActivity(intent)
             }
         })

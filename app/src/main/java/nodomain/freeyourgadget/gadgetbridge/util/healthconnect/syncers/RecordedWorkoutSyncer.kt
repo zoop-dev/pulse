@@ -39,7 +39,6 @@ import androidx.health.connect.client.units.Length
 import androidx.health.connect.client.units.Power
 import androidx.health.connect.client.units.Velocity
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
-import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsTrackViewModel
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries
@@ -48,12 +47,10 @@ import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind
-import nodomain.freeyourgadget.gadgetbridge.util.FileUtils
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs
 import nodomain.freeyourgadget.gadgetbridge.util.healthconnect.HealthConnectUtils
 import org.slf4j.LoggerFactory
-import java.io.File
 import java.time.Instant
 import java.time.ZoneOffset
 import java.util.Date
@@ -135,7 +132,7 @@ internal object RecordedWorkoutSyncer {
                 var activityPoints: List<ActivityPoint>? = null
 
                 if (useDetailedSync) {
-                    activityPoints = loadActivityPoints(workout, deviceName)
+                    activityPoints = loadActivityPoints(workout, gbDevice, context)
                 }
 
                 if (activityPoints != null && activityPoints.isNotEmpty()) {
@@ -267,31 +264,19 @@ internal object RecordedWorkoutSyncer {
         }
     }
 
-    private fun loadActivityPoints(workout: BaseActivitySummary, deviceName: String): List<ActivityPoint>? {
-        val trackFilePath = workout.rawDetailsPath
-        if (trackFilePath.isNullOrBlank()) {
-            LOG.debug("No track file path available for workout on device '$deviceName'.")
+    private fun loadActivityPoints(workout: BaseActivitySummary, device: GBDevice, context: Context): List<ActivityPoint>? {
+        val activityTrackProvider = device.deviceCoordinator.getActivityTrackProvider(device, context)
+        if (activityTrackProvider == null) {
+            LOG.debug("No activity track provider available device '{}'.", device)
             return null
         }
 
-        val trackFile = FileUtils.tryFixPath(File(trackFilePath))
-        if (trackFile == null || (!trackFile.exists() || !trackFile.canRead())) {
-            LOG.warn("Track file does not exist or cannot be read: $trackFilePath")
+        val points = activityTrackProvider.getActivityTrack(workout)?.allPoints
+        if (points.isNullOrEmpty()) {
+            LOG.debug("Track file for workout {} contains no activity points", workout.id)
             return null
         }
-
-        return try {
-            val points = MapsTrackViewModel.getActivityPoints(trackFile)
-            if (points.isEmpty()) {
-                LOG.debug("Track file contains no activity points: $trackFilePath")
-                null
-            } else {
-                points
-            }
-        } catch (e: Exception) {
-            LOG.error("Error loading activity points from track file: $trackFilePath", e)
-            null
-        }
+        return points
     }
 
     private fun processDetailedWorkout(

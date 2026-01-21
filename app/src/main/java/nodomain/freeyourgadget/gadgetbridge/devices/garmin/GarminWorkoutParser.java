@@ -737,10 +737,9 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             tableBuilder.addToSummaryData(summaryData);
         }
 
-        summaryData.add(
-                INTERNAL_HAS_GPS,
-                String.valueOf(activityPoints.stream().anyMatch(p -> p.getLocation() != null) ||
-                        sessionActivityPoints.stream().anyMatch(p -> p.getLocation() != null))
+        summaryData.setHasGps(
+                activityPoints.stream().anyMatch(p -> p.getLocation() != null) ||
+                        sessionActivityPoints.stream().anyMatch(p -> p.getLocation() != null)
         );
 
         summary.setSummaryData(summaryData.toString());
