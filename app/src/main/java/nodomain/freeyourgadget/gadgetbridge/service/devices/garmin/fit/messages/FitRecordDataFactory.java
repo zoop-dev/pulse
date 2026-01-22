@@ -165,6 +165,7 @@ public class FitRecordDataFactory {
             case 376 -> new FitHsaGyroscopeData(recordDefinition, recordHeader);
             case 378 -> new FitTrainingLoad(recordDefinition, recordHeader);
             case 379 -> new FitSleepSchedule(recordDefinition, recordHeader);
+            case 382 -> new FitSleepRestlessMoments(recordDefinition, recordHeader);
             case 387 -> new FitChronoShotSession(recordDefinition, recordHeader);
             case 388 -> new FitChronoShotData(recordDefinition, recordHeader);
             case 389 -> new FitHsaConfigurationData(recordDefinition, recordHeader);

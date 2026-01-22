@@ -1958,6 +1958,12 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
+    public static GlobalFITMessage SLEEP_RESTLESS_MOMENTS = new GlobalFITMessage(382, "SLEEP_RESTLESS_MOMENTS", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.UINT32, "unknown_0"),
+            new FieldDefinitionPrimitive(1, BaseType.UINT8, "restless_moments_count"),
+            new FieldDefinitionPrimitive(2, BaseType.UINT8, "unknown_2", FieldDefinitionFactory.FIELD.ARRAY)
+    ));
+
     public static GlobalFITMessage CHRONO_SHOT_SESSION = new GlobalFITMessage(387, "CHRONO_SHOT_SESSION", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT32, "min_speed", 1000, 0), // m/s
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "max_speed", 1000, 0), // m/s
@@ -2193,6 +2199,7 @@ public class GlobalFITMessage {
         put(376, HSA_GYROSCOPE_DATA);
         put(378, TRAINING_LOAD);
         put(379, SLEEP_SCHEDULE);
+        put(382, SLEEP_RESTLESS_MOMENTS);
         put(387, CHRONO_SHOT_SESSION);
         put(388, CHRONO_SHOT_DATA);
         put(389, HSA_CONFIGURATION_DATA);
