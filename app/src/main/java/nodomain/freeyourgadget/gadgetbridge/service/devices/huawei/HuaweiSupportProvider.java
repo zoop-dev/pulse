@@ -34,6 +34,7 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.slf4j.Logger;
@@ -2093,7 +2094,8 @@ public class HuaweiSupportProvider {
                     packet.trainingPoints,
                     packet.longestStreak,
                     packet.tripped,
-                    getDeviceState().isSupportsWorkoutNewSteps()
+                    getDeviceState().isSupportsWorkoutNewSteps(),
+                    null
             );
 
             db.getDaoSession().getHuaweiWorkoutSummarySampleDao().insertOrReplace(summarySample);
@@ -2970,7 +2972,7 @@ public class HuaweiSupportProvider {
     public void deviceFileDownloadRequest(String filename, byte fileType, byte fileId, int fileSize, String srcPackage, String dstPackage, String srcFingerprint, String dstFingerprint) {
         HuaweiFileDownloadManager.FileRequest request = HuaweiFileDownloadManager.FileRequest.IncomingFileRequest(filename, new HuaweiFileDownloadManager.FileDownloadCallback() {
             @Override
-            public void downloadComplete(HuaweiFileDownloadManager.FileRequest fileRequest) {
+            public void downloadComplete(HuaweiFileDownloadManager.FileRequest fileRequest, @Nullable File localRawFile) {
                 LOG.info("Download file: {}", fileRequest.getFilename());
                 huaweiP2PManager.handleFile(fileRequest.getSrcPackage(), fileRequest.getDstPackage(), fileRequest.getSrcFingerprint(), fileRequest.getDstFingerprint(), fileRequest.getFilename(), fileRequest.getData());
             }
@@ -3007,7 +3009,7 @@ public class HuaweiSupportProvider {
                 HuaweiDictTypes.SLEEP_DETAILS_CLASS,
                 new HuaweiFileDownloadManager.FileDownloadCallback() {
                     @Override
-                    public void downloadComplete(HuaweiFileDownloadManager.FileRequest fileRequest) {
+                    public void downloadComplete(HuaweiFileDownloadManager.FileRequest fileRequest, @Nullable File localRawFile) {
                         HuaweiSequenceDataFileParser.SequenceFileData sequenceFileData = HuaweiSequenceDataFileParser.parseSequenceFileData(fileRequest.getData());
                         LOG.info("SLEEP File data: {}", sequenceFileData);
 
@@ -3169,7 +3171,7 @@ public class HuaweiSupportProvider {
                 end,
                 new HuaweiFileDownloadManager.FileDownloadCallback() {
                     @Override
-                    public void downloadComplete(HuaweiFileDownloadManager.FileRequest fileRequest) {
+                    public void downloadComplete(HuaweiFileDownloadManager.FileRequest fileRequest, @Nullable File localRawFile) {
                         if (fileRequest.getData().length != 0) {
                             LOG.debug("Parsing stress file");
                             HuaweiStressParser.RriFileData results = HuaweiStressParser.parseRri(fileRequest.getData());
@@ -3213,7 +3215,7 @@ public class HuaweiSupportProvider {
                 end,
                 new HuaweiFileDownloadManager.FileDownloadCallback() {
                     @Override
-                    public void downloadComplete(HuaweiFileDownloadManager.FileRequest fileRequest) {
+                    public void downloadComplete(HuaweiFileDownloadManager.FileRequest fileRequest, @Nullable File localRawFile) {
                         if (fileRequest.getData().length != 0) {
                             LOG.debug("Parsing ECG file");
 
@@ -3276,7 +3278,7 @@ public class HuaweiSupportProvider {
                 databaseId,
                 new HuaweiFileDownloadManager.FileDownloadCallback() {
                     @Override
-                    public void downloadComplete(HuaweiFileDownloadManager.FileRequest fileRequest) {
+                    public void downloadComplete(HuaweiFileDownloadManager.FileRequest fileRequest, @Nullable File localRawFile) {
                         if (fileRequest.getData().length == 0) {
                             LOG.debug("PDR file empty");
                             return;
@@ -3306,13 +3308,36 @@ public class HuaweiSupportProvider {
                 databaseId,
                 new HuaweiFileDownloadManager.FileDownloadCallback() {
                     @Override
-                    public void downloadComplete(HuaweiFileDownloadManager.FileRequest fileRequest) {
+                    public void downloadComplete(HuaweiFileDownloadManager.FileRequest fileRequest, @Nullable File localRawFile) {
                         extraCallbackAction.run();
 
                         if (fileRequest.getData().length == 0) {
                             LOG.debug("GPS file empty");
                             syncState.stopWorkoutGpsDownload();
                             return;
+                        }
+
+                        Long databaseId = fileRequest.getDatabaseId();
+                        if (databaseId == null) {
+                            GB.toast(context, "Cannot link GPX to workout", Toast.LENGTH_SHORT, GB.ERROR);
+                            LOG.error("Cannot link GPX to workout");
+                            syncState.stopWorkoutGpsDownload();
+                            return;
+                        }
+
+                        // Link the raw file to the workout right away
+                        if (localRawFile != null) {
+                            try (DBHandler db = GBApplication.acquireDB()) {
+                                DaoSession daoSession = db.getDaoSession();
+                                HuaweiWorkoutSummarySample sample = daoSession.getHuaweiWorkoutSummarySampleDao().load(databaseId);
+                                sample.setRawGpsFileLocation(localRawFile.getAbsolutePath());
+                                sample.update();
+                            } catch (Exception e) {
+                                GB.toast(context, "Failed to save Workout raw file location", Toast.LENGTH_SHORT, GB.ERROR, e);
+                                LOG.error("Failed to save Workout raw file location", e);
+                                syncState.stopWorkoutGpsDownload();
+                                return;
+                            }
                         }
 
                         LOG.debug("Parsing GPS file");
@@ -3374,14 +3399,6 @@ public class HuaweiSupportProvider {
                         } catch (IOException | ActivityTrackExporter.GPXTrackEmptyException e) {
                             GB.toast(context, "Failed to export Workout GPX file", Toast.LENGTH_SHORT, GB.ERROR, e);
                             LOG.error("Failed to export Workout GPX file", e);
-                            syncState.stopWorkoutGpsDownload();
-                            return;
-                        }
-
-                        Long databaseId = fileRequest.getDatabaseId();
-                        if (databaseId == null) {
-                            GB.toast(context, "Cannot link GPX to workout", Toast.LENGTH_SHORT, GB.ERROR);
-                            LOG.error("Cannot link GPX to workout");
                             syncState.stopWorkoutGpsDownload();
                             return;
                         }

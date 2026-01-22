@@ -130,7 +130,7 @@ public class HuaweiFileDownloadManager {
     }
 
     public static class FileDownloadCallback {
-        public void downloadComplete(FileRequest fileRequest) {
+        public void downloadComplete(FileRequest fileRequest, @Nullable File localRawFile) {
         }
 
         public void downloadException(HuaweiFileDownloadException e) {
@@ -815,35 +815,39 @@ public class HuaweiFileDownloadManager {
         } // Else we're expecting more data to arrive automatically
     }
 
-    private void saveRawFileData(FileRequest fileRequest) {
+    @Nullable
+    private File saveRawFileData(FileRequest fileRequest) {
         boolean saveRawFilesEnabled = GBApplication
                 .getDeviceSpecificSharedPrefs(supportProvider.getDevice().getAddress())
                 .getBoolean(DeviceSettingsPreferenceConst.PREF_HUAWEI_SAVE_RAW_FILES, false);
-        if (!saveRawFilesEnabled)
-            return;
+        if (fileRequest.fileType != FileType.GPS && !saveRawFilesEnabled)
+            return null;
 
         try {
             String filename = FileUtils.makeValidFileName(System.currentTimeMillis() + "_" + fileRequest.getFileId() + "_" + fileRequest.getFilename());
-            File dir = new File(supportProvider.getDevice().getDeviceCoordinator().getWritableExportDirectory(supportProvider.getDevice(), true) + File.separator + "raw");
-            if (!dir.isDirectory()) {
-                if (!dir.mkdir()) {
+            final File writableExportDirectory = supportProvider.getDevice().getDeviceCoordinator().getWritableExportDirectory(supportProvider.getDevice(), true);
+            File rawDir = new File(writableExportDirectory, "raw");
+            File typeDir = new File(rawDir, fileRequest.fileType.name());
+            if (!typeDir.isDirectory()) {
+                if (!typeDir.mkdirs()) {
                     LOG.error("Error save raw file");
-                    return;
+                    return null;
                 }
             }
 
             File targetFile = new File(
-                    dir,
+                    typeDir,
                     filename
             );
             try (FileOutputStream fos = new FileOutputStream(targetFile)) {
                 fos.write(fileRequest.getData());
             }
             LOG.info("RAW file saved to: {}", targetFile.getAbsolutePath());
+            return targetFile;
         } catch (IOException e) {
             LOG.error("Could save RAW file", e);
+            return null;
         }
-
     }
 
     private void fileComplete() {
@@ -887,15 +891,15 @@ public class HuaweiFileDownloadManager {
 
         // Handle file data
 
+        final File rawFileData = saveRawFileData(currentFileRequest);
+
         try {
-            currentFileRequest.fileDownloadCallback.downloadComplete(currentFileRequest);
+            currentFileRequest.fileDownloadCallback.downloadComplete(currentFileRequest, rawFileData);
         } catch (Exception e) {
             LOG.error("Download complete callback exception.", e);
             LOG.warn("File contents: {}", GB.hexdump(currentFileRequest.getData()));
             GB.toast("Workout GPX file could not be parsed.", Toast.LENGTH_SHORT, GB.ERROR, e);
         }
-
-        saveRawFileData(currentFileRequest);
 
         if (!this.currentFileRequest.newSync && !this.fileRequests.isEmpty() && !this.fileRequests.get(0).newSync) {
             // Old sync can potentially take a shortcut

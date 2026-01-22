@@ -22,6 +22,10 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
+import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
+import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
+
 public class HuaweiGpsParser {
 
     public static class GpsPoint {
@@ -43,6 +47,20 @@ public class HuaweiGpsParser {
                     ", altitudeSupported=" + altitudeSupported +
                     ", altitude=" + altitude +
                     '}';
+        }
+
+        @NonNull
+        public ActivityPoint toActivityPoint() {
+            final GPSCoordinate coordinate;
+            if (altitudeSupported)
+                coordinate = new GPSCoordinate(longitude, latitude, altitude);
+            else
+                coordinate = new GPSCoordinate(longitude, latitude);
+
+            final ActivityPoint activityPoint = new ActivityPoint();
+            activityPoint.setTime(DateTimeUtils.parseTimeStamp(timestamp));
+            activityPoint.setLocation(coordinate);
+            return activityPoint;
         }
     }
 

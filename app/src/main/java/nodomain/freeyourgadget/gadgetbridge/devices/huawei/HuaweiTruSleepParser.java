@@ -16,9 +16,12 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.huawei;
 
+import androidx.annotation.Nullable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
@@ -457,7 +460,7 @@ public class HuaweiTruSleepParser {
         }
 
         @Override
-        public void downloadComplete(HuaweiFileDownloadManager.FileRequest fileRequest) {
+        public void downloadComplete(HuaweiFileDownloadManager.FileRequest fileRequest, @Nullable File localRawFile) {
             if (fileRequest.getFileType() == HuaweiFileDownloadManager.FileType.SLEEP_STATE) {
                 statusData = fileRequest.getData();
                 statusSynced = true;

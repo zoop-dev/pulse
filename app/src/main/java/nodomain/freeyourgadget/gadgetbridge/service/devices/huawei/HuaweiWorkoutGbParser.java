@@ -214,8 +214,28 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
     @Override
     public nodomain.freeyourgadget.gadgetbridge.model.workout.Workout parseWorkout(BaseActivitySummary summary, final boolean forDetails) {
         if (!forDetails) {
+            final ActivitySummaryData activitySummaryData = ActivitySummaryData.fromJson(summary.getSummaryData());
+            if (summary.getGpxTrack() == null) {
+                // Quickly check and update whether the activity has gps
+                try (DBHandler db = GBApplication.acquireDB()) {
+                    final DaoSession session = db.getDaoSession();
+                    final Device device = DBHelper.getDevice(gbDevice, session);
+                    final User user = DBHelper.getUser(session);
+                    final QueryBuilder<HuaweiWorkoutSummarySample> qb = session.getHuaweiWorkoutSummarySampleDao().queryBuilder();
+                    qb.where(HuaweiWorkoutSummarySampleDao.Properties.StartTimestamp.eq(summary.getStartTime().getTime() / 1000));
+                    qb.where(HuaweiWorkoutSummarySampleDao.Properties.DeviceId.eq(device.getId()));
+                    qb.where(HuaweiWorkoutSummarySampleDao.Properties.UserId.eq(user.getId()));
+                    final List<HuaweiWorkoutSummarySample> huaweiSummaries = qb.build().list();
+                    if (!huaweiSummaries.isEmpty()) {
+                        activitySummaryData.setHasGps(huaweiSummaries.get(0).getRawGpsFileLocation() != null);
+                    }
+                } catch (Exception e) {
+                    LOG.error("Failed to check whether activity has gps");
+                }
+            }
+
             // Our parsing is too slow, especially without a RecyclerView
-            return new nodomain.freeyourgadget.gadgetbridge.model.workout.Workout(summary, ActivitySummaryData.fromJson(summary.getSummaryData()));
+            return new nodomain.freeyourgadget.gadgetbridge.model.workout.Workout(summary, activitySummaryData);
         }
 
         // Find the existing HuaweiWorkoutSummarySample
@@ -639,6 +659,7 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                                                  final List<HuaweiActivityPoint> activityPoints) {
 
         ActivitySummaryData summaryData = new ActivitySummaryData();
+        summaryData.setHasGps(summary.getRawGpsFileLocation() != null);
 
         try {
 

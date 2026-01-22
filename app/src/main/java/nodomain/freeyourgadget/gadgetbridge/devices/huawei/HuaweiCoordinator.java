@@ -68,6 +68,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySampleD
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSwimSegmentsSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrackProvider;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvValueSample;
 import nodomain.freeyourgadget.gadgetbridge.model.SleepScoreSample;
@@ -75,6 +76,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.model.StressSample;
 import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZonesSpec;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiActivityTrackProvider;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiWorkoutGbParser;
 
 public abstract class HuaweiCoordinator extends AbstractDeviceCoordinator {
@@ -381,6 +383,11 @@ public abstract class HuaweiCoordinator extends AbstractDeviceCoordinator {
     @Override
     public ActivitySummaryParser getActivitySummaryParser(final GBDevice device, final Context context) {
         return new HuaweiWorkoutGbParser(device, context);
+    }
+
+    @Override
+    public ActivityTrackProvider getActivityTrackProvider(@NonNull final GBDevice device, @NonNull final Context context) {
+        return new HuaweiActivityTrackProvider(device);
     }
 
     @Override

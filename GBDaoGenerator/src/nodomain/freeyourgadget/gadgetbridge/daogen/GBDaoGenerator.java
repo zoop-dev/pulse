@@ -76,7 +76,7 @@ public class GBDaoGenerator {
             outputDir.mkdirs();
         }
 
-        final Schema schema = new Schema(128, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(129, MAIN_PACKAGE + ".entities");
 
         final List<Entity> sampleProvidersToGenerate = new LinkedList<>();
 
@@ -1924,6 +1924,8 @@ public class GBDaoGenerator {
         workoutSummary.addIntProperty("tripped").notNull();
 
         workoutSummary.addBooleanProperty("newSteps").notNull();
+
+        workoutSummary.addStringProperty("rawGpsFileLocation");
 
         return workoutSummary;
     }
