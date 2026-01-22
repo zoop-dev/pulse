@@ -99,7 +99,7 @@ public class XiaomiActivityFileId implements Comparable<XiaomiActivityFileId> {
     }
 
     public static XiaomiActivityFileId from(final byte[] bytes) {
-        assert bytes.length == 7;
+        assert bytes.length >= 7;
 
         return from(ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN));
     }

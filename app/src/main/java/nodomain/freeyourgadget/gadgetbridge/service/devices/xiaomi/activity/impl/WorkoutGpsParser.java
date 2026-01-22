@@ -19,6 +19,8 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.imp
 import android.content.Context;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,8 +53,8 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 public class WorkoutGpsParser extends XiaomiActivityParser {
     private static final Logger LOG = LoggerFactory.getLogger(WorkoutGpsParser.class);
 
-    @Override
-    public boolean parse(final Context context, final GBDevice gbDevice, final XiaomiActivityFileId fileId, final byte[] bytes) {
+    @Nullable
+    public ActivityTrack getActivityTrack(final XiaomiActivityFileId fileId, final byte[] bytes) {
         final int version = fileId.getVersion();
         final int headerSize;
         final int sampleSize;
@@ -67,7 +69,7 @@ public class WorkoutGpsParser extends XiaomiActivityParser {
                 break;
             default:
                 LOG.warn("Unable to parse workout gps version {}", fileId.getVersion());
-                return false;
+                return null;
         }
 
         final ByteBuffer buf = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN);
@@ -100,7 +102,7 @@ public class WorkoutGpsParser extends XiaomiActivityParser {
                 activityTrack.addTrackPoint(ap);
                 LOG.trace("ActivityPoint V1: ts={} lon={} lat={}", ts, longitude, latitude);
             }
-        } else { 
+        } else {
             while (buf.position() < buf.limit()) {
                 final int ts = buf.getInt();
                 final float longitude = buf.getFloat();
@@ -118,7 +120,16 @@ public class WorkoutGpsParser extends XiaomiActivityParser {
             }
         }
 
-       try (DBHandler dbHandler = GBApplication.acquireDB()) {
+        return activityTrack;
+    }
+
+    public boolean parse(final Context context, final GBDevice gbDevice, final XiaomiActivityFileId fileId, final byte[] bytes) {
+        final ActivityTrack activityTrack = getActivityTrack(fileId, bytes);
+        if (activityTrack == null) {
+            return false;
+        }
+
+        try (DBHandler dbHandler = GBApplication.acquireDB()) {
             final DaoSession session = dbHandler.getDaoSession();
             final Device device = DBHelper.getDevice(gbDevice, session);
             final User user = DBHelper.getUser(session);

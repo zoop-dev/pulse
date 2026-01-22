@@ -63,6 +63,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiSleepTimeSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrackProvider;
 import nodomain.freeyourgadget.gadgetbridge.model.BodyEnergySample;
 import nodomain.freeyourgadget.gadgetbridge.model.HeartRateSample;
 import nodomain.freeyourgadget.gadgetbridge.model.PaiSample;
@@ -74,6 +75,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiUuids;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiPreferences;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityTrackProvider;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl.WorkoutSummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
@@ -198,6 +200,12 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public ActivitySummaryParser getActivitySummaryParser(@NonNull final GBDevice device, final Context context) {
         return new WorkoutSummaryParser();
+    }
+
+    @Nullable
+    @Override
+    public ActivityTrackProvider getActivityTrackProvider(@NonNull final GBDevice device, @NonNull final Context context) {
+        return new XiaomiActivityTrackProvider(device, context);
     }
 
     @Override
