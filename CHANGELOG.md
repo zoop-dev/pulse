@@ -2,22 +2,87 @@
 
 #### Next version (WIP)
 
+* Add support for Internethelper
+* Add support for Health Connect
 * Initial support for CMF Buds 2
+* Initial support for Colmi V73
+* Initial support for D3, Qecnato S10 (GloryFit)
 * Initial support for Galaxy Buds3 Pro
-* Initial support for Garmin Edge 840 and Forerunner 920
+* Initial support for Garmin Edge 130, Edge 840, Edge 1040, Forerunner 920, GPSMAP 66s, Lily 2
+* Initial support for Yawell R05
+* Initial support for Sanitas SBM67 / SilverCrest SBM67 blood pressure meter
 * Initial support for Zendure SolarFlow (tested only 800 Pro)
-* Huawei: Sync raw ECG data (no UI)
+* Experimental support for Amazfit Active Max
+* Experimental support for Garmin Fenix 5S
+* Experimental support for Mi Band 4C
+* Experimental support for OneTouch blood glucose meters (tested only Select Plus Flex)
+* Amazfit Bip / Bip Lite / Cor 2: Restore 3rd party realtime HR setting
+* Amazfit Helio Strap: Enable workout detection sensitivity
+* CMF Watch Pro 2: Improve activity parsing
+* CMF Watch Pro: Fix active score
+* CMF Watch Pro: Fix measurement system
+* CMF Watch Pro: Rework device settings screen
+* CMF Watch: Fix weather
+* Even Realities G1: Improve connection stability
+* Galaxy Buds3 Pro: Fix icon color
+* Garmin: Add average ascent velocity
+* Garmin: Allow firewalled app internet access
+* Garmin: Display intervals on non-swimming activities
+* Garmin: Fix pairing for some older devices
+* Garmin: Fix processing of activity files with custom data
+* Garmin: Fix some crashes when processing activity files
+* Garmin: Improve connection stability
+* Garmin: Make calories consistent with other devices
+* GloryFit: Add screen timeout setting
+* GloryFit: Fix screen timeout preference
+* GloryFit: SOS contact (experimental)
+* Heart Rate devices: Parse and persist RR intervals
 * Huami: Improve workout charts for activities without gps
-* Pebble: Support Signal icon with 2025 models
-* Xiaomi-protobuf: Enable active calories
-* Zepp OS: Add jump rope stats
+* Huawei Watch Fit: Fix crash on sync
+* Huawei: Sync raw ECG data (no UI)
+* InfiniTime: Add resources upload
 * Marstek B2500: Support setting solar panel peak power
+* Pebble: Add weather support in Tears of the Kingdom watchface
+* Pebble: Check for watchapp updates if internet is available
+* Pebble: Download and show app/watchface previews
+* Pebble: Support Signal icon with 2025 models
+* Pinetime: Add sunrise and sunset weather data
+* Polar: Disable unused charts
+* Xiaomi-protobuf: Enable active calories
+* Xiaomi-protobuf: Improve outdoor running parsing
+* Zepp OS: Add jump rope stats
+* Zepp OS: Fix HRV on some devices
+* Zepp OS: Fix notification image encoding for some devices
+* Calendar Sync: Add the option to filter events
+* Camera: Fix theme
+* Charts: Add hours to x-axis
 * Charts: Add loading indicator
-* Charts: Add weekly/monthly body energy
+* Charts: Add units to calories and SpO2 charts
 * Charts: Add weekly/monthly blood oxygen
+* Charts: Add weekly/monthly body energy
+* Charts: Fix imperial units on temperature charts
+* Charts: Make max temperature dynamic
+* Dashboard: Fix some widgets linking to unsupported devices
+* Dashboard: Only include activities from enabled devices
+* Debug: Add setting to override BUSY_CHECKING
+* Debug: Revamp debug activity
+* Add auto phone call answer and notification speaking to some headphones that were missing it (Anker Soundcore Liberty 3 Pro / 4 NC, Bose QC35, Pixel Buds A, Redmi Buds, Soundcore AeroFit 2 / Q30)
 * Add HRV summary computation for all devices that support HRV
+* Add italian transliteration
+* Add timeout to reconnect when initial connection becomes stuck
+* Add transliteration of arrow emojis
+* Attempt to reconnect faster on connection loss
+* Avoid UI freeze when deleting device
 * Dismiss permissions screen after all permissions granted
+* Fetch all sync data types from notification
 * Fix 0-second sleep sessions
+* Fix bluetooth disconnected toasts while bluetooth is off
+* Fix call mute command in non-mainline build flavors
+* Fix raw details paths when moving between Gadgetbridge versions
+* Improve Gadgetbridge restart
+* Improve zip export speed
+* Keep screen on during zip export / import
+* Make GenericWeatherReceiver work without any connected devices
 
 #### 0.88.0
 
