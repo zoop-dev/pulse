@@ -6,7 +6,8 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.ActivityChartsActivity.UnknownFragment
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst
-import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryEntry
+import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummarySimpleEntry
+import nodomain.freeyourgadget.gadgetbridge.database.DBHandler
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import java.util.Locale
 
@@ -149,5 +150,15 @@ open class DefaultChartsProvider : DeviceChartsProvider {
             "respiratoryrate" -> RespiratoryRateCollectionFragment.newInstance(allowSwipe)
             else -> UnknownFragment()
         }
+    }
+
+    override fun getDailySleepStats(
+        context: Context,
+        db: DBHandler,
+        device: GBDevice,
+        tsStart: Int,
+        tsEnd: Int
+    ): Map<String, ActivitySummarySimpleEntry> {
+        return emptyMap()
     }
 }

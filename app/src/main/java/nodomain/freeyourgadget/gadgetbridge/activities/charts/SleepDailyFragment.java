@@ -53,6 +53,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -161,7 +162,23 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
                     Color.RED
             );
         }
-        return new MyChartsData(mySleepChartsData, chartsData, hrData.getLeft(), hrData.getMiddle(), hrData.getRight(), intensityData.getLeft(), intensityData.getMiddle(), intensityData.getRight(), stages, overlay);
+
+        final DeviceChartsProvider chartsProvider = device.getDeviceCoordinator().getChartsProvider();
+        final Map<String, ActivitySummarySimpleEntry> customStats = chartsProvider.getDailySleepStats(requireContext(), db, device, getTSStart(), getTSEnd());
+
+        return new MyChartsData(
+                mySleepChartsData,
+                chartsData,
+                hrData.getLeft(),
+                hrData.getMiddle(),
+                hrData.getRight(),
+                intensityData.getLeft(),
+                intensityData.getMiddle(),
+                intensityData.getRight(),
+                stages,
+                overlay,
+                customStats
+        );
     }
 
     private long getSamplesInterval(List<? extends TimeSample> samples) {
@@ -449,6 +466,10 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
                     getString(R.string.movement_intensity),
                     new ActivitySummarySimpleEntry(new DecimalFormat("###.#").format(intensityTotal), "string")
             );
+        }
+
+        for (Map.Entry<String, ActivitySummarySimpleEntry> e : mcd.getCustomStats().entrySet()) {
+            statsBuilder.addEntry(e.getKey(), e.getValue());
         }
 
         binding.sleepStatsContainer.addView(statsBuilder.build());
@@ -748,9 +769,21 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
 
         private final List<SleepDetailsView.SleepDetail> stages;
 
+        private final Map<String, ActivitySummarySimpleEntry> customStats;
+
         private final AbstractOverlayData overlayData;
 
-        public MyChartsData(MySleepChartsData pieData, DefaultChartsData<LineData> chartsData, float heartRateAverage, int heartRateAxisMin, int heartRateAxisMax, float intensityTotal, float intensityAxisMin, float intensityAxisMax, List<SleepDetailsView.SleepDetail> stages, AbstractOverlayData overlayData) {
+        public MyChartsData(MySleepChartsData pieData,
+                            DefaultChartsData<LineData> chartsData,
+                            float heartRateAverage,
+                            int heartRateAxisMin,
+                            int heartRateAxisMax,
+                            float intensityTotal,
+                            float intensityAxisMin,
+                            float intensityAxisMax,
+                            List<SleepDetailsView.SleepDetail> stages,
+                            AbstractOverlayData overlayData,
+                            Map<String, ActivitySummarySimpleEntry> customStats) {
             this.pieData = pieData;
             this.chartsData = chartsData;
             this.heartRateAverage = heartRateAverage;
@@ -761,6 +794,7 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
             this.intensityAxisMax = intensityAxisMax;
             this.stages = stages;
             this.overlayData = overlayData;
+            this.customStats = customStats;
         }
 
         public MySleepChartsData getPieData() {
@@ -801,6 +835,10 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
 
         public AbstractOverlayData getOverlayData() {
             return overlayData;
+        }
+
+        public Map<String, ActivitySummarySimpleEntry> getCustomStats() {
+            return customStats;
         }
     }
 }

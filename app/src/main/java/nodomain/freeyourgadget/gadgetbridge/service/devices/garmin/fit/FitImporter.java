@@ -39,6 +39,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractTimeSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.GarminSleepRestlessMomentsSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericTrainingLoadAcuteSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericTrainingLoadChronicSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminActivitySampleProvider;
@@ -71,6 +72,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.GarminRestingMetabolicRateS
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminHrvSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminHrvValueSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminRespiratoryRateSample;
+import nodomain.freeyourgadget.gadgetbridge.entities.GarminSleepRestlessMomentsSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminSleepStageSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminSleepStatsSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminSpo2Sample;
@@ -102,6 +104,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitSession;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitSleepDataInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitSleepDataRaw;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitSleepRestlessMoments;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitSleepStage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitSleepStats;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitSpo2;
@@ -137,6 +140,7 @@ public class FitImporter {
     private final Map<Integer, Integer> unknownRecords = new HashMap<>();
     private FitSleepDataInfo fitSleepDataInfo = null;
     private final List<FitSleepDataRaw> fitSleepDataRawSamples = new ArrayList<>();
+    private final List<GarminSleepRestlessMomentsSample> sleepRestlessMomentsSamples = new ArrayList<>();
     private final List<BatteryLevel> batterySamples = new ArrayList<>();
     private FitFileId fileId = null;
 
@@ -202,6 +206,14 @@ public class FitImporter {
             } else if (record instanceof FitSleepDataRaw fitSleepDataRaw) {
                 //LOG.debug("Sleep Data Raw: {}", fitSleepDataRaw);
                 fitSleepDataRawSamples.add(fitSleepDataRaw);
+            } else if (record instanceof FitSleepRestlessMoments fitSleepRestlessMoments) {
+                //LOG.debug("Sleep Restless Moments: {}", fitSleepRestlessMoments);
+                if (fitSleepRestlessMoments.getRestlessMomentsCount() != null) {
+                    final GarminSleepRestlessMomentsSample sample = new GarminSleepRestlessMomentsSample();
+                    sample.setTimestamp(ts * 1000L);
+                    sample.setCount(fitSleepRestlessMoments.getRestlessMomentsCount());
+                    sleepRestlessMomentsSamples.add(sample);
+                }
             } else if (record instanceof FitSleepStats) {
                 final Integer score = ((FitSleepStats) record).getOverallSleepScore();
                 if (score == null) {
@@ -452,6 +464,7 @@ public class FitImporter {
                     persistAbstractSamples(events, new GarminEventSampleProvider(gbDevice, session));
                     persistAbstractSamples(sleepStatsSamples, new GarminSleepStatsSampleProvider(gbDevice, session));
                     persistAbstractSamples(napSamples, new GarminNapSampleProvider(gbDevice, session));
+                    persistAbstractSamples(sleepRestlessMomentsSamples, new GarminSleepRestlessMomentsSampleProvider(gbDevice, session));
 
                     // We may have samples, but not sleep samples - #4048
                     // 0 unmeasurable, 1 awake
@@ -551,6 +564,7 @@ public class FitImporter {
         unknownRecords.clear();
         fitSleepDataInfo = null;
         fitSleepDataRawSamples.clear();
+        sleepRestlessMomentsSamples.clear();
         batterySamples.clear();
         fileId = null;
         workoutParser.reset();

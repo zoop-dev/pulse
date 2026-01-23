@@ -76,7 +76,7 @@ public class GBDaoGenerator {
             outputDir.mkdirs();
         }
 
-        final Schema schema = new Schema(126, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(127, MAIN_PACKAGE + ".entities");
 
         final List<Entity> sampleProvidersToGenerate = new LinkedList<>();
 
@@ -164,6 +164,7 @@ public class GBDaoGenerator {
         addGarminSleepStatsSample(schema, user, device);
         addGarminIntensityMinutesSample(schema, user, device);
         addGarminNapSample(schema, user, device);
+        sampleProvidersToGenerate.add(addGarminSleepRestlessMomentsSample(schema, user, device));
         addPendingFile(schema, user, device);
         addWena3EnergySample(schema, user, device);
         addWena3BehaviorSample(schema, user, device);
@@ -1102,6 +1103,13 @@ public class GBDaoGenerator {
         Entity sample = addEntity(schema, "GarminNapSample");
         addCommonTimeSampleProperties("AbstractTimeSample", sample, user, device);
         sample.addLongProperty("endTimestamp").notNull();
+        return sample;
+    }
+
+    private static Entity addGarminSleepRestlessMomentsSample(Schema schema, Entity user, Entity device) {
+        Entity sample = addEntity(schema, "GarminSleepRestlessMomentsSample");
+        addCommonTimeSampleProperties("AbstractTimeSample", sample, user, device);
+        sample.addIntProperty("count").notNull();
         return sample;
     }
 

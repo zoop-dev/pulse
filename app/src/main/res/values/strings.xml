@@ -2460,6 +2460,7 @@
     <string name="filter_mode">Filter Mode</string>
     <string name="mode_configuration">Mode Configuration</string>
     <string name="save_configuration">Save Configuration</string>
+    <string name="sleep_restless_moments">Restless Moments</string>
     <!-- App Widgets-->
     <string name="appwidget_not_connected">Not connected, alarm not set.</string>
     <string name="widget_settings_select_device_title">Select device</string>
