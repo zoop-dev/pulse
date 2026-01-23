@@ -230,6 +230,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.Amazfit
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitActiveEdgeCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitActiveMaxCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitBalance2Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitBalance2XTCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitBalanceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitBand7Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitBip5Coordinator;
@@ -556,6 +557,7 @@ public enum DeviceType {
     AMAZFITFALCON(AmazfitFalconCoordinator.class),
     AMAZFITBALANCE(AmazfitBalanceCoordinator.class),
     AMAZFITBALANCE2(AmazfitBalance2Coordinator.class),
+    AMAZFITBALANCE2XT(AmazfitBalance2XTCoordinator.class),
     AMAZFITACTIVE(AmazfitActiveCoordinator.class),
     AMAZFITACTIVE2(AmazfitActive2RoundCoordinator.class),
     AMAZFITACTIVE2NFC(AmazfitActive2NfcCoordinator.class),
