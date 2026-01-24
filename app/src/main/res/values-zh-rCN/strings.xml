@@ -4299,4 +4299,5 @@
     <string name="min_ground_contact_time">最短地面接触时间</string>
     <string name="min_vertical_ratio">最小垂直比</string>
     <string name="busy_task_fetch_blood_pressure_data">获取血压数据中</string>
+    <string name="sleep_restless_moments">不眠时刻</string>
 </resources>
