@@ -23,4 +23,14 @@ public class GarminVivoActive5Coordinator extends GarminWatchCoordinator {
     public boolean supportsTrainingLoad(@NonNull GBDevice device) {
         return false;
     }
+
+    @Override
+    public boolean supportsVO2MaxCycling(@NonNull GBDevice device) {
+        return false;
+    }
+
+    @Override
+    public boolean supportsVO2MaxRunning(@NonNull GBDevice device) {
+        return false;
+    }
 }
