@@ -120,7 +120,7 @@ public enum GarminSport {
     MARINE(61, 0, ActivityKind.MARINE),
     HIIT(62, 0, ActivityKind.HIIT),
     VIDEO_GAMING(63, 0, ActivityKind.VIDEO_GAMING),
-    GAMING(63, 77, ActivityKind.BOARD_GAME),
+    GAMING(63, 77, ActivityKind.ESPORTS),
     RACKET(64, 0, ActivityKind.RACKET),
     PICKLEBALL(64, 84, ActivityKind.PICKLEBALL),
     PADEL(64, 85, ActivityKind.PADEL),
