@@ -1,5 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.garmin.bike;
 
+import androidx.annotation.NonNull;
+
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -19,5 +21,10 @@ public class GarminEdgeExploreCoordinator extends GarminBikeComputerCoordinator 
     @Override
     public int getBatteryCount(final GBDevice device) {
         return 0; // does not seem to report the battery %
+    }
+
+    @Override
+    public boolean supportsTrainingLoad(@NonNull final GBDevice device) {
+        return false;
     }
 }

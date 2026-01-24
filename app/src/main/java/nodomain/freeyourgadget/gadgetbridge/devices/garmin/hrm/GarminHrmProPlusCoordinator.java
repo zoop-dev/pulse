@@ -93,4 +93,9 @@ public class GarminHrmProPlusCoordinator extends GarminCoordinator {
     public boolean supportsSleepMeasurement(@NonNull final GBDevice device){
         return false;
     }
+
+    @Override
+    public boolean supportsTrainingLoad(@NonNull final GBDevice device) {
+        return false;
+    }
 }

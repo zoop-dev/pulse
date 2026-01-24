@@ -391,4 +391,10 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
 
         return null;
     }
+
+    @Override
+    public boolean supportsTrainingLoad(@NonNull final GBDevice device) {
+        // Not all devices support it
+        return true;
+    }
 }

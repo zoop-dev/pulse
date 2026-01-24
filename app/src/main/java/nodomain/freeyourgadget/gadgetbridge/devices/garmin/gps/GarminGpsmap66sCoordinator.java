@@ -45,4 +45,9 @@ public class GarminGpsmap66sCoordinator extends GarminCoordinator {
     public DeviceKind getDeviceKind(@NonNull GBDevice device) {
         return DeviceKind.UNKNOWN;
     }
+
+    @Override
+    public boolean supportsTrainingLoad(@NonNull final GBDevice device) {
+        return false;
+    }
 }

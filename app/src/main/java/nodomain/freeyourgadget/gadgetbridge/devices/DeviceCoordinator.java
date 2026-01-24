@@ -288,7 +288,6 @@ public interface DeviceCoordinator {
     boolean supportsCharts(@NonNull GBDevice device);
     boolean supportsActiveCalories(@NonNull GBDevice device);
     boolean supportsTrainingLoad(@NonNull GBDevice device);
-    boolean supportsWorkoutLoad(@NonNull GBDevice device);
     boolean supportsGlucoseMeasurement(@NonNull GBDevice device);
 
     DeviceChartsProvider getChartsProvider();

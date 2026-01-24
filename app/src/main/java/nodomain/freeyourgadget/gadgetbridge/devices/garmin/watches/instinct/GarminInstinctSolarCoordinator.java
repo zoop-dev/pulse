@@ -1,5 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.instinct;
 
+import androidx.annotation.NonNull;
+
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -15,5 +17,10 @@ public class GarminInstinctSolarCoordinator extends GarminWatchCoordinator {
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_garmin_instinct_solar;
+    }
+
+    @Override
+    public boolean supportsTrainingLoad(@NonNull final GBDevice device) {
+        return false;
     }
 }

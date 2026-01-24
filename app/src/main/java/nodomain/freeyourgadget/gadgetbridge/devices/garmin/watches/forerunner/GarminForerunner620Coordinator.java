@@ -16,10 +16,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner;
 
+import androidx.annotation.NonNull;
+
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.GarminWatchCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class GarminForerunner620Coordinator extends GarminWatchCoordinator {
     @Override
@@ -30,5 +33,10 @@ public class GarminForerunner620Coordinator extends GarminWatchCoordinator {
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_garmin_forerunner_620;
+    }
+
+    @Override
+    public boolean supportsTrainingLoad(@NonNull final GBDevice device) {
+        return false;
     }
 }

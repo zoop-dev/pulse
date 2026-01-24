@@ -188,17 +188,6 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsTrainingLoad(@NonNull GBDevice device) {
-        // Not all devices support it
-        return true;
-    }
-
-    @Override
-    public boolean supportsWorkoutLoad(@NonNull GBDevice device) {
-        return true;
-    }
-
-    @Override
     public boolean supportsFindDevice(@NonNull GBDevice device) {
         return true;
     }

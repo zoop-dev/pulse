@@ -29,9 +29,4 @@ public class GarminFenix3HrCoordinator extends GarminWatchCoordinator {
     public boolean supportsTrainingLoad(@NonNull GBDevice device) {
         return false;
     }
-
-    @Override
-    public boolean supportsWorkoutLoad(@NonNull GBDevice device) {
-        return false;
-    }
 }
