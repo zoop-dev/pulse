@@ -137,10 +137,13 @@ public class WorkoutVo2MaxSampleProvider implements Vo2MaxSampleProvider<Vo2MaxS
                                        final QueryBuilder<BaseActivitySummary> qb,
                                        final Vo2MaxSample.Type type,
                                        final GBDevice device) {
+        if (type == Vo2MaxSample.Type.ANY)
+            return;
+
         final List<Integer> codes = new ArrayList<>();
 
         if (coordinator.supportsVO2MaxRunning(device)) {
-            if (type == Vo2MaxSample.Type.ANY || type == Vo2MaxSample.Type.RUNNING) {
+            if (type == Vo2MaxSample.Type.RUNNING) {
                 codes.addAll(Arrays.asList(
                         ActivityKind.INDOOR_RUNNING.getCode(),
                         ActivityKind.OUTDOOR_RUNNING.getCode(),
@@ -150,7 +153,7 @@ public class WorkoutVo2MaxSampleProvider implements Vo2MaxSampleProvider<Vo2MaxS
             }
         }
         if (coordinator.supportsVO2MaxCycling(device)) {
-            if (type == Vo2MaxSample.Type.ANY || type == Vo2MaxSample.Type.CYCLING) {
+            if (type == Vo2MaxSample.Type.CYCLING) {
                 codes.addAll(Arrays.asList(
                         ActivityKind.CYCLING.getCode(),
                         ActivityKind.INDOOR_CYCLING.getCode(),
