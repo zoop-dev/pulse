@@ -119,6 +119,7 @@ public class CmfWorkoutSummaryParser implements ActivitySummaryParser {
             summary.setEndTime(new Date(endTime * 1000L));
 
             final boolean gps = buf.get() == 1;
+            summaryData.setHasGps(gps);
             buf.get(); // ?
 
             if (buf.position() < buf.limit()) {
