@@ -7,12 +7,15 @@ import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather.getWeatherSpec
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsWeatherHandler
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils
+import nodomain.freeyourgadget.gadgetbridge.util.gson.DoubleAdapter
+import nodomain.freeyourgadget.gadgetbridge.util.gson.FloatAdapter
 import nodomain.freeyourgadget.gadgetbridge.util.gson.OffsetDateTimeAdapter
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneId
+import java.util.Calendar
 import java.util.Date
 import java.util.GregorianCalendar
 import kotlin.math.roundToInt
@@ -24,6 +27,8 @@ object ZeppOsWeatherHandlerV5 {
     private val GSON: Gson = GsonBuilder()
         .serializeNulls()
         .registerTypeAdapter(OffsetDateTime::class.java, OffsetDateTimeAdapter())
+        .registerTypeAdapter(Float::class.java, FloatAdapter)
+        .registerTypeAdapter(Double::class.java, DoubleAdapter)
         .create()
 
     @JvmStatic
@@ -114,12 +119,13 @@ object ZeppOsWeatherHandlerV5 {
         )
     }
 
-    private fun createHourlyAirQuality(weatherSpec: WeatherSpec): HourlyAirQuality {
+    private fun createHourlyAirQuality(weatherSpec: WeatherSpec): Any {
         // TODO WeatherSpec does not support hourly air quality
-        return HourlyAirQuality(
-            metadata = createMetadata(weatherSpec),
-            hours = emptyList()
-        )
+        return EmptyResponse()
+        //return HourlyAirQuality(
+        //    metadata = createMetadata(weatherSpec),
+        //    hours = emptyList()
+        //)
     }
 
     private fun createDailyIndices(weatherSpec: WeatherSpec): DailyIndices {
@@ -151,6 +157,26 @@ object ZeppOsWeatherHandlerV5 {
                 val sunrise = WeatherSpec.sunriseComputed(day.sunRise, calendar, weatherSpec.getLocationObject())
                 val sunset = WeatherSpec.sunsetComputed(day.sunRise, calendar, weatherSpec.getLocationObject())
 
+                val daytimeForecastStart: Date
+                val daytimeForecastEnd: Date
+                if (sunrise != null && sunset != null) {
+                    daytimeForecastStart = sunrise
+                    daytimeForecastEnd = sunset
+                } else {
+                    // We do not have sunrise and sunset.. use averages for now
+                    val calendar = Calendar.getInstance()
+
+                    calendar.setTime(Date(dayTimestamp))
+                    calendar.set(Calendar.HOUR_OF_DAY, 6)
+                    daytimeForecastStart = calendar.time
+
+                    calendar.setTime(Date(dayTimestamp))
+                    calendar.set(Calendar.HOUR_OF_DAY, 18)
+                    daytimeForecastEnd = calendar.time
+                }
+
+                val nightDurationSeconds = 3600 * 24 - ((daytimeForecastEnd.time - daytimeForecastStart.time) / 1000L)
+
                 DailyWeatherDay(
                     forecastStart = toOffsetDateTime(DateTimeUtils.dayStart(Date(dayTimestamp))),
                     forecastEnd = toOffsetDateTime(DateTimeUtils.dayEnd(Date(dayTimestamp))),
@@ -164,26 +190,24 @@ object ZeppOsWeatherHandlerV5 {
                     sunset = sunset?.let { toOffsetDateTime(it) },
                     temperatureMax = day.maxTemp - 273.15f,
                     temperatureMin = day.minTemp - 273.15f,
-                    daytimeForecast = null,
-                    overnightForecast = null,
-                    //daytimeForecast = DayPartForecast(
-                    //    forecastStart = sunrise,
-                    //    forecastEnd = sunset,
-                    //    conditionCode = ZeppOsWeatherHandler.mapToZeppOsWeatherCode(day.conditionCode).toString(),
-                    //    humidity = day.humidity / 100.0f,
-                    //    windDirection = day.windDirection,
-                    //    windSpeed = day.windSpeed,
-                    //    windScale = day.windSpeedAsBeaufort(),
-                    //),
-                    //overnightForecast = DayPartForecast(
-                    //    forecastStart = sunset,
-                    //    forecastEnd = Date(sunrise.time + 86400_000L),
-                    //    conditionCode = ZeppOsWeatherHandler.mapToZeppOsWeatherCode(day.conditionCode).toString(),
-                    //    humidity = day.humidity / 100.0f,
-                    //    windDirection = day.windDirection,
-                    //    windSpeed = day.windSpeed,
-                    //    windScale = day.windSpeedAsBeaufort(),
-                    //),
+                    daytimeForecast = DayPartForecast(
+                        forecastStart = toOffsetDateTime(daytimeForecastStart),
+                        forecastEnd = toOffsetDateTime(daytimeForecastEnd),
+                        conditionCode = ZeppOsWeatherHandler.mapToZeppOsWeatherCode(day.conditionCode).toString(),
+                        humidity = day.humidity / 100.0f,
+                        windDirection = day.windDirection,
+                        windSpeed = day.windSpeed,
+                        windScale = day.windSpeedAsBeaufort(),
+                    ),
+                    overnightForecast = DayPartForecast(
+                        forecastStart = toOffsetDateTime(daytimeForecastEnd),
+                        forecastEnd = toOffsetDateTime(daytimeForecastEnd).plusSeconds(nightDurationSeconds),
+                        conditionCode = ZeppOsWeatherHandler.mapToZeppOsWeatherCode(day.conditionCode).toString(),
+                        humidity = day.humidity / 100.0f,
+                        windDirection = day.windDirection,
+                        windSpeed = day.windSpeed,
+                        windScale = day.windSpeedAsBeaufort(),
+                    ),
                 )
             }
         )
@@ -196,10 +220,8 @@ object ZeppOsWeatherHandlerV5 {
         )
     }
 
-    private fun createDailyTide(weatherSpec: WeatherSpec) = DailyTide(
-        // We do not support tide data
-        metadata = createMetadata(weatherSpec),
-        days = emptyList()
+    private fun createDailyTide(weatherSpec: WeatherSpec) = EmptyResponse(
+        // We do not support tide data yet
     )
 
     private fun getMoonPhaseString(moonPhase: Int): String = when (moonPhase) {
@@ -335,4 +357,6 @@ object ZeppOsWeatherHandlerV5 {
         val metadata: Metadata,
         val days: List<DailyTideDay>,
     )
+
+    class EmptyResponse
 }
