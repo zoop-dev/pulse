@@ -4318,4 +4318,5 @@
     <string name="min_vertical_oscillation">Min. oscylacja pionowa</string>
     <string name="min_ground_contact_time">Min. czas kontaktu z podłożem</string>
     <string name="min_vertical_ratio">Min. odchylenie do długości kroku</string>
+    <string name="sleep_restless_moments">Momenty niepokoju</string>
 </resources>
