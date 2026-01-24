@@ -115,6 +115,11 @@ public class PebbleCoordinator extends AbstractBLClassicDeviceCoordinator {
     }
 
     @Override
+    public boolean supportsDataFetching(@NonNull GBDevice device) {
+        return true;
+    }
+
+    @Override
     public boolean supportsScreenshots(final GBDevice device) {
         return true;
     }

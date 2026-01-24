@@ -109,6 +109,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
     private static final short ENDPOINT_APPREORDER = (short) 0xabcd; // FW >=3.x
     private static final short ENDPOINT_BLOBDB = (short) 0xb1db;  // FW >=3.x
     private static final short ENDPOINT_PUTBYTES = (short) 0xbeef;
+    private static final short ENDPOINT_HEALTH_SYNC = 911;
 
     private static final byte APPRUNSTATE_START = 1;
     private static final byte APPRUNSTATE_STOP = 2;
@@ -200,6 +201,9 @@ public class PebbleProtocol extends GBDeviceProtocol {
     private static final byte DATALOG_REPORTSESSIONS = (byte) 0x84;
     private static final byte DATALOG_ACK = (byte) 0x85;
     private static final byte DATALOG_NACK = (byte) 0x86;
+
+    private static final byte HEALTH_SYNC_CMD_SYNC = 0x01;
+    private static final byte HEALTH_SYNC_CMD_ACK = 0x11;
 
     private static final byte PING_PING = 0;
     private static final byte PING_PONG = 1;
@@ -735,7 +739,28 @@ public class PebbleProtocol extends GBDeviceProtocol {
         if (dataTypes == RecordedDataTypes.TYPE_DEBUGLOGS) {
             return encodeRequestLogDump(0, 0);
         }
+        if ((dataTypes & RecordedDataTypes.TYPE_ACTIVITY) != 0) {
+            return encodeHealthSync();
+        }
         return null;
+    }
+
+    private byte[] encodeHealthSync() {
+        // Health sync message format (from PebbleOS health_sync_endpoint.c):
+        // - 1 byte: command (0x01 = sync)
+        // - 4 bytes: seconds_since_sync (uint32_t, little-endian)
+        // Sending 0 requests all queued health data from the DLS
+        final short LENGTH_HEALTH_SYNC = 5;
+        ByteBuffer buf = ByteBuffer.allocate(LENGTH_PREFIX + LENGTH_HEALTH_SYNC);
+        buf.order(ByteOrder.BIG_ENDIAN);
+        buf.putShort(LENGTH_HEALTH_SYNC);
+        buf.putShort(ENDPOINT_HEALTH_SYNC);
+        buf.put(HEALTH_SYNC_CMD_SYNC);
+
+        // Request all queued data (0 = send everything in DLS queue)
+        buf.order(ByteOrder.LITTLE_ENDIAN);
+        buf.putInt(0);
+        return buf.array();
     }
 
     byte[] encodeRequestLogDump(int generation, int cookie) {
@@ -2253,6 +2278,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
                         devEvtsDataLogging = new GBDeviceEvent[]{dataLogging, null};
                     }
                     if (datalogSession.uuid.equals(UUID_ZERO) && (datalogSession.tag == 81 || datalogSession.tag == 83 || datalogSession.tag == 84)) {
+                        // Tag 81 = activity minute data, Tag 84 = activity sessions
                         GB.signalActivityDataFinish(getDevice());
                     }
                     mDatalogSessions.remove(id);
@@ -2610,6 +2636,24 @@ public class PebbleProtocol extends GBDeviceProtocol {
             case ENDPOINT_AUDIOSTREAM:
                 devEvts = new GBDeviceEvent[]{decodeAudioStream(buf)};
 //                LOG.debug("AUDIOSTREAM DATA: " + GB.hexdump(responseData, 4, length));
+                break;
+            case ENDPOINT_HEALTH_SYNC:
+                pebbleCmd = buf.get();
+                if (pebbleCmd == HEALTH_SYNC_CMD_ACK) {
+                    // ACK response format: cmd (0x11) + ack_nack (0x01=ok, 0x02=fail)
+                    byte ackNack = buf.get();
+                    if (ackNack == 0x01) {
+                        // Success: actual data will arrive via DATALOG (tags 81/83/84), which
+                        // already calls signalActivityDataFinish. Leave the spinner running.
+                        LOG.info("Health sync ACK received (success), data will arrive via data logging");
+                    } else {
+                        // Failure: no DATALOG data is coming, so dismiss the spinner now.
+                        LOG.warn("Health sync ACK received but watch reported failure (ack_nack={}), signalling finish", ackNack);
+                        GB.signalActivityDataFinish(getDevice());
+                    }
+                } else {
+                    LOG.warn("Unknown health sync response: 0x{}", Integer.toHexString(pebbleCmd & 0xff));
+                }
                 break;
             default:
                 break;
