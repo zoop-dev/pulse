@@ -31,6 +31,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.fit.FitViewerActivity;
@@ -52,11 +54,13 @@ public class FileManagerAdapter extends RecyclerView.Adapter<FileManagerAdapter.
 
     private final List<File> fileList;
     private final Context mContext;
+    private final Map<String, String> mDeviceNames;
 
     private final FileFilter fileFilter;
 
-    public FileManagerAdapter(final Context context, final File directory) {
+    public FileManagerAdapter(final Context context, final File directory, final Map<String, String> deviceNames) {
         mContext = context;
+        mDeviceNames = deviceNames;
 
         // FIXME: This can be slow, make it async
         fileList = new ArrayList<>(Arrays.asList(directory.listFiles()));
@@ -86,7 +90,13 @@ public class FileManagerAdapter extends RecyclerView.Adapter<FileManagerAdapter.
         holder.name.setText(file.getName());
         if (file.isDirectory()) {
             holder.icon.setImageDrawable(AppCompatResources.getDrawable(mContext, R.drawable.ic_folder));
-            holder.description.setVisibility(View.GONE);
+            final String deviceName = mDeviceNames.get(file.getName());
+            if (StringUtils.isNotBlank(deviceName)) {
+                holder.description.setVisibility(View.VISIBLE);
+                holder.description.setText(deviceName);
+            } else {
+                holder.description.setVisibility(View.GONE);
+            }
             holder.menu.setVisibility(View.GONE);
         } else {
             holder.icon.setImageDrawable(AppCompatResources.getDrawable(mContext, R.drawable.ic_file_open));
