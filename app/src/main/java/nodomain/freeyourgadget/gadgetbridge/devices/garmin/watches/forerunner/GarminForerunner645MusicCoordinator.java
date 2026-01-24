@@ -15,4 +15,9 @@ public class GarminForerunner645MusicCoordinator extends GarminWatchCoordinator 
     public int getDeviceNameResource() {
         return R.string.devicetype_garmin_forerunner_645_music;
     }
+
+    @Override
+    public boolean supportsSpo2(@NonNull final GBDevice device) {
+        return false;
+    }
 }

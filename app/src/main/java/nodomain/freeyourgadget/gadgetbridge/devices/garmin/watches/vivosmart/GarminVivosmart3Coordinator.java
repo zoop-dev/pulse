@@ -29,4 +29,9 @@ public class GarminVivosmart3Coordinator extends GarminWatchCoordinator {
     public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
         return DeviceCoordinator.DeviceKind.FITNESS_BAND;
     }
+
+    @Override
+    public boolean supportsSpo2(@NonNull final GBDevice device) {
+        return false;
+    }
 }

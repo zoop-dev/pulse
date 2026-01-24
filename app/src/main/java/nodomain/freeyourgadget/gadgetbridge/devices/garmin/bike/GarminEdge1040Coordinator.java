@@ -20,4 +20,9 @@ public class GarminEdge1040Coordinator extends GarminBikeComputerCoordinator {
     public int getBatteryCount(final GBDevice device) {
         return 0; // does not seem to report the battery %
     }
+
+    @Override
+    public boolean supportsSpo2(@NonNull final GBDevice device) {
+        return false;
+    }
 }
