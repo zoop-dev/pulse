@@ -67,12 +67,15 @@ public class VO2MaxFragment extends AbstractChartFragment<VO2MaxFragment.VO2MaxD
     private TextView mDateView;
     private TextView vo2MaxRunningValue;
     private TextView vo2MaxCyclingValue;
+    private TextView vo2MaxValue;
     private ImageView vo2MaxRunningGauge;
     private ImageView vo2MaxCyclingGauge;
+    private ImageView vo2MaxGauge;
     protected GaugeDrawer gaugeDrawer = new GaugeDrawer();
     private LineChart vo2MaxChart;
     private RelativeLayout vo2maxCyclingWrapper;
     private RelativeLayout vo2maxRunningWrapper;
+    private RelativeLayout vo2maxWrapper;
     private GridLayout tilesGridWrapper;
     private int tsFrom;
     GBDevice device;
@@ -88,11 +91,14 @@ public class VO2MaxFragment extends AbstractChartFragment<VO2MaxFragment.VO2MaxD
         mDateView = rootView.findViewById(R.id.vo2max_date_view);
         vo2MaxRunningValue = rootView.findViewById(R.id.vo2max_running_gauge_value);
         vo2MaxCyclingValue = rootView.findViewById(R.id.vo2max_cycling_gauge_value);
+        vo2MaxValue = rootView.findViewById(R.id.vo2max_gauge_value);
         vo2MaxRunningGauge = rootView.findViewById(R.id.vo2max_running_gauge);
         vo2MaxCyclingGauge = rootView.findViewById(R.id.vo2max_cycling_gauge);
+        vo2MaxGauge = rootView.findViewById(R.id.vo2max_gauge);
         vo2MaxChart = rootView.findViewById(R.id.vo2max_chart);
         vo2maxCyclingWrapper = rootView.findViewById(R.id.vo2max_cycling_card_layout);
         vo2maxRunningWrapper = rootView.findViewById(R.id.vo2max_running_card_layout);
+        vo2maxWrapper = rootView.findViewById(R.id.vo2max_card_layout);
         tilesGridWrapper = rootView.findViewById(R.id.tiles_grid_wrapper);
         device = getChartsHost().getDevice();
         if (!supportsVO2MaxCycling(device)) {
@@ -100,6 +106,9 @@ public class VO2MaxFragment extends AbstractChartFragment<VO2MaxFragment.VO2MaxD
         }
         if (!supportsVO2MaxRunning(device)) {
             tilesGridWrapper.removeView(vo2maxRunningWrapper);
+        }
+        if (supportsVO2MaxRunning(device) || supportsVO2MaxCycling(device)) {
+            tilesGridWrapper.removeView(vo2maxWrapper);
         }
         setupVO2MaxChart();
         refresh();
@@ -163,14 +172,17 @@ public class VO2MaxFragment extends AbstractChartFragment<VO2MaxFragment.VO2MaxD
 
         List<Entry> runningEntries = new ArrayList<>();
         List<Entry> cyclingEntries = new ArrayList<>();
+        List<Entry> allEntries = new ArrayList<>();
         vo2MaxData.records.forEach((record) -> {
             float nd = (float) (record.timestamp - this.tsFrom) / (60 * 60 * 24);
+            Entry entry = new Entry(nd, record.value);
+            allEntries.add(entry);
             switch (record.type) {
                 case RUNNING:
-                    runningEntries.add(new Entry(nd, record.value));
+                    runningEntries.add(entry);
                     break;
                 case CYCLING:
-                    cyclingEntries.add(new Entry(nd, record.value));
+                    cyclingEntries.add(entry);
                     break;
             }
         });
@@ -191,6 +203,13 @@ public class VO2MaxFragment extends AbstractChartFragment<VO2MaxFragment.VO2MaxD
             gaugeDrawer.drawSegmentedGauge(vo2MaxCyclingGauge, colors, segments, cyclingVO2MaxValue, false, true);
             vo2MaxCyclingValue.setText(String.valueOf(latestCyclingRecord != null ? Math.round(latestCyclingRecord.value) : "-"));
             lineDataSets.add(createDataSet(cyclingEntries, getResources().getColor(R.color.vo2max_cycling_char_line_color), getString(R.string.vo2max_cycling)));
+        }
+        if (!supportsVO2MaxRunning(device) && !supportsVO2MaxCycling(device)) {
+            VO2MaxRecord latestRecord = vo2MaxData.getLatestValue(Vo2MaxSample.Type.ANY);
+            float vO2MaxValue = calculateVO2maxGaugeValue(vo2MaxRanges, latestRecord != null ? latestRecord.value : 0);
+            gaugeDrawer.drawSegmentedGauge(vo2MaxGauge, colors, segments, vO2MaxValue, false, true);
+            vo2MaxValue.setText(String.valueOf(latestRecord != null ? Math.round(latestRecord.value) : "-"));
+            lineDataSets.add(createDataSet(allEntries, getResources().getColor(R.color.vo2max_running_char_line_color), getString(R.string.menuitem_vo2_max)));
         }
         final LineData lineData = new LineData(lineDataSets);
         vo2MaxChart.getXAxis().setValueFormatter(getVO2MaxLineChartValueFormatter());
