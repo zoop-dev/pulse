@@ -79,12 +79,8 @@ class AppMessageHandlerTearsOfTheKingdom extends AppMessageHandler {
             return null;
         }
 
-        int weather_time = weatherSpec.getTimestamp();
-        // approximate night as the time as any time before sunrise or after sunset
-        boolean isNight = ( weather_time < weatherSpec.getSunRise() ) || ( weather_time > weatherSpec.getSunSet()) ;
-
         int temperature_f = (weatherSpec.getCurrentTemp() - 255) * 9 / 5; // 255K is 0 degF
-        int condition = getIconFromConditionCode(weatherSpec.getCurrentConditionCode(), isNight);
+        int condition = getIconFromConditionCode(weatherSpec.getCurrentConditionCode(), weatherSpec.isNight());
 
         ArrayList<Pair<Integer, Object>> pairs = new ArrayList<>(2);
         pairs.add(new Pair<>(TEMPERATURE_KEY, (Object) temperature_f));

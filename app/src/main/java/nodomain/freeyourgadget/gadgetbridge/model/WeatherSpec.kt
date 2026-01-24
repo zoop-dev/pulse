@@ -1,6 +1,6 @@
-/*  Copyright (C) 2016-2024 Andreas Shimokawa, Arjan Schrijver, beardhatcode,
+/*  Copyright (C) 2016-2026 Andreas Shimokawa, Arjan Schrijver, beardhatcode,
     Carsten Pfeiffer, Daniele Gobbetti, Enrico Brambilla, José Rebelo, Taavi
-    Eomäe
+    Eomäe, Avery Sterk
 
     This file is part of Gadgetbridge.
 
@@ -128,6 +128,49 @@ class WeatherSpec() : Parcelable {
 
     fun setIsCurrentLocation(currLoc: Int) {
         isCurrentLocation = currLoc
+    }
+
+    /**
+     * Determines whether the weather condition was retrieved when the sun was down
+     * @return True if the weather timestamp was outside the sunrise-sunset interval
+     */
+    fun isNight(): Boolean {
+        return isTimeNight( this.timestamp * 1000L )
+    }
+
+    /**
+     * Abstraction for whether the sunrise/set information indicates "polar night" (no sunrise)
+     * @return True if polar night, false otherwise
+     */
+    fun isPolarNight(): Boolean {
+        return (this.sunSet == 0) // unix time instant of 0
+    }
+    /**
+     * Abstraction for whether the sunrise/set information indicates "polar day" (sun never sets)
+     * @return True if polar day, false otherwise
+     */
+    fun isPolarDay(): Boolean {
+        return ((this.sunSet - this.sunRise) >= 86399) // sun is up every second of the day
+    }
+    /**
+     * Determines whether the current time falls during a night period based on sunrise and sunset
+     * @return True if the current time of day is outside the sunset-sunrise interval
+     */
+    fun isCurrentTimeNight(): Boolean {
+        return isTimeNight( System.currentTimeMillis() )
+    }
+
+    /**
+     * Checks whether a given time falls outside the sunrise-sunset interval
+     * @param unixTimeMilliSeconds Unix timestamp, in UTC, in milliseconds
+     * @return True if outside sunrise interval, false if during sunrise
+     */
+    fun isTimeNight(unixTimeMilliSeconds: Long): Boolean {
+        if (isPolarNight()) return true
+        if (isPolarDay()) return false
+        val millisPastMidnight = unixTimeMilliSeconds % 86400000
+        if ( millisPastMidnight < (this.sunRise % 86400 * 1000L ) ) return true
+        return ( millisPastMidnight > (this.sunSet % 86400 * 1000L ) )
     }
 
     fun getLocationObject(): Location? {

@@ -6,18 +6,19 @@ import nodomain.freeyourgadget.gadgetbridge.R
 object WeatherMapper {
 
     @JvmStatic
-    fun mapToOpenWeatherMapIcon(code: Int): String = when {
+    fun mapToOpenWeatherMapIcon(code: Int, isNight: Boolean = false): String = when (code) {
         //see https://openweathermap.org/weather-conditions
-        code in 200..299 -> "11d"
-        code in 300..499 -> "09d"
-        code in 500..509 -> "10d"
-        code in 511..599 -> "09d"
-        code in 600..699 -> "13d"
-        code in 700..799 -> "50d"
-        code == 800 -> "01d" //TODO: night?
-        code == 801 -> "02d" //TODO: night?
-        code == 802 -> "03d" //TODO: night?
-        code == 803 || code == 804 -> "04d" //TODO: night?
+        in 200..299 -> if (isNight) { "11n" } else { "11d" }
+        in 300..499 -> if (isNight) { "09n" } else { "09d" }
+        in 500..509 -> if (isNight) { "10n" } else { "10d" }
+        511 -> if (isNight) { "13n" } else { "13d" }
+        in 512..599 -> if (isNight) { "09n" } else { "09d" }
+        in 600..699 -> if (isNight) { "13n" } else { "13d" }
+        in 700..799 -> if (isNight) { "50n" } else { "50d" }
+        800 -> if (isNight) { "01n" } else { "01d" }
+        801 -> if (isNight) { "02n" } else { "02d" }
+        802 -> if (isNight) { "03n" } else { "03d" }
+        803, 804 -> if (isNight) { "04n" } else { "04d" }
         else -> "02d" // fallback
     }
 

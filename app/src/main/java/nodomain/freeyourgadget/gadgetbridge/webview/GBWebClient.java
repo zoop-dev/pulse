@@ -367,7 +367,7 @@ public class GBWebClient extends WebViewClient {
             condition.put("id", weatherSpec.getCurrentConditionCode());
             condition.put("main", weatherSpec.getCurrentCondition());
             condition.put("description", weatherSpec.getCurrentCondition());
-            condition.put("icon", WeatherMapper.mapToOpenWeatherMapIcon(weatherSpec.getCurrentConditionCode()));
+            condition.put("icon", WeatherMapper.mapToOpenWeatherMapIcon(weatherSpec.getCurrentConditionCode(),weatherSpec.isNight()));
             weather.put(condition);
 
 

@@ -190,7 +190,7 @@ class AppMessageHandlerYWeather extends AppMessageHandler {
         if (weatherSpec == null) {
             return null;
         }
-        boolean isNight = false; // TODO
+        boolean isNight = weatherSpec.isNight();
         ArrayList<Pair<Integer, Object>> pairs = new ArrayList<>(2);
         pairs.add(new Pair<>(KEY_LOCATION_NAME, (Object) (weatherSpec.getLocation())));
         pairs.add(new Pair<>(KEY_WEATHER_TEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°", weatherSpec.getCurrentTemp() - 273.15))));

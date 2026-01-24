@@ -137,10 +137,7 @@ class AppMessageHandlerTimeStylePebble extends AppMessageHandler {
 
         ArrayList<Pair<Integer, Object>> pairs = new ArrayList<>();
 
-        boolean isNight = false;
-        if (weatherSpec.getSunRise() != 0 && weatherSpec.getSunSet() != 0) {
-            isNight = weatherSpec.getSunRise() * 1000L > System.currentTimeMillis() || weatherSpec.getSunSet() * 1000L < System.currentTimeMillis();
-        }
+        boolean isNight = weatherSpec.isCurrentTimeNight();
 
         pairs.add(new Pair<>(messageKeys.get("SettingUseMetric"), 1)); //celsius
         pairs.add(new Pair<>(messageKeys.get("WeatherUseNightIcon"), isNight ? 1 : 0));

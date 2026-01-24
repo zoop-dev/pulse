@@ -50,7 +50,7 @@ public class WeatherMapperTest extends TestBase {
         for (int i = 0; i <= 3200; i++) {
             Assert.assertEquals(Weather.mapToPebbleCondition(i), WeatherMapper.mapToPebbleCondition(i));
             Assert.assertEquals(Weather.mapToYahooCondition(i), WeatherMapper.mapToYahooCondition(i));
-            Assert.assertEquals(Weather.mapToOpenWeatherMapIcon(i), WeatherMapper.mapToOpenWeatherMapIcon(i));
+            Assert.assertEquals(Weather.mapToOpenWeatherMapIcon(i), WeatherMapper.mapToOpenWeatherMapIcon(i,false));
             Assert.assertEquals(Weather.mapToOpenWeatherMapCondition(i), WeatherMapper.mapToOpenWeatherMapCondition(i));
             Assert.assertEquals(Weather.getConditionString(getContext(), i), WeatherMapper.getConditionString(getContext(), i));
             Assert.assertEquals(Weather.getAqiLevelString(getContext(), i), WeatherMapper.getAqiLevelString(getContext(), i));

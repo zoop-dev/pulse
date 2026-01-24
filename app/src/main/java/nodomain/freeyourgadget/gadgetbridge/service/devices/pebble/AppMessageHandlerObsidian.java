@@ -149,10 +149,10 @@ class AppMessageHandlerObsidian extends AppMessageHandler {
         }
 
         ArrayList<Pair<Integer, Object>> pairs = new ArrayList<>();
-        boolean isNight = false;   //TODO: use the night icons when night
+        boolean isNight = weatherSpec.isNight();
         pairs.add(new Pair<>(messageKeys.get("CONFIG_WEATHER_REFRESH"), (Object) 60));
         pairs.add(new Pair<>(messageKeys.get("CONFIG_WEATHER_UNIT_LOCAL"), (Object) 1)); //celsius
-        pairs.add(new Pair<>(messageKeys.get("MSG_KEY_WEATHER_ICON"), (Object) getIconForConditionCode(weatherSpec.getCurrentConditionCode(), isNight))); //celsius
+        pairs.add(new Pair<>(messageKeys.get("MSG_KEY_WEATHER_ICON"), (Object) getIconForConditionCode(weatherSpec.getCurrentConditionCode(), isNight)));
         pairs.add(new Pair<>(messageKeys.get("MSG_KEY_WEATHER_TEMP"), (Object) (weatherSpec.getCurrentTemp() - 273)));
 
         return mPebbleProtocol.encodeApplicationMessagePush(PebbleProtocol.ENDPOINT_APPLICATIONMESSAGE, mUUID, pairs, null);
