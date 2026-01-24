@@ -95,6 +95,7 @@ public class Request {
     protected OperationStatus operationStatus = OperationStatus.INITIAL;
     protected byte serviceId;
     protected byte commandId;
+    protected HuaweiPacket sendingPacket = null;
     protected HuaweiPacket receivedPacket = null;
     protected HuaweiSupportProvider supportProvider;
     protected HuaweiPacket.ParamsProvider paramsProvider;
@@ -221,6 +222,13 @@ public class Request {
     }
 
     protected List<byte[]> createRequest() throws RequestCreationException {
+        if (sendingPacket != null) {
+            try {
+                return sendingPacket.serialize();
+            } catch (HuaweiPacket.CryptoException e) {
+                throw new RequestCreationException(e);
+            }
+        }
         return null;
     }
 
