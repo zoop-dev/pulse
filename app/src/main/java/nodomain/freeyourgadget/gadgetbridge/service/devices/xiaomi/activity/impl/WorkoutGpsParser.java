@@ -36,8 +36,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
-import nodomain.freeyourgadget.gadgetbridge.export.ActivityTrackExporter;
-import nodomain.freeyourgadget.gadgetbridge.export.GPXExporter;
+import nodomain.freeyourgadget.gadgetbridge.export.AutoGpxExporter;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
@@ -46,8 +45,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityFileFetcher;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityFileId;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityParser;
-import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
-import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class WorkoutGpsParser extends XiaomiActivityParser {
@@ -129,13 +126,14 @@ public class WorkoutGpsParser extends XiaomiActivityParser {
             return false;
         }
 
+        final BaseActivitySummary summary;
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             final DaoSession session = dbHandler.getDaoSession();
             final Device device = DBHelper.getDevice(gbDevice, session);
             final User user = DBHelper.getUser(session);
 
             // Find the matching summary
-            final BaseActivitySummary summary = findOrCreateBaseActivitySummary(session, device, user, fileId);
+            summary = findOrCreateBaseActivitySummary(session, device, user, fileId);
 
             // Set the info on the activity track
             activityTrack.setUser(user);
@@ -146,22 +144,6 @@ public class WorkoutGpsParser extends XiaomiActivityParser {
             final File rawBytesFile = XiaomiActivityFileFetcher.getRawFile(gbDevice, fileId);
 
             // Save the gpx file
-            final GPXExporter exporter = new GPXExporter();
-
-            final String gpxFileName = FileUtils.makeValidFileName("gadgetbridge-" + DateTimeUtils.formatIso8601(fileId.getTimestamp()) + ".gpx");
-            final File gpxTargetFile = new File(FileUtils.getExternalFilesDir(), gpxFileName);
-
-            boolean exportGpxSuccess = true;
-            try {
-                exporter.performExport(activityTrack, gpxTargetFile);
-            } catch (final ActivityTrackExporter.GPXTrackEmptyException ex) {
-                exportGpxSuccess = false;
-                GB.toast(context, "This activity does not contain GPX tracks.", Toast.LENGTH_LONG, GB.ERROR, ex);
-            }
-
-            if (exportGpxSuccess) {
-                summary.setGpxTrack(gpxTargetFile.getAbsolutePath());
-            }
             if (rawBytesFile != null) {
                 summary.setRawDetailsPath(rawBytesFile.getAbsolutePath());
             }
@@ -170,6 +152,8 @@ public class WorkoutGpsParser extends XiaomiActivityParser {
             GB.toast(context, "Error saving workout gps", Toast.LENGTH_LONG, GB.ERROR, e);
             return false;
         }
+
+        AutoGpxExporter.doExport(context, gbDevice, summary, activityTrack);
 
         return true;
     }

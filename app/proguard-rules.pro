@@ -78,7 +78,8 @@
 # Keep generated protobuf classes
 -keep class * extends com.google.protobuf.GeneratedMessageLite { *; }
 
-# Keep debug preference fragments that might only be referenced from xml
+# Keep preference fragments that might only be referenced from xml
+-keep class nodomain.freeyourgadget.gadgetbridge.activities.automations.** extends androidx.fragment.app.Fragment { *; }
 -keep class nodomain.freeyourgadget.gadgetbridge.activities.debug.** extends androidx.fragment.app.Fragment { *; }
 
 # jsoup 1.22.1 introduces support for re2j, but falls back to java Regex if not available

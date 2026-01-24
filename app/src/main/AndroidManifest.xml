@@ -227,6 +227,10 @@
             android:label="@string/pref_header_auto_export_zip"
             android:parentActivityName=".activities.SettingsActivity" />
         <activity
+            android:name=".activities.automations.AutoExportGpxSettingsActivity"
+            android:label="@string/pref_header_auto_export_gpx"
+            android:parentActivityName=".activities.SettingsActivity" />
+        <activity
             android:name=".activities.maps.MapsTrackActivity"
             android:label="@string/maps"
             android:parentActivityName=".activities.SettingsActivity" />

@@ -647,10 +647,17 @@
     <string name="pref_header_auto_export">Auto export</string>
     <string name="pref_header_auto_export_db">Auto export database</string>
     <string name="pref_header_auto_export_zip">Auto export zip</string>
+    <string name="pref_header_auto_export_gpx">Auto export GPX tracks</string>
     <string name="pref_title_auto_export_enabled">Auto export enabled</string>
     <string name="pref_title_auto_export_location">Export location</string>
     <string name="pref_title_auto_export_interval">Export interval</string>
     <string name="pref_summary_auto_export_interval">Export every %d hour</string>
+    <!-- GPX Auto export -->
+    <string name="pref_auto_export_gpx_summary">Automatically export GPX files when syncing activity tracks</string>
+    <string name="pref_export_directory">Export directory</string>
+    <string name="pref_auto_export_gpx_all_devices_summary">Export GPX tracks from all devices</string>
+    <string name="pref_auto_export_gpx_selected_devices">Selected devices</string>
+    <string name="pref_auto_export_gpx_selected_devices_summary">Choose which devices to export GPX tracks from</string>
     <!-- Auto fetch activity preferences -->
     <string name="pref_header_auto_fetch">Auto fetch</string>
     <string name="pref_auto_fetch">Auto fetch activity data</string>

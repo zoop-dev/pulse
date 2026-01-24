@@ -116,8 +116,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSwimSegmentsSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSwimSegmentsSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.export.ActivityTrackExporter;
-import nodomain.freeyourgadget.gadgetbridge.export.GPXExporter;
+import nodomain.freeyourgadget.gadgetbridge.export.AutoGpxExporter;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.gps.GBLocationProviderType;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.gps.GBLocationService;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -248,7 +247,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetN
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetWorkModeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
-import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
@@ -3378,42 +3376,7 @@ public class HuaweiSupportProvider {
                             track.addTrackPoint(activityPoint);
                         }
 
-                        String filename = FileUtils.makeValidFileName("workout_" + fileRequest.getWorkoutId() + "_" + points[0].timestamp + ".gpx");
-                        File targetFile;
-                        try {
-                            targetFile = new File(
-                                    getDevice().getDeviceCoordinator().getWritableExportDirectory(getDevice(), true),
-                                    filename
-                            );
-                        } catch (IOException e) {
-                            GB.toast(context, "Could not open Workout GPS file to write to", Toast.LENGTH_SHORT, GB.ERROR, e);
-                            LOG.error("Could not open Workout GPS file to write to", e);
-                            syncState.stopWorkoutGpsDownload();
-                            return;
-                        }
-
-                        GPXExporter exporter = new GPXExporter();
-                        exporter.setCreator(GBApplication.app().getNameAndVersion());
-                        try {
-                            exporter.performExport(track, targetFile);
-                        } catch (IOException | ActivityTrackExporter.GPXTrackEmptyException e) {
-                            GB.toast(context, "Failed to export Workout GPX file", Toast.LENGTH_SHORT, GB.ERROR, e);
-                            LOG.error("Failed to export Workout GPX file", e);
-                            syncState.stopWorkoutGpsDownload();
-                            return;
-                        }
-
-                        try (DBHandler db = GBApplication.acquireDB()) {
-                            DaoSession daoSession = db.getDaoSession();
-                            HuaweiWorkoutSummarySample sample = daoSession.getHuaweiWorkoutSummarySampleDao().load(databaseId);
-                            sample.setGpxFileLocation(targetFile.getAbsolutePath());
-                            sample.update();
-                        } catch (Exception e) {
-                            GB.toast(context, "Failed to save Workout GPX file location", Toast.LENGTH_SHORT, GB.ERROR, e);
-                            LOG.error("Failed to save Workout GPX file location", e);
-                            syncState.stopWorkoutGpsDownload();
-                            return;
-                        }
+                        AutoGpxExporter.doExport(getContext(), getDevice(), null, track);
 
                         new HuaweiWorkoutGbParser(getDevice(), getContext()).parseWorkout(databaseId);
 

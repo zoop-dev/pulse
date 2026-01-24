@@ -24,9 +24,11 @@ import androidx.annotation.Nullable;
 import org.jetbrains.annotations.TestOnly;
 import org.xmlpull.v1.XmlSerializer;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
@@ -79,35 +81,41 @@ public class GPXExporter implements ActivityTrackExporter {
 
     @Override
     public void performExport(ActivityTrack track, File targetFile) throws IOException, GPXTrackEmptyException {
+        try (FileOutputStream outputStream = new FileOutputStream(targetFile);
+             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream)) {
+            performExport(track, bufferedOutputStream);
+        }
+    }
+
+    public void performExport(ActivityTrack track, OutputStream outputStream) throws IOException, GPXTrackEmptyException {
         String encoding = StandardCharsets.UTF_8.name();
         XmlSerializer ser = Xml.newSerializer();
-        try (FileOutputStream outputStream = new FileOutputStream(targetFile)) {
-            ser.setOutput(outputStream, encoding);
-            //ser.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
-            ser.startDocument(encoding, Boolean.TRUE);
-            ser.setPrefix("xsi", NS_XSI_URI);
-            ser.setPrefix(NS_TRACKPOINT_EXTENSION, NS_TRACKPOINT_EXTENSION_URI);
-            ser.setPrefix(NS_GPX_PREFIX, NS_GPX_URI);
-            ser.setPrefix(OPENTRACKS_PREFIX, OPENTRACKS_NAMESPACE_URI);
 
-            ser.startTag(NS_GPX_URI, "gpx");
-            ser.attribute(null, "version", "1.1");
-            if (creator != null) {
-                ser.attribute(null, "creator", creator);
-            } else {
-                ser.attribute(null, "creator", GBApplication.app().getNameAndVersion());
-            }
-            ser.attribute(NS_XSI_URI, "schemaLocation",NS_GPX_URI + " " + TOPOGRAFIX_NAMESPACE_XSD
-                    + " " + NS_TRACKPOINT_EXTENSION_URI + " " + TRACKPOINT_EXTENSION_XSD
-                    + " " + OPENTRACKS_NAMESPACE_URI + " " + OPENTRACKS_XSD);
+        ser.setOutput(outputStream, encoding);
+        //ser.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
+        ser.startDocument(encoding, Boolean.TRUE);
+        ser.setPrefix("xsi", NS_XSI_URI);
+        ser.setPrefix(NS_TRACKPOINT_EXTENSION, NS_TRACKPOINT_EXTENSION_URI);
+        ser.setPrefix(NS_GPX_PREFIX, NS_GPX_URI);
+        ser.setPrefix(OPENTRACKS_PREFIX, OPENTRACKS_NAMESPACE_URI);
 
-            exportMetadata(ser, track);
-            exportTrack(ser, track);
-
-            ser.endTag(NS_GPX_URI, "gpx");
-            ser.endDocument();
-            ser.flush();
+        ser.startTag(NS_GPX_URI, "gpx");
+        ser.attribute(null, "version", "1.1");
+        if (creator != null) {
+            ser.attribute(null, "creator", creator);
+        } else {
+            ser.attribute(null, "creator", GBApplication.app().getNameAndVersion());
         }
+        ser.attribute(NS_XSI_URI, "schemaLocation",NS_GPX_URI + " " + TOPOGRAFIX_NAMESPACE_XSD
+                + " " + NS_TRACKPOINT_EXTENSION_URI + " " + TRACKPOINT_EXTENSION_XSD
+                + " " + OPENTRACKS_NAMESPACE_URI + " " + OPENTRACKS_XSD);
+
+        exportMetadata(ser, track);
+        exportTrack(ser, track);
+
+        ser.endTag(NS_GPX_URI, "gpx");
+        ser.endDocument();
+        ser.flush();
     }
 
     private void exportMetadata(XmlSerializer ser, ActivityTrack track) throws IOException {

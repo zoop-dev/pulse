@@ -20,6 +20,14 @@
                 android:targetPackage="@string/applicationId" />
         </Preference>
 
+        <Preference
+            android:icon="@drawable/ic_gps_location"
+            android:title="@string/pref_header_auto_export_gpx">
+            <intent
+                android:targetClass="nodomain.freeyourgadget.gadgetbridge.activities.automations.AutoExportGpxSettingsActivity"
+                android:targetPackage="@string/applicationId" />
+        </Preference>
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_header_auto_fetch">

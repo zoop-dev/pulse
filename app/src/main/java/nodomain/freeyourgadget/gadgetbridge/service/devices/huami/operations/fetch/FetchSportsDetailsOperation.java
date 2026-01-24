@@ -17,7 +17,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch;
 
-import android.text.format.DateUtils;
 import android.widget.Toast;
 
 import org.slf4j.Logger;
@@ -37,9 +36,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
-import nodomain.freeyourgadget.gadgetbridge.export.ActivityTrackExporter;
-import nodomain.freeyourgadget.gadgetbridge.export.GPXExporter;
-import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
+import nodomain.freeyourgadget.gadgetbridge.export.AutoGpxExporter;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.AbstractHuamiActivityDetailsParser;
@@ -113,48 +110,7 @@ public class FetchSportsDetailsOperation extends AbstractFetchOperation {
 
         try {
             final ActivityTrack track = detailsParser.parse(buffer.toByteArray());
-            final ActivityTrackExporter exporter = new GPXExporter();
-            final String trackType;
-            switch (ActivityKind.fromCode(summary.getActivityKind())) {
-                case CYCLING:
-                    trackType = getContext().getString(R.string.activity_type_biking);
-                    break;
-                case RUNNING:
-                    trackType = getContext().getString(R.string.activity_type_running);
-                    break;
-                case WALKING:
-                    trackType = getContext().getString(R.string.activity_type_walking);
-                    break;
-                case HIKING:
-                    trackType = getContext().getString(R.string.activity_type_hiking);
-                    break;
-                case CLIMBING:
-                    trackType = getContext().getString(R.string.activity_type_climbing);
-                    break;
-                case SWIMMING:
-                    trackType = getContext().getString(R.string.activity_type_swimming);
-                    break;
-                default:
-                    trackType = "track";
-                    break;
-            }
-
-            final String fileName = FileUtils.makeValidFileName("gadgetbridge-" + trackType.toLowerCase() + "-" + DateTimeUtils.formatIso8601(summary.getStartTime()) + ".gpx");
-            final File targetFile = new File(FileUtils.getExternalFilesDir(), fileName);
-
-            boolean exportGpxSuccess = true;
-            try {
-                exporter.performExport(track, targetFile);
-            } catch (final ActivityTrackExporter.GPXTrackEmptyException ex) {
-                exportGpxSuccess = false;
-            }
-
-            try (DBHandler dbHandler = GBApplication.acquireDB()) {
-                if (exportGpxSuccess) {
-                    summary.setGpxTrack(targetFile.getAbsolutePath());
-                }
-                dbHandler.getDaoSession().getBaseActivitySummaryDao().update(summary);
-            }
+            AutoGpxExporter.doExport(getContext(), getDevice(), summary, track);
         } catch (final Exception e) {
             GB.toast(getContext(), "Error saving activity details: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
             // #4549 - we do not return false here, since this might cause the same activity to be fetched over and over again

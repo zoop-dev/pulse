@@ -19,19 +19,14 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.cmfwatchpro;
 import android.content.Context;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
@@ -46,7 +41,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.cmfwatchpro.samples.CmfWorko
 import nodomain.freeyourgadget.gadgetbridge.devices.cmfwatchpro.workout.CmfActivityTrackProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.cmfwatchpro.workout.CmfWorkoutSummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
-import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.CmfActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.CmfHeartRateSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.CmfSleepSessionSample;
@@ -57,13 +51,10 @@ import nodomain.freeyourgadget.gadgetbridge.entities.CmfWorkoutGpsSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
-import nodomain.freeyourgadget.gadgetbridge.export.ActivityTrackExporter;
-import nodomain.freeyourgadget.gadgetbridge.export.GPXExporter;
+import nodomain.freeyourgadget.gadgetbridge.export.AutoGpxExporter;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
-import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
-import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class CmfActivitySync {
@@ -505,64 +496,7 @@ public class CmfActivitySync {
         }
 
         // Save the gpx file
-        final File gpxFile = exportGpx(summary, activityTrack);
-        if (gpxFile == null) {
-            return;
-        }
-
-        // Update the summary in the db with the gpx path
-        try (DBHandler dbHandler = GBApplication.acquireDB()) {
-            final DaoSession session = dbHandler.getDaoSession();
-            final Device device = DBHelper.getDevice(mSupport.getDevice(), session);
-            final User user = DBHelper.getUser(session);
-
-            final BaseActivitySummaryDao summaryDao = session.getBaseActivitySummaryDao();
-            final QueryBuilder<BaseActivitySummary> qb = summaryDao.queryBuilder();
-            qb.where(BaseActivitySummaryDao.Properties.StartTime.eq(summary.getStartTime()));
-            qb.where(BaseActivitySummaryDao.Properties.DeviceId.eq(device.getId()));
-            qb.where(BaseActivitySummaryDao.Properties.UserId.eq(user.getId()));
-            final List<BaseActivitySummary> summaries = qb.build().list();
-
-            if (summaries.isEmpty()) {
-                LOG.warn("Failed to find existing summary in db - this should never happen");
-                return;
-            }
-            if (summaries.size() > 1) {
-                LOG.warn("Found multiple summaries in db - this should never happen");
-            }
-
-            final BaseActivitySummary summaryToUpdate = summaries.get(0);
-            summaryToUpdate.setGpxTrack(gpxFile.getAbsolutePath());
-            session.getBaseActivitySummaryDao().insertOrReplace(summaryToUpdate);
-        } catch (final Exception e) {
-            LOG.error("Failed to update summary with gpx path", e);
-        }
-    }
-
-    @Nullable
-    private File exportGpx(final BaseActivitySummary summary, final ActivityTrack activityTrack) {
-        final GPXExporter exporter = new GPXExporter();
-
-        final String gpxFileName = FileUtils.makeValidFileName("gadgetbridge-" + DateTimeUtils.formatIso8601(summary.getStartTime()) + ".gpx");
-        final File gpxTargetFile;
-        try {
-            gpxTargetFile = new File(FileUtils.getExternalFilesDir(), gpxFileName);
-        } catch (final IOException e) {
-            LOG.error("Failed to get external files dir", e);
-            return null;
-        }
-
-        try {
-            exporter.performExport(activityTrack, gpxTargetFile);
-        } catch (final ActivityTrackExporter.GPXTrackEmptyException e) {
-            LOG.warn("Gpx is empty");
-            return null;
-        } catch (IOException e) {
-            LOG.error("Failed to write gpx", e);
-            return null;
-        }
-
-        return gpxTargetFile;
+        AutoGpxExporter.doExport(getContext(), getDevice(), summary, activityTrack);
     }
 
     private Context getContext() {

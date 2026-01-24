@@ -34,8 +34,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
-import nodomain.freeyourgadget.gadgetbridge.export.ActivityTrackExporter;
-import nodomain.freeyourgadget.gadgetbridge.export.GPXExporter;
+import nodomain.freeyourgadget.gadgetbridge.export.AutoGpxExporter;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData;
@@ -204,40 +203,8 @@ class BangleJSActivityTrack {
                 track.addTrackPoint(banglePoint.toActivityPoint());
             }
 
-            ActivityTrackExporter exporter = new GPXExporter();
-            String trackType = "track";
-            switch (ActivityKind.fromCode(summary.getActivityKind())) {
-                case CYCLING:
-                    trackType = context.getString(R.string.activity_type_biking);
-                    break;
-                case RUNNING:
-                    trackType = context.getString(R.string.activity_type_running);
-                    break;
-                case WALKING:
-                    trackType = context.getString(R.string.activity_type_walking);
-                    break;
-                case HIKING:
-                    trackType = context.getString(R.string.activity_type_hiking);
-                    break;
-                case CLIMBING:
-                    trackType = context.getString(R.string.activity_type_climbing);
-                    break;
-                case SWIMMING:
-                    trackType = context.getString(R.string.activity_type_swimming);
-                    break;
-            }
-
-            String fileName = FileUtils.makeValidFileName("gadgetbridge-" + trackType.toLowerCase() + "-" + summary.getName() + ".gpx");
-            dir = new File(FileUtils.getExternalFilesDir() + "/" + FileUtils.makeValidFileName(device.getName()));
-            File targetFile = new File(dir, fileName);
-
             if (hasGPXReading /*|| hasHRMReading*/) {
-                try {
-                    exporter.performExport(track, targetFile);
-                    summary.setGpxTrack(targetFile.getAbsolutePath());
-                } catch (ActivityTrackExporter.GPXTrackEmptyException ex) {
-                    GB.toast(context, "This activity does not contain GPX tracks.", Toast.LENGTH_LONG, GB.ERROR, ex);
-                }
+                AutoGpxExporter.doExport(context, device, summary, track);
             }
 
             //summary.setSummaryData(null); // remove json before saving to database,
@@ -253,10 +220,10 @@ class BangleJSActivityTrack {
                 GB.toast(context, "Error saving activity summary", Toast.LENGTH_LONG, GB.ERROR, ex);
             }
 
-            LOG.debug("Activity track:\n" + track.getSegments());
+            LOG.debug("Activity track:\n{}", track.getSegments());
 
-        } catch (IOException e) {
-            LOG.error("IOException when parsing fetched CSV: " + e);
+        } catch (Exception e) {
+            LOG.error("IOException when parsing fetched CSV", e);
         }
 
         stopAndRestartTimeout(device,context);

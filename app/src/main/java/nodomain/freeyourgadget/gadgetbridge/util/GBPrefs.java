@@ -81,6 +81,12 @@ public class GBPrefs extends Prefs {
     public static final String AUTO_EXPORT_ZIP_LAST_EXECUTION = "zip_auto_export_last_execution";
     public static final String AUTO_EXPORT_ZIP_NEXT_EXECUTION = "zip_auto_export_next_execution";
 
+    // GPX export
+    public static final String AUTO_EXPORT_GPX_ENABLED = "gpx_auto_export_enabled";
+    public static final String AUTO_EXPORT_GPX_DIRECTORY = "gpx_auto_export_directory";
+    public static final String AUTO_EXPORT_GPX_ALL_DEVICES = "gpx_auto_export_all_devices";
+    public static final String AUTO_EXPORT_GPX_SELECTED_DEVICES = "gpx_auto_export_selected_devices";
+
     // Intent API
     public static final String INTENT_API_BROADCAST_EXPORT_DB = "intent_api_broadcast_export";
     public static final String INTENT_API_BROADCAST_EXPORT_ZIP = "intent_api_broadcast_zip_export";

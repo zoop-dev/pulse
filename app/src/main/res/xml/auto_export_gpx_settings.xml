@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_toggle_on"
+        android:key="gpx_auto_export_enabled"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_auto_export_gpx_summary"
+        android:title="@string/pref_title_auto_export_enabled"
+        app:iconSpaceReserved="false" />
+
+    <Preference
+        android:dependency="gpx_auto_export_enabled"
+        android:icon="@drawable/ic_folder"
+        android:key="gpx_auto_export_directory"
+        android:summary="@string/not_set"
+        android:title="@string/pref_export_directory"
+        app:iconSpaceReserved="false" />
+
+    <PreferenceCategory
+        android:key="pref_header_gpx_auto_export_devices"
+        android:title="@string/bottom_nav_devices"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:dependency="gpx_auto_export_enabled"
+            android:disableDependentsState="true"
+            android:key="gpx_auto_export_all_devices"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/pref_auto_export_gpx_all_devices_summary"
+            android:title="@string/pref_dashboard_all_devices_title"
+            app:iconSpaceReserved="false" />
+
+        <MultiSelectListPreference
+            android:dependency="gpx_auto_export_all_devices"
+            android:dialogTitle="@string/pref_auto_export_gpx_selected_devices"
+            android:entries="@array/empty_array"
+            android:entryValues="@array/empty_array"
+            android:key="gpx_auto_export_selected_devices"
+            android:summary="@string/pref_auto_export_gpx_selected_devices_summary"
+            android:title="@string/pref_auto_export_gpx_selected_devices"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
