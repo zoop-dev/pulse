@@ -28,4 +28,14 @@ public class GarminVivomoveHrCoordinator extends GarminWatchCoordinator {
     public boolean supportsSpo2(@NonNull final GBDevice device) {
         return false;
     }
+
+    @Override
+    public boolean supportsBodyEnergy(@NonNull final GBDevice device) {
+        return false;
+    }
+
+    @Override
+    public boolean supportsRespiratoryRate(@NonNull final GBDevice device) {
+        return false;
+    }
 }

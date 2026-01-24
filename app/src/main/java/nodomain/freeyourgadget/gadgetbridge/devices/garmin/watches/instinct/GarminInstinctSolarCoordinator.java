@@ -23,4 +23,14 @@ public class GarminInstinctSolarCoordinator extends GarminWatchCoordinator {
     public boolean supportsTrainingLoad(@NonNull final GBDevice device) {
         return false;
     }
+
+    @Override
+    public boolean supportsHrvMeasurement(@NonNull final GBDevice device) {
+        return false;
+    }
+
+    @Override
+    public boolean supportsRespiratoryRate(@NonNull final GBDevice device) {
+        return false;
+    }
 }

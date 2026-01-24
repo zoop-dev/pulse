@@ -27,9 +27,4 @@ public class GarminEdgeExplore2Coordinator extends GarminBikeComputerCoordinator
     public boolean supportsTrainingLoad(@NonNull final GBDevice device) {
         return false;
     }
-
-    @Override
-    public boolean supportsSpo2(@NonNull final GBDevice device) {
-        return false;
-    }
 }

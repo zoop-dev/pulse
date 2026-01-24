@@ -44,4 +44,9 @@ public class GarminForerunner45Coordinator extends GarminWatchCoordinator {
     public boolean supportsSpo2(@NonNull final GBDevice device) {
         return false;
     }
+
+    @Override
+    public boolean supportsRespiratoryRate(@NonNull final GBDevice device) {
+        return false;
+    }
 }
