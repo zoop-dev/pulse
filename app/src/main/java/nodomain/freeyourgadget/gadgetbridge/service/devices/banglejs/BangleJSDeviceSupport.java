@@ -887,7 +887,9 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         String url = json.getString("url");
         final boolean insecure = json.optBoolean("insecure", false);
         String method = "GET";
-        if (json.has("method")) json.getString("method").toUpperCase(Locale.US);
+        if (json.has("method")) {
+            method = json.getString("method").toUpperCase(Locale.US);
+        }
 
         String body = null;
         if (json.has("body"))

@@ -83,6 +83,7 @@
 * Improve zip export speed
 * Keep screen on during zip export / import
 * Make GenericWeatherReceiver work without any connected devices
+* Bangle.js: Fix handling HTTP method
 
 #### 0.88.0
 
