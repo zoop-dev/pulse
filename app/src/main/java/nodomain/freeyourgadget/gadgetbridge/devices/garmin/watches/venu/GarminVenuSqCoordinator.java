@@ -23,4 +23,9 @@ public class GarminVenuSqCoordinator extends GarminWatchCoordinator {
     public boolean supportsTrainingLoad(@NonNull GBDevice device) {
         return false;
     }
+
+    @Override
+    public boolean supportsVO2MultiSport(@NonNull final GBDevice device) {
+        return false;
+    }
 }

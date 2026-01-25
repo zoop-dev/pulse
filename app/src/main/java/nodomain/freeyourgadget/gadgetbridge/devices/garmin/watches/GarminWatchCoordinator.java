@@ -93,13 +93,8 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsVO2MaxCycling(@NonNull GBDevice device) {
-        return true;
-    }
-
-    @Override
-    public boolean supportsVO2MaxRunning(@NonNull GBDevice device) {
-        return true;
+    public boolean supportsVO2MultiSport(@NonNull GBDevice device) {
+        return supportsVO2Max(device);
     }
 
     @Override

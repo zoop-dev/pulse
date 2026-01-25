@@ -280,8 +280,11 @@ public interface DeviceCoordinator {
     boolean supportsBodyEnergy(@NonNull GBDevice device);
     boolean supportsHrvMeasurement(@NonNull GBDevice device);
     boolean supportsVO2Max(@NonNull GBDevice device);
-    boolean supportsVO2MaxCycling(@NonNull GBDevice device);
-    boolean supportsVO2MaxRunning(@NonNull GBDevice device);
+
+    /**
+     * Returns true if this device supports distinguishing VO2 max per sport (running / cycling).
+     */
+    boolean supportsVO2MultiSport(@NonNull GBDevice device);
     boolean supportsSleepMeasurement(@NonNull GBDevice device);
     boolean supportsStepCounter(@NonNull GBDevice device);
     boolean supportsSpeedzones(@NonNull GBDevice device);

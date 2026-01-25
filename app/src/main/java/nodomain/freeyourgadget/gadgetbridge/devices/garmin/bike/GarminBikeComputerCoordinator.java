@@ -33,11 +33,6 @@ public abstract class GarminBikeComputerCoordinator extends GarminCoordinator {
     }
 
     @Override
-    public boolean supportsVO2MaxCycling(@NonNull GBDevice device) {
-        return true;
-    }
-
-    @Override
     public boolean supportsRecordedActivities(@NonNull final GBDevice device) {
         return true;
     }

@@ -40,4 +40,9 @@ public class GarminVivoActive3Coordinator extends GarminWatchCoordinator {
     public boolean supportsRespiratoryRate(@NonNull final GBDevice device) {
         return false;
     }
+
+    @Override
+    public boolean supportsVO2MultiSport(@NonNull final GBDevice device) {
+        return false;
+    }
 }

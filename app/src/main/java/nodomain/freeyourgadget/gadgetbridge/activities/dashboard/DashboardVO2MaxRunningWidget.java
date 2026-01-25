@@ -47,6 +47,6 @@ public class DashboardVO2MaxRunningWidget extends AbstractDashboardVO2MaxWidget 
 
     @Override
     protected boolean isSupportedBy(final GBDevice device) {
-        return device.getDeviceCoordinator().supportsVO2MaxRunning(device);
+        return device.getDeviceCoordinator().supportsVO2MultiSport(device);
     }
 }

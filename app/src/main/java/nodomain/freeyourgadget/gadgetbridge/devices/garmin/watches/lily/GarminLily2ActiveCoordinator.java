@@ -25,12 +25,7 @@ public class GarminLily2ActiveCoordinator extends GarminWatchCoordinator {
     }
 
     @Override
-    public boolean supportsVO2MaxCycling(@NonNull GBDevice device) {
-        return false;
-    }
-
-    @Override
-    public boolean supportsVO2MaxRunning(@NonNull GBDevice device) {
+    public boolean supportsVO2MultiSport(@NonNull GBDevice device) {
         return false;
     }
 }
