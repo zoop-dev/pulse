@@ -76,6 +76,7 @@ public class WorkoutVo2MaxSampleProvider implements Vo2MaxSampleProvider<Vo2MaxS
         qb.where(BaseActivitySummaryDao.Properties.DeviceId.eq(dbDevice.getId()))
                 .where(BaseActivitySummaryDao.Properties.StartTime.gt(new Date(timestampFrom)))
                 .where(BaseActivitySummaryDao.Properties.StartTime.lt(new Date(timestampTo)))
+                .where(BaseActivitySummaryDao.Properties.SummaryData.like("%" + ActivitySummaryEntries.MAXIMUM_OXYGEN_UPTAKE + "%"))
                 .orderAsc(BaseActivitySummaryDao.Properties.StartTime);
 
         final List<BaseActivitySummary> samples = qb.build().list();
@@ -123,6 +124,7 @@ public class WorkoutVo2MaxSampleProvider implements Vo2MaxSampleProvider<Vo2MaxS
         }
 
         qb.where(BaseActivitySummaryDao.Properties.DeviceId.eq(dbDevice.getId()))
+                .where(BaseActivitySummaryDao.Properties.SummaryData.like("%" + ActivitySummaryEntries.MAXIMUM_OXYGEN_UPTAKE + "%"))
                 .orderDesc(BaseActivitySummaryDao.Properties.StartTime)
                 .limit(1);
 
@@ -195,6 +197,7 @@ public class WorkoutVo2MaxSampleProvider implements Vo2MaxSampleProvider<Vo2MaxS
 
         final QueryBuilder<BaseActivitySummary> qb = summaryDao.queryBuilder();
         qb.where(BaseActivitySummaryDao.Properties.DeviceId.eq(dbDevice.getId()))
+                .where(BaseActivitySummaryDao.Properties.SummaryData.like("%" + ActivitySummaryEntries.MAXIMUM_OXYGEN_UPTAKE + "%"))
                 .orderAsc(BaseActivitySummaryDao.Properties.StartTime)
                 .limit(1);
 
