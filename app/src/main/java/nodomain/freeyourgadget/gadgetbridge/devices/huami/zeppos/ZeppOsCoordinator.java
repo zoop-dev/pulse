@@ -215,11 +215,6 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public boolean supportsVO2MaxRunning(@NonNull GBDevice device) {
-        return true;
-    }
-
-    @Override
     public boolean supportsHeartRateStats(@NonNull GBDevice device) {
         return true;
     }
