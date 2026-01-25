@@ -282,4 +282,24 @@ class EndurainApiClient(
             }
         }.start()
     }
+
+    /**
+     * Fetch server version string
+     */
+    fun fetchVersion(): String? {
+        try {
+            val uri = "$baseUrl/api/v1/about".toUri()
+
+            val headers = buildHeaders(AuthType.NONE)
+
+            val result = InternetUtils.doJsonRequest(
+                uri = uri,
+                requestHeaders = headers,
+            )
+            return result?.getString("version")
+        } catch (e: Exception) {
+            LOG.error("Fetching server version error", e)
+            return null
+        }
+    }
 }

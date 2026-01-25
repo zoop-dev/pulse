@@ -43,6 +43,26 @@ class EndurainSetupViewModel(application: Application) : AndroidViewModel(applic
     var localLoginEnabled = false
     var ssoEnabled = false
     var pendingMfaUsername: String? = null
+    var serverVersion: String? = null
+
+
+    /**
+     * Fetch server version
+     */
+    fun fetchServerVersion(
+        serverUrl: String,
+        callback: (Boolean) -> Unit
+    ) {
+        Thread {
+            try {
+                apiClient = EndurainApiClient(serverUrl, tokenManager)
+                serverVersion = apiClient.fetchVersion()
+            } catch (e: Exception) {
+                LOG.error("Fetching server version error", e)
+                callback(true)
+            }
+        }.start()
+    }
 
     /**
      * Fetch server capabilities to determine available login methods

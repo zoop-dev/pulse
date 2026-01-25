@@ -55,6 +55,11 @@ class EndurainPreferencesActivity : AbstractSettingsActivityV2() {
                         updateLogoutPreferenceVisibility()
                     }
                 }
+                vm.fetchServerVersion(server) {
+                    activity?.runOnUiThread {
+                        updateStatus()
+                    }
+                }
             }
         }
 
@@ -121,11 +126,14 @@ class EndurainPreferencesActivity : AbstractSettingsActivityV2() {
             val server = GBApplication.getPrefs().preferences.getString("endurain_server", null)
             val tokenExpiresAt = vm.getTokenExpiresAt()
 
+            var summaryText = "Not logged in, integration is disabled"
             if (vm.isLoggedIn() && server != null) {
-                statusPref?.summary = "Logged in to $server\nAuth token expires: $tokenExpiresAt"
-            } else {
-                statusPref?.summary = "Not logged in, integration is disabled"
+                summaryText = "Logged in to $server\nAuth token expires: $tokenExpiresAt"
             }
+            if (vm.serverVersion != null) {
+                summaryText += "\nServer version: ${vm.serverVersion}"
+            }
+            statusPref?.summary = summaryText
         }
     }
 }
