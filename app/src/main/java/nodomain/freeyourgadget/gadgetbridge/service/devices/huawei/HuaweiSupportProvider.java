@@ -92,8 +92,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Weather;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Workout;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.ui.HuaweiStressCalibrationFragment;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst;
-import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
-import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiEcgDataSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiEcgDataSampleDao;
@@ -102,16 +100,6 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiEcgSummarySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStageSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStatsSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiStressSample;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutDataSample;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutDataSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutPaceSample;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutPaceSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSectionsSample;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSectionsSampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSpO2Sample;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSpO2SampleDao;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummaryAdditionalValuesSample;
-import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummaryAdditionalValuesSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSwimSegmentsSample;
@@ -170,7 +158,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetO
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetSmartAlarmList;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetWatchfaceParams;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetWorkoutCapability;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetWorkoutTotalsRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendCameraRemoteSetupEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendCountryCodeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendDeviceReportThreshold;
@@ -204,7 +191,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetF
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetHiChainRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetSleepDataCountRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetStepDataCountRequest;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetWorkoutCountRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SendNotificationRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetMusicRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.AlarmsRequest;
@@ -309,6 +295,8 @@ public class HuaweiSupportProvider {
     protected HuaweiP2PManager huaweiP2PManager = new HuaweiP2PManager(this);
 
     protected HuaweiDataSyncManager huaweiDataSyncManager = new HuaweiDataSyncManager(this);
+
+    protected HuaweiWorkoutSyncManager huaweiWorkoutSyncManager = new HuaweiWorkoutSyncManager(this);
 
     private HuaweiDataSyncFeatureManager huaweiDataSyncFeatureManager = null;
 
@@ -1653,80 +1641,25 @@ public class HuaweiSupportProvider {
         if (!syncState.startWorkoutSync())
             return;
 
-        int start = 0;
-        int end = (int) (System.currentTimeMillis() / 1000);
-
-        SharedPreferences sharedPreferences = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress());
-        long prefLastSyncTime = sharedPreferences.getLong("lastSportsActivityTimeMillis", 0);
-        if (prefLastSyncTime != 0) {
-            start = (int) (prefLastSyncTime / 1000);
-
-            // Reset for next calls
-            sharedPreferences.edit().putLong("lastSportsActivityTimeMillis", 0).apply();
-        } else {
-            try (DBHandler db = GBApplication.acquireDB()) {
-                Long userId = DBHelper.getUser(db.getDaoSession()).getId();
-                Long deviceId = DBHelper.getDevice(gbDevice, db.getDaoSession()).getId();
-
-                QueryBuilder<HuaweiWorkoutSummarySample> qb1 = db.getDaoSession().getHuaweiWorkoutSummarySampleDao().queryBuilder().where(
-                        HuaweiWorkoutSummarySampleDao.Properties.DeviceId.eq(deviceId),
-                        HuaweiWorkoutSummarySampleDao.Properties.UserId.eq(userId)
-                ).orderDesc(
-                        HuaweiWorkoutSummarySampleDao.Properties.StartTimestamp
-                ).limit(1);
-
-                List<HuaweiWorkoutSummarySample> samples1 = qb1.list();
-                if (!samples1.isEmpty())
-                    start = samples1.get(0).getEndTimestamp();
-
-                QueryBuilder<BaseActivitySummary> qb2 = db.getDaoSession().getBaseActivitySummaryDao().queryBuilder().where(
-                        BaseActivitySummaryDao.Properties.DeviceId.eq(deviceId),
-                        BaseActivitySummaryDao.Properties.UserId.eq(userId)
-                ).orderDesc(
-                        BaseActivitySummaryDao.Properties.StartTime
-                ).limit(1);
-
-                List<BaseActivitySummary> samples2 = qb2.list();
-                if (!samples2.isEmpty())
-                    start = Math.min(start, (int) (samples2.get(0).getEndTime().getTime() / 1000L));
-
-                start = start + 1;
-            } catch (Exception e) {
-                LOG.warn("Exception for getting start time, using 10/06/2022 - 00:00:00.");
+        huaweiWorkoutSyncManager.performSync(new HuaweiWorkoutSyncManager.WorkoutSyncCallback() {
+            @Override
+            public void syncComplete() {
+                LOG.info("Workout sync complete!");
+                syncState.stopWorkoutSync();
             }
 
-            if (start == 0 || start == 1)
-                start = 1654819200;
-        }
-
-        final GetWorkoutCountRequest getWorkoutCountRequest;
-        if (isBLE()) {
-            nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder leBuilder = createLeTransactionBuilder("FetchWorkoutData");
-            leBuilder.setBusyTask(R.string.busy_task_fetch_activity_data);
-            getWorkoutCountRequest = new GetWorkoutCountRequest(this, leBuilder, start, end);
-        } else {
-            nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder brBuilder = createBrTransactionBuilder("FetchWorkoutData");
-            brBuilder.setBusyTask(R.string.busy_task_fetch_activity_data);
-            getWorkoutCountRequest = new GetWorkoutCountRequest(this, brBuilder, start, end);
-        }
-
-        getWorkoutCountRequest.setFinalizeReq(new RequestCallback() {
             @Override
-            public void handleException(Request.ResponseParseException e) {
-                // This is propagated through the workout requests, hence the slightly generic error message
-                GB.toast(context, "Exception synchronizing workout", Toast.LENGTH_SHORT, GB.ERROR);
-                LOG.error("Exception synchronizing workout", e);
-                endOfWorkoutSync();
+            public void handleTimeout() {
+                LOG.error("Workout sync timeout!");
+                syncState.stopWorkoutSync();
+            }
+
+            @Override
+            public void handleException() {
+                LOG.error("Workout sync exception!");
+                syncState.stopWorkoutSync();
             }
         });
-
-        try {
-            getWorkoutCountRequest.doPerform();
-        } catch (IOException e) {
-            GB.toast(context, "Exception synchronizing workout", Toast.LENGTH_SHORT, GB.ERROR);
-            LOG.error("Error sending workout count - showing user that the workout sync failed", e);
-            endOfWorkoutSync();
-        }
     }
 
     public void onReset(int flags) {
@@ -2009,312 +1942,6 @@ public class HuaweiSupportProvider {
         LOG.debug("FITNESS total distance: {} m", distance);
 
         // TODO: potentially do more with this, maybe through realtime data?
-    }
-
-    public Long addWorkoutTotalsData(Workout.WorkoutTotals.Response packet) {
-        try (DBHandler db = GBApplication.acquireDB()) {
-            Long userId = DBHelper.getUser(db.getDaoSession()).getId();
-            Long deviceId = DBHelper.getDevice(gbDevice, db.getDaoSession()).getId();
-
-            // Avoid duplicates
-            QueryBuilder<HuaweiWorkoutSummarySample> qb = db.getDaoSession().getHuaweiWorkoutSummarySampleDao().queryBuilder().where(
-                    HuaweiWorkoutSummarySampleDao.Properties.UserId.eq(userId),
-                    HuaweiWorkoutSummarySampleDao.Properties.DeviceId.eq(deviceId),
-                    HuaweiWorkoutSummarySampleDao.Properties.WorkoutNumber.eq(packet.number),
-                    HuaweiWorkoutSummarySampleDao.Properties.StartTimestamp.eq(packet.startTime),
-                    HuaweiWorkoutSummarySampleDao.Properties.EndTimestamp.eq(packet.endTime)
-            );
-            List<HuaweiWorkoutSummarySample> results = qb.build().list();
-            Long workoutId = null;
-            if (!results.isEmpty())
-                workoutId = results.get(0).getWorkoutId();
-
-            byte[] raw;
-            if (packet.rawData == null)
-                raw = null;
-            else
-                raw = StringUtils.bytesToHex(packet.rawData).getBytes(StandardCharsets.UTF_8);
-
-
-            byte[] recoveryHeartRates;
-            if (packet.recoveryHeartRates == null)
-                recoveryHeartRates = null;
-            else
-                recoveryHeartRates = StringUtils.bytesToHex(packet.recoveryHeartRates).getBytes(StandardCharsets.UTF_8);
-
-            HuaweiWorkoutSummarySample summarySample = new HuaweiWorkoutSummarySample(
-                    workoutId,
-                    deviceId,
-                    userId,
-                    packet.number,
-                    packet.status,
-                    packet.startTime,
-                    packet.endTime,
-                    packet.calories,
-                    packet.distance,
-                    packet.stepCount,
-                    packet.totalTime,
-                    packet.duration,
-                    packet.type,
-                    packet.strokes,
-                    packet.avgStrokeRate,
-                    packet.poolLength,
-                    packet.laps,
-                    packet.avgSwolf,
-                    raw,
-                    null,
-                    packet.maxAltitude,
-                    packet.minAltitude,
-                    packet.elevationGain,
-                    packet.elevationLoss,
-                    packet.workoutLoad,
-                    packet.workoutAerobicEffect,
-                    packet.workoutAnaerobicEffect,
-                    packet.recoveryTime,
-                    packet.minHeartRatePeak,
-                    packet.maxHeartRatePeak,
-                    recoveryHeartRates,
-                    packet.swimType,
-                    packet.maxMET,
-                    packet.hrZoneType,
-                    packet.runPaceZone1Min,
-                    packet.runPaceZone2Min,
-                    packet.runPaceZone3Min,
-                    packet.runPaceZone4Min,
-                    packet.runPaceZone5Min,
-                    packet.runPaceZone5Max,
-                    packet.runPaceZone1Time,
-                    packet.runPaceZone2Time,
-                    packet.runPaceZone3Time,
-                    packet.runPaceZone4Time,
-                    packet.runPaceZone5Time,
-                    packet.algType,
-                    packet.trainingPoints,
-                    packet.longestStreak,
-                    packet.tripped,
-                    getDeviceState().isSupportsWorkoutNewSteps(),
-                    null
-            );
-
-            db.getDaoSession().getHuaweiWorkoutSummarySampleDao().insertOrReplace(summarySample);
-
-            // We should completely replace values. Delete all and insert again.
-            final DeleteQuery<HuaweiWorkoutSummaryAdditionalValuesSample> tableDeleteQuery = db.getDaoSession().getHuaweiWorkoutSummaryAdditionalValuesSampleDao().queryBuilder()
-                    .where(HuaweiWorkoutSummaryAdditionalValuesSampleDao.Properties.WorkoutId.eq(summarySample.getWorkoutId()))
-                    .buildDelete();
-            tableDeleteQuery.executeDeleteWithoutDetachingEntities();
-
-            for (Map.Entry<String, String> entry : packet.additionalValues.entrySet()) {
-                HuaweiWorkoutSummaryAdditionalValuesSample summarySampleAdditionalValue = new HuaweiWorkoutSummaryAdditionalValuesSample(summarySample.getWorkoutId(), entry.getKey(), entry.getValue());
-                db.getDaoSession().getHuaweiWorkoutSummaryAdditionalValuesSampleDao().insertOrReplace(summarySampleAdditionalValue);
-            }
-
-            return summarySample.getWorkoutId();
-        } catch (Exception e) {
-            LOG.error("Failed to add workout totals data to database", e);
-            return null;
-        }
-    }
-
-    public void addWorkoutSampleData(Long workoutId, List<Workout.WorkoutData.Response.Data> dataList) {
-        if (workoutId == null)
-            return;
-
-        try (DBHandler db = GBApplication.acquireDB()) {
-            HuaweiWorkoutDataSampleDao dao = db.getDaoSession().getHuaweiWorkoutDataSampleDao();
-
-            for (Workout.WorkoutData.Response.Data data : dataList) {
-                byte[] unknown;
-                if (data.unknownData == null)
-                    unknown = null;
-                else
-                    unknown = StringUtils.bytesToHex(data.unknownData).getBytes(StandardCharsets.UTF_8);
-
-                HuaweiWorkoutDataSample dataSample = new HuaweiWorkoutDataSample(
-                        workoutId,
-                        data.timestamp,
-                        data.heartRate,
-                        data.speed,
-                        data.stepRate,
-                        data.cadence,
-                        data.stepLength,
-                        data.groundContactTime,
-                        data.impact,
-                        data.swingAngle,
-                        data.foreFootLanding,
-                        data.midFootLanding,
-                        data.backFootLanding,
-                        data.eversionAngle,
-                        data.swolf,
-                        data.strokeRate,
-                        unknown,
-                        data.calories,
-                        data.cyclingPower,
-                        data.frequency,
-                        data.altitude,
-                        data.hangTime,
-                        data.impactHangRate,
-                        data.rideCadence,
-                        data.ap,
-                        data.vo,
-                        data.gtb,
-                        data.vr,
-                        data.ceiling,
-                        data.temp,
-                        data.spo2,
-                        data.cns
-                );
-                dao.insertOrReplace(dataSample);
-            }
-        } catch (Exception e) {
-            LOG.error("Failed to add workout data to database", e);
-        }
-    }
-
-    public void addWorkoutPaceData(Long workoutId, List<Workout.WorkoutPace.Response.Block> paceList, short number) {
-        if (workoutId == null)
-            return;
-
-        try (DBHandler db = GBApplication.acquireDB()) {
-            HuaweiWorkoutPaceSampleDao dao = db.getDaoSession().getHuaweiWorkoutPaceSampleDao();
-
-            if (number == 0) {
-                final DeleteQuery<HuaweiWorkoutPaceSample> tableDeleteQuery = dao.queryBuilder()
-                        .where(HuaweiWorkoutPaceSampleDao.Properties.WorkoutId.eq(workoutId))
-                        .buildDelete();
-                tableDeleteQuery.executeDeleteWithoutDetachingEntities();
-            }
-
-            int paceIndex = (int) dao.queryBuilder().where(HuaweiWorkoutPaceSampleDao.Properties.WorkoutId.eq(workoutId)).count();
-            for (Workout.WorkoutPace.Response.Block block : paceList) {
-
-                Integer correction = block.hasCorrection ? (int) block.correction : null;
-                HuaweiWorkoutPaceSample paceSample = new HuaweiWorkoutPaceSample(
-                        workoutId,
-                        paceIndex++,
-                        block.distance,
-                        block.type,
-                        block.pace,
-                        block.pointIndex,
-                        correction
-                );
-                dao.insertOrReplace(paceSample);
-            }
-        } catch (Exception e) {
-            LOG.error("Failed to add workout pace data to database", e);
-        }
-    }
-
-
-    public void addWorkoutSwimSegmentsData(Long workoutId, List<Workout.WorkoutSwimSegments.Response.Block> paceList, short number) {
-        if (workoutId == null)
-            return;
-
-        try (DBHandler db = GBApplication.acquireDB()) {
-            HuaweiWorkoutSwimSegmentsSampleDao dao = db.getDaoSession().getHuaweiWorkoutSwimSegmentsSampleDao();
-
-            if (number == 0) {
-                final DeleteQuery<HuaweiWorkoutSwimSegmentsSample> tableDeleteQuery = dao.queryBuilder()
-                        .where(HuaweiWorkoutSwimSegmentsSampleDao.Properties.WorkoutId.eq(workoutId))
-                        .buildDelete();
-                tableDeleteQuery.executeDeleteWithoutDetachingEntities();
-            }
-
-            int paceIndex = (int) dao.queryBuilder().where(HuaweiWorkoutSwimSegmentsSampleDao.Properties.WorkoutId.eq(workoutId)).count();
-            for (Workout.WorkoutSwimSegments.Response.Block block : paceList) {
-                HuaweiWorkoutSwimSegmentsSample swimSectionSample = new HuaweiWorkoutSwimSegmentsSample(
-                        workoutId,
-                        paceIndex++,
-                        block.distance,
-                        block.type,
-                        block.pace,
-                        block.pointIndex,
-                        block.segment,
-                        block.swimType,
-                        block.strokes,
-                        block.avgSwolf,
-                        block.time
-                );
-                dao.insertOrReplace(swimSectionSample);
-            }
-        } catch (Exception e) {
-            LOG.error("Failed to add workout swim section data to database", e);
-        }
-    }
-
-    public void addWorkoutSpO2Data(Long workoutId, List<Workout.WorkoutSpO2.Response.Block> spO2List, short number) {
-        if (workoutId == null)
-            return;
-
-        try (DBHandler db = GBApplication.acquireDB()) {
-            HuaweiWorkoutSpO2SampleDao dao = db.getDaoSession().getHuaweiWorkoutSpO2SampleDao();
-
-            if (number == 0) {
-                final DeleteQuery<HuaweiWorkoutSpO2Sample> tableDeleteQuery = dao.queryBuilder()
-                        .where(HuaweiWorkoutSpO2SampleDao.Properties.WorkoutId.eq(workoutId))
-                        .buildDelete();
-                tableDeleteQuery.executeDeleteWithoutDetachingEntities();
-            }
-
-            for (Workout.WorkoutSpO2.Response.Block block : spO2List) {
-                HuaweiWorkoutSpO2Sample spO2Sample = new HuaweiWorkoutSpO2Sample(
-                        workoutId,
-                        block.interval,
-                        block.value
-                );
-                dao.insertOrReplace(spO2Sample);
-            }
-        } catch (Exception e) {
-            LOG.error("Failed to add workout SpO2 data to database", e);
-        }
-    }
-
-    public void addWorkoutSectionsData(Long workoutId, List<Workout.WorkoutSections.Response.Block> spO2List, short number) {
-        if (workoutId == null)
-            return;
-
-        // NOTE: All fields of this data is optional. At this point I don't all workouts that this data used.
-        // I decided to add two additional fields dataIdx and rowIdx as primary keys that should identify each row
-        try (DBHandler db = GBApplication.acquireDB()) {
-            HuaweiWorkoutSectionsSampleDao dao = db.getDaoSession().getHuaweiWorkoutSectionsSampleDao();
-
-            if (number == 0) {
-                final DeleteQuery<HuaweiWorkoutSectionsSample> tableDeleteQuery = dao.queryBuilder()
-                        .where(HuaweiWorkoutSectionsSampleDao.Properties.WorkoutId.eq(workoutId))
-                        .buildDelete();
-                tableDeleteQuery.executeDeleteWithoutDetachingEntities();
-            }
-
-            int i = 0;
-            for (Workout.WorkoutSections.Response.Block block : spO2List) {
-                HuaweiWorkoutSectionsSample huaweiWorkoutSectionsSample = new HuaweiWorkoutSectionsSample(
-                        workoutId,
-                        number,
-                        i++,
-                        block.num,
-                        block.time,
-                        block.distance,
-                        block.pace,
-                        block.heartRate,
-                        block.cadence,
-                        block.stepLength,
-                        block.totalRise,
-                        block.totalDescend,
-                        block.groundContactTime,
-                        block.groundImpact,
-                        block.swingAngle,
-                        block.eversion,
-                        block.avgCadence,
-                        block.divingUnderwaterTime,
-                        block.divingMaxDepth,
-                        block.divingUnderwaterTime,
-                        block.divingBreakTime
-                );
-                dao.insertOrReplace(huaweiWorkoutSectionsSample);
-            }
-        } catch (Exception e) {
-            LOG.error("Failed to add workout sections data to database", e);
-        }
     }
 
     public void setWearLocation() {
@@ -3243,29 +2870,6 @@ public class HuaweiSupportProvider {
                 }
         ), true);
         return true;
-    }
-
-    public void nextWorkoutSync(List<Workout.WorkoutCount.Response.WorkoutNumbers> remainder, RequestCallback finalizeReq) {
-        if (!remainder.isEmpty()) {
-            GetWorkoutTotalsRequest nextRequest = new GetWorkoutTotalsRequest(
-                    this,
-                    remainder.remove(0),
-                    remainder
-            );
-            nextRequest.setFinalizeReq(finalizeReq);
-            // Cannot do this with nextRequest because it's in a callback
-            try {
-                nextRequest.doPerform();
-            } catch (IOException e) {
-                finalizeReq.handleException(new Request.ResponseParseException("Cannot send next request", e));
-            }
-        } else {
-            this.endOfWorkoutSync();
-        }
-    }
-
-    public void endOfWorkoutSync() {
-        this.syncState.stopWorkoutSync();
     }
 
     public void downloadWorkoutPdrFiles(short workoutId, Long databaseId) {

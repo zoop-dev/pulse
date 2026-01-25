@@ -337,7 +337,7 @@ public class Workout {
     }
 
     public static class WorkoutData {
-        public static final int id = 0x0a;
+        public static final byte id = 0x0a;
 
         public static class Request extends HuaweiPacket {
 
@@ -712,7 +712,7 @@ public class Workout {
     }
 
     public static class WorkoutPace {
-        public static final int id = 0x0c;
+        public static final byte id = 0x0c;
 
         public static class Request extends HuaweiPacket {
 
@@ -800,7 +800,7 @@ public class Workout {
     }
 
     public static class WorkoutSwimSegments {
-        public static final int id = 0x0e;
+        public static final byte id = 0x0e;
 
         public static class Request extends HuaweiPacket {
 
@@ -901,7 +901,7 @@ public class Workout {
     }
 
     public static class WorkoutSpO2 {
-        public static final int id = 0x14;
+        public static final byte id = 0x14;
 
         public static class Request extends HuaweiPacket {
 
@@ -1013,7 +1013,7 @@ public class Workout {
     }
 
     public static class WorkoutSections {
-        public static final int id = 0x16;
+        public static final byte id = 0x16;
 
         public static class Request extends HuaweiPacket {
 

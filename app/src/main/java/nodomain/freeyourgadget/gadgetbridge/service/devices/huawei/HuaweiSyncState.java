@@ -6,12 +6,12 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 class HuaweiSyncState {
     private static final Logger LOG = LoggerFactory.getLogger(HuaweiSyncState.class);
-
     private final HuaweiSupportProvider supportProvider;
     private final List<Integer> syncQueue = new ArrayList<>(2);
 
@@ -134,6 +134,7 @@ class HuaweiSyncState {
                 return false;
             }
             this.workoutSync = true;
+            this.supportProvider.getDevice().setBusyTask(R.string.busy_task_fetch_activity_data, supportProvider.getContext());
         }
         LOG.debug("Set workout sync state to true");
         return true;

@@ -34,6 +34,8 @@ public class RequestBuilder<T extends HuaweiPacket> {
 
     private boolean addToResponse = true;
 
+    private Integer timeout = null;
+
     private OnCallback<T> onCallback = null;
     private OnTimeout<T> onTimeout = null;
     private OnException onException = null;
@@ -52,6 +54,11 @@ public class RequestBuilder<T extends HuaweiPacket> {
 
     public RequestBuilder<T> noResponse() {
         this.addToResponse = false;
+        return this;
+    }
+
+    public RequestBuilder<T> setTimeout(Integer timeout) {
+        this.timeout = timeout;
         return this;
     }
 
@@ -76,6 +83,7 @@ public class RequestBuilder<T extends HuaweiPacket> {
         r.commandId = commandId;
         r.sendingPacket = requestPacket;
         r.addToResponse = this.addToResponse;
+        r.setupTimeoutUntilNext(this.timeout);
         r.setFinalizeReq(new Request.RequestCallback() {
             @Override
             public void call(Request request) {
