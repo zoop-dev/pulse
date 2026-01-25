@@ -4298,4 +4298,5 @@
     <string name="min_vertical_ratio">Minimální vertikální poměr</string>
     <string name="busy_task_fetch_blood_pressure_data">Stahování dat o krevním tlaku</string>
     <string name="sleep_restless_moments">Neklidné chvíle</string>
+    <string name="sports_activity_quick_filter_distant_past">Vzdálená minulost (všechna cvičení)</string>
 </resources>
