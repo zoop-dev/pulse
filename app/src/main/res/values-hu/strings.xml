@@ -4139,4 +4139,6 @@
     <string name="min_ground_contact_time">Legrövidebb talajjal való érintkezési idő</string>
     <string name="min_vertical_ratio">Legkisebb függőleges sebesség</string>
     <string name="busy_task_fetch_blood_pressure_data">Vérnyomásadatok lekérése</string>
+    <string name="sleep_restless_moments">Nyugtalan pillanatok</string>
+    <string name="sports_activity_quick_filter_distant_past">Régmúlt (összes edzés)</string>
 </resources>
