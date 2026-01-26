@@ -72,6 +72,11 @@ public class HuaweiWorkoutSyncManager {
      * General dataflow in this class:
      *  - Sync function sends a request to the device
      *  - Response gets into handle function, which calls the next sync function
+     *
+     * If we get an error or something we don't expect from the band, we generally try it three
+     * times, and then move on to the next normal step for the synchronisation.
+     * There's quite some exceptions that do not fall into this category, but they should be much
+     * more rare.
      */
 
     private record WorkoutSyncRequest(int start, int end) { }
@@ -82,17 +87,31 @@ public class HuaweiWorkoutSyncManager {
         void handleException();
     }
 
+    /*
+     * For all the packets that we know can return an error (from the watch, not the parsing),
+     * we retry up to this many times. If they still error, we continue with the next step in the
+     * sync process.
+     */
+    private static final int MAX_RETRIES = 3;
+
+    /*
+     * If you draw a tree from the smaller times we try, this is the max depth
+     */
+    private static final int MAX_SMALLER_TIMESLOT_DEPTH = 5;
+
     private final HuaweiSupportProvider supportProvider;
     private final ArrayList<WorkoutSyncRequest> syncRequests;
     private WorkoutSyncRequest currentSyncRequest;
     /// Used for the callback, but also to see if there's still a sync running
     private WorkoutSyncCallback callback = null;
+    private int smallerTimeslotDepth;
 
     private List<Workout.WorkoutCount.Response.WorkoutNumbers> workoutNumbersList;
     private Workout.WorkoutCount.Response.WorkoutNumbers currentWorkoutNumbers;
 
     private Long currentDatabaseId;
     private int currentNumber; // Used for data, pace, etc...
+    private int retryCounter;
 
     public HuaweiWorkoutSyncManager(HuaweiSupportProvider supportProvider) {
         this.supportProvider = supportProvider;
@@ -124,6 +143,7 @@ public class HuaweiWorkoutSyncManager {
             this.syncRequests.clear();
             this.workoutNumbersList = null;
             this.currentDatabaseId = null;
+            this.smallerTimeslotDepth = 0;
         }
     }
 
@@ -137,6 +157,13 @@ public class HuaweiWorkoutSyncManager {
         GB.toast("Timeout when synchronizing workout", Toast.LENGTH_SHORT, GB.WARN);
         this.callback.handleTimeout();
         resetState();
+    }
+
+    /**
+     * Notify the user that data might be missing
+     */
+    private void dataSkippedToast() {
+        GB.toast("The watch refuses to return some data, which may be missing from the workout", Toast.LENGTH_SHORT, GB.WARN);
     }
 
     private void syncNextFromQueue() {
@@ -178,8 +205,8 @@ public class HuaweiWorkoutSyncManager {
 
     private void handleWorkoutCount(Workout.WorkoutCount.Response packet) {
         if (packet.error != null) {
-            LOG.warn("Error when retrieving/parsing workout count: {}", packet.error);
-            handleException(null);
+            LOG.error("Error when retrieving/parsing workout count: {}", packet.error);
+            syncSmallerTimeslot();
             return;
         }
         if (packet.count == 0 || packet.workoutNumbers == null) {
@@ -189,15 +216,9 @@ public class HuaweiWorkoutSyncManager {
         }
 
         if (packet.count != packet.workoutNumbers.size()) {
+            LOG.error("Packet count does not match workoutNumbers size. Attempting smaller timeslot.");
             // If it errors, try to get less data - half the timeframe
-            int start = this.currentSyncRequest.start;
-            int end = this.currentSyncRequest.end;
-            int half = start + (end - start) / 2;
-
-            this.syncRequests.add(new WorkoutSyncRequest(start, half));
-            this.syncRequests.add(new WorkoutSyncRequest(half + 1, end));
-
-            syncNextFromQueue();
+            syncSmallerTimeslot();
             return;
         }
 
@@ -208,14 +229,36 @@ public class HuaweiWorkoutSyncManager {
         syncNextWorkout();
     }
 
+    private void syncSmallerTimeslot() {
+        if (this.smallerTimeslotDepth >= MAX_SMALLER_TIMESLOT_DEPTH) {
+            LOG.error("Requested smaller timeslot too many times - refusing.");
+            handleException(null);
+            resetState();
+            return;
+        }
+        this.smallerTimeslotDepth += 1;
+
+        int start = this.currentSyncRequest.start;
+        int end = this.currentSyncRequest.end;
+        int half = start + (end - start) / 2;
+
+        this.syncRequests.add(new WorkoutSyncRequest(start, half));
+        this.syncRequests.add(new WorkoutSyncRequest(half + 1, end));
+
+        syncNextFromQueue();
+    }
+
     private void syncNextWorkout() {
         if (this.workoutNumbersList == null || this.workoutNumbersList.isEmpty()) {
             syncNextFromQueue();
             return;
         }
-
         this.currentWorkoutNumbers = this.workoutNumbersList.remove(0);
+        this.retryCounter = 0;
+        syncWorkoutTotals();
+    }
 
+    private void syncWorkoutTotals() {
         Request getWorkoutTotalsRequest = new RequestBuilder<Workout.WorkoutTotals.Response>(
                 this.supportProvider,
                 Workout.id,
@@ -247,10 +290,19 @@ public class HuaweiWorkoutSyncManager {
     private void handleWorkoutTotals(Workout.WorkoutTotals.Response packet) {
         if (packet.error != null) {
             LOG.error("Error {} occurred during workout totals sync", packet.error);
-            handleException(null);
-            // TODO: Original went to the next workout here. We might still need to do that.
+            if (this.retryCounter >= MAX_RETRIES) {
+                LOG.error("Max tries for workout totals exceeded, moving to next workout");
+                GB.toast("There was an issue synchronizing one of the workouts. Continuing with then next one.", Toast.LENGTH_SHORT, GB.ERROR);
+                this.retryCounter = 0;
+                syncNextWorkout();
+            } else {
+                // Retry getting workout totals
+                this.retryCounter += 1;
+                syncWorkoutTotals();
+            }
             return;
         }
+        this.retryCounter = 0;
 
         if (packet.number != this.currentWorkoutNumbers.workoutNumber) {
             LOG.error("Incorrect workout number for totals response!");
@@ -318,23 +370,34 @@ public class HuaweiWorkoutSyncManager {
     }
 
     private void handleData(Workout.WorkoutData.Response packet) {
-        // TODO: Original didn't even have this check...
+        boolean err = false;
         if (packet.error != null) {
             LOG.error("Error {} occurred during workout data sync", packet.error);
-            handleException(null);
-            // TODO: Original went to the next workout here. We might still need to do that.
-            return;
+            err = true;
         }
         if (packet.workoutNumber != this.currentWorkoutNumbers.workoutNumber) {
             LOG.error("Incorrect workout number for data response!");
-            handleException(null);
-            return;
+            err = true;
         }
         if (packet.dataNumber != this.currentNumber) {
             LOG.error("Incorrect data number!");
-            handleException(null);
+            err = true;
+        }
+        if (err) {
+            if (this.retryCounter >= MAX_RETRIES) {
+                LOG.error("Max tries for workout data exceeded, moving to next data");
+                dataSkippedToast();
+                this.currentNumber += 1;
+                this.retryCounter = 0;
+                syncData();
+            } else {
+                // Retry getting workout data
+                this.retryCounter += 1;
+                syncData();
+            }
             return;
         }
+        this.retryCounter = 0;
 
         LOG.info("Workout {} data {}:", this.currentWorkoutNumbers.workoutNumber, this.currentNumber);
         LOG.info("Workout : {}", packet.workoutNumber);
@@ -388,22 +451,34 @@ public class HuaweiWorkoutSyncManager {
     }
 
     private void handlePace(Workout.WorkoutPace.Response packet) {
+        boolean err = false;
         if (packet.error != null) {
             LOG.error("Error {} occurred during workout pace sync", packet.error);
-            handleException(null);
-            // TODO: Original went to the next workout here. We might still need to do that.
-            return;
+            err = true;
         }
         if (packet.workoutNumber != this.currentWorkoutNumbers.workoutNumber) {
             LOG.error("Incorrect workout number for pace response!");
-            handleException(null);
-            return;
+            err = true;
         }
         if (packet.paceNumber != currentNumber) {
             LOG.error("Incorrect pace number!");
-            handleException(null);
+            err = true;
+        }
+        if (err) {
+            if (this.retryCounter >= MAX_RETRIES) {
+                LOG.error("Max tries for workout pace exceeded, moving to next data");
+                dataSkippedToast();
+                this.currentNumber += 1;
+                this.retryCounter = 0;
+                syncPace();
+            } else {
+                // Retry getting workout data
+                this.retryCounter += 1;
+                syncPace();
+            }
             return;
         }
+        this.retryCounter = 0;
 
         LOG.info("Workout {} pace {}:", this.currentWorkoutNumbers.workoutNumber, this.currentNumber);
         LOG.info("Workout  : {}", packet.workoutNumber);
@@ -454,22 +529,34 @@ public class HuaweiWorkoutSyncManager {
     }
 
     private void handleSwimSegment(Workout.WorkoutSwimSegments.Response packet) {
+        boolean err = false;
         if (packet.error != null) {
             LOG.error("Error {} occurred during workout swim segments sync", packet.error);
-            handleException(null);
-            // TODO: Original went to the next workout here. We might still need to do that.
-            return;
+            err = true;
         }
         if (packet.workoutNumber != this.currentWorkoutNumbers.workoutNumber) {
             LOG.error("Incorrect workout number for swim segment response!");
-            handleException(null);
-            return;
+            err = true;
         }
         if (packet.segmentNumber != this.currentNumber) {
             LOG.error("Incorrect swim segment number!");
-            handleException(null);
+            err = true;
+        }
+        if (err) {
+            if (this.retryCounter >= MAX_RETRIES) {
+                LOG.error("Max tries for workout swim segment exceeded, moving to next data");
+                dataSkippedToast();
+                this.currentNumber += 1;
+                this.retryCounter = 0;
+                syncSwimSegments();
+            } else {
+                // Retry getting workout data
+                this.retryCounter += 1;
+                syncSwimSegments();
+            }
             return;
         }
+        this.retryCounter = 0;
 
         LOG.info("Workout {} segment {}:", this.currentWorkoutNumbers.workoutNumber, this.currentNumber);
         LOG.info("Workout  : {}", packet.workoutNumber);
@@ -522,10 +609,20 @@ public class HuaweiWorkoutSyncManager {
     private void handleSpO2(Workout.WorkoutSpO2.Response packet) {
         if (packet.error != null) {
             LOG.error("Error {} occurred during workout SpO2 sync", packet.error);
-            handleException(null);
-            // TODO: Original went to the next workout here. We might still need to do that.
+            if (this.retryCounter >= MAX_RETRIES) {
+                LOG.error("Max tries for workout SpO2 exceeded, moving to next data");
+                dataSkippedToast();
+                this.currentNumber += 1;
+                this.retryCounter = 0;
+                syncSpO2();
+            } else {
+                // Retry getting workout data
+                this.retryCounter += 1;
+                syncSpO2();
+            }
             return;
         }
+        this.retryCounter = 0;
 
         LOG.info("Workout {} current {}:", this.currentWorkoutNumbers.workoutNumber, this.currentNumber);
         LOG.info("spO2Number1: {}", packet.spO2Number1);
@@ -577,17 +674,24 @@ public class HuaweiWorkoutSyncManager {
 
     private void handleSections(Workout.WorkoutSections.Response packet) {
         if (packet.error != null) {
-            if (packet.error == 0x0001E079) {
-                LOG.warn("Error 0001E079 occurred during workout swim segments sync. This seems to be normal, so it's ignored.");
+            if (this.retryCounter >= MAX_RETRIES || packet.error == 0x0001E079) {
+                if (packet.error == 0x0001E079) {
+                    LOG.warn("Error 0001E079 occurred during workout swim segments sync. This seems to be normal, so it's ignored.");
+                } else {
+                    LOG.error("Max tries for workout sections exceeded, moving to next data");
+                    dataSkippedToast();
+                }
                 this.currentNumber += 1;
+                this.retryCounter = 0;
                 syncSections();
-                return;
+            } else {
+                // Retry getting workout data
+                this.retryCounter += 1;
+                syncSections();
             }
-            LOG.error("Error {} occurred during workout sections sync", packet.error);
-            handleException(null);
-            // TODO: Original went to the next workout here. We might still need to do that.
             return;
         }
+        this.retryCounter = 0;
 
         LOG.info("Workout {} section {}:", this.currentWorkoutNumbers.workoutNumber, this.currentNumber);
         LOG.info("workoutId  : {}", packet.workoutId);
@@ -612,6 +716,9 @@ public class HuaweiWorkoutSyncManager {
                 this.currentDatabaseId,
                 this::syncNextWorkout
         );
+
+        // We reduce this by one, as it kinda forms a tree, where we want the max depth to be 3
+        this.smallerTimeslotDepth -= 1;
     }
 
     /*
