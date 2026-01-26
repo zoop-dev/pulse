@@ -150,7 +150,7 @@ internal object RecordedWorkoutSyncer {
                         metadata,
                         grantedPermissions,
                         recordsToInsert,
-                        deviceName,
+                        gbDevice,
                         activityKind,
                         exerciseType,
                         context
@@ -301,11 +301,13 @@ internal object RecordedWorkoutSyncer {
         metadata: Metadata,
         grantedPermissions: Set<String>,
         recordsToInsert: MutableList<Record>,
-        deviceName: String,
+        device: GBDevice,
         activityKind: ActivityKind,
         exerciseType: Int,
         context: Context
     ) {
+        val deviceName = device.aliasOrName
+
         // Build GPS route if location data is available and permission is granted
         val exerciseRoute = if (PERMISSION_WRITE_EXERCISE_ROUTE in grantedPermissions) {
             val locationPoints = activityPoints
@@ -356,7 +358,10 @@ internal object RecordedWorkoutSyncer {
         val summaryData = parseSummaryData(workout.summaryData)
         if (summaryData != null) {
             addDistanceRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
-            addCaloriesRecords(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
+            // Active calories are synced more granularly for these devices in ActiveCaloriesSyncer
+            if (!device.deviceCoordinator.supportsActiveCalories(device)) {
+                addCaloriesRecords(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
+            }
             addElevationGainedRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
             addStepsRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
             addCadenceRecords(summaryData, activityKind, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
