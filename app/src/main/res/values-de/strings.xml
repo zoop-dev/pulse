@@ -195,7 +195,7 @@
     <string name="miband_pairing_using_dummy_userdata">Keine gültigen Benutzerdaten angegeben, es werden jetzt Dummy-Benutzerdaten verwendet.</string>
     <string name="miband_pairing_tap_hint">Wenn dein Mi Band vibriert und blinkt, tippe es ein paar Mal hintereinander an.</string>
     <string name="appinstaller_install">Installieren</string>
-    <string name="discovery_connected_devices_hint">Mache dein Gerät auffindbar. Derzeit verbundene Geräte werden wahrscheinlich nicht erkannt. Aktiviere die Standortbestimmung (zum Beispiel GPS) in Android 6+. Deaktiviere Privacy Guard für Gadgetbridge, da er zu Abstürzen und Neustarts deines Telefons führen kann. Wenn nach einigen Minuten kein Gerät erkannt wird, versuche es nach dem Neustart deines mobilen Gerätes erneut.</string>
+    <string name="discovery_connected_devices_hint">Mache dein Gerät auffindbar. Derzeit verbundene Geräte werden wahrscheinlich nicht erkannt. Aktiviere die Standortbestimmung (zum Beispiel GPS). Deaktiviere Privacy Guard für Gadgetbridge, da er zu Abstürzen und Neustarts deines Telefons führen kann. Wenn nach einigen Minuten kein Gerät erkannt wird, versuche es nach dem Neustart deines mobilen Gerätes erneut.</string>
     <string name="discovery_note">Hinweis:</string>
     <string name="candidate_item_device_image">Gerätesymbol</string>
     <string name="miband_prefs_alias">Name/Alias</string>
@@ -4024,4 +4024,11 @@
     <string name="pref_experimental_settings_title">Experimentelle Einstellungen</string>
     <string name="pref_experimental_settings_summary">Experimentelle Einstellungen können instabil sein oder nicht wie erwartet funktionieren. Die Verwendung erfolgt auf eigene Gefahr.</string>
     <string name="pref_header_sync">Synchronisierung</string>
+    <string name="save">Speichern</string>
+    <string name="done">Fertig</string>
+    <string name="set_device_type">Gerätetyp festlegen</string>
+    <string name="calories_consumed">Verbrauchte Kalorien</string>
+    <string name="health_connect_initial_sync_3_days">3 Tage</string>
+    <string name="health_connect_initial_sync_7_days">7 Tage</string>
+    <string name="health_connect_initial_sync_30_days">30 Tage</string>
 </resources>
