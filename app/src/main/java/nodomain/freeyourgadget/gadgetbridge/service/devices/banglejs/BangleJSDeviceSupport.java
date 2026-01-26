@@ -649,7 +649,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 break;
             case SleepAsAndroidAction.SET_SUSPENDED:
                 boolean suspended = extras.getBoolean("SUSPENDED", false);
-                this.enableAccelSender(false);
+                this.enableAccelSender(!suspended);
                 sleepAsAndroidSender.pauseTracking(suspended);
                 break;
                 // Received when the app changes the batch size for the movement data
