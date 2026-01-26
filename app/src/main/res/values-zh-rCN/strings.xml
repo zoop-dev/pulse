@@ -4300,4 +4300,5 @@
     <string name="min_vertical_ratio">最小垂直比</string>
     <string name="busy_task_fetch_blood_pressure_data">获取血压数据中</string>
     <string name="sleep_restless_moments">不眠时刻</string>
+    <string name="sports_activity_quick_filter_distant_past">遥远的过去（所有锻炼）</string>
 </resources>
