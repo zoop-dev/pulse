@@ -4280,4 +4280,7 @@
     <string name="foot_per_hour">vt/u</string>
     <string name="solar_intensity">Zonne-intensiteit</string>
     <string name="battery_gain">Batterijladingtoename</string>
+    <string name="busy_task_fetch_blood_pressure_data">Bloeddrukgegevens ophalen</string>
+    <string name="activity_type_track_me">Track Mij</string>
+    <string name="set_device_type">Stel apparaattype in</string>
 </resources>
