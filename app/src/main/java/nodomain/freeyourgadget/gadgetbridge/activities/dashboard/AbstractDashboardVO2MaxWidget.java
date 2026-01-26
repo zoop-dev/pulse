@@ -7,14 +7,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.DashboardFragment;
+import nodomain.freeyourgadget.gadgetbridge.activities.charts.VO2MaxRanges;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.Vo2MaxSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Vo2MaxSample;
 
 public abstract class AbstractDashboardVO2MaxWidget extends AbstractGaugeWidget implements DashboardVO2MaxWidgetInterface {
@@ -62,22 +67,13 @@ public abstract class AbstractDashboardVO2MaxWidget extends AbstractGaugeWidget 
     }
 
     public static float[] getSegments() {
+        // Should match the percentiles in VO2MaxRanges
         return new float[] {
+                0.40F,
                 0.20F,
                 0.20F,
-                0.20F,
-                0.20F,
-                0.20F,
-        };
-    }
-
-    public static float[] getVO2MaxRanges() {
-        return new float[] {
-                55.4F,
-                51.1F,
-                45.4F,
-                41.7F,
-                0.0F,
+                0.15F,
+                0.05F,
         };
     }
 
@@ -91,8 +87,9 @@ public abstract class AbstractDashboardVO2MaxWidget extends AbstractGaugeWidget 
 
         final int[] colors = getColors();
         final float[] segments = getSegments();
-        final float[] vo2MaxRanges = getVO2MaxRanges();
-        float vo2MaxValue = calculateVO2maxGaugeValue(vo2MaxRanges, vo2MaxData.value != -1 ? vo2MaxData.value : 0);
+        final ActivityUser activityUser = new ActivityUser();
+        final int age = activityUser.getAgeAt(LocalDate.ofInstant(Instant.ofEpochSecond(dashboardData.timeTo), ZoneId.systemDefault()));
+        float vo2MaxValue = VO2MaxRanges.INSTANCE.calculateVO2MaxPercentile(vo2MaxData.value != -1 ? vo2MaxData.value : 0, age, activityUser.getGender());
         setText(String.valueOf(vo2MaxData.value != -1 ? Math.round(vo2MaxData.value) : "-"));
         drawSegmentedGauge(
                 colors,
@@ -101,21 +98,6 @@ public abstract class AbstractDashboardVO2MaxWidget extends AbstractGaugeWidget 
                 false,
                 true
         );
-    }
-
-    private float calculateVO2maxGaugeValue(float[] vo2MaxRanges, float vo2MaxValue) {
-        float value = -1;
-        for (int i = 0; i < vo2MaxRanges.length; i++) {
-            if (vo2MaxValue - vo2MaxRanges[i] > 0) {
-                float rangeValue = i - 1 >= 0 ? vo2MaxRanges[i-1] : 60F;
-                float rangeDiff = rangeValue - vo2MaxRanges[i];
-                float valueDiff = vo2MaxValue - vo2MaxRanges[i];
-                float multiplayer = valueDiff / rangeDiff;
-                value = (4 - i) * 0.2F + 0.2F * (multiplayer > 1 ? 1 : multiplayer) ;
-                break;
-            }
-        }
-        return value;
     }
 
     private static class VO2MaxData implements Serializable {

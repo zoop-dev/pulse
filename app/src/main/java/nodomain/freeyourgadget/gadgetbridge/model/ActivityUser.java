@@ -147,7 +147,11 @@ public class ActivityUser {
     }
 
     public int getAge() {
-        return Period.between(getDateOfBirth(), LocalDate.now()).getYears();
+        return getAgeAt(LocalDate.now());
+    }
+
+    public int getAgeAt(final LocalDate when) {
+        return Period.between(getDateOfBirth(), when).getYears();
     }
 
     private void fetchPreferences() {
