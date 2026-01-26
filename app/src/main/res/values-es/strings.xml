@@ -608,7 +608,7 @@
     <string name="title_activity_device_specific_settings">Configuraciones específicas del dispositivo</string>
     <string name="pref_title_authkey">Clave de autenticación</string>
     <string name="pref_summary_authkey">Cambia la clave de autenticación a una clave común en todos tus dispositivos Android desde los que quieras conectarte. La clave predeterminada anterior para todos los dispositivos es 0123456789@ABCDE</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Está a punto de instalar el firmware %s en su Amazfit Cor 2.\n\nAsegúrese de instalar el archivo .fw y, a continuación, el archivo .res. Su pulsera se reiniciará tras instalar el archivo .fw.\n\nNota: no es necesario instalar el archivo .res si es idéntico al ya instalado.\n\n¡PROCEDA BAJO SU PROPIA CUENTA Y RIESGO!\n\nNO SE HA PROBADO. QUIZÁ NECESITE INSTALAR UN FIRMWARE BEATS_W SI EL NOMBRE DE SU DISPOSITIVO ES Amazfit Band 2</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Está a punto de instalar el firmware %s en su Amazfit Cor 2.\n\nAsegúrese de instalar primero el archivo .fw y, después, el archivo .res. La pulsera se reiniciará tras instalar el archivo .fw.\n\nNota: no es necesario instalar el archivo .res si es exactamente el mismo que el ya instalado.\n\n¡PROCEDA BAJO SU PROPIA RESPONSABILIDAD!\n\nNO SE HA PROBADO. ES POSIBLE QUE NECESITE INSTALAR UN FIRMWARE BEATS_W SI EL NOMBRE DE SU DISPOSITIVO ES “Amazfit Band 2”.</string>
     <string name="fw_upgrade_notice_miband4">Está a punto de instalar el firmware %s en su Mi Band 4.\n\nAsegúrese de instalar el archivo .fw, y a continuación, el archivo .res. Su pulsera se reiniciará tras instalar el archivo .fw.\n\nNota: no es necesario instalar el archivo .res si es idéntico al ya instalado.\n\n¡PROCEDA BAJO SU PROPIA CUENTA Y RIESGO!</string>
     <string name="prefs_hr_alarm_activity">Alarma de frecuencia cardíaca durante actividad deportiva</string>
     <string name="prefs_hr_alarm_low">Límite bajo</string>
@@ -1499,7 +1499,7 @@
     <string name="open_fw_installer_connect_maximum_one_device">Conecte SÓLO UN dispositivo al que desee enviar el archivo.</string>
     <string name="open_fw_installer_ensure_device_connected">Asegúrese de que el dispositivo %s está conectado</string>
     <string name="debugactivity_confirm_remove_device_preferences_title">¿Eliminar preferencias del dispositivo?</string>
-    <string name="debugactivity_confirm_remove_device_preferences">Esto restablecerá las preferencias de todos los dispositivos conectados. ¿Lo confirma?</string>
+    <string name="debugactivity_confirm_remove_device_preferences">Esto restablecerá las preferencias de este dispositivo. ¿Está seguro?</string>
     <string name="fw_upgrade_notice_amazfit_gtr4">Está a punto de instalar el firmware %s en su Amazfit GTR 4.\n\nSu pulsera se reiniciará tras instalar el archivo .zip.\n\n¡PROCEDA BAJO SU PROPIA CUENTA Y RIESGO!</string>
     <string name="pref_title_notification_delay_calls">Retardo de notificación de llamada</string>
     <string name="pref_title_notifications_ignore_low_priority">Ignorar las notificaciones de baja prioridad</string>
@@ -3523,4 +3523,6 @@
     <string name="chinese">Chino</string>
     <string name="delete_device_and_retain_files">Mantener archivos</string>
     <string name="activity_type_apnea_training">Entrenamiento de apnea</string>
+    <string name="title_activity_file_installer">Instalador de archivos</string>
+    <string name="title_activity_gps_track_installer">Instalador de rutas GPS</string>
 </resources>
