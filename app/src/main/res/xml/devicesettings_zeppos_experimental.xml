@@ -15,12 +15,4 @@
         android:layout="@layout/preference_checkbox"
         android:summary="Enable Alexa / Zepp Flow manual debug options and voice receiving. Not yet functional."
         android:title="Assistant service" />
-
-    <SwitchPreferenceCompat
-        android:defaultValue="false"
-        android:icon="@drawable/ic_wb_sunny"
-        android:key="zepp_os_experimental_weather_v5"
-        android:layout="@layout/preference_checkbox"
-        android:summary="Not tested. See Codeberg issue #5653"
-        android:title="Weather v5" />
 </androidx.preference.PreferenceScreen>

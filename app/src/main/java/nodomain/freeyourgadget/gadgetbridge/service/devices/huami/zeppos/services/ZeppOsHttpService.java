@@ -164,16 +164,7 @@ public class ZeppOsHttpService extends AbstractZeppOsService {
         if (path.startsWith("/weather/")) {
             if (path.startsWith("/weather/v5/")) {
                 statusCode = 200;
-                final boolean experimentalWeatherV5 = getSupport().getCoordinator().experimentalSettingEnabled(
-                        getSupport().getDevice(),
-                        "zepp_os_experimental_weather_v5"
-                );
-                if (experimentalWeatherV5) {
-                    response = ZeppOsWeatherHandlerV5.handleHttpRequest(path, query);
-                } else {
-                    LOG.warn("Experimental weather v5 is disabled, ignoring request");
-                    response = null;
-                }
+                response = ZeppOsWeatherHandlerV5.handleHttpRequest(path, query);
             } else if (weatherHandler != null) {
                 final ZeppOsWeatherHandler.Response weatherResponse = weatherHandler.handleHttpRequest(path, query);
                 statusCode = weatherResponse.getHttpStatusCode();

@@ -108,7 +108,7 @@ object ZeppOsWeatherHandlerV5 {
                         conditionCode = ZeppOsWeatherHandler.mapToZeppOsWeatherCode(it.conditionCode).toString(),
                         humidity = it.humidity / 100.0f,
                         pressure = weatherSpec.pressure, // TODO WeatherSpec does not support hourly pressure
-                        temperature = it.temp - 273.15f,
+                        temperature = it.temp - 273f,
                         uvIndex = it.uvIndex.roundToInt(),
                         visibility = weatherSpec.visibility, // TODO WeatherSpec does not support hourly visibility
                         windDirection = it.windDirection,
@@ -155,7 +155,7 @@ object ZeppOsWeatherHandlerV5 {
                 calendar.setTime(Date(dayTimestamp))
 
                 val sunrise = WeatherSpec.sunriseComputed(day.sunRise, calendar, weatherSpec.getLocationObject())
-                val sunset = WeatherSpec.sunsetComputed(day.sunRise, calendar, weatherSpec.getLocationObject())
+                val sunset = WeatherSpec.sunsetComputed(day.sunSet, calendar, weatherSpec.getLocationObject())
 
                 val daytimeForecastStart: Date
                 val daytimeForecastEnd: Date
@@ -188,8 +188,8 @@ object ZeppOsWeatherHandlerV5 {
                     moonset = if (day.moonSet > 0) toOffsetDateTime(Date(day.moonSet * 1000L)) else null,
                     sunrise = sunrise?.let { toOffsetDateTime(it) },
                     sunset = sunset?.let { toOffsetDateTime(it) },
-                    temperatureMax = day.maxTemp - 273.15f,
-                    temperatureMin = day.minTemp - 273.15f,
+                    temperatureMax = day.maxTemp - 273f,
+                    temperatureMin = day.minTemp - 273f,
                     daytimeForecast = DayPartForecast(
                         forecastStart = toOffsetDateTime(daytimeForecastStart),
                         forecastEnd = toOffsetDateTime(daytimeForecastEnd),
