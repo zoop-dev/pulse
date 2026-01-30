@@ -812,7 +812,7 @@
     <string name="prefs_notifications_and_calls_continious_ring">响铃时通知</string>
     <string name="pref_title_notifications_and_calls_repeat_on_call">重复来电通知</string>
     <string name="pref_header_notifications_and_calls">通知和来电</string>
-    <string name="title_activity_LenovoWatch_calibration">WatchXPlus 首选项</string>
+    <string name="title_activity_LenovoWatch_calibration">WatchXPlus校准</string>
     <string name="power_mode_watch">仅手表</string>
     <string name="power_mode_saving">节能</string>
     <string name="power_mode_normal">普通</string>
@@ -2060,7 +2060,7 @@
     <string name="fossil_hr_confirmation_timeout">确认超时，正在继续</string>
     <string name="debug_companion_pair_current">将当前设备配对为配套设备</string>
     <string name="debug_companion_show_associated">显示关联的配套设备</string>
-    <string name="gpx_route_upload_complete">GPX路径上传成功</string>
+    <string name="gpx_route_upload_complete">GPX路径上传完成</string>
     <string name="gpx_route_upload_in_progress">正在上传GPX路径</string>
     <string name="gpx_route_upload_failed">GPX 路径上传失败</string>
     <string name="kind_gpx_route">GPX路径</string>
