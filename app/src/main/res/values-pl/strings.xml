@@ -1286,7 +1286,7 @@
     <string name="pref_title_equalizer_dynamic">Dynamiczne</string>
     <string name="toast_app_must_not_be_selected">Aplikacja nie może być wybrana, aby mogła być skonfigurowana</string>
     <string name="left_earbud">Lewa słuchawka</string>
-    <string name="battery_case">Etui zasilające</string>
+    <string name="battery_case">Etui ładujące</string>
     <string name="right_earbud">Prawa słuchawka</string>
     <string name="sony_automatic_power_off_1_hour">1 godzina</string>
     <string name="sony_equalizer_band_400">400</string>
