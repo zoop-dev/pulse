@@ -34,7 +34,13 @@ object VO2MaxRanges {
             0.5f
         }
 
-        return PERCENTILES[bandIndex] + (positionInBand * (PERCENTILES[bandIndex - 1] - PERCENTILES[bandIndex]))
+        val upperPercentile = if (bandIndex == 0) {
+            1.0f  // Top of superior band is 100th percentile
+        } else {
+            PERCENTILES[bandIndex - 1]
+        }
+
+        return PERCENTILES[bandIndex] + (positionInBand * (upperPercentile - PERCENTILES[bandIndex]))
     }
 
     /**
