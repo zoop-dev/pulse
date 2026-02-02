@@ -689,6 +689,7 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
             case 3:
             case 4:
             case 5:
+            case 6:
                 headerSize = 4;
                 break;
             default:
@@ -703,7 +704,10 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
         builder.addInt(ACTIVE_SECONDS, UNIT_SECONDS);
         builder.addShort(CALORIES_BURNT, UNIT_KCAL);
         builder.addInt(STEPS, UNIT_STEPS);
-        builder.addUnknown(2);        // MAX_STEPS_PER_MINUTE, UNIT_STEPS_PER_MINUTE
+        if (version >= 6) {
+            builder.addShort(CADENCE_AVG, UNIT_SPM);
+        }
+        builder.addShort(CADENCE_MAX, UNIT_SPM);
         builder.addByte(HR_AVG, UNIT_BPM);
         builder.addByte(HR_MAX, UNIT_BPM);
         builder.addByte(HR_MIN, UNIT_BPM);
