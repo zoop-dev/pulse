@@ -25,6 +25,8 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractPreferenceFragment
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractSettingsActivityV2
+import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils
+import nodomain.freeyourgadget.gadgetbridge.util.GB
 
 class EndurainPreferencesActivity : AbstractSettingsActivityV2() {
 
@@ -45,14 +47,16 @@ class EndurainPreferencesActivity : AbstractSettingsActivityV2() {
             updateLogoutPreferenceVisibility()
             setupLoginResultListener()
 
-            // Refresh auth token
+            // Refresh tokens
             val vm: EndurainSetupViewModel by viewModels()
             val server = GBApplication.getPrefs().preferences.getString("endurain_server", null)
             if (server != null) {
-                vm.performTokenRefresh(server) {
-                    activity?.runOnUiThread {
-                        updateStatus()
-                        updateLogoutPreferenceVisibility()
+                if (vm.tokenManager.isAccessTokenExpired()) {
+                    vm.performTokenRefresh(server) {
+                        activity?.runOnUiThread {
+                            updateStatus()
+                            updateLogoutPreferenceVisibility()
+                        }
                     }
                 }
                 vm.fetchServerVersion(server) {
@@ -106,29 +110,29 @@ class EndurainPreferencesActivity : AbstractSettingsActivityV2() {
             vm.logout { success ->
                 activity?.runOnUiThread {
                     if (success) {
-                        Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
+                        GB.toast("Logged out successfully", Toast.LENGTH_SHORT, GB.INFO)
                         updateStatus()
                         updateLogoutPreferenceVisibility()
                     } else {
-                        Toast.makeText(requireContext(), "Logout failed", Toast.LENGTH_SHORT).show()
+                        GB.toast("Logout failed", Toast.LENGTH_SHORT, GB.WARN)
                     }
                 }
             }
         }
 
         private fun updateLogoutPreferenceVisibility() {
-            findPreference<Preference>("pref_key_log_out")?.isVisible = vm.isLoggedIn()
-            findPreference<Preference>("pref_key_log_in")?.isVisible = !vm.isLoggedIn()
+            findPreference<Preference>("pref_key_log_out")?.isVisible = vm.tokenManager.isLoggedIn()
+            findPreference<Preference>("pref_key_log_in")?.isVisible = !vm.tokenManager.isLoggedIn()
         }
 
         private fun updateStatus() {
             val statusPref = findPreference<Preference>("pref_key_status")
             val server = GBApplication.getPrefs().preferences.getString("endurain_server", null)
-            val tokenExpiresAt = vm.getTokenExpiresAt()
+            val tokenExpiresAt = DateTimeUtils.parseTimeStamp(vm.tokenManager.getRefreshTokenExpiresAt())
 
             var summaryText = "Not logged in, integration is disabled"
-            if (vm.isLoggedIn() && server != null) {
-                summaryText = "Logged in to $server\nAuth token expires: $tokenExpiresAt"
+            if (vm.tokenManager.isLoggedIn() && server != null) {
+                summaryText = "Logged in to $server\nRefresh token expires: $tokenExpiresAt"
             }
             if (vm.serverVersion != null) {
                 summaryText += "\nServer version: ${vm.serverVersion}"

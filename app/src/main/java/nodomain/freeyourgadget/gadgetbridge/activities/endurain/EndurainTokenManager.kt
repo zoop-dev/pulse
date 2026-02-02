@@ -38,18 +38,30 @@ class EndurainTokenManager(context: Context) {
         sharedPreferences.edit {
             putString("access_token", accessToken)
                 .putString("refresh_token", refreshToken)
-                .putInt("expires_at", accessTokenExpiresAt)
+                .putInt("access_token_expires_at", accessTokenExpiresAt)
+                .putInt("refresh_token_expires_at",
+                    ((System.currentTimeMillis() / 1000) + (7 * 24 * 60 * 60)).toInt()
+                )  // FIXME: 7 days is the Endurain default for refresh token expiry
+                   // https://github.com/endurain-project/endurain/issues/514
         }
-    }
-
-    fun getAccessToken(): String? = sharedPreferences.getString("access_token", null)
-    fun getRefreshToken(): String? = sharedPreferences.getString("refresh_token", null)
-    fun getAccessTokenExpiresAt(): Int = sharedPreferences.getInt("expires_at", 0)
-    fun isTokenExpired(): Boolean {
-        return (System.currentTimeMillis() / 1000) >= getAccessTokenExpiresAt()
     }
 
     fun clearTokens() {
         sharedPreferences.edit { clear() }
+    }
+
+    fun getAccessToken(): String? = sharedPreferences.getString("access_token", null)
+    fun getAccessTokenExpiresAt(): Int = sharedPreferences.getInt("access_token_expires_at", 0)
+    fun getRefreshToken(): String? = sharedPreferences.getString("refresh_token", null)
+    fun getRefreshTokenExpiresAt(): Int = sharedPreferences.getInt("refresh_token_expires_at", 0)
+
+    fun isLoggedIn(): Boolean {
+        return getRefreshToken() != null && !isRefreshTokenExpired()
+    }
+    fun isAccessTokenExpired(): Boolean {
+        return (System.currentTimeMillis() / 1000) >= getAccessTokenExpiresAt()
+    }
+    fun isRefreshTokenExpired(): Boolean {
+        return (System.currentTimeMillis() / 1000) >= getRefreshTokenExpiresAt()
     }
 }

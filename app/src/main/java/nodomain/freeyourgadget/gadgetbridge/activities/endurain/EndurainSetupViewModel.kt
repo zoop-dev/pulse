@@ -27,7 +27,6 @@ import java.util.Date
 class EndurainSetupViewModel(application: Application) : AndroidViewModel(application) {
 
     private val LOG = LoggerFactory.getLogger(EndurainSetupViewModel::class.java)
-    private val tokenManager = EndurainTokenManager(application)
     private lateinit var apiClient: EndurainApiClient
 
     enum class Step {
@@ -38,13 +37,13 @@ class EndurainSetupViewModel(application: Application) : AndroidViewModel(applic
         SSO_LOGIN
     }
 
+    val tokenManager = EndurainTokenManager(application)
     var step = Step.SERVER
     var server = ""
     var localLoginEnabled = false
     var ssoEnabled = false
     var pendingMfaUsername: String? = null
     var serverVersion: String? = null
-
 
     /**
      * Fetch server version
@@ -57,9 +56,10 @@ class EndurainSetupViewModel(application: Application) : AndroidViewModel(applic
             try {
                 apiClient = EndurainApiClient(serverUrl, tokenManager)
                 serverVersion = apiClient.fetchVersion()
+                callback(true)
             } catch (e: Exception) {
                 LOG.error("Fetching server version error", e)
-                callback(true)
+                callback(false)
             }
         }.start()
     }
@@ -222,20 +222,6 @@ class EndurainSetupViewModel(application: Application) : AndroidViewModel(applic
                 callback(false)
             }
         }.start()
-    }
-
-    /**
-     * Check if user is currently logged in
-     */
-    fun isLoggedIn(): Boolean {
-        return tokenManager.getAccessToken() != null && !tokenManager.isTokenExpired()
-    }
-
-    /**
-     * Get token expiry date
-     */
-    fun getTokenExpiresAt(): Date {
-        return DateTimeUtils.parseTimeStamp(tokenManager.getAccessTokenExpiresAt())
     }
 
     /**

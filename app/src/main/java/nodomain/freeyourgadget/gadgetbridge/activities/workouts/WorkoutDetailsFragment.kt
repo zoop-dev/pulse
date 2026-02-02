@@ -61,7 +61,6 @@ import nodomain.freeyourgadget.gadgetbridge.activities.ActivitySummariesChartFra
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.DurationXLabelFormatter
 import nodomain.freeyourgadget.gadgetbridge.activities.endurain.EndurainApiClient
 import nodomain.freeyourgadget.gadgetbridge.activities.endurain.EndurainSetupViewModel
-import nodomain.freeyourgadget.gadgetbridge.activities.endurain.EndurainTokenManager
 import nodomain.freeyourgadget.gadgetbridge.activities.fit.FitViewerActivity
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.ChartDataRepository
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.DefaultWorkoutCharts
@@ -639,13 +638,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
 
         val endurainVm: EndurainSetupViewModel by viewModels()
         val server = GBApplication.getPrefs().preferences.getString("endurain_server", null)
-        if (server != null) {
-            endurainVm.performTokenRefresh(server) {
-                activity?.runOnUiThread {
-                    overflowMenu?.findItem(R.id.activity_action_upload_to_endurain)?.isVisible = hasGpx && endurainVm.isLoggedIn()
-                }
-            }
-        }
+        overflowMenu?.findItem(R.id.activity_action_upload_to_endurain)?.isVisible = hasGpx && server != null && endurainVm.tokenManager.isLoggedIn()
     }
 
     private fun takeSharedScreenshot() {
@@ -761,14 +754,26 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         }
 
         try {
-            val tokenManager = EndurainTokenManager(requireContext())
+            val endurainVm: EndurainSetupViewModel by viewModels()
             val serverUrl = GBApplication.getPrefs().preferences.getString("endurain_server", null)
-            val apiClient = EndurainApiClient(serverUrl!!, tokenManager)
-            apiClient.uploadActivity(gpxFile) { success ->
-                if (success)
-                    GB.toast("Successfully uploaded to Endurain", Toast.LENGTH_SHORT, GB.INFO)
-                else
-                    GB.toast("Error while uploading to Endurain", Toast.LENGTH_SHORT, GB.INFO)
+            val apiClient = EndurainApiClient(serverUrl!!, endurainVm.tokenManager)
+            endurainVm.performTokenRefresh(serverUrl) {
+                apiClient.uploadActivity(gpxFile) { success ->
+                    activity?.runOnUiThread {
+                        if (success)
+                            GB.toast(
+                                "Successfully uploaded to Endurain",
+                                Toast.LENGTH_SHORT,
+                                GB.INFO
+                            )
+                        else
+                            GB.toast(
+                                "Error while uploading to Endurain",
+                                Toast.LENGTH_SHORT,
+                                GB.INFO
+                            )
+                    }
+                }
             }
         } catch (e: Exception) {
             GB.toast(
