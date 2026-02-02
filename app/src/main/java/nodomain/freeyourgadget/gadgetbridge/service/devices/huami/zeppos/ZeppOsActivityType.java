@@ -56,6 +56,7 @@ public enum ZeppOsActivityType {
     Dodgeball(0x99, ActivityKind.DODGEBALL),
     DragonBoat(0x8a, ActivityKind.DRAGON_BOAT),
     Driving(0x84, ActivityKind.DRIVING),
+    EBike(0xce, ActivityKind.E_BIKE),
     Elliptical(0x09, ActivityKind.ELLIPTICAL_TRAINER),
     Esports(0xbd, ActivityKind.ESPORTS),
     Esquestrian(0x5e, ActivityKind.HORSE_RIDING),
