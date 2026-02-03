@@ -200,6 +200,9 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     public void dispose() {
         synchronized (ConnectionMonitor) {
             LOG.info("Garmin dispose()");
+            if (communicator != null) {
+                communicator.dispose();
+            }
             GBLocationService.stop(getContext(), getDevice());
             try {
                 LocalBroadcastManager.getInstance(GBApplication.getContext()).unregisterReceiver(broadcastReceiver);
