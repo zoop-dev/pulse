@@ -155,11 +155,22 @@ public class WorkoutVo2MaxSampleProvider implements Vo2MaxSampleProvider<Vo2MaxS
             }
             if (type == Vo2MaxSample.Type.CYCLING) {
                 codes.addAll(Arrays.asList(
+                        ActivityKind.BIKE_COMMUTE.getCode(),
                         ActivityKind.CYCLING.getCode(),
+                        ActivityKind.E_BIKE.getCode(),
                         ActivityKind.INDOOR_CYCLING.getCode(),
                         ActivityKind.HANDCYCLING.getCode(),
                         ActivityKind.HANDCYCLING_INDOOR.getCode(),
-                        ActivityKind.OUTDOOR_CYCLING.getCode()
+                        ActivityKind.OUTDOOR_CYCLING.getCode(),
+                        ActivityKind.SPINNING.getCode(),
+                        ActivityKind.DYNAMIC_CYCLE.getCode(),
+                        ActivityKind.BMX.getCode(),
+                        ActivityKind.BIKE_TOUR.getCode(),
+                        ActivityKind.CYCLO_CROSS.getCode(),
+                        ActivityKind.E_MOUNTAIN_BIKE.getCode(),
+                        ActivityKind.GRAVEL_BIKE.getCode(),
+                        ActivityKind.MOUNTAIN_BIKE.getCode(),
+                        ActivityKind.ROAD_BIKE.getCode()
                 ));
             }
         }
@@ -261,12 +272,22 @@ public class WorkoutVo2MaxSampleProvider implements Vo2MaxSampleProvider<Vo2MaxS
                 case RUNNING:
                     type = Vo2MaxSample.Type.RUNNING;
                     break;
+                case BIKE_COMMUTE:
                 case CYCLING:
-                case INDOOR_CYCLING:
+                case E_BIKE:
                 case HANDCYCLING:
                 case HANDCYCLING_INDOOR:
-                case MOTORCYCLING:
+                case INDOOR_CYCLING:
                 case OUTDOOR_CYCLING:
+                case SPINNING:
+                case DYNAMIC_CYCLE:
+                case BMX:
+                case BIKE_TOUR:
+                case CYCLO_CROSS:
+                case E_MOUNTAIN_BIKE:
+                case GRAVEL_BIKE:
+                case MOUNTAIN_BIKE:
+                case ROAD_BIKE:
                     type = Vo2MaxSample.Type.CYCLING;
                     break;
                 default:

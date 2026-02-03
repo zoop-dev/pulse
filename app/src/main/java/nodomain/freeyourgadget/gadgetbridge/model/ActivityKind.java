@@ -422,6 +422,14 @@ public enum ActivityKind {
             case INDOOR_CYCLING:
             case OUTDOOR_CYCLING:
             case SPINNING:
+            case DYNAMIC_CYCLE:
+            case BMX:
+            case BIKE_TOUR:
+            case CYCLO_CROSS:
+            case E_MOUNTAIN_BIKE:
+            case GRAVEL_BIKE:
+            case MOUNTAIN_BIKE:
+            case ROAD_BIKE:
                 return CycleUnit.REVOLUTIONS;
             case FLEXIBILITY:
             case BARBELL:
