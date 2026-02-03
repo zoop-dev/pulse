@@ -774,6 +774,9 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
             case 5:
                 headerSize = 4;
                 break;
+            case 10:
+                headerSize = 8;
+                break;
             case 11:
                 headerSize = 9;
                 break;
@@ -789,13 +792,13 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
         builder.addInt(ACTIVE_SECONDS, UNIT_SECONDS);
         builder.addInt(DISTANCE_METERS, UNIT_METERS);
         builder.addShort(CALORIES_BURNT, UNIT_KCAL);
-        if (version >= 11) {
+        if (version >= 10) {
             builder.addInt(PACE_AVG_SECONDS_KM, UNIT_SECONDS_PER_KM);
         }
         builder.addInt(PACE_MAX, UNIT_SECONDS_PER_KM);
         builder.addInt(PACE_MIN, UNIT_SECONDS_PER_KM);
         builder.addInt(STEPS, UNIT_STEPS);
-        if (version >= 11) {
+        if (version >= 10) {
             builder.addUnknown(2);
             builder.addShort(CADENCE_AVG, UNIT_SPM);
         }
@@ -804,11 +807,11 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
         builder.addByte(HR_MAX, UNIT_BPM);
         builder.addByte(HR_MIN, UNIT_BPM);
         builder.addFloat(TRAINING_EFFECT_AEROBIC, UNIT_NONE);
-        if (version >= 11) {
+        if (version >= 10) {
             builder.addUnknown(1);
         }
         builder.addByte(MAXIMUM_OXYGEN_UPTAKE, UNIT_ML_KG_MIN);
-        if (version >= 11) {
+        if (version >= 10) {
             builder.addUnknown(1);
         }
         builder.addUnknown(1);
