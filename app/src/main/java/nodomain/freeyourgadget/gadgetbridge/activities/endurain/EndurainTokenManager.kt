@@ -20,8 +20,11 @@ import android.content.Context
 import androidx.core.content.edit
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 class EndurainTokenManager(context: Context) {
+    private val LOG: Logger = LoggerFactory.getLogger(EndurainTokenManager::class.java)
     private val masterKey = MasterKey.Builder(context)
         .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
         .build()
@@ -63,5 +66,40 @@ class EndurainTokenManager(context: Context) {
     }
     fun isRefreshTokenExpired(): Boolean {
         return (System.currentTimeMillis() / 1000) >= getRefreshTokenExpiresAt()
+    }
+
+    fun performTokenRefresh(
+        serverUrl: String,
+        callback: (Boolean) -> Unit
+    ) {
+        Thread {
+            try {
+                val apiClient = EndurainApiClient(serverUrl, this)
+                val response = apiClient.refreshToken()
+
+                when {
+                    response == null -> {
+                        LOG.error("Token refresh failed: null response")
+                        callback(false)
+                    }
+                    response.access_token != null -> {
+                        LOG.info("Token refresh successful")
+                        saveTokens(
+                            response.access_token,
+                            response.refresh_token!!,
+                            response.expires_in!!
+                        )
+                        callback(true)
+                    }
+                    else -> {
+                        LOG.error("Token refresh failed: ${response.detail}")
+                        callback(false)
+                    }
+                }
+            } catch (e: Exception) {
+                LOG.error("Token refresh error", e)
+                callback(false)
+            }
+        }.start()
     }
 }

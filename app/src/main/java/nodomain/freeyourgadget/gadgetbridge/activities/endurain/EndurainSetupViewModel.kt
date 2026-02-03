@@ -19,10 +19,8 @@ package nodomain.freeyourgadget.gadgetbridge.activities.endurain
 import android.app.Application
 import androidx.core.net.toUri
 import androidx.lifecycle.AndroidViewModel
-import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils
 import nodomain.freeyourgadget.gadgetbridge.util.InternetUtils
 import org.slf4j.LoggerFactory
-import java.util.Date
 
 class EndurainSetupViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -100,44 +98,6 @@ class EndurainSetupViewModel(application: Application) : AndroidViewModel(applic
                 // Default to local login on error
                 localLoginEnabled = true
                 ssoEnabled = false
-                callback(false)
-            }
-        }.start()
-    }
-
-    /**
-     * Perform token refresh
-     */
-    fun performTokenRefresh(
-        serverUrl: String,
-        callback: (Boolean) -> Unit
-    ) {
-        Thread {
-            try {
-                apiClient = EndurainApiClient(serverUrl, tokenManager)
-                val response = apiClient.refreshToken()
-
-                when {
-                    response == null -> {
-                        LOG.error("Token refresh failed: null response")
-                        callback(false)
-                    }
-                    response.access_token != null -> {
-                        LOG.info("Token refresh successful")
-                        tokenManager.saveTokens(
-                            response.access_token,
-                            response.refresh_token!!,
-                            response.expires_in!!
-                        )
-                        callback(true)
-                    }
-                    else -> {
-                        LOG.error("Token refresh failed: ${response.message}")
-                        callback(false)
-                    }
-                }
-            } catch (e: Exception) {
-                LOG.error("Token refresh error", e)
                 callback(false)
             }
         }.start()

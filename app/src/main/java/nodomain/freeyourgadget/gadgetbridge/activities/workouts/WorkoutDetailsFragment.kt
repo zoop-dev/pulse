@@ -757,7 +757,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             val endurainVm: EndurainSetupViewModel by viewModels()
             val serverUrl = GBApplication.getPrefs().preferences.getString("endurain_server", null)
             val apiClient = EndurainApiClient(serverUrl!!, endurainVm.tokenManager)
-            endurainVm.performTokenRefresh(serverUrl) {
+            endurainVm.tokenManager.performTokenRefresh(serverUrl) {
                 apiClient.uploadActivity(gpxFile) { success ->
                     activity?.runOnUiThread {
                         if (success)

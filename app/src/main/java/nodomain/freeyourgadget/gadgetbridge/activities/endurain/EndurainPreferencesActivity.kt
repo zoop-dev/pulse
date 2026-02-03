@@ -29,7 +29,6 @@ import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 
 class EndurainPreferencesActivity : AbstractSettingsActivityV2() {
-
     override fun newFragment(): PreferenceFragmentCompat =
         EndurainPreferencesFragment()
 
@@ -52,7 +51,7 @@ class EndurainPreferencesActivity : AbstractSettingsActivityV2() {
             val server = GBApplication.getPrefs().preferences.getString("endurain_server", null)
             if (server != null) {
                 if (vm.tokenManager.isAccessTokenExpired()) {
-                    vm.performTokenRefresh(server) {
+                    vm.tokenManager.performTokenRefresh(server) {
                         activity?.runOnUiThread {
                             updateStatus()
                             updateLogoutPreferenceVisibility()
