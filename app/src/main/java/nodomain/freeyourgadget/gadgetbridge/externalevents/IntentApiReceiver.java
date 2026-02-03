@@ -61,7 +61,7 @@ public class IntentApiReceiver extends BroadcastReceiver {
     public static final String COMMAND_ACTIVITY_SYNC = "nodomain.freeyourgadget.gadgetbridge.command.ACTIVITY_SYNC";
     @Deprecated
     public static final String COMMAND_TRIGGER_EXPORT = "nodomain.freeyourgadget.gadgetbridge.command.TRIGGER_EXPORT";
-    public static final String TRIGGER_DATABASE_EXPORT = "nodomain.freeyourgadget.gadgetbridge.command.TRIGGER_DATABASE_EXPORT";
+    public static final String COMMAND_TRIGGER_DATABASE_EXPORT = "nodomain.freeyourgadget.gadgetbridge.command.TRIGGER_DATABASE_EXPORT";
     public static final String COMMAND_TRIGGER_ZIP_EXPORT = "nodomain.freeyourgadget.gadgetbridge.command.TRIGGER_ZIP_EXPORT";
     public static final String COMMAND_DEBUG_SEND_NOTIFICATION = "nodomain.freeyourgadget.gadgetbridge.command.DEBUG_SEND_NOTIFICATION";
     public static final String COMMAND_DEBUG_INCOMING_CALL = "nodomain.freeyourgadget.gadgetbridge.command.DEBUG_INCOMING_CALL";
@@ -111,9 +111,9 @@ public class IntentApiReceiver extends BroadcastReceiver {
                 LOG.warn(
                         "The action {} is deprecated, please use {}",
                         COMMAND_TRIGGER_EXPORT,
-                        TRIGGER_DATABASE_EXPORT
+                        COMMAND_TRIGGER_DATABASE_EXPORT
                 );
-            case TRIGGER_DATABASE_EXPORT:
+            case COMMAND_TRIGGER_DATABASE_EXPORT:
                 if (!prefs.getBoolean("intent_api_allow_trigger_export", false)) {
                     LOG.warn("Intent API db export trigger not allowed");
                     return;
@@ -262,6 +262,8 @@ public class IntentApiReceiver extends BroadcastReceiver {
         final IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(COMMAND_ACTIVITY_SYNC);
         intentFilter.addAction(COMMAND_TRIGGER_EXPORT);
+        intentFilter.addAction(COMMAND_TRIGGER_DATABASE_EXPORT);
+        intentFilter.addAction(COMMAND_TRIGGER_ZIP_EXPORT);
         intentFilter.addAction(COMMAND_DEBUG_SEND_NOTIFICATION);
         intentFilter.addAction(COMMAND_DEBUG_INCOMING_CALL);
         intentFilter.addAction(COMMAND_DEBUG_END_CALL);
