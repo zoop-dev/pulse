@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.activities.debug
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.text.InputType
 import android.widget.Toast
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
@@ -14,6 +15,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType
 import nodomain.freeyourgadget.gadgetbridge.util.DeviceTypeDialog
 import nodomain.freeyourgadget.gadgetbridge.util.GB
+import nodomain.freeyourgadget.gadgetbridge.util.preferences.MacAddressTextWatcher
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -40,17 +42,15 @@ class DeviceDebugFragment : AbstractDebugFragment() {
             findPreference<Preference>(PREF_DEBUG_DEVICE_ALIAS)?.summary = gbDevice.alias ?: getString(R.string.not_set)
         }
 
-        // TODO: MAC Address
         findPreference<EditTextPreference>(PREF_DEBUG_DEVICE_MAC_ADDRESS)?.text = gbDevice.address
-        findPreference<EditTextPreference>(PREF_DEBUG_DEVICE_MAC_ADDRESS)?.isSelectable = false
-        //findPreference<EditTextPreference>(PREF_DEBUG_DEVICE_MAC_ADDRESS)!!.setOnBindEditTextListener { editText ->
-        //    editText.inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
-        //    editText.filters = arrayOf(MacAddressInputFilter())
-        //    editText.addTextChangedListener(MacAddressTextWatcher(editText))
-        //}
-        //findPreference<EditTextPreference>(PREF_DEBUG_DEVICE_MAC_ADDRESS)!!.setOnPreferenceChangeListener { _: Preference?, newMacAddress: Any? ->
-        //    setDeviceMacAddress(gbDevice, newMacAddress as String)
-        //}
+        findPreference<EditTextPreference>(PREF_DEBUG_DEVICE_MAC_ADDRESS)?.setOnBindEditTextListener { editText ->
+            editText.inputType = InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
+            editText.addTextChangedListener(MacAddressTextWatcher(editText))
+            editText.setSelection(editText.text.length)
+        }
+        findPreference<EditTextPreference>(PREF_DEBUG_DEVICE_MAC_ADDRESS)?.setOnPreferenceChangeListener { _: Preference?, newMacAddress: Any? ->
+            setDeviceMacAddress(gbDevice, newMacAddress as String)
+        }
 
         // Device Type
         findPreference<Preference>(PREF_DEBUG_DEVICE_TYPE)?.summary = gbDevice.type.name
@@ -98,8 +98,67 @@ class DeviceDebugFragment : AbstractDebugFragment() {
     }
 
     private fun setDeviceMacAddress(gbDevice: GBDevice, newAddress: String): Boolean {
-        // TODO
-        return false
+        LOG.debug("Setting device {} MAC address from {} to {}", gbDevice.aliasOrName, gbDevice.address, newAddress)
+
+        if (gbDevice.address == newAddress) {
+            GB.toast("MAC address is the same!", Toast.LENGTH_SHORT, GB.INFO)
+            return true
+        }
+
+        val newDevice = GBApplication.app().deviceManager.getDeviceByAddress(newAddress)
+        if (newDevice != null) {
+            LOG.warn("New device address {} already exists", newAddress)
+            GB.toast("Device with this MAC address already exists", Toast.LENGTH_LONG, GB.ERROR)
+            return false
+        }
+
+        // Copy device-specific SharedPreferences from old to new address
+        val settingsOld = GBApplication.getDeviceSpecificSharedPrefs(gbDevice.address)
+        val settingsNew = GBApplication.getDeviceSpecificSharedPrefs(newAddress)
+        val editorNew = settingsNew.edit().clear()
+        val allSettings = settingsOld.all
+        LOG.debug("Copying {} preferences to new device", allSettings.size)
+
+        for ((key, value) in allSettings) {
+            when (value) {
+                is Boolean -> editorNew.putBoolean(key, value)
+                is Float -> editorNew.putFloat(key, value)
+                is Int -> editorNew.putInt(key, value)
+                is Long -> editorNew.putLong(key, value)
+                is String -> editorNew.putString(key, value)
+                is Set<*> -> {
+                    @Suppress("UNCHECKED_CAST")
+                    editorNew.putStringSet(key, value as Set<String>)
+                }
+                else -> {
+                    LOG.error("Unexpected preference type {}", value?.javaClass)
+                    GB.toast("Failed to copy settings", Toast.LENGTH_LONG, GB.ERROR)
+                    return false
+                }
+            }
+        }
+
+        if (!editorNew.commit()) {
+            LOG.error("Failed to persist preferences for new address")
+            GB.toast("Failed to save settings", Toast.LENGTH_LONG, GB.ERROR)
+            return false
+        }
+
+        try {
+            GBApplication.acquireDB().use { dbHandler ->
+                val session = dbHandler.getDaoSession()
+                DBHelper.updateDeviceMacAddress(session, gbDevice.address, newAddress)
+            }
+        } catch (e: Exception) {
+            LOG.error("Failed to update device MAC address", e)
+            GB.toast("Failed to update MAC address", Toast.LENGTH_LONG, GB.ERROR)
+            return false
+        }
+
+        LOG.info("Restarting GB after device MAC address update")
+
+        restart()
+        return true
     }
 
     private fun setDeviceType(gbDevice: GBDevice, newType: DeviceType) {
