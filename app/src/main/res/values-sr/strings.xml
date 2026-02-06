@@ -28,13 +28,11 @@
     <string name="appmanager_hrm_activate">Покрени ХРМ</string>
     <string name="appmanager_hrm_deactivate">Искључи ХРМ</string>
     <string name="appmanager_weather_activate">Покрени програм временске прогнозе склопа</string>
-    <string name="appmanager_weather_install_provider">Угради програм за вести о времену</string>
     <string name="app_move_to_top">Премести на врх</string>
     <string name="title_activity_notification_management">Поставке обавештења</string>
     <string name="blacklist_all_for_notifications">Искључи све из обавештења</string>
     <string name="check_all_applications">Означи све програме</string>
     <string name="uncheck_all_applications">Одзначи све програме</string>
-    <string name="title_activity_calblacklist">Искључени календари</string>
     <string name="action_debug">Разбубати</string>
     <string name="controlcenter_power_off">Искључи</string>
     <string name="action_quit">Напусти</string>
@@ -921,7 +919,6 @@
     <string name="activity_prefs_chart_max_idle_phase_length">Дужина одмора ради одвајања дејстава (у минутима)</string>
     <string name="activity_prefs_chart_min_session_length">Најмања дужина дејства (у минутима)</string>
     <string name="authentication_required">Неопходна је пријава</string>
-    <string name="activity_prefs_sleep_duration">Жељено трајање спавања у часовима</string>
     <string name="device_hw">Издање тврдотворина: %1$s</string>
     <string name="device_fw">Издање драма: %1$s</string>
     <string name="charts_legend_heartrate">Број срчаних откуцаја</string>
@@ -991,12 +988,9 @@
     <string name="hebrew">Хебрејски</string>
     <string name="pref_title_charts_average">Приказуј просеке у таблицама</string>
     <string name="activity_prefs_goal_standing_time_minutes">Дневни циљ: време стајања у минутима</string>
-    <string name="activity_db_management_merge_old_title">Обриши застарело хранилиште података</string>
     <string name="dbmanagementactivity_import_data_title">Да ли увести податке\?</string>
     <string name="dbmanagementactivity_error_exporting_shared">Десила се грешка приликом извоза поставки: %1$s</string>
     <string name="dbmanagementactivity_delete_old_activity_db">Да ли да избришем старо хранилиште података\?</string>
-    <string name="autoExport_lastTime_label">Последњи самостални извоз: %1$s</string>
-    <string name="activity_db_management_autoexport_enabled_yes">Самостални извоз је омогућен.</string>
     <string name="activity_type_basketball">Кошарка</string>
     <string name="pref_screen_vibration_patterns_title">Обрасци трешње</string>
     <string name="world_clock_no_free_slots_description">Уређај нема слободних места за светске часовнике (укупно места: %1$s)</string>
@@ -1054,8 +1048,6 @@
     <string name="pref_chart_heartrate_color_orange">Поморанџаста</string>
     <string name="dbmanagementactivity_database_successfully_deleted">Подаци су избрисани.</string>
     <string name="dbmanagementactivity_db_deletion_failed">Нисам успео да избришем хранилиште података.</string>
-    <string name="activity_db_management_autoexport_enabled_no">Самостални извоз није омогућен.</string>
-    <string name="activity_db_management_autoexport_explanation">Место самосталног чувања хранилишта података је постављено на:</string>
     <string name="activity_DB_import_button">Увези податке</string>
     <string name="activity_DB_ExportButton">Извези податке</string>
     <string name="Delete">Избриши</string>
@@ -1135,7 +1127,6 @@
     <string name="descentDistance">Размак низбрдо</string>
     <string name="descentSeconds">Силазно</string>
     <string name="qhybrid_title_apps">Програми</string>
-    <string name="activity_db_management_autoexport_label">Самостални извоз</string>
     <string name="activity_type_gymnastics">Гимнастика</string>
     <string name="menuitem_workout">Вежбање</string>
     <string name="prefs_button_single_press_action_selection_title">Радња догађаја 1</string>
@@ -1146,8 +1137,6 @@
     <string name="initialized">покренуто</string>
     <string name="title_activity_mi_band_pairing">Упарите свој Ми Бенд</string>
     <string name="activity_db_management_autoexport_scheduled_no">Самостални извоз није заказан.</string>
-    <string name="activity_db_management_clean_export_directory_label">Избриши датотеке из фасцикле извоза/увоза</string>
-    <string name="activity_DB_clean_export_directory_warning_message">Да ли заиста желите да избришете датотеке из фасцикле извоза/увоза\?</string>
     <string name="pref_title_setup_bt_pairing">Омогући упаривање Блутутом</string>
     <string name="unit_imperial">Империјално</string>
     <string name="StringUtils_sender">(%1$s)</string>
@@ -1174,7 +1163,6 @@
     <string name="title_activity_watch9_pairing">Упаривање Часовника 9</string>
     <string name="title_activity_watch9_calibration">Баждарење Часовника 9</string>
     <string name="share_log">Дневник дељења</string>
-    <string name="share_log_not_enabled_message">Морате прво омогућити вођење дневника у поставкама - пиши датотеке дневника</string>
     <string name="warning">Упозорење!</string>
     <string name="note">Примедба</string>
     <string name="no_data">Нема података</string>
@@ -1235,10 +1223,8 @@
     <string name="activity_data_management_directory_content_title">Садржај фасцикле извоза/увоза</string>
     <string name="activity_db_management_autoexport_location">Нисам успео да разумем положај. Највероватније је по среди новији склоп овлашћења Андроида. Највероватније, самостални извоз сада не ради.</string>
     <string name="activity_DB_delete_legacy_button">Избриши старо хранилиште података</string>
-    <string name="activity_DB_clean_export_directory_warning_title">Да ли избрисати датотеке из фасцикле извоза/увоза\?</string>
     <string name="activity_DB_ShowContentButton">Прикажи садржај фасцикле извоза/увоза</string>
     <string name="unit_metric">Метрички</string>
-    <string name="activity_db_management_clean_export_directory_text">Извезене датотеке у фасцикли извоза/увоза су доступне кроз било који програм на Вашем уређају. Можда желите да уклоните ове датотеке након усклађивања или похрањивања умношка. Уверите се да имате похрањени умножак пре њиховог брисања. Датотеке ГПИкс-а, подфасцикле и самостално извезене датотеке похране (уколико постоје) неће бити брисане. Путања ка фасцикли извоза/увоза је:</string>
     <string name="pref_summary_setup_bt_pairing">Искључите ово уколико имате потешкоћа са повезивањем</string>
     <string name="activity_summary_detail_select_gpx_track">Изаберите путању ГПИкс-а</string>
     <string name="activity_summary_detail_clear_gpx_track">Очисти путању ГПИкс-а</string>
@@ -2207,7 +2193,6 @@
     <string name="activity_db_management_import_export_explanation">Обраде увоза/извоза користе следеће путање (видите испод) на путању Вашег уређаја. Ова путања је доступна осталим програмима Анроида и Вашем рачунару. Обратите пажњу да ова путања и садржеће датотеке се бришу уколико уклоните програм Геџетбрвно. Обухваћени подаци:\n Поставке_извоза - опште поставке\n Поставке_извоза_МАЦ - нарочите поставке уређаја\nГеџетбрвно - уређај и складиште података дејстава\n Геџетбрвно_датум - складише података извезено датумом\n *.gpx - снимања ГПИксом\n *.log - датотеке дневника\nОчекујте да нађете своје извезене датотеке (или место датотека које желите увести) овде:</string>
     <string name="activity_type_karting">Тркање колицима</string>
     <string name="pebble_pairing_hint">Прозор упаривања ће искочити на уређају Андроида. Уколико се то не деси, погледајте у ладици обавештења и прихватите захтев за упаривањем. Такође, прихватите га на свом уређају Пебла након тога.</string>
-    <string name="weather_notification_label">Проверите да је свлак омогућен у програму обавештења о временским приликама на свом Пеблу.\n\nОвде нису потребне поставке.\n\nМожете омогућити програм временских прилика склопа на свом Пеблу из управљања програмима.\n\nПодржана лица часовника ће приказивати самостално временске прилике.</string>
     <string name="mi2_enable_text_notifications_summary"><![CDATA[Захтева драм >=1.0.1.28 и уграђен Mili_pro.ft*]]></string>
     <string name="activity_type_beach_volleyball">Плажни рукомет</string>
     <string name="activity_type_other_dance">Остали плесови</string>

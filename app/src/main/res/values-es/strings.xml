@@ -35,11 +35,9 @@
     <string name="appmanager_hrm_deactivate">Desactivar monitor de ritmo cardíaco</string>
     <string name="appmanager_weather_activate">Activar la aplicación de Clima del sistema</string>
     <string name="appmanager_weather_deactivate">Desactivar la aplicación de Clima del sistema</string>
-    <string name="appmanager_weather_install_provider">Instalar la aplicación de notificaciones del Clima</string>
     <string name="app_configure">Configurar</string>
     <string name="app_move_to_top">Mover arriba</string>
     <!--Strings related to CalBlacklist-->
-    <string name="title_activity_calblacklist">Calendarios en lista negra</string>
     <!--Strings related to FwAppInstaller-->
     <string name="title_activity_fw_app_insaller">Instalador de FW/App</string>
     <string name="fw_upgrade_notice">Está a punto de instalar el %s.</string>
@@ -331,7 +329,6 @@
     <string name="authentication_required">Autenticación requerida</string>
     <string name="appwidget_text">Zzz</string>
     <string name="add_widget">Añadir widget</string>
-    <string name="activity_prefs_sleep_duration">Horas de sueño deseadas</string>
     <string name="appwidget_setting_alarm">Se fijó una alarma a las %1$02d:%2$02d</string>
     <string name="device_hw">Revisión de hardware: %1$s</string>
     <string name="device_fw">Versión de firmware: %1$s</string>
@@ -346,7 +343,6 @@
     <string name="action_db_management">Administración de datos</string>
     <string name="title_activity_db_management">Administración de datos</string>
     <string name="activity_db_management_import_export_explanation">Las operaciones de exportación/importación utilizan la siguiente ruta (véase más abajo) a un directorio de tu dispositivo. Este directorio es accesible a otras aplicaciones Android y a tu ordenador. Ten en cuenta que este directorio y todos los archivos que contiene se eliminan si desinstalas Gadgetbridge. Los datos incluyen:\n· Export_preference - ajustes globales\n· Export_preference_MAC - ajustes específicos del dispositivo\n· Gadgetbridge - base de datos de dispositivos y actividades\n· Gadgetbridge_date - base de datos exportada en una fecha\n· *.gpx - grabaciones GPS\n· *.log - archivos de registro\nEspera encontrar tus archivos exportados (o coloca los archivos que deseas importar) en:</string>
-    <string name="activity_db_management_merge_old_title">Borrar la base de datos antigua</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">No se puede acceder a la ruta de exportación. Póngase en contacto con los desarrolladores.</string>
     <string name="dbmanagementactivity_exported_to">Exportado a: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Error de exportación de la base de datos: %1$s</string>
@@ -372,7 +368,6 @@
     <!--Strings related to Pebble Pairing Activity-->
     <string name="title_activity_pebble_pairing">Emparejamiento con Pebble</string>
     <string name="pebble_pairing_hint">Aparecerá un diálogo de emparejamiento en el dispositivo Android. Si no, busque la notificación en el cajón y acepte la solicitud. Posteriormente, acéptela también en el Pebble.</string>
-    <string name="weather_notification_label">Asegúrate de que esta apariencia esté habilitada en la aplicación de Notificación del Clima para recibir información meteorológica en tu Pebble.\n\nAquí no se necesita configuración.\n\nPuedes habilitar la aplicación meteorológica del sistema de tu Pebble desde la gestión de aplicaciones.\n\nLas esferas de reloj compatibles mostrarán el clima automáticamente.</string>
     <string name="pref_title_setup_bt_pairing">Activar el emparejamiento Bluetooth</string>
     <string name="pref_summary_setup_bt_pairing">Desactive esto si tiene problemas de conexión</string>
     <string name="unit_metric">Métrica</string>
@@ -647,8 +642,6 @@
     <string name="pref_title_expose_hr">Acceso terceros frec. cardíaca</string>
     <string name="pref_title_use_custom_font">Utilizar tipo de letra personalizado</string>
     <string name="pref_summary_use_custom_font">Activa esto si tu dispositivo incluye firmware con tipografía personalizada para admitir emojis</string>
-    <string name="activity_db_management_autoexport_explanation">La ubicación de exportación automática se definió en:</string>
-    <string name="activity_db_management_autoexport_label">Exportación automática</string>
     <string name="activity_DB_ExportButton">Exportar datos</string>
     <string name="activity_DB_import_button">Importar datos</string>
     <string name="activity_DB_test_export_button">Ejecutar exportación automática ahora</string>
@@ -942,7 +935,6 @@
     <string name="pref_check_permission_status_summary">Comprueba y pide los permisos que faltan, incluso cuando pueden no ser necesarios al instante. Desactiva esto solo si tus dispositivos no soportan ninguna de estas características. ¡No conceder un permiso puede causar problemas!</string>
     <string name="pref_check_permission_status">Comprobar el estado de los permisos</string>
     <string name="error_background_service_reason">El inicio del servicio en segundo plano falló debido a una excepción - haga clic aquí para obtener más información.\n\nError:</string>
-    <string name="device_requires_key">CLAVE REQUERIDA, MANTÉN PULSADO PARA ENTRAR</string>
     <string name="device_is_currently_bonded">YA SE HA HECHO EL ENLACE</string>
     <string name="error_background_service_reason_truncated">El inicio del servicio en segundo plano falló porque…</string>
     <string name="error_background_service">Fallo al iniciar el servicio en segundo plano</string>
@@ -992,10 +984,6 @@
     <string name="menuitem_cycles">Seguimiento del ciclo</string>
     <string name="menuitem_breathing">Respiración</string>
     <string name="dbmanagementactivity_export_finished">Eliminación finalizada</string>
-    <string name="activity_db_management_clean_export_directory_text">Los archivos exportados en el directorio de Exportación/Importación son accesibles por cualquier aplicación de tu dispositivo. Es posible que quieras eliminar estos archivos después de una sincronización o copia de seguridad. Asegúrate de tener una copia de seguridad antes de eliminarlos. Los archivos GPX, los subdirectorios y el archivo de base de datos autoexportado (si existe) no se eliminarán. La ruta del directorio de exportación/importación es:</string>
-    <string name="activity_DB_clean_export_directory_warning_title">¿Eliminar archivos en el directorio de exportación/importación\?</string>
-    <string name="activity_DB_clean_export_directory_warning_message">¿Realmente quiere eliminar los archivos del directorio de exportación/importación?</string>
-    <string name="activity_db_management_clean_export_directory_label">Eliminar archivos en el directorio de exportación/importación</string>
     <string name="activity_DB_ShowContentButton">Mostrar el contenido del directorio de exportación/importación</string>
     <string name="activity_data_management_directory_content_title">Exportar/Importar el contenido del directorio</string>
     <string name="dbmanagementactivity_export_confirmation">¿Exportar datos realmente\? Los datos de actividad previamente exportados (si los hay) y las preferencias se sobrescribirán.</string>
@@ -1376,12 +1364,9 @@
     <string name="pref_device_action_fitness_app_control_stop">Detener el seguimiento en la aplicación de fitness</string>
     <string name="pref_title_opentracks_packagename">Nombre del paquete OpenTracks</string>
     <string name="pref_summary_opentracks_packagename">Se usa para iniciar/detener la grabación del trayecto GPS en la aplicación externa de fitnes.</string>
-    <string name="activity_db_management_autoexport_enabled_yes">La autoexportación está activada.</string>
-    <string name="activity_db_management_autoexport_enabled_no">La autoexportación no está activada.</string>
     <string name="activity_db_management_autoexport_scheduled_yes">La autoexportación ha sido programada (originalmente) para %1$s</string>
     <string name="activity_db_management_autoexport_scheduled_no">La autoexportación no ha sido programada.</string>
     <string name="watchface_dialog_pre_setting_position">preconfigurando la posición a %s</string>
-    <string name="autoExport_lastTime_label">Última autoexportación: %1$s</string>
     <string name="activity_db_management_autoexport_location">No se ha podido entender la ubicación. Probablemente un problema del nuevo sistema de permisos de Android. Lo más probable es que la autoexportación no funcione ahora.</string>
     <string name="watchface_setting_light_up_on_notification">Encender al recibir una notificación nueva</string>
     <string name="menuitem_email">Correo electrónico</string>
@@ -1633,7 +1618,6 @@
     <string name="menuitem_sun_moon">Sol y luna</string>
     <string name="menuitem_brightness">Brillo</string>
     <string name="menuitem_unknown_app">Desconocido (%s)</string>
-    <string name="share_log_not_enabled_message">Primero debe activar el registro en Configuración ▸ Escribir archivos de registro</string>
     <string name="quick_alarm_description">Alerta desde el dispositivo</string>
     <string name="pref_title_lower_button_short_press_action">Acción de pulsación corta del botón inferior</string>
     <string name="menuitem_todo">Tareas pendientes</string>

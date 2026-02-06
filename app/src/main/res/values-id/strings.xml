@@ -44,12 +44,10 @@
     <string name="title_activity_fw_app_insaller">Penginstal FW / Aplikasi</string>
     <string name="prefs_autoremove_message">Hapus notifikasi SMS secara otomatis</string>
     <string name="fw_upgrade_notice">Anda akan memasang %s.</string>
-    <string name="title_activity_calblacklist">Kalender yang diblacklist</string>
     <string name="whitelist_all_for_notifications">Whitelist untuk semua notifikasi</string>
     <string name="blacklist_all_for_notifications">Blacklist untuk semua notifikasi</string>
     <string name="app_move_to_top">Pindah ke atas</string>
     <string name="app_configure">Konfigurasi</string>
-    <string name="appmanager_weather_install_provider">Pasang aplikasi notifikasi Cuaca</string>
     <string name="appmanager_weather_deactivate">Nonaktifkan aplikasi Sistem Cuaca</string>
     <string name="appmanager_weather_activate">Aktifkan aplikasi Sistem Cuaca</string>
     <string name="appmanager_hrm_deactivate">Nonaktifkan HRM</string>
@@ -386,7 +384,6 @@
     <string name="activity_prefs_chart_min_steps_per_minute_for_run">Langkah per menit minimal untuk mendeteksi lari</string>
     <string name="activity_prefs_chart_min_session_length">Panjang aktivitas minimal (menit)</string>
     <string name="activity_prefs_chart_min_steps_per_minute">Langkah per detik minimal untuk mendeteksi aktivitas</string>
-    <string name="activity_prefs_sleep_duration">Durasi tidur yang diinginkan dalam jam</string>
     <string name="DEVINFO_HR_VER">"HR: "</string>
     <string name="updatefirmwareoperation_update_in_progress">Sedang flash perangkat tegar</string>
     <string name="error_creating_directory_for_logfiles">Kesalahan membuat direktori untuk berkas catatan: %1$s</string>
@@ -395,8 +392,6 @@
     <string name="updatefirmwareoperation_firmware_not_sent">Firmware belum dikirim</string>
     <string name="activity_db_management_autoexport_scheduled_yes">Ekspor otomatis telah dijadwalkan (sebelumnya) untuk %1$s</string>
     <string name="Delete">Hapus</string>
-    <string name="activity_db_management_autoexport_enabled_no">Ekspor otomatis tidak diaktifkan.</string>
-    <string name="activity_db_management_autoexport_explanation">Lokasi ekspor otomatis basis data telah ditetapkan ke:</string>
     <string name="pref_title_setup_bt_pairing">Aktifkan penyandingan Bluetooth</string>
     <string name="pref_summary_setup_bt_pairing">Nonaktifkan ini jika Anda mengalami masalah menghubung</string>
     <string name="miband2_prefs_timeformat">Mi2: Format waktu</string>
@@ -442,7 +437,6 @@
     <string name="activity_filter_from_placeholder">masa lalu yang jauh</string>
     <string name="averageSpeed">Kecepatan Rata-Rata</string>
     <string name="set">Tetapkan</string>
-    <string name="device_requires_key">KUNCI DIBUTUHKAN, TEKAN LAMA UNTUK MEMASUKKAN</string>
     <string name="fossil_hr_new_action">Tindakan baru</string>
     <string name="pref_summary_canned_messages_set">Kirim pesan yang diatur di bawah ke perangkat Anda</string>
     <string name="watchface_dialog_title_set_name">Tetapkan nama wajah jam</string>
@@ -525,7 +519,6 @@
     <string name="toast_app_must_not_be_selected">Aplikasi harus tidak dipilih untuk diatur</string>
     <string name="watchface_setting_power_saving_display">Nonaktifkan pembaruan tampilan saat gelang mati</string>
     <string name="pref_title_touch_volume">Volume</string>
-    <string name="activity_db_management_autoexport_label">Ekspor Otomatis</string>
     <string name="error_background_service">Gagal memulai layanan latar belakang</string>
     <string name="activity_filter_apply_filter">Terapkan Saringan</string>
     <string name="addto_filter">Tambahkan ke saringan</string>
@@ -559,7 +552,6 @@
     <string name="pref_media_volumedown">Volume Bawah</string>
     <string name="steps_streaks_total_steps_hint_totals">Jumlah langkah yang telah direkam</string>
     <string name="step_streak_average_steps_hint">Langkah per hari runtunan rata-rata</string>
-    <string name="share_log_not_enabled_message">Anda harus mengaktifkan pencatatan dahulu di Pengaturan - Tulis berkas catatan</string>
     <string name="totalStride">Jumlah langkah</string>
     <string name="bpm">bpm</string>
     <string name="Strokes">Gaya</string>
@@ -847,9 +839,6 @@
 \n 
 \nPeringatan: menekan lama pada tombol atas ketika sebuah wajah jam dari aplikasi Fossil resmi terpasang akan juga mengubah antara menampilkan/menyembunyikan widget.</string>
     <string name="activity_DB_test_export_button">Jalankan Ekspor Otomatis Sekarang</string>
-    <string name="activity_db_management_clean_export_directory_label">Hapus file dalam direktori Ekspor/Impor</string>
-    <string name="activity_DB_clean_export_directory_warning_title">Hapus berkas dalam direktori Ekspor/Impor\?</string>
-    <string name="activity_DB_clean_export_directory_warning_message">Benar-benar ingin hapus berkas dalam direktori Ekspor/Impor\?</string>
     <string name="pebble_pairing_hint">Sebuah dialog penyandingan akan muncul di perangkat Android Anda. Jika tidak, lihat dalam laci notifikasi dan terima permintaan penyandingan. Juga terima di Pebble Anda setelah itu.</string>
     <string name="mi2_dnd_automatic">Otomatis (deteksi tidur)</string>
     <string name="activity_type_activity">Aktivitas</string>
@@ -900,17 +889,9 @@
     <string name="reminder_message">Pesan</string>
     <string name="reminder_time_every_year">%1$s, setiap tahun</string>
     <string name="chart_no_data_synchronize">Tidak ada data. Sinkron perangkat\?</string>
-    <string name="activity_db_management_clean_export_directory_text">Berkas yang diekspor dalam direktori Ekspor/Impor dapat diakses oleh aplikasi apa pun di perangkat. Anda mungkin ingin menghapus berkasi ini setelah penyinkronan atau pencadangan. Pastikan untuk memiliki cadangan sebelum menghapusnya. Berkas GPX, subdirektori dan berkas basis data yang diekspor secara otomatis (jika ada) tidak akan dihapus. Jalur ke direktori Ekspor/Impor adalah:</string>
     <string name="dismiss">Abaikan</string>
     <string name="unit_metric">Metrik</string>
     <string name="dbmanagementactivity_export_finished">Penghapusan selesai</string>
-    <string name="weather_notification_label">Pastikan kulit ini diaktifkan dalam aplikasi Notifikasi Cuaca untuk mendapatkan informasi cuaca di Pebble Anda. 
-\n 
-\nTidak ada pengaturan yang dibutuhkan di sini. 
-\n 
-\nAnda dapat mengaktifkan aplikasi cuaca sistem dari Pebble Anda dari pengelola aplikasi. 
-\n 
-\nWajah jam yang didukung akan menampilkan cuaca secara otomatis.</string>
     <string name="title_activity_vibration">Getaran</string>
     <string name="kind_resources">Sumber daya</string>
     <string name="kind_app">Aplikasi</string>
@@ -1004,7 +985,6 @@
     <string name="spanish">Spanyol</string>
     <string name="norwegian_bokmal">Bokmål Norwegia</string>
     <string name="pref_title_pebble_health_store_raw">Simpan rekaman mentah dalam basis data</string>
-    <string name="activity_db_management_merge_old_title">Penghapusan basis data lawas</string>
     <string name="activity_type_elliptical">Elips</string>
     <string name="share">Bagikan</string>
     <string name="device_is_currently_bonded">SUDAH DIJALIN</string>
@@ -1067,7 +1047,6 @@
     <string name="seconds_12">12 detik</string>
     <string name="seconds_13">13 detik</string>
     <string name="seconds_14">14 detik</string>
-    <string name="autoExport_lastTime_label">Ekspor otomatis terakhir: %1$s</string>
     <string name="activity_type_soccer">Sepak bola</string>
     <string name="activity_type_climbing">Memanjat</string>
     <string name="kind_watchface">Muka jam</string>
@@ -1138,7 +1117,6 @@
     <string name="prefs_always_on_display">Layar Selalu Nyala</string>
     <string name="prefs_password_summary">Kunci gelang dengan sebuah kata sandi ketika dilepaskan dari pergelangan</string>
     <string name="on">Nyala</string>
-    <string name="activity_db_management_autoexport_enabled_yes">Ekspor otomatis diaktifkan.</string>
     <string name="activity_db_management_autoexport_scheduled_no">Ekspor otomatis belum dijadwalkan.</string>
     <string name="activity_db_management_autoexport_location">Lokasi tidak dapat dimengerti. Kemungkinan sistem perizinan Anda yang lebih baru. Kemungkinan ekspor otomatis tidak bekerja sekarang.</string>
     <string name="controlcenter_get_heartrate_measurement">Dapatkan pengukuran detak jantung</string>

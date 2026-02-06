@@ -8,12 +8,10 @@
     <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>
     <string name="fw_upgrade_notice">Spremate se instalirati %s.</string>
     <string name="title_activity_fw_app_insaller">Program za instalaciju FW-a/aplikacija</string>
-    <string name="title_activity_calblacklist">Kalendari na popisu nedopuštenih</string>
     <string name="whitelist_all_for_notifications">Sve obavijesti stavi na popis dopuštenih</string>
     <string name="blacklist_all_for_notifications">Sve obavijesti stavi na popis nedopuštenih</string>
     <string name="app_move_to_top">Premjesti na vrh</string>
     <string name="app_configure">Konfiguriraj</string>
-    <string name="appmanager_weather_install_provider">Instalirajte aplikaciju Weather Notification</string>
     <string name="appmanager_weather_deactivate">Deaktivirajte sistemsku aplikaciju Vrijeme</string>
     <string name="appmanager_weather_activate">Aktivirajte sistemsku aplikaciju Vrijeme</string>
     <string name="appmanager_hrm_deactivate">Deaktiviraj HRM</string>
@@ -33,7 +31,6 @@
     <string name="dbmanagementactivity_database_successfully_deleted">Podaci izbrisani.</string>
     <string name="dbmanagementactivity_really_delete_entire_db">Stvarno izbrisati cijelu bazu podataka\? Svi vaši podaci o aktivnostima i podaci o vašim uređajima bit će izgubljeni.</string>
     <string name="dbmanagementactivity_delete_activity_data_title">Izbrisati podatke aktivnosti\?</string>
-    <string name="activity_db_management_merge_old_title">Brisanje naslijeđene baze podataka</string>
     <string name="appmananger_app_delete_cache">Izbriši i ukloni iz predmemorije</string>
     <string name="debugactivity_really_factoryreset">Vraćanjem na tvorničke postavke izbrisat će se svi podaci s povezanog uređaja (ako je podržano). Xiaomi/Huami uređaji također mijenjaju Bluetooth MAC adresu, tako da se pojavljuju kao novi uređaji za Gadgetbridge.</string>
     <string name="appmananger_app_delete">Izbriši</string>
@@ -234,7 +231,6 @@
     <string name="error_background_service">Pokretanje pozadinske usluge nije uspjelo</string>
     <string name="error_background_service_reason_truncated">Pokretanje pozadinske usluge nije uspjelo jer…</string>
     <string name="device_is_currently_bonded">VEĆ POVEZANO</string>
-    <string name="device_requires_key">POTREBAN JE KLJUČ, PRITISNI ZA UNOS</string>
     <string name="error_background_service_reason">Pokretanje pozadinske usluge nije uspjelo zbog iznimke – Pritisni ovdje za više informacija.\n\nGreška:</string>
     <string name="error_retrieving_devices_database">Pogreška prilikom dohvaćanja uređaja iz baze podataka</string>
     <string name="distanceMeters">Udaljenost</string>
@@ -884,7 +880,6 @@
     <string name="activity_prefs_chart_min_session_length">Minimalna duljina aktivnosti (minute)</string>
     <string name="authenticating">Provjera autentičnosti</string>
     <string name="authentication_required">Potrebna je provjera autentičnosti</string>
-    <string name="activity_prefs_sleep_duration">Željeno trajanje spavanja u satima</string>
     <string name="device_fw">Firmware verzija: %1$s</string>
     <string name="error_creating_directory_for_logfiles">Pogreška pri izradi direktorija za datoteke zapisa: %1$s</string>
     <string name="updatefirmwareoperation_update_in_progress">Flashanje firmware</string>
@@ -896,8 +891,6 @@
     <string name="dbmanagementactivity_overwrite_database_confirmation">Stvarno prepisati trenutne podatke? Svi vaši podaci trenutačne aktivnosti (ako ih ima), uređaji i postavke će se prepisati.</string>
     <string name="dbmanagementactivity_import_successful">Uvezeno.</string>
     <string name="dbmanagementactivity_db_deletion_failed">Brisanje baze podataka nije uspjelo.</string>
-    <string name="activity_db_management_autoexport_explanation">Lokacija automatskog izvoza baze podataka postavljena je na:</string>
-    <string name="activity_db_management_autoexport_label">Automatski izvoz</string>
     <string name="activity_DB_ExportButton">Izvoz podataka</string>
     <string name="activity_DB_import_button">Uvoz podataka</string>
     <string name="activity_DB_test_export_button">Pokreni automatski izvoz sada</string>
@@ -907,17 +900,8 @@
     <string name="activity_db_management_empty_db_warning">Upozorenje! Pritiskom na ovaj gumb izbrisat ćete svoju bazu podataka i početi ispočetka.</string>
     <string name="Cancel">Odustani</string>
     <string name="ok">U redu</string>
-    <string name="activity_DB_clean_export_directory_warning_message">Stvarno izbrisati datoteke u direktoriju za izvoz/uvoz\?</string>
-    <string name="activity_db_management_clean_export_directory_text">Izvezenim datotekama u direktoriju za izvoz/uvoz dostupna je svaka aplikacija na vašem uređaju. Možda biste željeli ukloniti ove datoteke nakon sinkronizacije ili sigurnosne kopije. Obavezno napravite sigurnosnu kopiju prije nego što ih izbrišete. GPX datoteke, poddirektoriji i automatski izvezena datoteka baze podataka (ako postoje) neće se izbrisati. Put do direktorija za izvoz/uvoz je:</string>
     <string name="title_activity_pebble_pairing">Pebble uparivanje</string>
     <string name="pebble_pairing_hint">Na vašem Android uređaju pojavit će se dijaloški okvir za uparivanje. Ako ne, pogledajte u ladicu s obavijestima i prihvatite zahtjev za uparivanje. Prihvatite to i na svom Pebbleu nakon toga.</string>
-    <string name="weather_notification_label">Provjerite je li ovaj izgled omogućen u aplikaciji Weather Notification da biste dobili informacije o vremenu na vašem Pebbleu.
-\n
-\nOvdje nije potrebna konfiguracija.
-\n
-\nMožete omogućiti sistemsku aplikaciju za vremensku prognozu vašeg Pebblea iz upravljanja aplikacijom.
-\n
-\nPodržani brojčanici će automatski prikazati vrijeme.</string>
     <string name="activity_web_view">Aktivnost web-prikaza</string>
     <string name="StringUtils_sender">(%1$s)</string>
     <string name="find_device_you_found_it">Pronašli ste!</string>
@@ -1174,8 +1158,6 @@
     <string name="dbmanagementactivity_overwrite">Prepiši</string>
     <string name="set">Postavi</string>
     <string name="activity_DB_ShowContentButton">Prikaži sadržaj direktorija za izvoz/uvoz</string>
-    <string name="activity_db_management_clean_export_directory_label">Izbrišite datoteke u direktoriju za izvoz/uvoz</string>
-    <string name="activity_DB_clean_export_directory_warning_title">Želite li izbrisati datoteke u direktoriju za izvoz/uvoz\?</string>
     <string name="unit_metric">Metrički</string>
     <string name="unit_imperial">Imperial</string>
     <string name="timeformat_24h">24H</string>
@@ -1462,9 +1444,6 @@
     <string name="pref_anc_optimizer_state_pressure">Atmosferski tlak</string>
     <string name="sony_anc_optimizer_status_analyzing">Analiziranje …</string>
     <string name="pref_title_notifications_generic_settings">Postavke obavijesti za Android</string>
-    <string name="autoExport_lastTime_label">Zadnji automatski izvoz: %1$s</string>
-    <string name="activity_db_management_autoexport_enabled_yes">Automatski izvoz je deaktiviran.</string>
-    <string name="activity_db_management_autoexport_enabled_no">Automatski izvoz nije aktiviran.</string>
     <string name="activity_db_management_autoexport_scheduled_yes">Automatski izvoz je (izvorno) planiran za %1$s</string>
     <string name="activity_db_management_autoexport_scheduled_no">Automatski izvoz nije planiran.</string>
     <string name="sony_anc_optimize_title">Optimiraj</string>

@@ -27,7 +27,6 @@
     <string name="app_configure">Configurează</string>
     <string name="blacklist_all_for_notifications">Blochează toate notificările</string>
     <string name="whitelist_all_for_notifications">Permite toate notificările</string>
-    <string name="title_activity_calblacklist">Calendare blocate</string>
     <string name="title_activity_fw_app_insaller">Instalare firmware</string>
     <string name="fw_multi_upgrade_notice">Ești pe punctul de a instala firmware-ul %1$s si %2$s, În locul celor deja instalate pe Mi Band.</string>
     <string name="miband_firmware_known">Firmware-ul a fost testat și este compatibil cu Gadgetbridge.</string>
@@ -65,7 +64,6 @@
     <string name="appmanager_installed_watchfaces">Cadrane instalate</string>
     <string name="appmananger_app_delete">Șterge</string>
     <string name="appmanager_app_openinstore">Caută in magazinul Pebble</string>
-    <string name="appmanager_weather_install_provider">Instalează aplicația Notificări Meteo</string>
     <string name="app_move_to_top">Mută la început</string>
     <string name="fw_upgrade_notice">Ești pe punctul de a instala firmware-ul %s.</string>
     <string name="fw_upgrade_notice_amazfitbip">Ești pe punctul de a instala firmware-ul %s pe Amazfit Bip.
@@ -956,13 +954,6 @@
     <string name="dateformat_date_time">Timp și dată</string>
     <string name="prefs_disconnect_notification_summary">Notificare pe dispozitiv când este deconectat de la Bluetooth.</string>
     <string name="mi2_prefs_button_actions">Acțiunile butonului</string>
-    <string name="weather_notification_label">Asigură-te că acest skin este activat în aplicația Notificare vreme pentru a obține informații despre vreme pe Pebble.
-\n
-\nNu este necesară nicio configurație aici.
-\n
-\nPoți activa aplicația meteo de sistem a Pebble din gestionarea aplicației.
-\n
-\nCadranele de ceas acceptate vor afișa automat vremea.</string>
     <string name="button_watchface_select_image">Schimbă imaginea de fundal</string>
     <string name="watchface_widget_type_calories">Calorii</string>
     <string name="watchface_widget_type_2nd_tz">al 2-lea fus orar</string>

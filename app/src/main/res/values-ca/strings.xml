@@ -35,10 +35,8 @@
     <string name="appmanager_hrm_deactivate">Desactiva el seguiment de ritme cardíac</string>
     <string name="appmanager_weather_activate">Activa l\'aplicació del temps del sistema</string>
     <string name="appmanager_weather_deactivate">Desactiva l\'aplicació del temps del sistema</string>
-    <string name="appmanager_weather_install_provider">Instal·la l\'aplicació del temps del sistema</string>
     <string name="app_configure">Configura</string>
     <string name="app_move_to_top">Mou a la part superior</string>
-    <string name="title_activity_calblacklist">Calendaris bloquejats</string>
     <string name="title_activity_fw_app_insaller">Instal·lador de microprogramari i aplicacions</string>
     <string name="fw_upgrade_notice">Sou a punt d\'instal·lar el %s.</string>
     <string name="fw_upgrade_notice_amazfitbip">Esteu a punt d\'instal·lar el microprogramari %s en el vostre Amazfit Bip.
@@ -372,7 +370,6 @@
     <string name="authentication_required">Es requereix autenticació</string>
     <string name="appwidget_text">Zzz</string>
     <string name="add_widget">Afegeix un giny</string>
-    <string name="activity_prefs_sleep_duration">Durada preferida del son en hores</string>
     <string name="appwidget_setting_alarm">S\'ha fixat una alarma a les %1$02d:%2$02d</string>
     <string name="device_hw">Revisió del maquinari: %1$s</string>
     <string name="device_fw">Versió del microprogramari: %1$s</string>
@@ -438,7 +435,6 @@
 \n *.gpx - gravacions GPS
 \n *.log - fitxers de registre
 \nTrobeu els vostres fitxers exportats (o deseu els fitxers que volgueu importar) aquí:</string>
-    <string name="activity_db_management_merge_old_title">Esborra la base de dades antiga</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">No es pot accedir al camí d\'exportació. Si us plau, contacteu els desenvolupadors.</string>
     <string name="dbmanagementactivity_exported_to">S\'ha exportat a: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Hi ha hagut un error en esborrar la base de dades: %1$s</string>
@@ -462,13 +458,6 @@
     <string name="title_activity_vibration">Vibració</string>
     <string name="title_activity_pebble_pairing">Aparellament amb Pebble</string>
     <string name="pebble_pairing_hint">Apareixerà un diàleg d\'aparellament al vostre aparell Android. Si no, cerqueu-lo entre les notificacions i accepteu la petició d\'aparellament. Després accepteu l\'aparellament també al Pebble.</string>
-    <string name="weather_notification_label">Assegureu-vos que aquesta aparença està activada en l\'aplicació de notificació del temps per obtenir informació del temps al vostre Pebble.
-\n
-\nAquí no cal configurar res.
-\n
-\nPodeu activar l\'aplicació del temps del sistema del vostre Pebble des de la gestió d\'aplicacions.
-\n
-\nLes caràtules compatibles mostraran el temps automàticament.</string>
     <string name="pref_title_setup_bt_pairing">Activa l\'aparellament per Bluetooth</string>
     <string name="pref_summary_setup_bt_pairing">Desactiveu això si teniu problemes de connexió</string>
     <string name="unit_metric">Sistema mètric</string>
@@ -683,7 +672,6 @@
     <string name="pref_title_expose_hr">Accés a tercers a freqüència cardíaca en temps real</string>
     <string name="pref_title_use_custom_font">Utilitza un tipus de lletra personalitzat</string>
     <string name="pref_summary_use_custom_font">Activa-ho si el vostre dispositiu inclou microprogramari de tipus de lletra personalitzat amb suport per a emojis</string>
-    <string name="activity_db_management_autoexport_label">Exportació automàtica</string>
     <string name="activity_DB_ExportButton">Exporta les dades</string>
     <string name="activity_DB_import_button">Importa les dades</string>
     <string name="activity_DB_test_export_button">Executa l\'exportació automàtica ara</string>
@@ -739,7 +727,6 @@
     <string name="prefs_hr_alarm_activity">Alarma de freqüència cardíaca durant activitat esportiva</string>
     <string name="pref_charts_range_on">El rang dels gràfics està configurat a un mes</string>
     <string name="pref_charts_range_off">El rang dels gràfics està configurat a una setmana</string>
-    <string name="activity_db_management_autoexport_explanation">La ubicació de l\'exportació automàtica s\'ha definit a:</string>
     <string name="activity_db_management_empty_DB">Buida la base de dades</string>
     <string name="activity_db_management_exportimport_label">Exportar i importar</string>
     <string name="activity_db_management_empty_db_warning">Atenció! En prémer aquest botó esborrareu tota la base de dades i començareu de zero.</string>
@@ -936,7 +923,6 @@
     <string name="descentMeters">En baixada</string>
     <string name="ascentMeters">En pujada</string>
     <string name="distanceMeters">Distància</string>
-    <string name="device_requires_key">ES REQUEREIX CLAU</string>
     <string name="require_location_provider">La ubicació ha d\'estar activada</string>
     <string name="about_links">Enllaços</string>
     <string name="about_activity_title_generic">Quant a Gadgetbridge</string>
@@ -1048,9 +1034,6 @@
     <string name="menuitem_goal">Objectiu d\'activitat</string>
     <string name="activity_type_strength_training">Entrenament de força</string>
     <string name="dbmanagementactivity_export_finished">Supressió finalitzada</string>
-    <string name="activity_DB_clean_export_directory_warning_message">De debò voleu esborrar els fitxers del directori d\'exportació/importació\?</string>
-    <string name="activity_DB_clean_export_directory_warning_title">Voleu esborrar els fitxers del directori d\'exportació/importació\?</string>
-    <string name="activity_db_management_clean_export_directory_label">Esborra els fitxers del directori d\'exportació/importació</string>
     <string name="activity_DB_ShowContentButton">Mostra el contingut del directori d\'exportació/importació</string>
     <string name="activity_data_management_directory_content_title">Exporta/Importa el contingut del directori</string>
     <string name="dbmanagementactivity_export_data_title">Voleu exportar les dades\?</string>
@@ -1304,9 +1287,6 @@
     <string name="prefs_galaxy_touch_options">Opcions tàctils</string>
     <string name="pref_activity_recognition_mode_none">cap</string>
     <string name="prefs_ambient_volume">Volum ambiental</string>
-    <string name="activity_db_management_autoexport_enabled_yes">L\'exportació automàtica està activada.</string>
-    <string name="autoExport_lastTime_label">Última exportació automàtica: %1$s</string>
-    <string name="activity_db_management_autoexport_enabled_no">L\'exportació automàtica no està activada.</string>
     <string name="activity_db_management_autoexport_scheduled_yes">L\'exportació automàtica està programada (originalment) per a %1$s</string>
     <string name="activity_db_management_autoexport_scheduled_no">L\'exportació automàtica no ha sigut programada.</string>
     <string name="menuitem_nothing">Res</string>
@@ -1350,7 +1330,6 @@
     <string name="kind_agps_bundle">Paquet AGPS</string>
     <string name="pref_title_lower_button_function_long">Botó inferior llarg</string>
     <string name="activity_db_management_autoexport_location">No s\'ha entés la ubicació. És possible que sigui un problema de permissos del nou sistema Android. El més probable és que l\'autoexportació de dades no funcioni ara.</string>
-    <string name="activity_db_management_clean_export_directory_text">Els fitxers exportats a la carpeta d\'Exportar/Importar poden ser llegits per qualsevol aplicació al teu dispositiu. És possible que vulguis suprimir aquests fixters després de sincronitzar o fer una copia de seguretat. Assegura\'t de fer una copia abans d\'esborrar-los. Els fitxers GPX, les subcarpetes i la base de dades auto-exportada (si existeix) no s\'esborrarà. La carpeta d\'Exportar/Importar es troba a:</string>
     <string name="companiondevice_pairing">Emparellament de dispositius de companyia</string>
     <string name="qhybrid_pref_summary_external_intents">Permetre que altres aplicacions d\'Android puguin sobre/escriure fitxers</string>
     <string name="averageStride">Mitjana d\'avançada</string>

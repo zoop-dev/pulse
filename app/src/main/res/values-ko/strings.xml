@@ -203,7 +203,6 @@
     <string name="authentication_required">인증 필요</string>
     <string name="appwidget_text">Zzz</string>
     <string name="add_widget">위젯 추가</string>
-    <string name="activity_prefs_sleep_duration">선호하는 수면 시간(시간)</string>
     <string name="appwidget_setting_alarm">%1$02d:%2$02d에 알람 설정 중</string>
     <string name="device_hw">하드웨어 리비전: %1$s</string>
     <string name="device_fw">펌웨어 버전: %1$s</string>
@@ -235,9 +234,7 @@
     <string name="appmanager_hrm_deactivate">심박수 모니터링(HRM) 비활성화</string>
     <string name="appmanager_weather_activate">시스템 날씨 앱 활성화</string>
     <string name="appmanager_weather_deactivate">시스템 날씨 앱 비활성화</string>
-    <string name="appmanager_weather_install_provider">날씨 알림 앱 설치</string>
     <string name="app_move_to_top">맨 위로 이동</string>
-    <string name="title_activity_calblacklist">차단된 캘린더</string>
     <string name="fw_upgrade_notice_amazfitbip">Amazfit Bip에 %s 펌웨어를 설치합니다.\n\n반드시 .fw, .res, .gps 파일 순서로 설치하세요. .fw 파일 설치 후 시계가 재부팅됩니다.\n\n참고: 이전에 설치한 파일과 동일한 경우 .res 및 .gps 파일은 설치할 필요가 없습니다.\n\n진행에 따른 모든 책임은 본인에게 있습니다!</string>
     <string name="pref_title_general_autostartonboot">자동으로 시작</string>
     <string name="pref_title_language">언어</string>
@@ -374,7 +371,6 @@
     <string name="action_db_management">데이터 관리</string>
     <string name="title_activity_db_management">데이터 관리</string>
     <string name="activity_db_management_import_export_explanation">내보내기/가져오기 작업은 기기의 다음 디렉토리 경로를 사용합니다. 이 디렉토리는 다른 안드로이드 앱과 컴퓨터에서 접근할 수 있습니다. Gadgetbridge를 제거하면 이 디렉토리와 포함된 모든 파일이 삭제된다는 점에 유의하세요. 데이터 포함 내역:\n Export_preference - 전역 설정\n Export_preference_MAC - 기기별 설정\n Gadgetbridge - 기기 및 활동 데이터베이스\n Gadgetbridge_date - 특정 날짜에 내보낸 데이터베이스\n *.gpx - GPS 기록\n *.log - 로그 파일\n내보낸 파일을 찾거나 가져올 파일을 다음 위치에 두세요:</string>
-    <string name="activity_db_management_merge_old_title">레거시 데이터베이스 삭제</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">내보낼 경로에 접근할 수 없습니다. 개발자에게 연락하세요.</string>
     <string name="dbmanagementactivity_exported_to">%1$s 로 내보냈음</string>
     <string name="dbmanagementactivity_error_exporting_db">DB 내보내기 오류: %1$s</string>
@@ -397,13 +393,6 @@
     <string name="title_activity_vibration">진동</string>
     <string name="title_activity_pebble_pairing">Pebble 페어링</string>
     <string name="pebble_pairing_hint">안드로이드 기기에 페어링 대화상자가 나타납니다. 나타나지 않으면 알림 창에서 페어링 요청을 수락하세요. 그 다음 Pebble에서도 수락하세요.</string>
-    <string name="weather_notification_label">Pebble에 날씨 정보를 얻기 위해 이 스킨이 Weather Notification 앱에서 활성화되었는지를 확인하세요.
-\n
-\n다른 설정은 필요하지 않습니다.
-\n
-\nPebble의 시스템 날씨 앱을 앱 관리에서 사용할 수 있습니다.
-\n
-\n이를 지원하는 워치페이스는 자동으로 날씨를 표시할 것입니다.</string>
     <string name="pref_title_setup_bt_pairing">블루투스 페어링 활성화</string>
     <string name="pref_summary_setup_bt_pairing">연결에 문제가 있는 경우 이 설정을 비활성화하세요.</string>
     <string name="unit_metric">미터법</string>
@@ -1416,13 +1405,8 @@
     <string name="dbmanagementactivity_error_cleaning_export_directory">내보내기 디렉토리 %1$s에서 파일 삭제 오류</string>
     <string name="dbmanagementactivity_export_data_title">데이터를 내보낼까요?</string>
     <string name="dbmanagementactivity_export_confirmation">정말로 데이터를 내보낼까요? 이전에 내보낸 활동 데이터(있는 경우)와 설정이 덮어쓰기됩니다.</string>
-    <string name="activity_db_management_autoexport_explanation">데이터베이스 자동 내보내기 위치가 다음으로 설정되었습니다:</string>
-    <string name="autoExport_lastTime_label">마지막 자동 내보내기: %1$s</string>
-    <string name="activity_db_management_autoexport_enabled_yes">자동 내보내기가 활성화되었습니다.</string>
-    <string name="activity_db_management_autoexport_enabled_no">자동 내보내기가 활성화되지 않았습니다.</string>
     <string name="activity_db_management_autoexport_scheduled_yes">자동 내보내기가 원래 %1$s에 예약되었습니다.</string>
     <string name="activity_db_management_autoexport_scheduled_no">자동 내보내기가 예약되지 않았습니다.</string>
-    <string name="activity_db_management_autoexport_label">자동 내보내기</string>
     <string name="activity_db_management_autoexport_location">위치를 이해할 수 없습니다. 최신 안드로이드 권한 시스템 문제일 가능성이 높습니다. 자동 내보내기가 지금 작동하지 않을 수 있습니다.</string>
     <string name="activity_DB_ExportButton">데이터 내보내기</string>
     <string name="activity_DB_import_button">데이터 가져오기</string>
@@ -1441,10 +1425,6 @@
     <string name="set">설정</string>
     <string name="activity_data_management_directory_content_title">내보내기/가져오기 디렉토리 내용</string>
     <string name="activity_DB_ShowContentButton">내보내기/가져오기 디렉토리 내용 표시</string>
-    <string name="activity_db_management_clean_export_directory_label">내보내기/가져오기 디렉토리의 파일 삭제</string>
-    <string name="activity_DB_clean_export_directory_warning_title">내보내기/가져오기 디렉토리의 파일을 삭제할까요?</string>
-    <string name="activity_DB_clean_export_directory_warning_message">정말로 내보내기/가져오기 디렉토리의 파일을 삭제할까요?</string>
-    <string name="activity_db_management_clean_export_directory_text">내보내기/가져오기 디렉토리에 있는 내보낸 파일은 기기의 모든 앱에서 접근할 수 있습니다. 동기화 또는 백업 후 이 파일을 제거하는 것이 좋습니다. 삭제하기 전에 백업이 있는지 확인하세요. GPX 파일, 하위 디렉토리 및 자동 내보내기된 데이터베이스 파일(있는 경우)은 삭제되지 않습니다. 내보내기/가져오기 디렉토리의 경로는 다음과 같습니다:</string>
     <string name="dbmanagementactivity_export_finished">삭제 완료</string>
     <string name="dateformat_day_month">일, 월</string>
     <string name="dateformat_month_day">월, 일</string>
@@ -1913,7 +1893,6 @@
     <string name="zepp_os_sun_moon_utc_title">일출/일몰 시간을 UTC로 전송</string>
     <string name="zepp_os_sun_moon_utc_summary">시계에 일출 및 일몰 시간이 잘못 표시되는 경우 이 옵션을 활성화하세요.</string>
     <string name="yesterdays_activity">어제의 활동</string>
-    <string name="share_log_not_enabled_message">먼저 설정 - 로그 파일 쓰기에서 로깅을 활성화해야 합니다.</string>
     <string name="note">참고</string>
     <string name="weather_condition_thunderstorm_with_light_rain">가벼운 비를 동반한 뇌우</string>
     <string name="weather_condition_thunderstorm_with_rain">비를 동반한 뇌우</string>

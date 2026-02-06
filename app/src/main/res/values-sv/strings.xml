@@ -37,10 +37,8 @@
     <string name="appmanager_health_deactivate">Avaktivera</string>
     <string name="appmanager_weather_activate">Aktivera systemets väderapp</string>
     <string name="appmanager_weather_deactivate">Avaktivera systemets väderapp</string>
-    <string name="appmanager_weather_install_provider">Installera väder appen</string>
     <string name="app_move_to_top">Lägg överst</string>
     <string name="blacklist_all_for_notifications">Svartlista alla för aviseringar</string>
-    <string name="title_activity_calblacklist">Svartlistade kalendrar</string>
     <string name="title_activity_fw_app_insaller">FW/App-installerare</string>
     <string name="pref_chart_heartrate_color_red">Röd</string>
     <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>
@@ -484,7 +482,6 @@
     <string name="watchface_widget_type_steps">Steg</string>
     <string name="french">Franska</string>
     <string name="alarm_fri_short">Fre</string>
-    <string name="activity_db_management_autoexport_label">Exportera automatiskt</string>
     <string name="laps">Varv</string>
     <string name="activity_detail_duration_label">Varaktighet</string>
     <string name="seconds_m">sek/m</string>

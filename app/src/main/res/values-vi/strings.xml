@@ -193,7 +193,6 @@
     <string name="sonyswr12_settings_stamina_summary">Chế độ tiết kiệm năng lượng tắt tính năng đo nhịp tim tự động định kỳ do đó tăng thời gian làm việc</string>
     <string name="sonyswr12_settings_alarm_interval_summary">Khoảng thời gian báo động thông minh là khoảng thời gian trước khi báo động được cài đặt. Trong khoảng thời gian này, thiết bị đang cố gắng phát hiện giai đoạn ngủ nhẹ nhất để người dùng tỉnh táo</string>
     <string name="sonyswr12_settings_low_vibration">Độ rung thấp được kích hoạt</string>
-    <string name="appmanager_weather_install_provider">Cài đặt ứng dụng Thông báo thời tiết</string>
     <string name="appmanager_weather_deactivate">Vô hiệu hoá ứng dụng Thời tiết hệ thống</string>
     <string name="appmanager_weather_activate">Kích hoạt ứng dụng Thời tiết hệ thống</string>
     <string name="debugactivity_really_factoryreset">Việc khôi phục cài đặt gốc sẽ xoá tất cả dữ liệu khỏi thiết bị đã kết nối (nếu được hỗ trợ). Các thiết bị Xiaomi/Huami cũng thay đổi địa chỉ MAC của Bluetooth, nên chúng hiện ra là thiết bị mới đối với Gadgetbridge.</string>
@@ -308,7 +307,6 @@
 \nLưu ý: Bạn không cần phải cài đặt .res và .gps nếu các tệp đó giống hệt với các tệp đã cài đặt trước đó.
 \n
 \nBẠN TỰ CHỊU RỦI RO KHI TIẾP TỤC!</string>
-    <string name="title_activity_calblacklist">Các lịch đã thêm vào danh sách đen</string>
     <string name="pref_title_location_aquire">Lấy vị trí</string>
     <string name="pref_title_allow_high_mtu">Cho phép MTU cao</string>
     <string name="pref_summary_use_custom_font">Bật tuỳ chọn này nếu thiết bị của bạn có phần mềm phông chữ tuỳ chỉnh để hỗ trợ emoji</string>

@@ -61,12 +61,10 @@
     <string name="appmanager_hrm_deactivate">Деактивиране на HRM</string>
     <string name="appmanager_weather_activate">Активиране на системното приложение за прогноза на времето</string>
     <string name="appmanager_weather_deactivate">Дективиране на системното приложение за прогноза на времето</string>
-    <string name="appmanager_weather_install_provider">Инсталиране на приложението за прогноза на времето</string>
     <string name="app_configure">Конфигуриране</string>
     <string name="app_move_to_top">Преместване горе</string>
     <string name="blacklist_all_for_notifications">Блокиране на всички известия</string>
     <string name="whitelist_all_for_notifications">Разрешаване на всички известия</string>
-    <string name="title_activity_calblacklist">Блокирани Календари</string>
     <string name="title_activity_fw_app_insaller">FW/App инсталатор</string>
     <string name="fw_upgrade_notice">Ще се инсталира %s.</string>
     <string name="fw_upgrade_notice_amazfitbip">Ще се инсталира %s firmware на вашия Amazfit Bip.
@@ -490,12 +488,9 @@
     <string name="activity_DB_ExportButton">Експорт на БД</string>
     <string name="activity_DB_test_export_message">Експортиране на БД…</string>
     <string name="activity_DB_test_export_button">Стартирай авто експортиране</string>
-    <string name="activity_db_management_autoexport_explanation">Локацията за експорт на БД е:</string>
-    <string name="activity_db_management_autoexport_label">АвтоЕкспорт</string>
     <string name="activity_db_management_empty_DB">ИзпразниБД</string>
     <string name="activity_db_management_empty_db_warning">Внимание! Ако натиснете този бутон БД ще се изтрие.</string>
     <string name="activity_db_management_exportimport_label">Експорт и Импорт</string>
-    <string name="activity_prefs_sleep_duration">Време за сън в часове</string>
     <string name="activity_summaries">Активности</string>
     <string name="activity_type_activity">Активност</string>
     <string name="activity_type_biking">Колоездене</string>

@@ -40,12 +40,10 @@
     <string name="appmanager_hrm_deactivate">غیرفعال‌سازی ضربان‌سنج (HRM)</string>
     <string name="appmanager_weather_activate">فعال‌سازی برنامه‌ی هواشناسی سیستم</string>
     <string name="appmanager_weather_deactivate">غیرفعال‌سازی برنامه‌ی هواشناسی سیستم</string>
-    <string name="appmanager_weather_install_provider">نصب برنامه‌ی آگاهی (Notification) هواشناسی</string>
     <string name="app_configure">پیکربندی</string>
     <string name="app_move_to_top">انتقال به بالا</string>
     <string name="blacklist_all_for_notifications">همه را به لیست سیاه آگاهی‌ها اضافه کن</string>
     <string name="whitelist_all_for_notifications">همه را از لیست سیاه آگاهی خارج کن</string>
-    <string name="title_activity_calblacklist">رخدادهای درون لیست سیاه</string>
     <string name="title_activity_fw_app_insaller">نصب کننده‌ی فرم‌ویر (FW)/برنامه</string>
     <string name="fw_upgrade_notice">شما در حال نصب فرمور %s به جای نسخه‌ی نصب شده بر روی دستگاه Mi Band خود هستید.</string>
     <string name="fw_upgrade_notice_amazfitbip">شما در حال نصب فرمویر %s به جای نسخه‌ی نصب شده برروی دستگاه Amazfit Bip خود هستید.

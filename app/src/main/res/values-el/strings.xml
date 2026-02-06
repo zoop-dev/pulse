@@ -34,10 +34,8 @@
     <string name="appmanager_hrm_deactivate">Απενεργοποίηση μέτρησης υγείας</string>
     <string name="appmanager_weather_activate">Ενεργοποίηση Εφαρμογής Καιρού</string>
     <string name="appmanager_weather_deactivate">Απενεργοποίηση Εφαρμογής Καιρού</string>
-    <string name="appmanager_weather_install_provider">Εγκαταστείστε την εφαρμογή ειδοποίησης Καιρού</string>
     <string name="app_configure">Επιλογές</string>
     <string name="app_move_to_top">Μετακίνηση στη κορυφή</string>
-    <string name="title_activity_calblacklist">Αποκλεισμένα ημερολόγια</string>
     <string name="title_activity_fw_app_insaller">Εγκαταστάτης εφαρμογών/FW</string>
     <string name="fw_upgrade_notice">Πρόκειται να εγκαταστήσετε την έκδοση λογισμικού %s.</string>
     <string name="fw_upgrade_notice_amazfitbip">Πρόκειται να εγκαταστήστε το λογισμικό έκδοσης %s στο Amazfit Bip σας.
@@ -375,7 +373,6 @@
     <string name="authentication_required">Απαιτείται επαλήθευση ταυτότητας</string>
     <string name="appwidget_text">Ζzz</string>
     <string name="add_widget">Πρόσθεση widget</string>
-    <string name="activity_prefs_sleep_duration">Προτιμώμενος χρόνος ύπνου (σε ώρες)</string>
     <string name="appwidget_setting_alarm">Ένα ξυπνητήρι έχει οριστεί για τις %1$02d:%2$02d</string>
     <string name="device_hw">Έκδοση υλικού: %1$s</string>
     <string name="device_fw">Έκδοση λογισμικού: %1$s</string>
@@ -390,7 +387,6 @@
     <string name="action_db_management">Διαχείριση δεδομένων</string>
     <string name="title_activity_db_management">Διαχείριση δεδομένων</string>
     <string name="activity_db_management_import_export_explanation">Η λειτουργία της βάσης δεδομένων χρησιμοποιεί τον ακόλουθο φάκελο στη συσκευή σας. Ο φάκελος αυτός είναι προσπελάσιμος από άλλες εφαρμογές Android και από τον υπολογιστή. Σημειώστε, ότι αυτός ο φάκελος και όλα τα αρχεία που περιέχει διαγράφονται εάν απεγκαταστήσετε το Gadgetbridge. Τα βάση περιλαμβάνει:\nExport_preference - ρυθμίσεις εφαρμογής\nExport_preference_MAC - ρυθμίσεις συσκευών\nGadgetbridge - βάση δεδομένων συσκευών και δραστηριοτήτων\nGadgetbridge_date - βάση δεδομένων που εξήχθη σε μια ημερομηνία\n*.gpx - εγγραφές GPS\n*.log - αρχεία καταγραφής\nΕκεί θα βρείτε την βάση δεδομένων που θα εξάγετε (ή βάλτε εκεί τη βάση δεδομένων που θέλετε να εισάγετε):</string>
-    <string name="activity_db_management_merge_old_title">Διαγραφή παλιάς βάσης δεδομένων</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Δεν είναι δυνατή η πρόσβαση στον φάκελο. Παρακαλώ επικοινωνήστε με τους προγραμματιστές.</string>
     <string name="dbmanagementactivity_exported_to">Εξαγωγή στο: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Σφάλμα κατά την εξαγωγή της βάσης δεδομένων: %1$s</string>
@@ -414,13 +410,6 @@
     <string name="title_activity_vibration">Δόνηση</string>
     <string name="title_activity_pebble_pairing">Σύζευξη Pebble</string>
     <string name="pebble_pairing_hint">Ένα παράθυρο σύζευξης θα εμφανιστεί στην Abdroid συσκευή σας. Αν αυτό δεν συμβεί, δείτε στη περιοχή ειδοποιήσεων και δεχθείτε την σύζευξη. Επίσης μετά δεχθείτε την σύζευξη και στο Pebble σας.</string>
-    <string name="weather_notification_label">Βεβαιωθείτε ότι αυτό το θέμα είναι ενεργοποιημένο στην εφαρμογή του καιρού ώστε να λάβει τις πληροφορίες το Pebble.
-\n
-\nΔεν χρειάζονται εδώ ρυθμίσεις.
-\n
-\nΜπορείτε να ενεργοποιήσετε την εφαρμογή του καιρού του Pebble από τον διαχειριστή εφαρμογών.
-\n
-\nΤα watchfaces που υποστηρίζουν την εφαρμογή του καιρού, θα δείξουν τον καιρό αυτόματα.</string>
     <string name="pref_title_setup_bt_pairing">Ενεργοποίηση σύζευξης Bluetooth</string>
     <string name="pref_summary_setup_bt_pairing">Απενεργοποιήστε αυτή την επιλογή αν έχετε προβλήματα σύνδεσης</string>
     <string name="unit_metric">Μετρικό (S.I.)</string>
@@ -678,8 +667,6 @@
     <string name="pref_title_expose_hr">Πρόσβαση δεδομένων καρδιακών παλμών σε πραγματικό χρόνο από τρίτες εφαρμογές</string>
     <string name="pref_title_use_custom_font">Χρήση προσαρμοσμένης γραμματοσειράς</string>
     <string name="pref_summary_use_custom_font">Ενεργοποίηση αυτής της επιλογής σε περίπτωση που η συσκευή σας διαθέτει υποστήριξη προσαρμοσμένης γραμματοσειράς για υποστήριξη emoji</string>
-    <string name="activity_db_management_autoexport_explanation">Η τοποθεσία αυτόματης εξαγωγής βάσης δεδομένων έχει ρυθμιστεί σε:</string>
-    <string name="activity_db_management_autoexport_label">Αυτόματη εξαγωγή</string>
     <string name="activity_DB_ExportButton">Εξαγωγή δεδομένων</string>
     <string name="activity_DB_import_button">Εισαγωγή δεδομένων</string>
     <string name="activity_DB_test_export_button">Εκτέλεση αυτόματης εξαγωγής τώρα</string>
@@ -893,7 +880,6 @@
     <string name="pref_check_permission_status_summary">Ελέγξτε και ζητήστε τις άδειες που λείπουν ακόμη και όταν ενδέχεται να μην χρειάζονται άμεσα. Απενεργοποιήστε το μόνο εάν οι συσκευές σας δεν υποστηρίζουν καμία από αυτές τις λειτουργίες. Ακόμα και η μη χορήγηση μιας άδειας ενδέχεται να προκαλέσει προβλήματα!</string>
     <string name="pref_check_permission_status">Ελέγξτε την κατάσταση άδειας</string>
     <string name="error_background_service_reason">Η εκκίνηση της υπηρεσίας παρασκηνίου απέτυχε λόγω μίας εξαίρεσης ‐ πατήστε εδώ για περισσότερες πλροφορίες.\n\nΛάθος:</string>
-    <string name="device_requires_key">ΑΠΑΙΤΕΙΤΑΙ ΤΟ ΚΛΕΙΔΙ</string>
     <string name="device_is_currently_bonded">ΕΙΝΑΙ ΗΔΗ ΣΥΝΔΕΜΕΝΟ</string>
     <string name="error_background_service_reason_truncated">Η εκκίνηση της υπηρεσίας παρασκηνίου απέτυχε επειδή…</string>
     <string name="error_background_service">Αποτυχία έναρξης της υπηρεσίας παρασκηνίου</string>
@@ -1501,10 +1487,6 @@
     <string name="set">Ορισμός</string>
     <string name="activity_data_management_directory_content_title">Εξαγωγή/Εισαγωγή περιεχομένου φακέλου</string>
     <string name="activity_DB_ShowContentButton">Εμφάνιση περιεχομένου φακέλου εξαγωγής/εισαγωγής</string>
-    <string name="activity_db_management_clean_export_directory_label">Διαγραφή αρχείων στον φάκελο εξαγωγών/εισαγωγών</string>
-    <string name="activity_DB_clean_export_directory_warning_title">Διαγράψτε αρχεία στον φάκελοπ εξαγωγών/εισαγωγών;</string>
-    <string name="activity_DB_clean_export_directory_warning_message">Οριστική διαγραφή αρχείων στο φάκελο Εξαγωγών/Εισαγωγών;</string>
-    <string name="activity_db_management_clean_export_directory_text">Τα εξαγόμενα αρχεία στον φάκελο Εξαγωγών/Εισαγωγών είναι προσβάσιμα από οποιαδήποτε εφαρμογή στη συσκευή σας. Ίσως θέλετε να καταργήσετε αυτά τα αρχεία μετά το συγχρονισμό ή τη δημιουργία αντιγράφων ασφαλείας. Βεβαιωθείτε ότι έχετε ένα αντίγραφο ασφαλείας πριν τα διαγράψετε. Τα αρχεία GPX, οι υποκατάλογοι και το αρχείο βάσης δεδομένων που εξάγεται αυτόματα (εάν υπάρχει) δεν θα διαγραφούν. Η διαδρομή προς τον φάκελο Εξαγωγών/Εισαγωγών είναι:</string>
     <string name="dbmanagementactivity_export_finished">Η διαγραφή ολοκληρώθηκε</string>
     <string name="dateformat_day_month">Ημέρα, Μήνας</string>
     <string name="dateformat_month_day">Μήνας, Ημέρα</string>

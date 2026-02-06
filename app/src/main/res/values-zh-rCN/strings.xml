@@ -34,10 +34,8 @@
     <string name="appmanager_hrm_deactivate">关闭心率检测</string>
     <string name="appmanager_weather_activate">启用系统天气应用</string>
     <string name="appmanager_weather_deactivate">禁用系统天气应用</string>
-    <string name="appmanager_weather_install_provider">安装天气通知应用</string>
     <string name="app_configure">配置</string>
     <string name="app_move_to_top">移至顶部</string>
-    <string name="title_activity_calblacklist">阻止记录</string>
     <string name="title_activity_fw_app_insaller">固件/应用安装器</string>
     <string name="fw_upgrade_notice">您即将安装 %s 。</string>
     <string name="fw_upgrade_notice_amazfitbip">即将在您的跃我手表青春版(Amazfit Bip)上安装固件 %s 。
@@ -357,7 +355,6 @@
     <string name="authentication_required">需要身份验证</string>
     <string name="appwidget_text">Zzz</string>
     <string name="add_widget">添加小部件</string>
-    <string name="activity_prefs_sleep_duration">睡眠时间目标</string>
     <string name="appwidget_setting_alarm">已设置一个闹钟为 %1$02d:%2$02d</string>
     <string name="device_hw">硬件版本:%1$s</string>
     <string name="device_fw">固件版本:%1$s</string>
@@ -378,7 +375,6 @@
 \n *.gpx - GPS记录
 \n *.log - 日志文件
 \n导出后请前往此处找到这些文件（或您希望导入文件的路径）：</string>
-    <string name="activity_db_management_merge_old_title">删除旧版数据库</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">无法访问导出路径。请与开发者联系。</string>
     <string name="dbmanagementactivity_exported_to">导出到:%1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">导出数据库时出错:%1$s</string>
@@ -402,13 +398,6 @@
     <string name="title_activity_vibration">振动</string>
     <string name="title_activity_pebble_pairing">Pebble 配对中</string>
     <string name="pebble_pairing_hint">您的 Android 设备上将会弹出一个配对对话框。如果没有出现, 请查看通知栏并接受配对请求。之后, 接受你的 Pebble 配对要求。</string>
-    <string name="weather_notification_label">请确保在天气通知应用程序中启用此外观，以获取您的 Pebble 上的天气信息。 
-\n 
-\n此处不需要配置。 
-\n 
-\n启用 Pebble 上的天气应用程序可以从“应用程序管理”中获得。 
-\n 
-\n支持的表盘将会自动显示天气。</string>
     <string name="pref_title_setup_bt_pairing">启用蓝牙配对</string>
     <string name="pref_summary_setup_bt_pairing">如果连接有问题，请停用</string>
     <string name="unit_metric">公制</string>
@@ -683,8 +672,6 @@
     <string name="pref_title_expose_hr">第三方实时心率数据访问</string>
     <string name="pref_title_use_custom_font">使用自定义字体</string>
     <string name="pref_summary_use_custom_font">如果您的设备使用自定义的字体固件或表情符号支持，请启用此选项</string>
-    <string name="activity_db_management_autoexport_explanation">数据库自动导出路径已经被设置为：</string>
-    <string name="activity_db_management_autoexport_label">自动导出</string>
     <string name="activity_DB_ExportButton">导出数据</string>
     <string name="activity_DB_import_button">导入数据</string>
     <string name="activity_DB_test_export_button">立刻运行自动导出</string>
@@ -875,7 +862,6 @@
     <string name="error_exporting_device_preferences">导出设备特定首选项时遇到错误</string>
     <string name="pref_check_permission_status_summary">检查并要求尚未获得的权限即使并非立刻需要。若您的设备的确不支持此类功能，也可禁用。不进行授权可能会导致问题！</string>
     <string name="pref_check_permission_status">检查权限状态</string>
-    <string name="device_requires_key">需要密钥，长按可进入</string>
     <string name="device_is_currently_bonded">已经绑定过了</string>
     <string name="companiondevice_pairing">CompanionDevice 配对</string>
     <string name="require_location_provider">必须启动定位</string>
@@ -1074,10 +1060,6 @@
     <string name="dbmanagementactivity_export_confirmation">确定需要导出数据吗？之前导出的数据（若有）将会被覆盖。</string>
     <string name="dbmanagementactivity_export_data_title">导出数据？</string>
     <string name="dbmanagementactivity_export_finished">已删除</string>
-    <string name="activity_db_management_clean_export_directory_text">位于导入/导出目录中的已导出文件可以被您设备上的任意应用所访问。您在备份或同步这些文件后，建议删除这戏文件。请确保在进行备份后再进行删除。GPX文件、子目录和自动导出的数据库文件（若有）将不会被删除。导入/导出目录的路径是：</string>
-    <string name="activity_DB_clean_export_directory_warning_title">删除导入/导出目录中的文件？</string>
-    <string name="activity_DB_clean_export_directory_warning_message">确实需要删除导入/导出目录中的文件？</string>
-    <string name="activity_db_management_clean_export_directory_label">删除导入/导出目录中的文件</string>
     <string name="dbmanagementactivity_error_cleaning_export_directory">从导出目录 %1$s 中删除文件时遇到错误</string>
     <string name="activity_type_strength_training">力量训练</string>
     <string name="mi">英里</string>
@@ -1475,9 +1457,6 @@
     <string name="activity_db_management_autoexport_scheduled_yes">为 %1$s 自动导出（原始的）已经启用计划</string>
     <string name="activity_db_management_autoexport_scheduled_no">尚未计划自动导出。</string>
     <string name="activity_db_management_autoexport_location">位置无法理解。 可能是较新的 Android 权限系统的问题。 最有可能的是，自动导出现在不起作用。</string>
-    <string name="autoExport_lastTime_label">最后一次自动导出：%1$s</string>
-    <string name="activity_db_management_autoexport_enabled_no">自动导出未开启。</string>
-    <string name="activity_db_management_autoexport_enabled_yes">自动导出已开启。</string>
     <string name="watchface_dialog_pre_setting_position">预设位置为 %s</string>
     <string name="watchface_setting_light_up_on_notification">有新通知时亮起</string>
     <string name="menuitem_email">电子邮件</string>
@@ -1685,7 +1664,6 @@
     <string name="steps_streaks_achievement_rate">成就
 \n率</string>
     <string name="note">注意</string>
-    <string name="share_log_not_enabled_message">必须首先在“设置 - 写入日志文件”中启用日志记录</string>
     <string name="watchface_setting_button_toggle_backlight">开启背光灯</string>
     <string name="watchface_setting_title_custom_events">自定义事件</string>
     <string name="controlcenter_get_heartrate_measurement">获取心率测量值</string>

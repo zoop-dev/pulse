@@ -35,11 +35,9 @@
     <string name="appmanager_hrm_deactivate">Désactiver la mesure du rythme cardiaque</string>
     <string name="appmanager_weather_activate">Activer l\'application météo</string>
     <string name="appmanager_weather_deactivate">Désactiver l\'application météo</string>
-    <string name="appmanager_weather_install_provider">Installer l\'application de notification de la météo</string>
     <string name="app_configure">Configurer</string>
     <string name="app_move_to_top">Haut de page </string>
     <!--Strings related to CalBlacklist-->
-    <string name="title_activity_calblacklist">Calendriers sur liste noire</string>
     <!--Strings related to FwAppInstaller-->
     <string name="title_activity_fw_app_insaller">Installateur d\'applications/firmware</string>
     <string name="fw_upgrade_notice">Vous êtes sur le point d\'installer le micrologiciel %s.</string>
@@ -334,8 +332,6 @@
     <string name="authentication_required">Authentification requise</string>
     <string name="appwidget_text">Zzz</string>
     <string name="add_widget">Ajouter un widget</string>
-    <string name="activity_prefs_sleep_duration">
-Temps de sommeil préféré en heures</string>
     <string name="appwidget_setting_alarm">Une alarme a été enregistré pour %1$02d:%2$02d</string>
     <string name="device_hw">Révision matérielle : %1$s</string>
     <string name="device_fw">Version du micrologiciel : %1$s</string>
@@ -357,7 +353,6 @@ Temps de sommeil préféré en heures</string>
 \n *.gpx - enregistrements GPS
 \n *.log - fichiers de log
 \nAttendez-vous à trouver vos fichiers exportés (ou à placer là les fichiers que vous voulez importer) à cet endroit :</string>
-    <string name="activity_db_management_merge_old_title">Effacer l\'ancienne base de données</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Impossible d\'accéder au fichier d\'export. Merci de contacter les développeurs.</string>
     <string name="dbmanagementactivity_exported_to">Exporter vers : %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Erreur d\'exportation de la base de données : %1$s</string>
@@ -383,13 +378,6 @@ Temps de sommeil préféré en heures</string>
     <!--Strings related to Pebble Pairing Activity-->
     <string name="title_activity_pebble_pairing">Jumelage avec une Pebble</string>
     <string name="pebble_pairing_hint">Une fenêtre de jumelage va s’afficher sur votre téléphone. Si cela ne se produit pas, regardez dans vos notifications et acceptez-la. Acceptez ensuite la demande de jumelage sur votre Pebble.</string>
-    <string name="weather_notification_label">Assurez vous que ce thème soit activé dans l\'application de notification de la météo pour recevoir les informations sur votre Pebble.
-\n
-\nAucune configuration n\'est requise.
-\n
-\nVous pouvez activer l\'application météo système de votre Pebble depuis la configuration de l\'application.
-\n
-\nLes cadrans supportés afficheront la météo automatiquement.</string>
     <string name="pref_title_setup_bt_pairing">Activer le jumelage Bluetooth</string>
     <string name="pref_summary_setup_bt_pairing">Désactivez ceci si vous avez des problèmes de connexion</string>
     <string name="unit_metric">Métrique</string>
@@ -700,8 +688,6 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_summary_expose_hr">Permettre aux autres applis d\'accéder aux données de fréquence cardiaque en temps réel lorsque Gadgetbridge est connecté</string>
     <string name="pref_title_expose_hr">Accès tiers fréq. cardiaque</string>
     <string name="pref_summary_use_custom_font">Activer ceci afin d’afficher les émojis si votre appareil a un micrologiciel de police personnalisée</string>
-    <string name="activity_db_management_autoexport_explanation">L\'export automatique des données est réglé vers :</string>
-    <string name="activity_db_management_autoexport_label">Exportation automatique</string>
     <string name="activity_DB_ExportButton">Exporter les données</string>
     <string name="activity_DB_import_button">Importer les données</string>
     <string name="activity_DB_test_export_button">Lancer immédiatement l\'exportation automatique</string>
@@ -940,7 +926,6 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_check_permission_status_summary">Demander et vérifier les autorisations manquantes même si elles ne sont pas immédiatement nécessaires. Désactiver uniquement si votre appareil ne supporte pas ces fonctions. Refuser une autorisation peut provoquer des problèmes !</string>
     <string name="pref_check_permission_status">Vérifier l\'état des autorisations</string>
     <string name="error_background_service_reason">Le démarrage du service en arrière-plan n\'a pas réussi à cause d\'une exception - cliquer ici pour plus d\'informations.\n\nErreur:</string>
-    <string name="device_requires_key">CLÉ NÉCESSAIRE, APPUI LONG POUR ENTRER</string>
     <string name="device_is_currently_bonded">DÉJA LIÉ</string>
     <string name="error_background_service_reason_truncated">Le démarrage du service en arrière-plan n\'a pas réussi à cause de…</string>
     <string name="error_background_service">Impossible de démarrer le service d\'arrière-plan</string>
@@ -1080,10 +1065,6 @@ Temps de sommeil préféré en heures</string>
     <string name="dbmanagementactivity_export_confirmation">Exporter réellement les données \? Les données et les préférences précédemment exportées (s\'il y en a) seront écrasées.</string>
     <string name="dbmanagementactivity_export_data_title">Exporter les Données \?</string>
     <string name="dbmanagementactivity_export_finished">Suppression terminée</string>
-    <string name="activity_db_management_clean_export_directory_text">Les fichiers exportés dans le répertoire d\'Import/Export sont accessibles depuis n\'importe quelle application sur votre appareil. Il est préférable de supprimer ces fichiers après synchronisation ou sauvegarde. Assurez-vous d\'avoir une sauvegarde avant de supprimer les fichiers. Les fichiers GPX, les sous-répertoires, et les fichiers de base de données auto-exportés (s\'ils existent) ne seront pas supprimés. Le chemin du répertoire d\'Import/Export est :</string>
-    <string name="activity_DB_clean_export_directory_warning_message">Vraiment effacer les fichiers dans le répertoire d\'Import/Export \?</string>
-    <string name="activity_DB_clean_export_directory_warning_title">Effacer les fichiers dans le répertoire d\'Import/Export \?</string>
-    <string name="activity_db_management_clean_export_directory_label">Effacer les fichiers dans le répertoire d\'Import/Export</string>
     <string name="dbmanagementactivity_error_cleaning_export_directory">Erreur lors de l\'effacement des fichiers du répertoire d\'exportation %1$s</string>
     <string name="activity_type_strength_training">Entrainement de Puissance</string>
     <string name="mi">miles</string>
@@ -1478,11 +1459,8 @@ Temps de sommeil préféré en heures</string>
     <string name="pref_device_action_fitness_app_control_start">Démarrage de l\'enregistrement dans l\'app Fitness</string>
     <string name="pref_device_action_fitness_app_control_stop">Arrêt de l\'enregistrement dans l\'app Fitness</string>
     <string name="pref_title_notifications_generic_settings">Configuration notifications Android</string>
-    <string name="autoExport_lastTime_label">Dernier export automatique : %1$s</string>
-    <string name="activity_db_management_autoexport_enabled_yes">L\'export automatique est activé.</string>
     <string name="activity_db_management_autoexport_scheduled_yes">L\'export automatique a été (initialement) réglé pour %1$s</string>
     <string name="activity_db_management_autoexport_scheduled_no">L\'export automatique n\'a pas été planifié.</string>
-    <string name="activity_db_management_autoexport_enabled_no">L\'export automatique est désactivé.</string>
     <string name="activity_db_management_autoexport_location">L\'emplacement n\'a pas pu être détecté. Probablement un problème avec les nouvelles permissions du système Android. Très probablement, l\'export automatique ne fonctionne pas actuellement.</string>
     <string name="watchface_dialog_pre_setting_position">pré-configuration de la position à %s</string>
     <string name="watchface_setting_light_up_on_notification">S\'allumer pour une nouvelle notification</string>
@@ -1689,7 +1667,6 @@ Temps de sommeil préféré en heures</string>
     <string name="note">Remarque</string>
     <string name="step_streak_days_hint">Nombre de jours consécutifs où l\'objectif de pas a été réalisé</string>
     <string name="steps_streaks_total_steps_average_hint">Moyenne totale %d de pas par jour</string>
-    <string name="share_log_not_enabled_message">Vous devez d\'abord activer l\'enregistrement des journaux dans les Réglages - Enregistrer les journaux</string>
     <string name="steps_streaks_total_steps_hint_totals">Nombre total de pas jamais enregistré</string>
     <string name="steps_streaks_total_days_hint_totals">Pourcentage de jours où l\'objectif a été réalisé comparé à tous les jours avec de l\'exercice</string>
     <string name="step_streak_average_steps_hint">Moyenne de pas par jour pour l\'objectif</string>

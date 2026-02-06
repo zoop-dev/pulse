@@ -35,11 +35,9 @@
     <string name="appmanager_hrm_deactivate">Disattiva il monitor del battito cardiaco</string>
     <string name="appmanager_weather_activate">Attiva l\'applicazione meteo di sistema</string>
     <string name="appmanager_weather_deactivate">Disattiva l\'applicazione meteo di sistema</string>
-    <string name="appmanager_weather_install_provider">Installa l\'applicazione Weather Notification</string>
     <string name="app_configure">Configura</string>
     <string name="app_move_to_top">Sposta in cima</string>
     <!--Strings related to CalBlacklist-->
-    <string name="title_activity_calblacklist">Calendari ignorati</string>
     <!--Strings related to FwAppInstaller-->
     <string name="title_activity_fw_app_insaller">Installazione FW/App</string>
     <string name="fw_upgrade_notice">Stai per installare il firmware %s.</string>
@@ -334,7 +332,6 @@
     <string name="authentication_required">Autenticazione necessaria</string>
     <string name="appwidget_text">Zzz</string>
     <string name="add_widget">Aggiungi widget</string>
-    <string name="activity_prefs_sleep_duration">Ore di sonno preferite</string>
     <string name="appwidget_setting_alarm">Impostata sveglia per %1$02d:%2$02d</string>
     <string name="device_hw">Versione Hardware: %1$s</string>
     <string name="device_fw">Versione Firmware: %1$s</string>
@@ -356,7 +353,6 @@
 \n*.gpx - registrazioni del GPS
 \n*.log - file di log
 \nLa posizione dei file esportati (o quella da cui vuoi importare i file) è la seguente:</string>
-    <string name="activity_db_management_merge_old_title">Elimina database nel vecchio formato</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Impossibile accedere al path esterno. Per cortesia contatta gli sviluppatori del progetto.</string>
     <string name="dbmanagementactivity_exported_to">Esportato su: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Errore esportando il DB: %1$s</string>
@@ -382,7 +378,6 @@
     <!--Strings related to Pebble Pairing Activity-->
     <string name="title_activity_pebble_pairing">Pairing del Pebble</string>
     <string name="pebble_pairing_hint">Un avviso di accoppiamento dovrebbe comparire sul tuo dispositivo Android. Se non succedesse controlla l\'area delle notifiche ed accetta la richiesta. Dopo fai lo stesso sul tuo Pebble.</string>
-    <string name="weather_notification_label">Assicurati che questa skin sia abilitata nell\'applicazione \"Notifiche Meteo\" per ricevere informazioni meteo sul tuo Pebble.\n\nNon è necessaria nessuna ulteriore configurazione.\n\nPuoi abilitare l\'applicazione Meteo di sistema sul tuo Pebble dalla gestione applicazioni.\n\nLe watchfaces che lo supportano mostreranno il meteo automaticamente.</string>
     <string name="pref_title_setup_bt_pairing">Abilita il pairing bluetooth</string>
     <string name="pref_summary_setup_bt_pairing">Disattiva se hai problemi di connession</string>
     <string name="unit_metric">Metrico</string>
@@ -686,8 +681,6 @@
     <string name="pref_title_expose_hr">Accesso ai dati cardiaci in tempo reale a terze parti</string>
     <string name="pref_title_use_custom_font">Utilizza un font personalizzato</string>
     <string name="pref_summary_use_custom_font">Attiva se il tuo dispositivo ha un firmware personalizzato che supporta gli emoji</string>
-    <string name="activity_db_management_autoexport_explanation">Il percorso di esportazione automatica del database è stato impostato su:</string>
-    <string name="activity_db_management_autoexport_label">Esportazione automatica</string>
     <string name="activity_DB_ExportButton">Esporta dati</string>
     <string name="activity_DB_import_button">Importa dati</string>
     <string name="activity_DB_test_export_button">Esegui esportazione automatica ora</string>
@@ -879,7 +872,6 @@
     <string name="error_setting_alias">Errore durante l\'impostazione dell\'alias:</string>
     <string name="pref_check_permission_status_summary">Controlla e chiedi le autorizzazioni mancanti anche quando potrebbero non essere immediatamente necessarie. Disabilita questo solo se i tuoi dispositivi in realtà non supportano nessuna di queste funzionalità. Non concedere un\'autorizzazione potrebbe causare problemi!</string>
     <string name="pref_check_permission_status">Verifica dello stato delle autorizzazioni</string>
-    <string name="device_requires_key">CHIAVE RICHIESTA, TIENI PREMUTO PER INSERIRE</string>
     <string name="device_is_currently_bonded">GIÀ ASSOCIATO</string>
     <string name="companiondevice_pairing">Associazione del CompanionDevice</string>
     <string name="require_location_provider">La posizione deve essere abilitata</string>
@@ -1092,10 +1084,6 @@
     <string name="menuitem_events">Eventi</string>
     <string name="activity_type_strength_training">Allenamento di forza</string>
     <string name="dbmanagementactivity_export_finished">Eliminazione completata</string>
-    <string name="activity_db_management_clean_export_directory_text">I file esportati nella cartella di importazione/esportazione sono accessibili da qualsiasi app sul tuo dispositivo. Se vuoi puoi eliminare questi file dopo la sincronizzazione o il backup. Assicurati di avere un backup dei file prima di eliminarli. I file GPX, le sottocartelle e i file del database esportati automaticamente (se presenti) non saranno eliminati. Il percorso della cartella di esportazione/importazione è la seguente:</string>
-    <string name="activity_DB_clean_export_directory_warning_message">Vuoi davvero eliminare i file dalla cartella di importazione/esportazione\?</string>
-    <string name="activity_DB_clean_export_directory_warning_title">Vuoi eliminare i file dalla cartella di importazione/esportazione\?</string>
-    <string name="activity_db_management_clean_export_directory_label">Elimina i file nella cartella di importazione/esportazione</string>
     <string name="activity_DB_ShowContentButton">Mostra i contenuti della cartella di importazione/esportazione</string>
     <string name="activity_data_management_directory_content_title">Esporta/Importa i contenuti della cartella</string>
     <string name="dbmanagementactivity_export_confirmation">Vuoi davvero esportare i dati\? I dati delle attività esportati precedentemente (se presenti) e le preferenza verranno sovrascritte.</string>
@@ -1223,7 +1211,6 @@
     <string name="menuitem_workout_history">Storico Allenamenti</string>
     <string name="menuitem_female_health">Salute femminile</string>
     <string name="menuitem_unknown_app">Sconosciuto (%s)</string>
-    <string name="share_log_not_enabled_message">Devi prima abilitare la registrazione in Impostazioni - Scrittura dei file di log</string>
     <string name="quick_alarm_description">Sveglia dal widget</string>
     <string name="toast_app_must_be_selected">L\'app deve essere selezionata per essere configurata</string>
     <string name="permission_notification_policy_access">%1$s deve accedere alle impostazioni Non Disturbare per poterle soddisfare sull\'orologio quando lo schermo del telefono è spento. \n \nTocca \"%2$s\" e poi \"%1$s\" e attiva \"Consenti Non Disturbare\", quindi tocca \"Indietro\" per tornare a %1$s.</string>
@@ -1460,7 +1447,6 @@
     <string name="pref_title_touch_spotify">Spotify</string>
     <string name="pref_voice_detect_duration_5">5 secondi</string>
     <string name="start">Inizio</string>
-    <string name="activity_db_management_autoexport_enabled_yes">Esportazione automatica attiva.</string>
     <string name="discover_unsupported_devices_description">Abilitando questa opzione, durante la scansione verranno visualizzati tutti i dispositivi Bluetooth rilevati. Tocca per copiare il nome del dispositivo e l\'indirizzo mac negli appunti. Premi a lungo per avviare la finestra \"Aggiungi dispositivo di prova\". Può causare il blocco dell\'app.</string>
     <string name="prefs_active_noise_cancelling_summary">Blocca i rumori dell\'ambiente circostante</string>
     <string name="fw_upgrade_notice_amazfit_gts3">Stai per installare il firmware %s sul tuo Amazfit GTS 3.
@@ -1514,7 +1500,6 @@
     <string name="czech">Ceco</string>
     <string name="extended_ascii">ASCII esteso</string>
     <string name="lithuanian">Lituano</string>
-    <string name="activity_db_management_autoexport_enabled_no">Esportazione automatica spenta.</string>
     <string name="activity_db_management_autoexport_scheduled_no">Esportazione automatica non programmata.</string>
     <string name="notification_channel_transfer_name">Trasferimento dati</string>
     <string name="prefs_fm_preset_instructions">Premi a lungo il pulsante per memorizzare la preimpostazione</string>
@@ -1567,7 +1552,6 @@
     <string name="heartrate_bpm_105">105 bpm</string>
     <string name="heartrate_bpm_110">110 bpm</string>
     <string name="heartrate_bpm_150">150 bpm</string>
-    <string name="autoExport_lastTime_label">Ultima esportazione automatica: %1$s</string>
     <string name="prefs_ambient_voice_summary">Fai risaltare la voce</string>
     <string name="prefs_ambient_sound">Suono Ambiente</string>
     <string name="prefs_active_noise_cancelling_level_low">Basso</string>

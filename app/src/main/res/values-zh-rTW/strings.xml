@@ -350,7 +350,6 @@
     <string name="widget_20_minutes">20分鐘</string>
     <string name="widget_1_hour">1 小時</string>
     <string name="watch_not_connected">手錶未連線</string>
-    <string name="appmanager_weather_install_provider">安裝天氣通知應用程式</string>
     <string name="app_move_to_top">移到最上方</string>
     <string name="pref_title_notifications_repetitions">重複次數</string>
     <string name="pref_summary_expose_hr">允許其他應用程式在裝置已連線時存取即時心率資料</string>
@@ -368,7 +367,6 @@
     <string name="live_activity_steps_per_minute_history">每分鐘步數歷史</string>
     <string name="live_activity_max_heart_rate">目前 / 最高心率：%1$d / %2$d</string>
     <string name="mi2_prefs_do_not_disturb_summary">手環將不會在啟用時收到通知</string>
-    <string name="activity_prefs_sleep_duration">偏好睡眠時間（小時）</string>
     <string name="charts_legend_heartrate">心率</string>
     <string name="live_activity_heart_rate">心率</string>
     <string name="activity_prefs_calories_burnt">每日目標：卡路里消耗</string>
@@ -408,8 +406,6 @@
     <string name="dbmanagementactivity_import_data_title">您確定要匯入資料？</string>
     <string name="dbmanagementactivity_error_importing_db">匯入資料庫時發生錯誤：%1$s</string>
     <string name="dbmanagementactivity_database_successfully_deleted">資料已刪除。</string>
-    <string name="activity_db_management_autoexport_explanation">資料庫的自動匯出位置已設定為：</string>
-    <string name="activity_db_management_autoexport_label">自動匯出</string>
     <string name="activity_DB_test_export_button">立即執行自動匯出</string>
     <string name="activity_DB_test_export_message">正在匯出資料庫…</string>
     <string name="Cancel">取消</string>
@@ -507,7 +503,6 @@
     <string name="pref_header_location">位置</string>
     <string name="pref_title_enable_pebblekit">允許第三方 Android 應用程式存取</string>
     <string name="pref_title_enable_outgoing_call">支援撥出電話</string>
-    <string name="title_activity_calblacklist">列入黑名單的日曆</string>
     <string name="no">否</string>
     <string name="yes">是</string>
     <string name="activity_summary_yesterday">昨天</string>
@@ -534,7 +529,6 @@
     <string name="activity_summary_detail">運動活動詳細資訊</string>
     <string name="companiondevice_pairing">使用 CompanionDevice 進行配對</string>
     <string name="pref_check_permission_status">檢查權限狀態</string>
-    <string name="device_requires_key">需要金鑰，長按可進入</string>
     <string name="device_is_currently_bonded">已綁定</string>
     <string name="pref_title_weather_summary">用於 LineageOS 的天氣提供者，其他 Android 版本則需要使用類似「Breezy Weather」的應用程式。更多資訊請造訪 Gadgetbridge 網站。</string>
     <string name="about_additional_contributions">非常感謝所有未列出的貢獻者貢獻了程式碼、翻譯、支持、想法、動力、錯誤報告、金錢……✊</string>
@@ -576,10 +570,6 @@
     <string name="about_version">版本 %s</string>
     <string name="widget_settings_select_device_title">選擇裝置</string>
     <string name="dbmanagementactivity_export_finished">刪除完成</string>
-    <string name="activity_db_management_clean_export_directory_text">在您裝置上的任何應用程式皆可存取在匯出/匯入資料夾中已匯出的檔案。您可能希望在備份或同步後移除這些檔案。刪除之前，請確認留有一份備份。GPX檔案、子資料夾及自動匯出的資料庫檔案（如果有的話）將不會被刪除。匯出/匯入資料夾的路徑是：</string>
-    <string name="activity_DB_clean_export_directory_warning_message">確定要刪除在匯出/匯入資料夾的檔案？</string>
-    <string name="activity_DB_clean_export_directory_warning_title">刪除在匯出/匯入資料夾的檔案？</string>
-    <string name="activity_db_management_clean_export_directory_label">刪除在匯出/匯入資料夾的檔案</string>
     <string name="activity_DB_ShowContentButton">顯示在匯出/匯入資料夾的內容</string>
     <string name="activity_data_management_directory_content_title">匯出/匯入資料夾的內容</string>
     <string name="dbmanagementactivity_overwrite">覆寫</string>
@@ -1243,7 +1233,6 @@
     <string name="charts_legend_spo2_average">血氧平均值</string>
     <string name="activity_prefs_goal_standing_time_minutes">每日目標：站立時間（分鐘）</string>
     <string name="pref_summary_pebble_health_store_raw">將數據「原樣」儲存，增加數據庫的使用量，以便後續解釋。</string>
-    <string name="activity_db_management_merge_old_title">刪除舊有資料庫</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">無法訪問導出路徑。請聯繫開發者。</string>
     <string name="dbmanagementactivity_error_exporting_db">導出資料庫時出錯：%1$s</string>
     <string name="dbmanagementactivity_overwrite_database_confirmation">真的要覆蓋當前數據嗎？您所有當前的活動數據（如果有）、設備和偏好設置將被覆蓋。</string>
@@ -1251,19 +1240,11 @@
     <string name="dbmanagementactivity_really_delete_entire_db">真的要刪除整個數據庫嗎？您所有的活動數據和有關您設備的信息將會丟失。</string>
     <string name="dbmanagementactivity_db_deletion_failed">資料庫刪除失敗。</string>
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">舊的活動數據已刪除。</string>
-    <string name="activity_db_management_autoexport_enabled_no">自動匯出未啟用。</string>
     <string name="activity_db_management_autoexport_location">位置無法理解。可能是較新的 Android 權限系統的問題。最有可能的是，自動匯出目前無法正常運作。</string>
     <string name="dismiss">解雇</string>
     <string name="status">狀態</string>
     <string name="set">設置</string>
     <string name="pebble_pairing_hint">您的 Android 設備上將會彈出配對對話框。如果沒有，請在通知抽屜中查看並接受配對請求。然後在您的 Pebble 上也接受它。</string>
-    <string name="weather_notification_label">請確保在天氣通知應用程式中啟用此主題，以便在您的 Pebble 上獲取天氣資訊。
-\n
-\n這裡不需要任何配置。
-\n
-\n您可以從應用管理中啟用 Pebble 的系統天氣應用程式。
-\n
-\n支援的表盤將自動顯示天氣資訊。</string>
     <string name="dateformat_day_month">日，月</string>
     <string name="dateformat_month_day">月份，日期</string>
     <string name="StringUtils_sender">(%1$s)</string>
@@ -1456,7 +1437,6 @@
     <string name="zepp_os_watchface_simplicity_data">簡單數據</string>
     <string name="zepp_os_watchface_business_style">商業風格</string>
     <string name="zepp_os_watchface_free_combination">自由組合</string>
-    <string name="share_log_not_enabled_message">您必須首先在設定中啟用日誌記錄 - 寫入日誌文件</string>
     <string name="note">注意</string>
     <string name="prefs_fm_preset_instructions">長按按鈕以存儲預設</string>
     <string name="toast_app_must_not_be_selected">應用程式不得被選擇進行配置</string>
@@ -2157,8 +2137,6 @@
     <string name="updatefirmwareoperation_metadata_updateproblem">韌體元資料傳輸問題</string>
     <string name="updatefirmwareoperation_failed_low_mtu">當前的 MTU 值 %1$d 太低，請在設備設定中啟用高 MTU，然後斷開/重新連接設備。</string>
     <string name="dbmanagementactivity_export_confirmation">真的要導出數據嗎？之前導出的活動數據（如果有）和偏好設置將被覆蓋。</string>
-    <string name="activity_db_management_autoexport_enabled_yes">自動匯出已啟用。</string>
-    <string name="autoExport_lastTime_label">最後自動匯出: %1$s</string>
     <string name="stop">停止</string>
     <string name="activity_type_physical_training">體能訓練</string>
     <string name="activity_type_cross_country_running">越野跑</string>

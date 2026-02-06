@@ -34,10 +34,8 @@
     <string name="appmanager_hrm_deactivate">Vypnúť meranie tepu</string>
     <string name="appmanager_weather_activate">Aktivovať systémovú aplikáciu pre počasie</string>
     <string name="appmanager_weather_deactivate">Deaktivovať systémovú aplikáciu pre počasie</string>
-    <string name="appmanager_weather_install_provider">Nainštalovať aplikáciu pre upozornenia na počasie</string>
     <string name="app_configure">Nastaviť</string>
     <string name="app_move_to_top">Posunúť hore</string>
-    <string name="title_activity_calblacklist">Zakázané upozornenia Kalendára</string>
     <string name="title_activity_fw_app_insaller">Inštalátor FW/Apl</string>
     <string name="fw_upgrade_notice">Nainštaluje firmware %s do Mi Band namiesto existujúceho.</string>
     <string name="fw_upgrade_notice_amazfitbip">Chystáte sa nainštalovať firmvér %s na vašom Amazfit Bip.
@@ -382,7 +380,6 @@
     <string name="authentication_required">Vyžiadané overenie</string>
     <string name="appwidget_text">Spí…</string>
     <string name="add_widget">Pridať miniaplikáciu</string>
-    <string name="activity_prefs_sleep_duration">Preferovaná dĺžka spánku v hodinách</string>
     <string name="appwidget_setting_alarm">Budík nastavený na %1$02d:%2$02d</string>
     <string name="device_hw">Revízia HW: %1$s</string>
     <string name="device_fw">Verzia FW: %1$s</string>
@@ -399,7 +396,6 @@
     <string name="activity_db_management_import_export_explanation">Pre operácie s databázou sa použije nasledujúca cesta v zariadení.
 \nTáto cesta je dostupná aj pre ostatné aplikácie Androidu a aj váš počítač.
 \nExportovanú databázu (alebo miesto pre importovanú databázu) nájdete tu:</string>
-    <string name="activity_db_management_merge_old_title">Vymazať pôvodnú databázu</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Nemožno pristúpiť na zadanú cestu. Kontaktujte vývojárov.</string>
     <string name="dbmanagementactivity_exported_to">Exportované do: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Chyba pri exporte DB: %1$s</string>
@@ -423,13 +419,6 @@
     <string name="title_activity_vibration">Vibrácie</string>
     <string name="title_activity_pebble_pairing">Párovánie Pebble</string>
     <string name="pebble_pairing_hint">Dialóg párovania by sa mal objaviť na vašom zariadení s Androidom. Ak sa tak nestane, skontrolujte panel upozornení a potvrďte párovanie. Potom potvrďte párovanie na Pebble</string>
-    <string name="weather_notification_label">Uistite sa, že tento skin je povolený v aplikácii pre upozornenia stavu počasia pre získavanie informácií z vášho Pebble.
-\n
-\nNie je potrebné nič nastavovať.
-\n
-\nAplikáciu pre počasie Pebble je možné povoliť v správe aplikácií.
-\n
-\nPodporované ciferníky ukážu počasie automaticky.</string>
     <string name="pref_title_setup_bt_pairing">Zapnúť BT párovanie</string>
     <string name="pref_summary_setup_bt_pairing">Toto vypnite v prípade problémov s pripojením</string>
     <string name="unit_metric">Metrické</string>

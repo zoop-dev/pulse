@@ -41,10 +41,8 @@
     <string name="appmanager_hrm_deactivate">Išjungti širdies ritmo stebėjimą</string>
     <string name="appmanager_weather_activate">Įjungti sistemos orų prognozės programą</string>
     <string name="appmanager_weather_deactivate">Išjungti sistemos orų prognozės programą</string>
-    <string name="appmanager_weather_install_provider">Įdiegti orų prognozės pranešimų programą</string>
     <string name="app_configure">Konfigūruoti</string>
     <string name="app_move_to_top">Perkelti į viršų</string>
-    <string name="title_activity_calblacklist">Kalendorių juodasis sąrašas</string>
     <string name="title_activity_fw_app_insaller">FW/Programų diegyklė</string>
     <string name="menuitem_activity">Veikla</string>
     <string name="controlcenter_calibrate_device">Kalibruoti įrenginį</string>

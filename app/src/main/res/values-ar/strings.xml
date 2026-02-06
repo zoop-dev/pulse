@@ -23,7 +23,6 @@
     <string name="appmananger_app_delete">حذف</string>
     <string name="appmananger_app_delete_cache">حذف وإزالة من ذاكرة التخزين المؤقت</string>
     <string name="appmananger_app_reinstall">أعد التثبيت</string>
-    <string name="appmanager_weather_install_provider">قم بتثبيت تطبيق إخطارات الطقس</string>
     <string name="app_move_to_top">انقل إلى الأعلى</string>
     <string name="title_activity_notification_management">إعدادات التنبيه</string>
     <string name="uncheck_all_applications">إلغاء تحديد جميع التطبيقات</string>
@@ -293,7 +292,6 @@
     <string name="prefs_activity_in_device_card_sleep_title_summary">عرض مدة النوم</string>
     <string name="controlcenter_get_heartrate_measurement">الحصول على قياس لمعدل نبضات القلب</string>
     <string name="device_card_activity_card_title">معلومات النشاط على بطاقة الجهاز</string>
-    <string name="title_activity_calblacklist">التقاويم المدرجة في القائمة السوداء</string>
     <string name="action_debug">التصحيح</string>
     <string name="title_activity_debug">تصحيح</string>
     <string name="open_fw_installer_warning_text">هذه الميزة لديها القدرة على عطب جهازك. ومع ذلك ، لم يحدث هذا مطلقًا لأي من المطورين من خلال التثبيت ، ولكن تذكر أنك تقوم بذلك على مسؤوليتك الخاصة.</string>
@@ -504,7 +502,6 @@
     <string name="pref_summary_pebble_enable_applogs">سيؤدي إلى تسجيل السجلات من تطبيقات الساعة بواسطة Gadgetbridge (يتطلب إعادة الاتصال)</string>
     <string name="test">الاختبار</string>
     <string name="mi2_prefs_goal_notification_summary">سيهتز السوار عند الوصول إلى هدف الخطوات اليومية</string>
-    <string name="share_log_not_enabled_message">يجب عليك أولاً تمكين التسجيل في الإعدادات - كتابة ملفات السجل</string>
     <string name="menuitem_timer">العد التنازلي</string>
     <string name="menuitem_compass">البوصلة</string>
     <string name="menuitem_settings">الإعدادات</string>
@@ -524,7 +521,6 @@
     <string name="menuitem_status">الحالة</string>
     <string name="discovery_pair_question">حدد إقران لإقران أجهزتك. إذا فشل ذلك ، حاول مرة أخرى بدون الاقتران.</string>
     <string name="mi2_fw_installhandler_fw53_hint">تحتاج إلى تثبيت الإصدار %1$s قبل تثبيت هذا البرنامج الثابت!</string>
-    <string name="activity_DB_clean_export_directory_warning_message">هل ترغب حقًا في حذف الملفات الموجودة في دليل التصدير / الاستيراد؟</string>
     <string name="StringUtils_sender">(%1$s)</string>
     <string name="pref_summary_opentracks_packagename">يستخدم لبدء / إيقاف تسجيل مسار GPS في تطبيق لياقة خارجي.</string>
     <string name="pref_title_banglejs_webview_url">عنوان URL لمحمل التطبيق</string>
@@ -595,19 +591,11 @@
     <string name="dbmanagementactivity_export_confirmation">هل ترغب حقًا في تصدير البيانات؟ ستتم الكتابة فوق بيانات الأنشطة التي تم تصديرها مسبقًا (إن وجدت) والتفضيلات.</string>
     <string name="dbmanagementactivity_error_cleaning_export_directory">خطأ في محو الملفات من دليل التصدير %1$s</string>
     <string name="dbmanagementactivity_really_delete_entire_db">هل ترغب حقًا في حذف قاعدة البيانات بأكملها؟ ستفقد جميع بيانات نشاطك ومعلومات حول أجهزتك.</string>
-    <string name="activity_db_management_autoexport_explanation">تم تعيين موقع التصدير التلقائي لقاعدة البيانات إلى:</string>
     <string name="activity_db_management_autoexport_scheduled_yes">تمت جدولة التصدير التلقائي (في الأصل) لـ %1$s</string>
     <string name="activity_db_management_autoexport_location">لا يمكن فهم الموقع. من المحتمل وجود مشكلة في نظام أذونات Android الأحدث. على الأرجح ، لا يعمل Autoexport الآن.</string>
     <string name="activity_db_management_empty_db_warning">تحذير! بالضغط على هذا الزر ، سوف تمسح قاعدة البيانات الخاصة بك وتبدأ من الصفر.</string>
     <string name="title_activity_vibration">اهتزاز</string>
     <string name="pebble_pairing_hint">سيظهر مربع حوار الاقتران على جهاز Android الخاص بك. إذا لم يكن كذلك ، فابحث في درج الإشعارات واقبل طلب الاقتران. تقبله أيضًا على Pebble بعد ذلك.</string>
-    <string name="weather_notification_label">تأكد من تمكين هذا الشكل في تطبيق Weather Notification للحصول على معلومات الطقس على Pebble.
-\n
-\nلا يوجد تكوين مطلوب هنا.
-\n
-\nيمكنك تمكين تطبيق الطقس للنظام الخاص بـ Pebble من إدارة التطبيق.
-\n
-\nستظهر واجهات المراقبة المدعومة الطقس تلقائيًا.</string>
     <string name="pref_summary_setup_bt_pairing">قم بإلغاء تنشيط هذا إذا كنت تواجه مشكلة في الاتصال</string>
     <string name="unit_metric">متري</string>
     <string name="timeformat_24h">24 ساعة</string>
@@ -779,7 +767,6 @@
     <string name="dutch">الهولندية</string>
     <string name="turkish">التركية</string>
     <string name="activity_prefs_goal_fat_burn_time_minutes">الهدف اليومي: وقت حرق الدهون في دقائق</string>
-    <string name="activity_db_management_autoexport_label">التصدير التلقائي</string>
     <string name="Delete">حذف</string>
     <string name="set">تعيين</string>
     <string name="off">ايقاف</string>
@@ -855,7 +842,6 @@
     <string name="pref_summary_canned_replies">الرد من الساعة باستخدام الرسائل المعدة مسبقا</string>
     <string name="pref_title_pebble_sync_morpheuz">مزامنة Morpheuz</string>
     <string name="pref_pebble_privacy_mode_content">إزاحة نص الإشعار خارج الشاشة</string>
-    <string name="activity_db_management_clean_export_directory_text">يمكن الوصول إلى الملفات المصدرة في دليل التصدير / الاستيراد بواسطة أي تطبيق على جهازك. قد ترغب في إزالة هذه الملفات بعد المزامنة أو النسخ الاحتياطي. تأكد من أن لديك نسخة احتياطية قبل حذفها. لن يتم حذف ملفات GPX والأدلة الفرعية وملف قاعدة البيانات الذي تم تصديره تلقائيًا (إن وجد). المسار إلى دليل التصدير / الاستيراد هو:</string>
     <string name="pref_summary_pebble_forceprotocol">يفرض هذا الخيار استخدام أحدث بروتوكول اشعار بناءً على إصدار البرنامج الثابت. لابد ان تعرف ما تقوم به!</string>
     <string name="pref_summary_pebble_gatt_clientonly">هذا لـ Pebble 2 فقط و تجريبي ، جرب هذا إذا كانت لديك مشاكل في الاتصال</string>
     <string name="pref_summary_pebble_enable_bgjs">عند التمكين ، يسمح لواجهات الساعة بإظهار الطقس ومعلومات البطارية وما إلى ذلك.</string>
@@ -934,7 +920,6 @@
     <string name="zetime_analog_mode">الوضع التناظري</string>
     <string name="pref_world_clocks_summary">تكوين الساعات لمناطق زمنية أخرى</string>
     <string name="prefs_always_on_display_summary">حافظ على شاشة السوار قيد التشغيل دائما</string>
-    <string name="device_requires_key">المفتاح مطلوب، اضغط لفترة طويلة للدخول</string>
     <string name="pref_summary_relax_firmware_checks">الاسترخاء في عمليات فحص البرامج الثابتة</string>
     <string name="pairing_unable_to_pair_with">تعذر الإقران بـ %1$s (%2$s)</string>
     <string name="about_contributors">المساهمون</string>
@@ -993,7 +978,6 @@
     <string name="dbmanagementactivity_delete_old_activity_db">حذف قاعدة بيانات النشاط القديمة؟</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">فشل حذف قاعدة بيانات النشاط القديم.</string>
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">تم حذف بيانات النشاط القديمة.</string>
-    <string name="activity_db_management_clean_export_directory_label">حذف الملفات في دليل التصدير / الاستيراد</string>
     <string name="discovery_attempting_to_pair">محاولة الاقتران بـ %1$s</string>
     <string name="discovery_bonding_failed_immediately">فشل الارتباط بـ %1$s على الفور.</string>
     <string name="discovery_trying_to_connect_to">محاولة الاتصال بـ: %1$s</string>
@@ -1032,7 +1016,6 @@
     <string name="cannot_connect_bt_address_invalid_">لا يمكن الاتصال. عنوان بلوتوث غير صالح؟</string>
     <string name="pairing_creating_bond_with">إنشاء ارتباط مع %1$s (%2$s)</string>
     <string name="activity_prefs_about_you">معلومات عنك</string>
-    <string name="activity_DB_clean_export_directory_warning_title">حذف الملفات في دليل التصدير / الاستيراد؟</string>
     <string name="pref_title_use_custom_font">استخدام خط مخصص</string>
     <string name="preferences_hplus_settings">إعدادات HPlus/Makibes</string>
     <string name="pref_header_notifications_and_calls_callhandling">التعامل مع المكالمات</string>
@@ -1049,11 +1032,9 @@
     <string name="action_discover">توصيل جهاز جديد</string>
     <string name="pairing_already_bonded">مرتبط بالفعل بـ %1$s (%2$s) ، جارٍ الاتصال …</string>
     <string name="pref_title_charts_average">إظهار المتوسطات في الرسوم البيانية</string>
-    <string name="activity_prefs_sleep_duration">مدة النوم المفضلة بالساعات</string>
     <string name="DEVINFO_HR_VER">"HR: "</string>
     <string name="pref_title_pebble_health_store_raw">تخزين السجل الخام في قاعدة البيانات</string>
     <string name="action_db_management">إدارة البيانات</string>
-    <string name="activity_db_management_merge_old_title">حذف قاعدة البيانات القديمة</string>
     <string name="notification_gps_text">إرسال موقع GPS إلى أجهزة %1$d</string>
     <string name="toast_notification_filter_words_empty_hint">الرجاء إدخال كلمة واحدة على الأقل</string>
     <string name="filter_mode_blacklist">حظر عند احتواء الكلمات</string>
@@ -1231,7 +1212,6 @@
     <string name="seconds_7">7 ثوان</string>
     <string name="minutes_5">5 دقائق</string>
     <string name="user_feedback_all_alarms_disabled">تم تعطيل جميع التبيهات</string>
-    <string name="autoExport_lastTime_label">آخر تصدير تلقائي: %1$s</string>
     <string name="activity_DB_ExportButton">تصدير البيانات</string>
     <string name="activity_db_management_exportimport_label">التصدير والاستيراد</string>
     <string name="dismiss">رفض</string>
@@ -1329,7 +1309,6 @@
     <string name="devicestatus_disconnecting">الجهاز مفصول!</string>
     <string name="pref_title_charts_range">نطاق الرسوم البيانية</string>
     <string name="pref_title_chart_heartrate_color">لون معدل نبضات القلب</string>
-    <string name="activity_db_management_autoexport_enabled_yes">تم تمكين التصدير التلقائي.</string>
     <string name="activity_DB_import_button">استيراد البيانات</string>
     <string name="kind_gps">البرامج الثابتة لنظام تحديد المواقع العالمي (GPS)</string>
     <string name="note">ملاحظة</string>
@@ -1541,7 +1520,6 @@
     <string name="charts_legend_heartrate">معدل نبضات القلب</string>
     <string name="live_activity_heart_rate">معدل نبضات القلب</string>
     <string name="dbmanagementactivity_error_importing_db">خطأ في استيراد قاعدة البيانات: %1$s</string>
-    <string name="activity_db_management_autoexport_enabled_no">لم يتم تمكين التصدير التلقائي.</string>
     <string name="activity_DB_test_export_button">قم بتشغيل التصدير التلقائي الآن</string>
     <string name="dbmanagementactivity_export_finished">انتهى الحذف</string>
     <string name="title_activity_pebble_pairing">Pebble اقتران</string>

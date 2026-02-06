@@ -25,8 +25,6 @@
     <string name="activity_DB_import_button">Verileri İçe Aktar</string>
     <string name="activity_DB_test_export_button">Otomatik Dışa Aktarmayı Başlat</string>
     <string name="activity_DB_test_export_message">Veri tabanı dışa aktarılıyor…</string>
-    <string name="activity_db_management_autoexport_explanation">Veri tabanı otomatik dışa aktarma konumu:</string>
-    <string name="activity_db_management_autoexport_label">Otomatik Dışa Aktarma</string>
     <string name="activity_db_management_empty_DB">Veri tabanını boşalt</string>
     <string name="activity_db_management_empty_db_warning">Dikkat! Bu düğmeye basarak veri tabanınızı silecek ve sıfırdan başlayacaksınız.</string>
     <string name="activity_db_management_exportimport_label">Dışa ve İçe Aktar</string>
@@ -38,7 +36,6 @@
 \n * .gpx - GPS kayıtları
 \n * .log - günlük dosyaları
 \nDışa aktarılan dosyalarınızı orada bulmayı (veya içe aktarmak istediğiniz dosyaları oraya yerleştirmeyi) bekleyin:</string>
-    <string name="activity_db_management_merge_old_title">Eski veri tabanını silme</string>
     <string name="activity_error_no_app_for_gpx">Etkinlik izlemesini görüntülemek için GPX dosyalarını işleyebilen bir uygulama kurun.</string>
     <string name="activity_prefs_about_you">Hakkınızda</string>
     <string name="activity_prefs_activetime_minutes">Günlük hedef: dakika cinsinden etkin zaman</string>
@@ -47,7 +44,6 @@
     <string name="activity_prefs_distance_meters">Günlük hedef: metre cinsinden mesafe</string>
     <string name="activity_prefs_gender">Cinsiyet</string>
     <string name="activity_prefs_height_cm">Boy (cm)</string>
-    <string name="activity_prefs_sleep_duration">Tercih edilen uyku süresi (saat cinsinden)</string>
     <string name="activity_prefs_weight_kg">Ağırlık (kg)</string>
     <string name="activity_prefs_year_birth">Doğum yılı</string>
     <string name="activity_sleepchart_activity_and_sleep">Etkinlik</string>
@@ -96,7 +92,6 @@
     <string name="appmanager_installed_watchfaces">Kurulu saat arayüzleri</string>
     <string name="appmanager_weather_activate">Sistem hava durumu uygulamasını etkinleştir</string>
     <string name="appmanager_weather_deactivate">Sistem hava durumu uygulamasını devre dışı bırak</string>
-    <string name="appmanager_weather_install_provider">Hava durumu bildirim uygulaması kur</string>
     <string name="appmananger_app_delete">Sil</string>
     <string name="appmananger_app_delete_cache">Sil ve önbellekten kaldır</string>
     <string name="appmananger_app_reinstall">Yeniden kur</string>
@@ -696,7 +691,6 @@
     <string name="title_activity_alarm_details">Alarm ayrıntıları</string>
     <string name="title_activity_android_pairing">Aygıt eşleştir</string>
     <string name="title_activity_appmanager">Uygulama Yöneticisi</string>
-    <string name="title_activity_calblacklist">Kara Listeye Alınan Takvimler</string>
     <string name="title_activity_charts">Etkinlik ve Uyku</string>
     <string name="title_activity_controlcenter_generic">Gadgetbridge</string>
     <string name="title_activity_db_management">Veri yönetimi</string>
@@ -754,13 +748,6 @@
     <string name="watch9_time_minutes">Dakika:</string>
     <string name="watch9_time_seconds">Saniye:</string>
     <string name="watch_not_connected">Saat bağlanmadı</string>
-    <string name="weather_notification_label">Pebble üzerinde hava durumu bilgisi almak için bu dış görünümün Hava Durumu Bildirimi uygulamasında etkinleştirildiğinden emin olun.
-\n
-\nBurada herhangi bir yapılandırma gerekmez.
-\n
-\nPebble sistem hava durumu uygulamasını uygulama yönetiminden etkinleştirebilirsiniz.
-\n
-\nDesteklenen saat yüzleri hava durumunu otomatik olarak gösterir.</string>
     <string name="weeksleepchart_sleep_a_month">Aylık uyku</string>
     <string name="weeksleepchart_sleep_a_week">Haftalık uyku</string>
     <string name="weeksleepchart_today_sleep_description">Bugünkü uyku, hedef: %1$s</string>
@@ -896,7 +883,6 @@
 \n
 \nİLERLEMENİZ DURUMUNDA RİSK SİZE AİTTİR!</string>
     <string name="device_is_currently_bonded">ZATEN ETKİLEŞİMDE</string>
-    <string name="device_requires_key">ANAHTAR GEREKLİ, GİRMEK İÇİN UZUN BASIN</string>
     <string name="error_location_enabled_mandatory">Aygıtları taramak için konumun açık olması gerekmektedir</string>
     <string name="error_retrieving_devices_database">Veri tabanından aygıtlar alınırken hata oluştu</string>
     <string name="error_setting_alias">Takma ad ayarlanırken hata oluştu:</string>
@@ -1100,10 +1086,6 @@
     <string name="dbmanagementactivity_export_confirmation">Veriler gerçekten dışarı aktarılsın mı\? Önceden dışa aktarılan etkinlik verilerinizin (varsa) ve tercihlerinizin üzerine yazılacak.</string>
     <string name="dbmanagementactivity_export_data_title">Veriler Dışa Aktarılsın mı\?</string>
     <string name="dbmanagementactivity_export_finished">Silme işlemi tamamlandı</string>
-    <string name="activity_db_management_clean_export_directory_text">Dışa/İçe aktarma dizinindeki dışa aktarılan dosyalara, aygıtınızdaki herhangi bir uygulama tarafından erişilebilir. Eşzamanlama veya yedeklemeden sonra bu dosyaları kaldırmak isteyebilirsiniz. Silmeden önce bir yedeğini aldığınızdan emin olun. GPX dosyaları, alt dizinler ve otomatik dışa aktarılan veri tabanı dosyası (varsa) silinmeyecektir. Dışa/İçe aktarma dizininin yolu şudur:</string>
-    <string name="activity_DB_clean_export_directory_warning_message">Dışa/İçe aktarma dizinindeki dosyalar gerçekten silinsin mi\?</string>
-    <string name="activity_DB_clean_export_directory_warning_title">Dışa/İçe aktarma dizinindeki dosyalar silinsin mi\?</string>
-    <string name="activity_db_management_clean_export_directory_label">Dışa/İçe aktarma dizinindeki dosyaları sil</string>
     <string name="dbmanagementactivity_error_cleaning_export_directory">%1$s dışa aktarma dizininden dosyaları silerken hata oluştu</string>
     <string name="activity_type_strength_training">Kuvvet Antrenmanı</string>
     <string name="mi_h">mi/sa</string>
@@ -1488,11 +1470,8 @@
     <string name="pref_device_action_fitness_app_control_stop">Fitness Uygulaması İzlemesini Durdur</string>
     <string name="pref_device_action_fitness_app_control_start">Fitness Uygulaması İzlemesini Başlat</string>
     <string name="pref_title_notifications_generic_settings">Android bildirim ayarları</string>
-    <string name="autoExport_lastTime_label">Son Otomatik Dışa Aktarma: %1$s</string>
-    <string name="activity_db_management_autoexport_enabled_no">Otomatik dışa aktarma etkin değil.</string>
     <string name="activity_db_management_autoexport_scheduled_yes">Otomatik dışa aktarma (başlangıçta) %1$s için zamanlandı</string>
     <string name="activity_db_management_autoexport_scheduled_no">Otomatik dışa aktarma zamanlanmadı.</string>
-    <string name="activity_db_management_autoexport_enabled_yes">Otomatik dışa aktarma etkin.</string>
     <string name="activity_db_management_autoexport_location">Konum anlaşılamadı. Bu, muhtemelen daha yeni bir Android izin sistemi sorunudur. Büyük olasılıkla, otomatik dışa aktarma şu anda çalışmıyor.</string>
     <string name="watchface_dialog_pre_setting_position">konumu %s olarak ön ayarlama</string>
     <string name="watchface_setting_light_up_on_notification">Yeni bildirimde ışığı aç</string>
@@ -1702,7 +1681,6 @@
     <string name="step_streak_days_hint">Adım hedefine ulaşılan ardışık gün sayısı</string>
     <string name="steps_streaks_total_steps_hint">Tüm serideki toplam adım sayısı</string>
     <string name="steps_streaks_total_steps_average_hint">Günlük toplam ortalama %d adım</string>
-    <string name="share_log_not_enabled_message">Önce Ayarlar - Günlük dosyalarını yaz bölümünde günlük kaydını etkinleştirmelisiniz</string>
     <string name="note">Not</string>
     <string name="watchface_setting_title_custom_events">Özel etkinlikler</string>
     <string name="watchface_setting_button_toggle_backlight">Arka ışığı aç</string>

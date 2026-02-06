@@ -273,7 +273,6 @@
     <string name="hr_widget_weather">வானிலை</string>
     <string name="pref_title_lower_button_short_press_action">கீழ் பொத்தான் குறுகிய அழுத்த நடவடிக்கை</string>
     <string name="pref_qhybrid_save_raw_activity_files">மூல செயல்பாட்டு கோப்புகளை சேமிக்கவும்</string>
-    <string name="device_requires_key">விசை தேவை, நுழைய நீண்ட செய்தித் தாள்</string>
     <string name="minHR">குறைந்த நாடிதுடிப்பு</string>
     <string name="lactateThresholdHeartRate">லாக்டேட் வாசல் இதய துடிப்பு</string>
     <string name="swolfMin">குறைந்தபட்ச ச்வோல்ஃப்</string>
@@ -347,7 +346,6 @@
     <string name="appmanager_weather_activate">கணினி வானிலை பயன்பாட்டை செயல்படுத்தவும்</string>
     <string name="appmanager_cached_watchapps_watchfaces">தற்காலிக சேமிப்பில் பயன்பாடுகள்</string>
     <string name="appmanager_weather_deactivate">கணினி வானிலை பயன்பாட்டை செயலிழக்கச் செய்யுங்கள்</string>
-    <string name="appmanager_weather_install_provider">வானிலை அறிவிப்பு பயன்பாட்டை நிறுவவும்</string>
     <string name="app_configure">உள்ளமைக்கவும்</string>
     <string name="pref_title_pebble_always_ack_pebblekit">முன்கூட்டியே ACK PEBBLEKIT</string>
     <string name="find_my_phone_notification">எனது தொலைபேசியைக் கண்டுபிடி</string>
@@ -514,12 +512,10 @@
     <string name="activity_prefs_weight_kg">கிலோ எடை</string>
     <string name="activity_prefs_step_length_cm">முதல்வரில் படி நீளம்</string>
     <string name="weekstepschart_steps_a_week_or_month">வாரத்திற்கு/மாதத்திற்கு படிகள்</string>
-    <string name="activity_prefs_sleep_duration">மணிநேரங்களில் விருப்பமான தூக்க காலம்</string>
     <string name="error_creating_directory_for_logfiles">பதிவு கோப்புகளுக்கான கோப்பகத்தை உருவாக்குவது பிழை: %1$s</string>
     <string name="title_activity_db_management">தரவு மேலாண்மை</string>
     <string name="dbmanagementactivity_import_successful">இறக்குமதி செய்யப்பட்டது.</string>
     <string name="dbmanagementactivity_error_importing_shared">விருப்பத்தை இறக்குமதி செய்வதில் பிழை: %1$s</string>
-    <string name="activity_db_management_autoexport_enabled_no">ஆட்டோ எக்ச்போர்ட் இயக்கப்படவில்லை.</string>
     <string name="activity_db_management_autoexport_scheduled_no">ஆட்டோ எக்ச்போர்ட் திட்டமிடப்படவில்லை.</string>
     <string name="activity_DB_delete_legacy_button">பழைய டி.பி நீக்கு</string>
     <string name="Cancel">ரத்துசெய்</string>
@@ -661,13 +657,11 @@
     <string name="live_activity_heart_rate">நாடி துடிப்பு</string>
     <string name="activity_prefs_calories_burnt">நாள்தோறும் இலக்கு: கலோரிகள் எரிக்கப்பட்டன</string>
     <string name="activity_prefs_distance_meters">நாள்தோறும் இலக்கு: மீட்டர் தூரம்</string>
-    <string name="activity_db_management_merge_old_title">மரபு தரவுத்தள நீக்கு</string>
     <string name="activity_DB_import_button">தரவை இறக்குமதி செய்யுங்கள்</string>
     <string name="activity_DB_test_export_button">ஆட்டோ எக்ச்போர்ட்டை இப்போது இயக்கவும்</string>
     <string name="activity_DB_test_export_message">தரவுத்தளத்தை ஏற்றுமதி செய்யுங்கள்…</string>
     <string name="Delete">நீக்கு</string>
     <string name="activity_data_management_directory_content_title">அடைவு உள்ளடக்கத்தை ஏற்றுமதி/இறக்குமதி செய்யுங்கள்</string>
-    <string name="activity_db_management_clean_export_directory_label">ஏற்றுமதி/இறக்குமதி கோப்பகத்தில் கோப்புகளை நீக்கு</string>
     <string name="title_activity_vibration">அதிர்வு</string>
     <string name="title_activity_pebble_pairing">கூழாங்கல் இணைத்தல்</string>
     <string name="activity_web_view">வலை பார்வை செயல்பாடு</string>
@@ -1761,7 +1755,6 @@
     <string name="zepp_os_watchface_multiple_data">பல தரவு</string>
     <string name="watch9_calibration_hint">உங்கள் சாதனம் இப்போது உங்களுக்குக் காண்பிக்கும் நேரத்தை அமைக்கவும்.</string>
     <string name="watch9_calibration_button">அளவீடு செய்யுங்கள்</string>
-    <string name="share_log_not_enabled_message">நீங்கள் முதலில் அமைப்புகளில் உள்நுழைவதை இயக்க வேண்டும் - பதிவு கோப்புகளை எழுதுங்கள்</string>
     <string name="warning">எச்சரிக்கை!</string>
     <string name="note">குறிப்பு</string>
     <string name="no_data">தரவு இல்லை</string>
@@ -2208,7 +2201,6 @@
     <string name="blacklist_all_for_notifications">அறிவிப்புகளுக்கு அனைத்தையும் தடுப்புப்பட்டியலில் வைக்கவும்</string>
     <string name="whitelist_all_for_notifications">அனைத்து அறிவிப்புகளுக்கும் அனுமதிப்பட்டியல்</string>
     <string name="uncheck_all_applications">எல்லா பயன்பாடுகளையும் தேர்வு செய்யவும்</string>
-    <string name="title_activity_calblacklist">தடுப்புப்பட்டியல் காலெண்டர்கள்</string>
     <string name="title_activity_fw_app_insaller">FW/APP நிறுவி</string>
     <string name="fw_upgrade_notice">நீங்கள் %s ஐ நிறுவ உள்ளீர்கள்.</string>
     <string name="fw_upgrade_notice_amazfitbip">உங்கள் AMAZFIT BIP இல் %s ஃபார்ம்வேரை நிறுவ உள்ளீர்கள்.\n\n .Fw கோப்பு, பின்னர் .res கோப்பு மற்றும் இறுதியாக .gps கோப்பை நிறுவுவதை உறுதிசெய்க. .Fw கோப்பை நிறுவிய பின் உங்கள் கடிகாரம் மறுதொடக்கம் செய்யும்.\n\n குறிப்பு: இந்த கோப்புகள் முன்பு நிறுவப்பட்டதைப் போலவே இருந்தால் நீங்கள் .res மற்றும் .gps ஐ நிறுவ வேண்டியதில்லை.\n\n உங்கள் சொந்த ஆபத்தில் தொடரவும்!</string>
@@ -2583,18 +2575,10 @@
     <string name="dbmanagementactivity_db_deletion_failed">தரவுத்தள நீக்குதல் தோல்வியடைந்தது.</string>
     <string name="dbmanagementactivity_delete_old_activity_db">பழைய செயல்பாட்டு தரவுத்தளத்தை நீக்கவா?</string>
     <string name="dbmanagementactivity_delete_old_activitydb_confirmation">பழைய செயல்பாட்டு தரவுத்தளத்தை உண்மையில் நீக்கவா? இறக்குமதி செய்யப்படாத செயல்பாட்டு தரவு இழக்கப்படும்.</string>
-    <string name="activity_db_management_autoexport_explanation">தரவுத்தள ஆட்டோ எக்ச்போர்ட் இருப்பிடம் இதற்கு அமைக்கப்பட்டுள்ளது:</string>
-    <string name="autoExport_lastTime_label">கடைசி ஆட்டோ எக்ச்போர்ட்: %1$s</string>
-    <string name="activity_db_management_autoexport_enabled_yes">ஆட்டோ எக்ச்போர்ட் இயக்கப்பட்டது.</string>
     <string name="activity_db_management_autoexport_scheduled_yes">ஆட்டோ எக்ச்போர்ட் (முதலில்) %1$s க்கு திட்டமிடப்பட்டுள்ளது</string>
-    <string name="activity_db_management_autoexport_label">ஆட்டோ எக்ச்போர்ட்</string>
     <string name="activity_db_management_empty_db_warning">எச்சரிக்கை! இந்த பொத்தானை அழுத்துவதன் மூலம் உங்கள் தரவுத்தளத்தை துடைத்து புதிதாகத் தொடங்குவீர்கள்.</string>
     <string name="stop">நிறுத்து</string>
-    <string name="activity_DB_clean_export_directory_warning_title">ஏற்றுமதி/இறக்குமதி கோப்பகத்தில் கோப்புகளை நீக்கவா?</string>
-    <string name="activity_DB_clean_export_directory_warning_message">ஏற்றுமதி/இறக்குமதி கோப்பகத்தில் உள்ள கோப்புகளை உண்மையில் நீக்கவா?</string>
-    <string name="activity_db_management_clean_export_directory_text">ஏற்றுமதி/இறக்குமதி கோப்பகத்தில் ஏற்றுமதி செய்யப்பட்ட கோப்புகள் உங்கள் சாதனத்தில் உள்ள எந்த பயன்பாட்டினாலும் அணுகக்கூடியவை. ஒத்திசைவு அல்லது காப்புப்பிரதிக்குப் பிறகு இந்த கோப்புகளை அகற்ற விரும்பலாம். அவற்றை நீக்குவதற்கு முன் காப்புப்பிரதி இருப்பதை உறுதிப்படுத்திக் கொள்ளுங்கள். சிபிஎக்ச் கோப்புகள், துணை இயக்குநர்கள் மற்றும் தானாக ஏற்றுமதி செய்யப்பட்ட தரவுத்தள கோப்பு (இருந்தால்) நீக்கப்படாது. ஏற்றுமதி/இறக்குமதி கோப்பகத்திற்கான பாதை:</string>
     <string name="pebble_pairing_hint">உங்கள் ஆண்ட்ராய்டு சாதனத்தில் ஒரு இணைத்தல் உரையாடல் பாப் அப் செய்யும். இல்லையென்றால், அறிவிப்பு அலமாரியில் பார்த்து இணைத்தல் கோரிக்கையை ஏற்றுக்கொள்ளுங்கள். அதை உங்கள் கூழாங்கற்களிலும் ஏற்றுக்கொள்ளுங்கள்.</string>
-    <string name="weather_notification_label">உங்கள் கூழாங்கற்களில் வானிலை தகவல்களைப் பெற வானிலை அறிவிப்பு பயன்பாட்டில் இந்த தோல் இயக்கப்பட்டிருப்பதை உறுதிப்படுத்திக் கொள்ளுங்கள்.\n\n இங்கே உள்ளமைவு தேவையில்லை.\n\n பயன்பாட்டு நிர்வாகத்திலிருந்து உங்கள் கூழாங்கல்லின் கணினி வானிலை பயன்பாட்டை இயக்கலாம்.\n\n ஆதரிக்கப்படும் கண்காணிப்பகங்கள் வானிலை தானாகவே காண்பிக்கும்.</string>
     <string name="dateformat_month_day">மாதம், நாள்</string>
     <string name="pref_screen_notification_profile_alarm_clock">அலாரம் கடிகாரம்</string>
     <string name="StringUtils_sender">(%1$s)</string>

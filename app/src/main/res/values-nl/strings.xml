@@ -31,7 +31,6 @@
     <string name="appmanager_hrm_activate">Activeer HRM</string>
     <string name="appmanager_hrm_deactivate">Deactiveer HRM</string>
     <string name="appmanager_weather_activate">Activeer de systeem weer app</string>
-    <string name="appmanager_weather_install_provider">Installeer de app voor weer meldingen</string>
     <string name="app_configure">Configureer</string>
     <string name="app_move_to_top">Verplaats naar bovenaan</string>
     <string name="fw_upgrade_notice">U staat op het punt om firmware %s te installeren.</string>
@@ -132,7 +131,6 @@
     <string name="controlcenter_navigation_drawer_open">Open navigatiescherm</string>
     <string name="controlcenter_navigation_drawer_close">Sluit navigatiescherm</string>
     <string name="appmanager_weather_deactivate">Deactiveer de systeem weer app</string>
-    <string name="title_activity_calblacklist">Kalenders op de zwarte lijst</string>
     <string name="title_activity_fw_app_insaller">Firmware/Apps installeren</string>
     <string name="fw_upgrade_notice_amazfitcor">U staat op het punt om de firmware %s te installeren op uw Amazfit Cor.
 \n
@@ -384,7 +382,6 @@
     <string name="authentication_required">Authenticatie vereist</string>
     <string name="appwidget_text">Zzz</string>
     <string name="add_widget">Widget toevoegen</string>
-    <string name="activity_prefs_sleep_duration">Gewenste slaapduur in uren</string>
     <string name="appwidget_setting_alarm">Een alarm is ingesteld voor %1$02d:%2$02d</string>
     <string name="device_hw">Hardware revisie: %1$s</string>
     <string name="device_fw">Firmware-versie: %1$s</string>
@@ -406,7 +403,6 @@
 \n* .gpx - GPS-opnames
 \n* .log - logbestanden
 \nUw geëxporteerde bestanden kunt u hier vinden (of plaats de bestanden die u wilt importeren hier):</string>
-    <string name="activity_db_management_merge_old_title">Legacy-database verwijderen</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Export pad is niet toegankelijk. Neem contact op met de ontwikkelaars.</string>
     <string name="dbmanagementactivity_exported_to">Geëxporteerd naar: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Fout bij het exporteren DB: %1$s</string>
@@ -430,13 +426,6 @@
     <string name="title_activity_vibration">Vibratie</string>
     <string name="title_activity_pebble_pairing">Pebble koppelen</string>
     <string name="pebble_pairing_hint">Er zal een koppelingsdialoogvenster verschijnen op uw Android-apparaat. Als dat niet gebeurt, kijk dan tussen uw meldingen en accepteer het koppelingsverzoek. Accepteer het daarna ook op uw Pebble.</string>
-    <string name="weather_notification_label">Zorg ervoor dat deze skin is ingeschakeld in de Weermeldingen app om informatie over het weer op uw Pebble te krijgen. 
-\n 
-\nHiervoor is geen configuratie nodig. 
-\n 
-\nU kunt de systeemweer-app van uw Pebble vanuit het app-beheer inschakelen. 
-\n 
-\nOndersteunde wijzerplaten geven het weer automatisch weer.</string>
     <string name="pref_title_setup_bt_pairing">Schakel Bluetooth koppeling in</string>
     <string name="pref_summary_setup_bt_pairing">Deactiveer dit als u problemen hebt met verbinden</string>
     <string name="unit_metric">Metrisch</string>
@@ -685,8 +674,6 @@
     <string name="pref_title_expose_hr">realtime HR-toegang door derden</string>
     <string name="pref_title_use_custom_font">Gebruik aangepast lettertype</string>
     <string name="pref_summary_use_custom_font">Selecteer dit als je apparaat aangepaste lettertypesoftware bevat met emoji-ondersteuning</string>
-    <string name="activity_db_management_autoexport_explanation">Database autoexport-locatie is ingesteld op:</string>
-    <string name="activity_db_management_autoexport_label">Auto Exporteren</string>
     <string name="activity_DB_ExportButton">Exporteer gegevens</string>
     <string name="activity_DB_import_button">Importeer gegevens</string>
     <string name="activity_DB_test_export_button">Voer nu AutoExport uit</string>
@@ -878,7 +865,6 @@
     <string name="error_exporting_device_preferences">Fout bij het exporteren van apparaatspecifieke voorkeuren</string>
     <string name="pref_check_permission_status_summary">Controleer en vraag om ontbrekende machtigingen, zelfs als ze mogelijk niet direct nodig zijn. Schakel dit alleen uit als uw apparaten geen van deze functies ondersteunen. Het niet verlenen van een toestemming kan problemen veroorzaken!</string>
     <string name="pref_check_permission_status">Machtigingsstatus controleren</string>
-    <string name="device_requires_key">SLEUTEL VEREIST, LANG INDRUKKEN OM IN TE VOEREN</string>
     <string name="device_is_currently_bonded">REEDS GEKOPPELD</string>
     <string name="companiondevice_pairing">Companion-apparaat koppelen</string>
     <string name="require_location_provider">Locatie moet ingeschakeld zijn</string>
@@ -970,10 +956,6 @@
     <string name="menuitem_spo2">SpO2</string>
     <string name="activity_type_strength_training">Krachttraining</string>
     <string name="dbmanagementactivity_export_finished">Verwijdering voltooid</string>
-    <string name="activity_db_management_clean_export_directory_text">Geëxporteerde bestanden in de export/import-directory zijn toegankelijk voor elke app op uw apparaat. Mogelijk wilt u deze bestanden verwijderen na synchronisatie of back-up. Zorg ervoor dat u een back-up hebt voordat u ze verwijdert. GPX-bestanden, submappen en automatisch geëxporteerde databasebestanden (indien aanwezig) worden niet verwijderd. Het pad naar de export/import-directory is:</string>
-    <string name="activity_DB_clean_export_directory_warning_message">Echt bestanden verwijderen in de export/import-directory\?</string>
-    <string name="activity_DB_clean_export_directory_warning_title">Bestanden verwijderen in de export/import-directory\?</string>
-    <string name="activity_db_management_clean_export_directory_label">Verwijder bestanden in de export/import-map</string>
     <string name="activity_DB_ShowContentButton">Toon de inhoud van de export/import-map</string>
     <string name="activity_data_management_directory_content_title">Directory-inhoud exporteren/importeren</string>
     <string name="dbmanagementactivity_export_confirmation">Echt gegevens exporteren\? Eerder geëxporteerde activiteitsgegevens (indien aanwezig) en voorkeuren worden overschreven.</string>
@@ -1477,10 +1459,7 @@
     <string name="pref_title_notifications_generic_settings">Instellingen voor Android-meldingen</string>
     <string name="activity_db_management_autoexport_scheduled_no">AutoExport is niet gepland.</string>
     <string name="activity_db_management_autoexport_location">Locatie was niet te begrijpen. Waarschijnlijk een probleem met het nieuwere Android-toestemmingssysteem. Hoogstwaarschijnlijk werkt automatisch exporteren nu niet.</string>
-    <string name="activity_db_management_autoexport_enabled_no">AutoExport is niet ingeschakeld.</string>
-    <string name="activity_db_management_autoexport_enabled_yes">AutoExport is ingeschakeld.</string>
     <string name="activity_db_management_autoexport_scheduled_yes">AutoExport is (oorspronkelijk) gepland voor %1$s</string>
-    <string name="autoExport_lastTime_label">Laatste AutoExport: %1$s</string>
     <string name="watchface_dialog_pre_setting_position">Positie ingesteld op %s</string>
     <string name="watchface_setting_light_up_on_notification">Scherm oplichten bij nieuwe melding</string>
     <string name="menuitem_email">E-mail</string>
@@ -1668,7 +1647,6 @@
     <string name="watchface_dialog_widget_cat_2nd_tz_widget">2e tijdzone-widget</string>
     <string name="watchface_dialog_title_widget">Widget-instellingen</string>
     <string name="watchface_dialog_widget_background">Achtergrond</string>
-    <string name="share_log_not_enabled_message">U moet eerst het schrijven van logbestanden inschakelen in Instellingen - Logbestanden schrijven</string>
     <string name="step_streak_total">Totaal</string>
     <string name="steps_streaks_since_date">Sinds %s</string>
     <string name="step_streak_average_steps_hint">Gemiddeld aantal stappen per dag van de reeks</string>

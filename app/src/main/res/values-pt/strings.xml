@@ -36,7 +36,6 @@
     <string name="appmanager_hrm_deactivate">Desativar monitor de ritmo cardíaco</string>
     <string name="appmanager_weather_activate">Ativar aplicação de meteorologia do sistema</string>
     <string name="appmanager_weather_deactivate">Desativar aplicação de meteorologia do sistema</string>
-    <string name="appmanager_weather_install_provider">Instalar a aplicação de notificação de meteorologia</string>
     <string name="app_configure">Configurar</string>
     <string name="app_move_to_top">Mover para o topo</string>
     <!--Strings related to FwAppInstaller-->
@@ -341,7 +340,6 @@
     <string name="authentication_required">Autenticação necessária</string>
     <string name="appwidget_text">Zzz</string>
     <string name="add_widget">Adicionar widget</string>
-    <string name="activity_prefs_sleep_duration">Preferir duração de sono em horas</string>
     <string name="appwidget_setting_alarm">Alarme definido para as %1$02d:%2$02d</string>
     <string name="device_hw">Hardware revisão: %1$s</string>
     <string name="device_fw">Firmware versão: %1$s</string>
@@ -363,7 +361,6 @@
 \n *.gpx - gravações deGPS
 \n *.log - ficheiros de log
 \nEspere encontrar os seus ficheiros exportados (ou pôr os ficheiros que deseja importar) lá:</string>
-    <string name="activity_db_management_merge_old_title">Apagar o banco de dados legado</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Não foi possível aceder ao caminho de exportação. Por favor contacte os programadores.</string>
     <string name="dbmanagementactivity_exported_to">Exportado para: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Erro ao exportar a Base de Dados: %1$s</string>
@@ -387,13 +384,6 @@
     <!--Strings related to Pebble Pairing Activity-->
     <string name="title_activity_pebble_pairing">Pareamento do Pebble</string>
     <string name="pebble_pairing_hint">Um diálogo de pareamento vai aparecer no seu aparelho Android. Se isso não acontecer, procure na gaveta de notificação e aceite o pedido de pareamento. Também aceite-o no seu Pebble em seguida.</string>
-    <string name="weather_notification_label">Garanta que este tema se encontra ativado na App de Meteorologia para obter informação meteorológica atualizada no seu Pebble.
-\n
-\nNão é necessária qualquer configuração aqui.
-\n
-\nPode ativar a app nativa de meteorologia do seu Pebble através da gestão de apps.
-\n
-\nTemas de relógio irão apresentar a informação meteorológica automaticamente.</string>
     <string name="pref_title_setup_bt_pairing">Ativar o emparelhamento Bluetooth</string>
     <string name="pref_summary_setup_bt_pairing">Desative isto caso tenha problemas na ligação</string>
     <string name="unit_metric">Métrico</string>
@@ -418,7 +408,6 @@
     <string name="discovery_dont_pair">Não emparelhar</string>
     <string name="action_donate">Doar</string>
     <string name="controlcenter_connect">Conectar…</string>
-    <string name="title_activity_calblacklist">Calendários bloqueados</string>
     <string name="fw_upgrade_notice_amazfitbip">Está prestes a instalar o firmware %s na sua Amazfit Bip.
 \n
 \nPor favor garanta que instala o firmware .fw, o ficheiro .res e finalmente o ficheiro .gps. O seu relógio vai reiniciar depois de instalar o ficheiro .fw.
@@ -559,7 +548,6 @@
     <string name="activity_db_management_empty_db_warning">Atenção! Pressionando este botão, irá limpar o seu banco de dados e começar do zero.</string>
     <string name="activity_db_management_empty_DB">Esvaziar a Base de Dados</string>
     <string name="activity_DB_test_export_message">Exportar a base de dados…</string>
-    <string name="activity_db_management_autoexport_explanation">O local de exportação automática da base de dados foi definido para:</string>
     <string name="menuitem_worldclock">Relógio Mundial</string>
     <string name="pref_title_weather_summary">Usado para o provedor do clima do LineageOS, outras versões do Android precisam usar uma app como o \"Notificação de clima\". Encontrará mais informações no wiki do Gadgetbridge.</string>
     <string name="about_additional_contributions">Muito obrigado a todos os contribuidores não listados aqui por contribuição com código, transdução, suporte, ideias, motivação, relatórios de erros, dinheiro… ✊</string>
@@ -722,7 +710,6 @@
     <string name="activity_DB_test_export_button">Executar AutoExportação Agora</string>
     <string name="activity_DB_import_button">Importar dados</string>
     <string name="activity_DB_ExportButton">Exportar dados</string>
-    <string name="activity_db_management_autoexport_label">AutoExportar</string>
     <string name="pref_summary_use_custom_font">Ative isto se o seu aparelho possui uma firmware de letra personalizada para suporte de emoji</string>
     <string name="pref_title_use_custom_font">Usar letra personalizada</string>
     <string name="pref_title_expose_hr">Acesso por terceiros a FC em tempo real</string>
@@ -927,7 +914,6 @@
     <string name="error_exporting_device_preferences">Erro ao exportar as preferências específicas do aparelho</string>
     <string name="pref_check_permission_status_summary">Verifique e peça permissões ausentes mesmo quando elas podem não ser necessárias no exato momento. Desative isso somente se seus aparelhos realmente não suportarem nenhum desses recursos. Não conceder uma permissão pode causar problemas!</string>
     <string name="pref_check_permission_status">Verificar estado de permissão</string>
-    <string name="device_requires_key">CHAVE NECESSÁRIA</string>
     <string name="device_is_currently_bonded">JÁ ASSOCIADO</string>
     <string name="menuitem_stress">Estresse</string>
     <string name="menuitem_cycles">Rastreio de Ciclos</string>
@@ -1186,10 +1172,6 @@
     <string name="blood_pressure">Pressão arterial</string>
     <string name="getting_heart_rate">Medição</string>
     <string name="heart_rate_result">Resultados da medição</string>
-    <string name="activity_db_management_clean_export_directory_label">Excluir ficheiros no diretório de exportação/importação</string>
-    <string name="activity_DB_clean_export_directory_warning_title">Excluir ficheiros no diretório de exportação/importação\?</string>
-    <string name="activity_DB_clean_export_directory_warning_message">Deseja realmente excluir ficheiros do diretório de exportação/importação\?</string>
-    <string name="activity_db_management_clean_export_directory_text">Os ficheiros exportados no diretório de exportação/importação podem ser acedidos por qualquer app no seu aparelho. Pode remover esses ficheiros após a sincronização ou backup. Certifique-se de ter um backup antes de excluí-los. Os ficheiros GPX, subdiretórios e ficheiros de base de dados exportados automaticamente (se houver) não serão excluídos. O caminho ao diretório de exportação/importação é:</string>
     <string name="dbmanagementactivity_export_finished">Exclusão finalizada</string>
     <string name="activity_type_strength_training">Treinamento de força</string>
     <string name="activity_summary_detail_select_gpx_track">Selecionar trilha GPX</string>
@@ -1791,8 +1773,6 @@
     <string name="pref_pair_bluetooth_calls_help_warning">AVISO: se ativar as chamadas por Bluetooth sem parear com a segunda instância, as notificações de chamadas poderão não funcionar como esperado.</string>
     <string name="pref_title_device_internet_access">Permitir Acesso à Internet</string>
     <string name="pref_screen_vibration_patterns_title">Padrões de vibração</string>
-    <string name="activity_db_management_autoexport_enabled_yes">A exportação automática está ativada.</string>
-    <string name="activity_db_management_autoexport_enabled_no">A exportação automática não está ativada.</string>
     <string name="activity_type_outdoor_running">Corrida ao ar livre</string>
     <string name="activity_type_indoor_running">Corrida em ambiente fechado</string>
     <string name="device_name_cycling_sensor">Sensor de ciclismo</string>
@@ -1942,7 +1922,6 @@
     <string name="busy_task_fetch_temperature">A coletar dados de temperatura</string>
     <string name="busy_task_fetch_stress_data">A coletar dados de estresse</string>
     <string name="seconds_7">7 segundos</string>
-    <string name="autoExport_lastTime_label">Última exportação automática: %1$s</string>
     <string name="pref_enable_call_reject">Ativar a rejeição de chamadas</string>
     <string name="pref_enable_call_reject_summary">Ativar a rejeição de chamadas do dispositivo</string>
     <string name="controlcenter_set_preferences">Definir preferências</string>
@@ -2904,7 +2883,6 @@
     <string name="zepp_os_watchface_vital">Vital</string>
     <string name="zepp_os_sun_moon_utc_title">Enviar horários do sol/lua em UTC</string>
     <string name="zepp_os_sun_moon_utc_summary">Ative esta opção se o seu relógio estiver a ser exibido valores incorretos para os horários do sol e da lua</string>
-    <string name="share_log_not_enabled_message">Primeiro, deve ativar o registo em Configurações - Gravar ficheiros de log</string>
     <string name="weather_condition_thunderstorm_with_light_rain">tempestade com chuva fraca</string>
     <string name="weather_condition_thunderstorm_with_rain">tempestade com chuva</string>
     <string name="weather_condition_thunderstorm_with_heavy_rain">tempestade com chuva forte</string>

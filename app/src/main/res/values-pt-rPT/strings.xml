@@ -117,7 +117,6 @@
     <string name="whitelist_all_for_notifications">Desbloquear todas as notificações</string>
     <string name="check_all_applications">Marcar todas as aplicações</string>
     <string name="uncheck_all_applications">Desmarcar todas as aplicações</string>
-    <string name="title_activity_calblacklist">Blacklist do Calendário</string>
     <string name="title_activity_fw_app_insaller">Instalador de FW/app</string>
     <string name="fw_upgrade_notice">Está prestes a instalar o %s.</string>
     <string name="fw_upgrade_notice_amazfitbip">Está prestes a instalar o firmware %s no seu Amazfit Bip. \n \nCertifique-se de instalar o firmware .fw, depois o ficheiro .res e finalmente o ficheiro .gps. O seu relógio será reiniciado após a instalação do ficheiro .fw. \n \nNota: não precisa instalar .res e .gps se estes ficheiros forem exatamente os mesmos que os instalados anteriormente. \n \nPROSSIGA POR SUA CONTA E RISCO!</string>
@@ -998,7 +997,6 @@
     <string name="authenticating">A autenticar</string>
     <string name="authentication_required">Autenticação necessária</string>
     <string name="authentication_failed_check_key">Falha na autenticação, verifique a chave de autenticação</string>
-    <string name="activity_prefs_sleep_duration">Preferência de duração de sono em horas</string>
     <string name="device_hw">Hardware revisão: %1$s</string>
     <string name="device_fw">Firmware versão: %1$s</string>
     <string name="error_creating_directory_for_logfiles">Erro ao criar o diretório para ficheiros de log: %1$s</string>
@@ -1019,7 +1017,6 @@
     <string name="action_db_management">Gestão de dados</string>
     <string name="title_activity_db_management">Gestão de dados</string>
     <string name="activity_db_management_import_export_explanation">As operações de exportação/importação usam o seguinte caminho (veja abaixo) para um diretório no seu dispositivo. Este diretório é acessível a outras apps de Android e o seu computador. Observe que este diretório e todos os ficheiros que contêm são apagados se desinstalar o Gadgetbridge. Os dados incluem: \n Export_preference - configurações globais \n Export_preference_MAC - configurações específicas do dispositivo \n Gadgetbridge - base de dados de dispositivos e atividades \n Gadgetbridge_date - base de dados exportado numa data \n *.gpx - gravações deGPS \n *.log - ficheiros de log \nEspere encontrar os seus ficheiros exportados (ou colocar os ficheiros que deseja importar) lá:</string>
-    <string name="activity_db_management_merge_old_title">Apagar a base de dados legado</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Não é possível aceder o caminho de exportação. Entre em contato com os programadores.</string>
     <string name="dbmanagementactivity_exported_to">Exportado para: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Erro ao exportar BD: %1$s</string>
@@ -1040,12 +1037,7 @@
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Os dados de atividades antigos foram apagados.</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">Falha ao apagar a base de dados da atividades antigo.</string>
     <string name="dbmanagementactivity_overwrite">Sobrepor</string>
-    <string name="activity_db_management_autoexport_explanation">Localização de autoexportação da base de dados foi definida para:</string>
-    <string name="autoExport_lastTime_label">Última exportação automática: %1$s</string>
-    <string name="activity_db_management_autoexport_enabled_yes">A exportação automática está ativada.</string>
-    <string name="activity_db_management_autoexport_enabled_no">A exportação automática não está ativada.</string>
     <string name="activity_db_management_autoexport_scheduled_no">A exportação automática não foi programada.</string>
-    <string name="activity_db_management_autoexport_label">Autoexportar</string>
     <string name="activity_db_management_autoexport_location">Não foi possível perceber a localização. Provavelmente um problema do sistema de permissão mais recente do Android. Muito provavelmente, a exportação automática agora não funciona.</string>
     <string name="activity_DB_ExportButton">Exportar dados</string>
     <string name="activity_DB_import_button">Importar dados</string>
@@ -1063,10 +1055,6 @@
     <string name="set">Definir</string>
     <string name="activity_data_management_directory_content_title">Conteúdo do diretório de exportação/importação</string>
     <string name="activity_DB_ShowContentButton">Mostrar Conteúdo do diretório de exportação/importação</string>
-    <string name="activity_db_management_clean_export_directory_label">Apagar ficheiros no diretório de exportação/importação</string>
-    <string name="activity_DB_clean_export_directory_warning_title">Apagar ficheiros no diretório de exportação/importação?</string>
-    <string name="activity_DB_clean_export_directory_warning_message">Deseja realmente apagar ficheiros do diretório de exportação/importação?</string>
-    <string name="activity_db_management_clean_export_directory_text">Os ficheiros exportados no diretório de exportação/importação podem ser acedidos por qualquer app no seu dispositivo. Pode querer remover estes ficheiros após a sincronização ou backup. Certifique-se de ter um backup antes de apagá-los. Os ficheiros GPX, subdiretórios e ficheiros de base de dados exportados automaticamente (se houver) não serão apagados. O caminho para o diretório de exportação/importação é:</string>
     <string name="dbmanagementactivity_export_finished">Apagar finalizado</string>
     <string name="title_activity_vibration">Vibração</string>
     <string name="title_activity_pebble_pairing">Pareamento do Pebble</string>
@@ -2758,7 +2746,6 @@
     <string name="zepp_os_watchface_vital">Vital</string>
     <string name="zepp_os_sun_moon_utc_title">Enviar horários do sol/lua em UTC</string>
     <string name="zepp_os_sun_moon_utc_summary">Ative esta opção se o seu relógio estiver a ser exibido valores incorretos para os horários do sol e da lua</string>
-    <string name="share_log_not_enabled_message">Primeiro, deve ativar o registo em Configurações - Gravar ficheiros de log</string>
     <string name="weather_condition_thunderstorm_with_light_rain">tempestade com chuva fraca</string>
     <string name="weather_condition_thunderstorm_with_rain">tempestade com chuva</string>
     <string name="weather_condition_thunderstorm_with_heavy_rain">tempestade com chuva forte</string>

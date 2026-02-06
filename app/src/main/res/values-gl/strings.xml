@@ -34,10 +34,8 @@
     <string name="appmanager_hrm_deactivate">Desactivar Monitor de Ritmo Cardíaco</string>
     <string name="appmanager_weather_activate">Activar app de clima do sistema</string>
     <string name="appmanager_weather_deactivate">Desactivar app de clima do sistema</string>
-    <string name="appmanager_weather_install_provider">Instalar a app de notificacións do clima</string>
     <string name="app_configure">Configurar</string>
     <string name="app_move_to_top">Mover para arriba</string>
-    <string name="title_activity_calblacklist">Calendarios bloqueados</string>
     <string name="title_activity_fw_app_insaller">Instalador de FW/App</string>
     <string name="fw_upgrade_notice">Está a piques de instalar o firmware %s.</string>
     <string name="fw_multi_upgrade_notice">Está a piques de instalar os firmwares %1$s e %2$s no canto dos que están actualmente na súa Mi Band.</string>
@@ -342,7 +340,6 @@
     <string name="authentication_required">Requerida autenticación</string>
     <string name="appwidget_text">ZzZ</string>
     <string name="add_widget">Engadir widget</string>
-    <string name="activity_prefs_sleep_duration">Duración de sono preferida en horas</string>
     <string name="appwidget_setting_alarm">Unha alarma foi definida para %1$02d:%2$02d</string>
     <string name="device_hw">Revisión de hardware: %1$s</string>
     <string name="device_fw">Versión de firmware: %1$s</string>
@@ -358,7 +355,6 @@
     <string name="activity_db_management_import_export_explanation">A base de datos usa a seguinte ubicación no seu dispositivo.
 \nEsta ubicación é accesíbel para outras aplicacións Android e para o seu ordenador.
 \nAtopará as súas bases de datos exportadas (ou a que quere importar) aquí:</string>
-    <string name="activity_db_management_merge_old_title">Borrar a base de datos antiga</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Non se pode acceder á ruta para exportar . Por favor, contacta cos desenvolvedores.</string>
     <string name="dbmanagementactivity_exported_to">Exportado a: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Erro ao exportar a base de datos: %1$s</string>
@@ -422,13 +418,6 @@
     <string name="mi2_prefs_button_press_broadcast_summary">Enviar mensaxe despois dun número definido de pulsacións</string>
     <string name="pref_summary_pebble_health_store_raw">Se marcado, os datos son almacenados no seu formato orixinal ficando disponíbeis para posterior interpretación. Nota: A base de datos será máis grande!</string>
     <string name="pebble_pairing_hint">Verá unha notificación de emparellamento no seu dispositivo Android. Se non, acceda ás notificacións e acepte a solicitude de emparellamento. posteriormente a solicitude de emparellamento no seu Pebble.</string>
-    <string name="weather_notification_label">Asegúrate de que este tema esté activado na aplicación de notificación do clima para obter a información no teu Pebble.
-\n
-\nNon se require configuración.
-\n
-\nPodes activar a aplicación meteorolóxica do sistema desde a configuración da app.
-\n
-\nAs \"watchfaces\" soportadas amosarán a información do clima automáticamente.</string>
     <string name="discovery_pair_question">Selecciona Emparellar para emparellar os teus dispositivos. Se isto falla, proba de novo sen emparellar.</string>
     <string name="controlcenter_connect">Conectar…</string>
     <string name="fw_upgrade_notice_amazfitcor">Estás a piques de instalar firmware %s no teu Amazfit Cor.

@@ -246,7 +246,6 @@
     <string name="activity_prefs_height_cm">Wzrost w cm</string>
     <string name="activity_prefs_weight_kg">Waga w kg</string>
     <string name="add_widget">Dodaj widget</string>
-    <string name="activity_prefs_sleep_duration">Preferowana długość snu w godzinach</string>
     <string name="device_hw">Wersja sprzętu: %1$s</string>
     <string name="device_fw">Wersja oprogramowania: %1$s</string>
     <string name="updatefirmwareoperation_update_in_progress">Aktualizowanie oprogramowania</string>
@@ -272,8 +271,6 @@
     <string name="controlcenter_snackbar_requested_screenshot">Wykonywanie zrzutu ekranu urządzenia</string>
     <string name="appmanager_weather_activate">Aktywuj systemową aplikację pogody</string>
     <string name="appmanager_weather_deactivate">Dezaktywuj systemową aplikację pogody</string>
-    <string name="appmanager_weather_install_provider">Zainstaluj aplikację Weather Notification</string>
-    <string name="title_activity_calblacklist">Lista zablokowanych kalendarzy</string>
     <string name="pref_title_general_autostartonboot">Uruchom automatycznie</string>
     <string name="pref_title_minimize_priority">Ukryj powiadomienia Gadgetbridge</string>
     <string name="pref_summary_minimize_priority_off">Ikona na pasku stanu i powiadomienia będą wyświetlane na zablokowanym ekranie</string>
@@ -645,7 +642,6 @@
     <string name="pref_summary_expose_hr">Umożliwia innym aplikacjom dostęp do danych HR w czasie rzeczywistym, gdy Gadgetbridge jest podłączony</string>
     <string name="pref_title_use_custom_font">Użyj niestandardowej czcionki</string>
     <string name="pref_summary_use_custom_font">Włącz tę opcję, jeśli Twoje urządzenie ma niestandardowy firmware czcionek do obsługi emoji</string>
-    <string name="activity_db_management_autoexport_label">Automatyczny eksport</string>
     <string name="activity_DB_ExportButton">Eksport danych</string>
     <string name="activity_DB_import_button">Import danych</string>
     <string name="activity_DB_test_export_message">Eksportowanie bazy danych…</string>
@@ -706,16 +702,8 @@
 \n • Pliki z rozszerzeniem LOG – pliki rejestrów dziennika
 \n
 \nWyeksportowane pliki znajdziesz tutaj (jest to również katalog importu):</string>
-    <string name="activity_db_management_merge_old_title">Usuwanie starej bazy danych</string>
     <string name="dbmanagementactivity_error_exporting_shared">Błąd podczas eksportowania preferencji: %1$s</string>
     <string name="dbmanagementactivity_error_importing_shared">Błąd podczas importowania preferencji: %1$s</string>
-    <string name="weather_notification_label">Upewnij się, że ta skórka jest włączona w aplikacji \"Weather Notification\", aby uzyskać informacje o pogodzie na swoim Pebble.
-\n
-\nKonfiguracja nie jest tutaj wymagana.
-\n
-\nMożesz włączyć systemową aplikację pogody swojego Pebble z poziomu zarządzania aplikacją.
-\n
-\nObsługiwane zegarki automatycznie wyświetlą pogodę.</string>
     <string name="discovery_bonding_failed_immediately">Wiązanie z %1$s natychmiast się nie powiodło.</string>
     <string name="discovery_successfully_bonded">Powiązano z %1$s.</string>
     <string name="controlcenter_start_activity_tracks">Ślady aktywności</string>
@@ -742,7 +730,6 @@
     <string name="prefs_hr_alarm_high">Górny limit</string>
     <string name="pref_title_charts_average">Pokaż wartości średnie na wykresach</string>
     <string name="pref_title_expose_hr">Dostęp zewnętrznych aplikacji do czujnika tętna</string>
-    <string name="activity_db_management_autoexport_explanation">Lokalizacja automatycznego eksportu bazy danych została ustawiona na:</string>
     <string name="activity_DB_test_export_button">Uruchom AutoEksport teraz</string>
     <string name="appwidget_sleep_alarm_widget_label">Budzik</string>
     <string name="widget_listing_label">Status i alarmy</string>
@@ -875,7 +862,6 @@
     <string name="descentMeters">Spadek</string>
     <string name="ascentMeters">Pod górę</string>
     <string name="distanceMeters">Dystans</string>
-    <string name="device_requires_key">WYMAGANY KLUCZ, DŁUGIE NACIŚNIĘCIE POWODUJE WEJŚCIE</string>
     <string name="require_location_provider">Lokalizacja musi być włączona</string>
     <string name="permission_granting_mandatory">Wszystkie te uprawnienia są wymagane, a ich brak może spowodować niestabilność</string>
     <string name="about_additional_device_support">Dodatkowe wsparcie dla urządzeń</string>
@@ -1086,11 +1072,7 @@
     <string name="widget_settings_select_device_title">Wybierz urządzenie</string>
     <string name="dbmanagementactivity_export_confirmation">Czy naprawdę wyeksportować dane\? Wyeksportowane wcześniej dane o aktywnościach (jeśli takie istnieją) i ustawienia zostaną nadpisane.</string>
     <string name="dbmanagementactivity_export_data_title">Wyeksportować dane\?</string>
-    <string name="activity_db_management_clean_export_directory_text">Eksportowane pliki w katalogu eksportu/importu dostępne są dla każdej aplikacji na tym urządzeniu. Możesz chcieć usunąć te dane po synchronizacji lub utworzeniu kopii zapasowej. Upewnij się, że posiadasz kopię zapasową tych danych przed ich usunięciem. Pliki GPX, podkatalogi i automatycznie wyeksportowane pliki bazy danych (jeśli istnieją) nie zostaną usunięte. Ścieżka do katalogu eksportu/importu:</string>
-    <string name="activity_db_management_clean_export_directory_label">Usuwanie plików z katalogu eksportu/importu</string>
     <string name="dbmanagementactivity_export_finished">Usuwanie ukończone</string>
-    <string name="activity_DB_clean_export_directory_warning_message">Czy na pewno usunąć pliki z katalogu eksportu/importu\?</string>
-    <string name="activity_DB_clean_export_directory_warning_title">Usunąć pliki z katalogu eksportu/importu\?</string>
     <string name="dbmanagementactivity_error_cleaning_export_directory">Wystąpił błąd podczas usuwania plików z katalogu eksportu %1$s</string>
     <string name="minutes_mi">min/mil</string>
     <string name="mi_h">mil/h</string>
@@ -1483,9 +1465,6 @@
     <string name="sony_anc_optimizer_status_wearing_condition">Mierzenie warunków użytkowania…</string>
     <string name="pref_device_action_fitness_app_control_start">Początek śledzenia aplikacji fitness</string>
     <string name="pref_title_notifications_generic_settings">Ustawienia powiadomień Androida</string>
-    <string name="autoExport_lastTime_label">Ostatni automatyczny eksport: %1$s</string>
-    <string name="activity_db_management_autoexport_enabled_yes">Automatyczny eksport jest włączony.</string>
-    <string name="activity_db_management_autoexport_enabled_no">Automatyczny eksport jest wyłączony.</string>
     <string name="activity_db_management_autoexport_scheduled_yes">Automatyczny eksport został zaplanowany na %1$s</string>
     <string name="activity_db_management_autoexport_scheduled_no">Automatyczny eksport nie został zaplanowany.</string>
     <string name="sony_anc_optimize_confirmation_description">Używaj słuchawek tak, jak zwykle. Jeśli warunki użytkowania lub ciśnienie powietrza ulegną zmianie, uruchom optymalizator ponownie.</string>
@@ -1676,7 +1655,6 @@
     <string name="menuitem_workout_history">Historia treningów</string>
     <string name="menuitem_female_health">Zdrowie kobiety</string>
     <string name="menuitem_workout_status">Status treningu</string>
-    <string name="share_log_not_enabled_message">Musisz najpierw włączyć rejestrowanie w Ustawieniach - Zapisywanie plików dziennika</string>
     <string name="menuitem_personal_activity_intelligence">Inteligencja działań osobistych (PAI)</string>
     <string name="permission_display_over_other_apps">%1$s potrzebuje uprawnienia do wyświetlania się nad innymi aplikacjami, aby umożliwić zegarkom Bangle.js uruchamianie aktywności za pomocą intencji, gdy %1$s działa w tle.\n\nMoże to służyć do uruchomienia aplikacji muzycznej i odtworzenia utworu oraz wielu innych czynności.\n\nProszę stuknąć „%2$s”, a następnie „%1$s” i włączyć opcję „Zezwalaj na wyświetlanie na innych aplikacjach”, po czym stuknąć „Wstecz”, aby powrócić do %1$s.\n\nAby zatrzymać prośby o uprawnienia przez %1$s, przejdź do „Ustawienia” i odznacz opcję „Sprawdzaj status uprawnień”.\n\nUpewnij się, że przyznałeś/przyznałaś %1$s uprawnienia niezbędne do oczekiwanego funkcjonowania.</string>
     <string name="watchface_dialog_widget_cat_generic">Generyczny</string>
@@ -3816,7 +3794,6 @@
     <string name="menuitem_zepp_flow">Zepp Flow</string>
     <string name="same_image_already_on_device">ten sam obraz już na urządzeniu</string>
     <string name="sending_image">wysyłanie obrazu</string>
-    <string name="pref_atc_tlsr_model_title">Typ wyświetlacza</string>
     <string name="pref_atc_ble_oepl_model_title">Model wyświetlania</string>
     <string name="pref_atc_ble_oepl_ble_adv_interval_title">Interwał ogłaszania BLE</string>
     <string name="pref_atc_ble_oepl_oepl_protocol_enable_title">Włącz protokół OEPL</string>
@@ -3929,7 +3906,6 @@
     <string name="media_source_switching_bluetooth_mp3">Przełącz źródło multimediów (Bluetooth/MP3)</string>
     <string name="shokz_controls_long_press_multi_function">Przytrzymaj przycisk wielofunkcyjny</string>
     <string name="shokz_controls_simultaneous_volume_up_down">Przytrzymaj jednocześnie przyciski zwiększania i zmniejszania głośności</string>
-    <string name="emoji">Emoji</string>
     <string name="title_activity_gps_track_installer">Instalator tras GPS</string>
     <string name="title_gpx_track_name">Nazwa trasy</string>
     <string name="track_name_required">Nazwa trasy nie może być pusta</string>

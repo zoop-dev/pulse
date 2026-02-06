@@ -118,8 +118,6 @@
     <string name="activity_DB_test_export_button">Run AutoExport Now</string>
     <string name="activity_DB_import_button">Import DB</string>
     <string name="activity_DB_ExportButton">Export Data</string>
-    <string name="activity_db_management_autoexport_label">AutoExport</string>
-    <string name="activity_db_management_autoexport_explanation">Database autoexport location has been set to:</string>
     <string name="pref_summary_use_custom_font">Enable this if your device has a custom font firmware for emoji support</string>
     <string name="pref_title_use_custom_font">Use custom font</string>
     <string name="pref_title_expose_hr">3rd party realtime HR access</string>
@@ -407,13 +405,6 @@
     <string name="unit_metric">Metric</string>
     <string name="pref_summary_setup_bt_pairing">Deactivate this if you have trouble connecting</string>
     <string name="pref_title_setup_bt_pairing">Enable Bluetooth pairing</string>
-    <string name="weather_notification_label">Make sure that this skin is enabled in the Weather Notification app to get weather information on your Pebble.
-\n
-\nNo configuration is needed here.
-\n
-\nYou can enable the system weather app of your Pebble from the app management.
-\n
-\nSupported watchfaces will show the weather automatically.</string>
     <string name="pebble_pairing_hint">A pairing dialog will pop up on your Android device. If not, look in the notification drawer and accept the pairing request. Also accept it on your Pebble afterwards.</string>
     <string name="title_activity_pebble_pairing">Pebble pairing</string>
     <string name="title_activity_vibration">Vibration</string>
@@ -442,7 +433,6 @@
     <string name="error_creating_directory_for_logfiles">Error creating directory for log files: %1$s</string>
     <string name="device_fw">Firmware version: %1$s</string>
     <string name="device_hw">Hardware revision: %1$s</string>
-    <string name="activity_prefs_sleep_duration">Preferred sleep duration in hours</string>
     <string name="add_widget">Add widget</string>
     <string name="appwidget_text">Zzz</string>
     <string name="authentication_required">Authentication required</string>
@@ -744,7 +734,6 @@
     <string name="dbmanagementactivity_error_exporting_db">Error exporting DB: %1$s</string>
     <string name="dbmanagementactivity_exported_to">Exported to: %1$s</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Cannot access export path. Please contact the developers.</string>
-    <string name="activity_db_management_merge_old_title">Legacy database delete</string>
     <string name="activity_db_management_import_export_explanation">The export/import operations use the following path (see below) to a directory on your device. This directory is accessible to other Android apps and your computer. Do note, that this directory and all containing files are deleted if you uninstall Gadgetbridge. The data includes:
 \n Export_preference - global settings
 \n Export_preference_MAC - device specific settings
@@ -758,10 +747,8 @@
     <string name="fw_multi_upgrade_notice">You are about to install the %1$s and %2$s firmware, instead of the ones currently on your Mi Band.</string>
     <string name="fw_upgrade_notice">You are about to install the %s.</string>
     <string name="title_activity_fw_app_insaller">FW/App installer</string>
-    <string name="title_activity_calblacklist">Blacklisted Calendars</string>
     <string name="app_move_to_top">Move to top</string>
     <string name="app_configure">Configure</string>
-    <string name="appmanager_weather_install_provider">Install the Weather Notification app</string>
     <string name="appmanager_weather_deactivate">Deactivate System Weather app</string>
     <string name="appmanager_weather_activate">Activate System Weather app</string>
     <string name="appmanager_hrm_deactivate">Deactivate HRM</string>
@@ -869,8 +856,6 @@
     <string name="charts_legend_heartrate_average">Heart rate average</string>
     <string name="dbmanagementactivity_error_cleaning_export_directory">Error erasing files from export directory %1$s</string>
     <string name="activity_data_management_directory_content_title">Export/Import directory content</string>
-    <string name="activity_DB_clean_export_directory_warning_title">Delete files in the Export/Import directory\?</string>
-    <string name="activity_DB_clean_export_directory_warning_message">Really delete files in the Export/Import directory\?</string>
     <string name="dbmanagementactivity_export_finished">Deletion finished</string>
     <string name="activity_type_yoga">Yoga</string>
     <string name="activity_type_rowing_machine">Rowing Machine</string>
@@ -1030,7 +1015,6 @@
     <string name="activity_summary_edit_name_title">Edit label</string>
     <string name="toast_app_must_not_be_selected">App must not be selected to be configured</string>
     <string name="widget_settings_select_device_title">Select device</string>
-    <string name="activity_db_management_clean_export_directory_text">Exported files in the Export/Import directory are accessible by any app on your device. You might like to remove these files after synchronisation or backup. Make sure to have a backup before deleting them. GPX files, sub-directories and auto-exported database file (if exist) will not be deleted. The path to the Export/Import directory is:</string>
     <string name="activity_type_strength_training">Strength Training</string>
     <string name="toast_app_must_be_selected">App must be selected to be configured</string>
     <string name="companiondevice_pairing">CompanionDevice Pairing</string>
@@ -1233,7 +1217,6 @@
     <string name="activity_DB_ShowContentButton">Show Export/Import directory content</string>
     <string name="dbmanagementactivity_export_data_title">Export Data\?</string>
     <string name="dbmanagementactivity_export_confirmation">Really export data\? Previously exported activity data (if any) and preferences will be overwritten.</string>
-    <string name="activity_db_management_clean_export_directory_label">Delete files in Export/Import directory</string>
     <string name="menuitem_findphone">Find Phone</string>
     <string name="menuitem_takephoto">Camera Remote</string>
     <string name="menuitem_alexa">Alexa</string>
@@ -1294,7 +1277,6 @@
     <string name="pref_check_permission_status_summary">Check and ask for missing permissions even when they might not be instantly needed. Disable this only if your devices actually doesn\'t support any of these features. Not granting a permission might cause issues!</string>
     <string name="pref_check_permission_status">Check permission status</string>
     <string name="error_background_service_reason">Starting the background service failed because of an exception - click here for more information.\n\nError:</string>
-    <string name="device_requires_key">Key required</string>
     <string name="error_background_service_reason_truncated">Starting the background service failed because…</string>
     <string name="error_background_service">Failed to start background service</string>
     <string name="permission_granting_mandatory">All these permissions are required and instability might occur if not granted</string>
@@ -1469,15 +1451,12 @@
     <string name="pref_header_sony_anc_optimizer">Noise Cancelling Optimiser</string>
     <string name="sony_anc_optimize_confirmation_description">Use the headphones as you normally would. If the wearing condition or atmospheric pressure change, run the optimiser again.</string>
     <string name="menuitem_nothing">Nothing</string>
-    <string name="autoExport_lastTime_label">Last AutoExport: %1$s</string>
     <string name="activity_db_management_autoexport_scheduled_no">AutoExport has not been not scheduled.</string>
     <string name="pref_title_notifications_generic_settings">Android notification settings</string>
     <string name="activity_db_management_autoexport_scheduled_yes">AutoExport has (originally) been scheduled for %1$s</string>
     <string name="activity_db_management_autoexport_location">Location could not be understood. Likely an issue of newer Android permission system. Most likely, autoexport is not working now.</string>
     <string name="pref_title_opentracks_packagename">OpenTracks package name</string>
     <string name="pref_summary_opentracks_packagename">Used for starting/stopping GPS track recording in external fitness app.</string>
-    <string name="activity_db_management_autoexport_enabled_yes">AutoExport is enabled.</string>
-    <string name="activity_db_management_autoexport_enabled_no">AutoExport is not enabled.</string>
     <string name="pref_device_action_fitness_app_control_start">Fitness App Tracking Start</string>
     <string name="pref_device_action_fitness_app_control_stop">Fitness App Tracking Stop</string>
 </resources>

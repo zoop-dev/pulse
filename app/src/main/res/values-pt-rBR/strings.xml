@@ -28,7 +28,6 @@
     <string name="appmanager_hrm_deactivate">Desativar HRM</string>
     <string name="appmanager_weather_activate">Ativar o aplicativo de clima do sistema</string>
     <string name="appmanager_weather_deactivate">Desativar o aplicativo de clima do sistema</string>
-    <string name="appmanager_weather_install_provider">Instalar o aplicativo de notificação de clima</string>
     <string name="app_configure">Configurar</string>
     <string name="app_move_to_top">Mover para o topo</string>
     <!--Strings related to CalBlacklist-->
@@ -300,7 +299,6 @@
     <string name="authentication_required">Autenticação necessária</string>
     <string name="appwidget_text">Zzz</string>
     <string name="add_widget">Adicionar widget</string>
-    <string name="activity_prefs_sleep_duration">Preferência de duração de sono em horas</string>
     <string name="appwidget_setting_alarm">Um alarme foi definido para %1$02d:%2$02d</string>
     <string name="device_hw">Hardware revisão: %1$s</string>
     <string name="device_fw">Firmware versão: %1$s</string>
@@ -338,13 +336,6 @@
     <!--Strings related to Pebble Pairing Activity-->
     <string name="title_activity_pebble_pairing">Pareamento do Pebble</string>
     <string name="pebble_pairing_hint">Um diálogo de pareamento vai aparecer no seu dispositivo Android. Se isso não acontecer, procure na gaveta de notificação e aceite o pedido de pareamento. Também aceite-o no seu Pebble em seguida.</string>
-    <string name="weather_notification_label">Certifique-se de que esta capa está ativada no aplicativo Notificação de Clima para obter informações sobre o tempo em seu Pebble.
-\n
-\nNão é necessário configurar aqui.
-\n
-\nVocê pode ativar o aplicativo de tempo do sistema de seu Pebble do gerenciamento de aplicativos.
-\n
-\nOs mostradores suportados mostrarão o tempo automaticamente.</string>
     <string name="pref_title_setup_bt_pairing">Ativar pareamento Bluetooth</string>
     <string name="pref_summary_setup_bt_pairing">Desative isso se tiver problemas de conexão</string>
     <string name="unit_metric">Metro</string>
@@ -360,7 +351,6 @@
     <string name="controlcenter_snackbar_disconnecting">Desconectando</string>
     <string name="controlcenter_snackbar_connecting">Conectando…</string>
     <string name="controlcenter_snackbar_requested_screenshot">Tirar captura de tela do dispositivo</string>
-    <string name="title_activity_calblacklist">Blacklist do Calendário</string>
     <string name="fw_upgrade_notice_amazfitbip">Você está prestes a instalar o firmware %s no seu Amazfit Bip.
 \n
 \nCertifique-se de instalar o firmware .fw, depois o arquivo .res e finalmente o arquivo .gps. Seu relógio será reiniciado após a instalação do arquivo .fw.
@@ -446,7 +436,6 @@
     <string name="mi2_prefs_inactivity_warnings_dnd_summary">Desabilita avisos de inatividade por um intervalo de tempo</string>
     <string name="mi2_prefs_do_not_disturb_start">Horário de início</string>
     <string name="mi2_prefs_do_not_disturb_end">Horário de término</string>
-    <string name="activity_db_management_merge_old_title">Exclusão de banco de dados legado</string>
     <string name="dbmanagementactivity_error_exporting_shared">Erro ao exportar preferências: %1$s</string>
     <string name="dbmanagementactivity_error_importing_shared">Erro ao importar preferências: %1$s</string>
     <string name="StringUtils_sender">(%1$s)</string>
@@ -683,8 +672,6 @@
     <string name="pref_title_expose_hr">Acesso por terceiros a FC em tempo real</string>
     <string name="pref_title_use_custom_font">Usar fonte personalizada</string>
     <string name="pref_summary_use_custom_font">Habilite isso se seu dispositivo possui uma firmware de fonte personalizado para suporte a emoji</string>
-    <string name="activity_db_management_autoexport_explanation">Localização de autoexportação do banco de dados foi definida para:</string>
-    <string name="activity_db_management_autoexport_label">Autoexportar</string>
     <string name="activity_DB_ExportButton">Exportar dados</string>
     <string name="activity_DB_import_button">Importar dados</string>
     <string name="activity_DB_test_export_button">Executar autoexportação agora</string>
@@ -877,7 +864,6 @@
     <string name="error_exporting_device_preferences">Erro ao exportar as preferências específicas do dispositivo</string>
     <string name="pref_check_permission_status_summary">Verifique e peça permissões ausentes mesmo quando elas podem não ser necessárias no exato momento. Desabilite isso somente se seus dispositivos realmente não suportarem nenhum desses recursos. Não conceder uma permissão pode causar problemas!</string>
     <string name="pref_check_permission_status">Verificar status de permissão</string>
-    <string name="device_requires_key">CHAVE NECESSÁRIA</string>
     <string name="device_is_currently_bonded">JÁ ASSOCIADO</string>
     <string name="companiondevice_pairing">Pareamento de CompanionDevice</string>
     <string name="require_location_provider">Localização deve estar habilitada</string>
@@ -1144,10 +1130,6 @@
     <string name="activity_summary_detail_select_gpx_track">Selecionar trilha GPX</string>
     <string name="activity_type_strength_training">Treinamento de força</string>
     <string name="dbmanagementactivity_export_finished">Exclusão finalizada</string>
-    <string name="activity_db_management_clean_export_directory_text">Os arquivos exportados no diretório de exportação/importação podem ser acessados por qualquer aplicativo em seu dispositivo. Você pode querer remover esses arquivos após a sincronização ou backup. Certifique-se de ter um backup antes de excluí-los. Os arquivos GPX, subdiretórios e arquivos de banco de dados exportados automaticamente (se houver) não serão excluídos. O caminho para o diretório de exportação/importação é:</string>
-    <string name="activity_DB_clean_export_directory_warning_message">Deseja realmente excluir arquivos do diretório de exportação/importação\?</string>
-    <string name="activity_DB_clean_export_directory_warning_title">Excluir arquivos no diretório de exportação/importação\?</string>
-    <string name="activity_db_management_clean_export_directory_label">Excluir arquivos no diretório de exportação/importação</string>
     <string name="set">Definir</string>
     <string name="heart_rate_result">Resultados da medição</string>
     <string name="getting_heart_rate">Medição</string>
@@ -1695,7 +1677,6 @@
     <string name="spanish_us">Espanhol (Estados Unidos)</string>
     <string name="persian">Persa</string>
     <string name="weeksleepchart_sleep_a_week_or_month">Sono por semana/mês</string>
-    <string name="autoExport_lastTime_label">Última exportação automática: %1$s</string>
     <string name="menuitem_volume">Volume</string>
     <string name="prefs_wena3_vibration_strength_item_strong">Forte</string>
     <string name="heartrate_bpm_45">45 bpm</string>
@@ -1806,8 +1787,6 @@
     <string name="french_ca">Francês (Canadá)</string>
     <string name="portuguese_br">Português (Brasil)</string>
     <string name="activity_prefs_goals">Metas</string>
-    <string name="activity_db_management_autoexport_enabled_no">A exportação automática não está ativada.</string>
-    <string name="activity_db_management_autoexport_enabled_yes">A exportação automática está ativada.</string>
     <string name="pref_title_notifications_ignore_work_profile">Ignorar notificações de perfil de trabalho</string>
     <string name="prefs_wena3_notification_settings_title">Configurações de Notificação</string>
     <string name="prefs_wena3_button_action_name_activity_screen">Tela de Atividade</string>
@@ -2841,7 +2820,6 @@
     <string name="menuitem_buzzer_intensity">Intensidade do alarme sonoro</string>
     <string name="menuitem_night_display">Exibição noturna</string>
     <string name="zepp_os_sun_moon_utc_summary">Ative esta opção se o seu relógio estiver exibindo valores incorretos para os horários do sol e da lua</string>
-    <string name="share_log_not_enabled_message">Primeiro, você deve habilitar o registro em Configurações - Gravar arquivos de log</string>
     <string name="zepp_os_sun_moon_utc_title">Enviar horários do sol/lua em UTC</string>
     <string name="weather_condition_thunderstorm_with_light_rain">tempestade com chuva fraca</string>
     <string name="weather_condition_thunderstorm_with_rain">tempestade com chuva</string>

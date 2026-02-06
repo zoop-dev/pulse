@@ -186,8 +186,6 @@
     <string name="activity_DB_test_export_button">Lancer immédiatement l\'exportation automatique</string>
     <string name="activity_DB_import_button">Importer la base de données</string>
     <string name="activity_DB_ExportButton">Exporter la base de données</string>
-    <string name="activity_db_management_autoexport_label">Exportation automatique</string>
-    <string name="activity_db_management_autoexport_explanation">L\'export automatique des données est réglé vers :</string>
     <string name="pref_summary_use_custom_font">Activer ceci afin d’afficher les émojis si votre appareil a un micrologiciel de police personnalisée</string>
     <string name="pref_title_use_custom_font">Utiliser une police personnalisée</string>
     <string name="pref_title_expose_hr">Accès tiers fréq. cardiaque</string>
@@ -358,13 +356,6 @@
     <string name="unit_metric">Métrique</string>
     <string name="pref_summary_setup_bt_pairing">Désactivez ceci si vous avez des problèmes de connexion</string>
     <string name="pref_title_setup_bt_pairing">Activer le jumelage Bluetooth</string>
-    <string name="weather_notification_label">Assurez vous que ce thème soit activé dans l\'application de notification de la météo pour recevoir les informations sur votre Pebble.
-\n
-\nAucune configuration n\'est requise.
-\n
-\nVous pouvez activer l\'application météo système de votre Pebble depuis la configuration de l\'application.
-\n
-\nLes watchfaces supportées afficheront la météo automatiquement.</string>
     <string name="pebble_pairing_hint">Une fenêtre de jumelage va s’afficher sur votre téléphone. Si cela ne se produit pas, regardez dans vos notifications et acceptez-la. Acceptez ensuite la demande de jumelage sur votre Pebble.</string>
     <string name="title_activity_pebble_pairing">Jumelage avec une Pebble</string>
     <string name="Delete">Supprimer</string>
@@ -389,7 +380,6 @@
     <string name="error_creating_directory_for_logfiles">Erreur à la création de votre fichier log : %1$s</string>
     <string name="device_fw">Version du micrologiciel : %1$s</string>
     <string name="device_hw">Révision matérielle : %1$s</string>
-    <string name="activity_prefs_sleep_duration">Temps de sommeil préféré en heures</string>
     <string name="add_widget">Ajouter un widget</string>
     <string name="authentication_required">Authentification requise</string>
     <string name="authenticating">Authentification</string>
@@ -749,7 +739,6 @@
     <string name="fw_multi_upgrade_notice">Vous êtes sur le point d\'installer les micrologiciels %1$s et %2$s à la place de ceux qui sont actuellement sur votre Mi Band.</string>
     <string name="fw_upgrade_notice">Vous êtes sur le point d\'installer le micrologiciel %s.</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Impossible d\'accéder au fichier d\'export. Merci de contacter les développeurs.</string>
-    <string name="activity_db_management_merge_old_title">Effacer l\'ancienne base de données</string>
     <string name="activity_db_management_import_export_explanation">Les opérations sur la base de données ont utilisé le chemin suivant sur votre appareil. 
 \nCe chemin est accessible par d\'autres applications Android ou par votre ordinateur. 
 \nVotre base de données (ou celle que vous souhaitez importer) se trouvera ici :</string>
@@ -757,10 +746,8 @@
     <string name="action_db_management">Gestion de base de données</string>
     <string name="pref_summary_pebble_health_store_raw">Si coché, les données « brutes » sont stockées pour une interprétation ultérieure, augmentant la taille de la base de données.</string>
     <string name="title_activity_fw_app_insaller">Installateur d\'applications/firmware</string>
-    <string name="title_activity_calblacklist">Calendriers sur liste noire</string>
     <string name="app_move_to_top">Haut de page</string>
     <string name="app_configure">Configurer</string>
-    <string name="appmanager_weather_install_provider">Installer l\'application de notification de la météo</string>
     <string name="appmanager_weather_deactivate">Désactiver l\'application météo</string>
     <string name="appmanager_weather_activate">Activer l\'application météo</string>
     <string name="appmanager_hrm_deactivate">Désactiver la mesure du rythme cardiaque</string>

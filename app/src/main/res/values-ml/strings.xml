@@ -24,12 +24,10 @@
 \nനിങ്ങളുടെ സ്വന്തം അപകടസാധ്യതയിൽ പ്രോസസ്സ് ചെയ്തു!</string>
     <string name="fw_upgrade_notice">നിങ്ങൾ %s ഇൻസ്റ്റാൾ ചെയ്യാൻ പോകുന്നു.</string>
     <string name="title_activity_fw_app_insaller">FW / അപ്ലിക്കേഷൻ ഇൻസ്റ്റാളർ</string>
-    <string name="title_activity_calblacklist">ബ്ലാക്ക്‌ലിസ്റ് ചെയ്ത കലണ്ടറുകൾ</string>
     <string name="whitelist_all_for_notifications">നോട്ടിഫിക്കേഷനുകൾ എല്ലാം വൈറ്റ്‌ലിസ്റ്റ് ചെയ്യുക</string>
     <string name="blacklist_all_for_notifications">നോട്ടിഫിക്കേഷനുകൾ എല്ലാം ബ്ലാക്ക്‌ലിസ്റ്റിൽ ഉൾപെടുത്തുക</string>
     <string name="app_move_to_top">മുകളിലേക്ക് നീക്കുക</string>
     <string name="app_configure">കോൺഫിഗർ ചെയ്യുക</string>
-    <string name="appmanager_weather_install_provider">Weather Notification അപ്ലിക്കേഷൻ ഇൻസ്റ്റാൾ ചെയ്യുക</string>
     <string name="appmanager_weather_deactivate">സിസ്റ്റത്തിലെ കാലാവസ്ഥാ അപ്ലിക്കേഷൻ നിർജ്ജീവമാക്കുക</string>
     <string name="appmanager_weather_activate">സിസ്റ്റത്തിലെ കാലാവസ്ഥാ അപ്ലിക്കേഷൻ സജീവമാക്കുക</string>
     <string name="appmanager_hrm_activate">എച്ച്ആർ‌എം സജീവമാക്കുക</string>

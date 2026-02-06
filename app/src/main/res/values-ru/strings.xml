@@ -34,7 +34,6 @@
     <string name="appmanager_hrm_deactivate">Выключить пульсометр</string>
     <string name="appmanager_weather_activate">Включить системный прогноз погоды</string>
     <string name="appmanager_weather_deactivate">Выключить системный прогноз погоды</string>
-    <string name="appmanager_weather_install_provider">Установить уведомления для прогноза погоды</string>
     <string name="app_configure">Настроить</string>
     <string name="app_move_to_top">Переместить наверх</string>
     <!--Strings related to CalBlacklist-->
@@ -318,7 +317,6 @@
     <string name="authentication_required">Требуется аутентификация</string>
     <string name="appwidget_text">Хрр</string>
     <string name="add_widget">Добавить виджет</string>
-    <string name="activity_prefs_sleep_duration">Желаемая продолжительность сна</string>
     <string name="appwidget_setting_alarm">Будильник был установлен на %1$02d:%2$02d</string>
     <string name="device_hw">Версия устройства: %1$s</string>
     <string name="device_fw">Версия прошивки: %1$s</string>
@@ -340,7 +338,6 @@
 \n *.gpx - записи GPS
 \n *.log - файлы журнала
 \nОжидайте найти экспортированные файлы (или поместить файлы, которые вы хотите импортировать) там:</string>
-    <string name="activity_db_management_merge_old_title">Удаление устаревшей базы данных</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Нет доступа к пути экспорта. Обратитесь, пожалуйста, к разработчикам.</string>
     <string name="dbmanagementactivity_exported_to">Экспортировано в: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Ошибка экспорта базы данных: %1$s</string>
@@ -366,13 +363,6 @@
     <!--Strings related to Pebble Pairing Activity-->
     <string name="title_activity_pebble_pairing">Сопряжение с Pebble</string>
     <string name="pebble_pairing_hint">На вашем Android устройстве должно появиться всплывающее окно с запросом на сопряжение устройств. Если этого не произошло, загляните в ящик уведомлений и примите запрос на сопряжение. После этого примите запрос сопряжения на вашем устройстве Pebble.</string>
-    <string name="weather_notification_label">Чтобы получать информацию о погоде на вашем Pebble, убедитесь, что выбрали эту тему в приложении «Уведомление о погоде».
-\n
-\nДополнительная настройка не нужна.
-\n
-\nВключить приложение погоды на вашем Pebble можно из \"Управления приложениями\".
-\n
-\nПоддерживаемые циферблаты покажут погоду автоматически.</string>
     <string name="pref_title_setup_bt_pairing">Сопряжение по Bluetooth</string>
     <string name="pref_summary_setup_bt_pairing">Отключите, если вам не удалось подключиться</string>
     <string name="unit_metric">Метрическая система мер</string>
@@ -398,7 +388,6 @@
     <string name="discovery_dont_pair">Не выполнять сопряжение</string>
     <string name="action_donate">Пожертвования</string>
     <string name="controlcenter_connect">Подключить…</string>
-    <string name="title_activity_calblacklist">Заблокированные календари</string>
     <string name="fw_upgrade_notice_amazfitbip">Вы собираетесь установить прошивку %s на ваш Amazfit Bip.
 \n
 \nБудьте внимательны: сначала установите файл .fw, потом .res, и затем .gps. После установки .fw ваши часы будут перезагружены.
@@ -696,8 +685,6 @@
     <string name="menuitem_nfc">NFC</string>
     <string name="pref_title_use_custom_font">Пользовательский шрифт</string>
     <string name="pref_summary_use_custom_font">Включите при наличии на устройстве пользовательского шрифта для поддержки эмодзи</string>
-    <string name="activity_db_management_autoexport_explanation">Местоположение авто-экспорта базы данных установлено:</string>
-    <string name="activity_db_management_autoexport_label">Авто-экспорт</string>
     <string name="activity_DB_ExportButton">Экспорт данных</string>
     <string name="activity_DB_import_button">Импорт данных</string>
     <string name="activity_DB_test_export_button">Запустить Авто-экспорт сейчас</string>
@@ -935,7 +922,6 @@
     <string name="error_exporting_device_preferences">Ошибка при экспорте специфичных настроек устройства</string>
     <string name="pref_check_permission_status_summary">Проверять и запрашивать недостающие разрешения, даже если в них не всегда есть необходимость. Отключите, если ваши устройства действительно не поддерживают ни одну из этих функций. Отсутствие разрешений может вызвать проблемы в работе!</string>
     <string name="pref_check_permission_status">Проверять наличие разрешений</string>
-    <string name="device_requires_key">НЕОБХОДИМ КЛЮЧ, ДОЛГОЕ ЗАЖАТИЕ ДЛЯ ВХОДА</string>
     <string name="device_is_currently_bonded">УЖЕ СВЯЗАНЫ</string>
     <string name="companiondevice_pairing">Сопряжение с CompanionDevice</string>
     <string name="require_location_provider">Местоположение должно быть включено</string>
@@ -1079,10 +1065,6 @@
     <string name="prefs_operating_sounds">Рабочие звуки</string>
     <string name="widget_settings_select_device_title">Выберите устройство</string>
     <string name="dbmanagementactivity_export_finished">Удаление завершено</string>
-    <string name="activity_db_management_clean_export_directory_text">Экспортированные файлы в каталоге экспорта/импорта доступны для любого приложения на вашем устройстве. Вы можете удалить эти файлы после синхронизации или резервного копирования. Перед удалением убедитесь, что у вас есть резервная копия. Файлы GPX, подкаталоги и автоматически экспортируемый файл базы данных (если он существует) не будут удалены. Путь к каталогу экспорта/импорта:</string>
-    <string name="activity_DB_clean_export_directory_warning_message">Действительно удалить файлы в каталоге экспорта/импорта\?</string>
-    <string name="activity_DB_clean_export_directory_warning_title">Удалить файлы в каталоге экспорта/импорта\?</string>
-    <string name="activity_db_management_clean_export_directory_label">Удалить файлы в каталоге экспорта/импорта</string>
     <string name="activity_DB_ShowContentButton">Показать содержимое каталога экспорта/импорта</string>
     <string name="activity_data_management_directory_content_title">Экспорт/импорт содержимого каталога</string>
     <string name="dbmanagementactivity_error_cleaning_export_directory">Ошибка при удалении файлов из каталога экспорта %1$s</string>
@@ -1666,7 +1648,6 @@
     <string name="hybridhr_widget_bg_dashed_circle">Пунктирный круг</string>
     <string name="pref_voice_detect_duration_15">15 секунд</string>
     <string name="activity_type_pilates">Пилатес</string>
-    <string name="share_log_not_enabled_message">Сначала необходимо включить логгирование в Настройках - Записывать логи</string>
     <string name="hybridhr_widget_bg_thin_circle">Тонкий круг</string>
     <string name="hybridhr_widget_bg_double_circle">Двойной круг</string>
     <string name="gps">GPS</string>
@@ -1738,14 +1719,11 @@
     <string name="connection_over_ble">Подключение по BLE</string>
     <string name="auto_reconnect_ble_summary">Периодически пытаться переподключиться</string>
     <string name="application_name_banglejs_nightly">Bangle.js Gadgetbridge (Nightly)</string>
-    <string name="activity_db_management_autoexport_enabled_yes">Авто-экспорт включен.</string>
     <string name="activity_db_management_autoexport_scheduled_no">Авто-экспорт не был запланирован.</string>
     <string name="activity_prefs_allow_bluetooth_intent_api">Bluetooth Intent API</string>
     <string name="menuitem_wifi">Wi-Fi</string>
-    <string name="autoExport_lastTime_label">Последний авто-экспорт: %1$s</string>
     <string name="activity_db_management_autoexport_scheduled_yes">Авто-экспорт был изначально запланирован на %1$s</string>
     <string name="activity_db_management_autoexport_location">Не удалось определить местоположение. Возможно, эта проблема связана с новой системой разрешений в Android. Скорее всего, автоэкспорт сейчас не работает.</string>
-    <string name="activity_db_management_autoexport_enabled_no">Авто-экспорт не включен.</string>
     <string name="menuitem_bluetooth">Bluetooth</string>
     <string name="prefs_screen_timeout">Время ожидания экрана</string>
     <string name="pref_workout_detection_enabled">Обнаружение включено</string>

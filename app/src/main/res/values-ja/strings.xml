@@ -35,11 +35,9 @@
     <string name="appmanager_hrm_deactivate">HRM を無効にする</string>
     <string name="appmanager_weather_activate">システムの天気アプリを有効にする</string>
     <string name="appmanager_weather_deactivate">システムの天気アプリを無効にする</string>
-    <string name="appmanager_weather_install_provider">天気通知アプリをインストール</string>
     <string name="app_configure">設定</string>
     <string name="app_move_to_top">先頭に移動</string>
     <!--Strings related to CalBlacklist-->
-    <string name="title_activity_calblacklist">ブラックリストにしたカレンダー</string>
     <!--Strings related to FwAppInstaller-->
     <string name="title_activity_fw_app_insaller">ファームウェア/アプリのインストール</string>
     <string name="fw_upgrade_notice">%s をインストールしようとしています。</string>
@@ -338,7 +336,6 @@
     <string name="authentication_required">認証が必要です</string>
     <string name="appwidget_text">Zzz</string>
     <string name="add_widget">ウィジェットを追加</string>
-    <string name="activity_prefs_sleep_duration">目標睡眠時間 (時間)</string>
     <string name="appwidget_setting_alarm">アラームを %1$02d:%2$02d に設定しました</string>
     <string name="device_hw">ハードウェアリビジョン: %1$s</string>
     <string name="device_fw">ファームウェアバージョン: %1$s</string>
@@ -355,7 +352,6 @@
     <string name="activity_db_management_import_export_explanation">データベース操作は、デバイスの次のパスを使用します。
 \nこのパスは、他の Android アプリケーションやお使いのコンピュータがアクセス可能です。
 \nエクスポートされたデータベースが見つかります (またはインポートしたいデータベースを配置します):</string>
-    <string name="activity_db_management_merge_old_title">レガシー データベースの削除</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">エクスポート パスにアクセスできません。開発者に連絡してください。</string>
     <string name="dbmanagementactivity_exported_to">エクスポートしました: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">データベースのエクスポートエラー : %1$s</string>
@@ -381,13 +377,6 @@
     <!--Strings related to Pebble Pairing Activity-->
     <string name="title_activity_pebble_pairing">Pebble ペアリング</string>
     <string name="pebble_pairing_hint">Android デバイスでペアリングのダイアログがポップアップします。 表示されなかった場合は、通知ドロワーを調べてペアリング要求を了承してください。 その後、Pebble でも同様に了承してください。</string>
-    <string name="weather_notification_label">Pebble で天気情報を取得するには、天気通知アプリでこのスキンが有効になっていることを確認してください。
-\n
-\nここで必要な設定はありません。
-\n
-\nアプリの管理からPebbleのシステム天気アプリを有効にすることができます。
-\n
-\nサポートされているウォッチフェイスが自動的に天気を表示します。</string>
     <string name="pref_title_setup_bt_pairing">Bluetooth ペアリングを有効にする</string>
     <string name="pref_summary_setup_bt_pairing">接続に問題がある場合は、この機能を無効にしてください</string>
     <string name="unit_metric">メートル</string>
@@ -681,7 +670,6 @@
     <string name="minAltitude">最小</string>
     <string name="maxAltitude">最大</string>
     <string name="distanceMeters">距離</string>
-    <string name="device_requires_key">キーが必要です。長押しして入力してください</string>
     <string name="about_contributors">貢献者</string>
     <string name="about_activity_title_generic">Gadgetbridge について</string>
     <string name="about_title">このアプリについて</string>
@@ -715,7 +703,6 @@
     <string name="maximum_duration">期間</string>
     <string name="find_lost_device_you_found_it">見つけた！</string>
     <string name="activity_DB_delete_legacy_button">古いデータベースを削除</string>
-    <string name="activity_db_management_autoexport_label">自動エクスポート</string>
     <string name="pref_chart_sleep_rolling_24_on">過去24時間</string>
     <string name="pref_title_chart_heartrate_color">心拍数の色</string>
     <string name="pref_chart_heartrate_color_orange">橙</string>
@@ -1435,17 +1422,13 @@
     <string name="dbmanagementactivity_export_data_title">データをエクスポートしますか？</string>
     <string name="activity_db_management_empty_db_warning">注意！このボタンを押すとデータベースがリセットされます。</string>
     <string name="dbmanagementactivity_export_finished">削除が完了しました</string>
-    <string name="activity_db_management_autoexport_explanation">データベースの自動エクスポート先を次の場所に設定しました：</string>
     <string name="qhybrid_title_apps_management">アプリの管理</string>
-    <string name="activity_db_management_autoexport_enabled_no">自動エクスポートは有効ではありません。</string>
-    <string name="activity_db_management_autoexport_enabled_yes">自動エクスポートが有効になっています。</string>
     <string name="activity_db_management_autoexport_scheduled_no">自動エクスポートは予定されていません。</string>
     <string name="activity_db_management_autoexport_scheduled_yes">自動エクスポートは %1$s に予定されていました</string>
     <string name="activity_DB_test_export_message">データベースのエクスポート中…</string>
     <string name="activity_DB_empty_button">データベースを空にする</string>
     <string name="activity_db_management_empty_DB">データベースを空にする</string>
     <string name="activity_DB_import_button">データのインポート</string>
-    <string name="autoExport_lastTime_label">最後の自動エクスポート：%1$s</string>
     <string name="activity_DB_ExportButton">データのエクスポート</string>
     <string name="activity_DB_test_export_button">今すぐ自動エクスポートを実行する</string>
     <string name="activity_db_management_autoexport_location">保存先を認識できませんでした。新しい Androidのパーミッション システムの問題であるかもしれません。自動エクスポートはおそらく機能していません。</string>
@@ -1625,7 +1608,6 @@
     <string name="menuitem_goal">アクティビティの目標</string>
     <string name="menuitem_lockscreen">ロック画面</string>
     <string name="zepp_os_watchface_lightning_flash">Lightning flash</string>
-    <string name="share_log_not_enabled_message">設定から「ログファイルを出力」 を有効にする必要があります</string>
     <string name="menuitem_membership_cards">会員証</string>
     <string name="menuitem_screen_always_lit">画面を常に点灯</string>
     <string name="menuitem_brightness">明るさ</string>

@@ -35,11 +35,9 @@
     <string name="appmanager_hrm_deactivate">HRM deaktivieren</string>
     <string name="appmanager_weather_activate">Aktiviere die Wetter-App des Systems</string>
     <string name="appmanager_weather_deactivate">Deaktiviere die Wetter-App des Systems</string>
-    <string name="appmanager_weather_install_provider">App \"Weather Notification\" installieren</string>
     <string name="app_configure">Konfigurieren</string>
     <string name="app_move_to_top">Nach oben</string>
     <!--Strings related to CalBlacklist-->
-    <string name="title_activity_calblacklist">Kalender auf Blacklist</string>
     <!--Strings related to FwAppInstaller-->
     <string name="title_activity_fw_app_insaller">FW/App-Installer</string>
     <string name="fw_upgrade_notice">Du bist dabei, die %s zu installieren.</string>
@@ -335,7 +333,6 @@
     <string name="authentication_required">Authentifizierung erforderlich</string>
     <string name="appwidget_text">Zzz</string>
     <string name="add_widget">Widget hinzufügen</string>
-    <string name="activity_prefs_sleep_duration">Tagesziel: Schlafdauer (Stunden)</string>
     <string name="appwidget_setting_alarm">Wecker wurde auf %1$02d:%2$02d gestellt</string>
     <string name="device_hw">Hardwarerevision: %1$s</string>
     <string name="device_fw">Firmwareversion: %1$s</string>
@@ -357,7 +354,6 @@
 \n * .gpx - GPS-Aufzeichnungen
 \n * .log - Protokolldateien
 \nDie exportierten Dateien (oder die Dateien, die du importieren möchtest) findest du dort:</string>
-    <string name="activity_db_management_merge_old_title">Legacy-Datenbank löschen</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Kann nicht auf den Exportpfad zugreifen. Bitte die Entwickler kontaktieren.</string>
     <string name="dbmanagementactivity_exported_to">Exportiert nach: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Fehler beim Exportieren der DB: %1$s</string>
@@ -383,7 +379,6 @@
     <!--Strings related to Pebble Pairing Activity-->
     <string name="title_activity_pebble_pairing">Pebble koppeln</string>
     <string name="pebble_pairing_hint">Auf deinem Android-Gerät erscheint ein Koppeln-Dialog. Wenn nicht, schaue in die Benachrichtigungsübersicht und akzeptiere die Kopplungsanforderung. Akzeptiere es auch danach auf deiner Pebble.</string>
-    <string name="weather_notification_label">Stelle sicher, dass dieser Skin in der App „Weather Notification“ aktiviert ist, damit du Wetterdaten auf deiner Smartwatch (Pebble) erhältst.\n\nEine zusätzliche Konfiguration ist nicht erforderlich.\n\nDie Wetterfunktion der Pebble kannst du in der App-Verwaltung aktivieren.\n\nUnterstützte Zifferblätter zeigen das Wetter automatisch an.</string>
     <string name="pref_title_setup_bt_pairing">Bluetooth-Kopplung aktivieren</string>
     <string name="pref_summary_setup_bt_pairing">Deaktivierbar, falls du Probleme beim Verbinden hast</string>
     <string name="unit_metric">Metrisch</string>
@@ -694,8 +689,6 @@
     <string name="pref_display_add_device_fab">Neues Gerät koppeln</string>
     <string name="pref_display_add_device_fab_on">Immer sichtbar</string>
     <string name="pref_display_add_device_fab_off">Nur sichtbar, wenn noch kein Gerät hinzugefügt wurde</string>
-    <string name="activity_db_management_autoexport_explanation">Speicherort für automatischen Datenbank-Export auf:</string>
-    <string name="activity_db_management_autoexport_label">Automatischer Export</string>
     <string name="activity_DB_test_export_button">Automatischen Export jetzt starten</string>
     <string name="activity_DB_test_export_message">Datenbank wird exportiert…</string>
     <string name="activity_db_management_empty_db_warning">Achtung! Wenn du auf diese Schaltfläche klickst, löschst du deine Datenbank und beginnst von Grund auf neu.</string>
@@ -848,7 +841,6 @@
     <string name="error_exporting_device_preferences">Fehler beim Export der gerätespezifischen Einstellungen</string>
     <string name="pref_check_permission_status_summary">Prüfen und nachfragen von fehlenden Berechtigungen, auch wenn sie nicht direkt benötigt werden. Nur deaktivieren, wenn dieses Gerät eine der Features nicht unterstützen soll. Eine Berechtigung nicht zu erteilen kann zu Problemen führen!</string>
     <string name="pref_check_permission_status">Berechtigungsstatus prüfen</string>
-    <string name="device_requires_key">SCHLÜSSEL NOTWENDIG, LANGES DRÜCKEN ZUR EINGABE</string>
     <string name="device_is_currently_bonded">BEREITS VERBUNDEN</string>
     <string name="companiondevice_pairing">CompanionDevice Gerätepaarung</string>
     <string name="require_location_provider">Standort muss aktiviert sein</string>
@@ -1038,12 +1030,8 @@
     <string name="dbmanagementactivity_export_data_title">Daten exportieren\?</string>
     <string name="activity_DB_ShowContentButton">Export-/Importverzeichnisinhalt anzeigen</string>
     <string name="activity_data_management_directory_content_title">Verzeichnisinhalt exportieren/importieren</string>
-    <string name="activity_db_management_clean_export_directory_text">Auf exportierte Dateien im Export/Import-Verzeichnis kann jede App auf deinem Gerät zugreifen. Möglicherweise möchtest du diese Dateien nach der Synchronisierung oder Sicherung entfernen. Stelle sicher, dass du ein Backup hast, bevor du sie löschst. GPX-Dateien, Unterverzeichnisse und automatisch exportierte Datenbankdateien (falls vorhanden) werden nicht gelöscht. Der Pfad zum Export/Import-Verzeichnis lautet:</string>
     <string name="dbmanagementactivity_error_cleaning_export_directory">Fehler beim Löschen der Dateien aus dem Exportverzeichnis %1$s</string>
     <string name="dbmanagementactivity_export_finished">Löschen abgeschlossen</string>
-    <string name="activity_DB_clean_export_directory_warning_message">Dateien im Export/Import-Verzeichnis wirklich löschen\?</string>
-    <string name="activity_DB_clean_export_directory_warning_title">Dateien im Export/Import-Verzeichnis löschen\?</string>
-    <string name="activity_db_management_clean_export_directory_label">Dateien im Export/Import-Verzeichnis löschen</string>
     <string name="activity_type_strength_training">Krafttraining</string>
     <string name="mi">mi</string>
     <string name="minutes_mi">min/mi</string>
@@ -1435,12 +1423,9 @@
     <string name="watchface_dialog_pre_setting_position">Voreinstellung der Position auf %s</string>
     <string name="pref_device_action_fitness_app_control_stop">Fitness-App Tracking Stopp</string>
     <string name="pref_device_action_fitness_app_control_start">Fitness-App Tracking Start</string>
-    <string name="activity_db_management_autoexport_enabled_yes">Autom. Export ist aktiviert.</string>
-    <string name="activity_db_management_autoexport_enabled_no">Autom. Export ist deaktiviert.</string>
     <string name="activity_db_management_autoexport_scheduled_yes">Autom. Export wurde (ursprünglich) geplant für %1$s</string>
     <string name="activity_db_management_autoexport_scheduled_no">Autom. Export wurde nicht geplant.</string>
     <string name="watchface_setting_light_up_on_notification">Aufleuchten bei neuer Benachrichtigung</string>
-    <string name="autoExport_lastTime_label">Letzter autom. Export: %1$s</string>
     <string name="activity_db_management_autoexport_location">Standort ermittelt nicht möglich. Wahrscheinlich ein Problem des neueren Android-Berechtigungssystems. Höchstwahrscheinlich funktioniert der autom. Export jetzt nicht.</string>
     <string name="menuitem_email">E-Mail</string>
     <string name="application_name_banglejs_main">Bangle.js Gadgetbridge</string>
@@ -1626,7 +1611,6 @@
     <string name="appmanager_app_share">Teilen</string>
     <string name="watchface_dialog_title_widget">Widget-Einstellungen</string>
     <string name="steps_streaks">Schrittserie</string>
-    <string name="share_log_not_enabled_message">Du musst zuerst die Protokollierung in den Einstellungen - Protokolldateien schreiben aktivieren</string>
     <string name="note">Hinweis</string>
     <string name="step_streak_total">Insgesamt</string>
     <string name="steps_streaks_since_date">Seit %s</string>
@@ -3824,7 +3808,6 @@
     <string name="shokz_controls_simultaneous_volume_up_down">Gleichzeitiges langes Drücken der Lautstärketasten nach oben und unten</string>
     <string name="title_activity_gps_track_installer">Installer für GPS-Strecken</string>
     <string name="title_gpx_track_name">Streckenname</string>
-    <string name="emoji">Emoji</string>
     <string name="training_acute_load">Akute Belastung</string>
     <string name="training_chronic_load">Chronische Belastung</string>
     <string name="this_week_total">Gesamt diese Woche</string>

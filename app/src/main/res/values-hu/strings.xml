@@ -34,7 +34,6 @@
     <string name="appmanager_hrm_deactivate">Pulzusmérő deaktiválása</string>
     <string name="appmanager_weather_activate">Rendszer időjárás alkalmazás aktiválása</string>
     <string name="appmanager_weather_deactivate">Rendszer időjárás alkalmazás deaktiválása</string>
-    <string name="appmanager_weather_install_provider">Időjárás értesítő alkalmazás telepítése</string>
     <string name="app_configure">Beállítás</string>
     <string name="app_move_to_top">A tetejére mozgatás</string>
     <!--Strings related to FwAppInstaller-->
@@ -330,7 +329,6 @@
     <string name="authentication_required">Hitelesítés szükséges</string>
     <string name="appwidget_text">Zzz</string>
     <string name="add_widget">Modul hozzáadása</string>
-    <string name="activity_prefs_sleep_duration">Előnyben részesített alvásidő órában</string>
     <string name="appwidget_setting_alarm">Riasztás beállítva: %1$02d:%2$02d</string>
     <string name="device_hw">Hardververzió: %1$s</string>
     <string name="device_fw">Firmware verzió: %1$s</string>
@@ -345,7 +343,6 @@
     <string name="action_db_management">Adatkezelés</string>
     <string name="title_activity_db_management">Adatkezelés</string>
     <string name="activity_db_management_import_export_explanation">Az exportálás/importálás műveletek a következő könyvtár útvonalát (lásd lentebb) használják az eszközén. Ez a könyvtár elérhető más Android- alkalmazások és a számítógépe számára. Jegyezze meg, hogy ez a könyvár és az összes tartalmazott fájl törölve lesz, ha eltávolítja a Gadgetbridge-et. Az adatok tartalmazzák: \n Export_preference - globális beállítások \n Export_preference_MAC - eszközspecifikus beállítások \n Gadgetbridge - eszköz- és tevékenység-adatbázis \n Gadgetbridge_date - egy dátumon exportált adatbázis \n *.gpx - GPS-rögzítés \n *.log - naplófájlok \nVárhatóan itt megtalálja az exportált fájlokat (vagy helyezze ide az importálandó fájlokat):</string>
-    <string name="activity_db_management_merge_old_title">Régi adatbázis törlése</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Nem érhető el az exportálási útvonal. Vegye fel a kapcsolatot a fejlesztőkkel.</string>
     <string name="dbmanagementactivity_exported_to">Exportálva ide: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Hiba történt az adatbázis exportálásakor: %1$s</string>
@@ -371,7 +368,6 @@
     <!--Strings related to Pebble Pairing Activity-->
     <string name="title_activity_pebble_pairing">Pebble párosítása</string>
     <string name="pebble_pairing_hint">Egy párosítási párbeszédablak fog megjelenni az Android-eszközén. Ha ez nem történik meg, nézze meg az értesítési sávban és fogadja el a párosítási kérelmet. Utána fogadja el a kérelmet a Pebble-n is.</string>
-    <string name="weather_notification_label">Győződjön meg róla, hogy ez a kinézet engedélyezve van az Időjárás értesítés alkalmazásban, hogy időjárási információkat kapjon a Pebble eszközén. \n \nItt nincs szükség beállításra. \n \nA Pebble rendszer időjárás alkalmazását az alkalmazáskezelésből engedélyezheti. \n \nA támogatott számlapok automatikusan megjelenítik az időjárást.</string>
     <string name="pref_title_setup_bt_pairing">Bluetooth párosítás engedélyezése</string>
     <string name="pref_summary_setup_bt_pairing">Kapcsolja ki ezt, ha gondja van a kapcsolódással</string>
     <string name="unit_metric">Metrikus</string>
@@ -488,7 +484,6 @@
     <string name="pref_title_custom_deviceicon">Eszközspecifikus értesítés ikon megjelenítése</string>
     <string name="pref_title_notifications_timeout">Minimum időköz az értesítések között</string>
     <string name="pref_theme_system">Rendszer</string>
-    <string name="title_activity_calblacklist">Tiltólistás naptárak</string>
     <string name="sonyswr12_settings_title">Sony SWR12 beállítások</string>
     <string name="sonyswr12_settings_low_vibration">Alacsony rezgés engedélyezve</string>
     <string name="sonyswr12_settings_stamina">Az energiatakarékos üzemmód be van kapcsolva</string>
@@ -810,7 +805,6 @@
     <string name="activity_prefs_charts">Grafikon beállítása</string>
     <string name="activity_type_swimming">Úszás</string>
     <string name="meters_second">m/s</string>
-    <string name="activity_db_management_autoexport_label">Automatikus exportálás</string>
     <string name="menuitem_nfc">NFC</string>
     <string name="bpm">bpm</string>
     <string name="activeSeconds">Aktív</string>
@@ -1205,8 +1199,6 @@
     <string name="pref_title_chart_heartrate_color">Pulzusszám színe</string>
     <string name="discovery_bluetooth_scan">Bluetooth beolvasás:</string>
     <string name="zepp_os_watchface_free_combination">Free combination</string>
-    <string name="activity_db_management_autoexport_enabled_yes">Az automatikus exportálás engedélyezve van.</string>
-    <string name="activity_db_management_clean_export_directory_label">Fájlok törlése az exportálás/importálás könyvtárból</string>
     <string name="prefs_wena3_vibration_smart_item">Okos rezgés</string>
     <string name="zepp_os_watchface_business_style">Business Style</string>
     <string name="watchface_cache_confirm_overwrite">Egy számlap ezzel a névvel már létezik a gyorsítótárban. Szeretné felülírni?</string>
@@ -1219,9 +1211,7 @@
     <string name="fossil_hr_connection_not_confirmed">A kapcsolódás nincs megerősítve az órán, hitelesítés nélküli mód használata</string>
     <string name="zepp_os_watchface_vibrant">Vibrant</string>
     <string name="activity_db_management_autoexport_scheduled_no">Az automatikus exportálás nincs időzítve.</string>
-    <string name="activity_db_management_clean_export_directory_text">Az exportált fájlok az exportálás/importálás könyvtárban bármilyen alkalmazás számára elérhetőek az eszközén. Lehet, hogy törölni szeretné ezeket a fájlokat szinkronizálás vagy biztonsági mentés után. Győződjön meg arról, hogy van mentése, mielőtt törli őket. A GPX fájlok, az alkönyvtárak és az automatikusan exportált adatbázis-fájlok (ha léteznek) nem lesznek törölve. Az exportálás/importálás könyvtár útvonala:</string>
     <string name="prefs_wena3_vibration_strength_item_weak">Gyenge</string>
-    <string name="activity_db_management_autoexport_enabled_no">Az automatikus exportálás nincs engedélyezve.</string>
     <string name="pref_screen_vibration_patterns_summary">Rezgésminták beállítása a különböző értesítésekhez</string>
     <string name="zepp_os_watchface_starry_sky">Starry sky</string>
     <string name="discovery_entered_invalid_authkey">A beírt titkos hitelesítési kulcs érvénytelen! Nyomja hosszan az eszközön a szerkesztéshez.</string>
@@ -1231,10 +1221,8 @@
     <string name="prefs_hr_alarm_activity">Pulzusszámriasztás sporttevékenység közben</string>
     <string name="devicestatus_disconnecting">Az eszköz leválasztódik!</string>
     <string name="prefs_wena3_vibration_basic">Alap</string>
-    <string name="activity_DB_clean_export_directory_warning_title">Törli a fájlokat az exportálás/importálás könyvtárból?</string>
     <string name="prefs_wena3_notification_vibration_repetition_2">Kétszer</string>
     <string name="discovery_need_to_enter_authkey">Ennek az eszköznek titkos hitelesítési kulcsra van szüksége, hosszan nyomva lehet megadni az eszközön. További információ a weboldalon.</string>
-    <string name="activity_DB_clean_export_directory_warning_message">Biztosan törli a fájlokat az exportálás/importálás könyvtárból?</string>
     <string name="prefs_wena3_vibration_rapid">Gyors</string>
     <string name="about_additional_contributions">Sok köszönet minden fel nem sorolt közreműködőnek, akik közreműködtek ezekben: kódok, fordítások, támogatás, ötletek, motiváció, hibajelentések, pénz… ✊</string>
     <string name="silent_mode_vibrate_silent">Rezgés / néma</string>
@@ -1246,7 +1234,6 @@
     <string name="pref_cache_weather_summary">Az időjárás-információ gyorsítótárazva lesz az alkalmazás újraindításai között.</string>
     <string name="zepp_os_watchface_vast_sky">Vast Sky</string>
     <string name="about_description_main_nopebble">Felhőmentes, szerzői jogmentes, szabad szoftveres alternatíva a zárt forráskódú Android-kütyüalkalmazások helyett, amelyeket a gyártók kínálnak. A Gadgetbridge korai hozzáférésű kiadása. Ebben a verzióban a Pebble szolgáltatót átnevezték az ütközések elkerülése érdekében, így egyes Pebble eszközökkel kapcsolatos integrációk nem működnek, de telepíthető a meglévő Gadgetbridge-telepítés mellé.</string>
-    <string name="autoExport_lastTime_label">Utolsó automatikus exportálás: %1$s</string>
     <string name="zepp_os_watchface_simplicity_data">Simplicity Data</string>
     <string name="pref_title_huami_force_new_protocol">Új hitelesítési protokoll</string>
     <string name="qhybrid_title_watchface">Számlap konfigurálása</string>
@@ -1757,7 +1744,6 @@
     <string name="lack_of_step">Hiányzó lépések: %1$d</string>
     <string name="pref_huami_truncate_fetch_operation_timestamps_summary">A lekérdezési műveletek időbélyegeinek percekre történő csökkentése. Ha a nagyon rövid edzések lekérdezésekor problémák merülnek fel, tiltsa le ezt a beállítást, hogy az időbélyegek másodpercben maradjanak.</string>
     <string name="mi2_prefs_button_press_count_max_delay_summary">Legnagyobb késleltetés a gombnyomások között ezredmásodpercben</string>
-    <string name="activity_db_management_autoexport_explanation">Az adatbázis automatikus exportálási helye a következőre lett beállítva:</string>
     <string name="activity_db_management_autoexport_scheduled_yes">Az automatikus exportálás (eredetileg) %1$s-ra lett ütemezve</string>
     <string name="activity_type_rowing_machine">Evező gép</string>
     <string name="activity_type_rowing">Evezés</string>
@@ -1851,7 +1837,6 @@
     <string name="note">Jegyzet</string>
     <string name="pref_invalid_frequency_message">Adjon meg egy 87,5 és 108,0 közötti frekvenciát</string>
     <string name="pref_title_lower_button_short_press_action">Alsó gomb rövid megnyomású művelet</string>
-    <string name="share_log_not_enabled_message">Először engedélyeznie kell a naplózást a Beállítások - Naplófájlok írása menüpontban</string>
     <string name="quick_alarm_description">Riasztás a modulról</string>
     <string name="qhybrid_goal_in_steps">Cél lépésenként</string>
     <string name="prefs_button_single_press_action_selection_title">1. esemény művelet</string>
@@ -1915,7 +1900,6 @@
     <string name="pref_check_permission_status_summary">Ellenőrizze és kérje a hiányzó engedélyeket akkor is, ha esetleg nincs rájuk azonnal szükség. Csak akkor kapcsolja ki, ha eszközei valójában nem támogatják ezen funkciók egyikét sem. Az engedély hiánya problémákat okozhat!</string>
     <string name="averageKMPaceSeconds">Átlagos tempó</string>
     <string name="hrZoneNa">N/A</string>
-    <string name="device_requires_key">KULCS SZÜKSÉGES, A BELÉPÉSHEZ HOSSZAN NYOMJA MEG</string>
     <string name="error_location_enabled_mandatory">Az eszközök beolvasásához be kell kapcsolni a helymeghatározást</string>
     <string name="error_exporting_device_preferences">Hiba történt az eszközspecifikus beállítások exportálásakor</string>
     <string name="flatDistance">Sík távolság</string>

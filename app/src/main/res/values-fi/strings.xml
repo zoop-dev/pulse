@@ -32,7 +32,6 @@
     <string name="appmanager_hrm_deactivate">Poista sykemittari käytöstä</string>
     <string name="appmanager_weather_activate">Aktivoi järjestelmän sääsovellus</string>
     <string name="appmanager_weather_deactivate">Ota järjestelmän sääsovellus pois käytöstä</string>
-    <string name="appmanager_weather_install_provider">Asenna sääilmoitussovellus</string>
     <string name="app_configure">Määritä</string>
     <string name="app_move_to_top">Siirrä ylimmäksi</string>
     <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>
@@ -137,7 +136,6 @@
 \nJATKA OMALLA VASTUULLA!</string>
     <string name="fw_upgrade_notice">Olet asentamassa %s.</string>
     <string name="title_activity_fw_app_insaller">Laiteohjelmiston/ohjelmiston asennusohjelma</string>
-    <string name="title_activity_calblacklist">Mustalla listalla olevat Kalenterit</string>
     <string name="whitelist_all_for_notifications">Lisää kaikki ilmoitukset valkoiselle listalle</string>
     <string name="blacklist_all_for_notifications">Lisää kaikki ilmoitukset mustalle listalle</string>
     <string name="debugactivity_really_factoryreset">Tehdasastetuksien palauttaminen poistaa yhdistetystä laitteesta kaikki tiedot (jos tuettu). Xiaomin ja Huamin laitteet myös muuttavat Bluetooth MAC -osoitteen, joten ne näkyvät uusina laitteina Gadgetbridgessä.</string>

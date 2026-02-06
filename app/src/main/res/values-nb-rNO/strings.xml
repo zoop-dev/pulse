@@ -32,10 +32,8 @@
     <string name="appmanager_hrm_deactivate">Deaktiver HRM</string>
     <string name="appmanager_weather_activate">Aktiver systemvær-app</string>
     <string name="appmanager_weather_deactivate">Deaktiver systemvær-app</string>
-    <string name="appmanager_weather_install_provider">Installer værmeldingsprogrammet</string>
     <string name="app_configure">Konfigurer</string>
     <string name="app_move_to_top">Flytt til topp</string>
-    <string name="title_activity_calblacklist">Blokkerte kalendere</string>
     <string name="title_activity_fw_app_insaller">FW/App-installer</string>
     <string name="fw_upgrade_notice">Du er i ferd med å installere %s.</string>
     <string name="application_name_generic">Gadgetbridge</string>
@@ -334,7 +332,6 @@
     <string name="authentication_required">Autentisering kreves</string>
     <string name="appwidget_text">Zzz</string>
     <string name="add_widget">Legg til widget</string>
-    <string name="activity_prefs_sleep_duration">Foretrukket søvn i timer</string>
     <string name="appwidget_setting_alarm">Setter alarm for %1$02d:%2$02d</string>
     <string name="device_hw">Maskinvareversjon: %1$s</string>
     <string name="device_fw">Firmware-versjon: %1$s</string>
@@ -427,15 +424,7 @@
     <string name="mi2_prefs_button_press_count_max_delay_summary">Maksimal forsinkelse mellom knappetrykk i millisekunder</string>
     <string name="mi2_prefs_activate_display_on_lift">Aktiver skjerm ved løft</string>
     <string name="activity_db_management_import_export_explanation">Eksporterings-/importeringsoperasjonene bruker følgende sti (se nedenfor) til en mappe på enheten din. Denne mappen er tilgjengelig for andre Android-apper og datamaskinen din. Merk at denne mappen og alle filer den inneholder slettes hvis du avinstallerer Gadgetbridge. Dataene inkluderer:\n Export_preference - globale innstillinger\n Export_preference_MAC - enhetspesifikke innstillinger\n Gadgetbridge - enhets- og aktivitetsdatabase\n Gadgetbridge_date - database eksportert på en dato\n *.gpx - GPS-opptak\n *.log - loggfiler\nForvent å finne eksporterte filer (eller plasser filene du vil importere) der:</string>
-    <string name="activity_db_management_merge_old_title">Slett arv-databaset</string>
     <string name="dbmanagementactivvity_cannot_access_export_path">Kan ikke få tilgang til eksporteringssti. Kontakt utviklerne.</string>
-    <string name="weather_notification_label">Forsikre deg om at denne drakten er iført Værmeldingsprogrammet for å få varsel på din Pebble.
-\n
-\nInget oppsett nødvendig.
-\n
-\nDu kan skru på systemværmeldingsprogrammet på din Pebble fra programbehandling.
-\n
-\nStøttede urskiver vil vise vær automatisk.</string>
     <string name="activity_web_view">Webvisningsaktivitet</string>
     <string name="kind_gps_almanac">GPS-almanakk</string>
     <string name="kind_gps_cep">GPS feilretting</string>
@@ -644,8 +633,6 @@
     <string name="pref_title_expose_hr">3. parts sanntids HR-tilgang</string>
     <string name="pref_title_use_custom_font">Bruk tilpasset skrifttype</string>
     <string name="pref_summary_use_custom_font">Aktiver dette hvis enheten din har en tilpasset skrifttype-fastvare for emoji-støtte</string>
-    <string name="activity_db_management_autoexport_explanation">Automatisk eksportplassering for database satt til:</string>
-    <string name="activity_db_management_autoexport_label">Automatisk eksport</string>
     <string name="activity_DB_ExportButton">Eksporter data</string>
     <string name="activity_DB_import_button">Importer data</string>
     <string name="activity_DB_test_export_button">Kjør AutoExport nå</string>
@@ -840,7 +827,6 @@
     <string name="prefs_events_forwarding_title">Enhetsaksjoner</string>
     <string name="km">km</string>
     <string name="seconds_m">sek/m</string>
-    <string name="device_requires_key">NØKKEL KREVES</string>
     <string name="permission_granting_mandatory">Alle disse tillatelsene er påkrevd og ustabilitet kan oppstå hvis de ikke gis</string>
     <string name="about_additional_contributions">Mange takk til alle uoppførte bidragsytere for kodebidrag, oversettelser, støtte, ideer, motivasjon, feilrapporter, penger… ✊</string>
     <string name="about_core_team_title">Kjerne-team (i rekkefølge etter første kodebidrag)</string>
@@ -996,11 +982,7 @@
     <string name="prefs_key_vibration">Tastaturvibrasjon</string>
     <string name="prefs_autolight">Automatisk lys</string>
     <string name="widget_settings_select_device_title">Velg enhet</string>
-    <string name="activity_db_management_clean_export_directory_text">Eksporterte filer i eksporter-/importmappen er tilgjengelige for enhver app på enheten din. Du vil kanskje fjerne disse filene etter synkronisering eller sikkerhetskopi. Sørg for å ha en sikkerhetskopi før du sletter dem. GPX-filer, undermapper og auto-eksportert databasefil (hvis finnes) vil ikke slettes. Stien til eksporter-/importmappen er:</string>
     <string name="dbmanagementactivity_export_finished">Sletting fullført</string>
-    <string name="activity_DB_clean_export_directory_warning_title">Slett filer i eksporter-/importmappen?</string>
-    <string name="activity_DB_clean_export_directory_warning_message">Virkelig slette filer i eksporter-/importmappen?</string>
-    <string name="activity_db_management_clean_export_directory_label">Slett filer i eksporter-/importmappen</string>
     <string name="dbmanagementactivity_error_cleaning_export_directory">Feil ved sletting av filer fra eksporteringsmappen %1$s</string>
     <string name="mi">mi</string>
     <string name="minutes_mi">min/mi</string>
@@ -1373,9 +1355,6 @@
     <string name="pref_title_opentracks_packagename">OpenTracks pakkenavn</string>
     <string name="pref_title_notifications_generic_settings">Android-varslingsinnstillinger</string>
     <string name="pref_summary_opentracks_packagename">Brukes for å starte/stopp GPS-sporopptak i ekstern treningsapp.</string>
-    <string name="activity_db_management_autoexport_enabled_yes">Auto-eksport er påslått.</string>
-    <string name="activity_db_management_autoexport_enabled_no">Auto-eksport er avslått.</string>
-    <string name="autoExport_lastTime_label">Siste auto-eksport:%1$s</string>
     <string name="activity_db_management_autoexport_scheduled_yes">AutoExport er (opprinnelig) planlagt for %1$s</string>
     <string name="activity_db_management_autoexport_scheduled_no">AutoExport er ikke planlagt.</string>
     <string name="activity_db_management_autoexport_location">Sted kunne ikke forstås. Sannsynligvis et problem med nyere Android-tillatelsessystem. Mest sannsynlig fungerer ikke autoexport nå.</string>
@@ -2464,7 +2443,6 @@
     <string name="zepp_os_sun_moon_utc_title">Send sol-/månetider i UTC</string>
     <string name="zepp_os_sun_moon_utc_summary">Aktiver dette hvis klokken din viser feil verdier for sol- og månetider</string>
     <string name="yesterdays_activity">Gårsdagens aktivitet</string>
-    <string name="share_log_not_enabled_message">Du må først aktivere logging i Innstillinger - Skriv loggfiler</string>
     <string name="note">Merk</string>
     <string name="weather_condition_thunderstorm_with_light_rain">tordenvær med lett regn</string>
     <string name="weather_condition_thunderstorm_with_rain">tordenvær med regn</string>

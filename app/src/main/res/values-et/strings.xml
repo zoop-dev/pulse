@@ -35,10 +35,8 @@
     <string name="appmanager_hrm_deactivate">Inaktiveeri HRM</string>
     <string name="appmanager_weather_activate">Aktiveeri süsteemi ilmarakendus</string>
     <string name="appmanager_weather_deactivate">Inaktiveeri süsteemi ilmarakendus</string>
-    <string name="appmanager_weather_install_provider">Paigalda ilmateavituste rakendus</string>
     <string name="app_configure">Seadista</string>
     <string name="app_move_to_top">Liiguta kõige üles</string>
-    <string name="title_activity_calblacklist">Kalendrite keeluloend</string>
     <string name="title_activity_fw_app_insaller">Püsivara/rakenduse paigaldaja</string>
     <string name="fw_upgrade_notice">Olete installeerimas püsivara %s.</string>
     <string name="fw_upgrade_notice_amazfitbip">Olete installimas %s püsivara enda Amazfit Bip\'ile. 
@@ -565,13 +563,6 @@
     <string name="unit_metric">SI-süsteem</string>
     <string name="pref_summary_setup_bt_pairing">Lülita see välja, kui ilmnevad probleemid paaritamisega</string>
     <string name="pref_title_setup_bt_pairing">Lülita Bluetooth\'i paaritamine sisse</string>
-    <string name="weather_notification_label">Veendu, et Gadgetbridge on Weather Notification sisse lülitatud, et ilmateade teie Pebble\'isse ilmuks.
-\n
-\nRohkem seadistamist pole siin vaja tarvis teha.
-\n
-\nTeie Pebble\'il saate ilmateaterakenduse sisse lülitada rakenduste haldamise alt.
-\n
-\nToetatud kellastiilid kuvavad ilmateadet automaatselt.</string>
     <string name="title_activity_pebble_pairing">Pebble paaritamine</string>
     <string name="ok">OK</string>
     <string name="activity_db_management_exportimport_label">Eksport ja import</string>
@@ -723,7 +714,6 @@
     <string name="pref_check_permission_status_summary">Kontrolli ja küsi ligipääse isegi siis kui neid pole koheselt vaja. Lülita see välja kui su kasutatavad seadmed päriselt mitte ühtegi nendest funktsionaalsustest ei kasuta. Ligipääsu mitteandmine võib probleeme põhjustada!</string>
     <string name="pref_check_permission_status">Kontrolli ligipääsude staatust</string>
     <string name="error_background_service_reason">Taustal töötava teenuse käivitamine ei õnnestunud vea tõttu - lisateavet leiad siit.\n\nViga:</string>
-    <string name="device_requires_key">VÕTI VAJALIK, SISESTAMISEKS VAJUTA PIKALT</string>
     <string name="device_is_currently_bonded">JUBA PAARITATUD</string>
     <string name="error_background_service_reason_truncated">Taustal töötava teenuse käivitamine ebaõnnestus sest…</string>
     <string name="error_background_service">Taustal töötava teenuse käivitamine ebaõnnestus</string>
@@ -757,7 +747,6 @@
     <string name="activity_type_treadmill">Jooksulint</string>
     <string name="activity_type_biking">Jalgrattasõit</string>
     <string name="activity_summaries">Tegevused</string>
-    <string name="activity_db_management_merge_old_title">Vana versiooni andmebaasi kustutamine</string>
     <string name="title_activity_db_management">Andmehaldus</string>
     <string name="action_db_management">Andmehaldus</string>
     <string name="activity_prefs_activetime_minutes">Päevane eesmärk: aktiivsusminuteid</string>
@@ -765,7 +754,6 @@
     <string name="activity_prefs_calories_burnt">Päevane eesmärk: põletatud kaloreid</string>
     <string name="device_fw">Püsivaraversioon: %1$s</string>
     <string name="device_hw">Riistvaraversioon: %1$s</string>
-    <string name="activity_prefs_sleep_duration">Eelistatud magamise kestvus</string>
     <string name="pref_chart_sleep_rolling_24_off">Lõunast lõunani</string>
     <string name="weeksleepchart_sleep_a_month">Und kuus</string>
     <string name="dbmanagementactivity_error_exporting_shared">Viga sätteid eksportides: %1$s</string>
