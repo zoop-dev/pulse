@@ -1644,7 +1644,7 @@
     <string name="open_fw_installer_info_text_title">文件安装程序</string>
     <string name="open_fw_installer_select_file">选择您想上传到设备的文件： %s</string>
     <string name="open_fw_installer_info_text">固件/表盘/应用程序/文件安装程序允许您将支持的文件（固件，表盘，应用程序，GPS，资源，字体等）上传/安装到设备。在网站查看更多信息： https://gadgetbridge.org/internals/features/installer/</string>
-    <string name="open_fw_installer_warning_text">此功能有可能使您的设备变砖。虽然如此这般，但是这从未发生在任何开发人员身上，但请记住，这样做需要您自担风险。</string>
+    <string name="open_fw_installer_warning_text">此功能有可能使您的设备变砖。尽管如此，但是这从未发生在任何开发人员身上，但请记住，这样做需要您自担风险。</string>
     <string name="open_fw_installer_getting_files_title">获取固件/应用程序文件</string>
     <string name="open_fw_installer_getting_files_text">由于我们可能不会提供固件文件，因此您必须自己获取文件。这意味着您将需要在 apk 文件中提取固件，使用搜索引擎查找、或者在论坛搜索（如 Amazfitwatchfaces，适用于小米手环/ 跃我设备）对应的固件等。</string>
     <string name="open_fw_installer_ensure_device_connected">请确保设备 %s 已经连接</string>
