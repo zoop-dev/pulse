@@ -12,12 +12,14 @@
 * Initial support for Yawell R05
 * Initial support for Sanitas SBM67 / SilverCrest SBM67 blood pressure meter
 * Initial support for Zendure SolarFlow (tested only 800 Pro)
-* Experimental support for Amazfit Active Max
+* Experimental support for Amazfit Active Max, Balance 2 XT
 * Experimental support for Garmin Fenix 5S
 * Experimental support for Mi Band 4C
 * Experimental support for OneTouch blood glucose meters (tested only Select Plus Flex)
 * Amazfit Bip / Bip Lite / Cor 2: Restore 3rd party realtime HR setting
 * Amazfit Helio Strap: Enable workout detection sensitivity
+* Bangle.js: Fix handling HTTP method
+* Bangle.js: Fix starting accelerometer when SleepAsAndroid resumes
 * CMF Watch Pro 2: Improve activity parsing
 * CMF Watch Pro: Fix active score
 * CMF Watch Pro: Fix measurement system
@@ -27,10 +29,16 @@
 * Galaxy Buds3 Pro: Fix icon color
 * Garmin: Add average ascent velocity
 * Garmin: Allow firewalled app internet access
+* Garmin: Disable some features on unsupported devices
+* Garmin: Disable VO2 Max split on devices that do not support it
 * Garmin: Display intervals on non-swimming activities
+* Garmin: Display sleep restless moments
+* Garmin: Fix esports activity
+* Garmin: Fix occasional crash when disconnecting
 * Garmin: Fix pairing for some older devices
 * Garmin: Fix processing of activity files with custom data
 * Garmin: Fix some crashes when processing activity files
+* Garmin: Fix some missing VO2 Max cycling activities
 * Garmin: Improve connection stability
 * Garmin: Make calories consistent with other devices
 * GloryFit: Add screen timeout setting
@@ -45,14 +53,26 @@
 * Pebble: Add weather support in Tears of the Kingdom watchface
 * Pebble: Check for watchapp updates if internet is available
 * Pebble: Download and show app/watchface previews
+* Pebble: Fix nightly weather icons
 * Pebble: Support Signal icon with 2025 models
 * Pinetime: Add sunrise and sunset weather data
 * Polar: Disable unused charts
 * Xiaomi-protobuf: Enable active calories
-* Xiaomi-protobuf: Improve outdoor running parsing
+* Xiaomi-protobuf: Improve outdoor running, treadmill and elliptical parsing
+* Zepp OS 5: Fix weather
+* Zepp OS: Add e-bike activity
 * Zepp OS: Add jump rope stats
 * Zepp OS: Fix HRV on some devices
 * Zepp OS: Fix notification image encoding for some devices
+* Add "Today" and "distant past" quick filter option to workout list with persistent selection
+* Add auto phone call answer and notification speaking to some headphones that were missing it (Anker Soundcore Liberty 3 Pro / 4 NC, Bose QC35, Pixel Buds A, Redmi Buds, Soundcore AeroFit 2 / Q30)
+* Add distinct VO2 Max ranges per age / gender
+* Add HRV summary computation for all devices that support HRV
+* Add italian transliteration
+* Add timeout to reconnect when initial connection becomes stuck
+* Add transliteration of arrow emojis
+* Attempt to reconnect faster on connection loss
+* Avoid UI freeze when deleting device
 * Calendar Sync: Add the option to filter events
 * Camera: Fix theme
 * Charts: Add hours to x-axis
@@ -66,14 +86,8 @@
 * Dashboard: Only include activities from enabled devices
 * Debug: Add setting to override BUSY_CHECKING
 * Debug: Revamp debug activity
-* Add auto phone call answer and notification speaking to some headphones that were missing it (Anker Soundcore Liberty 3 Pro / 4 NC, Bose QC35, Pixel Buds A, Redmi Buds, Soundcore AeroFit 2 / Q30)
-* Add HRV summary computation for all devices that support HRV
-* Add italian transliteration
-* Add timeout to reconnect when initial connection becomes stuck
-* Add transliteration of arrow emojis
-* Attempt to reconnect faster on connection loss
-* Avoid UI freeze when deleting device
 * Dismiss permissions screen after all permissions granted
+* Display device alias hints on file manager
 * Fetch all sync data types from notification
 * Fix 0-second sleep sessions
 * Fix bluetooth disconnected toasts while bluetooth is off
@@ -81,10 +95,9 @@
 * Fix raw details paths when moving between Gadgetbridge versions
 * Improve Gadgetbridge restart
 * Improve zip export speed
+* Intent API: Fix database and zip export intents
 * Keep screen on during zip export / import
 * Make GenericWeatherReceiver work without any connected devices
-* Bangle.js: Fix handling HTTP method
-* Bangle.js: Fix starting accelsender when SleepAsAndroid resumes
 
 #### 0.88.0
 
