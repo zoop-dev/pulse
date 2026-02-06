@@ -3753,7 +3753,6 @@
     <string name="soundcore_auto_power_off_title">Automatikus kikapcsolás</string>
     <string name="soundcore_auto_power_off_summary">A telefontól való szétkapcsolódáskor az eszköz a megadott időtúllépés után kikapcsol</string>
     <string name="soundcore_battery_low_tone_title">Alacsony akkumulátorszint-jelzés</string>
-    <string name="soundcore_battery_low_tone_summary">Hangjelzés az akkumulátorszint 20% és 10% alatti értékeinél</string>
     <string name="soundcore_gaming_mode_title">Játékmód</string>
     <string name="soundcore_gaming_mode_summary">Csökkenti a késleltetést és felerősíti a lépések és a hangok hangjait. Csökkentheti a kapcsolat stabilitását.</string>
     <string name="huawei_sleep_breath_summary">Légzés kiértékelése csendes környezetben. Hatással lehet az akkumulátor élettartamára.\nFigyelmeztetés: Még nincs szinkronizálva a Gadgetbridge alkalmazással.</string>

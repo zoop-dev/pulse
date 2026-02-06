@@ -4030,7 +4030,6 @@
     <string name="internet_firewall_action">Brannmuraksjon</string>
     <string name="internet_firewall_allow">Tillat</string>
     <string name="internet_firewall_block">Blokker</string>
-    <string name="internet_firewall_no_domains">Ingen domener</string>
     <string name="internet_firewall_add_domain">Legg til domene</string>
     <string name="internet_firewall_edit_domain">Rediger domene</string>
     <string name="rebble_appstore_download_failed_wrong_content_type">Nedlasting mislyktes, feil innholdstype</string>
@@ -4096,8 +4095,6 @@
     <string name="health_connect_no_permissions">Ingen tillatelser</string>
     <string name="health_connect_finished">Synkronisering fullført</string>
     <string name="health_connect_finished_no_data">Synkronisering fullført, ingen data</string>
-    <string name="health_connect_finished_with_stats">Synkronisering fullført med statistikk</string>
-    <string name="health_connect_finished_with_stats_and_errors">Synkronisering fullført med statistikk og feil</string>
     <string name="health_connect_finished_with_errors">Synkronisering fullført med feil</string>
     <string name="health_connect_syncing">Synkroniserer</string>
     <string name="notification_channel_health_connect_sync_name">Health Connect-synkronisering</string>
@@ -4125,12 +4122,5 @@
     <string name="health_connect_keep_sync_history">Behold synkroniseringshistorikk</string>
     <string name="health_connect_exception">Synkroniseringsunntak</string>
     <string name="health_connect_sync_failed">Synkronisering mislyktes</string>
-    <string name="health_connect_sync_failed_retries">Synkronisering mislyktes, forsøk igjen</string>
-    <string name="health_connect_syncing_device_datatype">Synkroniserer enhets-datatype</string>
-    <string name="health_connect_sync_error_for_device">Synkroniseringsfeil for enhet</string>
-    <string name="health_connect_permission_denied">Tillatelse nektet</string>
-    <string name="health_connect_sleep_session_title">Søvnsesjon</string>
-    <string name="health_connect_sleep_session_notes">Søvnsesjonsnotater</string>
     <string name="infinitime_filesystem_access_disabled">Infinitime filsystemtilgang deaktivert</string>
-    <string name="infinitime_resource_upload_progress_status">Ressursopplastingsfremdrift</string>
 </resources>

@@ -702,7 +702,7 @@
     <string name="pref_display_add_device_fab">כפתור הוספת התקן חדש</string>
     <string name="pref_display_add_device_fab_on">גלוי תמיד</string>
     <string name="pref_display_add_device_fab_off">גלוי רק אם טרם נוספו התקנים</string>
-    <plurals name="widget_alarm_target_hours">
+    <plurals name="widget_alarm_target_hours" tools:ignore="MissingQuantity">
         <item quantity="one">שעה</item>
         <item quantity="two">שעתיים</item>
         <item quantity="other">%d שעות</item>
@@ -2933,7 +2933,7 @@
     <string name="map_theme_osmarender">Osmarender</string>
     <string name="map_theme_motorider">Motorider</string>
     <string name="service_notification_collector_service_text">מעקב אחר התראות ברקע</string>
-    <plurals name="amount_of_days">
+    <plurals name="amount_of_days" tools:ignore="MissingQuantity">
         <item quantity="one">יום</item>
         <item quantity="two">יומיים</item>
         <item quantity="other">%d ימים</item>
