@@ -1,0 +1,7 @@
+• Optional internet access with Internethelper
+• Health Connect integration
+• Support for 20 new devices
+• Workout parsing fixes across multiple devices
+• Improved charts
+
+Read the full changelog in the project repository.

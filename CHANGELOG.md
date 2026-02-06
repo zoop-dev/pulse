@@ -1,6 +1,6 @@
 ### Changelog
 
-#### Next version (WIP)
+#### 0.89.0
 
 * Add support for Internethelper
 * Add support for Health Connect

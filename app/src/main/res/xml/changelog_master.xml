@@ -1,5 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="0.89.0" versioncode="244">
+        <change>Add support for Internethelper</change>
+        <change>Add support for Health Connect</change>
+        <change>Initial support for CMF Buds 2</change>
+        <change>Initial support for Colmi V73</change>
+        <change>Initial support for D3, Qecnato S10 (GloryFit)</change>
+        <change>Initial support for Galaxy Buds3 Pro</change>
+        <change>Initial support for Garmin Edge 130, Edge 840, Edge 1040, Forerunner 920, GPSMAP 66s, Lily 2</change>
+        <change>Initial support for Yawell R05</change>
+        <change>Initial support for Sanitas SBM67 / SilverCrest SBM67 blood pressure meter</change>
+        <change>Initial support for Zendure SolarFlow (tested only 800 Pro)</change>
+        <change>Experimental support for Amazfit Active Max, Balance 2 XT</change>
+        <change>Experimental support for Garmin Fenix 5S</change>
+        <change>Experimental support for Mi Band 4C</change>
+        <change>Experimental support for OneTouch blood glucose meters (tested only Select Plus Flex)</change>
+        <change>Amazfit Bip / Bip Lite / Cor 2: Restore 3rd party realtime HR setting</change>
+        <change>Amazfit Helio Strap: Enable workout detection sensitivity</change>
+        <change>Bangle.js: Fix handling HTTP method</change>
+        <change>Bangle.js: Fix starting accelerometer when SleepAsAndroid resumes</change>
+        <change>CMF Watch Pro 2: Improve activity parsing</change>
+        <change>CMF Watch Pro: Fix active score</change>
+        <change>CMF Watch Pro: Fix measurement system</change>
+        <change>CMF Watch Pro: Rework device settings screen</change>
+        <change>CMF Watch: Fix weather</change>
+        <change>Even Realities G1: Improve connection stability</change>
+        <change>Galaxy Buds3 Pro: Fix icon color</change>
+        <change>Garmin: Add average ascent velocity</change>
+        <change>Garmin: Allow firewalled app internet access</change>
+        <change>Garmin: Disable some features on unsupported devices</change>
+        <change>Garmin: Disable VO2 Max split on devices that do not support it</change>
+        <change>Garmin: Display intervals on non-swimming activities</change>
+        <change>Garmin: Display sleep restless moments</change>
+        <change>Garmin: Fix esports activity</change>
+        <change>Garmin: Fix occasional crash when disconnecting</change>
+        <change>Garmin: Fix pairing for some older devices</change>
+        <change>Garmin: Fix processing of activity files with custom data</change>
+        <change>Garmin: Fix some crashes when processing activity files</change>
+        <change>Garmin: Fix some missing VO2 Max cycling activities</change>
+        <change>Garmin: Improve connection stability</change>
+        <change>Garmin: Make calories consistent with other devices</change>
+        <change>GloryFit: Add screen timeout setting</change>
+        <change>GloryFit: Fix screen timeout preference</change>
+        <change>GloryFit: SOS contact (experimental)</change>
+        <change>Heart Rate devices: Parse and persist RR intervals</change>
+        <change>Huami: Improve workout charts for activities without gps</change>
+        <change>Huawei Watch Fit: Fix crash on sync</change>
+        <change>Huawei: Sync raw ECG data (no UI)</change>
+        <change>InfiniTime: Add resources upload</change>
+        <change>Marstek B2500: Support setting solar panel peak power</change>
+        <change>Pebble: Add weather support in Tears of the Kingdom watchface</change>
+        <change>Pebble: Check for watchapp updates if internet is available</change>
+        <change>Pebble: Download and show app/watchface previews</change>
+        <change>Pebble: Fix nightly weather icons</change>
+        <change>Pebble: Support Signal icon with 2025 models</change>
+        <change>Pinetime: Add sunrise and sunset weather data</change>
+        <change>Polar: Disable unused charts</change>
+        <change>Xiaomi-protobuf: Enable active calories</change>
+        <change>Xiaomi-protobuf: Improve outdoor running, treadmill and elliptical parsing</change>
+        <change>Zepp OS 5: Fix weather</change>
+        <change>Zepp OS: Add e-bike activity</change>
+        <change>Zepp OS: Add jump rope stats</change>
+        <change>Zepp OS: Fix HRV on some devices</change>
+        <change>Zepp OS: Fix notification image encoding for some devices</change>
+        <change>Add "Today" and "distant past" quick filter option to workout list with persistent selection</change>
+        <change>Add auto phone call answer and notification speaking to some headphones that were missing it (Anker Soundcore Liberty 3 Pro / 4 NC, Bose QC35, Pixel Buds A, Redmi Buds, Soundcore AeroFit 2 / Q30)</change>
+        <change>Add distinct VO2 Max ranges per age / gender</change>
+        <change>Add HRV summary computation for all devices that support HRV</change>
+        <change>Add italian transliteration</change>
+        <change>Add timeout to reconnect when initial connection becomes stuck</change>
+        <change>Add transliteration of arrow emojis</change>
+        <change>Attempt to reconnect faster on connection loss</change>
+        <change>Avoid UI freeze when deleting device</change>
+        <change>Calendar Sync: Add the option to filter events</change>
+        <change>Camera: Fix theme</change>
+        <change>Charts: Add hours to x-axis</change>
+        <change>Charts: Add loading indicator</change>
+        <change>Charts: Add units to calories and SpO2 charts</change>
+        <change>Charts: Add weekly/monthly blood oxygen</change>
+        <change>Charts: Add weekly/monthly body energy</change>
+        <change>Charts: Fix imperial units on temperature charts</change>
+        <change>Charts: Make max temperature dynamic</change>
+        <change>Dashboard: Fix some widgets linking to unsupported devices</change>
+        <change>Dashboard: Only include activities from enabled devices</change>
+        <change>Debug: Add setting to override BUSY_CHECKING</change>
+        <change>Debug: Revamp debug activity</change>
+        <change>Dismiss permissions screen after all permissions granted</change>
+        <change>Display device alias hints on file manager</change>
+        <change>Fetch all sync data types from notification</change>
+        <change>Fix 0-second sleep sessions</change>
+        <change>Fix bluetooth disconnected toasts while bluetooth is off</change>
+        <change>Fix call mute command in non-mainline build flavors</change>
+        <change>Fix raw details paths when moving between Gadgetbridge versions</change>
+        <change>Improve Gadgetbridge restart</change>
+        <change>Improve zip export speed</change>
+        <change>Intent API: Fix database and zip export intents</change>
+        <change>Keep screen on during zip export / import</change>
+        <change>Make GenericWeatherReceiver work without any connected devices</change>
+    </release>
     <release version="0.88.0" versioncode="243">
         <change>Initial support for Amazfit GTS 4 Mini New, T-Rex 3 Pro</change>
         <change>Initial support for Coospo H9Z</change>
