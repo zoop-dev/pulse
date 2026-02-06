@@ -129,7 +129,7 @@
     <string name="pref_title_pebble_forcele">Usa sempre BLE</string>
     <string name="pref_summary_pebble_forcele">Utilizza il supporto sperimentale Pebble LE per tutti i Pebble in alternativa al BT. Questo richiede un nuovo accoppiamento a LE prima e poi al Pebble LE</string>
     <string name="pref_title_pebble_mtu_limit">Limita la MTU del Pebble 2/LE</string>
-    <string name="pref_summary_pebble_mtu_limit">Se il tuo Pebble 2/LE non funziona come dovrebbe, prova a impostare un limite alla MTU (range valido 20–512)</string>
+    <string name="pref_summary_pebble_mtu_limit">Se il tuo Pebble 2/Pebble LE non funziona come dovrebbe, prova a impostare un limite alla MTU (range valido 20 – 512)</string>
     <string name="pref_title_pebble_enable_applogs">Abilita il log delle applicazioni eseguite su Pebble</string>
     <string name="pref_summary_pebble_enable_applogs">Il log delle applicazioni che girano su Pebble verrà aggiunto a quello di Gadgetbridge (richiede riconessione)</string>
     <string name="pref_title_pebble_always_ack_pebblekit">Invia l\'ACK dei messaggi PebbleKit prematuramente</string>
@@ -823,7 +823,7 @@
     <string name="about_additional_device_support">Supporto a dispositivi aggiuntivi</string>
     <string name="about_contributors">Contributori</string>
     <string name="about_core_team_title">Team principale (ordinati in base al primo contributo di codice)</string>
-    <string name="about_description_generic">Un\'alternativa gratuita, libera e senza cloud alle applicazioni Android a sorgente chiusa del tuo dispositivo.</string>
+    <string name="about_description_generic">Un\'alternativa gratuita, libera e senza cloud alle applicazioni Android proprietarie del tuo dispositivo.</string>
     <string name="about_activity_title_generic">Riguardo a Gadgetbridge</string>
     <string name="about_title">Informazioni</string>
     <string name="hr_widget_last_notification">Ultima notifica</string>
@@ -854,7 +854,7 @@
     <string name="prefs_notifications_and_calls_continious_ring">Notifica durante la suoneria del cellulare</string>
     <string name="pref_title_notifications_and_calls_repeat_on_call">Ripeti la notifica di chiamata</string>
     <string name="title_activity_LenovoWatch_calibration">Calibrazione del Watch X Plus</string>
-    <string name="pref_title_weather_summary">Usato per il provider meteo di LineageOS, altre versioni di Android necessitano di usare un\'app come \"Weather Notifications\". Trova più informazioni nella wiki di Gadgetbridge.</string>
+    <string name="pref_title_weather_summary">Usato per il provider meteo di LineageOS, altre versioni di Android necessitano di usare un\'app come \"Breezy Weather\". Trova più informazioni sul sito di Gadgetbridge.</string>
     <string name="fw_upgrade_notice_amazfit_trex">Stai per installare il firmware %s sul tuo Amazfit T-Rex.
 \n
 \nAssicurati di installare prima il file .fw e dopo il file .res. L\'orologio si riavvierà al termine del caricamento del file .fw.
@@ -1249,7 +1249,7 @@
     <string name="pref_header_connection">Collegamento</string>
     <string name="pref_blacklist_calendars_summary">I calendari ignorati non saranno sincronizzati con il dispositivo</string>
     <string name="pref_title_screen_on_on_notifications">Notifiche con schermo acceso</string>
-    <string name="pref_summary_screen_on_on_notifications">Accendi lo schermo della band quando arriva una notifica</string>
+    <string name="pref_summary_screen_on_on_notifications">Accendi lo schermo del dispositivo quando arriva una notifica</string>
     <string name="spo2_perc_80">80%</string>
     <string name="heartrate_bpm_40">40 bpm</string>
     <string name="heartrate_bpm_45">45 bpm</string>
@@ -1468,7 +1468,7 @@
 \nLa band si riavvierà dopo l\'installazione del file .zip.
 \n
 \nPROCEDI A TUO RISCHIO E PERICOLO!</string>
-    <string name="open_fw_installer_info_text">L\'installer di Firmware/Quadrante/App/File consente di caricare/installare i file supportati (firmware, quadranti, applicazioni, GPS, risorse, font...) sul dispositivo. Per ulteriori informazioni, consultare la wiki: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
+    <string name="open_fw_installer_info_text">L\'installatore di Firmware/Quadrante/App/File consente di caricare/installare i file supportati (firmware, quadranti, applicazioni, GPS, risorse, font...) sul dispositivo. Per ulteriori informazioni, consultare il sito: https://gadgetbridge.org/internals/features/installer/</string>
     <string name="pref_header_display">Schermo</string>
     <string name="pref_header_health">Salute</string>
     <string name="pref_header_time">Ora</string>
@@ -1901,7 +1901,7 @@
     <string name="anaerobicTrainingEffect">Effetto Anaerobico</string>
     <string name="currentWorkoutLoad">Carico Allenamento</string>
     <string name="debugactivity_confirm_remove_device_preferences_title">Rimuovere le preferenze del dispositivo\?</string>
-    <string name="debugactivity_confirm_remove_device_preferences">Così si ripristineranno le preferenze per tutti i dispositivi collegati. Sei sicuro?</string>
+    <string name="debugactivity_confirm_remove_device_preferences">Così si ripristineranno le preferenze per questo dispositivo. Sei sicuro?</string>
     <string name="pref_alert_tone">Tono di Avviso</string>
     <string name="pref_vibrate_for_alert">Vibra per gli Avvisi</string>
     <string name="pref_text_to_speech">Sintesi Vocale</string>
@@ -2023,14 +2023,14 @@
     <string name="bluetooth_calls">Chiamate bluetooth</string>
     <string name="pref_display_caller_title">Mostra informazioni contatto</string>
     <string name="pref_display_caller_summary">Visualizza numero di telefono o nome per chiamate in arrivo</string>
-    <string name="pref_pair_bluetooth_calls_title">Accoppia per chiamate bluetooth</string>
+    <string name="pref_pair_bluetooth_calls_title">Accoppia per chiamate Bluetooth</string>
     <string name="pref_pair_bluetooth_calls_summary">Tocca per avviare l\'accoppiamento</string>
-    <string name="pref_pair_bluetooth_calls_help_title">Come ricevere chiamate bluetooth</string>
-    <string name="pref_pair_bluetooth_calls_help_summary">Per ricevere chiamate bluetooth è necessario accoppiare il telefono a una seconda istanza dell\'orologio.</string>
+    <string name="pref_pair_bluetooth_calls_help_title">Come ricevere chiamate Bluetooth</string>
+    <string name="pref_pair_bluetooth_calls_help_summary">Per ricevere chiamate Bluetooth è necessario accoppiare il telefono a una seconda istanza dell\'orologio.</string>
     <string name="pref_pair_bluetooth_calls_help_1">1. Tocca il pulsante in basso per avviare l\'accoppiamento.</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Vai nelle impostazioni bluetooth del telefono e associa il nuovo dispositivo visualizzato (nome simile a quello dell\'orologio corrente, ma con un suffisso, ad es. \"Amazfit GTR 4 - AFC8\".</string>
-    <string name="pref_pair_bluetooth_calls_help_3">3. Attiva l\'impostazione delle chiamate Bluetooth in basso.</string>
-    <string name="pref_pair_bluetooth_calls_help_warning">ATTENZIONE: se attivi le chiamate bluetooth senza effettuare l\'accoppiamento con la seconda istanza, le notifiche di chiamata potrebbero non funzionare correttamente.</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Vai nelle impostazioni Bluetooth del telefono e associa il nuovo dispositivo visualizzato (nome simile a quello dell\'orologio corrente, ma con un suffisso, ad es. \"Amazfit GTR 4 - AFC8\".</string>
+    <string name="pref_pair_bluetooth_calls_help_3">3. Attiva l\'impostazione delle \"chiamate Bluetooth\" in basso.</string>
+    <string name="pref_pair_bluetooth_calls_help_warning">ATTENZIONE: se attivi le chiamate Bluetooth senza effettuare l\'accoppiamento con la seconda istanza, le notifiche di chiamata potrebbero non funzionare correttamente.</string>
     <string name="prefs_shortcut_cards_summary">Schede di scelta rapida visualizzate quando si scorre a destra dal quadrante. Quando un\'app è in esecuzione, le schede generate automaticamente non sono influenzate da questa impostazione.</string>
     <string name="prefs_shortcut_cards">Schede di Scelta Rapida</string>
     <string name="menuitem_forecast">Previsione</string>
@@ -2300,8 +2300,8 @@
     <string name="pref_summary_casio_alert_email">Avviso (vibrazione/bip) per le notifiche via e-mail</string>
     <string name="pref_title_casio_alert_sms">Avviso per notifiche SMS</string>
     <string name="pref_summary_casio_alert_sms">Avviso (vibrazione/bip) per le notifiche SMS (messaggi di testo)</string>
-    <string name="pref_title_casio_alert_other">Avviso per altre notifiche</string>
-    <string name="pref_summary_casio_alert_other">Avviso (vibrazione/bip) per le notifiche con altre categorie</string>
+    <string name="pref_title_casio_alert_other">Avviso per \"altre\" notifiche</string>
+    <string name="pref_summary_casio_alert_other">Avviso (vibrazione/bip) per le notifiche con \"altre\" categorie</string>
     <string name="busy_task_fetch_pai_data">Recupero dati PAI</string>
     <string name="manual">Manuale</string>
     <string name="updatefirmwareoperation_updateproblem_low_battery">Il dispositivo è troppo scarico</string>
@@ -3436,7 +3436,7 @@
     <string name="workout_revolutions">Rivoluzioni</string>
     <string name="workout_swings">Oscillazioni</string>
     <string name="max_power_sitting">Potenza massima (seduto)</string>
-    <string name="range_percentage_float">%.1f%% - %.1f%%</string>
+    <string name="range_percentage_float">%.1f%% – %.1f%%</string>
     <string name="weather_condition_thunderstorm_with_heavy_rain">temporale con pioggia intensa</string>
     <string name="weather_condition_windy">ventoso</string>
     <string name="weather_condition_gale">burrasca</string>
@@ -3525,8 +3525,8 @@
     <string name="weather_condition_volcanic_ash">cenere vulcanica</string>
     <string name="front_gear_shifts">Cambi anteriori</string>
     <string name="intensity_factor">Fattore di intensità (IF)</string>
-    <string name="range_percentage">%1$d%% - %2$d%%</string>
-    <string name="range_degrees">%1$dº - %2$dº</string>
+    <string name="range_percentage">%1$d%% – %2$d%%</string>
+    <string name="range_degrees">%1$dº – %2$dº</string>
     <string name="average_cadence_standing">Cadenza media (in piedi)</string>
     <string name="left_right_balance">Equilibrio</string>
     <string name="weather_condition_ragged_thunderstorm">temporale violento</string>
@@ -3725,4 +3725,17 @@
     <string name="busy_task_fetch_training_data_finished">Dati dell\'allenamento ricevuti!</string>
     <string name="interval_twenty_minutes">ogni 20 minuti</string>
     <string name="pref_display_enabled_summary">Abilita il display dell\'anello</string>
+    <string name="pref_summary_block_screenshots">Previeni gli screenshots e la visualizzazione su display non sicuri. Richiede il riavvio di GB per diventare completamente operativa</string>
+    <string name="title_activity_file_installer">Installazione File</string>
+    <string name="title_activity_gps_track_installer">Installazione traccia GPS</string>
+    <string name="pref_header_sync">Sincronizzazione</string>
+    <string name="pref_header_dashboard">Cruscotto</string>
+    <string name="sound_and_vibration">Suono + Vibrazione</string>
+    <string name="map_theme_biker">Ciclista</string>
+    <string name="map_theme_indigo">Indaco</string>
+    <string name="pref_title_block_screenshot">Blocca screenshots</string>
+    <string name="phone_calls">Chiamate</string>
+    <string name="pref_title_notifications_when_screen_saver">...anche quando lo screen saver è attivo</string>
+    <string name="pref_summary_screen_on_on_notifications_timeout">Aspetta %s prima di spegnere nuovamente lo schermo dopo una notifica</string>
+    <string name="pref_title_calendar_sync_choose">Calendari da sincronizzare</string>
 </resources>
