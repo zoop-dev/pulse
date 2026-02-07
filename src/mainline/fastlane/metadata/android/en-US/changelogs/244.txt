@@ -3,5 +3,6 @@
 • Support for 21 new devices
 • Workout parsing fixes across multiple devices
 • Improved charts
+• Multiple fixes across many devices
 
 Read the full changelog in the project repository.
