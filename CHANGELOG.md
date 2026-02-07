@@ -8,7 +8,7 @@
 * Initial support for Colmi V73
 * Initial support for D3, Qecnato S10 (GloryFit)
 * Initial support for Galaxy Buds3 Pro
-* Initial support for Garmin Edge 130, Edge 840, Edge 1040, Forerunner 920, GPSMAP 66s, Lily 2
+* Initial support for Garmin Edge 130, Edge 840, Edge 1040, Forerunner 920, GPSMAP 66s, Lily 2, Tactix 8
 * Initial support for Yawell R05
 * Initial support for Sanitas SBM67 / SilverCrest SBM67 blood pressure meter
 * Initial support for Zendure SolarFlow (tested only 800 Pro)
