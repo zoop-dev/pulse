@@ -78,6 +78,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("SBM67", DeviceType.SILVERCREST_SBM_67);
             put("BPM Smart", DeviceType.SANITAS_SBM_67);
             put("R11_0500", DeviceType.YAWELL_R11); // #4711
+            put("Edge 2x", DeviceType.GARMIN_EDGE_25);
             put("Edge 130", DeviceType.GARMIN_EDGE_130); // matrix
             put("Edge 840", DeviceType.GARMIN_EDGE_840); // matrix
             put("Edge 1040", DeviceType.GARMIN_EDGE_1040); // matrix

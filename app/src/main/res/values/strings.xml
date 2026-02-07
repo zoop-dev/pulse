@@ -1930,6 +1930,7 @@
     <string name="devicetype_garmin_venu_3s" translatable="false">Garmin Venu 3S</string>
     <string name="devicetype_garmin_venu_4" translatable="false">Garmin Venu 4</string>
     <string name="devicetype_garmin_venu_x1" translatable="false">Garmin Venu X1</string>
+    <string name="devicetype_garmin_edge_25" translatable="false">Garmin Edge 25</string>
     <string name="devicetype_garmin_edge_130" translatable="false">Garmin Edge 130</string>
     <string name="devicetype_garmin_edge_130_plus" translatable="false">Garmin Edge 130 Plus</string>
     <string name="devicetype_garmin_edge_540" translatable="false">Garmin Edge 540</string>
