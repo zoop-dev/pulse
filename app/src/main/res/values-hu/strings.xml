@@ -4124,4 +4124,5 @@
     <string name="busy_task_fetch_blood_pressure_data">Vérnyomásadatok lekérése</string>
     <string name="sleep_restless_moments">Nyugtalan pillanatok</string>
     <string name="sports_activity_quick_filter_distant_past">Régmúlt (összes edzés)</string>
+    <string name="soundcore_battery_low_tone_summary">Hallható jelzés, amikor az akkumulátor szintje 20%, illetve 10% alá esik</string>
 </resources>
