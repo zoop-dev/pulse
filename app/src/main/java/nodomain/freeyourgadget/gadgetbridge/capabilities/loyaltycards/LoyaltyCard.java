@@ -23,6 +23,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.nio.charset.Charset;
 import java.util.Currency;
 import java.util.Date;
 import java.util.Locale;
@@ -46,6 +47,8 @@ public class LoyaltyCard implements Serializable, Comparable<LoyaltyCard> {
     @Nullable
     private final Integer color;
 
+    private final String barcodeEncoding;
+
     private final boolean starred;
     private final boolean archived;
     private final long lastUsed;
@@ -59,6 +62,7 @@ public class LoyaltyCard implements Serializable, Comparable<LoyaltyCard> {
                        final String cardId,
                        @Nullable final String barcodeId,
                        @Nullable final BarcodeFormat barcodeFormat,
+                       final String barcodeEncoding,
                        @Nullable final Integer color,
                        final boolean starred,
                        final boolean archived,
@@ -72,6 +76,7 @@ public class LoyaltyCard implements Serializable, Comparable<LoyaltyCard> {
         this.cardId = cardId;
         this.barcodeId = barcodeId;
         this.barcodeFormat = barcodeFormat;
+        this.barcodeEncoding = barcodeEncoding;
         this.color = color;
         this.starred = starred;
         this.archived = archived;
@@ -114,6 +119,10 @@ public class LoyaltyCard implements Serializable, Comparable<LoyaltyCard> {
     @Nullable
     public BarcodeFormat getBarcodeFormat() {
         return barcodeFormat;
+    }
+
+    public Charset getBarcodeEncoding() {
+        return Charset.forName(barcodeEncoding);
     }
 
     @Nullable

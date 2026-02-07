@@ -209,7 +209,7 @@ public class ZeppOsLoyaltyCardService extends AbstractZeppOsService {
             baos.write(0);
 
             if (card.getBarcodeId() != null) {
-                baos.write(card.getBarcodeId().getBytes(StandardCharsets.UTF_8));
+                baos.write(card.getBarcodeId().getBytes(card.getBarcodeEncoding()));
             } else {
                 baos.write(card.getCardId().getBytes(StandardCharsets.UTF_8));
             }

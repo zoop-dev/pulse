@@ -46,6 +46,7 @@ import androidx.preference.PreferenceCategory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -230,6 +231,12 @@ public class LoyaltyCardsSettingsFragment extends AbstractPreferenceFragment {
                 }
                 values.removeAll(toRemove);
                 syncGroups.setSummary(TextUtils.join(", ", values));
+
+                syncGroups.setOnPreferenceChangeListener((preference, newValue) -> {
+                    //noinspection unchecked
+                    syncGroups.setSummary(TextUtils.join(", ", (Collection<String>) newValue));
+                    return true;
+                });
             }
         }
 
