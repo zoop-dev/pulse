@@ -263,6 +263,7 @@ public abstract class AbstractSampleProvider<T extends AbstractActivitySample> i
         }
 
         // This slightly breaks activity recognition, because we don't have per-minute granularity...
+        int prevTimestamp = samples.get(0).getTimestamp();
         int prevSteps = samples.get(0).getSteps();
         int prevDistance = samples.get(0).getDistanceCm();
         int prevActiveCalories = samples.get(0).getActiveCalories();
@@ -277,16 +278,31 @@ public abstract class AbstractSampleProvider<T extends AbstractActivitySample> i
 
             if (!sameDay(s1, s2)) {
                 // went past midnight - reset steps
+                prevTimestamp = s2.getTimestamp();
                 prevSteps = s2.getSteps() > 0 ? s2.getSteps() : 0;
                 prevDistance = s2.getDistanceCm() > 0 ? s2.getDistanceCm() : 0;
                 prevActiveCalories = s2.getActiveCalories() > 0 ? s2.getActiveCalories() : 0;
             } else {
+                if (s2.getSteps() >= 0 && s2.getSteps() < prevSteps) {
+                    // This is likely a bug, since cumulative steps shouldn't ever go down within the same day.
+                    // Mitigate it by ignoring the second sample, but this will likely still result in inconsistent data for the day.
+                    LOG.warn(
+                            "Cumulative steps went down from {} to {} ({} to {}) within the same day - ignoring second sample",
+                            prevTimestamp,
+                            s2.getTimestamp(),
+                            prevSteps,
+                            s2.getSteps()
+                    );
+                    continue;
+                }
+
                 // New value for the current day - subtract the previous seen sample
 
                 if (s2.getSteps() > 0) {
                     bak = s2.getSteps();
                     s2.setSteps(s2.getSteps() - prevSteps);
                     prevSteps = bak;
+                    prevTimestamp = s2.getTimestamp();
                 }
                 if (s2.getDistanceCm() > 0) {
                     bak = s2.getDistanceCm();
