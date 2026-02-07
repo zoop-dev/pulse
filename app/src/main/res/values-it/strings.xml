@@ -3722,4 +3722,5 @@
     <string name="pref_title_notifications_when_screen_saver">...anche quando lo screen saver è attivo</string>
     <string name="pref_summary_screen_on_on_notifications_timeout">Aspetta %s prima di spegnere nuovamente lo schermo dopo una notifica</string>
     <string name="pref_title_calendar_sync_choose">Calendari da sincronizzare</string>
+    <string name="pref_summary_calendar_sync_choose">Scegli quali calendari e colori sincronizzare con il dispositivo</string>
 </resources>
