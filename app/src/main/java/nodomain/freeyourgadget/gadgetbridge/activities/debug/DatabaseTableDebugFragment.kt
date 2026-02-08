@@ -18,6 +18,7 @@ import androidx.preference.PreferenceViewHolder
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import nodomain.freeyourgadget.gadgetbridge.BuildConfig
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils
@@ -65,7 +66,10 @@ class DatabaseTableDebugFragment : AbstractDebugFragment() {
 
         onClick(PREF_DEBUG_CLEAR_TABLE) { clearTable(tableName) }
 
-        onClick(PREF_DEBUG_DROP_TABLE) { dropTable(tableName) }
+        if (BuildConfig.DEBUG) {
+            findPreference<Preference>(PREF_DEBUG_DROP_TABLE)?.isVisible = true
+            onClick(PREF_DEBUG_DROP_TABLE) { dropTable(tableName) }
+        }
 
         val ddl = getTableDdl(tableName)
 
