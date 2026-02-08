@@ -46,7 +46,7 @@ class InternetHelperPreferencesActivity : AbstractSettingsActivityV2() {
                     installWarning?.setOnPreferenceClickListener {
                         val startIntent = Intent(Intent.ACTION_VIEW)
                         startIntent.data =
-                            "https://codeberg.org/Freeyourgadget/Internethelper/releases".toUri()
+                            "https://codeberg.org/Freeyourgadget/Internethelper".toUri()
                         startActivity(startIntent)
                         true
                     }

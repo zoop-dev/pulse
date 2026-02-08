@@ -4524,7 +4524,7 @@
     <string name="pref_notifications_pictures_enable">Send notification pictures</string>
     <string name="pref_notifications_pictures_enable_summary">Send notification pictures for current device</string>
     <string name="activity_title_rebble_app_store">Rebble app store</string>
-    <string name="prefs_internet_helper_title">Internet helper</string>
+    <string name="prefs_internet_helper_title">Internet Helper</string>
     <string name="prefs_internet_helper_summary">Configure the URLs that are allowed to be requested through the internet helper add-on app</string>
     <string name="internet_helper_pref_app_req_title">Add-on app required</string>
     <string name="internet_helper_pref_app_req_summary">This feature requires the installation of an add-on app. Tap here to go to the download page.</string>
@@ -4552,8 +4552,8 @@
     <string name="rebble_appstore_download_failed">Download failed: %1$s</string>
     <string name="rebble_appstore_fetch_app_info_failed_content_type">Fetching app info failed, wrong content-type: %1$s</string>
     <string name="rebble_appstore_fetching_download_file_failed">Fetching download file failed: %1$s</string>
-    <string name="internet_helper_permission_title">Internet helper add-on</string>
-    <string name="internet_helper_permission_summary">Permit access to the Gadgetbridge-internethelper add-on app</string>
+    <string name="internet_helper_permission_title">Internet Helper add-on</string>
+    <string name="internet_helper_permission_summary">Permit access to the Internet Helper for Gadgetbridge add-on app</string>
     <string name="notification_channel_pebble_js_runner">Pebble JS runner</string>
     <string name="notification_pebble_js_service_title">Pebble JavaScript service</string>
     <string name="notification_pebble_js_service_text">Running Pebble app/watchface JavaScript</string>
