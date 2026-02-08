@@ -3958,8 +3958,8 @@
     <string name="rebble_appstore_download_failed">Sikertelen letöltés: %1$s</string>
     <string name="rebble_appstore_fetch_app_info_failed_content_type">Nem sikerült lekérni az alkalmazás adatait, helytelen tartalomtípus: %1$s</string>
     <string name="rebble_appstore_fetching_download_file_failed">Nem sikerült lekérni a letöltési fájlt: %1$s</string>
-    <string name="internet_helper_permission_title">Internetsegéd bővítmény</string>
-    <string name="internet_helper_permission_summary">Engedélyezze a Gadgetbridge internetsegéd bővítmény-alkalmazás hozzáférését</string>
+    <string name="internet_helper_permission_title">Internetsegéd-bővítmény</string>
+    <string name="internet_helper_permission_summary">Engedélyezze az internethozzáférést Gadgetbridge internetsegéd-bővítménye számára</string>
     <string name="notification_channel_pebble_js_runner">Pebble JS-futtató</string>
     <string name="notification_pebble_js_service_title">Pebble JavaScript szolgáltatás</string>
     <string name="notification_pebble_js_service_text">JavaScript futtatása a Pebble alkalmazásban/számlapon</string>
