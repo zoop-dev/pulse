@@ -2,13 +2,13 @@
 
 #### 0.89.0
 
-* Add support for Internethelper
+* Add support for Internet Helper
 * Add support for Health Connect
 * Initial support for CMF Buds 2
 * Initial support for Colmi V73
 * Initial support for D3, Qecnato S10 (GloryFit)
 * Initial support for Galaxy Buds3 Pro
-* Initial support for Garmin Edge 130, Edge 840, Edge 1040, Forerunner 920, GPSMAP 66s, Lily 2, Tactix 8
+* Initial support for Garmin Edge 25, Edge 130, Edge 840, Edge 1040, Forerunner 920, GPSMAP 66s, Lily 2, Tactix 7, Tactix 8
 * Initial support for Yawell R05
 * Initial support for Sanitas SBM67 / SilverCrest SBM67 blood pressure meter
 * Initial support for Zendure SolarFlow (tested only 800 Pro)
@@ -64,6 +64,7 @@
 * Zepp OS: Add jump rope stats
 * Zepp OS: Fix HRV on some devices
 * Zepp OS: Fix notification image encoding for some devices
+* Zepp OS: Use Catima barcode encoding if available
 * Add "Today" and "distant past" quick filter option to workout list with persistent selection
 * Add auto phone call answer and notification speaking to some headphones that were missing it (Anker Soundcore Liberty 3 Pro / 4 NC, Bose QC35, Pixel Buds A, Redmi Buds, Soundcore AeroFit 2 / Q30)
 * Add distinct VO2 Max ranges per age / gender
