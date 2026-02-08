@@ -59,23 +59,11 @@ class DatabaseTableDebugFragment : AbstractDebugFragment() {
 
         preferenceScreen?.title = tableName
 
-        try {
-            GBApplication.acquireDB().use { db ->
-                val cursor = db.database.rawQuery(
-                    "SELECT COUNT(*) as \"count\" FROM $tableName;",
-                    null
-                )
-
-                cursor.use {
-                    it.moveToNext()
-                    findPreference<Preference>(PREF_DEBUG_DATABASE_COUNT)?.summary = it.getInt(it.getColumnIndexOrThrow("count")).toString()
-                }
-            }
-        } catch (e: Exception) {
-            GB.log("Error accessing database", GB.ERROR, e)
-        }
+        loadTableCount(tableName)
 
         onClick(PREF_DEBUG_EXPORT_TABLE) { startTableExport(tableName) }
+
+        onClick(PREF_DEBUG_CLEAR_TABLE) { clearTable(tableName) }
 
         onClick(PREF_DEBUG_DROP_TABLE) { dropTable(tableName) }
 
@@ -103,6 +91,24 @@ class DatabaseTableDebugFragment : AbstractDebugFragment() {
             true
         }
         findPreference<PreferenceCategory>(PREF_HEADER_SQL)?.addPreference(pref)
+    }
+
+    private fun loadTableCount(tableName: String) {
+        try {
+            GBApplication.acquireDB().use { db ->
+                val cursor = db.database.rawQuery(
+                    "SELECT COUNT(*) as \"count\" FROM $tableName;",
+                    null
+                )
+
+                cursor.use {
+                    it.moveToNext()
+                    findPreference<Preference>(PREF_DEBUG_DATABASE_COUNT)?.summary = it.getInt(it.getColumnIndexOrThrow("count")).toString()
+                }
+            }
+        } catch (e: Exception) {
+            GB.log("Error accessing database", GB.ERROR, e)
+        }
     }
 
     private fun getTableDdl(tableName: String): String {
@@ -428,6 +434,27 @@ class DatabaseTableDebugFragment : AbstractDebugFragment() {
         }
     }
 
+    private fun clearTable(tableName: String) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setCancelable(true)
+            .setIcon(R.drawable.ic_warning)
+            .setTitle("Clear $tableName")
+            .setMessage("Clear $tableName? All data in this table will be deleted.")
+            .setPositiveButton(R.string.Delete) { _, _ ->
+                try {
+                    GBApplication.acquireDB().use { db ->
+                        db.database.execSQL("DELETE FROM $tableName;")
+                    }
+                    loadTableCount(tableName)
+                    GB.toast("Table cleared", Toast.LENGTH_LONG, GB.INFO)
+                } catch (e: Exception) {
+                    GB.toast("Failed to clear table", Toast.LENGTH_LONG, GB.ERROR, e)
+                }
+            }
+            .setNegativeButton(R.string.Cancel) { _, _ -> }
+            .show()
+    }
+
     private fun dropTable(tableName: String) {
         MaterialAlertDialogBuilder(requireContext())
             .setCancelable(true)
@@ -455,6 +482,7 @@ class DatabaseTableDebugFragment : AbstractDebugFragment() {
         private const val PREF_DEBUG_DATABASE_COUNT = "pref_debug_database_count"
         private const val PREF_DEBUG_EXPORT_TABLE = "pref_debug_export_table"
         private const val PREF_HEADER_DANGEROUS_ACTIONS = "pref_header_dangerous_actions"
+        private const val PREF_DEBUG_CLEAR_TABLE = "pref_debug_clear_table"
         private const val PREF_DEBUG_DROP_TABLE = "pref_debug_drop_table"
         private const val PREF_HEADER_SQL = "pref_header_sql"
     }

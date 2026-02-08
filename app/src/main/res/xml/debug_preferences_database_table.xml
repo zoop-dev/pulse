@@ -30,6 +30,14 @@
 
         <Preference
             android:dependency="dangerous_actions"
+            android:icon="@drawable/ic_delete"
+            android:key="pref_debug_clear_table"
+            android:persistent="false"
+            android:summary="Warning! By pushing this button all data from the table will be deleted."
+            android:title="Clear table" />
+
+        <Preference
+            android:dependency="dangerous_actions"
             android:icon="@drawable/ic_delete_forever"
             android:key="pref_debug_drop_table"
             android:persistent="false"
