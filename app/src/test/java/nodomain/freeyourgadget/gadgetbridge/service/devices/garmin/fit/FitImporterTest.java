@@ -5,7 +5,9 @@ import org.junit.Test;
 
 import java.io.File;
 
-public class FitImporterTest {
+import nodomain.freeyourgadget.gadgetbridge.test.TestBase;
+
+public class FitImporterTest extends TestBase {
     @Test
     @Ignore("helper test for development, remove this while debugging")
     public void localTest() throws Exception {

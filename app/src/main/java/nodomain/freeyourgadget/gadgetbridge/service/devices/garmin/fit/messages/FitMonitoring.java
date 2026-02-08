@@ -358,7 +358,20 @@ public class FitMonitoring extends RecordData {
 
         if (timestamp16 != null && lastMonitoringTimestamp != null) {
             final int referenceGarminTs = GarminTimeUtils.unixTimeToGarminTimestamp(lastMonitoringTimestamp.intValue());
-            return (long) (lastMonitoringTimestamp.intValue() + ((timestamp16 - (referenceGarminTs & 0xffff)) & 0xffff));
+            int timeDiff = (timestamp16 & 0xFFFF) - (referenceGarminTs & 0xFFFF);
+
+            // Handle rollover
+            if (timeDiff < -32768) {
+                timeDiff += 65536;
+            } else if (timeDiff > 32768) {
+                timeDiff -= 65536;
+            }
+
+            return lastMonitoringTimestamp + timeDiff;
+        }
+
+        if (lastMonitoringTimestamp != null) {
+            return lastMonitoringTimestamp;
         }
 
         return getComputedTimestamp();

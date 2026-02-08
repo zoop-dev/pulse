@@ -118,6 +118,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class FitImporter {
     private static final Logger LOG = LoggerFactory.getLogger(FitImporter.class);
+    private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.ROOT);
 
     private final Context context;
     private final GBDevice gbDevice;
@@ -156,6 +157,8 @@ public class FitImporter {
      * @noinspection StatementWithEmptyBody
      */
     public void importFile(final File file) throws IOException, FitParseException {
+        LOG.debug("Parsing {}", file.getAbsolutePath());
+
         reset();
 
         final FitFile fitFile = FitFile.parseIncoming(file);
@@ -244,8 +247,12 @@ public class FitImporter {
                 sample.setEndTimestamp(nap.getEndTimestamp() * 1000L);
                 napSamples.add(sample);
             } else if (record instanceof FitMonitoring monitoringRecord) {
-                LOG.trace("Monitoring at {}: {}", ts, record);
                 final Long currentMonitoringTimestamp = monitoringRecord.computeTimestamp(lastMonitoringTimestamp);
+                LOG.trace(
+                        "Monitoring at {}: {}",
+                        SDF.format(new Date(currentMonitoringTimestamp * 1000L)),
+                        record
+                );
                 if (!activitySamplesPerTimestamp.containsKey(currentMonitoringTimestamp)) {
                     activitySamplesPerTimestamp.put(currentMonitoringTimestamp, new ArrayList<>());
                 }
@@ -591,7 +598,11 @@ public class FitImporter {
         for (final long ts : activitySamplesPerTimestamp.keySet()) {
             if (prevTs > 0 && ts - prevTs > 60) {
                 // Fill gaps between samples
-                LOG.debug("Filling gap between {} and {}", prevTs, ts);
+                LOG.debug(
+                    "Filling gap between {} and {}",
+                    SDF.format(new Date(prevTs * 1000L)),
+                    SDF.format(new Date(ts * 1000L))
+                );
                 for (int i = prevTs + 60; i < ts; i += 60) {
                     final GarminActivitySample sample = new GarminActivitySample();
                     sample.setTimestamp(i);

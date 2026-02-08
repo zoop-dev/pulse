@@ -10,7 +10,7 @@ import java.util.Locale;
 public class GBToStringBuilder extends ToStringBuilder {
     public static final GBToStringStyle STYLE = new GBToStringStyle();
 
-    private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.US);
+    private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.ROOT);
 
     public GBToStringBuilder(final Object object) {
         super(object, STYLE);
