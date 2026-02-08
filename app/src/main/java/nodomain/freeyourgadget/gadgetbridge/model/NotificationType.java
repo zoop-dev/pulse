@@ -59,6 +59,8 @@ public enum NotificationType {
     PINTEREST,
     YOUTUBE,
     GADGETBRIDGE_TEXT_RECEIVER,
+    GAMES,
+    WEATHER,
     ;
 
 
@@ -85,6 +87,7 @@ public enum NotificationType {
             case SNAPCHAT:
             case INSTAGRAM:
             case LINKEDIN:
+            case VK:
                 return "generic_social";
             case CONVERSATIONS:
             case FACEBOOK_MESSENGER:
@@ -118,6 +121,8 @@ public enum NotificationType {
                 return "generic_email";
             case COL_REMINDER:
             case GADGETBRIDGE_TEXT_RECEIVER:
+            case GAMES:
+            case WEATHER:
             case UNKNOWN:
             default:
                 return "generic";

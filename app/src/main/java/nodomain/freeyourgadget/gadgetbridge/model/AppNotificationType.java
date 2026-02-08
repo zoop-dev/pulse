@@ -67,6 +67,12 @@ public class AppNotificationType extends HashMap<String, NotificationType> {
         // Conversations
         put("eu.siacs.conversations", NotificationType.CONVERSATIONS);
         put("de.pixart.messenger", NotificationType.CONVERSATIONS);
+        put("org.jitsi.meet", NotificationType.CONVERSATIONS);
+        put("com.microsoft.teams", NotificationType.CONVERSATIONS);
+        put("us.zoom.videomeetings", NotificationType.CONVERSATIONS);
+        put("com.nextcloud.talk2", NotificationType.CONVERSATIONS);
+        put("com.cisco.wx2.android", NotificationType.CONVERSATIONS);
+        put("com.google.android.apps.tachyon", NotificationType.CONVERSATIONS);
 
         // Element, ElementX, SchildiChat, FluffyChat
         // (making the last two an extra Notification Type to give them distinct colors is debatable)
@@ -198,8 +204,25 @@ public class AppNotificationType extends HashMap<String, NotificationType> {
         // KTrip
         put("org.kde.ktrip", NotificationType.TRANSIT);
 
-        // Others
+        // VK
         put("com.vkontakte.android", NotificationType.VK);
+        put("com.vkmp3mod.android", NotificationType.VK);
+        put("ua.itaysonlab.vkx", NotificationType.VK);
+
+        // Games
+        put("com.valvesoftware.android.steam.community", NotificationType.GAMES);
+        put("com.google.android.play.games", NotificationType.GAMES);
+        put("com.scee.psxandroid", NotificationType.GAMES);
+        put("com.microsoft.xboxone.smartglass", NotificationType.GAMES);
+        put("com.nintendo.znca", NotificationType.GAMES);
+        put("com.nianticlabs.pokemongo", NotificationType.GAMES);
+
+        // Weather
+        put("org.breezyweather", NotificationType.WEATHER);
+        put("com.motorola.timeweatherwidget", NotificationType.WEATHER);
+        put("com.google.android.apps.weather", NotificationType.WEATHER);
+
+        // Others
         put("com.tencent.mobileqq", NotificationType.QQ);
         put("com.tumblr", NotificationType.TUMBLR);
         put("com.pinterest", NotificationType.PINTEREST);
