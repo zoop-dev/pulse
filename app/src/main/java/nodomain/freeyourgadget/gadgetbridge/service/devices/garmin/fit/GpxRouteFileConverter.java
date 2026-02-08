@@ -3,7 +3,6 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,7 +10,12 @@ import java.util.stream.Collectors;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.FileType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums.GarminSport;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitRecordDataFactory;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitCourse;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitEvent;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitFileCreator;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitFileId;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitLap;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitRecord;
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxFile;
 import nodomain.freeyourgadget.gadgetbridge.util.gpx.model.GpxTrackPoint;
 
@@ -37,12 +41,10 @@ public class GpxRouteFileConverter {
         }
     }
 
-    private static RecordData getFileCreatorRecordData() {
-        final RecordData fileCreatorRecord = FitRecordDataFactory.create(
-                new RecordDefinition(new RecordHeader((byte) 0x41), ByteOrder.BIG_ENDIAN, NativeFITMessage.FILE_CREATOR, NativeFITMessage.FILE_CREATOR.getFieldDefinitions(0), null),
-                new RecordHeader((byte) 0x01));
-        fileCreatorRecord.setFieldByName("software_version", 1);
-        return fileCreatorRecord;
+    private static FitFileCreator getFileCreatorRecordData() {
+        final FitFileCreator.Builder fileCreatorBuilder = new FitFileCreator.Builder();
+        fileCreatorBuilder.setSoftwareVersion(1);
+        return fileCreatorBuilder.build(0x01);
     }
 
     public FitFile getConvertedFile() {
@@ -71,9 +73,7 @@ public class GpxRouteFileConverter {
             return null;
         }
 
-        final RecordHeader gpxDataPointRecordHeader = new RecordHeader((byte) 0x05);
-        final RecordDefinition gpxDataPointRecordDefinition = new RecordDefinition(new RecordHeader((byte) 0x45), ByteOrder.BIG_ENDIAN, NativeFITMessage.RECORD, NativeFITMessage.RECORD.getFieldDefinitions(0, 1, 2, 5, 253), null);
-        List<RecordData> gpxPointDataRecords = new ArrayList<>();
+        final List<RecordData> gpxPointDataRecords = new ArrayList<>();
 
         double totalAscent = 0;
         double totalDescent = 0;
@@ -88,88 +88,77 @@ public class GpxRouteFileConverter {
             totalDescent += point.getDescent(prevPoint);
             totalDistance += point.getDistance(prevPoint);
             runningTs += (long) (point.getDistance(prevPoint) / speed);
-            final RecordData gpxDataPointRecord = FitRecordDataFactory.create(gpxDataPointRecordDefinition, gpxDataPointRecordHeader);
 
-            gpxDataPointRecord.setFieldByName("latitude", point.getLatitude());
-            gpxDataPointRecord.setFieldByName("longitude", point.getLongitude());
-            gpxDataPointRecord.setFieldByName("altitude", point.getAltitude());
-            gpxDataPointRecord.setFieldByName("distance", totalDistance);
-            gpxDataPointRecord.setFieldByName("timestamp", runningTs);
+            final FitRecord.Builder recordBuilder = new FitRecord.Builder();
+            recordBuilder.setLatitude(point.getLatitude());
+            recordBuilder.setLongitude(point.getLongitude());
+            recordBuilder.setAltitude((float) point.getAltitude());
+            recordBuilder.setDistance(totalDistance);
+            recordBuilder.setTimestamp(runningTs);
 
             prevPoint = point;
-            gpxPointDataRecords.add(gpxDataPointRecord);
+            gpxPointDataRecords.add(recordBuilder.build(0x05));
         }
 
-        final RecordData lapRecord = getLapRecordData(gpxTrackPointList);
-        lapRecord.setFieldByName("total_distance", totalDistance);
-        lapRecord.setFieldByName("total_ascent", totalAscent);
-        lapRecord.setFieldByName("total_descent", totalDescent);
-        lapRecord.setFieldByName("total_elapsed_time", (runningTs - timestamp));
-        lapRecord.setFieldByName("total_timer_time", (runningTs - timestamp));
+        final FitLap.Builder lapRecordBuilder = getLapRecordData(gpxTrackPointList);
+        lapRecordBuilder.setTotalDistance(totalDistance);
+        lapRecordBuilder.setTotalAscent((int) Math.round(totalAscent));
+        lapRecordBuilder.setTotalDescent((int) Math.round(totalDescent));
+        lapRecordBuilder.setTotalElapsedTime((double) (runningTs - timestamp));
+        lapRecordBuilder.setTotalTimerTime((double) (runningTs - timestamp));
 
         final List<RecordData> courseFileDataRecords = new ArrayList<>();
         courseFileDataRecords.add(getFileIdRecordData());
         courseFileDataRecords.add(getFileCreatorRecordData());
         courseFileDataRecords.add(getCourseRecordData());
-        courseFileDataRecords.add(lapRecord);
+        courseFileDataRecords.add(lapRecordBuilder.build(0x03));
 
-        final RecordHeader eventRecordHeader = new RecordHeader((byte) 0x04);
-        final RecordDefinition eventRecordDefinition = new RecordDefinition(new RecordHeader((byte) 0x44), ByteOrder.BIG_ENDIAN, NativeFITMessage.EVENT, NativeFITMessage.EVENT.getFieldDefinitions(0, 1, 4, 253), null);
-        courseFileDataRecords.add(getEventRecordData(eventRecordDefinition, eventRecordHeader, timestamp, 0));
-        courseFileDataRecords.add(getEventRecordData(eventRecordDefinition, eventRecordHeader, runningTs, 9));
+        courseFileDataRecords.add(getEventRecordData(timestamp, 0));
+        courseFileDataRecords.add(getEventRecordData(runningTs, 9));
 
         courseFileDataRecords.addAll(gpxPointDataRecords);
 
         return new FitFile(courseFileDataRecords);
     }
 
-    private RecordData getEventRecordData(RecordDefinition eventRecordDefinition, RecordHeader eventRecordHeader, long timestamp, int eventType) {
-        final RecordData startEvent = FitRecordDataFactory.create(
-                eventRecordDefinition,
-                eventRecordHeader);
-
-        startEvent.setFieldByName("timestamp", timestamp);
-        startEvent.setFieldByName("event", 0);
-        startEvent.setFieldByName("event_group", 0);
-        startEvent.setFieldByName("event_type", eventType);
-        return startEvent;
+    private FitEvent getEventRecordData(long timestamp, int eventType) {
+        final FitEvent.Builder eventBuilder = new FitEvent.Builder();
+        eventBuilder.setTimestamp(timestamp);
+        eventBuilder.setEvent(0);
+        eventBuilder.setEventGroup(0);
+        eventBuilder.setEventType(eventType);
+        return eventBuilder.build(0x04);
     }
 
-    private RecordData getLapRecordData(List<GpxTrackPoint> gpxTrackPointList) {
+    private FitLap.Builder getLapRecordData(List<GpxTrackPoint> gpxTrackPointList) {
         final GPSCoordinate first = gpxTrackPointList.get(0);
         final GPSCoordinate last = gpxTrackPointList.get(gpxTrackPointList.size() - 1);
 
-        final RecordData lapRecord = FitRecordDataFactory.create(
-                new RecordDefinition(new RecordHeader((byte) 0x43), ByteOrder.BIG_ENDIAN, NativeFITMessage.LAP, NativeFITMessage.LAP.getFieldDefinitions(3, 4, 5, 6, 7, 8, 9, 21, 22, 253), null),
-                new RecordHeader((byte) 0x03));
-        lapRecord.setFieldByName("start_lat", first.getLatitude());
-        lapRecord.setFieldByName("start_long", first.getLongitude());
-        lapRecord.setFieldByName("end_lat", last.getLatitude());
-        lapRecord.setFieldByName("end_long", last.getLongitude());
-        lapRecord.setFieldByName("timestamp", timestamp);
-        return lapRecord;
+        final FitLap.Builder lapBuilder = new FitLap.Builder();
+        lapBuilder.setStartLat(first.getLatitude());
+        lapBuilder.setStartLong(first.getLongitude());
+        lapBuilder.setEndLat(last.getLatitude());
+        lapBuilder.setEndLong(last.getLongitude());
+        lapBuilder.setTimestamp(timestamp);
+        return lapBuilder;
     }
 
-    private RecordData getCourseRecordData() {
-        final RecordData courseRecord = FitRecordDataFactory.create(
-                new RecordDefinition(new RecordHeader((byte) 0x42), ByteOrder.BIG_ENDIAN, NativeFITMessage.COURSE, NativeFITMessage.COURSE.getFieldDefinitions(4, 5), null),
-                new RecordHeader((byte) 0x02));
-        courseRecord.setFieldByName("sport", activity); //TODO use track.getType()
-        courseRecord.setFieldByName("name", name);
-        return courseRecord;
+    private FitCourse getCourseRecordData() {
+        final FitCourse.Builder courseBuilder = new FitCourse.Builder();
+        courseBuilder.setSport(activity); //TODO use track.getType()
+        courseBuilder.setName(name);
+        return courseBuilder.build(0x02);
     }
 
-    private RecordData getFileIdRecordData() {
-        final RecordData fileIdRecord = FitRecordDataFactory.create(
-                new RecordDefinition(new RecordHeader((byte) 0x40), ByteOrder.BIG_ENDIAN, NativeFITMessage.FILE_ID, NativeFITMessage.FILE_ID.getFieldDefinitions(0, 1, 2, 3, 4, 5), null),
-                new RecordHeader((byte) 0x00));
-        fileIdRecord.setFieldByName("type", FileType.FILETYPE.COURSES.getSubType());
-        fileIdRecord.setFieldByName("manufacturer", 1);
-        fileIdRecord.setFieldByName("product", 65534);
-        fileIdRecord.setFieldByName("time_created", timestamp);
-        fileIdRecord.setFieldByName("serial_number", 1);
-        fileIdRecord.setFieldByName("number", 1);
-        return fileIdRecord;
+    private FitFileId getFileIdRecordData() {
+        final FitFileId.Builder fileIdBuilder = new FitFileId.Builder();
+        fileIdBuilder.setType(FileType.FILETYPE.COURSES);
+        fileIdBuilder.setManufacturer(1);
+        fileIdBuilder.setProduct(65534);
+        fileIdBuilder.setTimeCreated(timestamp);
+        fileIdBuilder.setSerialNumber(1L);
+        fileIdBuilder.setNumber(1);
+        return fileIdBuilder.build(0x00);
     }
 
 }
