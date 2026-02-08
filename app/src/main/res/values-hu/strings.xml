@@ -4125,4 +4125,6 @@
     <string name="sleep_restless_moments">Nyugtalan pillanatok</string>
     <string name="sports_activity_quick_filter_distant_past">Régmúlt (összes edzés)</string>
     <string name="soundcore_battery_low_tone_summary">Hallható jelzés, amikor az akkumulátor szintje 20%, illetve 10% alá esik</string>
+    <string name="internet_firewall_blacklisted_domains_title">Letiltott domainek</string>
+    <string name="internet_firewall_blacklisted_domains_summary">A következő domainek és azok összes aldomainje figyelmen kívül hagyja a fenti beállítást, és mindig le lesznek tiltva.</string>
 </resources>
