@@ -78,7 +78,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("SBM67", DeviceType.SILVERCREST_SBM_67);
             put("BPM Smart", DeviceType.SANITAS_SBM_67);
             put("R11_0500", DeviceType.YAWELL_R11); // #4711
-            put("Edge 2x", DeviceType.GARMIN_EDGE_25);
+            put("Edge 2x", DeviceType.GARMIN_EDGE_25); // #5779
             put("Edge 130", DeviceType.GARMIN_EDGE_130); // matrix
             put("Edge 840", DeviceType.GARMIN_EDGE_840); // matrix
             put("Edge 1040", DeviceType.GARMIN_EDGE_1040); // matrix
@@ -99,6 +99,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("Venu Sq", DeviceType.GARMIN_VENU_SQ);
             put("fenix 8 - 51mm", DeviceType.GARMIN_FENIX_8); // #4226
             put("quatix 8 - 51mm", DeviceType.GARMIN_QUATIX_8); // #5575
+            put("tactix 7", DeviceType.GARMIN_TACTIX_7); // #5782
             put("tactix 8 - 51mm", DeviceType.GARMIN_TACTIX_8); // #5772
             put("Forerunner 265S", DeviceType.GARMIN_FORERUNNER_265S);
             put("Forerunner 955", DeviceType.GARMIN_FORERUNNER_955); // #4124
