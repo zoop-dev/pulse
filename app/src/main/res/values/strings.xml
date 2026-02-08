@@ -4549,6 +4549,8 @@
     <string name="internet_firewall_no_domains">No domain rules found. Default action: %s</string>
     <string name="internet_firewall_add_domain">Add domain</string>
     <string name="internet_firewall_edit_domain">Edit domain</string>
+    <string name="internet_firewall_blacklisted_domains_title">Blocked domains</string>
+    <string name="internet_firewall_blacklisted_domains_summary">The following domains and all their subdomains will ignore the setting above and always be blocked.</string>
     <string name="rebble_appstore_download_failed_wrong_content_type">Download failed, wrong content-type: %1$s</string>
     <string name="rebble_appstore_download_failed">Download failed: %1$s</string>
     <string name="rebble_appstore_fetch_app_info_failed_content_type">Fetching app info failed, wrong content-type: %1$s</string>

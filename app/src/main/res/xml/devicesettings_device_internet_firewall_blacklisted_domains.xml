@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        android:key="pref_category_internet_firewall_blacklisted_domains"
+        android:title="@string/internet_firewall_blacklisted_domains_title"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            android:dependency="device_internet_access"
+            android:key="pref_key_internet_firewall_blacklisted_domains_warning"
+            android:selectable="false"
+            android:summary="@string/internet_firewall_blacklisted_domains_summary"
+            app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+</androidx.preference.PreferenceScreen>

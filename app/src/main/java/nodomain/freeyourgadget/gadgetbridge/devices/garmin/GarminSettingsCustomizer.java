@@ -228,6 +228,25 @@ public class GarminSettingsCustomizer implements DeviceSpecificSettingsCustomize
                 prefAgpsHeader.addPreference(prefUpdateTime);
             }
         }
+
+        final PreferenceCategory blacklistedDomains = handler.findPreference("pref_category_internet_firewall_blacklisted_domains");
+        if (blacklistedDomains != null) {
+            final Preference url1 = new Preference(handler.getContext());
+            url1.setKey("pref_blacklisted_url_garmin_com");
+            url1.setPersistent(false);
+            url1.setSelectable(false);
+            url1.setIcon(R.drawable.ic_block);
+            url1.setSummary("garmin.com");
+            blacklistedDomains.addPreference(url1);
+
+            final Preference url2 = new Preference(handler.getContext());
+            url2.setKey("pref_blacklisted_url_dciwx_com");
+            url2.setPersistent(false);
+            url2.setSelectable(false);
+            url2.setIcon(R.drawable.ic_block);
+            url2.setSummary("dciwx.com");
+            blacklistedDomains.addPreference(url2);
+        }
     }
 
     private void selectAgpsFile(final DeviceSpecificSettingsHandler handler, final Prefs prefs, final String url, final Preference prefLocalFile) {
