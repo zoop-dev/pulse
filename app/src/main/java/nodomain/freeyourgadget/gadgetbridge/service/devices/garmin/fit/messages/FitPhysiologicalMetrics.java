@@ -33,9 +33,9 @@ public class FitPhysiologicalMetrics extends RecordData {
     public FitPhysiologicalMetrics(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 140) {
-            throw new IllegalArgumentException("FitPhysiologicalMetrics expects global messages of " + 140 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 140) {
+            throw new IllegalArgumentException("FitPhysiologicalMetrics expects native messages of " + 140 + ", got " + nativeNumber);
         }
     }
 

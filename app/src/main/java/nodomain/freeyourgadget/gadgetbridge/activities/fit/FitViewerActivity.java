@@ -43,7 +43,7 @@ import java.util.Set;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.GlobalFITMessage;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.NativeFITMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -55,7 +55,7 @@ public class FitViewerActivity extends AbstractGBActivity implements MenuProvide
 
     private FitRecordAdapter fitRecordAdapter;
     private FitFile fitFile;
-    private final Set<GlobalFITMessage> filter = new HashSet<>();
+    private final Set<NativeFITMessage> filter = new HashSet<>();
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -107,8 +107,8 @@ public class FitViewerActivity extends AbstractGBActivity implements MenuProvide
     public boolean onMenuItemSelected(@NonNull final MenuItem menuItem) {
         final int itemId = menuItem.getItemId();
         if (itemId == R.id.fit_viewer_filter) {
-            final GlobalFITMessage[] globals = fitFile.getRecords().stream()
-                    .map(RecordData::getGlobalFITMessage)
+            final NativeFITMessage[] globals = fitFile.getRecords().stream()
+                    .map(RecordData::getNativeFITMessage)
                     .distinct()
                     .sorted((a, b) -> {
                         if (a.name().startsWith("UNK_") && b.name().startsWith("UNK_")) {
@@ -117,7 +117,7 @@ public class FitViewerActivity extends AbstractGBActivity implements MenuProvide
                             return a.name().compareToIgnoreCase(b.name());
                         }
                     })
-                    .toArray(GlobalFITMessage[]::new);
+                    .toArray(NativeFITMessage[]::new);
 
             final boolean[] checked = new boolean[globals.length];
             for (int i = 0; i < globals.length; i++) {
@@ -127,7 +127,7 @@ public class FitViewerActivity extends AbstractGBActivity implements MenuProvide
             }
 
             final CharSequence[] mEntries = Arrays.stream(globals)
-                    .map(GlobalFITMessage::name)
+                    .map(NativeFITMessage::name)
                     .toArray(CharSequence[]::new);
 
             new MaterialAlertDialogBuilder(this)

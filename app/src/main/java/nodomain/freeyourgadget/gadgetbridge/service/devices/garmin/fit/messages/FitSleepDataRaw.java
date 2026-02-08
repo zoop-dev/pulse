@@ -33,9 +33,9 @@ public class FitSleepDataRaw extends RecordData {
     public FitSleepDataRaw(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 274) {
-            throw new IllegalArgumentException("FitSleepDataRaw expects global messages of " + 274 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 274) {
+            throw new IllegalArgumentException("FitSleepDataRaw expects native messages of " + 274 + ", got " + nativeNumber);
         }
     }
 

@@ -34,9 +34,9 @@ public class FitLap extends RecordData {
     public FitLap(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 19) {
-            throw new IllegalArgumentException("FitLap expects global messages of " + 19 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 19) {
+            throw new IllegalArgumentException("FitLap expects native messages of " + 19 + ", got " + nativeNumber);
         }
     }
 

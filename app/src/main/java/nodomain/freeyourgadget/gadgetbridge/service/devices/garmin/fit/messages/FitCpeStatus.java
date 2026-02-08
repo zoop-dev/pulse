@@ -33,9 +33,9 @@ public class FitCpeStatus extends RecordData {
     public FitCpeStatus(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 394) {
-            throw new IllegalArgumentException("FitCpeStatus expects global messages of " + 394 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 394) {
+            throw new IllegalArgumentException("FitCpeStatus expects native messages of " + 394 + ", got " + nativeNumber);
         }
     }
 

@@ -33,9 +33,9 @@ public class FitSkinTempOvernight extends RecordData {
     public FitSkinTempOvernight(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 398) {
-            throw new IllegalArgumentException("FitSkinTempOvernight expects global messages of " + 398 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 398) {
+            throw new IllegalArgumentException("FitSkinTempOvernight expects native messages of " + 398 + ", got " + nativeNumber);
         }
     }
 

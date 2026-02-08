@@ -394,12 +394,12 @@ public class FitImporter {
             } else {
                 LOG.trace("Unknown record: {}", record);
 
-                if (!unknownRecords.containsKey(record.getGlobalFITMessage().getNumber())) {
-                    unknownRecords.put(record.getGlobalFITMessage().getNumber(), 0);
+                if (!unknownRecords.containsKey(record.getNativeFITMessage().getNumber())) {
+                    unknownRecords.put(record.getNativeFITMessage().getNumber(), 0);
                 }
                 unknownRecords.put(
-                        record.getGlobalFITMessage().getNumber(),
-                        Objects.requireNonNull(unknownRecords.get(record.getGlobalFITMessage().getNumber())) + 1
+                        record.getNativeFITMessage().getNumber(),
+                        Objects.requireNonNull(unknownRecords.get(record.getNativeFITMessage().getNumber())) + 1
                 );
             }
         }
@@ -497,8 +497,8 @@ public class FitImporter {
         }
 
         for (final Map.Entry<Integer, Integer> e : unknownRecords.entrySet()) {
-            final String globalNumber = FitDebug.mesgNumLookup(e.getKey());
-            LOG.warn("Unknown record of global number {} seen {} times", globalNumber, e.getValue());
+            final String NativeMessageNumber = FitDebug.mesgNumLookup(e.getKey());
+            LOG.warn("Unknown record of native number {} seen {} times", NativeMessageNumber, e.getValue());
         }
     }
 

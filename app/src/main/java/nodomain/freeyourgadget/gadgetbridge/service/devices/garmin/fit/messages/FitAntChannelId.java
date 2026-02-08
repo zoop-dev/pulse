@@ -33,9 +33,9 @@ public class FitAntChannelId extends RecordData {
     public FitAntChannelId(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 82) {
-            throw new IllegalArgumentException("FitAntChannelId expects global messages of " + 82 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 82) {
+            throw new IllegalArgumentException("FitAntChannelId expects native messages of " + 82 + ", got " + nativeNumber);
         }
     }
 

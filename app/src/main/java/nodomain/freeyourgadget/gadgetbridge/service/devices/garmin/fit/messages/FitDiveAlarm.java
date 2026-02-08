@@ -33,9 +33,9 @@ public class FitDiveAlarm extends RecordData {
     public FitDiveAlarm(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 262) {
-            throw new IllegalArgumentException("FitDiveAlarm expects global messages of " + 262 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 262) {
+            throw new IllegalArgumentException("FitDiveAlarm expects native messages of " + 262 + ", got " + nativeNumber);
         }
     }
 

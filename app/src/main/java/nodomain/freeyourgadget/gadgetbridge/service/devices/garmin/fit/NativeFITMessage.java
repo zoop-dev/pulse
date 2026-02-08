@@ -14,8 +14,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes
 /**
  * @noinspection ArraysAsListWithZeroOrOneArgument
  */
-public class GlobalFITMessage {
-    public static GlobalFITMessage FILE_ID = new GlobalFITMessage(0, "FILE_ID", Arrays.asList(
+public class NativeFITMessage {
+    public static NativeFITMessage FILE_ID = new NativeFITMessage(0, "FILE_ID", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "type", FieldDefinitionFactory.FIELD.FILE_TYPE),
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "manufacturer"),
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "product"),
@@ -26,14 +26,14 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(8, BaseType.STRING, 20, "product_name")
     ));
 
-    public static GlobalFITMessage CAPABILITIES = new GlobalFITMessage(1, "CAPABILITIES", Arrays.asList(
+    public static NativeFITMessage CAPABILITIES = new NativeFITMessage(1, "CAPABILITIES", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8Z, "languages", FieldDefinitionFactory.FIELD.ARRAY),
             new FieldDefinitionPrimitive(1, BaseType.UINT8Z, "sports", FieldDefinitionFactory.FIELD.ARRAY),
             new FieldDefinitionPrimitive(21, BaseType.UINT32Z, "workouts_supported"),
             new FieldDefinitionPrimitive(23, BaseType.UINT32Z, "connectivity_supported")
     ));
 
-    public static GlobalFITMessage DEVICE_SETTINGS = new GlobalFITMessage(2, "DEVICE_SETTINGS", Arrays.asList(
+    public static NativeFITMessage DEVICE_SETTINGS = new NativeFITMessage(2, "DEVICE_SETTINGS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "active_time_zone"),
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "utc_offset"),
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "time_offset", FieldDefinitionFactory.FIELD.ARRAY),
@@ -64,7 +64,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(174, BaseType.ENUM, "tap_sensitivity")
     ));
 
-    public static GlobalFITMessage USER_PROFILE = new GlobalFITMessage(3, "USER_PROFILE", Arrays.asList(
+    public static NativeFITMessage USER_PROFILE = new NativeFITMessage(3, "USER_PROFILE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.STRING, 8, "friendly_name"),
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "gender"),
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "age"),
@@ -100,7 +100,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage HRM_PROFILE = new GlobalFITMessage(4, "HRM_PROFILE", Arrays.asList(
+    public static NativeFITMessage HRM_PROFILE = new NativeFITMessage(4, "HRM_PROFILE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "enabled", FieldDefinitionFactory.FIELD.BOOLEAN),
             new FieldDefinitionPrimitive(1, BaseType.UINT16Z, "hrm_ant_id"),
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "log_hrv"),
@@ -108,7 +108,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage SDM_PROFILE = new GlobalFITMessage(5, "SDM_PROFILE", Arrays.asList(
+    public static NativeFITMessage SDM_PROFILE = new NativeFITMessage(5, "SDM_PROFILE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "enabled", FieldDefinitionFactory.FIELD.BOOLEAN),
             new FieldDefinitionPrimitive(1, BaseType.UINT16Z, "sdm_ant_id"),
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "sdm_cal_factor", 10, 0), // %
@@ -119,7 +119,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage BIKE_PROFILE = new GlobalFITMessage(6, "BIKE_PROFILE", Arrays.asList(
+    public static NativeFITMessage BIKE_PROFILE = new NativeFITMessage(6, "BIKE_PROFILE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.STRING, "name"),
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "sport"),
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "sub_sport"),
@@ -154,7 +154,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage ZONES_TARGET = new GlobalFITMessage(7, "ZONES_TARGET", Arrays.asList(
+    public static NativeFITMessage ZONES_TARGET = new NativeFITMessage(7, "ZONES_TARGET", Arrays.asList(
             new FieldDefinitionPrimitive(3, BaseType.UINT16, "functional_threshold_power"),
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "max_heart_rate"),
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "threshold_heart_rate"),
@@ -162,39 +162,39 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(7, BaseType.ENUM, "pwr_calc_type") //1=percent_ftp
     ));
 
-    public static GlobalFITMessage HR_ZONE = new GlobalFITMessage(8, "HR_ZONE", Arrays.asList(
+    public static NativeFITMessage HR_ZONE = new NativeFITMessage(8, "HR_ZONE", Arrays.asList(
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "high_bpm"),
             new FieldDefinitionPrimitive(2, BaseType.STRING, "name"),
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage POWER_ZONE = new GlobalFITMessage(9, "POWER_ZONE", Arrays.asList(
+    public static NativeFITMessage POWER_ZONE = new NativeFITMessage(9, "POWER_ZONE", Arrays.asList(
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "high_value"), // watt
             new FieldDefinitionPrimitive(2, BaseType.STRING, "name"),
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage MET_ZONE = new GlobalFITMessage(10, "MET_ZONE", Arrays.asList(
+    public static NativeFITMessage MET_ZONE = new NativeFITMessage(10, "MET_ZONE", Arrays.asList(
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "high_bpm"),
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "calories", 10, 0), // kcal/min
             new FieldDefinitionPrimitive(3, BaseType.UINT8, "fat_calories", 10, 0), // kcal/min
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage SPORT = new GlobalFITMessage(12, "SPORT", Arrays.asList(
+    public static NativeFITMessage SPORT = new NativeFITMessage(12, "SPORT", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "sport"),
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "sub_sport"),
             new FieldDefinitionPrimitive(3, BaseType.STRING, 24, "name")
     ));
 
-    public static GlobalFITMessage TRAINING_SETTINGS = new GlobalFITMessage(13, "TRAINING_SETTINGS", Arrays.asList(
+    public static NativeFITMessage TRAINING_SETTINGS = new NativeFITMessage(13, "TRAINING_SETTINGS", Arrays.asList(
             new FieldDefinitionPrimitive(31, BaseType.UINT32, "target_distance", 100, 0), // m
             new FieldDefinitionPrimitive(32, BaseType.UINT16, "target_speed", 1000, 0), // m/s
             new FieldDefinitionPrimitive(33, BaseType.UINT32, "target_time", 1, 0), // s
             new FieldDefinitionPrimitive(153, BaseType.UINT32, "precise_target_speed", 1000000, 0) // m/s
     ));
 
-    public static GlobalFITMessage GOALS = new GlobalFITMessage(15, "GOALS", Arrays.asList(
+    public static NativeFITMessage GOALS = new NativeFITMessage(15, "GOALS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "sport"),
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "sub_sport"),
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "start_date"),
@@ -210,7 +210,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage SESSION = new GlobalFITMessage(18, "SESSION", Arrays.asList(
+    public static NativeFITMessage SESSION = new NativeFITMessage(18, "SESSION", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "event"), // 8 session 9 lap
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "event_type"), // 1 stop
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "start_time"),
@@ -385,7 +385,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage LAP = new GlobalFITMessage(19, "LAP", Arrays.asList(
+    public static NativeFITMessage LAP = new NativeFITMessage(19, "LAP", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "event"), // 9 lap
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "event_type"), // 1 stop
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "start_time"),
@@ -512,7 +512,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage RECORD = new GlobalFITMessage(20, "RECORD", Arrays.asList(
+    public static NativeFITMessage RECORD = new NativeFITMessage(20, "RECORD", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.SINT32, "latitude", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(1, BaseType.SINT32, "longitude", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "altitude", 5, 500), // m
@@ -601,7 +601,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage EVENT = new GlobalFITMessage(21, "EVENT", Arrays.asList(
+    public static NativeFITMessage EVENT = new NativeFITMessage(21, "EVENT", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "event"), // 0 timer, 74 sleep
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "event_type"), // sleep: 0 start 1 stop, timer: 0 start 4 stop all
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "data16"),
@@ -623,7 +623,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage DEVICE_USED = new GlobalFITMessage(22, "DEVICE_USED", Arrays.asList(
+    public static NativeFITMessage DEVICE_USED = new NativeFITMessage(22, "DEVICE_USED", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "speed"),
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "distance"),
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "cadence"),
@@ -633,7 +633,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage DEVICE_INFO = new GlobalFITMessage(23, "DEVICE_INFO", Arrays.asList(
+    public static NativeFITMessage DEVICE_INFO = new NativeFITMessage(23, "DEVICE_INFO", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "device_index"),
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "device_type"),
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "manufacturer"),
@@ -656,7 +656,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage WORKOUT = new GlobalFITMessage(26, "WORKOUT", Arrays.asList(
+    public static NativeFITMessage WORKOUT = new NativeFITMessage(26, "WORKOUT", Arrays.asList(
             new FieldDefinitionPrimitive(4, BaseType.ENUM, "sport"),
             new FieldDefinitionPrimitive(5, BaseType.UINT32Z, "capabilities"),
             new FieldDefinitionPrimitive(6, BaseType.UINT16, "num_valid_steps"),
@@ -668,7 +668,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage WORKOUT_STEP = new GlobalFITMessage(27, "WORKOUT_STEP", Arrays.asList(
+    public static NativeFITMessage WORKOUT_STEP = new NativeFITMessage(27, "WORKOUT_STEP", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.STRING, "wkt_step_name"),
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "duration_type"),
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "duration_value"),
@@ -690,7 +690,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage SCHEDULE = new GlobalFITMessage(28, "SCHEDULE", Arrays.asList(
+    public static NativeFITMessage SCHEDULE = new NativeFITMessage(28, "SCHEDULE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "manufacturer"),
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "product"),
             new FieldDefinitionPrimitive(2, BaseType.UINT32Z, "serial_number"),
@@ -700,7 +700,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(6, BaseType.UINT32, "scheduled_time")
     ));
 
-    public static GlobalFITMessage LOCATION = new GlobalFITMessage(29, "LOCATION", Arrays.asList(
+    public static NativeFITMessage LOCATION = new NativeFITMessage(29, "LOCATION", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.STRING, 32, "name"),
             new FieldDefinitionPrimitive(1, BaseType.SINT32, "position_lat", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(2, BaseType.SINT32, "position_long", FieldDefinitionFactory.FIELD.COORDINATE),
@@ -712,7 +712,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage WEIGHT_SCALE = new GlobalFITMessage(30, "WEIGHT_SCALE", Arrays.asList(
+    public static NativeFITMessage WEIGHT_SCALE = new NativeFITMessage(30, "WEIGHT_SCALE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "weight", 100, 0), // kg
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "percent_fat", 100, 0), // %
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "percent_hydration", 100, 0), // %
@@ -729,14 +729,14 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage COURSE = new GlobalFITMessage(31, "COURSE", Arrays.asList(
+    public static NativeFITMessage COURSE = new NativeFITMessage(31, "COURSE", Arrays.asList(
             new FieldDefinitionPrimitive(4, BaseType.ENUM, "sport"),
             new FieldDefinitionPrimitive(5, BaseType.STRING, 16, "name"),
             new FieldDefinitionPrimitive(6, BaseType.UINT32Z, "capabilities"),
             new FieldDefinitionPrimitive(7, BaseType.ENUM, "sub_sport")
     ));
 
-    public static GlobalFITMessage COURSE_POINT = new GlobalFITMessage(32, "COURSE_POINT", Arrays.asList(
+    public static NativeFITMessage COURSE_POINT = new NativeFITMessage(32, "COURSE_POINT", Arrays.asList(
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP),
             new FieldDefinitionPrimitive(2, BaseType.SINT32, "position_lat", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(3, BaseType.SINT32, "position_long", FieldDefinitionFactory.FIELD.COORDINATE),
@@ -747,7 +747,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage TOTALS = new GlobalFITMessage(33, "TOTALS", Arrays.asList(
+    public static NativeFITMessage TOTALS = new NativeFITMessage(33, "TOTALS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT32, "timer_time"), // s
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "distance"), // m
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "calories"), // kcal
@@ -761,7 +761,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage ACTIVITY = new GlobalFITMessage(34, "ACTIVITY", Arrays.asList(
+    public static NativeFITMessage ACTIVITY = new NativeFITMessage(34, "ACTIVITY", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT32, "total_timer_time"),
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "num_sessions"),
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "type"), // 0 manual
@@ -772,13 +772,13 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage SOFTWARE = new GlobalFITMessage(35, "SOFTWARE", Arrays.asList(
+    public static NativeFITMessage SOFTWARE = new NativeFITMessage(35, "SOFTWARE", Arrays.asList(
             new FieldDefinitionPrimitive(3, BaseType.UINT16, "version", 100, 0),
             new FieldDefinitionPrimitive(5, BaseType.STRING, "part_number"),
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage FILE_CAPABILITIES = new GlobalFITMessage(37, "FILE_CAPABILITIES", Arrays.asList(
+    public static NativeFITMessage FILE_CAPABILITIES = new NativeFITMessage(37, "FILE_CAPABILITIES", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "type"),
             new FieldDefinitionPrimitive(1, BaseType.UINT8Z, "flags"),
             new FieldDefinitionPrimitive(2, BaseType.STRING, 16, "directory"),
@@ -787,7 +787,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage MESG_CAPABILITIES = new GlobalFITMessage(38, "MESG_CAPABILITIES", Arrays.asList(
+    public static NativeFITMessage MESG_CAPABILITIES = new NativeFITMessage(38, "MESG_CAPABILITIES", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "file"),
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "mesg_num"),
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "count_type"),
@@ -796,7 +796,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage FIELD_CAPABILITIES = new GlobalFITMessage(39, "FIELD_CAPABILITIES", Arrays.asList(
+    public static NativeFITMessage FIELD_CAPABILITIES = new NativeFITMessage(39, "FIELD_CAPABILITIES", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "file"),
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "mesg_num"),
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "field_num"),
@@ -804,12 +804,12 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage FILE_CREATOR = new GlobalFITMessage(49, "FILE_CREATOR", Arrays.asList(
+    public static NativeFITMessage FILE_CREATOR = new NativeFITMessage(49, "FILE_CREATOR", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "software_version"),
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "hardware_version")
     ));
 
-    public static GlobalFITMessage BLOOD_PRESSURE = new GlobalFITMessage(51, "BLOOD_PRESSURE", Arrays.asList(
+    public static NativeFITMessage BLOOD_PRESSURE = new NativeFITMessage(51, "BLOOD_PRESSURE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "systolic_pressure"), // mmHg
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "diastolic_pressure"), // mmHg
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "mean_arterial_pressure"), // mmHg
@@ -823,13 +823,13 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage SPEED_ZONE = new GlobalFITMessage(53, "SPEED_ZONE", Arrays.asList(
+    public static NativeFITMessage SPEED_ZONE = new NativeFITMessage(53, "SPEED_ZONE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "high_value", 1000, 0), // m/s
             new FieldDefinitionPrimitive(1, BaseType.STRING, "name"),
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage MONITORING = new GlobalFITMessage(55, "MONITORING", Arrays.asList(
+    public static NativeFITMessage MONITORING = new NativeFITMessage(55, "MONITORING", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "device_index"),
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "calories"), // kcal
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "distance"),
@@ -861,7 +861,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage MAP_LAYER = new GlobalFITMessage(70, "MAP_LAYER", Arrays.asList(
+    public static NativeFITMessage MAP_LAYER = new NativeFITMessage(70, "MAP_LAYER", Arrays.asList(
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "relief_shading"),
             new FieldDefinitionPrimitive(11, BaseType.ENUM, "orientation"),
             new FieldDefinitionPrimitive(13, BaseType.ENUM, "user_locations"),
@@ -877,7 +877,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage TRAINING_FILE = new GlobalFITMessage(72, "TRAINING_FILE", Arrays.asList(
+    public static NativeFITMessage TRAINING_FILE = new NativeFITMessage(72, "TRAINING_FILE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "type"),
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "manufacturer"),
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "product"),
@@ -886,11 +886,11 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage HRV = new GlobalFITMessage(78, "HRV", Arrays.asList(
+    public static NativeFITMessage HRV = new NativeFITMessage(78, "HRV", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "time", FieldDefinitionFactory.FIELD.ARRAY)
     ));
 
-    public static GlobalFITMessage USER_METRICS = new GlobalFITMessage(79, "USER_METRICS", Arrays.asList(
+    public static NativeFITMessage USER_METRICS = new NativeFITMessage(79, "USER_METRICS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "vo2_max"), // scale: 292.5714286
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "age"),
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "height", 100, 0), // m
@@ -906,7 +906,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage ANT_RX = new GlobalFITMessage(80, "ANT_RX", Arrays.asList(
+    public static NativeFITMessage ANT_RX = new NativeFITMessage(80, "ANT_RX", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "fractional_timestamp", 32768, 0),
             new FieldDefinitionPrimitive(1, BaseType.BASE_TYPE_BYTE, "mesg_id"),
             new FieldDefinitionPrimitive(2, BaseType.BASE_TYPE_BYTE, "mesg_data", FieldDefinitionFactory.FIELD.ARRAY),
@@ -915,7 +915,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage ANT_TX = new GlobalFITMessage(81, "ANT_TX", Arrays.asList(
+    public static NativeFITMessage ANT_TX = new NativeFITMessage(81, "ANT_TX", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "fractional_timestamp", 32768, 0),
             new FieldDefinitionPrimitive(1, BaseType.BASE_TYPE_BYTE, "mesg_id"),
             new FieldDefinitionPrimitive(2, BaseType.BASE_TYPE_BYTE, "mesg_data", FieldDefinitionFactory.FIELD.ARRAY),
@@ -924,7 +924,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage ANT_CHANNEL_ID = new GlobalFITMessage(82, "ANT_CHANNEL_ID", Arrays.asList(
+    public static NativeFITMessage ANT_CHANNEL_ID = new NativeFITMessage(82, "ANT_CHANNEL_ID", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "channel_number"),
             new FieldDefinitionPrimitive(1, BaseType.UINT8Z, "device_type"),
             new FieldDefinitionPrimitive(2, BaseType.UINT16Z, "device_number"),
@@ -932,7 +932,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(4, BaseType.UINT8, "device_index")
     ));
 
-    public static GlobalFITMessage LENGTH = new GlobalFITMessage(101, "LENGTH", Arrays.asList(
+    public static NativeFITMessage LENGTH = new NativeFITMessage(101, "LENGTH", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "event"),
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "event_type"),
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "start_time"),
@@ -957,7 +957,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage MONITORING_INFO = new GlobalFITMessage(103, "MONITORING_INFO", Arrays.asList(
+    public static NativeFITMessage MONITORING_INFO = new NativeFITMessage(103, "MONITORING_INFO", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT32, "local_timestamp"), // garmin timestamp, but in user timezone
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "activity_type", FieldDefinitionFactory.FIELD.ARRAY), // 6 walking, 1 running, 13 ?
             new FieldDefinitionPrimitive(3, BaseType.UINT16, "steps_to_distance", FieldDefinitionFactory.FIELD.ARRAY, 5000, 0), // same size as activity_type?
@@ -966,23 +966,23 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage DEVICE_STATUS = new GlobalFITMessage(104, "DEVICE_STATUS", Arrays.asList(
+    public static NativeFITMessage DEVICE_STATUS = new NativeFITMessage(104, "DEVICE_STATUS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "battery_voltage", 1000, 0), // V
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "battery_level"), // 0 - 100%
             new FieldDefinitionPrimitive(3, BaseType.SINT8, "temperature"), // °C
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage PAD = new GlobalFITMessage(105, "PAD", Arrays.asList(
+    public static NativeFITMessage PAD = new NativeFITMessage(105, "PAD", Arrays.asList(
             // only used to align other messages to memory boundaries
     ));
 
-    public static GlobalFITMessage SLAVE_DEVICE = new GlobalFITMessage(106, "SLAVE_DEVICE", Arrays.asList(
+    public static NativeFITMessage SLAVE_DEVICE = new NativeFITMessage(106, "SLAVE_DEVICE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "manufacturer"),
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "product")
     ));
 
-    public static GlobalFITMessage CONNECTIVITY = new GlobalFITMessage(127, "CONNECTIVITY", Arrays.asList(
+    public static NativeFITMessage CONNECTIVITY = new NativeFITMessage(127, "CONNECTIVITY", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "bluetooth_enabled"),
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "bluetooth_le_enabled"),
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "ant_enabled"),
@@ -998,7 +998,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(12, BaseType.ENUM, "grouptrack_enabled")
     ));
 
-    public static GlobalFITMessage WEATHER = new GlobalFITMessage(128, "WEATHER", Arrays.asList(
+    public static NativeFITMessage WEATHER = new NativeFITMessage(128, "WEATHER", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "weather_report", FieldDefinitionFactory.FIELD.WEATHER_REPORT),
             new FieldDefinitionPrimitive(1, BaseType.SINT8, "temperature", FieldDefinitionFactory.FIELD.TEMPERATURE),
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "condition", FieldDefinitionFactory.FIELD.WEATHER_CONDITION),
@@ -1020,7 +1020,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage WEATHER_ALERT = new GlobalFITMessage(129, "WEATHER_ALERT", Arrays.asList(
+    public static NativeFITMessage WEATHER_ALERT = new NativeFITMessage(129, "WEATHER_ALERT", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.STRING, "report_id"),
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "issue_time"),
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "expire_time"),
@@ -1029,13 +1029,13 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage CADENCE_ZONE = new GlobalFITMessage(131, "CADENCE_ZONE", Arrays.asList(
+    public static NativeFITMessage CADENCE_ZONE = new NativeFITMessage(131, "CADENCE_ZONE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "high_value"), // rpm
             new FieldDefinitionPrimitive(1, BaseType.STRING, "name"),
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage HR = new GlobalFITMessage(132, "HR", Arrays.asList(
+    public static NativeFITMessage HR = new NativeFITMessage(132, "HR", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "fractional_timestamp", 32768, 0), // s
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "time256", 256, 0), // s
             new FieldDefinitionPrimitive(6, BaseType.UINT8, "filtered_bpm", FieldDefinitionFactory.FIELD.ARRAY), // bpm
@@ -1045,7 +1045,7 @@ public class GlobalFITMessage {
     ));
 
     // https://github.com/GoldenCheetah/GoldenCheetah/blob/71e3928bc614f3209d9977d90cc50b942999b855/src/FileIO/FitRideFile.cpp#L1998
-    public static GlobalFITMessage PHYSIOLOGICAL_METRICS = new GlobalFITMessage(140, "PHYSIOLOGICAL_METRICS", Arrays.asList(
+    public static NativeFITMessage PHYSIOLOGICAL_METRICS = new NativeFITMessage(140, "PHYSIOLOGICAL_METRICS", Arrays.asList(
             new FieldDefinitionPrimitive(4, BaseType.UINT8, "aerobic_effect", 10, 0),
             new FieldDefinitionPrimitive(7, BaseType.SINT32, "met_max", 65536, 0),
             new FieldDefinitionPrimitive(9, BaseType.UINT16, "recovery_time", 1, 0), // minutes
@@ -1055,14 +1055,14 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage EPO_STATUS = new GlobalFITMessage(141, "EPO_STATUS", Arrays.asList(
+    public static NativeFITMessage EPO_STATUS = new NativeFITMessage(141, "EPO_STATUS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "status"),
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "start_time"),
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "end_time"),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage SEGMENT_LAP = new GlobalFITMessage(142, "SEGMENT_LAP", Arrays.asList(
+    public static NativeFITMessage SEGMENT_LAP = new NativeFITMessage(142, "SEGMENT_LAP", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "event"),
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "event_type"),
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "start_time"),
@@ -1160,7 +1160,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage MEMO_GLOB = new GlobalFITMessage(145, "MEMO_GLOB", Arrays.asList(
+    public static NativeFITMessage MEMO_GLOB = new NativeFITMessage(145, "MEMO_GLOB", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.BASE_TYPE_BYTE, "memo", FieldDefinitionFactory.FIELD.ARRAY),
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "mesg_num"),
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "parent_index"),
@@ -1169,7 +1169,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(250, BaseType.UINT32, "part_index")
     ));
 
-    public static GlobalFITMessage SENSOR_SETTINGS = new GlobalFITMessage(147, "SENSOR_SETTINGS", Arrays.asList(
+    public static NativeFITMessage SENSOR_SETTINGS = new NativeFITMessage(147, "SENSOR_SETTINGS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT32Z, "ant_id"),
             new FieldDefinitionPrimitive(2, BaseType.STRING, "name"),
             new FieldDefinitionPrimitive(45, BaseType.ENUM, "use_for_speed"),
@@ -1178,7 +1178,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage SEGMENT_ID = new GlobalFITMessage(148, "SEGMENT_ID", Arrays.asList(
+    public static NativeFITMessage SEGMENT_ID = new NativeFITMessage(148, "SEGMENT_ID", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.STRING, 50, "name"),
             new FieldDefinitionPrimitive(1, BaseType.STRING, 33, "uuid"),
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "sport"),
@@ -1190,7 +1190,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(8, BaseType.ENUM, "selection_type")
     ));
 
-    public static GlobalFITMessage SEGMENT_LEADERBOARD_ENTRY = new GlobalFITMessage(149, "SEGMENT_LEADERBOARD_ENTRY", Arrays.asList(
+    public static NativeFITMessage SEGMENT_LEADERBOARD_ENTRY = new NativeFITMessage(149, "SEGMENT_LEADERBOARD_ENTRY", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.STRING, 100, "name"),
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "type"),
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "group_primary_key"),
@@ -1200,7 +1200,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage SEGMENT_POINT = new GlobalFITMessage(150, "SEGMENT_POINT", Arrays.asList(
+    public static NativeFITMessage SEGMENT_POINT = new NativeFITMessage(150, "SEGMENT_POINT", Arrays.asList(
             new FieldDefinitionPrimitive(1, BaseType.SINT32, "position_lat", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(2, BaseType.SINT32, "position_long", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(3, BaseType.UINT32, "distance", 100, 0), // m
@@ -1210,7 +1210,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage SEGMENT_FILE = new GlobalFITMessage(151, "SEGMENT_FILE", Arrays.asList(
+    public static NativeFITMessage SEGMENT_FILE = new NativeFITMessage(151, "SEGMENT_FILE", Arrays.asList(
             new FieldDefinitionPrimitive(1, BaseType.STRING, "file_uuid"),
             new FieldDefinitionPrimitive(3, BaseType.ENUM, "enabled"),
             new FieldDefinitionPrimitive(4, BaseType.UINT32, "user_profile_primary_key"),
@@ -1222,7 +1222,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage WORKOUT_SESSION = new GlobalFITMessage(158, "WORKOUT_SESSION", Arrays.asList(
+    public static NativeFITMessage WORKOUT_SESSION = new NativeFITMessage(158, "WORKOUT_SESSION", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "sport"),
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "sub_sport"),
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "num_valid_steps"),
@@ -1232,13 +1232,13 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage WATCHFACE_SETTINGS = new GlobalFITMessage(159, "WATCHFACE_SETTINGS", Arrays.asList(
+    public static NativeFITMessage WATCHFACE_SETTINGS = new NativeFITMessage(159, "WATCHFACE_SETTINGS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "mode"), //1=analog
             new FieldDefinitionPrimitive(1, BaseType.BASE_TYPE_BYTE, "layout"),
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage GPS_METADATA = new GlobalFITMessage(160, "GPS_METADATA", Arrays.asList(
+    public static NativeFITMessage GPS_METADATA = new NativeFITMessage(160, "GPS_METADATA", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "timestamp_ms"), // ms
             new FieldDefinitionPrimitive(1, BaseType.SINT32, "position_lat", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(2, BaseType.SINT32, "position_long", FieldDefinitionFactory.FIELD.COORDINATE),
@@ -1250,7 +1250,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage CAMERA_EVENT = new GlobalFITMessage(161, "CAMERA_EVENT", Arrays.asList(
+    public static NativeFITMessage CAMERA_EVENT = new NativeFITMessage(161, "CAMERA_EVENT", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "timestamp_ms"), // ms
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "camera_event_type"),
             new FieldDefinitionPrimitive(2, BaseType.STRING, "camera_file_uuid"),
@@ -1258,7 +1258,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage TIMESTAMP_CORRELATION = new GlobalFITMessage(162, "TIMESTAMP_CORRELATION", Arrays.asList(
+    public static NativeFITMessage TIMESTAMP_CORRELATION = new NativeFITMessage(162, "TIMESTAMP_CORRELATION", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "fractional_timestamp", 32768, 0),
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "system_timestamp"),
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "fractional_system_timestamp", 32768, 0),
@@ -1268,7 +1268,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage GYROSCOPE_DATA = new GlobalFITMessage(164, "GYROSCOPE_DATA", Arrays.asList(
+    public static NativeFITMessage GYROSCOPE_DATA = new NativeFITMessage(164, "GYROSCOPE_DATA", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "timestamp_ms"), // ms
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "sample_time_offset", FieldDefinitionFactory.FIELD.ARRAY), // ms
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "gyro_x", FieldDefinitionFactory.FIELD.ARRAY), // count
@@ -1280,7 +1280,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage ACCELEROMETER_DATA = new GlobalFITMessage(165, "ACCELEROMETER_DATA", Arrays.asList(
+    public static NativeFITMessage ACCELEROMETER_DATA = new NativeFITMessage(165, "ACCELEROMETER_DATA", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "timestamp_ms"), // ms
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "sample_time_offset", FieldDefinitionFactory.FIELD.ARRAY), // ms
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "accel_x", FieldDefinitionFactory.FIELD.ARRAY), // count
@@ -1295,7 +1295,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage THREE_D_SENSOR_CALIBRATION = new GlobalFITMessage(167, "THREE_D_SENSOR_CALIBRATION", Arrays.asList(
+    public static NativeFITMessage THREE_D_SENSOR_CALIBRATION = new NativeFITMessage(167, "THREE_D_SENSOR_CALIBRATION", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "sensor_type"),
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "calibration_factor"),
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "calibration_divisor"),
@@ -1305,13 +1305,13 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage VIDEO_FRAME = new GlobalFITMessage(169, "VIDEO_FRAME", Arrays.asList(
+    public static NativeFITMessage VIDEO_FRAME = new NativeFITMessage(169, "VIDEO_FRAME", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "timestamp_ms"), // ms
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "frame_number"),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage OBDII_DATA = new GlobalFITMessage(174, "OBDII_DATA", Arrays.asList(
+    public static NativeFITMessage OBDII_DATA = new NativeFITMessage(174, "OBDII_DATA", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "timestamp_ms"), // ms
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "time_offset", FieldDefinitionFactory.FIELD.ARRAY), // ms
             new FieldDefinitionPrimitive(2, BaseType.BASE_TYPE_BYTE, "pid"),
@@ -1323,13 +1323,13 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage NMEA_SENTENCE = new GlobalFITMessage(177, "NMEA_SENTENCE", Arrays.asList(
+    public static NativeFITMessage NMEA_SENTENCE = new NativeFITMessage(177, "NMEA_SENTENCE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "timestamp_ms"), // ms
             new FieldDefinitionPrimitive(1, BaseType.STRING, "sentence"),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage AVIATION_ATTITUDE = new GlobalFITMessage(178, "AVIATION_ATTITUDE", Arrays.asList(
+    public static NativeFITMessage AVIATION_ATTITUDE = new NativeFITMessage(178, "AVIATION_ATTITUDE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "timestamp_ms"), // ms
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "system_time", FieldDefinitionFactory.FIELD.ARRAY), // ms
             new FieldDefinitionPrimitive(2, BaseType.SINT16, "pitch", FieldDefinitionFactory.FIELD.ARRAY),
@@ -1344,25 +1344,25 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage VIDEO = new GlobalFITMessage(184, "VIDEO", Arrays.asList(
+    public static NativeFITMessage VIDEO = new NativeFITMessage(184, "VIDEO", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.STRING, "url"),
             new FieldDefinitionPrimitive(1, BaseType.STRING, "hosting_provider"),
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "duration")
     ));
 
-    public static GlobalFITMessage VIDEO_TITLE = new GlobalFITMessage(185, "VIDEO_TITLE", Arrays.asList(
+    public static NativeFITMessage VIDEO_TITLE = new NativeFITMessage(185, "VIDEO_TITLE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "message_count"),
             new FieldDefinitionPrimitive(1, BaseType.STRING, "text"),
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage VIDEO_DESCRIPTION = new GlobalFITMessage(186, "VIDEO_DESCRIPTION", Arrays.asList(
+    public static NativeFITMessage VIDEO_DESCRIPTION = new NativeFITMessage(186, "VIDEO_DESCRIPTION", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "message_count"),
             new FieldDefinitionPrimitive(1, BaseType.STRING, "text"),
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage VIDEO_CLIP = new GlobalFITMessage(187, "VIDEO_CLIP", Arrays.asList(
+    public static NativeFITMessage VIDEO_CLIP = new NativeFITMessage(187, "VIDEO_CLIP", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "clip_number"),
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "start_timestamp"),
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "start_timestamp_ms"),
@@ -1372,19 +1372,19 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(7, BaseType.UINT32, "clip_end") // ms
     ));
 
-    public static GlobalFITMessage OHR_SETTINGS = new GlobalFITMessage(188, "OHR_SETTINGS", Arrays.asList(
+    public static NativeFITMessage OHR_SETTINGS = new NativeFITMessage(188, "OHR_SETTINGS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "enabled"),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage EXD_SCREEN_CONFIGURATION = new GlobalFITMessage(200, "EXD_SCREEN_CONFIGURATION", Arrays.asList(
+    public static NativeFITMessage EXD_SCREEN_CONFIGURATION = new NativeFITMessage(200, "EXD_SCREEN_CONFIGURATION", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "screen_index"),
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "field_count"),
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "layout"),
             new FieldDefinitionPrimitive(3, BaseType.ENUM, "screen_enabled", FieldDefinitionFactory.FIELD.BOOLEAN)
     ));
 
-    public static GlobalFITMessage EXD_DATA_FIELD_CONFIGURATION = new GlobalFITMessage(201, "EXD_DATA_FIELD_CONFIGURATION", Arrays.asList(
+    public static NativeFITMessage EXD_DATA_FIELD_CONFIGURATION = new NativeFITMessage(201, "EXD_DATA_FIELD_CONFIGURATION", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "screen_index"),
             new FieldDefinitionPrimitive(1, BaseType.BASE_TYPE_BYTE, "concept_field"),
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "field_id"),
@@ -1393,7 +1393,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(5, BaseType.STRING, 32, "title")
     ));
 
-    public static GlobalFITMessage EXD_DATA_CONCEPT_CONFIGURATION = new GlobalFITMessage(202, "EXD_DATA_CONCEPT_CONFIGURATION", Arrays.asList(
+    public static NativeFITMessage EXD_DATA_CONCEPT_CONFIGURATION = new NativeFITMessage(202, "EXD_DATA_CONCEPT_CONFIGURATION", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "screen_index"),
             new FieldDefinitionPrimitive(1, BaseType.BASE_TYPE_BYTE, "concept_field"),
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "field_id"),
@@ -1407,7 +1407,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(11, BaseType.ENUM, "is_signed", FieldDefinitionFactory.FIELD.BOOLEAN)
     ));
 
-    public static GlobalFITMessage FIELD_DESCRIPTION = new GlobalFITMessage(206, "FIELD_DESCRIPTION", Arrays.asList(
+    public static NativeFITMessage FIELD_DESCRIPTION = new NativeFITMessage(206, "FIELD_DESCRIPTION", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "developer_data_index"),
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "field_definition_number"),
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "fit_base_type_id"),
@@ -1424,7 +1424,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(15, BaseType.UINT8, "native_field_num")
     ));
 
-    public static GlobalFITMessage DEVELOPER_DATA = new GlobalFITMessage(207, "DEVELOPER_DATA", Arrays.asList(
+    public static NativeFITMessage DEVELOPER_DATA = new NativeFITMessage(207, "DEVELOPER_DATA", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.BASE_TYPE_BYTE, 16, "developer_id", FieldDefinitionFactory.FIELD.ARRAY, 1, 0),
             new FieldDefinitionPrimitive(1, BaseType.BASE_TYPE_BYTE, 16, "application_id", FieldDefinitionFactory.FIELD.ARRAY, 1, 0),
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "manufacturer_id"),
@@ -1432,7 +1432,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(4, BaseType.UINT32, "application_version")
     ));
 
-    public static GlobalFITMessage MAGNETOMETER_DATA = new GlobalFITMessage(208, "MAGNETOMETER_DATA", Arrays.asList(
+    public static NativeFITMessage MAGNETOMETER_DATA = new NativeFITMessage(208, "MAGNETOMETER_DATA", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "timestamp_ms"), // ms
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "sample_time_offset", FieldDefinitionFactory.FIELD.ARRAY),
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "mag_x", FieldDefinitionFactory.FIELD.ARRAY),
@@ -1444,14 +1444,14 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage BAROMETER_DATA = new GlobalFITMessage(209, "BAROMETER_DATA", Arrays.asList(
+    public static NativeFITMessage BAROMETER_DATA = new NativeFITMessage(209, "BAROMETER_DATA", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "timestamp_ms"), // ms
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "sample_time_offset", FieldDefinitionFactory.FIELD.ARRAY), // ms
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "baro_pres", FieldDefinitionFactory.FIELD.ARRAY), // Pa
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage ONE_D_SENSOR_CALIBRATION = new GlobalFITMessage(210, "ONE_D_SENSOR_CALIBRATION", Arrays.asList(
+    public static NativeFITMessage ONE_D_SENSOR_CALIBRATION = new NativeFITMessage(210, "ONE_D_SENSOR_CALIBRATION", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "sensor_type"),
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "calibration_factor"),
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "calibration_divisor"),
@@ -1460,13 +1460,13 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage MONITORING_HR_DATA = new GlobalFITMessage(211, "MONITORING_HR_DATA", Arrays.asList(
+    public static NativeFITMessage MONITORING_HR_DATA = new NativeFITMessage(211, "MONITORING_HR_DATA", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "resting_heart_rate"),
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "current_day_resting_heart_rate"),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage TIME_IN_ZONE = new GlobalFITMessage(216, "TIME_IN_ZONE", Arrays.asList(
+    public static NativeFITMessage TIME_IN_ZONE = new NativeFITMessage(216, "TIME_IN_ZONE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "reference_message"),
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "reference_index"),
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "time_in_zone", FieldDefinitionFactory.FIELD.HR_TIME_IN_ZONE), // seconds
@@ -1486,7 +1486,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage ALARM_SETTINGS = new GlobalFITMessage(222, "ALARM_SETTINGS", Arrays.asList(
+    public static NativeFITMessage ALARM_SETTINGS = new NativeFITMessage(222, "ALARM_SETTINGS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "time", FieldDefinitionFactory.FIELD.ALARM),
             new FieldDefinitionPrimitive(1, BaseType.UINT32Z, "repeat"), // 31 weekday 96 weekend 126 all except mon 127 daily 128 once
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "enabled"), // 0/1
@@ -1498,7 +1498,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage SET = new GlobalFITMessage(225, "SET", Arrays.asList(
+    public static NativeFITMessage SET = new NativeFITMessage(225, "SET", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT32, "duration", 1000, 0), // seconds
             new FieldDefinitionPrimitive(3, BaseType.UINT16, "repetitions"),
             new FieldDefinitionPrimitive(4, BaseType.UINT16, "weight", 16, 0), // kg
@@ -1511,7 +1511,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(11, BaseType.UINT16, "wkt_step_index"),
             new FieldDefinitionPrimitive(254, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
-    public static GlobalFITMessage DIVE_SETTINGS = new GlobalFITMessage(258, "DIVE_SETTINGS", Arrays.asList(
+    public static NativeFITMessage DIVE_SETTINGS = new NativeFITMessage(258, "DIVE_SETTINGS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.STRING, "name"),
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "model"),
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "gf_low"), // %
@@ -1548,20 +1548,20 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP),
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
-    public static GlobalFITMessage DIVE_GAS = new GlobalFITMessage(259, "DIVE_GAS", Arrays.asList(
+    public static NativeFITMessage DIVE_GAS = new NativeFITMessage(259, "DIVE_GAS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "helium_content"),
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "oxygen_content"),
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "status"),
             new FieldDefinitionPrimitive(3, BaseType.ENUM, "mode"),
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
-    public static GlobalFITMessage STRESS_LEVEL = new GlobalFITMessage(227, "STRESS_LEVEL", Arrays.asList(
+    public static NativeFITMessage STRESS_LEVEL = new NativeFITMessage(227, "STRESS_LEVEL", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.SINT16, "stress_level_value"),
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "stress_level_time", FieldDefinitionFactory.FIELD.TIMESTAMP),
             new FieldDefinitionPrimitive(3, BaseType.SINT8, "body_energy")
     ));
 
-    public static GlobalFITMessage DIVE_ALARM = new GlobalFITMessage(262, "DIVE_ALARM", Arrays.asList(
+    public static NativeFITMessage DIVE_ALARM = new NativeFITMessage(262, "DIVE_ALARM", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT32, "depth", 1000, 0), // m
             new FieldDefinitionPrimitive(1, BaseType.SINT32, "time"), // s
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "enabled", FieldDefinitionFactory.FIELD.BOOLEAN),
@@ -1577,21 +1577,21 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage EXERCISE_TITLE = new GlobalFITMessage(264, "EXERCISE_TITLE", Arrays.asList(
+    public static NativeFITMessage EXERCISE_TITLE = new NativeFITMessage(264, "EXERCISE_TITLE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "exercise_category"),
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "exercise_name"),
             new FieldDefinitionPrimitive(2, BaseType.STRING, "wkt_step_name"),
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage SPO2 = new GlobalFITMessage(269, "SPO2", Arrays.asList(
+    public static NativeFITMessage SPO2 = new NativeFITMessage(269, "SPO2", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "reading_spo2"),
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "reading_confidence"),
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "mode"), // 1 manual 3 periodic
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage SLEEP_DATA_INFO = new GlobalFITMessage(273, "SLEEP_DATA_INFO", Arrays.asList(
+    public static NativeFITMessage SLEEP_DATA_INFO = new NativeFITMessage(273, "SLEEP_DATA_INFO", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "unk0"), // 2
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "sample_length"), // 60, sample time?
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "local_timestamp"), // garmin timestamp, but in user timezone
@@ -1600,16 +1600,16 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage SLEEP_DATA_RAW = new GlobalFITMessage(274, "SLEEP_DATA_RAW", Arrays.asList(
+    public static NativeFITMessage SLEEP_DATA_RAW = new NativeFITMessage(274, "SLEEP_DATA_RAW", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.BASE_TYPE_BYTE, "bytes") // arr of 20 bytes per sample
     ));
 
-    public static GlobalFITMessage SLEEP_STAGE = new GlobalFITMessage(275, "SLEEP_STAGE", Arrays.asList(
+    public static NativeFITMessage SLEEP_STAGE = new NativeFITMessage(275, "SLEEP_STAGE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "sleep_stage", FieldDefinitionFactory.FIELD.SLEEP_STAGE),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage MAX_MET_DATA = new GlobalFITMessage(229, "MAX_MET_DATA", Arrays.asList(
+    public static NativeFITMessage MAX_MET_DATA = new NativeFITMessage(229, "MAX_MET_DATA", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT32, "update_time", FieldDefinitionFactory.FIELD.TIMESTAMP),
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "vo2_max", 10, 0),
             new FieldDefinitionPrimitive(5, BaseType.ENUM, "sport"),
@@ -1620,7 +1620,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(13, BaseType.ENUM, "speed_source")
     ));
 
-    public static GlobalFITMessage DIVE_SUMMARY = new GlobalFITMessage(268, "DIVE_SUMMARY", Arrays.asList(
+    public static NativeFITMessage DIVE_SUMMARY = new NativeFITMessage(268, "DIVE_SUMMARY", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "reference_mesg"),
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "reference_index"),
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "avg_depth", 1000, 0), // m
@@ -1647,7 +1647,7 @@ public class GlobalFITMessage {
 
     ));
 
-    public static GlobalFITMessage JUMP = new GlobalFITMessage(285, "JUMP", Arrays.asList(
+    public static NativeFITMessage JUMP = new NativeFITMessage(285, "JUMP", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.FLOAT32, "distance"), // m
             new FieldDefinitionPrimitive(1, BaseType.FLOAT32, "heigh"), // m
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "rotations"),
@@ -1660,7 +1660,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage AAD_ACCEL_FEATURES = new GlobalFITMessage(289, "AAD_ACCEL_FEATURES", Arrays.asList(
+    public static NativeFITMessage AAD_ACCEL_FEATURES = new NativeFITMessage(289, "AAD_ACCEL_FEATURES", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "time"), // s
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "energy_total"),
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "zero_cross_cnt"),
@@ -1669,18 +1669,18 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage BEAT_INTERVALS = new GlobalFITMessage(290, "BEAT_INTERVALS", Arrays.asList(
+    public static NativeFITMessage BEAT_INTERVALS = new NativeFITMessage(290, "BEAT_INTERVALS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "timestamp_ms"), // ms
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "time", FieldDefinitionFactory.FIELD.ARRAY), // ms
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage RESPIRATION_RATE = new GlobalFITMessage(297, "RESPIRATION_RATE", Arrays.asList(
+    public static NativeFITMessage RESPIRATION_RATE = new NativeFITMessage(297, "RESPIRATION_RATE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.SINT16, "respiration_rate", 100, 0), // breaths / min
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage HSA_ACCELEROMETER_DATA = new GlobalFITMessage(302, "HSA_ACCELEROMETER_DATA", Arrays.asList(
+    public static NativeFITMessage HSA_ACCELEROMETER_DATA = new NativeFITMessage(302, "HSA_ACCELEROMETER_DATA", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "timestamp_ms"), // ms
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "sampling_interval"),
             new FieldDefinitionPrimitive(2, BaseType.SINT16, "accel_x", FieldDefinitionFactory.FIELD.ARRAY),
@@ -1690,39 +1690,39 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage HSA_STEP_DATA = new GlobalFITMessage(304, "HSA_STEP_DATA", Arrays.asList(
+    public static NativeFITMessage HSA_STEP_DATA = new NativeFITMessage(304, "HSA_STEP_DATA", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "processing_interval"), // seconds
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "steps", FieldDefinitionFactory.FIELD.ARRAY),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage HSA_SPO2_DATA = new GlobalFITMessage(305, "HSA_SPO2_DATA", Arrays.asList(
+    public static NativeFITMessage HSA_SPO2_DATA = new NativeFITMessage(305, "HSA_SPO2_DATA", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "processing_interval"), // seconds
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "reading_spo2", FieldDefinitionFactory.FIELD.ARRAY), // %
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "confidence", FieldDefinitionFactory.FIELD.ARRAY),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage HSA_STRESS_DATA = new GlobalFITMessage(306, "HSA_STRESS_DATA", Arrays.asList(
+    public static NativeFITMessage HSA_STRESS_DATA = new NativeFITMessage(306, "HSA_STRESS_DATA", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "processing_interval"), // seconds
             new FieldDefinitionPrimitive(1, BaseType.SINT8, "stress_level", FieldDefinitionFactory.FIELD.ARRAY),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage HSA_RESPIRATION_DATA = new GlobalFITMessage(307, "HSA_RESPIRATION_DATA", Arrays.asList(
+    public static NativeFITMessage HSA_RESPIRATION_DATA = new NativeFITMessage(307, "HSA_RESPIRATION_DATA", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "processing_interval"), // seconds
             new FieldDefinitionPrimitive(1, BaseType.SINT16, "respiration_rate", FieldDefinitionFactory.FIELD.ARRAY, 100, 0), // breath / minute
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage HSA_HEART_RATE_DATA = new GlobalFITMessage(308, "HSA_HEART_RATE_DATA", Arrays.asList(
+    public static NativeFITMessage HSA_HEART_RATE_DATA = new NativeFITMessage(308, "HSA_HEART_RATE_DATA", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "processing_interval"), // seconds
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "status"),
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "heart_rate", FieldDefinitionFactory.FIELD.ARRAY),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage SPLIT = new GlobalFITMessage(312, "SPLIT", Arrays.asList(
+    public static NativeFITMessage SPLIT = new NativeFITMessage(312, "SPLIT", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "split_type"),
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "total_elapsed_time", 1000, 0), // seconds
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "total_timer_time", 1000, 0), // seconds
@@ -1744,7 +1744,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage SPLIT_SUMMARY = new GlobalFITMessage(313, "SPLIT_SUMMARY", Arrays.asList(
+    public static NativeFITMessage SPLIT_SUMMARY = new NativeFITMessage(313, "SPLIT_SUMMARY", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "split_type"),
             new FieldDefinitionPrimitive(3, BaseType.UINT16, "num_splits"),
             new FieldDefinitionPrimitive(4, BaseType.UINT32, "total_timer_time", 1000, 0), // s
@@ -1762,7 +1762,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage HSA_BODY_BATTERY_DATA = new GlobalFITMessage(314, "HSA_BODY_BATTERY_DATA", Arrays.asList(
+    public static NativeFITMessage HSA_BODY_BATTERY_DATA = new NativeFITMessage(314, "HSA_BODY_BATTERY_DATA", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "processing_interval"), // seconds
             new FieldDefinitionPrimitive(1, BaseType.SINT8, "level", FieldDefinitionFactory.FIELD.ARRAY), // %
             new FieldDefinitionPrimitive(2, BaseType.SINT16, "charged", FieldDefinitionFactory.FIELD.ARRAY),
@@ -1770,12 +1770,12 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage HSA_EVENT = new GlobalFITMessage(315, "HSA_EVENT", Arrays.asList(
+    public static NativeFITMessage HSA_EVENT = new NativeFITMessage(315, "HSA_EVENT", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "event_id"),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage CLIMB_PRO = new GlobalFITMessage(317, "CLIMB_PRO", Arrays.asList(
+    public static NativeFITMessage CLIMB_PRO = new NativeFITMessage(317, "CLIMB_PRO", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.SINT32, "position_lat", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(1, BaseType.SINT32, "position_long", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "climb_pro_event"),
@@ -1785,13 +1785,13 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage TANK_UPDATE = new GlobalFITMessage(319, "TANK_UPDATE", Arrays.asList(
+    public static NativeFITMessage TANK_UPDATE = new NativeFITMessage(319, "TANK_UPDATE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT32Z, "sensor"),
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "pressure", 100, 0), // bar
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage TANK_SUMMARY = new GlobalFITMessage(323, "TANK_SUMMARY", Arrays.asList(
+    public static NativeFITMessage TANK_SUMMARY = new NativeFITMessage(323, "TANK_SUMMARY", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT32Z, "sensor"),
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "start_pressure", 100, 0), // bar
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "end_pressure", 100, 0), // bar
@@ -1799,13 +1799,13 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage GPS_EVENT = new GlobalFITMessage(326, "GPS_EVENT", Arrays.asList(
+    public static NativeFITMessage GPS_EVENT = new NativeFITMessage(326, "GPS_EVENT", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT32, "event_type"),
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "data"),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage ECG_SUMMARY = new GlobalFITMessage(336, "ECG_SUMMARY", Arrays.asList(
+    public static NativeFITMessage ECG_SUMMARY = new NativeFITMessage(336, "ECG_SUMMARY", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "unknown_0"), // 10103
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "unknown_1"), // 3
             new FieldDefinitionPrimitive(2, BaseType.FLOAT32, "unknown_2"), // 512
@@ -1819,15 +1819,15 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(12, BaseType.UINT8, "unknown_12") // 39
     ));
 
-    public static GlobalFITMessage ECG_RAW_SAMPLE = new GlobalFITMessage(337, "ECG_RAW_SAMPLE", Arrays.asList(
+    public static NativeFITMessage ECG_RAW_SAMPLE = new NativeFITMessage(337, "ECG_RAW_SAMPLE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.FLOAT32, "value")
     ));
 
-    public static GlobalFITMessage ECG_SMOOTH_SAMPLE = new GlobalFITMessage(338, "ECG_SMOOTH_SAMPLE", Arrays.asList(
+    public static NativeFITMessage ECG_SMOOTH_SAMPLE = new NativeFITMessage(338, "ECG_SMOOTH_SAMPLE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.FLOAT32, "value")
     ));
 
-    public static GlobalFITMessage SLEEP_STATS = new GlobalFITMessage(346, "SLEEP_STATS", Arrays.asList(
+    public static NativeFITMessage SLEEP_STATS = new NativeFITMessage(346, "SLEEP_STATS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "combined_awake_score"),
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "awake_time_score"),
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "awakenings_count_score"),
@@ -1848,7 +1848,7 @@ public class GlobalFITMessage {
     ));
 
     // Source: #5709
-    public static GlobalFITMessage FUNCTIONAL_METRICS = new GlobalFITMessage(356, "FUNCTIONAL_METRICS", Arrays.asList(
+    public static NativeFITMessage FUNCTIONAL_METRICS = new NativeFITMessage(356, "FUNCTIONAL_METRICS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "unknown_0"),
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "unknown_2"),
             new FieldDefinitionPrimitive(3, BaseType.UINT32, "unknown_3"),
@@ -1865,7 +1865,7 @@ public class GlobalFITMessage {
     ));
 
     // Source: #5710
-    public static GlobalFITMessage TRAINING_READINESS = new GlobalFITMessage(369, "TRAINING_READINESS", Arrays.asList(
+    public static NativeFITMessage TRAINING_READINESS = new NativeFITMessage(369, "TRAINING_READINESS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "training_readiness"),
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "level"), // 4 high, 5 prime
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "unknown_2"),
@@ -1898,7 +1898,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage HRV_SUMMARY = new GlobalFITMessage(370, "HRV_SUMMARY", Arrays.asList(
+    public static NativeFITMessage HRV_SUMMARY = new NativeFITMessage(370, "HRV_SUMMARY", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "weekly_average", 128, 0), // milliseconds, scaled by 128
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "last_night_average", 128, 0), // milliseconds, scaled by 128
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "last_night_5_min_high", 128, 0), // milliseconds, scaled by 128
@@ -1909,12 +1909,12 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage HRV_VALUE = new GlobalFITMessage(371, "HRV_VALUE", Arrays.asList(
+    public static NativeFITMessage HRV_VALUE = new NativeFITMessage(371, "HRV_VALUE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "value", 128, 0), // milliseconds, scaled by 128
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage RAW_BBI = new GlobalFITMessage(372, "RAW_BBI", Arrays.asList(
+    public static NativeFITMessage RAW_BBI = new NativeFITMessage(372, "RAW_BBI", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "timestamp_ms"), // ms
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "data", FieldDefinitionFactory.FIELD.ARRAY),
             new FieldDefinitionPrimitive(2, BaseType.UINT16, "time", FieldDefinitionFactory.FIELD.ARRAY), // ms
@@ -1923,7 +1923,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage DEVICE_AUX_BATTERY_INFO = new GlobalFITMessage(375, "DEVICE_AUX_BATTERY_INFO", Arrays.asList(
+    public static NativeFITMessage DEVICE_AUX_BATTERY_INFO = new NativeFITMessage(375, "DEVICE_AUX_BATTERY_INFO", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "device_index"),
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "battery_voltage", 256, 0), // V
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "battery_status"),
@@ -1931,7 +1931,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage HSA_GYROSCOPE_DATA = new GlobalFITMessage(376, "HSA_GYROSCOPE_DATA", Arrays.asList(
+    public static NativeFITMessage HSA_GYROSCOPE_DATA = new NativeFITMessage(376, "HSA_GYROSCOPE_DATA", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "timestamp_ms"), // ms
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "sampling_interval"),
             new FieldDefinitionPrimitive(2, BaseType.SINT16, "gyro_x", FieldDefinitionFactory.FIELD.ARRAY),
@@ -1941,30 +1941,30 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage SKIN_TEMP_RAW = new GlobalFITMessage(397, "SKIN_TEMP_RAW", Arrays.asList(
+    public static NativeFITMessage SKIN_TEMP_RAW = new NativeFITMessage(397, "SKIN_TEMP_RAW", Arrays.asList(
             new FieldDefinitionPrimitive(1, BaseType.FLOAT32, "deviation"),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage TRAINING_LOAD = new GlobalFITMessage(378, "TRAINING_LOAD", Arrays.asList(
+    public static NativeFITMessage TRAINING_LOAD = new NativeFITMessage(378, "TRAINING_LOAD", Arrays.asList(
             new FieldDefinitionPrimitive(3, BaseType.UINT16, "training_load_acute"),
             new FieldDefinitionPrimitive(4, BaseType.UINT16, "training_load_chronic"),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage SLEEP_SCHEDULE = new GlobalFITMessage(379, "SLEEP_SCHEDULE", Arrays.asList(
+    public static NativeFITMessage SLEEP_SCHEDULE = new NativeFITMessage(379, "SLEEP_SCHEDULE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT32, "bed_time"),
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "wake_time"),
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage SLEEP_RESTLESS_MOMENTS = new GlobalFITMessage(382, "SLEEP_RESTLESS_MOMENTS", Arrays.asList(
+    public static NativeFITMessage SLEEP_RESTLESS_MOMENTS = new NativeFITMessage(382, "SLEEP_RESTLESS_MOMENTS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT32, "unknown_0"),
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "restless_moments_count"),
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "unknown_2", FieldDefinitionFactory.FIELD.ARRAY)
     ));
 
-    public static GlobalFITMessage CHRONO_SHOT_SESSION = new GlobalFITMessage(387, "CHRONO_SHOT_SESSION", Arrays.asList(
+    public static NativeFITMessage CHRONO_SHOT_SESSION = new NativeFITMessage(387, "CHRONO_SHOT_SESSION", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT32, "min_speed", 1000, 0), // m/s
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "max_speed", 1000, 0), // m/s
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "avg_speed", 1000, 0), // m/s
@@ -1975,19 +1975,19 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage CHRONO_SHOT_DATA = new GlobalFITMessage(388, "CHRONO_SHOT_DATA", Arrays.asList(
+    public static NativeFITMessage CHRONO_SHOT_DATA = new NativeFITMessage(388, "CHRONO_SHOT_DATA", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT32, "shot_speed", 1000, 0), // m/s
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "shot_num"),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage HSA_CONFIGURATION_DATA = new GlobalFITMessage(389, "HSA_CONFIGURATION_DATA", Arrays.asList(
+    public static NativeFITMessage HSA_CONFIGURATION_DATA = new NativeFITMessage(389, "HSA_CONFIGURATION_DATA", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.BASE_TYPE_BYTE, "data", FieldDefinitionFactory.FIELD.ARRAY),
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "data_size"),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage DIVE_APNEA_ALARM = new GlobalFITMessage(393, "DIVE_APNEA_ALARM", Arrays.asList(
+    public static NativeFITMessage DIVE_APNEA_ALARM = new NativeFITMessage(393, "DIVE_APNEA_ALARM", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT32, "depth", 1000, 0), // m
             new FieldDefinitionPrimitive(1, BaseType.SINT32, "time"), // s
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "enabled", FieldDefinitionFactory.FIELD.BOOLEAN),
@@ -2003,14 +2003,14 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
-    public static GlobalFITMessage CPE_STATUS = new GlobalFITMessage(394, "CPE_STATUS", Arrays.asList(
+    public static NativeFITMessage CPE_STATUS = new NativeFITMessage(394, "CPE_STATUS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "status"),
             new FieldDefinitionPrimitive(1, BaseType.UINT32, "start_time"),
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "end_time"),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage SKIN_TEMP_OVERNIGHT = new GlobalFITMessage(398, "SKIN_TEMP_OVERNIGHT", Arrays.asList(
+    public static NativeFITMessage SKIN_TEMP_OVERNIGHT = new NativeFITMessage(398, "SKIN_TEMP_OVERNIGHT", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT32, "local_timestamp"), // garmin timestamp, but in user timezone
             new FieldDefinitionPrimitive(1, BaseType.FLOAT32, "average_deviation"),
             new FieldDefinitionPrimitive(2, BaseType.FLOAT32, "average_7_day_deviation"),
@@ -2020,7 +2020,7 @@ public class GlobalFITMessage {
     ));
 
     // Source: matrix
-    public static GlobalFITMessage HILL_SCORE = new GlobalFITMessage(402, "HILL_SCORE", Arrays.asList(
+    public static NativeFITMessage HILL_SCORE = new NativeFITMessage(402, "HILL_SCORE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "hill_score"),
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "hill_strength"),
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "hill_endurance"),
@@ -2031,7 +2031,7 @@ public class GlobalFITMessage {
     ));
 
     // Source: #5708
-    public static GlobalFITMessage ENDURANCE_SCORE = new GlobalFITMessage(403, "ENDURANCE_SCORE", Arrays.asList(
+    public static NativeFITMessage ENDURANCE_SCORE = new NativeFITMessage(403, "ENDURANCE_SCORE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "endurance_score"),
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "level"), // 6 superior 7 elite
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "unknown_2"),
@@ -2047,13 +2047,13 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage HSA_WRIST_TEMPERATURE_DATA = new GlobalFITMessage(409, "HSA_WRIST_TEMPERATURE_DATA", Arrays.asList(
+    public static NativeFITMessage HSA_WRIST_TEMPERATURE_DATA = new NativeFITMessage(409, "HSA_WRIST_TEMPERATURE_DATA", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "processing_interval"), // s
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "value", FieldDefinitionFactory.FIELD.ARRAY, 1000, 0), // °C
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static GlobalFITMessage NAP = new GlobalFITMessage(412, "NAP", Arrays.asList(
+    public static NativeFITMessage NAP = new NativeFITMessage(412, "NAP", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT32, "start_timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP),
             new FieldDefinitionPrimitive(1, BaseType.SINT16, "unknown_1"), // 0
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "end_timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP),
@@ -2064,7 +2064,7 @@ public class GlobalFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static Map<Integer, GlobalFITMessage> KNOWN_MESSAGES = new HashMap<>() {{
+    public static Map<Integer, NativeFITMessage> KNOWN_MESSAGES = new HashMap<>() {{
         put(0, FILE_ID);
         put(1, CAPABILITIES);
         put(2, DEVICE_SETTINGS);
@@ -2218,19 +2218,19 @@ public class GlobalFITMessage {
 
     private final List<FieldDefinitionPrimitive> fieldDefinitionPrimitives;
 
-    GlobalFITMessage(int number, String name, List<FieldDefinitionPrimitive> fieldDefinitionPrimitives) {
+    NativeFITMessage(int number, String name, List<FieldDefinitionPrimitive> fieldDefinitionPrimitives) {
         this.number = number;
         this.name = name;
         this.fieldDefinitionPrimitives = fieldDefinitionPrimitives;
     }
 
-    public static GlobalFITMessage fromNumber(final int number) {
-        final GlobalFITMessage found = KNOWN_MESSAGES.get(number);
+    public static NativeFITMessage fromNumber(final int number) {
+        final NativeFITMessage found = KNOWN_MESSAGES.get(number);
         if (found != null) {
             return found;
         }
 
-        return new GlobalFITMessage(number, "UNK_" + FitDebug.mesgNumLookup(number), null);
+        return new NativeFITMessage(number, "UNK_" + FitDebug.mesgNumLookup(number), null);
     }
 
     public String name() {
@@ -2293,7 +2293,7 @@ public class GlobalFITMessage {
     public FieldDefinition getFieldDefinition(int id, int size) {
         if (null == fieldDefinitionPrimitives)
             return null;
-        for (GlobalFITMessage.FieldDefinitionPrimitive fieldDefinitionPrimitive :
+        for (NativeFITMessage.FieldDefinitionPrimitive fieldDefinitionPrimitive :
                 fieldDefinitionPrimitives) {
             if (fieldDefinitionPrimitive.number == id) {
                 return FieldDefinitionFactory.create(
@@ -2314,7 +2314,7 @@ public class GlobalFITMessage {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
 
-        GlobalFITMessage that = (GlobalFITMessage) o;
+        NativeFITMessage that = (NativeFITMessage) o;
         return number == that.number && Objects.equals(name, that.name) && Objects.equals(fieldDefinitionPrimitives, that.fieldDefinitionPrimitives);
     }
 

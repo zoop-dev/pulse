@@ -33,9 +33,9 @@ public class FitTimestampCorrelation extends RecordData {
     public FitTimestampCorrelation(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 162) {
-            throw new IllegalArgumentException("FitTimestampCorrelation expects global messages of " + 162 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 162) {
+            throw new IllegalArgumentException("FitTimestampCorrelation expects native messages of " + 162 + ", got " + nativeNumber);
         }
     }
 

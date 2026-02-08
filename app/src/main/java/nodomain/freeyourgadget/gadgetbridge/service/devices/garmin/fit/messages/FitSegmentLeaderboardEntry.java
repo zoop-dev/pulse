@@ -33,9 +33,9 @@ public class FitSegmentLeaderboardEntry extends RecordData {
     public FitSegmentLeaderboardEntry(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 149) {
-            throw new IllegalArgumentException("FitSegmentLeaderboardEntry expects global messages of " + 149 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 149) {
+            throw new IllegalArgumentException("FitSegmentLeaderboardEntry expects native messages of " + 149 + ", got " + nativeNumber);
         }
     }
 

@@ -33,9 +33,9 @@ public class FitStressLevel extends RecordData {
     public FitStressLevel(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 227) {
-            throw new IllegalArgumentException("FitStressLevel expects global messages of " + 227 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 227) {
+            throw new IllegalArgumentException("FitStressLevel expects native messages of " + 227 + ", got " + nativeNumber);
         }
     }
 

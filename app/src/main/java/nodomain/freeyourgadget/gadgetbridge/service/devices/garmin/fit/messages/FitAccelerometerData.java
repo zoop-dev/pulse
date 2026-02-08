@@ -33,9 +33,9 @@ public class FitAccelerometerData extends RecordData {
     public FitAccelerometerData(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 165) {
-            throw new IllegalArgumentException("FitAccelerometerData expects global messages of " + 165 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 165) {
+            throw new IllegalArgumentException("FitAccelerometerData expects native messages of " + 165 + ", got " + nativeNumber);
         }
     }
 

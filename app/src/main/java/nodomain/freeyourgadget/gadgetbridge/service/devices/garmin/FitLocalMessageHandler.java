@@ -9,7 +9,7 @@ import java.util.List;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminCapability;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitLocalMessageBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.GlobalFITMessage;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.NativeFITMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.FitDataMessage;
@@ -64,7 +64,7 @@ public class FitLocalMessageHandler implements MessageHandler{
     }
 
     private List<GBDeviceEvent> processRecordData(RecordData d) {
-        if (d.getRecordDefinition().getGlobalFITMessage() == GlobalFITMessage.CAPABILITIES) {
+        if (d.getRecordDefinition().getNativeFITMessage() == NativeFITMessage.CAPABILITIES) {
             //TODO: we are not sure this is correct!
             return GarminCapability.getGBDeviceEvent(
                     GarminCapability.setFromLong((Long) d.getFieldByName("connectivity_supported"))

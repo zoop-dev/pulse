@@ -33,9 +33,9 @@ public class FitHsaStressData extends RecordData {
     public FitHsaStressData(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 306) {
-            throw new IllegalArgumentException("FitHsaStressData expects global messages of " + 306 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 306) {
+            throw new IllegalArgumentException("FitHsaStressData expects native messages of " + 306 + ", got " + nativeNumber);
         }
     }
 

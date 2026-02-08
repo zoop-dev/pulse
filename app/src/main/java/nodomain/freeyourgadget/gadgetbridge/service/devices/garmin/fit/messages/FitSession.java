@@ -39,9 +39,9 @@ public class FitSession extends RecordData {
     public FitSession(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 18) {
-            throw new IllegalArgumentException("FitSession expects global messages of " + 18 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 18) {
+            throw new IllegalArgumentException("FitSession expects native messages of " + 18 + ", got " + nativeNumber);
         }
     }
 

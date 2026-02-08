@@ -33,9 +33,9 @@ public class FitOhrSettings extends RecordData {
     public FitOhrSettings(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 188) {
-            throw new IllegalArgumentException("FitOhrSettings expects global messages of " + 188 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 188) {
+            throw new IllegalArgumentException("FitOhrSettings expects native messages of " + 188 + ", got " + nativeNumber);
         }
     }
 

@@ -33,9 +33,9 @@ public class FitBarometerData extends RecordData {
     public FitBarometerData(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 209) {
-            throw new IllegalArgumentException("FitBarometerData expects global messages of " + 209 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 209) {
+            throw new IllegalArgumentException("FitBarometerData expects native messages of " + 209 + ", got " + nativeNumber);
         }
     }
 

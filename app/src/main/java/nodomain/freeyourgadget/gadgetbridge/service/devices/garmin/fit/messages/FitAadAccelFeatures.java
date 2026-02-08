@@ -33,9 +33,9 @@ public class FitAadAccelFeatures extends RecordData {
     public FitAadAccelFeatures(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 289) {
-            throw new IllegalArgumentException("FitAadAccelFeatures expects global messages of " + 289 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 289) {
+            throw new IllegalArgumentException("FitAadAccelFeatures expects native messages of " + 289 + ", got " + nativeNumber);
         }
     }
 

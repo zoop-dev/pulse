@@ -33,9 +33,9 @@ public class FitTrainingReadiness extends RecordData {
     public FitTrainingReadiness(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 369) {
-            throw new IllegalArgumentException("FitTrainingReadiness expects global messages of " + 369 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 369) {
+            throw new IllegalArgumentException("FitTrainingReadiness expects native messages of " + 369 + ", got " + nativeNumber);
         }
     }
 

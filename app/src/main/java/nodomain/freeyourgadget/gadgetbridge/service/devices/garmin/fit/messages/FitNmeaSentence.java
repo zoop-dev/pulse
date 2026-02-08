@@ -33,9 +33,9 @@ public class FitNmeaSentence extends RecordData {
     public FitNmeaSentence(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 177) {
-            throw new IllegalArgumentException("FitNmeaSentence expects global messages of " + 177 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 177) {
+            throw new IllegalArgumentException("FitNmeaSentence expects native messages of " + 177 + ", got " + nativeNumber);
         }
     }
 

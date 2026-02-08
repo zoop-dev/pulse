@@ -33,9 +33,9 @@ public class FitSpeedZone extends RecordData {
     public FitSpeedZone(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 53) {
-            throw new IllegalArgumentException("FitSpeedZone expects global messages of " + 53 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 53) {
+            throw new IllegalArgumentException("FitSpeedZone expects native messages of " + 53 + ", got " + nativeNumber);
         }
     }
 

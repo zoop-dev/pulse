@@ -33,9 +33,9 @@ public class FitRawBbi extends RecordData {
     public FitRawBbi(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 372) {
-            throw new IllegalArgumentException("FitRawBbi expects global messages of " + 372 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 372) {
+            throw new IllegalArgumentException("FitRawBbi expects native messages of " + 372 + ", got " + nativeNumber);
         }
     }
 

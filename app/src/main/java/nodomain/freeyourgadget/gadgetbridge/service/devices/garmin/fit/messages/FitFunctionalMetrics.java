@@ -33,9 +33,9 @@ public class FitFunctionalMetrics extends RecordData {
     public FitFunctionalMetrics(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 356) {
-            throw new IllegalArgumentException("FitFunctionalMetrics expects global messages of " + 356 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 356) {
+            throw new IllegalArgumentException("FitFunctionalMetrics expects native messages of " + 356 + ", got " + nativeNumber);
         }
     }
 

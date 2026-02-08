@@ -33,9 +33,9 @@ public class FitHsaEvent extends RecordData {
     public FitHsaEvent(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 315) {
-            throw new IllegalArgumentException("FitHsaEvent expects global messages of " + 315 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 315) {
+            throw new IllegalArgumentException("FitHsaEvent expects native messages of " + 315 + ", got " + nativeNumber);
         }
     }
 

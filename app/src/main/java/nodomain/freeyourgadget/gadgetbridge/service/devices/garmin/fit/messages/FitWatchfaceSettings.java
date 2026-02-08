@@ -33,9 +33,9 @@ public class FitWatchfaceSettings extends RecordData {
     public FitWatchfaceSettings(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 159) {
-            throw new IllegalArgumentException("FitWatchfaceSettings expects global messages of " + 159 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 159) {
+            throw new IllegalArgumentException("FitWatchfaceSettings expects native messages of " + 159 + ", got " + nativeNumber);
         }
     }
 

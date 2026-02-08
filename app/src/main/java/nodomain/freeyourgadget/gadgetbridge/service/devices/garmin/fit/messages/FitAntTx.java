@@ -33,9 +33,9 @@ public class FitAntTx extends RecordData {
     public FitAntTx(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 81) {
-            throw new IllegalArgumentException("FitAntTx expects global messages of " + 81 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 81) {
+            throw new IllegalArgumentException("FitAntTx expects native messages of " + 81 + ", got " + nativeNumber);
         }
     }
 

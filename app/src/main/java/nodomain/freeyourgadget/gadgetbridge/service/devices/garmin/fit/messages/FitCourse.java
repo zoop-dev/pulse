@@ -33,9 +33,9 @@ public class FitCourse extends RecordData {
     public FitCourse(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 31) {
-            throw new IllegalArgumentException("FitCourse expects global messages of " + 31 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 31) {
+            throw new IllegalArgumentException("FitCourse expects native messages of " + 31 + ", got " + nativeNumber);
         }
     }
 

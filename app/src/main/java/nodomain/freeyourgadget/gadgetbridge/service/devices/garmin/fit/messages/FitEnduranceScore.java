@@ -33,9 +33,9 @@ public class FitEnduranceScore extends RecordData {
     public FitEnduranceScore(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 403) {
-            throw new IllegalArgumentException("FitEnduranceScore expects global messages of " + 403 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 403) {
+            throw new IllegalArgumentException("FitEnduranceScore expects native messages of " + 403 + ", got " + nativeNumber);
         }
     }
 

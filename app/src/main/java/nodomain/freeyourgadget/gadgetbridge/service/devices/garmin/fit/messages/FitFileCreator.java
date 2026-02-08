@@ -33,9 +33,9 @@ public class FitFileCreator extends RecordData {
     public FitFileCreator(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 49) {
-            throw new IllegalArgumentException("FitFileCreator expects global messages of " + 49 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 49) {
+            throw new IllegalArgumentException("FitFileCreator expects native messages of " + 49 + ", got " + nativeNumber);
         }
     }
 

@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.FileType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.GlobalFITMessage;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.NativeFITMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
@@ -79,7 +79,7 @@ public class FitCodeGen {
     public void generate() throws IOException {
         generateFitRecordDataFactory();
 
-        for (final GlobalFITMessage value : GlobalFITMessage.KNOWN_MESSAGES.values()) {
+        for (final NativeFITMessage value : NativeFITMessage.KNOWN_MESSAGES.values()) {
             generateFitMessageClassFile(value);
         }
     }
@@ -88,10 +88,10 @@ public class FitCodeGen {
         final File factoryFile = new File("app/src/main/java/nodomain/freeyourgadget/gadgetbridge/service/devices/garmin/fit/messages/FitRecordDataFactory.java");
 
         final List<String> switchCases = new ArrayList<>();
-        final List<GlobalFITMessage> globalFITMessages = new ArrayList<>(GlobalFITMessage.KNOWN_MESSAGES.values());
-        globalFITMessages.sort(Comparator.comparingInt(GlobalFITMessage::getNumber));
+        final List<NativeFITMessage> nativeFITMessages = new ArrayList<>(NativeFITMessage.KNOWN_MESSAGES.values());
+        nativeFITMessages.sort(Comparator.comparingInt(NativeFITMessage::getNumber));
 
-        for (final GlobalFITMessage value : globalFITMessages) {
+        for (final NativeFITMessage value : nativeFITMessages) {
             final String className = "Fit" + capitalize(toCamelCase(value.name()));
             switchCases.add("            case %d -> new %s(recordDefinition, recordHeader);".formatted(value.getNumber(), className));
         }
@@ -114,7 +114,7 @@ public class FitCodeGen {
                     }
                 
                     public static RecordData create(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
-                        return switch (recordDefinition.getGlobalFITMessage().getNumber()) {
+                        return switch (recordDefinition.getNativeFITMessage().getNumber()) {
                 ${switchCases}
                              default -> new RecordData(recordDefinition, recordHeader);
                         };
@@ -132,8 +132,8 @@ public class FitCodeGen {
         FileUtils.copyStringToFile(result, factoryFile, "replace");
     }
 
-    public void generateFitMessageClassFile(final GlobalFITMessage globalFITMessage) throws IOException {
-        final String className = "Fit" + capitalize(toCamelCase(globalFITMessage.name()));
+    public void generateFitMessageClassFile(final NativeFITMessage nativeFITMessage) throws IOException {
+        final String className = "Fit" + capitalize(toCamelCase(nativeFITMessage.name()));
         final File outputFile = new File(
                 "app/src/main/java/nodomain/freeyourgadget/gadgetbridge/service/devices/garmin/fit/messages/",
                 className + ".java"
@@ -154,7 +154,7 @@ public class FitCodeGen {
         //
         // Add field-specific imports
         //
-        for (final GlobalFITMessage.FieldDefinitionPrimitive primitive : globalFITMessage.getFieldDefinitionPrimitives()) {
+        for (final NativeFITMessage.FieldDefinitionPrimitive primitive : nativeFITMessage.getFieldDefinitionPrimitives()) {
             final Class<?> fieldType = getFieldType(primitive);
             if (!Objects.requireNonNull(fieldType.getCanonicalName()).startsWith("java.lang")) {
                 if (fieldType.isArray()) {
@@ -223,21 +223,21 @@ public class FitCodeGen {
                     public ${className}(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
                         super(recordDefinition, recordHeader);
                 
-                        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-                        if (globalNumber != ${globalNumber}) {
-                            throw new IllegalArgumentException("${className} expects global messages of " + ${globalNumber} + ", got " + globalNumber);
+                        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+                        if (nativeNumber != ${nativeNumber}) {
+                            throw new IllegalArgumentException("${className} expects native messages of " + ${nativeNumber} + ", got " + nativeNumber);
                         }
                     }
                 """
                 .replace("${classCanonicalName}", Objects.requireNonNull(getClass().getCanonicalName()))
                 .replace("${className}", className)
-                .replace("${globalNumber}", String.valueOf(globalFITMessage.getNumber()))
+                .replace("${nativeNumber}", String.valueOf(nativeFITMessage.getNumber()))
         );
 
         //
         // Field accessors
         //
-        for (final GlobalFITMessage.FieldDefinitionPrimitive primitive : globalFITMessage.getFieldDefinitionPrimitives()) {
+        for (final NativeFITMessage.FieldDefinitionPrimitive primitive : nativeFITMessage.getFieldDefinitionPrimitives()) {
             final Class<?> fieldType = getFieldType(primitive);
             final String fieldTypeName;
             final String accessorTemplate;
@@ -279,13 +279,13 @@ public class FitCodeGen {
                      */
                     public static class Builder extends FitRecordDataBuilder {
                         public Builder() {
-                            super(${globalNumber});
+                            super(${nativeNumber});
                         }
                 """
-                .replace("${globalNumber}", String.valueOf(globalFITMessage.getNumber()))
+                .replace("${nativeNumber}", String.valueOf(nativeFITMessage.getNumber()))
         );
 
-        for (final GlobalFITMessage.FieldDefinitionPrimitive primitive : globalFITMessage.getFieldDefinitionPrimitives()) {
+        for (final NativeFITMessage.FieldDefinitionPrimitive primitive : nativeFITMessage.getFieldDefinitionPrimitives()) {
             final Class<?> fieldType = getFieldType(primitive);
             final String fieldTypeName = fieldType.getSimpleName();
 
@@ -339,7 +339,7 @@ public class FitCodeGen {
         FileUtils.copyStringToFile(output, outputFile, "replace");
     }
 
-    public Class<?> getFieldType(final GlobalFITMessage.FieldDefinitionPrimitive primitive) {
+    public Class<?> getFieldType(final NativeFITMessage.FieldDefinitionPrimitive primitive) {
         if (primitive.getType() != null) {
             return switch (primitive.getType()) {
                 case ALARM -> LocalTime.class;
@@ -418,7 +418,7 @@ public class FitCodeGen {
         return sb.toString();
     }
 
-    public String method(final String methodName, final GlobalFITMessage.FieldDefinitionPrimitive primitive) {
+    public String method(final String methodName, final NativeFITMessage.FieldDefinitionPrimitive primitive) {
         return methodName + capitalize(toCamelCase(primitive.getName()));
     }
 

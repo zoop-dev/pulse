@@ -30,7 +30,7 @@ public class FitRecordDataFactory {
     }
 
     public static RecordData create(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
-        return switch (recordDefinition.getGlobalFITMessage().getNumber()) {
+        return switch (recordDefinition.getNativeFITMessage().getNumber()) {
             case 0 -> new FitFileId(recordDefinition, recordHeader);
             case 1 -> new FitCapabilities(recordDefinition, recordHeader);
             case 2 -> new FitDeviceSettings(recordDefinition, recordHeader);

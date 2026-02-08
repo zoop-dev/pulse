@@ -36,9 +36,9 @@ public class FitMonitoring extends RecordData {
     public FitMonitoring(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 55) {
-            throw new IllegalArgumentException("FitMonitoring expects global messages of " + 55 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 55) {
+            throw new IllegalArgumentException("FitMonitoring expects native messages of " + 55 + ", got " + nativeNumber);
         }
     }
 

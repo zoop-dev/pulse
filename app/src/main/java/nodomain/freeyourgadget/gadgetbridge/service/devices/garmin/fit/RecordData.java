@@ -27,7 +27,7 @@ public class RecordData {
 
     private final RecordDefinition recordDefinition;
     private final RecordHeader recordHeader;
-    private final GlobalFITMessage globalFITMessage;
+    private final NativeFITMessage nativeFITMessage;
     private final List<FieldData> fieldDataList;
     protected ByteBuffer valueHolder;
 
@@ -47,7 +47,7 @@ public class RecordData {
 
         this.recordDefinition = recordDefinition;
         this.recordHeader = recordHeader;
-        this.globalFITMessage = recordDefinition.getGlobalFITMessage();
+        this.nativeFITMessage = recordDefinition.getNativeFITMessage();
 
         int totalSize = 0;
 
@@ -76,8 +76,8 @@ public class RecordData {
 
     }
 
-    public GlobalFITMessage getGlobalFITMessage() {
-        return globalFITMessage;
+    public NativeFITMessage getNativeFITMessage() {
+        return nativeFITMessage;
     }
 
     public RecordDefinition getRecordDefinition() {
@@ -152,7 +152,7 @@ public class RecordData {
             for (int i = 0; i < devFieldDefinitions.size(); i++) {
                 final DevFieldDefinition devField = devFieldDefinitions.get(i);
 
-                if (devField.getNativeMesgNum() == globalFITMessage.getNumber() && devField.getNativeFieldNum() == number) {
+                if (devField.getNativeMesgNum() == nativeFITMessage.getNumber() && devField.getNativeFieldNum() == number) {
                     // Get the corresponding FieldData for this developer field
                     final int fieldDataIndex = regularFieldCount + i;
                     if (fieldDataIndex < fieldDataList.size()) {
@@ -256,7 +256,7 @@ public class RecordData {
         final GBToStringBuilder tsb = new GBToStringBuilder(this);
 
         if (this.getClass().getName().equals(RecordData.class.getName())) {
-            tsb.append(globalFITMessage.name());
+            tsb.append(nativeFITMessage.name());
         }
 
         if (getComputedTimestamp() != null) {

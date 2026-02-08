@@ -33,9 +33,9 @@ public class FitDeviceStatus extends RecordData {
     public FitDeviceStatus(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 104) {
-            throw new IllegalArgumentException("FitDeviceStatus expects global messages of " + 104 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 104) {
+            throw new IllegalArgumentException("FitDeviceStatus expects native messages of " + 104 + ", got " + nativeNumber);
         }
     }
 

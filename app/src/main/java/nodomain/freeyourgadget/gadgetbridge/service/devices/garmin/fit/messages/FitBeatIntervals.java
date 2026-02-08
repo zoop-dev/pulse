@@ -33,9 +33,9 @@ public class FitBeatIntervals extends RecordData {
     public FitBeatIntervals(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 290) {
-            throw new IllegalArgumentException("FitBeatIntervals expects global messages of " + 290 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 290) {
+            throw new IllegalArgumentException("FitBeatIntervals expects native messages of " + 290 + ", got " + nativeNumber);
         }
     }
 

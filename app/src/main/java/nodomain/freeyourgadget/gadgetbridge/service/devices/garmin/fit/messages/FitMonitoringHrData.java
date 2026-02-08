@@ -33,9 +33,9 @@ public class FitMonitoringHrData extends RecordData {
     public FitMonitoringHrData(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 211) {
-            throw new IllegalArgumentException("FitMonitoringHrData expects global messages of " + 211 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 211) {
+            throw new IllegalArgumentException("FitMonitoringHrData expects native messages of " + 211 + ", got " + nativeNumber);
         }
     }
 

@@ -36,9 +36,9 @@ public class FitAlarmSettings extends RecordData {
     public FitAlarmSettings(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 222) {
-            throw new IllegalArgumentException("FitAlarmSettings expects global messages of " + 222 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 222) {
+            throw new IllegalArgumentException("FitAlarmSettings expects native messages of " + 222 + ", got " + nativeNumber);
         }
     }
 

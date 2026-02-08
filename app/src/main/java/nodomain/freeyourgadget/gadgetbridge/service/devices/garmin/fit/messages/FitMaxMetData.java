@@ -33,9 +33,9 @@ public class FitMaxMetData extends RecordData {
     public FitMaxMetData(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 229) {
-            throw new IllegalArgumentException("FitMaxMetData expects global messages of " + 229 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 229) {
+            throw new IllegalArgumentException("FitMaxMetData expects native messages of " + 229 + ", got " + nativeNumber);
         }
     }
 

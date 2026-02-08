@@ -33,9 +33,9 @@ public class FitAviationAttitude extends RecordData {
     public FitAviationAttitude(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 178) {
-            throw new IllegalArgumentException("FitAviationAttitude expects global messages of " + 178 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 178) {
+            throw new IllegalArgumentException("FitAviationAttitude expects native messages of " + 178 + ", got " + nativeNumber);
         }
     }
 

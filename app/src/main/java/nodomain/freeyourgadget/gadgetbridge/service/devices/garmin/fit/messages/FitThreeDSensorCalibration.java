@@ -33,9 +33,9 @@ public class FitThreeDSensorCalibration extends RecordData {
     public FitThreeDSensorCalibration(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 167) {
-            throw new IllegalArgumentException("FitThreeDSensorCalibration expects global messages of " + 167 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 167) {
+            throw new IllegalArgumentException("FitThreeDSensorCalibration expects native messages of " + 167 + ", got " + nativeNumber);
         }
     }
 

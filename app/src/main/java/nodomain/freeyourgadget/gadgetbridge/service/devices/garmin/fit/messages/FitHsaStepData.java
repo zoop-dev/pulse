@@ -33,9 +33,9 @@ public class FitHsaStepData extends RecordData {
     public FitHsaStepData(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 304) {
-            throw new IllegalArgumentException("FitHsaStepData expects global messages of " + 304 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 304) {
+            throw new IllegalArgumentException("FitHsaStepData expects native messages of " + 304 + ", got " + nativeNumber);
         }
     }
 

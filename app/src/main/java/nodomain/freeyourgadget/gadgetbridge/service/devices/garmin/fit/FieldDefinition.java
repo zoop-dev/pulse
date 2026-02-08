@@ -37,25 +37,25 @@ public class FieldDefinition implements FieldInterface {
         this(number, size, baseType, name, 1, 0);
     }
 
-    public static FieldDefinition parseIncoming(GarminByteBufferReader garminByteBufferReader, GlobalFITMessage globalFITMessage) {
+    public static FieldDefinition parseIncoming(GarminByteBufferReader garminByteBufferReader, NativeFITMessage nativeFITMessage) {
         int number = garminByteBufferReader.readByte();
         int size = garminByteBufferReader.readByte();
         int baseTypeIdentifier = garminByteBufferReader.readByte();
         BaseType baseType = BaseType.fromIdentifier(baseTypeIdentifier);
-        FieldDefinition global = globalFITMessage.getFieldDefinition(number, size);
-        if (global != null) {
-            if (global.getBaseType().equals(baseType)) {
-                return global;
+        FieldDefinition nativeFITMessageFieldDefinition = nativeFITMessage.getFieldDefinition(number, size);
+        if (nativeFITMessageFieldDefinition != null) {
+            if (nativeFITMessageFieldDefinition.getBaseType().equals(baseType)) {
+                return nativeFITMessageFieldDefinition;
             } else {
-                if (baseType == BaseType.UINT8 && global.getBaseType() == BaseType.ENUM) {
+                if (baseType == BaseType.UINT8 && nativeFITMessageFieldDefinition.getBaseType() == BaseType.ENUM) {
                     // Allow uint8 -> enum, as older fit versions changed the type of some fields
-                    return global;
+                    return nativeFITMessageFieldDefinition;
                 }
                 LOG.warn(
-                        "Global for {}[{}] is of type {}, but message declares {}",
-                        globalFITMessage.name(),
-                        global.name,
-                        global.getBaseType(),
+                        "Native for {}[{}] is of type {}, but message declares {}",
+                        nativeFITMessage.name(),
+                        nativeFITMessageFieldDefinition.name,
+                        nativeFITMessageFieldDefinition.getBaseType(),
                         baseType
                 );
             }

@@ -34,9 +34,9 @@ public class FitLocation extends RecordData {
     public FitLocation(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 29) {
-            throw new IllegalArgumentException("FitLocation expects global messages of " + 29 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 29) {
+            throw new IllegalArgumentException("FitLocation expects native messages of " + 29 + ", got " + nativeNumber);
         }
     }
 

@@ -33,9 +33,9 @@ public class FitHr extends RecordData {
     public FitHr(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 132) {
-            throw new IllegalArgumentException("FitHr expects global messages of " + 132 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 132) {
+            throw new IllegalArgumentException("FitHr expects native messages of " + 132 + ", got " + nativeNumber);
         }
     }
 

@@ -33,9 +33,9 @@ public class FitSleepSchedule extends RecordData {
     public FitSleepSchedule(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 379) {
-            throw new IllegalArgumentException("FitSleepSchedule expects global messages of " + 379 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 379) {
+            throw new IllegalArgumentException("FitSleepSchedule expects native messages of " + 379 + ", got " + nativeNumber);
         }
     }
 

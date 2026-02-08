@@ -33,9 +33,9 @@ public class FitDeviceInfo extends RecordData {
     public FitDeviceInfo(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 23) {
-            throw new IllegalArgumentException("FitDeviceInfo expects global messages of " + 23 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 23) {
+            throw new IllegalArgumentException("FitDeviceInfo expects native messages of " + 23 + ", got " + nativeNumber);
         }
     }
 

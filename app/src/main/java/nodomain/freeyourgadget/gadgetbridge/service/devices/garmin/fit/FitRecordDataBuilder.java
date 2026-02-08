@@ -9,25 +9,25 @@ import java.util.stream.Collectors;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitRecordDataFactory;
 
 public class FitRecordDataBuilder {
-    private final GlobalFITMessage globalMessage;
+    private final NativeFITMessage nativeFITMessage;
 
     private final Map<String, Object[]> values = new LinkedHashMap<>();
 
-    public FitRecordDataBuilder(final GlobalFITMessage globalMessage) {
-        this.globalMessage = globalMessage;
+    public FitRecordDataBuilder(final NativeFITMessage nativeFITMessage) {
+        this.nativeFITMessage = nativeFITMessage;
     }
 
-    public FitRecordDataBuilder(final int globalMessageNumber) {
-        this.globalMessage = GlobalFITMessage.KNOWN_MESSAGES.get(globalMessageNumber);
-        if (this.globalMessage == null) {
-            throw new IllegalArgumentException("Unknown global message " + globalMessageNumber);
+    public FitRecordDataBuilder(final int nativeFITMessageNumber) {
+        this.nativeFITMessage = NativeFITMessage.KNOWN_MESSAGES.get(nativeFITMessageNumber);
+        if (this.nativeFITMessage == null) {
+            throw new IllegalArgumentException("Unknown native FIT message " + nativeFITMessageNumber);
         }
     }
 
     public FitRecordDataBuilder setFieldByNumber(final int number, final Object... value) {
-        final List<FieldDefinition> fieldDefinition = globalMessage.getFieldDefinitions(number);
+        final List<FieldDefinition> fieldDefinition = nativeFITMessage.getFieldDefinitions(number);
         if (fieldDefinition == null || fieldDefinition.isEmpty()) {
-            throw new IllegalArgumentException("Unknown field number " + number + " for " + globalMessage);
+            throw new IllegalArgumentException("Unknown field number " + number + " for " + nativeFITMessage);
         }
 
         setFieldByName(fieldDefinition.get(0).getName(), value);
@@ -50,8 +50,8 @@ public class FitRecordDataBuilder {
                 new RecordDefinition(
                         new RecordHeader(true, localMessageType),
                         ByteOrder.BIG_ENDIAN,
-                        globalMessage,
-                        values.entrySet().stream().map(e -> globalMessage.getFieldDefinition(e.getKey(), e.getValue().length)).collect(Collectors.toList()),
+                        nativeFITMessage,
+                        values.entrySet().stream().map(e -> nativeFITMessage.getFieldDefinition(e.getKey(), e.getValue().length)).collect(Collectors.toList()),
                         null
                 ),
                 new RecordHeader(false, localMessageType)

@@ -33,9 +33,9 @@ public class FitJump extends RecordData {
     public FitJump(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 285) {
-            throw new IllegalArgumentException("FitJump expects global messages of " + 285 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 285) {
+            throw new IllegalArgumentException("FitJump expects native messages of " + 285 + ", got " + nativeNumber);
         }
     }
 

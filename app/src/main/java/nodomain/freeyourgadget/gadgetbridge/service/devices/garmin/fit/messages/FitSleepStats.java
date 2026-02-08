@@ -33,9 +33,9 @@ public class FitSleepStats extends RecordData {
     public FitSleepStats(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 346) {
-            throw new IllegalArgumentException("FitSleepStats expects global messages of " + 346 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 346) {
+            throw new IllegalArgumentException("FitSleepStats expects native messages of " + 346 + ", got " + nativeNumber);
         }
     }
 

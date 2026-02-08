@@ -33,9 +33,9 @@ public class FitGyroscopeData extends RecordData {
     public FitGyroscopeData(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 164) {
-            throw new IllegalArgumentException("FitGyroscopeData expects global messages of " + 164 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 164) {
+            throw new IllegalArgumentException("FitGyroscopeData expects native messages of " + 164 + ", got " + nativeNumber);
         }
     }
 

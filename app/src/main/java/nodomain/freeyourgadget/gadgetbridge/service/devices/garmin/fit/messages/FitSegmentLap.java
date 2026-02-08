@@ -33,9 +33,9 @@ public class FitSegmentLap extends RecordData {
     public FitSegmentLap(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 142) {
-            throw new IllegalArgumentException("FitSegmentLap expects global messages of " + 142 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 142) {
+            throw new IllegalArgumentException("FitSegmentLap expects native messages of " + 142 + ", got " + nativeNumber);
         }
     }
 

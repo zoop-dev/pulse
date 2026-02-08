@@ -33,9 +33,9 @@ public class FitSlaveDevice extends RecordData {
     public FitSlaveDevice(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 106) {
-            throw new IllegalArgumentException("FitSlaveDevice expects global messages of " + 106 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 106) {
+            throw new IllegalArgumentException("FitSlaveDevice expects native messages of " + 106 + ", got " + nativeNumber);
         }
     }
 

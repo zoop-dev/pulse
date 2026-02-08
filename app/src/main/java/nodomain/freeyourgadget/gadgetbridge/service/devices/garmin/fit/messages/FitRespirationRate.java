@@ -33,9 +33,9 @@ public class FitRespirationRate extends RecordData {
     public FitRespirationRate(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 297) {
-            throw new IllegalArgumentException("FitRespirationRate expects global messages of " + 297 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 297) {
+            throw new IllegalArgumentException("FitRespirationRate expects native messages of " + 297 + ", got " + nativeNumber);
         }
     }
 

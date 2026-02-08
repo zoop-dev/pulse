@@ -33,9 +33,9 @@ public class FitSplitSummary extends RecordData {
     public FitSplitSummary(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 313) {
-            throw new IllegalArgumentException("FitSplitSummary expects global messages of " + 313 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 313) {
+            throw new IllegalArgumentException("FitSplitSummary expects native messages of " + 313 + ", got " + nativeNumber);
         }
     }
 

@@ -33,9 +33,9 @@ public class FitConnectivity extends RecordData {
     public FitConnectivity(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 127) {
-            throw new IllegalArgumentException("FitConnectivity expects global messages of " + 127 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 127) {
+            throw new IllegalArgumentException("FitConnectivity expects native messages of " + 127 + ", got " + nativeNumber);
         }
     }
 

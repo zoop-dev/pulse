@@ -33,9 +33,9 @@ public class FitHsaSpo2Data extends RecordData {
     public FitHsaSpo2Data(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 305) {
-            throw new IllegalArgumentException("FitHsaSpo2Data expects global messages of " + 305 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 305) {
+            throw new IllegalArgumentException("FitHsaSpo2Data expects native messages of " + 305 + ", got " + nativeNumber);
         }
     }
 

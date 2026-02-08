@@ -108,7 +108,7 @@ public class FitFile {
                 if (recordDefinition != null) {
                     if (recordHeader.isDeveloperData())
                         for (RecordData rd : dataRecords) {
-                            if (GlobalFITMessage.FIELD_DESCRIPTION.equals(rd.getGlobalFITMessage()))
+                            if (NativeFITMessage.FIELD_DESCRIPTION.equals(rd.getNativeFITMessage()))
                                 recordDefinition.populateDevFields(rd);
                         }
                     recordDefinitionMap.put(recordHeader.getLocalMessageType(), recordDefinition);
@@ -137,10 +137,10 @@ public class FitFile {
         return new FitFile(header, dataRecords);
     }
 
-    public List<RecordData> getRecordsByGlobalMessage(GlobalFITMessage globalFITMessage) {
+    public List<RecordData> getRecordsByNativeMessage(NativeFITMessage nativeFITMessage) {
         final List<RecordData> filtered = new ArrayList<>();
         for (RecordData rd : dataRecords) {
-            if (globalFITMessage.equals(rd.getGlobalFITMessage()))
+            if (nativeFITMessage.equals(rd.getNativeFITMessage()))
                 filtered.add(rd);
         }
         return filtered;

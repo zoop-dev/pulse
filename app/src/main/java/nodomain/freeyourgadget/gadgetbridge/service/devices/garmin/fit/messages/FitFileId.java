@@ -34,9 +34,9 @@ public class FitFileId extends RecordData {
     public FitFileId(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 0) {
-            throw new IllegalArgumentException("FitFileId expects global messages of " + 0 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 0) {
+            throw new IllegalArgumentException("FitFileId expects native messages of " + 0 + ", got " + nativeNumber);
         }
     }
 

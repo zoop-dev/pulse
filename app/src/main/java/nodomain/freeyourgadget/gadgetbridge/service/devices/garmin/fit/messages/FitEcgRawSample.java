@@ -33,9 +33,9 @@ public class FitEcgRawSample extends RecordData {
     public FitEcgRawSample(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 337) {
-            throw new IllegalArgumentException("FitEcgRawSample expects global messages of " + 337 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 337) {
+            throw new IllegalArgumentException("FitEcgRawSample expects native messages of " + 337 + ", got " + nativeNumber);
         }
     }
 

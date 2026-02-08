@@ -33,9 +33,9 @@ public class FitMagnetometerData extends RecordData {
     public FitMagnetometerData(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 208) {
-            throw new IllegalArgumentException("FitMagnetometerData expects global messages of " + 208 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 208) {
+            throw new IllegalArgumentException("FitMagnetometerData expects native messages of " + 208 + ", got " + nativeNumber);
         }
     }
 

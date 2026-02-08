@@ -34,9 +34,9 @@ public class FitSleepStage extends RecordData {
     public FitSleepStage(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 275) {
-            throw new IllegalArgumentException("FitSleepStage expects global messages of " + 275 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 275) {
+            throw new IllegalArgumentException("FitSleepStage expects native messages of " + 275 + ", got " + nativeNumber);
         }
     }
 

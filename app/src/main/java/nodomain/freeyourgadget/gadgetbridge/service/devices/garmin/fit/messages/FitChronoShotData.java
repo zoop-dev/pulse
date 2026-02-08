@@ -33,9 +33,9 @@ public class FitChronoShotData extends RecordData {
     public FitChronoShotData(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 388) {
-            throw new IllegalArgumentException("FitChronoShotData expects global messages of " + 388 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 388) {
+            throw new IllegalArgumentException("FitChronoShotData expects native messages of " + 388 + ", got " + nativeNumber);
         }
     }
 

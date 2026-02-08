@@ -33,9 +33,9 @@ public class FitHsaRespirationData extends RecordData {
     public FitHsaRespirationData(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 307) {
-            throw new IllegalArgumentException("FitHsaRespirationData expects global messages of " + 307 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 307) {
+            throw new IllegalArgumentException("FitHsaRespirationData expects native messages of " + 307 + ", got " + nativeNumber);
         }
     }
 

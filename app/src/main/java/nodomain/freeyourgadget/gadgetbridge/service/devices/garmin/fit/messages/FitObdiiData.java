@@ -33,9 +33,9 @@ public class FitObdiiData extends RecordData {
     public FitObdiiData(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 174) {
-            throw new IllegalArgumentException("FitObdiiData expects global messages of " + 174 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 174) {
+            throw new IllegalArgumentException("FitObdiiData expects native messages of " + 174 + ", got " + nativeNumber);
         }
     }
 

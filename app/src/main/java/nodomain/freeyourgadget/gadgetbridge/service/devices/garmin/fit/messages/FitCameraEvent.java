@@ -33,9 +33,9 @@ public class FitCameraEvent extends RecordData {
     public FitCameraEvent(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 161) {
-            throw new IllegalArgumentException("FitCameraEvent expects global messages of " + 161 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 161) {
+            throw new IllegalArgumentException("FitCameraEvent expects native messages of " + 161 + ", got " + nativeNumber);
         }
     }
 

@@ -33,9 +33,9 @@ public class FitUserMetrics extends RecordData {
     public FitUserMetrics(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 79) {
-            throw new IllegalArgumentException("FitUserMetrics expects global messages of " + 79 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 79) {
+            throw new IllegalArgumentException("FitUserMetrics expects native messages of " + 79 + ", got " + nativeNumber);
         }
     }
 

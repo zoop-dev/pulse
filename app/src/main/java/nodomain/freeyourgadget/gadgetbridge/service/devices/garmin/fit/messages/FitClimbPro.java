@@ -33,9 +33,9 @@ public class FitClimbPro extends RecordData {
     public FitClimbPro(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 317) {
-            throw new IllegalArgumentException("FitClimbPro expects global messages of " + 317 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 317) {
+            throw new IllegalArgumentException("FitClimbPro expects native messages of " + 317 + ", got " + nativeNumber);
         }
     }
 

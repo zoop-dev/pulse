@@ -33,9 +33,9 @@ public class FitSensorSettings extends RecordData {
     public FitSensorSettings(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 147) {
-            throw new IllegalArgumentException("FitSensorSettings expects global messages of " + 147 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 147) {
+            throw new IllegalArgumentException("FitSensorSettings expects native messages of " + 147 + ", got " + nativeNumber);
         }
     }
 

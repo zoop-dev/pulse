@@ -33,9 +33,9 @@ public class FitSkinTempRaw extends RecordData {
     public FitSkinTempRaw(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 397) {
-            throw new IllegalArgumentException("FitSkinTempRaw expects global messages of " + 397 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 397) {
+            throw new IllegalArgumentException("FitSkinTempRaw expects native messages of " + 397 + ", got " + nativeNumber);
         }
     }
 

@@ -33,9 +33,9 @@ public class FitLength extends RecordData {
     public FitLength(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 101) {
-            throw new IllegalArgumentException("FitLength expects global messages of " + 101 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 101) {
+            throw new IllegalArgumentException("FitLength expects native messages of " + 101 + ", got " + nativeNumber);
         }
     }
 

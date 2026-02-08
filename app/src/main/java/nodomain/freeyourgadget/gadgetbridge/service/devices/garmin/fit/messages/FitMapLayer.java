@@ -33,9 +33,9 @@ public class FitMapLayer extends RecordData {
     public FitMapLayer(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 70) {
-            throw new IllegalArgumentException("FitMapLayer expects global messages of " + 70 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 70) {
+            throw new IllegalArgumentException("FitMapLayer expects native messages of " + 70 + ", got " + nativeNumber);
         }
     }
 

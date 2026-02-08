@@ -33,9 +33,9 @@ public class FitMetZone extends RecordData {
     public FitMetZone(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 10) {
-            throw new IllegalArgumentException("FitMetZone expects global messages of " + 10 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 10) {
+            throw new IllegalArgumentException("FitMetZone expects native messages of " + 10 + ", got " + nativeNumber);
         }
     }
 

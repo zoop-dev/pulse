@@ -34,9 +34,9 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit;
 
 public final class FitDebug {
-    /// format a global number (FIT message number) for logging
-    public static String mesgNumLookup(int globalNumber) {
-        return switch (globalNumber) {
+    /// format a native number (Native FIT message number) for logging
+    public static String mesgNumLookup(int nativeMessageNumber) {
+        return switch (nativeMessageNumber) {
             case 0 -> "0_file_id";
             case 1 -> "1_capabilities";
             case 2 -> "2_device_settings";
@@ -158,7 +158,7 @@ public final class FitDebug {
             case 393 -> "393_dive_apnea_alarm";
             case 398 -> "398_skin_temp_overnight";
             case 409 -> "409_hsa_wrist_temperature_data";
-            default -> Integer.toString(globalNumber);
+            default -> Integer.toString(nativeMessageNumber);
         };
     }
 }

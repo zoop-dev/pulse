@@ -33,9 +33,9 @@ public class FitDiveApneaAlarm extends RecordData {
     public FitDiveApneaAlarm(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 393) {
-            throw new IllegalArgumentException("FitDiveApneaAlarm expects global messages of " + 393 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 393) {
+            throw new IllegalArgumentException("FitDiveApneaAlarm expects native messages of " + 393 + ", got " + nativeNumber);
         }
     }
 

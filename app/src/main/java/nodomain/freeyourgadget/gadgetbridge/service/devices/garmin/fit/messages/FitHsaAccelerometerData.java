@@ -33,9 +33,9 @@ public class FitHsaAccelerometerData extends RecordData {
     public FitHsaAccelerometerData(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 302) {
-            throw new IllegalArgumentException("FitHsaAccelerometerData expects global messages of " + 302 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 302) {
+            throw new IllegalArgumentException("FitHsaAccelerometerData expects native messages of " + 302 + ", got " + nativeNumber);
         }
     }
 

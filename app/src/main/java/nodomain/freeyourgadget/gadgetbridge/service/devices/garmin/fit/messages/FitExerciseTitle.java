@@ -33,9 +33,9 @@ public class FitExerciseTitle extends RecordData {
     public FitExerciseTitle(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 264) {
-            throw new IllegalArgumentException("FitExerciseTitle expects global messages of " + 264 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 264) {
+            throw new IllegalArgumentException("FitExerciseTitle expects native messages of " + 264 + ", got " + nativeNumber);
         }
     }
 

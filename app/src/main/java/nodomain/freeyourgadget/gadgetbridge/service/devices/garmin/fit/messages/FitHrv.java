@@ -33,9 +33,9 @@ public class FitHrv extends RecordData {
     public FitHrv(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 78) {
-            throw new IllegalArgumentException("FitHrv expects global messages of " + 78 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 78) {
+            throw new IllegalArgumentException("FitHrv expects native messages of " + 78 + ", got " + nativeNumber);
         }
     }
 

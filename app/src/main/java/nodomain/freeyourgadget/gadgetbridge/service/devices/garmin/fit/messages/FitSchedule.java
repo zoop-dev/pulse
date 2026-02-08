@@ -33,9 +33,9 @@ public class FitSchedule extends RecordData {
     public FitSchedule(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 28) {
-            throw new IllegalArgumentException("FitSchedule expects global messages of " + 28 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 28) {
+            throw new IllegalArgumentException("FitSchedule expects native messages of " + 28 + ", got " + nativeNumber);
         }
     }
 

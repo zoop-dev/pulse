@@ -33,9 +33,9 @@ public class FitExdScreenConfiguration extends RecordData {
     public FitExdScreenConfiguration(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 200) {
-            throw new IllegalArgumentException("FitExdScreenConfiguration expects global messages of " + 200 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 200) {
+            throw new IllegalArgumentException("FitExdScreenConfiguration expects native messages of " + 200 + ", got " + nativeNumber);
         }
     }
 

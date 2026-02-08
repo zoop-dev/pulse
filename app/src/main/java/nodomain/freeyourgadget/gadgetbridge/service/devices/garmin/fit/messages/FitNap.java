@@ -33,9 +33,9 @@ public class FitNap extends RecordData {
     public FitNap(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 412) {
-            throw new IllegalArgumentException("FitNap expects global messages of " + 412 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 412) {
+            throw new IllegalArgumentException("FitNap expects native messages of " + 412 + ", got " + nativeNumber);
         }
     }
 

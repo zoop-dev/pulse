@@ -33,9 +33,9 @@ public class FitHsaWristTemperatureData extends RecordData {
     public FitHsaWristTemperatureData(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 409) {
-            throw new IllegalArgumentException("FitHsaWristTemperatureData expects global messages of " + 409 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 409) {
+            throw new IllegalArgumentException("FitHsaWristTemperatureData expects native messages of " + 409 + ", got " + nativeNumber);
         }
     }
 

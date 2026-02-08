@@ -38,9 +38,9 @@ public class FitWeather extends RecordData {
     public FitWeather(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 128) {
-            throw new IllegalArgumentException("FitWeather expects global messages of " + 128 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 128) {
+            throw new IllegalArgumentException("FitWeather expects native messages of " + 128 + ", got " + nativeNumber);
         }
     }
 

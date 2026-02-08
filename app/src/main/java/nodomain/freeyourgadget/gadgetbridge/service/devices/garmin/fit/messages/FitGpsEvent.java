@@ -33,9 +33,9 @@ public class FitGpsEvent extends RecordData {
     public FitGpsEvent(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 326) {
-            throw new IllegalArgumentException("FitGpsEvent expects global messages of " + 326 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 326) {
+            throw new IllegalArgumentException("FitGpsEvent expects native messages of " + 326 + ", got " + nativeNumber);
         }
     }
 

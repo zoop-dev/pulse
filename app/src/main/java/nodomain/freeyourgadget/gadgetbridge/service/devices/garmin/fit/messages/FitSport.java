@@ -33,9 +33,9 @@ public class FitSport extends RecordData {
     public FitSport(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 12) {
-            throw new IllegalArgumentException("FitSport expects global messages of " + 12 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 12) {
+            throw new IllegalArgumentException("FitSport expects native messages of " + 12 + ", got " + nativeNumber);
         }
     }
 

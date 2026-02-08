@@ -33,9 +33,9 @@ public class FitHrmProfile extends RecordData {
     public FitHrmProfile(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 4) {
-            throw new IllegalArgumentException("FitHrmProfile expects global messages of " + 4 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 4) {
+            throw new IllegalArgumentException("FitHrmProfile expects native messages of " + 4 + ", got " + nativeNumber);
         }
     }
 

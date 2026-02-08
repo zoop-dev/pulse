@@ -33,9 +33,9 @@ public class FitEvent extends RecordData {
     public FitEvent(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 21) {
-            throw new IllegalArgumentException("FitEvent expects global messages of " + 21 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 21) {
+            throw new IllegalArgumentException("FitEvent expects native messages of " + 21 + ", got " + nativeNumber);
         }
     }
 

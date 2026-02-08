@@ -33,9 +33,9 @@ public class FitEpoStatus extends RecordData {
     public FitEpoStatus(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 141) {
-            throw new IllegalArgumentException("FitEpoStatus expects global messages of " + 141 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 141) {
+            throw new IllegalArgumentException("FitEpoStatus expects native messages of " + 141 + ", got " + nativeNumber);
         }
     }
 

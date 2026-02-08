@@ -33,9 +33,9 @@ public class FitSpo2 extends RecordData {
     public FitSpo2(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 269) {
-            throw new IllegalArgumentException("FitSpo2 expects global messages of " + 269 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 269) {
+            throw new IllegalArgumentException("FitSpo2 expects native messages of " + 269 + ", got " + nativeNumber);
         }
     }
 

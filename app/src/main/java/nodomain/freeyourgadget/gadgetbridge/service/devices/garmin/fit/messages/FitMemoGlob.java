@@ -33,9 +33,9 @@ public class FitMemoGlob extends RecordData {
     public FitMemoGlob(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 145) {
-            throw new IllegalArgumentException("FitMemoGlob expects global messages of " + 145 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 145) {
+            throw new IllegalArgumentException("FitMemoGlob expects native messages of " + 145 + ", got " + nativeNumber);
         }
     }
 

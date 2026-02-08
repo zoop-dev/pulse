@@ -33,9 +33,9 @@ public class FitHsaConfigurationData extends RecordData {
     public FitHsaConfigurationData(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 389) {
-            throw new IllegalArgumentException("FitHsaConfigurationData expects global messages of " + 389 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 389) {
+            throw new IllegalArgumentException("FitHsaConfigurationData expects native messages of " + 389 + ", got " + nativeNumber);
         }
     }
 

@@ -33,9 +33,9 @@ public class FitTankSummary extends RecordData {
     public FitTankSummary(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 323) {
-            throw new IllegalArgumentException("FitTankSummary expects global messages of " + 323 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 323) {
+            throw new IllegalArgumentException("FitTankSummary expects native messages of " + 323 + ", got " + nativeNumber);
         }
     }
 

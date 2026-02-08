@@ -33,9 +33,9 @@ public class FitDiveGas extends RecordData {
     public FitDiveGas(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 259) {
-            throw new IllegalArgumentException("FitDiveGas expects global messages of " + 259 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 259) {
+            throw new IllegalArgumentException("FitDiveGas expects native messages of " + 259 + ", got " + nativeNumber);
         }
     }
 

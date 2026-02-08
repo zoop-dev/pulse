@@ -33,9 +33,9 @@ public class FitOneDSensorCalibration extends RecordData {
     public FitOneDSensorCalibration(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 210) {
-            throw new IllegalArgumentException("FitOneDSensorCalibration expects global messages of " + 210 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 210) {
+            throw new IllegalArgumentException("FitOneDSensorCalibration expects native messages of " + 210 + ", got " + nativeNumber);
         }
     }
 

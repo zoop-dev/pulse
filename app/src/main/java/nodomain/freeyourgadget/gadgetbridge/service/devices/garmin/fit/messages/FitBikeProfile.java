@@ -33,9 +33,9 @@ public class FitBikeProfile extends RecordData {
     public FitBikeProfile(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 6) {
-            throw new IllegalArgumentException("FitBikeProfile expects global messages of " + 6 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 6) {
+            throw new IllegalArgumentException("FitBikeProfile expects native messages of " + 6 + ", got " + nativeNumber);
         }
     }
 

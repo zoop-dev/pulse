@@ -33,9 +33,9 @@ public class FitTankUpdate extends RecordData {
     public FitTankUpdate(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 319) {
-            throw new IllegalArgumentException("FitTankUpdate expects global messages of " + 319 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 319) {
+            throw new IllegalArgumentException("FitTankUpdate expects native messages of " + 319 + ", got " + nativeNumber);
         }
     }
 

@@ -33,9 +33,9 @@ public class FitGpsMetadata extends RecordData {
     public FitGpsMetadata(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 160) {
-            throw new IllegalArgumentException("FitGpsMetadata expects global messages of " + 160 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 160) {
+            throw new IllegalArgumentException("FitGpsMetadata expects native messages of " + 160 + ", got " + nativeNumber);
         }
     }
 

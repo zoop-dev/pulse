@@ -33,9 +33,9 @@ public class FitFieldDescription extends RecordData {
     public FitFieldDescription(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 206) {
-            throw new IllegalArgumentException("FitFieldDescription expects global messages of " + 206 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 206) {
+            throw new IllegalArgumentException("FitFieldDescription expects native messages of " + 206 + ", got " + nativeNumber);
         }
     }
 

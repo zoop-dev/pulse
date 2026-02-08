@@ -33,9 +33,9 @@ public class FitEcgSmoothSample extends RecordData {
     public FitEcgSmoothSample(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 338) {
-            throw new IllegalArgumentException("FitEcgSmoothSample expects global messages of " + 338 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 338) {
+            throw new IllegalArgumentException("FitEcgSmoothSample expects native messages of " + 338 + ", got " + nativeNumber);
         }
     }
 

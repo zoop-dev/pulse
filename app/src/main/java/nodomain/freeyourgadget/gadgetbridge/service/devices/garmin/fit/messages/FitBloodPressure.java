@@ -33,9 +33,9 @@ public class FitBloodPressure extends RecordData {
     public FitBloodPressure(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 51) {
-            throw new IllegalArgumentException("FitBloodPressure expects global messages of " + 51 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 51) {
+            throw new IllegalArgumentException("FitBloodPressure expects native messages of " + 51 + ", got " + nativeNumber);
         }
     }
 

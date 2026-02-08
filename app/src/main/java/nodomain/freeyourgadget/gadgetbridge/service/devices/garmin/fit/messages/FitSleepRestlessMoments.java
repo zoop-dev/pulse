@@ -33,9 +33,9 @@ public class FitSleepRestlessMoments extends RecordData {
     public FitSleepRestlessMoments(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 382) {
-            throw new IllegalArgumentException("FitSleepRestlessMoments expects global messages of " + 382 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 382) {
+            throw new IllegalArgumentException("FitSleepRestlessMoments expects native messages of " + 382 + ", got " + nativeNumber);
         }
     }
 
@@ -52,11 +52,6 @@ public class FitSleepRestlessMoments extends RecordData {
     @Nullable
     public Number[] getUnknown2() {
         return getArrayFieldByNumber(2, Number.class);
-    }
-
-    @Nullable
-    public Long getTimestamp() {
-        return getFieldByNumber(253, Long.class);
     }
 
     /**
@@ -79,11 +74,6 @@ public class FitSleepRestlessMoments extends RecordData {
 
         public Builder setUnknown2(final Number[] value) {
             setFieldByNumber(2, (Object[]) value);
-            return this;
-        }
-
-        public Builder setTimestamp(final Long value) {
-            setFieldByNumber(253, value);
             return this;
         }
 

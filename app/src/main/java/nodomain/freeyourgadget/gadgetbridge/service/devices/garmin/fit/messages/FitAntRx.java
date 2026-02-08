@@ -33,9 +33,9 @@ public class FitAntRx extends RecordData {
     public FitAntRx(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 80) {
-            throw new IllegalArgumentException("FitAntRx expects global messages of " + 80 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 80) {
+            throw new IllegalArgumentException("FitAntRx expects native messages of " + 80 + ", got " + nativeNumber);
         }
     }
 

@@ -34,9 +34,9 @@ public class FitSet extends RecordData {
     public FitSet(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 225) {
-            throw new IllegalArgumentException("FitSet expects global messages of " + 225 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 225) {
+            throw new IllegalArgumentException("FitSet expects native messages of " + 225 + ", got " + nativeNumber);
         }
     }
 

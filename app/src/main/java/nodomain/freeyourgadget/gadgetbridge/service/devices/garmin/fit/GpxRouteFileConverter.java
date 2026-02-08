@@ -39,7 +39,7 @@ public class GpxRouteFileConverter {
 
     private static RecordData getFileCreatorRecordData() {
         final RecordData fileCreatorRecord = FitRecordDataFactory.create(
-                new RecordDefinition(new RecordHeader((byte) 0x41), ByteOrder.BIG_ENDIAN, GlobalFITMessage.FILE_CREATOR, GlobalFITMessage.FILE_CREATOR.getFieldDefinitions(0), null),
+                new RecordDefinition(new RecordHeader((byte) 0x41), ByteOrder.BIG_ENDIAN, NativeFITMessage.FILE_CREATOR, NativeFITMessage.FILE_CREATOR.getFieldDefinitions(0), null),
                 new RecordHeader((byte) 0x01));
         fileCreatorRecord.setFieldByName("software_version", 1);
         return fileCreatorRecord;
@@ -72,7 +72,7 @@ public class GpxRouteFileConverter {
         }
 
         final RecordHeader gpxDataPointRecordHeader = new RecordHeader((byte) 0x05);
-        final RecordDefinition gpxDataPointRecordDefinition = new RecordDefinition(new RecordHeader((byte) 0x45), ByteOrder.BIG_ENDIAN, GlobalFITMessage.RECORD, GlobalFITMessage.RECORD.getFieldDefinitions(0, 1, 2, 5, 253), null);
+        final RecordDefinition gpxDataPointRecordDefinition = new RecordDefinition(new RecordHeader((byte) 0x45), ByteOrder.BIG_ENDIAN, NativeFITMessage.RECORD, NativeFITMessage.RECORD.getFieldDefinitions(0, 1, 2, 5, 253), null);
         List<RecordData> gpxPointDataRecords = new ArrayList<>();
 
         double totalAscent = 0;
@@ -114,7 +114,7 @@ public class GpxRouteFileConverter {
         courseFileDataRecords.add(lapRecord);
 
         final RecordHeader eventRecordHeader = new RecordHeader((byte) 0x04);
-        final RecordDefinition eventRecordDefinition = new RecordDefinition(new RecordHeader((byte) 0x44), ByteOrder.BIG_ENDIAN, GlobalFITMessage.EVENT, GlobalFITMessage.EVENT.getFieldDefinitions(0, 1, 4, 253), null);
+        final RecordDefinition eventRecordDefinition = new RecordDefinition(new RecordHeader((byte) 0x44), ByteOrder.BIG_ENDIAN, NativeFITMessage.EVENT, NativeFITMessage.EVENT.getFieldDefinitions(0, 1, 4, 253), null);
         courseFileDataRecords.add(getEventRecordData(eventRecordDefinition, eventRecordHeader, timestamp, 0));
         courseFileDataRecords.add(getEventRecordData(eventRecordDefinition, eventRecordHeader, runningTs, 9));
 
@@ -140,7 +140,7 @@ public class GpxRouteFileConverter {
         final GPSCoordinate last = gpxTrackPointList.get(gpxTrackPointList.size() - 1);
 
         final RecordData lapRecord = FitRecordDataFactory.create(
-                new RecordDefinition(new RecordHeader((byte) 0x43), ByteOrder.BIG_ENDIAN, GlobalFITMessage.LAP, GlobalFITMessage.LAP.getFieldDefinitions(3, 4, 5, 6, 7, 8, 9, 21, 22, 253), null),
+                new RecordDefinition(new RecordHeader((byte) 0x43), ByteOrder.BIG_ENDIAN, NativeFITMessage.LAP, NativeFITMessage.LAP.getFieldDefinitions(3, 4, 5, 6, 7, 8, 9, 21, 22, 253), null),
                 new RecordHeader((byte) 0x03));
         lapRecord.setFieldByName("start_lat", first.getLatitude());
         lapRecord.setFieldByName("start_long", first.getLongitude());
@@ -152,7 +152,7 @@ public class GpxRouteFileConverter {
 
     private RecordData getCourseRecordData() {
         final RecordData courseRecord = FitRecordDataFactory.create(
-                new RecordDefinition(new RecordHeader((byte) 0x42), ByteOrder.BIG_ENDIAN, GlobalFITMessage.COURSE, GlobalFITMessage.COURSE.getFieldDefinitions(4, 5), null),
+                new RecordDefinition(new RecordHeader((byte) 0x42), ByteOrder.BIG_ENDIAN, NativeFITMessage.COURSE, NativeFITMessage.COURSE.getFieldDefinitions(4, 5), null),
                 new RecordHeader((byte) 0x02));
         courseRecord.setFieldByName("sport", activity); //TODO use track.getType()
         courseRecord.setFieldByName("name", name);
@@ -161,7 +161,7 @@ public class GpxRouteFileConverter {
 
     private RecordData getFileIdRecordData() {
         final RecordData fileIdRecord = FitRecordDataFactory.create(
-                new RecordDefinition(new RecordHeader((byte) 0x40), ByteOrder.BIG_ENDIAN, GlobalFITMessage.FILE_ID, GlobalFITMessage.FILE_ID.getFieldDefinitions(0, 1, 2, 3, 4, 5), null),
+                new RecordDefinition(new RecordHeader((byte) 0x40), ByteOrder.BIG_ENDIAN, NativeFITMessage.FILE_ID, NativeFITMessage.FILE_ID.getFieldDefinitions(0, 1, 2, 3, 4, 5), null),
                 new RecordHeader((byte) 0x00));
         fileIdRecord.setFieldByName("type", FileType.FILETYPE.COURSES.getSubType());
         fileIdRecord.setFieldByName("manufacturer", 1);

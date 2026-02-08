@@ -14,15 +14,15 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.Mess
 
 public class RecordDefinition {
     private final RecordHeader recordHeader;
-    private final GlobalFITMessage globalFITMessage;
+    private final NativeFITMessage nativeFITMessage;
     private final java.nio.ByteOrder byteOrder;
     private List<FieldDefinition> fieldDefinitions;
     private List<DevFieldDefinition> devFieldDefinitions;
 
-    public RecordDefinition(RecordHeader recordHeader, ByteOrder byteOrder, GlobalFITMessage globalFITMessage, List<FieldDefinition> fieldDefinitions, List<DevFieldDefinition> devFieldDefinitions) {
+    public RecordDefinition(RecordHeader recordHeader, ByteOrder byteOrder, NativeFITMessage nativeFITMessage, List<FieldDefinition> fieldDefinitions, List<DevFieldDefinition> devFieldDefinitions) {
         this.recordHeader = recordHeader;
         this.byteOrder = byteOrder;
-        this.globalFITMessage = globalFITMessage;
+        this.nativeFITMessage = nativeFITMessage;
         this.fieldDefinitions = fieldDefinitions;
         this.devFieldDefinitions = devFieldDefinitions;
     }
@@ -33,16 +33,16 @@ public class RecordDefinition {
         garminByteBufferReader.readByte();//ignore
         ByteOrder byteOrder = garminByteBufferReader.readByte() == 0x01 ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN;
         garminByteBufferReader.setByteOrder(byteOrder);
-        final int globalMesgNum = garminByteBufferReader.readShort();
-        final GlobalFITMessage globalFITMessage = GlobalFITMessage.fromNumber(globalMesgNum);
+        final int nativeMesgNum = garminByteBufferReader.readShort();
+        final NativeFITMessage nativeFITMessage = NativeFITMessage.fromNumber(nativeMesgNum);
 
-        RecordDefinition definitionMessage = new RecordDefinition(recordHeader, byteOrder, globalFITMessage, null, null);
+        RecordDefinition definitionMessage = new RecordDefinition(recordHeader, byteOrder, nativeFITMessage, null, null);
 
         final int numFields = garminByteBufferReader.readByte();
         List<FieldDefinition> fieldDefinitions = new ArrayList<>(numFields);
 
         for (int i = 0; i < numFields; i++) {
-            fieldDefinitions.add(FieldDefinition.parseIncoming(garminByteBufferReader, globalFITMessage));
+            fieldDefinitions.add(FieldDefinition.parseIncoming(garminByteBufferReader, nativeFITMessage));
         }
 
         definitionMessage.setFieldDefinitions(fieldDefinitions);
@@ -59,8 +59,8 @@ public class RecordDefinition {
         return definitionMessage;
     }
 
-    public GlobalFITMessage getGlobalFITMessage() {
-        return globalFITMessage;
+    public NativeFITMessage getNativeFITMessage() {
+        return nativeFITMessage;
     }
 
 
@@ -94,7 +94,7 @@ public class RecordDefinition {
         writer.writeByte(0);//ignore
         writer.writeByte(byteOrder == ByteOrder.LITTLE_ENDIAN ? 0 : 1);
         writer.setByteOrder(byteOrder);
-        writer.writeShort(globalFITMessage.getNumber());
+        writer.writeShort(nativeFITMessage.getNumber());
 
         if (fieldDefinitions != null) {
             writer.writeByte(fieldDefinitions.size());
@@ -107,7 +107,7 @@ public class RecordDefinition {
     @NonNull
     public String toString() {
         return System.lineSeparator() + recordHeader.toString() +
-                " Global Message Number: " + globalFITMessage.name();
+                " Native Message Number: " + nativeFITMessage.name();
     }
 
     public void populateDevFields(RecordData recordData) {
@@ -140,13 +140,13 @@ public class RecordDefinition {
         if (o == null || getClass() != o.getClass()) return false;
 
         RecordDefinition that = (RecordDefinition) o;
-        return Objects.equals(recordHeader, that.recordHeader) && Objects.equals(globalFITMessage, that.globalFITMessage) && Objects.equals(byteOrder, that.byteOrder) && Objects.equals(fieldDefinitions, that.fieldDefinitions) && Objects.equals(devFieldDefinitions, that.devFieldDefinitions);
+        return Objects.equals(recordHeader, that.recordHeader) && Objects.equals(nativeFITMessage, that.nativeFITMessage) && Objects.equals(byteOrder, that.byteOrder) && Objects.equals(fieldDefinitions, that.fieldDefinitions) && Objects.equals(devFieldDefinitions, that.devFieldDefinitions);
     }
 
     @Override
     public int hashCode() {
         int result = Objects.hashCode(recordHeader);
-        result = 31 * result + Objects.hashCode(globalFITMessage);
+        result = 31 * result + Objects.hashCode(nativeFITMessage);
         result = 31 * result + Objects.hashCode(byteOrder);
         result = 31 * result + Objects.hashCode(fieldDefinitions);
         result = 31 * result + Objects.hashCode(devFieldDefinitions);

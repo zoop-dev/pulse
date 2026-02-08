@@ -33,9 +33,9 @@ public class FitVideoFrame extends RecordData {
     public FitVideoFrame(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 169) {
-            throw new IllegalArgumentException("FitVideoFrame expects global messages of " + 169 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 169) {
+            throw new IllegalArgumentException("FitVideoFrame expects native messages of " + 169 + ", got " + nativeNumber);
         }
     }
 

@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.GlobalFITMessage;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.NativeFITMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 
 public class FitRecordAdapter extends RecyclerView.Adapter<FitRecordAdapter.FitRecordViewHolder> {
@@ -55,7 +55,7 @@ public class FitRecordAdapter extends RecyclerView.Adapter<FitRecordAdapter.FitR
 
     private final List<RecordData> fitRecords;
     private final List<RecordData> filteredRecords;
-    private final Set<GlobalFITMessage> filter = new HashSet<>();
+    private final Set<NativeFITMessage> filter = new HashSet<>();
     private final Context mContext;
 
     public FitRecordAdapter(final Context context, final FitFile fitFile) {
@@ -76,7 +76,7 @@ public class FitRecordAdapter extends RecyclerView.Adapter<FitRecordAdapter.FitR
     public void onBindViewHolder(final FitRecordViewHolder holder, int position) {
         final RecordData record = filteredRecords.get(position);
 
-        holder.title.setText(record.getGlobalFITMessage().name());
+        holder.title.setText(record.getNativeFITMessage().name());
         if (record.getComputedTimestamp() != null) {
             holder.description.setText(SDF.format(new Date(record.getComputedTimestamp() * 1000L)));
         } else {
@@ -107,13 +107,13 @@ public class FitRecordAdapter extends RecyclerView.Adapter<FitRecordAdapter.FitR
 
             new MaterialAlertDialogBuilder(mContext)
                     .setCancelable(true)
-                    .setTitle(record.getGlobalFITMessage().name())
+                    .setTitle(record.getNativeFITMessage().name())
                     .setMessage(recordInfo)
                     .setPositiveButton(R.string.ok, (dialog, which) -> {
                     })
                     .setNeutralButton(android.R.string.copy, (dialog, which) -> {
                         final ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
-                        final ClipData clip = ClipData.newPlainText(record.getGlobalFITMessage().name(), recordInfo);
+                        final ClipData clip = ClipData.newPlainText(record.getNativeFITMessage().name(), recordInfo);
                         clipboard.setPrimaryClip(clip);
                     })
                     .show();
@@ -125,7 +125,7 @@ public class FitRecordAdapter extends RecyclerView.Adapter<FitRecordAdapter.FitR
         return filteredRecords.size();
     }
 
-    public void updateFilter(final Set<GlobalFITMessage> filter) {
+    public void updateFilter(final Set<NativeFITMessage> filter) {
         this.filter.clear();
         this.filter.addAll(filter);
         refreshFilter();
@@ -136,7 +136,7 @@ public class FitRecordAdapter extends RecyclerView.Adapter<FitRecordAdapter.FitR
         if (filter.isEmpty()) {
             filteredRecords.addAll(fitRecords);
         } else {
-            filteredRecords.addAll(fitRecords.stream().filter(r -> filter.contains(r.getGlobalFITMessage())).collect(Collectors.toList()));
+            filteredRecords.addAll(fitRecords.stream().filter(r -> filter.contains(r.getNativeFITMessage())).collect(Collectors.toList()));
         }
     }
 

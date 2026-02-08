@@ -33,9 +33,9 @@ public class FitHillScore extends RecordData {
     public FitHillScore(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 402) {
-            throw new IllegalArgumentException("FitHillScore expects global messages of " + 402 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 402) {
+            throw new IllegalArgumentException("FitHillScore expects native messages of " + 402 + ", got " + nativeNumber);
         }
     }
 

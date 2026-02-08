@@ -33,9 +33,9 @@ public class FitDiveSummary extends RecordData {
     public FitDiveSummary(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 268) {
-            throw new IllegalArgumentException("FitDiveSummary expects global messages of " + 268 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 268) {
+            throw new IllegalArgumentException("FitDiveSummary expects native messages of " + 268 + ", got " + nativeNumber);
         }
     }
 

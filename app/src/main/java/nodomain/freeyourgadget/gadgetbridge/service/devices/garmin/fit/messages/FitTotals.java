@@ -33,9 +33,9 @@ public class FitTotals extends RecordData {
     public FitTotals(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 33) {
-            throw new IllegalArgumentException("FitTotals expects global messages of " + 33 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 33) {
+            throw new IllegalArgumentException("FitTotals expects native messages of " + 33 + ", got " + nativeNumber);
         }
     }
 

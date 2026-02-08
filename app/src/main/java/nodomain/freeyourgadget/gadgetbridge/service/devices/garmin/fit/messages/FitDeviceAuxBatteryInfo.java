@@ -33,9 +33,9 @@ public class FitDeviceAuxBatteryInfo extends RecordData {
     public FitDeviceAuxBatteryInfo(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 375) {
-            throw new IllegalArgumentException("FitDeviceAuxBatteryInfo expects global messages of " + 375 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 375) {
+            throw new IllegalArgumentException("FitDeviceAuxBatteryInfo expects native messages of " + 375 + ", got " + nativeNumber);
         }
     }
 

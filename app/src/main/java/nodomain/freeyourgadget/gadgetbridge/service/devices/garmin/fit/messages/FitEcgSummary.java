@@ -33,9 +33,9 @@ public class FitEcgSummary extends RecordData {
     public FitEcgSummary(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 336) {
-            throw new IllegalArgumentException("FitEcgSummary expects global messages of " + 336 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 336) {
+            throw new IllegalArgumentException("FitEcgSummary expects native messages of " + 336 + ", got " + nativeNumber);
         }
     }
 

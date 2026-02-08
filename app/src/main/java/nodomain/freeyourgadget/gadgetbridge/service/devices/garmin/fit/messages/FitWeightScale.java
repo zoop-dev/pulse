@@ -33,9 +33,9 @@ public class FitWeightScale extends RecordData {
     public FitWeightScale(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 30) {
-            throw new IllegalArgumentException("FitWeightScale expects global messages of " + 30 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 30) {
+            throw new IllegalArgumentException("FitWeightScale expects native messages of " + 30 + ", got " + nativeNumber);
         }
     }
 

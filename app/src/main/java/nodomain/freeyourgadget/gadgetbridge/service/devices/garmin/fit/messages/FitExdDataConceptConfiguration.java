@@ -33,9 +33,9 @@ public class FitExdDataConceptConfiguration extends RecordData {
     public FitExdDataConceptConfiguration(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 202) {
-            throw new IllegalArgumentException("FitExdDataConceptConfiguration expects global messages of " + 202 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 202) {
+            throw new IllegalArgumentException("FitExdDataConceptConfiguration expects native messages of " + 202 + ", got " + nativeNumber);
         }
     }
 

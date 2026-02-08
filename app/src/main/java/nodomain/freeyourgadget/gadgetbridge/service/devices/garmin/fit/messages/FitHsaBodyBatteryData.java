@@ -33,9 +33,9 @@ public class FitHsaBodyBatteryData extends RecordData {
     public FitHsaBodyBatteryData(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 314) {
-            throw new IllegalArgumentException("FitHsaBodyBatteryData expects global messages of " + 314 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 314) {
+            throw new IllegalArgumentException("FitHsaBodyBatteryData expects native messages of " + 314 + ", got " + nativeNumber);
         }
     }
 

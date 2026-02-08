@@ -33,9 +33,9 @@ public class FitSdmProfile extends RecordData {
     public FitSdmProfile(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 5) {
-            throw new IllegalArgumentException("FitSdmProfile expects global messages of " + 5 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 5) {
+            throw new IllegalArgumentException("FitSdmProfile expects native messages of " + 5 + ", got " + nativeNumber);
         }
     }
 

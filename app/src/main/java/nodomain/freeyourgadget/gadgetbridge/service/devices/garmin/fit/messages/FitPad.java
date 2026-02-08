@@ -33,9 +33,9 @@ public class FitPad extends RecordData {
     public FitPad(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
-        final int globalNumber = recordDefinition.getGlobalFITMessage().getNumber();
-        if (globalNumber != 105) {
-            throw new IllegalArgumentException("FitPad expects global messages of " + 105 + ", got " + globalNumber);
+        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
+        if (nativeNumber != 105) {
+            throw new IllegalArgumentException("FitPad expects native messages of " + 105 + ", got " + nativeNumber);
         }
     }
 
