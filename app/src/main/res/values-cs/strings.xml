@@ -4120,7 +4120,7 @@
     <string name="rebble_appstore_fetch_app_info_failed_content_type">Získávání informací o aplikaci selhalo, nesprávný typ obsahu: %1$s</string>
     <string name="rebble_appstore_fetching_download_file_failed">Získávání souboru ke stažení selhalo: %1$s</string>
     <string name="internet_helper_permission_title">Doplněk pomocníka s internetem</string>
-    <string name="internet_helper_permission_summary">Udělit přístup k doplňkové aplikaci Gadgetbridge-internethelper</string>
+    <string name="internet_helper_permission_summary">Udělit přístup k doplňkové aplikaci Pomocník s internetem Gadgetbridge</string>
     <string name="notification_channel_pebble_js_runner">Spouštěč Pebble JS</string>
     <string name="notification_pebble_js_service_title">JavaScriptová služba Pebble</string>
     <string name="notification_pebble_js_service_text">Spouštím JavaScript aplikací/ciferníků Pebble</string>
@@ -4282,4 +4282,6 @@
     <string name="busy_task_fetch_blood_pressure_data">Stahování dat o krevním tlaku</string>
     <string name="sleep_restless_moments">Neklidné chvíle</string>
     <string name="sports_activity_quick_filter_distant_past">Vzdálená minulost (všechna cvičení)</string>
+    <string name="internet_firewall_blacklisted_domains_title">Zablokované domény</string>
+    <string name="internet_firewall_blacklisted_domains_summary">Následující domény a všechny jejich subdomény budou ignorovat nastavení výše a budou vždy zablokované.</string>
 </resources>
