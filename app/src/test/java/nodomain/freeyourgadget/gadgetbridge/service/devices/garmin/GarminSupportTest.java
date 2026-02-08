@@ -20,7 +20,6 @@ import android.bluetooth.BluetoothGattCharacteristic;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -70,7 +69,6 @@ public class GarminSupportTest extends TestBase {
     }
 
     @Test
-    @Ignore("RecordData now includes a timestamp and the test comparison fails, even though it's functionally the same")
     public void testWeatherDataMessage() {
         byte[] weatherDataMessage = GB.hexStringToByteArray("540194130000438CC424438CC4240F0A1904000C630BA40D1E00000026FFFFFF860A02477265656E2048696C6C00000000000101438CD2340A000A001E1748320A400000000101438CE0440B000B001F1872330B404000000101438CEE540C000C0020199C340C408000000101438CFC640D000D00211AC6350D40A000000101438D0A740E000E00221BF0360E40C000000101438D18840F000F00231D1A370F40E000000101438D269410001000241E443810410000000101438D34A411001100251F6E3911411000000101438D42B4120012002620983A12412000000101438D50C4130013002721C23B13413000000101438D5ED4140014002822EC3C14414000000101438D6CE4150015002924163D15415000000202438CC4240A19046305020202438CC4240A19003206030202438CC4240B1A003300030202438CC4240C1B003401030202438CC4240D1C0035020330AD");
         FitDataMessage fitDataMessage = (FitDataMessage) GFDIMessage.parseIncoming(weatherDataMessage);
@@ -103,12 +101,6 @@ public class GarminSupportTest extends TestBase {
     @Test
     public void incomingFitDefinition() {
         GarminSupport support = createSupport();
-
-        final CobsCoDec cobsCoDec = new CobsCoDec();
-        cobsCoDec.receivedBytes(GB.hexStringToByteArray("00021703AA13082088236905011303021F03033F0507045BC600"));//notificationcontrol message from log
-        final byte[] deCobs = cobsCoDec.retrieveMessage();
-
-        GFDIMessage pippo = GFDIMessage.parseIncoming(GB.hexStringToByteArray("1700AA13002088236905011300021F00033F0007045BC6"));//notificationcontrol message from log
 
         final byte[] incomingDefinition = GB.hexStringToByteArray("5700931340000000000603048C0404860102840202840502840001004100000C000404028400010001010005010042000001000317048C1A048C01010A4300007F00060318070101000401000501000701000A010054CE");
         FitDefinitionMessage fitDefinitionMessage = (FitDefinitionMessage) GFDIMessage.parseIncoming(incomingDefinition);
