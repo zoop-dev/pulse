@@ -17,8 +17,6 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin;
 
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.content.Context;
-import android.net.Uri;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -36,24 +34,16 @@ import java.lang.reflect.Parameter;
 import java.math.BigInteger;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
-import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiFWHelper;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.communicator.CobsCoDec;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.communicator.v2.CommunicatorV2;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.IncomingFitDefinitionDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FieldDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitLocalMessageBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.GlobalFITMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
@@ -69,7 +59,6 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.FitD
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.GFDIMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.status.FitDataStatusMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.status.FitDefinitionStatusMessage;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.HuamiSupport;
 import nodomain.freeyourgadget.gadgetbridge.test.TestBase;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
@@ -83,12 +72,10 @@ public class GarminSupportTest extends TestBase {
     @Test
     @Ignore("RecordData now includes a timestamp and the test comparison fails, even though it's functionally the same")
     public void testWeatherDataMessage() {
-        byte[] weatherDataMessage = GB.hexStringToByteArray("5901941306003f3672953f3672951a0e1b0200b4000a7a1a2b211bba1707fe6f1d426f6c7a616e6f2c204974616c790009013f367a1018020144037e0a360e3ecac083ff09013f36882017020144037e0a3b0e00000000ff09013f36963015020144037e0a3f0e00000000ff09013f36a44013010015037e0a430d00000000ff09013f36b25012010015037e00470d00000000ff09013f36c06012010015037e004a0d00000000ff09013f36ce7011010017037e004d0d00000000ff09013f36dc8010010017037e00500d00000000ff09013f36ea9010010017037e00510d00000000ff09013f36f8a00f000029037e00530c00000000ff09013f3706b00e000029037e00540c00000000ff09013f3714c00f000029037e00500c00000000ff0a023f3672950e1b0200030a023f3672950e1d0000040a023f3672950f1e0114050a023f36729511200114060a023f367295122100140052E3");
-//        byte[] weatherDataMessage = GB.hexStringToByteArray("59019413060040684550406845500A060A010095640254095200000000000000004D79204C6F636174696F6E000000000901406848000A160087012A62547F3E99999AFF0901406856100A010168025460577F3DCCCCCDFF0901406864200901000504A85E557F00000000FF09014068723009010027025458517F00000000FF09014068804009010015037E53517F00000000FF090140688E5009010161037E4D4E7F00000000FF090140689C6008010162037E334E7F00000000FF09014068AA700701015A012A1A4F7F00000000FF09014068B8800701008D0254004E7F00000000FF09014068C690070100AC037E004D7F00000000FF09014068D4A007010099012A004E7F00000000FF09014068E2B0061600B4012A004F7F00000000FF0A0240684550060A0164040A0240684550060E1064050A02406845500A121061060A02406845500A0D0361000A0240684550090F106401C8DA");
-//        byte[] weatherDataMessage = GB.hexStringToByteArray("590194130600405D7050405D70501007130000C20001920E3000000000000000004D79204C6F636174696F6E000000000901405D75B0100100D30245002D0040933333000901405D83C0120100B40245002A004099999A000901405D91D0120100A0048A002A0040900000000901405D9FE01301009E0649002B00406CCCCD000901405DADF013010096056A002F0040133333000901405DBC001201008703510036003FA00000000901405DCA101001003B048A003B003F000000000901405DD8200D01003B02450041003D4CCCCD000901405DE6300D16005A019200410000000000000901405DF4400C16007501BF00450000000000000901405E02500C16005A045E00450000000000000901405E10600B01007204B700490000000000000A02405D705007130000030A02405D70500814163A040A02405D705008141605050A02405D70500611035E060A02405D7050050C1640006324");
+        byte[] weatherDataMessage = GB.hexStringToByteArray("540194130000438CC424438CC4240F0A1904000C630BA40D1E00000026FFFFFF860A02477265656E2048696C6C00000000000101438CD2340A000A001E1748320A400000000101438CE0440B000B001F1872330B404000000101438CEE540C000C0020199C340C408000000101438CFC640D000D00211AC6350D40A000000101438D0A740E000E00221BF0360E40C000000101438D18840F000F00231D1A370F40E000000101438D269410001000241E443810410000000101438D34A411001100251F6E3911411000000101438D42B4120012002620983A12412000000101438D50C4130013002721C23B13413000000101438D5ED4140014002822EC3C14414000000101438D6CE4150015002924163D15415000000202438CC4240A19046305020202438CC4240A19003206030202438CC4240B1A003300030202438CC4240C1B003401030202438CC4240D1C0035020330AD");
         FitDataMessage fitDataMessage = (FitDataMessage) GFDIMessage.parseIncoming(weatherDataMessage);
 
-        byte[] weatherDefinitionMessage = GB.hexStringToByteArray("7b00931346000100800f000100fd04860904860101010e01010d01010201000302840501020402840601010701020a04850b0485080f0749000100800b000100fd04860101010201000302840402840501020701020f01011004881101004a0001008007000100fd04860e01010d01010201000501020c01003ae3");
+        byte[] weatherDefinitionMessage = GB.hexStringToByteArray("81009313400001008011000100FD04860904860101010E01010D01010201000302840501020402840601010701020A04850B04850F0101110100080F0741000100800A000100FD0486010101020100060101030284040284050102070102100488420001008008000100FD04860E01010D01010201000501020C0100110100F2FF");
         FitDefinitionMessage fitDefinitionMessage = (FitDefinitionMessage) GFDIMessage.parseIncoming(weatherDefinitionMessage);
 
         List<RecordData>  recordDataList = fitDataMessage.applyDefinitions(fitDefinitionMessage.getRecordDefinitions());
@@ -96,31 +83,21 @@ public class GarminSupportTest extends TestBase {
         List<RecordData> weatherData = new ArrayList<>();
 
         for (RecordData rec : recordDataList) {
-
-
             RecordData out = new RecordData(rec.getRecordDefinition(), rec.getRecordDefinition().getRecordHeader());
 
             for (int fieldNumber :
                     rec.getFieldsNumbers()) {
                 Object o = rec.getFieldByNumber(fieldNumber);
                 out.setFieldByNumber(fieldNumber, o);
+                //due to the different ways applyDefinitions and setFieldByNumber we manually set the computedTimestamp to ensure the equality is passed
+                out.computedTimestamp = rec.getComputedTimestamp();
                 Assert.assertEquals(o, out.getFieldByNumber(fieldNumber));
             }
-            weatherData.add(out);
-            System.out.println(rec.toString());
-            System.out.println(out.toString());
-
             Assert.assertEquals(rec.toString(), out.toString());
-
+            weatherData.add(out);
         }
 
-        FitDataMessage recostructed = new FitDataMessage(weatherData);
-
-        byte[] output = recostructed.getOutgoingMessage();
-
-        Assert.assertArrayEquals(weatherDataMessage, output);
-
-
+        Assert.assertArrayEquals(weatherDataMessage, new FitDataMessage(weatherData).getOutgoingMessage());
     }
 
     @Test
@@ -152,17 +129,6 @@ public class GarminSupportTest extends TestBase {
 
         FitDataStatusMessage ok_applied_data = new FitDataStatusMessage(GFDIMessage.GarminMessage.FIT_DATA, GFDIMessage.Status.ACK, FitDataStatusMessage.FitDataStatusCode.APPLIED, true);
         Assert.assertArrayEquals(ok_applied_data.getOutgoingMessage(), fitDataMessage.getAckBytestream());
-
-        //RecordData{CAPABILITIES, sports=7, connectivity_supported=352360138, unknown_26(UINT32Z/4)=7}
-        //RecordData{CONNECTIVITY, bluetooth_le_enabled=0, name=Forerunner 35, live_tracking_enabled=1, weather_conditions_enabled=1, auto_activity_upload_enabled=1, gps_ephemeris_download_enabled=1}
-
-        //forse va in conflitto con ``private void enableWeather() {``???
-
-
-
-//        final FitLocalMessageBuilder pippo = new FitLocalMessageBuilder(((IncomingFitDefinitionDeviceEvent) events.getFirst()).getRecordDefinitions());
-//        pippo.getDefinitions();
-
     }
     @Test
     public void testBaseFields() {
