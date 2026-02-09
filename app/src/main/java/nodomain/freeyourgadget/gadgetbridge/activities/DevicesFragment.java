@@ -23,6 +23,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -77,7 +78,7 @@ public class DevicesFragment extends Fragment {
                 case DeviceManager.ACTION_DEVICES_CHANGED:
                 case GBApplication.ACTION_NEW_DATA:
                     if (action.equals(GBApplication.ACTION_NEW_DATA)) {
-                        createRefreshTask("get activity data", requireContext(), device).execute();
+                        createRefreshTask("get activity data", requireContext(), device).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }
                     if (device != null) {
                         // Refresh only this device
@@ -129,7 +130,7 @@ public class DevicesFragment extends Fragment {
             @Override
             public void run() {
                 if (getContext() != null) {
-                    createRefreshTask("get activity data", getContext(), null).execute();
+                    createRefreshTask("get activity data", getContext(), null).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
             }
         });
@@ -242,7 +243,7 @@ public class DevicesFragment extends Fragment {
         private final GBDevice device;
 
         public RefreshTask(final String task, final Context context, final GBDevice device) {
-            super(task, context);
+            super(task, context, false);
             this.device = device;
         }
 

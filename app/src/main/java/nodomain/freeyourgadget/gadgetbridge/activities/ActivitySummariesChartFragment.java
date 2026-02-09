@@ -18,6 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -94,7 +95,7 @@ public class ActivitySummariesChartFragment extends AbstractActivityChartFragmen
         this.gbDevice = gbDevice;
         if (this.view != null) {
             setupChart();
-            createLocalRefreshTask("getting hr and activity", getActivity()).execute();
+            createLocalRefreshTask("getting hr and activity", getActivity()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
@@ -117,7 +118,7 @@ public class ActivitySummariesChartFragment extends AbstractActivityChartFragmen
         this.view = view;
         if (this.trackFile != null || this.gbDevice != null) {
             setupChart();
-            createLocalRefreshTask("getting hr and activity", getActivity()).execute();
+            createLocalRefreshTask("getting hr and activity", getActivity()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 
@@ -218,7 +219,7 @@ public class ActivitySummariesChartFragment extends AbstractActivityChartFragmen
     public class RefreshTask extends DBAccess {
 
         public RefreshTask(String task, Context context) {
-            super(task, context);
+            super(task, context, false);
         }
 
         @Override

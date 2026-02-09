@@ -144,7 +144,7 @@ public class GBDeviceEventBatteryInfo extends GBDeviceEvent {
         GBDevice gbDevice;
 
         public StoreDataTask(String task, Context context, GBDevice device, GBDeviceEventBatteryInfo deviceEvent) {
-            super(task, context);
+            super(task, context, true);
             this.deviceEvent = deviceEvent;
             this.gbDevice = device;
         }

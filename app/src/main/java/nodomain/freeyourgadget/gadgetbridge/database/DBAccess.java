@@ -35,10 +35,12 @@ public abstract class DBAccess extends AsyncTask {
     private final String mTask;
     private final Context mContext;
     private Exception mError;
+    private final boolean mForWrite;
 
-    public DBAccess(String task, Context context) {
+    public DBAccess(String task, Context context, boolean forWrite) {
         mTask = task;
         mContext = context;
+        mForWrite = forWrite;
     }
 
     public Context getContext() {
@@ -49,7 +51,7 @@ public abstract class DBAccess extends AsyncTask {
 
     @Override
     protected Object doInBackground(Object[] params) {
-        try (DBHandler db = GBApplication.acquireDB()) {
+        try (DBHandler db = (mForWrite ? GBApplication.acquireDB() : GBApplication.acquireDbReadOnly())) {
             doInBackground(db);
         } catch (Exception e) {
             LOG.error("Error during DBAccess for {}", mTask, e);

@@ -17,6 +17,7 @@
 package nodomain.freeyourgadget.gadgetbridge.activities;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,7 +83,7 @@ public class BatteryInfoChartFragment extends AbstractGBFragment {
         this.gbDevice = gbDevice;
         this.batteryIndex = batteryIndex;
         try {
-            createRefreshTask("Visualizing data", getActivity()).execute();
+            createRefreshTask("Visualizing data", getActivity()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } catch (Exception e) {
             LOG.debug("Unable to fill charts data right now:", e);
         }
@@ -136,7 +137,7 @@ public class BatteryInfoChartFragment extends AbstractGBFragment {
         mChart = rootView.findViewById(R.id.activitysleepchart);
         if (this.gbDevice != null) {
             setupChart();
-            createRefreshTask("Visualizing data", getActivity()).execute();
+            createRefreshTask("Visualizing data", getActivity()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
         return rootView;
     }
@@ -213,7 +214,7 @@ public class BatteryInfoChartFragment extends AbstractGBFragment {
     public class RefreshTask extends DBAccess {
 
         public RefreshTask(String task, Context context) {
-            super(task, context);
+            super(task, context, false);
         }
 
         @Override

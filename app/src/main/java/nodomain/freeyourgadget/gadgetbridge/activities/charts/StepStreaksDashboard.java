@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -142,8 +143,8 @@ public class StepStreaksDashboard extends MaterialDialogFragment {
                 populateData();
             }
         }
-        createTaskCalculateLatestStepsStreak("Visualizing data current", getActivity(), PERIOD_CURRENT).execute();
-        createTaskCalculateLatestStepsStreak("Visualizing data maximum", getActivity(), PERIOD_TOTALS).execute();
+        createTaskCalculateLatestStepsStreak("Visualizing data current", getActivity(), PERIOD_CURRENT).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        createTaskCalculateLatestStepsStreak("Visualizing data maximum", getActivity(), PERIOD_TOTALS).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     void indicate_progress(boolean inProgress) {
@@ -242,7 +243,7 @@ public class StepStreaksDashboard extends MaterialDialogFragment {
         String period;
 
         public TaskCalculateLatestStepsStreak(String taskName, Context context, String period) {
-            super(taskName, context);
+            super(taskName, context, false);
             this.period = period;
         }
 

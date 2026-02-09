@@ -343,7 +343,7 @@ public abstract class AbstractChartFragment<D extends ChartsData> extends Abstra
                 if (refreshTask != null && refreshTask.getStatus() != AsyncTask.Status.FINISHED) {
                     refreshTask.cancel(true);
                 }
-                refreshTask = createRefreshTask("Visualizing data", getActivity()).execute();
+                refreshTask = createRefreshTask("Visualizing data", getActivity()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
     }
@@ -357,7 +357,7 @@ public abstract class AbstractChartFragment<D extends ChartsData> extends Abstra
         private D chartsData;
 
         public RefreshTask(final String task, final Context context) {
-            super(task, context);
+            super(task, context, false);
         }
 
         @Override

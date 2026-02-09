@@ -18,6 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.activities.charts;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -161,7 +162,7 @@ public class ActivityListingDashboard extends MaterialDialogFragment {
                 battery_status_time_span_text.setText(text);
                 battery_status_date_from_text.setText(DateTimeUtils.formatDate(new Date(timeFrom * 1000L)));
                 battery_status_date_to_text.setText(DateTimeUtils.formatDate(new Date(timeTo * 1000L)));
-                createRefreshTask("Visualizing step sessions", getActivity()).execute();
+                createRefreshTask("Visualizing step sessions", getActivity()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
 
             @Override
@@ -301,7 +302,7 @@ public class ActivityListingDashboard extends MaterialDialogFragment {
     public class RefreshTask extends DBAccess {
 
         public RefreshTask(String task, Context context) {
-            super(task, context);
+            super(task, context, false);
         }
 
         @Override
