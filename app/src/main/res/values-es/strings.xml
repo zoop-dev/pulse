@@ -4005,7 +4005,7 @@
     <string name="pref_notifications_pictures_enable">Enviar imágenes de notificaciones</string>
     <string name="pref_notifications_pictures_enable_summary">Enviar imágenes de notificaciones para el dispositivo actual</string>
     <string name="activity_title_rebble_app_store">Tienda de aplicaciones Rebble</string>
-    <string name="prefs_internet_helper_title">Asistente de Internet</string>
+    <string name="prefs_internet_helper_title">Asistente de internet</string>
     <string name="prefs_internet_helper_summary">Configurar las URL que pueden solicitarse a través de la aplicación complementaria del asistente de Internet</string>
     <string name="internet_helper_pref_app_req_title">Se requiere aplicación complementaria</string>
     <string name="internet_helper_pref_app_req_summary">Esta función requiere la instalación de una aplicación complementaria. Toque aquí para ir a la página de descarga.</string>
@@ -4034,7 +4034,7 @@
     <string name="rebble_appstore_fetch_app_info_failed_content_type">Error al obtener la información de la aplicación, tipo de contenido incorrecto: %1$s</string>
     <string name="rebble_appstore_fetching_download_file_failed">Error al obtener el archivo de descarga: %1$s</string>
     <string name="internet_helper_permission_title">Complemento del asistente de Internet</string>
-    <string name="internet_helper_permission_summary">Permitir acceso a la aplicación complementaria Gadgetbridge‑internethelper</string>
+    <string name="internet_helper_permission_summary">Permitir acceso al complemento Internet Helper para la aplicación Gadgetbridge</string>
     <string name="notification_channel_pebble_js_runner">Motor de Pebble JS</string>
     <string name="notification_pebble_js_service_title">Servicio de JavaScript de Pebble</string>
     <string name="notification_pebble_js_service_text">Ejecutando JavaScript de aplicaciones y esferas de Pebble</string>
@@ -4129,4 +4129,6 @@
     <string name="health_connect_sleep_session_notes">Datos de sueño del dispositivo Gadgetbridge: %1$s.</string>
     <string name="infinitime_filesystem_access_disabled">El acceso al sistema de archivos está desactivado en InfiniTime</string>
     <string name="infinitime_resource_upload_progress_status">Realizando acción %d de %d\n%s %s</string>
+    <string name="internet_firewall_blacklisted_domains_title">Dominios bloqueados</string>
+    <string name="internet_firewall_blacklisted_domains_summary">Los siguientes dominios y todos sus subdominios ignorarán la configuración anterior y siempre serán bloqueados.</string>
 </resources>
