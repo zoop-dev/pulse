@@ -4117,7 +4117,7 @@
     <string name="rebble_appstore_fetch_app_info_failed_content_type">获取应用信息失败，错误的内容类型：%1$s</string>
     <string name="rebble_appstore_fetching_download_file_failed">获取下载文件失败：%1$s</string>
     <string name="internet_helper_permission_title">互联网助手附加组件</string>
-    <string name="internet_helper_permission_summary">允许访问 Gadgetbridge-internethelper 附加组件应用</string>
+    <string name="internet_helper_permission_summary">授予 Gadgetbridge 附加组件应用访问互联网助手的权限</string>
     <string name="notification_channel_pebble_js_runner">Pebble JS 运行器</string>
     <string name="notification_pebble_js_service_title">Pebble JavaScript 服务</string>
     <string name="notification_pebble_js_service_text">正运行 Pebble 应用/表盘 JavaScript</string>
@@ -4279,4 +4279,6 @@
     <string name="busy_task_fetch_blood_pressure_data">获取血压数据中</string>
     <string name="sleep_restless_moments">不眠时刻</string>
     <string name="sports_activity_quick_filter_distant_past">遥远的过去（所有锻炼）</string>
+    <string name="internet_firewall_blacklisted_domains_title">拦截的域名</string>
+    <string name="internet_firewall_blacklisted_domains_summary">下列域名和它们所有的子域名会忽略上方设置，始终被拦截。</string>
 </resources>
