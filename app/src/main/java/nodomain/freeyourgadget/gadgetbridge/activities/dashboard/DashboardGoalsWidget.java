@@ -108,11 +108,12 @@ public class DashboardGoalsWidget extends AbstractDashboardWidget {
     @Override
     protected void fillData() {
         if (goalsView == null) return;
+        LOG.trace("Starting fillData for {}", getClass().getSimpleName());
         goalsView.post(new Runnable() {
             @Override
             public void run() {
                 FillDataAsyncTask myAsyncTask = new FillDataAsyncTask();
-                myAsyncTask.execute();
+                myAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
     }

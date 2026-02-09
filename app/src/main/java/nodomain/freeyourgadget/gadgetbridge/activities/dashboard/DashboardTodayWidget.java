@@ -387,6 +387,8 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
     protected void fillData() {
         if (todayView == null) return;
 
+        LOG.trace("Starting fillData for {}", getClass().getSimpleName());
+
         Prefs prefs = GBApplication.getPrefs();
         if (prefs.getBoolean("dashboard_widget_today_show_yesterday", false)) {
             Calendar today = Calendar.getInstance();
@@ -401,7 +403,7 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
             @Override
             public void run() {
                 FillDataAsyncTask myAsyncTask = new FillDataAsyncTask();
-                myAsyncTask.execute();
+                myAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         });
     }
@@ -547,7 +549,7 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
             List<ActivitySample> allActivitySamples = new ArrayList<>();
             List<ActivitySession> stepSessions = new ArrayList<>();
             List<BaseActivitySummary> activitySummaries = null;
-            try (DBHandler dbHandler = GBApplication.acquireDB()) {
+            try (DBHandler dbHandler = GBApplication.acquireDbReadOnly()) {
                 final List<Long> deviceIds = new LinkedList<>();
                 for (GBDevice dev : devices) {
                     if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsActivityTracking(dev)) {

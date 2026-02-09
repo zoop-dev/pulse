@@ -36,7 +36,7 @@ public abstract class AbstractDashboardVO2MaxWidget extends AbstractGaugeWidget 
 
         // Latest vo2max sample.
         Vo2MaxSample sample = null;
-        try (DBHandler dbHandler = GBApplication.acquireDB()) {
+        try (DBHandler dbHandler = GBApplication.acquireDbReadOnly()) {
             for (GBDevice dev : devices) {
                 final Vo2MaxSampleProvider sampleProvider = (Vo2MaxSampleProvider) dev.getDeviceCoordinator().getVo2MaxSampleProvider(dev, dbHandler.getDaoSession());
                 final Vo2MaxSample latestSample = sampleProvider.getLatestSample(getVO2MaxType(), dashboardData.timeTo * 1000L);

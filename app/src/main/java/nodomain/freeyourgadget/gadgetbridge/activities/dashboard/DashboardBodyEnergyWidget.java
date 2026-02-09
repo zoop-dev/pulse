@@ -71,7 +71,7 @@ public class DashboardBodyEnergyWidget extends AbstractGaugeWidget {
             // Latest stress sample for today
             BodyEnergySample sample = null;
 
-            try (DBHandler dbHandler = GBApplication.acquireDB()) {
+            try (DBHandler dbHandler = GBApplication.acquireDbReadOnly()) {
                 for (GBDevice dev : devices) {
                     final BodyEnergySample latestSample = dev.getDeviceCoordinator().getBodyEnergySampleProvider(dev, dbHandler.getDaoSession())
                             .getLatestSample();
@@ -90,7 +90,7 @@ public class DashboardBodyEnergyWidget extends AbstractGaugeWidget {
             }
         } else {
             // Gain / loss for the period
-            try (DBHandler dbHandler = GBApplication.acquireDB()) {
+            try (DBHandler dbHandler = GBApplication.acquireDbReadOnly()) {
                 for (GBDevice dev : devices) {
                     if ((dashboardData.showAllDevices || dashboardData.showDeviceList.contains(dev.getAddress())) && dev.getDeviceCoordinator().supportsBodyEnergy(dev)) {
                         final List<? extends BodyEnergySample> samples = dev.getDeviceCoordinator()

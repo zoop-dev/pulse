@@ -64,7 +64,7 @@ public class DashboardSleepScoreWidget extends AbstractGaugeWidget {
         final SleepScoreData data = new SleepScoreData();
 
         SleepScoreSample sample = null;
-        try (DBHandler dbHandler = GBApplication.acquireDB()) {
+        try (DBHandler dbHandler = GBApplication.acquireDbReadOnly()) {
             for (GBDevice dev : devices) {
                 TimeSampleProvider<? extends SleepScoreSample> provider = dev.getDeviceCoordinator().getSleepScoreProvider(dev, dbHandler.getDaoSession());
                 final SleepScoreSample latestSample = provider.getLatestSample(dashboardData.timeTo * 1000L);

@@ -82,9 +82,10 @@ public abstract class AbstractGaugeWidget extends AbstractDashboardWidget {
     @Override
     protected void fillData() {
         if (gaugeBar == null) return;
+        LOG.trace("Starting fillData for {}", getClass().getSimpleName());
         gaugeBar.post(() -> {
             final FillDataAsyncTask myAsyncTask = new FillDataAsyncTask();
-            myAsyncTask.execute();
+            myAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         });
     }
 

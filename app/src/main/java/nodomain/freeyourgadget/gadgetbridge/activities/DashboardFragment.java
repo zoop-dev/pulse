@@ -83,6 +83,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardVO2Max
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardVO2MaxRunningWidget;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
+import nodomain.freeyourgadget.gadgetbridge.util.CachedValue;
 import nodomain.freeyourgadget.gadgetbridge.util.DashboardUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
@@ -382,118 +383,93 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         public int timeFrom;
         public int timeTo;
         public final List<GeneralizedActivity> generalizedActivities = Collections.synchronizedList(new ArrayList<>());
-        private int stepsTotal;
-        private float stepsGoalFactor;
-        private int restingCaloriesTotal;
-        private int activeCaloriesTotal;
-        private float activeCaloriesGoalFactor;
-        private int caloriesTotal;
-        private long sleepTotalMinutes;
-        private float sleepGoalFactor;
-        private float distanceTotalMeters;
-        private float distanceGoalFactor;
-        private long activeMinutesTotal;
-        private float activeMinutesGoalFactor;
+        private final CachedValue<Integer> stepsTotal = new CachedValue<>();
+        private final CachedValue<Float> stepsGoalFactor = new CachedValue<>();
+        private final CachedValue<Integer> restingCaloriesTotal = new CachedValue<>();
+        private final CachedValue<Integer> activeCaloriesTotal = new CachedValue<>();
+        private final CachedValue<Float> activeCaloriesGoalFactor = new CachedValue<>();
+        private final CachedValue<Long> sleepTotalMinutes = new CachedValue<>();
+        private final CachedValue<Float> sleepGoalFactor = new CachedValue<>();
+        private final CachedValue<Float> distanceTotalMeters = new CachedValue<>();
+        private final CachedValue<Float> distanceGoalFactor = new CachedValue<>();
+        private final CachedValue<Long> activeMinutesTotal = new CachedValue<>();
+        private final CachedValue<Float> activeMinutesGoalFactor = new CachedValue<>();
         private final Map<String, Serializable> genericData = new ConcurrentHashMap<>();
 
         public void clear() {
-            restingCaloriesTotal = 0;
-            activeCaloriesTotal = 0;
-            activeCaloriesGoalFactor = 0;
-            caloriesTotal = 0;
-            stepsTotal = 0;
-            stepsGoalFactor = 0;
-            sleepTotalMinutes = 0;
-            sleepGoalFactor = 0;
-            distanceTotalMeters = 0;
-            distanceGoalFactor = 0;
-            activeMinutesTotal = 0;
-            activeMinutesGoalFactor = 0;
+            restingCaloriesTotal.clear();
+            activeCaloriesTotal.clear();
+            activeCaloriesGoalFactor.clear();
+            stepsTotal.clear();
+            stepsGoalFactor.clear();
+            sleepTotalMinutes.clear();
+            sleepGoalFactor.clear();
+            distanceTotalMeters.clear();
+            distanceGoalFactor.clear();
+            activeMinutesTotal.clear();
+            activeMinutesGoalFactor.clear();
             generalizedActivities.clear();
             genericData.clear();
         }
 
         public boolean isEmpty() {
-            return (stepsTotal == 0 &&
-                    stepsGoalFactor == 0 &&
-                    restingCaloriesTotal == 0 &&
-                    activeCaloriesTotal == 0 &&
-                    activeCaloriesGoalFactor == 0 &&
-                    caloriesTotal == 0 &&
-                    sleepTotalMinutes == 0 &&
-                    sleepGoalFactor == 0 &&
-                    distanceTotalMeters == 0 &&
-                    distanceGoalFactor == 0 &&
-                    activeMinutesTotal == 0 &&
-                    activeMinutesGoalFactor == 0 &&
+            return (stepsTotal.isEmpty() &&
+                    stepsGoalFactor.isEmpty() &&
+                    restingCaloriesTotal.isEmpty() &&
+                    activeCaloriesTotal.isEmpty() &&
+                    activeCaloriesGoalFactor.isEmpty() &&
+                    sleepTotalMinutes.isEmpty() &&
+                    sleepGoalFactor.isEmpty() &&
+                    distanceTotalMeters.isEmpty() &&
+                    distanceGoalFactor.isEmpty() &&
+                    activeMinutesTotal.isEmpty() &&
+                    activeMinutesGoalFactor.isEmpty() &&
                     genericData.isEmpty() &&
                     generalizedActivities.isEmpty());
         }
 
-        public synchronized int getStepsTotal() {
-            if (stepsTotal == 0)
-                stepsTotal = DashboardUtils.getStepsTotal(this);
-            return stepsTotal;
+        public int getStepsTotal() {
+            return stepsTotal.get(() -> DashboardUtils.getStepsTotal(this));
         }
 
-        public synchronized float getStepsGoalFactor() {
-            if (stepsGoalFactor == 0)
-                stepsGoalFactor = DashboardUtils.getStepsGoalFactor(this);
-            return stepsGoalFactor;
+        public float getStepsGoalFactor() {
+            return stepsGoalFactor.get(() -> DashboardUtils.getStepsGoalFactor(this));
         }
 
-        public synchronized float getDistanceTotal() {
-            if (distanceTotalMeters == 0)
-                distanceTotalMeters = DashboardUtils.getDistanceTotal(this);
-            return distanceTotalMeters;
+        public float getDistanceTotal() {
+            return distanceTotalMeters.get(() -> DashboardUtils.getDistanceTotal(this));
         }
 
-        public synchronized float getDistanceGoalFactor() {
-            if (distanceGoalFactor == 0)
-                distanceGoalFactor = DashboardUtils.getDistanceGoalFactor(this);
-            return distanceGoalFactor;
+        public float getDistanceGoalFactor() {
+            return distanceGoalFactor.get(() -> DashboardUtils.getDistanceGoalFactor(this));
         }
 
-        public synchronized long getActiveMinutesTotal() {
-            if (activeMinutesTotal == 0)
-                activeMinutesTotal = DashboardUtils.getActiveMinutesTotal(this);
-            return activeMinutesTotal;
+        public long getActiveMinutesTotal() {
+            return activeMinutesTotal.get(() -> DashboardUtils.getActiveMinutesTotal(this));
         }
 
-        public synchronized float getActiveMinutesGoalFactor() {
-            if (activeMinutesGoalFactor == 0)
-                activeMinutesGoalFactor = DashboardUtils.getActiveMinutesGoalFactor(this);
-            return activeMinutesGoalFactor;
+        public float getActiveMinutesGoalFactor() {
+            return activeMinutesGoalFactor.get(() -> DashboardUtils.getActiveMinutesGoalFactor(this));
         }
 
-        public synchronized long getSleepMinutesTotal() {
-            if (sleepTotalMinutes == 0)
-                sleepTotalMinutes = DashboardUtils.getSleepMinutesTotal(this);
-            return sleepTotalMinutes;
+        public long getSleepMinutesTotal() {
+            return sleepTotalMinutes.get(() -> DashboardUtils.getSleepMinutesTotal(this));
         }
 
-        public synchronized float getSleepMinutesGoalFactor() {
-            if (sleepGoalFactor == 0)
-                sleepGoalFactor = DashboardUtils.getSleepMinutesGoalFactor(this);
-            return sleepGoalFactor;
+        public float getSleepMinutesGoalFactor() {
+            return sleepGoalFactor.get(() -> DashboardUtils.getSleepMinutesGoalFactor(this));
         }
 
-        public synchronized int getActiveCaloriesTotal() {
-            if (activeCaloriesTotal == 0)
-                activeCaloriesTotal = DashboardUtils.getActiveCaloriesTotal(this);
-            return activeCaloriesTotal;
+        public int getActiveCaloriesTotal() {
+            return activeCaloriesTotal.get(() -> DashboardUtils.getActiveCaloriesTotal(this));
         }
 
-        public synchronized int getRestingCaloriesTotal() {
-            if (restingCaloriesTotal == 0)
-                restingCaloriesTotal = DashboardUtils.getRestingCaloriesTotal(this);
-            return restingCaloriesTotal;
+        public int getRestingCaloriesTotal() {
+            return restingCaloriesTotal.get(() -> DashboardUtils.getRestingCaloriesTotal(this));
         }
 
-        public synchronized float getActiveCaloriesGoalFactor() {
-            if (activeCaloriesGoalFactor == 0)
-                activeCaloriesGoalFactor = DashboardUtils.getActiveCaloriesGoalFactor(this);
-            return activeCaloriesGoalFactor;
+        public float getActiveCaloriesGoalFactor() {
+            return activeCaloriesGoalFactor.get(() -> DashboardUtils.getActiveCaloriesGoalFactor(this));
         }
 
         public void put(final String key, final Serializable value) {
