@@ -18,6 +18,8 @@
         <item name="drawerArrowStyle">@style/GadgetbridgeTheme.DrawerButtonStyle</item>
         <item name="toolbarNavigationButtonStyle">@style/GadgetbridgeTheme.NavigationButtonStyle</item>
         <item name="actionOverflowButtonStyle">@style/GadgetbridgeTheme.OverflowMenuButton</item>
+        <item name="actionModeStyle">@style/GadgetbridgeTheme.ActionMode</item>
+        <item name="actionModeCloseButtonStyle">@style/GadgetbridgeTheme.ActionModeCloseButton</item>
         <item name="preferenceTheme">@style/AppPreferenceThemeOverlay</item>
 
         <item name="drawer_header_color">?attr/colorPrimaryDark</item>
@@ -195,6 +197,19 @@
     </style>
     <style name="GadgetbridgeTheme.OverflowMenuButton" parent="Widget.AppCompat.ActionButton.Overflow">
         <item name="tint">@android:color/white</item>
+    </style>
+    <style name="GadgetbridgeTheme.ActionMode" parent="Widget.AppCompat.ActionMode">
+        <item name="background">@color/primary_light</item>
+        <item name="titleTextStyle">@style/GadgetbridgeTheme.ActionBarTitleStyle</item>
+        <item name="subtitleTextStyle">@style/GadgetbridgeTheme.ActionBarTitleStyle</item>
+        <item name="android:theme">@style/GadgetbridgeTheme.ActionModeOverlay</item>
+    </style>
+    <style name="GadgetbridgeTheme.ActionModeOverlay" parent="">
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="actionmenu_icon_color">@android:color/white</item>
+    </style>
+    <style name="GadgetbridgeTheme.ActionModeCloseButton" parent="Widget.AppCompat.ActionButton">
+        <item name="android:tint">@android:color/white</item>
     </style>
     <style name="GadgetbridgeTheme.ActionBarTitleStyle" parent="TextAppearance.Material3.ActionBar.Title">
         <item name="android:textColor">@color/primarytext_dark</item>

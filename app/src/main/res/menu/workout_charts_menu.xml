@@ -2,14 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_filter_charts"
-        android:icon="@drawable/ic_filter_alt_plus"
-        android:title="@string/filter_charts"
-        app:showAsAction="always">
-    </item>
-    <item
         android:id="@+id/action_rotate_screen"
         android:icon="@drawable/ic_mobile_rotate"
         android:title="@string/rotate_screen"
+        app:iconTint="?attr/actionmenu_icon_color"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_filter_charts"
+        android:icon="@drawable/ic_filter_alt_plus"
+        android:title="@string/filter_charts"
+        app:iconTint="?attr/actionmenu_icon_color"
+        app:showAsAction="ifRoom"/>
 </menu>

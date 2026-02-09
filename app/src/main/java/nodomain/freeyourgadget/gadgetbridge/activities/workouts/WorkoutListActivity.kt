@@ -256,6 +256,16 @@ class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
             override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
                 mode.title = getString(R.string.number_selected_items, numSelected)
                 menuInflater.inflate(R.menu.activity_list_context_menu, menu)
+
+                // For some reason the icons in the context menu are not tinted
+                // by the theme, so we do it manually here
+                val typedValue = android.util.TypedValue()
+                theme.resolveAttribute(R.attr.actionmenu_icon_color, typedValue, true)
+                val iconColor = typedValue.data
+                for (i in 0 until menu.size()) {
+                    menu.getItem(i).icon?.setTint(iconColor)
+                }
+
                 findViewById<View>(R.id.fab).visibility = View.INVISIBLE
                 return true
             }
