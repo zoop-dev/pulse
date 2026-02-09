@@ -4125,4 +4125,25 @@
     <string name="file_export">Export</string>
     <string name="file_import">Import</string>
     <string name="global_preferences">Globale Einstellungen</string>
+    <string name="export_success">Export erfolgreich</string>
+    <string name="import_success">Import erfolgreich</string>
+    <string name="reset_fields">Felder zurücksetzen</string>
+    <string name="are_you_sure">Bist du sicher?</string>
+    <string name="dangerous_actions">Gefährliche Handlungen</string>
+    <string name="debug_other_actions">Andere Aktionen</string>
+    <string name="prefs_title_battery_allow_bypass_mode">Akku-Bypass zulassen</string>
+    <string name="pref_title_pebble_search_app_updates">Nach App-Updates suchen</string>
+    <string name="pref_summary_pebble_search_app_updates">Beim Öffnen des App-Managers automatisch nach Updates für die Uhr-App und das Zifferblatt suchen</string>
+    <string name="pref_sos_contact_title">SOS-Kontakt</string>
+    <string name="healthconnect_settings">Health Connect</string>
+    <string name="pref_health_connect_enabled">Health Connect-Export aktivieren</string>
+    <string name="pref_health_connect_manual_settings">Health Connect-Daten verwalten</string>
+    <string name="pref_health_connect_settings">Health Connect-Einstellungen</string>
+    <string name="pref_health_connect_settings_summary">Android Health Connect-Einstellungen öffnen</string>
+    <string name="pref_health_connect_disable_notice">Um Health Connect Export zu deaktivieren, entferne alle Berechtigungen von Gadgetbridge aus der Health Connect App</string>
+    <string name="pref_health_connect_sync_notice">Je nach Datenmenge kann eine Health Connect-Synchronisierung mehrere Minuten dauern.</string>
+    <string name="pref_health_connect_device_selection">Geräte auswählen</string>
+    <string name="pref_health_connect_device_selection_summary">Wähle aus, von welchen Geräten Daten für die Freigabe mit Health Connect übernommen werden sollen</string>
+    <string name="health_connect_unsupported">Health Connect wird auf dieser Android-Version nicht unterstützt</string>
+    <string name="health_connect_update_required">Health Connect-Anbieteraktualisierung erforderlich</string>
 </resources>
