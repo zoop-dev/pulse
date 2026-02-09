@@ -141,6 +141,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.instinct.Garm
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.instinct.GarminInstinctCrossoverCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.instinct.GarminInstinctECoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.instinct.GarminInstinctSolarCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.instinct.GarminInstinctSolarTacticalCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.instinct.GarminInstinctTacticalCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.lily.GarminLily2ActiveCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.lily.GarminLily2Coordinator;
@@ -687,6 +688,7 @@ public enum DeviceType {
     GARMIN_INSTINCT(GarminInstinctCoordinator.class),
     GARMIN_INSTINCT_SOLAR(GarminInstinctSolarCoordinator.class),
     GARMIN_INSTINCT_TACTICAL(GarminInstinctTacticalCoordinator.class),
+    GARMIN_INSTINCT_SOLAR_TACTICAL(GarminInstinctSolarTacticalCoordinator.class),
     GARMIN_INSTINCT_2(GarminInstinct2Coordinator.class),
     GARMIN_INSTINCT_2S(GarminInstinct2SCoordinator.class),
     GARMIN_INSTINCT_2S_SOLAR(GarminInstinct2SSolarCoordinator.class),

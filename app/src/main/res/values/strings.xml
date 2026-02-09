@@ -1974,6 +1974,7 @@
     <string name="devicetype_garmin_inReach_mini_2" translatable="false">Garmin inReach Mini 2</string>
     <string name="devicetype_garmin_instinct" translatable="false">Garmin Instinct</string>
     <string name="devicetype_garmin_instinct_solar" translatable="false">Garmin Instinct Solar</string>
+    <string name="devicetype_garmin_instinct_solar_tactical" translatable="false">Garmin Instinct Solar Tactical</string>
     <string name="devicetype_garmin_instinct_2" translatable="false">Garmin Instinct 2</string>
     <string name="devicetype_garmin_instinct_2s" translatable="false">Garmin Instinct 2S</string>
     <string name="devicetype_garmin_instinct_2s_solar" translatable="false">Garmin Instinct 2S Solar</string>
