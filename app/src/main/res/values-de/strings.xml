@@ -4146,4 +4146,10 @@
     <string name="pref_health_connect_device_selection_summary">Wähle aus, von welchen Geräten Daten für die Freigabe mit Health Connect übernommen werden sollen</string>
     <string name="health_connect_unsupported">Health Connect wird auf dieser Android-Version nicht unterstützt</string>
     <string name="health_connect_update_required">Health Connect-Anbieteraktualisierung erforderlich</string>
+    <string name="health_connect_settings_open_error">Der Einstellungsbildschirm von Health Connect konnte nicht geöffnet werden. Bitte versuche, die Health Connect-App manuell zu öffnen.</string>
+    <string name="pref_health_connect_sync_on_event_title">Synchronisieren nach Gerätesynchronisierung</string>
+    <string name="pref_health_connect_sync_on_event_summary">Mit Health Connect synchronisieren, nachdem ein ausgewähltes Gerät die Synchronisierung seiner Aktivitätsdaten abgeschlossen hat.</string>
+    <string name="health_connect_permissions_rationale_title">Datenschutzerklärung und Berechtigungen</string>
+    <string name="health_connect_permissions_rationale_message">Gadgetbridge sammelt Daten von deinen Geräten und gibt diese mit deiner Zustimmung an Health Connect weiter. Diese Daten werden auf deinem Gerät gespeichert und nicht an Dritte weitergegeben.</string>
+    <string name="health_connect_sync_notification_title">Health Connect Synchronisierung</string>
 </resources>
