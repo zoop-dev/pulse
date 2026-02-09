@@ -214,30 +214,29 @@ internal object RecordedWorkoutSyncer {
         sliceStartBoundary: Instant,
         sliceEndBoundary: Instant
     ): List<BaseActivitySummary> {
-        val db: DBHandler = GBApplication.acquireDB()
         try {
-            val device = DBHelper.getDevice(gbDevice, db.daoSession)
-            if (device == null) {
-                LOG.warn("Device not found in database for '{}'", gbDevice.aliasOrName)
-                return emptyList()
+            GBApplication.acquireDB().use { db ->
+                val device = DBHelper.getDevice(gbDevice, db.daoSession)
+                if (device == null) {
+                    LOG.warn("Device not found in database for '{}'", gbDevice.aliasOrName)
+                    return emptyList()
+                }
+
+                val startDate = Date.from(sliceStartBoundary)
+                val endDate = Date.from(sliceEndBoundary)
+
+                return db.daoSession.baseActivitySummaryDao.queryBuilder()
+                    .where(
+                        BaseActivitySummaryDao.Properties.DeviceId.eq(device.id),
+                        BaseActivitySummaryDao.Properties.StartTime.ge(startDate),
+                        BaseActivitySummaryDao.Properties.StartTime.lt(endDate)
+                    )
+                    .build()
+                    .list()
             }
-
-            val startDate = Date.from(sliceStartBoundary)
-            val endDate = Date.from(sliceEndBoundary)
-
-            return db.daoSession.baseActivitySummaryDao.queryBuilder()
-                .where(
-                    BaseActivitySummaryDao.Properties.DeviceId.eq(device.id),
-                    BaseActivitySummaryDao.Properties.StartTime.ge(startDate),
-                    BaseActivitySummaryDao.Properties.StartTime.lt(endDate)
-                )
-                .build()
-                .list()
         } catch (e: Exception) {
             LOG.error("Error querying workouts from database for device '{}'", gbDevice.aliasOrName, e)
             return emptyList()
-        } finally {
-            GBApplication.releaseDB()
         }
     }
 

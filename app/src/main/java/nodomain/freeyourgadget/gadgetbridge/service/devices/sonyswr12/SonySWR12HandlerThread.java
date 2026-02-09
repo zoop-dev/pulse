@@ -61,15 +61,13 @@ public class SonySWR12HandlerThread extends GBDeviceIoThread {
     }
 
     private void processRealTimeHeartRate(EventWithValue event) {
-        try {
-            DBHandler dbHandler = GBApplication.acquireDB();
+        try (DBHandler dbHandler = GBApplication.acquireDB()) {
             Long userId = DBHelper.getUser(dbHandler.getDaoSession()).getId();
             Long deviceId = DBHelper.getDevice(getDevice(), dbHandler.getDaoSession()).getId();
             SonySWR12SampleProvider provider = new SonySWR12SampleProvider(getDevice(), dbHandler.getDaoSession());
             int timestamp = getTimestamp();
             SonySWR12Sample sample = new SonySWR12Sample(timestamp, deviceId, userId, (int) event.value, ActivitySample.NOT_MEASURED, 0, 1);
             provider.addGBActivitySample(sample);
-            GBApplication.releaseDB();
             Intent intent = new Intent(DeviceService.ACTION_REALTIME_SAMPLES)
                     .putExtra(GBDevice.EXTRA_DEVICE, getDevice())
                     .putExtra(DeviceService.EXTRA_REALTIME_SAMPLE, sample)
@@ -100,23 +98,20 @@ public class SonySWR12HandlerThread extends GBDeviceIoThread {
     }
 
     private void addActivity(ActivityWithData activity) {
-        try {
-            DBHandler dbHandler = GBApplication.acquireDB();
+        try (DBHandler dbHandler = GBApplication.acquireDB()) {
             Long userId = DBHelper.getUser(dbHandler.getDaoSession()).getId();
             Long deviceId = DBHelper.getDevice(getDevice(), dbHandler.getDaoSession()).getId();
             SonySWR12SampleProvider provider = new SonySWR12SampleProvider(getDevice(), dbHandler.getDaoSession());
             int kind = SonySWR12Constants.TYPE_ACTIVITY;
             SonySWR12Sample sample = new SonySWR12Sample(activity.getTimeStampSec(), deviceId, userId, ActivitySample.NOT_MEASURED, activity.data, kind, 1);
             provider.addGBActivitySample(sample);
-            GBApplication.releaseDB();
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
     }
 
     private void addSleep(ActivitySleep activity) {
-        try {
-            DBHandler dbHandler = GBApplication.acquireDB();
+        try (DBHandler dbHandler = GBApplication.acquireDB()) {
             Long userId = DBHelper.getUser(dbHandler.getDaoSession()).getId();
             Long deviceId = DBHelper.getDevice(getDevice(), dbHandler.getDaoSession()).getId();
             SonySWR12SampleProvider provider = new SonySWR12SampleProvider(getDevice(), dbHandler.getDaoSession());
@@ -144,7 +139,6 @@ public class SonySWR12HandlerThread extends GBDeviceIoThread {
                 sample = new SonySWR12Sample(activity.getTimeStampSec() + activity.durationMin * 60, deviceId, userId, ActivitySample.NOT_MEASURED, 0, SonySWR12Constants.TYPE_NOT_WORN, 1);
                 provider.addGBActivitySample(sample);
             }
-            GBApplication.releaseDB();
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }

@@ -21,7 +21,6 @@ package nodomain.freeyourgadget.gadgetbridge.database;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,18 +29,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
-import java.util.UUID;
 
 import de.greenrobot.dao.Property;
 import de.greenrobot.dao.query.Query;
@@ -77,7 +69,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.ValidByDate;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
-import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 
 
@@ -96,78 +87,6 @@ public class DBHelper {
 
     public DBHelper(Context context) {
         this.context = context;
-    }
-
-    /**
-     * Closes the database and returns its name.
-     * Important: after calling this, you have to DBHandler#openDb() it again
-     * to get it back to work.
-     */
-    private String getClosedDBPath(DBHandler dbHandler) throws IllegalStateException {
-        SQLiteDatabase db = dbHandler.getDatabase();
-        String path = db.getPath();
-        dbHandler.closeDb();
-        if (db.isOpen()) { // reference counted, so may still be open
-            throw new IllegalStateException("Database must be closed");
-        }
-        return path;
-    }
-
-    public File exportDB(DBHandler dbHandler, File toDir) throws IllegalStateException, IOException {
-        String dbPath = getClosedDBPath(dbHandler);
-        try {
-            File sourceFile = new File(dbPath);
-            File destFile = new File(toDir, sourceFile.getName());
-            if (destFile.exists()) {
-                File backup = new File(toDir, destFile.getName() + "_" + getDate());
-                destFile.renameTo(backup);
-            } else if (!toDir.exists()) {
-                if (!toDir.mkdirs()) {
-                    throw new IOException("Unable to create directory: " + toDir.getAbsolutePath());
-                }
-            }
-
-            FileUtils.copyFile(sourceFile, destFile);
-            return destFile;
-        } finally {
-            dbHandler.openDb();
-        }
-    }
-
-    public void exportDB(DBHandler dbHandler, OutputStream dest) throws IOException {
-        String dbPath = getClosedDBPath(dbHandler);
-        try {
-            File source = new File(dbPath);
-            FileUtils.copyFileToStream(source, dest);
-        } finally {
-            dbHandler.openDb();
-        }
-    }
-
-    private String getDate() {
-        return new SimpleDateFormat("yyyyMMdd-HHmmss", Locale.US).format(new Date());
-    }
-
-    public void importDB(DBHandler dbHandler, File fromFile) throws IllegalStateException, IOException {
-        importDB(dbHandler, new FileInputStream(fromFile));
-    }
-
-    public void importDB(DBHandler dbHandler, InputStream inputStream) throws IllegalStateException, IOException {
-        String dbPath = getClosedDBPath(dbHandler);
-        try {
-            File toFile = new File(dbPath);
-            FileUtils.copyStreamToFile(inputStream, toFile);
-        } finally {
-            dbHandler.openDb();
-        }
-    }
-
-    public void validateDB(SQLiteOpenHelper dbHandler) throws IOException {
-        try (SQLiteDatabase db = dbHandler.getReadableDatabase()) {
-            if (!db.isDatabaseIntegrityOk()) {
-                throw new IOException("Database integrity is not OK");
-            }
-        }
     }
 
     public static void dropTable(String tableName, SQLiteDatabase db) {
@@ -422,7 +341,6 @@ public class DBHelper {
      * exists already, it will be updated with the current preferences values. If no device exists
      * yet, it will be created in the database.
      *
-     * @param session
      * @return the device entity corresponding to the given GBDevice
      */
     public static Device getDevice(GBDevice gbDevice, DaoSession session) {
@@ -596,6 +514,7 @@ public class DBHelper {
         return createTag(user, name, null, session);
     }
 
+    @SuppressWarnings("SameParameterValue")
     static Tag createTag(@NonNull User user, @NonNull String name, @Nullable String description, @NonNull DaoSession session) {
         Tag tag = new Tag();
         tag.setUserId(user.getId());

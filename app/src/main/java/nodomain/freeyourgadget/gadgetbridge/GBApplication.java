@@ -41,7 +41,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Build.VERSION;
@@ -70,18 +69,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import ch.qos.logback.core.spi.LifeCycle;
 import nodomain.freeyourgadget.gadgetbridge.activities.ControlCenterv2;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
-import nodomain.freeyourgadget.gadgetbridge.database.DBOpenHelper;
 import nodomain.freeyourgadget.gadgetbridge.database.PeriodicDbExporter;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceManager;
-import nodomain.freeyourgadget.gadgetbridge.entities.DaoMaster;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.BluetoothStateChangeReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.opentracks.OpenTracksContentObserver;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -111,17 +105,14 @@ import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 public class GBApplication extends Application {
     // Since this class must not log to slf4j, we use plain android.util.Log
     private static final String TAG = "GBApplication";
-    public static final String DATABASE_NAME = "Gadgetbridge";
     private static volatile ShutdownHook SHUTDOWN_HOOK;
 
     private static GBApplication context;
-    private static final Lock dbLock = new ReentrantLock();
     private static DeviceService deviceService;
     private static SharedPreferences sharedPrefs;
 
     private static final LimitedQueue<Integer, String> mIDSenderLookup = new LimitedQueue<>(16);
     private static GBPrefs prefs;
-    private static LockHandler lockHandler;
     /**
      * Note: is null on Lollipop
      */
@@ -178,6 +169,7 @@ public class GBApplication extends Application {
         Intent quitIntent = new Intent(GBApplication.ACTION_QUIT);
         LocalBroadcastManager.getInstance(context).sendBroadcast(quitIntent);
         GBApplication.deviceService().quit();
+        GBDatabaseManager.closeDatabase();
         System.exit(0);
     }
 
@@ -188,13 +180,7 @@ public class GBApplication extends Application {
         LocalBroadcastManager.getInstance(context).sendBroadcast(quitIntent);
         GBApplication.deviceService().quit();
 
-        if (lockHandler != null) {
-            try {
-                lockHandler.closeDb();
-            } catch (final Exception e) {
-                GB.log("Failed to close DB before restart", GB.ERROR, e);
-            }
-        }
+        GBDatabaseManager.closeDatabase();
 
         final Intent startActivity = new Intent(context, ControlCenterv2.class);
         final PendingIntent pendingIntent = PendingIntent.getActivity(
@@ -268,14 +254,15 @@ public class GBApplication extends Application {
 
     @Override
     public void onCreate() {
-        app = this;
-        super.onCreate();
-        ProcessLifecycleOwner.get().getLifecycle().addObserver(new AppLifecycleObserver());
-
-        if (lockHandler != null) {
+        if (app != null) {
+            super.onCreate();
             // guard against multiple invocations (robolectric)
             return;
         }
+
+        app = this;
+        super.onCreate();
+        ProcessLifecycleOwner.get().getLifecycle().addObserver(new AppLifecycleObserver());
 
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         prefs = new GBPrefs(sharedPrefs);
@@ -284,7 +271,7 @@ public class GBApplication extends Application {
             GBEnvironment.setupEnvironment(GBEnvironment.createDeviceEnvironment());
             // setup db after the environment is set up, but don't do it in test mode
             // in test mode, it's done individually, see TestBase
-            setupDatabase();
+            GBDatabaseManager.setupDatabase(this);
         }
 
         // don't do anything here before we set up logging, otherwise
@@ -430,22 +417,6 @@ public class GBApplication extends Application {
         return prefs.getBoolean("minimize_priority", false);
     }
 
-    public void setupDatabase() {
-        DaoMaster.OpenHelper helper;
-        GBEnvironment env = GBEnvironment.env();
-        if (env.isTest()) {
-            helper = new DaoMaster.DevOpenHelper(this, null, null);
-        } else {
-            helper = new DBOpenHelper(this, DATABASE_NAME, null);
-        }
-        SQLiteDatabase db = helper.getWritableDatabase();
-        DaoMaster daoMaster = new DaoMaster(db);
-        if (lockHandler == null) {
-            lockHandler = new LockHandler();
-        }
-        lockHandler.init(daoMaster, helper);
-    }
-
     public static Context getContext() {
         return context;
     }
@@ -471,37 +442,17 @@ public class GBApplication extends Application {
     }
 
     /**
-     * Returns the DBHandler instance for reading/writing or throws GBException
-     * when that was not successful
-     * If acquiring was successful, callers must call #releaseDB when they
-     * are done (from the same thread that acquired the lock!
-     * <p>
-     * Callers must not hold a reference to the returned instance because it
-     * will be invalidated at some point.
-     *
-     * @return the DBHandler
-     * @throws GBException
-     * @see #releaseDB()
+     * @see GBDatabaseManager#acquireWrite()
      */
     public static DBHandler acquireDB() throws GBException {
-        try {
-            if (dbLock.tryLock(30, TimeUnit.SECONDS)) {
-                return lockHandler;
-            }
-        } catch (InterruptedException ex) {
-            Log.i(TAG, "Interrupted while waiting for DB lock");
-        }
-        throw new GBException("Unable to access the database.");
+        return GBDatabaseManager.acquireWrite();
     }
 
     /**
-     * Releases the database lock.
-     *
-     * @throws IllegalMonitorStateException if the current thread is not owning the lock
-     * @see #acquireDB()
+     * @see GBDatabaseManager#acquireReadOnly()
      */
-    public static void releaseDB() {
-        dbLock.unlock();
+    public static DBHandler acquireDbReadOnly() throws GBException {
+        return GBDatabaseManager.acquireReadOnly();
     }
 
     public static boolean isRunningNougatOrLater() {
@@ -706,35 +657,6 @@ public class GBApplication extends Application {
             return ("OsmAnd");
         }
         return packageName;
-    }
-
-    /**
-     * Deletes both the old Activity database and the new one recreates it with empty tables.
-     *
-     * @return true on successful deletion
-     */
-    public static synchronized boolean deleteActivityDatabase(Context context) {
-        // TODO: flush, close, reopen db
-        if (lockHandler != null) {
-            lockHandler.closeDb();
-        }
-        boolean result = deleteOldActivityDatabase(context);
-        result &= getContext().deleteDatabase(DATABASE_NAME);
-        return result;
-    }
-
-    /**
-     * Deletes the legacy (pre 0.12) Activity database
-     *
-     * @return true on successful deletion
-     */
-    public static synchronized boolean deleteOldActivityDatabase(Context context) {
-        DBHelper dbHelper = new DBHelper(context);
-        boolean result = true;
-        if (dbHelper.existsDB("ActivityDatabase")) {
-            result = getContext().deleteDatabase("ActivityDatabase");
-        }
-        return result;
     }
 
     @VisibleForTesting

@@ -19,11 +19,9 @@ package nodomain.freeyourgadget.gadgetbridge.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,15 +43,14 @@ import java.util.List;
 import java.util.Locale;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.GBDatabaseManager;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.files.FileManagerActivity;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
-import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
-import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.ImportExportSharedPreferences;
 
 
@@ -122,19 +119,9 @@ public class DataManagementActivity extends AbstractGBActivity {
         dbPath.setText(getExternalPath());
 
         Button exportDBButton = findViewById(R.id.exportDataButton);
-        exportDBButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                exportDB();
-            }
-        });
+        exportDBButton.setOnClickListener(v -> exportDB());
         Button importDBButton = findViewById(R.id.importDataButton);
-        importDBButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                importDB();
-            }
-        });
+        importDBButton.setOnClickListener(v -> importDB());
 
         Button showContentDataButton = findViewById(R.id.showContentDataButton);
         showContentDataButton.setOnClickListener(v -> {
@@ -223,24 +210,31 @@ public class DataManagementActivity extends AbstractGBActivity {
                 .setIcon(R.drawable.ic_warning)
                 .setTitle(R.string.dbmanagementactivity_export_data_title)
                 .setMessage(R.string.dbmanagementactivity_export_confirmation)
-                .setPositiveButton(R.string.activity_DB_ExportButton, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        try (DBHandler dbHandler = GBApplication.acquireDB()) {
-                            exportShared();
-                            DBHelper helper = new DBHelper(DataManagementActivity.this);
-                            File dir = FileUtils.getExternalFilesDir();
-                            File destFile = helper.exportDB(dbHandler, dir);
-                            GB.toast(DataManagementActivity.this, getString(R.string.dbmanagementactivity_exported_to, destFile.getAbsolutePath()), Toast.LENGTH_LONG, GB.INFO);
-                        } catch (Exception ex) {
-                            GB.toast(DataManagementActivity.this, getString(R.string.dbmanagementactivity_error_exporting_db, ex.getLocalizedMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
+                .setPositiveButton(R.string.activity_DB_ExportButton, (dialog, which) -> {
+                    exportShared();
+
+                    try {
+                        final File dir = FileUtils.getExternalFilesDir();
+                        final File destFile = new File(dir, "Gadgetbridge");
+                        if (destFile.exists()) {
+                            final String date = new SimpleDateFormat("yyyyMMdd-HHmmss", Locale.US).format(new Date());
+                            File backup = new File(dir, destFile.getName() + "_" + date);
+                            if (!destFile.renameTo(backup)) {
+                                throw new IOException("Unable to rename existing database file");
+                            }
+                        } else if (!dir.exists()) {
+                            if (!dir.mkdirs()) {
+                                throw new IOException("Unable to create directory: " + dir.getAbsolutePath());
+                            }
                         }
+
+                        GBDatabaseManager.exportDB(destFile);
+                        GB.toast(DataManagementActivity.this, getString(R.string.dbmanagementactivity_exported_to, destFile.getAbsolutePath()), Toast.LENGTH_LONG, GB.INFO);
+                    } catch (Exception ex) {
+                        GB.toast(DataManagementActivity.this, getString(R.string.dbmanagementactivity_error_exporting_db, ex.getLocalizedMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
                     }
                 })
-                .setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
+                .setNegativeButton(R.string.Cancel, (dialog, which) -> {
                 })
                 .show();
     }
@@ -251,27 +245,18 @@ public class DataManagementActivity extends AbstractGBActivity {
                 .setIcon(R.drawable.ic_warning)
                 .setTitle(R.string.dbmanagementactivity_import_data_title)
                 .setMessage(R.string.dbmanagementactivity_overwrite_database_confirmation)
-                .setPositiveButton(R.string.dbmanagementactivity_overwrite, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        try (DBHandler dbHandler = GBApplication.acquireDB()) {
-                            DBHelper helper = new DBHelper(DataManagementActivity.this);
-                            File dir = FileUtils.getExternalFilesDir();
-                            SQLiteOpenHelper sqLiteOpenHelper = dbHandler.getHelper();
-                            File sourceFile = new File(dir, sqLiteOpenHelper.getDatabaseName());
-                            helper.importDB(dbHandler, sourceFile);
-                            helper.validateDB(sqLiteOpenHelper);
-                            GB.toast(DataManagementActivity.this, getString(R.string.dbmanagementactivity_import_successful), Toast.LENGTH_LONG, GB.INFO);
-                        } catch (Exception ex) {
-                            GB.toast(DataManagementActivity.this, getString(R.string.dbmanagementactivity_error_importing_db, ex.getLocalizedMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
-                        }
-                        importShared();
+                .setPositiveButton(R.string.dbmanagementactivity_overwrite, (dialog, which) -> {
+                    try {
+                        final File dir = FileUtils.getExternalFilesDir();
+                        final File sourceFile = new File(dir, "Gadgetbridge");
+                        GBDatabaseManager.importDB(sourceFile);
+                        GB.toast(DataManagementActivity.this, getString(R.string.dbmanagementactivity_import_successful), Toast.LENGTH_LONG, GB.INFO);
+                    } catch (Exception ex) {
+                        GB.toast(DataManagementActivity.this, getString(R.string.dbmanagementactivity_error_importing_db, ex.getLocalizedMessage()), Toast.LENGTH_LONG, GB.ERROR, ex);
                     }
+                    importShared();
                 })
-                .setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
+                .setNegativeButton(R.string.Cancel, (dialog, which) -> {
                 })
                 .show();
     }

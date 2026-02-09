@@ -14,6 +14,7 @@ import java.io.File;
 
 import ch.qos.logback.classic.util.ContextInitializer;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.GBDatabaseManager;
 import nodomain.freeyourgadget.gadgetbridge.GBEnvironment;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
@@ -70,7 +71,7 @@ public abstract class TestBase {
         app = (GBApplication) RuntimeEnvironment.application;
         assertNotNull(app);
         assertNotNull(getContext());
-        app.setupDatabase();
+        GBDatabaseManager.setupDatabase(app);
         dbHandler = GBApplication.acquireDB();
         daoSession = dbHandler.getDaoSession();
         assertNotNull(daoSession);
@@ -78,8 +79,7 @@ public abstract class TestBase {
 
     @After
     public void tearDown() throws Exception {
-        dbHandler.closeDb();
-        GBApplication.releaseDB();
+        GBDatabaseManager.closeDatabase();
     }
 
     protected GBDevice createDummyGDevice(String macAddress) {

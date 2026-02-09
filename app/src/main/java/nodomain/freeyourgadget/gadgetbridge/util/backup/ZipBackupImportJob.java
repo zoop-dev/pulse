@@ -18,7 +18,6 @@ package nodomain.freeyourgadget.gadgetbridge.util.backup;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 
 import org.slf4j.Logger;
@@ -39,6 +38,7 @@ import java.util.zip.ZipFile;
 
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.GBDatabaseManager;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
@@ -140,13 +140,8 @@ public class ZipBackupImportJob extends AbstractZipBackupJob {
             // Restore database
             LOG.debug("Importing database");
             updateProgress(75, R.string.backup_restore_importing_database);
-            try (DBHandler dbHandler = GBApplication.acquireDB()) {
-                final DBHelper helper = new DBHelper(getContext());
-                final SQLiteOpenHelper sqLiteOpenHelper = dbHandler.getHelper();
-                try (InputStream databaseInputStream = zipFile.getInputStream(zipFile.getEntry(DATABASE_FILENAME))) {
-                    helper.importDB(dbHandler, databaseInputStream);
-                    helper.validateDB(sqLiteOpenHelper);
-                }
+            try (InputStream databaseInputStream = zipFile.getInputStream(zipFile.getEntry(DATABASE_FILENAME))) {
+                GBDatabaseManager.importDB(databaseInputStream);
             }
 
             if (isAborted()) return;

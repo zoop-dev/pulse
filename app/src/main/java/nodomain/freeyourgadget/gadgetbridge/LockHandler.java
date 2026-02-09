@@ -17,7 +17,9 @@
 package nodomain.freeyourgadget.gadgetbridge;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.util.concurrent.locks.Lock;
 
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoMaster;
@@ -27,90 +29,49 @@ import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
  * Provides low-level access to the database.
  */
 public class LockHandler implements DBHandler {
+    private static final String TAG = "LockHandler";
 
-    private DaoMaster daoMaster = null;
-    private DaoSession session = null;
-    private SQLiteOpenHelper helper = null;
+    private final Lock lock;
 
-    public LockHandler() {
-    }
+    private final DaoMaster daoMaster;
+    private final DaoSession session;
 
-    public void init(DaoMaster daoMaster, DaoMaster.OpenHelper helper) {
-        if (isValid()) {
-            throw new IllegalStateException("DB must be closed before initializing it again");
-        }
-        if (daoMaster == null) {
-            throw new IllegalArgumentException("daoMaster must not be null");
-        }
-        if (helper == null) {
-            throw new IllegalArgumentException("helper must not be null");
-        }
+    private boolean closed = false;
+
+    public LockHandler(final Lock lock,
+                       final DaoMaster daoMaster,
+                       final DaoSession session) {
+        this.lock = lock;
         this.daoMaster = daoMaster;
-        this.helper = helper;
-
-        session = daoMaster.newSession();
-        if (session == null) {
-            throw new RuntimeException("Unable to create database session");
-        }
+        this.session = session;
     }
 
-    @Override
-    public DaoMaster getDaoMaster() {
-        return daoMaster;
-    }
-
-    private boolean isValid() {
-        return daoMaster != null;
-    }
-
-    private void ensureValid() {
-        if (!isValid()) {
+    private void ensureNotClosed() {
+        if (closed) {
             throw new IllegalStateException("LockHandler is not in a valid state");
         }
     }
 
     @Override
     public void close() {
-        ensureValid();
-        GBApplication.releaseDB();
-    }
-
-    @Override
-    public synchronized void openDb() {
-        if (session != null) {
-            throw new IllegalStateException("session must be null");
+        if (closed) {
+            Log.w(TAG, lock.getClass().getSimpleName() + " was already closed (" + Thread.currentThread().getName() + ")");
+            return;
         }
-        // this will create completely new db instances and in turn update this handler through #init()
-        GBApplication.app().setupDatabase();
-    }
-
-    @Override
-    public synchronized void closeDb() {
-        if (session == null) {
-            throw new IllegalStateException("session must not be null");
-        }
-        session.clear();
-        session.getDatabase().close();
-        session = null;
-        helper = null;
-        daoMaster = null;
-    }
-
-    @Override
-    public SQLiteOpenHelper getHelper() {
-        ensureValid();
-        return helper;
+        closed = true;
+        Log.d(TAG, "Releasing " + lock.getClass().getSimpleName() + " from " + Thread.currentThread().getName());
+        lock.unlock();
     }
 
     @Override
     public DaoSession getDaoSession() {
-        ensureValid();
+        ensureNotClosed();
         return session;
     }
 
     @Override
     public SQLiteDatabase getDatabase() {
-        ensureValid();
+        ensureNotClosed();
         return daoMaster.getDatabase();
     }
 }

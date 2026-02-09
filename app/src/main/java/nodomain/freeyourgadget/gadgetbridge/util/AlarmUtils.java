@@ -178,8 +178,7 @@ public class AlarmUtils {
 
     public static List<Alarm> mergeOneshotToDeviceAlarms(GBDevice gbDevice, Alarm oneshot, int position) {
         List<Alarm> all_alarms = new ArrayList<>();
-        try {
-            DBHandler db = GBApplication.acquireDB();
+        try (DBHandler db = GBApplication.acquireDB()) {
             DaoSession daoSession = db.getDaoSession();
             Device device = DBHelper.getDevice(gbDevice, daoSession);
             User user = DBHelper.getUser(daoSession);
@@ -188,7 +187,6 @@ public class AlarmUtils {
             oneshot.setUserId(user.getId());
             daoSession.insertOrReplace(oneshot);
             all_alarms = DBHelper.getAlarms(gbDevice);
-            GBApplication.releaseDB();
         } catch (Exception e) {
             GB.log("error storing one shot quick alarm", GB.ERROR, e);
         }

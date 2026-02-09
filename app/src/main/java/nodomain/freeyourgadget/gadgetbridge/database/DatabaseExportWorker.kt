@@ -3,15 +3,16 @@ package nodomain.freeyourgadget.gadgetbridge.database
 import android.content.Context
 import android.content.Intent
 import androidx.core.content.edit
+import androidx.core.net.toUri
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
+import nodomain.freeyourgadget.gadgetbridge.GBDatabaseManager
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import androidx.core.net.toUri
 
 class DatabaseExportWorker(
     private val mContext: Context,
@@ -38,11 +39,8 @@ class DatabaseExportWorker(
         }
 
         try {
-            GBApplication.acquireDB().use { dbHandler ->
-                val helper = DBHelper(mContext)
-                mContext.contentResolver.openOutputStream(dst.toUri()).use { out ->
-                    helper.exportDB(dbHandler, out)
-                }
+            mContext.contentResolver.openOutputStream(dst.toUri()).use { out ->
+                GBDatabaseManager.exportDB(out)
             }
 
             GBApplication.getPrefs().preferences.edit {
