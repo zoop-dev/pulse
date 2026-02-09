@@ -168,7 +168,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         lifecycleScope.launch {
             try {
                 currentWorkout = withContext(Dispatchers.IO) {
-                    val summary = GBApplication.acquireDB().use { dbHandler ->
+                    val summary = GBApplication.acquireDbReadOnly().use { dbHandler ->
                         dbHandler.daoSession.baseActivitySummaryDao.load(workoutId)
                     }
                     gbDevice = getGBDevice(summary.device)

@@ -32,7 +32,7 @@ class WorkoutDetailsViewModel : ViewModel() {
 
         try {
             val workout = withContext(Dispatchers.IO) {
-                GBApplication.acquireDB().use { dbHandler ->
+                GBApplication.acquireDbReadOnly().use { dbHandler ->
                     val summaryDao = dbHandler.daoSession.baseActivitySummaryDao
                     summaryDao.load(workoutId)
                 }
@@ -108,7 +108,7 @@ class WorkoutDetailsViewModel : ViewModel() {
         deviceFilter: Long,
         itemsFilter: List<Long>?
     ): List<BaseActivitySummary> {
-        return GBApplication.acquireDB().use { dbHandler ->
+        return GBApplication.acquireDbReadOnly().use { dbHandler ->
             val summaryDao = dbHandler.daoSession.baseActivitySummaryDao
             val dbDevice = gbDevice?.let { DBHelper.findDevice(it, dbHandler.daoSession) }
 

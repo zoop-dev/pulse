@@ -108,7 +108,7 @@ class WorkoutListViewModel : ViewModel() {
         deviceFilter: Long,
         itemsFilter: List<Long>?
     ): List<BaseActivitySummary> {
-        return GBApplication.acquireDB().use { dbHandler ->
+        return GBApplication.acquireDbReadOnly().use { dbHandler ->
             val summaryDao = dbHandler.daoSession.baseActivitySummaryDao
             val dbDevice = DBHelper.findDevice(gbDevice, dbHandler.daoSession)
 

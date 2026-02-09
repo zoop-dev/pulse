@@ -464,7 +464,7 @@ class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
 
     private fun getDeviceId(device: GBDevice): Long {
         return try {
-            GBApplication.acquireDB().use { handler ->
+            GBApplication.acquireDbReadOnly().use { handler ->
                 DBHelper.findDevice(device, handler.daoSession)?.id ?: 0L
             }
         } catch (e: Exception) {
