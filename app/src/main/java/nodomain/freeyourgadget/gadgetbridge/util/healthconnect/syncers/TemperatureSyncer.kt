@@ -67,7 +67,7 @@ internal object TemperatureSyncer : HealthConnectSyncer {
         }
 
         val samples: List<TemperatureSample> = try {
-            GBApplication.acquireDB().use { db ->
+            GBApplication.acquireDbReadOnly().use { db ->
                 val provider = gbDevice.deviceCoordinator.getTemperatureSampleProvider(gbDevice, db.daoSession)
                 if (provider == null) {
                     LOG.warn("TemperatureSampleProvider not found for device '$deviceName'. Skipping Temperature sync for slice $sliceStartBoundary to $sliceEndBoundary.")
@@ -230,7 +230,7 @@ internal object TemperatureSyncer : HealthConnectSyncer {
                         dayEnd
                     )
 
-                    val samplesForDay: List<TemperatureSample> = GBApplication.acquireDB().use { db ->
+                    val samplesForDay: List<TemperatureSample> = GBApplication.acquireDbReadOnly().use { db ->
                         val tempProvider = gbDevice.deviceCoordinator.getTemperatureSampleProvider(gbDevice, db.daoSession)
                         if (tempProvider == null) {
                             LOG.warn("SkinBaselineHelper for '$deviceAddress': TemperatureSampleProvider not found. Cannot calculate daily average for $targetDayStart.")

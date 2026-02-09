@@ -369,7 +369,7 @@ class HealthConnectUtils {
                     val activityBasedSamples: List<ActivitySample>? = 
                         if (dataType == HealthConnectPermissionManager.HealthConnectDataType.ACTIVITY || 
                             dataType == HealthConnectPermissionManager.HealthConnectDataType.SLEEP) {
-                            GBApplication.acquireDB().use { db ->
+                            GBApplication.acquireDbReadOnly().use { db ->
                                 getActivitySamples(db, gbDevice, queryStartTs.epochSecond.toInt(), currentSliceEndTs.epochSecond.toInt())
                             }
                         } else {
@@ -480,7 +480,7 @@ class HealthConnectUtils {
             deviceCoordinator: DeviceCoordinator,
             dataType: HealthConnectPermissionManager.HealthConnectDataType
         ): Pair<Instant, Instant>? {
-            return GBApplication.acquireDB().use { db ->
+            return GBApplication.acquireDbReadOnly().use { db ->
                 val deviceFromDb = DBHelper.getDevice(gbDevice, db.daoSession)
                 if (deviceFromDb == null) {
                     CompanionLogger.error("$HC_SYNC_TAG Device not found in database for address: {}", gbDevice.address)

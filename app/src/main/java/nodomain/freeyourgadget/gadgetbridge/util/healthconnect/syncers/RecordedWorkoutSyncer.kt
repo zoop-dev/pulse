@@ -215,7 +215,7 @@ internal object RecordedWorkoutSyncer {
         sliceEndBoundary: Instant
     ): List<BaseActivitySummary> {
         try {
-            GBApplication.acquireDB().use { db ->
+            GBApplication.acquireDbReadOnly().use { db ->
                 val device = DBHelper.getDevice(gbDevice, db.daoSession)
                 if (device == null) {
                     LOG.warn("Device not found in database for '{}'", gbDevice.aliasOrName)

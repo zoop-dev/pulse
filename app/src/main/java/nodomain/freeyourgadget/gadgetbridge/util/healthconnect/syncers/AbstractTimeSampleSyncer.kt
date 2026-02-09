@@ -75,7 +75,7 @@ internal abstract class AbstractTimeSampleSyncer<TSample : TimeSample, TRecord :
 
         // Fetch samples
         val samples: List<TSample> = try {
-            GBApplication.acquireDB().use { dbInstance ->
+            GBApplication.acquireDbReadOnly().use { dbInstance ->
                 val provider = getSampleProvider(gbDevice, dbInstance.daoSession)
                 if (provider == null) {
                     logger.info("$recordTypeName sample provider not available for device '$deviceName'.")
