@@ -2242,7 +2242,7 @@
     <string name="title_activity_file_installer">Instalador de arquivo</string>
     <string name="title_activity_gps_track_installer">Instalador de rastreamento GPS</string>
     <string name="fw_upgrade_notice_huawei">Você está prestes a fazer o upload do firmware %1$s no seu %2$s.\n\nO seu firmware atual é %3$s.\n\nO seu dispositivo será reiniciado após o upload.\n\nPROCEDA POR SUA PRÓPRIA CONTA E RISCO!</string>
-    <string name="open_source_licenses">Licensas</string>
+    <string name="open_source_licenses">Licenças</string>
     <string name="dialog_close">Fechar</string>
     <string name="dialog_open_url">Abrir URL</string>
     <string name="zepp_os_install_map_instructions">Após o início da instalação no telefone, você também precisa aceitar no relógio.</string>
@@ -3269,4 +3269,5 @@
     <string name="bluetooth_multipoint_pair_new">Emparelhar novo dispositivo</string>
     <string name="bluetooth_multipoint_no_devices">Nenhum dispositivo emparelhado encontrado\n\nToque em Emparelhar novo dispositivo para adicionar um dispositivo</string>
     <string name="bluetooth_multipoint_pair_stop">Interrompa o emparelhamento</string>
+    <string name="pref_title_notifications_when_screen_saver">...quando o protetor de tela estiver ligado</string>
 </resources>
