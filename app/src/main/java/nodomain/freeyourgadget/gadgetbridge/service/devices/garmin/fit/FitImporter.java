@@ -380,14 +380,19 @@ public class FitImporter {
                     trainingLoadChronicSamples.add(sample);
                 }
             } else if (record instanceof FitMonitoringHrData monitoringHrData) {
-                if (monitoringHrData.getRestingHeartRate() == null) {
+                if (monitoringHrData.getRestingHeartRate() == null && monitoringHrData.getCurrentDayRestingHeartRate() == null) {
                     LOG.warn("Resting HR at {} is null", ts);
                     continue;
                 }
-                LOG.trace("Resting HR at {}: {}", ts, monitoringHrData.getRestingHeartRate());
+                LOG.trace("Resting HR at {}: {}, currentDay={}", ts, monitoringHrData.getRestingHeartRate(), monitoringHrData.getCurrentDayRestingHeartRate());
                 final GarminHeartRateRestingSample sample = new GarminHeartRateRestingSample();
                 sample.setTimestamp(ts * 1000L);
-                sample.setHeartRate(monitoringHrData.getRestingHeartRate());
+                if (monitoringHrData.getCurrentDayRestingHeartRate() != null) {
+                    // Prioritize the current day value - that matches what the watch displays
+                    sample.setHeartRate(monitoringHrData.getCurrentDayRestingHeartRate());
+                } else {
+                    sample.setHeartRate(monitoringHrData.getRestingHeartRate());
+                }
                 restingHrSamples.add(sample);
             } else if (record instanceof FitDeviceStatus deviceStatus) {
                 Integer level = deviceStatus.getBatteryLevel();
