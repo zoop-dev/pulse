@@ -4285,4 +4285,6 @@
     <string name="export_select_end_date">Einddatum</string>
     <string name="infinitime_filesystem_access_disabled">Toegang tot bestandssysteem is uitgeschakeld in InfiniTime</string>
     <string name="infinitime_resource_upload_progress_status">Bezig met uitvoeren van actie %d van %d\n%s %s</string>
+    <string name="internet_firewall_blacklisted_domains_title">Geblokkeerde domeinen</string>
+    <string name="internet_firewall_blacklisted_domains_summary">De volgende domeinen en al hun subdomains negeren de instellingen hierboven en worden altijd geblokkeerd.</string>
 </resources>
