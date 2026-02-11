@@ -4135,7 +4135,7 @@
     <string name="pref_notifications_pictures_enable">Stuur meldingsafbeeldingen</string>
     <string name="pref_notifications_pictures_enable_summary">Stuur afbeeldingen bij meldingen naar het huidige apparaat</string>
     <string name="activity_title_rebble_app_store">Rebble app-winkel</string>
-    <string name="prefs_internet_helper_title">Internet helper</string>
+    <string name="prefs_internet_helper_title">Internet Helper</string>
     <string name="prefs_internet_helper_summary">Configureer de URLs die via de internet helper add-on-app opgevraagd mogen worden</string>
     <string name="internet_helper_pref_app_req_title">Add-on-app vereist</string>
     <string name="internet_helper_pref_app_req_summary">Deze functie vereist de installatie van een add-on-app. Tik hier om naar de downloadpagina te gaan.</string>
@@ -4154,8 +4154,8 @@
     <string name="rebble_appstore_download_failed">Download mislukt: %1$s</string>
     <string name="rebble_appstore_fetch_app_info_failed_content_type">Ophalen van app-info mislukt, verkeerde content-type: %1$s</string>
     <string name="rebble_appstore_fetching_download_file_failed">Ophalen van download mislukt: %1$s</string>
-    <string name="internet_helper_permission_title">Internet helper add-on</string>
-    <string name="internet_helper_permission_summary">Sta toegang tot de Gadgetbridge internet helper add-on-app toe</string>
+    <string name="internet_helper_permission_title">Internet Helper add-on</string>
+    <string name="internet_helper_permission_summary">Sta toegang tot de Internet Helper voor Gadgetbridge add-on-app toe</string>
     <string name="notification_channel_pebble_js_runner">Pebble JS service</string>
     <string name="notification_pebble_js_service_title">Pebble JavaScript service</string>
     <string name="notification_pebble_js_service_text">JavaScript voor Pebble app/wijzerplaat draait</string>
@@ -4286,5 +4286,5 @@
     <string name="infinitime_filesystem_access_disabled">Toegang tot bestandssysteem is uitgeschakeld in InfiniTime</string>
     <string name="infinitime_resource_upload_progress_status">Bezig met uitvoeren van actie %d van %d\n%s %s</string>
     <string name="internet_firewall_blacklisted_domains_title">Geblokkeerde domeinen</string>
-    <string name="internet_firewall_blacklisted_domains_summary">De volgende domeinen en al hun subdomains negeren de instellingen hierboven en worden altijd geblokkeerd.</string>
+    <string name="internet_firewall_blacklisted_domains_summary">De volgende domeinen en al hun subdomeinen negeren de instellingen hierboven en worden altijd geblokkeerd.</string>
 </resources>
