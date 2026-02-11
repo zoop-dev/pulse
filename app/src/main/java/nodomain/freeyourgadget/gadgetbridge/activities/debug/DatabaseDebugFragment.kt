@@ -10,6 +10,8 @@ import nodomain.freeyourgadget.gadgetbridge.GBDatabaseManager
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper
 import nodomain.freeyourgadget.gadgetbridge.util.GB
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 class DatabaseDebugFragment : AbstractDebugFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -59,7 +61,7 @@ class DatabaseDebugFragment : AbstractDebugFragment() {
                 tableNames.sortWith(Comparator { o1, o2 -> o1.compareTo(o2, true) })
             }
         } catch (e: Exception) {
-            GB.log("Error accessing database", GB.ERROR, e)
+            LOG.error("Error accessing database", e)
         }
 
         for (tableName in tableNames) {
@@ -142,11 +144,13 @@ class DatabaseDebugFragment : AbstractDebugFragment() {
                 db.database.execSQL("DROP TABLE IF EXISTS TABLE_NAME_TO_DROP_HERE")
             }
         } catch (e: Exception) {
-            GB.log("Error accessing database", GB.ERROR, e)
+            LOG.error("Error accessing database", e)
         }
     }
 
     companion object {
+        private val LOG: Logger = LoggerFactory.getLogger(DatabaseDebugFragment::class.java)
+
         private const val PREF_DEBUG_DATABASE_VERSION = "pref_debug_database_version"
         private const val DANGEROUS_ACTIONS = "dangerous_actions"
         private const val PREF_DEBUG_DELETE_OLD_DATABASE = "pref_debug_delete_old_database"

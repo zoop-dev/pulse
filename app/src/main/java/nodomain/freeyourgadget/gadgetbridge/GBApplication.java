@@ -48,7 +48,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract.PhoneLookup;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Window;
 import android.view.WindowManager;
@@ -60,17 +59,16 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import org.slf4j.LoggerFactory;
 import androidx.lifecycle.ProcessLifecycleOwner;
 
-import java.io.File;
-import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import ch.qos.logback.core.spi.LifeCycle;
 import nodomain.freeyourgadget.gadgetbridge.activities.ControlCenterv2;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
@@ -87,7 +85,6 @@ import nodomain.freeyourgadget.gadgetbridge.prefs.GBPrefsMigrator;
 import nodomain.freeyourgadget.gadgetbridge.service.NotificationCollectorMonitorService;
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.BondingUtil;
-import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.InternetHelperSingleton;
@@ -103,9 +100,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
  * logging and DB access.
  */
 public class GBApplication extends Application {
-    // Since this class must not log to slf4j, we use plain android.util.Log
-    private static final String TAG = "GBApplication";
-    private static volatile ShutdownHook SHUTDOWN_HOOK;
+    private static final Logger LOG = LoggerFactory.getLogger(GBApplication.class);
 
     private static GBApplication context;
     private static DeviceService deviceService;
@@ -128,17 +123,6 @@ public class GBApplication extends Application {
 
     private static GBApplication app;
 
-    private static final Logging logging = new Logging() {
-        @Override
-        protected String createLogDirectory() throws IOException {
-            if (GBEnvironment.env().isLocalTest()) {
-                return System.getProperty(Logging.PROP_LOGFILES_DIR);
-            } else {
-                File dir = FileUtils.getExternalFilesDir();
-                return dir.getAbsolutePath();
-            }
-        }
-    };
     private static Locale language;
 
     private DeviceManager deviceManager;
@@ -146,25 +130,8 @@ public class GBApplication extends Application {
 
     private OpenTracksContentObserver openTracksObserver;
 
-    /// flush the log buffer and stop file logging
-    private static final class ShutdownHook implements Runnable {
-        @Override
-        public void run() {
-            try {
-                logging.stopFileLogger();
-            } catch (Throwable ignored) {
-            }
-
-            try {
-                LifeCycle lifeCycle = (LifeCycle) LoggerFactory.getILoggerFactory();
-                lifeCycle.stop();
-            } catch (Throwable ignored) {
-            }
-        }
-    }
-
     public static void quit() {
-        GB.log("Quitting Gadgetbridge...", GB.INFO, null);
+        LOG.info("Quitting Gadgetbridge...");
         BondingUtil.StopObservingAll(getContext());
         Intent quitIntent = new Intent(GBApplication.ACTION_QUIT);
         LocalBroadcastManager.getInstance(context).sendBroadcast(quitIntent);
@@ -174,7 +141,7 @@ public class GBApplication extends Application {
     }
 
     public static void restart() {
-        GB.log("Restarting Gadgetbridge...", GB.INFO, null);
+        LOG.info("Restarting Gadgetbridge...");
         BondingUtil.StopObservingAll(getContext());
         final Intent quitIntent = new Intent(GBApplication.ACTION_QUIT);
         LocalBroadcastManager.getInstance(context).sendBroadcast(quitIntent);
@@ -244,10 +211,6 @@ public class GBApplication extends Application {
         }
     }
 
-    public static Logging getLogging() {
-        return logging;
-    }
-
     protected DeviceService createDeviceService() {
         return new GBDeviceService(this);
     }
@@ -274,9 +237,7 @@ public class GBApplication extends Application {
             GBDatabaseManager.setupDatabase(this);
         }
 
-        // don't do anything here before we set up logging, otherwise
-        // slf4j may be implicitly initialized before we properly configured it.
-        setupLogging(isFileLoggingEnabled());
+        Logging.getInstance().initialize(prefs.getBoolean("log_to_file", false));
 
         migratePrefsIfNeeded();
 
@@ -324,7 +285,7 @@ public class GBApplication extends Application {
         if (!prefs.getBoolean("prefs_key_enable_deprecated_notificationcollectormonitor", false)) {
             return;
         }
-        Log.i(TAG, "Starting the deprecated NotificationCollectorMonitorService foreground service.");
+        LOG.info("Starting the deprecated NotificationCollectorMonitorService foreground service.");
         try {
             //the following will ensure the notification manager is kept alive
             Intent serviceIntent = new Intent(context, NotificationCollectorMonitorService.class);
@@ -379,38 +340,9 @@ public class GBApplication extends Application {
         return false;
     }
 
-    public static void setupLogging(boolean enabled) {
-        logging.setupLogging(enabled);
-
-        // prepare for log shutdown
-        if(SHUTDOWN_HOOK == null) {
-            //noinspection NonThreadSafeLazyInitialization
-            SHUTDOWN_HOOK = new ShutdownHook();
-            Thread thread = new Thread(SHUTDOWN_HOOK, "shutdownHook");
-            Runtime runtime = Runtime.getRuntime();
-            runtime.addShutdownHook(thread);
-        }
-    }
-
-    public static String getLogPath() {
-        String path = logging.getLogPath();
-        if (path == null) {
-            // file logging is currently disabled but there still might be an old logfile
-            try {
-                path = logging.createLogDirectory() + File.separator + "gadgetbridge.log";
-            } catch (Exception ignored) {
-            }
-        }
-        return path;
-    }
-
     private void setupExceptionHandler(final boolean notifyOnCrash) {
         final GBExceptionHandler handler = new GBExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), notifyOnCrash);
         Thread.setDefaultUncaughtExceptionHandler(handler);
-    }
-
-    public static boolean isFileLoggingEnabled() {
-        return prefs.getBoolean("log_to_file", false);
     }
 
     public static boolean minimizeNotification() {
@@ -536,7 +468,7 @@ public class GBApplication extends Application {
 
     public static boolean appIsNotifBlacklisted(String packageName) {
         if (apps_notification_blacklist == null) {
-            GB.log("appIsNotifBlacklisted: apps_notification_blacklist is null!", GB.INFO, null);
+            LOG.info("appIsNotifBlacklisted: apps_notification_blacklist is null!");
         }
         return apps_notification_blacklist != null && apps_notification_blacklist.contains(packageName);
     }
@@ -547,22 +479,22 @@ public class GBApplication extends Application {
 
     public static void setAppsNotifBlackList(Set<String> packageNames, SharedPreferences.Editor editor) {
         if (packageNames == null) {
-            GB.log("Set null apps_notification_blacklist", GB.INFO, null);
+            LOG.info("Set null apps_notification_blacklist");
             apps_notification_blacklist = new HashSet<>();
         } else {
             apps_notification_blacklist = new HashSet<>(packageNames);
         }
-        GB.log("New apps_notification_blacklist has " + apps_notification_blacklist.size() + " entries", GB.INFO, null);
+        LOG.info("New apps_notification_blacklist has {} entries", apps_notification_blacklist.size());
         saveAppsNotifBlackList(editor);
     }
 
     private static void loadAppsNotifBlackList() {
-        GB.log("Loading apps_notification_blacklist", GB.INFO, null);
+        LOG.info("Loading apps_notification_blacklist");
         apps_notification_blacklist = (HashSet<String>) sharedPrefs.getStringSet(GBPrefs.PACKAGE_BLACKLIST, null); // lgtm [java/abstract-to-concrete-cast]
         if (apps_notification_blacklist == null) {
             apps_notification_blacklist = new HashSet<>();
         }
-        GB.log("Loaded apps_notification_blacklist has " + apps_notification_blacklist.size() + " entries", GB.INFO, null);
+        LOG.info("Loaded apps_notification_blacklist has {} entries", apps_notification_blacklist.size());
     }
 
     private static void saveAppsNotifBlackList() {
@@ -570,7 +502,7 @@ public class GBApplication extends Application {
     }
 
     private static void saveAppsNotifBlackList(SharedPreferences.Editor editor) {
-        GB.log("Saving apps_notification_blacklist with " + apps_notification_blacklist.size() + " entries", GB.INFO, null);
+        LOG.info("Saving apps_notification_blacklist with {} entries", apps_notification_blacklist.size());
         if (apps_notification_blacklist.isEmpty()) {
             editor.putStringSet(GBPrefs.PACKAGE_BLACKLIST, null);
         } else {
@@ -586,7 +518,7 @@ public class GBApplication extends Application {
     }
 
     public static synchronized void removeFromAppsNotifBlacklist(String packageName) {
-        GB.log("Removing from apps_notification_blacklist: " + packageName, GB.INFO, null);
+        LOG.info("Removing from apps_notification_blacklist: {}", packageName);
         apps_notification_blacklist.remove(packageName);
         saveAppsNotifBlackList();
     }
@@ -595,7 +527,7 @@ public class GBApplication extends Application {
 
     public static boolean appIsPebbleBlacklisted(String sender) {
         if (apps_pebblemsg_blacklist == null) {
-            GB.log("appIsPebbleBlacklisted: apps_pebblemsg_blacklist is null!", GB.INFO, null);
+            LOG.info("appIsPebbleBlacklisted: apps_pebblemsg_blacklist is null!");
         }
         return apps_pebblemsg_blacklist != null && apps_pebblemsg_blacklist.contains(sender);
     }
@@ -606,22 +538,22 @@ public class GBApplication extends Application {
 
     public static void setAppsPebbleBlackList(Set<String> packageNames, SharedPreferences.Editor editor) {
         if (packageNames == null) {
-            GB.log("Set null apps_pebblemsg_blacklist", GB.INFO, null);
+            LOG.info("Set null apps_pebblemsg_blacklist");
             apps_pebblemsg_blacklist = new HashSet<>();
         } else {
             apps_pebblemsg_blacklist = new HashSet<>(packageNames);
         }
-        GB.log("New apps_pebblemsg_blacklist has " + apps_pebblemsg_blacklist.size() + " entries", GB.INFO, null);
+        LOG.info("New apps_pebblemsg_blacklist has {} entries", apps_pebblemsg_blacklist.size());
         saveAppsPebbleBlackList(editor);
     }
 
     private static void loadAppsPebbleBlackList() {
-        GB.log("Loading apps_pebblemsg_blacklist", GB.INFO, null);
+        LOG.info("Loading apps_pebblemsg_blacklist");
         apps_pebblemsg_blacklist = (HashSet<String>) sharedPrefs.getStringSet(GBPrefs.PACKAGE_PEBBLEMSG_BLACKLIST, null); // lgtm [java/abstract-to-concrete-cast]
         if (apps_pebblemsg_blacklist == null) {
             apps_pebblemsg_blacklist = new HashSet<>();
         }
-        GB.log("Loaded apps_pebblemsg_blacklist has " + apps_pebblemsg_blacklist.size() + " entries", GB.INFO, null);
+        LOG.info("Loaded apps_pebblemsg_blacklist has {} entries", apps_pebblemsg_blacklist.size());
     }
 
     private static void saveAppsPebbleBlackList() {
@@ -629,7 +561,7 @@ public class GBApplication extends Application {
     }
 
     private static void saveAppsPebbleBlackList(SharedPreferences.Editor editor) {
-        GB.log("Saving apps_pebblemsg_blacklist with " + apps_pebblemsg_blacklist.size() + " entries", GB.INFO, null);
+        LOG.info("Saving apps_pebblemsg_blacklist with {} entries", apps_pebblemsg_blacklist.size());
         if (apps_pebblemsg_blacklist.isEmpty()) {
             editor.putStringSet(GBPrefs.PACKAGE_PEBBLEMSG_BLACKLIST, null);
         } else {
@@ -645,7 +577,7 @@ public class GBApplication extends Application {
     }
 
     public static synchronized void removeFromAppsPebbleBlacklist(String packageName) {
-        GB.log("Removing from apps_pebblemsg_blacklist: " + packageName, GB.INFO, null);
+        LOG.info("Removing from apps_pebblemsg_blacklist: {}", packageName);
         apps_pebblemsg_blacklist.remove(packageNameToPebbleMsgSender(packageName));
         saveAppsPebbleBlackList();
     }
@@ -802,7 +734,7 @@ public class GBApplication extends Application {
         try {
             return getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA).versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            GB.log("Unable to determine Gadgetbridge's version", GB.WARN, e);
+            LOG.warn("Unable to determine Gadgetbridge's version", e);
             return "0.0.0";
         }
     }
@@ -813,7 +745,7 @@ public class GBApplication extends Application {
             PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA);
             return String.format("%s %s", appInfo.name, packageInfo.versionName);
         } catch (PackageManager.NameNotFoundException e) {
-            GB.log("Unable to determine Gadgetbridge's name/version", GB.WARN, e);
+            LOG.warn("Unable to determine Gadgetbridge's name/version", e);
             return "Gadgetbridge";
         }
     }
@@ -831,7 +763,7 @@ public class GBApplication extends Application {
         public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
             boolean preventScreenshots = getPrefs().getBoolean(GBPrefs.BLOCK_SCREENSHOTS, false);
             if (preventScreenshots) {
-                GB.log("set FLAG_SECURE for " + activity.getLocalClassName(), GB.DEBUG, null);
+                LOG.debug("set FLAG_SECURE for {}", activity.getLocalClassName());
                 Window window = activity.getWindow();
                 window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
             }

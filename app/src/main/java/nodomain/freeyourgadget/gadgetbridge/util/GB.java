@@ -538,18 +538,22 @@ public class GB {
     }
 
     public static void log(String message, int severity, Throwable ex) {
+        log(LOG, message, severity, ex);
+    }
+
+    public static void log(Logger logger, String message, int severity, Throwable ex) {
         switch (severity) {
             case INFO:
-                LOG.info(message, ex);
+                logger.info(message, ex);
                 break;
             case WARN:
-                LOG.warn(message, ex);
+                logger.warn(message, ex);
                 break;
             case ERROR:
-                LOG.error(message, ex);
+                logger.error(message, ex);
                 break;
             case DEBUG:
-                LOG.debug(message, ex);
+                logger.debug(message, ex);
         }
     }
 

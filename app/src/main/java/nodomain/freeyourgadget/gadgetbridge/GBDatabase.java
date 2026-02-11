@@ -3,7 +3,9 @@ package nodomain.freeyourgadget.gadgetbridge;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +21,8 @@ import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
  * This class is NOT thread-safe, all calls should be guarded by the upstream write lock.
  */
 public class GBDatabase {
-    private static final String TAG = "GBDatabase";
+    private static final Logger LOG = LoggerFactory.getLogger(GBDatabase.class);
+
     public static final String DATABASE_NAME = "Gadgetbridge";
 
     private DaoMaster daoMaster = null;
@@ -40,25 +43,25 @@ public class GBDatabase {
 
     void closeDatabase() {
         if (session == null) {
-            Log.w(TAG, "Database was already closed");
+            LOG.warn("Database was already closed");
             return;
         }
-        Log.d(TAG, "Trying to close database from " + Thread.currentThread().getName());
+        LOG.debug("Trying to close database");
         session.clear();
         session.getDatabase().close();
         session = null;
         daoMaster = null;
         helper = null;
-        Log.d(TAG, "Database closed");
+        LOG.info("Database closed");
     }
 
     void setupDatabase(final Context context) {
         if (session != null) {
-            Log.w(TAG, "Database already setup");
+            LOG.warn("Database already setup");
             return;
         }
 
-        Log.i(TAG, "Setting up database from " + Thread.currentThread().getName());
+        LOG.debug("Setting up database");
 
         if (GBEnvironment.env().isTest()) {
             helper = new DaoMaster.DevOpenHelper(context, null, null);
@@ -71,7 +74,7 @@ public class GBDatabase {
         if (session == null) {
             throw new RuntimeException("Unable to create database session");
         }
-        Log.d(TAG, "Database setup finished");
+        LOG.info("Database setup finished");
     }
 
     void importDB(final InputStream inputStream) throws IllegalStateException, IOException {

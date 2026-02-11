@@ -17,7 +17,9 @@
 package nodomain.freeyourgadget.gadgetbridge;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.locks.Lock;
 
@@ -29,7 +31,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
  * Provides low-level access to the database.
  */
 public class LockHandler implements DBHandler {
-    private static final String TAG = "LockHandler";
+    private static final Logger LOG = LoggerFactory.getLogger(LockHandler.class);
 
     private final Lock lock;
 
@@ -55,11 +57,11 @@ public class LockHandler implements DBHandler {
     @Override
     public void close() {
         if (closed) {
-            Log.w(TAG, lock.getClass().getSimpleName() + " was already closed (" + Thread.currentThread().getName() + ")");
+            LOG.warn("{} was already closed", lock.getClass().getSimpleName());
             return;
         }
         closed = true;
-        Log.d(TAG, "Releasing " + lock.getClass().getSimpleName() + " from " + Thread.currentThread().getName());
+        LOG.trace("Releasing {}", lock.getClass().getSimpleName());
         lock.unlock();
     }
 

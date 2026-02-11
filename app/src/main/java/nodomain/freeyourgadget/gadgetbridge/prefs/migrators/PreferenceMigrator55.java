@@ -16,10 +16,11 @@ import static nodomain.freeyourgadget.gadgetbridge.model.DeviceType.WATCHXPLUS;
 
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.util.Log;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -52,6 +53,8 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
  */
 @SuppressWarnings("deprecation")
 public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
+    private static final Logger LOG = LoggerFactory.getLogger(PreferenceMigrator55.class);
+
     private final SharedPreferences sharedPrefs;
     private final GBPrefs prefs;
 
@@ -97,7 +100,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
             try {
                 legacyGender_1 = sharedPrefs.getInt(ActivityUser.PREF_USER_GENDER, 2);
             } catch (Exception e) {
-                Log.e(TAG, "Could not access legacy activity gender", e);
+                LOG.error("Could not access legacy activity gender", e);
             }
             editor.putString(ActivityUser.PREF_USER_GENDER, Integer.toString(legacyGender_1));
         }
@@ -213,7 +216,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                 editor.remove("miband3_language");
 
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 3", e);
+                LOG.error("Failed to migrate prefs to version 3", e);
             }
         }
         if (oldVersion < 4) {
@@ -233,7 +236,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     deviceSharedPrefsEdit.apply();
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 4", e);
+                LOG.error("Failed to migrate prefs to version 4", e);
             }
         }
         if (oldVersion < 5) {
@@ -297,7 +300,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                 editor.remove("zetime_wrist");
 
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 5", e);
+                LOG.error("Failed to migrate prefs to version 5", e);
             }
         }
         if (oldVersion < 6) {
@@ -331,9 +334,9 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                 DaoSession daoSession = db.getDaoSession();
                 List<Device> activeDevices = DBHelper.getActiveDevices(daoSession);
                 migrateBooleanPrefToPerDevicePref("transliteration", false, "pref_transliteration_enabled", (ArrayList) activeDevices);
-                Log.w(TAG, "migrating transliteration settings");
+                LOG.warn("migrating transliteration settings");
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 9", e);
+                LOG.error("Failed to migrate prefs to version 9", e);
             }
         }
         if (oldVersion < 10) {
@@ -347,14 +350,14 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     DeviceType deviceType = DeviceType.fromName(dbDevice.getTypeName());
 
                     if (deviceType == GALAXY_BUDS) {
-                        GB.log("migrating Galaxy Buds volume", GB.INFO, null);
+                        LOG.info("migrating Galaxy Buds volume");
                         String volume = deviceSharedPrefs.getString(DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_AMBIENT_VOLUME, "1");
                         deviceSharedPrefsEdit.putInt(DeviceSettingsPreferenceConst.PREF_GALAXY_BUDS_AMBIENT_VOLUME, Integer.parseInt(volume));
                     }
                     deviceSharedPrefsEdit.apply();
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 10", e);
+                LOG.error("Failed to migrate prefs to version 10", e);
             }
         }
         if (oldVersion < 11) {
@@ -445,7 +448,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                 editor.remove("mi2_inactivity_warnings_end");
                 editor.remove("mi_fitness_goal");
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 11", e);
+                LOG.error("Failed to migrate prefs to version 11", e);
             }
         }
         if (oldVersion < 12) {
@@ -485,7 +488,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     deviceSharedPrefsEdit.apply();
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 13", e);
+                LOG.error("Failed to migrate prefs to version 13", e);
             }
         }
 
@@ -509,7 +512,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     deviceSharedPrefsEdit.apply();
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 14", e);
+                LOG.error("Failed to migrate prefs to version 14", e);
             }
         }
 
@@ -528,7 +531,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     }
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 15", e);
+                LOG.error("Failed to migrate prefs to version 15", e);
             }
         }
 
@@ -552,7 +555,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     deviceSharedPrefsEdit.apply();
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 16", e);
+                LOG.error("Failed to migrate prefs to version 16", e);
             }
         }
 
@@ -576,7 +579,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     deviceSharedPrefsEdit.apply();
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 17", e);
+                LOG.error("Failed to migrate prefs to version 17", e);
             }
 
             editor.remove(GBPrefs.CALENDAR_BLACKLIST);
@@ -602,7 +605,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     deviceSharedPrefsEdit.apply();
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 18", e);
+                LOG.error("Failed to migrate prefs to version 18", e);
             }
         }
 
@@ -637,7 +640,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     deviceSharedPrefsEdit.apply();
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 20", e);
+                LOG.error("Failed to migrate prefs to version 20", e);
             }
         }
 
@@ -667,7 +670,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     deviceSharedPrefsEdit.apply();
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 21", e);
+                LOG.error("Failed to migrate prefs to version 21", e);
             }
         }
 
@@ -687,7 +690,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     }
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 22", e);
+                LOG.error("Failed to migrate prefs to version 22", e);
             }
         }
 
@@ -716,7 +719,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     deviceSharedPrefsEdit.apply();
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 26", e);
+                LOG.error("Failed to migrate prefs to version 26", e);
             }
         }
 
@@ -747,7 +750,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     deviceSharedPrefsEdit.apply();
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 27", e);
+                LOG.error("Failed to migrate prefs to version 27", e);
             }
         }
 
@@ -788,7 +791,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     }
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 28", e);
+                LOG.error("Failed to migrate prefs to version 28", e);
             }
         }
 
@@ -810,7 +813,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     }
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 29", e);
+                LOG.error("Failed to migrate prefs to version 29", e);
             }
         }
 
@@ -832,7 +835,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     }
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 30", e);
+                LOG.error("Failed to migrate prefs to version 30", e);
             }
         }
 
@@ -862,7 +865,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     deviceSharedPrefsEdit.apply();
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 31", e);
+                LOG.error("Failed to migrate prefs to version 31", e);
             }
         }
 
@@ -892,7 +895,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     deviceSharedPrefsEdit.apply();
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 32", e);
+                LOG.error("Failed to migrate prefs to version 32", e);
             }
         }
 
@@ -922,7 +925,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     deviceSharedPrefsEdit.apply();
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 33", e);
+                LOG.error("Failed to migrate prefs to version 33", e);
             }
         }
 
@@ -963,7 +966,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     }
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 34", e);
+                LOG.error("Failed to migrate prefs to version 34", e);
             }
         }
 
@@ -1029,7 +1032,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     }
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 35", e);
+                LOG.error("Failed to migrate prefs to version 35", e);
             }
         }
         if (oldVersion < 36) {
@@ -1065,7 +1068,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     }
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 36", e);
+                LOG.error("Failed to migrate prefs to version 36", e);
             }
         }
 
@@ -1086,11 +1089,11 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     if (yearOfBirthValue > 1800 && yearOfBirthValue < 3000) {
                         editor.putString("activity_user_date_of_birth", String.format(Locale.ROOT, "%s-01-01", yearOfBirth.trim()));
                     } else {
-                        Log.e(TAG, "Year of birth out of range, not migrating - " + yearOfBirth);
+                        LOG.error("Year of birth out of range, not migrating - " + yearOfBirth);
                     }
                 }
             } catch (final Exception e) {
-                Log.e(TAG, "Failed to migrate year of birth to date of birth in version 38", e);
+                LOG.error("Failed to migrate year of birth to date of birth in version 38", e);
             }
         }
 
@@ -1122,7 +1125,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     deviceSharedPrefsEdit.apply();
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 39", e);
+                LOG.error("Failed to migrate prefs to version 39", e);
             }
         }
 
@@ -1152,7 +1155,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     deviceSharedPrefsEdit.apply();
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 40", e);
+                LOG.error("Failed to migrate prefs to version 40", e);
             }
         }
 
@@ -1201,7 +1204,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     deviceSharedPrefsEdit.apply();
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 43", e);
+                LOG.error("Failed to migrate prefs to version 43", e);
             }
         }
 
@@ -1215,7 +1218,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     editor.putBoolean("first_run", false);
                 }
             } catch (final Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 44", e);
+                LOG.error("Failed to migrate prefs to version 44", e);
             }
         }
 
@@ -1249,7 +1252,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     deviceSharedPrefsEdit.apply();
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 45", e);
+                LOG.error("Failed to migrate prefs to version 45", e);
             }
         }
 
@@ -1268,7 +1271,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     }
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 46", e);
+                LOG.error("Failed to migrate prefs to version 46", e);
             }
         }
 
@@ -1315,7 +1318,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     }
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 49", e);
+                LOG.error("Failed to migrate prefs to version 49", e);
             }
         }
 
@@ -1349,7 +1352,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     deviceSharedPrefsEdit.apply();
                 }
             } catch (Exception e) {
-                Log.e(TAG, "Failed to migrate prefs to version 50", e);
+                LOG.error("Failed to migrate prefs to version 50", e);
             }
         }
 
@@ -1384,7 +1387,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                         deviceSharedPrefsEdit.apply();
                     }
                 } catch (Exception e) {
-                    Log.e(TAG, "Failed to migrate prefs to version 54", e);
+                    LOG.error("Failed to migrate prefs to version 54", e);
                 }
             }
         }
@@ -1419,7 +1422,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                 }
             }
         } catch (Exception e) {
-            Log.e(TAG, "Failed to migrate device types", e);
+            LOG.error("Failed to migrate device types", e);
         }
     }
 
@@ -1436,7 +1439,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     DeviceType deviceType = DeviceType.fromName(dbDevice.getTypeName());
 
                     if (deviceTypes.contains(deviceType)) {
-                        Log.i(TAG, "migrating global string preference " + globalPref + " for " + deviceType.name() + " " + dbDevice.getIdentifier());
+                        LOG.info("migrating global string preference {} for {} {}", globalPref, deviceType.name(), dbDevice.getIdentifier());
                         deviceSharedPrefsEdit.putString(perDevicePref, globalPrefValue);
                     }
                     deviceSharedPrefsEdit.apply();
@@ -1445,7 +1448,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
             editor.remove(globalPref);
             editor.apply();
         } catch (Exception e) {
-            Log.w(TAG, "error acquiring DB lock");
+            LOG.warn("error acquiring DB lock");
         }
     }
 
@@ -1463,7 +1466,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
                     DeviceType deviceType = DeviceType.fromName(dbDevice.getTypeName());
 
                     if (deviceTypes.contains(deviceType)) {
-                        Log.i(TAG, "migrating global boolean preference " + globalPref + " for " + deviceType.name() + " " + dbDevice.getIdentifier());
+                        LOG.info("migrating global boolean preference {} for {} {}", globalPref, deviceType.name(), dbDevice.getIdentifier());
                         deviceSharedPrefsEdit.putBoolean(perDevicePref, globalPrefValue);
                     }
                     deviceSharedPrefsEdit.apply();
@@ -1472,7 +1475,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
             editor.remove(globalPref);
             editor.apply();
         } catch (Exception e) {
-            Log.e(TAG, "Failed to migrate " + globalPref, e);
+            LOG.error("Failed to migrate {}", globalPref, e);
         }
     }
 }

@@ -1,12 +1,14 @@
 package nodomain.freeyourgadget.gadgetbridge.prefs;
 
 import android.content.SharedPreferences;
-import android.util.Log;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import nodomain.freeyourgadget.gadgetbridge.prefs.migrators.PreferenceMigrator55;
 
 public class GBPrefsMigrator {
-    private static final String TAG = "GBPrefsMigrator";
+    private static final Logger LOG = LoggerFactory.getLogger(GBPrefsMigrator.class);
 
     public static final String PREFS_VERSION = "shared_preferences_version";
     //if preferences have to be migrated, increment the following and add the migration logic in migratePrefs below
@@ -16,7 +18,7 @@ public class GBPrefsMigrator {
     public static void migratePrefsIfNeeded(final SharedPreferences sharedPrefs) {
         final int oldVersion = getPrefsFileVersion(sharedPrefs);
         if (oldVersion != CURRENT_PREFS_VERSION) {
-            Log.i(TAG, "Migrating preferences from " + oldVersion + " to " + CURRENT_PREFS_VERSION);
+            LOG.info("Migrating preferences from {} to {}", oldVersion, CURRENT_PREFS_VERSION);
 
             final SharedPreferences.Editor editor = sharedPrefs.edit();
 

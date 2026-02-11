@@ -44,7 +44,6 @@ import java.util.Set;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.Logging;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.CheckInitializedAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.AbstractBleProfile;
@@ -81,7 +80,9 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
     public AbstractBTLEMultiDeviceSupport(Logger logger, int deviceCount) {
         this.logger = logger;
         this.deviceCount = deviceCount;
+        //noinspection unchecked
         mSupportedServices = new Set[deviceCount];
+        //noinspection unchecked
         mSupportedServerServices = new Set[deviceCount];
         mMTUs = new int[deviceCount];
         for (int i = 0; i < deviceCount; i++) {
@@ -92,14 +93,11 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
         mQueues = new BtLEQueue[deviceCount];
         bleApis = new BleIntentApi[deviceCount];
         devices = new GBDevice[deviceCount];
+        //noinspection unchecked
         mAvailableCharacteristics = new Map[deviceCount];
         if (logger == null) {
             throw new IllegalArgumentException("logger must not be null");
         }
-    }
-
-    public AbstractBTLEMultiDeviceSupport(Logger logger) {
-        this(logger, 1);
     }
 
     private void validateDeviceIndex(int deviceIdx) {
@@ -427,14 +425,6 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
     protected Set<UUID> getSupportedServices(int deviceIdx) {
         validateDeviceIndex(deviceIdx);
         return mSupportedServices[deviceIdx];
-    }
-
-    /**
-     * Utility method that may be used to log incoming messages when we don't know how to deal with them yet.
-     */
-    public void logMessageContent(byte[] value) {
-        logger.info("RECEIVED DATA WITH LENGTH: {}", (value != null) ? value.length : "(null)");
-        Logging.logBytes(logger, value);
     }
 
     // default implementations of event handler methods (gatt callbacks)

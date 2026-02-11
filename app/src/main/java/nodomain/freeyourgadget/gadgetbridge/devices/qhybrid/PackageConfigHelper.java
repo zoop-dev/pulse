@@ -20,16 +20,19 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.misfit.PlayNotificationRequest;
-import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class PackageConfigHelper {
+    private static final Logger LOG = LoggerFactory.getLogger(PackageConfigHelper.class);
+
     public static final String DB_NAME = "qhybridNotifications.db";
     public static final String DB_ID = "id";
     public static final String DB_TABLE = "notifications";
@@ -45,7 +48,7 @@ public class PackageConfigHelper {
         try {
             initDB();
         } catch (Exception e) {
-            GB.log("error getting database", GB.ERROR, e);
+            LOG.error("error getting database", e);
         }
     }
 
@@ -96,7 +99,7 @@ public class PackageConfigHelper {
                                 PlayNotificationRequest.VibrationType.fromValue((byte) cursor.getInt(vibrationPos)),
                                 cursor.getInt(idPos)
                         ));
-                        Log.d("Settings", "setting #" + cursor.getPosition() + ": " + cursor.getInt(silentPos));
+                        LOG.debug("setting #{}: {}", cursor.getPosition(), cursor.getInt(silentPos));
                     } while (cursor.moveToNext());
                 }
                 return list;
@@ -115,16 +118,15 @@ public class PackageConfigHelper {
                     return null;
                 }
                 c.moveToFirst();
-                NotificationConfiguration settings = new NotificationConfiguration(
-                        (short) c.getInt(c.getColumnIndex(DB_MINUTE)),
-                        (short) c.getInt(c.getColumnIndex(DB_HOUR)),
-                        c.getString(c.getColumnIndex(DB_PACKAGE)),
-                        c.getString(c.getColumnIndex(DB_APPNAME)),
-                        c.getInt(c.getColumnIndex(DB_RESPECT_SILENT)) == 1,
-                        PlayNotificationRequest.VibrationType.fromValue((byte) c.getInt(c.getColumnIndex(DB_VIBRATION))),
-                        c.getInt(c.getColumnIndex(DB_ID))
+                return new NotificationConfiguration(
+                        (short) c.getInt(c.getColumnIndexOrThrow(DB_MINUTE)),
+                        (short) c.getInt(c.getColumnIndexOrThrow(DB_HOUR)),
+                        c.getString(c.getColumnIndexOrThrow(DB_PACKAGE)),
+                        c.getString(c.getColumnIndexOrThrow(DB_APPNAME)),
+                        c.getInt(c.getColumnIndexOrThrow(DB_RESPECT_SILENT)) == 1,
+                        PlayNotificationRequest.VibrationType.fromValue((byte) c.getInt(c.getColumnIndexOrThrow(DB_VIBRATION))),
+                        c.getInt(c.getColumnIndexOrThrow(DB_ID))
                 );
-                return settings;
             }
         }
     }
@@ -145,7 +147,7 @@ public class PackageConfigHelper {
     }
 
     public void deleteNotificationConfiguration(NotificationConfiguration packageSettings) throws Exception {
-        Log.d("DB", "deleting id " + packageSettings.getId());
+        LOG.debug("deleting id {}", packageSettings.getId());
         if(packageSettings.getId() == -1) return;
 
         try (DBHandler db = GBApplication.acquireDB()) {

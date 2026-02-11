@@ -16,8 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.qhybrid;
 
-import android.util.Log;
-
 import java.io.Serializable;
 
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.misfit.PlayNotificationRequest;
@@ -28,15 +26,6 @@ public class NotificationConfiguration implements Serializable {
     private PlayNotificationRequest.VibrationType vibration;
     private boolean respectSilentMode;
     private long id = -1;
-
-    NotificationConfiguration(short min, short hour, String packageName, String appName, boolean respectSilentMode, PlayNotificationRequest.VibrationType vibration) {
-        this.min = min;
-        this.hour = hour;
-        this.packageName = packageName;
-        this.appName = appName;
-        this.respectSilentMode = respectSilentMode;
-        this.vibration = vibration;
-    }
 
     public NotificationConfiguration(short min, short hour, short subEye, PlayNotificationRequest.VibrationType vibration) {
         this.min = min;
@@ -81,7 +70,6 @@ public class NotificationConfiguration implements Serializable {
     }
 
     public boolean getRespectSilentMode() {
-        Log.d("Config", "respect: " + respectSilentMode);
         return respectSilentMode;
     }
 

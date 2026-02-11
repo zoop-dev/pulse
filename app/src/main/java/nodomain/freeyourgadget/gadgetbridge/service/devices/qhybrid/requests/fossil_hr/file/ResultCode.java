@@ -16,8 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil_hr.file;
 
-import nodomain.freeyourgadget.gadgetbridge.util.GB;
-
 public enum ResultCode {
     SUCCESS(0, true),
     INVALID_OPERATION_DATA(1, false),
@@ -46,24 +44,21 @@ public enum ResultCode {
     // no clue what there one mean
     UNKNOWN_1(-125, false);
 
-    boolean success;
-    int code;
+    final boolean success;
+    final int code;
 
-    private ResultCode(int code, boolean success){
+    ResultCode(int code, boolean success) {
         this.code = code;
         this.success = success;
     }
 
-    public boolean inidicatesSuccess(){
+    public boolean inidicatesSuccess() {
         return this.success;
     }
 
-    public static ResultCode fromCode(int code){
-        for (ResultCode resultCode : ResultCode.values()){
-            if(resultCode.code == code) {
-                if(resultCode == UNKNOWN_1){
-                    GB.log("dunno what code this is: " + code, GB.INFO, null);
-                }
+    public static ResultCode fromCode(int code) {
+        for (ResultCode resultCode : ResultCode.values()) {
+            if (resultCode.code == code) {
                 return resultCode;
             }
         }

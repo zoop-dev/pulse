@@ -26,6 +26,9 @@ import android.os.Environment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -52,8 +55,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBEnvironment;
 
 public class FileUtils {
-    // Don't use slf4j here -- would be a bootstrapping problem
-    private static final String TAG = "FileUtils";
+    private static final Logger LOG = LoggerFactory.getLogger(FileUtils.class);
 
     private static final List<String> KNOWN_PACKAGES = Arrays.asList(
             "nodomain.freeyourgadget.gadgetbridge",
@@ -65,10 +67,6 @@ public class FileUtils {
 
     /**
      * Copies the the given sourceFile to destFile, overwriting it, in case it exists.
-     *
-     * @param sourceFile
-     * @param destFile
-     * @throws IOException
      */
     public static void copyFile(File sourceFile, File destFile) throws IOException {
         if (!sourceFile.exists()) {
@@ -89,7 +87,6 @@ public class FileUtils {
      * Copies the contents of the given input stream to the destination file.
      * @param inputStream the contents to write. Note: the caller has to close the input stream!
      * @param destFile the file to write to
-     * @throws IOException
      */
     public static void copyStreamToFile(InputStream inputStream, File destFile) throws IOException {
         try (FileOutputStream fout = new FileOutputStream(destFile)) {
@@ -105,7 +102,6 @@ public class FileUtils {
      * Copies the contents of the given string to the destination file.
      * @param string the contents to write.
      * @param dst the file to write to
-     * @throws IOException
      */
     public static void copyStringToFile(String string, File dst, String mode) throws IOException {
         boolean append = true;
@@ -120,7 +116,6 @@ public class FileUtils {
      * Copies the contents of the given file to the destination output stream.
      * @param src the file from which to read.
      * @param dst the output stream that is written to. Note: the caller has to close the output stream!
-     * @throws IOException
      */
     public static void copyFileToStream(File src, OutputStream dst) throws IOException {
         try (FileInputStream in = new FileInputStream(src)) {
@@ -153,7 +148,6 @@ public class FileUtils {
      * @param context the application context.
      * @param src the file from which the content should be copied.
      * @param dst the destination uri.
-     * @throws IOException
      */
     public static void copyFileToURI(Context context, File src, Uri dst) throws IOException {
         OutputStream out = context.getContentResolver().openOutputStream(dst);
@@ -170,7 +164,6 @@ public class FileUtils {
      * in UTF-8 encoding.
      * @param file the file to read
      * @return the file contents as a newline-delimited string
-     * @throws IOException
      * @see #getStringFromFile(File, String)
      */
     public static String getStringFromFile(File file) throws IOException {
@@ -182,7 +175,6 @@ public class FileUtils {
      * given encoding.
      * @param file the file to read
      * @return the file contents as a newline-delimited string
-     * @throws IOException
      * @see #getStringFromFile(File)
      */
     public static String getStringFromFile(File file, String encoding) throws IOException {
@@ -220,7 +212,6 @@ public class FileUtils {
      * It doesn't matter whether child shall represent a file or a directory.
      * The parent directory will automatically be created, if necessary.
      * @param child the path to become relative to the external files directory
-     * @throws IOException
      * @see #getExternalFilesDir()
      */
     public static File getExternalFile(String child) throws IOException {
@@ -245,7 +236,7 @@ public class FileUtils {
             file.delete();
             return true;
         } catch (FileNotFoundException e) {
-            GB.log("Cannot write to directory: " + dir.getAbsolutePath(), GB.INFO, e);
+            LOG.debug("Cannot write to directory: {}", dir.getAbsolutePath(), e);
             return false;
         }
     }
@@ -259,7 +250,6 @@ public class FileUtils {
      * can actually write to them. But when created, they *should* be writable.
      *
      * @return the list of writable directories
-     * @throws IOException
      */
     @NonNull
     private static List<File> getWritableExternalFilesDirs() throws IOException {
@@ -284,20 +274,19 @@ public class FileUtils {
         if (dirs.length == 0) {
             throw new IOException("Unable to access external files dirs: 0");
         }
-        for (int i = 0; i < dirs.length; i++) {
-            File dir = dirs[i];
+        for (File dir : dirs) {
             if (dir == null) {
                 continue;
             }
             if (!dir.exists() && !dir.mkdirs()) {
-                GB.log("Unable to create directories: " + dir.getAbsolutePath(), GB.INFO, null);
+                LOG.info("Unable to create directories: {}", dir.getAbsolutePath());
                 continue;
             }
 
             if (!GBEnvironment.env().isLocalTest()) { // don't do this with robolectric
                 final String storageState = Environment.getExternalStorageState(dir);
                 if (!Environment.MEDIA_MOUNTED.equals(storageState)) {
-                    GB.log("ignoring '" +  storageState + "' external storage dir: " + dir, GB.INFO, null);
+                    LOG.info("ignoring '{}' external storage dir: {}", storageState, dir);
                     continue;
                 }
             }

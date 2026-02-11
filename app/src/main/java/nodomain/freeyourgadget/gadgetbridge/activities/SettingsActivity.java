@@ -39,11 +39,14 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SwitchPreference;
+import androidx.preference.SwitchPreferenceCompat;
 
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResult;
 import com.google.android.material.color.DynamicColors;
@@ -60,6 +63,7 @@ import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.Logging;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.automations.AutomationsSettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.ChartsPreferencesActivity;
@@ -160,15 +164,15 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
                 });
             }
 
-            pref = findPreference("log_to_file");
-            if (pref != null) {
-                pref.setOnPreferenceChangeListener((preference, newVal) -> {
+            final SwitchPreferenceCompat logToFilePreference = findPreference("log_to_file");
+            if (logToFilePreference != null) {
+                logToFilePreference.setOnPreferenceChangeListener((preference, newVal) -> {
                     boolean doEnable = Boolean.TRUE.equals(newVal);
                     try {
                         if (doEnable) {
                             FileUtils.getExternalFilesDir(); // ensures that it is created
                         }
-                        GBApplication.setupLogging(doEnable);
+                        Logging.getInstance().setFileLoggingEnabled(doEnable);
                     } catch (IOException ex) {
                         GB.toast(requireContext().getApplicationContext(),
                                 getString(R.string.error_creating_directory_for_logfiles, ex.getLocalizedMessage()),
@@ -179,10 +183,24 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
                     return true;
                 });
 
-                // If we didn't manage to initialize file logging, disable the preference
-                if (!GBApplication.getLogging().isFileLoggerInitialized()) {
-                    pref.setEnabled(false);
-                    pref.setSummary(R.string.pref_write_logfiles_not_available);
+                // If we didn't manage to initialize file logging, disable the preference and show the button to initialize again
+                if (!Logging.getInstance().isFileLoggerInitialized()) {
+                    logToFilePreference.setEnabled(false);
+                    logToFilePreference.setSummary(R.string.pref_write_logfiles_not_available);
+                    final Preference logRestart = findPreference("log_restart");
+                    if (logRestart != null) {
+                        logRestart.setVisible(true);
+                        logRestart.setOnPreferenceClickListener(preference -> {
+                            Logging.getInstance().setFileLoggingEnabled(logToFilePreference.isChecked());
+                            if (Logging.getInstance().isFileLoggerInitialized()) {
+                                logToFilePreference.setEnabled(true);
+                                logToFilePreference.setSummary(null);
+                                logRestart.setVisible(false);
+
+                            }
+                            return true;
+                        });
+                    }
                 }
             }
 

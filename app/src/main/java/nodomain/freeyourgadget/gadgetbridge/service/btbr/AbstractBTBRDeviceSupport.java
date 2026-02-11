@@ -24,7 +24,6 @@ import org.slf4j.Logger;
 
 import java.util.UUID;
 
-import nodomain.freeyourgadget.gadgetbridge.Logging;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BleNamesResolver;
@@ -171,14 +170,6 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
      */
     protected int getConnectDelayMillis() {
         return 0;
-    }
-
-    /**
-     * Utility method that may be used to log incoming messages when we don't know how to deal with them yet.
-     */
-    public void logMessageContent(byte[] value) {
-        logger.info("RECEIVED DATA WITH LENGTH: {}", (value != null) ? value.length : "(null)");
-        Logging.logBytes(logger, value);
     }
 
     @Override

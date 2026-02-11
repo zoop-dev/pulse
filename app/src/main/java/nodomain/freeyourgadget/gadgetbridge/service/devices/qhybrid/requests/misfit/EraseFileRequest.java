@@ -17,7 +17,6 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.misfit;
 
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.util.Log;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

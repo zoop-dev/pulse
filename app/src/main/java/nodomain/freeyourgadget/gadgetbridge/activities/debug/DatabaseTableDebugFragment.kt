@@ -111,7 +111,7 @@ class DatabaseTableDebugFragment : AbstractDebugFragment() {
                 }
             }
         } catch (e: Exception) {
-            GB.log("Error accessing database", GB.ERROR, e)
+            LOG.error("Error accessing database", e)
         }
     }
 

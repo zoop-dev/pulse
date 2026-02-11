@@ -18,10 +18,10 @@
 package nodomain.freeyourgadget.gadgetbridge;
 
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,19 +36,39 @@ import ch.qos.logback.core.Appender;
 import ch.qos.logback.core.FileAppender;
 import ch.qos.logback.core.rolling.RollingFileAppender;
 import ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy;
+import ch.qos.logback.core.spi.LifeCycle;
 import ch.qos.logback.core.util.FileSize;
 import ch.qos.logback.core.util.StatusPrinter;
-import nodomain.freeyourgadget.gadgetbridge.util.GB;
-import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
+import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 
-public abstract class Logging {
-    // Only used for tests
-    public static final String PROP_LOGFILES_DIR = "GB_LOGFILES_DIR";
+public class Logging {
+    private static final Logger LOG = LoggerFactory.getLogger(Logging.class);
+
+    private static final Logging INSTANCE = new Logging();
+
+    private Logging() {
+    }
 
     private String logDirectory;
     private FileAppender<ILoggingEvent> fileLogger;
+    private boolean initialized = false;
 
-    public void setupLogging(boolean enable) {
+    public static Logging getInstance() {
+        return INSTANCE;
+    }
+
+    public void initialize(final boolean enable) {
+        setFileLoggingEnabled(enable);
+        // prepare for log shutdown
+        if (!initialized) {
+            final Thread thread = new Thread(this::shutdown, "shutdownHook");
+            final Runtime runtime = Runtime.getRuntime();
+            runtime.addShutdownHook(thread);
+            initialized = true;
+        }
+    }
+
+    public void setFileLoggingEnabled(final boolean enable) {
         try {
             if (!isFileLoggerInitialized()) {
                 init();
@@ -58,26 +78,40 @@ public abstract class Logging {
             } else {
                 stopFileLogger();
             }
-            getLogger().info("Gadgetbridge version: {}-{} {} {}", BuildConfig.VERSION_NAME,
+            LOG.info("Gadgetbridge version: {}-{} {} {}", BuildConfig.VERSION_NAME,
                     BuildConfig.GIT_HASH_SHORT, BuildConfig.FLAVOR, BuildConfig.BUILD_TYPE);
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.BAKLAVA) {
-                getLogger().info(
+                LOG.info(
                         "Android: SDK_INT={} SECURITY_PATCH={}",
                         Build.VERSION.SDK_INT,
                         Build.VERSION.SECURITY_PATCH
                 );
             } else {
-                getLogger().info(
+                LOG.info(
                         "Android: SDK_INT={} SDK_INT_FULL={} SECURITY_PATCH={}",
                         Build.VERSION.SDK_INT,
                         Build.VERSION.SDK_INT_FULL,
                         Build.VERSION.SECURITY_PATCH
                 );
             }
-        } catch (Exception ex) {
-            Log.e("GBApplication", "External files dir not available, cannot log to file", ex);
+        } catch (final Exception ex) {
+            LOG.error("External files dir not available, cannot log to file", ex);
             stopFileLogger();
+        }
+    }
+
+    /// flush the log buffer and stop file logging
+    public void shutdown() {
+        try {
+            stopFileLogger();
+        } catch (Throwable ignored) {
+        }
+
+        try {
+            LifeCycle lifeCycle = (LifeCycle) LoggerFactory.getILoggerFactory();
+            lifeCycle.stop();
+        } catch (Throwable ignored) {
         }
     }
 
@@ -89,9 +123,12 @@ public abstract class Logging {
             return null;
     }
 
-    public void setImmediateFlush(final boolean immediateFlush) {
-        if (fileLogger != null) {
+    public void flush() {
+        if (fileLogger != null && !fileLogger.isImmediateFlush()) {
             fileLogger.setImmediateFlush(true);
+            // Write something so it's actually flushed
+            LOG.debug("Flushing logs");
+            fileLogger.setImmediateFlush(false);
         }
     }
 
@@ -107,38 +144,36 @@ public abstract class Logging {
 //        Logger logger = LoggerFactory.getLogger(Logging.class);
     }
 
-    protected abstract String createLogDirectory() throws IOException;
+    protected String createLogDirectory() throws IOException {
+        return FileUtils.getExternalFilesDir().getAbsolutePath();
+    }
 
-    protected void init() throws IOException {
-        Log.i("GBApplication", "Initializing logging");
+    private void init() throws IOException {
+        LOG.debug("Initializing logging");
         logDirectory = createLogDirectory();
         if (logDirectory == null) {
             throw new IllegalArgumentException("log directory must not be null");
         }
     }
 
-    private Logger getLogger() {
-        return LoggerFactory.getLogger(Logging.class);
-    }
-
     private void startFileLogger() {
         if (fileLogger != null) {
-            Log.w("GBApplication", "Logger already started");
+            LOG.warn("Logger already started");
             return;
         }
 
         if (logDirectory == null) {
-            Log.e("GBApplication", "Can't start file logging without a log directory");
+            LOG.error("Can't start file logging without a log directory");
             return;
         }
 
-        final FileAppender fileAppender = createFileAppender(logDirectory);
+        final FileAppender<ILoggingEvent> fileAppender = createFileAppender(logDirectory);
         fileAppender.start();
         attachLogger(fileAppender);
         fileLogger = fileAppender;
     }
 
-    void stopFileLogger() {
+    public void stopFileLogger() {
         if (fileLogger == null) {
             return;
         }
@@ -152,34 +187,35 @@ public abstract class Logging {
         fileLogger = null;
     }
 
-    private void attachLogger(Appender<ILoggingEvent> logger) {
+    private static void attachLogger(final Appender<ILoggingEvent> logger) {
         try {
             ch.qos.logback.classic.Logger root = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
             if (!root.isAttached(logger)) {
                 root.addAppender(logger);
             }
-        } catch (Throwable ex) {
-            Log.e("GBApplication", "Error attaching logger appender", ex);
+        } catch (final Throwable e) {
+            LOG.error("Error attaching logger appender", e);
         }
     }
 
-    private void detachLogger(Appender<ILoggingEvent> logger) {
+    private static void detachLogger(final Appender<ILoggingEvent> logger) {
         try {
             ch.qos.logback.classic.Logger root = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
             if (logger != null && root.isAttached(logger)) {
                 root.detachAppender(logger);
             }
-        } catch (Throwable ex) {
-            Log.e("GBApplication", "Error detaching logger appender", ex);
+        } catch (final Throwable e) {
+            LOG.error("Error detaching logger appender", e);
         }
     }
 
+    @VisibleForTesting
     public FileAppender<ILoggingEvent> getFileLogger() {
         return fileLogger;
     }
 
     @NonNull
-    public static String formatBytes(@Nullable byte[] bytes) {
+    public static String formatBytes(@Nullable final byte[] bytes) {
         if (bytes == null) {
             return "(null)";
         } else if (bytes.length == 0) {
@@ -194,13 +230,7 @@ public abstract class Logging {
         return builder.toString();
     }
 
-    public static void logBytes(Logger logger, byte[] value) {
-        if (value != null) {
-            logger.warn("DATA: " + GB.hexdump(value, 0, value.length));
-        }
-    }
-
-    public static FileAppender createFileAppender(final String logDirectory) {
+    private static FileAppender<ILoggingEvent> createFileAppender(final String logDirectory) {
         final LoggerContext lc = (LoggerContext) LoggerFactory.getILoggerFactory();
 
         final PatternLayoutEncoder ple = new PatternLayoutEncoder();
@@ -209,8 +239,8 @@ public abstract class Logging {
         ple.setContext(lc);
         ple.start();
 
-        final SizeAndTimeBasedRollingPolicy rollingPolicy = new SizeAndTimeBasedRollingPolicy();
-        final RollingFileAppender<ILoggingEvent> fileAppender = new RollingFileAppender<ILoggingEvent>();
+        final SizeAndTimeBasedRollingPolicy<ILoggingEvent> rollingPolicy = new SizeAndTimeBasedRollingPolicy<>();
+        final RollingFileAppender<ILoggingEvent> fileAppender = new RollingFileAppender<>();
 
         rollingPolicy.setContext(lc);
         rollingPolicy.setFileNamePattern(logDirectory + "/gadgetbridge-%d{yyyy-MM-dd}.%i.log.zip");

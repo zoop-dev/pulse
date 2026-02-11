@@ -751,6 +751,8 @@
     <string name="watch9_pairing_tap_hint">When your watch vibrates, shake the device or press its button.</string>
     <string name="title_activity_sleepmonitor">Sleep monitor</string>
     <string name="pref_write_logfiles">Write log files</string>
+    <string name="pref_restart_logging_title">Initialize logging</string>
+    <string name="pref_restart_logging_summary">Click here to try to initialize the logging file</string>
     <string name="pref_cache_weather">Cache weather information</string>
     <string name="pref_experimental_settings_title">Experimental settings</string>
     <string name="pref_experimental_settings_summary">Experimental settings might be unstable or not work as expected. Proceed at your own risk.</string>

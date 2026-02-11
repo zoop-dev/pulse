@@ -28,12 +28,14 @@ import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -44,6 +46,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fos
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class ImageEditActivity extends AbstractGBActivity implements View.OnTouchListener {
+    private static final Logger LOG = LoggerFactory.getLogger(ImageEditActivity.class);
+
     static final public int RESULT_CODE_EDIT_SUCCESS = 0;
 
     ImageView overlay;
@@ -85,7 +89,7 @@ public class ImageEditActivity extends AbstractGBActivity implements View.OnTouc
                 try {
                     fitImageToLayout(mainLayout);
                 } catch (IOException | RuntimeException e) {
-                    GB.log("Error formatting image", GB.ERROR, e);
+                    LOG.error("Error formatting image", e);
                     GB.toast("Error formatting image", Toast.LENGTH_LONG, GB.ERROR);
                     finish();
                 }

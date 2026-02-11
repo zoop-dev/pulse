@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
         android:icon="@drawable/ic_add"
@@ -18,6 +19,13 @@
             android:key="log_to_file"
             android:layout="@layout/preference_checkbox"
             android:title="@string/pref_write_logfiles" />
+
+        <Preference
+            android:icon="@drawable/ic_refresh"
+            android:key="log_restart"
+            android:summary="@string/pref_restart_logging_summary"
+            android:title="@string/pref_restart_logging_title"
+            app:isPreferenceVisible="false" />
 
         <Preference
             android:dependency="log_to_file"

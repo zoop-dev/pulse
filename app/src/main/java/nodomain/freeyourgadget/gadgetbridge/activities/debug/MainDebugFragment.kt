@@ -8,15 +8,15 @@ import androidx.core.content.FileProvider
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import nodomain.freeyourgadget.gadgetbridge.GBApplication
+import nodomain.freeyourgadget.gadgetbridge.Logging
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.CameraActivity
 import nodomain.freeyourgadget.gadgetbridge.activities.PermissionsActivity
 import nodomain.freeyourgadget.gadgetbridge.activities.welcome.WelcomeActivity
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventCameraRemote
+import nodomain.freeyourgadget.gadgetbridge.util.DeviceTypeDialog
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils
 import nodomain.freeyourgadget.gadgetbridge.util.GB
-import nodomain.freeyourgadget.gadgetbridge.util.DeviceTypeDialog
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
@@ -24,8 +24,11 @@ import java.io.IOException
 import java.lang.Boolean
 import kotlin.Any
 import kotlin.String
+import kotlin.Suppress
+import kotlin.apply
 import kotlin.let
 
+@Suppress("unused")
 class MainDebugFragment : AbstractDebugFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.debug_preferences_main, rootKey)
@@ -37,14 +40,15 @@ class MainDebugFragment : AbstractDebugFragment() {
         }
 
         onClick(PREF_DEBUG_SHARE_LOGS) { showLogSharingWarning() }
-        findPreference<SwitchPreferenceCompat>(LOG_TO_FILE)?.let {
+        val logToFilePreference = findPreference<SwitchPreferenceCompat>(LOG_TO_FILE)
+        logToFilePreference?.let {
             it.setOnPreferenceChangeListener { _: Preference?, newVal: Any? ->
                 val doEnable = Boolean.TRUE == newVal
                 try {
                     if (doEnable) {
                         FileUtils.getExternalFilesDir() // ensures that it is created
                     }
-                    GBApplication.setupLogging(doEnable)
+                    Logging.getInstance().setFileLoggingEnabled(doEnable)
                 } catch (ex: IOException) {
                     GB.toast(
                         requireContext().applicationContext,
@@ -58,9 +62,28 @@ class MainDebugFragment : AbstractDebugFragment() {
             }
 
             // If we didn't manage to initialize file logging, disable the preference
-            if (!GBApplication.getLogging().isFileLoggerInitialized) {
+            if (!Logging.getInstance().isFileLoggerInitialized) {
                 it.isEnabled = false
                 it.setSummary(R.string.pref_write_logfiles_not_available)
+            }
+
+            // If we didn't manage to initialize file logging, disable the preference and show the button to initialize again
+            if (!Logging.getInstance().isFileLoggerInitialized()) {
+                logToFilePreference.isEnabled = false
+                logToFilePreference.setSummary(R.string.pref_write_logfiles_not_available)
+                val logRestart = findPreference<Preference?>("log_restart")
+                if (logRestart != null) {
+                    logRestart.isVisible = true
+                    logRestart.setOnPreferenceClickListener { preference: Preference? ->
+                        Logging.getInstance().setFileLoggingEnabled(logToFilePreference.isChecked)
+                        if (Logging.getInstance().isFileLoggerInitialized) {
+                            logToFilePreference.isEnabled = true
+                            logToFilePreference.setSummary(null)
+                            logRestart.isVisible = false
+                        }
+                        true
+                    }
+                }
             }
         }
 
@@ -99,15 +122,13 @@ class MainDebugFragment : AbstractDebugFragment() {
     }
 
     private fun shareLog() {
-        val fileName = GBApplication.getLogPath()
+        val fileName = Logging.getInstance().logPath
         if (fileName == null || fileName.isEmpty()) {
             return
         }
 
         // Flush the logs, so that we ensure latest lines are also there
-        GBApplication.getLogging().setImmediateFlush(true)
-        LOG.debug("Flushing logs before sharing")
-        GBApplication.getLogging().setImmediateFlush(false)
+        Logging.getInstance().flush()
 
         val logFile = File(fileName)
         if (!logFile.exists()) {
@@ -135,6 +156,7 @@ class MainDebugFragment : AbstractDebugFragment() {
         private const val PREF_DEBUG_ADD_TEST_DEVICE = "pref_debug_add_test_device"
         private const val PREF_HEADER_LOGS = "pref_header_logs"
         private const val LOG_TO_FILE = "log_to_file"
+        private const val LOG_RESTART = "log_restart"
         private const val PREF_DEBUG_SHARE_LOGS = "pref_debug_share_logs"
         private const val PREF_HEADER_DEBUG = "pref_header_debug"
         private const val PREF_DEBUG_NOTIFICATIONS = "pref_debug_notifications"

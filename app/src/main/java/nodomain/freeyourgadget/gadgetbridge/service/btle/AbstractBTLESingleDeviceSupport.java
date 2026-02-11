@@ -44,10 +44,10 @@ import java.util.Set;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.Logging;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.CheckInitializedAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.AbstractBleProfile;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 /**
@@ -109,10 +109,6 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
                 mQueue.disconnect();
             }
         }
-    }
-
-    public BleIntentApi getBleApi() {
-        return bleApi;
     }
 
     @Override
@@ -339,8 +335,11 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
      * Utility method that may be used to log incoming messages when we don't know how to deal with them yet.
      */
     public void logMessageContent(byte[] value) {
-        logger.info("RECEIVED DATA WITH LENGTH: {}", (value != null) ? value.length : "(null)");
-        Logging.logBytes(logger, value);
+        if (value != null) {
+            logger.info("RECEIVED DATA WITH LENGTH: {}: {}", value.length, GB.hexdump(value));
+        } else {
+            logger.warn("RECEIVED DATA: (null)");
+        }
     }
 
     // default implementations of event handler methods (gatt callbacks)

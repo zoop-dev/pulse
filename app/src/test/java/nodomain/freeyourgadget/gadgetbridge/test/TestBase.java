@@ -11,6 +11,7 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.io.File;
+import java.util.Objects;
 
 import ch.qos.logback.classic.util.ContextInitializer;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -20,10 +21,8 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
-import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 
 import static org.junit.Assert.assertNotNull;
-import static nodomain.freeyourgadget.gadgetbridge.Logging.PROP_LOGFILES_DIR;
 
 /**
  * Base class for all testcases in Gadgetbridge that are supposed to run locally
@@ -35,31 +34,20 @@ import static nodomain.freeyourgadget.gadgetbridge.Logging.PROP_LOGFILES_DIR;
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = 23, application = GBTestApplication.class)
 public abstract class TestBase {
-    protected static File logFilesDir;
-
     protected GBApplication app = (GBApplication) RuntimeEnvironment.application;
     protected DaoSession daoSession;
     protected DBHandler dbHandler;
 
     // Make sure logging is set up for all testcases, so that we can debug problems
     @BeforeClass
-    public static void setupSuite() throws Exception {
+    public static void setupSuite() {
         GBEnvironment.setupEnvironment(GBEnvironment.createLocalTestEnvironment());
 
         // print everything going to android.util.Log to System.out
         System.setProperty("robolectric.logging", "stdout");
 
-        // properties might be preconfigured in build.gradle because of test ordering problems
-        String logDir = System.getProperty(PROP_LOGFILES_DIR);
-        if (logDir != null) {
-            logFilesDir = new File(logDir);
-        } else {
-            logFilesDir = FileUtils.createTempDir("logfiles");
-            System.setProperty(PROP_LOGFILES_DIR, logFilesDir.getAbsolutePath());
-        }
-
         if (System.getProperty(ContextInitializer.CONFIG_FILE_PROPERTY) == null) {
-            File workingDir = new File(System.getProperty("user.dir"));
+            File workingDir = new File(Objects.requireNonNull(System.getProperty("user.dir")));
             File configFile = new File(workingDir, "src/main/assets/logback.xml");
             System.out.println(configFile.getAbsolutePath());
             System.setProperty(ContextInitializer.CONFIG_FILE_PROPERTY, configFile.getAbsolutePath());

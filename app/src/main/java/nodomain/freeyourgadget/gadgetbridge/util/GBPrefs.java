@@ -25,10 +25,12 @@ import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
 import java.time.LocalTime;
@@ -39,8 +41,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class GBPrefs extends Prefs {
-    // Since this class must not log to slf4j, we use plain android.util.Log
-    private static final String TAG = "GBPrefs";
+    private static final Logger LOG = LoggerFactory.getLogger(GBPrefs.class);
 
     public static final String PACKAGE_BLACKLIST = "package_blacklist";
     public static final String PACKAGE_PEBBLEMSG_BLACKLIST = "package_pebblemsg_blacklist";
@@ -146,7 +147,7 @@ public class GBPrefs extends Prefs {
         try {
             return DateTimeUtils.dayFromString(date);
         } catch (ParseException ex) {
-            GB.log("Error parsing date: " + date, GB.ERROR, ex);
+            LOG.error("Error parsing date: {}", date, ex);
             return null;
         }
     }
@@ -158,7 +159,7 @@ public class GBPrefs extends Prefs {
     public float[] getLongLat(Context context) {
         float latitude = getFloat("location_latitude", 0);
         float longitude = getFloat("location_longitude", 0);
-        Log.i(TAG, "got longitude/latitude from preferences: " + latitude + "/" + longitude);
+        LOG.info("got longitude/latitude from preferences: {}/{}", latitude, longitude);
 
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                 getBoolean("use_updated_location_if_available", false)) {
@@ -170,7 +171,7 @@ public class GBPrefs extends Prefs {
                 if (lastKnownLocation != null) {
                     latitude = (float) lastKnownLocation.getLatitude();
                     longitude = (float) lastKnownLocation.getLongitude();
-                    Log.i(TAG, "got longitude/latitude from last known location: " + latitude + "/" + longitude);
+                    LOG.info("got longitude/latitude from last known location: {}/{}", latitude, longitude);
                 }
             }
         }

@@ -39,6 +39,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 /**
  * Catches otherwise uncaught exceptions, logs them and terminates the app.
  */
+@SuppressWarnings("ClassCanBeRecord")
 public class GBExceptionHandler implements Thread.UncaughtExceptionHandler {
     private static final Logger LOG = LoggerFactory.getLogger(GBExceptionHandler.class);
     private final Thread.UncaughtExceptionHandler mDelegate;
@@ -50,7 +51,7 @@ public class GBExceptionHandler implements Thread.UncaughtExceptionHandler {
     }
 
     /// Log and notify the unhandled exception
-    /// Flushing and closing the log is handled by {@link GBApplication.ShutdownHook}
+    /// Flushing and closing the log is handled by {@link Logging} shutdown hook
     @Override
     public void uncaughtException(@NonNull Thread thread, @NonNull Throwable ex) {
         // This method is only called if something is seriously wrong so be very generous

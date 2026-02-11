@@ -17,7 +17,6 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests;
 
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.util.Log;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +27,7 @@ import java.util.UUID;
 
 public abstract class Request {
     protected byte[] data;
-    private Logger logger = (Logger) LoggerFactory.getLogger(getName());
+    private final Logger logger = LoggerFactory.getLogger(getName());
     //protected ByteBuffer buffer;
 
     public Request(){

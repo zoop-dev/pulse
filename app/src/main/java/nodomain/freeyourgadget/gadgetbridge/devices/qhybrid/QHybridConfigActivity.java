@@ -24,11 +24,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -64,6 +63,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -80,8 +81,11 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSuppo
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.adapter.fossil.FossilWatchAdapter;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.buttonconfig.ConfigPayload;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
+import nodomain.freeyourgadget.gadgetbridge.util.NotificationUtils;
 
 public class QHybridConfigActivity extends AbstractGBActivity {
+    private static final Logger LOG = LoggerFactory.getLogger(QHybridConfigActivity.class);
+
     PackageAdapter adapter;
     ArrayList<NotificationConfiguration> list;
     PackageConfigHelper helper;
@@ -469,7 +473,7 @@ public class QHybridConfigActivity extends AbstractGBActivity {
                                                     buttonIntent.putExtra(FossilWatchAdapter.ITEM_BUTTONS, buttonConfig.toString());
                                                     LocalBroadcastManager.getInstance(QHybridConfigActivity.this).sendBroadcast(buttonIntent);
                                                 } catch (JSONException e) {
-                                                    GB.log("error", GB.ERROR, e);
+                                                    LOG.error("Failed to update button config", e);
                                                 }
                                             }
                                         })
@@ -572,11 +576,8 @@ public class QHybridConfigActivity extends AbstractGBActivity {
     }
 
     class PackageAdapter extends ArrayAdapter<NotificationConfiguration> {
-        PackageManager manager;
-
         PackageAdapter(@NonNull Context context, int resource, @NonNull List<NotificationConfiguration> objects) {
             super(context, resource, objects);
-            manager = context.getPackageManager();
         }
 
         @NonNull
@@ -599,10 +600,9 @@ public class QHybridConfigActivity extends AbstractGBActivity {
                 return addButton;
             }
 
-            try {
-                ((ImageView) view.findViewById(R.id.packageIcon)).setImageDrawable(manager.getApplicationIcon(settings.getPackageName()));
-            } catch (PackageManager.NameNotFoundException e) {
-                GB.log("error", GB.ERROR, e);
+            final Drawable appIcon = NotificationUtils.getAppIcon(getContext(), settings.getPackageName());
+            if (appIcon != null) {
+                ((ImageView) view.findViewById(R.id.packageIcon)).setImageDrawable(appIcon);
             }
             final int square_side = 100;
             ((TextView) view.findViewById(R.id.packageName)).setText(settings.getAppName());

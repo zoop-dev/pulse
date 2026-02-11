@@ -1,7 +1,9 @@
 package nodomain.freeyourgadget.gadgetbridge;
 
 import android.content.Context;
-import android.util.Log;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,7 +17,7 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 
 public class GBDatabaseManager {
-    private static final String TAG = "GBDatabaseManager";
+    private static final Logger LOG = LoggerFactory.getLogger(GBDatabaseManager.class);
 
     private static final ReentrantReadWriteLock DB_LOCK = new ReentrantReadWriteLock(true);
     private static final GBDatabase GB_DATABASE = new GBDatabase();
@@ -24,7 +26,7 @@ public class GBDatabaseManager {
     }
 
     public static void closeDatabase() {
-        Log.v(TAG, "Trying to close database from " + Thread.currentThread().getName());
+        LOG.trace("Trying to close database");
         DB_LOCK.writeLock().lock();
         try {
             GB_DATABASE.closeDatabase();
@@ -34,7 +36,7 @@ public class GBDatabaseManager {
     }
 
     public static void setupDatabase(final Context context) {
-        Log.v(TAG, "Setting up database from " + Thread.currentThread().getName());
+        LOG.trace("Setting up database");
         DB_LOCK.writeLock().lock();
         try {
             GB_DATABASE.setupDatabase(context);
@@ -56,26 +58,26 @@ public class GBDatabaseManager {
      */
     public static DBHandler acquireWrite() throws GBException {
         try {
-            Log.v(TAG, "Trying to acquire write lock from " + Thread.currentThread().getName());
+            LOG.trace("Trying to acquire write lock");
             if (DB_LOCK.writeLock().tryLock(30, TimeUnit.SECONDS)) {
-                Log.v(TAG, "Acquired write lock from " + Thread.currentThread().getName());
+                LOG.trace("Acquired write lock");
                 return new LockHandler(DB_LOCK.writeLock(), GB_DATABASE.getDaoMaster(), GB_DATABASE.getSession());
             }
         } catch (final InterruptedException e) {
-            Log.e(TAG, "Interrupted while waiting for DB lock");
+           LOG.error("Interrupted while waiting for write DB lock", e);
         }
         throw new GBException("Failed to acquire database write lock");
     }
 
     public static DBHandler acquireReadOnly() throws GBException {
         try {
-            Log.v(TAG, "Trying to acquire read lock from " + Thread.currentThread().getName());
+            LOG.trace("Trying to acquire read lock");
             if (DB_LOCK.readLock().tryLock(30, TimeUnit.SECONDS)) {
-                Log.v(TAG, "Acquired read lock from " + Thread.currentThread().getName());
+                LOG.trace("Acquired read lock");
                 return new LockHandler(DB_LOCK.readLock(), GB_DATABASE.getDaoMaster(), GB_DATABASE.getSession());
             }
         } catch (final InterruptedException e) {
-            Log.e(TAG, "Interrupted while waiting for DB lock");
+            LOG.error("Interrupted while waiting for read DB lock", e);
         }
         throw new GBException("Failed to acquire database read lock");
     }
@@ -86,7 +88,7 @@ public class GBDatabaseManager {
      * @return true on successful deletion
      */
     public static boolean deleteActivityDatabase(final Context context) {
-        Log.v(TAG, "Deleting activity database from " + Thread.currentThread().getName());
+        LOG.trace("Deleting activity database");
 
         DB_LOCK.writeLock().lock();
         try {
@@ -101,7 +103,7 @@ public class GBDatabaseManager {
     }
 
     public static void exportDB(final File destFile) throws IOException {
-        Log.v(TAG, "Exporting database to file from " + Thread.currentThread().getName());
+        LOG.trace("Exporting database to file");
 
         DB_LOCK.writeLock().lock();
         try {
@@ -112,7 +114,7 @@ public class GBDatabaseManager {
     }
 
     public static void exportDB(final OutputStream dest) throws IOException {
-        Log.v(TAG, "Exporting database to OutputStream from " + Thread.currentThread().getName());
+        LOG.trace("Exporting database to OutputStream");
 
         DB_LOCK.writeLock().lock();
         try {
@@ -128,7 +130,7 @@ public class GBDatabaseManager {
      * @return true on successful deletion
      */
     public static boolean deleteOldActivityDatabase(final Context context) {
-        Log.v(TAG, "Deleting old activity database from " + Thread.currentThread().getName());
+        LOG.trace("Deleting old activity database");
 
         final DBHelper dbHelper = new DBHelper(context);
         boolean result = true;
@@ -143,7 +145,7 @@ public class GBDatabaseManager {
     }
 
     public static void importDB(final InputStream inputStream) throws IllegalStateException, IOException {
-        Log.v(TAG, "Importing database from " + Thread.currentThread().getName());
+        LOG.trace("Importing database");
 
         DB_LOCK.writeLock().lock();
         try {

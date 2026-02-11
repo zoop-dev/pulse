@@ -16,15 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil.device_info;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.util.HashMap;
-
-import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.file.FileHandle;
 
 public class DeviceSecurityVersionInfo implements DeviceInfo {
     private int versionMajor, versionMinor;
