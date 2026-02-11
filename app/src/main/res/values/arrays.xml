@@ -1103,13 +1103,17 @@
         <item>@string/hrv</item>
         <item>@string/menuitem_map</item>
         <item>@string/menuitem_heart_rate_push</item>
+        <item>@string/menuitem_audio_control</item>
         <item>@string/menuitem_bluetooth_scale_assistant</item>
         <item>@string/menuitem_calculator</item>
         <item>@string/menuitem_running_calculator</item>
         <item>@string/menuitem_real_time_heart_rate</item>
         <item>@string/menuitem_watch_storage_space</item>
         <item>@string/menuitem_water_time</item>
+        <item>@string/menuitem_diary</item>
+        <item>@string/menuitem_calorie_intake_record</item>
         <item>@string/activity_type_meditation</item>
+        <item>@string/menuitem_zepp_flow</item>
         <item>@string/menuitem_zepp_flow</item>
         <item>@string/menuitem_jet_lag_manager</item>
         <item>@string/menuitem_golf</item>
@@ -1174,14 +1178,18 @@
         <item>hrv</item>
         <item>map</item>
         <item>heart_rate_push</item>
+        <item>audio_control</item>
         <item>bluetooth_scale_assistant</item>
         <item>calculator</item>
         <item>running_calculator</item>
         <item>real_time_heart_rate</item>
         <item>watch_storage_space</item>
         <item>water_time</item>
+        <item>diary</item>
+        <item>calorie_intake_record</item>
         <item>meditation</item>
         <item>zepp_flow</item>
+        <item>zepp_flow2</item>
         <item>jet_lag_manager</item>
         <item>golf</item>
         <item>bio_charge</item>
@@ -1232,6 +1240,7 @@
         <item>@string/menuitem_bio_charge</item>
         <item>@string/menuitem_worldclock</item>
         <item>@string/menuitem_breathing</item>
+        <item>@string/menuitem_zepp_os_ask_anything_chat_bot</item>
     </string-array>
 
     <string-array name="pref_zepp_os_shortcut_cards_values">
@@ -1274,6 +1283,7 @@
         <item>bio_charge</item>
         <item>worldclock2</item>
         <item>breathing2</item>
+        <item>ask_anything</item>
     </string-array>
 
     <string-array name="pref_huami2021_control_center">
@@ -1302,6 +1312,10 @@
         <item>@string/menuitem_countdown</item>
         <item>@string/menuitem_stopwatch</item>
         <item>@string/menuitem_alarm</item>
+        <item>@string/menuitem_flashlight</item>
+        <item>@string/menuitem_text_size</item>
+        <item>@string/menuitem_sos_flashlight</item>
+        <item>@string/_pebble_watch_mute</item>
     </string-array>
 
     <string-array name="pref_huami2021_control_center_values">
@@ -1330,6 +1344,10 @@
         <item>countdown</item>
         <item>stopwatch</item>
         <item>alarm</item>
+        <item>flashlight2</item>
+        <item>text_size</item>
+        <item>sos_flashlight</item>
+        <item>mute</item>
     </string-array>
 
     <string-array name="pref_miband5_workout_activity_types">

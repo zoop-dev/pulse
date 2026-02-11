@@ -2240,6 +2240,9 @@
     <string name="menuitem_apps_shortcuts">Apps shortcuts</string>
     <string name="menuitem_map">Map</string>
     <string name="menuitem_heart_rate_push">Heart Rate Push</string>
+    <string name="menuitem_audio_control">Audio Control</string>
+    <string name="menuitem_diary">Diary</string>
+    <string name="menuitem_calorie_intake_record">Calorie Intake Record</string>
     <string name="menuitem_bluetooth_scale_assistant">Bluetooth Scale Assistant</string>
     <string name="menuitem_calculator">Calculator</string>
     <string name="menuitem_running_calculator">Running Calculator</string>
@@ -2249,6 +2252,7 @@
     <string name="menuitem_breathing">Breathing</string>
     <string name="menuitem_cycles">Cycle Tracking</string>
     <string name="menuitem_alarm">Alarm</string>
+    <string name="menuitem_zepp_os_ask_anything_chat_bot">Ask Anything</string>
     <string name="menuitem_timer">Countdown</string>
     <string name="menuitem_compass">Compass</string>
     <string name="menuitem_settings">Settings</string>
@@ -2291,6 +2295,8 @@
     <string name="menuitem_weight">Weight</string>
     <string name="menuitem_barometer">Barometer</string>
     <string name="menuitem_flashlight">Flashlight</string>
+    <string name="menuitem_text_size">Text Size</string>
+    <string name="menuitem_sos_flashlight">SOS Flashlight</string>
     <string name='menuitem_email'>E-mail</string>
     <string name='menuitem_countdown'>Countdown</string>
     <string name='menuitem_personal_activity_intelligence'>Personal Activity Intelligence</string>

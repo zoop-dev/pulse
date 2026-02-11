@@ -97,6 +97,7 @@ public class ZeppOsShortcutCardsService extends AbstractZeppOsService {
         WORLDCLOCK2("1049670", "1"),
         BREATHING2("1053484", "1"),
         ZEPP_FLOW("1074698", "1"),
+        ASK_ANYTHING("1086782", "1"),
         ;
 
         private final String appNum;
