@@ -148,7 +148,7 @@
     <string name="tap_connected_device_for_activity">Dotkněte se zařízení pro aktivitu</string>
     <string name="tap_connected_device_for_vibration">Dotkněte se zařízení pro vibrace</string>
     <string name="tap_a_device_to_connect">Dotkněte se zařízení pro připojení</string>
-    <string name="cannot_connect_bt_address_invalid_">Nelze připojit. Je BT adresa v pořádku?</string>
+    <string name="cannot_connect_bt_address_invalid_">Nelze se připojit. Je Bluetooth adresa v pořádku?</string>
     <string name="gadgetbridge_running_generic">Gadgetbridge běží</string>
     <string name="installing_binary_d_d">Instaluji soubor %1$d/%2$d</string>
     <string name="installation_failed_">Instalace selhala</string>
@@ -171,7 +171,7 @@
     <string name="action_discover">Připojit nové zařízení</string>
     <string name="device_with_rssi">%1$s (%2$s)</string>
     <string name="title_activity_android_pairing">Párovat zařízení</string>
-    <string name="android_pairing_hint">Použijte párování BT Androidu pro spárování se zařízením. </string>
+    <string name="android_pairing_hint">Použijte dialog párování Bluetooth systému Android pro spárování se zařízením.</string>
     <string name="title_activity_mi_band_pairing">Párovat Mi Band</string>
     <string name="pairing">Páruji s %s…</string>
     <string name="pairing_creating_bond_with">Vytvářím vazbu s %1$s (%2$s)</string>
@@ -259,8 +259,8 @@
     <string name="miband_fwinstaller_untested_version">Netestovaná verze!</string>
     <string name="fwappinstaller_connection_state">Připojení k zařízení: %1$s</string>
     <string name="pbw_installhandler_pebble_firmware">Firmware Pebble %1$s</string>
-    <string name="pbwinstallhandler_correct_hw_revision">Správná revize HW</string>
-    <string name="pbwinstallhandler_incorrect_hw_revision">Revize HW není správná!</string>
+    <string name="pbwinstallhandler_correct_hw_revision">Správná revize hardwaru</string>
+    <string name="pbwinstallhandler_incorrect_hw_revision">Neshoda revize hardwaru!</string>
     <string name="pbwinstallhandler_app_item">%1$s (%2$s)</string>
     <string name="updatefirmwareoperation_updateproblem_do_not_reboot">Při přenosu firmwaru nastaly potíže. Nerestartujte svůj Mi Band!</string>
     <string name="updatefirmwareoperation_metadata_updateproblem">Problém při přenosu metadat firmware</string>
@@ -308,8 +308,8 @@
     <string name="appwidget_text">Spí</string>
     <string name="add_widget">Přidat widget</string>
     <string name="appwidget_setting_alarm">Budík nastaven na %1$02d:%2$02d</string>
-    <string name="device_hw">Revize HW: %1$s</string>
-    <string name="device_fw">Verze FW: %1$s</string>
+    <string name="device_hw">Revize hardwaru: %1$s</string>
+    <string name="device_fw">Verze firmwaru: %1$s</string>
     <string name="error_creating_directory_for_logfiles">Chyba při vytváření adresáře pro protokoly: %1$s</string>
     <string name="DEVINFO_HR_VER">"Tep: "</string>
     <string name="updatefirmwareoperation_update_in_progress">Aktualizace firmware</string>
@@ -344,7 +344,7 @@
     <!--Strings related to Pebble Pairing Activity-->
     <string name="title_activity_pebble_pairing">Párování Pebble</string>
     <string name="pebble_pairing_hint">Na vašem zařízení Android se objeví dialog párování. Pokud se tak nestane, zkontrolujte oznámení a potvrďte žádost o párování. Poté potvrďte párování na Pebble.</string>
-    <string name="pref_title_setup_bt_pairing">Zapnout párování BT</string>
+    <string name="pref_title_setup_bt_pairing">Zapnout párování Bluetooth</string>
     <string name="pref_summary_setup_bt_pairing">Toto vypněte v případě problémů s připojením</string>
     <string name="unit_metric">Metrické</string>
     <string name="unit_imperial">Imperiální</string>
@@ -1908,7 +1908,7 @@
     <string name="activity_type_stretching">Protahování</string>
     <string name="activity_type_street_dance">Pouliční tanec</string>
     <string name="activity_type_pool_swimming">Bazénové plavání</string>
-    <string name="activity_type_hiit">HIIT</string>
+    <string name="activity_type_hiit">Vysoce intenzivní intervalový trénink</string>
     <string name="activity_type_indoor_walking">Chůze vevnitř</string>
     <string name="activity_type_kickboxing">Kickbox</string>
     <string name="activity_type_indoor_ice_skating">Bruslení na ledě vevnitř</string>
@@ -1979,10 +1979,10 @@
     <string name="num_min">%d min</string>
     <string name="pai_chart_per_month">PAI za měsíc</string>
     <string name="pref_huami_truncate_fetch_operation_timestamps_title">Oříznout časy při stahování</string>
-    <string name="gpx_route_upload_complete">Nahrávání GPX traxy hotovo</string>
+    <string name="gpx_route_upload_complete">Nahrávání trasy GPX dokončeno</string>
     <string name="pref_huami_truncate_fetch_operation_timestamps_summary">Ořízne časy stažených data na celé minuty. Vypněte, chcete-li zachovat čas ve vteřinách, při potížích při stahování velmi krátkých aktivit.</string>
-    <string name="gpx_route_upload_failed">Chyba při nahrávání GPX trasy</string>
-    <string name="gpx_route_upload_in_progress">Nahrávání GPX trasy</string>
+    <string name="gpx_route_upload_failed">Chyba při nahrávání trasy GPX</string>
+    <string name="gpx_route_upload_in_progress">Nahrávání trasy GPX</string>
     <string name="pref_app_logs_stop_summary">Vypnout zaznamenávání ladících informací aplikaci</string>
     <string name="prefs_control_center">Ovládací Centrum</string>
     <string name="dismiss">Zamítnout</string>
@@ -4167,7 +4167,7 @@
     <string name="done">Hotovo</string>
     <string name="pref_header_sync">Synchronizace</string>
     <string name="healthconnect_settings">Health Connect</string>
-    <string name="pref_health_connect_enabled">Povolit export ze služby Health Connect</string>
+    <string name="pref_health_connect_enabled">Povolit export do služby Health Connect</string>
     <string name="pref_health_connect_manual_settings">Spravovat data služby Health Connect</string>
     <string name="pref_health_connect_settings">Nastavení služby Health Connect</string>
     <string name="pref_health_connect_settings_summary">Otevřít nastavení systému Android pro Health Connect</string>
@@ -4204,8 +4204,8 @@
     <string name="pref_health_connect_detailed_workout_sync_summary">Synchronizovat trasy GPS a měření po sekundách (tep, rychlost, výkon) u cvičení. Poskytuje podrobnější data, může ale trvat déle.</string>
     <string name="health_connect_initial_sync_custom_date">Synchronizovat od vlastního data</string>
     <string name="health_connect_initial_sync_dialog_title">Prvotní synchronizace se službou Health Connect</string>
-    <string name="health_connect_initial_sync_dialog_message">Vyberte, kolik dat chcete synchronizovat při prvotní synchronizaci se službou Health Connect:</string>
-    <string name="health_connect_initial_sync_preset">Poslední synchronizace:</string>
+    <string name="health_connect_initial_sync_dialog_message">Vyberte množství dat, které chcete synchronizovat při prvotní synchronizaci se službou Health Connect:</string>
+    <string name="health_connect_initial_sync_preset">Synchronizovat posledních:</string>
     <string name="health_connect_initial_sync_select_date">Vybrat datum</string>
     <string name="health_connect_initial_sync_3_days">3 dny</string>
     <string name="health_connect_initial_sync_7_days">7 dní</string>
