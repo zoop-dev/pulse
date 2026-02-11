@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
@@ -305,7 +306,19 @@ public class HuaweiEphemerisManager {
                 throw new Exception("Ephemeris no config data");
             }
 
-            final JsonObject conf = availableDataConfig.getAsJsonObject(downloadTag);
+            JsonObject conf = null;
+            if(downloadTag.contains("HW_PRECSION_ION")) {
+                Set<String> jsonKeys = availableDataConfig.keySet();
+                for(String k: jsonKeys) {
+                    if(k.contains("HW_PRECSION_ION")) {
+                        conf = availableDataConfig.getAsJsonObject(k);
+                        break;
+                    }
+                }
+            } else {
+                conf = availableDataConfig.getAsJsonObject(downloadTag);
+            }
+
             if(conf == null) {
                 throw new Exception("Ephemeris no config for tag");
             }
