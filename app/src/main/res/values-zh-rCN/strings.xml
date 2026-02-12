@@ -4281,4 +4281,12 @@
     <string name="sports_activity_quick_filter_distant_past">遥远的过去（所有锻炼）</string>
     <string name="internet_firewall_blacklisted_domains_title">拦截的域名</string>
     <string name="internet_firewall_blacklisted_domains_summary">下列域名和它们所有的子域名会忽略上方设置，始终被拦截。</string>
+    <string name="pref_restart_logging_title">初始化日志记录</string>
+    <string name="pref_restart_logging_summary">单击此处尝试初始化日志文件</string>
+    <string name="menuitem_audio_control">音频控制</string>
+    <string name="menuitem_diary">日记</string>
+    <string name="menuitem_calorie_intake_record">卡路里摄入记录</string>
+    <string name="menuitem_zepp_os_ask_anything_chat_bot">随便问问</string>
+    <string name="menuitem_text_size">文本大小</string>
+    <string name="menuitem_sos_flashlight">SOS 手电</string>
 </resources>
