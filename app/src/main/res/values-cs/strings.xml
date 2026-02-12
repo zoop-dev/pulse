@@ -4284,4 +4284,12 @@
     <string name="sports_activity_quick_filter_distant_past">Vzdálená minulost (všechna cvičení)</string>
     <string name="internet_firewall_blacklisted_domains_title">Zablokované domény</string>
     <string name="internet_firewall_blacklisted_domains_summary">Následující domény a všechny jejich subdomény budou ignorovat nastavení výše a budou vždy zablokované.</string>
+    <string name="pref_restart_logging_title">Inicializace protokolování</string>
+    <string name="pref_restart_logging_summary">Klepněte sem pro inicializaci souboru protokolování</string>
+    <string name="menuitem_audio_control">Ovládání zvuku</string>
+    <string name="menuitem_diary">Deník</string>
+    <string name="menuitem_calorie_intake_record">Záznam příjmu kalorií</string>
+    <string name="menuitem_zepp_os_ask_anything_chat_bot">Zeptejte se na cokoli</string>
+    <string name="menuitem_text_size">Velikost textu</string>
+    <string name="menuitem_sos_flashlight">SOS svítilna</string>
 </resources>
