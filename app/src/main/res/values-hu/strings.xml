@@ -4127,4 +4127,12 @@
     <string name="soundcore_battery_low_tone_summary">Hallható jelzés, amikor az akkumulátor szintje 20%, illetve 10% alá esik</string>
     <string name="internet_firewall_blacklisted_domains_title">Letiltott domainek</string>
     <string name="internet_firewall_blacklisted_domains_summary">A következő domainek és azok összes aldomainje figyelmen kívül hagyja a fenti beállítást, és mindig le lesznek tiltva.</string>
+    <string name="pref_restart_logging_title">Naplózás előkészítése</string>
+    <string name="pref_restart_logging_summary">Koppintson ide, hogy megpróbálja előkészíteni a naplófájlt</string>
+    <string name="menuitem_audio_control">Hangvezérlés</string>
+    <string name="menuitem_diary">Napló</string>
+    <string name="menuitem_calorie_intake_record">Kalóriabevitel-nyilvántartás</string>
+    <string name="menuitem_zepp_os_ask_anything_chat_bot">Kérdezzen bármit</string>
+    <string name="menuitem_text_size">Szövegméret</string>
+    <string name="menuitem_sos_flashlight">SOS-zseblámpa</string>
 </resources>
