@@ -4131,4 +4131,12 @@
     <string name="infinitime_resource_upload_progress_status">Realizando acción %d de %d\n%s %s</string>
     <string name="internet_firewall_blacklisted_domains_title">Dominios bloqueados</string>
     <string name="internet_firewall_blacklisted_domains_summary">Los siguientes dominios y todos sus subdominios ignorarán la configuración anterior y siempre serán bloqueados.</string>
+    <string name="pref_restart_logging_title">Iniciar el registro</string>
+    <string name="pref_restart_logging_summary">Pulsa aquí para intentar iniciar el archivo de registro</string>
+    <string name="menuitem_audio_control">Control de audio</string>
+    <string name="menuitem_diary">Diario</string>
+    <string name="menuitem_calorie_intake_record">Registro de ingesta de calorías</string>
+    <string name="menuitem_zepp_os_ask_anything_chat_bot">Preguntar cualquier cosa</string>
+    <string name="menuitem_text_size">Tamaño del texto</string>
+    <string name="menuitem_sos_flashlight">Linterna SOS</string>
 </resources>
