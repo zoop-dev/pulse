@@ -826,11 +826,11 @@
     <string name="mi2_prefs_display_items_summary">Odaberite stavke prikazane na zaslonu banda</string>
     <string name="mi2_prefs_activate_display_on_lift">Aktiviraj prikaz nakon podizanja</string>
     <string name="mi2_prefs_rotate_wrist_to_switch_info">Zakrenite zapešće za promjenu informacija</string>
-    <string name="mi2_prefs_do_not_disturb">Ne ometaj</string>
+    <string name="mi2_prefs_do_not_disturb">Ne smetaj</string>
     <string name="mi2_prefs_do_not_disturb_summary">Band neće primati obavijesti dok je aktivan</string>
     <string name="mi2_prefs_inactivity_warnings">Upozorenja o neaktivnosti</string>
     <string name="mi2_prefs_do_not_disturb_start">Vrijeme početka</string>
-    <string name="mi2_prefs_do_not_disturb_lift_wrist">Aktivirajte prikaz nakon podizanja tijekom DND-a</string>
+    <string name="mi2_prefs_do_not_disturb_lift_wrist">Aktiviraj prikaz nakon podizanja tijekom „Ne smetaj”</string>
     <string name="mi3_prefs_band_screen_unlock">Otključavanje zaslona banda</string>
     <string name="mi3_prefs_band_screen_unlock_summary">Prevucite prstom prema gore za otključavanje zaslona banda</string>
     <string name="mi3_prefs_night_mode">Noćni način rada</string>
@@ -1236,7 +1236,7 @@
     <string name="pbwinstallhandler_incorrect_hw_revision">Nepodudaranje revizije hardvera!</string>
     <string name="notif_export_failed_title">Izvoz baze podataka nije uspio! Provjerite svoje postavke.</string>
     <string name="pbw_install_handler_hw_revision_mismatch">Nije moguće instalirati dati firmware: ne odgovara reviziji hardvera vašeg Pebblea.</string>
-    <string name="pref_title_notification_filter">DND</string>
+    <string name="pref_title_notification_filter">Ne smetaj</string>
     <string name="pref_summary_minimize_priority_off">Ikona u statusnoj traci i obavijest na zaključanom zaslonu se prikazuju</string>
     <string name="pref_title_language">Jezik</string>
     <string name="pref_theme_system">Sustav</string>
@@ -1411,7 +1411,7 @@
     <string name="pref_header_sony_equalizer_bands">Bandovi</string>
     <string name="sony_audio_upsampling">Povećanje zvuka</string>
     <string name="thai">tajlandski</string>
-    <string name="pref_summary_notification_filter">Blokiraj sve obavijesti kada je DND način omogućen na telefonu</string>
+    <string name="pref_summary_notification_filter">Blokiraj sve obavijesti kada je modus „Ne smetaj” aktiviran na telefonu</string>
     <plurals name="widget_alarm_target_hours">
         <item quantity="one">%1$d:%2$02d sat</item>
         <item quantity="few">%1$d:%2$02d sata</item>
