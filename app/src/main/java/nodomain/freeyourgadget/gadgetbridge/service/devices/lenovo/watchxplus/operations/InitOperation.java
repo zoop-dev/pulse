@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.service.devices.lenovo.operations;
+package nodomain.freeyourgadget.gadgetbridge.service.devices.lenovo.watchxplus.operations;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.lenovo.watchxplus.WatchXPlusConstants;
-import nodomain.freeyourgadget.gadgetbridge.devices.watch9.Watch9Constants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -66,10 +65,10 @@ public class InitOperation extends AbstractBTLEOperation<WatchXPlusDeviceSupport
                                            BluetoothGattCharacteristic characteristic,
                                            byte[] value) {
         UUID characteristicUUID = characteristic.getUuid();
-        if (Watch9Constants.UUID_CHARACTERISTIC_WRITE.equals(characteristicUUID) && needsAuth) {
+        if (WatchXPlusConstants.UUID_CHARACTERISTIC_WRITE.equals(characteristicUUID) && needsAuth) {
             try {
                 getSupport().logMessageContent(value);
-                if (ArrayUtils.equals(value, Watch9Constants.RESP_AUTHORIZATION_TASK, 5) && value[8] == 0x01) {
+                if (ArrayUtils.equals(value, WatchXPlusConstants.RESP_AUTHORIZATION_TASK, 5) && value[8] == 0x01) {
                     TransactionBuilder builder = getSupport().createTransactionBuilder("authInit");
                     builder.setCallback(this);
                     builder.setDeviceState(GBDevice.State.INITIALIZING);

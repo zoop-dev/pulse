@@ -799,16 +799,16 @@
             android:label="@string/devicetype_gree_ac"
             android:parentActivityName=".activities.discovery.DiscoveryActivityV2" />
         <activity
-            android:name=".devices.watch9.Watch9PairingActivity"
+            android:name=".devices.lenovo.watch9.Watch9PairingActivity"
             android:label="@string/title_activity_watch9_pairing" />
         <activity
-            android:name=".devices.watch9.Watch9CalibrationActivity"
+            android:name=".devices.lenovo.watch9.Watch9CalibrationActivity"
             android:label="@string/title_activity_watch9_calibration" />
         <activity
-            android:name=".devices.lenovo.LenovoWatchPairingActivity"
+            android:name=".devices.lenovo.watchxplus.LenovoWatchPairingActivity"
             android:label="@string/title_activity_watch9_pairing" />
         <activity
-            android:name=".devices.lenovo.LenovoWatchCalibrationActivity"
+            android:name=".devices.lenovo.watchxplus.LenovoWatchCalibrationActivity"
             android:label="@string/title_activity_LenovoWatch_calibration" />
         <activity
             android:name=".activities.charts.ActivityChartsActivity"

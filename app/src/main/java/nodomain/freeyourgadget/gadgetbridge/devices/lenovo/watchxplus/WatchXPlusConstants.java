@@ -18,8 +18,6 @@ package nodomain.freeyourgadget.gadgetbridge.devices.lenovo.watchxplus;
 
 import java.util.UUID;
 
-import nodomain.freeyourgadget.gadgetbridge.devices.lenovo.LenovoWatchConstants;
-
 public final class WatchXPlusConstants extends LenovoWatchConstants {
     public static final UUID UUID_SERVICE_WATCHXPLUS = UUID.fromString("0000a800-0000-1000-8000-00805f9b34fb");
 

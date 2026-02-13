@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.watch9;
+package nodomain.freeyourgadget.gadgetbridge.devices.lenovo.watch9;
 
 import java.util.UUID;
 

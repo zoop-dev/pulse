@@ -15,7 +15,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.watch9;
+package nodomain.freeyourgadget.gadgetbridge.devices.lenovo.watch9;
 
 import android.app.Activity;
 import android.bluetooth.le.ScanFilter;
@@ -34,7 +34,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.ServiceDeviceSupport;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.watch9.Watch9DeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.lenovo.watch9.Watch9DeviceSupport;
 
 public class Watch9DeviceCoordinator extends AbstractBLEDeviceCoordinator {
     @NonNull

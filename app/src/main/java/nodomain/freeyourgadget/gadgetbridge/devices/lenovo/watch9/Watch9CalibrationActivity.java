@@ -1,4 +1,4 @@
-/*  Copyright (C) 2019-2024 mamucho, mkusnierz
+/*  Copyright (C) 2018-2024 Daniele Gobbetti, maxirnilian
 
     This file is part of Gadgetbridge.
 
@@ -14,7 +14,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.lenovo;
+package nodomain.freeyourgadget.gadgetbridge.devices.lenovo.watch9;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,26 +23,25 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
 
-import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class LenovoWatchCalibrationActivity extends AbstractGBActivity {
+public class Watch9CalibrationActivity extends AbstractGBActivity {
 
     private static final String STATE_DEVICE = "stateDevice";
-    private GBDevice device;
+    GBDevice device;
 
-    private NumberPicker pickerHour, pickerMinute, pickerSecond;
+    NumberPicker pickerHour, pickerMinute, pickerSecond;
 
-    private Handler handler;
-    private Runnable holdCalibration;
+    Handler handler;
+    Runnable holdCalibration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_watchxplus_calibration);
+        setContentView(R.layout.activity_watch9_calibration);
 
         pickerHour = findViewById(R.id.np_hour);
         pickerMinute = findViewById(R.id.np_minute);
@@ -62,7 +61,7 @@ public class LenovoWatchCalibrationActivity extends AbstractGBActivity {
         holdCalibration = new Runnable() {
             @Override
             public void run() {
-                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(new Intent(LenovoWatchConstants.ACTION_CALIBRATION_HOLD));
+                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(new Intent(Watch9Constants.ACTION_CALIBRATION_HOLD));
                 handler.postDelayed(this, 10000);
             }
         };
@@ -82,10 +81,10 @@ public class LenovoWatchCalibrationActivity extends AbstractGBActivity {
             public void onClick(View v) {
                 btCalibrate.setEnabled(false);
                 handler.removeCallbacks(holdCalibration);
-                Intent calibrationData = new Intent(LenovoWatchConstants.ACTION_CALIBRATION_SEND);
-                calibrationData.putExtra(LenovoWatchConstants.VALUE_CALIBRATION_HOUR, pickerHour.getValue());
-                calibrationData.putExtra(LenovoWatchConstants.VALUE_CALIBRATION_MINUTE, pickerMinute.getValue());
-                calibrationData.putExtra(LenovoWatchConstants.VALUE_CALIBRATION_SECOND, pickerSecond.getValue());
+                Intent calibrationData = new Intent(Watch9Constants.ACTION_CALIBRATION_SEND);
+                calibrationData.putExtra(Watch9Constants.VALUE_CALIBRATION_HOUR, pickerHour.getValue());
+                calibrationData.putExtra(Watch9Constants.VALUE_CALIBRATION_MINUTE, pickerMinute.getValue());
+                calibrationData.putExtra(Watch9Constants.VALUE_CALIBRATION_SECOND, pickerSecond.getValue());
                 LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(calibrationData);
                 finish();
             }
@@ -93,7 +92,7 @@ public class LenovoWatchCalibrationActivity extends AbstractGBActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(STATE_DEVICE, device);
     }
@@ -107,8 +106,8 @@ public class LenovoWatchCalibrationActivity extends AbstractGBActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Intent calibration = new Intent(LenovoWatchConstants.ACTION_CALIBRATION);
-        calibration.putExtra(LenovoWatchConstants.ACTION_ENABLE, true);
+        Intent calibration = new Intent(Watch9Constants.ACTION_CALIBRATION);
+        calibration.putExtra(Watch9Constants.ACTION_ENABLE, true);
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(calibration);
         handler.postDelayed(holdCalibration, 1000);
     }
@@ -116,8 +115,8 @@ public class LenovoWatchCalibrationActivity extends AbstractGBActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        Intent calibration = new Intent(LenovoWatchConstants.ACTION_CALIBRATION);
-        calibration.putExtra(LenovoWatchConstants.ACTION_ENABLE, false);
+        Intent calibration = new Intent(Watch9Constants.ACTION_CALIBRATION);
+        calibration.putExtra(Watch9Constants.ACTION_ENABLE, false);
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(calibration);
         handler.removeCallbacks(holdCalibration);
     }
