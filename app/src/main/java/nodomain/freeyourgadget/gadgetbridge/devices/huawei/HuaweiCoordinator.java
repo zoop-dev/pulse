@@ -312,6 +312,12 @@ public abstract class HuaweiCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
+    public boolean supportsVO2Max(@NonNull final GBDevice device) {
+        // #5770 - most Huawei and Honor devices seem to support it
+        return true;
+    }
+
+    @Override
     public boolean supportsHeartRateMeasurement(@NonNull final GBDevice device) {
         return HuaweiDeviceStateManager.get(device).supportsHeartRate(device);
     }

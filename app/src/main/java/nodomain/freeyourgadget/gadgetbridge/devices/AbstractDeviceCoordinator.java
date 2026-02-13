@@ -330,7 +330,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     @Override
     @Nullable
     public Vo2MaxSampleProvider<? extends Vo2MaxSample> getVo2MaxSampleProvider(GBDevice device, DaoSession session) {
-        return null;
+        return new WorkoutVo2MaxSampleProvider(device, session);
     }
 
     @Override
