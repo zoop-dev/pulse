@@ -62,6 +62,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.Vo2MaxSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Vo2MaxSample;
+import nodomain.freeyourgadget.gadgetbridge.util.Accumulator;
 
 
 public class VO2MaxFragment extends AbstractChartFragment<VO2MaxFragment.VO2MaxData> {
@@ -168,10 +169,12 @@ public class VO2MaxFragment extends AbstractChartFragment<VO2MaxFragment.VO2MaxD
         List<Entry> runningEntries = new ArrayList<>();
         List<Entry> cyclingEntries = new ArrayList<>();
         List<Entry> allEntries = new ArrayList<>();
+        final Accumulator accumulator = new Accumulator();
         vo2MaxData.records.forEach((record) -> {
             float nd = (float) (record.timestamp - this.tsFrom) / (60 * 60 * 24);
             Entry entry = new Entry(nd, record.value);
             allEntries.add(entry);
+            accumulator.add(record.value);
             switch (record.type) {
                 case RUNNING:
                     runningEntries.add(entry);
@@ -209,6 +212,10 @@ public class VO2MaxFragment extends AbstractChartFragment<VO2MaxFragment.VO2MaxD
         }
         final LineData lineData = new LineData(lineDataSets);
         vo2MaxChart.getXAxis().setValueFormatter(getVO2MaxLineChartValueFormatter());
+        if (accumulator.getCount() > 0) {
+            vo2MaxChart.getAxisLeft().setAxisMinimum(Math.max(0, (float) accumulator.getMin() - 2));
+            vo2MaxChart.getAxisLeft().setAxisMaximum(Math.min(100, (float) accumulator.getMax() +  2));
+        }
         vo2MaxChart.setData(lineData);
     }
 
