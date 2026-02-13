@@ -16,8 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos;
 
-import androidx.annotation.Nullable;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +25,7 @@ import java.nio.ByteOrder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -35,8 +34,8 @@ import java.util.TimeZone;
 import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
-import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.AbstractHuamiActivityDetailsParser;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsParser {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsActivityDetailsParser.class);
@@ -47,23 +46,19 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         SDF.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
-    private Date timestamp;
-    private long offset = 0;
-
-    private long longitude;
-    private long latitude;
-    private double altitude;
-
     private final ZeppOsActivityTrack activityTrack;
-    private ActivityPoint lastActivityPoint;
+
+    // We need to keep track of these separately because of the offsets
+    private long timestamp;
+    private int offset;
+    private int longitude;
+    private int latitude;
+
+    private int lastSwimIntervalIndex = 0;
+
+    private final ActivityPoint.Builder activityPointBuilder = new ActivityPoint.Builder();
 
     public ZeppOsActivityDetailsParser(final BaseActivitySummary summary) {
-        this.timestamp = summary.getStartTime();
-
-        this.longitude = summary.getBaseLongitude();
-        this.latitude = summary.getBaseLatitude();
-        this.altitude = summary.getBaseAltitude();
-
         this.activityTrack = new ZeppOsActivityTrack();
         this.activityTrack.setUser(summary.getUser());
         this.activityTrack.setDevice(summary.getDevice());
@@ -131,16 +126,28 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
                 case HEARTRATE:
                     consumeHeartRate(buf);
                     break;
+                case TEMPERATURE:
+                    consumeTemperature(buf);
+                    break;
                 case STRENGTH_SET:
                     consumeStrengthSet(buf);
+                    break;
+                case SWIMMING_INTERVAL:
+                    consumeSwimmingInterval(buf);
                     break;
                 case LAP:
                     consumeLap(buf);
                     break;
                 default:
-                    LOG.warn("No consumer for for type {}", type);
                     // Consume the reported length
-                    buf.get(new byte[length]);
+                    final byte[] unkBytes = new byte[length];
+                    buf.get(unkBytes);
+                    LOG.warn(
+                            "No consumer for for type {} at {}: {}",
+                            type,
+                            timestamp,
+                            GB.hexdump(unkBytes)
+                    );
                     continue;
             }
 
@@ -153,7 +160,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
 
         if (!unknownTypeCodes.isEmpty()) {
             for (final Map.Entry<Integer, Integer> e : unknownTypeCodes.entrySet()) {
-                LOG.warn("Unknown type code {} seen {} times", String.format("0x%X", e.getKey()), e.getValue());
+                LOG.warn("Unknown type code {} seen {} times", e.getKey(), e.getValue());
             }
         }
 
@@ -210,15 +217,21 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
     }
 
     private void consumeTimestamp(final ByteBuffer buf) {
+        addNewActivityPoint();
+
         buf.getInt(); // ?
-        this.timestamp = new Date(buf.getLong());
+        this.timestamp = buf.getLong();
         this.offset = 0;
 
-        trace("Consumed timestamp");
+        trace("Consumed timestamp: {}", timestamp);
     }
 
     private void consumeTimestampOffset(final ByteBuffer buf) {
+        addNewActivityPoint();
+
         this.offset = buf.getShort();
+
+        trace("Consumed offset: {}", offset);
     }
 
     private void consumeGpsCoords(final ByteBuffer buf, final int length) {
@@ -237,8 +250,6 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
 
         // TODO which one is the time offset? Not sure it is the first
 
-        addNewGpsCoordinates();
-
         final double longitudeDeg = convertHuamiValueToDecimalDegrees(longitude);
         final double latitudeDeg = convertHuamiValueToDecimalDegrees(latitude);
 
@@ -251,22 +262,19 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         final short latitudeDelta = buf.getShort();
         final short two = buf.getShort(); // ? seems to always be 2
 
-        this.longitude += longitudeDelta;
-        this.latitude += latitudeDelta;
-
         // Handle additional data in Balance 2 format (16 bytes total)
         if (length == 16) {
             // Skip additional 8 bytes: 2-byte flag + 2x 4-byte floats (likely speed/accuracy)
             buf.get(new byte[8]);
         }
 
-        if (lastActivityPoint == null) {
-            final String timestampStr = SDF.format(new Date(timestamp.getTime() + offset));
+        if (this.longitude == 0 && this.latitude == 0) {
+            final String timestampStr = SDF.format(new Date(timestamp + offset));
             LOG.warn("{}: Got GPS delta before GPS coords, ignoring", timestampStr);
-            return;
+        } else {
+            this.longitude += longitudeDelta;
+            this.latitude += latitudeDelta;
         }
-
-        addNewGpsCoordinates();
 
         trace("Consumed GPS delta: {} {} {}", longitudeDelta, latitudeDelta, two);
     }
@@ -290,6 +298,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
                 break;
             case 6:
                 status = "stop";
+                addNewActivityPoint();
                 break;
             default:
                 status = String.format("unknown (0x%X)", statusCode);
@@ -306,12 +315,10 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         final short stride = buf.getShort(); // cm
         final short pace = buf.getShort(); // sec/km
 
-        final ActivityPoint ap = getCurrentActivityPoint();
-        if (ap != null) {
-            ap.setCadence(cadence);
-            if (pace != 0) {
-                ap.setSpeed(1000f / pace); // s/km -> m/s
-            }
+        activityPointBuilder.setCadence(cadence);
+        activityPointBuilder.setStrideCm(stride);
+        if (pace != 0) {
+            activityPointBuilder.setSpeed(1000f / pace); // s/km -> m/s
         }
 
         trace("Consumed speed: cadence={}, stride={}, pace={}", cadence, stride, pace);
@@ -341,33 +348,29 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
             newAltitude = altitudeRaw / 100.0f;
         }
 
-        final ActivityPoint ap = getCurrentActivityPoint();
-        if (ap != null) {
-            final GPSCoordinate newCoordinate = new GPSCoordinate(
-                    ap.getLocation().getLongitude(),
-                    ap.getLocation().getLatitude(),
-                    newAltitude
-            );
+        activityPointBuilder.setAltitude(newAltitude);
 
-            ap.setLocation(newCoordinate);
-        }
-
-        // Only update the instance altitude if we have valid data
-        altitude = newAltitude;
-
-        trace("Consumed altitude: {}", altitude);
+        trace("Consumed altitude: {}", newAltitude);
     }
 
     private void consumeHeartRate(final ByteBuffer buf) {
         consumeTimestampOffset(buf);
         final int heartRate = buf.get() & 0xff;
 
-        final ActivityPoint ap = getCurrentActivityPoint();
-        if (ap != null) {
-            ap.setHeartRate(heartRate);
-        }
+        activityPointBuilder.setHeartRate(heartRate);
 
         trace("Consumed HeartRate: {}", heartRate);
+    }
+
+    private void consumeTemperature(final ByteBuffer buf) {
+        consumeTimestampOffset(buf);
+
+        final float temperature = buf.getFloat();
+        buf.get(); // 0?
+
+        activityPointBuilder.setTemperature(temperature);
+
+        trace("Consumed temperature: {}", temperature);
     }
 
     private void consumeStrengthSet(final ByteBuffer buf) {
@@ -380,6 +383,59 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         activityTrack.addStrengthSet(reps, weight != 0xffff ? weight / 10f : -1);
 
         trace("Consumed strength set: reps={}, weightKg={}", reps, weight);
+    }
+
+    private void consumeSwimmingInterval(final ByteBuffer buf) {
+        consumeTimestampOffset(buf);
+
+        buf.get(); // 0?
+        final int interval = buf.getShort(); // starting from 1
+        final int poolLengthMeters = buf.getShort();
+        buf.get(); // 0?
+        final int hr = buf.get() & 0xff;
+        buf.getShort(); // 1?
+        final int style = buf.getShort() & 0xffff;
+        final int pace = buf.getShort() & 0xffff; // s/km
+        final int swolf = buf.getShort() & 0xffff;
+        final int strokeRate = buf.getShort() & 0xffff;
+        final int durationMillis = buf.getInt();
+        buf.getInt(); // 0x00000000?
+        final int strokeDistance = buf.getShort() & 0xffff;
+        final int calories = buf.getShort() & 0xffff;
+
+        activityTrack.addSwimmingInterval(
+                interval,
+                poolLengthMeters,
+                hr,
+                style,
+                pace,
+                swolf,
+                strokeRate,
+                durationMillis,
+                strokeDistance,
+                calories
+        );
+
+        final List<ActivityPoint> allPoints = activityTrack.getAllPoints();
+        // Fill all activity points since the last interval so we can chart it
+        for (int i = lastSwimIntervalIndex; i < allPoints.size(); i++) {
+            allPoints.get(i).setSpeed(1000f / pace);
+            allPoints.get(i).setCadence(strokeRate);
+        }
+        lastSwimIntervalIndex = allPoints.size();
+
+        trace(
+                "Consumed swimming interval {}: hr={}, style={}, pace={}, swolf={}, strokeRate={}, durationMillis={}, strokeDistance={}, calories={}",
+                interval,
+                hr,
+                style,
+                pace,
+                swolf,
+                strokeRate,
+                durationMillis,
+                strokeDistance,
+                calories
+        );
     }
 
     private void consumeLap(final ByteBuffer buf) {
@@ -399,59 +455,43 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         trace("Consumed lap: number={}, hr={}, pace={}, calories={}, distance={}, duration={}", number, hr, pace, calories, distance, duration);
     }
 
-    @Nullable
-    private ActivityPoint getCurrentActivityPoint() {
-        if (lastActivityPoint == null) {
-            return null;
-        }
-
-        // Round to the nearest second
-        final long currentTime = timestamp.getTime() + offset;
-        if (currentTime - lastActivityPoint.getTime().getTime() > 500) {
-            addNewGpsCoordinates();
-            return lastActivityPoint;
-        }
-
-        return lastActivityPoint;
-    }
-
-    private void addNewGpsCoordinates() {
-        final GPSCoordinate coordinate = new GPSCoordinate(
-                convertHuamiValueToDecimalDegrees(longitude),
-                convertHuamiValueToDecimalDegrees(latitude),
-                altitude
-        );
-
-        if (lastActivityPoint != null && lastActivityPoint.getLocation() != null && lastActivityPoint.getLocation().equals(coordinate)) {
-            // Ignore repeated location
+    private void addNewActivityPoint() {
+        if (timestamp == 0) {
             return;
         }
-
-        final ActivityPoint ap = new ActivityPoint(new Date(timestamp.getTime() + offset));
-        ap.setLocation(coordinate);
-        add(ap);
-    }
-
-    private void add(final ActivityPoint ap) {
-        if (ap == lastActivityPoint) {
-            LOG.debug("skipping point!");
-            return;
+        activityPointBuilder.setTime(Math.round((timestamp + offset) / 1000d) * 1000L);
+        if (longitude != 0) {
+            activityPointBuilder.setLongitude(convertHuamiValueToDecimalDegrees(longitude));
         }
-
-        lastActivityPoint = ap;
-        activityTrack.addTrackPoint(ap);
+        if (latitude != 0) {
+            activityPointBuilder.setLatitude(convertHuamiValueToDecimalDegrees(latitude));
+        }
+        final ActivityPoint ap = activityPointBuilder.build();
+        final List<ActivityPoint> currentSegment = activityTrack.getSegments().get(activityTrack.getSegments().size() - 1);
+        // We get timestamp increments by milliseconds, and data interleaved with those
+        // Upsert the last value for the same second if we got an update, as it will almost
+        // surely contain updated information
+        if (!currentSegment.isEmpty()) {
+            if (currentSegment.get(currentSegment.size() - 1).getTime().equals(ap.getTime())) {
+                trace("Upserting activity point at {}", ap.getTime());
+                currentSegment.set(currentSegment.size() - 1, ap);
+            } else {
+                trace("Adding activity point at {}", ap.getTime());
+                activityTrack.addTrackPoint(ap);
+            }
+        } else {
+            trace("Adding activity point at {}", ap.getTime());
+            activityTrack.addTrackPoint(ap);
+        }
     }
 
     private void trace(final String format, final Object... args) {
-        final Object[] argsWithDate;
-        if (timestamp != null) {
-            argsWithDate = ArrayUtils.insert(0, args, SDF.format(new Date(timestamp.getTime() + offset)));
-        } else {
-            argsWithDate = ArrayUtils.insert(0, args, "(null)");
-        }
+        if (LOG.isTraceEnabled()) {
+            final Object[] argsWithDate = ArrayUtils.insert(0, args, SDF.format(new Date(activityPointBuilder.getTime())));
 
-        //noinspection StringConcatenationArgumentToLogCall
-        LOG.trace("{}: " + format, argsWithDate);
+            //noinspection StringConcatenationArgumentToLogCall
+            LOG.trace("{}: " + format, argsWithDate);
+        }
     }
 
     private enum Type {
@@ -463,18 +503,21 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         ALTITUDE(7, 6),
         HEARTRATE(8, 3),
         LAP(11, 99),
+        TEMPERATURE(13, 7),
         STRENGTH_SET(15, 34),
+        SWIMMING_INTERVAL(20, 31),
+        //UNKNOWN_7945(7945, 6),
         ;
 
-        private final byte code;
+        private final int code;
         private final int expectedLength;
 
         Type(final int code, final int expectedLength) {
-            this.code = (byte) code;
+            this.code = code;
             this.expectedLength = expectedLength;
         }
 
-        public byte getCode() {
+        public int getCode() {
             return this.code;
         }
 

@@ -15,6 +15,7 @@ message WorkoutSummary {
     Pace pace = 10;
     Altitude altitude = 13;
     HeartRate heartRate = 19;
+    Temperature temperature = 20;
     Calories calories = 16;
     Frequency frequency = 18;
     TrainingEffect trainingEffect = 21;
@@ -39,6 +40,12 @@ message HeartRate {
     int32 avg = 1; // bpm
     int32 max = 2; // bpm
     int32 min = 3; // bpm
+}
+
+message Temperature {
+    float avg = 1; // celsius
+    float max = 2; // celsius
+    float min = 3; // celsius
 }
 
 message Steps {

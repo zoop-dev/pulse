@@ -17,6 +17,7 @@
 package nodomain.freeyourgadget.gadgetbridge.model;
 
 import java.util.Date;
+import java.util.Objects;
 
 import androidx.annotation.Nullable;
 
@@ -40,6 +41,7 @@ public class ActivityPoint {
     private GPSCoordinate location;
     private int heartRate;
     private float speed = -1;
+    private int strideCm = -1;
     private int cadence = -1;
     private int power = -1;
     private float respiratoryRate = -1;
@@ -97,6 +99,14 @@ public class ActivityPoint {
         this.speed = speed;
     }
 
+    public int getStrideCm() {
+        return strideCm;
+    }
+
+    public void setStrideCm(int strideCm) {
+        this.strideCm = strideCm;
+    }
+
     public int getCadence() {
         return cadence;
     }
@@ -126,4 +136,154 @@ public class ActivityPoint {
     public double getDepth() {return depth; }
     public void setDepth(final double depth) { this.depth = depth; }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof ActivityPoint that)) return false;
+        return heartRate == that.heartRate &&
+                Float.compare(speed, that.speed) == 0 &&
+                strideCm == that.strideCm &&
+                cadence == that.cadence &&
+                power == that.power &&
+                Float.compare(respiratoryRate, that.respiratoryRate) == 0 &&
+                Double.compare(depth, that.depth) == 0 &&
+                Double.compare(temperature, that.temperature) == 0 &&
+                Objects.equals(time, that.time) &&
+                Objects.equals(location, that.location) &&
+                Objects.equals(description, that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(time, location, heartRate, speed, strideCm, cadence, power, respiratoryRate, depth, temperature, description);
+    }
+
+    public static class Builder {
+        private long timeMillis;
+
+        private double latitude;
+        private double longitude;
+        private double altitude = GPSCoordinate.UNKNOWN_ALTITUDE;
+
+        private int heartRate;
+        private float speed = -1;
+        private int strideCm = -1;
+        private int cadence = -1;
+        private int power = -1;
+        private float respiratoryRate = -1;
+        private double depth = -1;
+        private double temperature = -273;
+
+        public long getTime() {
+            return timeMillis;
+        }
+
+        public void setTime(final long timeMillis) {
+            this.timeMillis = timeMillis;
+        }
+
+        public double getLatitude() {
+            return latitude;
+        }
+
+        public void setLatitude(final double latitude) {
+            this.latitude = latitude;
+        }
+
+        public double getLongitude() {
+            return longitude;
+        }
+
+        public void setLongitude(final double longitude) {
+            this.longitude = longitude;
+        }
+
+        public double getAltitude() {
+            return altitude;
+        }
+
+        public void setAltitude(final double altitude) {
+            this.altitude = altitude;
+        }
+
+        public int getHeartRate() {
+            return heartRate;
+        }
+
+        public void setHeartRate(final int heartRate) {
+            this.heartRate = heartRate;
+        }
+
+        public float getSpeed() {
+            return speed;
+        }
+
+        public void setSpeed(final float speed) {
+            this.speed = speed;
+        }
+
+        public int getStrideCm() {
+            return strideCm;
+        }
+
+        public void setStrideCm(int strideCm) {
+            this.strideCm = strideCm;
+        }
+
+        public int getCadence() {
+            return cadence;
+        }
+
+        public void setCadence(final int cadence) {
+            this.cadence = cadence;
+        }
+
+        public int getPower() {
+            return power;
+        }
+
+        public void setPower(final int power) {
+            this.power = power;
+        }
+
+        public float getRespiratoryRate() {
+            return respiratoryRate;
+        }
+
+        public void setRespiratoryRate(final float respiratoryRate) {
+            this.respiratoryRate = respiratoryRate;
+        }
+
+        public double getDepth() {
+            return depth;
+        }
+
+        public void setDepth(final double depth) {
+            this.depth = depth;
+        }
+
+        public double getTemperature() {
+            return temperature;
+        }
+
+        public void setTemperature(final double temperature) {
+            this.temperature = temperature;
+        }
+
+        public ActivityPoint build() {
+            final ActivityPoint activityPoint = new ActivityPoint();
+            activityPoint.setTime(new Date(timeMillis));
+            if (latitude != 0 && longitude != 0) {
+                activityPoint.setLocation(new GPSCoordinate(longitude, latitude, altitude));
+            }
+            activityPoint.setHeartRate(heartRate);
+            activityPoint.setSpeed(speed);
+            activityPoint.setCadence(cadence);
+            activityPoint.setStrideCm(strideCm);
+            activityPoint.setPower(power);
+            activityPoint.setRespiratoryRate(respiratoryRate);
+            activityPoint.setDepth(depth);
+            activityPoint.setTemperature(temperature);
+            return activityPoint;
+        }
+    }
 }

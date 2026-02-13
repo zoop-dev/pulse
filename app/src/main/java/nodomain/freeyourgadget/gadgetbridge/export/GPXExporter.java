@@ -83,6 +83,7 @@ public class GPXExporter implements ActivityTrackExporter {
         XmlSerializer ser = Xml.newSerializer();
         try (FileOutputStream outputStream = new FileOutputStream(targetFile)) {
             ser.setOutput(outputStream, encoding);
+            //ser.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
             ser.startDocument(encoding, Boolean.TRUE);
             ser.setPrefix("xsi", NS_XSI_URI);
             ser.setPrefix(NS_TRACKPOINT_EXTENSION, NS_TRACKPOINT_EXTENSION_URI);
