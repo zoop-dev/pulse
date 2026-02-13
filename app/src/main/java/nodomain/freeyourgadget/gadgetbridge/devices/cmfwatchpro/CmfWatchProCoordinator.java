@@ -301,7 +301,7 @@ public class CmfWatchProCoordinator extends AbstractBLEDeviceCoordinator {
         dateTime.add(R.xml.devicesettings_timeformat);
 
         final List<Integer> display = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DISPLAY);
-        display.add(R.xml.devicesettings_workout_activity_types);
+        display.add(R.xml.devicesettings_cmf_activity_types);
         display.add(R.xml.devicesettings_liftwrist_display_noshed);
 
         final List<Integer> health = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.HEALTH);

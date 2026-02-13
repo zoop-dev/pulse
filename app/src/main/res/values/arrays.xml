@@ -1496,7 +1496,7 @@
         <item>indoor_ice_skating</item>
     </string-array>
 
-    <string-array name="pref_workout_activity_types">
+    <string-array name="pref_cmf_activity_types">
         <item>@string/activity_type_indoor_running</item>
         <item>@string/activity_type_outdoor_running</item>
         <item>@string/activity_type_outdoor_walking</item>
@@ -1619,7 +1619,7 @@
         <item>@string/activity_type_parkour</item>
     </string-array>
 
-    <string-array name="pref_workout_activity_types_values">
+    <string-array name="pref_cmf_activity_types_values">
         <item>indoor_running</item>
         <item>outdoor_running</item>
         <item>outdoor_walking</item>
@@ -1742,9 +1742,9 @@
         <item>parkour</item>
     </string-array>
 
-    <string-array name="pref_workout_activity_types_default">
-        <item>indoor_run</item>
-        <item>outdoor_run</item>
+    <string-array name="pref_cmf_activity_types_default">
+        <item>indoor_running</item>
+        <item>outdoor_running</item>
     </string-array>
 
     <string-array name="pref_withings_steel_activity_types">
