@@ -76,7 +76,9 @@ public class HuaweiPacket {
         protected byte authAlgo;
         protected byte encryptMethod;
         protected byte[] firstKey;
-        protected  byte authMode;
+        protected byte authMode;
+
+        protected boolean isAW = false;
 
         public void setAuthVersion(byte authVersion) {
             this.authVersion = authVersion;
@@ -183,6 +185,14 @@ public class HuaweiPacket {
 
         public byte[] getFirstKey() {
             return firstKey;
+        }
+
+        public boolean isAW() {
+            return isAW;
+        }
+
+        public void setAW(boolean AW) {
+            isAW = AW;
         }
     }
 

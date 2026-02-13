@@ -393,6 +393,7 @@ public class HuaweiSupportProvider {
         this.gbDevice = device;
         this.context = context;
         this.huaweiType = getCoordinator().getHuaweiType();
+        this.paramsProvider.setAW(getCoordinator().getHuaweiType() == HuaweiDeviceType.AW);
         this.paramsProvider.setTransactionsCrypted(getCoordinator().isTransactionCrypted());
         mediaManager = new MediaManager(context);
     }
@@ -471,13 +472,6 @@ public class HuaweiSupportProvider {
 
     public void setGpsParametersResponse(GpsAndTime.GpsParameters.Response response) {
         this.gpsParametersResponse = response;
-    }
-
-    public void setup(GBDevice device, Context context) {
-        this.gbDevice = device;
-        this.context = context;
-        this.huaweiType = getCoordinator().getHuaweiType();
-        this.paramsProvider.setTransactionsCrypted(getCoordinator().isTransactionCrypted());
     }
 
     protected nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder initializeDevice(nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder builder) {

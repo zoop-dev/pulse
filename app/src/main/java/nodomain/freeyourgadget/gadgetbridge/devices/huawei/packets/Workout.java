@@ -324,11 +324,11 @@ public class Workout {
                     this.recoveryHeartRates = container.getBytes(0x66);
 
                 for (HuaweiTLV subTlv : container.getObjects(0xe7)) {
-                    if(subTlv.contains(0x68) && subTlv.contains(0x69)) {
+                    if (subTlv.contains(0x68) && subTlv.contains(0x69)) {
                         int tag = subTlv.getInteger(0x68);
                         String value = subTlv.getString(0x69); // The watch returns this value always as string.
                         String key = huaweiIdToKey.get(tag);
-                        if(key != null)
+                        if (key != null)
                             additionalValues.put(key, value);
                     }
                 }
@@ -470,7 +470,7 @@ public class Workout {
             }
 
             private final byte[] bitmapLengths = {1, 2, 1, 2, 2, 4, -1, 2, 2, 2};
-            private final byte[] innerBitmapLengths = {2, 2, 2, 1, 2, 1, 1, 1, 1, 2, 2, 1, 2, 2, 2, 2, 1, 1, 1, 2};
+            private final byte[] innerBitmapLengths = {2, 2, 2, 1, 2, 1, 1, 1, 1, 2, 2, 1, 2, 2, 2, 2, 1, 1, 1, 2, 2, 1, 2};
 
             public Integer error = null;
 
@@ -479,7 +479,7 @@ public class Workout {
             public byte[] rawHeader;
             public byte[] rawData;
             public int innerBitmap = 0;
-            public int extraDataLength = 0;
+            public int innerDataLength = 0;
 
             public Header header;
             public List<Data> dataList;
@@ -499,6 +499,92 @@ public class Workout {
                 this.parseTlv();
             }
 
+            private void parseInnerData(byte[] innerRawData, Data data) {
+                ByteBuffer buf = ByteBuffer.wrap(innerRawData);
+                // Inner data, parsing into data
+
+                for (byte k = 0; k < innerBitmapLengths.length; k++) {
+                    if ((innerBitmap & (1 << k)) != 0) {
+                        switch (k) {
+                            case 0:
+                                data.cadence = buf.getShort();
+                                break;
+                            case 1:
+                                data.stepLength = buf.getShort();
+                                break;
+                            case 2:
+                                data.groundContactTime = buf.getShort();
+                                break;
+                            case 3:
+                                data.impact = buf.get();
+                                break;
+                            case 4:
+                                data.swingAngle = buf.getShort();
+                                break;
+                            case 5:
+                                data.foreFootLanding = buf.get();
+                                break;
+                            case 6:
+                                data.midFootLanding = buf.get();
+                                break;
+                            case 7:
+                                data.backFootLanding = buf.get();
+                                break;
+                            case 8:
+                                data.eversionAngle = buf.get();
+                                break;
+                            case 9:
+                                data.hangTime = buf.getShort();
+                                break;
+                            case 10:
+                                data.impactHangRate = buf.getShort();
+                                break;
+                            case 11:
+                                data.rideCadence = buf.get();
+                                break;
+                            case 12:
+                                data.ap = (float) buf.getShort() / 10.0f;
+                                break;
+                            case 13:
+                                data.vo = (float) buf.getShort() / 10.0f;
+                                break;
+                            case 14:
+                                data.gtb = (float) buf.getShort() / 100.0f;
+                                break;
+                            case 15:
+                                data.vr = (float) buf.getShort() / 10.0f;
+                                break;
+                            case 16:
+                                data.ceiling = buf.get();
+                                break;
+                            case 17:
+                                data.temp = buf.get();
+                                break;
+                            case 18:
+                                data.spo2 = buf.get();
+                                break;
+                            case 19:
+                                data.cns = buf.getShort();
+                                break;
+//                            case 20:
+//                                buf.getShort(); //cycle analog power
+//                                break;
+//                            case 21:
+//                                buf.get(); // Unknown
+//                                break;
+//                            case 22:
+//                                buf.getShort(); // cycle analog cadence
+//                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+                if (buf.remaining() > 0) {
+                    data.unknownData = this.tlv.serialize();
+                }
+            }
+
             @Override
             public void parseTlv() throws ParseException {
 
@@ -515,28 +601,17 @@ public class Workout {
                 this.rawData = container.getBytes(0x05); // TODO: not sure if 5 can also be omitted
 
                 if (container.contains(0x08))
-                    this.extraDataLength = container.getAsInteger(0x08);
+                    this.innerDataLength = container.getAsInteger(0x08);
+                else if(paramsProvider.isAW()) //NOTE: bitmap 0x01FF and length 26 only true for AW devices
+                    this.innerDataLength = 26;
 
                 if (container.contains(0x09))
                     this.innerBitmap = container.getAsInteger(0x09);
-                else
+                else if(paramsProvider.isAW()) //NOTE: bitmap 0x01FF and length 26 only true for AW devices
                     this.innerBitmap = 0x01FF; // This seems to be the default
-
 
                 if (this.rawHeader.length != 14)
                     throw new LengthMismatchException("Workout data header length mismatch.");
-
-                // Calculate inner data length
-                int innerDataLength = 0;
-                for (byte i = 0; i < innerBitmapLengths.length; i++) {
-                    if ((innerBitmap & (1 << i)) != 0) {
-                        innerDataLength += innerBitmapLengths[i];
-                    }
-                }
-
-                //TODO: innerDataLength should be equal to this.extraDataLength. Should correlate to innerBitmap default value.
-                //TODO: I suppose innerBitmap should be 0 by default but not sure and don't have devices for testing. So I do not add this check.
-                //TODO: is is possible that innerBitmap = 0x01FF only true for AW70 devices. in this case extraDataLength should be properly calculated.
 
                 this.header = new Header();
                 ByteBuffer buf = ByteBuffer.wrap(this.rawHeader);
@@ -551,6 +626,17 @@ public class Workout {
                 // Check data lengths from header
                 if (this.header.dataCount * this.header.dataLength != this.rawData.length)
                     throw new LengthMismatchException("Workout data length mismatch with header.");
+
+                // Calculate inner data length
+                int calcInnerDataLength = 0;
+                for (byte i = 0; i < innerBitmapLengths.length; i++) {
+                    if ((innerBitmap & (1 << i)) != 0) {
+                        calcInnerDataLength += innerBitmapLengths[i];
+                    }
+                }
+
+                if(calcInnerDataLength > this.innerDataLength)
+                    throw new LengthMismatchException("Workout data innerDataLength incorrect");
 
                 // Check data lengths from bitmap
                 int dataLength = 0;
@@ -595,78 +681,10 @@ public class Workout {
                                     break;
                                 case 6:
                                     // Inner data, parsing into data
-                                    // TODO: function for readability?
-                                    for (byte k = 0; k < innerBitmapLengths.length; k++) {
-                                        if ((innerBitmap & (1 << k)) != 0) {
-                                            switch (k) {
-                                                case 0:
-                                                    data.cadence = buf.getShort();
-                                                    break;
-                                                case 1:
-                                                    data.stepLength = buf.getShort();
-                                                    break;
-                                                case 2:
-                                                    data.groundContactTime = buf.getShort();
-                                                    break;
-                                                case 3:
-                                                    data.impact = buf.get();
-                                                    break;
-                                                case 4:
-                                                    data.swingAngle = buf.getShort();
-                                                    break;
-                                                case 5:
-                                                    data.foreFootLanding = buf.get();
-                                                    break;
-                                                case 6:
-                                                    data.midFootLanding = buf.get();
-                                                    break;
-                                                case 7:
-                                                    data.backFootLanding = buf.get();
-                                                    break;
-                                                case 8:
-                                                    data.eversionAngle = buf.get(); // buf.get() - 100;
-                                                    break;
-                                                case 9:
-                                                    data.hangTime = buf.getShort();
-                                                    break;
-                                                case 10:
-                                                    data.impactHangRate = buf.getShort();
-                                                    break;
-                                                case 11:
-                                                    data.rideCadence = buf.get();
-                                                    break;
-                                                case 12:
-                                                    data.ap = (float) buf.getShort() / 10.0f;
-                                                    break;
-                                                case 13:
-                                                    data.vo = (float) buf.getShort() / 10.0f;
-                                                    break;
-                                                case 14:
-                                                    data.gtb = (float) buf.getShort() / 100.0f;
-                                                    break;
-                                                case 15:
-                                                    data.vr = (float) buf.getShort() / 10.0f;
-                                                    break;
-                                                case 16:
-                                                    data.ceiling = buf.get();
-                                                    break;
-                                                case 17:
-                                                    data.temp = buf.get();
-                                                    break;
-                                                case 18:
-                                                    data.spo2 = buf.get();
-                                                    break;
-                                                case 19:
-                                                    data.cns = buf.getShort();
-                                                    break;
-                                                default:
-                                                    data.unknownData = this.tlv.serialize();
-                                                    // Fix alignment
-                                                    for (int l = 0; l < innerBitmapLengths[k]; l++)
-                                                        buf.get();
-                                                    break;
-                                            }
-                                        }
+                                    if (innerDataLength > 0) {
+                                        byte[] innerRawData = new byte[innerDataLength];
+                                        buf.get(innerRawData);
+                                        parseInnerData(innerRawData, data);
                                     }
                                     break;
                                 case 7:
