@@ -38,10 +38,12 @@ import static nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst.PR
 import static nodomain.freeyourgadget.gadgetbridge.devices.moyoung.MoyoungConstants.PREF_MOYOUNG_DEVICE_VERSION;
 import static nodomain.freeyourgadget.gadgetbridge.devices.moyoung.MoyoungConstants.PREF_MOYOUNG_WATCH_FACE;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.text.InputType;
@@ -685,8 +687,6 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_SOUNDS);
         addPreferenceHandlerFor(PREF_CAMERA_REMOTE);
         addPreferenceHandlerFor(PREF_SCREEN_LIFT_WRIST);
-        addPreferenceHandlerFor(PREF_SYNC_CALENDAR);
-        addPreferenceHandlerFor(PREF_CALENDAR_LOOKAHEAD_DAYS);
 
         addPreferenceHandlerFor(PREF_BATTERY_POLLING_ENABLE);
         addPreferenceHandlerFor(PREF_BATTERY_POLLING_INTERVAL);
@@ -1023,11 +1023,29 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_CALENDAR_MAX_TITLE_LENGTH);
         addPreferenceHandlerFor(PREF_CALENDAR_MAX_DESC_LENGTH);
         addPreferenceHandlerFor(PREF_CALENDAR_TARGET_APP);
-        addPreferenceHandlerFor(PREF_CALENDAR_SYNC_CANCELED);
-        addPreferenceHandlerFor(PREF_CALENDAR_SYNC_DECLINED);
-        addPreferenceHandlerFor(PREF_CALENDAR_SYNC_FOCUS_TIME);
-        addPreferenceHandlerFor(PREF_CALENDAR_SYNC_ALL_DAY);
-        addPreferenceHandlerFor(PREF_CALENDAR_SYNC_WORKING_LOCATION);
+
+        final Preference syncCalendarPreference = findPreference(PREF_SYNC_CALENDAR);
+        if (syncCalendarPreference != null) {
+            if (requireContext().checkSelfPermission(Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+                syncCalendarPreference.setEnabled(false);
+                syncCalendarPreference.setSummary(R.string.permission_not_granted_calendar);
+            }
+            if (requireContext().checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+                final Preference syncBirthdaysPreference = findPreference(PREF_SYNC_BIRTHDAYS);
+                if (syncBirthdaysPreference != null) {
+                    syncBirthdaysPreference.setEnabled(false);
+                    syncBirthdaysPreference.setSummary(R.string.permission_not_granted_contacts);
+                }
+            }
+            addPreferenceHandlerFor(PREF_SYNC_CALENDAR);
+            addPreferenceHandlerFor(PREF_SYNC_BIRTHDAYS);
+            addPreferenceHandlerFor(PREF_CALENDAR_LOOKAHEAD_DAYS);
+            addPreferenceHandlerFor(PREF_CALENDAR_SYNC_CANCELED);
+            addPreferenceHandlerFor(PREF_CALENDAR_SYNC_DECLINED);
+            addPreferenceHandlerFor(PREF_CALENDAR_SYNC_FOCUS_TIME);
+            addPreferenceHandlerFor(PREF_CALENDAR_SYNC_ALL_DAY);
+            addPreferenceHandlerFor(PREF_CALENDAR_SYNC_WORKING_LOCATION);
+        }
 
         addPreferenceHandlerFor(PREF_ATC_BLE_OEPL_MODEL);
         addPreferenceHandlerFor(PREF_ATC_BLE_OEPL_BLE_ADV_INTERVAL);

@@ -16,9 +16,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.util.calendar;
 
+import android.Manifest;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.CalendarContract;
@@ -100,12 +102,23 @@ public class CalendarManager {
 
         final List<CalendarEvent> calendarEventList = new ArrayList<>();
 
+        // Calendar events
         if (prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SYNC_CALENDAR, false)) {
-            calendarEventList.addAll(getCalendarEvents(lookaheadDays));
+            if (mContext.checkSelfPermission(Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
+                calendarEventList.addAll(getCalendarEvents(lookaheadDays));
+            } else {
+                LOG.warn("Calendar sync is enabled, but calendar access is not granted");
+            }
         }
+
+        // Contact birthdays
         if (prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SYNC_BIRTHDAYS, false)) {
-            calendarEventList.addAll(getBirthdays(lookaheadDays));
-            calendarEventList.sort(Comparator.comparingInt(CalendarEvent::getBeginSeconds));
+            if (mContext.checkSelfPermission(Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+                calendarEventList.addAll(getBirthdays(lookaheadDays));
+                calendarEventList.sort(Comparator.comparingInt(CalendarEvent::getBeginSeconds));
+            } else {
+                LOG.warn("Birthday sync is enabled, but contact access is not granted");
+            }
         }
 
         return calendarEventList;
@@ -307,7 +320,7 @@ public class CalendarManager {
                 ));
             }
         } catch (final Exception e) {
-            LOG.error("could not query birthdays, permission denied?", e);
+            LOG.error("Failed to query birthdays", e);
         }
         return birthdays;
     }

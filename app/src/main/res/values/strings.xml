@@ -447,6 +447,8 @@
     <string name="pref_summary_device_intents">Allow Bangle.js watch apps to send Android Intents, and allow other apps on Android (like Tasker) to send data to Bangle.js with the com.banglejs.uart.tx Intent. Needs permission to display over other apps to work in the background.</string>
     <string name="pref_summary_sync_calendar">Enables calendar alerts, even when disconnected</string>
     <string name="pref_title_sync_caldendar">Sync calendar events</string>
+    <string name="permission_not_granted_contacts">Contacts permission not granted</string>
+    <string name="permission_not_granted_calendar">Calendar permission not granted</string>
     <string name="pref_summary_calendar_sync_choose">Choose which calendars and color labels to sync to the device</string>
     <string name="pref_title_calendar_sync_choose">Calendars to sync</string>
     <string name="pref_title_calendar_sync_colors">Event colors to sync</string>
