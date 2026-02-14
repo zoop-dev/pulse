@@ -62,6 +62,7 @@ public class AmazfitHelioStrapCoordinator extends ZeppOsCoordinator {
         return false;
     }
 
+
     @Override
     public DeviceKind getDeviceKind(@NonNull GBDevice device) {
         return DeviceKind.FITNESS_BAND;

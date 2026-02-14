@@ -263,6 +263,14 @@ public class ZeppOsSettingsCustomizer extends HuamiSettingsCustomizer {
         setupGpsPreference(handler, prefs);
         setupButtonClickPreferences(handler);
 
+        // Hide heart rate monitoring for devices without display like Helio Strap (they have continuous monitoring by default)
+        if (!coordinator.hasDisplay()) {
+            final Preference heartRateMonitoringPref = handler.findPreference(DeviceSettingsPreferenceConst.PREF_SCREEN_HEARTRATE_MONITORING);
+            if (heartRateMonitoringPref != null) {
+                heartRateMonitoringPref.setVisible(false);
+            }
+        }
+
         // Since we populate the values dynamically, we need to sort it here
         final Preference languagePref = handler.findPreference("language");
         if (languagePref != null) {
