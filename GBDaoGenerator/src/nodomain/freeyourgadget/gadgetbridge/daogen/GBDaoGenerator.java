@@ -76,7 +76,7 @@ public class GBDaoGenerator {
             outputDir.mkdirs();
         }
 
-        final Schema schema = new Schema(127, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(128, MAIN_PACKAGE + ".entities");
 
         final List<Entity> sampleProvidersToGenerate = new LinkedList<>();
 
@@ -142,6 +142,7 @@ public class GBDaoGenerator {
         addBangleJSActivitySample(schema, user, device);
         addCasioGBX100Sample(schema, user, device);
         addFitProActivitySample(schema, user, device);
+        addLaxasFitActivitySample(schema, user, device);
         addPineTimeActivitySample(schema, user, device);
         addPolarH10ActivitySample(schema, user, device);
         addWithingsSteelHRActivitySample(schema, user, device);
@@ -1587,6 +1588,22 @@ public class GBDaoGenerator {
         Entity activitySample = addEntity(schema, "FitProActivitySample");
         activitySample.implementsSerializable();
         addCommonActivitySampleProperties("AbstractFitProActivitySample", activitySample, user, device);
+        activitySample.addIntProperty(SAMPLE_STEPS).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        activitySample.addIntProperty(SAMPLE_RAW_KIND).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        addHeartRateProperties(activitySample);
+        activitySample.addIntProperty("caloriesBurnt");
+        activitySample.addIntProperty("distanceMeters");
+        activitySample.addIntProperty("spo2Percent");
+        activitySample.addIntProperty("pressureLowMmHg");
+        activitySample.addIntProperty("pressureHighMmHg");
+        activitySample.addIntProperty("activeTimeMinutes");
+        return activitySample;
+    }
+
+    private static Entity addLaxasFitActivitySample(Schema schema, Entity user, Entity device) {
+        Entity activitySample = addEntity(schema, "LaxasFitActivitySample");
+        activitySample.implementsSerializable();
+        addCommonActivitySampleProperties("AbstractLaxasFitActivitySample", activitySample, user, device);
         activitySample.addIntProperty(SAMPLE_STEPS).notNull().codeBeforeGetterAndSetter(OVERRIDE);
         activitySample.addIntProperty(SAMPLE_RAW_KIND).notNull().codeBeforeGetterAndSetter(OVERRIDE);
         addHeartRateProperties(activitySample);

@@ -139,6 +139,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("vívoactive 5", DeviceType.GARMIN_VIVOACTIVE_5); // #3459
             put("ColaCao23", DeviceType.COLACAO23); // #3455
             put("ColaCao21", DeviceType.COLACAO21); // #2955
+            put("Q11", DeviceType.LAXASFIT_Q11); // #5774
             put("Xiaomi Watch S1 Pro CF1B", DeviceType.XIAOMI_WATCH_S1_PRO); // #3450
             put("Ear (2)", DeviceType.NOTHING_EAR2); // #3450
             put("realme Buds T110", DeviceType.REALME_BUDS_T110);
