@@ -83,7 +83,7 @@ public class HuaweiHeartRateZonesSpec extends HeartRateZonesSpec {
         }
 
         if (!state.supportsTrack())
-            return null;
+            return res;
 
         res.add(loadOrCreateHeartRateZonesConfig(HeartRateZonesSpec.PostureType.UPRIGHT,
                 true,
