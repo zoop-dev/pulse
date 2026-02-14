@@ -4298,4 +4298,12 @@
     <string name="sports_activity_quick_filter_distant_past">Odległa przeszłość (wszystkie treningi)</string>
     <string name="internet_firewall_blacklisted_domains_title">Zablokowane domeny</string>
     <string name="internet_firewall_blacklisted_domains_summary">Poniższe domeny oraz wszystkie ich poddomeny będą ignorować powyższe ustawienie i będą zawsze blokowane.</string>
+    <string name="pref_restart_logging_title">Inicjuj logowanie</string>
+    <string name="pref_restart_logging_summary">Kliknij tutaj, aby spróbować zainicjować plik dziennika</string>
+    <string name="menuitem_audio_control">Sterowanie dźwiękiem</string>
+    <string name="menuitem_diary">Dziennik</string>
+    <string name="menuitem_calorie_intake_record">Rejestr spożycia kalorii</string>
+    <string name="menuitem_zepp_os_ask_anything_chat_bot">Zadaj dowolne pytanie</string>
+    <string name="menuitem_text_size">Wielkość tekstu</string>
+    <string name="menuitem_sos_flashlight">Latarka SOS</string>
 </resources>
