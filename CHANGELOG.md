@@ -1,5 +1,10 @@
 ### Changelog
 
+#### 0.89.1
+
+* Garmin: Fix edge case on activity timestamp processing
+* Huawei/Honor: Fix exception when processing workout data
+
 #### 0.89.0
 
 * Add support for Internet Helper

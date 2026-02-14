@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="0.89.1" versioncode="245">
+        <change>Garmin: Fix edge case on activity timestamp processing</change>
+        <change>Huawei/Honor: Fix exception when processing workout data</change>
+    </release>
     <release version="0.89.0" versioncode="244">
         <change>Add support for Internet Helper</change>
         <change>Add support for Health Connect</change>

@@ -1,0 +1,2 @@
+• Garmin: Fix edge case on activity timestamp processing
+• Huawei/Honor: Fix exception when processing workout data
