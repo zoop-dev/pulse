@@ -4306,4 +4306,6 @@
     <string name="menuitem_zepp_os_ask_anything_chat_bot">Zadaj dowolne pytanie</string>
     <string name="menuitem_text_size">Wielkość tekstu</string>
     <string name="menuitem_sos_flashlight">Latarka SOS</string>
+    <string name="permission_not_granted_contacts">Brak uprawnień do kontaktów</string>
+    <string name="permission_not_granted_calendar">Brak uprawnień do kalendarza</string>
 </resources>
