@@ -4135,4 +4135,6 @@
     <string name="menuitem_zepp_os_ask_anything_chat_bot">Kérdezzen bármit</string>
     <string name="menuitem_text_size">Szövegméret</string>
     <string name="menuitem_sos_flashlight">SOS-zseblámpa</string>
+    <string name="permission_not_granted_contacts">Nincs engedélyezve a névjegyekhez való hozzáférés</string>
+    <string name="permission_not_granted_calendar">Nincs engedélyezve a naptárhoz való hozzáférés</string>
 </resources>
