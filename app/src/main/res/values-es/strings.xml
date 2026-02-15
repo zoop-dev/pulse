@@ -4139,4 +4139,6 @@
     <string name="menuitem_zepp_os_ask_anything_chat_bot">Preguntar cualquier cosa</string>
     <string name="menuitem_text_size">Tamaño del texto</string>
     <string name="menuitem_sos_flashlight">Linterna SOS</string>
+    <string name="permission_not_granted_contacts">No se ha concedido el permiso de contactos</string>
+    <string name="permission_not_granted_calendar">No se ha concedido el permiso de calendario</string>
 </resources>
