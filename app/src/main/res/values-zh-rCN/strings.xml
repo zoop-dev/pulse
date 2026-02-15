@@ -4289,4 +4289,6 @@
     <string name="menuitem_zepp_os_ask_anything_chat_bot">随便问问</string>
     <string name="menuitem_text_size">文本大小</string>
     <string name="menuitem_sos_flashlight">SOS 手电</string>
+    <string name="permission_not_granted_contacts">未授予联系人权限</string>
+    <string name="permission_not_granted_calendar">未授予日历权限</string>
 </resources>
