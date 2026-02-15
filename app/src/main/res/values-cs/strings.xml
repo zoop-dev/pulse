@@ -4171,7 +4171,7 @@
     <string name="pref_health_connect_manual_settings">Spravovat data služby Health Connect</string>
     <string name="pref_health_connect_settings">Nastavení služby Health Connect</string>
     <string name="pref_health_connect_settings_summary">Otevřít nastavení systému Android pro Health Connect</string>
-    <string name="pref_health_connect_disable_notice">Pro zakázání exportu ze služby Health Connect odstraňte všechna oprávnění aplikace Gadgetbridge z aplikace Health Connect</string>
+    <string name="pref_health_connect_disable_notice">Pro zakázání exportu do služby Health Connect odstraňte všechna oprávnění aplikace Gadgetbridge z aplikace Health Connect</string>
     <string name="pref_health_connect_sync_notice">V závislosti na množství dat může synchronizace se službou Health Connect zabrat několik minut.</string>
     <string name="pref_health_connect_device_selection">Vybrat zařízení</string>
     <string name="pref_health_connect_device_selection_summary">Vyberte, ze kterých zařízení chcete zahrnout data ke sdílení se službou Health Connect</string>
@@ -4292,4 +4292,6 @@
     <string name="menuitem_zepp_os_ask_anything_chat_bot">Zeptejte se na cokoli</string>
     <string name="menuitem_text_size">Velikost textu</string>
     <string name="menuitem_sos_flashlight">SOS svítilna</string>
+    <string name="permission_not_granted_contacts">Přístup ke kontaktům neudělen</string>
+    <string name="permission_not_granted_calendar">Přístup ke kalendáři neudělen</string>
 </resources>
