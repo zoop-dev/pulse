@@ -42,6 +42,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.AbstractTimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GarminSleepRestlessMomentsSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericTrainingLoadAcuteSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericTrainingLoadChronicSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.cmfwatchpro.workout.CmfActivityTrackProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminActivitySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminBodyEnergySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminEventSampleProvider;
@@ -80,10 +81,13 @@ import nodomain.freeyourgadget.gadgetbridge.entities.GarminStressSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericTrainingLoadAcuteSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericTrainingLoadChronicSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
+import nodomain.freeyourgadget.gadgetbridge.export.AutoGpxExporter;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
+import nodomain.freeyourgadget.gadgetbridge.model.FitActivityTrackProvider;
 import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.FileType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
@@ -554,6 +558,13 @@ public class FitImporter {
             session.getBaseActivitySummaryDao().insertOrReplace(summary);
         } catch (final Exception e) {
             GB.toast(context, "Error saving workout", Toast.LENGTH_LONG, GB.ERROR, e);
+        }
+
+        // Export to gpx
+        final FitActivityTrackProvider activityTrackProvider = new FitActivityTrackProvider();
+        final ActivityTrack activityTrack = activityTrackProvider.getActivityTrack(summary);
+        if (activityTrack != null) {
+            AutoGpxExporter.doExport(context, gbDevice, summary, activityTrack);
         }
     }
 
