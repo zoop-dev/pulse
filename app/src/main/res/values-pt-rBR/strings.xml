@@ -3271,4 +3271,7 @@
     <string name="bluetooth_multipoint_pair_stop">Interrompa o emparelhamento</string>
     <string name="pref_title_notifications_when_screen_saver">...quando o protetor de tela estiver ligado</string>
     <string name="pref_header_sync">Sincronização</string>
+    <string name="pref_header_dashboard">Painel</string>
+    <string name="permission_not_granted_contacts">Permissão de acessar contatos negada</string>
+    <string name="permission_not_granted_calendar">Permissão de acessar calendário negada</string>
 </resources>
