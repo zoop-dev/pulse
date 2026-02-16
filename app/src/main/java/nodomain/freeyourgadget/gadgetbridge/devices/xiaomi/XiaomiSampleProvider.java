@@ -93,25 +93,29 @@ public class XiaomiSampleProvider extends AbstractSampleProvider<XiaomiActivityS
     protected List<XiaomiActivitySample> getGBActivitySamples(final int timestamp_from, final int timestamp_to) {
         final List<XiaomiActivitySample> samples = super.getGBActivitySamples(timestamp_from, timestamp_to);
 
+        convertCalories(samples);
         overlaySleep(samples, timestamp_from, timestamp_to);
 
         return samples;
+    }
+
+    private void convertCalories(final List<XiaomiActivitySample> samples) {
+        for (XiaomiActivitySample sample : samples) {
+            sample.setActiveCalories(sample.getActiveCalories() * 1000);
+        }
     }
 
     /**
      * See {@link nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl.SleepDetailsParser}
      */
     private static ActivityKind getActivityKindForSample(final XiaomiSleepStageSample sample) {
-        switch (sample.getStage()) {
-            case 2:
-                return ActivityKind.DEEP_SLEEP;
-            case 3:
-                return ActivityKind.LIGHT_SLEEP;
-            case 4:
-                return ActivityKind.REM_SLEEP;
-            default: // default to awake
-                return ActivityKind.UNKNOWN;
-        }
+        return switch (sample.getStage()) {
+            case 2 -> ActivityKind.DEEP_SLEEP;
+            case 3 -> ActivityKind.LIGHT_SLEEP;
+            case 4 -> ActivityKind.REM_SLEEP;
+            default -> // default to awake
+                    ActivityKind.UNKNOWN;
+        };
     }
 
     /**
