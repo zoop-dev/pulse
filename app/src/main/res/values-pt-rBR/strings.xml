@@ -1424,7 +1424,7 @@
     <string name="step_streak_longest">Mais longo</string>
     <string name="appmanager_app_share">Compartilhar</string>
     <string name="debugactivity_confirm_remove_device_preferences_title">Remover as preferências do dispositivo?</string>
-    <string name="debugactivity_confirm_remove_device_preferences">Isso redefinirá as preferências do dispositivo para todos os dispositivos conectados. Tem certeza?</string>
+    <string name="debugactivity_confirm_remove_device_preferences">Isso redefinirá as preferências do dispositivo. Tem certeza?</string>
     <string name="pref_header_calendar">Calendário</string>
     <string name="pref_title_general_reconnectonlytoconnected">Reconectar somente a dispositivos conectados</string>
     <string name="pref_summary_general_reconnectonlytoconnected">Reconectar somente a dispositivos conectados, em vez de reconectar a todos os dispositivos</string>
@@ -1500,7 +1500,7 @@
     <string name="gps">GPS</string>
     <string name="gps_bds">GPS + BDS</string>
     <string name="open_fw_installer_info_text_title">Instalador de arquivos</string>
-    <string name="open_fw_installer_info_text">O instalador de Firmware/Tema/App/Arquivo permite o upload/instalação de arquivos suportados (firmware, temas, aplicações, GPS, recursos, fontes...) para o dispositivo. Veja outras informações na wiki: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
+    <string name="open_fw_installer_info_text">O instalador de Firmware/Tema/App/Arquivo permite o upload/instalação de arquivos suportados (firmware, temas, aplicações, GPS, recursos, fontes...) para o dispositivo. Veja outras informações no site: https://gadgetbridge.org/internals/features/installer/</string>
     <string name="fw_upgrade_notice_amazfit_gts3">Você está prestes a instalar o firmware %s no seu Amazfit GTS 3.
 \n
 \nSeu relógio irá reiniciar após instalar o arquivo .zip.
@@ -1670,7 +1670,7 @@
     <string name="pref_pair_bluetooth_calls_help_1">1. Toque no botão abaixo para iniciar o processo de pareamento.</string>
     <string name="pref_pair_bluetooth_calls_help_warning">AVISO: Se você ativar as chamadas por Bluetooth sem parear com a segunda instância, as notificações de chamadas poderão não funcionar como esperado.</string>
     <string name="pref_header_navigation">Navegação</string>
-    <string name="pref_title_casio_alert_other">Alerta para outras notificações</string>
+    <string name="pref_title_casio_alert_other">Alerta para \"outras\" notificações</string>
     <string name="pref_title_casio_alert_sms">Alerta para notificações por SMS</string>
     <string name="pref_title_goal_secondary">Meta secundária</string>
     <string name="spanish_mx">Espanhol (México)</string>
@@ -1808,7 +1808,7 @@
     <string name="pref_title_casio_alert_email">Alerta para notificações por e-mail</string>
     <string name="pref_summary_casio_alert_email">Alerta (vibração/bip) para notificações por e-mail</string>
     <string name="pref_summary_casio_alert_sms">Alerta (vibrar/bipar) para notificações de SMS (mensagem de texto)</string>
-    <string name="pref_summary_casio_alert_other">Alerta (vibrar/bipar) para notificações em outra categoria</string>
+    <string name="pref_summary_casio_alert_other">Alerta (vibrar/bipar) para notificações em \"outra\" categoria</string>
     <string name="changelog_title">O que há de novo</string>
     <string name="serial_number">Número de série</string>
     <string name="seconds_11">11 segundos</string>
@@ -2263,7 +2263,7 @@
     <string name="pref_summary_block_screenshots">Impede capturas de tela e visualização em telas não seguras. Requer uma reinicialização do GB para se tornar totalmente eficaz.</string>
     <string name="phone_calls">Chamadas telefônicas</string>
     <string name="pref_pair_bluetooth_calls_help_2">2. Acesse as configurações de Bluetooth do seu telefone e emparelhe com o novo dispositivo que aparecerá (nome semelhante ao do seu relógio atual, mas com um sufixo, por exemplo, Amazfit GTR 4 - AFC8).</string>
-    <string name="pref_pair_bluetooth_calls_help_3">3. Ative a configuração de chamadas Bluetooth abaixo.</string>
+    <string name="pref_pair_bluetooth_calls_help_3">3. Ative a configuração de \"chamadas Bluetooth\" abaixo.</string>
     <string name="pref_title_notification_times_enabled">Horários de notificação</string>
     <string name="pref_title_banglejs_text_bitmap">Texto como Bitmaps</string>
     <string name="pref_summary_banglejs_text_bitmap">Se uma palavra não puder ser renderizada com a fonte do relógio, renderize-a como um bitmap no Gadgetbridge e exiba o bitmap no relógio</string>
@@ -3270,4 +3270,5 @@
     <string name="bluetooth_multipoint_no_devices">Nenhum dispositivo emparelhado encontrado\n\nToque em Emparelhar novo dispositivo para adicionar um dispositivo</string>
     <string name="bluetooth_multipoint_pair_stop">Interrompa o emparelhamento</string>
     <string name="pref_title_notifications_when_screen_saver">...quando o protetor de tela estiver ligado</string>
+    <string name="pref_header_sync">Sincronização</string>
 </resources>
