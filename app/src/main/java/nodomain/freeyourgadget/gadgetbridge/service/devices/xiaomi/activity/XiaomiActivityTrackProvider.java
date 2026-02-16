@@ -53,7 +53,8 @@ public class XiaomiActivityTrackProvider implements ActivityTrackProvider {
         try {
             final WorkoutGpsParser workoutGpsParser = new WorkoutGpsParser();
             final XiaomiActivityFileId fileId = XiaomiActivityFileId.from(detailsBytes);
-            return workoutGpsParser.getActivityTrack(fileId, detailsBytes);
+            final byte[] fixedBytes = XiaomiActivityParser.fixAndWrap(detailsBytes).array();
+            return workoutGpsParser.getActivityTrack(fileId, fixedBytes);
         } catch (final Exception e) {
             LOG.error("Failed to parse bytes from {}", inputFile, e);
             return new GpxActivityTrackProvider().getActivityTrack(summary);

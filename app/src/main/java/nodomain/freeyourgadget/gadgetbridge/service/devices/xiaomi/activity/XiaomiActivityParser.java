@@ -23,6 +23,8 @@ import androidx.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.List;
 
 import de.greenrobot.dao.query.QueryBuilder;
@@ -33,6 +35,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl.ManualSamplesParser;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl.DailyDetailsParser;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl.DailySummaryParser;
@@ -40,6 +43,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl.SleepStagesParser;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl.WorkoutGpsParser;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl.WorkoutSummaryParser;
+import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
 
 public abstract class XiaomiActivityParser {
     private static final Logger LOG = LoggerFactory.getLogger(XiaomiActivityParser.class);
@@ -132,5 +136,35 @@ public abstract class XiaomiActivityParser {
 
     public static boolean validData(final byte[] header, final int i) {
         return (header[i / 8] & (1 << (7 - (i % 8)))) != 0;
+    }
+
+    /**
+     * If the CRC32 is not valid, we're missing 1 header padding byte due to a previous bug.
+     * This previous version also did not include the CRC at the end.
+     * More info: <a href="https://codeberg.org/Freeyourgadget/Gadgetbridge/issues/3916">#3916</a>
+     */
+    public static ByteBuffer fixAndWrap(final byte[] data) {
+        final int arrCrc32 = CheckSums.getCRC32(data, 0, data.length - 4);
+        final int expectedCrc32 = BLETypeConversions.toUint32(data, data.length - 4);
+
+        if (arrCrc32 == expectedCrc32) {
+            return ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN);
+        }
+
+        LOG.warn("Invalid CRC found, fixing and wrapping");
+
+        // Unfortunately in this case we can't distinguish a corrupted file from one where we accidentally discarded the
+        // crc. We assume the latter, since we check the crc before writing it to storage. We then reconstruct the file
+        // by adding the missing padding byte + append a newly computed crc
+        final ByteBuffer buf = ByteBuffer.allocate(data.length + 1 + 4).order(ByteOrder.LITTLE_ENDIAN);
+        buf.put(data, 0, 7); // fileId
+        buf.put((byte) 0); // missing padding byte
+        buf.put(data, 7, data.length - 7);
+
+        final int newCrc32 = CheckSums.getCRC32(buf.array(), 0, buf.limit() - 4);
+        buf.putInt(newCrc32);
+        buf.flip();
+
+        return buf;
     }
 }

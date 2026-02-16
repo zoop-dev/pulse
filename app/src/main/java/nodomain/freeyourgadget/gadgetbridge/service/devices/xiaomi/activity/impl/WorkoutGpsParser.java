@@ -120,6 +120,7 @@ public class WorkoutGpsParser extends XiaomiActivityParser {
         return activityTrack;
     }
 
+    @Override
     public boolean parse(final Context context, final GBDevice gbDevice, final XiaomiActivityFileId fileId, final byte[] bytes) {
         final ActivityTrack activityTrack = getActivityTrack(fileId, bytes);
         if (activityTrack == null) {

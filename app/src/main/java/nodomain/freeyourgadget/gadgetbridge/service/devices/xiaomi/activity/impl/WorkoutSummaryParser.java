@@ -112,10 +112,8 @@ import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityFileId;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityParser;
-import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 @SuppressWarnings("NonStrictComparisonCanBeEquality")
@@ -132,16 +130,11 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
         summary.setRawSummaryData(bytes);
 
         try {
-            summary = parseBinaryData(summary, true);
+            final ByteBuffer buf = ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN);
+            updateSummaryFromData(summary, buf, true);
         } catch (final Exception e) {
             LOG.error("Failed to parse workout summary", e);
             GB.toast(context, "Failed to parse workout summary", Toast.LENGTH_LONG, GB.ERROR, e);
-            return false;
-        }
-
-        // parseBinaryData may return null in case the version is not supported
-        if (summary == null) {
-            LOG.warn("summary is null - should never happen {}", fileId);
             return false;
         }
 
@@ -174,24 +167,12 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
             return summary;
         }
 
-        final int arrCrc32 = CheckSums.getCRC32(data, 0, data.length - 4);
-        final int expectedCrc32 = BLETypeConversions.toUint32(data, data.length - 4);
+        return updateSummaryFromData(summary, fixAndWrap(data), forDetails);
+    }
 
-        final ByteBuffer buf;
-        if (arrCrc32 != expectedCrc32) {
-            // If the CRC32 is not valid, we're missing 1 header padding byte due to a previous bug
-            // This previous version also did not include the CRC at the end
-            // More info: https://codeberg.org/Freeyourgadget/Gadgetbridge/issues/3916
-            buf = ByteBuffer.allocate(data.length + 1).order(ByteOrder.LITTLE_ENDIAN);
-            buf.put(data, 0, 7);
-            buf.put((byte) 0);
-            buf.put(data, 7, data.length - 7);
-            buf.flip();
-        } else {
-            // Valid full file, skip crc
-            buf = ByteBuffer.wrap(data, 0, data.length - 4).order(ByteOrder.LITTLE_ENDIAN);
-        }
-
+    private BaseActivitySummary updateSummaryFromData(final BaseActivitySummary summary,
+                                                      final ByteBuffer buf,
+                                                      final boolean forDetails) {
         final XiaomiActivityFileId fileId = XiaomiActivityFileId.from(buf);
 
         final byte fileIdPadding = buf.get();

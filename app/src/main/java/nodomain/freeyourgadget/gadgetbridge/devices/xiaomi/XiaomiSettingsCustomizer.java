@@ -34,6 +34,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -188,8 +189,7 @@ public class XiaomiSettingsCustomizer implements DeviceSpecificSettingsCustomize
                         continue;
                     }
 
-                    final byte[] fileIdBytes = Arrays.copyOfRange(data, 0, 7);
-                    final XiaomiActivityFileId fileId = XiaomiActivityFileId.from(fileIdBytes);
+                    final XiaomiActivityFileId fileId = XiaomiActivityFileId.from(data);
 
                     final XiaomiActivityParser activityParser = XiaomiActivityParser.create(fileId);
                     if (activityParser == null) {
@@ -198,7 +198,9 @@ public class XiaomiSettingsCustomizer implements DeviceSpecificSettingsCustomize
                     }
 
                     try {
-                        if (activityParser.parse(context, device, fileId, data)) {
+                        // Some files may have been wrongly written, see javadoc for fixAndWrap
+                        final byte[] fixedData = XiaomiActivityParser.fixAndWrap(data).array();
+                        if (activityParser.parse(context, device, fileId, fixedData)) {
                             LOG.info("Successfully parsed {}", fileId);
                         } else {
                             LOG.warn("Failed to parse {}", fileId);
