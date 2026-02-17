@@ -36,6 +36,7 @@ import java.util.List;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsHandler;
+import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsCoordinator;
 
 public class HeartRateCapability {
     public enum MeasurementInterval {
@@ -95,8 +96,16 @@ public class HeartRateCapability {
         final ListPreference heartrateAlertLow = handler.findPreference(PREF_HEARTRATE_ALERT_LOW_THRESHOLD);
         // Newer devices that have low alert threshold can only use it if measurement interval is smart (-1) or 1 minute
         final boolean hrAlertsNeedSmartOrOne = heartrateAlertActiveHigh != null && heartrateAlertHigh != null && heartrateAlertLow != null && heartrateMeasurementInterval != null;
+        // Devices without display (like Helio Strap) have continuous HR monitoring by default
+        final boolean deviceHasContinuousHr;
+        if (handler.getDevice().getDeviceCoordinator() instanceof ZeppOsCoordinator) {
+            deviceHasContinuousHr = !((ZeppOsCoordinator) handler.getDevice().getDeviceCoordinator()).hasDisplay();
+        } else {
+            deviceHasContinuousHr = false;
+        }
         if (hrAlertsNeedSmartOrOne) {
-            final boolean hrMonitoringIsSmartOrOne = heartrateMeasurementInterval.getValue().equals("60") ||
+            final boolean hrMonitoringIsSmartOrOne = deviceHasContinuousHr ||
+                    heartrateMeasurementInterval.getValue().equals("60") ||
                     heartrateMeasurementInterval.getValue().equals("-1");
 
             heartrateAlertHigh.setEnabled(hrMonitoringIsSmartOrOne);
@@ -132,8 +141,8 @@ public class HeartRateCapability {
                         heartrateAlertEnabled.setEnabled(isMeasurementIntervalEnabled);
                     }
                     if (hrAlertsNeedSmartOrOne) {
-                        // Same as above, check if smart or 1 minute
-                        final boolean hrMonitoringIsSmartOrOne = newVal.equals("60") || newVal.equals("-1");
+                        // Same as above, check if smart or 1 minute (or device has continuous HR)
+                        final boolean hrMonitoringIsSmartOrOne = deviceHasContinuousHr || newVal.equals("60") || newVal.equals("-1");
 
                         heartrateAlertActiveHigh.setEnabled(hrMonitoringIsSmartOrOne);
                         heartrateAlertHigh.setEnabled(hrMonitoringIsSmartOrOne);

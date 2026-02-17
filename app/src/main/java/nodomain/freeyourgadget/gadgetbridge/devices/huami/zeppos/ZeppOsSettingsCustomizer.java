@@ -263,11 +263,19 @@ public class ZeppOsSettingsCustomizer extends HuamiSettingsCustomizer {
         setupGpsPreference(handler, prefs);
         setupButtonClickPreferences(handler);
 
-        // Hide heart rate monitoring for devices without display like Helio Strap (they have continuous monitoring by default)
+        // For devices without display (like Helio Strap): they have continuous HR monitoring by default
+        // Hide the preferences that can't be changed - the actual values come from the device on connection
         if (!coordinator.hasDisplay()) {
-            final Preference heartRateMonitoringPref = handler.findPreference(DeviceSettingsPreferenceConst.PREF_SCREEN_HEARTRATE_MONITORING);
-            if (heartRateMonitoringPref != null) {
-                heartRateMonitoringPref.setVisible(false);
+            // Hide the entire "All-day heart rate monitoring" category (contains only the interval preference)
+            final Preference allDayHrCategory = handler.findPreference("pref_key_header_heartrate_allday");
+            if (allDayHrCategory != null) {
+                allDayHrCategory.setVisible(false);
+            }
+
+            // Hide activity monitoring preference
+            final Preference heartRateActivityMonitoring = handler.findPreference(DeviceSettingsPreferenceConst.PREF_HEARTRATE_ACTIVITY_MONITORING);
+            if (heartRateActivityMonitoring != null) {
+                heartRateActivityMonitoring.setVisible(false);
             }
         }
 
