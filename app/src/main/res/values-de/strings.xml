@@ -4206,4 +4206,6 @@
     <string name="health_connect_syncing">Synchronisierung läuft…</string>
     <string name="notification_channel_health_connect_sync_name">Health Connect Synchronisation</string>
     <string name="health_connect_sync_status_title">Synchronisierungsstatus</string>
+    <string name="permission_not_granted_contacts">Zugriff auf Kontakte nicht gewährt</string>
+    <string name="permission_not_granted_calendar">Zugriff auf Kalender nicht gewährt</string>
 </resources>
