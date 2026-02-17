@@ -313,8 +313,8 @@ public class ZeppOsActivitySummaryParser extends HuamiActivitySummaryParser {
                         Arrays.asList(
                                 new ActivitySummaryValue(interval.number(), UNIT_NONE),
                                 new ActivitySummaryValue(getSwimStyle(interval.style()), UNIT_NONE),
-                                new ActivitySummaryValue(interval.swolf(), UNIT_NONE),
                                 new ActivitySummaryValue(interval.hr(), UNIT_NONE),
+                                new ActivitySummaryValue(interval.swolf(), UNIT_NONE),
                                 new ActivitySummaryValue(interval.durationMillis() / 1000, UNIT_SECONDS)
                         )
                 );
@@ -326,10 +326,11 @@ public class ZeppOsActivitySummaryParser extends HuamiActivitySummaryParser {
 
     private String getSwimStyle(final int styleCode) {
         return switch (styleCode) {
-            // TODO i18n these
             case 1 -> "breaststroke";
             case 2 -> "freestyle";
             case 3 -> "backstroke";
+            case 4 -> "swim_style_butterfly";
+            case 6 -> "medley";
             default -> "unknown: " + styleCode;
         };
     }
