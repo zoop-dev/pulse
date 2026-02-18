@@ -19,7 +19,10 @@ package nodomain.freeyourgadget.gadgetbridge.activities.endurain
 import android.net.Uri
 import androidx.core.net.toUri
 import com.google.gson.Gson
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind
 import nodomain.freeyourgadget.gadgetbridge.util.InternetUtils
+import org.json.JSONArray
+import org.json.JSONObject
 import org.slf4j.LoggerFactory
 import java.io.File
 
@@ -258,7 +261,7 @@ class EndurainApiClient(
     /**
      * Upload activity file (GPX)
      */
-    fun uploadActivity(file: File, callback: (Boolean) -> Unit) {
+    fun uploadActivity(file: File, callback: (Int?) -> Unit) {
         Thread {
             try {
                 val uri = "$baseUrl/api/v1/activities/create/upload".toUri()
@@ -270,17 +273,53 @@ class EndurainApiClient(
                     requestHeaders = headers
                 ) { success, responseText ->
                     if (success && responseText != null) {
-                        callback(true)
+                        val jsonArray = JSONArray(responseText)
+                        val firstObject = jsonArray.getJSONObject(0)
+                        val id = firstObject.getInt("id")
+                        callback(id)
                     } else {
                         LOG.error("Activity upload failed")
-                        callback(false)
+                        callback(null)
                     }
                 }
             } catch (e: Exception) {
                 LOG.error("Activity upload error", e)
-                callback(false)
+                callback(null)
             }
         }.start()
+    }
+
+    /**
+     * Edit uploaded activity
+     */
+    fun editActivity(id: Int, activityKind: ActivityKind, name: String): Boolean {
+        try {
+            val uri = "$baseUrl/api/v1/activities/edit".toUri()
+            val headers = buildHeaders(AuthType.AUTH_TOKEN)
+
+            var activityType = 10  // Generic workout
+            if (activityLookup.containsKey(activityKind.ordinal)) {
+                activityType = activityLookup[activityKind.ordinal]!!
+            }
+
+            val bodyJson = JSONObject().apply {
+                put("id", id)
+                put("activity_type", activityType)
+                put("name", name)
+            }
+
+            val result = InternetUtils.doStringRequest(
+                method = "PUT",
+                uri = uri,
+                requestHeaders = headers,
+                body = bodyJson.toString()
+            )
+            LOG.info("editActivity result: {}", result)
+            return true
+        } catch (e: Exception) {
+            LOG.error("Activity edit error", e)
+            return false
+        }
     }
 
     /**
@@ -302,4 +341,54 @@ class EndurainApiClient(
             return null
         }
     }
+
+    /**
+     * Lookup map to convert ActivityKind to the integer Endurain expects,
+     * based on https://docs.endurain.com/developer-guide/supported-types/
+     */
+    val activityLookup = mapOf(
+        ActivityKind.RUNNING.ordinal to 1,
+        ActivityKind.TRAIL_RUN.ordinal to 2,
+        ActivityKind.VIRTUAL_RUN.ordinal to 3,
+        ActivityKind.CYCLING.ordinal to 4,
+        ActivityKind.ROAD_BIKE.ordinal to 4,
+        ActivityKind.GRAVEL_BIKE.ordinal to 5,
+        ActivityKind.MOUNTAIN_BIKE.ordinal to 6,
+        ActivityKind.POOL_SWIM.ordinal to 8,
+        ActivityKind.SWIMMING_OPENWATER.ordinal to 9,
+        ActivityKind.TRAINING.ordinal to 10,
+        ActivityKind.WALKING.ordinal to 11,
+        ActivityKind.HIKING.ordinal to 12,
+        ActivityKind.ROWING.ordinal to 13,
+        ActivityKind.YOGA.ordinal to 14,
+        ActivityKind.SKIING.ordinal to 15,
+        ActivityKind.SNOWBOARDING.ordinal to 17,
+        ActivityKind.TRANSITION.ordinal to 18,
+        ActivityKind.STRENGTH_TRAINING.ordinal to 19,
+        ActivityKind.CROSSFIT.ordinal to 20,
+        ActivityKind.TENNIS.ordinal to 21,
+        ActivityKind.TABLE_TENNIS.ordinal to 22,
+        ActivityKind.BADMINTON.ordinal to 23,
+        ActivityKind.SQUASH.ordinal to 24,
+        ActivityKind.RACQUETBALL.ordinal to 25,
+        ActivityKind.PICKLEBALL.ordinal to 26,
+        ActivityKind.BIKE_COMMUTE.ordinal to 27,
+        ActivityKind.INDOOR_CYCLING.ordinal to 28,
+        ActivityKind.WINDSURFING.ordinal to 30,
+        ActivityKind.INDOOR_WALKING.ordinal to 31,
+        ActivityKind.STAND_UP_PADDLEBOARDING.ordinal to 32,
+        ActivityKind.SURFING.ordinal to 33,
+        ActivityKind.TRACK_RUN.ordinal to 34,
+        ActivityKind.E_BIKE.ordinal to 35,
+        ActivityKind.E_MOUNTAIN_BIKE.ordinal to 36,
+        ActivityKind.ICE_SKATING.ordinal to 37,
+        ActivityKind.SOCCER.ordinal to 38,
+        ActivityKind.PADEL.ordinal to 39,
+        ActivityKind.TREADMILL.ordinal to 40,
+        ActivityKind.CARDIO.ordinal to 41,
+        ActivityKind.KAYAKING.ordinal to 42,
+        ActivityKind.SAILING.ordinal to 43,
+        ActivityKind.INLINE_SKATING.ordinal to 45,
+        ActivityKind.HIIT.ordinal to 46
+    )
 }
