@@ -50,7 +50,7 @@ internal object ActiveCaloriesSyncer : AbstractActivitySampleSyncer<ActiveCalori
             offset,
             endTs,
             offset,
-            Energy.kilocalories(caloriesInMinute.toDouble()),
+            Energy.calories(caloriesInMinute.toDouble()),
             metadata
         )
     }
