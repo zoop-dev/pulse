@@ -77,10 +77,12 @@ public class GBMusicControlReceiver extends BroadcastReceiver {
                 keyCode = KeyEvent.KEYCODE_MEDIA_FAST_FORWARD;
                 break;
             case VOLUMEUP:
+                LOG.debug("Adjusting volume up");
                 audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, 0);
                 sendPhoneVolume(audioManager);
                 return;
             case VOLUMEDOWN:
+                LOG.debug("Adjusting volume down");
                 audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, 0);
                 sendPhoneVolume(audioManager);
                 return;
@@ -150,6 +152,8 @@ public class GBMusicControlReceiver extends BroadcastReceiver {
                     controller = controllers.get(0);
                 }
 
+                LOG.debug("Will send {} to media controller for {}", musicCmd, controller.getPackageName());
+
                 switch (musicCmd) {
                     case NEXT:
                         controller.getTransportControls().skipToNext();
@@ -166,6 +170,7 @@ public class GBMusicControlReceiver extends BroadcastReceiver {
                     case PLAYPAUSE:
                         final PlaybackState playbackState = controller.getPlaybackState();
                         if (playbackState != null) {
+                            LOG.debug("Current playback state for media controller: {}", playbackState);
                             switch (playbackState.getState()) {
                                 case PlaybackState.STATE_NONE:
                                 case PlaybackState.STATE_STOPPED:
@@ -178,6 +183,7 @@ public class GBMusicControlReceiver extends BroadcastReceiver {
                                     controller.getTransportControls().pause();
                                     return;
                                 default:
+                                    LOG.error("Unknown playback state {}", playbackState);
                                     return;
                             }
                         } else {
@@ -211,6 +217,8 @@ public class GBMusicControlReceiver extends BroadcastReceiver {
         final int volumeLevel = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
         final int volumeMax = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         final int volumePercentage = (byte) Math.round(100 * (volumeLevel / (float) volumeMax));
+
+        LOG.debug("Sending volume to phone: {}", volumePercentage);
 
         GBApplication.deviceService().onSetPhoneVolume(volumePercentage);
     }

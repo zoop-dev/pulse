@@ -22,15 +22,10 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.receivers.GBMusicControlReceiver;
 
 public class GBDeviceEventMusicControl extends GBDeviceEvent {
-    private static final Logger LOG = LoggerFactory.getLogger(GBDeviceEventMusicControl.class);
-
     public Event event;
 
     public GBDeviceEventMusicControl() {
@@ -42,8 +37,7 @@ public class GBDeviceEventMusicControl extends GBDeviceEvent {
     }
 
     @Override
-    public void evaluate(final Context context, final GBDevice device) {
-        LOG.info("Got event for MUSIC_CONTROL");
+    public void evaluate(final Context context, @NonNull final GBDevice device) {
         final Intent musicIntent = new Intent(GBMusicControlReceiver.ACTION_MUSICCONTROL);
         musicIntent.putExtra("event", event.ordinal());
         musicIntent.setPackage(context.getPackageName());
