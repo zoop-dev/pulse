@@ -69,7 +69,9 @@ public class FileType {
         CHANGELOG(128, 41),
         METRICS(128, 44),
         SLEEP(128, 49),
+        CHRONO_SHOT(128, 54), // Garmin Xero C1 Pro Chronograph
         PACE_BANDS(128, 56),
+        UNKNOWN_57(128, 57), // Garmin Edge 530 - #5265
         DEVICE_58(128, 58), // just "Device" in Fenix 7s
         MUSCLE_MAP(128, 59),
         RUNNING_TRACK(128, 60),
@@ -91,7 +93,9 @@ public class FileType {
         PRG(255, 17),
         ERROR_SHUTDOWN_REPORTS(255, 245),
         IQ_ERROR_REPORTS(255, 244),
+        GOLF_SCORECARD(255, 246), // Garmin vívoactive 5 - #4522
         ULF_LOGS(255, 247),
+        KPI(255, 248), // Garmin Instinct Solar Tactical Edition - #5803
         ;
 
         private final int type;
