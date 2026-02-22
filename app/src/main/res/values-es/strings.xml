@@ -153,7 +153,7 @@
     <string name="tap_connected_device_for_activity">Pulse el dispositivo conectado para ver la actividad</string>
     <string name="tap_connected_device_for_vibration">Pulse el dispositivo conectado para la vibración</string>
     <string name="tap_a_device_to_connect">Pulse un dispositivo para conectarse</string>
-    <string name="cannot_connect_bt_address_invalid_">No se puede conectar. ¿Dirección BT incorrecta?</string>
+    <string name="cannot_connect_bt_address_invalid_">No se puede conectar. ¿Dirección Bluetooth incorrecta?</string>
     <string name="gadgetbridge_running_generic">Gadgetbridge en ejecución</string>
     <string name="installing_binary_d_d">Instalando binario %1$d/%2$d</string>
     <string name="installation_failed_">Instalación fallida</string>
@@ -603,7 +603,7 @@
     <string name="title_activity_device_specific_settings">Configuraciones específicas del dispositivo</string>
     <string name="pref_title_authkey">Clave de autenticación</string>
     <string name="pref_summary_authkey">Cambia la clave de autenticación a una clave común en todos tus dispositivos Android desde los que quieras conectarte. La clave predeterminada anterior para todos los dispositivos es 0123456789@ABCDE</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Está a punto de instalar el firmware %s en su Amazfit Cor 2.\n\nAsegúrese de instalar primero el archivo .fw y, después, el archivo .res. La pulsera se reiniciará tras instalar el archivo .fw.\n\nNota: no es necesario instalar el archivo .res si es exactamente el mismo que el ya instalado.\n\n¡PROCEDA BAJO SU PROPIA RESPONSABILIDAD!\n\nNO SE HA PROBADO. ES POSIBLE QUE NECESITE INSTALAR UN FIRMWARE BEATS_W SI EL NOMBRE DE SU DISPOSITIVO ES “Amazfit Band 2”.</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Está a punto de instalar el firmware %s en su Amazfit Cor 2.\n\nAsegúrese de instalar primero el archivo .fw y, después, el archivo .res. La pulsera se reiniciará tras instalar el archivo .fw.\n\nNota: no es necesario instalar el archivo .res si es exactamente el mismo que el ya instalado.\n\n¡PROCEDA BAJO SU PROPIA RESPONSABILIDAD!\n\nNO SE HA PROBADO. ES POSIBLE QUE NECESITE INSTALAR UN FIRMWARE BEATS_W SI EL NOMBRE DE SU DISPOSITIVO ES “Amazfit Band 2”</string>
     <string name="fw_upgrade_notice_miband4">Está a punto de instalar el firmware %s en su Mi Band 4.\n\nAsegúrese de instalar el archivo .fw, y a continuación, el archivo .res. Su pulsera se reiniciará tras instalar el archivo .fw.\n\nNota: no es necesario instalar el archivo .res si es idéntico al ya instalado.\n\n¡PROCEDA BAJO SU PROPIA CUENTA Y RIESGO!</string>
     <string name="prefs_hr_alarm_activity">Alarma de frecuencia cardíaca durante actividad deportiva</string>
     <string name="prefs_hr_alarm_low">Límite bajo</string>
@@ -1956,7 +1956,7 @@
     <string name="action_changelog">Novedades</string>
     <string name="pref_title_banglejs_phone_gps_network_only">Solo usa la red para determinar la ubicación</string>
     <string name="pref_title_banglejs_phone_gps_update_interval">Intervalo de actualización de datos GPS</string>
-    <string name="pref_summary_banglejs_phone_gps_enbale">Utiliza los datos GPS del teléfono móvil para sobrescribir los datos GPS del dispositivo de pulsera</string>
+    <string name="pref_summary_banglejs_phone_gps_enbale">Utiliza los datos GPS del teléfono para sobrescribir los datos GPS del dispositivo Bangle</string>
     <string name="pref_summary_banglejs_phone_gps_update_interval">El intervalo de actualización de la posición GPS, en ms</string>
     <string name="pref_title_banglejs_phone_gps_enbale">Usar datos GPS del teléfono</string>
     <string name="pref_summary_banglejs_phone_gps_network_only">Utiliza solo el proveedor de red para determinar la ubicación. Esto reduce el consumo de energía a costa de la precisión. Es necesaria una reconexión.</string>
@@ -2599,7 +2599,7 @@
     <string name="pref_summary_garmin_default_reply_suffix">Añadido junto al sufijo configurado en Gadgetbridge</string>
     <string name="no_folder_selected">Ninguna carpeta seleccionada</string>
     <string name="folder_is_empty">Carpeta vacía</string>
-    <string name="pref_garmin_agps_help">La siguiente lista contiene todas las URL solicitadas por el reloj para actualizaciones AGPS. Puede seleccionar un archivo del almacenamiento del teléfono que se enviará al reloj cuando solicite una actualización. Solo es necesario configurar uno de los archivos.</string>
+    <string name="pref_garmin_agps_help">La siguiente lista contiene todas las URL solicitadas por el reloj para actualizaciones AGPS. Puede seleccionar un archivo del almacenamiento del teléfono que se enviará al reloj cuando solicite una actualización.\n\nSolo es necesario configurar uno de los archivos.</string>
     <string name="intent_api_broadcast_activity_sync_summary">Enviar una notificación cuando se complete la sincronización de la actividad para cualquier dispositivo</string>
     <string name="intent_api_broadcast_activity_sync_title">Transferir cuando finalice la sincronización de actividades</string>
     <string name="activity_prefs_height_inches">Altura en pulgadas</string>
