@@ -2970,7 +2970,7 @@
     <string name="birthdays">Születésnapok</string>
     <string name="pref_dnd_follow_phone_summary">Amikor a telefonon engedélyezve vagy le van tiltva a DND mód, akkor automatikusan kapcsolja az eszközön is</string>
     <string name="pref_dashboard_widget_today_yesterday_data_title">A tegnapi nap adatai</string>
-    <string name="pref_dashboard_widget_today_yesterday_data_summary">A tegnapi adatok megjelenítése a jelenlegi idő és éjfél között tompítva</string>
+    <string name="pref_dashboard_widget_today_yesterday_data_summary">A tegnapi adatok megjelenítése a jelenlegi idő és éjfél között</string>
     <string name="pref_dashboard_widget_today_time_indicator_title">Jelenlegi idő jelzője</string>
     <string name="prefs_hrv_monitoring_title">Szívfrekvencia-variabilitás megfigyelés</string>
     <string name="prefs_hrv_monitoring_description">Automatikusan figyeli a pulzusszám-változékonyságot a nap folyamán</string>
@@ -4137,4 +4137,6 @@
     <string name="menuitem_sos_flashlight">SOS-zseblámpa</string>
     <string name="permission_not_granted_contacts">Nincs engedélyezve a névjegyekhez való hozzáférés</string>
     <string name="permission_not_granted_calendar">Nincs engedélyezve a naptárhoz való hozzáférés</string>
+    <string name="pref_dashboard_widget_today_dim_yesterday_data_title">Tegnapi adatok megjelenítése tompítva</string>
+    <string name="pref_dashboard_widget_today_dim_yesterday_data_summary">Tegnapi adatok megjelenítése tompított színekkel</string>
 </resources>
