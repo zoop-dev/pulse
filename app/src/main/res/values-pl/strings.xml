@@ -3149,7 +3149,7 @@
     <string name="hrZoneThreshold">Próg</string>
     <string name="hrZoneMaximum">Maksymalny</string>
     <string name="workout_set_reps">Powtórzenia</string>
-    <string name="pref_dashboard_widget_today_yesterday_data_summary">Pokaż wczorajsze dane przyciemnione pomiędzy bieżącą godziną a północą</string>
+    <string name="pref_dashboard_widget_today_yesterday_data_summary">Pokaż dane z wczoraj między obecną godziną a północą</string>
     <string name="stepRateAvg">Średnia liczba kroków</string>
     <string name="activity_detail_share_json_details">Udostępnij szczegóły JSON</string>
     <string name="pref_dashboard_widget_today_time_indicator_summary">Pokaż wskaźnik w bieżącym czasie, aby wizualnie oddzielić dane od wczoraj i dzisiaj</string>
@@ -4308,4 +4308,6 @@
     <string name="menuitem_sos_flashlight">Latarka SOS</string>
     <string name="permission_not_granted_contacts">Brak uprawnień do kontaktów</string>
     <string name="permission_not_granted_calendar">Brak uprawnień do kalendarza</string>
+    <string name="pref_dashboard_widget_today_dim_yesterday_data_title">Wyświetlaj wczorajsze dane przyciemnione</string>
+    <string name="pref_dashboard_widget_today_dim_yesterday_data_summary">Pokaż dane z wczoraj w przyciemnionych kolorach</string>
 </resources>
