@@ -148,6 +148,7 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
         Prefs prefs = GBApplication.getPrefs();
         boolean upsideDown24h = prefs.getBoolean("dashboard_widget_today_24h_upside_down", false);
         boolean showYesterday = prefs.getBoolean("dashboard_widget_today_show_yesterday", false);
+        boolean dimYesterday = prefs.getBoolean("dashboard_widget_today_dim_yesterday", true);
 
         // Prepare circular chart
         long currentDayStart = dashboardData.timeTo - 86400;
@@ -276,56 +277,56 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
                 if (activity.activityKind == ActivityKind.NOT_MEASURED) {
                     paint.setStrokeWidth(barWidth / 3f);
                     paint.setColor(color_worn);
-                    if (showYesterday && dayIsToday && activity.timeFrom < currentDayStart) {
+                    if (showYesterday && dimYesterday && dayIsToday && activity.timeFrom < currentDayStart) {
                         paint.setAlpha(64);
                     }
                     canvas.drawArc(margin, margin, width - margin, height - margin, start_angle, sweep_angle, false, paint);
                 } else if (activity.activityKind == ActivityKind.NOT_WORN) {
                     paint.setStrokeWidth(barWidth / 3f);
                     paint.setColor(color_not_worn);
-                    if (showYesterday && dayIsToday && activity.timeFrom < currentDayStart) {
+                    if (showYesterday && dimYesterday && dayIsToday && activity.timeFrom < currentDayStart) {
                         paint.setAlpha(64);
                     }
                     canvas.drawArc(margin, margin, width - margin, height - margin, start_angle, sweep_angle, false, paint);
                 } else if (activity.activityKind == ActivityKind.LIGHT_SLEEP || activity.activityKind == ActivityKind.SLEEP_ANY) {
                     paint.setStrokeWidth(barWidth);
                     paint.setColor(color_light_sleep);
-                    if (showYesterday && dayIsToday && activity.timeFrom < currentDayStart) {
+                    if (showYesterday && dimYesterday && dayIsToday && activity.timeFrom < currentDayStart) {
                         paint.setAlpha(64);
                     }
                     canvas.drawArc(margin, margin, width - margin, height - margin, start_angle, sweep_angle, false, paint);
                 } else if (activity.activityKind == ActivityKind.REM_SLEEP) {
                     paint.setStrokeWidth(barWidth);
                     paint.setColor(color_rem_sleep);
-                    if (showYesterday && dayIsToday && activity.timeFrom < currentDayStart) {
+                    if (showYesterday && dimYesterday && dayIsToday && activity.timeFrom < currentDayStart) {
                         paint.setAlpha(64);
                     }
                     canvas.drawArc(margin, margin, width - margin, height - margin, start_angle, sweep_angle, false, paint);
                 } else if (activity.activityKind == ActivityKind.DEEP_SLEEP) {
                     paint.setStrokeWidth(barWidth);
                     paint.setColor(color_deep_sleep);
-                    if (showYesterday && dayIsToday && activity.timeFrom < currentDayStart) {
+                    if (showYesterday && dimYesterday && dayIsToday && activity.timeFrom < currentDayStart) {
                         paint.setAlpha(64);
                     }
                     canvas.drawArc(margin, margin, width - margin, height - margin, start_angle, sweep_angle, false, paint);
                 } else if (activity.activityKind == ActivityKind.AWAKE_SLEEP) {
                     paint.setStrokeWidth(barWidth);
                     paint.setColor(color_awake_sleep);
-                    if (showYesterday && dayIsToday && activity.timeFrom < currentDayStart) {
+                    if (showYesterday && dimYesterday && dayIsToday && activity.timeFrom < currentDayStart) {
                         paint.setAlpha(64);
                     }
                     canvas.drawArc(margin, margin, width - margin, height - margin, start_angle, sweep_angle, false, paint);
                 } else if (activity.activityKind == ActivityKind.EXERCISE) {
                     paint.setStrokeWidth(barWidth);
                     paint.setColor(color_exercise);
-                    if (showYesterday && dayIsToday && activity.timeFrom < currentDayStart) {
+                    if (showYesterday && dimYesterday && dayIsToday && activity.timeFrom < currentDayStart) {
                         paint.setAlpha(64);
                     }
                     canvas.drawArc(margin, margin, width - margin, height - margin, start_angle, sweep_angle, false, paint);
                 } else {
                     paint.setStrokeWidth(barWidth);
                     paint.setColor(color_activity);
-                    if (showYesterday && dayIsToday && activity.timeFrom < currentDayStart) {
+                    if (showYesterday && dimYesterday && dayIsToday && activity.timeFrom < currentDayStart) {
                         paint.setAlpha(64);
                     }
                     canvas.drawArc(margin, margin, width - margin, height - margin, start_angle, sweep_angle, false, paint);

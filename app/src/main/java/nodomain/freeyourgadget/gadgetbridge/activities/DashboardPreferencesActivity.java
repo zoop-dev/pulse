@@ -69,6 +69,7 @@ public class DashboardPreferencesActivity extends AbstractSettingsActivityV2 {
                     "dashboard_widget_today_24h",
                     "dashboard_widget_today_24h_upside_down",
                     "dashboard_widget_today_show_yesterday",
+                    "dashboard_widget_today_dim_yesterday",
                     "dashboard_widget_today_time_indicator",
                     "dashboard_widget_today_2columns",
                     "dashboard_widget_today_legend",
