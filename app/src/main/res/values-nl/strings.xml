@@ -3145,7 +3145,7 @@
     <string name="birthdays">Verjaardagen</string>
     <string name="pref_dashboard_widget_today_time_indicator_title">Indicator van huidige tijd</string>
     <string name="pref_dashboard_widget_today_yesterday_data_title">Gegevens van gisteren</string>
-    <string name="pref_dashboard_widget_today_yesterday_data_summary">Toon gegevens van gisteren met gedimde kleuren tussen de huidige tijd en middernacht</string>
+    <string name="pref_dashboard_widget_today_yesterday_data_summary">Toon gegevens van gisteren tussen de huidige tijd en middernacht</string>
     <string name="pref_dashboard_widget_today_time_indicator_summary">Toon een indicator op de huidige tijd, als visuele scheiding tussen de gegevens van gisteren en vandaag</string>
     <string name="pref_title_calendar_lookahead">Aantal toekomstige dagen</string>
     <string name="pref_summary_calendar_lookahead">Synchroniseer %1s dagen aan kalenderevenementen</string>
@@ -4287,4 +4287,16 @@
     <string name="infinitime_resource_upload_progress_status">Bezig met uitvoeren van actie %d van %d\n%s %s</string>
     <string name="internet_firewall_blacklisted_domains_title">Geblokkeerde domeinen</string>
     <string name="internet_firewall_blacklisted_domains_summary">De volgende domeinen en al hun subdomeinen negeren de instellingen hierboven en worden altijd geblokkeerd.</string>
+    <string name="permission_not_granted_contacts">Contacten-permissie niet geaccepteerd</string>
+    <string name="permission_not_granted_calendar">Agenda-permissie niet geaccepteerd</string>
+    <string name="pref_restart_logging_title">Initialiseer logging</string>
+    <string name="pref_restart_logging_summary">Tik hier om te proberen het logbestand te initialiseren</string>
+    <string name="menuitem_audio_control">Audiobediening</string>
+    <string name="menuitem_diary">Dagboek</string>
+    <string name="menuitem_calorie_intake_record">Calorie-inname</string>
+    <string name="menuitem_zepp_os_ask_anything_chat_bot">Stel een vraag</string>
+    <string name="menuitem_text_size">Tekstgrootte</string>
+    <string name="menuitem_sos_flashlight">SOS-zaklamp</string>
+    <string name="pref_dashboard_widget_today_dim_yesterday_data_title">Toon gisteren gedimd</string>
+    <string name="pref_dashboard_widget_today_dim_yesterday_data_summary">Toon gegevens van gisteren met gedimde kleuren</string>
 </resources>
