@@ -2988,7 +2988,7 @@
     <string name="app_crash_notification_title">%1s se ha bloqueado</string>
     <string name="app_crash_share_stacktrace">Compartir error</string>
     <string name="pref_dashboard_widget_today_yesterday_data_title">Datos de ayer</string>
-    <string name="pref_dashboard_widget_today_yesterday_data_summary">Mostrar datos de ayer atenuados entre la hora actual y la medianoche</string>
+    <string name="pref_dashboard_widget_today_yesterday_data_summary">Mostrar datos de ayer entre la hora actual y la medianoche</string>
     <string name="pref_dashboard_widget_today_time_indicator_title">Indicador de la hora actual</string>
     <string name="pref_dashboard_widget_today_time_indicator_summary">Mostrar un indicador en la hora actual, para separar visualmente los datos de ayer y hoy</string>
     <string name="pref_title_calendar_lookahead">Número de días de antelación</string>
@@ -3219,9 +3219,9 @@
     <string name="gree_pair_clipboard">Nombre del dispositivo: %1$s\nDirección MAC: %2$s\nClave de vinculación: %3$s</string>
     <string name="prefs_active_noise_cancelling_indoor">Interior</string>
     <string name="prefs_active_noise_cancelling_outdoor">Exterior</string>
-    <string name="charts_show_balance_steps_summary">Mostrar el exceso o falta de pasos en las gráficas semanales y mensuales</string>
+    <string name="charts_show_balance_steps_summary">Mostrar el exceso o la falta de pasos en las gráficas semanales y mensuales</string>
     <string name="activity_type_barbell">Pesas</string>
-    <string name="charts_show_balance_sleep_summary">Mostrar el exceso o falta de sueño en las gráficas semanales y mensuales</string>
+    <string name="charts_show_balance_sleep_summary">Mostrar el exceso o la falta de sueño en las gráficas semanales y mensuales</string>
     <string name="pref_garmin_fake_oauth_title">Enviar respuestas falsas de OAuth</string>
     <string name="activity_type_step_aerobics">Step</string>
     <string name="activity_type_equestrian">Equitación</string>
@@ -3231,7 +3231,7 @@
     <string name="activity_type_triathlon">Triatlón</string>
     <string name="title_activity_even_realities_g1_pairing">Emparejamiento de Even G1</string>
     <string name="spo2_perc_75">75 %</string>
-    <string name="charts_show_balance_steps_title">Mostrar resumen de pasos</string>
+    <string name="charts_show_balance_steps_title">Mostrar balance de pasos</string>
     <string name="activity_type_other_water_sports">Otros deportes acuáticos</string>
     <string name="activity_type_diving">Buceo</string>
     <string name="activity_type_paragliding">Parapente</string>
@@ -3263,7 +3263,7 @@
     <string name="average_torque_effectiveness">Eficiencia del torque</string>
     <string name="fit_file_viewer">Visor de archivos FIT</string>
     <string name="pairing_even_realities_g1_select_next_lens">Lente %1$s seleccionada para el emparejamiento. Se encontraron múltiples opciones para la lente %2$s. Selecciona la lente %2$s de la lista a continuación.</string>
-    <string name="pref_override_features_title">Modificar funciones compatibles</string>
+    <string name="pref_override_features_title">Sobrescribir funciones compatibles</string>
     <string name="pref_override_features_summary">Habilitar o deshabilitar funciones específicas del dispositivo. Esto puede causar problemas o hacer que el dispositivo funcione incorrectamente</string>
     <string name="pref_workout_send_gps_timeout_title">Tiempo de espera para el envío de GPS</string>
     <string name="activity_type_powerboating">Motonáutica</string>
@@ -3462,7 +3462,7 @@
     <string name="even_realities_left_lens">Lente izquierda</string>
     <string name="prefs_title_gatt_settings">Perfil de atributo genérico</string>
     <string name="pref_device_version">Versión del dispositivo</string>
-    <string name="pairing_even_realities_g1_final_connect">Configurando dispositivos; espere…</string>
+    <string name="pairing_even_realities_g1_final_connect">Configurando dispositivos. Por favor, espere…</string>
     <string name="pref_watch_face">Esfera</string>
     <string name="interval_twenty_minutes">cada 20 minutos</string>
     <string name="connection_priority_low_power_title">Solicitar baja potencia</string>
@@ -4141,4 +4141,6 @@
     <string name="menuitem_sos_flashlight">Linterna SOS</string>
     <string name="permission_not_granted_contacts">No se ha concedido el permiso de contactos</string>
     <string name="permission_not_granted_calendar">No se ha concedido el permiso de calendario</string>
+    <string name="pref_dashboard_widget_today_dim_yesterday_data_title">Mostrar ayer atenuado</string>
+    <string name="pref_dashboard_widget_today_dim_yesterday_data_summary">Mostrar los datos de ayer con colores atenuados</string>
 </resources>
