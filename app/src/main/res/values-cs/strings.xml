@@ -3140,7 +3140,7 @@
     <string name="pref_crash_notification_summary">Při pádu aplikace zobrazit oznámení s chybou</string>
     <string name="app_crash_share_stacktrace">Sdílet chybu</string>
     <string name="app_crash_notification_title">Aplikace %1s havarovala</string>
-    <string name="pref_dashboard_widget_today_yesterday_data_summary">Zobrazit tmavě data ze včerejška mezi aktuálním časem a půlnocí</string>
+    <string name="pref_dashboard_widget_today_yesterday_data_summary">Zobrazit data ze včerejška mezi aktuálním časem a půlnocí</string>
     <string name="pref_dashboard_widget_today_yesterday_data_title">Údaje ze včerejška</string>
     <string name="pref_dashboard_widget_today_time_indicator_title">Ukazatel aktuálního času</string>
     <string name="pref_dashboard_widget_today_time_indicator_summary">Zobrazit ukazatel aktuálního času pro vizuální oddělení údajů ze včerejška a dneška</string>
@@ -4294,4 +4294,6 @@
     <string name="menuitem_sos_flashlight">SOS svítilna</string>
     <string name="permission_not_granted_contacts">Přístup ke kontaktům neudělen</string>
     <string name="permission_not_granted_calendar">Přístup ke kalendáři neudělen</string>
+    <string name="pref_dashboard_widget_today_dim_yesterday_data_title">Zobrazit včerejšek ztmaveně</string>
+    <string name="pref_dashboard_widget_today_dim_yesterday_data_summary">Zobrazit data ze včerejška tmavšími barvami</string>
 </resources>
