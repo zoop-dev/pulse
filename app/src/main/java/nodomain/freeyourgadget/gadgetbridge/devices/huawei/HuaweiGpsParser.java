@@ -126,8 +126,8 @@ public class HuaweiGpsParser {
             // NOTE: instead of 6383807.0d should be 6378245.0 (Krassovsky 1940 ellipsoid).
             // According to my research it provides better result. But I am not sure.
             // Additional research required.
-            point.latitude = (lat / 6383807.0d + lat_start) / 0.017453292519943d;
-            point.longitude = (lon / 6383807.0d / Math.cos(lat_start) + lon_start) / 0.017453292519943d;
+            point.latitude = (lat / 6378245.0d + lat_start) / 0.017453292519943d;
+            point.longitude = (lon / 6378245.0d / Math.cos(lat_start) + lon_start) / 0.017453292519943d;
             point.pause = pause == 1;
             point.altitudeSupported = alt_support;
             if (alt_support) {
