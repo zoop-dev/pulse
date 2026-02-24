@@ -1,4 +1,4 @@
-/*  Copyright (C) 2023-2024 José Rebelo
+/*  Copyright (C) 2023-2026 José Rebelo, Thomas Riedler
 
     This file is part of Gadgetbridge.
 
@@ -21,6 +21,8 @@ import static org.apache.commons.lang3.ArrayUtils.subarray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+
+import androidx.annotation.NonNull;
 
 import org.slf4j.Logger;
 
@@ -238,7 +240,7 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
                         height
                 );
 
-                sendNotificationPicture(packageName, notificationId, pictureFormat, width);
+                sendNotificationPicture(packageName, notificationId, pictureFormat, width, height);
                 return;
             }
             default:
@@ -500,7 +502,7 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
         sendFile(url, filename, tga, success -> ackNotificationAfterIconSent(packageName, success));
     }
 
-    private void sendNotificationPicture(final String packageName, final int notificationId, final byte pictureFormat, final int width) {
+    private void sendNotificationPicture(final String packageName, final int notificationId, final byte pictureFormat, final int requestWidth, final int requestHeight) {
         final ZeppOsBitmapFormat format = ZeppOsBitmapFormat.fromCode(pictureFormat);
         if (format == null) {
             LOG.error("Unknown picture bitmap format code {}", String.format("0x%02x", pictureFormat));
@@ -522,11 +524,9 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
             return;
         }
 
-        // FIXME: On the GTR 4, the band sends 358 on the url, but the actual image has 368 width
-        //  if sent as requested, it gets all corrupted...
-        final int targetWidth = width + 10;
-        final int targetHeight = (int) Math.round(bmp.getHeight() * ((double) targetWidth / bmp.getWidth()));
-        final byte[] tga = format.encode(bmp, targetWidth, targetHeight);
+        TargetDimensions targetDimensions = getTargetDimensions(requestWidth, requestHeight, bmp.getWidth(), bmp.getHeight());
+
+        final byte[] tga = format.encode(bmp, targetDimensions.targetWidth(), targetDimensions.targetHeight());
         if (tga == null) {
             LOG.warn("Failed to encode tga from {}", picturePath);
             ackNotificationAfterPictureSent(packageName, notificationId, false);
@@ -538,13 +538,52 @@ public class ZeppOsNotificationService extends AbstractZeppOsService {
                 "notification://content_image?app_id=%s&uid=%d&width=%d&height=%d&format=%s",
                 packageName,
                 notificationId,
-                width,
-                targetHeight,
+                targetDimensions.notificationWidth(),
+                targetDimensions.targetHeight(),
                 format
         );
         final String filename = String.format(Locale.ROOT, "picture_%d.tga", notificationId);
 
         sendFile(url, filename, tga, success -> ackNotificationAfterPictureSent(packageName, notificationId, success));
+    }
+
+    @NonNull
+    private static TargetDimensions getTargetDimensions(int requestWidth, int requestHeight, int bmpWidth, int bmpHeight) {
+        final boolean is_portrait = bmpHeight > bmpWidth;
+
+        // max height for portrait mode as observed on a Balance 2 XT
+        final int maxHeight = 632;
+        final int requestMaxHeight = Math.min(requestHeight, maxHeight);
+
+        int targetHeight;
+        int targetWidth;
+        int notificationWidth;
+        if (is_portrait && (requestMaxHeight > 0)) {
+            targetHeight = requestMaxHeight;
+            // rounding factor found by testing on snooped data
+            notificationWidth = (requestMaxHeight * 1408) / bmpHeight * bmpWidth / 1408;
+        }
+        else {
+            notificationWidth = requestWidth;
+            // rounding factor found by testing on snooped data
+            targetHeight = bmpHeight * 500 / bmpWidth * requestWidth / 500;
+        }
+        // According to testing, the target width is the smallest multiple of 16 >= notificationWidth
+        // (lower 4 bits are zero)
+        targetWidth = nextMultipleOfSixteen(notificationWidth);
+        return new TargetDimensions(targetHeight, targetWidth, notificationWidth);
+    }
+
+    private record TargetDimensions(int targetHeight, int targetWidth, int notificationWidth) {
+    }
+
+    /**
+     * Returns the next greater multiple of 16, or the number itself if it is already a multiple of 16
+     * @param number    some positive number
+     * @return          smallest multiple of 16 >= number
+     */
+    private static int nextMultipleOfSixteen(final int number) {
+        return ((number - 1) | 0x0F ) + 1;
     }
 
     private void sendFile(final String url,
