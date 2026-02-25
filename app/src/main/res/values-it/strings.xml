@@ -800,7 +800,7 @@
     <string name="power_mode_normal">Normale</string>
     <string name="pref_sensors_bp_calibration_high">Pressione sanguigna SISTOLICA (alta)</string>
     <string name="pref_sensors_bp_calibration_low">Pressione sanguigna DIASTOLICA (bassa)</string>
-    <string name="pref_header_device_spec_settings">Impostazioni dell\'apparecchio</string>
+    <string name="pref_header_device_spec_settings">Impostazioni del dispositivo</string>
     <string name="prefs_notifications_and_calls_reject">Pulsante ignora/rifiuta la chiamata</string>
     <string name="pref_header_notifications_and_calls_callhandling">Gestione delle chiamate</string>
     <string name="pref_notifications_and_calls_enable_misscall">Notifica per chiamata senza risposta</string>
