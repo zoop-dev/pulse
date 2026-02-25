@@ -16,4 +16,11 @@
         android:summary="Reset Health Connect sync state and allow re-syncing all data"
         android:title="Reset HC sync state" />
 
+    <Preference
+        android:icon="@drawable/ic_save"
+        android:key="pref_debug_export_gb_data"
+        android:persistent="false"
+        android:summary="Export device data as JSON (for HC sync verification)"
+        android:title="Export GB data as JSON" />
+
 </androidx.preference.PreferenceScreen>

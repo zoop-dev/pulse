@@ -15,12 +15,15 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBHelper
 import nodomain.freeyourgadget.gadgetbridge.entities.HealthConnectSyncStateDao
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils
 import nodomain.freeyourgadget.gadgetbridge.util.GB
+import nodomain.freeyourgadget.gadgetbridge.util.healthconnect.GadgetbridgeDataExporter
 import nodomain.freeyourgadget.gadgetbridge.util.healthconnect.HealthConnectSyncWorker
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.time.Instant
+import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
 
 class HealthConnectDebugFragment : AbstractDebugFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -59,6 +62,30 @@ class HealthConnectDebugFragment : AbstractDebugFragment() {
                 }
                 .setNegativeButton(R.string.Cancel) { _, _ -> }
                 .show()
+        }
+
+        onClick(PREF_DEBUG_EXPORT_GB_DATA) {
+            runOnDebugDevices("Export data for device", forceDialog = true) { gbDevice ->
+                val cal = Calendar.getInstance()
+                cal.add(Calendar.DAY_OF_YEAR, -7)
+                DatePickerDialog(
+                    requireActivity(),
+                    { _: DatePicker?, year: Int, month: Int, day: Int ->
+                        val startDate = LocalDate.of(year, month + 1, day)
+                        val startInstant = startDate.atStartOfDay(ZoneId.systemDefault()).toInstant()
+                        val endInstant = Instant.now()
+                        try {
+                            val file = GadgetbridgeDataExporter.export(requireContext(), gbDevice, startInstant, endInstant)
+                            GB.toast("Exported to ${file.name}", Toast.LENGTH_LONG, GB.INFO)
+                        } catch (e: Exception) {
+                            GB.toast("Export failed: ${e.message}", Toast.LENGTH_LONG, GB.ERROR, e)
+                        }
+                    },
+                    cal.get(Calendar.YEAR),
+                    cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DAY_OF_MONTH)
+                ).show()
+            }
         }
 
         reloadSyncStates()
@@ -126,5 +153,6 @@ class HealthConnectDebugFragment : AbstractDebugFragment() {
         private val LOG: Logger = LoggerFactory.getLogger(HealthConnectDebugFragment::class.java)
         private const val PREF_DEBUG_MANUAL_SYNC_TRIGGER = "pref_debug_manual_sync_trigger"
         private const val PREF_DEBUG_RESET_HC_SYNC_STATE = "pref_debug_reset_hc_sync_state"
+        private const val PREF_DEBUG_EXPORT_GB_DATA = "pref_debug_export_gb_data"
     }
 }
