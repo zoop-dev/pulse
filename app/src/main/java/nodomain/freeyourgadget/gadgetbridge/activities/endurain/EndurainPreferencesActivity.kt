@@ -109,11 +109,11 @@ class EndurainPreferencesActivity : AbstractSettingsActivityV2() {
             vm.logout { success ->
                 activity?.runOnUiThread {
                     if (success) {
-                        GB.toast("Logged out successfully", Toast.LENGTH_SHORT, GB.INFO)
+                        GB.toast(getString(R.string.endurain_logged_out_successfully), Toast.LENGTH_SHORT, GB.INFO)
                         updateStatus()
                         updateLogoutPreferenceVisibility()
                     } else {
-                        GB.toast("Logout failed", Toast.LENGTH_SHORT, GB.WARN)
+                        GB.toast(getString(R.string.endurain_logout_failed), Toast.LENGTH_SHORT, GB.WARN)
                     }
                 }
             }
@@ -129,12 +129,13 @@ class EndurainPreferencesActivity : AbstractSettingsActivityV2() {
             val server = GBApplication.getPrefs().preferences.getString("endurain_server", null)
             val tokenExpiresAt = DateTimeUtils.parseTimeStamp(vm.tokenManager.getRefreshTokenExpiresAt())
 
-            var summaryText = "Not logged in, integration is disabled"
+            var summaryText = getString(R.string.endurain_not_logged_in_integration_disabled)
             if (vm.tokenManager.isLoggedIn() && server != null) {
-                summaryText = "Logged in to $server\nRefresh token expires: $tokenExpiresAt"
+                summaryText =
+                    getString(R.string.endurain_logged_in_refresh_token, server, tokenExpiresAt)
             }
             if (vm.serverVersion != null) {
-                summaryText += "\nServer version: ${vm.serverVersion}"
+                summaryText += getString(R.string.endurain_server_version, vm.serverVersion)
             }
             statusPref?.summary = summaryText
         }

@@ -1124,6 +1124,23 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activities.endurain.EndurainOAuthCallbackActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Deep link scheme for OAuth callback -->
+                <data
+                    android:scheme="${appAuthRedirectScheme}"
+                    android:host="endurain"
+                    android:pathPrefix="/oauth/callback" />
+            </intent-filter>
+        </activity>
+
         <!-- For supported versions through Android 13, create an activity to show the rationale
        of Health Connect permissions once users click the privacy policy link. -->
         <activity
