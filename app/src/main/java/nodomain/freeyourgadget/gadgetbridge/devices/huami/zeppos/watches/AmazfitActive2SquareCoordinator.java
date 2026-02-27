@@ -29,12 +29,6 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class AmazfitActive2SquareCoordinator extends ZeppOsCoordinator {
     @Override
-    public boolean isExperimental() {
-        // untested
-        return true;
-    }
-
-    @Override
     public ConnectionType getConnectionType() {
         return ConnectionType.BOTH;
     }
