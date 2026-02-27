@@ -37,15 +37,15 @@ class EndurainTokenManager(context: Context) {
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )
 
-    fun saveTokens(accessToken: String, refreshToken: String, accessTokenExpiresAt: Int) {
+    fun saveTokens(accessToken: String, refreshToken: String, accessTokenExpiry: Int, refreshTokenExpiry: Int) {
+        val accessTokenExpiryTs = if (accessTokenExpiry < 1000000000) ((System.currentTimeMillis() / 1000) + accessTokenExpiry).toInt() else accessTokenExpiry
+        val refreshTokenExpiryTs = if (refreshTokenExpiry < 1000000000) ((System.currentTimeMillis() / 1000) + refreshTokenExpiry).toInt() else refreshTokenExpiry
         sharedPreferences.edit {
             putString("access_token", accessToken)
                 .putString("refresh_token", refreshToken)
-                .putInt("access_token_expires_at", accessTokenExpiresAt)
-                .putInt("refresh_token_expires_at",
-                    ((System.currentTimeMillis() / 1000) + (7 * 24 * 60 * 60)).toInt()
-                )  // FIXME: 7 days is the Endurain default for refresh token expiry
-                   // https://github.com/endurain-project/endurain/issues/514
+                .putInt("access_token_expires_at", accessTokenExpiryTs)
+                .putInt("refresh_token_expires_at", refreshTokenExpiryTs
+                )
         }
     }
 
@@ -87,7 +87,8 @@ class EndurainTokenManager(context: Context) {
                         saveTokens(
                             response.access_token,
                             response.refresh_token!!,
-                            response.expires_in!!
+                            response.expires_in!!,
+                            response.refresh_token_expires_in!!
                         )
                         callback(true)
                     }

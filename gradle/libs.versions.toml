@@ -51,6 +51,7 @@ searchpreference = "2.7.3"
 slf4j = "2.0.18"
 solarpositioning = "0.1.10"
 security-crypto = "1.1.0"
+browser = "1.10.0"
 
 [libraries]
 ahocorasick = { group = "org.ahocorasick", name = "ahocorasick", version.ref = "ahocorasick" }
@@ -114,6 +115,7 @@ searchpreference = { group = "com.github.ByteHamster", name = "SearchPreference"
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
 solarpositioning = { group = "net.e175.klaus", name = "solarpositioning", version.ref = "solarpositioning" }
 androidx-security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "security-crypto" }
+androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
 
 [bundles]
 android-emojify = [

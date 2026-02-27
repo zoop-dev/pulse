@@ -4938,4 +4938,26 @@
     <string name="media_source_audio_card">Audio card</string>
     <string name="media_source_aux">AUX</string>
     <string name="sinilink_prompt_tone">Prompt tone</string>
+    <string name="required">Required</string>
+    <string name="endurain_sso_login_failed">SSO login failed</string>
+    <string name="endurain_no_sso_providers_available">No SSO providers available</string>
+    <string name="endurain_failed_to_open_browser">Failed to open browser: %1$s</string>
+    <string name="endurain_sso_login_successful">SSO login successful</string>
+    <string name="endurain_invalid_server_url">Invalid server URL</string>
+    <string name="endurain_failed_to_connect_to_server">Failed to connect to server</string>
+    <string name="endurain_verify_mfa">Verify MFA</string>
+    <string name="endurain_enter_your_mfa_code">Enter your MFA code</string>
+    <string name="endurain_login_successful">Login successful</string>
+    <string name="endurain_login_failed">Login failed</string>
+    <string name="endurain_mfa_verification_successful">MFA verification successful</string>
+    <string name="endurain_invalid_mfa_code">Invalid MFA code</string>
+    <string name="endurain_mfa_verification_failed">MFA verification failed</string>
+    <string name="endurain_select_identity_provider">Select Identity Provider</string>
+    <string name="endurain_invalid_oauth_callback">Invalid OAuth callback</string>
+    <string name="endurain_oauth_completing_login">Completing login…</string>
+    <string name="endurain_not_logged_in_integration_disabled">Not logged in, integration is disabled</string>
+    <string name="endurain_logged_in_refresh_token">Logged in to %1$s\nRefresh token expires: %2$s</string>
+    <string name="endurain_server_version">\nServer version: %1$s</string>
+    <string name="endurain_logout_failed">Logout failed</string>
+    <string name="endurain_logged_out_successfully">Logged out successfully</string>
 </resources>

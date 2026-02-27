@@ -17,8 +17,12 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.endurain
 
 import android.app.Application
+import android.content.Context
+import androidx.core.content.edit
 import androidx.core.net.toUri
 import androidx.lifecycle.AndroidViewModel
+import nodomain.freeyourgadget.gadgetbridge.BuildConfig
+import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.util.InternetUtils
 import org.slf4j.LoggerFactory
 
@@ -26,13 +30,14 @@ class EndurainSetupViewModel(application: Application) : AndroidViewModel(applic
 
     private val LOG = LoggerFactory.getLogger(EndurainSetupViewModel::class.java)
     private lateinit var apiClient: EndurainApiClient
+    private val pkceHelper = PkceHelper()
 
     enum class Step {
         SERVER,
         LOGIN_TYPE,
         LOCAL_LOGIN,
         MFA_VERIFY,
-        SSO_LOGIN
+        SSO_PROVIDERS
     }
 
     val tokenManager = EndurainTokenManager(application)
@@ -41,6 +46,7 @@ class EndurainSetupViewModel(application: Application) : AndroidViewModel(applic
     var localLoginEnabled = false
     var ssoEnabled = false
     var pendingMfaUsername: String? = null
+    var availableProviders: List<IdentityProvider> = emptyList()
     var serverVersion: String? = null
 
     /**
@@ -104,6 +110,101 @@ class EndurainSetupViewModel(application: Application) : AndroidViewModel(applic
     }
 
     /**
+     * Fetch available SSO providers
+     */
+    fun fetchSsoProviders(callback: (Boolean) -> Unit) {
+        Thread {
+            try {
+                apiClient = EndurainApiClient(server, tokenManager)
+                val providers = apiClient.getIdentityProviders()
+
+                if (providers != null && providers.isNotEmpty()) {
+                    availableProviders = providers
+                    callback(true)
+                } else {
+                    LOG.error("No SSO providers available")
+                    callback(false)
+                }
+            } catch (e: Exception) {
+                LOG.error("Error fetching SSO providers", e)
+                callback(false)
+            }
+        }.start()
+    }
+
+    /**
+     * Generate SSO URL with PKCE for Custom Tabs
+     * Returns the URL and also stores the verifier for later
+     */
+    fun generateSsoUrl(idpSlug: String): String {
+        val codeVerifier = pkceHelper.generateCodeVerifier()
+        val codeChallenge = pkceHelper.generateCodeChallenge(codeVerifier)
+
+        LOG.debug("Initiating PKCE with verifier=$codeVerifier and challenge=$codeChallenge")
+
+        // Store verifier in shared preferences for the callback activity
+        getApplication<GBApplication>().getSharedPreferences("endurain_oauth_temp", Context.MODE_PRIVATE)
+            .edit {
+                putString("code_verifier", codeVerifier)
+            }
+
+        // Build OAuth URL with custom redirect URI for deep linking
+        return "$server/api/v1/public/idp/login/$idpSlug".toUri()
+            .buildUpon()
+            .appendQueryParameter("code_challenge", codeChallenge)
+            .appendQueryParameter("code_challenge_method", "S256")
+            .appendQueryParameter("redirect", BuildConfig.APPLICATION_ID + "://endurain/oauth/callback")
+            .build()
+            .toString()
+    }
+
+    /**
+     * Exchange OAuth session for tokens
+     */
+    fun exchangeSsoSession(sessionId: String, callback: (Boolean) -> Unit) {
+        Thread {
+            try {
+                // Retrieve the stored code verifier
+                val prefs = getApplication<GBApplication>()
+                    .getSharedPreferences("endurain_oauth_temp", Context.MODE_PRIVATE)
+
+                val verifier = prefs.getString("code_verifier", null)
+                if (verifier == null) {
+                    LOG.error("No pending code verifier")
+                    callback(false)
+                    return@Thread
+                }
+
+                // Clear the verifier
+                prefs.edit { remove("code_verifier") }
+
+                if (!::apiClient.isInitialized) {
+                    apiClient = EndurainApiClient(server, tokenManager)
+                }
+
+                val response = apiClient.exchangeOAuthSession(sessionId, verifier)
+
+                if (response?.access_token != null) {
+                    LOG.info("SSO login successful")
+                    tokenManager.saveTokens(
+                        response.access_token,
+                        response.refresh_token!!,
+                        response.expires_in!!,
+                        response.refresh_token_expires_in!!
+                    )
+                    callback(true)
+                } else {
+                    LOG.error("SSO login failed")
+                    callback(false)
+                }
+            } catch (e: Exception) {
+                LOG.error("SSO session exchange error", e)
+                callback(false)
+            }
+        }.start()
+    }
+
+    /**
      * Perform local username/password login
      */
     fun performLocalLogin(
@@ -133,7 +234,8 @@ class EndurainSetupViewModel(application: Application) : AndroidViewModel(applic
                         tokenManager.saveTokens(
                             response.access_token,
                             response.refresh_token!!,
-                            response.expires_in!!
+                            response.expires_in!!,
+                            response.refresh_token_expires_in!!
                         )
                         callback(true)
                     }
@@ -164,12 +266,15 @@ class EndurainSetupViewModel(application: Application) : AndroidViewModel(applic
 
                 val response = apiClient.verifyMfa(username, mfaCode)
 
+                LOG.debug("MFA verification response: {}", response)
+
                 if (response?.access_token != null) {
                     LOG.info("MFA verification successful")
                     tokenManager.saveTokens(
                         response.access_token,
                         response.refresh_token!!,
-                        response.expires_in!!
+                        response.expires_in!!,
+                        response.refresh_token_expires_in!!
                     )
                     pendingMfaUsername = null
                     callback(true)

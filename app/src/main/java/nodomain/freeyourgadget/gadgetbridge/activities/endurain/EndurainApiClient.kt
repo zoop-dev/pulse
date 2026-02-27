@@ -37,6 +37,7 @@ data class LoginResponse(
     val access_token: String? = null,
     val refresh_token: String? = null,
     val expires_in: Int? = null,
+    val refresh_token_expires_in: Int? = null,
     val token_type: String? = null,
     val mfa_required: Boolean? = null,
     val username: String? = null,
@@ -50,6 +51,12 @@ data class MfaVerifyRequest(
 
 data class TokenExchangeRequest(
     val code_verifier: String
+)
+
+data class IdentityProvider(
+    val id: String,
+    val name: String,
+    val slug: String
 )
 
 class EndurainApiClient(
@@ -201,6 +208,28 @@ class EndurainApiClient(
     }
 
     /**
+     * Get list of available identity providers
+     */
+    fun getIdentityProviders(): List<IdentityProvider>? {
+        try {
+            val uri = "$baseUrl/api/v1/public/idp".toUri()
+
+            val responseText = InternetUtils.doStringRequest(uri = uri)
+
+            return if (responseText != null) {
+                val type = object : com.google.gson.reflect.TypeToken<List<IdentityProvider>>() {}.type
+                gson.fromJson(responseText, type)
+            } else {
+                LOG.error("Failed to fetch identity providers")
+                null
+            }
+        } catch (e: Exception) {
+            LOG.error("Error fetching identity providers", e)
+            return null
+        }
+    }
+
+    /**
      * Exchange OAuth session for tokens (PKCE flow)
      */
     fun exchangeOAuthSession(sessionId: String, codeVerifier: String): LoginResponse? {
@@ -219,6 +248,8 @@ class EndurainApiClient(
                 requestHeaders = headers,
                 body = body
             )
+
+            LOG.debug("OAuth token result: $responseText")
 
             return if (responseText != null) {
                 gson.fromJson(responseText, LoginResponse::class.java)
