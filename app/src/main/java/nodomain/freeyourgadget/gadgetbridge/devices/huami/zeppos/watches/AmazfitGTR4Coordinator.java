@@ -19,7 +19,6 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches;
 import androidx.annotation.NonNull;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -33,7 +32,10 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 public class AmazfitGTR4Coordinator extends ZeppOsCoordinator {
     @Override
     public List<String> getDeviceBluetoothNames() {
-        return Collections.singletonList("Amazfit GTR 4");
+        return Arrays.asList(
+                "Amazfit GTR 4",
+                "Amazfit GTR 4 LE"
+        );
     }
 
     @Override
@@ -47,7 +49,7 @@ public class AmazfitGTR4Coordinator extends ZeppOsCoordinator {
 
     @Override
     protected Map<Integer, String> getCrcMap() {
-        return new HashMap<Integer, String>() {{
+        return new HashMap<>() {{
             // firmware
             put(1699, "3.17.0.2");
             put(20712, "3.18.1.1 (diff from 3.17.0.2)");
