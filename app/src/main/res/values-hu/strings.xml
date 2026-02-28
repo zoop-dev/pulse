@@ -847,7 +847,7 @@
     <string name="qhybrid_buttons_overwrite_error">Hiba történt a gombok felülírásakor</string>
     <string name="qhybrid_vibration_strength">rezgés erőssége:</string>
     <string name="title_activity_notification_filter">Értesítésszűrő</string>
-    <string name="abstract_chart_fragment_kind_rem_sleep">REM alvás</string>
+    <string name="abstract_chart_fragment_kind_rem_sleep">REM-fázis</string>
     <string name="pref_sleep_mode_title">Alvó üzemmód</string>
     <string name="pref_check_permission_status">Engedélyállapot ellenőrzése</string>
     <string name="mi2_prefs_button_action_vibrate">Karkötő rezgésének engedélyezése</string>
@@ -2217,7 +2217,7 @@
     <string name="stats_empty_value">-</string>
     <string name="sleep_colored_stats_light_avg">Átlagos könnyűalvás</string>
     <string name="date_placeholders__date__time">%1$s, %2$s</string>
-    <string name="sleep_colored_stats_rem_avg">Átlagos remfázis</string>
+    <string name="sleep_colored_stats_rem_avg">Átlagos REM-fázis</string>
     <string name="activity_prefs_date_birth">Születési idő</string>
     <string name="activity_type_motorcycling">Motorkerékpározás</string>
     <string name="activity_type_boating">Hajózás</string>
@@ -2239,7 +2239,7 @@
     <string name="minutes_210">210 perc</string>
     <string name="dateformat_day_month">Nap, Hónap</string>
     <string name="dateformat_month_day">Hónap, Nap</string>
-    <string name="activity_type_rem_sleep">REM alvás</string>
+    <string name="activity_type_rem_sleep">REM-fázis</string>
     <string name="activity_type_transition">Átmenet</string>
     <string name="activity_type_mountaineering">Hegymászás</string>
     <string name="activity_type_american_football">Amerikai futball</string>
@@ -2275,7 +2275,7 @@
     <string name="abstract_chart_fragment_kind_awake_sleep">Ébrenlét</string>
     <string name="sleep_colored_stats_deep">Mély</string>
     <string name="sleep_colored_stats_light">Könnyű</string>
-    <string name="sleep_colored_stats_rem">REM</string>
+    <string name="sleep_colored_stats_rem">REM-fázis</string>
     <string name="sleep_colored_stats_deep_avg">Átlagos mélyalvás</string>
     <string name="hrv_status">Szívfrekvencia-variabilitás állapota</string>
     <string name="activity_type_parachuting">Ejtőernyőzés</string>
@@ -3019,7 +3019,7 @@
     <string name="activity_type_lacrosse">Lacrosse</string>
     <string name="activity_type_wakesurfing">Wakeboardozás</string>
     <string name="activity_type_ballroom_dance">Társastánc</string>
-    <string name="activity_type_body_combat">Body combat</string>
+    <string name="activity_type_body_combat">Testharc</string>
     <string name="activity_type_shuffleboard">Shuffleboard</string>
     <string name="activity_type_plaza_dancing">Plázatánc</string>
     <string name="activity_type_snorkeling">Snorkelezés</string>
@@ -4139,4 +4139,7 @@
     <string name="permission_not_granted_calendar">Nincs engedélyezve a naptárhoz való hozzáférés</string>
     <string name="pref_dashboard_widget_today_dim_yesterday_data_title">Tegnapi adatok megjelenítése tompítva</string>
     <string name="pref_dashboard_widget_today_dim_yesterday_data_summary">Tegnapi adatok megjelenítése tompított színekkel</string>
+    <string name="activity_type_street_running">Utcai futás</string>
+    <string name="activity_type_stop_watch">Stopperóra</string>
+    <string name="activity_type_ccr_diving">Zárt rendszerű újralégző</string>
 </resources>
