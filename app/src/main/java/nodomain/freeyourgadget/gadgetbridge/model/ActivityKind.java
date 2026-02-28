@@ -337,6 +337,9 @@ public enum ActivityKind {
     ULTRA_RUN(0x04000132, R.string.activity_type_ultra_run, R.drawable.ic_activity_trail_run),
     VIRTUAL_RUN(0x04000133, R.string.activity_type_virtual_run, R.drawable.ic_activity_indoor_running),
     XC_SKATE_SKI(0x04000134, R.string.activity_type_xc_skate_ski, R.drawable.ic_activity_skiing),
+    STREET_RUNNING(0x04000135, R.string.activity_type_street_running, R.drawable.ic_activity_road),
+    STOP_WATCH(0x04000136, R.string.activity_type_stop_watch, R.drawable.ic_timer),
+    CCR_DIVING(0x04000137, R.string.activity_type_ccr_diving, R.drawable.ic_activity_diving),
     ;
 
     private final int code;

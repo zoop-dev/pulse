@@ -3921,6 +3921,9 @@
     <string name="devicesetting_scannable_rssi_summary">The minimum RSSI threshold for detection</string>
     <string name="error_showing_changelog">Error showing Changelog</string>
     <string name="activity_type_worn">Worn</string>
+    <string name="activity_type_street_running">Street Running</string>
+    <string name="activity_type_stop_watch">Stop Watch</string>
+    <string name="activity_type_ccr_diving">Closed-Circuit Rebreather</string>
     <string name="dashboard_settings">Dashboard settings</string>
     <string name="bottom_nav_dashboard">Dashboard</string>
     <string name="bottom_nav_devices">Devices</string>
