@@ -177,6 +177,8 @@ public class FitRecordDataFactory {
             case 403 -> new FitEnduranceScore(recordDefinition, recordHeader);
             case 409 -> new FitHsaWristTemperatureData(recordDefinition, recordHeader);
             case 412 -> new FitNap(recordDefinition, recordHeader);
+            case 470 -> new FitSleepDisruptionSeverityPeriod(recordDefinition, recordHeader);
+            case 471 -> new FitSleepDisruptionOvernightSeverity(recordDefinition, recordHeader);
              default -> new RecordData(recordDefinition, recordHeader);
         };
     }

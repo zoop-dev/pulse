@@ -2064,6 +2064,17 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
+    public static NativeFITMessage SLEEP_DISRUPTION_SEVERITY_PERIOD = new NativeFITMessage(470, "SLEEP_DISRUPTION_SEVERITY_PERIOD", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.ENUM, "severity"),
+            new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP),
+            new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
+    ));
+
+    public static NativeFITMessage SLEEP_DISRUPTION_OVERNIGHT_SEVERITY = new NativeFITMessage(471, "SLEEP_DISRUPTION_OVERNIGHT_SEVERITY", Arrays.asList(
+            new FieldDefinitionPrimitive(0, BaseType.ENUM, "severity"),
+            new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
+    ));
+
     public static Map<Integer, NativeFITMessage> KNOWN_MESSAGES = new HashMap<>() {{
         put(0, FILE_ID);
         put(1, CAPABILITIES);
@@ -2211,6 +2222,8 @@ public class NativeFITMessage {
         put(403, ENDURANCE_SCORE);
         put(409, HSA_WRIST_TEMPERATURE_DATA);
         put(412, NAP);
+        put(470, SLEEP_DISRUPTION_SEVERITY_PERIOD);
+        put(471, SLEEP_DISRUPTION_OVERNIGHT_SEVERITY);
     }};
 
     private final int number;
