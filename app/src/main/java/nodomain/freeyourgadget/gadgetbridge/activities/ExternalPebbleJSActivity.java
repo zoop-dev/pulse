@@ -70,7 +70,7 @@ public class ExternalPebbleJSActivity extends AbstractGBActivity {
         UUID currentUUID = null;
         GBDevice currentDevice = null;
 
-        if (extras == null) {
+        if (extras == null || (extras.getParcelable(GBDevice.EXTRA_DEVICE) == null)) {
             confUri = getIntent().getData();
             if(confUri.getScheme().equals("gadgetbridge")) {
                 try {
