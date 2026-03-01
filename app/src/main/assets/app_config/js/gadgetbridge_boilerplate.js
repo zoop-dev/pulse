@@ -269,12 +269,6 @@ if (jsConfigFile != null) {
         Pebble.evaluate('ready', [{'type': "ready"}]); //callback object apparently needed by some watchfaces
         if(document.hasFocus() && !(getURLVariable('config') == 'true')) {
             Pebble.evaluate('showConfiguration');
-        } else {
-            window.onfocus = function () {
-                showStep("step1");
-                GBjs.gbLog("window focused!!!");
-                Pebble.evaluate('showConfiguration');
-            };
         }
         if (getURLVariable('config') == 'true') {
             showStep("step2");
@@ -285,6 +279,13 @@ if (jsConfigFile != null) {
                 Pebble.evaluate('webviewclosed',[t]);
             }
         } else {
+             if (!document.hasFocus()) {
+                window.onfocus = function () {
+                    showStep("step1");
+                    GBjs.gbLog("window focused!!!");
+                    Pebble.evaluate('showConfiguration');
+                };
+            }
             if (storedPreset === undefined) {
                 var presetElements = document.getElementsByClassName("load_presets");
                     for (var i = 0; i < presetElements.length; i ++) {
