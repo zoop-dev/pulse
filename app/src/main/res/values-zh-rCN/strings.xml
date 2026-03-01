@@ -4293,4 +4293,7 @@
     <string name="permission_not_granted_calendar">未授予日历权限</string>
     <string name="pref_dashboard_widget_today_dim_yesterday_data_title">降低昨日数据显示亮度</string>
     <string name="pref_dashboard_widget_today_dim_yesterday_data_summary">用偏暗颜色显示昨日数据</string>
+    <string name="activity_type_street_running">街跑</string>
+    <string name="activity_type_stop_watch">秒表</string>
+    <string name="activity_type_ccr_diving">密闭式循环呼吸器</string>
 </resources>
