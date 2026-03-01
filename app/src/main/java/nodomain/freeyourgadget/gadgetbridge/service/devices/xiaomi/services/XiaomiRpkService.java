@@ -46,6 +46,7 @@ public class XiaomiRpkService extends AbstractXiaomiService implements XiaomiDat
     public static final int CMD_RPK_SET = 1;
     public static final int CMD_RPK_DELETE = 3;
     public static final int CMD_RPK_INSTALL = 1;
+    public static final int CMD_RPK_INSTALLED = 2;
 
 
     // Not null if we're installing a firmware
@@ -64,18 +65,23 @@ public class XiaomiRpkService extends AbstractXiaomiService implements XiaomiDat
             case CMD_RPK_LIST:
                 handleRpkList(cmd.getRpk().getRpkList());
                 return;
+            case CMD_RPK_INSTALLED:
+                LOG.debug("Got rpk install complete notification");
+                requestRpkList();
+                return;
             case CMD_RPK_DELETE:
-                LOG.debug("Got rpk delete response, ack={}", cmd.getWatchface().getAck());
+                // Band may send a delete response in some cases
+                LOG.debug("Got rpk delete response");
                 requestRpkList();
                 return;
             case CMD_RPK_INSTALL:
-                final int installStatus = cmd.getWatchface().getInstallStatus();
+                final int installStatus = cmd.getRpk().getRpkInstallStart().getCmd();
+                LOG.debug("Got rpk install response, status={}", installStatus);
                 if (installStatus != 0) {
-                    LOG.warn("Invalid watchface install status {} for {}", installStatus, fwHelper.getId());
+                    LOG.warn("Rpk install rejected with status {} for {}", installStatus, fwHelper != null ? fwHelper.getId() : "null");
                     return;
                 }
-
-                LOG.debug("Rpk install status 0, uploading");
+                LOG.debug("Rpk install accepted, starting upload");
                 setDeviceBusy();
                 getSupport().getDataUploadService().setCallback(this);
                 getSupport().getDataUploadService().requestUpload(XiaomiDataUploadService.TYPE_RPK, fwHelper.getBytes());
@@ -91,9 +97,10 @@ public class XiaomiRpkService extends AbstractXiaomiService implements XiaomiDat
 
     public void deleteRpk(UUID uuid) {
         for (GBDeviceApp app : apps) {
-            if (app.getUUID() == uuid) {
+            if (app.getUUID().equals(uuid)) {
                 String packageName = app.getCreator();
                 ByteString sha = shaMap.get(packageName);
+                LOG.debug("Deleting rpk: id={}", packageName);
                 getSupport().sendCommand("delete rpk",
                         XiaomiProto.Command.newBuilder()
                                 .setType(COMMAND_TYPE)
@@ -106,6 +113,8 @@ public class XiaomiRpkService extends AbstractXiaomiService implements XiaomiDat
                                         )
                                 )
                                 .build());
+                // Band sends no response to delete — request list immediately after
+                requestRpkList();
                 return;
             }
         }
@@ -118,6 +127,7 @@ public class XiaomiRpkService extends AbstractXiaomiService implements XiaomiDat
 
         this.fwHelper = fwHelper;
 
+        LOG.debug("Sending install request for rpk: id={}, versionCode={}, size={}", fwHelper.getId(), fwHelper.getVersionCode(), fwHelper.getBytes().length);
         getSupport().sendCommand("install rpk " + fwHelper.getId(),
                 XiaomiProto.Command.newBuilder()
                         .setType(COMMAND_TYPE)
@@ -126,6 +136,7 @@ public class XiaomiRpkService extends AbstractXiaomiService implements XiaomiDat
                                 .setRpkInfo(
                                         XiaomiProto.RpkInfo.newBuilder()
                                                 .setId(fwHelper.getId())
+                                                .setUnknown2(fwHelper.getVersionCode())
                                                 .setSize(fwHelper.getBytes().length)
                                 ))
                         .build());
@@ -160,6 +171,9 @@ public class XiaomiRpkService extends AbstractXiaomiService implements XiaomiDat
                 LOG.debug("Rpk upload finished: {}", success);
                 getSupport().getDataUploadService().setCallback(null);
                 unsetDeviceBusy();
+
+                // List refresh is triggered by CMD_RPK_INSTALLED notification from the band
+
                 fwHelper = null;
             });
         }
@@ -177,7 +191,7 @@ public class XiaomiRpkService extends AbstractXiaomiService implements XiaomiDat
 
     private void setDeviceBusy() {
         final GBDevice device = getSupport().getDevice();
-        device.setBusyTask(getSupport().getContext().getString(R.string.uploading_rpk));
+        device.setBusyTask(R.string.uploading_rpk, getSupport().getContext());
         device.sendDeviceUpdateIntent(getSupport().getContext());
     }
 

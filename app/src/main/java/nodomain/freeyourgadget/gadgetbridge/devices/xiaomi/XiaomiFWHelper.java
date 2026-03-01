@@ -94,6 +94,7 @@ public class XiaomiFWHelper {
     private String id;
     private String name;
     private String version;
+    private int versionCode;
 
     public XiaomiFWHelper(final Uri uri, final Context context) {
         this.uri = uri;
@@ -157,6 +158,10 @@ public class XiaomiFWHelper {
 
     public String getVersion() {
         return version;
+    }
+
+    public int getVersionCode() {
+        return versionCode;
     }
 
     public void unsetFwBytes() {
@@ -339,11 +344,15 @@ public class XiaomiFWHelper {
         try {
             GBZipFile file = new GBZipFile(fw);
             String manifest = new String(file.getFileFromZip("manifest.json"));
+            LOG.debug("RPK manifest: {}", manifest);
             JSONObject json = new JSONObject(manifest);
             id = json.getString("package");
             name = json.getString("name");
             version = json.getString("versionName");
+            versionCode = json.optInt("versionCode", 1);
+            LOG.debug("Parsed RPK: id={}, name={}, version={}, versionCode={}", id, name, version, versionCode);
         } catch (ZipFileException | JSONException e) {
+            LOG.warn("Failed to parse as RPK: {}", e.getMessage());
             return false;
         }
         return true;
@@ -399,6 +408,7 @@ public class XiaomiFWHelper {
             version = new String(fw, 4, 11, StandardCharsets.UTF_8);
             return true;
         }
+        LOG.warn("File header not a firmware");
         return false;
     }
 }
