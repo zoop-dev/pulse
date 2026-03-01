@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        android:key="pref_key_header_redmibuds6active_sound"
+        android:title="@string/pref_header_equalizer">
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/redmi_buds_6_active_equalizer_presets_names"
+            android:entryValues="@array/redmi_buds_6_active_equalizer_presets_values"
+            android:icon="@drawable/ic_graphic_eq"
+            android:key="pref_redmi_buds_6_active_equalizer_preset"
+            app:useSimpleSummaryProvider="true"
+            android:title="@string/prefs_equalizer_preset" />
+
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

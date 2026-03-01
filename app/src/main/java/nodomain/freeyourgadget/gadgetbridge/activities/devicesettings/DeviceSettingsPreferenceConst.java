@@ -466,6 +466,16 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_REDMI_BUDS_5_PRO_EQUALIZER_BAND_16k="pref_redmi_buds_5_pro_equalizer_band_16k";
     public static final String PREF_REDMI_BUDS_5_PRO_ADAPTIVE_SOUND="pref_redmi_buds_5_pro_adaptive_sound";
 
+    public static final String PREF_REDMI_BUDS_6_ACTIVE_CONTROL_SINGLE_TAP_LEFT="pref_redmi_buds_6_active_control_single_tap_left";
+    public static final String PREF_REDMI_BUDS_6_ACTIVE_CONTROL_SINGLE_TAP_RIGHT="pref_redmi_buds_6_active_control_single_tap_right";
+    public static final String PREF_REDMI_BUDS_6_ACTIVE_CONTROL_DOUBLE_TAP_LEFT="pref_redmi_buds_6_active_control_double_tap_left";
+    public static final String PREF_REDMI_BUDS_6_ACTIVE_CONTROL_DOUBLE_TAP_RIGHT="pref_redmi_buds_6_active_control_double_tap_right";
+    public static final String PREF_REDMI_BUDS_6_ACTIVE_CONTROL_TRIPLE_TAP_LEFT="pref_redmi_buds_6_active_control_triple_tap_left";
+    public static final String PREF_REDMI_BUDS_6_ACTIVE_CONTROL_TRIPLE_TAP_RIGHT="pref_redmi_buds_6_active_control_triple_tap_right";
+    public static final String PREF_REDMI_BUDS_6_ACTIVE_CONTROL_LONG_TAP_MODE_LEFT="pref_redmi_buds_6_active_control_long_tap_mode_left";
+    public static final String PREF_REDMI_BUDS_6_ACTIVE_CONTROL_LONG_TAP_MODE_RIGHT="pref_redmi_buds_6_active_control_long_tap_mode_right";
+    public static final String PREF_REDMI_BUDS_6_ACTIVE_EQUALIZER_PRESET="pref_redmi_buds_6_active_equalizer_preset";
+
     public static final String PREF_SONY_AUDIO_CODEC = "pref_sony_audio_codec";
     public static final String PREF_SONY_PROTOCOL_VERSION = "pref_protocol_version";
     public static final String PREF_SONY_ACTUAL_PROTOCOL_VERSION = "pref_actual_protocol_version";

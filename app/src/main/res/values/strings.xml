@@ -3282,6 +3282,7 @@
     <string name="redmi_buds_5_pro_equalizer_4">4 dB</string>
     <string name="redmi_buds_5_pro_equalizer_5">5 dB</string>
     <string name="redmi_buds_5_pro_equalizer_6">6 dB</string>
+    <string name="redmi_buds_6_active_equalizer_preset_volume">Boost Volume</string>
     <string name="sony_ambient_sound">Mode</string>
     <string name="sony_ambient_sound_off">Off</string>
     <string name="sony_ambient_sound_noise_cancelling">Noise Cancelling</string>
