@@ -106,6 +106,7 @@ internal object RecordedWorkoutSyncer {
 
         var workoutsProcessedInThisSlice = 0
         val workoutRecordList = mutableListOf<Record>()
+        var latestWorkoutEndTs: Instant? = null
 
         for (workout in workouts) {
             try {
@@ -187,6 +188,10 @@ internal object RecordedWorkoutSyncer {
                 HealthConnectUtils.insertRecords(recordsToInsert, healthConnectClient)
                 LOG.info("Successfully inserted ${recordsToInsert.size} record(s) for workout (Type: ${activityKind}, Start: $workoutStartInstant) for device '$deviceName'.")
                 workoutRecordList.addAll(recordsToInsert)
+                val currentEnd = workoutEndInstant
+                if (latestWorkoutEndTs == null || currentEnd.isAfter(latestWorkoutEndTs)) {
+                    latestWorkoutEndTs = currentEnd
+                }
             } catch (e: Exception) {
                 LOG.error("Error processing workout for device '$deviceName'", e)
                 // Continue with next workout instead of failing entire sync
@@ -205,7 +210,7 @@ internal object RecordedWorkoutSyncer {
         }
 
         LOG.info("Successfully inserted ${workoutRecordList.size} ExerciseSessionRecord(s) for device '$deviceName' for slice $sliceStartBoundary to $sliceEndBoundary.")
-        return SyncerStatistics(recordsSynced = workoutRecordList.size, recordType = "Workout")
+        return SyncerStatistics(recordsSynced = workoutRecordList.size, recordType = "Workout", latestRecordTimestamp = latestWorkoutEndTs)
     }
 
 

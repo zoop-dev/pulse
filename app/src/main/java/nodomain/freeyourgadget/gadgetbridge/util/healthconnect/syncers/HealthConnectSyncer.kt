@@ -30,7 +30,8 @@ import java.time.ZoneOffset
 data class SyncerStatistics(
     val recordsSynced: Int = 0,
     val recordsSkipped: Int = 0,
-    val recordType: String = ""
+    val recordType: String = "",
+    val latestRecordTimestamp: Instant? = null
 )
 
 /**

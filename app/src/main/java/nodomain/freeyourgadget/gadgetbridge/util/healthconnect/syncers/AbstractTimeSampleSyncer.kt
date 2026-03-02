@@ -99,10 +99,10 @@ internal abstract class AbstractTimeSampleSyncer<TSample : TimeSample, TRecord :
 
         // Convert samples to records
         var skippedCount = 0
+        var latestSyncedTimestamp: Instant? = null
 
         val recordsToInsert = samples.filter {
             val timestamp = Instant.ofEpochMilli(it.timestamp)
-            // Use inclusive boundaries [sliceStart, sliceEnd] to ensure last sample is included
             if (timestamp.isBefore(sliceStartBoundary) || timestamp.isAfter(sliceEndBoundary)) {
                 logger.debug(
                     "Skipping sample for at {} as it's outside the slice {} - {}.",
@@ -113,13 +113,18 @@ internal abstract class AbstractTimeSampleSyncer<TSample : TimeSample, TRecord :
                 return@filter false
             }
             return@filter true
-        }.mapNotNull {
+        }.mapNotNull { sample ->
             convertSample(
-                it,
+                sample,
                 offset,
                 metadata,
                 deviceName
-            ) ?: run {
+            )?.also {
+                val ts = Instant.ofEpochMilli(sample.timestamp)
+                if (latestSyncedTimestamp == null || ts.isAfter(latestSyncedTimestamp)) {
+                    latestSyncedTimestamp = ts
+                }
+            } ?: run {
                 skippedCount++
                 null
             }
@@ -138,7 +143,8 @@ internal abstract class AbstractTimeSampleSyncer<TSample : TimeSample, TRecord :
         return SyncerStatistics(
             recordsSynced = recordsToInsert.size,
             recordsSkipped = skippedCount,
-            recordType = recordTypeName
+            recordType = recordTypeName,
+            latestRecordTimestamp = latestSyncedTimestamp
         )
     }
 }

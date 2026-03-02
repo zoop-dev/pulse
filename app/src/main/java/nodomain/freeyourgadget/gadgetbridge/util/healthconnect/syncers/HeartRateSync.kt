@@ -143,6 +143,6 @@ internal object HeartRateSyncer : ActivitySampleSyncer {
         }
 
         LOG.info("Successfully inserted ${heartRateRecordList.size} HeartRateRecord(s) for device '$deviceName' for slice $sliceStartBoundary to $sliceEndBoundary.")
-        return SyncerStatistics(recordsSynced = heartRateRecordList.size, recordsSkipped = skippedCount, recordType = "HeartRate")
+        return SyncerStatistics(recordsSynced = heartRateRecordList.size, recordsSkipped = skippedCount, recordType = "HeartRate", latestRecordTimestamp = previousSampleTimestamp)
     }
 }

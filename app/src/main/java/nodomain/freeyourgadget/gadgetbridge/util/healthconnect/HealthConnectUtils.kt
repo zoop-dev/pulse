@@ -396,7 +396,19 @@ class HealthConnectUtils {
                             recordsSyncedByType[key] = currentSynced + stat.recordsSynced
                         }
 
-                        timestampToPersistForThisDataType = currentSliceEndTs
+                        val sliceTotalSynced = sliceStats.sumOf { it.recordsSynced }
+
+                        val latestRecordTs = sliceStats.mapNotNull { it.latestRecordTimestamp }.maxOrNull()
+                        if (latestRecordTs != null && latestRecordTs.isAfter(timestampToPersistForThisDataType)) {
+                            timestampToPersistForThisDataType = latestRecordTs
+                        } else if (sliceTotalSynced == 0) {
+                            LOG.debug(
+                                "$HC_SYNC_TAG Holding sync state for {}({}) at {} (no records synced in slice {} to {})",
+                                gbDevice.aliasOrName, dataType.name, timestampToPersistForThisDataType,
+                                currentSliceStartTs, currentSliceEndTs
+                            )
+                        }
+
                         currentSliceStartTs = currentSliceEndTs
                     } catch (e: SyncException) {
                         LOG.warn(

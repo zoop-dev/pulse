@@ -101,7 +101,8 @@ internal object SleepSyncer : ContextualActivitySampleSyncer {
         LOG.info("Attempting to insert ${sleepSessionRecordList.size} SleepSessionRecord(s) for device '$deviceName' for slice $sliceStartBoundary to $sliceEndBoundary.")
         HealthConnectUtils.insertRecords(sleepSessionRecordList, healthConnectClient)
         LOG.info("Successfully inserted SleepSessionRecord(s) for device '$deviceName' for slice $sliceStartBoundary to $sliceEndBoundary.")
-        return SyncerStatistics(recordsSynced = sleepSessionRecordList.size, recordsSkipped = skippedCount, recordType = "Sleep")
+        val latestTs = sleepSessionRecordList.maxOfOrNull { it.endTime }
+        return SyncerStatistics(recordsSynced = sleepSessionRecordList.size, recordsSkipped = skippedCount, recordType = "Sleep", latestRecordTimestamp = latestTs)
     }
 
     /**

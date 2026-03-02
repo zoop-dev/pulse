@@ -70,12 +70,11 @@ internal abstract class AbstractActivitySampleSyncer<TRecord : Record> : Activit
 
         val recordsToInsert = mutableListOf<Record>()
         var skippedCount = 0
+        var latestSyncedTimestamp: Instant? = null
         relevantSamples.forEach { currentSample ->
             val endTs = Instant.ofEpochSecond(currentSample.timestamp.toLong())
             val startTs = endTs.minus(1, ChronoUnit.MINUTES)
 
-            // Use inclusive boundaries [sliceStart, sliceEnd] for the slice
-            // Overlap check: interval overlaps if endTs > sliceStart AND startTs <= sliceEnd
             if (endTs.isBefore(sliceStartBoundary) || startTs.isAfter(sliceEndBoundary)) {
                 logger.debug(
                     "Skipping {} for device '{}' for sample at {} (interval {} to {}) as its interval is outside the slice {} - {}.",
@@ -96,6 +95,9 @@ internal abstract class AbstractActivitySampleSyncer<TRecord : Record> : Activit
                 return@forEach
             }
             recordsToInsert.add(record)
+            if (latestSyncedTimestamp == null || endTs.isAfter(latestSyncedTimestamp)) {
+                latestSyncedTimestamp = endTs
+            }
         }
 
         // 3. No Valid Records to Insert
@@ -114,7 +116,8 @@ internal abstract class AbstractActivitySampleSyncer<TRecord : Record> : Activit
         return SyncerStatistics(
             recordsSynced = recordsToInsert.size,
             recordsSkipped = skippedCount,
-            recordType = recordTypeName
+            recordType = recordTypeName,
+            latestRecordTimestamp = latestSyncedTimestamp
         )
     }
 }
