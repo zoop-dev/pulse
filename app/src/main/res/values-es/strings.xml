@@ -4143,4 +4143,7 @@
     <string name="permission_not_granted_calendar">No se ha concedido el permiso de calendario</string>
     <string name="pref_dashboard_widget_today_dim_yesterday_data_title">Mostrar ayer atenuado</string>
     <string name="pref_dashboard_widget_today_dim_yesterday_data_summary">Mostrar los datos de ayer con colores atenuados</string>
+    <string name="activity_type_street_running">Carrera urbana</string>
+    <string name="activity_type_stop_watch">Cronómetro</string>
+    <string name="activity_type_ccr_diving">Rebreather de circuito cerrado</string>
 </resources>
