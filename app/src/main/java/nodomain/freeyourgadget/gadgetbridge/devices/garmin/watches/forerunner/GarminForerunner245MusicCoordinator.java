@@ -10,12 +10,6 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class GarminForerunner245MusicCoordinator extends GarminWatchCoordinator {
     @Override
-    public boolean isExperimental() {
-        // https://codeberg.org/Freeyourgadget/Gadgetbridge/issues/3986
-        return true;
-    }
-
-    @Override
     protected Pattern getSupportedDeviceName() {
         return Pattern.compile("^Forerunner 245 Music$");
     }
