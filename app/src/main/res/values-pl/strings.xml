@@ -4310,4 +4310,7 @@
     <string name="permission_not_granted_calendar">Brak uprawnień do kalendarza</string>
     <string name="pref_dashboard_widget_today_dim_yesterday_data_title">Wyświetlaj wczorajsze dane przyciemnione</string>
     <string name="pref_dashboard_widget_today_dim_yesterday_data_summary">Pokaż dane z wczoraj w przyciemnionych kolorach</string>
+    <string name="activity_type_street_running">Bieganie uliczne</string>
+    <string name="activity_type_stop_watch">Stoper</string>
+    <string name="activity_type_ccr_diving">Rebreather o obiegu zamkniętym</string>
 </resources>
