@@ -383,6 +383,10 @@ public abstract class HuaweiCoordinator extends AbstractDeviceCoordinator {
 
     @Override
     public InstallHandler findInstallHandler(Uri uri, Bundle options, Context context) {
+        final HuaweiGpxRouteInstallHandler huaweiGpxRouteInstallHandler = new HuaweiGpxRouteInstallHandler(uri, context);
+        if (huaweiGpxRouteInstallHandler.isValid())
+            return huaweiGpxRouteInstallHandler;
+
         final HuaweiInstallHandler handler = new HuaweiInstallHandler(uri, context);
         return handler.isValid() ? handler : null;
     }

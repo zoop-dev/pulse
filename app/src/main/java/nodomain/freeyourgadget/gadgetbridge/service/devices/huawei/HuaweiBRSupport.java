@@ -159,7 +159,7 @@ public class HuaweiBRSupport extends AbstractBTBRDeviceSupport {
 
     @Override
     public void onInstallApp(Uri uri, @NonNull final Bundle options) {
-        supportProvider.onInstallApp(uri);
+        supportProvider.onInstallApp(uri, options);
     }
 
     @Override

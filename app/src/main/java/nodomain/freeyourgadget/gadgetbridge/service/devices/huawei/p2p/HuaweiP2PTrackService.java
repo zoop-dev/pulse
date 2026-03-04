@@ -18,9 +18,6 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiHeartRateZonesSpec;
@@ -29,30 +26,13 @@ import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZones;
 import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZonesConfig;
 import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZonesSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiP2PManager;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.utils.HuaweiP2PSubMsg;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class HuaweiP2PTrackService extends HuaweiBaseP2PService {
     private final Logger LOG = LoggerFactory.getLogger(HuaweiP2PTrackService.class);
 
     public static final String MODULE = "hw.unitedevice.track";
-
-    private static final int HEADER_LENGTH = 36;
-
-    static class Sequence {
-        int counter;
-
-        private Sequence() {
-            this.counter = 0;
-        }
-
-        public int getNext() {
-            synchronized (this) {
-                this.counter = (this.counter + 1) % 10000;
-                return this.counter;
-            }
-        }
-    }
-
-    private final Sequence counter = new Sequence();
 
     public HuaweiP2PTrackService(HuaweiP2PManager manager) {
         super(manager);
@@ -224,23 +204,10 @@ public class HuaweiP2PTrackService extends HuaweiBaseP2PService {
             return;
         }
 
-        ByteBuffer header = ByteBuffer.allocate(HEADER_LENGTH);
-        header.order(ByteOrder.LITTLE_ENDIAN);
-        header.putInt(2); // session id ??
-        header.putInt(1); // version
-        header.putInt(HEADER_LENGTH + data.length); // total length
-        header.putInt(0); // unknown, sub header length??
-        header.putInt(counter.getNext()); // message id
-        header.flip();
+        HuaweiP2PSubMsg packet = new HuaweiP2PSubMsg(2, HuaweiP2PSubMsg.getNext(), data);
+        LOG.info("HuaweiP2PTrackService sendHeartZoneConfig b: {}", GB.hexdump(packet.getBytes()));
 
-        ByteBuffer packet = ByteBuffer.allocate(HEADER_LENGTH + data.length);
-        packet.put(header.array());
-        packet.put(data);
-        packet.flip();
-
-        LOG.info("HuaweiP2PTrackService sendHeartZoneConfig");
-
-        sendCommand(packet.array(), null);
+        sendCommand(packet.getBytes(), null);
     }
 
     @Override

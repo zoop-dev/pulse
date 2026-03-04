@@ -28,6 +28,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
@@ -77,6 +78,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiDeviceStateMana
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiDictTypes;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiEcgFileParser;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiGpsParser;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiGpxRouteInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPdrParser;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiSampleProvider;
@@ -140,6 +142,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2P
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PCannedRepliesService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PContactsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PDirection;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PFitnessData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PMapkitService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PTrackService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PDataDictionarySyncService;
@@ -229,6 +232,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetW
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetWearMessagePushRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetNotificationCapabilitiesRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetWorkModeRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.utils.HuaweiGPSTrackConverter;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.utils.HuaweiRouteTrack;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -1029,6 +1034,11 @@ public class HuaweiSupportProvider {
                         if (HuaweiP2PDirection.getRegisteredInstance(huaweiP2PManager) == null) {
                             HuaweiP2PDirection directionService = new HuaweiP2PDirection(huaweiP2PManager);
                             directionService.register();
+                        }
+
+                        if (HuaweiP2PFitnessData.getRegisteredInstance(huaweiP2PManager) == null) {
+                            HuaweiP2PFitnessData p2PFitnessData = new HuaweiP2PFitnessData(huaweiP2PManager);
+                            p2PFitnessData.register();
                         }
                     }
                 }
@@ -2398,9 +2408,18 @@ public class HuaweiSupportProvider {
         gpsLastLocation = location;
     }
 
-    public void onInstallApp(Uri uri) {
+    public void onInstallApp(Uri uri, @NonNull final Bundle options) {
         LOG.info("enter onAppInstall uri: {}", uri);
         HuaweiFwHelper huaweiFwHelper = new HuaweiFwHelper(uri, getContext());
+
+        final HuaweiGpxRouteInstallHandler huaweiGpxRouteInstallHandler = new HuaweiGpxRouteInstallHandler(uri, getContext());
+        if (huaweiGpxRouteInstallHandler.isValid()) {
+            final String trackName = options.getString(HuaweiGpxRouteInstallHandler.EXTRA_TRACK_NAME);
+            HuaweiRouteTrack track = HuaweiGPSTrackConverter.getTrack(getDeviceState(), huaweiGpxRouteInstallHandler.getGpxFile(), trackName);
+            HuaweiP2PFitnessData huaweiP2PFitnessData = HuaweiP2PFitnessData.getRegisteredInstance(huaweiP2PManager);
+            huaweiP2PFitnessData.sendTrack(track);
+            return;
+        }
 
         if(huaweiFwHelper.isOfflineMap) {
             HuaweiP2PMapkitService mapkitService = HuaweiP2PMapkitService.getRegisteredInstance(huaweiP2PManager);
