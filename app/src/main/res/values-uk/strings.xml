@@ -4123,4 +4123,5 @@
     <string name="info_no_devices_to_sync">Підключені пристрої не підтримують синхронізацію даних</string>
     <string name="sleep_restless_moments">Неспокійні моменти</string>
     <string name="sports_activity_quick_filter_distant_past">Далеке минуле (всі тренування)</string>
+    <string name="activity_type_stop_watch">Секундомір</string>
 </resources>
