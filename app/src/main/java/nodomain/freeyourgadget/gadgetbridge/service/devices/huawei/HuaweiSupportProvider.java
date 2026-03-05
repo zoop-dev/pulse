@@ -2423,7 +2423,11 @@ public class HuaweiSupportProvider {
 
         if(huaweiFwHelper.isOfflineMap) {
             HuaweiP2PMapkitService mapkitService = HuaweiP2PMapkitService.getRegisteredInstance(huaweiP2PManager);
-            mapkitService.startUpload(huaweiFwHelper.getFileName(), huaweiFwHelper.getUriHelper());
+            if(mapkitService != null) {
+                mapkitService.startUpload(huaweiFwHelper.getFileName(), huaweiFwHelper.getUriHelper());
+            } else {
+                // not supported by device
+            }
             return;
         }
 
