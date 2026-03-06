@@ -4210,4 +4210,7 @@
     <string name="permission_not_granted_calendar">Zugriff auf Kalender nicht gewährt</string>
     <string name="pref_dashboard_widget_today_dim_yesterday_data_title">Gestern gedimmt anzeigen</string>
     <string name="pref_dashboard_widget_today_dim_yesterday_data_summary">Daten von gestern mit gedämpften Farben anzeigen</string>
+    <string name="activity_type_street_running">Straßenlauf</string>
+    <string name="activity_type_stop_watch">Uhr stoppen</string>
+    <string name="activity_type_ccr_diving">Geschlossener Kreislauf-Rebreather</string>
 </resources>
