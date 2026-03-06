@@ -497,6 +497,9 @@ public class BleNamesResolver {
         mServices.put("0000185a-0000-1000-8000-00805f9b34fb", "Industrial Measurement Device");
         mServices.put("0000185b-0000-1000-8000-00805f9b34fb", "Ranging");
         mServices.put("0000185c-0000-1000-8000-00805f9b34fb", "HID ISO");
+        mServices.put("0000185d-0000-1000-8000-00805f9b34fb", "Cookware");
+        mServices.put("0000185e-0000-1000-8000-00805f9b34fb", "Voice Assistant");
+        mServices.put("0000185f-0000-1000-8000-00805f9b34fb", "Generic Voice Assistant");
 
         // source: https://bitbucket.org/bluetooth-SIG/public/src/main/assigned_numbers/uuids/service_class.yaml
         mServices.put("00001000-0000-1000-8000-00805f9b34fb", "ServiceDiscoveryServerServiceClassID");
@@ -1075,6 +1078,7 @@ public class BleNamesResolver {
         mCharacteristics.put("00002c17-0000-1000-8000-00805f9b34fb", "RAS Control Point");
         mCharacteristics.put("00002c18-0000-1000-8000-00805f9b34fb", "Ranging Data Ready");
         mCharacteristics.put("00002c19-0000-1000-8000-00805f9b34fb", "Ranging Data Overwritten");
+        mCharacteristics.put("00002c1a-0000-1000-8000-00805f9b34fb", "Coordinated Set Name");
         mCharacteristics.put("00002c1b-0000-1000-8000-00805f9b34fb", "Humidity 8");
         mCharacteristics.put("00002c1c-0000-1000-8000-00805f9b34fb", "Illuminance 16");
         mCharacteristics.put("00002c1d-0000-1000-8000-00805f9b34fb", "Acceleration 3D");
@@ -1085,6 +1089,26 @@ public class BleNamesResolver {
         mCharacteristics.put("00002c22-0000-1000-8000-00805f9b34fb", "Contact Status 8");
         mCharacteristics.put("00002c23-0000-1000-8000-00805f9b34fb", "HID ISO Properties");
         mCharacteristics.put("00002c24-0000-1000-8000-00805f9b34fb", "LE HID Operation Mode");
+        mCharacteristics.put("00002c25-0000-1000-8000-00805f9b34fb", "Cookware Description");
+        mCharacteristics.put("00002c26-0000-1000-8000-00805f9b34fb", "Recipe Control");
+        mCharacteristics.put("00002c27-0000-1000-8000-00805f9b34fb", "Recipe Parameters");
+        mCharacteristics.put("00002c28-0000-1000-8000-00805f9b34fb", "Cooking Step Status");
+        mCharacteristics.put("00002c29-0000-1000-8000-00805f9b34fb", "Cooking Zone Capabilities");
+        mCharacteristics.put("00002c2a-0000-1000-8000-00805f9b34fb", "Cooking Zone Desired Cooking Conditions");
+        mCharacteristics.put("00002c2b-0000-1000-8000-00805f9b34fb", "Cooking Zone Actual Cooking Conditions");
+        mCharacteristics.put("00002c2c-0000-1000-8000-00805f9b34fb", "Cookware Sensor Data");
+        mCharacteristics.put("00002c2d-0000-1000-8000-00805f9b34fb", "Cookware Sensor Aggregate");
+        mCharacteristics.put("00002c2e-0000-1000-8000-00805f9b34fb", "Cooking Temperature");
+        mCharacteristics.put("00002c2f-0000-1000-8000-00805f9b34fb", "Cooking Zone Perceived Power");
+        mCharacteristics.put("00002c30-0000-1000-8000-00805f9b34fb", "Kitchen Appliance Airflow");
+        mCharacteristics.put("00002c31-0000-1000-8000-00805f9b34fb", "Voice Assistant Name");
+        mCharacteristics.put("00002c32-0000-1000-8000-00805f9b34fb", "Voice Assistant UUID");
+        mCharacteristics.put("00002c33-0000-1000-8000-00805f9b34fb", "Voice Assistant Service Control Point");
+        mCharacteristics.put("00002c34-0000-1000-8000-00805f9b34fb", "Installed Location");
+        mCharacteristics.put("00002c35-0000-1000-8000-00805f9b34fb", "Voice Assistant Session State");
+        mCharacteristics.put("00002c36-0000-1000-8000-00805f9b34fb", "Voice Assistant Session Flag");
+        mCharacteristics.put("00002c37-0000-1000-8000-00805f9b34fb", "Voice Assistant Supported Languages");
+        mCharacteristics.put("00002c38-0000-1000-8000-00805f9b34fb", "Voice Assistant Supported Features");
 
         mCharacteristics.put("14702856-620a-3973-7c78-9cfff0876abd", "(Propr: HPLUS Control)");
         mCharacteristics.put("14702853-620a-3973-7c78-9cfff0876abd", "(Propr: HPLUS Measurements)");
