@@ -1,3 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="application_name_generic">ಗ್ಯಾಡ್ಜೆಟ್‌ಬ್ರಿಡ್ಜ್</string>
+    <string name="title_activity_controlcenter_generic">ಗ್ಯಾಡ್ಜೆಟ್‌ಬ್ರಿಡ್ಜ್</string>
+    <string name="about_activity_title_generic">ಗ್ಯಾಡ್ಜೆಟ್‌ಬ್ರಿಡ್ಜಿನ ಬಗ್ಗೆ</string>
+    <string name="about_description_generic">ವಿವಿಧ ಮಾರಾಟಗಾರರ ಕ್ಲೋಸ್ಡ್ ಸೋರ್ಸ್ ಆಂಡ್ರಾಯ್ಡ್ ಗ್ಯಾಜೆಟ್-ಆಪ್‌ಗಳ ಬದಲಾಗಿ, ಕ್ಲೌಡ್-ಮುಕ್ತ, ಪ್ರತಿಕೃತ್ಯಾಧಿಕಾರ-ನಿರ್ಮುಕ್ತವಾದ (copylefted ಮತ್ತು libre) ಪರ್ಯಾಯೀ ಆಪ್.</string>
+    <string name="gadgetbridge_running_generic">ಗ್ಯಾಡ್ಜೆಟ್‌ಬ್ರಿಡ್ಜ್ ಚಾಲನೆಯಲ್ಲಿದೆ</string>
+    <string name="application_name_banglejs_main">Bangle.js ಗ್ಯಾಡ್ಜೆಟ್‌ಬ್ರಿಡ್ಜ್</string>
+    <string name="title_activity_controlcenter_banglejs_main">Bangle.js ಗ್ಯಾಡ್ಜೆಟ್‌ಬ್ರಿಡ್ಜ್</string>
+    <string name="about_activity_title_banglejs_main">Bangle.js ಗ್ಯಾಡ್ಜೆಟ್‌ಬ್ರಿಡ್ಜಿನ ಬಗ್ಗೆ</string>
+    <string name="about_description_banglejs_main">ಗ್ಯಾಡ್ಜೆಟ್‌ಬ್ರಿಡ್ಜ್ ಯೋಜನೆಯ ಆಧಾರದ ಮೇಲೆ ನಿರ್ಮಿಸಲಾದ, ಇಂಟರ್ನೆಟ್ ಸೌಲಭ್ಯವನ್ನು ಹೊಂದಿರುವ Bangle.js ಗಾಗಿನ ಆಂಡ್ರಾಯ್ಡ್ ಕಂಪ್ಯಾನಿಯನ್ ಆಪ್.\n\nಗೂಗಲ್ ಪ್ಲೇ ಸ್ಟೋರ್ ನಿಯಮಗಳ ಕಾರಣದಿಂದಾಗಿ, ಆಪ್‌ನಲ್ಲಿ ನೇರವಾಗಿ ದೇಣಿಗೆ ಲಿಂಕ್ ನೀಡಲು ನಮಗೆ ಅನುಮತಿಯಿಲ್ಲ. ಆದರೆ ನಿಮಗೆ ಈ ಆಪ್ ಇಷ್ಟವಾದಲ್ಲಿ, ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಗ್ಯಾಡ್ಜೆಟ್‌ಬ್ರಿಡ್ಜ್ ಮುಖಪುಟದ ಮೂಲಕ ದೇಣಿಗೆ ನೀಡಲು ಪರಿಗಣಿಸಿ.</string>
+    <string name="gadgetbridge_running_banglejs_main">Bangle.js ಚಾಲನೆಯಲ್ಲಿದೆ</string>
+    <string name="application_name_banglejs_nightly">Bangle.js ಗ್ಯಾಡ್ಜೆಟ್‌ಬ್ರಿಡ್ಜ್ (ಪ್ರತಿರಾತ್ರೀಯ ಬಿಲ್ಡ್)</string>
+    <string name="title_activity_controlcenter_banglejs_nightly">Bangle.js ಗ್ಯಾಡ್ಜೆಟ್‌ಬ್ರಿಡ್ಜ್ (ಪ್ರತಿರಾತ್ರೀಯ ಬಿಲ್ಡ್)</string>
+    <string name="about_activity_title_banglejs_nightly">Bangle.js ಗ್ಯಾಡ್ಜೆಟ್‌ಬ್ರಿಡ್ಜ್ (ಪ್ರತಿರಾತ್ರೀಯ ಬಿಲ್ಡ್) ಇನ ಬಗ್ಗೆ</string>
+    <string name="about_description_banglejs_nightly">ಗ್ಯಾಡ್ಜೆಟ್‌ಬ್ರಿಡ್ಜ್ ಯೋಜನೆಯ ಆಧಾರದ ಮೇಲೆ ನಿರ್ಮಿಸಲಾದ, ಇಂಟರ್ನೆಟ್ ಸೌಲಭ್ಯವನ್ನು ಹೊಂದಿರುವ Bangle.js ಗಾಗಿನ ಆಂಡ್ರಾಯ್ಡ್ ಕಂಪ್ಯಾನಿಯನ್ ಆಪ್.\n\nಗೂಗಲ್ ಪ್ಲೇ ಸ್ಟೋರ್ ನಿಯಮಗಳ ಕಾರಣದಿಂದಾಗಿ, ಆಪ್‌ನಲ್ಲಿ ನೇರವಾಗಿ ದೇಣಿಗೆ ಲಿಂಕ್ ನೀಡಲು ನಮಗೆ ಅನುಮತಿಯಿಲ್ಲ. ಆದರೆ ನಿಮಗೆ ಈ ಆಪ್ ಇಷ್ಟವಾದಲ್ಲಿ, ದಯವಿಟ್ಟು ಕೆಳಗಿನ ಗ್ಯಾಡ್ಜೆಟ್‌ಬ್ರಿಡ್ಜ್ ಮುಖಪುಟದ ಮೂಲಕ ದೇಣಿಗೆ ನೀಡಲು ಪರಿಗಣಿಸಿ.</string>
+    <string name="gadgetbridge_running_banglejs_nightly">(ಪ್ರತಿರಾತ್ರಿ) Bangle.js ಚಾಲನೆಯಲ್ಲಿದೆ</string>
+    <string name="application_name_main_nightly">ಗ್ಯಾಡ್ಜೆಟ್‌ಬ್ರಿಡ್ಜ್ (ಪ್ರತಿರಾತ್ರೀಯ ಬಿಲ್ಡ್)</string>
+    <string name="title_activity_controlcenter_main_nightly">ಗ್ಯಾಡ್ಜೆಟ್‌ಬ್ರಿಡ್ಜ್ (ಪ್ರತಿರಾತ್ರೀಯ ಬಿಲ್ಡ್)</string>
+    <string name="about_activity_title_main_nightly">ಗ್ಯಾಡ್ಜೆಟ್‌ಬ್ರಿಡ್ಜ್ (ಪ್ರತಿರಾತ್ರೀಯ ಬಿಲ್ಡ್) ಇನ ಬಗ್ಗೆ</string>
+    <string name="about_description_main_nightly">ವಿವಿಧ ಮಾರಾಟಗಾರರ ಕ್ಲೋಸ್ಡ್ ಸೋರ್ಸ್ ಆಂಡ್ರಾಯ್ಡ್ ಗ್ಯಾಜೆಟ್-ಆಪ್‌ಗಳ ಬದಲಾಗಿ, ಕ್ಲೌಡ್-ಮುಕ್ತ, ಪ್ರತಿಕೃತ್ಯಾಧಿಕಾರ-ನಿರ್ಮುಕ್ತವಾದ (copylefted ಮತ್ತು libre) ಪರ್ಯಾಯೀ ಆಪ್.</string>
 </resources>
