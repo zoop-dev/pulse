@@ -1173,7 +1173,7 @@
     <string name="getting_heart_rate">Medição</string>
     <string name="heart_rate_result">Resultados da medição</string>
     <string name="dbmanagementactivity_export_finished">Exclusão finalizada</string>
-    <string name="activity_type_strength_training">Treinamento de força</string>
+    <string name="activity_type_strength_training">Treino de força</string>
     <string name="activity_summary_detail_select_gpx_track">Selecionar trilha GPX</string>
     <string name="activity_summary_detail_clear_gpx_track">Apagar trilha GPX</string>
     <string name="activity_summary_detail_editing_gpx_track">Editando trilha GPX vinculada</string>
@@ -2630,7 +2630,7 @@
     <string name="activity_type_fitness_equipment">Equipamentos de ginástica</string>
     <string name="activity_type_platform_tennis">Tênis de plataforma</string>
     <string name="activity_type_american_football">Futebol americano</string>
-    <string name="activity_type_training">Treinamento</string>
+    <string name="activity_type_training">Treino</string>
     <string name="activity_type_cardio">Cardio</string>
     <string name="activity_type_breathwork">Respiração</string>
     <string name="activity_type_xc_classic_ski">Esqui Clássico XC</string>
@@ -2754,7 +2754,7 @@
     <string name="activity_type_equestrian">Equestre</string>
     <string name="activity_type_athletics">Atletismo</string>
     <string name="activity_type_free_diving">Mergulho livre</string>
-    <string name="activity_type_apnea_training">Treinamento de apneia</string>
+    <string name="activity_type_apnea_training">Treino de apneia</string>
     <string name="activity_type_apnea_test">Teste de apneia</string>
     <string name="activity_type_scuba_diving">Mergulho autônomo</string>
     <string name="activity_type_adventure_race">Corrida de aventura</string>
@@ -2996,7 +2996,7 @@
     <string name="hrv_sdrr">HRV SDRR</string>
     <string name="hrv_rmssd">HRV RMSSD</string>
     <string name="breaths_per_min">respirações/minuto</string>
-    <string name="TrainingEffect">Efeito do treinamento</string>
+    <string name="TrainingEffect">Efeito do treino</string>
     <string name="maximumOxygenUptake">Consumo máximo de oxigênio</string>
     <string name="estimatedSweatLoss">Perda estimada de suor</string>
     <string name="lactateThresholdHeartRate">Frequência cardíaca do limiar de lactato</string>
