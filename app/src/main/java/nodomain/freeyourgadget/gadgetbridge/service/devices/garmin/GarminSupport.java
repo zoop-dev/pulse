@@ -840,7 +840,18 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     }
 
     private void processDownloadQueue() {
+        if (LOG.isTraceEnabled()) {
+            LOG.trace(
+                    "Processing download queue - {} files to download, currentlyDownloading = {}, isBusyFetching = {}",
+                    filesToDownload.size(),
+                    currentlyDownloading != null,
+                    isBusyFetching
+            );
+        }
+
         if (!filesToDownload.isEmpty() && currentlyDownloading == null) {
+            LOG.debug("Processing next file of {}", filesToDownload.size());
+
             if (!gbDevice.isBusy()) {
                 LOG.debug("Starting download queue");
 
@@ -896,6 +907,8 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         }
 
         if (filesToDownload.isEmpty() && currentlyDownloading == null && isBusyFetching) {
+            LOG.debug("No more files to download, will process pending files");
+
             final List<File> filesToProcess;
             try (DBHandler handler = GBApplication.acquireDB()) {
                 final DaoSession session = handler.getDaoSession();
