@@ -7,6 +7,7 @@ Copyright (c) 2018-2026 Miller Cy Chan
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.util.Pair;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +35,10 @@ public class PnnQuantizer {
 
 	public PnnQuantizer(String fname) {
 		fromBitmap(fname);
+	}
+
+	public PnnQuantizer(Bitmap bitmap) {
+		fromBitmap(bitmap);
 	}
 
 	private void fromBitmap(Bitmap bitmap) {
@@ -131,7 +136,7 @@ public class PnnQuantizer {
 		return cnt -> cnt;
 	}
 
-	protected Integer[] pnnquan(final int[] pixels, int nMaxColors)
+	protected int[] pnnquan(final int[] pixels, int nMaxColors)
 	{
 		short quan_rt = (short) 1;
 		Pnnbin[] bins = new Pnnbin[65536];
@@ -255,7 +260,7 @@ public class PnnQuantizer {
 		}
 
 		/* Fill palette */
-		Integer[] palette = new Integer[extbins > 0 ? nMaxColors : maxbins];
+		int[] palette = new int[extbins > 0 ? nMaxColors : maxbins];
 		short k = 0;
 		for (int i = 0; k < palette.length; ++k) {
 			palette[k] = Color.argb((int) bins[i].ac, (int) bins[i].rc, (int) bins[i].gc, (int) bins[i].bc);
@@ -266,7 +271,7 @@ public class PnnQuantizer {
 		return palette;
 	}
 
-	protected short nearestColorIndex(final Integer[] palette, int c, final int pos)
+	protected short nearestColorIndex(final int[] palette, int c, final int pos)
 	{
 		final int offset = weight > .015 ? c : BitmapUtilities.getColorIndex(c, hasSemiTransparency, m_transparentPixelIndex >= 0);
 		Short got = nearestMap.get(offset);
@@ -310,7 +315,7 @@ public class PnnQuantizer {
 		return k;
 	}
 
-	protected short closestColorIndex(final Integer[] palette, int c, final int pos)
+	protected short closestColorIndex(final int[] palette, int c, final int pos)
 	{
 		short k = 0;
 		if (Color.alpha(c) <= alphaThreshold)
@@ -382,7 +387,7 @@ public class PnnQuantizer {
 			}
 
 			@Override
-			public short nearestColorIndex(Integer[] palette, int c, final int pos) {
+			public short nearestColorIndex(int[] palette, int c, final int pos) {
 				if(dither)
 					return PnnQuantizer.this.nearestColorIndex(palette, c, pos);
 				return PnnQuantizer.this.closestColorIndex(palette, c, pos);
@@ -390,7 +395,7 @@ public class PnnQuantizer {
 		};
 	}
 
-	protected int[] dither(final int[] cPixels, Integer[] palette, int width, int height, boolean dither) throws Exception
+	protected int[] dither(final int[] cPixels, int[] palette, int width, int height, boolean dither)
 	{
 		Ditherable ditherable = getDitherFn(dither);
 		if(hasSemiTransparency)
@@ -406,7 +411,7 @@ public class PnnQuantizer {
 		return qPixels;
 	}
 
-	public Bitmap convert(int nMaxColors, boolean dither) throws Exception {
+	public Pair<Bitmap, int[]> convert(int nMaxColors, boolean dither) {
 		int semiTransCount = 0;
 		for (int i = 0; i < pixels.length; ++i) {
 			int pixel = pixels[i];
@@ -435,11 +440,11 @@ public class PnnQuantizer {
 			PR = coeffs[0][0]; PG = coeffs[0][1]; PB = coeffs[0][2];
 		}
 
-		Integer[] palette;
+		int[] palette;
 		if (nMaxColors > 2)
 			palette = pnnquan(pixels, nMaxColors);
 		else {
-			palette = new Integer[nMaxColors];
+			palette = new int[nMaxColors];
 			weight = 1;
 			if (m_transparentPixelIndex >= 0) {
 				palette[0] = m_transparentColor;
@@ -452,7 +457,9 @@ public class PnnQuantizer {
 		}		
 
 		int[] qPixels = dither(pixels, palette, width, height, dither);
-		return Bitmap.createBitmap(qPixels, width, height, Bitmap.Config.ARGB_8888);
+		return new Pair<>(
+				Bitmap.createBitmap(qPixels, width, height, Bitmap.Config.ARGB_8888),
+				palette);
 	}
 	
 	public boolean hasAlpha() {

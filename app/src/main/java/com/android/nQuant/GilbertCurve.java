@@ -38,7 +38,7 @@ public class GilbertCurve {
 	private final int width, height;
 	private final double weight;
 	private final int[] pixels;
-	private final Integer[] palette;
+	private final int[] palette;
 	private final int[] qPixels;
 	private final Ditherable ditherable;
 	private final float[] saliencies;
@@ -47,7 +47,7 @@ public class GilbertCurve {
 	private final int margin, thresold;
 	private static final float BLOCK_SIZE = 343f;
 
-	private GilbertCurve(final int width, final int height, final int[] image, final Integer[] palette, final int[] qPixels, final Ditherable ditherable, final float[] saliencies, double weight, boolean dither)
+	private GilbertCurve(final int width, final int height, final int[] image, final int[] palette, final int[] qPixels, final Ditherable ditherable, final float[] saliencies, double weight, boolean dither)
 	{
 		this.width = width;
 		this.height = height;
@@ -279,7 +279,7 @@ public class GilbertCurve {
 			qPixels[bidx] = palette[qPixels[bidx]];
 	}
 
-	private void generate2d(int x, int y, int ax, int ay, int bx, int by) throws Exception {
+	private void generate2d(int x, int y, int ax, int ay, int bx, int by) {
 		int w = Math.abs(ax + ay);
 		int h = Math.abs(bx + by);
 		int dax = Integer.signum(ax);
@@ -353,7 +353,7 @@ public class GilbertCurve {
 		weights[0] += 1f - weight;
 	}
 
-	private void run() throws Exception
+	private void run()
 	{
 		if(!sortedByYDiff)
 			initWeights(DITHER_MAX);
@@ -364,7 +364,7 @@ public class GilbertCurve {
 			generate2d(0, 0, 0, height, width, 0);
 	}
 
-	public static int[] dither(final int width, final int height, final int[] pixels, final Integer[] palette, final Ditherable ditherable, final float[] saliencies, final double weight, final boolean dither) throws Exception
+	public static int[] dither(final int width, final int height, final int[] pixels, final int[] palette, final Ditherable ditherable, final float[] saliencies, final double weight, final boolean dither)
 	{
         int[] qPixels = new int[pixels.length];
 		new GilbertCurve(width, height, pixels, palette, qPixels, ditherable, saliencies, weight, dither).run();

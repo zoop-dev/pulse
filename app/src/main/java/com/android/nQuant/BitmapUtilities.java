@@ -37,7 +37,7 @@ public class BitmapUtilities {
 		return ditherPixel;
 	}
 
-	static int[] quantize_image(final int width, final int height, final int[] pixels, final Integer[] palette, final Ditherable ditherable, final boolean hasSemiTransparency, final boolean dither)
+	static int[] quantize_image(final int width, final int height, final int[] pixels, final int[] palette, final Ditherable ditherable, final boolean hasSemiTransparency, final boolean dither)
 	{
 		int[] qPixels = new int[pixels.length];
 		int nMaxColors = palette.length;

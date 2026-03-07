@@ -196,7 +196,7 @@ public class BlueNoise {
 		return Color.argb(a_pix, r_pix, g_pix, b_pix);
 	}
 
-    static int[] processImagePixels(final Integer[] palette, final int[] qPixels) {
+    static int[] processImagePixels(final int[] palette, final int[] qPixels) {
         int[] qPixel32s = new int[qPixels.length];
         for (var i = 0; i < qPixels.length; ++i)
             qPixel32s[i] = palette[qPixels[i]];
@@ -204,7 +204,7 @@ public class BlueNoise {
         return qPixel32s;
     }
 
-	public static int[] dither(final int width, final int height, final int[] pixels, final Integer[] palette, final Ditherable ditherable, final int[] qPixels, final float weight)
+	public static int[] dither(final int width, final int height, final int[] pixels, final int[] palette, final Ditherable ditherable, final int[] qPixels, final float weight)
 	{
 		final float strength = 1 / 3f;
 		for (int y = 0; y < height; ++y) {

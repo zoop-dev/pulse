@@ -4,6 +4,7 @@ package com.android.nQuant;
 Copyright (c) 2018-2026 Miller Cy Chan
 * error measure; time used is proportional to number of bins squared - WJ */
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 
 import com.android.nQuant.CIELABConvertor.Lab;
@@ -24,6 +25,10 @@ public class PnnLABQuantizer extends PnnQuantizer {
 	public PnnLABQuantizer(String fname) throws IOException {
 		super(fname);
 	}
+
+    public PnnLABQuantizer(Bitmap bitmap) {
+        super(bitmap);
+    }
 
 	private static final class Pnnbin {
 		float ac = 0, Lc = 0, Ac = 0, Bc = 0, err = 0;
@@ -128,7 +133,7 @@ public class PnnLABQuantizer extends PnnQuantizer {
 	}
 
 	@Override
-	protected Integer[] pnnquan(final int[] pixels, int nMaxColors)
+	protected int[] pnnquan(final int[] pixels, int nMaxColors)
 	{
 		short quan_rt = (short) 1;
 		Pnnbin[] bins = new Pnnbin[65536];
@@ -192,7 +197,7 @@ public class PnnLABQuantizer extends PnnQuantizer {
 		
 		if(pixelMap.size() <= nMaxColors) {
 			/* Fill palette */
-			Integer[] palette = new Integer[pixelMap.size()];
+			int[] palette = new int[pixelMap.size()];
 			int k = 0;
 			for (Integer pixel : pixelMap.keySet()) {
 				palette[k++] = pixel;
@@ -312,7 +317,7 @@ public class PnnLABQuantizer extends PnnQuantizer {
 		}
 
 		/* Fill palette */
-		Integer[] palette = new Integer[extbins > 0 ? nMaxColors : maxbins];
+		int[] palette = new int[extbins > 0 ? nMaxColors : maxbins];
 		short k = 0;
 		for (int i = 0; k < palette.length; ++k) {
 			Lab lab1 = new Lab();
@@ -327,7 +332,7 @@ public class PnnLABQuantizer extends PnnQuantizer {
 	}
 
 	@Override
-	protected short nearestColorIndex(final Integer[] palette, int c, final int pos)
+	protected short nearestColorIndex(final int[] palette, int c, final int pos)
 	{
 		final int offset = !isNano ? c : BitmapUtilities.getColorIndex(c, hasSemiTransparency, m_transparentPixelIndex >= 0);
 		Short got = nearestMap.get(offset);
@@ -404,7 +409,7 @@ public class PnnLABQuantizer extends PnnQuantizer {
 	}
 
 	@Override
-	protected short closestColorIndex(final Integer[] palette, int c, final int pos)
+	protected short closestColorIndex(final int[] palette, int c, final int pos)
 	{
 		if (Color.alpha(c) <= alphaThreshold)
 			return nearestColorIndex(palette, c, pos);
@@ -481,7 +486,7 @@ public class PnnLABQuantizer extends PnnQuantizer {
 			}
 
 			@Override
-			public short nearestColorIndex(Integer[] palette, int c, final int pos) {
+			public short nearestColorIndex(int[] palette, int c, final int pos) {
 				if (palette.length <= 4)
 					return PnnLABQuantizer.this.nearestColorIndex(palette, c, pos);
 				return PnnLABQuantizer.this.closestColorIndex(palette, c, pos);
@@ -490,7 +495,7 @@ public class PnnLABQuantizer extends PnnQuantizer {
 	}
 
 	@Override
-	protected int[] dither(final int[] cPixels, Integer[] palette, int width, int height, boolean dither) throws Exception
+	public int[] dither(final int[] cPixels, int[] palette, int width, int height, boolean dither)
 	{
 		Ditherable ditherable = getDitherFn();
 		if(hasSemiTransparency)
