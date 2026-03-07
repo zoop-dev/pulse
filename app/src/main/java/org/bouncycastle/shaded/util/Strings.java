@@ -23,16 +23,32 @@ public final class Strings {
         }
     }
 
-    public static String toLowerCase(String str) {
-        char[] charArray = str.toCharArray();
-        boolean z = false;
-        for (int i = 0; i != charArray.length; i++) {
-            char c = charArray[i];
-            if ('A' <= c && 'Z' >= c) {
-                charArray[i] = (char) ((c - 'A') + 97);
-                z = true;
+    /**
+     * A locale independent version of toLowerCase.
+     *
+     * @param string input to be converted
+     * @return a US ASCII lowercase version
+     */
+    public static String toLowerCase(String string)
+    {
+        boolean changed = false;
+        char[] chars = string.toCharArray();
+
+        for (int i = 0; i != chars.length; i++)
+        {
+            char ch = chars[i];
+            if ('A' <= ch && 'Z' >= ch)
+            {
+                changed = true;
+                chars[i] = (char)(ch - 'A' + 'a');
             }
         }
-        return z ? new String(charArray) : str;
+
+        if (changed)
+        {
+            return new String(chars);
+        }
+
+        return string;
     }
 }
