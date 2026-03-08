@@ -71,7 +71,7 @@ public class FileType {
         SLEEP(128, 49),
         CHRONO_SHOT(128, 54), // Garmin Xero C1 Pro Chronograph
         PACE_BANDS(128, 56),
-        UNKNOWN_57(128, 57), // Garmin Edge 530 - #5265
+        SPORTS_BACKUP(128, 57), // Garmin Edge 530 - #5265, Garmin Edge 830
         DEVICE_58(128, 58), // just "Device" in Fenix 7s
         MUSCLE_MAP(128, 59),
         RUNNING_TRACK(128, 60),
