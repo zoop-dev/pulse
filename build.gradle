@@ -24,6 +24,9 @@ allprojects {
         mavenCentral()
         maven {
             url = 'https://jitpack.io'
+            content {
+                includeGroupByRegex "com\\.github\\..*"
+            }
         }
         google()
     }
