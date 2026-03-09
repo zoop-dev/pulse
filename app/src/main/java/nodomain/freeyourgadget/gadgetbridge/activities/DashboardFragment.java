@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -259,7 +260,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             textViewDate.setText(requireContext().getString(R.string.activity_summary_today));
             arrowRight.setAlpha(0.5f);
         } else {
-            textViewDate.setText(DateTimeUtils.formatDate(day.getTime()));
+            textViewDate.setText(DateTimeUtils.formatDate(day.getTime(), DateUtils.FORMAT_SHOW_WEEKDAY));
             arrowRight.setAlpha(1);
         }
 
