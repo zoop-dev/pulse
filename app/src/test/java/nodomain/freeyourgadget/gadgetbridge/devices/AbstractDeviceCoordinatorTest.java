@@ -67,6 +67,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("Redmi Buds 6 Pro", DeviceType.REDMIBUDS6PRO);
             put("Xiaomi Watch S4 AB01", DeviceType.XIAOMI_WATCH_S4);
             put("HUAWEI WATCH FIT 4 Pro-CC6", DeviceType.HUAWEIWATCHFIT4PRO);
+            put("HUAWEI Band 11-CEF", DeviceType.HUAWEIBAND11); // #5839
             put("Edge Explore", DeviceType.GARMIN_EDGE_EXPLORE); // #4855
             put("Edge Explore 2", DeviceType.GARMIN_EDGE_EXPLORE_2); // #4855
             put("Redmi Smart Band 3 CCF1", DeviceType.REDMISMARTBAND3);

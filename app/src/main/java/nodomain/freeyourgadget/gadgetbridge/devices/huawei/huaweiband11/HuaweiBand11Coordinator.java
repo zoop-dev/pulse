@@ -14,31 +14,30 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.huawei.huaweiband10;
+package nodomain.freeyourgadget.gadgetbridge.devices.huawei.huaweiband11;
 
 import androidx.annotation.NonNull;
 
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiLECoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class HuaweiBand10Coordinator extends HuaweiLECoordinator {
+public class HuaweiBand11Coordinator extends HuaweiLECoordinator {
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile(HuaweiConstants.HU_BAND10_NAME + ".*", Pattern.CASE_INSENSITIVE);
+        return Pattern.compile(HuaweiConstants.HU_BAND11_NAME + ".*", Pattern.CASE_INSENSITIVE);
     }
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_huawei_band10;
+        return R.string.devicetype_huawei_band11;
     }
 
     @Override
-    public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceCoordinator.DeviceKind.FITNESS_BAND;
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.FITNESS_BAND;
     }
 }
