@@ -498,6 +498,10 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
                     DeviceSpecificSettingsScreen.CALENDAR,
                     R.xml.devicesettings_sync_calendar
             );
+            deviceSpecificSettings.addRootScreen(
+                    DeviceSpecificSettingsScreen.CALENDAR,
+                    R.xml.devicesettings_sync_calendar_event_reminders
+            );
         }
 
         //

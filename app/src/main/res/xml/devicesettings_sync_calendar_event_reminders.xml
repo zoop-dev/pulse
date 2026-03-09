@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:dependency="sync_calendar"
+        android:icon="@drawable/ic_access_alarms"
+        android:key="calendar_sync_event_reminders"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_summary_calendar_sync_event_reminders"
+        android:title="@string/pref_title_calendar_sync_event_reminders" />
+</androidx.preference.PreferenceScreen>

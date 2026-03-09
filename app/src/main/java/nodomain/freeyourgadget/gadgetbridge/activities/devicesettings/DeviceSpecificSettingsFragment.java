@@ -1045,6 +1045,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
             addPreferenceHandlerFor(PREF_CALENDAR_SYNC_FOCUS_TIME);
             addPreferenceHandlerFor(PREF_CALENDAR_SYNC_ALL_DAY);
             addPreferenceHandlerFor(PREF_CALENDAR_SYNC_WORKING_LOCATION);
+            addPreferenceHandlerFor(PREF_CALENDAR_SYNC_EVENT_REMINDERS);
         }
 
         addPreferenceHandlerFor(PREF_ATC_BLE_OEPL_MODEL);

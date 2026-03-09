@@ -464,6 +464,8 @@
     <string name="pref_title_calendar_sync_all_day">Sync all day events</string>
     <string name="pref_summary_calendar_sync_working_location">Calendar events that are special \"Working Locations\" will be synced to the device</string>
     <string name="pref_title_calendar_sync_working_location">Sync working location events</string>
+    <string name="pref_summary_calendar_sync_event_reminders">Event reminder notifications will be synced to the device</string>
+    <string name="pref_title_calendar_sync_event_reminders">Sync event reminders</string>
     <string name="pref_summary_relax_firmware_checks">Relax firmware checks</string>
     <string name="pref_title_relax_firmware_checks">Enable this if you want to flash a firmware not intended for your device (at your own risk)</string>
     <string name="pref_title_vibration_strength">Vibration strength</string>

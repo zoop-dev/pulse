@@ -23,6 +23,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
 import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
@@ -143,7 +144,8 @@ public class ZeppOsCalendarService extends AbstractZeppOsService {
         buf.putInt(calendarEventSpec.timestamp + calendarEventSpec.durationInSeconds);
 
         // Remind
-        if (calendarEventSpec.reminders != null && !calendarEventSpec.reminders.isEmpty()) {
+        final boolean syncReminders = getDevicePrefs().getBoolean(DeviceSettingsPreferenceConst.PREF_CALENDAR_SYNC_EVENT_REMINDERS, false);
+        if (syncReminders && calendarEventSpec.reminders != null && !calendarEventSpec.reminders.isEmpty()) {
             buf.putInt((int) (calendarEventSpec.reminders.get(0) / 1000L));
         } else {
             buf.putInt(0);

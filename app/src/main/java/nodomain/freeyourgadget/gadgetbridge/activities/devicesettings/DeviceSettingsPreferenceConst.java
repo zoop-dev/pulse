@@ -95,6 +95,7 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_CALENDAR_SYNC_ALL_DAY = "calendar_sync_all_day";
     public static final String PREF_CALENDAR_SYNC_WORKING_LOCATION = "calendar_sync_working_location";
     public static final String PREF_CALENDAR_SYNC_COLOR_BLACKLIST = "calendar_sync_color_blacklist";
+    public static final String PREF_CALENDAR_SYNC_EVENT_REMINDERS = "calendar_sync_event_reminders";
     public static final String PREF_TIME_SYNC = "time_sync";
     public static final String PREF_WEIGHT_SCALE_UNIT = "pref_weight_scale_unit";
     public static final String PREF_USE_CUSTOM_DEVICEICON = "use_custom_deviceicon";

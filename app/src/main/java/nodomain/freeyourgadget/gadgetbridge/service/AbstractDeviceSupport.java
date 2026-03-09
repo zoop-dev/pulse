@@ -571,6 +571,7 @@ public abstract class AbstractDeviceSupport implements DeviceSupport {
             case DeviceSettingsPreferenceConst.PREF_CALENDAR_SYNC_ALL_DAY:
             case DeviceSettingsPreferenceConst.PREF_CALENDAR_SYNC_WORKING_LOCATION:
             case DeviceSettingsPreferenceConst.PREF_CALENDAR_SYNC_COLOR_BLACKLIST:
+            case DeviceSettingsPreferenceConst.PREF_CALENDAR_SYNC_EVENT_REMINDERS:
                 CalendarReceiver.forceSync(getDevice());
                 break;
         }
