@@ -4146,4 +4146,6 @@
     <string name="activity_type_street_running">Carrera urbana</string>
     <string name="activity_type_stop_watch">Cronómetro</string>
     <string name="activity_type_ccr_diving">Rebreather de circuito cerrado</string>
+    <string name="pref_summary_calendar_sync_event_reminders">Las notificaciones de recordatorios de eventos se sincronizarán con el dispositivo</string>
+    <string name="pref_title_calendar_sync_event_reminders">Sincronizar recordatorios de eventos</string>
 </resources>
