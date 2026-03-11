@@ -185,9 +185,11 @@ public class ActivitySummaryEntries {
     public static final String WORKOUT_LOAD = "currentWorkoutLoad";
     public static final String MAXIMUM_OXYGEN_UPTAKE = "maximumOxygenUptake";
     public static final String RECOVERY_TIME = "recoveryTime";
+    public static final String RECOVERY_HR = "recoveryHr";
     public static final String FLUID_CONSUMED = "fluid_consumed";
     public static final String ESTIMATED_SWEAT_LOSS = "estimatedSweatLoss";
     public static final String LACTATE_THRESHOLD_HR = "lactateThresholdHeartRate";
+    public static final String RATING_OF_PERCEIVED_EXERTION = "ratingOfPerceivedExertion";
 
     public static final String CYCLING_POWER_AVERAGE = "cyclingPowerAverage";
     public static final String CYCLING_POWER_MIN = "cyclingPowerMin";

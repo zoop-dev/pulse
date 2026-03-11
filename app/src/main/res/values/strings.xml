@@ -2673,6 +2673,8 @@
     <string name="estimatedSweatLoss">Estimated Sweat Loss</string>
     <string name="lactateThresholdHeartRate">Lactate Threshold Heart Rate</string>
     <string name="recoveryTime">Recovery Time</string>
+    <string name="recoveryHr">Recovery Heart Rate</string>
+    <string name="ratingOfPerceivedExertion">Rate of Perceived Exertion</string>
     <string name="averageStride">Average Stride</string>
     <string name="maxStride">Max Stride</string>
     <string name="minStride">Min Stride</string>

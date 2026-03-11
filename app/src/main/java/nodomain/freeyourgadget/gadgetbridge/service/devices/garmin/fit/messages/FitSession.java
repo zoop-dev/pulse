@@ -846,6 +846,11 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Integer getRecoveryHeartRate() {
+        return getFieldByNumber(202, Integer.class);
+    }
+
+    @Nullable
     public Long getBatteryGain() {
         return getFieldByNumber(203, Long.class);
     }
@@ -1710,6 +1715,11 @@ public class FitSession extends RecordData {
 
         public Builder setTotalFractionalDescent(final Float value) {
             setFieldByNumber(200, value);
+            return this;
+        }
+
+        public Builder setRecoveryHeartRate(final Integer value) {
+            setFieldByNumber(202, value);
             return this;
         }
 

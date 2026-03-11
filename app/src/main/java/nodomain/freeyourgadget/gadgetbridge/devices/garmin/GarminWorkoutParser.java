@@ -341,6 +341,13 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             }
         }
 
+        if (session.getRecoveryHeartRate() != null){
+            summaryData.add(RECOVERY_HR, session.getRecoveryHeartRate(), UNIT_BPM);
+        }
+        if (session.getWorkoutRpe() != null){
+            summaryData.add(RATING_OF_PERCEIVED_EXERTION, session.getWorkoutRpe(), UNIT_PERCENTAGE);
+        }
+
         summaryData.add(AVG_POWER, session.getAvgPower(), UNIT_WATT);
         summaryData.add(MAX_POWER, session.getMaxPower(), UNIT_WATT);
         summaryData.add(NORMALIZED_POWER, session.getNormalizedPower(), UNIT_WATT);

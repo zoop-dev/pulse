@@ -363,7 +363,7 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(187, BaseType.FLOAT32, "avg_flow"),
             new FieldDefinitionPrimitive(188, BaseType.ENUM, "primary_benefit"), // 1 recovery
             new FieldDefinitionPrimitive(192, BaseType.UINT8, "workout_feel"), // 0, bad 1 - 100 good
-            new FieldDefinitionPrimitive(193, BaseType.UINT8, "workout_rpe"), // 0, very weak effort 1 - 10 maximum effort
+            new FieldDefinitionPrimitive(193, BaseType.UINT8, "workout_rpe"), // 0, very weak effort 1 - 10 maximum effort (encoded as 10 - 100)
             new FieldDefinitionPrimitive(194, BaseType.UINT8, "avg_spo2"),
             new FieldDefinitionPrimitive(195, BaseType.UINT8, "avg_stress"),
             new FieldDefinitionPrimitive(196, BaseType.UINT16, "resting_calories"), // kcal
@@ -371,6 +371,7 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(198, BaseType.UINT8, "hrv_rmssd"), // ms
             new FieldDefinitionPrimitive(199, BaseType.UINT8, "total_fractional_ascent", 100, 0), // m
             new FieldDefinitionPrimitive(200, BaseType.UINT8, "total_fractional_descent", 100, 0), // m
+            new FieldDefinitionPrimitive(202, BaseType.UINT8, "recovery_heart_rate"), // bpm - delta heart rate 2 minutes after workout
             new FieldDefinitionPrimitive(203, BaseType.UINT32, "battery_gain"), // minutes
             new FieldDefinitionPrimitive(204, BaseType.UINT16, "solar_intensity", 100, 0), // %
             new FieldDefinitionPrimitive(205, BaseType.UINT8, "beginning_potential"),
