@@ -32,7 +32,6 @@ import androidx.health.connect.client.records.PowerRecord
 import androidx.health.connect.client.records.Record
 import androidx.health.connect.client.records.SpeedRecord
 import androidx.health.connect.client.records.StepsCadenceRecord
-import androidx.health.connect.client.records.StepsRecord
 import androidx.health.connect.client.records.TotalCaloriesBurnedRecord
 import androidx.health.connect.client.records.metadata.Metadata
 import androidx.health.connect.client.units.Energy
@@ -44,7 +43,6 @@ import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsTrackViewModel
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries
-import nodomain.freeyourgadget.gadgetbridge.database.DBHandler
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao
@@ -355,8 +353,6 @@ internal object RecordedWorkoutSyncer {
             )
         )
 
-        val supportsActivityTracking = device.deviceCoordinator.supportsActivityTracking(device)
-
         addDetailedHeartRateRecords(activityPoints, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
         addDetailedSpeedRecords(activityPoints, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
         addDetailedPowerRecords(activityPoints, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
@@ -364,14 +360,10 @@ internal object RecordedWorkoutSyncer {
         val summaryData = parseSummaryData(workout.summaryData)
         if (summaryData != null) {
             addDistanceRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
-            // Active calories are synced more granularly for these devices in ActiveCaloriesSyncer
             if (!device.deviceCoordinator.supportsActiveCalories(device)) {
                 addCaloriesRecords(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
             }
             addElevationGainedRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
-            if (!supportsActivityTracking) {
-                addStepsRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
-            }
             addCadenceRecords(summaryData, activityKind, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
         }
     }
@@ -402,22 +394,14 @@ internal object RecordedWorkoutSyncer {
             )
         )
 
-        val supportsActivityTracking = gbDevice.deviceCoordinator.supportsActivityTracking(gbDevice)
-
         val summaryData = parseSummaryData(workout.summaryData)
         if (summaryData != null) {
             addDistanceRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
-            if (!supportsActivityTracking) {
-                addHeartRateRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
-            }
             addSpeedRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
             if (!gbDevice.deviceCoordinator.supportsActiveCalories(gbDevice)) {
                 addCaloriesRecords(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
             }
             addElevationGainedRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
-            if (!supportsActivityTracking) {
-                addStepsRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
-            }
             addCadenceRecords(summaryData, activityKind, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
         } else {
             LOG.warn("No summary data available for workout on device '{}' at {}", deviceName, workoutStartInstant)
@@ -600,44 +584,6 @@ internal object RecordedWorkoutSyncer {
         }
     }
 
-    private fun addHeartRateRecord(
-        summaryData: ActivitySummaryData,
-        startTime: Instant,
-        endTime: Instant,
-        offset: ZoneOffset,
-        metadata: Metadata,
-        grantedPermissions: Set<String>,
-        recordsToInsert: MutableList<Record>,
-        deviceName: String
-    ) {
-        val hrPermission = HealthPermission.getWritePermission(HeartRateRecord::class)
-
-        if (hrPermission !in grantedPermissions) {
-            return
-        }
-
-        val hrAvg = summaryData.getNumber(ActivitySummaryEntries.HR_AVG, 0.0)
-        if (hrAvg.toDouble() > 0) {
-            val midTime = startTime.plusSeconds((endTime.epochSecond - startTime.epochSecond) / 2)
-            recordsToInsert.add(
-                HeartRateRecord(
-                    startTime = midTime,
-                    startZoneOffset = offset,
-                    endTime = midTime,
-                    endZoneOffset = offset,
-                    samples = listOf(
-                        HeartRateRecord.Sample(
-                            time = midTime,
-                            beatsPerMinute = hrAvg.toLong()
-                        )
-                    ),
-                    metadata = metadata
-                )
-            )
-            LOG.debug("Added HeartRateRecord (avg: {} bpm) for workout at {} for device '{}'.", hrAvg, startTime, deviceName)
-        }
-    }
-
     private fun addSpeedRecord(
         summaryData: ActivitySummaryData,
         startTime: Instant,
@@ -775,37 +721,6 @@ internal object RecordedWorkoutSyncer {
                 )
             )
             LOG.debug("Added ElevationGainedRecord ({} m) for workout at {} for device '{}'.", elevationGain, startTime, deviceName)
-        }
-    }
-
-    private fun addStepsRecord(
-        summaryData: ActivitySummaryData,
-        startTime: Instant,
-        endTime: Instant,
-        offset: ZoneOffset,
-        metadata: Metadata,
-        grantedPermissions: Set<String>,
-        recordsToInsert: MutableList<Record>,
-        deviceName: String
-    ) {
-        val stepsPermission = HealthPermission.getWritePermission(StepsRecord::class)
-        if (stepsPermission !in grantedPermissions) {
-            return
-        }
-
-        val steps = summaryData.getNumber(ActivitySummaryEntries.STEPS, 0.0).toLong()
-        if (steps > 0) {
-            recordsToInsert.add(
-                StepsRecord(
-                    startTime = startTime,
-                    startZoneOffset = offset,
-                    endTime = endTime,
-                    endZoneOffset = offset,
-                    count = steps,
-                    metadata = metadata
-                )
-            )
-            LOG.debug("Added StepsRecord ({} steps) for workout at {} for device '{}'.", steps, startTime, deviceName)
         }
     }
 
