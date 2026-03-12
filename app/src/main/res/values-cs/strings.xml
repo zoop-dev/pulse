@@ -4301,4 +4301,6 @@
     <string name="activity_type_ccr_diving">Rebreather s uzavřeným okruhem</string>
     <string name="pref_summary_calendar_sync_event_reminders">Připomínky událostí budou synchronizovány do zařízení</string>
     <string name="pref_title_calendar_sync_event_reminders">Synchronizovat připomínky událostí</string>
+    <string name="recoveryHr">Zotavovací tep</string>
+    <string name="ratingOfPerceivedExertion">Míra vnímané námahy</string>
 </resources>
