@@ -31,8 +31,8 @@
     <string name="appmanager_app_openinstore">Buscar en tienda de aplicaciones de Pebble</string>
     <string name="appmanager_health_activate">Activar</string>
     <string name="appmanager_health_deactivate">Desactivar</string>
-    <string name="appmanager_hrm_activate">Activar monitor de ritmo cardíaco</string>
-    <string name="appmanager_hrm_deactivate">Desactivar monitor de ritmo cardíaco</string>
+    <string name="appmanager_hrm_activate">Activar monitor de frecuencia cardíaca</string>
+    <string name="appmanager_hrm_deactivate">Desactivar monitor de frecuencia cardíaca</string>
     <string name="appmanager_weather_activate">Activar la aplicación de Clima del sistema</string>
     <string name="appmanager_weather_deactivate">Desactivar la aplicación de Clima del sistema</string>
     <string name="app_configure">Configurar</string>
@@ -137,7 +137,7 @@
     <string name="pref_title_unit_system">Unidades</string>
     <string name="pref_title_timeformat">Formato de hora</string>
     <string name="pref_title_screentime">Tiempo de pantalla encendida</string>
-    <string name="prefs_title_all_day_heart_rate">Medición del ritmo cardíaco todo el día</string>
+    <string name="prefs_title_all_day_heart_rate">Medición de la frecuencia cardíaca todo el día</string>
     <string name="preferences_hplus_settings">Configuración de HPlus/Makibes</string>
     <string name="not_connected">No conectado</string>
     <string name="connecting">Conectando</string>
@@ -339,7 +339,7 @@
     <string name="charts_legend_heartrate">Frecuencia cardíaca</string>
     <string name="live_activity_heart_rate">Frecuencia cardíaca</string>
     <string name="pref_title_pebble_health_store_raw">Almacenar datos en bruto en la base de datos </string>
-    <string name="pref_summary_pebble_health_store_raw">Almacena los datos \"tal cual\", aumentando el uso de la base de datos para permitir una interpretación posterior.</string>
+    <string name="pref_summary_pebble_health_store_raw">Almacena los datos «tal cual», aumentando el uso de la base de datos para permitir una interpretación posterior.</string>
     <string name="action_db_management">Administración de datos</string>
     <string name="title_activity_db_management">Administración de datos</string>
     <string name="activity_db_management_import_export_explanation">Las operaciones de exportación/importación utilizan la siguiente ruta (véase más abajo) a un directorio de tu dispositivo. Este directorio es accesible a otras aplicaciones Android y a tu ordenador. Ten en cuenta que este directorio y todos los archivos que contiene se eliminan si desinstalas Gadgetbridge. Los datos incluyen:\n· Export_preference - ajustes globales\n· Export_preference_MAC - ajustes específicos del dispositivo\n· Gadgetbridge - base de datos de dispositivos y actividades\n· Gadgetbridge_date - base de datos exportada en una fecha\n· *.gpx - grabaciones GPS\n· *.log - archivos de registro\nEspera encontrar tus archivos exportados (o coloca los archivos que deseas importar) en:</string>
@@ -400,7 +400,7 @@
     <string name="mi2_prefs_button_press_count">Número de presiones</string>
     <string name="mi2_prefs_button_press_count_summary">Número de presiones de botón para desencadenar un Suceso 1. Después, presionar la misma cantidad de veces creará un Suceso 2 y así sucesivamente.</string>
     <string name="mi2_prefs_button_press_broadcast">Mensaje para enviar</string>
-    <string name="mi2_prefs_button_press_broadcast_summary">Mensaje de difusión enviado con el evento. El parámetro \"button_id\" se añade automáticamente a cada mensaje.</string>
+    <string name="mi2_prefs_button_press_broadcast_summary">Mensaje de difusión enviado con el evento. El parámetro «button_id» se añade automáticamente a cada mensaje.</string>
     <string name="mi2_prefs_button_action">Activar acción por botón</string>
     <string name="mi2_prefs_button_action_summary">Activar acción por un número definido de pulsaciones</string>
     <string name="mi2_prefs_button_action_vibrate">Activar la vibración de la pulsera</string>
@@ -1118,9 +1118,9 @@
     <string name="prefs_vibration_enable">Activar vibración</string>
     <string name="prefs_autoheartrate_interval">Frecuencia de las mediciones</string>
     <string name="prefs_autoheartrate_sleep">Tomar medidas durante el sueño</string>
-    <string name="prefs_autoheartrate_measurement">Mediciones automáticas del ritmo cardíaco</string>
-    <string name="prefs_autoheartrate_summary">Mediciones periódicas del ritmo cardíaco durante el día y también mientras duerme</string>
-    <string name="prefs_autoheartrate">Ritmo cardíaco automático</string>
+    <string name="prefs_autoheartrate_measurement">Mediciones automáticas de la frecuencia cardíaca</string>
+    <string name="prefs_autoheartrate_summary">Mediciones periódicas de la frecuencia cardíaca durante el día y también mientras duerme</string>
+    <string name="prefs_autoheartrate">Frecuencia cardíaca automática</string>
     <string name="enable_notifications_summary">Notificaciones de llamadas, mensajes y más</string>
     <string name="prefs_notifications_enable">Activar notificaciones</string>
     <string name="prefs_sleep_time_summary">Especifica las horas en las que se registra el sueño</string>
@@ -1623,7 +1623,7 @@
     <string name="menuitem_todo">Tareas pendientes</string>
     <string name="menuitem_voice_memos">Notas de voz</string>
     <string name="menuitem_one_tap_measuring">Medición con una sola pulsación</string>
-    <string name="menuitem_wifi">Wi-Fi</string>
+    <string name="menuitem_wifi">Wi‑Fi</string>
     <string name="menuitem_lockscreen">Bloqueo de pantalla</string>
     <string name="menuitem_unsupported">[NO ADMITIDO] %s</string>
     <string name="hrZoneExtreme">Extremo</string>
@@ -1831,13 +1831,13 @@
     <string name="pref_camera_remote_title">Control remoto de la cámara</string>
     <string name="pref_camera_remote_summary">Permite que el reloj active la cámara del teléfono</string>
     <string name="pref_workout_keep_screen_on_summary">La pantalla permanecerá encendida durante el entrenamiento y el brillo se ajustará para mostrar continuamente los datos del entrenamiento en tiempo real</string>
-    <string name="wifi_hotspot">Punto de acceso Wi-Fi</string>
-    <string name="wifi_hotspot_summary">Control del punto de acceso Wi-Fi en el reloj</string>
-    <string name="wifi_hotspot_configuration">Configuración del punto de acceso Wi-Fi</string>
+    <string name="wifi_hotspot">Punto de acceso Wi‑Fi</string>
+    <string name="wifi_hotspot_summary">Control del punto de acceso Wi‑Fi en el reloj</string>
+    <string name="wifi_hotspot_configuration">Configuración del punto de acceso Wi‑Fi</string>
     <string name="stop">Detener</string>
     <string name="status">Estado</string>
-    <string name="wifi_hotspot_start_summary">Iniciar el punto de acceso Wi-Fi del reloj</string>
-    <string name="wifi_hotspot_stop_summary">Detener el punto de acceso Wi-Fi del reloj</string>
+    <string name="wifi_hotspot_start_summary">Iniciar el punto de acceso Wi‑Fi del reloj</string>
+    <string name="wifi_hotspot_stop_summary">Detener el punto de acceso Wi‑Fi del reloj</string>
     <string name="ftp_server">Servidor FTP</string>
     <string name="ftp_server_summary">Controlar el servidor FTP del reloj</string>
     <string name="ftp_server_start_summary">Iniciar el servidor FTP del reloj</string>
@@ -1846,7 +1846,7 @@
     <string name="username">Nombre de usuario</string>
     <string name="croatian">Croata</string>
     <string name="wifi_ssid">SSID</string>
-    <string name="wifi_hotspot_status">Estado del punto de acceso Wi-Fi</string>
+    <string name="wifi_hotspot_status">Estado del punto de acceso Wi‑Fi</string>
     <string name="address">Dirección</string>
     <string name="ftp_server_configuration">Configuración del servidor FTP</string>
     <string name="ftp_server_root_dir">Directorio raíz</string>
@@ -2202,7 +2202,7 @@
     <string name="pref_title_navigation_prefs">Preferencias de navegación</string>
     <string name="pref_navigation_app_gmaps">Google Maps</string>
     <string name="pref_navigation_app_osmand">OsmAnd(+)</string>
-    <string name="pref_title_casio_alert_other">Alerta para \"otras\" notificaciones</string>
+    <string name="pref_title_casio_alert_other">Alerta para «otras» notificaciones</string>
     <string name="pref_title_casio_alert_calendar">Alerta de las notificaciones en el calendario</string>
     <string name="pref_summary_casio_alert_call">Alerta (vibración/pitido) de llamadas entrantes</string>
     <string name="menuitem_running">Ejecutando</string>
@@ -2219,7 +2219,7 @@
     <string name="danish">Danés</string>
     <string name="wake_up_time">Despertar</string>
     <string name="menuitem_stats">Estadísticas</string>
-    <string name="pref_summary_casio_alert_other">Alerta (vibración/pitido) para las notificaciones de la categoría \"otras\"</string>
+    <string name="pref_summary_casio_alert_other">Alerta (vibración/pitido) para las notificaciones de la categoría «otras»</string>
     <string name="pref_summary_preview_message_in_title">Muestra una vista previa del mensaje en el título de una notificación según lo permita el dispositivo</string>
     <string name="pref_sleep_mode_schedule_summary">Envía un recordatorio y entra en modo reposo a la hora de acostarte. A la hora programada para despertarse, sonará la alarma del despertador.</string>
     <string name="pref_title_casio_alert_sms">Alerta de notificaciones por SMS</string>
@@ -2300,7 +2300,7 @@
     <string name="pref_enable_call_reject">Permitir rechazar llamadas</string>
     <string name="pref_enable_call_reject_summary">Activar el rechazo de llamadas desde el dispositivo</string>
     <string name="pref_disable_find_phone_with_dnd">Desactivar encontrar mi teléfono cuando no molestar está activo</string>
-    <string name="pref_heartrate_automatic_enable">Activar medición automática del ritmo cardíaco</string>
+    <string name="pref_heartrate_automatic_enable">Activar la medición automática de la frecuencia cardíaca</string>
     <string name="pref_spo_automatic_enable">Activar medición automática de SpO₂</string>
     <string name="pref_force_options">Forzar opciones</string>
     <string name="pref_force_smart_alarm">Forzar la alarma inteligente</string>
@@ -2476,8 +2476,8 @@
     <string name="eversionAngleAvg">Angulo medio de la eversión</string>
     <string name="eversionAngleMax">Angulo máximo de la eversión</string>
     <string name="fmtPaceDistance">Ritmo %d distancia</string>
-    <string name="fmtPaceType">Tipo %d ritmo</string>
-    <string name="fmtPacePace">Ritmo %d</string>
+    <string name="fmtPaceType">Tipo de ritmo %d</string>
+    <string name="fmtPacePace">Ritmo %d ritmo</string>
     <string name="fmtPaceCorrection">Corrección del ritmo %d</string>
     <string name="fmtPaceTypeAverage">Tipo de ritmo %d medio</string>
     <string name="unknownDataEncountered">Se encontraron datos desconocidos</string>
@@ -2514,7 +2514,7 @@
     <string name="pref_dashboard_select_devices_summary">Combinar los datos de actividad de dispositivos específicos para los totales del panel de control</string>
     <string name="pref_dashboard_widget_today_hr_interval_title">Intervalo de frecuencia cardíaca</string>
     <string name="activity_type_worn">En uso</string>
-    <string name="pref_dashboard_widget_today_hr_interval_summary">La cantidad de minutos que el gráfico muestra \"en uso\" después de cada medición correcta de la frecuencia cardíaca</string>
+    <string name="pref_dashboard_widget_today_hr_interval_summary">La cantidad de minutos que el gráfico muestra «en uso» después de cada medición correcta de la frecuencia cardíaca</string>
     <string name="pref_auto_reply_calls_summary">El teléfono descolgará automáticamente las llamadas entrantes</string>
     <string name="pref_auto_reply_calls_delay_summary">Número de segundos tras los cuales se descuelga automáticamente la llamada</string>
     <string name="pref_auto_reply_calls_title">Responder automáticamente a las llamadas</string>
@@ -3018,15 +3018,15 @@
     <string name="pref_dnd_follow_phone_summary">Cuando DND está habilitado o deshabilitado en el teléfono, también se activa automáticamente en el dispositivo</string>
     <string name="prefs_hrv_monitoring_description">Monitoriza automáticamente la variabilidad de la frecuencia cardíaca a lo largo del día</string>
     <string name="fmtPaceAverage">Ritmo promedio</string>
-    <string name="average_respiration_rate">Frecuencia de la respiración</string>
+    <string name="average_respiration_rate">Frecuencia respiratoria</string>
     <string name="breaths_per_min">Respiraciones por minuto</string>
-    <string name="min_respiration_rate">Frecuencia mínima de la respiración</string>
+    <string name="min_respiration_rate">Frecuencia respiratoria mínima</string>
     <string name="hrv_sdrr">VFC SDRR</string>
     <string name="idasen_control_button_sit">SENTADO</string>
     <string name="idasen_control_button_stand">DE PIE</string>
     <string name="idasen_pref_value_warning">El valor debe estar comprendido entre 62 y 126 cm</string>
     <string name="idasen_control_button_mid">MEDIO</string>
-    <string name="max_respiration_rate">Frecuencia máxima de la respiración</string>
+    <string name="max_respiration_rate">Frecuencia respiratoria máxima</string>
     <string name="hrv_rmssd">VFC RMSSD</string>
     <string name="idasen_pref_sit_height">Altura de la posición sentado (en centímetros)</string>
     <string name="idasen_pref_mid_height">Altura de posición media (en centímetros)</string>
@@ -3934,7 +3934,7 @@
     <string name="bluetooth_multipoint_pairing">Emparejamiento multipunto</string>
     <string name="bluetooth_multipoint">Multipunto</string>
     <string name="bluetooth_multipoint_pair_new">Emparejar nuevo dispositivo</string>
-    <string name="bluetooth_multipoint_no_devices">No se encontraron dispositivos emparejados\n\nToque \"Emparejar nuevo dispositivo\" para añadir uno</string>
+    <string name="bluetooth_multipoint_no_devices">No se encontraron dispositivos emparejados\n\nToque «Emparejar nuevo dispositivo» para añadir uno</string>
     <string name="bluetooth_multipoint_pair_stop">Detener emparejamiento</string>
     <string name="bluetooth_paired_devices">Dispositivos emparejados</string>
     <string name="connect">Conectar</string>
@@ -3969,7 +3969,7 @@
     <string name="hr_settings_zones_calculation_method_lthr">LTHR</string>
     <string name="hr_settings_zones_resting_hr">Frecuencia cardíaca en reposo</string>
     <string name="hr_settings_zones_max_hr">Frecuencia cardíaca máxima</string>
-    <string name="hr_settings_zones_lactate_threshold_hr">Frecuencia cardíaca en el umbral de lactato</string>
+    <string name="hr_settings_zones_lactate_threshold_hr">Frecuencia cardíaca del umbral de lactato</string>
     <string name="hr_settings_zones_remove_all">Restablecer todo</string>
     <string name="hr_settings_zones_remove_all_description">¿Está seguro de que desea eliminar las zonas y límites de frecuencia cardíaca para todas las configuraciones de postura y restablecerlos a los valores predeterminados?</string>
     <string name="pref_huawei_health_features_config_title">Configuración de funciones de salud</string>
@@ -4148,4 +4148,6 @@
     <string name="activity_type_ccr_diving">Rebreather de circuito cerrado</string>
     <string name="pref_summary_calendar_sync_event_reminders">Las notificaciones de recordatorios de eventos se sincronizarán con el dispositivo</string>
     <string name="pref_title_calendar_sync_event_reminders">Sincronizar recordatorios de eventos</string>
+    <string name="recoveryHr">Frecuencia cardíaca de recuperación</string>
+    <string name="ratingOfPerceivedExertion">Índice de esfuerzo percibido</string>
 </resources>
