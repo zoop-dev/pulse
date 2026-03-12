@@ -242,6 +242,7 @@ class HealthConnectUtils {
         val manager = GBApplication.app().deviceManager
         val syncIntervalInSeconds: Long = 24 * 60 * 60 // 1 day slices
         val lookBackInSeconds: Long = 24 * 60 * 60
+        val sleepLookForwardSeconds: Long = 12 * 60 * 60
 
         for (targetAddress in selectedDevices) {
             // Check if worker has been cancelled
@@ -363,14 +364,19 @@ class HealthConnectUtils {
                     updateSyncStatus(summary, true, summaryCallback, mainHandler)
 
                     val queryStartTs = currentSliceStartTs.minusSeconds(lookBackInSeconds)
-                    LOG.info("$HC_SYNC_TAG Querying Gadgetbridge DB for {}({}) from {} to {}", gbDevice.aliasOrName, dataType.name, queryStartTs, currentSliceEndTs)
+                    val queryEndTs = if (dataType == HealthConnectPermissionManager.HealthConnectDataType.SLEEP) {
+                        currentSliceEndTs.plusSeconds(sleepLookForwardSeconds)
+                    } else {
+                        currentSliceEndTs
+                    }
+                    LOG.info("$HC_SYNC_TAG Querying Gadgetbridge DB for {}({}) from {} to {}", gbDevice.aliasOrName, dataType.name, queryStartTs, queryEndTs)
 
                     // Fetch activityBasedSamples under their own lock if needed for the current dataType
                     val activityBasedSamples: List<ActivitySample>? = 
                         if (dataType == HealthConnectPermissionManager.HealthConnectDataType.ACTIVITY || 
                             dataType == HealthConnectPermissionManager.HealthConnectDataType.SLEEP) {
                             GBApplication.acquireDbReadOnly().use { db ->
-                                getActivitySamples(db, gbDevice, queryStartTs.epochSecond.toInt(), currentSliceEndTs.epochSecond.toInt())
+                                getActivitySamples(db, gbDevice, queryStartTs.epochSecond.toInt(), queryEndTs.epochSecond.toInt())
                             }
                         } else {
                             null

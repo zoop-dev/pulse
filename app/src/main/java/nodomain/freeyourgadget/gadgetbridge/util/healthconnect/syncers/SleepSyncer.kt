@@ -123,11 +123,14 @@ internal object SleepSyncer : ContextualActivitySampleSyncer {
         val sessionBoundaryStart = analysisSession.sleepStart.toInstant()
         val sessionBoundaryEndInclusive = analysisSession.sleepEnd.toInstant()
 
-        // Check if session overlaps with the current slice (inclusive boundaries [sliceStart, sliceEnd])
-        // Skip if: sessionStart > sliceEnd OR sessionEnd < sliceStart
-        if (sessionBoundaryStart.isAfter(sliceEndBoundary) || sessionBoundaryEndInclusive.isBefore(sliceStartBoundary)) {
+        // Only process this session if its START falls within the current slice [sliceStart, sliceEnd).
+        // The look-back query ensures full session data is available even for sessions starting near the
+        // previous slice boundary. The look-forward query ensures full session data for sessions starting
+        // near the current slice end. This ownership rule prevents duplicate records when the same session
+        // is discovered across multiple slices due to the look-back overlap.
+        if (sessionBoundaryStart.isBefore(sliceStartBoundary) || !sessionBoundaryStart.isBefore(sliceEndBoundary)) {
             LOG.debug(
-                "Skipping sleep session (identified by SleepAnalysis) for device '{}' (Timeframe: {} to {}) as it does not overlap with current slice ({} to {}).",
+                "Skipping sleep session (identified by SleepAnalysis) for device '{}' (Timeframe: {} to {}) as its start does not fall within current slice [{} to {}).",
                 deviceName,
                 sessionBoundaryStart,
                 sessionBoundaryEndInclusive,
