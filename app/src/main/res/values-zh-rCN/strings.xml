@@ -4298,4 +4298,6 @@
     <string name="activity_type_ccr_diving">密闭式循环呼吸器</string>
     <string name="pref_summary_calendar_sync_event_reminders">将同步活动提醒通知到该设备</string>
     <string name="pref_title_calendar_sync_event_reminders">同步活动通知</string>
+    <string name="recoveryHr">恢复心率</string>
+    <string name="ratingOfPerceivedExertion">运动自觉量表</string>
 </resources>
