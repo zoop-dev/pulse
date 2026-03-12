@@ -4144,4 +4144,6 @@
     <string name="activity_type_ccr_diving">Zárt rendszerű újralégző</string>
     <string name="pref_summary_calendar_sync_event_reminders">Az eseményemlékeztető értesítések szinkronizálva lesznek az eszközzel</string>
     <string name="pref_title_calendar_sync_event_reminders">Eseményemlékeztetők szinkronizálása</string>
+    <string name="recoveryHr">Megnyugvási pulzusszám</string>
+    <string name="ratingOfPerceivedExertion">Érzékelt erőfeszítés</string>
 </resources>
