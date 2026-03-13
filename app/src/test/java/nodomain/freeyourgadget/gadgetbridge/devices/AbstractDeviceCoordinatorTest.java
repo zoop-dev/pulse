@@ -105,6 +105,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("tactix 7", DeviceType.GARMIN_TACTIX_7); // #5782
             put("tactix 8 - 51mm", DeviceType.GARMIN_TACTIX_8); // #5772
             put("Forerunner 265S", DeviceType.GARMIN_FORERUNNER_265S);
+            put("Forerunner 935", DeviceType.GARMIN_FORERUNNER_935); // #5870
             put("Forerunner 955", DeviceType.GARMIN_FORERUNNER_955); // #4124
             put("Enduro", DeviceType.GARMIN_ENDURO); // #5347
             put("Enduro 3", DeviceType.GARMIN_ENDURO_3);
