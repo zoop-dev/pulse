@@ -124,6 +124,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("Forerunner 255S", DeviceType.GARMIN_FORERUNNER_255S); // #3841
             put("Venu 2", DeviceType.GARMIN_VENU_2); // #3835
             put("Venu 4 45mm", DeviceType.GARMIN_VENU_4); // #5461
+            put("Venu 4 - 45mm", DeviceType.GARMIN_VENU_4); // matrix
             put("Forerunner 265", DeviceType.GARMIN_FORERUNNER_265); // #3831
             put("EPIX PRO - 51mm", DeviceType.GARMIN_EPIX_PRO); // #3810
             put("EPIX", DeviceType.GARMIN_EPIX); // matrix

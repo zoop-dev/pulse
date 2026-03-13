@@ -8,7 +8,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.GarminWatchCo
 public class GarminVenu4Coordinator extends GarminWatchCoordinator {
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("^Venu 4 \\d+mm$");
+        return Pattern.compile("^Venu 4 (- )?\\d+mm$");
     }
 
     @Override
