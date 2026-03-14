@@ -397,7 +397,7 @@
     <string name="Delete">删除</string>
     <string name="title_activity_vibration">振动</string>
     <string name="title_activity_pebble_pairing">Pebble 配对中</string>
-    <string name="pebble_pairing_hint">您的 Android 设备上将会弹出一个配对对话框。如果没有出现, 请查看通知栏并接受配对请求。之后, 接受你的 Pebble 配对要求。</string>
+    <string name="pebble_pairing_hint">您的 Android 设备上将会弹出一个配对对话框。如果没有出现, 请查看通知栏并接受配对请求。之后也请在 Pebble 上接受配对要求。</string>
     <string name="pref_title_setup_bt_pairing">启用蓝牙配对</string>
     <string name="pref_summary_setup_bt_pairing">如果连接有问题，请停用</string>
     <string name="unit_metric">公制</string>
@@ -1215,7 +1215,7 @@
     <string name="prefs_sleep_time_label">定义睡眠小时</string>
     <string name="prefs_sleep_time">睡眠时间</string>
     <string name="pref_title_ping_tone">Ping 铃声</string>
-    <string name="nothing_prefs_inear_summary">当佩戴或取下耳塞式耳机时自动播放或暂停音乐</string>
+    <string name="nothing_prefs_inear_summary">播放还是暂停音乐取决于戴不戴耳塞式耳机</string>
     <string name="nothing_prefs_inear_title">入耳检测</string>
     <string name="nothing_prefs_audiomode_title">音频模式</string>
     <string name="check_all_applications">选中所有的应用</string>
@@ -1442,7 +1442,7 @@
     <string name="sony_anc_optimizer_status_analyzing">分析中…</string>
     <string name="pref_anc_optimizer_state_pressure">大气压力</string>
     <string name="pref_header_sony_anc_optimizer">降噪优化</string>
-    <string name="sony_anc_optimize_description">点击开始以进行降噪优化。</string>
+    <string name="sony_anc_optimize_description">点击开始降噪优化。</string>
     <string name="unknown">未知</string>
     <string name="sony_anc_optimize_title">优化</string>
     <string name="sony_anc_optimizer_status_not_running">没有运行</string>
@@ -4238,7 +4238,7 @@
     <string name="pref_even_realities_g1_touch_double_right_title">轻按右边两次</string>
     <string name="pref_even_realities_g1_touch_double_right_summary">轻按右触控板两次时，采取此操作：%s</string>
     <string name="pref_even_realities_g1_touch_long_left_title">长按左边</string>
-    <string name="pref_even_realities_g1_touch_long_left_summary">长按左触控板两次时，采取该操作：%s</string>
+    <string name="pref_even_realities_g1_touch_long_left_summary">长按左触控板时，采取该操作：%s</string>
     <string name="pref_even_realities_g1_touch_long_right_title">长按右边</string>
     <string name="pref_even_realities_g1_touch_long_right_summary">长按右触控板两次时，采取该操作：%s</string>
     <string name="even_realities_no_calendar_events">无即将来临的活动</string>
