@@ -2389,12 +2389,12 @@
     <string name="menuitem_focus">Fokus</string>
     <string name="pref_call_rejection_method_title">Methode zur Ablehnung von Anrufen</string>
     <string name="prefs_wena3_auto_power_off_turn_on_time_item">Zeit fortsetzen</string>
-    <string name="heartrate_bpm_155">155 Schläge/min</string>
-    <string name="heartrate_bpm_165">165 Schläge/min</string>
-    <string name="heartrate_bpm_175">175 Schläge/min</string>
-    <string name="heartrate_bpm_185">185 Schläge/min</string>
-    <string name="heartrate_bpm_195">195 Schläge/min</string>
-    <string name="heartrate_bpm_205">205 Schläge/min</string>
+    <string name="heartrate_bpm_155">155 BPM</string>
+    <string name="heartrate_bpm_165">165 BPM</string>
+    <string name="heartrate_bpm_175">175 BPM</string>
+    <string name="heartrate_bpm_185">185 BPM</string>
+    <string name="heartrate_bpm_195">195 BPM</string>
+    <string name="heartrate_bpm_205">205 BPM</string>
     <string name="pref_navigation_app_osmand">OsmAnd(+)</string>
     <string name="pref_force_connection_type_bt_classic">Bluetooth-Classic</string>
     <string name="prefs_heartrate_alert_active_high_threshold">Alarmgrenze Aktivitätspuls</string>
@@ -3005,7 +3005,7 @@
     <string name="backup_restore_restart_title">Neustart</string>
     <string name="backup_restore_restart_summary">%1s startet jetzt neu.</string>
     <string name="first_start_welcome_title">Willkommen</string>
-    <string name="first_start_intro_welcome_to">WIllkommen zu</string>
+    <string name="first_start_intro_welcome_to">Willkommen zu</string>
     <string name="activity_db_management_import_from_zip">ZIP importieren</string>
     <string name="activity_db_management_backup_restore_explanation">Das Sichern und Wiederherstellen ermöglicht es, alle Gadgetbridge-Einstellungen, -Geräte und -Daten mittels ZIP-Datei zu migrieren oder zu sichern.\n\nBeim Wiederherstellen werden alle bestehenden Daten, Geräte und Einstellungen entfernt und vollständig durch die Sicherung ersetzt.</string>
     <string name="backup_restore_abort_export_confirmation">Export abbrechen? Die unvollständige ZIP-Datei wird gelöscht.</string>
@@ -3131,7 +3131,7 @@
     <string name="activity_type_aerobic_combo">Aerobic-Kombination</string>
     <string name="activity_type_air_walker">Air Walker</string>
     <string name="activity_type_futsal">Futsal</string>
-    <string name="activity_type_jai_alai">Jai alai</string>
+    <string name="activity_type_jai_alai">Jai Alai</string>
     <string name="activity_type_obstacle_race">Hindernislauf</string>
     <string name="activity_type_body_combat">Körperkampf</string>
     <string name="activity_type_orienteering">Orientierungslauf</string>
@@ -3146,8 +3146,8 @@
     <string name="redmi_buds_5_pro_equalizer_band_12k">12 kHz</string>
     <string name="redmi_buds_5_pro_equalizer_neg4">-4 dB</string>
     <string name="activity_type_hip_hop">Hip-Hop</string>
-    <string name="activity_type_hacky_sack">Hacky sack</string>
-    <string name="activity_type_pole_dance">Pole dance</string>
+    <string name="activity_type_hacky_sack">Hacky Sack</string>
+    <string name="activity_type_pole_dance">Poledance</string>
     <string name="activity_type_somatosensory_game">Somatosensorisches Spiel</string>
     <string name="activity_type_wall_ball">Wandball</string>
     <string name="activity_type_ballroom_dance">Gesellschaftstanz</string>
@@ -3160,7 +3160,7 @@
     <string name="redmi_buds_5_pro_equalizer_5">5 dB</string>
     <string name="prefs_light_duration_longer">Längere Lichtdauer</string>
     <string name="activity_type_push_walk_speed">Schieben - Gehgeschwindigkeit</string>
-    <string name="activity_type_hula_hoop">Hula hoop</string>
+    <string name="activity_type_hula_hoop">Hula-Hoop</string>
     <string name="activity_type_race_walking">Gehen(Sport)</string>
     <string name="activity_type_indoor_push_walk_speed">Schieben innen - Gehgeschwindigkeit</string>
     <string name="activity_type_push_run_speed">Schieben - Laufgeschwindigkeit</string>
@@ -3174,7 +3174,7 @@
     <string name="activity_type_flowriding">Indoor-Surfen</string>
     <string name="activity_type_folk_dance">Folkstanz</string>
     <string name="activity_type_modern_dance">Moderner Tanz</string>
-    <string name="activity_type_square_dance">Square dance</string>
+    <string name="activity_type_square_dance">Square Dance</string>
     <string name="activity_type_stair_climber">Treppenkletterer</string>
     <string name="activity_type_shuffleboard">Shuffleboard</string>
     <string name="steps_distance_unit">%1$,.2f km</string>
@@ -4040,7 +4040,7 @@
     <string name="sleep_restless_moments">Ruhelose Momente</string>
     <string name="average_ascent_velocity">Durchschnittliche Steiggeschwindigkeit</string>
     <string name="mountain_bike_grit_score">Grit-Wert</string>
-    <string name="mountain_bike_flow_score">Flow score</string>
+    <string name="mountain_bike_flow_score">Flow Score</string>
     <string name="avg_temperature">∅ Temperatur</string>
     <string name="min_temperature">Minimaltemperatur</string>
     <string name="max_temperature">Maximaltemperatur</string>
