@@ -44,7 +44,7 @@
     <string name="miband_firmware_unknown_warning">Ez a firmware nincs tesztelve, lehetséges, hogy nem kompatibilis a Gadgetbridge-dzsel.
 \n
 \nNEM javasoljuk, ezen firmware telepítését!</string>
-    <string name="miband_firmware_suggest_whitelist">Ha ennek ellenére is telepíteni szeretné, és a dolgok jól működnek utána, jelezze a Gadgetbridge fejlesztőinek, hogy az engedélyezési listára tehessék a(z) %s firmware-változatot.</string>
+    <string name="miband_firmware_suggest_whitelist">Ha mégis folytatni szeretné, és a dolgok jól működnek utána, jelezze a Gadgetbridge fejlesztőinek, hogy az engedélyezési listára tehessék a(z) %s firmware-változatot.</string>
     <!--Strings related to Settings-->
     <string name="title_activity_settings">Beállítások</string>
     <string name="pref_header_general">Általános beállítások</string>
@@ -1343,7 +1343,7 @@
     <string name="pref_header_equalizer">Hangszínszabályzó</string>
     <string name="pref_pair_bluetooth_calls_summary">Koppintson ide a párosítási folyamat elindításához</string>
     <string name="pref_pair_bluetooth_calls_help_title">Bluetooth-hívások fogadása</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Menjen a telefon Bluetooth-beállításaiba, és párosítsa az új eszközzel, amely megjelenik (hasonló név, mint a jelenlegi óráé, de egy utótaggal, például: „Amazfit GTR 4 – AFC8”).</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Nyissa meg a telefon Bluetooth-beállításait, és párosítsa az új eszközt, amelynek neve hasonló lesz a jelenlegi órájához, de utótaggal egészül ki, például: „Amazfit GTR 4 – AFC8”.</string>
     <string name="pref_pair_bluetooth_calls_help_summary">Bluetooth-hívások fogadásához a telefont párosítani kell az óra egy második példányával.</string>
     <string name="pref_pair_bluetooth_calls_help_1">1. Érintse meg az alábbi gombot a párosítási folyamat elindításához.</string>
     <string name="pref_pair_bluetooth_calls_help_3">3. Engedélyezze az alábbi „Bluetooth-hívások” beállítást.</string>
@@ -1363,7 +1363,7 @@
     <string name="pref_title_banglejs_text_bitmap">Szöveg bittérképként</string>
     <string name="pref_pair_bluetooth_calls_help_warning">FIGYELEM: Ha engedélyezi a Bluetooth-hívásokat a második példánnyal párosítás nélkül, a hívásértesítések nem feltétlenül fognak megfelelően működni.</string>
     <string name="pref_title_notifications_ignore_work_profile">Munkaprofil-értesítések mellőzése</string>
-    <string name="pref_title_banglejs_phone_gps_enbale">Telefonos GPS-adatok használata</string>
+    <string name="pref_title_banglejs_phone_gps_enbale">Telefon GPS-adatainak használata</string>
     <string name="pref_title_banglejs_webview_url">Alkalmazásbetöltő webcím</string>
     <string name="pref_summary_custom_deviceicon">Kapcsolódáskor egy eszközspecifikus Android értesítési ikont jelenjen meg a Gadgetbridge ikon helyett</string>
     <string name="pref_title_screen_on_on_notifications">Képernyő bekapcsolása értesítések érkezésekor</string>
@@ -1388,7 +1388,7 @@
     <string name="pref_title_ping_tone">Csengőhang</string>
     <string name="pref_title_banglejs_txt_bitmap_size">Szöveg Bitkép mérete</string>
     <string name="pref_summary_banglejs_txt_bitmap_size">A bittérképes szövegmegjelenítéshez használható méret</string>
-    <string name="pref_summary_banglejs_phone_gps_enbale">Használja a telefon GPS-adatait a karkötő GPS-adatainak felülírásához</string>
+    <string name="pref_summary_banglejs_phone_gps_enbale">Telefon GPS-adatainak használata a karkötő GPS-adatainak felülírásához</string>
     <string name="pref_rtl_max_line_length_summary">Meghosszabbítja vagy lerövidíti azokat a sorokat, amelyekre a jobbról balra haladó szöveg fel van osztva</string>
     <string name="pref_summary_casio_alert_calendar">Riasztás (rezgés/csipogás) a naptári értesítéseknél</string>
     <string name="pref_title_casio_alert_call">Riasztás a bejövő hívásoknál</string>
