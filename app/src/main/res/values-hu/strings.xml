@@ -367,7 +367,7 @@
     <string name="title_activity_vibration">Rezgés</string>
     <!--Strings related to Pebble Pairing Activity-->
     <string name="title_activity_pebble_pairing">Pebble párosítása</string>
-    <string name="pebble_pairing_hint">Egy párosítási párbeszédablak fog megjelenni az Android-eszközén. Ha ez nem történik meg, nézze meg az értesítési sávban és fogadja el a párosítási kérelmet. Utána fogadja el a kérelmet a Pebble-n is.</string>
+    <string name="pebble_pairing_hint">Egy párosítási párbeszédablak fog megjelenni az Android-eszközén. Ha ez nem történik meg, nézze meg az értesítési sávban és fogadja el a párosítási kérelmet. Utána fogadja el a kérelmet a Pebble eszközön is.</string>
     <string name="pref_title_setup_bt_pairing">Bluetooth párosítás engedélyezése</string>
     <string name="pref_summary_setup_bt_pairing">Kapcsolja ki ezt, ha gondja van a kapcsolódással</string>
     <string name="unit_metric">Metrikus</string>
@@ -1369,7 +1369,7 @@
     <string name="pref_title_screen_on_on_notifications">Képernyő bekapcsolása értesítések érkezésekor</string>
     <string name="pref_summary_banglejs_phone_gps_network_only">Csak a hálózati szolgáltató használata a helyszín meghatározásához. Ez csökkenti az energiafogyasztást a pontosság rovására. Újrakapcsolódás szükséges.</string>
     <string name="pref_title_banglejs_phone_gps_update_interval">GPS-adatfrissítési időköz</string>
-    <string name="pref_summary_banglejs_webview_url">Ha egyéni alkalmazásbetöltőt szeretne, adja meg https://…/android.html webcímét ide. Ellenkező esetben hagyja üresen a https://banglejs.com/apps mezőt</string>
+    <string name="pref_summary_banglejs_webview_url">Ha egyéni alkalmazásbetöltőt szeretne használni, akkor itt adja meg a https://…/android.html webcímét. Ellenkező esetben hagyja üresen a https://banglejs.com/apps használatához</string>
     <string name="pref_title_message_privacy_mode">Üzenet adatvédelmi mód</string>
     <string name="pref_title_weather_summary">A LineageOS időjárásszolgáltatóhoz használatos, más Android-verziókhoz olyan alkalmazás szükséges, mint a „Breezy Weather”. További információ a Gadgetbridge weboldalán talál.</string>
     <string name="pref_title_device_intents">Intentek engedélyezése</string>
@@ -1397,7 +1397,7 @@
     <string name="pref_title_casio_alert_sms">Riasztás az SMS értesítéseknél</string>
     <string name="pref_summary_casio_alert_sms">Riasztás (rezgés/csipogás) az SMS-értesítéseknél (szöveges üzenet)</string>
     <string name="pref_title_casio_alert_other">Riasztás az „egyéb” értesítésekhez</string>
-    <string name="pref_summary_banglejs_phone_gps_update_interval">A GPS-pozíció frissítésének gyakorisága mmp-ben</string>
+    <string name="pref_summary_banglejs_phone_gps_update_interval">GPS-pozíció frissítésének gyakorisága mmp-ben</string>
     <string name="pref_header_intent_api">Intent API</string>
     <string name="intent_api_broadcast_export_summary">Intent közvetítése, amikor az adatbázis exportálása befejeződik</string>
     <string name="intent_api_allow_trigger_export_title">Engedélyezze az adatbázis exportálását</string>
@@ -1406,7 +1406,7 @@
     <string name="femometer_measurement_mode_precise">Precíz mód (3 perc)</string>
     <string name="pref_gps_band">GPS sáv</string>
     <string name="pref_agps_expiry_reminder_enabled">AGPS lejárati emlékeztető</string>
-    <string name="prefs_sensors_button_bp_calibration_sum">Kattintson ide a kalibrálás megkezdéséhez</string>
+    <string name="prefs_sensors_button_bp_calibration_sum">Koppintson ide a kalibrálás megkezdéséhez</string>
     <string name="pref_workout_detection_ask_first_summary">Edzés észlelésekor az órán történő megerősítés szükséges</string>
     <string name="world_clock_no_free_slots_title">Nincs szabad hely</string>
     <string name="pref_summary_connected_advertisement">Felfedezhetővé teszi az eszközt Bluetooth-on keresztül, még akkor is, ha csatlakoztatva van</string>
@@ -1833,7 +1833,7 @@
     <string name="pref_qhybrid_title_widget_draw_circles">Modulkörök rajzolása</string>
     <string name="pref_qhybrid_save_raw_activity_files">Nyers tevékenységfájlok mentése</string>
     <string name="permission_granting_mandatory">Mindezek az engedélyek szükségesek, és ha nem adják meg őket, instabilitás léphet fel</string>
-    <string name="permission_notification_policy_access">A(z) %1$s alkalmazásnak hozzáférésre van szüksége a ne zavarjanak beállításokhoz, hogy betarthassa őket az órán is, amikor a telefon képernyője ki van kapcsolva.\n\nKoppintson a(z) „%2$s” majd a(z) „%1$s” elemre, és válassza a „Ne zavarjanak mód engedélyezése” lehetőséget, majd a visszatéréshez ide: %1$s koppintson a „Vissza” gombra.</string>
+    <string name="permission_notification_policy_access">A(z) %1$s alkalmazásnak hozzáférésre van szüksége a „Ne zavarjanak” beállításokhoz, hogy azok az órán is érvényesüljenek, amikor a telefon képernyője ki van kapcsolva.\n\nKoppintson a(z) „%2$s” gombra, majd a(z) „%1$s” gombra, és engedélyezze a „Ne zavarjanak” módot, végül koppintson a „Vissza” gombra, hogy visszatérjen a(z) %1$s alkalmazásba.</string>
     <string name="note">Jegyzet</string>
     <string name="pref_invalid_frequency_message">Adjon meg egy 87,5 és 108,0 közötti frekvenciát</string>
     <string name="pref_title_lower_button_short_press_action">Alsó gomb rövid megnyomású művelet</string>
@@ -1883,7 +1883,7 @@
     <string name="swim_style">úszás stílus</string>
     <string name="mi_h">mérföld/óra</string>
     <string name="minutes_mi">perc/mi</string>
-    <string name="error_background_service_reason">A háttérszolgáltatás indítása egy kivétel miatt nem sikerült - további információkért kattintson ide.\n\nHiba:</string>
+    <string name="error_background_service_reason">A háttérszolgáltatás indítása egy kivétel miatt nem sikerült - további információkért koppintson ide.\n\nHiba:</string>
     <string name="error_setting_alias">Hiba történt az álnév beállításakor:</string>
     <string name="discover_unsupported_devices">Nem támogatott eszközök felfedezése</string>
     <string name="swolf_index">swolf index</string>
@@ -1930,7 +1930,7 @@
     <string name="dev_tools">Fejlesztőeszközök</string>
     <string name="activity_filter_from_placeholder">távoli múlt</string>
     <string name="watchface_setting_title_display_refresh_timeout">Frissítés időtúllépés megjelenítése</string>
-    <string name="nothing_prefs_inear_summary">A zenelejátszás indítása/szüneteltetése attól függően, hogy viseli-e a fülhallgatót</string>
+    <string name="nothing_prefs_inear_summary">Zenelejátszás indítása/szüneteltetése attól függően, hogy viselve van-e a fülhallgató</string>
     <string name="weekstepschart_steps_a_week_or_month">Heti/havi lépésszám</string>
     <string name="weeksleepchart_sleep_a_week_or_month">Heti/havi alvásidő</string>
     <string name="sony_speak_to_chat_focus_on_voice">Beszédhang kiemelése</string>
@@ -2249,7 +2249,7 @@
     <string name="activity_type_ice_skating">Jégkorcsolya</string>
     <string name="activity_type_snowmobiling">Hómobilozás</string>
     <string name="activity_type_modern_dance">Modern tánc</string>
-    <string name="activity_type_muay_thai">Muay thai</string>
+    <string name="activity_type_muay_thai">Muay Thai</string>
     <string name="devicesetting_scannable_rssi">Minimális RSSI-határérték</string>
     <string name="pref_media_rewind">Ugrás hátra</string>
     <string name="pref_device_action_dnd_priority">Ne zavarjanak - Csak elsőbbséggel</string>
@@ -2880,7 +2880,7 @@
     <string name="redmi_buds_5_pro_transparency_ambient">Környezeti hangok kiemelése</string>
     <string name="sony_button_mode_right">Gomb üzemmód (jobbra)</string>
     <string name="redmi_buds_5_pro_combo_transparency_off">Átlátszóság / Kikapcsolva</string>
-    <string name="sony_anc_optimize_description">Kattintson a zajszűrő-optimalizáló elindításához.</string>
+    <string name="sony_anc_optimize_description">Koppintson a zajszűrő-optimalizáló elindításához.</string>
     <string name="sony_anc_optimize_confirmation_title">Zajszűrés-optimalizáló</string>
     <string name="sony_anc_optimizer_status_wearing_condition">A viselési állapot mérése…</string>
     <string name="pref_wide_area_tap_title">Széles területű érintés</string>
@@ -3401,7 +3401,7 @@
     <string name="maps_download_title">Térképek letöltése</string>
     <string name="maps_track_color_title">Nyomvonal színe</string>
     <string name="maps_not_found">Nem találhatók térképek - válasszon ki egy érvényes térképmappát a beállításokban</string>
-    <string name="maps_download_summary">Kattintson ide a térképfájlok letöltéséhez. Ezeket az alábbi beállításban kiválasztott mappába kell menteni.</string>
+    <string name="maps_download_summary">Koppintson ide a térképfájlok letöltéséhez. Ezeket az alábbi beállításban kiválasztott mappába kell menteni.</string>
     <string name="maps">Térképek</string>
     <string name="weather_condition_light_thunderstorm">gyenge zivatar</string>
     <string name="weather_condition_thunderstorm">zivatar</string>
@@ -3570,7 +3570,7 @@
     <string name="advanced_settings">Speciális beállítások</string>
     <string name="country">Ország</string>
     <string name="developer_mode">Fejlesztői mód</string>
-    <string name="double_click">Dupla kattintás</string>
+    <string name="double_click">Dupla koppintás</string>
     <string name="dpi_dots_per_inch">Képernyő DPI</string>
     <string name="factory_reset">Gyári beállítások visszaállítása</string>
     <string name="long_press_10_seconds">Hosszan nyomva tartás (10 mp)</string>
@@ -3799,7 +3799,7 @@
     <string name="pref_aawireless_start_fix_title">Javítás indítása</string>
     <string name="pref_aawireless_vag_crash_fix_summary">Összeomlás javítása VAG Technisat egységeken szám átugrása és szüneteltetése alatt. Ne engedélyezze más autókon, hibákat okozhat.</string>
     <string name="pref_aawireless_vag_crash_fix_title">VAG-összeomlás javítás</string>
-    <string name="single_click">Egyszeri kattintás</string>
+    <string name="single_click">Egyszeri koppintás</string>
     <string name="switch_to_phone">Váltás erre: %1$s</string>
     <string name="wifi_channel">Wi-Fi-csatorna</string>
     <string name="wifi_frequency_2_4_ghz">2,4 GHz</string>
