@@ -8,4 +8,5 @@
     <cache-path name="csv" path="csv/" />
     <cache-path name="audio" path="audio/" />
     <cache-path name="images" path="images/" />
+    <cache-path name="pdf" path="pdf/" />
 </paths>

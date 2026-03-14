@@ -67,6 +67,9 @@ open class DefaultChartsProvider : DeviceChartsProvider {
         if (coordinator.supportsTemperatureMeasurement(device)) {
             supportedCharts.add("temperature")
         }
+        if (coordinator.supportsBloodPressureMeasurement(device)) {
+            supportedCharts.add("bloodpressure")
+        }
         if (coordinator.supportsWeightMeasurement(device)) {
             supportedCharts.add("weight")
         }
@@ -110,6 +113,7 @@ open class DefaultChartsProvider : DeviceChartsProvider {
             "livestats" -> context.getString(R.string.liveactivity_live_activity)
             "spo2" -> context.getString(R.string.pref_header_spo2)
             "temperature" -> context.getString(R.string.menuitem_temperature)
+            "bloodpressure" -> context.getString(R.string.blood_pressure)
             "cycling" -> context.getString(R.string.title_cycling)
             "weight" -> context.getString(R.string.menuitem_weight)
             "calories" -> context.getString(R.string.calories)
@@ -144,6 +148,7 @@ open class DefaultChartsProvider : DeviceChartsProvider {
                     TemperatureDailyFragment() else TemperatureChartFragment()
             }
 
+            "bloodpressure" -> BloodPressureCollectionFragment.newInstance(allowSwipe)
             "cycling" -> CyclingChartFragment()
             "weight" -> WeightChartFragment()
             "calories" -> CaloriesCollectionFragment.newInstance(allowSwipe)

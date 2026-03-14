@@ -3441,6 +3441,7 @@
         <item>@string/menuitem_weight</item>
         <item>@string/watchface_widget_type_calories</item>
         <item>@string/respiratoryrate</item>
+        <item>@string/blood_pressure</item>
     </string-array>
 
     <string-array name="pref_charts_tabs_values">
@@ -3462,6 +3463,7 @@
         <item>@string/p_weight</item>
         <item>@string/p_calories</item>
         <item>@string/p_respiratory_rate</item>
+        <item>@string/p_bloodpressure</item>
     </string-array>
 
     <string-array name="pref_charts_tabs_items_default">
@@ -3484,6 +3486,7 @@
         <item>@string/p_weight</item>
         <item>@string/p_calories</item>
         <item>@string/p_respiratory_rate</item>
+        <item>@string/p_bloodpressure</item>
     </string-array>
 
 
@@ -5078,6 +5081,7 @@
         <item>@string/menuitem_stress_segmented</item>
         <item>@string/menuitem_stress_breakdown</item>
         <item>@string/hrv</item>
+        <item>@string/blood_pressure</item>
         <item>@string/menuitem_pai</item>
         <item>@string/menuitem_vo2_max</item>
         <item>@string/vo2max_running</item>
@@ -5099,6 +5103,7 @@
         <item>stress_segmented</item>
         <item>stress_breakdown</item>
         <item>hrv</item>
+        <item>bloodpressure</item>
         <item>pai</item>
         <item>vo2max</item>
         <item>vo2max_running</item>
@@ -5117,6 +5122,7 @@
         <item>bodyenergy</item>
         <item>stress_segmented</item>
         <item>hrv</item>
+        <item>bloodpressure</item>
         <item>vo2max</item>
         <item>calories_active</item>
         <item>calories_segmented</item>

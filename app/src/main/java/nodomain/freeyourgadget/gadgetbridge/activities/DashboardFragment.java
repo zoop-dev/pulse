@@ -72,6 +72,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardCalori
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardDistanceWidget;
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardGoalsWidget;
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardHrvWidget;
+import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardBloodPressureWidget;
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardPaiWidget;
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardSleepScoreWidget;
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardSleepWidget;
@@ -309,6 +310,9 @@ public class DashboardFragment extends Fragment implements MenuProvider {
                         break;
                     case "hrv":
                         widget = DashboardHrvWidget.newInstance(dashboardData);
+                        break;
+                    case "bloodpressure":
+                        widget = DashboardBloodPressureWidget.newInstance(dashboardData);
                         break;
                     case "vo2max_running":
                         widget = DashboardVO2MaxRunningWidget.newInstance(dashboardData);

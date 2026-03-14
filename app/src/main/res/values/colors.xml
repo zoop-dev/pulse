@@ -79,6 +79,8 @@
     <color name="spo2_color" type="color">#aad93832</color>
     <color name="spo2_avg_color_light" type="color">#630b0d</color>
     <color name="spo2_avg_color_dark" type="color">#ff9393</color>
+    <color name="blood_pressure_systolic_color" type="color">#d93832</color>
+    <color name="blood_pressure_diastolic_color" type="color">#3F84E5</color>
 
     <color name="value_line_color" type="color">#858585</color>
     <color name="row_separator_light" type="color">#ffe2e2e5</color>

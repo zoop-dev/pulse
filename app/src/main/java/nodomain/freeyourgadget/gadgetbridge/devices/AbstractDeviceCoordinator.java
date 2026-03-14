@@ -697,7 +697,8 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
                 supportsWeightMeasurement(device) ||
                 supportsActiveCalories(device) ||
                 supportsCyclingData(device) ||
-                supportsRespiratoryRate(device);
+                supportsRespiratoryRate(device) ||
+                supportsBloodPressureMeasurement(device);
     }
 
     @Override
