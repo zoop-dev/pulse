@@ -763,7 +763,7 @@
     <string name="pref_title_vibration_strength">Vibrationsstärke</string>
     <string name="hr_appname_commute">Pendeln</string>
     <string name="pref_summary_relax_firmware_checks">Firmwareüberprüfung deaktivieren</string>
-    <string name="pref_title_relax_firmware_checks">Aktiviere diese Option, wenn du eine Firmware flashen möchten, die nicht für dein Gerät bestimmt ist (auf eigene Gefahr)</string>
+    <string name="pref_title_relax_firmware_checks">Aktiviere diese Option, wenn du eine Firmware flashen möchtest, die nicht für dein Gerät bestimmt ist (auf eigene Gefahr)</string>
     <string name="pref_qhybrid_title_widget_draw_circles">Widget-Kreise zeichnen</string>
     <string name="pref_header_auto_fetch">Automatischer Abruf</string>
     <string name="pref_qhybrid_save_raw_activity_files">Raw Activity Dateien speichern</string>
@@ -837,7 +837,7 @@
 \nINSTALLATION AUF EIGENE GEFAHR!</string>
     <string name="error_location_enabled_mandatory">Standort muss für den Gerätescan aktiviert sein</string>
     <string name="error_retrieving_devices_database">Fehler beim Laden der Geräte aus der Datenbank</string>
-    <string name="error_setting_alias">Fehler beim setzen des Alias:</string>
+    <string name="error_setting_alias">Fehler beim Setzen des Alias:</string>
     <string name="error_exporting_device_preferences">Fehler beim Export der gerätespezifischen Einstellungen</string>
     <string name="pref_check_permission_status_summary">Prüfen und nachfragen von fehlenden Berechtigungen, auch wenn sie nicht direkt benötigt werden. Nur deaktivieren, wenn dieses Gerät eine der Features nicht unterstützen soll. Eine Berechtigung nicht zu erteilen kann zu Problemen führen!</string>
     <string name="pref_check_permission_status">Berechtigungsstatus prüfen</string>
@@ -958,7 +958,7 @@
     <string name="sonyswr12_settings_alarm_interval_summary">Das intelligente Alarmintervall ist das Intervall vor dem installierten Alarm. In diesem Intervall versucht das Gerät, die leichteste Schlafphase zu erkennen, um den Benutzer zu wecken</string>
     <string name="chart_get_active_and_synchronize">Führe einige Aktivitäten durch und synchronisiere das Gerät.</string>
     <string name="descentSeconds">Abstiegszeit</string>
-    <string name="activity_error_no_app_for_png">Um diesen Screenshot zu teilen installiere eine App die Bilder verarbeiten kann.</string>
+    <string name="activity_error_no_app_for_png">Um diesen Screenshot zu teilen, installiere eine App die Bilder verarbeiten kann.</string>
     <string name="activity_prefs_chart_min_session_length">Minimale Aktivitätsdauer (Minuten)</string>
     <string name="activity_prefs_chart_max_idle_phase_length">Pausenlänge zum Trennen von Aktivitäten (Minuten)</string>
     <string name="activity_prefs_chart_min_steps_per_minute">Minimale Schritte pro Minute zur Erkennung einer Aktivität (Gehen)</string>
@@ -2982,7 +2982,7 @@
     <string name="menuitem_stress_segmented">Stress (segmentiert)</string>
     <string name="pref_deprecated_media_control_title">Veraltete Mediensteuerung</string>
     <string name="activity_type_canoeing">Kanufahren</string>
-    <string name="backup_restore_exporting_files_i_of_n">Exportiere Dateien... %1$d von %2$d</string>
+    <string name="backup_restore_exporting_files_i_of_n">Exportiere Dateien… %1$d von %2$d</string>
     <string name="backup_restore_exporting_finishing">Export wird abgeschlossen…</string>
     <string name="backup_restore_import_complete">Import abgeschlossen</string>
     <string name="backup_restore_abort_title">Abbrechen</string>
@@ -3070,7 +3070,7 @@
     <string name="music_new_playlist">Neue Playlist</string>
     <string name="prefs_hrv_monitoring_title">HRV Überwachung</string>
     <string name="inactivity_warnings_minimum_steps_summary">Mindestanzahl an Schritten, welche während des definierten Zeitraums gegangen werden müssen</string>
-    <string name="backup_restore_importing_files_i_of_n">Importieren von Dateien... %1$d von %2$d</string>
+    <string name="backup_restore_importing_files_i_of_n">Importieren von Dateien… %1$d von %2$d</string>
     <string name="first_start_overview_devices">Die Geräteansicht zeigt alle Geräte an, die Sie konfiguriert haben und gibt Zugriff auf gerätespezifische Funktionen wie detaillierte Diagramme, Einstellungen, Apps und Alarme.</string>
     <string name="first_start_get_started_title">Ersteinrichtung</string>
     <string name="first_start_permissions_desc">Gadgetbridge braucht für viele Berechtigungen, damit alle Funktionen funktionieren. Überprüfe die Berechtigungen und ihre Zwecke unten.</string>
@@ -3259,7 +3259,7 @@
     <string name="error_no_cycling_sensor_found">kein Fahrradsensor gefunden</string>
     <string name="workout_set_repetitions_weight_lbs">%1$d x %2$.2f lbs</string>
     <string name="hrv_sdrr">HRV SDRR</string>
-    <string name="activity_type_muay_thai">Muay thai</string>
+    <string name="activity_type_muay_thai">Muay Thai</string>
     <string name="activity_type_cardio_combat">Kardio-Kampf</string>
     <string name="hrZoneMaximum">Maximum</string>
     <string name="activity_type_marine">Marine</string>
@@ -3581,7 +3581,7 @@
     <string name="busy_task_fetch_weight_data">Abrufen der Gewichtsdaten</string>
     <string name="restingCalories">Ruhekalorien</string>
     <string name="notifications_app_icon_info">Wähle Anwendungen und drücke «an Gerät senden». Alle zuvor hochgeladenen Symbole können ersetzt werden. Aktuelle Gerätebeschränkungen unbekannt.</string>
-    <string name="notifications_app_icon_uploading">Die Symbole werden im Hintergrund hochgeladen. Du kannst diese Aktivität schliessen</string>
+    <string name="notifications_app_icon_uploading">Die Symbole werden im Hintergrund hochgeladen. Du kannst diese Aktivität schließen</string>
     <string name="pref_huawei_activity_reminders">Aktivitätserinnerungen</string>
     <string name="pref_huawei_activity_reminder_stand_title">Stand</string>
     <string name="pref_huawei_activity_reminder_stand_summary">Erhalte eine Erinnerung, aufzustehen, wenn du seit einer Stunde nicht aufgestanden bist</string>
