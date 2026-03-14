@@ -182,7 +182,7 @@
     <string name="fw_upgrade_notice_huawei">You are about to upload the %1$s firmware on your %2$s.\n\nYour current firmware is %3$s\n\nYour device will reboot after uploading.\n\nPROCEED AT YOUR OWN RISK!</string>
     <string name="miband_firmware_known">This firmware has been tested and is known to be compatible with Gadgetbridge.</string>
     <string name="miband_firmware_unknown_warning">This firmware is untested and may not be compatible with Gadgetbridge.\n\nYou are DISCOURAGED from flashing it!</string>
-    <string name="miband_firmware_suggest_whitelist">If you still want to proceed and things continue to work properly afterwards, please tell the Gadgetbridge developers to whitelist the %s firmware version.</string>
+    <string name="miband_firmware_suggest_whitelist">If you still want to proceed and things continue to work properly afterward, please tell the Gadgetbridge developers to whitelist the %s firmware version.</string>
     <!-- Strings related to the FwAppInstaller opener activity -->
     <string name="open_fw_installer_info_text">The Firmware/Watchface/App/File Installer allows you to upload/install supported files (firmware, watchfaces, applications, GPS, resources, fonts…) to the device. See some more information on the website: https://gadgetbridge.org/internals/features/installer/</string>
     <string name="open_fw_installer_warning_title">Warning</string>
@@ -282,7 +282,7 @@
     <string name="pref_pair_bluetooth_calls_help_title">How to receive Bluetooth calls</string>
     <string name="pref_pair_bluetooth_calls_help_summary">In order to receive Bluetooth calls, you need to pair your phone with a second instance of the watch.</string>
     <string name="pref_pair_bluetooth_calls_help_1">1. Tap the button below to start the pairing process.</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Go to your phone\'s Bluetooth settings, and pair with the new device that will show up (similar name to your current watch, but with a suffix, eg. \"Amazfit GTR 4 - AFC8\".</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Go to your phone\'s Bluetooth settings, and pair with the new device that will show up (similar name to your current watch, but with a suffix, e.g. \"Amazfit GTR 4 - AFC8\".</string>
     <string name="pref_pair_bluetooth_calls_help_3">3. Enable the \"Bluetooth calls\" setting below.</string>
     <string name="pref_pair_bluetooth_calls_help_warning">WARNING: If you enable Bluetooth calls without pairing with the second instance, call notifications might not work as expected.</string>
     <string name="pref_title_support_voip_calls">Enable VoIP app calls</string>
@@ -319,14 +319,14 @@
     <string name="pref_summary_banglejs_text_bitmap">If a word cannot be rendered with the watch\'s font, render it to a bitmap in Gadgetbridge and display the bitmap on the watch</string>
     <string name="pref_title_banglejs_txt_bitmap_size">Text Bitmaps Size</string>
     <string name="pref_summary_banglejs_txt_bitmap_size">Size to use for bitmap text rendering</string>
-    <string name="pref_title_banglejs_phone_gps_enbale">Use phone gps data</string>
-    <string name="pref_summary_banglejs_phone_gps_enbale">Use the gps data of the phone to overwrite the gps data of the bangle device</string>
+    <string name="pref_title_banglejs_phone_gps_enbale">Use phone GPS data</string>
+    <string name="pref_summary_banglejs_phone_gps_enbale">Use the GPS data of the phone to overwrite the GPS data of the bangle device</string>
     <string name="pref_title_banglejs_phone_gps_network_only">Only use network to determine location</string>
     <string name="pref_summary_banglejs_phone_gps_network_only">Use only the network provider to determine the location. This reduces the power consumption at the cost of accuracy. A reconnection is needed.</string>
     <string name="pref_title_banglejs_phone_gps_update_interval">GPS data update interval</string>
-    <string name="pref_summary_banglejs_phone_gps_update_interval">The interval for how often the gps position is being updated, in ms</string>
+    <string name="pref_summary_banglejs_phone_gps_update_interval">The interval for how often the GPS position is being updated, in ms</string>
     <string name="pref_title_banglejs_webview_url">App loader URL</string>
-    <string name="pref_summary_banglejs_webview_url">If you want a custom app loader put your https://…/android.html URL here. Otherwise leave blank for https://banglejs.com/apps</string>
+    <string name="pref_summary_banglejs_webview_url">If you want a custom app loader put your https://…/android.html URL here. Otherwise, leave blank for https://banglejs.com/apps</string>
     <string name="pref_title_rtl">Right-To-Left</string>
     <string name="pref_summary_rtl">Enable this if your device can not show right-to-left languages</string>
     <string name="pref_rtl_max_line_length">Right-To-Left Max Line Length</string>
@@ -454,7 +454,7 @@
     <string name="pref_title_calendar_sync_colors">Event colors to sync</string>
     <string name="pref_summary_sync_birthdays">Sync contact birthdays alongside calendar events</string>
     <string name="pref_title_sync_birthdays">Sync birthdays</string>
-    <string name="pref_summary_calendar_sync_canceled">Calendar events that are cancelled will be synced to the device</string>
+    <string name="pref_summary_calendar_sync_canceled">Calendar events that are canceled will be synced to the device</string>
     <string name="pref_title_calendar_sync_canceled">Sync canceled events</string>
     <string name="pref_summary_calendar_sync_declined">Calendar events that you have declined will be synced to the device</string>
     <string name="pref_title_calendar_sync_declined">Sync declined events</string>
@@ -1422,7 +1422,7 @@
     <string name="title_activity_vibration">Vibration</string>
     <!-- Strings related to Pebble Pairing Activity-->
     <string name="title_activity_pebble_pairing">Pebble pairing</string>
-    <string name="pebble_pairing_hint">A pairing dialog will pop up on your Android device. If not, look in the notification drawer and accept the pairing request. Also accept it on your Pebble afterwards.</string>
+    <string name="pebble_pairing_hint">A pairing dialog will pop up on your Android device. If not, look in the notification drawer and accept the pairing request. Also accept it on your Pebble afterward.</string>
     <string name="pref_title_setup_bt_pairing">Enable Bluetooth pairing</string>
     <string name="pref_summary_setup_bt_pairing">Deactivate this if you have trouble connecting</string>
     <string name="unit_metric">Metric</string>
@@ -1715,7 +1715,7 @@
     <string name="activity_type_jujitsu">Jujitsu</string>
     <string name="activity_type_mass_gymnastics">Mass gymnastics</string>
     <string name="activity_type_modern_dance">Modern dance</string>
-    <string name="activity_type_muay_thai">Muay thai</string>
+    <string name="activity_type_muay_thai">Muay Thai</string>
     <string name="activity_type_parallel_bars">Parallel bars</string>
     <string name="activity_type_pole_dance">Pole dance</string>
     <string name="activity_type_race_walking">Race walking</string>
@@ -2564,7 +2564,7 @@
     <string name="permission_request">%1$s allows you to send messages and other data from Android to your device. To do this it requires permission to access that data and without it, it might not function properly.\n\nYou\'ll now be presented with a few Android dialogs requesting those permissions.\n\nPlease tap \"%2$s\" to continue.</string>
     <string name="permission_granting_mandatory">All these permissions are required and instability might occur if not granted</string>
     <string name="permission_notification_listener">%1$s needs access to Notifications in order to display them on your watch when your phone\'s screen is off.\n\nPlease tap \"%2$s\" then \"%1$s\" and enable \"Allow Notification Access\", then tap \"Back\" to return to %1$s.</string>
-    <string name="permission_notification_policy_access">%1$s needs access to Do Not Disturb settings in order to honour them on your watch when your phone\'s screen is off.\n\nPlease tap \"%2$s\" then \"%1$s\" and enable \"Allow Do Not Disturb\", then tap \"Back\" to return to %1$s.</string>
+    <string name="permission_notification_policy_access">%1$s needs access to Do Not Disturb settings in order to honor them on your watch when your phone\'s screen is off.\n\nPlease tap \"%2$s\" then \"%1$s\" and enable \"Allow Do Not Disturb\", then tap \"Back\" to return to %1$s.</string>
     <string name="permission_location">%1$s needs access to your location in the background to allow it to stay connected to your watch even when your screen is off.\n\nPlease choose \"%2$s\" in the following screen, then tap \"Back\" to return to %1$s.</string>
     <string name="permission_display_over_other_apps">%1$s needs permission to display over other apps in order to let Bangle.js watches start activities via intents when %1$s is in the background.\n\nThis can be used to start a music app and play a song, and many other things.\n\nPlease tap \"%2$s\" then \"%1$s\" and enable \"Allow display over other apps\", then tap \"Back\" to return to %1$s.\n\nTo stop %1$s asking for permissions go to \"Settings\" and uncheck \"Check permission status\".\n\nMake sure to grant %1$s the permissions needed to function as you expect.</string>
     <string name="error_version_check_extreme_caution">CAUTION: Error when checking version information! You should not continue! Saw version name \"%s\"</string>
@@ -2598,7 +2598,7 @@
     <string name="sonyswr12_settings_stamina">Power saving mode on</string>
     <string name="sonyswr12_settings_stamina_summary">Power saving mode turns off periodic auto measuring of heart rate thus increases working time</string>
     <string name="sonyswr12_settings_alarm_interval">Smart alarm interval in minutes</string>
-    <string name="sonyswr12_settings_alarm_interval_summary">Smart alarm interval is interval before of installed alarm. In this interval device is trying to detect lightest phase of sleep to awake user</string>
+    <string name="sonyswr12_settings_alarm_interval_summary">Smart alarm interval is interval before of installed alarm. In this interval device is trying to detect the lightest phase of sleep to awake user</string>
     <!-- activity summary labels-->
     <string name="distanceMeters">Distance</string>
     <string name="poolLength">Pool length</string>
@@ -3087,7 +3087,7 @@
     <string name="devicetype_galaxybuds_3_pro" translatable="false">Galaxy Buds3 Pro</string>
     <string name="devicetype_sanitas_sbm_67" translatable="false">Sanitas SBM67</string>
     <string name="devicetype_silvercrest_sbm_67" translatable="false">SilverCrest SBM67</string>
-    <string name="nothing_prefs_inear_summary">Play/pause the music depending if you wear the earbuds</string>
+    <string name="nothing_prefs_inear_summary">Play/pause the music depending on whether you wear the earbuds</string>
     <string name="nothing_prefs_inear_title">In-Ear detection</string>
     <string name="prefs_in_ear_detection_summary">Play calls through your earbuds when they are in your ears</string>
     <string name="nothing_prefs_audiomode_title">Audio mode</string>
@@ -3270,7 +3270,7 @@
     <string name="sony_ambient_sound_level">Ambient Sound Level</string>
     <string name="pref_header_sony_anc_optimizer">Noise Cancelling Optimizer</string>
     <string name="sony_anc_optimize_title">Optimize</string>
-    <string name="sony_anc_optimize_description">Click to start the noise cancelling optimizer.</string>
+    <string name="sony_anc_optimize_description">Click to start the noise-cancelling optimizer.</string>
     <string name="sony_anc_optimize_confirmation_title">Noise Cancelling Optimizer</string>
     <string name="sony_anc_optimize_confirmation_description">Use the headphones as you normally would. If the wearing condition or atmospheric pressure change, run the optimizer again.</string>
     <string name="pref_anc_optimizer_state_pressure">Atmospheric pressure</string>
@@ -3325,9 +3325,9 @@
     <string name="pref_adaptive_noise_cancelling_title">Adaptive ANC</string>
     <string name="pref_adaptive_noise_cancelling_summary">Set the strength of the ANC automatically depending on the ambient sound level</string>
     <!--    <string name="pref_personalized_noise_cancelling_title">Personalized ANC</string>-->
-    <!--    <string name="pref_personalized_noise_cancelling_summary">Set whether to use personalized active noise cancelling</string>-->
+    <!--    <string name="pref_personalized_noise_cancelling_summary">Set whether to use personalized active noise-cancelling</string>-->
     <string name="sony_speak_to_chat">Speak-to-chat</string>
-    <string name="sony_speak_to_chat_summary">Turn off noise cancelling automatically when you start talking.</string>
+    <string name="sony_speak_to_chat_summary">Turn off noise-cancelling automatically when you start talking.</string>
     <string name="sony_speak_to_chat_sensitivity">Voice Detection Sensitivity</string>
     <string name="sony_speak_to_chat_sensitivity_auto">Automatic</string>
     <string name="sony_speak_to_chat_sensitivity_high">High</string>
@@ -3960,7 +3960,7 @@
         <item quantity="other">%d days</item>
     </plurals>
     <string name="dashboard_calendar_month_goals_reached_title">% of steps goal reached</string>
-    <string name="pref_auto_reply_calls_summary">The phone will automatically pick-up incoming phonecalls</string>
+    <string name="pref_auto_reply_calls_summary">The phone will automatically pick up incoming phone calls</string>
     <string name="pref_auto_reply_calls_title">Automatically answer phone calls</string>
     <string name="pref_auto_reply_calls_delay_summary">Number of seconds after which the call is automatically picked up</string>
     <string name="pref_auto_reply_calls_delay_title">Automatic Answer Delay</string>
@@ -4356,11 +4356,11 @@
     <string name="pref_even_realities_g1_screen_calibrate_angle_title">Calibrate Angle</string>
     <string name="pref_even_realities_g1_screen_calibrate_angle_summary">Zeroes the angle of the glasses, look straight ahead and tap here</string>
     <string name="pref_even_realities_g1_touch_double_left_title">Double tap left</string>
-    <string name="pref_even_realities_g1_touch_double_left_summary">When the left touch pad is double tapped, take this action: %s</string>
+    <string name="pref_even_realities_g1_touch_double_left_summary">When the left touchpad is double tapped, take this action: %s</string>
     <string name="pref_even_realities_g1_touch_double_right_title">Double tap right</string>
     <string name="pref_even_realities_g1_touch_double_right_summary">When the right pad is double tapped, take this action: %s</string>
     <string name="pref_even_realities_g1_touch_long_left_title">Long press left</string>
-    <string name="pref_even_realities_g1_touch_long_left_summary">When the left touch pad is long pressed, take this action: %s</string>
+    <string name="pref_even_realities_g1_touch_long_left_summary">When the left touchpad is long pressed, take this action: %s</string>
     <string name="pref_even_realities_g1_touch_long_right_title">Long press right</string>
     <string name="pref_even_realities_g1_touch_long_right_summary">When the right pad is long pressed, take this action: %s</string>
     <string name="even_realities_frame_shape_G1A">G1A/Round</string>
