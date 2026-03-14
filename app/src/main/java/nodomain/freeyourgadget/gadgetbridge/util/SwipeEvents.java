@@ -36,6 +36,7 @@ public class SwipeEvents implements View.OnTouchListener {
     public void onSwipeRight() {
     }
 
+    @Override
     public boolean onTouch(View v, MotionEvent event) {
         return gestureDetector.onTouchEvent(event);
     }

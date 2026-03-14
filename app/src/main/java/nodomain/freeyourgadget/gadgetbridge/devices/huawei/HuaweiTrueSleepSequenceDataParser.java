@@ -143,6 +143,7 @@ public class HuaweiTrueSleepSequenceDataParser extends HuaweiSequenceDataParserB
     }
 
 
+    @Override
     protected void fillData(SleepSummary details, int dictId, int dataType, byte[] value) {
         switch (dictId) {
             case 700013686:
@@ -345,6 +346,7 @@ public class HuaweiTrueSleepSequenceDataParser extends HuaweiSequenceDataParserB
         }
     }
 
+    @Override
     protected SleepSummary getNewData() {
         return new SleepSummary();
     }

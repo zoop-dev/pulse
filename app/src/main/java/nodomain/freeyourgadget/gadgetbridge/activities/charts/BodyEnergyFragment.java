@@ -320,6 +320,7 @@ public class BodyEnergyFragment extends AbstractChartFragment<BodyEnergyFragment
         return avgEntries;
     }
 
+    @Override
     protected void setupLegend(Chart<?> chart) {}
 
     Bitmap drawGauge(int width, int barWidth, @ColorInt int filledColor, int value, int maxValue) {

@@ -300,6 +300,7 @@ public class VO2MaxFragment extends AbstractChartFragment<VO2MaxFragment.VO2MaxD
         yAxisRight.setDrawAxisLine(true);
     }
 
+    @Override
     protected void setupLegend(Chart<?> chart) {
         chart.getLegend().setTextColor(LEGEND_TEXT_COLOR);
         chart.getLegend().setWordWrapEnabled(true);

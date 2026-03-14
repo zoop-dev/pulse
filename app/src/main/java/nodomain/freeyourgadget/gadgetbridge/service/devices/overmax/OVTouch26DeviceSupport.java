@@ -388,6 +388,7 @@ public class OVTouch26DeviceSupport extends AbstractBTLESingleDeviceSupport {
         return false;
     }
 
+    @Override
     public void onSendConfiguration(String config) {
             switch (config) {
                 case DeviceSettingsPreferenceConst.PREF_BATTERY_POLLING_ENABLE:

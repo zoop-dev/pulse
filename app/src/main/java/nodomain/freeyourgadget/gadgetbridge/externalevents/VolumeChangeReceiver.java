@@ -87,6 +87,7 @@ public class VolumeChangeReceiver {
             this.observerWeakReference = new WeakReference<>(volumeChangeObserver);
         }
 
+        @Override
         public void onReceive(Context context, Intent intent) {
             VolumeChangeReceiver volumeChangeObserver;
             int currentMusicVolume;

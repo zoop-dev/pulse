@@ -642,6 +642,7 @@ public class CommunicatorV2 implements ICommunicator {
             this.handle = handle;
         }
 
+        @Override
         public void write(final String taskName, final byte[] value) {
             final ByteBuffer buf = ByteBuffer.allocate(value.length + 1);
             buf.put((byte) handle);
@@ -676,6 +677,7 @@ public class CommunicatorV2 implements ICommunicator {
             this.mlrComm = mlrComm;
         }
 
+        @Override
         public void write(final String taskName, final byte[] value) {
             mlrComm.sendMessage(taskName, value);
         }

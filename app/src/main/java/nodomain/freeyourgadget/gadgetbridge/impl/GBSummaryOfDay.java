@@ -24,18 +24,22 @@ public class GBSummaryOfDay implements SummaryOfDay {
     private int dayStartWakeupTime;
     private int dayEndFallAsleepTime;
 
+    @Override
     public byte getProvider() {
         return provider;
     }
 
+    @Override
     public int getSteps() {
         return steps;
     }
 
+    @Override
     public int getDayStartWakeupTime() {
         return dayStartWakeupTime;
     }
 
+    @Override
     public int getDayEndFallAsleepTime() {
         return dayEndFallAsleepTime;
     }

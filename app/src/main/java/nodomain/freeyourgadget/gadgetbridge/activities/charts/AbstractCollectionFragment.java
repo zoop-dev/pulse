@@ -48,6 +48,7 @@ public abstract class AbstractCollectionFragment extends AbstractGBFragment {
         }
     }
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_nested_tabs, container, false);
@@ -64,6 +65,7 @@ public abstract class AbstractCollectionFragment extends AbstractGBFragment {
         return rootView;
     }
 
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {

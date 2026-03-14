@@ -170,6 +170,7 @@ public class RespiratoryRateDailyFragment extends RespiratoryRateFragment<Respir
         respiratoryRateChart.invalidate();
     }
 
+    @Override
     protected void setupLegend(Chart<?> chart) {}
 
     private void setupRespiratoryRateChart() {

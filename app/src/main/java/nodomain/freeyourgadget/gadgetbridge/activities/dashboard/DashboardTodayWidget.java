@@ -385,6 +385,7 @@ public class DashboardTodayWidget extends AbstractDashboardWidget {
         todayChart.setImageBitmap(todayBitmap);
     }
 
+    @Override
     protected void fillData() {
         if (todayView == null) return;
 

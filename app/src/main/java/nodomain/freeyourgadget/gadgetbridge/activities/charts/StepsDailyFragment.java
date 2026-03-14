@@ -192,6 +192,7 @@ public class StepsDailyFragment extends StepsFragment<StepsDailyFragment.StepsDa
         stepsChart.invalidate();
     }
 
+    @Override
     protected void setupLegend(Chart<?> chart) {}
 
     private void setupStepsChart() {

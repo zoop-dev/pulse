@@ -463,6 +463,7 @@ public class LoadFragment extends AbstractChartFragment<LoadFragment.LoadsData> 
         return typedValue.data;
     }
 
+    @Override
     protected void setupLegend(Chart<?> chart) {}
 
     protected static class LoadsData extends ChartsData {

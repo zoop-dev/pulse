@@ -37,10 +37,12 @@ public class DashboardVO2MaxCyclingWidget extends AbstractDashboardVO2MaxWidget 
         return fragment;
     }
 
+    @Override
     public Vo2MaxSample.Type getVO2MaxType() {
         return Vo2MaxSample.Type.CYCLING;
     }
 
+    @Override
     public String getWidgetKey() {
         return "vo2max_cycling";
     }

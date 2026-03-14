@@ -242,6 +242,7 @@ public class ZeppOsActivitySummaryParser extends HuamiActivitySummaryParser {
         }
     }
 
+    @Override
     protected void enrichWithDetails(final BaseActivitySummary summary, ActivityTrack activityTrack) throws IOException, GBException {
         super.enrichWithDetails(summary, activityTrack);
         if (!(activityTrack instanceof ZeppOsActivityTrack zeppOsActivityTrack)) {

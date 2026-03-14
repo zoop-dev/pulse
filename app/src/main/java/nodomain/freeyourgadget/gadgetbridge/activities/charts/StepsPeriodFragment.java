@@ -214,6 +214,7 @@ public class StepsPeriodFragment extends StepsFragment<StepsPeriodFragment.Steps
         stepsChart.invalidate();
     }
 
+    @Override
     protected void setupLegend(Chart<?> chart) {
     }
 

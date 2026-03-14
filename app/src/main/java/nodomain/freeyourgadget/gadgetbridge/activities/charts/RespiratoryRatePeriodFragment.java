@@ -205,6 +205,7 @@ public class RespiratoryRatePeriodFragment extends RespiratoryRateFragment<Respi
         respiratoryRateChart.invalidate();
     }
 
+    @Override
     protected void setupLegend(Chart<?> chart) {}
 
     protected static class RespiratoryRateData extends ChartsData {

@@ -25,6 +25,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
  * Provides low-level access to the database.
  */
 public interface DBHandler extends AutoCloseable {
+    @Override
     void close() throws Exception;
 
     SQLiteDatabase getDatabase();

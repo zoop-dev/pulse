@@ -18,6 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.entities;
 
 public abstract class AbstractGBX100ActivitySample extends AbstractActivitySample {
     abstract public int getCalories();
+    @Override
     abstract public int getSteps();
 
     @Override

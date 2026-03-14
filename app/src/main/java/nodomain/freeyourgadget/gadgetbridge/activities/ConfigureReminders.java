@@ -111,6 +111,7 @@ public class ConfigureReminders extends AbstractGBActivity {
                             .setMessage(getBaseContext().getString(R.string.reminder_no_free_slots_description, String.format(Locale.getDefault(), "%d", deviceSlots)))
                             .setIcon(R.drawable.ic_warning)
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
                                 public void onClick(final DialogInterface dialog, final int whichButton) {
                                 }
                             })

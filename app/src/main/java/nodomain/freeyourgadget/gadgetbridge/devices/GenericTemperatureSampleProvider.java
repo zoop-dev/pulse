@@ -107,11 +107,13 @@ public class GenericTemperatureSampleProvider extends AbstractTimeSampleProvider
         return applyDefaults(super.getLatestSample(until));
     }
 
+    @Override
     @Nullable
     public GenericTemperatureSample getLastSampleBefore(final long timestampTo) {
         return applyDefaults(super.getLastSampleBefore(timestampTo));
     }
 
+    @Override
     @Nullable
     public GenericTemperatureSample getNextSampleAfter(final long timestampFrom) {
         return applyDefaults(super.getNextSampleAfter(timestampFrom));

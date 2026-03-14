@@ -173,14 +173,17 @@ public class ActivitySummariesFilter extends AbstractGBActivity {
 
         nameContainsFilterdata.addTextChangedListener(new TextWatcher() {
 
+            @Override
             public void afterTextChanged(Editable s) {
 
             }
 
+            @Override
             public void beforeTextChanged(CharSequence s, int start,
                                           int count, int after) {
             }
 
+            @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
                 nameContainsFilter = s.toString();
@@ -407,6 +410,7 @@ public class ActivitySummariesFilter extends AbstractGBActivity {
 
     public class CustomOnKindSelectedListener implements AdapterView.OnItemSelectedListener {
 
+        @Override
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             SpinnerWithIconItem selectedItem = (SpinnerWithIconItem) parent.getItemAtPosition(pos);
             String activity = selectedItem.getText();
@@ -423,6 +427,7 @@ public class ActivitySummariesFilter extends AbstractGBActivity {
 
     public class CustomOnDeviceSelectedListener implements AdapterView.OnItemSelectedListener {
 
+        @Override
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             SpinnerWithIconItem selectedItem = (SpinnerWithIconItem) parent.getItemAtPosition(pos);
             deviceFilter = selectedItem.getId();
@@ -440,6 +445,7 @@ public class ActivitySummariesFilter extends AbstractGBActivity {
         ArrayList<String> activity_filter_quick_filter_period_values = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.activity_filter_quick_filter_period_values)));
         String selection;
 
+        @Override
         public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
             selection = activity_filter_quick_filter_period_values.get(pos);
             setTimePeriodFilter(selection);

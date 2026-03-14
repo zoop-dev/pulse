@@ -61,6 +61,7 @@ public abstract class AbstractGBActivity extends AppCompatActivity implements GB
         }
     };
 
+    @Override
     public void setLanguage(Locale language, boolean invalidateLanguage) {
         if (invalidateLanguage) {
             isLanguageInvalid = true;

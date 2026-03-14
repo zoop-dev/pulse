@@ -300,6 +300,7 @@ public class PermissionsUtils {
                         activity.getString(R.string.app_name),
                         activity.getString(R.string.ok)))
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
                     public void onClick(DialogInterface dialog, int id) {
                         try {
                             Intent intent;

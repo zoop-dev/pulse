@@ -407,6 +407,7 @@ public class MusicManagerActivity extends AbstractGBActivity {
         }
 
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                                 @Override
                                                  public boolean onMenuItemClick(MenuItem item) {
                                                      return onPopupItemSelected(item, music);
                                                  }

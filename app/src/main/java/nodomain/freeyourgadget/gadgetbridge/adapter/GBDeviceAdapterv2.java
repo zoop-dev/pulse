@@ -774,6 +774,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                                             .setTitle(R.string.pref_invalid_frequency_title)
                                             .setMessage(R.string.pref_invalid_frequency_message)
                                             .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                                @Override
                                                 public void onClick(DialogInterface dialog, int which) {
                                                 }
                                             })
@@ -857,6 +858,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                             .setMessage(R.string.controlcenter_power_off_confirm_description)
                             .setIcon(R.drawable.ic_power_settings_new)
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
                                 public void onClick(final DialogInterface dialog, final int whichButton) {
                                     GBApplication.deviceService(device).onPowerOff();
                                 }
@@ -1103,6 +1105,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
         deviceListSpinner.setAdapter(deviceListAdapter);
 
         deviceListSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 SpinnerWithIconItem selectedItem = (SpinnerWithIconItem) parent.getItemAtPosition(pos);
                 int folderId = selectedItem.getId().intValue();

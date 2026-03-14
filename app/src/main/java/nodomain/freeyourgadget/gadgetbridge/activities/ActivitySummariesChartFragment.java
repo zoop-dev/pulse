@@ -208,6 +208,7 @@ public class ActivitySummariesChartFragment extends AbstractActivityChartFragmen
     protected void renderCharts() {
     }
 
+    @Override
     protected Entry createLineEntry(float value, int xValue) {
         return new Entry(xValue, value);
     }

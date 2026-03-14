@@ -129,6 +129,7 @@ public class HeartRateCapability {
             final SwitchPreferenceCompat stressMonitoring = handler.findPreference(PREF_HEARTRATE_STRESS_MONITORING);
 
             heartrateMeasurementInterval.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
                 public boolean onPreferenceChange(final Preference preference, final Object newVal) {
                     GBApplication.deviceService(handler.getDevice()).onSetHeartRateMeasurementInterval(Integer.parseInt((String) newVal));
 

@@ -88,6 +88,7 @@ public class GBReminderListAdapter extends RecyclerView.Adapter<GBReminderListAd
                         .setMessage(R.string.reminder_delete_confirm_description)
                         .setIcon(R.drawable.ic_warning)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
                             public void onClick(final DialogInterface dialog, final int whichButton) {
                                 ((ConfigureReminders) mContext).deleteReminder(reminder);
                             }

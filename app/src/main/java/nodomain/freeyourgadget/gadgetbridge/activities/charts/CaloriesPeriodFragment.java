@@ -203,6 +203,7 @@ public class CaloriesPeriodFragment extends CaloriesFragment<CaloriesPeriodFragm
         caloriesChart.invalidate();
     }
 
+    @Override
     protected void setupLegend(Chart<?> chart) {
     }
 

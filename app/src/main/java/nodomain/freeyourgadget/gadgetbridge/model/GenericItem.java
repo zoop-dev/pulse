@@ -112,6 +112,7 @@ public class GenericItem implements ItemWithDetails {
         this.preview = preview;
     }
 
+    @Override
     public Bitmap getPreview() {
         return preview;
     }

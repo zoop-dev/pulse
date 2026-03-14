@@ -37,10 +37,12 @@ public class DashboardVO2MaxAnyWidget extends AbstractDashboardVO2MaxWidget {
         return fragment;
     }
 
+    @Override
     public Vo2MaxSample.Type getVO2MaxType() {
         return Vo2MaxSample.Type.ANY;
     }
 
+    @Override
     public String getWidgetKey() {
         return "vo2max";
     }

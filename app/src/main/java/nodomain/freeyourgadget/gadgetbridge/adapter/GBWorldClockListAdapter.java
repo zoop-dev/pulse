@@ -88,6 +88,7 @@ public class GBWorldClockListAdapter extends RecyclerView.Adapter<GBWorldClockLi
                         .setMessage(R.string.world_clock_delete_confirm_description)
                         .setIcon(R.drawable.ic_warning)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
                             public void onClick(final DialogInterface dialog, final int whichButton) {
                                 ((ConfigureWorldClocks) mContext).deleteWorldClock(worldClock);
                             }

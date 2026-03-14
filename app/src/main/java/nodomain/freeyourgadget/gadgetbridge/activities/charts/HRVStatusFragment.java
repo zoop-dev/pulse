@@ -370,6 +370,7 @@ public class HRVStatusFragment extends AbstractChartFragment<HRVStatusFragment.H
         return formatLetterDay.format(new Date(day.day.getTimeInMillis()));
     }
 
+    @Override
     protected void setupLegend(Chart<?> chart) {}
 
     protected static class HRVStatusWeeklyData extends ChartsData {

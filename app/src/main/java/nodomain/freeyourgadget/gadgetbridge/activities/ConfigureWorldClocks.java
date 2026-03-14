@@ -96,6 +96,7 @@ public class ConfigureWorldClocks extends AbstractGBActivity {
                             .setMessage(getBaseContext().getString(R.string.world_clock_no_free_slots_description, String.format(Locale.getDefault(), "%d", deviceSlots)))
                             .setIcon(R.drawable.ic_warning)
                             .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
                                 public void onClick(final DialogInterface dialog, final int whichButton) {
                                 }
                             })

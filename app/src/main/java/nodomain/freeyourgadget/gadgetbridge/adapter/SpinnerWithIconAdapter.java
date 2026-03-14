@@ -45,6 +45,7 @@ public class SpinnerWithIconAdapter extends ArrayAdapter<SpinnerWithIconItem> {
         this.groupId = groupId;
     }
 
+    @Override
     @NonNull
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
@@ -58,6 +59,7 @@ public class SpinnerWithIconAdapter extends ArrayAdapter<SpinnerWithIconItem> {
         return convertView;
     }
 
+    @Override
     public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
         return getView(position, convertView, parent);
 

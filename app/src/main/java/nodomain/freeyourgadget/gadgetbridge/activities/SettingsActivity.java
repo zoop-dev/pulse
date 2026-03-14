@@ -510,6 +510,7 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
         }
 
         public class CustomOnDeviceSelectedListener implements AdapterView.OnItemSelectedListener {
+            @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 if (++fitnessAppSelectionListSpinnerFirstRun > 1) { //this prevents the setText to be set when spinner just is being initialized
                     fitnessAppEditText.setText(parent.getItemAtPosition(pos).toString());

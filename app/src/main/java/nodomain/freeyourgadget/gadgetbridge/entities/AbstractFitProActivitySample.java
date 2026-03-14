@@ -18,6 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.entities;
 
 public abstract class AbstractFitProActivitySample extends AbstractActivitySample {
 
+    @Override
     abstract public int getSteps();
 
     @Override

@@ -108,6 +108,7 @@ public class OsmandEventReceiver {
     };
 
     private final ServiceConnection mConnection = new ServiceConnection() {
+        @Override
         public void onServiceConnected(ComponentName className,
                                        IBinder service) {
             mIOsmAndAidlInterface = IOsmAndAidlInterface.Stub.asInterface(service);
@@ -118,6 +119,7 @@ public class OsmandEventReceiver {
 //            OsmandEventReceiver.this.startActivityForResult(intent,666);
         }
 
+        @Override
         public void onServiceDisconnected(ComponentName className) {
             mIOsmAndAidlInterface = null;
             LOG.info("OsmAnd service disconnected");

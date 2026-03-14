@@ -73,6 +73,7 @@ public class GenericActivitySample extends AbstractActivitySample {
         return rawIntensity;
     }
 
+    @Override
     public void setRawIntensity(final int rawIntensity) {
         this.rawIntensity = rawIntensity;
     }

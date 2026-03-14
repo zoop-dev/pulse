@@ -644,6 +644,7 @@ public abstract class AbstractAppManagerFragment extends Fragment {
         }
         //menu.setHeaderTitle(selectedApp.getName());
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                                 @Override
                                                  public boolean onMenuItemClick(MenuItem item) {
                                                      return onContextItemSelected(item, selectedApp);
                                                  }

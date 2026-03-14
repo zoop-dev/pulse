@@ -1317,6 +1317,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         final Preference cannedMessagesDismissCall = findPreference("canned_messages_dismisscall_send");
         if (cannedMessagesDismissCall != null) {
             cannedMessagesDismissCall.setOnPreferenceClickListener(new androidx.preference.Preference.OnPreferenceClickListener() {
+                @Override
                 public boolean onPreferenceClick(androidx.preference.Preference preference) {
                     ArrayList<String> messages = new ArrayList<>();
                     for (int i = 1; i <= cannedRepliesSlotCount; i++) {
@@ -1346,6 +1347,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         if (cannedMessagesGeneric != null) {
 
             cannedMessagesGeneric.setOnPreferenceClickListener(new androidx.preference.Preference.OnPreferenceClickListener() {
+                @Override
                 public boolean onPreferenceClick(androidx.preference.Preference preference) {
                     final ArrayList<String> messages = new ArrayList<>();
                     for (int i = 1; i <= cannedRepliesSlotCount; i++) {
@@ -1697,6 +1699,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         Preference pref = findPreference(preferenceKey);
         if (pref != null) {
             pref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
                 public boolean onPreferenceChange(Preference preference, Object newVal) {
                     notifyPreferenceChanged(preferenceKey);
 

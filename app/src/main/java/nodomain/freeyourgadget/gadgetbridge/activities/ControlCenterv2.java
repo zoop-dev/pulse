@@ -413,6 +413,7 @@ public class ControlCenterv2 extends AppCompatActivity
         }
     }
 
+    @Override
     public void setLanguage(Locale language, boolean invalidateLanguage) {
         if (invalidateLanguage) {
             isLanguageInvalid = true;

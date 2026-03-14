@@ -18,6 +18,7 @@ public class SoundcoreLiberty3ProDeviceSupport extends AbstractHeadphoneSerialDe
         return new SoundcoreLibertyProtocol(getDevice());
     }
 
+    @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
         builder.write(mDeviceProtocol.encodeDeviceInfoRequest());
         builder.setDeviceState(GBDevice.State.INITIALIZED);
