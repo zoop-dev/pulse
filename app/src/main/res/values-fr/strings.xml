@@ -3918,12 +3918,12 @@
     <string name="pref_even_realities_g1_screen_activation_angle_enable_title">Montrer sur tête haute</string>
     <string name="pref_even_realities_g1_screen_activation_angle_enable_summary">Permettre l’affichage automatique du tableau de bord lorsque le porteur regarde en haut</string>
     <string name="pref_even_realities_g1_touch_double_left_title">Double tape gauche</string>
-    <string name="pref_even_realities_g1_touch_double_left_summary">Lorsque le pavé tactile gauche est tapé deux fois, effectuer cette action : %s</string>
+    <string name="pref_even_realities_g1_touch_double_left_summary">Lorsque le pavé tactile gauche est tapé deux fois, effectuer cette action : %s</string>
     <string name="pref_even_realities_g1_touch_double_right_title">Double tape droite</string>
     <string name="pref_even_realities_g1_touch_double_right_summary">Lorsque le pavé tactile droit est tapé deux fois, effectuer cette action : %s</string>
     <string name="pref_even_realities_g1_touch_long_left_title">Pression longue à gauche</string>
     <string name="pref_even_realities_g1_touch_long_right_title">Pression longue à droite</string>
-    <string name="pref_even_realities_g1_touch_long_left_summary">Lorsque le pavé tactile gauche est enfoncé longtemps, effectuer cette action : %s</string>
+    <string name="pref_even_realities_g1_touch_long_left_summary">Lorsque le pavé tactile gauche est enfoncé longtemps, effectuer cette action : %s</string>
     <string name="pref_even_realities_g1_touch_long_right_summary">Lorsque le pavé tactile droit est enfoncé longtemps, effectuer cette action : %s</string>
     <string name="even_realities_left_lens">Lentille gauche</string>
     <string name="even_realities_right_lens">Lentille droite</string>
