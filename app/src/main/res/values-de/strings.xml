@@ -3070,7 +3070,7 @@
     <string name="music_new_playlist">Neue Playlist</string>
     <string name="prefs_hrv_monitoring_title">HRV Überwachung</string>
     <string name="inactivity_warnings_minimum_steps_summary">Mindestanzahl an Schritten, welche während des definierten Zeitraums gegangen werden müssen</string>
-    <string name="backup_restore_importing_files_i_of_n">Importieren von Dateien… %1$d von %2$d</string>
+    <string name="backup_restore_importing_files_i_of_n">Importiere Dateien… %1$d von %2$d</string>
     <string name="first_start_overview_devices">Die Geräteansicht zeigt alle Geräte an, die Sie konfiguriert haben und gibt Zugriff auf gerätespezifische Funktionen wie detaillierte Diagramme, Einstellungen, Apps und Alarme.</string>
     <string name="first_start_get_started_title">Ersteinrichtung</string>
     <string name="first_start_permissions_desc">Gadgetbridge braucht für viele Berechtigungen, damit alle Funktionen funktionieren. Überprüfe die Berechtigungen und ihre Zwecke unten.</string>
@@ -3108,7 +3108,7 @@
     <string name="permission_bluetooth_scan_title">Bluetooth-Scan</string>
     <string name="permission_bluetooth_admin_summary">Finde und verbinde Bluetooth-Geräte</string>
     <string name="prefs_title_gatt_client_api_package">BLE API Paket</string>
-    <string name="backup_restore_importing">Von einem ZIP wiederherstellen …</string>
+    <string name="backup_restore_importing">Importiere aus ZIP…</string>
     <string name="pref_music_management_summary">Musik auf der Smartwatch verwalten</string>
     <string name="prefs_summary_gatt_client_notification_intents">Änderungen der BLE Merkmale durch Intents empfangen</string>
     <string name="permission_background_location_title">Hintergrund Standort</string>
