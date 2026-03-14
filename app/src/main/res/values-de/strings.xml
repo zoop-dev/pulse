@@ -81,7 +81,7 @@
     <string name="pref_header_privacy">Privatsphäre</string>
     <string name="pref_title_call_privacy_mode">Anzeige bei Anrufen</string>
     <string name="pref_call_privacy_mode_off">Name und Telefonnummer anzeigen</string>
-    <string name="pref_call_privacy_mode_name">Name ausblenden, aber Telefonummer anzeigen</string>
+    <string name="pref_call_privacy_mode_name">Name ausblenden, aber Telefonnummer anzeigen</string>
     <string name="pref_call_privacy_mode_number">Telefonnummer ausblenden, aber Name anzeigen</string>
     <string name="pref_call_privacy_mode_complete">Name und Telefonnummer ausblenden</string>
     <string name="pref_blacklist_calendars">Blockierte Kalender</string>
@@ -122,7 +122,7 @@
     <string name="toast_enable_networklocationprovider">Bitte Netzwerkstandort aktivieren</string>
     <string name="toast_aqurired_networklocation">Standort wurde ermittelt</string>
     <string name="pref_title_pebble_forceprotocol">Benachrichtigungsprotokoll erzwingen</string>
-    <string name="pref_summary_pebble_forceprotocol">Diese Option erzwingt das neuste Benachrichtigungsprotokoll abhängig von der Firmwareversion. NUR EINSCHALTEN, WENN DU WEIẞT, WAS DU TUST!</string>
+    <string name="pref_summary_pebble_forceprotocol">Diese Option erzwingt das neuste Benachrichtigungsprotokoll abhängig von der Firmwareversion. NUR EINSCHALTEN, WENN DU WEISST, WAS DU TUST!</string>
     <string name="pref_title_pebble_forceuntested">Ungetestete Features aktivieren</string>
     <string name="pref_summary_pebble_forceuntested">Aktiviere ungetestete Features. NUR EINSCHALTEN, WENN DU WEIẞT, WAS DU TUST!</string>
     <string name="pref_title_pebble_forcele">BLE immer bevorzugen</string>
@@ -425,13 +425,7 @@
     <string name="simplified_chinese">Chinesisch (vereinfacht)</string>
     <string name="traditional_chinese">Chinesisch (traditionell)</string>
     <string name="english">Englisch</string>
-    <string name="fw_upgrade_notice_amazfitcor">Du bist dabei, die Firmware %s auf deine Amazfit Cor zu installieren.
-\n
-\nBitte stelle sicher, dass du die .fw Datei und danach die .res Datei installierst. Dein Band wird nach der Installation der .fw Datei neu gestartet.
-\n
-\nHinweis: Du musst .res nicht installieren, wenn es genau das gleiche ist, wie die zuvor installierte.
-\n
-\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_amazfitcor">Du bist dabei, die Firmware %s auf deine Amazfit Cor zu installieren. \n \nBitte stelle sicher, dass du die .fw Datei und danach die .res Datei installierst. Dein Band wird nach der Installation der .fw Datei neu gestartet. \n \nHinweis: Du musst .res nicht installieren, wenn es genau das Gleiche ist, wie die zuvor Installierte. \n \nINSTALLATION AUF EIGENE GEFAHR!</string>
     <string name="mi2_prefs_button_press_count">Anzahl der Tastendrücke</string>
     <string name="pref_title_charts_swipe">Streichen nach links/rechts im Diagrammbetrieb aktivieren</string>
     <string name="pref_summary_pebble_enable_bgjs">Wenn aktiviert, werden Wetter- und Akkudaten etc. auf Zifferblättern angezeigt.</string>
@@ -491,13 +485,7 @@
     <string name="menuitem_compass">Kompass</string>
     <string name="menuitem_settings">Einstellungen</string>
     <string name="menuitem_alipay">Alipay</string>
-    <string name="fw_upgrade_notice_miband3">Du bist dabei, die Firmware %s auf dein Mi Band 3 zu installieren.
-\n
-\nBitte stelle sicher, dass du die .fw Datei und die .res Datei installierst. Dein Band wird nach der Installation der .fw Datei neu gestartet.
-\n
-\nHinweis: Du musst .res nicht installieren, wenn es genau das gleiche ist, wie die zuvor installierte.
-\n
-\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_miband3">Du bist dabei, die Firmware %s auf dein Mi Band 3 zu installieren. \n \nBitte stelle sicher, dass du die .fw Datei und die .res Datei installierst. Dein Band wird nach der Installation der .fw Datei neu gestartet. \n \nHinweis: Du musst .res nicht installieren, wenn es genau das Gleiche ist, wie die zuvor Installierte. \n \nINSTALLATION AUF EIGENE GEFAHR!</string>
     <string name="pref_summary_pebble_gatt_clientonly">Dies ist nur für Pebble 2 und experimentell, versuche dies, wenn du Verbindungsprobleme hast</string>
     <string name="pref_auto_fetch">Aktivitätsdaten automatisch abrufen</string>
     <string name="blacklist_all_for_notifications">Blacklist für alle Benachrichtigungen</string>
@@ -644,7 +632,7 @@
     <string name="title_activity_device_specific_settings">Gerätespezifische Einstellungen</string>
     <string name="pref_title_authkey">Authentifizierungsschlüssel</string>
     <string name="pref_summary_authkey">Einige Geräte erfordern einen Auth-Schlüssel für die Verbindung. Ohne diesen Schlüssel ist keine Kommunikation möglich. Er muss je nach Hersteller über die Original-App oder Cloud-Dienste ausgelesen werden. Mehr Infos: https://gadgetbridge.org/basics/pairing/</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Du bist dabei, die %s-Firmware auf deine Amazfit Cor 2 zu installieren. \n \nBitte stelle sicher, dass du die .fw-Datei und danach die .res-Datei installierst. Dein Band wird nach der Installation der .fw-Datei neu gestartet. \n \nHinweis: Du musst .res nicht installieren, wenn es genau das gleiche ist, wie die zuvor installierte. \n \nAUF EIGENE GEFAHR! \n \nVOLLSTÄNDIG UNGETESTET, WAHRSCHEINLICH MUSST DU EINE BEATS_W FIRMWARE FLASHEN, WENN DEIN GERÄTENAME \"Amazfit Band 2\" IST</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Du bist dabei, die %s-Firmware auf deine Amazfit Cor 2 zu installieren. \n \nBitte stelle sicher, dass du die .fw-Datei und danach die .res-Datei installierst. Dein Band wird nach der Installation der .fw-Datei neu gestartet. \n \nHinweis: Du musst .res nicht installieren, wenn es genau das Gleiche ist, wie die zuvor Installierte. \n \nAUF EIGENE GEFAHR! \n \nVOLLSTÄNDIG UNGETESTET, WAHRSCHEINLICH MUSST DU EINE BEATS_W FIRMWARE FLASHEN, WENN DEIN GERÄTENAME \"Amazfit Band 2\" IST</string>
     <string name="dutch">Niederländisch</string>
     <string name="turkish">Türkisch</string>
     <string name="ukrainian">Ukrainisch</string>
@@ -653,13 +641,7 @@
     <string name="thai">Thailändisch</string>
     <string name="vietnamese">Vietnamesisch</string>
     <string name="portuguese">Portugiesisch</string>
-    <string name="fw_upgrade_notice_miband4">Du bist dabei, die Firmware %s auf dein Mi Band 4 zu installieren.
-\n
-\nBitte stelle sicher, dass du die .fw Datei und die .res Datei installierst. Dein Band wird nach der Installation der .fw Datei neu gestartet.
-\n
-\nHinweis: Du musst .res nicht installieren, wenn es genau das gleiche ist, wie die zuvor installierte.
-\n
-\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_miband4">Du bist dabei, die Firmware %s auf dein Mi Band 4 zu installieren. \n \nBitte stelle sicher, dass du die .fw Datei und die .res Datei installierst. Dein Band wird nach der Installation der .fw Datei neu gestartet. \n \nHinweis: Du musst .res nicht installieren, wenn es genau das Gleiche ist, wie die zuvor Installierte. \n \nINSTALLATION AUF EIGENE GEFAHR!</string>
     <string name="prefs_hr_alarm_activity">Herzfrequenzalarm bei sportlicher Aktivität</string>
     <string name="prefs_hr_alarm_low">Untere Grenze</string>
     <string name="prefs_hr_alarm_high">Obere Grenze</string>
@@ -795,7 +777,7 @@
     <string name="pref_title_notifications_and_calls_repeat_on_misscall">Wiederhole für X Minuten</string>
     <string name="pref_summary_notifications_and_calls_enable_misscall">Wiederhole minütlich</string>
     <string name="pref_notifications_and_calls_enable_misscall">Benachrichtige verpasste Anrufe</string>
-    <string name="prefs_notifications_and_calls_continious_ring">Benachrichtigung whärend dem Klingeln</string>
+    <string name="prefs_notifications_and_calls_continious_ring">Benachrichtigung während dem Klingeln</string>
     <string name="pref_title_notifications_and_calls_repeat_on_call">Anrufbenachrichtigung wiederholen</string>
     <string name="title_activity_LenovoWatch_calibration">Watch X Plus-Kalibrierung</string>
     <string name="hungarian">Ungarisch</string>
@@ -1075,13 +1057,7 @@
     <string name="menuitem_temperature">Temperatur</string>
     <string name="menuitem_widgets">Widgets</string>
     <string name="menuitem_events">Ereignisse</string>
-    <string name="fw_upgrade_notice_miband6">Du bist dabei, die Firmware %s auf dein Mi Band 6 zu installieren.
-\n
-\nBitte stelle sicher, dass du die .fw Datei und die .res Datei installierst. Dein Band wird nach der Installation der .fw Datei neu gestartet.
-\n
-\nHinweis: Du musst .res nicht installieren, wenn es genau die gleiche ist, wie die zuvor installierte.
-\n
-\nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_miband6">Du bist dabei, die Firmware %s auf dein Mi Band 6 zu installieren. \n \nBitte stelle sicher, dass du die .fw Datei und die .res Datei installierst. Dein Band wird nach der Installation der .fw Datei neu gestartet. \n \nHinweis: Du musst .res nicht installieren, wenn es genau die Gleiche ist, wie die zuvor Installierte. \n \nINSTALLATION AUF EIGENE GEFAHR!</string>
     <string name="fossil_hr_commute_actions_explanation">Die hier konfigurierten Aktionen werden in der Commute-App auf Ihrer Smartwatch angezeigt. Informationen zum Umgang mit den durch diese Aktionen ausgelösten Intents finden Sie auf der Website.</string>
     <string name="kind_agps_bundle">AGPS-Bundle</string>
     <string name="qhybrid_calibration_100_steps">100 Schritte</string>
@@ -1569,7 +1545,7 @@
     <string name="autoconnect_from_device_title">Herstellen einer Verbindung vom Gerät aus</string>
     <string name="watchface_dialog_widget_timezone_duration">Sichtbarkeitsdauer der Uhr (in Sekunden)</string>
     <string name="connection_over_ble">Verbindung über BLE</string>
-    <string name="connection_over_bt_classic">Verbindung über Bluetooth classic</string>
+    <string name="connection_over_bt_classic">Verbindung über Bluetooth Classic</string>
     <string name="error_setting_parent_folder">Fehler beim Festlegen des übergeordneten Ordners: %s</string>
     <string name="error_deleting_device">Fehler beim Löschen des Geräts: %s</string>
     <string name="controlcenter_folder_name">Ordnername:</string>
@@ -1896,7 +1872,7 @@
     <string name="pref_workout_keep_screen_on_summary">Der Bildschirm bleibt während des Trainings eingeschaltet und die Helligkeit wird angepasst, um die Trainingsdaten in Echtzeit anzuzeigen</string>
     <string name="pref_camera_remote_summary">Ermöglicht der Smartwatch, die Kamera des Smartphones auszulösen</string>
     <string name="pref_camera_remote_title">Kamera-Fernauslöser</string>
-    <string name="stop">Stop</string>
+    <string name="stop">Stopp</string>
     <string name="status">Status</string>
     <string name="wifi_hotspot">WLAN Hotspot</string>
     <string name="wifi_hotspot_summary">WLAN-Hotspot auf der Smartwatch steuern</string>
@@ -2493,7 +2469,7 @@
     <string name="alarm_smart_wakeup_interval_default">5 Minuten</string>
     <string name="device_state_waiting_scan">Warten auf Geräte-Scan</string>
     <string name="auto_reconnect_ble_scan_summary">Warten auf Geräte-Scan anstelle von blinden Verbindungsversuchen</string>
-    <string name="waiting_for_bluetooth">warten auf Bluetooth…</string>
+    <string name="waiting_for_bluetooth">Warten auf Bluetooth…</string>
     <string name="scan_scanning_all_devices">Scannen aller Geräte</string>
     <string name="scan_not_scanning">Nicht scannen</string>
     <string name="error_scan_failed">Scan fehlgeschlagen: %d</string>
@@ -2696,7 +2672,7 @@
         <item quantity="one">%d Tag</item>
         <item quantity="other">%d Tage</item>
     </plurals>
-    <string name="pref_fetch_unknown_files_title">Abrufen von Unbekannte Dateien</string>
+    <string name="pref_fetch_unknown_files_title">Abrufen von unbekannten Dateien</string>
     <string name="moondrop_equalizer_preset_basshead">Basskopf</string>
     <string name="moondrop_touch_earbud">Ohrhörer</string>
     <string name="moondrop_touch_earbud_both">Beide</string>
@@ -3020,7 +2996,7 @@
     <string name="permission_external_storage_title">Externer Speicher</string>
     <string name="permission_query_all_packages_summary">Namen und Icons von allen installierten Apps lesen</string>
     <string name="permission_query_all_packages_title">Alle Pakete abrufen</string>
-    <string name="permission_external_storage_summary">Nutze Bidler, Klingeltöne, Appdateien und mehr</string>
+    <string name="permission_external_storage_summary">Nutze Bilder, Klingeltöne, Appdateien und mehr</string>
     <string name="manual_discharge">Manuelle Entladungsintervalle</string>
     <string name="permission_send_sms_summary">Sende vorgefertigte SMS-Antworten von Gadgets aus</string>
     <string name="permission_receive_sms_title">SMS empfangen</string>
@@ -3032,7 +3008,7 @@
     <string name="permission_read_phone_state_summary">Status von ausgehenden Anrufen auslesen</string>
     <string name="charts_show_balance_sleep_title">Schlafbilanz anzeigen</string>
     <string name="charts_show_balance_steps_title">Schrittbilanz anzeigen</string>
-    <string name="charts_show_balance_steps_summary">Schrittmangel und -überschuss in wöchtenlichen und monatlichen Diagrammen anzeigen</string>
+    <string name="charts_show_balance_steps_summary">Schrittmangel und -überschuss in wöchentlichen und monatlichen Diagrammen anzeigen</string>
     <string name="respiratoryrate">Atemfrequenz</string>
     <string name="sleep_avg">Ø Schlafdauer</string>
     <string name="lowest">Niedrigster</string>
@@ -3086,7 +3062,7 @@
     <string name="first_start_permissions_title">Berechtigungen</string>
     <string name="prefs_summary_gatt_client_device_state_updates">Änderungen des BLE Verbindungsstatus über Intents empfangen</string>
     <string name="prefs_title_gatt_client_allow_gatt_interactions">GATT Interaktionen durch BLE Intent API erlauben</string>
-    <string name="first_start_intro_tag_line">Befreie dich von properitären Apps und den Clouddiensten der Gadgethersteller.</string>
+    <string name="first_start_intro_tag_line">Befreie dich von proprietären Apps und den Clouddiensten der Gadgethersteller.</string>
     <string name="permission_bluetooth_title">Bluetooth</string>
     <string name="label_distance_trip">Trip: %.1f km</string>
     <string name="first_start_overview_desc">Gadgetbridge hat zwei Hauptansichten, welche jeweils ihren eigenen Zweck haben.</string>
@@ -3249,7 +3225,7 @@
     <string name="redmi_buds_5_pro_double_connection_description">Ermögliche die gleichzeitige Verbindung der Ohrhörer mit zwei Geräten</string>
     <string name="redmi_buds_5_pro_equalizer_neg6">-6 dB</string>
     <string name="garmin_intensity_minutes">Intensität Minuten</string>
-    <string name="pref_override_features_summary">ktivieren/Deaktivieren bestimmter Gerätefunktionen. Dies kann Probleme verursachen und/oder dazu führen, dass dein Gerät nicht richtig funktioniert</string>
+    <string name="pref_override_features_summary">Aktivieren/Deaktivieren bestimmter Gerätefunktionen. Dies kann Probleme verursachen und/oder dazu führen, dass dein Gerät nicht richtig funktioniert</string>
     <string name="redmi_buds_5_pro_transparency_strength">Transparenzstärke</string>
     <string name="pref_wear_sensor_summary">Erkennen, wenn das Gerät nicht getragen wird</string>
     <string name="pref_app_connection_duration">App-Verbindungsdauer</string>
@@ -3275,13 +3251,13 @@
     <string name="redmi_buds_5_pro_equalizer_preset_custom">Benutzerdefiniert</string>
     <string name="redmi_buds_5_pro_equalizer_preset_voice">Stimme verstärken</string>
     <string name="notifications_dismiss_all">Alle löschen</string>
-    <string name="prefs_summary_gatt_client_filter_char">Filter für bestimmte BLE Eigenschaften, geteilt durch ein Komma</string>
-    <string name="prefs_title_gatt_client_filter_char">BLE Eigenschaften</string>
+    <string name="prefs_summary_gatt_client_filter_char">Filter für bestimmte BLE-Eigenschaften, geteilt durch ein Komma</string>
+    <string name="prefs_title_gatt_client_filter_char">BLE-Eigenschaften</string>
     <string name="pairing_even_realities_g1_working">Kopple mit %1s…</string>
     <string name="pairing_even_realities_g1_invalid_device">Fehlerhaftes G1 Gerät: %1$s.</string>
     <string name="activity_type_barbell">Langhantel</string>
     <string name="reset">Zurücksetzen</string>
-    <string name="fw_upgrade_notice_huawei">Du bist dabei, die Firmware %1$s auf dein %2$s zu installieren.\n \nDeine aktuelle Firmware ist %3$s\n \nDein Gerät wird nach dem Hochladen neustarten.\n \nINSTALLATION AUF EIGENE GEFAHR!</string>
+    <string name="fw_upgrade_notice_huawei">Du bist dabei, die Firmware %1$s auf dein %2$s zu installieren.\n \nDeine aktuelle Firmware ist %3$s\n \nDein Gerät wird nach dem Hochladen neu starten.\n \nINSTALLATION AUF EIGENE GEFAHR!</string>
     <string name="update_firmware_operation_check_failed">Firmware Überprüfung fehlgeschlagen</string>
     <string name="update_firmware_operation_check_in_progress">Überprüfe Firmware</string>
     <string name="uploading">Lade hoch…</string>
@@ -3290,7 +3266,7 @@
     <string name="copy_to_clipboard">Kopieren</string>
     <string name="pref_garmin_fake_oauth_summary">Behebt bestimmte Funktionen wie Wetter- und AGPS-Updates, ohne alle 90 Tage eine Verbindung zur offiziellen App herstellen zu müssen.</string>
     <string name="activity_prefs_goal_standing_hours">Tagesziel: Stehzeiten</string>
-    <string name="poolLength">Pool länge</string>
+    <string name="poolLength">Poollänge</string>
     <string name="swim_avg_cadence">∅ Schwimmkadenz</string>
     <string name="unit_revolutions_per_minute">Umdrehungen/min</string>
     <string name="unit_repetitions_per_minute">Wiederholungen/min</string>
@@ -3849,7 +3825,7 @@
     <string name="alarm_label_appointment">Termin</string>
     <string name="alarm_label_training">Training</string>
     <string name="alarm_label_class">Kurs</string>
-    <string name="alarm_label_meditate">Mededitation</string>
+    <string name="alarm_label_meditate">Meditation</string>
     <string name="error_message">Fehler: %s</string>
     <string name="weight_scale_jin">Jin (500 g)</string>
     <string name="weight_scale_jin_format">%1$.2f Jin (500 g)</string>
