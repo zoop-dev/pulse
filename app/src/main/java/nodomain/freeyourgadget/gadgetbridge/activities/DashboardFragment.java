@@ -72,6 +72,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardCalori
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardDistanceWidget;
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardGoalsWidget;
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardHrvWidget;
+import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardPaiWidget;
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardSleepScoreWidget;
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardSleepWidget;
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardStepsWidget;
@@ -302,6 +303,9 @@ public class DashboardFragment extends Fragment implements MenuProvider {
                         break;
                     case "bodyenergy":
                         widget = DashboardBodyEnergyWidget.newInstance(dashboardData);
+                        break;
+                    case "pai":
+                        widget = DashboardPaiWidget.newInstance(dashboardData);
                         break;
                     case "hrv":
                         widget = DashboardHrvWidget.newInstance(dashboardData);

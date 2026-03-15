@@ -3893,17 +3893,17 @@
         <item>7</item>
     </string-array>
 
-<!--    <string-array name="redmi_buds_5_pro_surround_sound_mode_names">-->
-<!--        <item>Standard</item>-->
-<!--        <item>Music</item>-->
-<!--        <item>Video</item>-->
-<!--    </string-array>-->
+    <!--    <string-array name="redmi_buds_5_pro_surround_sound_mode_names">-->
+    <!--        <item>Standard</item>-->
+    <!--        <item>Music</item>-->
+    <!--        <item>Video</item>-->
+    <!--    </string-array>-->
 
-<!--    <string-array name="redmi_buds_5_pro_surround_sound_mode_values">-->
-<!--        <item>1</item>-->
-<!--        <item>2</item>-->
-<!--        <item>3</item>-->
-<!--    </string-array>-->
+    <!--    <string-array name="redmi_buds_5_pro_surround_sound_mode_values">-->
+    <!--        <item>1</item>-->
+    <!--        <item>2</item>-->
+    <!--        <item>3</item>-->
+    <!--    </string-array>-->
 
     <string-array name="redmi_buds_5_pro_equalizer_presets_names">
         <item>@string/redmi_buds_5_pro_equalizer_preset_standard</item>
@@ -5078,6 +5078,7 @@
         <item>@string/menuitem_stress_segmented</item>
         <item>@string/menuitem_stress_breakdown</item>
         <item>@string/hrv</item>
+        <item>@string/menuitem_pai</item>
         <item>@string/menuitem_vo2_max</item>
         <item>@string/vo2max_running</item>
         <item>@string/vo2max_cycling</item>
@@ -5098,6 +5099,7 @@
         <item>stress_segmented</item>
         <item>stress_breakdown</item>
         <item>hrv</item>
+        <item>pai</item>
         <item>vo2max</item>
         <item>vo2max_running</item>
         <item>vo2max_cycling</item>
@@ -5327,7 +5329,7 @@
         <item>7000</item>
         <item>8000</item>
         <item>10000</item>
-      </string-array>
+    </string-array>
 
     <string-array name="weight_scale_units">
         <item>@string/weight_scale_jin</item>
