@@ -99,12 +99,19 @@ public class OpenTracksController extends Activity {
         moveTaskToBack(true);
     }
 
-    public static void sendIntent(Context context, String className, String category, OpenTracksActivityType openTracksActivityType) {
+    public static void sendIntent(Context context, String actionClassSuffix, String category, OpenTracksActivityType openTracksActivityType) {
         Prefs prefs = GBApplication.getPrefs();
         String packageName = prefs.getString("opentracks_packagename", "de.dennisguse.opentracks");
+        String classPackageBase = packageName;
+        if (packageName.startsWith("de.dennisguse.opentracks")) {
+            classPackageBase = "de.dennisguse.opentracks";
+        } else if (packageName.startsWith("de.storchp.opentracks")) {
+            classPackageBase = "de.storchp.opentracks";
+        }
+
         Intent intent = new Intent();
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setClassName(packageName, className);
+        intent.setClassName(packageName, classPackageBase + actionClassSuffix);
         intent.putExtra("STATS_TARGET_PACKAGE", context.getPackageName());
         intent.putExtra("STATS_TARGET_CLASS", OpenTracksController.class.getName());
         if (category != null) {
@@ -121,7 +128,7 @@ public class OpenTracksController extends Activity {
     }
 
     public static void startRecording(Context context) {
-        sendIntent(context, "de.dennisguse.opentracks.publicapi.StartRecording", null, null);
+        sendIntent(context, ".publicapi.StartRecording", null, null);
     }
 
     public static void startRecording(Context context, ActivityKind activityKind) {
@@ -131,11 +138,11 @@ public class OpenTracksController extends Activity {
             LOG.warn("Unmapped activity kind icon for {}", activityKind);
         }
 
-        sendIntent(context, "de.dennisguse.opentracks.publicapi.StartRecording", category, openTracksActivityType);
+        sendIntent(context, ".publicapi.StartRecording", category, openTracksActivityType);
     }
 
     public static void stopRecording(Context context) {
-        sendIntent(context, "de.dennisguse.opentracks.publicapi.StopRecording", null, null);
+        sendIntent(context, ".publicapi.StopRecording", null, null);
         OpenTracksContentObserver openTracksObserver = GBApplication.app().getOpenTracksObserver();
         if (openTracksObserver != null) {
             saveToGpx(openTracksObserver.getActivityTrack());
