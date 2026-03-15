@@ -44,7 +44,7 @@
     <string name="fw_multi_upgrade_notice">Está a punto de instalar el firmware %1$s y %2$s en sustitución de los que hay actualmente en su Mi Band.</string>
     <string name="miband_firmware_known">Este firmware ha sido probado y se sabe que es compatible con Gadgetbridge.</string>
     <string name="miband_firmware_unknown_warning">Este firmware no ha sido probado y puede que no sea compatible con Gadgetbridge. \n \n¡NO se recomienda la instalación en su Mi Band!</string>
-    <string name="miband_firmware_suggest_whitelist">Si aun desea continuar y después las cosas continúan funcionando correctamente, pida a los desarrolladores de Gadgetbridge que incluyan en la lista blanca la versión de firmware de %s.</string>
+    <string name="miband_firmware_suggest_whitelist">Si aun así quieres continuar y todo funciona correctamente después, informa a los desarrolladores de Gadgetbridge para que añadan la versión de firmware %s a la lista de permitidos.</string>
     <!--Strings related to Settings-->
     <string name="title_activity_settings">Configuración</string>
     <string name="pref_header_general">Configuración general</string>
@@ -149,10 +149,10 @@
     <string name="this_is_a_test_notification_from_gadgetbridge">Notificación de prueba desde Gadgetbridge</string>
     <string name="bluetooth_is_not_supported_">No se admite el Bluetooth.</string>
     <string name="bluetooth_is_disabled_">El Bluetooth está desactivado.</string>
-    <string name="tap_connected_device_for_app_mananger">Pulse en el dispositivo conectado para acceder al administrador de aplicaciones</string>
-    <string name="tap_connected_device_for_activity">Pulse el dispositivo conectado para ver la actividad</string>
-    <string name="tap_connected_device_for_vibration">Pulse el dispositivo conectado para la vibración</string>
-    <string name="tap_a_device_to_connect">Pulse un dispositivo para conectarse</string>
+    <string name="tap_connected_device_for_app_mananger">Toca el dispositivo conectado para acceder al administrador de aplicaciones</string>
+    <string name="tap_connected_device_for_activity">Toca el dispositivo conectado para ver la actividad</string>
+    <string name="tap_connected_device_for_vibration">Toca el dispositivo conectado para hacerlo vibrar</string>
+    <string name="tap_a_device_to_connect">Toca un dispositivo para conectarlo</string>
     <string name="cannot_connect_bt_address_invalid_">No se puede conectar. ¿Dirección Bluetooth incorrecta?</string>
     <string name="gadgetbridge_running_generic">Gadgetbridge en ejecución</string>
     <string name="installing_binary_d_d">Instalando binario %1$d/%2$d</string>
@@ -367,7 +367,7 @@
     <string name="title_activity_vibration">Vibración</string>
     <!--Strings related to Pebble Pairing Activity-->
     <string name="title_activity_pebble_pairing">Emparejamiento con Pebble</string>
-    <string name="pebble_pairing_hint">Aparecerá un diálogo de emparejamiento en el dispositivo Android. Si no, busque la notificación en el cajón y acepte la solicitud. Posteriormente, acéptela también en el Pebble.</string>
+    <string name="pebble_pairing_hint">Aparecerá un cuadro de diálogo de emparejamiento en tu dispositivo Android. Si no lo ves, abre el panel de notificaciones y acepta la solicitud. Después, acéptala también en tu Pebble.</string>
     <string name="pref_title_setup_bt_pairing">Activar el emparejamiento Bluetooth</string>
     <string name="pref_summary_setup_bt_pairing">Desactive esto si tiene problemas de conexión</string>
     <string name="unit_metric">Métrica</string>
@@ -467,11 +467,11 @@
     <string name="watch9_time_hours">Horas:</string>
     <string name="watch9_time_seconds">Segundos:</string>
     <string name="watch9_calibration_button">Calibrar</string>
-    <string name="watch9_pairing_tap_hint">Cuando el dispositivo vibre, agítelo o pulse un botón.</string>
+    <string name="watch9_pairing_tap_hint">Cuando el dispositivo vibre, agítalo o pulse un botón.</string>
     <string name="debugactivity_really_factoryreset_title">¿Confirmar restablecimiento de fábrica?</string>
     <string name="debugactivity_really_factoryreset">Al hacer un restablecimiento de fábrica se eliminarán todos los datos del dispositivo conectado (si se admite). Los dispositivos Xiaomi o Huami también cambian la dirección MAC de Bluetooth, por lo que aparecen como nuevos dispositivos para Gadgetbridge.</string>
     <string name="blacklist_all_for_notifications">Lista negra para todas las notificaciones</string>
-    <string name="whitelist_all_for_notifications">Lista blanca para todas las notificaciones</string>
+    <string name="whitelist_all_for_notifications">Permitir todas las notificaciones</string>
     <string name="fw_upgrade_notice_miband3">Está a punto de instalar el firmware %s en su Mi Band 3.\n\nAsegúrese de instalar el archivo .fw, y a continuación, el archivo .res. Su pulsera se reiniciará tras instalar el archivo .fw.\n\nNota: no es necesario instalar el archivo .res si es idéntico al ya instalado.\n\n¡PROCEDA BAJO SU PROPIA CUENTA Y RIESGO!</string>
     <string name="pref_title_notifications_timeout">Tiempo mínimo entre notificaciones</string>
     <string name="pref_title_rtl">De derecha a izquierda</string>
@@ -650,7 +650,7 @@
     <string name="activity_DB_empty_button">Vaciar base de datos</string>
     <string name="activity_db_management_empty_DB">Vaciar base de datos</string>
     <string name="activity_db_management_exportimport_label">Exportar e importar</string>
-    <string name="activity_db_management_empty_db_warning">Atención: al pulsar en este botón se borrará la base de datos y comenzará de cero.</string>
+    <string name="activity_db_management_empty_db_warning">Atención: al pulsar este botón se borrará la base de datos y comenzará de cero.</string>
     <string name="widget_listing_label">Estado y alarmas</string>
     <string name="widget_set_alarm_after">Fijar alarma tras:</string>
     <string name="widget_5_minutes">5 minutos</string>
@@ -743,7 +743,7 @@
     <string name="sonyswr12_settings_alarm_interval">Intervalo de alarma inteligente en minutos</string>
     <string name="sonyswr12_settings_low_vibration_summary">Activar baja intensidad de vibración en la pulsera</string>
     <string name="sonyswr12_settings_stamina_summary">El modo de ahorro de energía desactiva la medición automática periódica de la frecuencia cardíaca, lo que aumenta el tiempo de trabajo</string>
-    <string name="sonyswr12_settings_alarm_interval_summary">El intervalo de alarma inteligente es el intervalo anterior a la alarma instalada. En este intervalo, el dispositivo está tratando de detectar la fase más ligera del sueño para despertar al usuario</string>
+    <string name="sonyswr12_settings_alarm_interval_summary">El intervalo de alarma inteligente es el tiempo previo a la alarma configurada. Durante este periodo, el dispositivo intenta detectar la fase más ligera del sueño para despertar al usuario</string>
     <string name="activity_prefs_step_length_cm">Longitud del paso en cm</string>
     <string name="czesh">Checo</string>
     <string name="swedish">Sueco</string>
@@ -805,7 +805,7 @@
     <string name="power_mode_watch">Solo reloj</string>
     <string name="power_mode_saving">Ahorro de energía</string>
     <string name="power_mode_normal">Normal</string>
-    <string name="prefs_sensors_button_bp_calibration_sum">Pulsa aquí para iniciar la calibración</string>
+    <string name="prefs_sensors_button_bp_calibration_sum">Toca aquí para iniciar la calibración</string>
     <string name="prefs_sensors_button_bp_calibration">Calibración</string>
     <string name="prefs_notifications_and_calls_shake_reject">Agitar la muñeca para ignorar/rechazar llamada</string>
     <string name="pref_summary_notifications_and_calls_title_shake_reject">Duplica la acción del botón de reloj</string>
@@ -990,7 +990,7 @@
     <string name="dbmanagementactivity_export_data_title">¿Exportar datos\?</string>
     <string name="dbmanagementactivity_error_cleaning_export_directory">Error al borrar archivos del directorio de exportación %1$s</string>
     <string name="prefs_charts_tabs_summary">Pestañas visibles del gráfico</string>
-    <string name="discovery_entered_invalid_authkey">¡La clave secreta de autentificación que has introducido no es válida! Mantén pulsado sobre el dispositivo para editarlo.</string>
+    <string name="discovery_entered_invalid_authkey">¡La clave secreta de autenticación que has introducido no es válida! Mantén pulsado en el dispositivo para editarlo.</string>
     <string name="pref_title_connected_advertisement">Visible mientras está conectado</string>
     <string name="fw_upgrade_notice_amazfitvergel">Está a punto de instalar el firmware %s en su Amazfit Verge Lite.\n\nAsegúrese de instalar el archivo .fw, el archivo .res y finalmente el archivo .gps. Su reloj se reiniciará tras instalar el archivo .fw.\n\nNota: no es necesario instalar los archivos .res y .gps si son idénticos a los ya instalados.\n\n¡PROCEDA BAJO SU PROPIA CUENTA Y RIESGO!</string>
     <string name="minutes_mi">min/mi</string>
@@ -1127,7 +1127,7 @@
     <string name="prefs_sleep_time_label">Definir las horas de sueño</string>
     <string name="prefs_sleep_time">Horas de sueño</string>
     <string name="pref_title_ping_tone">Tono de ping</string>
-    <string name="nothing_prefs_inear_summary">Reproducir/pausar la música dependiendo de si lleva los auriculares</string>
+    <string name="nothing_prefs_inear_summary">Reproducir o pausar la música según si llevas puestos los auriculares</string>
     <string name="nothing_prefs_inear_title">Detección de oído</string>
     <string name="nothing_prefs_audiomode_title">Modo de sonido</string>
     <string name="uncheck_all_applications">Desmarcar todas las aplicaciones</string>
@@ -1289,7 +1289,7 @@
     <string name="pref_activity_recognition_mode_ask">preguntar</string>
     <string name="pref_activity_recognition_mode_auto">automático</string>
     <string name="menuitem_menu">Menú</string>
-    <string name="fossil_hr_button_config_info">Algunos botones no se pueden configurar porque sus funciones están codificadas en el firmware del reloj.\n\nAdvertencia: si el botón superior se mantiene pulsado al instalar una esfera de la aplicación oficial de Fossil, también se alternará entre mostrar y ocultar los widgets.</string>
+    <string name="fossil_hr_button_config_info">Algunos botones no se pueden configurar porque sus funciones están codificadas en el firmware del reloj.\n\nAdvertencia: Si el botón superior se mantiene pulsado al instalar una esfera de la aplicación oficial de Fossil, también se alternará entre mostrar y ocultar los widgets.</string>
     <string name="controlcenter_power_off">Apagar</string>
     <string name="controlcenter_power_off_confirm_title">Apagar</string>
     <string name="controlcenter_power_off_confirm_description">¿Confirma que quiere apagar el dispositivo?</string>
@@ -1357,7 +1357,7 @@
     <string name="sony_anc_optimize_confirmation_description">Use los auriculares como lo haría normalmente. Si las condiciones de uso o la presión atmosférica cambian, vuelva a ejecutar el optimizador.</string>
     <string name="audio_codec">Códec de audio</string>
     <string name="pref_header_sony_device_info">Información del dispositivo</string>
-    <string name="sony_anc_optimize_description">Pulse para iniciar el optimizador de cancelación de ruido.</string>
+    <string name="sony_anc_optimize_description">Toca para iniciar el optimizador de cancelación de ruido.</string>
     <string name="menuitem_nothing">Nada</string>
     <string name="pref_title_notifications_generic_settings">Ajustes de notificaciones de Android</string>
     <string name="pref_device_action_fitness_app_control_start">Iniciar el seguimiento en la aplicación de fitness</string>
@@ -1400,7 +1400,7 @@
     <string name="pref_header_workout">Entrenamiento</string>
     <string name="pref_title_screen_on_on_notifications">Encender pantalla con notificaciones</string>
     <string name="pref_summary_screen_on_on_notifications">Encender la pantalla del dispositivo cuando llegue una notificación</string>
-    <string name="pref_explanation_authkey">Algunos dispositivos requieren una clave de emparejamiento especial para la primera inicialización del dispositivo. Pulsa aquí para obtener más detalles en el sitio web.</string>
+    <string name="pref_explanation_authkey">Algunos dispositivos requieren una clave de emparejamiento especial para la primera inicialización del dispositivo. Toca aquí para obtener más detalles en el sitio web.</string>
     <string name="appmanager_watchface_activate">Activar</string>
     <string name="appmanager_app_start">Iniciar</string>
     <string name="appmanager_app_download">Descargar a caché</string>
@@ -1466,7 +1466,7 @@
     <string name="pref_summary_notification_media_ignores_application_list">Procesar las notificaciones multimedia antes que la lista de aplicaciones. Si esta preferencia no está marcada, las aplicaciones multimedia deben estar permitidas en la lista de aplicaciones para que los controles multimedia funcionen en el dispositivo.</string>
     <string name="pref_summary_banglejs_txt_bitmap_size">Tamaño a utilizar para la representación de texto en mapa de bits</string>
     <string name="pref_title_banglejs_webview_url">URL del cargador de aplicaciones</string>
-    <string name="pref_summary_banglejs_webview_url">Si quiere un cargador de aplicaciones personalizado, introduzca aquí su URL https://.../android.html. De lo contrario, deje en blanco para usar https://banglejs.com/apps</string>
+    <string name="pref_summary_banglejs_webview_url">Si quieres un cargador de aplicaciones personalizado, introduce aquí tu URL https://.../android.html. De lo contrario, déjalo en blanco para usar https://banglejs.com/apps</string>
     <string name="pref_blacklist_calendars_summary">Los calendarios de la lista negra no se sincronizarán con el dispositivo</string>
     <string name="pref_summary_canned_replies">Responder desde el reloj con mensajes predefinidos</string>
     <string name="pref_header_intent_api">Intent API</string>
@@ -1500,7 +1500,7 @@
     <string name="watchface_dialog_widget_cat_custom_widget">Widget personalizado</string>
     <string name="watchface_dialog_title_widget">Ajustes del widget</string>
     <string name="pref_voice_detect_duration_10">10 segundos</string>
-    <string name="prefs_double_tap_edge">Doble pulsación al borde</string>
+    <string name="prefs_double_tap_edge">Doble toque en el borde</string>
     <string name="sony_ambient_sound_control_button_modes">Modos del botón de control de sonido ambiente</string>
     <string name="sony_ambient_sound_control_button_mode_nc_as_off">Cancelación de ruido, sonido ambiente, apagado</string>
     <string name="sony_ambient_sound_control_button_mode_as_off">Sonido ambiente, apagado</string>
@@ -1622,7 +1622,7 @@
     <string name="pref_title_lower_button_short_press_action">Acción de pulsación corta del botón inferior</string>
     <string name="menuitem_todo">Tareas pendientes</string>
     <string name="menuitem_voice_memos">Notas de voz</string>
-    <string name="menuitem_one_tap_measuring">Medición con una sola pulsación</string>
+    <string name="menuitem_one_tap_measuring">Medición con un solo toque</string>
     <string name="menuitem_wifi">Wi‑Fi</string>
     <string name="menuitem_lockscreen">Bloqueo de pantalla</string>
     <string name="menuitem_unsupported">[NO ADMITIDO] %s</string>
@@ -1643,7 +1643,7 @@
     <string name="steps_streaks_total_steps_average_hint">Media total de pasos al día %d</string>
     <string name="currentWorkoutLoad">Carga de ejercicio</string>
     <string name="heartrate_bpm_40">40 ppm</string>
-    <string name="permission_notification_policy_access">%1$s necesita acceder a la configuración de No molestar para respetarla en su reloj cuando la pantalla del teléfono esté apagada.\n\nToque «%2$s» y luego «%1$s» y active «Permitir No molestar». Después, toque «Atrás» para volver a %1$s.</string>
+    <string name="permission_notification_policy_access">%1$s necesita acceder a los ajustes de «No molestar» para aplicarlos en tu reloj cuando la pantalla del teléfono esté apagada. \n \nToca «%2$s» y luego «%1$s», activa «Permitir No molestar» y, después, toca «Atrás» para volver a %1$s.</string>
     <string name="pref_voice_detect_duration_15">15 segundos</string>
     <string name="controlcenter_connected_fraction">Conectado: %1$d/%2$d</string>
     <string name="heartrate_bpm_50">50 ppm</string>
@@ -1754,10 +1754,10 @@
     <string name="prefs_noise_control_with_one_earbud">Control de ruido con un solo auricular</string>
     <string name="pref_ambient_sound_tone">Tono de sonido ambiente</string>
     <string name="pref_switch_controls_anc_ambient">Cancelación de ruido ↔ Ambiental</string>
-    <string name="prefs_double_tap_edge_summary">Detecta la doble pulsación aunque no se pulse en el panel táctil</string>
+    <string name="prefs_double_tap_edge_summary">Detecta el doble toque incluso si no se toca el panel táctil</string>
     <string name="pref_header_spo2">Oxígeno en sangre</string>
     <string name="pref_header_stress">Tensión</string>
-    <string name="sony_quick_access_double_tap">Acceso rápido (doble pulsación)</string>
+    <string name="sony_quick_access_double_tap">Acceso rápido (doble toque)</string>
     <string name="step_streak_longest">Más largo</string>
     <string name="steps_streaks_hint">Serie de días consecutivos sin interrupción con pasos objetivo alcanzados</string>
     <string name="steps_streaks">Medición de los pasos</string>
@@ -1778,7 +1778,7 @@
     <string name="pref_huami_truncate_fetch_operation_timestamps_summary">Trunca las marcas de tiempo de las operaciones de recuperación a minutos. Desactive esta opción para mantener las marcas de tiempo en segundos, si tiene problemas al recuperar de entrenamientos muy cortos.</string>
     <string name="prefs_password_summary">Bloquea la pulsera con una contraseña cuando se la quita de la muñeca</string>
     <string name="normal">Normal</string>
-    <string name="pref_cover_to_mute">Pulsar para silenciar</string>
+    <string name="pref_cover_to_mute">Cubrir para silenciar</string>
     <string name="pref_screen_notification_profile_find_device">Buscar dispositivo</string>
     <string name="pref_screen_notification_idle_alerts">Alertas de inactividad</string>
     <string name="pref_screen_vibration_patterns_title">Modelos de vibración</string>
@@ -1850,26 +1850,26 @@
     <string name="address">Dirección</string>
     <string name="ftp_server_configuration">Configuración del servidor FTP</string>
     <string name="ftp_server_root_dir">Directorio raíz</string>
-    <string name="sony_speak_to_chat_summary">Desactiva automáticamente la cancelación de ruido cuando empiece a hablar.</string>
+    <string name="sony_speak_to_chat_summary">Desactiva automáticamente la cancelación de ruido cuando empiezas a hablar.</string>
     <string name="pref_morning_updates_title">Actualización matinal</string>
     <string name="pref_morning_updates_summary">Mostrar actualizaciones cada mañana</string>
     <string name="pref_morning_updates_categories_title">Categorías de las actualizaciones matinales</string>
     <string name="yesterdays_activity">Actividades de ayer</string>
     <string name="pref_morning_updates_categories_summary">Lista de categorías a mostrar cada mañana</string>
     <string name="pref_summary_receive_calls_watch">Realiza y recibe llamadas directamente en el reloj</string>
-    <string name="bluetooth_calls">Llamadas por Bluetooth</string>
+    <string name="bluetooth_calls">Llamadas Bluetooth</string>
     <string name="bluetooth_calls_pairing">Emparejamiento para llamadas Bluetooth</string>
     <string name="bluetooth_calls_settings">Configuración de llamadas Bluetooth</string>
     <string name="pref_display_caller_title">Mostrar información del contacto</string>
     <string name="pref_display_caller_summary">Mostrar el número de teléfono o el nombre de las llamadas entrantes</string>
     <string name="pref_pair_bluetooth_calls_title">Emparejar para llamadas Bluetooth</string>
-    <string name="pref_pair_bluetooth_calls_summary">Pulsa aquí para iniciar el proceso de emparejamiento</string>
-    <string name="pref_pair_bluetooth_calls_help_title">Cómo recibir llamadas Bluetooth</string>
-    <string name="pref_pair_bluetooth_calls_help_summary">Para recibir llamadas Bluetooth, debe emparejar el teléfono con una segunda instancia del reloj.</string>
-    <string name="pref_pair_bluetooth_calls_help_1">1. Pulsa el botón de abajo para iniciar el proceso de emparejamiento.</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Vaya a los ajustes de Bluetooth del teléfono y empareje el nuevo dispositivo que aparecerá (con un nombre similar al de su reloj actual, pero con un sufijo, por ejemplo: “Amazfit GTR 4 - AFC8”).</string>
-    <string name="pref_pair_bluetooth_calls_help_warning">ADVERTENCIA: si activa las llamadas Bluetooth sin emparejar la segunda instancia, es posible que las notificaciones de llamadas no funcionen como se espera.</string>
-    <string name="pref_pair_bluetooth_calls_help_3">3. Active la opción “Llamadas Bluetooth” que aparece a continuación.</string>
+    <string name="pref_pair_bluetooth_calls_summary">Toca aquí para iniciar el proceso de emparejamiento</string>
+    <string name="pref_pair_bluetooth_calls_help_title">Cómo recibir llamadas por Bluetooth</string>
+    <string name="pref_pair_bluetooth_calls_help_summary">Para recibir llamadas por Bluetooth, tienes que emparejar el teléfono con una segunda instancia del reloj.</string>
+    <string name="pref_pair_bluetooth_calls_help_1">1. Toca el botón de abajo para iniciar el proceso de emparejamiento.</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Ve a los ajustes de Bluetooth del teléfono y empareja el nuevo dispositivo que aparecerá (tendrá un nombre similar al de tu reloj, pero con un sufijo, por ejemplo: «Amazfit GTR 4 - AFC8»).</string>
+    <string name="pref_pair_bluetooth_calls_help_warning">ADVERTENCIA: Si activas las llamadas por Bluetooth sin emparejar la segunda instancia, es posible que las notificaciones de llamadas no funcionen correctamente.</string>
+    <string name="pref_pair_bluetooth_calls_help_3">3. Activa la opción «Llamadas Bluetooth» que aparece a continuación.</string>
     <string name="pref_summary_notification_cache_while_disconnected">Enviar notificaciones perdidas cuando un dispositivo se vuelve a conectar después de estar fuera de cobertura</string>
     <string name="pref_title_notification_cache_while_disconnected">Caché mientras está fuera de cobertura</string>
     <string name="sony_button_mode_help_summary">Descripción de cada modo de botón</string>
@@ -1956,7 +1956,7 @@
     <string name="action_changelog">Novedades</string>
     <string name="pref_title_banglejs_phone_gps_network_only">Solo usa la red para determinar la ubicación</string>
     <string name="pref_title_banglejs_phone_gps_update_interval">Intervalo de actualización de datos GPS</string>
-    <string name="pref_summary_banglejs_phone_gps_enbale">Utiliza los datos GPS del teléfono para sobrescribir los datos GPS del dispositivo Bangle</string>
+    <string name="pref_summary_banglejs_phone_gps_enbale">Usa los datos GPS del teléfono para sobrescribir los datos GPS del dispositivo Bangle</string>
     <string name="pref_summary_banglejs_phone_gps_update_interval">El intervalo de actualización de la posición GPS, en ms</string>
     <string name="pref_title_banglejs_phone_gps_enbale">Usar datos GPS del teléfono</string>
     <string name="pref_summary_banglejs_phone_gps_network_only">Utiliza solo el proveedor de red para determinar la ubicación. Esto reduce el consumo de energía a costa de la precisión. Es necesaria una reconexión.</string>
@@ -2515,7 +2515,7 @@
     <string name="pref_dashboard_widget_today_hr_interval_title">Intervalo de frecuencia cardíaca</string>
     <string name="activity_type_worn">En uso</string>
     <string name="pref_dashboard_widget_today_hr_interval_summary">La cantidad de minutos que el gráfico muestra «en uso» después de cada medición correcta de la frecuencia cardíaca</string>
-    <string name="pref_auto_reply_calls_summary">El teléfono descolgará automáticamente las llamadas entrantes</string>
+    <string name="pref_auto_reply_calls_summary">El teléfono responderá automáticamente las llamadas entrantes</string>
     <string name="pref_auto_reply_calls_delay_summary">Número de segundos tras los cuales se descuelga automáticamente la llamada</string>
     <string name="pref_auto_reply_calls_title">Responder automáticamente a las llamadas</string>
     <string name="pref_auto_reply_calls_delay_title">Retraso automático en la respuesta</string>
@@ -2661,7 +2661,7 @@
     <string name="activity_type_parachuting">Paracaidismo</string>
     <string name="pref_title_notification_times_enabled">Horarios de notificación</string>
     <string name="pref_summary_notification_times_enabled">Enviar notificaciones solo entre horas específicas</string>
-    <string name="find_my_phone_companion_warning">Para encontrar el teléfono es necesario emparejar el dispositivo. Pulse aquí para obtener más información.</string>
+    <string name="find_my_phone_companion_warning">Para encontrar el teléfono es necesario emparejar el dispositivo. Toca aquí para obtener más información.</string>
     <string name="sleep_colored_stats_rem">REM</string>
     <string name="stats_empty_value">-</string>
     <string name="hrv_status_unbalanced">Desequilibrado</string>
@@ -2917,7 +2917,7 @@
     <string name="pref_header_external_integrations">Integraciones externas</string>
     <string name="pref_header_automations">Automatizaciones</string>
     <string name="pref_description_general">Inicio, idioma, región, ubicación</string>
-    <string name="pref_description_notifications">Notificaciones de aplicaciones, lista blanca/lista negra</string>
+    <string name="pref_description_notifications">Notificaciones de aplicaciones, permitidos/bloqueados</string>
     <string name="pref_description_user_interface">Tema, pantalla principal</string>
     <string name="pref_description_dashboard">Widgets, dispositivos a incluir</string>
     <string name="pref_description_developer_options">Registros, Intent API</string>
@@ -3519,7 +3519,7 @@
     <string name="pref_summary_calendar_sync_choose">Elija qué calendarios y etiquetas de color sincronizar con el dispositivo</string>
     <string name="pref_title_calendar_sync_choose">Calendarios a sincronizar</string>
     <string name="pref_title_calendar_sync_colors">Colores de eventos a sincronizar</string>
-    <string name="pref_summary_calendar_sync_canceled">Los eventos de calendario cancelados se sincronizarán con el dispositivo</string>
+    <string name="pref_summary_calendar_sync_canceled">Los eventos del calendario cancelados se sincronizarán con el dispositivo</string>
     <string name="pref_title_calendar_sync_canceled">Sincronizar eventos cancelados</string>
     <string name="pref_summary_calendar_sync_declined">Los eventos de calendario que haya rechazado se sincronizarán con el dispositivo</string>
     <string name="pref_title_calendar_sync_declined">Sincronizar eventos rechazados</string>
@@ -4132,7 +4132,7 @@
     <string name="internet_firewall_blacklisted_domains_title">Dominios bloqueados</string>
     <string name="internet_firewall_blacklisted_domains_summary">Los siguientes dominios y todos sus subdominios ignorarán la configuración anterior y siempre serán bloqueados.</string>
     <string name="pref_restart_logging_title">Iniciar el registro</string>
-    <string name="pref_restart_logging_summary">Pulsa aquí para intentar iniciar el archivo de registro</string>
+    <string name="pref_restart_logging_summary">Toca aquí para intentar iniciar el archivo de registro</string>
     <string name="menuitem_audio_control">Control de audio</string>
     <string name="menuitem_diary">Diario</string>
     <string name="menuitem_calorie_intake_record">Registro de ingesta de calorías</string>
