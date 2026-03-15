@@ -1,9 +1,13 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,9 +32,10 @@ public class GpxRouteFileConverter {
     private FitFile convertedFile;
     private final String name;
 
-    public GpxRouteFileConverter(final GpxFile gpxFile,
-                                 final String trackName) {
-        this.timestamp = System.currentTimeMillis() / 1000;
+    public GpxRouteFileConverter(@NonNull final GpxFile gpxFile,
+                                 @NonNull final String trackName,
+                                 @Nullable final Date date) {
+        this.timestamp = ((date == null) ? System.currentTimeMillis() : date.getTime()) / 1000L;
         this.gpxFile = gpxFile;
         this.name = trackName;
         try {
@@ -82,7 +87,7 @@ public class GpxRouteFileConverter {
 
         GPSCoordinate prevPoint = gpxTrackPointList.get(0);
 
-        for (GPSCoordinate point :
+        for (GpxTrackPoint point :
                 gpxTrackPointList) {
             totalAscent += point.getAscent(prevPoint);
             totalDescent += point.getDescent(prevPoint);
@@ -90,11 +95,29 @@ public class GpxRouteFileConverter {
             runningTs += (long) (point.getDistance(prevPoint) / speed);
 
             final FitRecord.Builder recordBuilder = new FitRecord.Builder();
+            recordBuilder.setTimestamp(runningTs);
             recordBuilder.setLatitude(point.getLatitude());
             recordBuilder.setLongitude(point.getLongitude());
-            recordBuilder.setAltitude((float) point.getAltitude());
             recordBuilder.setDistance(totalDistance);
-            recordBuilder.setTimestamp(runningTs);
+
+            if(point.hasAltitude()){
+                recordBuilder.setAltitude((float) point.getAltitude());
+            }
+
+            final double depth = point.getDepth();
+            if(Double.isFinite(depth)) {
+                recordBuilder.setDepth(depth);
+            }
+
+            final float temperature = point.getTemperature();
+            if(Float.isFinite(temperature)) {
+                recordBuilder.setTemperature((int) temperature);
+            }
+
+            final float speed = point.getSpeed();
+            if(Float.isFinite(speed) && speed > 0.0f) {
+                recordBuilder.setSpeed(speed);
+            }
 
             prevPoint = point;
             gpxPointDataRecords.add(recordBuilder.build(0x05));
@@ -140,6 +163,9 @@ public class GpxRouteFileConverter {
         lapBuilder.setEndLat(last.getLatitude());
         lapBuilder.setEndLong(last.getLongitude());
         lapBuilder.setTimestamp(timestamp);
+        lapBuilder.setMessageIndex(0);
+        lapBuilder.setStartTime(timestamp);
+        lapBuilder.setSport(activity);
         return lapBuilder;
     }
 
@@ -158,6 +184,7 @@ public class GpxRouteFileConverter {
         fileIdBuilder.setTimeCreated(timestamp);
         fileIdBuilder.setSerialNumber(1L);
         fileIdBuilder.setNumber(1);
+        fileIdBuilder.setProductName("Gadgetbridge");
         return fileIdBuilder.build(0x00);
     }
 
