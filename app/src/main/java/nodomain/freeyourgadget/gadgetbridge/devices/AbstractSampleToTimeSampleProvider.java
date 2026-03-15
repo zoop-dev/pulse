@@ -22,8 +22,12 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.dao.Property;
+import de.greenrobot.dao.query.QueryBuilder;
+import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.entities.AbstractActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
+import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.TimeSample;
 
@@ -43,6 +47,9 @@ public abstract class AbstractSampleToTimeSampleProvider<T extends TimeSample, S
 
     @Nullable
     protected abstract T convertSample(final S sample);
+
+    @NonNull
+    protected abstract Property getFilterColumn();
 
     public GBDevice getDevice() {
         return mDevice;
@@ -84,21 +91,102 @@ public abstract class AbstractSampleToTimeSampleProvider<T extends TimeSample, S
     @Nullable
     @Override
     public T getLatestSample() {
-        final S latestSample = mSampleProvider.getLatestActivitySample();
+        final S latestSample = getLatestActivitySample();
         return convertSample(latestSample);
     }
 
     @Nullable
     @Override
     public T getLatestSample(final long until) {
-        final S latestSample = mSampleProvider.getLatestActivitySample((int) (until / 1000L));
+        final S latestSample = getLatestActivitySample((int) (until / 1000L));
         return convertSample(latestSample);
     }
 
     @Nullable
     @Override
     public T getFirstSample() {
-        final S firstSample = mSampleProvider.getFirstActivitySample();
+        final S firstSample = getFirstActivitySample();
         return convertSample(firstSample);
+    }
+
+    /**
+     * Same as the one from AbstractSampleProvider but with added getFilterColumn
+     */
+    @Nullable
+    private S getLatestActivitySample() {
+        if (!(mSampleProvider instanceof AbstractSampleProvider<S> abstractSampleProvider)) {
+            return null;
+        }
+        final QueryBuilder<S> qb = abstractSampleProvider.getSampleDao().queryBuilder();
+        final Device dbDevice = DBHelper.findDevice(getDevice(), getSession());
+        if (dbDevice == null) {
+            // no device, no sample
+            return null;
+        }
+        final Property deviceProperty = abstractSampleProvider.getDeviceIdentifierSampleProperty();
+        qb.where(deviceProperty.eq(dbDevice.getId())).orderDesc(abstractSampleProvider.getTimestampSampleProperty()).limit(1);
+        qb.where(getFilterColumn().isNotNull());
+        final List<S> samples = qb.build().list();
+        if (samples.isEmpty()) {
+            return null;
+        }
+        final S sample = samples.get(0);
+        sample.setProvider(mSampleProvider);
+        return sample;
+    }
+
+    /**
+     * Same as the one from AbstractSampleProvider but with added getFilterColumn
+     */
+    @Nullable
+    private S getLatestActivitySample(final int until) {
+        if (!(mSampleProvider instanceof AbstractSampleProvider<S> abstractSampleProvider)) {
+            return null;
+        }
+        final QueryBuilder<S> qb = abstractSampleProvider.getSampleDao().queryBuilder();
+        final Device dbDevice = DBHelper.findDevice(getDevice(), getSession());
+        if (dbDevice == null) {
+            // no device, no sample
+            return null;
+        }
+        final Property deviceProperty = abstractSampleProvider.getDeviceIdentifierSampleProperty();
+        final Property timestampProperty = abstractSampleProvider.getTimestampSampleProperty();
+        qb.where(timestampProperty.le(until))
+                .where(deviceProperty.eq(dbDevice.getId()))
+                .where(getFilterColumn().isNotNull())
+                .orderDesc(timestampProperty).limit(1);
+        final List<S> samples = qb.build().list();
+        if (samples.isEmpty()) {
+            return null;
+        }
+        final S sample = samples.get(0);
+        sample.setProvider(mSampleProvider);
+        return sample;
+    }
+
+    /**
+     * Same as the one from AbstractSampleProvider but with added getFilterColumn
+     */
+    @Nullable
+    private S getFirstActivitySample() {
+        if (!(mSampleProvider instanceof AbstractSampleProvider<S> abstractSampleProvider)) {
+            return null;
+        }
+        final QueryBuilder<S> qb = abstractSampleProvider.getSampleDao().queryBuilder();
+        final Device dbDevice = DBHelper.findDevice(getDevice(), getSession());
+        if (dbDevice == null) {
+            // no device, no sample
+            return null;
+        }
+        final Property deviceProperty = abstractSampleProvider.getDeviceIdentifierSampleProperty();
+        qb.where(deviceProperty.eq(dbDevice.getId())).orderAsc(abstractSampleProvider.getTimestampSampleProperty()).limit(1);
+        qb.where(getFilterColumn().isNotNull());
+        final List<S> samples = qb.build().list();
+        if (samples.isEmpty()) {
+            return null;
+        }
+        final S sample = samples.get(0);
+        sample.setProvider(mSampleProvider);
+        return sample;
     }
 }

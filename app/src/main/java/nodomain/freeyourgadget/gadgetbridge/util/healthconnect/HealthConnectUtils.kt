@@ -679,7 +679,7 @@ class HealthConnectUtils {
                 }
                 is BaseActivitySummaryDao -> {
                     val deviceEntity = DBHelper.getDevice(device, db.daoSession) ?: return null
-                    return db.daoSession.baseActivitySummaryDao?.queryBuilder()
+                    db.daoSession.baseActivitySummaryDao?.queryBuilder()
                         ?.where(BaseActivitySummaryDao.Properties.DeviceId.eq(deviceEntity.id))
                         ?.orderAsc(BaseActivitySummaryDao.Properties.StartTime)
                         ?.limit(1)

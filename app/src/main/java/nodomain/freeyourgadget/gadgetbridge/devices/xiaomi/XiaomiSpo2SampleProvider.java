@@ -16,9 +16,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.xiaomi;
 
+import androidx.annotation.NonNull;
+
+import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractSampleToTimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiActivitySample;
+import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 
@@ -37,6 +41,12 @@ public class XiaomiSpo2SampleProvider extends AbstractSampleToTimeSampleProvider
                 sample.getTimestamp() * 1000L,
                 sample.getSpo2()
         );
+    }
+
+    @NonNull
+    @Override
+    protected Property getFilterColumn() {
+        return XiaomiActivitySampleDao.Properties.Spo2;
     }
 
     protected static class XiaomiSpo2Sample implements Spo2Sample {

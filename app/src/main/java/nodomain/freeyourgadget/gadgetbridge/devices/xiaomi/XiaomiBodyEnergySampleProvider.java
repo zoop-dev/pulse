@@ -16,9 +16,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.xiaomi;
 
+import androidx.annotation.NonNull;
+
+import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractSampleToTimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiActivitySample;
+import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BodyEnergySample;
 
@@ -37,6 +41,12 @@ public class XiaomiBodyEnergySampleProvider extends AbstractSampleToTimeSamplePr
                 sample.getTimestamp() * 1000L,
                 sample.getEnergy()
         );
+    }
+
+    @NonNull
+    @Override
+    protected Property getFilterColumn() {
+        return XiaomiActivitySampleDao.Properties.Energy;
     }
 
     protected static class XiaomiBodyEnergySample implements BodyEnergySample {
