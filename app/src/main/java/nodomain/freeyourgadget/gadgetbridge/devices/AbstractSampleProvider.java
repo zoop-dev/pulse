@@ -248,7 +248,7 @@ public abstract class AbstractSampleProvider<T extends AbstractActivitySample> i
     public void convertCumulativeSteps(final List<T> samples, final Property stepsSampleProperty) {
         // Fix over-counting at the turn of day
         final T lastSample = getLastSampleWithStepsBefore(samples.get(0).getTimestamp(), stepsSampleProperty);
-        if (lastSample != null && sameDay(lastSample, samples.get(0))) {
+        if (lastSample != null && sameDay(lastSample.getTimestamp(), samples.get(0).getTimestamp())) {
             if (samples.get(0).getSteps() > 0) {
                 samples.get(0).setSteps(samples.get(0).getSteps() - lastSample.getSteps());
             }
@@ -267,6 +267,7 @@ public abstract class AbstractSampleProvider<T extends AbstractActivitySample> i
         int prevSteps = samples.get(0).getSteps();
         int prevDistance = samples.get(0).getDistanceCm();
         int prevActiveCalories = samples.get(0).getActiveCalories();
+        int lastDecreaseTimestamp = 0;
         // Round timestamp to the nearest minute
         samples.get(0).setTimestamp((samples.get(0).getTimestamp() / 60) * 60);
         int bak;
@@ -276,7 +277,7 @@ public abstract class AbstractSampleProvider<T extends AbstractActivitySample> i
             final T s2 = samples.get(i);
             s2.setTimestamp((s2.getTimestamp() / 60) * 60);
 
-            if (!sameDay(s1, s2)) {
+            if (!sameDay(s1.getTimestamp(), s2.getTimestamp())) {
                 // went past midnight - reset steps
                 prevTimestamp = s2.getTimestamp();
                 prevSteps = s2.getSteps() > 0 ? s2.getSteps() : 0;
@@ -287,13 +288,27 @@ public abstract class AbstractSampleProvider<T extends AbstractActivitySample> i
                     // This is likely a bug, since cumulative steps shouldn't ever go down within the same day.
                     // Mitigate it by ignoring the second sample, but this will likely still result in inconsistent data for the day.
                     LOG.warn(
-                            "Cumulative steps went down from {} to {} ({} to {}) within the same day - ignoring second sample",
+                            "Cumulative steps went down from {} to {} ({} to {}) within the same day",
                             prevTimestamp,
                             s2.getTimestamp(),
                             prevSteps,
                             s2.getSteps()
                     );
-                    continue;
+                    if (!sameDay(lastDecreaseTimestamp, s2.getTimestamp())) {
+                        // This is the first jump in this day. Since it may have happened due to a timezone shift, let's
+                        // persist the values to mitigate missing data
+                        prevTimestamp = s2.getTimestamp();
+                        prevSteps = s2.getSteps();
+                        prevDistance = s2.getDistanceCm();
+                        prevActiveCalories = s2.getActiveCalories();
+                        lastDecreaseTimestamp = s2.getTimestamp();
+                        // We need to erase whatever cumulative value we have in this sample, or it might cause a large jump
+                        // FIXME: This might introduce missing data on timezone changes
+                        s2.setSteps(-1);
+                        s2.setDistanceCm(-1);
+                        s2.setActiveCalories(-1);
+                        continue;
+                    }
                 }
 
                 // New value for the current day - subtract the previous seen sample
@@ -338,16 +353,22 @@ public abstract class AbstractSampleProvider<T extends AbstractActivitySample> i
         return !samples.isEmpty() ? samples.get(0) : null;
     }
 
-    public boolean sameDay(final T s1, final T s2) {
+    public boolean sameDay(final int t1, final int t2) {
         final Calendar cal = Calendar.getInstance();
 
-        cal.setTimeInMillis(s1.getTimestamp() * 1000L - 1000L);
+        cal.setTimeInMillis(t1 * 1000L - 1000L);
         final LocalDate d1 = LocalDate.of(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
 
-        cal.setTimeInMillis(s2.getTimestamp() * 1000L - 1000L);
+        cal.setTimeInMillis(t2 * 1000L - 1000L);
         final LocalDate d2 = LocalDate.of(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
 
         return d1.equals(d2);
+    }
+
+    public LocalDate getLocalDate(final long timestampMillis) {
+        final Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(timestampMillis);
+        return LocalDate.of(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
     }
 
     protected List<T> fillGaps(final List<T> samples, final int timestamp_from, final int timestamp_to) {
