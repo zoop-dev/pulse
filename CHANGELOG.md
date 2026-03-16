@@ -1,5 +1,51 @@
 ### Changelog
 
+#### Next release (WIP)
+
+* Initial support for Honor Magic Watch
+* Initial support for Y6 (GloryFit)
+* Initial support for Garmin Forerunner 935, Instinct 2S Surf, Instinct Solar Tactical
+* Initial support for Huawei Band 11
+* Initial support for Laxasfit devices
+* Amazfit GTR 4: Add bluetooth name for Limited Edition
+* Amazfit Helio Strap: Hide heart rate monitoring config (always-on by design)
+* Charts: Improve VO2 Max chart range
+* CMF Watch Pro: Fix activity over-counting on timezone change
+* CMF Watch Pro: Fix exception on connection
+* Dashboard: Add PAI widget
+* Dashboard: Add preference for disabling dimming in Today widget
+* Dashboard: Add week day
+* Database: Improve access performance
+* Debug: Add setting to change device mac address
+* Garmin Venu 4: Fix bluetooth name
+* Garmin: Add Recovery Heart Rate and Rate of Perceived Exertion to activity summary
+* Garmin: Fix activity over-counting on timezone change
+* Garmin: Use current day resting heart rate
+* Health Connect: Fix calories unit
+* Health Connect: Fix duplicate and truncated sleep records
+* Health Connect: Fix duplicate records from workout syncer overlapping activity sync
+* Health Connect: Fix sync skipping some records
+* Huami: Map more apps to notification icons
+* Huawei Watch GT 6 Pro: Fix workout processing
+* Huawei/Honor: Enable VO2 Max for supported devices
+* Huawei/Honor: Fix workout processing for some devices
+* Mi Band 9 Active: Fix activity fetching
+* Pebble: Fix app configuration when internet helper is available but disallowed
+* Pebble: Fix crash when returning from exernal website from browser application
+* Pebble: Fix sending config to watchfaces
+* Sony WF-1000XM4: Enable speak-to-chat support
+* Webview: Do not check firewall when direct internet access is available
+* Withings Steel HR: Update battery and time on sync
+* Xiaomi-protobuf: Fix calories charts
+* Xiaomi: Fix first HC sync for SpO2 data
+* Zepp OS: Add setting to disable calendar event reminders
+* Zepp OS: Fix notification pictures
+* Zepp OS: Map some unknown display items
+* Zepp OS: Parse swimming details and temperature
+* Fix Tiny Weather Forecast Germany on some devices
+* Fix workout list icon tint in action menu
+* Fix crash on calendar sync if permissions are not granted
+
 #### 0.89.1
 
 * Garmin: Fix edge case on activity timestamp processing
