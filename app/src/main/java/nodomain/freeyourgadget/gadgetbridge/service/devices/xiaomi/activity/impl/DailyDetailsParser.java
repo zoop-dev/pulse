@@ -39,7 +39,6 @@ import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityFileId;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityParser;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -86,7 +85,6 @@ public class DailyDetailsParser extends XiaomiActivityParser {
         timestamp.setTime(fileId.getTimestamp());
 
         final List<XiaomiActivitySample> samples = new ArrayList<>();
-        final boolean isMb9a = gbDevice.getType() == DeviceType.MIBAND9ACTIVE;
         while (buf.position() < buf.limit()) {
             complexParser.reset();
 
@@ -162,12 +160,7 @@ public class DailyDetailsParser extends XiaomiActivityParser {
             }
 
             if (includeExtraEntry == 1) {
-                if (complexParser.nextGroup(8)) {
-                    // TODO
-                }
-            }
-            if (isMb9a) {
-                // FIXME this is very hacky, but I can't understand why we miss 1 byte per sample on the mb9a
+                // From feedback in #4625, looks like a byte will always be present
                 buf.get();
             }
 
