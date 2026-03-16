@@ -125,7 +125,7 @@ public abstract class AbstractSampleToTimeSampleProvider<T extends TimeSample, S
         }
         final Property deviceProperty = abstractSampleProvider.getDeviceIdentifierSampleProperty();
         qb.where(deviceProperty.eq(dbDevice.getId())).orderDesc(abstractSampleProvider.getTimestampSampleProperty()).limit(1);
-        qb.where(getFilterColumn().isNotNull());
+        qb.where(qb.and(getFilterColumn().isNotNull(), getFilterColumn().gt(0)));
         final List<S> samples = qb.build().list();
         if (samples.isEmpty()) {
             return null;
@@ -153,7 +153,7 @@ public abstract class AbstractSampleToTimeSampleProvider<T extends TimeSample, S
         final Property timestampProperty = abstractSampleProvider.getTimestampSampleProperty();
         qb.where(timestampProperty.le(until))
                 .where(deviceProperty.eq(dbDevice.getId()))
-                .where(getFilterColumn().isNotNull())
+                .where(qb.and(getFilterColumn().isNotNull(), getFilterColumn().gt(0)))
                 .orderDesc(timestampProperty).limit(1);
         final List<S> samples = qb.build().list();
         if (samples.isEmpty()) {
@@ -180,7 +180,7 @@ public abstract class AbstractSampleToTimeSampleProvider<T extends TimeSample, S
         }
         final Property deviceProperty = abstractSampleProvider.getDeviceIdentifierSampleProperty();
         qb.where(deviceProperty.eq(dbDevice.getId())).orderAsc(abstractSampleProvider.getTimestampSampleProperty()).limit(1);
-        qb.where(getFilterColumn().isNotNull());
+        qb.where(qb.and(getFilterColumn().isNotNull(), getFilterColumn().gt(0)));
         final List<S> samples = qb.build().list();
         if (samples.isEmpty()) {
             return null;
