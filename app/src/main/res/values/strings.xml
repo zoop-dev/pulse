@@ -4437,6 +4437,7 @@
     <string name="service_notification_collector_service_text">Monitoring notifications in background</string>
     <string name="devicetype_imiki_frame_2" translatable="false">IMIKI Frame 2</string>
     <string name="devicetype_oukitel_bt103" translatable="false">Oukitel BT103</string>
+    <string name="devicetype_y6" translatable="false">Y6</string>
     <string name="devicetype_y66" translatable="false">Y66</string>
     <string name="devicetype_d3" translatable="false">D3</string>
     <string name="devicetype_s52" translatable="false">S52</string>
