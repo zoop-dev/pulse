@@ -173,6 +173,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("Xiaomi Smart Band 7 Pro", DeviceType.MIBAND7PRO); // #2781
             put("Galaxy Buds Pro (B352)", DeviceType.GALAXY_BUDS_PRO); // #2642
             put("Redmi Watch 2 Lite 31A5", DeviceType.REDMIWATCH2LITE); // #2637
+            put("honor Watch-7EE", DeviceType.HONORMAGICWATCH); // #5816
             put("HUAWEI Band 6-A47", DeviceType.HUAWEIBAND6); // #2569
             put("716", DeviceType.FITPRO);
             put("LH716", DeviceType.FITPRO);

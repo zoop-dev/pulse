@@ -2110,6 +2110,7 @@
     <string name="devicetype_honor_band5" translatable="false">Honor Band 5</string>
     <string name="devicetype_honor_band6" translatable="false">Honor Band 6</string>
     <string name="devicetype_honor_band7" translatable="false">Honor Band 7</string>
+    <string name="devicetype_honor_magicwatch" translatable="false">Honor Magic Watch</string>
     <string name="devicetype_honor_magicwatch2" translatable="false">Honor MagicWatch 2</string>
     <string name="devicetype_honor_watchgs3" translatable="false">Honor Watch GS 3</string>
     <string name="devicetype_honor_watchgspro" translatable="false">Honor Watch GS Pro</string>
