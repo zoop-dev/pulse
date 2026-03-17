@@ -2090,7 +2090,7 @@
     <string name="pref_title_banglejs_phone_gps_update_interval">Update-interval GPS-gegevens</string>
     <string name="action_changelog">Wijzigingenlijst</string>
     <string name="pref_title_banglejs_phone_gps_enbale">Gebruik GPS-gegevens van telefoon</string>
-    <string name="pref_summary_banglejs_phone_gps_update_interval">Het interval voor hoe vaak de gps-positie wordt bijgewerkt, in ms</string>
+    <string name="pref_summary_banglejs_phone_gps_update_interval">Het interval voor hoe vaak de GPS-positie wordt bijgewerkt, in ms</string>
     <string name="pref_title_banglejs_phone_gps_network_only">Gebruik alleen het netwerk om de locatie te bepalen</string>
     <string name="pref_summary_banglejs_phone_gps_enbale">Gebruik de GPS-gegevens van de telefoon om de GPS-gegevens van het Bangle-apparaat te overschrijven</string>
     <string name="changelog_title">Wat is er nieuw</string>
@@ -4300,4 +4300,10 @@
     <string name="pref_dashboard_widget_today_dim_yesterday_data_title">Toon gisteren gedimd</string>
     <string name="pref_dashboard_widget_today_dim_yesterday_data_summary">Toon gegevens van gisteren met gedimde kleuren</string>
     <string name="activity_type_street_running">Straathardlopen</string>
+    <string name="pref_summary_calendar_sync_event_reminders">Afspraakherinneringen worden naar het apparaat gesynchroniseerd</string>
+    <string name="pref_title_calendar_sync_event_reminders">Synchroniseer herinneringen</string>
+    <string name="recoveryHr">Hartslagherstel</string>
+    <string name="ratingOfPerceivedExertion">Mate van gevoelde inspanning</string>
+    <string name="activity_type_stop_watch">Stopwatch</string>
+    <string name="activity_type_ccr_diving">Duiken met rebreather</string>
 </resources>
