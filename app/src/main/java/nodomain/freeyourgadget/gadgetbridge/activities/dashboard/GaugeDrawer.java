@@ -115,20 +115,45 @@ public class GaugeDrawer {
         paint.setStrokeCap(Paint.Cap.BUTT);
         paint.setStrokeWidth(barWidth);
 
+        // Draw the empty gauge
+        paint.setStrokeWidth(barWidth * 0.75f);
+        paint.setColor(color_unknown);
+        canvas.drawArc(barMargin, barMargin, width - barMargin, width - barMargin, 180, 180, false, paint);
+        paint.setStrokeWidth(barWidth);
+
         final double cornersGapRadians = Math.asin((width * 0.055f) / (double) height);
         final double cornersGapFactor = cornersGapRadians / Math.PI;
 
-        int dotColor = 0;
-        float angleSum = 0;
+        // Pre-calculate cumulative angles for each segment
+        final float[] cumulativeAngles = new float[segments.length];
+        float cumulativeSum = 0;
         for (int i = 0; i < segments.length; i++) {
+            cumulativeAngles[i] = cumulativeSum;
+            cumulativeSum += segments[i];
+        }
+
+        // Find the last non-zero segment index
+        int lastSegmentIndex = -1;
+        for (int i = segments.length - 1; i >= 0; i--) {
+            if (segments[i] > 0) {
+                lastSegmentIndex = i;
+                break;
+            }
+        }
+
+        int dotColor = 0;
+        // Draw segments in reverse order (from last to first) so BUTT cap overwrites the start of the last segment
+        for (int i = segments.length - 1; i >= 0; i--) {
             if (segments[i] == 0) {
                 continue;
             }
 
+            // Use ROUND cap only for the last segment, BUTT for others
+            paint.setStrokeCap(i == lastSegmentIndex ? Paint.Cap.ROUND : Paint.Cap.BUTT);
             paint.setColor(colors[i]);
             paint.setStrokeWidth(barWidth);
 
-            if (value < 0 || (value >= angleSum && value <= angleSum + segments[i])) {
+            if (value < 0 || (value >= cumulativeAngles[i] && value <= cumulativeAngles[i] + segments[i])) {
                 dotColor = colors[i];
             } else {
                 if (fadeOutsideDot) {
@@ -138,7 +163,7 @@ public class GaugeDrawer {
                 }
             }
 
-            float startAngleDegrees = 180 + angleSum * 180;
+            float startAngleDegrees = 180 + cumulativeAngles[i] * 180;
             float sweepAngleDegrees = segments[i] * 180;
 
             if (value >= 0) {
@@ -167,7 +192,6 @@ public class GaugeDrawer {
                     false,
                     paint
             );
-            angleSum += segments[i];
         }
 
         if (value >= 0) {
