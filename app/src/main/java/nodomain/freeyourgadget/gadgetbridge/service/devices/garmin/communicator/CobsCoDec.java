@@ -80,10 +80,12 @@ public class CobsCoDec {
 
     // this implementation of COBS relies on a leading and a trailing 0 byte (the former is not part of default implementations)
     public static byte[] encode(byte[] data) {
-        ByteBuffer encodedBytesBuffer = ByteBuffer.allocate((data.length * 2) + 1); // Maximum expansion
+        ByteBuffer encodedBytesBuffer = ByteBuffer.allocate((data.length * 2) + 2); // Maximum expansion
 
         encodedBytesBuffer.put((byte) 0);// Garmin initial padding
         ByteBuffer buffer = ByteBuffer.wrap(data);
+
+        boolean lastByteWasZero = false;
 
         while (buffer.position() < buffer.limit()) {
             int startPos = buffer.position();
@@ -92,6 +94,8 @@ public class CobsCoDec {
             while (buffer.hasRemaining() && buffer.get() != 0) {
                 zeroIndex++;
             }
+
+            lastByteWasZero = buffer.position() > zeroIndex;
 
             int payloadSize = zeroIndex - startPos;
 
@@ -104,16 +108,10 @@ public class CobsCoDec {
 
             encodedBytesBuffer.put((byte) (payloadSize + 1));
             encodedBytesBuffer.put(data, startPos, payloadSize);
+        }
 
-            if (buffer.hasRemaining()) {
-                zeroIndex++; // Include the zero byte in the next block
-            }
-
-            if (!buffer.hasRemaining() && payloadSize == 0) {
-                break;
-            }
-
-            buffer.position(zeroIndex);
+        if (lastByteWasZero) {
+            encodedBytesBuffer.put((byte) 0x01);
         }
 
         encodedBytesBuffer.put((byte) 0); // Append a zero byte to indicate end of encoding
