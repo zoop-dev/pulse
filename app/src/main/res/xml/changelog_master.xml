@@ -1,5 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="0.90.0" versioncode="246">
+        <change>Initial support for Honor Magic Watch</change>
+        <change>Initial support for Y6 (GloryFit)</change>
+        <change>Initial support for Garmin Forerunner 935, Instinct 2S Surf, Instinct Solar Tactical</change>
+        <change>Initial support for Huawei Band 11</change>
+        <change>Initial support for Laxasfit devices</change>
+        <change>Amazfit GTR 4: Add bluetooth name for Limited Edition</change>
+        <change>Amazfit Helio Strap: Hide heart rate monitoring config (always-on by design)</change>
+        <change>Charts: Improve VO2 Max chart range</change>
+        <change>CMF Watch Pro: Fix activity over-counting on timezone change</change>
+        <change>CMF Watch Pro: Fix exception on connection</change>
+        <change>Dashboard: Add PAI widget</change>
+        <change>Dashboard: Add preference for disabling dimming in Today widget</change>
+        <change>Dashboard: Add week day</change>
+        <change>Database: Improve access performance</change>
+        <change>Debug: Add setting to change device mac address</change>
+        <change>Garmin Venu 4: Fix bluetooth name</change>
+        <change>Garmin: Add Recovery Heart Rate and Rate of Perceived Exertion to activity summary</change>
+        <change>Garmin: Fix activity over-counting on timezone change</change>
+        <change>Garmin: Use current day resting heart rate</change>
+        <change>Health Connect: Fix calories unit</change>
+        <change>Health Connect: Fix duplicate and truncated sleep records</change>
+        <change>Health Connect: Fix duplicate records from workout syncer overlapping activity sync</change>
+        <change>Health Connect: Fix sync skipping some records</change>
+        <change>Huami: Map more apps to notification icons</change>
+        <change>Huawei Watch GT 6 Pro: Fix workout processing</change>
+        <change>Huawei/Honor: Enable VO2 Max for supported devices</change>
+        <change>Huawei/Honor: Fix workout processing for some devices</change>
+        <change>Mi Band 9 Active: Fix activity fetching</change>
+        <change>Pebble: Fix app configuration when internet helper is available but disallowed</change>
+        <change>Pebble: Fix crash when returning from exernal website from browser application</change>
+        <change>Pebble: Fix sending config to watchfaces</change>
+        <change>Sony WF-1000XM4: Enable speak-to-chat support</change>
+        <change>Webview: Do not check firewall when direct internet access is available</change>
+        <change>Withings Steel HR: Update battery and time on sync</change>
+        <change>Xiaomi-protobuf: Fix calories charts</change>
+        <change>Xiaomi: Fix first HC sync for SpO2 data</change>
+        <change>Zepp OS: Add setting to disable calendar event reminders</change>
+        <change>Zepp OS: Fix notification pictures</change>
+        <change>Zepp OS: Map some unknown display items</change>
+        <change>Zepp OS: Parse swimming details and temperature</change>
+        <change>Fix Tiny Weather Forecast Germany on some devices</change>
+        <change>Fix workout list icon tint in action menu</change>
+        <change>Fix crash on calendar sync if permissions are not granted</change>
+    </release>
     <release version="0.89.1" versioncode="245">
         <change>Garmin: Fix edge case on activity timestamp processing</change>
         <change>Huawei/Honor: Fix exception when processing workout data</change>

@@ -1,6 +1,6 @@
 ### Changelog
 
-#### Next release (WIP)
+#### 0.90.0
 
 * Initial support for Honor Magic Watch
 * Initial support for Y6 (GloryFit)

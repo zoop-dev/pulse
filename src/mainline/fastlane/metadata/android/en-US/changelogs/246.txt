@@ -1,0 +1,7 @@
+• Support for 7 new devices: Honor Magic Watch, Huawei Band 11, Y6 (GloryFit), Laxasfit, and Garmin Forerunner 935/Instinct variants
+• Dashboard updates: PAI widget, week day display, and optional dimming in today widget
+• Garmin and Huawei/Honor: Workout processing and VO2 Max improvements
+• Health Connect and activity sync fixes
+• Multiple fixes across Pebble, Zepp OS, Xiaomi, CMF, Withings, Sony, and others
+
+Read the full changelog in the project repository.
