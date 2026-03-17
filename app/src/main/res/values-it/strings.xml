@@ -46,7 +46,7 @@
     <string name="miband_firmware_unknown_warning">Questo firmware non è stato testato e potrebbe non essere compatibile con Gadgetbridge. 
 \n 
 \nNON è consigliato installarlo sulla tua Mi Band!</string>
-    <string name="miband_firmware_suggest_whitelist">Se si procede e tutto continua a funzionare ti invitiamo a contattare gli sviluppatori e dire loro di aggiungere il firmware %s all\'elenco di quelli compatibili.</string>
+    <string name="miband_firmware_suggest_whitelist">Se decidi di procede e tutto continua a funzionare, ti invitiamo a contattare gli sviluppatori di Gadgetbridge e dire loro di aggiungere la versione %s del firmware all\'elenco di quelli compatibili.</string>
     <!--Strings related to Settings-->
     <string name="title_activity_settings">Impostazioni</string>
     <string name="pref_header_general">Impostazioni generali</string>
@@ -318,7 +318,7 @@
     <string name="mi2_prefs_inactivity_warnings">Allarmi inattività</string>
     <string name="mi2_prefs_inactivity_warnings_summary">La band vibrerà dopo un determinato periodo di inattività</string>
     <string name="mi2_prefs_inactivity_warnings_threshold">Limite inattività (in minuti)</string>
-    <string name="mi2_prefs_inactivity_warnings_dnd_summary">Disabilita allarmi inattività per un intervallo di tempo</string>
+    <string name="mi2_prefs_inactivity_warnings_dnd_summary">Disabilita gli avvisi di inattività per un intervallo di tempo</string>
     <string name="mi2_prefs_do_not_disturb_start">Ora inizio</string>
     <string name="mi2_prefs_do_not_disturb_end">Ora fine</string>
     <string name="FetchActivityOperation_about_to_transfer_since">Vengono trasferiti dati a partire dal %1$s</string>
@@ -424,7 +424,7 @@
     <string name="pref_summary_pebble_enable_bgjs">Quando abilitato permette a watchface di visualizzare meteo, batteria, etc.</string>
     <string name="pref_header_auto_export">Esporta automaticamente le preferenze</string>
     <string name="pref_title_auto_export_enabled">Esportazione automatica abilitata</string>
-    <string name="pref_title_auto_export_location">Esporta posizione</string>
+    <string name="pref_title_auto_export_location">Posizione di esportazione</string>
     <string name="pref_title_auto_export_interval">Intervallo di esportazione</string>
     <string name="pref_summary_auto_export_interval">Esporta ogni %d ora/e</string>
     <string name="unknown_state">Stato sconosciuto</string>
@@ -1234,7 +1234,7 @@
 \nPROCEDI A TUO RISCHIO E PERICOLO!</string>
     <string name="pref_header_calendar">Calendario</string>
     <string name="pref_header_connection">Collegamento</string>
-    <string name="pref_blacklist_calendars_summary">I calendari ignorati non saranno sincronizzati con il dispositivo</string>
+    <string name="pref_blacklist_calendars_summary">I calendari ignorati non verranno sincronizzati col dispositivo</string>
     <string name="pref_title_screen_on_on_notifications">Notifiche con schermo acceso</string>
     <string name="pref_summary_screen_on_on_notifications">Accendi lo schermo del dispositivo quando arriva una notifica</string>
     <string name="spo2_perc_80">80%</string>
@@ -2012,7 +2012,7 @@
     <string name="pref_pair_bluetooth_calls_help_title">Come ricevere chiamate Bluetooth</string>
     <string name="pref_pair_bluetooth_calls_help_summary">Per ricevere chiamate Bluetooth è necessario accoppiare il telefono a una seconda istanza dell\'orologio.</string>
     <string name="pref_pair_bluetooth_calls_help_1">1. Tocca il pulsante in basso per avviare l\'accoppiamento.</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Vai nelle impostazioni Bluetooth del telefono e associa il nuovo dispositivo visualizzato (nome simile a quello dell\'orologio corrente, ma con un suffisso, ad es. \"Amazfit GTR 4 - AFC8\".</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Vai nelle impostazioni Bluetooth del telefono e associa il nuovo dispositivo visualizzato (nome simile a quello dell\'orologio corrente, ma con un suffisso, ad es. \"Amazfit GTR 4 - AFC8\").</string>
     <string name="pref_pair_bluetooth_calls_help_3">3. Attiva l\'impostazione delle \"chiamate Bluetooth\" in basso.</string>
     <string name="pref_pair_bluetooth_calls_help_warning">ATTENZIONE: se attivi le chiamate Bluetooth senza effettuare l\'accoppiamento con la seconda istanza, le notifiche di chiamata potrebbero non funzionare correttamente.</string>
     <string name="prefs_shortcut_cards_summary">Schede di scelta rapida visualizzate quando si scorre a destra dal quadrante. Quando un\'app è in esecuzione, le schede generate automaticamente non sono influenzate da questa impostazione.</string>
@@ -2093,7 +2093,7 @@
     <string name="title">Titolo</string>
     <string name="pref_summary_banglejs_phone_gps_network_only">Usa solo il fornitore di rete per determinare la posizione. Questo riduce il consumo di energia al costo della precisione. È necessaria una riconnessione.</string>
     <string name="pref_title_banglejs_phone_gps_update_interval">Intervallo di aggiornamento dati GPS</string>
-    <string name="pref_summary_banglejs_phone_gps_update_interval">Intervallo per quanto frequentemente aggiornare la posizione, in ms</string>
+    <string name="pref_summary_banglejs_phone_gps_update_interval">Intervallo per quanto frequentemente aggiornare la posizione GPS, in ms</string>
     <string name="busy_task_fetch_sports_details">Recuperando i dettagli degli sport</string>
     <string name="busy_task_fetch_sports_summaries">Recuperando i riepiloghi degli sport</string>
     <string name="busy_task_fetch_debug_logs">Recuperando log di debug</string>
@@ -2159,8 +2159,8 @@
     <string name="pref_app_logs_title">Registri app</string>
     <string name="loyalty_cards_sync_starred">Sincronizza solo carte preferite</string>
     <string name="pref_title_banglejs_phone_gps_network_only">Usa solo la rete per determinare la posizione</string>
-    <string name="pref_title_banglejs_phone_gps_enbale">Usa dati gps del telefono</string>
-    <string name="pref_summary_banglejs_phone_gps_enbale">Usa i dati gps del telefono per sovrascrivere i dati gps del dispositivo bangle</string>
+    <string name="pref_title_banglejs_phone_gps_enbale">Usa dati GPS del telefono</string>
+    <string name="pref_summary_banglejs_phone_gps_enbale">Usa i dati GPS del telefono per sovrascrivere i dati GPS del dispositivo bangle</string>
     <string name="stress_moderate">Moderato</string>
     <string name="stress_mild">Leggero</string>
     <string name="pref_theme_dynamic">Colori dinamici</string>
@@ -2721,7 +2721,7 @@
     <string name="pref_title_user_interface">Interfaccia utente</string>
     <string name="pref_summary_sync_birthdays">Sincronizza i compleanni dei contatti con gli eventi del calendario</string>
     <string name="pref_title_sync_birthdays">Sincronizza i compleanni</string>
-    <string name="find_my_phone_companion_warning">L\'accoppiamento con il companion è necessario per trovare il telefono. Per ulteriori informazioni, fare clic qui.</string>
+    <string name="find_my_phone_companion_warning">L\'accoppiamento con il companion è necessario per trovare il telefono. Per ulteriori informazioni, fai clic qui.</string>
     <string name="music_upload_info">Si sta per caricare il seguente file musicale:\n\n%1$s\nTitolo della canzone: %2$s\nAlbum: %3$s\n</string>
     <string name="authentication_failed_negotiation">Negoziazione della chiave di autenticazione fallita</string>
     <string name="activity_type_rem_sleep">Sonno REM</string>
@@ -3655,7 +3655,7 @@
     <string name="earfun_anc_mode_wind_noise_cancelling">Cancellazione rumore del vento</string>
     <string name="ultrahuman_airplane_mode_activated">Modalità aereo attiva</string>
     <string name="ultrahuman_breathing_start">Inizia</string>
-    <string name="maps_download_summary">Clicca qui per scaricare i file delle mappe. Saranno salvati nella cartella selezionata nelle preferenze qui sotto.</string>
+    <string name="maps_download_summary">Clicca qui per scaricare i file delle mappe. Saranno salvati nella cartella selezionata nell\'impostazione qui sotto.</string>
     <string name="huawei_stress_test_enable">Stress test automatico</string>
     <string name="huawei_stress_test_enable_summary">Attiva o disattiva lo stress test automatico</string>
     <string name="zepp_os_watchface_rhythm">Rhythm</string>
@@ -3727,12 +3727,63 @@
     <string name="permission_not_granted_contacts">Autorizzazione contatti non concessa</string>
     <string name="permission_not_granted_calendar">Autorizzazione calendario non concessa</string>
     <string name="pref_title_calendar_sync_colors">Colori evento da sincronizzare</string>
-    <string name="pref_summary_calendar_sync_canceled">Eventi del calendario che sono cancellati verranno sincronizzati col dispositivo</string>
+    <string name="pref_summary_calendar_sync_canceled">Gli eventi del calendario che sono cancellati verranno sincronizzati col dispositivo</string>
     <string name="pref_title_calendar_sync_canceled">Sincronizza eventi cancellati</string>
-    <string name="pref_summary_calendar_sync_declined">Gli eventi del calendario che hai rifiutato verranno sincronizzati con il dispositivo</string>
+    <string name="pref_summary_calendar_sync_declined">Gli eventi del calendario che hai rifiutato verranno sincronizzati col dispositivo</string>
     <string name="pref_title_calendar_sync_declined">Sincronizza eventi rifiutati</string>
-    <string name="pref_summary_calendar_sync_focus_time">Gli eventi del calendario marcati come \"Concentrazione\" saranno sincronizzati con il dispositivo</string>
+    <string name="pref_summary_calendar_sync_focus_time">Gli eventi del calendario marcati come \"Concentrazione\" verranno sincronizzati col dispositivo</string>
     <string name="pref_title_calendar_sync_focus_time">Sincronizza eventi di concentrazione</string>
-    <string name="pref_summary_calendar_sync_all_day">Gli eventi del calendario che sono contrassegnati come \"Tutto il giorno\" saranno sincronizzati con il dispositivo</string>
+    <string name="pref_summary_calendar_sync_all_day">Gli eventi del calendario che sono contrassegnati come \"Tutto il giorno\" verranno sincronizzati col dispositivo</string>
     <string name="pref_title_calendar_sync_all_day">Sincronizza tutti gli eventi del giorno</string>
+    <string name="pref_summary_calendar_sync_working_location">Gli eventi del calendario che sono \"posizioni lavorative\" speciali verranno sincronizzati col dispositivo</string>
+    <string name="pref_summary_calendar_sync_event_reminders">Le notifiche di promemoria degli eventi verranno sincronizzate col dispositivo</string>
+    <string name="pref_title_calendar_sync_working_location">Sincronizza gli eventi di posizioni lavorative</string>
+    <string name="pref_title_calendar_sync_event_reminders">Sincronizza i promemoria degli eventi</string>
+    <string name="connection_force_legacy_gatt_title">Forza GATT obsoleto</string>
+    <string name="connection_force_legacy_gatt_summary">Evita problemi sulle vecchie versioni di Android, ma può introdurre situazioni di corsa</string>
+    <string name="title_gpx_track_name">Nome della traccia</string>
+    <string name="pref_header_auto_export_db">Esportazione automatica del database</string>
+    <string name="pref_header_auto_export_zip">Esportazione automatica archivio zip</string>
+    <string name="prefs_device_support_settings">Supporto dispositivo</string>
+    <string name="device_support_can_reconnect_title">Riutilizza supporto dispositivo</string>
+    <string name="device_support_can_reconnect_summary">Riutilizza l\'istanza DeviceSupport alla riconnessione con il gadget.</string>
+    <string name="pref_restart_logging_title">Inizializzazione log</string>
+    <string name="pref_restart_logging_summary">Clicca qui per inizializzare il file dei log</string>
+    <string name="double_click">Doppio clic</string>
+    <string name="single_click">Un clic</string>
+    <string name="busy_task_setting_alarms">Impostazione allarmi</string>
+    <string name="busy_task_syncing">Sincronizzazione</string>
+    <string name="interval_1_hour">ogni ora</string>
+    <string name="interval_2_hour">ogni 2 ore</string>
+    <string name="interval_3_hour">ogni 3 ore</string>
+    <string name="interval_4_hour">ogni 4 ore</string>
+    <string name="interval_6_hour">ogni 6 ore</string>
+    <string name="glucose_level_threshold_high">Soglia massima del glucosio</string>
+    <string name="glucose_level_threshold_low">Soglia minima del glucosio</string>
+    <string name="notif_export_location_not_set">Posizione di esportazione non configurata</string>
+    <string name="notif_export_zip_failed_title">Esportazione archivio zip non riuscita! Controlla le impostazioni.</string>
+    <string name="unknown_error">Errore sconosciuto</string>
+    <string name="uploading_resources">Caricamento risorse…</string>
+    <string name="charts_two_items_only">Puoi confrontare solo due elementi alla volta.</string>
+    <string name="charts_at_least_one_item">Deve essere selezionato almeno un elemento.</string>
+    <string name="fwinstaller_file_not_compatible_to_device">Il file selezionato non è compatibile col dispositivo</string>
+    <string name="fwinstaller_no_compatible_device_found">Nessun dispositivo compatibile per installare %1s trovato</string>
+    <string name="mi2_prefs_inactivity_warnings_dnd_lunch_break_summary">Disattiva gli avvisi di inattività durante la pausa pranzo (12:00 – 14:00)</string>
+    <string name="prefs_device_alias">Alias dispositivo</string>
+    <string name="chinese">Cinese</string>
+    <string name="activity_prefs_sleep_duration_minutes">Durata del sonno preferita in minuti</string>
+    <string name="delete_device_and_retain_files">Mantieni i file</string>
+    <string name="save">Salva</string>
+    <string name="done">Fatto</string>
+    <string name="hr_measurement_continuous">Continuo</string>
+    <string name="discovery_bonding_error">Collegamento fallito: %1$s</string>
+    <string name="activity_type_free_diving">Immersione in apnea</string>
+    <string name="activity_type_apnea_training">Allenamento di apnea</string>
+    <string name="activity_type_apnea_test">Test di apnea</string>
+    <string name="activity_type_scuba_diving">Immersione SCUBA</string>
+    <string name="activity_type_backcountry_skiing">Sci fuori pista</string>
+    <string name="activity_type_backcountry_snowboarding">Snowboard fuori pista</string>
+    <string name="activity_type_bike_tour">Ciclismo</string>
+    <string name="activity_type_motocross">Motocross</string>
+    <string name="activity_type_mountain_bike">Mountain bike</string>
 </resources>
