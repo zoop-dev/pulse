@@ -602,12 +602,12 @@ public class Workout {
 
                 if (container.contains(0x08))
                     this.innerDataLength = container.getAsInteger(0x08);
-                else if(paramsProvider.isAW()) //NOTE: bitmap 0x01FF and length 26 only true for AW devices
+                else if(paramsProvider.isAW()) //NOTE: bitmap 0x01FF and length 13 only true for AW devices
                     this.innerDataLength = 13;
 
                 if (container.contains(0x09))
                     this.innerBitmap = container.getAsInteger(0x09);
-                else if(paramsProvider.isAW()) //NOTE: bitmap 0x01FF and length 26 only true for AW devices
+                else if(paramsProvider.isAW()) //NOTE: bitmap 0x01FF and length 13 only true for AW devices
                     this.innerBitmap = 0x01FF; // This seems to be the default
 
                 if (this.rawHeader.length != 14)
