@@ -58,6 +58,11 @@ public class TestWorkout {
         public int getSliceSize() {
             return 0xF4;
         }
+
+        @Override
+        public boolean isAW() {
+            return true;
+        }
     };
 
     @Test
@@ -228,6 +233,19 @@ public class TestWorkout {
     @Test
     public void testWorkoutDataResponse() throws NoSuchFieldException, IllegalAccessException, HuaweiPacket.ParseException {
         byte[] raw = {(byte) 0x5a, (byte) 0x00, (byte) 0x5a, (byte) 0x00, (byte) 0x17, (byte) 0x0a, (byte) 0x7c, (byte) 0x01, (byte) 0x01, (byte) 0x7d, (byte) 0x10, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x7e, (byte) 0x40, (byte) 0x03, (byte) 0x66, (byte) 0xf5, (byte) 0x16, (byte) 0xc9, (byte) 0x60, (byte) 0xb9, (byte) 0xf2, (byte) 0xe3, (byte) 0x88, (byte) 0x99, (byte) 0xab, (byte) 0x50, (byte) 0x22, (byte) 0xcb, (byte) 0x83, (byte) 0x53, (byte) 0xd0, (byte) 0xb2, (byte) 0xc3, (byte) 0x66, (byte) 0xa9, (byte) 0x16, (byte) 0x23, (byte) 0xa5, (byte) 0x8e, (byte) 0x81, (byte) 0x68, (byte) 0x85, (byte) 0x38, (byte) 0x3e, (byte) 0xd5, (byte) 0x8e, (byte) 0x21, (byte) 0xc8, (byte) 0xa1, (byte) 0x80, (byte) 0x98, (byte) 0x2d, (byte) 0x78, (byte) 0x75, (byte) 0x80, (byte) 0xa1, (byte) 0x39, (byte) 0x61, (byte) 0xa6, (byte) 0x3e, (byte) 0x61, (byte) 0x2c, (byte) 0x5e, (byte) 0xe2, (byte) 0x6f, (byte) 0xef, (byte) 0xdf, (byte) 0xdb, (byte) 0x39, (byte) 0x8f, (byte) 0xab, (byte) 0x21, (byte) 0xde, (byte) 0xba, (byte) 0xdb, (byte) 0x2c, (byte) 0xff, (byte) 0x97, (byte) 0x94};
+
+        /*
+            Actual raw data (decrypted):
+            81 38
+              02 02     workoutNumber
+                0102
+              03 02     dataNumber
+                0304
+              04 0e     rawHeader
+                01020304050607080900020f0042
+              05 1e     rawData
+                0a0b0c0d0e0f101112131415161718191a1b1c1d1e1f2021222324252627
+        */
 
         short workoutNumber = 0x0102;
         short dataNumber = 0x0304;
