@@ -129,7 +129,11 @@ public class LineageOsWeatherReceiver extends BroadcastReceiver implements Linea
     }
 
     private void requestWeather() {
-        final LineageWeatherManager weatherManager = LineageWeatherManager.getInstance(GBApplication.getContext());
+        final LineageWeatherManager weatherManager = LineageWeatherManager.getInstance(mContext);
+        if (weatherManager == null) {
+            LOG.warn("Unable to request weather - weatherManager is null");
+            return;
+        }
         if (weatherManager.getActiveWeatherServiceProviderLabel() != null && weatherLocation != null) {
             weatherManager.requestWeatherUpdate(weatherLocation, this);
         }
