@@ -1,6 +1,6 @@
 /**
  * All files under this package were adapted from https://github.com/mcychan/nQuant.android
- * at 12822f15c92695136f1761b6b72c9bd18dc70c46
+ * at 8f18e9d7536e71a90d0d1333968e07688b7ebf09
  * <p>
  * Changes done:
  * - Update PnnQuantizer to allow for access to the palette after convertion
