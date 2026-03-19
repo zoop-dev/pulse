@@ -3881,7 +3881,6 @@
     <string name="weight_scale_kilogram">கிலோகிராம் - கிலோ</string>
     <string name="weight_scale_kilogram_format">%1$.3f கிலோ</string>
     <string name="weight_scale_pound">பவுண்டு - பவுண்டு</string>
-    <string name="weight_scale_pound_format">%1$.af கூழ்</string>
     <string name="weight_scale_show_measurement">எடையைக் காட்டு</string>
     <string name="weight_scale_stone">கல் - ச்டம்ப்</string>
     <string name="weight_scale_stone_format">%1$d ச்டம்ப் %2$d பவுண்டு</string>
