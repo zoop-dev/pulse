@@ -1,4 +1,4 @@
-/*  Copyright (C) 2019-2024 Andreas Shimokawa, Arjan Schrijver, Carsten
+/* Copyright (C) 2019-2024 Andreas Shimokawa, Arjan Schrijver, Carsten
     Pfeiffer, Daniel Dakhno, Hasan Ammar, Petr Vaněk
 
     This file is part of Gadgetbridge.
@@ -17,7 +17,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.adapter.fossil;
 
-import static nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport.ITEM_STEP_GOAL;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport.ITEM_TIMEZONE_OFFSET;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport.ITEM_VIBRATION_STRENGTH;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport.QHYBRID_EVENT_BUTTON_PRESS;
@@ -32,6 +31,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.slf4j.Logger;
@@ -58,6 +58,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.NotificationConfigur
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.PackageConfigHelper;
 import nodomain.freeyourgadget.gadgetbridge.entities.HybridHRActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport;
@@ -105,7 +106,6 @@ public class FossilWatchAdapter extends WatchAdapter {
     private final String ITEM_MTU = "MTU: ";
     static public final String ITEM_BUTTONS = "BUTTONS: ";
 
-    private final String CONFIG_ITEM_STEP_GOAL = "step_goal";
     private final String CONFIG_ITEM_VIBRATION_STRENGTH = "vibration_strength";
     private final String CONFIG_ITEM_TIMEZONE_OFFSET = "timezone_offset";
     public final String CONFIG_ITEM_BUTTONS = "buttons";
@@ -260,13 +260,12 @@ public class FossilWatchAdapter extends WatchAdapter {
     private void syncConfiguration() {
         SharedPreferences preferences = getDeviceSpecificPreferences();
 
-        int stepGoal = preferences.getInt(CONFIG_ITEM_STEP_GOAL, 1000000);
+        int stepGoal = new ActivityUser().getStepsGoal();
         byte vibrationStrength = (byte) preferences.getInt(CONFIG_ITEM_VIBRATION_STRENGTH, 100);
         int timezoneOffset = preferences.getInt(CONFIG_ITEM_TIMEZONE_OFFSET, 0);
 
         GBDevice device = getDeviceSupport().getDevice();
 
-        device.addDeviceInfo(new GenericItem(ITEM_STEP_GOAL, String.valueOf(stepGoal)));
         device.addDeviceInfo(new GenericItem(ITEM_VIBRATION_STRENGTH, String.valueOf(vibrationStrength)));
         device.addDeviceInfo(new GenericItem(ITEM_TIMEZONE_OFFSET, String.valueOf(timezoneOffset)));
 
@@ -395,11 +394,6 @@ public class FossilWatchAdapter extends WatchAdapter {
 
     @Override
     public void setStepGoal(int stepGoal) {
-        getDeviceSpecificPreferences()
-                .edit()
-                .putInt(CONFIG_ITEM_STEP_GOAL, stepGoal)
-                .apply();
-
         queueWrite(new ConfigurationPutRequest(new ConfigurationPutRequest.DailyStepGoalConfigItem(stepGoal), this) {
             @Override
             public void onFilePut(boolean success) {
@@ -636,7 +630,7 @@ public class FossilWatchAdapter extends WatchAdapter {
 
     @Override
     public void onSendConfiguration(String config) {
-
+        setStepGoal(new ActivityUser().getStepsGoal());
     }
 
     @Override

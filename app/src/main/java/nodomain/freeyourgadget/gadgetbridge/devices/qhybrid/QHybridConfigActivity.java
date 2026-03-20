@@ -349,32 +349,6 @@ public class QHybridConfigActivity extends AbstractGBActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                EditText et = findViewById(R.id.stepGoalEt);
-                et.setOnEditorActionListener(null);
-                final String text = getDeviceInfoDetails(QHybridSupport.ITEM_STEP_GOAL);
-                et.setText(text);
-                et.setSelection(text.length());
-                et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                    @Override
-                    public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                        if (i == EditorInfo.IME_ACTION_DONE || i == EditorInfo.IME_ACTION_NEXT) {
-                            String t = textView.getText().toString();
-                            if (!t.isEmpty()) {
-                                device.addDeviceInfo(new GenericItem(QHybridSupport.ITEM_STEP_GOAL, t));
-                                Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_UPDATE_SETTINGS);
-                                intent.putExtra("EXTRA_SETTING", QHybridSupport.ITEM_STEP_GOAL);
-                                LocalBroadcastManager.getInstance(QHybridConfigActivity.this).sendBroadcast(intent);
-                                updateSettings();
-                            }
-                            final View currentFocus = getCurrentFocus();
-                            if (currentFocus != null) {
-                                ((InputMethodManager) getApplicationContext().getSystemService(Activity.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(currentFocus.getWindowToken(), 0);
-                            }
-                        }
-                        return true;
-                    }
-                });
-
                 final String extendedVibrationSupport = getDeviceInfoDetails(QHybridSupport.ITEM_EXTENDED_VIBRATION_SUPPORT);
                 final String vibrationStrength = getDeviceInfoDetails(QHybridSupport.ITEM_VIBRATION_STRENGTH);
                 if ("true".equals(extendedVibrationSupport) && !vibrationStrength.isEmpty()) {
