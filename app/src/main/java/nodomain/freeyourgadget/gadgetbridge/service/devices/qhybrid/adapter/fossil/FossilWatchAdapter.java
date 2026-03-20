@@ -102,8 +102,8 @@ public class FossilWatchAdapter extends WatchAdapter {
 
     private int MTU = 23;
 
-    private final String ITEM_MTU = "MTU";
-    static public final String ITEM_BUTTONS = "BUTTONS";
+    private final String ITEM_MTU = "MTU: ";
+    static public final String ITEM_BUTTONS = "BUTTONS: ";
 
     private final String CONFIG_ITEM_STEP_GOAL = "step_goal";
     private final String CONFIG_ITEM_VIBRATION_STRENGTH = "vibration_strength";

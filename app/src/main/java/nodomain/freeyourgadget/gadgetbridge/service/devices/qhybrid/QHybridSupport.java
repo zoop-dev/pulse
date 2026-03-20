@@ -123,16 +123,16 @@ public class QHybridSupport extends QHybridBaseSupport {
     public static final String QHYBRID_EVENT_MULTI_BUTTON_PRESS = "nodomain.freeyourgadget.gadgetbridge.Q_MULTI_BUTTON_PRESSED";
     public static final String QHYBRID_EVENT_COMMUTE_MENU = "nodomain.freeyourgadget.gadgetbridge.Q_COMMUTE_MENU";
 
-    public static final String ITEM_STEP_GOAL = "STEP_GOAL";
-    public static final String ITEM_STEP_COUNT = "STEP_COUNT";
-    public static final String ITEM_VIBRATION_STRENGTH = "VIBRATION_STRENGTH";
-    public static final String ITEM_ACTIVITY_POINT = "ACTIVITY_POINT";
-    public static final String ITEM_EXTENDED_VIBRATION_SUPPORT = "EXTENDED_VIBRATION";
-    public static final String ITEM_HAS_ACTIVITY_HAND = "HAS_ACTIVITY_HAND";
-    public static final String ITEM_USE_ACTIVITY_HAND = "USE_ACTIVITY_HAND";
-    public static final String ITEM_LAST_HEARTBEAT = "LAST_HEARTBEAT";
-    public static final String ITEM_TIMEZONE_OFFSET = "TIMEZONE_OFFSET_COUNT";
-    public static final String ITEM_HEART_RATE_MEASUREMENT_MODE = "HEART_RATE_MEASUREMENT_MODE";
+    public static final String ITEM_STEP_GOAL = "STEP_GOAL: ";
+    public static final String ITEM_STEP_COUNT = "STEP_COUNT: ";
+    public static final String ITEM_VIBRATION_STRENGTH = "VIBRATION_STRENGTH: ";
+    public static final String ITEM_ACTIVITY_POINT = "ACTIVITY_POINT: ";
+    public static final String ITEM_EXTENDED_VIBRATION_SUPPORT = "EXTENDED_VIBRATION: ";
+    public static final String ITEM_HAS_ACTIVITY_HAND = "HAS_ACTIVITY_HAND: ";
+    public static final String ITEM_USE_ACTIVITY_HAND = "USE_ACTIVITY_HAND: ";
+    public static final String ITEM_LAST_HEARTBEAT = "LAST_HEARTBEAT: ";
+    public static final String ITEM_TIMEZONE_OFFSET = "TIMEZONE_OFFSET_COUNT: ";
+    public static final String ITEM_HEART_RATE_MEASUREMENT_MODE = "HEART_RATE_MEASUREMENT_MODE: ";
 
     private static final Logger logger = LoggerFactory.getLogger(QHybridSupport.class);
     private final BroadcastReceiver commandReceiver;
