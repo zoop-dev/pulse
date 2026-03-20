@@ -17,6 +17,9 @@
 
 package nodomain.freeyourgadget.gadgetbridge.service.devices.casio;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Map;
@@ -32,8 +35,8 @@ import java.time.zone.ZoneOffsetTransition;
 import java.time.zone.ZoneOffsetTransitionRule;
 import java.time.zone.ZoneRules;
 
-
 public class CasioTimeZone {
+    private static final Logger LOG = LoggerFactory.getLogger(CasioTimeZone.class);
 
 /*
 There are six clocks on the Casio GW-B5600 / S100
@@ -108,12 +111,12 @@ PONTA DELGADA      E4 00  FC  04     02
 
 */
 
-    private byte[] name;
-    private byte[] number;
-    private byte offset;
-    private byte dstOffset;
-    private byte dstRules;
-    private byte dstSetting;
+    private final byte[] name;
+    private final byte[] number;
+    private final byte offset;
+    private final byte dstOffset;
+    private final byte dstRules;
+    private final byte dstSetting;
 
     // bitwise flags
     final static byte DST_SETTING_ON   = 1;
@@ -129,7 +132,7 @@ PONTA DELGADA      E4 00  FC  04     02
     }
 
     static public Set<Casio2C2DSupport.FeatureRequest> requests(int slot) {
-        HashSet<Casio2C2DSupport.FeatureRequest> requests = new HashSet();
+        HashSet<Casio2C2DSupport.FeatureRequest> requests = new HashSet<>();
         requests.add(new Casio2C2DSupport.FeatureRequest(Casio2C2DSupport.FEATURE_DST_WATCH_STATE, (byte) (slot/2*2)));
         requests.add(new Casio2C2DSupport.FeatureRequest(Casio2C2DSupport.FEATURE_DST_SETTING, (byte) slot));
         requests.add(new Casio2C2DSupport.FeatureRequest(Casio2C2DSupport.FEATURE_WORLD_CITY, (byte) slot));
@@ -217,15 +220,23 @@ PONTA DELGADA      E4 00  FC  04     02
         byte dstRules = 0;
         byte dstSetting = 0;
 
-        ZoneOffsetTransition next = rules.nextTransition(time);
-        int nextYear = next.getInstant().atZone(zone).getYear();
-        ZoneOffsetTransition next2 = (next == null ? null: rules.nextTransition(next.getInstant()));
-        int next2Year = (next2 == null ? 0 : next2.getInstant().atZone(zone).getYear());
+        ZoneOffsetTransition next = null;
+        ZoneOffsetTransition next2 = null;
+        try {
+            // Guard against #5914
+            next = rules.nextTransition(time);
+            next2 = (next == null ? null: rules.nextTransition(next.getInstant()));
+        } catch (final Exception e) {
+            LOG.error("Failed to get next transition for {}", zone.getId(), e);
+        }
 
         if (next == null) {
         // no DST is easy
             dstSetting = DST_SETTING_AUTO;
         } else {
+            final int nextYear = next.getInstant().atZone(zone).getYear();
+            final int next2Year = (next2 == null ? 0 : next2.getInstant().atZone(zone).getYear());
+
             // we need an Instant with DST on to get the dstOffset
             if (rules.isDaylightSavings(time)) {
                 dstOffset = (byte) (rules.getDaylightSavings(time).getSeconds() / 60 / 15);

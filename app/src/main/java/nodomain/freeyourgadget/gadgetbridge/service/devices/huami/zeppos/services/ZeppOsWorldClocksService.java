@@ -133,22 +133,31 @@ public class ZeppOsWorldClocksService extends AbstractZeppOsService {
 
             final ZoneRules zoneRules = zoneId.getRules();
             if (useDaylightTime) {
-                final ZoneOffsetTransition transition;
-                if (inDaylightTime) {
-                    daylightByte = 0x01;
-                    transition = zoneRules.previousTransition(Instant.now());
-                } else {
-                    daylightByte = 0x02;
-                    transition = zoneRules.nextTransition(Instant.now());
+                ZoneOffsetTransition transition = null;
+                try {
+                    if (inDaylightTime) {
+                        daylightByte = 0x01;
+                        transition = zoneRules.previousTransition(Instant.now());
+                    } else {
+                        daylightByte = 0x02;
+                        transition = zoneRules.nextTransition(Instant.now());
+                    }
+                } catch (final Exception e) {
+                    LOG.error("Failed to get transition", e);
                 }
-                daylightOffsetMinutes = (byte) transition.getDuration().toMinutes();
+                daylightOffsetMinutes = (byte) (transition != null ? transition.getDuration().toMinutes() : 0);
             }
 
             baos.write(daylightByte);
             baos.write(daylightOffsetMinutes);
 
             // The timestamp of the next daylight savings transition, if any
-            final ZoneOffsetTransition nextTransition = zoneRules.nextTransition(Instant.now());
+            ZoneOffsetTransition nextTransition = null;
+            try {
+                nextTransition = zoneRules.nextTransition(Instant.now());
+            } catch (final Exception e) {
+                LOG.error("Failed to get neext transition", e);
+            }
             long nextTransitionTs = 0;
             if (nextTransition != null) {
                 nextTransitionTs = nextTransition

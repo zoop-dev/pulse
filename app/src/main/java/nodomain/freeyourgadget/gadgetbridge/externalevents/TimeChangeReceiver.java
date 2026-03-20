@@ -93,9 +93,15 @@ public class TimeChangeReceiver extends BroadcastReceiver {
      */
     public static void scheduleNextDstChangeOrPeriodicSync(final Context context) {
         final ZoneId zoneId = ZoneId.systemDefault();
-        final ZoneRules zoneRules = zoneId.getRules();
         final Instant now = Instant.now();
-        final ZoneOffsetTransition transition = zoneRules.nextTransition(now);
+        ZoneOffsetTransition transition = null;
+        try {
+            // Guard against #5914
+            final ZoneRules zoneRules = zoneId.getRules();
+            transition = zoneRules.nextTransition(now);
+        } catch (final Exception e) {
+            LOG.error("Failed to get next transition for {}", zoneId, e);
+        }
 
         final Intent i = new Intent(ACTION_DST_CHANGED_OR_PERIODIC_SYNC);
         i.setPackage(BuildConfig.APPLICATION_ID);

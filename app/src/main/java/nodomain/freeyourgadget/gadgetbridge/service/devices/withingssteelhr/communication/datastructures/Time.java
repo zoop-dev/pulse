@@ -16,6 +16,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.withingssteelhr.communication.datastructures;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.nio.ByteBuffer;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -24,6 +27,7 @@ import java.time.zone.ZoneRules;
 import java.util.TimeZone;
 
 public class Time extends WithingsStructure {
+    private static final Logger LOG = LoggerFactory.getLogger(Time.class);
 
     private Instant now;
     private int timeOffsetInSeconds;
@@ -35,8 +39,14 @@ public class Time extends WithingsStructure {
         final TimeZone timezone = TimeZone.getDefault();
         timeOffsetInSeconds = timezone.getOffset(now.toEpochMilli()) / 1000;
         final ZoneId zoneId = ZoneId.systemDefault();
-        final ZoneRules zoneRules = zoneId.getRules();
-        final ZoneOffsetTransition nextTransition = zoneRules.nextTransition(Instant.now());
+        ZoneOffsetTransition nextTransition = null;
+        try {
+            // Guard against #5914
+            final ZoneRules zoneRules = zoneId.getRules();
+            nextTransition = zoneRules.nextTransition(Instant.now());
+        } catch (final Exception e) {
+            LOG.error("Failed to get next transition for {}", zoneId, e);
+        }
         long nextTransitionTs = 0;
         if (nextTransition != null) {
             nextTransitionTs = nextTransition.getDateTimeBefore().atZone(zoneId).toEpochSecond();

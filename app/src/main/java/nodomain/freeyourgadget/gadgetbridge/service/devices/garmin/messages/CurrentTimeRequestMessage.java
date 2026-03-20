@@ -28,11 +28,19 @@ public class CurrentTimeRequestMessage extends GFDIMessage {
     protected boolean generateOutgoing() {
 
         final Instant now = Instant.now();
-        final ZoneRules zoneRules = ZoneId.systemDefault().getRules();
+        final ZoneId zoneId = ZoneId.systemDefault();
+        final ZoneRules zoneRules = zoneId.getRules();
         final int dstOffset = (int) zoneRules.getDaylightSavings(now).getSeconds();
         final int timeZoneOffset = TimeZone.getDefault().getOffset(now.toEpochMilli()) / 1000;
         final int garminTimestamp = GarminTimeUtils.unixTimeToGarminTimestamp((int) now.getEpochSecond());
-        final ZoneOffsetTransition nextTransitionStart = zoneRules.nextTransition(now);
+
+        ZoneOffsetTransition nextTransitionStart = null;
+        try {
+            // Guard against #5914
+            nextTransitionStart = zoneRules.nextTransition(now);
+        } catch (final Exception e) {
+            LOG.error("Failed to get next transition for {}", zoneId, e);
+        }
 
         final int nextTransitionEndsGarminTs;
         final int nextTransitionStartsGarminTs;
@@ -41,7 +49,13 @@ public class CurrentTimeRequestMessage extends GFDIMessage {
             final int nextTransitionStartsTs = (int) nextTransitionStart.toEpochSecond();
             nextTransitionStartsGarminTs = GarminTimeUtils.unixTimeToGarminTimestamp(nextTransitionStartsTs);
 
-            final ZoneOffsetTransition nextTransitionEnd = zoneRules.nextTransition(nextTransitionStart.getInstant());
+            ZoneOffsetTransition nextTransitionEnd = null;
+            try {
+                // Guard against #5914
+                nextTransitionEnd = zoneRules.nextTransition(nextTransitionStart.getInstant());
+            } catch (final Exception e) {
+                LOG.error("Failed to get next transition end for {}", zoneId, e);
+            }
 
             if (nextTransitionEnd != null) {
                 final int nextTransitionEndsTs = (int) nextTransitionEnd.toEpochSecond();

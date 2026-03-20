@@ -91,7 +91,13 @@ public class ZeppOsTimeService extends AbstractZeppOsService {
     public void setNextDst(final ZeppOsTransactionBuilder builder) {
         final ZoneId zoneId = ZoneId.systemDefault();
         final ZoneRules rules = zoneId.getRules();
-        final ZoneOffsetTransition nextTransition = rules.nextTransition(Instant.now());
+        final ZoneOffsetTransition nextTransition;
+        try {
+            nextTransition = rules.nextTransition(Instant.now());
+        } catch (final Exception e) {
+            LOG.error("Failed to get next transition", e);
+            return;
+        }
         if (nextTransition == null) {
             return;
         }
