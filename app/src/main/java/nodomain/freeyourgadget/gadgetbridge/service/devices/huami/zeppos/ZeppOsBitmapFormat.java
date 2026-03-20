@@ -73,6 +73,12 @@ public enum ZeppOsBitmapFormat {
         }
     },
 
+    TGA_RGB565_MHS002SNEMAP(0x0a) {
+        @Override
+        public byte[] encode(final Bitmap bmp, final int width, final int height) {
+            return BitmapUtil.convertToTgaRGB565(bmp, width, height, getTgaIdBytes(width));
+        }
+    },
     ;
 
     private final byte code;
