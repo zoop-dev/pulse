@@ -14,11 +14,11 @@ import static org.junit.Assert.assertNotNull;
 
 public class CmfWorkoutSummaryParserTest extends TestBase {
     @Test
-    public void testParseSummary2() {
+    public void testParseSummary_v1_2() {
         // From https://codeberg.org/Freeyourgadget/Gadgetbridge/issues/4530
         final byte[] bytes = GB.hexStringToByteArray("9F7734685D02039D8B0008060000FA0500007B01000000000000057A346800001B0064000000B40001000100000006000000401F0000");
 
-        final CmfWorkoutSummaryParser parser = new CmfWorkoutSummaryParser(null, getContext());
+        final CmfWorkoutSummaryParser parser = new CmfWorkoutSummaryParser(null, getContext(), 1);
         final BaseActivitySummary summary = new BaseActivitySummary();
         summary.setRawSummaryData(bytes);
         parser.parseBinaryData(summary, false);
@@ -60,11 +60,11 @@ public class CmfWorkoutSummaryParserTest extends TestBase {
     }
 
     @Test
-    public void testParseSummary3() {
+    public void testParseSummary_v1_3() {
         // From https://codeberg.org/Freeyourgadget/Gadgetbridge/issues/4530
         final byte[] bytes = GB.hexStringToByteArray("ec153769380e02afe8039d250000e222000097010000000000002524376901006400e000f401310d0000000001002b000e00281d0100");
 
-        final CmfWorkoutSummaryParser parser = new CmfWorkoutSummaryParser(null, getContext());
+        final CmfWorkoutSummaryParser parser = new CmfWorkoutSummaryParser(null, getContext(), 1);
         final BaseActivitySummary summary = new BaseActivitySummary();
         summary.setRawSummaryData(bytes);
         parser.parseBinaryData(summary, false);
@@ -106,5 +106,25 @@ public class CmfWorkoutSummaryParserTest extends TestBase {
         assertEquals(100d, summaryData.getNumber(ActivitySummaryEntries.TRAINING_LOAD, -1));
         assertEquals(56 * 60 * 60d + 17 * 60d, summaryData.getNumber(ActivitySummaryEntries.RECOVERY_TIME, -1)); // 56.3h
         assertEquals(73d, summaryData.getNumber(ActivitySummaryEntries.ACTIVE_SCORE, -1)); // +73
+    }
+
+    @Test
+    public void testParseSummary_v3_1() {
+        // From https://codeberg.org/Freeyourgadget/Gadgetbridge/issues/4530
+        final byte[] bytes = GB.hexStringToByteArray("f3459269ad469269b8000000134b0100000000000a0000000000000000000000000000000000000000000302000000000000000000000000");
+        final CmfWorkoutSummaryParser parser = new CmfWorkoutSummaryParser(null, getContext(), 3);
+        final BaseActivitySummary summary = new BaseActivitySummary();
+        summary.setRawSummaryData(bytes);
+        parser.parseBinaryData(summary, true);
+    }
+
+    @Test
+    public void testParseSummary_v3_2() {
+        // From https://codeberg.org/Freeyourgadget/Gadgetbridge/issues/4530
+        final byte[] bytes = GB.hexStringToByteArray("70A39369C6A3936954000000135C0200000000000A0000000000000000000000000000004401000000000306000000000000000000000000");
+        final CmfWorkoutSummaryParser parser = new CmfWorkoutSummaryParser(null, getContext(), 3);
+        final BaseActivitySummary summary = new BaseActivitySummary();
+        summary.setRawSummaryData(bytes);
+        parser.parseBinaryData(summary, true);
     }
 }

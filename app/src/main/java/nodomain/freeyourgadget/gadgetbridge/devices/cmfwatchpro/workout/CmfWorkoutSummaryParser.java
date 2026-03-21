@@ -18,6 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices.cmfwatchpro.workout;
 
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.ACTIVE_SECONDS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.ACTIVE_SCORE;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.CADENCE_AVG;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.CALORIES_BURNT;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.DISTANCE_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.HR_AVG;
@@ -27,16 +28,21 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.HR_ZONE_MAXIMUM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.HR_ZONE_WARM_UP;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.PACE_AVG_SECONDS_KM;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.PACE_MAX;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.RECOVERY_TIME;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.STEPS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.STRIDE_AVG;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.TRAINING_EFFECT_AEROBIC;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.TRAINING_EFFECT_ANAEROBIC;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.TRAINING_LOAD;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_BPM;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_CM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KCAL;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_NONE;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_KM;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SPM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_STEPS;
 
 import android.content.Context;
@@ -64,14 +70,29 @@ public class CmfWorkoutSummaryParser implements ActivitySummaryParser {
 
     private final GBDevice gbDevice;
     private final Context context;
+    private final int version;
 
-    public CmfWorkoutSummaryParser(final GBDevice device, final Context context) {
+    public CmfWorkoutSummaryParser(final GBDevice device,
+                                   final Context context,
+                                   final int version) {
         this.gbDevice = device;
         this.context = context;
+        this.version = version;
     }
 
     @Override
     public BaseActivitySummary parseBinaryData(final BaseActivitySummary summary, final boolean forDetails) {
+        switch (version) {
+            case 1:
+                return parseBinaryDataV1(summary);
+            case 3:
+                return parseBinaryDataV3(summary);
+        }
+
+        throw new IllegalArgumentException("Unknown version " + version);
+    }
+
+    private BaseActivitySummary parseBinaryDataV1(final BaseActivitySummary summary) {
         final byte[] rawSummaryData = summary.getRawSummaryData();
         if (rawSummaryData == null) {
             return summary;
@@ -111,7 +132,7 @@ public class CmfWorkoutSummaryParser implements ActivitySummaryParser {
 
 
             final int averagePace = buf.getShort();
-            summaryData.add(PACE_AVG_SECONDS_KM, averagePace, UNIT_SECONDS);
+            summaryData.add(PACE_AVG_SECONDS_KM, averagePace, UNIT_SECONDS_PER_KM);
             buf.get(new byte[2]); //?
             buf.get(new byte[4]); //?
 
@@ -170,7 +191,79 @@ public class CmfWorkoutSummaryParser implements ActivitySummaryParser {
                 summaryData.add(ACTIVE_SCORE, Math.round(activityScore / 1000f), UNIT_NONE);
             }
         } catch (final Exception e) {
-            LOG.error("Failed to parse workout binary data", e);
+            LOG.error("Failed to parse workout binary data v1", e);
+        }
+
+        summary.setSummaryData(summaryData.toString());
+
+        return summary;
+    }
+
+    private BaseActivitySummary parseBinaryDataV3(final BaseActivitySummary summary) {
+        final byte[] rawSummaryData = summary.getRawSummaryData();
+        if (rawSummaryData == null) {
+            return summary;
+        }
+
+        final ByteBuffer buf = ByteBuffer.wrap(rawSummaryData).order(ByteOrder.LITTLE_ENDIAN);
+
+        final ActivitySummaryData summaryData = new ActivitySummaryData();
+
+        // We should be able to get at least the first few right
+        final int startTime = buf.getInt();
+        summary.setStartTime(new Date(startTime * 1000L));
+
+        final int endTime = buf.getInt();
+        summary.setEndTime(new Date(endTime * 1000L));
+
+        final int duration = buf.getInt();
+        summaryData.add(ACTIVE_SECONDS, duration, UNIT_SECONDS);
+
+        final byte workoutType = buf.get();
+        final CmfActivityType cmfActivityType = CmfActivityType.fromCode(workoutType);
+        if (cmfActivityType != null) {
+            summary.setActivityKind(cmfActivityType.getActivityKind().getCode());
+        } else {
+            summary.setActivityKind(ActivityKind.UNKNOWN.getCode());
+        }
+
+        try {
+            final int hrAvg = buf.get() & 0xff;
+            summaryData.add(HR_AVG, hrAvg, UNIT_BPM);
+
+            final int calories = buf.getShort();
+            summaryData.add(CALORIES_BURNT, calories, UNIT_KCAL);
+
+            if (buf.remaining() > 40) {
+                // TODO not sure, but it's the only sample I have with gps
+                summaryData.setHasGps(true);
+
+                buf.get(new byte[40]); //?
+
+                final int steps = buf.getInt();
+                summaryData.add(STEPS, steps, UNIT_STEPS);
+
+                final int distanceMeters = buf.getInt();
+                summaryData.add(DISTANCE_METERS, distanceMeters, UNIT_METERS);
+
+                buf.getInt(); // ?
+
+                final int maxPace = buf.getInt();
+                summaryData.add(PACE_MAX, maxPace, UNIT_SECONDS_PER_KM);
+
+                final int avgPace = buf.getInt();
+                summaryData.add(PACE_AVG_SECONDS_KM, avgPace, UNIT_SECONDS_PER_KM);
+
+                buf.getInt(); // ?
+
+                final int cadence = buf.getInt(); // steps per min
+                summaryData.add(CADENCE_AVG, cadence, UNIT_SPM);
+
+                final int stride = buf.getInt(); // stride length
+                summaryData.add(STRIDE_AVG, stride, UNIT_CM);
+            }
+        } catch (final Exception e) {
+            LOG.error("Failed to parse workout binary data v3", e);
         }
 
         summary.setSummaryData(summaryData.toString());

@@ -103,6 +103,7 @@ public enum CmfCommand {
     WEATHER_SET_2(0x0066, 0x0001),
     WORKOUT_GPS(0xffff, 0xa05a),
     WORKOUT_SUMMARY(0x0057, 0x0001),
+    WORKOUT_SUMMARY_V3(0x0160, 0x0001),
     ;
 
     private final int cmd1;

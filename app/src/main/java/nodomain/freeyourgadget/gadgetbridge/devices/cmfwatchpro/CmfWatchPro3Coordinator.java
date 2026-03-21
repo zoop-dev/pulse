@@ -16,10 +16,16 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.cmfwatchpro;
 
+import android.content.Context;
+
+import androidx.annotation.Nullable;
+
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.devices.cmfwatchpro.workout.CmfWorkoutSummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 
 public class CmfWatchPro3Coordinator extends CmfWatchProCoordinator {
     @Override
@@ -30,6 +36,12 @@ public class CmfWatchPro3Coordinator extends CmfWatchProCoordinator {
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_nothing_cmf_watch_pro_3;
+    }
+
+    @Nullable
+    @Override
+    public ActivitySummaryParser getActivitySummaryParser(final GBDevice device, final Context context) {
+        return new CmfWorkoutSummaryParser(device, context, 3);
     }
 
     @Override

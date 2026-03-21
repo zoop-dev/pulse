@@ -181,7 +181,7 @@ public class CmfWatchProCoordinator extends AbstractBLEDeviceCoordinator {
     @Nullable
     @Override
     public ActivitySummaryParser getActivitySummaryParser(final GBDevice device, final Context context) {
-        return new CmfWorkoutSummaryParser(device, context);
+        return new CmfWorkoutSummaryParser(device, context, 1);
     }
 
     @Nullable

@@ -96,7 +96,10 @@ public class CmfActivitySync {
                 handleSpo2(payload);
                 return true;
             case WORKOUT_SUMMARY:
-                handleWorkoutSummary(payload);
+                handleWorkoutSummary(payload, 1);
+                return true;
+            case WORKOUT_SUMMARY_V3:
+                handleWorkoutSummary(payload, 3);
                 return true;
             case WORKOUT_GPS:
                 handleWorkoutGps(payload);
@@ -369,23 +372,25 @@ public class CmfActivitySync {
         }
     }
 
-    private void handleWorkoutSummary(final byte[] payload) {
+    private void handleWorkoutSummary(final byte[] payload, final int version) {
         final int bytesPerWorkout;
 
-        if (payload.length % 32 == 0) {
+        if (version == 3) {
+            bytesPerWorkout = payload.length;
+        } else if (payload.length % 32 == 0) {
             bytesPerWorkout = 32;
         } else if (payload.length % 54 == 0) {
             bytesPerWorkout = 54;
         } else {
-            LOG.error("Workout summary payload size {} not divisible by 32 or 54", payload.length);
+            LOG.error("Workout summary payload size {} not divisible by 32/54", payload.length);
             return;
         }
 
-        LOG.debug("Got {} workout summary samples", payload.length / bytesPerWorkout);
+        LOG.debug("Got {} workout summary samples for version {}", payload.length / bytesPerWorkout, version);
 
         final ByteBuffer buf = ByteBuffer.wrap(payload).order(ByteOrder.LITTLE_ENDIAN);
 
-        final CmfWorkoutSummaryParser summaryParser = new CmfWorkoutSummaryParser(getDevice(), getContext());
+        final CmfWorkoutSummaryParser summaryParser = new CmfWorkoutSummaryParser(getDevice(), getContext(), version);
 
         while (buf.remaining() > 0) {
             final byte[] summaryBytes = new byte[bytesPerWorkout];
@@ -426,10 +431,8 @@ public class CmfActivitySync {
                 return;
             }
 
-            // FIXME: This should be set by CmfWorkoutSummaryParser
-            if (summaryBytes[30] == 1) {
-                activitiesWithGps.add(summary);
-            }
+            // Assume all activities have GPS
+            activitiesWithGps.add(summary);
         }
     }
 
@@ -495,8 +498,13 @@ public class CmfActivitySync {
             return;
         }
 
-        // Save the gpx file
-        AutoGpxExporter.doExport(getContext(), getDevice(), summary, activityTrack);
+        final boolean hasGps = activityTrack.getAllPoints().stream()
+                .anyMatch(p -> p.getLocation() != null);
+
+        if (hasGps) {
+            // Save the gpx file
+            AutoGpxExporter.doExport(getContext(), getDevice(), summary, activityTrack);
+        }
     }
 
     private Context getContext() {
