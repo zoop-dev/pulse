@@ -4300,4 +4300,17 @@
     <string name="pref_title_calendar_sync_event_reminders">同步活动通知</string>
     <string name="recoveryHr">恢复心率</string>
     <string name="ratingOfPerceivedExertion">运动自觉量表</string>
+    <string name="pref_header_auto_export_gpx">自动导出 GPX 轨迹</string>
+    <string name="pref_auto_export_gpx_summary">同步活动轨迹时自动导出 GPX 文件</string>
+    <string name="pref_export_directory">导出目录</string>
+    <string name="pref_auto_export_gpx_all_devices_summary">导出所有设备的 GPX 轨迹</string>
+    <string name="pref_auto_export_gpx_selected_devices">所选设备</string>
+    <string name="pref_auto_export_gpx_selected_devices_summary">选择要导出 GPX 轨迹的设备</string>
+    <string name="blood_pressure_systolic">收缩压</string>
+    <string name="blood_pressure_diastolic">舒张压</string>
+    <string name="blood_pressure_measurement_count">读数</string>
+    <string name="blood_pressure_export_date">日期</string>
+    <string name="blood_pressure_export_dob">出生日期：%s</string>
+    <string name="blood_pressure_avg_format">%1$d/%2$d</string>
+    <string name="auto_export_invalid_location">无效的导出位置：%s</string>
 </resources>
