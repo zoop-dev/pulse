@@ -1408,6 +1408,7 @@
     <string name="activity_db_management_autoexport_scheduled_yes">AutoExport has (originally) been scheduled for %1$s</string>
     <string name="activity_db_management_autoexport_scheduled_no">AutoExport has not been not scheduled.</string>
     <string name="activity_db_management_autoexport_location">Location could not be understood. Likely an issue of newer Android permission system. Most likely, autoexport is not working now.</string>
+    <string name="auto_export_invalid_location">Invalid export location: %s</string>
     <string name="activity_DB_ExportButton">Export Data</string>
     <string name="activity_DB_import_button">Import Data</string>
     <string name="activity_DB_test_export_button">Run AutoExport Now</string>

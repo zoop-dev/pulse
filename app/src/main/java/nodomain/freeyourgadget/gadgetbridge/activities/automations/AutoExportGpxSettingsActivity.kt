@@ -97,7 +97,10 @@ class AutoExportGpxSettingsActivity : AbstractSettingsActivityV2() {
                 if (uriString.isEmpty()) {
                     customDirPref?.summary = getString(R.string.not_set)
                 } else {
-                    customDirPref?.summary = uriString
+                    customDirPref?.summary = AbstractAutoExportSettingsFragment.resolveLocationSummary(
+                        requireContext(),
+                        uriString
+                    )
                 }
             }
 

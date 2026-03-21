@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.activities.automations
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.provider.DocumentsContract
 import android.text.InputType
@@ -116,7 +117,7 @@ abstract class AbstractAutoExportSettingsFragment(
 
         val prefExportInterval = findPreference<Preference>(prefKeyInterval)
         if (prefExportInterval != null) {
-            prefExportInterval.setOnPreferenceChangeListener { preference: Preference?, autoExportInterval: Any? ->
+            prefExportInterval.setOnPreferenceChangeListener { _: Preference?, autoExportInterval: Any? ->
                 val summary = String.format(
                     requireContext().applicationContext.getString(R.string.pref_summary_auto_export_interval),
                     (autoExportInterval as String?)!!.toInt()
@@ -134,7 +135,7 @@ abstract class AbstractAutoExportSettingsFragment(
         }
 
         val prefExportEnabled = findPreference<Preference>(prefKeyEnabled)
-        prefExportEnabled?.setOnPreferenceChangeListener { preference: Preference?, autoExportEnabled: Any? ->
+        prefExportEnabled?.setOnPreferenceChangeListener { _: Preference?, _: Any? ->
             scheduleNextExecutionDelayed()
             true
         }
@@ -145,7 +146,7 @@ abstract class AbstractAutoExportSettingsFragment(
         }
 
         val prefStartTime = findPreference<Preference>(prefKeyStartTime)
-        prefStartTime?.setOnPreferenceChangeListener { preference: Preference?, startFrom: Any? ->
+        prefStartTime?.setOnPreferenceChangeListener { _: Preference?, _: Any? ->
             scheduleNextExecutionDelayed()
             true
         }
@@ -277,6 +278,40 @@ abstract class AbstractAutoExportSettingsFragment(
                 return ""
             }
             val uri = uriString.toUri()
+
+            // Handle tree URIs (from ACTION_OPEN_DOCUMENT_TREE)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && DocumentsContract.isTreeUri(uri)) {
+                try {
+                    val treeDocId = DocumentsContract.getTreeDocumentId(uri)
+                    if ("com.android.externalstorage.documents" == uri.authority) {
+                        val split = treeDocId.split(":", limit = 2)
+                        if (split.size >= 2) {
+                            return if (split[0] == "primary") {
+                                "${android.os.Environment.getExternalStorageDirectory()}/${split[1]}"
+                            } else {
+                                "/storage/${split[0]}/${split[1]}"
+                            }
+                        }
+                    }
+
+                    // For other providers, query the document URI built from the tree
+                    val docUri = DocumentsContract.buildDocumentUriUsingTree(uri, treeDocId)
+                    context.contentResolver.query(
+                        docUri,
+                        arrayOf(DocumentsContract.Document.COLUMN_DISPLAY_NAME),
+                        null, null, null
+                    )?.use { cursor ->
+                        if (cursor.moveToFirst()) {
+                            return cursor.getString(cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DISPLAY_NAME))
+                        }
+                    }
+                    return treeDocId
+                } catch (e: Exception) {
+                    LOG.warn("getAutoExportLocationSummary tree", e)
+                }
+                return context.getString(R.string.auto_export_invalid_location, uriString)
+            }
+
             try {
                 return AndroidUtils.getFilePath(context.applicationContext, uri)
             } catch (e: IllegalArgumentException) {
@@ -286,8 +321,8 @@ abstract class AbstractAutoExportSettingsFragment(
                         uri,
                         arrayOf(DocumentsContract.Document.COLUMN_DISPLAY_NAME),
                         null, null, null, null
-                    ).use { cursor ->
-                        if (cursor != null && cursor.moveToFirst()) {
+                    )?.use { cursor ->
+                        if (cursor.moveToFirst()) {
                             return cursor.getString(cursor.getColumnIndexOrThrow(DocumentsContract.Document.COLUMN_DISPLAY_NAME))
                         }
                     }
@@ -295,7 +330,7 @@ abstract class AbstractAutoExportSettingsFragment(
                     LOG.warn("getAutoExportLocationSummary 2", e2)
                 }
             }
-            return context.getString(R.string.activity_db_management_autoexport_location)
+            return context.getString(R.string.auto_export_invalid_location, uriString)
         }
     }
 }
