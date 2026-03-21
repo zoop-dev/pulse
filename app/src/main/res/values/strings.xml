@@ -1976,6 +1976,7 @@
     <string name="devicetype_garmin_tactix_7" translatable="false">Garmin Tactix 7</string>
     <string name="devicetype_garmin_tactix_8" translatable="false">Garmin Tactix 8</string>
     <string name="devicetype_garmin_descent_mk3" translatable="false">Garmin Descent Mk3</string>
+    <string name="devicetype_garmin_descent_g1" translatable="false">Garmin Descent G1</string>
     <string name="devicetype_garmin_descent_g2" translatable="false">Garmin Descent G2</string>
     <string name="devicetype_garmin_inReach_mini_2" translatable="false">Garmin inReach Mini 2</string>
     <string name="devicetype_garmin_instinct" translatable="false">Garmin Instinct</string>

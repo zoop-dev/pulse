@@ -64,6 +64,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("Venu X1", DeviceType.GARMIN_VENU_X1);
             put("Redmi Watch 5 163A", DeviceType.REDMIWATCH5);
             put("Descent Mk3 43mm", DeviceType.GARMIN_DESCENT_MK3);
+            put("Descent G1", DeviceType.GARMIN_DESCENT_G1); // #5915
             put("Descent G2", DeviceType.GARMIN_DESCENT_G2);
             put("Active 2 NFC (Round)-4B84", DeviceType.AMAZFITACTIVE2NFC);
             put("Redmi Buds 6 Pro", DeviceType.REDMIBUDS6PRO);
