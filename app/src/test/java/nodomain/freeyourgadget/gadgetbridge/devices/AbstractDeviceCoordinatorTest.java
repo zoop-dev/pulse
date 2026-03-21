@@ -46,6 +46,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("D3(ID-417F)", DeviceType.D3);
             put("S10", DeviceType.QECNATO_S10);
             put("S52", DeviceType.S52);
+            put("ZL02D", DeviceType.ZL02D);
             put("R11C_B200", DeviceType.YAWELL_R11);
             put("R11_B200", DeviceType.YAWELL_R11);
             put("WF-C710N", DeviceType.SONY_WF_C710N);
