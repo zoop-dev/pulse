@@ -871,8 +871,8 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                     FileTransferHandler.DirectoryEntry directoryEntry = currentlyDownloading.getDirectoryEntry();
                     if (alreadyDownloaded(directoryEntry)) {
                         LOG.debug("File: {} already downloaded, not downloading again.", directoryEntry.getFileName());
+                        currentlyDownloading = null;
                         if (!getKeepActivityDataOnDevice()) { // delete file from watch if already downloaded
-                            currentlyDownloading = null;
                             sendOutgoingMessage("archive file " + directoryEntry.getFileIndex(), new SetFileFlagsMessage(directoryEntry.getFileIndex(), SetFileFlagsMessage.FileFlags.ARCHIVE));
                         }
                         if (directoryEntry.getFiletype() != FileType.FILETYPE.DIRECTORY) {
