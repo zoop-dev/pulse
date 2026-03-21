@@ -133,7 +133,7 @@
     <string name="pref_summary_pebble_enable_applogs">Smartwatch-App-Logs werden von Gadgetbridge erfasst (erneute Verbindung nötig)</string>
     <string name="pref_title_pebble_always_ack_pebblekit">PebbleKit Nachrichten direkt bestätigen</string>
     <string name="pref_summary_pebble_always_ack_pebblekit">Nachrichten, die an externe Drittanbieteranwendungen geschickt werden, immer und sofort bestätigen</string>
-    <string name="pref_title_pebble_reconnect_attempts">Wiederverbindungsversuche</string>
+    <string name="pref_title_pebble_reconnect_attempts">Verbindungsversuche</string>
     <string name="pref_title_unit_system">Einheiten</string>
     <string name="pref_title_timeformat">Zeitformat</string>
     <string name="pref_title_screentime">Zeit der aktiven Bildschirmanzeige</string>
@@ -4193,4 +4193,10 @@
     <string name="pref_title_calendar_sync_event_reminders">Ereigniserinnerungen synchronisieren</string>
     <string name="recoveryHr">Erholungsherzfrequenz</string>
     <string name="ratingOfPerceivedExertion">Wahrgenommene Anstrengung</string>
+    <string name="blood_pressure_systolic">Systolisch</string>
+    <string name="blood_pressure_diastolic">Diastolisch</string>
+    <string name="blood_pressure_measurement_count">Messungen</string>
+    <string name="blood_pressure_export_date">Datum</string>
+    <string name="blood_pressure_export_dob">Geb.: %s</string>
+    <string name="blood_pressure_avg_format">%1$d/%2$d</string>
 </resources>
