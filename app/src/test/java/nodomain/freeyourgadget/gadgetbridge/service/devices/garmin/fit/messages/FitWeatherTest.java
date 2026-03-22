@@ -3,26 +3,25 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages
 import androidx.annotation.NonNull;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitLocalMessageBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.FitDataMessage;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.FitDefinitionMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.MessageWriter;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class FitWeatherTest {
+    //TODO: maybe the annotation is not needed anymore?
     @SuppressWarnings("DataFlowIssue")
     @Test
-    @Ignore("The binary needs to be regenerated")
     public void testEncode() {
         final WeatherSpec weather = getWeatherSpec();
 
@@ -284,16 +283,7 @@ public class FitWeatherTest {
         FitLocalMessageBuilder weatherLocalMessage = GarminSupport.encodeWeather(weather);
         List<RecordData> weatherData = weatherLocalMessage.getRecordDataList();
 
-        // Get all distinct record definitions
-        Set<Integer> seenDefinitions = new HashSet<>();
-        List<RecordDefinition> weatherDefinitions = new ArrayList<>(3);
-        for (RecordData d : weatherData) {
-            final int localMessageType = d.getRecordDefinition().getRecordHeader().getLocalMessageType();
-            if (!seenDefinitions.contains(localMessageType)) {
-                seenDefinitions.add(localMessageType);
-                weatherDefinitions.add(d.getRecordDefinition());
-            }
-        }
+        List<RecordDefinition> weatherDefinitions = weatherLocalMessage.getDefinitions();
 
 
         for (RecordDefinition weatherDefinition : weatherDefinitions) {
@@ -308,29 +298,185 @@ public class FitWeatherTest {
         }
 
         Assert.assertEquals(3, weatherDefinitions.size());
-        assertEquals("460001008011000100FD04860904860101010E01010D01010201000302840501020402840601010701020A04850B04851101000F0101080F07", weatherDefinitions.get(0));
-        assertEquals("49000100800C000100FD04860101010201000302840402840501020601010701020F0101100488110100", weatherDefinitions.get(1));
-        assertEquals("4A0001008008000100FD04860E01010D01010201000501020C0100110100", weatherDefinitions.get(2));
+        assertEquals("400001008011000100FD04860904860101010E01010D01010201000302840501020402840601010701020A04850B04851101000F0101080F07", weatherDefinitions.get(0));
+        assertEquals("41000100800C000100FD04860101010201000302840402840501020601010701020F0101100488110100", weatherDefinitions.get(1));
+        assertEquals("420001008008000100FD04860E01010D01010201000501020C0100110100", weatherDefinitions.get(2));
         Assert.assertEquals(18, weatherData.size());
-        assertEquals("0600438CC424438CC4240F0A1904000C630BA40D1E00000026FFFFFF86020A477265656E2048696C6C0000000000", weatherData.get(0));
-        assertEquals("0901FFFFFFFF0A00001E1748320A0A7F40000000FF", weatherData.get(1));
-        assertEquals("0901FFFFFFFF0B00001F1872330B0B7F40400000FF", weatherData.get(2));
-        assertEquals("0901FFFFFFFF0C000020199C340C0C7F40800000FF", weatherData.get(3));
-        assertEquals("0901FFFFFFFF0D0000211AC6350D0D7F40A00000FF", weatherData.get(4));
-        assertEquals("0901FFFFFFFF0E0000221BF0360E0E7F40C00000FF", weatherData.get(5));
-        assertEquals("0901FFFFFFFF0F0000231D1A370F0F7F40E00000FF", weatherData.get(6));
-        assertEquals("0901FFFFFFFF100000241E443810107F41000000FF", weatherData.get(7));
-        assertEquals("0901FFFFFFFF110000251F6E3911117F41100000FF", weatherData.get(8));
-        assertEquals("0901FFFFFFFF1200002620983A12127F41200000FF", weatherData.get(9));
-        assertEquals("0901FFFFFFFF1300002721C23B13137F41300000FF", weatherData.get(10));
-        assertEquals("0901FFFFFFFF1400002822EC3C14147F41400000FF", weatherData.get(11));
-        assertEquals("0901FFFFFFFF1500002924163D15157F41500000FF", weatherData.get(12));
-        assertEquals("0A02438CC4240A1904630502", weatherData.get(13));
-        assertEquals("0A02438CC4240A190032FF03", weatherData.get(14));
-        assertEquals("0A02438CC4240B1A0033FF03", weatherData.get(15));
-        assertEquals("0A02438CC4240C1B0034FF03", weatherData.get(16));
-        assertEquals("0A02438CC4240D1C0035FF03", weatherData.get(17));
+        assertEquals("0000438CC424438CC4240F0A1904000C630BA40D1E00000026FFFFFF86020A477265656E2048696C6C0000000000", weatherData.get(0));
+        assertEquals("0101FFFFFFFF0A00001E1748320A0A7F40000000FF", weatherData.get(1));
+        assertEquals("0101FFFFFFFF0B00001F1872330B0B7F40400000FF", weatherData.get(2));
+        assertEquals("0101FFFFFFFF0C000020199C340C0C7F40800000FF", weatherData.get(3));
+        assertEquals("0101FFFFFFFF0D0000211AC6350D0D7F40A00000FF", weatherData.get(4));
+        assertEquals("0101FFFFFFFF0E0000221BF0360E0E7F40C00000FF", weatherData.get(5));
+        assertEquals("0101FFFFFFFF0F0000231D1A370F0F7F40E00000FF", weatherData.get(6));
+        assertEquals("0101FFFFFFFF100000241E443810107F41000000FF", weatherData.get(7));
+        assertEquals("0101FFFFFFFF110000251F6E3911117F41100000FF", weatherData.get(8));
+        assertEquals("0101FFFFFFFF1200002620983A12127F41200000FF", weatherData.get(9));
+        assertEquals("0101FFFFFFFF1300002721C23B13137F41300000FF", weatherData.get(10));
+        assertEquals("0101FFFFFFFF1400002822EC3C14147F41400000FF", weatherData.get(11));
+        assertEquals("0101FFFFFFFF1500002924163D15157F41500000FF", weatherData.get(12));
+        assertEquals("0202438CC4240A1904630502", weatherData.get(13));
+        assertEquals("0202438CC4240A1900320603", weatherData.get(14));
+        assertEquals("0202438CC4240B1A00330003", weatherData.get(15));
+        assertEquals("0202438CC4240C1B00340103", weatherData.get(16));
+        assertEquals("0202438CC4240D1C00350203", weatherData.get(17));
     }
+
+    @Test
+    public void testCoherence() {
+        final WeatherSpec weather = getWeatherSpec();
+
+        FitLocalMessageBuilder weatherLocalMessage = GarminSupport.encodeWeather(weather);
+        FitLocalMessageBuilder weatherLocalMessageLegacy = encodeWeatherWithLegacyMethod(weather);
+        Assert.assertEquals(weatherLocalMessage.getDefinitions(), weatherLocalMessageLegacy.getDefinitions());
+//        TOOD: for some reason the following test fails, even though contents are identical
+//        Assert.assertEquals(weatherLocalMessage.getRecordDataList(), weatherLocalMessage2.getRecordDataList());
+
+        FitDefinitionMessage weatherDefinitionMessage = new FitDefinitionMessage(weatherLocalMessage.getDefinitions());
+        FitDefinitionMessage weatherDefinitionMessageLegacy = new FitDefinitionMessage(weatherLocalMessageLegacy.getDefinitions());
+        Assert.assertEquals(GB.hexdump(weatherDefinitionMessage.getOutgoingMessage()), GB.hexdump(weatherDefinitionMessageLegacy.getOutgoingMessage()));
+
+        FitDataMessage weatherDataMessage = new FitDataMessage(weatherLocalMessage.getRecordDataList());
+        FitDataMessage weatherDataMessageLegacy = new FitDataMessage(weatherLocalMessageLegacy.getRecordDataList());
+        Assert.assertEquals(GB.hexdump(weatherDataMessage.getOutgoingMessage()), GB.hexdump(weatherDataMessageLegacy.getOutgoingMessage()));
+    }
+
+    private static FitLocalMessageBuilder encodeWeatherWithLegacyMethod(final WeatherSpec weather) {
+
+        final FitLocalMessageBuilder weatherLocalMessage = new FitLocalMessageBuilder();
+
+        final FitWeather.Builder today = new FitWeather.Builder();
+        today.setWeatherReport(null);
+        today.setTimestamp(null);
+        today.setObservedAtTime(null);
+        today.setTemperature(null);
+        today.setLowTemperature(null);
+        today.setHighTemperature(null);
+        today.setCondition(null);
+        today.setWindDirection(null);
+        today.setPrecipitationProbability(null);
+        today.setWindSpeed(null);
+        today.setTemperatureFeelsLike(null);
+        today.setRelativeHumidity(null);
+        today.setObservedLocationLat(null);
+        today.setObservedLocationLong(null);
+        today.setAirQuality(null);
+        today.setDewPoint(null);
+        today.setLocation(null);
+
+        today.setFieldByName("weather_report", 0); // 0 = current, 1 = hourly_forecast, 2 = daily_forecast
+        today.setFieldByName("timestamp", weather.getTimestamp());
+        today.setFieldByName("observed_at_time", weather.getTimestamp());
+        today.setFieldByName("temperature", weather.getCurrentTemp());
+        today.setFieldByName("low_temperature", weather.getTodayMinTemp());
+        today.setFieldByName("high_temperature", weather.getTodayMaxTemp());
+        today.setFieldByName("condition", weather.getCurrentConditionCode());
+        today.setFieldByName("wind_direction", weather.getWindDirection());
+        today.setFieldByName("precipitation_probability", weather.getPrecipProbability());
+        today.setFieldByName("wind_speed", Math.round(weather.getWindSpeed()));
+        today.setFieldByName("temperature_feels_like", weather.getFeelsLikeTemp());
+        today.setFieldByName("relative_humidity", weather.getCurrentHumidity());
+        today.setFieldByName("observed_location_lat", weather.getLatitude());
+        today.setFieldByName("observed_location_long", weather.getLongitude());
+        if (null != weather.getAirQuality()) {
+            today.setFieldByName("air_quality", weather.getAirQuality().getAqi());
+        }
+        today.setFieldByName("dew_point", weather.getDewPoint());
+        today.setFieldByName("location", weather.getLocation());
+
+        weatherLocalMessage.addRecordData(today.build(weatherLocalMessage.getNextAvailableLocalMessageType()));
+
+        final int hourlyMessageType = weatherLocalMessage.getNextAvailableLocalMessageType();
+        for (int hour = 0; hour <= 11; hour++) {
+            if (hour < weather.getHourly().size()) {
+                WeatherSpec.Hourly hourly = weather.getHourly().get(hour);
+                final FitWeather.Builder weatherHourlyForecast = new FitWeather.Builder();
+                weatherHourlyForecast.setWeatherReport(null);
+                weatherHourlyForecast.setTimestamp(null);
+                weatherHourlyForecast.setTemperature(null);
+                weatherHourlyForecast.setCondition(null);
+                weatherHourlyForecast.setWindDirection(null);
+                weatherHourlyForecast.setWindSpeed(null);
+                weatherHourlyForecast.setPrecipitationProbability(null);
+                weatherHourlyForecast.setTemperatureFeelsLike(null);
+                weatherHourlyForecast.setRelativeHumidity(null);
+                weatherHourlyForecast.setDewPoint(null);
+                weatherHourlyForecast.setUvIndex(null);
+                weatherHourlyForecast.setAirQuality(null);
+
+                weatherHourlyForecast.setFieldByName("weather_report", 1); // 0 = current, 1 = hourly_forecast, 2 = daily_forecast
+                weatherHourlyForecast.setFieldByName("timestamp", hourly.getTimestamp());
+                weatherHourlyForecast.setFieldByName("temperature", hourly.getTemp());
+                weatherHourlyForecast.setFieldByName("condition", hourly.getConditionCode());
+                weatherHourlyForecast.setFieldByName("wind_direction", hourly.getWindDirection());
+                weatherHourlyForecast.setFieldByName("wind_speed", Math.round(hourly.getWindSpeed()));
+                weatherHourlyForecast.setFieldByName("precipitation_probability", hourly.getPrecipProbability());
+                weatherHourlyForecast.setFieldByName("temperature_feels_like", hourly.getTemp()); //TODO: switch to actual feels like field once Hourly contains this information
+                weatherHourlyForecast.setFieldByName("relative_humidity", hourly.getHumidity());
+//                weatherHourlyForecast.setFieldByName("dew_point", ); //we just need the definition
+                weatherHourlyForecast.setFieldByName("uv_index", hourly.getUvIndex());
+//                weatherHourlyForecast.setFieldByName("air_quality", ); //we just need the definition
+
+                weatherLocalMessage.addRecordData(weatherHourlyForecast.build(hourlyMessageType));
+            }
+        }
+
+        final int dailyMessageType = weatherLocalMessage.getNextAvailableLocalMessageType();
+
+        final FitWeather.Builder todayDailyForecast = new FitWeather.Builder();
+        todayDailyForecast.setWeatherReport(null);
+        todayDailyForecast.setTimestamp(null);
+        todayDailyForecast.setLowTemperature(null);
+        todayDailyForecast.setHighTemperature(null);
+        todayDailyForecast.setCondition(null);
+        todayDailyForecast.setPrecipitationProbability(null);
+        todayDailyForecast.setDayOfWeek(null);
+        todayDailyForecast.setAirQuality(null);
+
+        todayDailyForecast.setFieldByName("weather_report", 2); // 0 = current, 1 = hourly_forecast, 2 = daily_forecast
+        todayDailyForecast.setFieldByName("timestamp", weather.getTimestamp());
+        todayDailyForecast.setFieldByName("low_temperature", weather.getTodayMinTemp());
+        todayDailyForecast.setFieldByName("high_temperature", weather.getTodayMaxTemp());
+        todayDailyForecast.setFieldByName("condition", weather.getCurrentConditionCode());
+        todayDailyForecast.setFieldByName("precipitation_probability", weather.getPrecipProbability());
+        todayDailyForecast.setFieldByName("day_of_week", weather.getTimestamp());
+        if (null != weather.getAirQuality()) {
+            todayDailyForecast.setFieldByName("air_quality", weather.getAirQuality().getAqi());
+        }
+        weatherLocalMessage.addRecordData(todayDailyForecast.build(dailyMessageType));
+
+        for (int day = 0; day < 4; day++) {
+            if (day < weather.getForecasts().size()) {
+                WeatherSpec.Daily daily = weather.getForecasts().get(day);
+                int ts = weather.getTimestamp() + (day + 1) * 24 * 60 * 60;
+                final FitWeather.Builder weatherDailyForecast = new FitWeather.Builder();
+                weatherDailyForecast.setWeatherReport(null);
+                weatherDailyForecast.setTimestamp(null);
+                weatherDailyForecast.setLowTemperature(null);
+                weatherDailyForecast.setHighTemperature(null);
+                weatherDailyForecast.setCondition(null);
+                weatherDailyForecast.setPrecipitationProbability(null);
+                weatherDailyForecast.setDayOfWeek(null);
+                todayDailyForecast.setAirQuality(null);
+
+                weatherDailyForecast.setFieldByName("weather_report", 2); // 0 = current, 1 = hourly_forecast, 2 = daily_forecast
+                weatherDailyForecast.setFieldByName("timestamp", weather.getTimestamp());
+                weatherDailyForecast.setFieldByName("low_temperature", daily.getMinTemp());
+                weatherDailyForecast.setFieldByName("high_temperature", daily.getMaxTemp());
+                weatherDailyForecast.setFieldByName("condition", daily.getConditionCode());
+                weatherDailyForecast.setFieldByName("precipitation_probability", daily.getPrecipProbability());
+                weatherDailyForecast.setFieldByName("day_of_week", ts);
+
+                if (null != daily.getAirQuality()) {
+                    weatherDailyForecast.setFieldByName("air_quality", daily.getAirQuality().getAqi());
+                }
+                weatherLocalMessage.addRecordData(weatherDailyForecast.build(dailyMessageType));
+            }
+        }
+
+        return weatherLocalMessage;
+    }
+
 
     private static void assertEquals(final String expectedPayload, final RecordDefinition recordDefinition) {
         final MessageWriter writer = new MessageWriter();

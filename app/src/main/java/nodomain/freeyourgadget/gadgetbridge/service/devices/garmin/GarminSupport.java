@@ -717,10 +717,11 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         today.setRelativeHumidity(weather.getCurrentHumidity());
         today.setObservedLocationLat((long) weather.getLatitude());
         today.setObservedLocationLong((long) weather.getLongitude());
-        today.setDewPoint(weather.getDewPoint());
+        today.setAirQuality(null); //ensure the definition is added
         if (null != weather.getAirQuality()) {
             today.setAirQuality(FieldDefinitionWeatherAqi.aqiAbsoluteValueToEnum(weather.getAirQuality().getAqi()));
         }
+        today.setDewPoint(weather.getDewPoint());
         today.setLocation(weather.getLocation());
         weatherLocalMessage.addRecordData(today.build(weatherLocalMessage.getNextAvailableLocalMessageType()));
 
@@ -733,19 +734,18 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                 weatherHourlyForecast.setTimestamp((long) hourly.getTimestamp());
                 weatherHourlyForecast.setTemperature(hourly.getTemp());
                 weatherHourlyForecast.setCondition(FieldDefinitionWeatherCondition.openWeatherCodeToFitWeatherStatus(hourly.getConditionCode()));
-                weatherHourlyForecast.setTemperatureFeelsLike(hourly.getTemp()); //TODO: switch to actual feels like field once Hourly contains this information
                 weatherHourlyForecast.setWindDirection(hourly.getWindDirection());
                 weatherHourlyForecast.setWindSpeed(hourly.getWindSpeed());
                 weatherHourlyForecast.setPrecipitationProbability(hourly.getPrecipProbability());
                 weatherHourlyForecast.setTemperatureFeelsLike(hourly.getTemp()); //TODO: switch to actual feels like field once Hourly contains this information
                 weatherHourlyForecast.setRelativeHumidity(hourly.getHumidity());
-//                    weatherHourlyForecast.setDewPoint(0); // TODO: add once Hourly contains this information
+                weatherHourlyForecast.setDewPoint(null); // null to ensure the definition is added TODO: add once Hourly contains this information
                 weatherHourlyForecast.setUvIndex(hourly.getUvIndex());
-//                    weatherHourlyForecast.setAirQuality(0); // TODO: add once Hourly contains this information
+                weatherHourlyForecast.setAirQuality(null); // null to ensure the definition is added TODO: add once Hourly contains this information
                 weatherLocalMessage.addRecordData(weatherHourlyForecast.build(hourlyMessageType));
             }
         }
-//
+
         final int dailyMessageType = weatherLocalMessage.getNextAvailableLocalMessageType();
 
         final FitWeather.Builder todayDailyForecast = new FitWeather.Builder();
@@ -756,7 +756,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         todayDailyForecast.setCondition(FieldDefinitionWeatherCondition.openWeatherCodeToFitWeatherStatus(weather.getCurrentConditionCode()));
         todayDailyForecast.setPrecipitationProbability(weather.getPrecipProbability());
         todayDailyForecast.setDayOfWeek(Instant.ofEpochSecond(weather.getTimestamp()).atZone(ZoneId.systemDefault()).getDayOfWeek());
-        todayDailyForecast.setFieldByName("day_of_week", weather.getTimestamp());
+        todayDailyForecast.setAirQuality(null); //ensure the definition is added
         if (null != weather.getAirQuality()) {
             todayDailyForecast.setAirQuality(FieldDefinitionWeatherAqi.aqiAbsoluteValueToEnum(weather.getAirQuality().getAqi()));
         }
@@ -770,11 +770,12 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                 final FitWeather.Builder weatherDailyForecast = new FitWeather.Builder();
                 weatherDailyForecast.setWeatherReport(FieldDefinitionWeatherReport.Type.daily_forecast);
                 weatherDailyForecast.setTimestamp((long) weather.getTimestamp());
-                weatherDailyForecast.setHighTemperature(daily.getMaxTemp());
                 weatherDailyForecast.setLowTemperature(daily.getMinTemp());
+                weatherDailyForecast.setHighTemperature(daily.getMaxTemp());
                 weatherDailyForecast.setCondition(FieldDefinitionWeatherCondition.openWeatherCodeToFitWeatherStatus(daily.getConditionCode()));
                 weatherDailyForecast.setPrecipitationProbability(daily.getPrecipProbability());
                 weatherDailyForecast.setDayOfWeek(Instant.ofEpochSecond(ts).atZone(ZoneId.systemDefault()).getDayOfWeek());
+                weatherDailyForecast.setAirQuality(null); //ensure the definition is added
                 if (null != daily.getAirQuality()) {
                     weatherDailyForecast.setAirQuality(FieldDefinitionWeatherAqi.aqiAbsoluteValueToEnum(daily.getAirQuality().getAqi()));
                 }
