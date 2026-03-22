@@ -18,10 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.generic_bp;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.widget.Toast;
 
 import androidx.annotation.CallSuper;
@@ -30,9 +27,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -58,9 +53,8 @@ public class GenericBloodPressureSupport extends AbstractBTLESingleDeviceSupport
 
     private final DeviceInfoProfile<GenericBloodPressureSupport> deviceInfoProfile;
     private final BloodPressureProfile<GenericBloodPressureSupport> bloodPressureProfile;
-    private final BroadcastReceiver commandReceiver;
 
-    private final List<BloodPressureMeasurement> measurements = new ArrayList<>();
+    private int persistedMeasurements = 0;
 
     public GenericBloodPressureSupport() {
         super(LOG);
@@ -75,27 +69,6 @@ public class GenericBloodPressureSupport extends AbstractBTLESingleDeviceSupport
         bloodPressureProfile = new BloodPressureProfile<>(this);
         bloodPressureProfile.addListener(this);
         addSupportedProfile(bloodPressureProfile);
-
-        commandReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (GBDevice.ACTION_DEVICE_CHANGED.equals(intent.getAction())) {
-                    final GBDevice.DeviceUpdateSubject subject = (GBDevice.DeviceUpdateSubject) intent.getSerializableExtra(GBDevice.EXTRA_UPDATE_SUBJECT);
-
-                    if (GBDevice.DeviceUpdateSubject.CONNECTION_STATE.equals(subject) &&
-                            GBDevice.State.CONNECTING.equals(gbDevice.getState()) &&
-                            !measurements.isEmpty()) {
-                        // This particular device disconnects automatically once the transfer is finished, hence this method of persisting the samples works, but it's far from ideal
-                        persistMeasurements();
-                        measurements.clear();
-                    }
-                }
-            }
-        };
-
-        final IntentFilter commandFilter = new IntentFilter();
-        commandFilter.addAction(GBDevice.ACTION_DEVICE_CHANGED);
-        LocalBroadcastManager.getInstance(GBApplication.getContext()).registerReceiver(commandReceiver, commandFilter);
     }
 
     @Override
@@ -105,7 +78,7 @@ public class GenericBloodPressureSupport extends AbstractBTLESingleDeviceSupport
 
     @Override
     protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
-        measurements.clear();
+        persistedMeasurements = 0;
 
         // mark the device as initializing
         builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
@@ -122,17 +95,14 @@ public class GenericBloodPressureSupport extends AbstractBTLESingleDeviceSupport
         return builder;
     }
 
-    @CallSuper
     @Override
-    public void dispose() {
-        synchronized (ConnectionMonitor) {
-            try {
-                LocalBroadcastManager.getInstance(GBApplication.getContext()).unregisterReceiver(commandReceiver);
-            } catch (final Exception e) {
-                LOG.error("Failed to unregister receiver", e);
-            }
-
-            super.dispose();
+    public void onConnectionStateChange(final BluetoothGatt gatt, final int status, final int newState) {
+        super.onConnectionStateChange(gatt, status, newState);
+        if (newState != BluetoothGatt.STATE_CONNECTED && persistedMeasurements > 0) {
+            // This particular device disconnects automatically once the transfer is finished
+            // We persist all samples as we receive them, but we need to signal that we finished the fetch
+            persistedMeasurements = 0;
+            GB.signalActivityDataFinish(getDevice());
         }
     }
 
@@ -147,37 +117,6 @@ public class GenericBloodPressureSupport extends AbstractBTLESingleDeviceSupport
         LOG.warn("Unhandled characteristic changed: {} {}", characteristic.getUuid(), GB.hexdump(value));
 
         return false;
-    }
-
-    protected void persistMeasurements() {
-        if (measurements.isEmpty()) {
-            LOG.debug("No measurements to persist");
-            return;
-        }
-
-        LOG.debug("Will persist {} blood pressure measurements", measurements.size());
-
-        final List<GenericBloodPressureSample> samples = measurements.stream().map(measurement -> {
-            final GenericBloodPressureSample sample = new GenericBloodPressureSample();
-            sample.setTimestamp(measurement.getTimestamp());
-            sample.setBpSystolic(measurement.getSystolicMmHg());
-            sample.setBpDiastolic(measurement.getDiastolicMmHg());
-            sample.setMeanArterialPressure(measurement.getMeanArterialPressure());
-            sample.setPulseRate(measurement.getPulseRate());
-            sample.setUserIndex(measurement.getUserId());
-            sample.setMeasurementStatus(measurement.getMeasurementStatus());
-            return sample;
-        }).collect(Collectors.toList());
-
-        try (DBHandler handler = GBApplication.acquireDB()) {
-            final DaoSession session = handler.getDaoSession();
-            final GenericBloodPressureSampleProvider sampleProvider = new GenericBloodPressureSampleProvider(getDevice(), session);
-            sampleProvider.persistForDevice(getContext(), getDevice(), samples);
-        } catch (final Exception e) {
-            GB.toast(getContext(), "Error saving blood pressure samples", Toast.LENGTH_LONG, GB.ERROR, e);
-        }
-
-        GB.signalActivityDataFinish(getDevice());
     }
 
     @Override
@@ -210,6 +149,30 @@ public class GenericBloodPressureSupport extends AbstractBTLESingleDeviceSupport
     }
 
     private void handleBloodPressureMeasurement(final BloodPressureMeasurement measurement) {
-        measurements.add(measurement);
+        LOG.debug(
+                "Persisting blood pressure measurement at {}: {}/{}",
+                measurement.getTimestamp(),
+                measurement.getSystolicMmHg(),
+                measurement.getDiastolicMmHg()
+        );
+
+        final GenericBloodPressureSample sample = new GenericBloodPressureSample();
+        sample.setTimestamp(measurement.getTimestamp());
+        sample.setBpSystolic(measurement.getSystolicMmHg());
+        sample.setBpDiastolic(measurement.getDiastolicMmHg());
+        sample.setMeanArterialPressure(measurement.getMeanArterialPressure());
+        sample.setPulseRate(measurement.getPulseRate());
+        sample.setUserIndex(measurement.getUserId());
+        sample.setMeasurementStatus(measurement.getMeasurementStatus());
+
+        try (DBHandler handler = GBApplication.acquireDB()) {
+            final DaoSession session = handler.getDaoSession();
+            final GenericBloodPressureSampleProvider sampleProvider = new GenericBloodPressureSampleProvider(getDevice(), session);
+            sampleProvider.persistForDevice(getContext(), getDevice(), List.of(sample));
+
+            persistedMeasurements++;
+        } catch (final Exception e) {
+            GB.toast(getContext(), "Error saving blood pressure samples", Toast.LENGTH_LONG, GB.ERROR, e);
+        }
     }
 }

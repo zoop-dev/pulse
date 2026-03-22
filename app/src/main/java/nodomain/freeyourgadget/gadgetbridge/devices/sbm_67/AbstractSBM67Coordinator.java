@@ -18,8 +18,14 @@ package nodomain.freeyourgadget.gadgetbridge.devices.sbm_67;
 
 import androidx.annotation.NonNull;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import de.greenrobot.dao.AbstractDao;
+import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
+import nodomain.freeyourgadget.gadgetbridge.entities.GenericBloodPressureSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.generic_bp.GenericBloodPressureSupport;
@@ -58,5 +64,12 @@ public abstract class AbstractSBM67Coordinator extends AbstractBLEDeviceCoordina
     @Override
     public GenericBloodPressureSampleProvider getBloodPressureSampleProvider(final GBDevice device, final DaoSession session) {
         return new GenericBloodPressureSampleProvider(device, session);
+    }
+
+    @Override
+    public Map<AbstractDao<?, ?>, Property> getAllDeviceDao(@NonNull DaoSession session) {
+        final Map<AbstractDao<?, ?>, Property> map = new HashMap<>(1);
+        map.put(session.getGenericBloodPressureSampleDao(), GenericBloodPressureSampleDao.Properties.DeviceId);
+        return map;
     }
 }
