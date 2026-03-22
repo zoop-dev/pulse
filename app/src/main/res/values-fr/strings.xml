@@ -1586,7 +1586,7 @@
     <string name="pref_device_action_fitness_app_control_toggle">Basculer d\'app de suivi sportif</string>
     <string name="pref_title_banglejs_webview_url">URL de chargement de l\'app</string>
     <string name="permission_location">%1$s a besoin d’accéder à votre position en arrière-plan pour rester connecté à votre montre, même lorsque l’écran de votre téléphone est éteint.\n\nVeuillez sélectionner « %2$s » dans l’écran suivant, puis appuyez sur « Retour » pour revenir à %1$s.</string>
-    <string name="pref_summary_banglejs_webview_url">Si vous souhaitez utiliser un chargeur d\'app spécifique mettre votre URL https://…/android.html ici. Sinon laissez blanc pour https://banglejs.com/apps</string>
+    <string name="pref_summary_banglejs_webview_url">Si vous souhaitez utiliser un chargeur d\'app spécifique mettre votre URL https://…/android.html ici. Sinon, laissez blanc pour https://banglejs.com/apps</string>
     <string name="info_no_devices_connected">Aucun appareil connecté</string>
     <string name="info_connected_count">%d appareils connectés</string>
     <string name="ukranian">Ukrainien</string>
@@ -2089,7 +2089,7 @@
     <string name="charts_legend_stress_average">Stress moyen</string>
     <string name="watchface_widget_type_uv_index">Index UV</string>
     <string name="action_changelog">Journal des modifications</string>
-    <string name="pref_title_banglejs_phone_gps_enbale">Utiliser les données GPS du téléphone</string>
+    <string name="pref_title_banglejs_phone_gps_enbale">Utiliser données GPS du téléphone</string>
     <string name="pref_summary_banglejs_phone_gps_network_only">Utiliser uniquement le réseau pour déterminer la position. Cela réduit la consommation d\'énergie au prix de la précision. Une reconnexion est nécessaire.</string>
     <string name="pref_summary_banglejs_phone_gps_enbale">Utiliser les données GPS du téléphone à la place des données de l\'appareil bangle</string>
     <string name="pref_title_banglejs_phone_gps_update_interval">Intervalle de mise à jour du GPS</string>
@@ -4067,4 +4067,10 @@
     <string name="weather_condition_high_windcase_near_gale">vent très fort</string>
     <string name="aqi_level_fair">acceptable</string>
     <string name="aqi_level_poor">mauvais</string>
+    <string name="permission_not_granted_contacts">Permission contacts non accordée</string>
+    <string name="permission_not_granted_calendar">Permission calendrier non accordée</string>
+    <string name="pref_summary_calendar_sync_event_reminders">Les notifications de rappel d’événement seront synchronisées avec l’appareil</string>
+    <string name="pref_title_calendar_sync_event_reminders">Sync rappels d’événements</string>
+    <string name="pref_auto_export_gpx_selected_devices">Appareils sélectionnés</string>
+    <string name="blood_pressure_export_date">Date</string>
 </resources>
