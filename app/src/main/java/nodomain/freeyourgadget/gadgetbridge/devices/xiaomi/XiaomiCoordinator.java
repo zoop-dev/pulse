@@ -397,6 +397,11 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
+    public boolean supportsAwakeSleep(@NonNull GBDevice device) {
+        return true;
+    }
+
+    @Override
     public boolean supportsWeather(@NonNull final GBDevice device) {
         return true;
     }
