@@ -4066,4 +4066,15 @@
     <string name="pref_huawei_arterial_stiffness_detection">Определение артериальной ригидности</string>
     <string name="pref_huawei_arterial_stiffness_detection_enable_title">Включить определение артериальной ригидности</string>
     <string name="pref_huawei_arterial_stiffness_detection_enable_summary">Включить определение артериальной ригидности на устройстве</string>
+    <string name="pref_header_auto_export_gpx">Авот экспорт GPX-треков</string>
+    <string name="pref_export_directory">Папка для экспорта</string>
+    <string name="pref_auto_export_gpx_all_devices_summary">Экспортировать GPX-треки со всех устройств</string>
+    <string name="pref_auto_export_gpx_selected_devices">Выбранные устройства</string>
+    <string name="pref_auto_export_gpx_selected_devices_summary">Выберите устройства, с которых будут экспортироваться GPX-треки</string>
+    <string name="pref_header_sync">Синхронизация</string>
+    <string name="pref_health_connect_settings">Настройки Health Connect</string>
+    <string name="pref_health_connect_settings_summary">Открывает настройки Android Health Connect</string>
+    <string name="pref_health_connect_disable_notice">Для остановки экспорта данных в Health Connect, уберите все разрешения Gadgetbridge у приложения Health Connect</string>
+    <string name="pref_health_connect_sync_notice">В зависимости от кол-ва данных, синхронизация с Health Connect может занять несколько минут.</string>
+    <string name="pref_health_connect_device_selection">Выбрать устройства</string>
 </resources>
