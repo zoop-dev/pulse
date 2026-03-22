@@ -146,7 +146,7 @@ class PebbleIoThread extends GBDeviceIoThread {
         mPebbleProtocol = (PebbleProtocol) gbDeviceProtocol;
         mBtAdapter = btAdapter;
         mPebbleSupport = pebbleSupport;
-        mEnablePebblekit = devicePrefs.getBoolean("third_party_apps_set_settings", false);
+        mEnablePebblekit = devicePrefs.getBoolean("pebble_enable_pebblekit", false);
         mPebbleProtocol.setAlwaysACKPebbleKit(devicePrefs.getBoolean("pebble_always_ack_pebblekit", false));
         mPebbleProtocol.setEnablePebbleKit(mEnablePebblekit);
 

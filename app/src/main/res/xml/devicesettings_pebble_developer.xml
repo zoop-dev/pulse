@@ -27,6 +27,17 @@
             android:summary="@string/pref_summary_pebble_gatt_clientonly"
             android:title="@string/pref_title_pebble_gatt_clientonly"
             app:iconSpaceReserved="false" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="PebbleKit"
+        app:iconSpaceReserved="false">
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="pebble_enable_pebblekit"
+            android:layout="@layout/preference_checkbox"
+            android:summary="@string/pref_summary_enable_pebblekit"
+            android:title="@string/pref_title_enable_pebblekit"
+            app:iconSpaceReserved="false" />
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="pebble_enable_applogs"
