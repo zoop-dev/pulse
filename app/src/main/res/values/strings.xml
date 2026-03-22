@@ -2200,6 +2200,7 @@
     <string name="devicetype_colmi_v73" translatable="false">Colmi V73</string>
     <string name="devicetype_colmi_v76" translatable="false">Colmi V76</string>
     <string name="devicetype_colmi_v89" translatable="false">Colmi V89</string>
+    <string name="devicetype_itech_active_3" translatable="false">iTECH Active 3</string>
     <string name="devicetype_zl02d" translatable="false">ZL02D</string>
     <string name="devicetype_colmi_p80" translatable="false">Colmi P80</string>
     <string name="devicetype_blackview_r60" translatable="false">Blackview R60</string>
