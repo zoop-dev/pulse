@@ -4159,4 +4159,6 @@
     <string name="blood_pressure_export_dob">Születési dátum: %s</string>
     <string name="blood_pressure_avg_format">%1$d / %2$d</string>
     <string name="auto_export_invalid_location">Érvénytelen exportálási hely: %s</string>
+    <string name="pref_summary_supported_devices">Ezt a funkciót nem minden eszköz támogatja. További információért koppintson ide.</string>
+    <string name="pref_title_supported_devices">Támogatott eszközök</string>
 </resources>
