@@ -90,9 +90,10 @@ public class ZeppOsActivitySummaryParser extends HuamiActivitySummaryParser {
             if (activityType != null) {
                 activityKind = activityType.toActivityKind();
             } else {
-                LOG.warn("Unknown workout activity type code {}", String.format("0x%X", summaryProto.getType().getType()));
+                final String typeCodeHex = String.format("0x%X", summaryProto.getType().getType());
+                LOG.warn("Unknown workout activity type code {}", typeCodeHex);
                 activityKind = ActivityKind.UNKNOWN;
-                summaryData.add(ACTIVITY_TYPE_CODE, typeCode, UNIT_NONE);
+                summaryData.add(ACTIVITY_TYPE_CODE, typeCodeHex, UNIT_NONE);
             }
             summary.setActivityKind(activityKind.getCode());
         } else {

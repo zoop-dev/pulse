@@ -77,6 +77,7 @@ public enum ZeppOsActivityType {
     HipHop(0xa5, ActivityKind.HIP_HOP),
     HorizontalBar(0x95, ActivityKind.HORIZONTAL_BAR),
     HulaHoop(0x73, ActivityKind.HULA_HOOP),
+    Floorball(0xbc, ActivityKind.FLOORBALL),
     IceHockey(0x9e, ActivityKind.ICE_HOCKEY),
     IceSkating(0x2c, ActivityKind.ICE_SKATING),
     IndoorCycling(0x08, ActivityKind.INDOOR_CYCLING),

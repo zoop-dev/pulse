@@ -1572,6 +1572,7 @@
     <string name="activity_type_jet_skiing">Jet skiing</string>
     <string name="activity_type_skating">Skating</string>
     <string name="activity_type_ice_hockey">Ice hockey</string>
+    <string name="activity_type_floorball">Floorball</string>
     <string name="activity_type_curling">Curling</string>
     <string name="activity_type_cross_country_skiing">Cross country skiing</string>
     <string name="activity_type_snow_sports">Snow sports</string>
