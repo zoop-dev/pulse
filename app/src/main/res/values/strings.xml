@@ -3644,6 +3644,7 @@
     <string name="intent_activity_sync_title">Activity sync</string>
     <string name="intent_api_allow_debug_commands_title">Allow Debug Commands</string>
     <string name="intent_api_allow_debug_commands_summary">Allow triggering debug menu commands via Intent API</string>
+    <string name="intent_api_allow_global_settings_summary">Allow 3rd party apps to set global Gadgetbridge settings through intents. Please restart Gadgetbridge in order to take effect.</string>
     <string name="devicetype_super_cars" translatable="false">Shell Racing</string>
     <string name="supercars_turbo_speed_label">Turbo Speed</string>
     <string name="supercars_lights_label">Lights</string>

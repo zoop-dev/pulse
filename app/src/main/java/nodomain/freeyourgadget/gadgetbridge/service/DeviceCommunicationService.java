@@ -66,6 +66,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.Stack;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
@@ -83,6 +84,7 @@ import nodomain.freeyourgadget.gadgetbridge.externalevents.BluetoothPairingReque
 import nodomain.freeyourgadget.gadgetbridge.externalevents.CMWeatherReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.CalendarReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.DeviceSettingsReceiver;
+import nodomain.freeyourgadget.gadgetbridge.externalevents.GlobalSettingsReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.HrvCacheInvalidationReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.IntentApiReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.KeyMissingReceiver;
@@ -280,8 +282,8 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
     private LineageOsWeatherReceiver mLineageOsWeatherReceiver = null;
     private TinyWeatherForecastGermanyReceiver mTinyWeatherForecastGermanyReceiver = null;
     private OmniJawsObserver mOmniJawsObserver = null;
-    private final DeviceSettingsReceiver deviceSettingsReceiver = new DeviceSettingsReceiver();
-    private final IntentApiReceiver intentApiReceiver = new IntentApiReceiver();
+
+    private final Stack<BroadcastReceiver> globalReceivers = new Stack<>();
     private GBLocationService locationService = null;
 
     private OsmandEventReceiver mOsmandAidlHelper = null;
@@ -537,11 +539,23 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         bluetoothCommandFilter.addAction(API_LEGACY_COMMAND_BLUETOOTH_DISCONNECT);
         ContextCompat.registerReceiver(this, bluetoothCommandReceiver, bluetoothCommandFilter, ContextCompat.RECEIVER_EXPORTED);
 
+        if (getPrefs().getBoolean("intent_api_allow_global_settings", false)) {
+            final GlobalSettingsReceiver globalSettingsReceiver = new GlobalSettingsReceiver();
+            final IntentFilter globalSettingsIntentFilter = new IntentFilter();
+            globalSettingsIntentFilter.addAction(GlobalSettingsReceiver.COMMAND);
+            ContextCompat.registerReceiver(this, globalSettingsReceiver, globalSettingsIntentFilter, ContextCompat.RECEIVER_EXPORTED);
+            globalReceivers.add(globalSettingsReceiver);
+        }
+
+        final DeviceSettingsReceiver deviceSettingsReceiver = new DeviceSettingsReceiver();
         final IntentFilter deviceSettingsIntentFilter = new IntentFilter();
         deviceSettingsIntentFilter.addAction(DeviceSettingsReceiver.COMMAND);
         ContextCompat.registerReceiver(this, deviceSettingsReceiver, deviceSettingsIntentFilter, ContextCompat.RECEIVER_EXPORTED);
+        globalReceivers.add(deviceSettingsReceiver);
 
+        final IntentApiReceiver intentApiReceiver = new IntentApiReceiver();
         ContextCompat.registerReceiver(this, intentApiReceiver, intentApiReceiver.buildFilter(), ContextCompat.RECEIVER_EXPORTED);
+        globalReceivers.add(intentApiReceiver);
 
         mKeyMissingReceiver = new KeyMissingReceiver();
         ContextCompat.registerReceiver(this, mKeyMissingReceiver, new IntentFilter(KeyMissingReceiver.ACTION_KEY_MISSING), ContextCompat.RECEIVER_EXPORTED);
@@ -1622,8 +1636,16 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         GB.removeNotification(GB.NOTIFICATION_ID, this); // need to do this because the updated notification won't be cancelled when service stops
 
         unregisterReceiver(bluetoothCommandReceiver);
-        unregisterReceiver(deviceSettingsReceiver);
-        unregisterReceiver(intentApiReceiver);
+
+        while (!globalReceivers.isEmpty()) {
+            final BroadcastReceiver receiver = globalReceivers.pop();
+            try {
+                LOG.debug("Unregistering global receiver {}", receiver.getClass().getSimpleName());
+                unregisterReceiver(receiver);
+            } catch (final Exception e) {
+                LOG.error("Failed to unregister broadcast receiver", e);
+            }
+        }
 
         if (mHrvCacheInvalidationReceiver != null) {
             mHrvCacheInvalidationReceiver.unregisterReceiver();

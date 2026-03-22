@@ -472,6 +472,19 @@
             </PreferenceCategory>
 
             <PreferenceCategory
+                android:key="pref_header_intent_global_settings"
+                android:title="@string/action_settings"
+                app:iconSpaceReserved="false">
+
+                <SwitchPreferenceCompat
+                    android:key="intent_api_allow_global_settings"
+                    android:layout="@layout/preference_checkbox"
+                    android:summary="@string/intent_api_allow_global_settings_summary"
+                    android:title="@string/pref_title_third_party_app_device_settings"
+                    app:iconSpaceReserved="false" />
+            </PreferenceCategory>
+
+            <PreferenceCategory
                 android:key="pref_header_debug"
                 android:title="@string/action_debug"
                 app:iconSpaceReserved="false">
