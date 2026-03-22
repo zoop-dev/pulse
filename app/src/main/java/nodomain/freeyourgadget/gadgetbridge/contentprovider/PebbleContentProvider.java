@@ -17,18 +17,16 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.contentprovider;
 
-import android.content.BroadcastReceiver;
 import android.content.ContentProvider;
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import java.util.Comparator;
+import java.util.Optional;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -52,23 +50,8 @@ public class PebbleContentProvider extends ContentProvider {
     static final String URL = "content://" + PROVIDER_NAME + "/state";
     static final Uri CONTENT_URI = Uri.parse(URL);
 
-    private GBDevice mGBDevice = null;
-
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (GBDevice.ACTION_DEVICE_CHANGED.equals(action)) {
-                mGBDevice = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE);
-            }
-        }
-    };
-
     @Override
     public boolean onCreate() {
-
-        LocalBroadcastManager.getInstance(this.getContext()).registerReceiver(mReceiver, new IntentFilter(GBDevice.ACTION_DEVICE_CHANGED));
-
         return true;
     }
 
@@ -79,13 +62,20 @@ public class PebbleContentProvider extends ContentProvider {
             int connected = 0;
             int pebbleKit = 0;
             String fwString = "unknown";
-            if (mGBDevice != null && mGBDevice.getType() == DeviceType.PEBBLE && mGBDevice.isInitialized()) {
-                final DevicePrefs deviceSpecificSharedPrefsrefs = GBApplication.getDevicePrefs(mGBDevice);
+
+            final Optional<GBDevice> pebbleDeviceOpt = GBApplication.app().getDeviceManager().getSelectedDevices()
+                    .stream().filter(d -> d.getType() == DeviceType.PEBBLE)
+                    .sorted(Comparator.comparing(GBDevice::getState).thenComparing(GBDevice::getAliasOrName).reversed())
+                    .findFirst();
+
+            if (pebbleDeviceOpt.isPresent()) {
+                final GBDevice pebbleDevice = pebbleDeviceOpt.get();
+                final DevicePrefs deviceSpecificSharedPrefsrefs = GBApplication.getDevicePrefs(pebbleDevice);
                 if (deviceSpecificSharedPrefsrefs.getBoolean("pebble_enable_pebblekit", false)) {
                     pebbleKit = 1;
                 }
-                connected = 1;
-                fwString = mGBDevice.getFirmwareVersion();
+                connected = pebbleDevice.isInitialized() ? 1 : 0;
+                fwString = pebbleDevice.getFirmwareVersion();
             }
             mc.addRow(new Object[]{connected, pebbleKit, pebbleKit, 3, 8, 2, fwString});
 
