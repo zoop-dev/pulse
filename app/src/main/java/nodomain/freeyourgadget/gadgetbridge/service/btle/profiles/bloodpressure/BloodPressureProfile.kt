@@ -60,6 +60,7 @@ class BloodPressureProfile<T : AbstractBTLESingleDeviceSupport>(val support: T) 
             val second = buf.get()
 
             val c = GregorianCalendar.getInstance()
+            c.clear() //set also milliseconds to 0
             c.set(year.toInt(), month - 1, day.toInt(), hour.toInt(), minute.toInt(), second.toInt())
 
             timestamp = c.getTime().time
