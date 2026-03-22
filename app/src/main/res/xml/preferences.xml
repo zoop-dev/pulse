@@ -272,6 +272,17 @@
             android:title="@string/pref_title_nagivation_apps"
             app:iconSpaceReserved="false">
 
+            <Preference
+                android:icon="@drawable/ic_warning_gray"
+                android:key="maps_warning_supported_devices"
+                android:persistent="false"
+                android:summary="@string/pref_summary_supported_devices"
+                android:title="@string/pref_title_supported_devices">
+                <intent
+                    android:action="android.intent.action.VIEW"
+                    android:data="https://gadgetbridge.org/basics/features/navigation/#supported-devices" />
+            </Preference>
+
             <SwitchPreferenceCompat
                 android:defaultValue="true"
                 android:key="navigation_forward"
