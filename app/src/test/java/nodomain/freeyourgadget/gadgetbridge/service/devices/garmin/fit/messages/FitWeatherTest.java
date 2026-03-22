@@ -19,8 +19,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.Mess
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class FitWeatherTest {
-    //TODO: maybe the annotation is not needed anymore?
-    @SuppressWarnings("DataFlowIssue")
+
     @Test
     public void testEncode() {
         final WeatherSpec weather = getWeatherSpec();
@@ -302,7 +301,7 @@ public class FitWeatherTest {
         assertEquals("41000100800C000100FD04860101010201000302840402840501020601010701020F0101100488110100", weatherDefinitions.get(1));
         assertEquals("420001008008000100FD04860E01010D01010201000501020C0100110100", weatherDefinitions.get(2));
         Assert.assertEquals(18, weatherData.size());
-        assertEquals("0000438CC424438CC4240F0A1904000C630BA40D1E00000026FFFFFF86020A477265656E2048696C6C0000000000", weatherData.get(0));
+        assertEquals("0000438CC424438CC4240F0A1904000C630BA40D1E1B33399AA8F3CB06020A477265656E2048696C6C0000000000", weatherData.get(0));
         assertEquals("0101FFFFFFFF0A00001E1748320A0A7F40000000FF", weatherData.get(1));
         assertEquals("0101FFFFFFFF0B00001F1872330B0B7F40400000FF", weatherData.get(2));
         assertEquals("0101FFFFFFFF0C000020199C340C0C7F40800000FF", weatherData.get(3));
@@ -376,8 +375,8 @@ public class FitWeatherTest {
         today.setFieldByName("wind_speed", Math.round(weather.getWindSpeed()));
         today.setFieldByName("temperature_feels_like", weather.getFeelsLikeTemp());
         today.setFieldByName("relative_humidity", weather.getCurrentHumidity());
-        today.setFieldByName("observed_location_lat", weather.getLatitude());
-        today.setFieldByName("observed_location_long", weather.getLongitude());
+        today.setFieldByName("observed_location_lat", (double) weather.getLatitude());
+        today.setFieldByName("observed_location_long", (double) weather.getLongitude());
         if (null != weather.getAirQuality()) {
             today.setFieldByName("air_quality", weather.getAirQuality().getAqi());
         }

@@ -715,8 +715,8 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         today.setWindSpeed(weather.getWindSpeed());
         today.setTemperatureFeelsLike(weather.getFeelsLikeTemp());
         today.setRelativeHumidity(weather.getCurrentHumidity());
-        today.setObservedLocationLat((long) weather.getLatitude());
-        today.setObservedLocationLong((long) weather.getLongitude());
+        today.setObservedLocationLat((double) weather.getLatitude());
+        today.setObservedLocationLong((double) weather.getLongitude());
         today.setAirQuality(null); //ensure the definition is added
         if (null != weather.getAirQuality()) {
             today.setAirQuality(FieldDefinitionWeatherAqi.aqiAbsoluteValueToEnum(weather.getAirQuality().getAqi()));

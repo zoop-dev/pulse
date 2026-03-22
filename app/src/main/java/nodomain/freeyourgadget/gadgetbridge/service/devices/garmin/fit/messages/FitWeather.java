@@ -95,13 +95,13 @@ public class FitWeather extends RecordData {
     }
 
     @Nullable
-    public Long getObservedLocationLat() {
-        return getFieldByNumber(10, Long.class);
+    public Double getObservedLocationLat() {
+        return getFieldByNumber(10, Double.class);
     }
 
     @Nullable
-    public Long getObservedLocationLong() {
-        return getFieldByNumber(11, Long.class);
+    public Double getObservedLocationLong() {
+        return getFieldByNumber(11, Double.class);
     }
 
     @Nullable
@@ -197,12 +197,12 @@ public class FitWeather extends RecordData {
             return this;
         }
 
-        public Builder setObservedLocationLat(final Long value) {
+        public Builder setObservedLocationLat(final Double value) {
             setFieldByNumber(10, value);
             return this;
         }
 
-        public Builder setObservedLocationLong(final Long value) {
+        public Builder setObservedLocationLong(final Double value) {
             setFieldByNumber(11, value);
             return this;
         }
