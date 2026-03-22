@@ -83,7 +83,7 @@ public class GenericBloodPressureSupport extends AbstractBTLESingleDeviceSupport
                     final GBDevice.DeviceUpdateSubject subject = (GBDevice.DeviceUpdateSubject) intent.getSerializableExtra(GBDevice.EXTRA_UPDATE_SUBJECT);
 
                     if (GBDevice.DeviceUpdateSubject.CONNECTION_STATE.equals(subject) &&
-                            GBDevice.State.NOT_CONNECTED.equals(gbDevice.getState()) &&
+                            GBDevice.State.CONNECTING.equals(gbDevice.getState()) &&
                             !measurements.isEmpty()) {
                         // This particular device disconnects automatically once the transfer is finished, hence this method of persisting the samples works, but it's far from ideal
                         persistMeasurements();
