@@ -105,6 +105,6 @@ public class DeviceSettingsReceiver extends BroadcastReceiver {
 
         editor.commit();
 
-        GBApplication.deviceService().onSendConfiguration(key);
+        GBApplication.deviceService(targetDevice).onSendConfiguration(key);
     }
 }
