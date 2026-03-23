@@ -342,8 +342,8 @@ public class FossilWatchAdapter extends WatchAdapter {
                 @Override
                 public void onFilePut(boolean success) {
                     if (success)
-                        GB.toast("successfully overwritten button settings", Toast.LENGTH_SHORT, GB.INFO);
-                    else GB.toast("error overwriting button settings", Toast.LENGTH_SHORT, GB.INFO);
+                        LOG.info("successfully overwritten button settings");
+                    else LOG.error("error overwriting button settings");
                 }
             };
             queueWrite(fileUploadRequets);
@@ -397,8 +397,8 @@ public class FossilWatchAdapter extends WatchAdapter {
             @Override
             public void onFilePut(boolean success) {
                 if (success)
-                    GB.toast("successfully updated step goal", Toast.LENGTH_SHORT, GB.INFO);
-                else GB.toast("error updating step goal", Toast.LENGTH_SHORT, GB.INFO);
+                    LOG.info("successfully updated step goal to {}", stepGoal);
+                else LOG.error("error updating step goal to {}", stepGoal);
             }
         }, false);
     }
@@ -420,9 +420,9 @@ public class FossilWatchAdapter extends WatchAdapter {
                     @Override
                     public void onFilePut(boolean success) {
                         if (success)
-                            GB.toast("successfully updated vibration strength", Toast.LENGTH_SHORT, GB.INFO);
+                            LOG.info("successfully updated vibration strength to {}", strength);
                         else
-                            GB.toast("error updating vibration strength", Toast.LENGTH_SHORT, GB.INFO);
+                            LOG.error("error updating vibration strength to {}", strength);
                     }
                 }, false
         );
@@ -478,8 +478,8 @@ public class FossilWatchAdapter extends WatchAdapter {
             public void onFilePut(boolean success) {
                 super.onFilePut(success);
 
-                if (success) GB.toast("successfully updated timezone", Toast.LENGTH_SHORT, GB.INFO);
-                else GB.toast("error updating timezone", Toast.LENGTH_SHORT, GB.ERROR);
+                if (success) LOG.info("successfully updated timezone to offset {}", offset);
+                else LOG.error("error updating timezone to offset {}", offset);
             }
         });
     }
