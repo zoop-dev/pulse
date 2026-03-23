@@ -185,17 +185,17 @@ public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public boolean supportsAppsManagement(final GBDevice device) {
-        return true;
+        return isHybridHR(device);
     }
 
     @Override
     public boolean supportsAppListFetching(final GBDevice device) {
-        return true;
+        return isHybridHR(device);
     }
 
     @Override
     public Class<? extends Activity> getAppsManagementActivity(final GBDevice device) {
-        return isHybridHR(device) ? AppManagerActivity.class : QHybridConfigActivity.class;
+        return isHybridHR(device) ? AppManagerActivity.class : null;
     }
 
     @Override
