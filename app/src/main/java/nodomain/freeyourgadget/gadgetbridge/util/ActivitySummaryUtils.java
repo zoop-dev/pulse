@@ -62,7 +62,7 @@ public final class ActivitySummaryUtils {
         final String summaryDate = DateTimeUtils.formatIso8601(summary.getStartTime());
         final String gpxFileName;
         if (activityTrack.getName() != null) {
-            gpxFileName = activityTrack.getName() + "_" + summaryDate + ".gpx";
+            gpxFileName = FileUtils.makeValidFileName(activityTrack.getName() + "_" + summaryDate + ".gpx");
         } else {
             gpxFileName = FileUtils.makeValidFileName("gadgetbridge-" + summaryDate + ".gpx");
         }
