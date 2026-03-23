@@ -4161,4 +4161,6 @@
     <string name="auto_export_invalid_location">Érvénytelen exportálási hely: %s</string>
     <string name="pref_summary_supported_devices">Ezt a funkciót nem minden eszköz támogatja. További információért koppintson ide.</string>
     <string name="pref_title_supported_devices">Támogatott eszközök</string>
+    <string name="activity_type_floorball">Floorball</string>
+    <string name="intent_api_allow_global_settings_summary">Harmadik féltől származó alkalmazások számára engedélyezi a Gadgetbridge globális beállításainak módosítását intenteken keresztül. A módosítások érvénybe lépéséhez indítsa újra a Gadgetbridge-et.</string>
 </resources>
