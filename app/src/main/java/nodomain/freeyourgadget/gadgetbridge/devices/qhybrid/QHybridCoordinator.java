@@ -313,9 +313,13 @@ public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public int[] getSupportedDeviceSpecificAuthenticationSettings() {
-        return new int[]{
-                R.xml.devicesettings_pairingkey
-        };
+        if (isHybridHR()) {
+            return new int[]{
+                    R.xml.devicesettings_pairingkey
+            };
+        } else {
+            return new int[0];
+        }
     }
 
     @Nullable
