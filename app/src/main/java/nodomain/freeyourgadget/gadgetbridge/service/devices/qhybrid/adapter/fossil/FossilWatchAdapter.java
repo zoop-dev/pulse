@@ -266,6 +266,10 @@ public class FossilWatchAdapter extends WatchAdapter {
         SharedPreferences preferences = getDeviceSpecificPreferences();
 
         int stepGoal = new ActivityUser().getStepsGoal();
+        if (preferences.getBoolean("use_activity_hand_as_notification_counter", false)) {
+            stepGoal = 1000000;
+        }
+
         byte vibrationStrength = (byte) preferences.getInt(CONFIG_ITEM_VIBRATION_STRENGTH, 100);
         int timezoneOffset = preferences.getInt(CONFIG_ITEM_TIMEZONE_OFFSET, 0);
 
@@ -670,6 +674,13 @@ public class FossilWatchAdapter extends WatchAdapter {
                 setStepGoal(new ActivityUser().getStepsGoal());
                 break;
             }
+            case "use_activity_hand_as_notification_counter":
+                if (getDeviceSpecificPreferences().getBoolean("use_activity_hand_as_notification_counter", false)) {
+                    setStepGoal(1000000);
+                } else {
+                    setStepGoal(new ActivityUser().getStepsGoal());
+                }
+                break;
         }
     }
 

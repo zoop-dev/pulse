@@ -325,34 +325,6 @@ public class QHybridConfigActivity extends AbstractGBActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                final String extendedVibrationSupport = getDeviceInfoDetails(QHybridSupport.ITEM_EXTENDED_VIBRATION_SUPPORT);
-                CheckBox activityHandCheckbox = findViewById(R.id.checkBoxUserActivityHand);
-                if (getDeviceInfoDetails(QHybridSupport.ITEM_HAS_ACTIVITY_HAND).equals("true")) {
-                    if (getDeviceInfoDetails(QHybridSupport.ITEM_USE_ACTIVITY_HAND).equals("true")) {
-                        activityHandCheckbox.setChecked(true);
-                    }
-                    activityHandCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(@NonNull CompoundButton buttonView, boolean checked) {
-                                new MaterialAlertDialogBuilder(QHybridConfigActivity.this)
-                                        .setMessage(getString(R.string.qhybrid_prompt_million_steps))
-                                        .setPositiveButton("ok", null)
-                                        .show();
-                                buttonView.setChecked(false);
-                        }
-                    });
-                } else {
-                    // activityHandCheckbox.setEnabled(false);
-                    activityHandCheckbox.setAlpha(0.2f);
-                    activityHandCheckbox.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            GB.toast("nah.", Toast.LENGTH_SHORT, GB.INFO);
-                            ((CheckBox) v).setChecked(false);
-                        }
-                    });
-                }
-
                 ItemWithDetails item = device.getDeviceInfo(FossilWatchAdapter.ITEM_BUTTONS);
                 String buttonJson = null;
                 if(item != null) {
@@ -468,7 +440,6 @@ public class QHybridConfigActivity extends AbstractGBActivity {
         super.onResume();
         refreshList();
         ContextCompat.registerReceiver(this, buttonReceiver, new IntentFilter(QHybridSupport.QHYBRID_EVENT_BUTTON_PRESS), ContextCompat.RECEIVER_NOT_EXPORTED);
-        LocalBroadcastManager.getInstance(this).registerReceiver(settingsReceiver, new IntentFilter(QHybridSupport.QHYBRID_EVENT_SETTINGS_UPDATED));
         LocalBroadcastManager.getInstance(this).registerReceiver(fileReceiver, new IntentFilter(QHybridSupport.QHYBRID_EVENT_FILE_UPLOADED));
     }
 

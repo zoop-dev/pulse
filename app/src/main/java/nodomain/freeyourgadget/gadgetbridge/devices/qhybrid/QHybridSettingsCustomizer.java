@@ -21,6 +21,8 @@ public class QHybridSettingsCustomizer implements DeviceSpecificSettingsCustomiz
 
     @Override
     public void customizeSettings(final DeviceSpecificSettingsHandler handler, final Prefs prefs, final String rootKey) {
+        handler.addPreferenceHandlerFor("use_activity_hand_as_notification_counter");
+
         final Preference pref = handler.findPreference("pref_key_qhybrid_legacy");
         if (pref != null) {
             pref.setOnPreferenceClickListener(preference -> {
@@ -37,7 +39,7 @@ public class QHybridSettingsCustomizer implements DeviceSpecificSettingsCustomiz
         return Collections.emptySet();
     }
 
-    public static final Creator<QHybridSettingsCustomizer> CREATOR = new Creator<QHybridSettingsCustomizer>() {
+    public static final Creator<QHybridSettingsCustomizer> CREATOR = new Creator<>() {
         @Override
         public QHybridSettingsCustomizer createFromParcel(final Parcel in) {
             return new QHybridSettingsCustomizer();

@@ -267,6 +267,7 @@ public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
         // Q Hybrid watches, without eInk screen
         if (!isHybridHR(device)) {
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_fossilqhybrid_legacy);
+            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_qhybrid);
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_fossilhybridhr_vibration);
 //            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_fossilhybridhr_calibration);  // TODO
             final List<Integer> developer = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DEVELOPER);

@@ -2524,18 +2524,14 @@
     <string name="quick_alarm_description">Alarm from widget</string>
     <string name="icon_placeholder" translatable="false">Icon</string>
     <string name="watch_not_connected">Watch not connected</string>
-    <string name="qhybrid_vibration_strength">vibration strength:</string>
-    <string name="qhybrid_goal_in_steps">Goal in steps</string>
-    <string name="qhybrid_time_shift">time shift</string>
-    <string name="qhybrid_second_timezone_offset_relative_to_utc">second timezone offset relative to UTC</string>
-    <string name="qhybrid_overwrite_buttons">overwrite buttons</string>
-    <string name="qhybrid_use_activity_hand_as_notification_counter">use activity hand as notification counter</string>
-    <string name="qhybrid_prompt_million_steps">Please set the step count to a million to activate that.</string>
+    <string name="qhybrid_time_shift">Time shift</string>
+    <string name="qhybrid_second_timezone_offset_relative_to_utc">Second timezone offset relative to UTC</string>
+    <string name="qhybrid_use_activity_hand_as_notification_counter">Use activity hand as notification counter</string>
     <string name="qhybrid_buttons_overwrite_success">Buttons overwritten</string>
     <string name="qhybrid_buttons_overwrite_error">Error overwriting buttons</string>
-    <string name="qhybrid_offset_timezone">offset timezone by</string>
-    <string name="qhybrid_changes_delay_prompt">change might take some seconds…</string>
-    <string name="qhybrid_offset_time_by">offset time by</string>
+    <string name="qhybrid_offset_timezone">Offset timezone by</string>
+    <string name="qhybrid_changes_delay_prompt">Change might take some seconds…</string>
+    <string name="qhybrid_offset_time_by">Offset time by</string>
     <string name="kind_waypoints">Waypoints</string>
     <string name="kind_segments">Segments</string>
     <string name="waypoint_count">%d waypoints</string>

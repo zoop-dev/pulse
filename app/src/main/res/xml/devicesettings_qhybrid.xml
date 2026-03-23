@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="use_activity_hand_as_notification_counter"
+        android:layout="@layout/preference_checkbox"
+        android:title="@string/qhybrid_use_activity_hand_as_notification_counter"
+        android:icon="@drawable/ic_timer" />
+
+</androidx.preference.PreferenceScreen>
