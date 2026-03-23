@@ -1184,4 +1184,11 @@
     <string name="watchface_setting_wrist_flick_duration">Kestus (msek)</string>
     <string name="watchface_widget_type_chance_rain">Vihma tõenäosus</string>
     <string name="watchface_widget_type_uv_index">UV indeks</string>
+    <string name="prefs_password_4_digits_0_to_9_summary">Salasõna võib koosneda vaid neljast numbrist</string>
+    <string name="prefs_password_6_digits_0_to_9_summary">Salasõna võib koosneda vaid kuuest numbrist</string>
+    <string name="seconds_m">sek/m</string>
+    <string name="activity_type_yoga">Jooga</string>
+    <string name="activity_filter_date_from">Alates</string>
+    <string name="activity_filter_date_to">Kuni</string>
+    <string name="km">km</string>
 </resources>
