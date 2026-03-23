@@ -123,9 +123,7 @@ public class QHybridSupport extends QHybridBaseSupport {
     public static final String QHYBRID_EVENT_MULTI_BUTTON_PRESS = "nodomain.freeyourgadget.gadgetbridge.Q_MULTI_BUTTON_PRESSED";
     public static final String QHYBRID_EVENT_COMMUTE_MENU = "nodomain.freeyourgadget.gadgetbridge.Q_COMMUTE_MENU";
 
-    public static final String ITEM_STEP_GOAL = "STEP_GOAL: ";
     public static final String ITEM_STEP_COUNT = "STEP_COUNT: ";
-    public static final String ITEM_VIBRATION_STRENGTH = "VIBRATION_STRENGTH: ";
     public static final String ITEM_ACTIVITY_POINT = "ACTIVITY_POINT: ";
     public static final String ITEM_EXTENDED_VIBRATION_SUPPORT = "EXTENDED_VIBRATION: ";
     public static final String ITEM_HAS_ACTIVITY_HAND = "HAS_ACTIVITY_HAND: ";
@@ -259,24 +257,6 @@ public class QHybridSupport extends QHybridBaseSupport {
                             break;
                         }
                         switch (newSetting) {
-                            case ITEM_VIBRATION_STRENGTH: {
-                                final ItemWithDetails itemVibrationStrength = gbDevice.getDeviceInfo(ITEM_VIBRATION_STRENGTH);
-                                if (itemVibrationStrength == null) {
-                                    logger.error("itemVibrationStrength is null");
-                                    break;
-                                }
-                                watchAdapter.setVibrationStrength(Short.parseShort(itemVibrationStrength.getDetails()));
-                                break;
-                            }
-                            case ITEM_STEP_GOAL: {
-                                final ItemWithDetails itemStepGoal = gbDevice.getDeviceInfo(ITEM_STEP_GOAL);
-                                if (itemStepGoal == null) {
-                                    logger.error("itemStepGoal is null");
-                                    break;
-                                }
-                                watchAdapter.setStepGoal(Integer.parseInt(itemStepGoal.getDetails()));
-                                break;
-                            }
                             case ITEM_USE_ACTIVITY_HAND: {
                                 final ItemWithDetails itemUseActivityHand = gbDevice.getDeviceInfo(ITEM_USE_ACTIVITY_HAND);
                                 if (itemUseActivityHand == null) {

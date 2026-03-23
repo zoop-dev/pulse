@@ -284,30 +284,6 @@ public class QHybridConfigActivity extends AbstractGBActivity {
                 LocalBroadcastManager.getInstance(QHybridConfigActivity.this).sendBroadcast(notificationIntent);
             }
         });
-        SeekBar vibeBar = findViewById(R.id.vibrationStrengthBar);
-        vibeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int start;
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                start = seekBar.getProgress();
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                int progress;
-                if ((progress = seekBar.getProgress()) == start) return;
-                String[] values = {"25", "50", "100"};
-                device.addDeviceInfo(new GenericItem(QHybridSupport.ITEM_VIBRATION_STRENGTH, values[progress]));
-                Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_UPDATE_SETTINGS);
-                intent.putExtra("EXTRA_SETTING", QHybridSupport.ITEM_VIBRATION_STRENGTH);
-                LocalBroadcastManager.getInstance(QHybridConfigActivity.this).sendBroadcast(intent);
-            }
-        });
 
         if (device.getType() == DeviceType.FOSSILQHYBRID && device.isInitialized() && device.getFirmwareVersion().charAt(2) == '0') {
             updateSettings();
@@ -350,17 +326,6 @@ public class QHybridConfigActivity extends AbstractGBActivity {
             @Override
             public void run() {
                 final String extendedVibrationSupport = getDeviceInfoDetails(QHybridSupport.ITEM_EXTENDED_VIBRATION_SUPPORT);
-                final String vibrationStrength = getDeviceInfoDetails(QHybridSupport.ITEM_VIBRATION_STRENGTH);
-                if ("true".equals(extendedVibrationSupport) && !vibrationStrength.isEmpty()) {
-                    final int strengthProgress = (int) (Math.log(Double.parseDouble(vibrationStrength) / 25) / Math.log(2));
-
-                    setSettingsEnabled(true);
-                    SeekBar seekBar = findViewById(R.id.vibrationStrengthBar);
-                    seekBar.setProgress(strengthProgress);
-                } else {
-                    findViewById(R.id.vibrationStrengthBar).setEnabled(false);
-                    findViewById(R.id.vibrationStrengthLayout).setAlpha(0.5f);
-                }
                 CheckBox activityHandCheckbox = findViewById(R.id.checkBoxUserActivityHand);
                 if (getDeviceInfoDetails(QHybridSupport.ITEM_HAS_ACTIVITY_HAND).equals("true")) {
                     if (getDeviceInfoDetails(QHybridSupport.ITEM_USE_ACTIVITY_HAND).equals("true")) {
@@ -369,18 +334,11 @@ public class QHybridConfigActivity extends AbstractGBActivity {
                     activityHandCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(@NonNull CompoundButton buttonView, boolean checked) {
-                            if (!getDeviceInfoDetails(QHybridSupport.ITEM_STEP_GOAL).equals("1000000")) {
                                 new MaterialAlertDialogBuilder(QHybridConfigActivity.this)
                                         .setMessage(getString(R.string.qhybrid_prompt_million_steps))
                                         .setPositiveButton("ok", null)
                                         .show();
                                 buttonView.setChecked(false);
-                                return;
-                            }
-                            device.addDeviceInfo(new GenericItem(QHybridSupport.ITEM_USE_ACTIVITY_HAND, String.valueOf(checked)));
-                            Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_UPDATE_SETTINGS);
-                            intent.putExtra("EXTRA_SETTING", QHybridSupport.ITEM_USE_ACTIVITY_HAND);
-                            LocalBroadcastManager.getInstance(QHybridConfigActivity.this).sendBroadcast(intent);
                         }
                     });
                 } else {

@@ -18,7 +18,6 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.adapter.fossil;
 
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport.ITEM_TIMEZONE_OFFSET;
-import static nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport.ITEM_VIBRATION_STRENGTH;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport.QHYBRID_EVENT_BUTTON_PRESS;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport.QHYBRID_EVENT_MULTI_BUTTON_PRESS;
 
@@ -31,7 +30,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
-import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.slf4j.Logger;
@@ -51,6 +49,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.HybridHRActivitySampleProvider;
@@ -92,6 +91,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.mis
 import nodomain.freeyourgadget.gadgetbridge.util.AlarmUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
+import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.UriHelper;
 
 public class FossilWatchAdapter extends WatchAdapter {
@@ -266,7 +266,6 @@ public class FossilWatchAdapter extends WatchAdapter {
 
         GBDevice device = getDeviceSupport().getDevice();
 
-        device.addDeviceInfo(new GenericItem(ITEM_VIBRATION_STRENGTH, String.valueOf(vibrationStrength)));
         device.addDeviceInfo(new GenericItem(ITEM_TIMEZONE_OFFSET, String.valueOf(timezoneOffset)));
 
         queueWrite(new ConfigurationPutRequest(new ConfigurationPutRequest.ConfigItem[]{
@@ -404,16 +403,18 @@ public class FossilWatchAdapter extends WatchAdapter {
         }, false);
     }
 
+    private void setVibrationStrengthFromConfig() {
+        Prefs prefs = new Prefs(getDeviceSpecificPreferences());
+        int vibrationStrengh = prefs.getInt(DeviceSettingsPreferenceConst.PREF_VIBRATION_STRENGH_PERCENTAGE, 2);
+        if (vibrationStrengh > 0) {
+            vibrationStrengh = (vibrationStrengh + 1) * 25; // Seems 0,50,75,100 are working...
+        }
+        setVibrationStrength((short) (vibrationStrengh));
+    }
+
     @Override
     public void setVibrationStrength(short strength) {
-        getDeviceSpecificPreferences()
-                .edit()
-                .putInt(CONFIG_ITEM_VIBRATION_STRENGTH, (byte) strength)
-                .apply();
-
         ConfigurationPutRequest.ConfigItem vibrationItem = new ConfigurationPutRequest.VibrationStrengthConfigItem((byte) strength);
-
-
         queueWrite(
                 new ConfigurationPutRequest(new ConfigurationPutRequest.ConfigItem[]{vibrationItem}, this) {
                     @Override
@@ -631,6 +632,7 @@ public class FossilWatchAdapter extends WatchAdapter {
     @Override
     public void onSendConfiguration(String config) {
         setStepGoal(new ActivityUser().getStepsGoal());
+        setVibrationStrengthFromConfig();
     }
 
     @Override

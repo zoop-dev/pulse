@@ -49,9 +49,9 @@ public class ConfigurationGetRequest extends FileEncryptedLookupAndGetRequest im
 
         for(ConfigurationPutRequest.ConfigItem item : items){
             if(item instanceof ConfigurationPutRequest.VibrationStrengthConfigItem){
-                device.addDeviceInfo(new GenericItem(QHybridSupport.ITEM_VIBRATION_STRENGTH, String.valueOf(((ConfigurationPutRequest.VibrationStrengthConfigItem) item).getValue())));
+//                device.addDeviceInfo(new GenericItem(QHybridSupport.ITEM_VIBRATION_STRENGTH, String.valueOf(((ConfigurationPutRequest.VibrationStrengthConfigItem) item).getValue())));
             }else if(item instanceof ConfigurationPutRequest.DailyStepGoalConfigItem){
-                device.addDeviceInfo(new GenericItem(QHybridSupport.ITEM_STEP_GOAL, String.valueOf(((ConfigurationPutRequest.DailyStepGoalConfigItem) item).getValue())));
+//                device.addDeviceInfo(new GenericItem(QHybridSupport.ITEM_STEP_GOAL, String.valueOf(((ConfigurationPutRequest.DailyStepGoalConfigItem) item).getValue())));
             }else if(item instanceof ConfigurationPutRequest.CurrentStepCountConfigItem){
                 device.addDeviceInfo(new GenericItem(QHybridSupport.ITEM_STEP_COUNT, String.valueOf(((ConfigurationPutRequest.CurrentStepCountConfigItem) item).getValue())));
             }else if(item instanceof ConfigurationPutRequest.TimezoneOffsetConfigItem) {

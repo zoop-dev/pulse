@@ -14,27 +14,6 @@
         android:id="@+id/settingsLayout"
         android:focusableInTouchMode="true" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/vibrationStrengthLayout"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/qhybrid_vibration_strength" />
-
-
-            <SeekBar
-                android:id="@+id/vibrationStrengthBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:max="2"
-                android:min="0" />
-
-        </LinearLayout>
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

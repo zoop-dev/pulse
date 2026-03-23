@@ -266,6 +266,8 @@ public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
         final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
         if (!isHybridHR(device)) {
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_fossilqhybrid_legacy);
+            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_fossilhybridhr_vibration);
+//            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_fossilhybridhr_calibration);  // TODO
             return deviceSpecificSettings;
         }
         final List<Integer> generic = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.GENERIC);
