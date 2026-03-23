@@ -4303,4 +4303,21 @@
     <string name="pref_title_calendar_sync_event_reminders">Synchronizovat připomínky událostí</string>
     <string name="recoveryHr">Zotavovací tep</string>
     <string name="ratingOfPerceivedExertion">Míra vnímané námahy</string>
+    <string name="pref_header_auto_export_gpx">Automaticky exportovat stopy GPX</string>
+    <string name="pref_auto_export_gpx_summary">Automaticky exportovat soubory GPX při synchronizaci stop aktivit</string>
+    <string name="pref_export_directory">Adresář pro export</string>
+    <string name="pref_auto_export_gpx_all_devices_summary">Exportovat trasy GPX ze všech zařízení</string>
+    <string name="pref_auto_export_gpx_selected_devices">Vybraná zařízení</string>
+    <string name="pref_auto_export_gpx_selected_devices_summary">Vyberte, ze kterých zařízení chcete exportovat trasy GPX</string>
+    <string name="blood_pressure_systolic">Systolický</string>
+    <string name="blood_pressure_diastolic">Diastolický</string>
+    <string name="blood_pressure_measurement_count">Měření</string>
+    <string name="blood_pressure_export_date">Datum</string>
+    <string name="blood_pressure_export_dob">DOB: %s</string>
+    <string name="blood_pressure_avg_format">%1$d/%2$d</string>
+    <string name="auto_export_invalid_location">Neplatné umístění exportu: %s</string>
+    <string name="activity_type_floorball">Florbal</string>
+    <string name="pref_summary_supported_devices">Tato funkce není podporována všemi zařízeními. Klikněte sem pro více informací.</string>
+    <string name="pref_title_supported_devices">Podporovaná zařízení</string>
+    <string name="intent_api_allow_global_settings_summary">Povolit aplikacím třetích stran nastavovat globální nastavení Gadgetbridge skrze intenty. Pro použití změny restartujte Gadgetbridge.</string>
 </resources>
