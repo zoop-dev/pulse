@@ -4208,4 +4208,6 @@
     <string name="pref_auto_export_gpx_selected_devices_summary">Wählen Sie aus, von welchen Geräten GPX-Tracks exportiert werden sollen</string>
     <string name="auto_export_invalid_location">Ungültiger Exportspeicherort: %s</string>
     <string name="pref_summary_supported_devices">Diese Funktion wird nicht von allen Geräten unterstützt. Klicken Sie hier für weitere Informationen.</string>
+    <string name="activity_type_floorball">Unihockey</string>
+    <string name="intent_api_allow_global_settings_summary">Erlauben Sie Drittanbieter-Apps, globale Gadgetbridge-Einstellungen festzulegen. Bitte starten Sie Gadgetbridge neu, damit die Änderungen wirksam werden.</string>
 </resources>
