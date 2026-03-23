@@ -218,7 +218,6 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
         super(deviceSupport);
     }
 
-    private boolean saveRawActivityFiles = false;
     private boolean notifiedAboutMissingNavigationApp = false;
 
     HashMap<String, Bitmap> appIconCache = new HashMap<>();
@@ -560,15 +559,6 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                 downloadFile(FileHandle.APP_CODE.getMajorHandle(), appInfo.getFileHandle(), appInfo.getAppName(), false, true);
             }
         }
-    }
-
-    private void setVibrationStrengthFromConfig() {
-        Prefs prefs = new Prefs(getDeviceSpecificPreferences());
-        int vibrationStrengh = prefs.getInt(DeviceSettingsPreferenceConst.PREF_VIBRATION_STRENGH_PERCENTAGE, 2);
-        if (vibrationStrengh > 0) {
-            vibrationStrengh = (vibrationStrengh + 1) * 25; // Seems 0,50,75,100 are working...
-        }
-        setVibrationStrength((short) (vibrationStrengh));
     }
 
     private void setUnitsConfig() {
@@ -1316,8 +1306,9 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                             }
 
                             if (saveRawActivityFiles) {
-                                writeFile(String.valueOf(System.currentTimeMillis()), fileData);
+                                writeFile("activity_hr", String.valueOf(System.currentTimeMillis()), fileData);
                             }
+
                             queueWrite(new FileDeleteRequest(fileHandle));
                             GB.updateTransferNotification(null, "", false, 100, getContext());
                             GB.signalActivityDataFinish(getDeviceSupport().getDevice());
@@ -1345,21 +1336,6 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                 getDeviceSupport().getDevice().sendDeviceUpdateIntent(getContext());
             }
         });
-    }
-
-    private void writeFile(String fileName, byte[] value) {
-        File activityDir = new File(getContext().getExternalFilesDir(null), "activity_hr");
-        activityDir.mkdir();
-        File f = new File(activityDir, fileName);
-        try {
-            f.createNewFile();
-            FileOutputStream fos = new FileOutputStream(f);
-            fos.write(value);
-            fos.close();
-            GB.toast("saved file data", Toast.LENGTH_SHORT, GB.INFO);
-        } catch (IOException e) {
-            LOG.error("file error", e);
-        }
     }
 
     private void syncSettings() {

@@ -4,13 +4,6 @@
 
     <SwitchPreferenceCompat
         android:defaultValue="false"
-        android:key="save_raw_activity_files"
-        android:layout="@layout/preference_checkbox"
-        android:title="@string/pref_qhybrid_save_raw_activity_files"
-        android:icon="@drawable/ic_date_range" />
-
-    <SwitchPreferenceCompat
-        android:defaultValue="false"
         android:key="dangerous_external_intents"
         android:layout="@layout/preference_checkbox"
         android:title="@string/qhybrid_pref_title_external_intents"

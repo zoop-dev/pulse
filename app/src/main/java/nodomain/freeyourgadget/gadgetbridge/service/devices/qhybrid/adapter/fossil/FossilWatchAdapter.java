@@ -36,6 +36,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DateFormat;
@@ -111,6 +113,7 @@ public class FossilWatchAdapter extends WatchAdapter {
     public final String CONFIG_ITEM_BUTTONS = "buttons";
 
     private int lastButtonIndex = -1;
+    protected boolean saveRawActivityFiles = false;
 
     protected final Logger LOG = LoggerFactory.getLogger(getClass().getSimpleName());
 
@@ -150,6 +153,8 @@ public class FossilWatchAdapter extends WatchAdapter {
     @Override
     public void initialize() {
         timeoutThread.start();
+
+        saveRawActivityFiles = getDeviceSpecificPreferences().getBoolean("save_raw_activity_files", false);
 
         playPairingAnimation();
 
@@ -393,6 +398,8 @@ public class FossilWatchAdapter extends WatchAdapter {
 
     @Override
     public void setStepGoal(int stepGoal) {
+        LOG.info("setStepGoal called with value: {}", stepGoal);
+
         queueWrite(new ConfigurationPutRequest(new ConfigurationPutRequest.DailyStepGoalConfigItem(stepGoal), this) {
             @Override
             public void onFilePut(boolean success) {
@@ -403,7 +410,7 @@ public class FossilWatchAdapter extends WatchAdapter {
         }, false);
     }
 
-    private void setVibrationStrengthFromConfig() {
+    protected void setVibrationStrengthFromConfig() {
         Prefs prefs = new Prefs(getDeviceSpecificPreferences());
         int vibrationStrengh = prefs.getInt(DeviceSettingsPreferenceConst.PREF_VIBRATION_STRENGH_PERCENTAGE, 2);
         if (vibrationStrengh > 0) {
@@ -539,6 +546,21 @@ public class FossilWatchAdapter extends WatchAdapter {
         throw new UnsupportedOperationException("Model " + modelNumber + " not supported");
     }
 
+    protected void writeFile(String dirname, String fileName, byte[] value) {
+        File activityDir = new File(getContext().getExternalFilesDir(null), dirname);
+        activityDir.mkdir();
+        File f = new File(activityDir, fileName);
+        try {
+            f.createNewFile();
+            FileOutputStream fos = new FileOutputStream(f);
+            fos.write(value);
+            fos.close();
+            LOG.debug("Saved raw activity file: " + f.getName());
+        } catch (IOException e) {
+            LOG.error("file error", e);
+        }
+    }
+
     @Override
     public void onFetchActivityData() {
         queueWrite(new FileLookupAndGetRequest(FileHandle.ACTIVITY_FILE, this) {
@@ -559,6 +581,10 @@ public class FossilWatchAdapter extends WatchAdapter {
                     }
 
                     provider.addGBActivitySamples(samples);
+
+                    if (saveRawActivityFiles) {
+                        writeFile("activity_qhybrid", String.valueOf(System.currentTimeMillis()), fileData);
+                    }
 
                     queueWrite(new FileDeleteRequest(getHandle()));
                     GB.updateTransferNotification(null, "", false, 100, getContext());
@@ -631,8 +657,20 @@ public class FossilWatchAdapter extends WatchAdapter {
 
     @Override
     public void onSendConfiguration(String config) {
-        setStepGoal(new ActivityUser().getStepsGoal());
-        setVibrationStrengthFromConfig();
+        switch (config) {
+            case DeviceSettingsPreferenceConst.PREF_VIBRATION_STRENGH_PERCENTAGE: {
+                setVibrationStrengthFromConfig();
+                break;
+            }
+            case DeviceSettingsPreferenceConst.PREF_HYBRID_HR_SAVE_RAW_ACTIVITY_FILES: {
+                saveRawActivityFiles = getDeviceSpecificPreferences().getBoolean("save_raw_activity_files", false);
+                break;
+            }
+            case ActivityUser.PREF_USER_STEPS_GOAL: {
+                setStepGoal(new ActivityUser().getStepsGoal());
+                break;
+            }
+        }
     }
 
     @Override

@@ -264,12 +264,16 @@ public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
         final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
+        // Q Hybrid watches, without eInk screen
         if (!isHybridHR(device)) {
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_fossilqhybrid_legacy);
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_fossilhybridhr_vibration);
 //            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_fossilhybridhr_calibration);  // TODO
+            final List<Integer> developer = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DEVELOPER);
+            developer.add(R.xml.devicesettings_fossilhybrids_dev);
             return deviceSpecificSettings;
         }
+        // Gen 1 and Gen 6 HR Hybrid watches, with eInk screen
         final List<Integer> generic = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.GENERIC);
         // Firmware version specific settings
         final Version firmwareVersion = getFirmwareVersion(device);
@@ -296,6 +300,7 @@ public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
         notifications.add(R.xml.devicesettings_transliteration);
         notifications.add(R.xml.devicesettings_custom_deviceicon);
         final List<Integer> developer = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DEVELOPER);
+        developer.add(R.xml.devicesettings_fossilhybrids_dev);
         developer.add(R.xml.devicesettings_fossilhybridhr_dev);
         return deviceSpecificSettings;
     }

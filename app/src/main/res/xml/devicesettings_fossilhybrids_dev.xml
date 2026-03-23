@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="save_raw_activity_files"
+        android:layout="@layout/preference_checkbox"
+        android:title="@string/pref_qhybrid_save_raw_activity_files"
+        android:icon="@drawable/ic_date_range" />
+
+</androidx.preference.PreferenceScreen>
