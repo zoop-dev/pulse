@@ -4150,4 +4150,23 @@
     <string name="pref_title_calendar_sync_event_reminders">Sincronizar recordatorios de eventos</string>
     <string name="recoveryHr">Frecuencia cardíaca de recuperación</string>
     <string name="ratingOfPerceivedExertion">Índice de esfuerzo percibido</string>
+    <string name="pref_header_auto_export_gpx">Exportar pistas GPX Automáticamente</string>
+    <string name="pref_auto_export_gpx_summary">Exportar ficheros GPX automáticamente cuando sincronice pistas de actividades</string>
+    <string name="pref_export_directory">Exportar directorio</string>
+    <string name="pref_auto_export_gpx_all_devices_summary">Exportar pistas GPX de todos los dispositivos</string>
+    <string name="pref_auto_export_gpx_selected_devices">Dispositivos seleccionados</string>
+    <string name="pref_auto_export_gpx_selected_devices_summary">Seleccione dispositivos desde los que exportar pistas GPX</string>
+    <string name="blood_pressure_systolic">Sistólico</string>
+    <string name="blood_pressure_diastolic">Diastólico</string>
+    <string name="blood_pressure_measurement_count">Medidas</string>
+    <string name="blood_pressure_export_date">Fecha</string>
+    <string name="auto_export_invalid_location">Ubicación de exportación incorrecta: %s</string>
+    <string name="activity_type_floorball">Floorball</string>
+    <string name="redmi_buds_6_active_equalizer_preset_volume">Volumen de graves</string>
+    <string name="pref_summary_supported_devices">Esta funcionalidad no está soportada por todos los dispositivos. Haz click aquí para mas información.</string>
+    <string name="pref_title_supported_devices">Dispositivos soportados</string>
+    <string name="intent_api_allow_global_settings_summary">Permitir a aplicaciones de terceros definir configuraciones globales de Gadgetbridge mediante intents. Por favor, reinicia Gadgetbridge para que tenga efecto.</string>
+    <string name="uploading_rpk">Subiendo rpk…</string>
+    <string name="uploadrpkoperation_complete">Rpk instalación completada</string>
+    <string name="uploadrpkoperation_failed">Rpk instalación fallida</string>
 </resources>
