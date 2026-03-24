@@ -254,6 +254,8 @@ public class ActivitySummaryEntries {
     public static final String UNIT_SECONDS_PER_100_METERS = "seconds_100m";
     public static final String UNIT_MINUTES_PER_100_YARDS = "minutes_100yd";
     public static final String UNIT_SECONDS_PER_100_YARDS = "seconds_100yd";
+    public static final String UNIT_NAUTICAL_MILES = "nautical_miles";
+    public static final String UNIT_KNOTS = "knots";
     public static final String UNIT_CELSIUS = "unit_celsius";
 
     public static final String GROUP_PACE = "Pace";

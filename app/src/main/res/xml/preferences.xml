@@ -79,6 +79,13 @@
                 android:title="@string/pref_title_unit_system"
                 android:icon="@drawable/ic_straighten"
                 app:useSimpleSummaryProvider="true" />
+            <SwitchPreferenceCompat
+                android:defaultValue="true"
+                android:key="units_nautical"
+                android:layout="@layout/preference_checkbox"
+                android:summary="@string/pref_summary_nautical_units"
+                android:icon="@drawable/ic_sailing"
+                android:title="@string/pref_title_nautical_units" />
             <PreferenceScreen
                 android:key="pref_screen_rtl"
                 android:title="@string/preferences_rtl_settings"

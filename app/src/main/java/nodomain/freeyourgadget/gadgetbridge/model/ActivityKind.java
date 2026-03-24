@@ -403,6 +403,18 @@ public enum ActivityKind {
                 activityKind.name().contains("TREADMILL") || activityKind.name().contains("WALK");
     }
 
+    public static boolean isNauticalActivity(final ActivityKind activityKind) {
+        return activityKind == SAILING
+                || activityKind == SAIL_RACE
+                || activityKind == SAIL_EXPEDITION
+                || activityKind == BOATING
+                || activityKind == POWERBOATING
+                || activityKind == MARINE
+                || activityKind == ANCHOR
+                || activityKind == TROLLING_MOTOR
+                || activityKind == WINDSURFING;
+    }
+
     public static boolean isSwimActivity(final ActivityKind activityKind) {
         return activityKind.name().contains("SWIM");
     }

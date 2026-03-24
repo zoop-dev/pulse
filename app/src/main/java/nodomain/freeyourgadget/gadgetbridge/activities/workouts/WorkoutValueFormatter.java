@@ -1,8 +1,11 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.workouts;
 
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.DISTANCE_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_CM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KG;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KILOMETERS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KMPH;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KNOTS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_LB;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS_PER_HOUR;
@@ -10,6 +13,7 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_100_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_100_YARDS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MM;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_NAUTICAL_MILES;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_100_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_100_YARDS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_KM;
@@ -26,6 +30,7 @@ import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 
@@ -34,15 +39,23 @@ public class WorkoutValueFormatter {
 
     private boolean show_raw_data = false;
 
+    private final ActivityKind activityKind;
     private final String units;
     private final String UNIT_IMPERIAL;
     private final String UNIT_METRIC;
+    private final boolean useNauticalUnits;
     private final DecimalFormat df = new DecimalFormat("#.##");
 
     public WorkoutValueFormatter() {
+        this(ActivityKind.UNKNOWN);
+    }
+
+    public WorkoutValueFormatter(final ActivityKind activityKind) {
+        this.activityKind = activityKind;
         this.units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
         this.UNIT_IMPERIAL = GBApplication.getContext().getString(R.string.p_unit_imperial);
         this.UNIT_METRIC = GBApplication.getContext().getString(R.string.p_unit_metric);
+        this.useNauticalUnits = ActivityKind.isNauticalActivity(activityKind) && GBApplication.getPrefs().getBoolean("units_nautical", true);
     }
 
     public void toggleRawData() {
@@ -146,7 +159,10 @@ public class WorkoutValueFormatter {
                     }
                     break;
                 case UNIT_METERS:
-                    if (units.equals(UNIT_IMPERIAL)) {
+                    if (useNauticalUnits) {
+                        value = value / 1852D;
+                        unit = UNIT_NAUTICAL_MILES;
+                    } else if (units.equals(UNIT_IMPERIAL)) {
                         value = value * 3.28084D;
                         unit = "ft";
                         if (value > 6000) {
@@ -158,6 +174,15 @@ public class WorkoutValueFormatter {
                             value = value / 1000;
                             unit = "km";
                         }
+                    }
+                    break;
+                case UNIT_KMPH:
+                    if (useNauticalUnits) {
+                        value = value / 1.852D;
+                        unit = UNIT_KNOTS;
+                    } else if (units.equals(UNIT_IMPERIAL)) {
+                        value = value * 0.621371D;
+                        unit = "mi_h";
                     }
                     break;
                 case UNIT_SECONDS_PER_100_METERS:
