@@ -44,6 +44,8 @@ public class SleepAnalysis {
             if (isSleep(sample)) {
                 if (sleepStart == null)
                     sleepStart = getDateFromSample(sample);
+                else
+                    awakeSleepDuration += durationSinceLastSleep;
                 sleepEnd = getDateFromSample(sample);
 
                 durationSinceLastSleep = 0;
@@ -77,7 +79,6 @@ public class SleepAnalysis {
                 } else {
                     durationSinceLastSleep += durationSinceLastSample;
                     if (sleepStart != null) {
-                        awakeSleepDuration += durationSinceLastSample;
                         if (durationSinceLastSleep > MAX_WAKE_PHASE_LENGTH) {
                             if (lightSleepDuration + deepSleepDuration + remSleepDuration + awakeSleepDuration > MIN_SESSION_LENGTH)
                                 result.add(new SleepSession(sleepStart, sleepEnd, lightSleepDuration, deepSleepDuration, remSleepDuration, awakeSleepDuration));
