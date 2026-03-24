@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        android:key="pref_key_header_redmibuds6active_system"
+        android:title="@string/pref_header_system">
+
+        <PreferenceScreen
+            android:icon="@drawable/ic_touch"
+            android:key="pref_screen_redmibuds6active_touch_options"
+            android:persistent="false"
+            android:title="@string/prefs_galaxy_touch_options">
+
+            <PreferenceCategory android:title="@string/single_tap">
+                <ListPreference
+                    android:entries="@array/redmi_buds_6_active_single_button_function_names"
+                    android:entryValues="@array/redmi_buds_6_active_single_button_function_values"
+                    android:icon="@drawable/ic_filter_1"
+                    android:defaultValue="8"
+                    android:key="pref_redmi_buds_6_active_control_single_tap_left"
+                    app:useSimpleSummaryProvider="true"
+                    android:title="@string/prefs_left" />
+                <ListPreference
+                    android:entries="@array/redmi_buds_6_active_single_button_function_names"
+                    android:entryValues="@array/redmi_buds_6_active_single_button_function_values"
+                    android:defaultValue="8"
+                    android:key="pref_redmi_buds_6_active_control_single_tap_right"
+                    app:useSimpleSummaryProvider="true"
+                    android:title="@string/prefs_right" />
+            </PreferenceCategory>
+
+            <PreferenceCategory android:title="@string/double_tap">
+                <ListPreference
+                    android:entries="@array/redmi_buds_6_active_button_function_names"
+                    android:entryValues="@array/redmi_buds_6_active_button_function_values"
+                    android:icon="@drawable/ic_filter_2"
+                    android:defaultValue="1"
+                    android:key="pref_redmi_buds_6_active_control_double_tap_left"
+                    app:useSimpleSummaryProvider="true"
+                    android:title="@string/prefs_left" />
+                <ListPreference
+                    android:entries="@array/redmi_buds_6_active_button_function_names"
+                    android:entryValues="@array/redmi_buds_6_active_button_function_values"
+                    android:defaultValue="1"
+                    android:key="pref_redmi_buds_6_active_control_double_tap_right"
+                    app:useSimpleSummaryProvider="true"
+                    android:title="@string/prefs_right" />
+            </PreferenceCategory>
+
+            <PreferenceCategory android:title="@string/triple_tap">
+                <ListPreference
+                    android:entries="@array/redmi_buds_6_active_button_function_names"
+                    android:entryValues="@array/redmi_buds_6_active_button_function_values"
+                    android:icon="@drawable/ic_filter_3"
+                    android:defaultValue="2"
+                    android:key="pref_redmi_buds_6_active_control_triple_tap_left"
+                    app:useSimpleSummaryProvider="true"
+                    android:title="@string/prefs_left" />
+                <ListPreference
+                    android:entries="@array/redmi_buds_6_active_button_function_names"
+                    android:entryValues="@array/redmi_buds_6_active_button_function_values"
+                    android:defaultValue="3"
+                    android:key="pref_redmi_buds_6_active_control_triple_tap_right"
+                    app:useSimpleSummaryProvider="true"
+                    android:title="@string/prefs_right" />
+            </PreferenceCategory>
+
+            <PreferenceCategory android:title="@string/long_press">
+                <ListPreference
+                    android:entries="@array/redmi_buds_6_active_long_button_mode_names"
+                    android:entryValues="@array/redmi_buds_6_active_long_button_mode_values"
+                    android:icon="@drawable/ic_touch"
+                    android:defaultValue="6"
+                    android:key="pref_redmi_buds_6_active_control_long_tap_mode_left"
+                    app:useSimpleSummaryProvider="true"
+                    android:title="@string/sony_button_mode_left" />
+                <ListPreference
+                    android:entries="@array/redmi_buds_6_active_long_button_mode_names"
+                    android:entryValues="@array/redmi_buds_6_active_long_button_mode_values"
+                    android:icon="@drawable/ic_touch"
+                    android:defaultValue="6"
+                    android:key="pref_redmi_buds_6_active_control_long_tap_mode_right"
+                    app:useSimpleSummaryProvider="true"
+                    android:title="@string/sony_button_mode_right" />
+            </PreferenceCategory>
+        </PreferenceScreen>
+
+    </PreferenceCategory>
+</androidx.preference.PreferenceScreen>
