@@ -55,10 +55,74 @@ public class ActivityFileParser {
 
         short fileId = buffer.getShort(16);
 
-        buffer.position(52); // Seem to be another 32 bytes after the initial 20 stop 
+        // Detect file variant by checking whether the byte at offset 52 is a
+        // known HR marker-stream byte.  In the HR variant the marker stream
+        // starts exactly at offset 52.  In the no-HR (step-only) variant
+        // offset 52 falls in the middle of the fixed 4-byte record array and
+        // will never hold a marker value.
+        if (isNoHrVariant(file)) {
+            parseNoHrVariant(buffer, file);
+        } else {
+            parseHrVariant(buffer, file);
+        }
+    }
+
+    // Variant detection
+    private static boolean isNoHrVariant(byte[] file) {
+        // HR stream markers that can legally appear at offset 52 in the HR variant.
+        // No b0 byte in the no-HR fixed-record encoding ever takes one of these values.
+        byte b = file[52];
+        return b != (byte) 0xCE && b != (byte) 0xC2 && b != (byte) 0xE2
+            && b != (byte) 0xE0 && b != (byte) 0xDD && b != (byte) 0xD6
+            && b != (byte) 0xCB && b != (byte) 0xCC && b != (byte) 0xCF;
+    }
+
+    // No-HR variant - flat 4-byte record array starting at offset 44
+    private void parseNoHrVariant(ByteBuffer buffer, byte[] file) {
+        // The preamble always contains a timestamp-sync block (0xE2 0x04 +
+        // 4-byte LE Unix timestamp) at a fixed offset of 32; the timestamp
+        // itself is at offset 34.
+        this.currentTimestamp = buffer.getInt(34);
+
+        int pos = 44;
+        while (pos <= file.length - 4) {
+            int varLo  = file[pos]     & 0xFF;
+            int varHi  = file[pos + 1] & 0xFF;
+            int hrByte = file[pos + 2] & 0xFF;
+            int flags  = file[pos + 3] & 0xFF;
+
+            if (hrByte != 0xFF) break;   // sentinel / corrupt record → stop
+
+            if ((flags & 0x40) != 0) {   // special marker → skip, tick clock
+                currentTimestamp += 60;
+                pos += 4;
+                continue;
+            }
+
+            ActivityEntry entry = new ActivityEntry();
+            entry.id = currentId++;
+            entry.timestamp = currentTimestamp;
+            entry.wearingState = ActivityEntry.WEARING_STATE.WEARING;
+
+            parseVariabilityBytes(varLo, varHi, entry);
+
+            int intensity = flags & 0x03;
+            entry.isActive = intensity > 0;
+            // intensity 0=none, 1=light, 2=moderate, 3=vigorous
+            // stored in calories field for compatibility (0–3)
+//            entry.calories = intensity;
+
+            samples.add(entry);
+            currentTimestamp += 60;
+            pos += 4;
+        }
+    }
+
+    // HR variant - marker-stream parser
+    private void parseHrVariant(ByteBuffer buffer, byte[] file) {
+        buffer.position(52); // Seem to be another 32 bytes after the initial 20 stop
 
         finishCurrentPacket(samples);
-
 
         while (buffer.position() < buffer.capacity() - 4) {
             byte next = buffer.get();
@@ -75,42 +139,37 @@ public class ActivityFileParser {
                         buffer.getShort(); // minutes offset
                         this.currentTimestamp = timestamp;
 
-                    } else if (f1 == (byte) 0xD3) { // Workout-related 
+                    } else if (f1 == (byte) 0xD3) { // Workout-related
                         int hr1 = f2 & 0xFF; // Might be min HR during workout sometimes?
                         byte[] infoB = new byte[2];
                         buffer.get(infoB);
 
                         byte v1 = buffer.get();
-                        byte v2 = buffer.get(buffer.position()); // Could be important for 11 byte packet  
+                        byte v2 = buffer.get(buffer.position()); // Could be important for 11 byte packet
                         if (v1 == (byte) 0xDF) {
-                            int hr2 = v2 & 0xFF; // Max HR during workout - extra data inside? 
+                            int hr2 = v2 & 0xFF; // Max HR during workout - extra data inside?
                             buffer.get();
                             if (infoB[0] == (byte) 0x08)
                                 buffer.get(new byte[11]); // ?
-
                             else if (!elemValidFlags(buffer.get(buffer.position() + 4)))
                                 buffer.get(new byte[3]);
 
-
                         } else if (v1 == (byte) 0xE2 && v2 == (byte) 0x04) {
                             buffer.get(new byte[13]);
-
                             if (!elemValidFlags(buffer.get(buffer.position())))
                                 buffer.get(new byte[3]);
 
                         } else if (!elemValidFlags(buffer.get(buffer.position() + 4)))
                             buffer.get();
 
-
                     } else if (f1 == (byte) 0xCF || f1 == (byte) 0xDF) {
-                        continue; // Not sure what to do with this                                  
+                        continue; // Not sure what to do with this
 
                     } else if (f1 == (byte) 0xD6) {
                         HybridHRSpo2Sample spo2Sample = new HybridHRSpo2Sample();
                         spo2Sample.setTimestamp(currentTimestamp * 1000L);
                         spo2Sample.setSpo2(buffer.get() & 0xFF);
                         spo2Samples.add(spo2Sample);
-
                         buffer.get(new byte[3]); // Likely something to do with sample statistics
 
                     } else if (f1 == (byte) 0xFE && f2 == (byte) 0xFE) {
@@ -119,7 +178,7 @@ public class ActivityFileParser {
                         } // WHY?
 
                     } else if (elemValidFlags(buffer.get(buffer.position() + 2))) {
-                        parseVariabilityBytes(f1, f2);
+                        parseVariabilityBytes(f1 & 0xFF, f2 & 0xFF, currentSample);
                         int heartRate = buffer.get() & 0xFF;
                         int calories = buffer.get() & 0xFF;
                         boolean isActive = (calories & 0x40) == 0x40;
@@ -129,7 +188,6 @@ public class ActivityFileParser {
                         currentSample.calories = calories;
                         currentSample.isActive = isActive;
                         finishCurrentPacket(samples);
-
                         continue;
                     }
 
@@ -137,7 +195,7 @@ public class ActivityFileParser {
                         continue;
                     }
 
-                    parseVariabilityBytes(buffer.get(), buffer.get());
+                    parseVariabilityBytes(buffer.get() & 0xFF, buffer.get() & 0xFF, currentSample);
                     int heartRate = buffer.get() & 0xFF;
                     int calories = buffer.get() & 0xFF;
                     boolean isActive = (calories & 0x40) == 0x40; // upper two bits
@@ -152,16 +210,13 @@ public class ActivityFileParser {
 
                 case (byte) 0xC2: // Or `c2 X` `ac X` as per #2884
                     buffer.get(new byte[3]);
-
                     break;
 
                 case (byte) 0xE2:
                     buffer.get(new byte[9]);
-
                     if (!elemValidFlags(buffer.get(buffer.position()))) {
                         buffer.get(new byte[6]);
                     }
-
                     break;
 
                 case (byte) 0xE0:
@@ -179,10 +234,10 @@ public class ActivityFileParser {
                             buffer.get(rawInfo);
                             ByteBuffer info = ByteBuffer.wrap(rawInfo).order(ByteOrder.LITTLE_ENDIAN);
                             rawWorkoutData.write(info.array());
-                            if (attributeId == 2) {  // Attribute 2 is the duration in seconds
+                            if (attributeId == 2) { // Attribute 2 is the duration in seconds
                                 duration = info.getInt();
                             }
-                            if (attributeId == 9) {  // Attribute 9 is the workout type
+                            if (attributeId == 9) { // Attribute 9 is the workout type
                                 gbType = switch (info.get(0)) {
                                     case 0x01 -> ActivityKind.RUNNING;
                                     case 0x02 -> ActivityKind.CYCLING;
@@ -209,12 +264,10 @@ public class ActivityFileParser {
                     summary.setEndTime(DateTimeUtils.parseTimeStamp(currentTimestamp));
                     summary.setRawSummaryData(rawWorkoutData.toByteArray());
                     workouts.add(summary);
-
                     break;
 
                 case (byte) 0xDD:
                     buffer.get(new byte[20]); // No idea what this is
-
                     break;
 
                 case (byte) 0xD6:
@@ -241,11 +294,10 @@ public class ActivityFileParser {
         for (byte i : new byte[]{(byte) 0xCE, (byte) 0xDD, (byte) 0xCB, (byte) 0xCC, (byte) 0xCF, (byte) 0xD6, (byte) 0xE2})
             if (value == i)
                 return true;
-
         return false;
     }
 
-    private void parseVariabilityBytes(byte lower, byte higher) {
+    private void parseVariabilityBytes(int lower, int higher, ActivityEntry currentSample) {
         if ((lower & 0b0000001) == 0b0000001) {
             currentSample.maxVariability = (higher & 0b00000011) * 25 + 1;
             currentSample.stepCount = lower & 0b1110;
@@ -259,7 +311,7 @@ public class ActivityFileParser {
             }
         } else {
             currentSample.stepCount = lower & 0b11111110;
-            currentSample.variability = (int) higher * (int) higher * 64;
+            currentSample.variability = higher * higher * 64;
             currentSample.maxVariability = 10000;
         }
     }

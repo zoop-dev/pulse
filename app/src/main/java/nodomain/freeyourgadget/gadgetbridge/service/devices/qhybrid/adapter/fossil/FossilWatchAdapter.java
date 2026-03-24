@@ -42,6 +42,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
@@ -537,17 +538,12 @@ public class FossilWatchAdapter extends WatchAdapter {
     @Override
     public boolean supportsActivityHand() {
         String modelNumber = getDeviceSupport().getDevice().getModel();
-        switch (modelNumber) {
-            case "HW.0.0":
-                return true;
-            case "HL.0.0":
-            case "IV.0.0":
-            case "DN.1.0":
-            case "WA.0.0":
-            case "VA.0.0":
-                return false;
-        }
-        throw new UnsupportedOperationException("Model " + modelNumber + " not supported");
+        return switch (modelNumber) {
+            case "HW.0.0" -> true;
+            case "HL.0.0", "IV.0.0", "DN.1.0", "WA.0.0", "VA.0.0" -> false;
+            default ->
+                    throw new UnsupportedOperationException("Model " + modelNumber + " not supported");
+        };
     }
 
     protected void writeFile(String dirname, String fileName, byte[] value) {
@@ -582,6 +578,9 @@ public class FossilWatchAdapter extends WatchAdapter {
                     Long deviceId = DBHelper.getDevice(getDeviceSupport().getDevice(), dbHandler.getDaoSession()).getId();
                     for (int i = 0; i < entries.size(); i++) {
                         samples[i] = entries.get(i).toDAOActivitySample(userId, deviceId);
+                    }
+                    if (BuildConfig.DEBUG) {
+                        LOG.debug("Activity samples parsed successfully: {}", Arrays.stream(samples).toList());
                     }
 
                     provider.addGBActivitySamples(samples);
