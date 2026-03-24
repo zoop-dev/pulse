@@ -35,10 +35,14 @@ import org.slf4j.LoggerFactory;
 import java.text.ParseException;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.Locale;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureUnit;
+import nodomain.freeyourgadget.gadgetbridge.model.WeightUnit;
 
 public class GBPrefs extends Prefs {
     private static final Logger LOG = LoggerFactory.getLogger(GBPrefs.class);
@@ -196,8 +200,31 @@ public class GBPrefs extends Prefs {
         return getLocalTime("notification_times_end", "22:00");
     }
 
-    public boolean isMetricUnits() {
-        return getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, "metric").equals("metric");
+    public TemperatureUnit getTemperatureUnit() {
+        try {
+            return TemperatureUnit.valueOf(getString(SettingsActivity.PREF_UNIT_TEMPERATURE, "celsius").toUpperCase(Locale.ROOT));
+        } catch (final Exception e) {
+            LOG.error("Error reading temperature unit preference", e);
+        }
+        return TemperatureUnit.CELSIUS;
+    }
+
+    public WeightUnit getWeightUnit() {
+        try {
+            return WeightUnit.valueOf(getString(SettingsActivity.PREF_UNIT_WEIGHT, "kilogram").toUpperCase(Locale.ROOT));
+        } catch (final Exception e) {
+            LOG.error("Error reading weight unit preference", e);
+        }
+        return WeightUnit.KILOGRAM;
+    }
+
+    public DistanceUnit getDistanceUnit() {
+        try {
+            return DistanceUnit.valueOf(getString(SettingsActivity.PREF_UNIT_DISTANCE, "metric").toUpperCase(Locale.ROOT));
+        } catch (final Exception e) {
+            LOG.error("Error reading distance unit preference", e);
+        }
+        return DistanceUnit.METRIC;
     }
 
     public boolean syncTime() {

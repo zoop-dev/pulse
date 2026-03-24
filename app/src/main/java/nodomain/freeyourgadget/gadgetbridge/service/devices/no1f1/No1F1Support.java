@@ -49,6 +49,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -262,7 +263,7 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
         try {
             builder = performInitialized("Sending configuration for option: " + config);
             switch (config) {
-                case SettingsActivity.PREF_MEASUREMENT_SYSTEM:
+                case SettingsActivity.PREF_UNIT_DISTANCE:
                     setDisplaySettings(builder);
                     break;
             }
@@ -304,8 +305,8 @@ public class No1F1Support extends AbstractBTLESingleDeviceSupport {
                 0x00, // 1 - display distance in kilometers, 2 - in miles
                 0x00 // 1 - display 24-hour clock, 2 - for 12-hour with AM/PM
         };
-        String units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, getContext().getString(R.string.p_unit_metric));
-        if (units.equals(getContext().getString(R.string.p_unit_metric))) {
+        final DistanceUnit distanceUnit = GBApplication.getPrefs().getDistanceUnit();
+        if (distanceUnit == DistanceUnit.METRIC) {
             displayBytes[1] = 1;
         } else {
             displayBytes[1] = 2;

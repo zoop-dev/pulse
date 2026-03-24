@@ -16,11 +16,11 @@ import java.util.List;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
-import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.entities.CyclingSample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class CyclingLiveDataActivity extends AbstractGBActivity {
@@ -84,10 +84,9 @@ public class CyclingLiveDataActivity extends AbstractGBActivity {
                 return true;
             }
         });
+        final DistanceUnit distanceUnit = GBApplication.getPrefs().getDistanceUnit();
 
-        String measurementSystem = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, "metric");
-
-        if(!measurementSystem.equals("metric")) {
+        if(distanceUnit != DistanceUnit.METRIC) {
             toUnitFactor = 0.621371f;
 
             speedStringResource = R.string.mi_h;

@@ -39,7 +39,6 @@ import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.password.PasswordCapabilityImpl;
@@ -469,16 +468,6 @@ public abstract class HuamiCoordinator extends AbstractBLEDeviceCoordinator {
         }
 
         return prefs.getTimePreference(key, defaultValue);
-    }
-
-    public static MiBandConst.DistanceUnit getDistanceUnit() {
-        Prefs prefs = GBApplication.getPrefs();
-        String unit = prefs.getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
-        if (unit.equals(GBApplication.getContext().getString(R.string.p_unit_metric))) {
-            return MiBandConst.DistanceUnit.METRIC;
-        } else {
-            return MiBandConst.DistanceUnit.IMPERIAL;
-        }
     }
 
     public static DoNotDisturb getDoNotDisturb(String deviceAddress) {

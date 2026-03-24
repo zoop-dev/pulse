@@ -66,7 +66,6 @@ public abstract class AbstractMijiaLywsdCoordinator extends AbstractBLEDeviceCoo
     public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
         return new int[]{
                 R.xml.devicesettings_mijia_lywsd,
-                R.xml.devicesettings_temperature_scale_cf,
         };
     }
 

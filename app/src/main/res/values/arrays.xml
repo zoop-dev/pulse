@@ -2654,8 +2654,8 @@
     </string-array>
 
     <string-array name="pref_values_unit_system">
-        <item>@string/p_unit_metric</item>
-        <item>@string/p_unit_imperial</item>
+        <item>metric</item>
+        <item>imperial</item>
     </string-array>
 
     <string-array name="pref_timeformat_entries">
@@ -4703,18 +4703,6 @@
         <item>5</item>
     </string-array>
 
-    <string-array name="miscale_weight_unit_names">
-        <item>@string/miscale_weight_unit_metric</item>
-        <item>@string/miscale_weight_unit_imperial</item>
-        <item>@string/miscale_weight_unit_chinese</item>
-    </string-array>
-
-    <string-array name="miscale_weight_unit_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-    </string-array>
-
     <string-array name="fitness_tracking_apps_package_names">
         <item>de.dennisguse.opentracks</item>
         <item>de.dennisguse.opentracks.playstore</item>
@@ -5087,13 +5075,13 @@
         <item>white</item>
     </string-array>
 
-    <string-array name="temperature_scales_cf">
+    <string-array name="temperature_scales">
         <item>@string/temperature_scale_celsius</item>
         <item>@string/temperature_scale_fahrenheit</item>
     </string-array>
-    <string-array name="temperature_scales_cf_values">
-        <item>c</item>
-        <item>f</item>
+    <string-array name="temperature_scales_values">
+        <item>celsius</item>
+        <item>fahrenheit</item>
     </string-array>
 
     <string-array name="femometer_measurement_mode">

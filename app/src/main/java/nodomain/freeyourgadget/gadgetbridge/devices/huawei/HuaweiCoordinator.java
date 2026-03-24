@@ -564,9 +564,6 @@ public abstract class HuaweiCoordinator extends AbstractDeviceCoordinator {
         // Currently on main setting menu.
         /*if (deviceState.supportsLanguageSetting())
             deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DISPLAY, R.xml.devicesettings_language_generic);*/
-        if (deviceState.supportsTemperature()) {
-            deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DISPLAY, R.xml.devicesettings_temperature_scale_cf);
-        }
 
         // Developer
         final List<Integer> developer = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DEVELOPER);

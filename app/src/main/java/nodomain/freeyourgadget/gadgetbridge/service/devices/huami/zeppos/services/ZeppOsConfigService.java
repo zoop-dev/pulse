@@ -73,6 +73,9 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.DoNotDisturb;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureUnit;
+import nodomain.freeyourgadget.gadgetbridge.model.WeightUnit;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsMenuType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsSupport;
@@ -162,7 +165,9 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
                 return true;
             }
             // Measurement system is global
-            case SettingsActivity.PREF_MEASUREMENT_SYSTEM: {
+            case SettingsActivity.PREF_UNIT_DISTANCE:
+            case SettingsActivity.PREF_UNIT_TEMPERATURE:
+            case SettingsActivity.PREF_UNIT_WEIGHT: {
                 withTransactionBuilder("set measurement system", this::setMeasurementSystem);
                 return true;
             }
@@ -258,28 +263,20 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
     }
 
     private void setMeasurementSystem(final ZeppOsTransactionBuilder builder) {
-        final String measurementSystem = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, "metric");
-        LOG.info("Setting measurement system to {}", measurementSystem);
-
-        final byte distanceUnit;
-        final byte temperatureUnit;
-        final byte weightUnit;
-
-        // FIXME we should be able to configure these separately
-        if ("metric".equals(measurementSystem)) {
-            distanceUnit = 0;
-            temperatureUnit = 0;
-            weightUnit = 0;
-        } else {
-            distanceUnit = 1;
-            temperatureUnit = 1;
-            weightUnit = 2;
-        }
+        final DistanceUnit distanceUnit = GBApplication.getPrefs().getDistanceUnit();
+        final TemperatureUnit temperatureUnit = GBApplication.getPrefs().getTemperatureUnit();
+        final WeightUnit weightUnit = GBApplication.getPrefs().getWeightUnit();
+        LOG.info(
+                "Setting measurement system - distance={}, temperature={}, weight={}",
+                distanceUnit,
+                temperatureUnit,
+                weightUnit
+        );
 
         newSetter()
-                .setByte(ConfigArg.DISTANCE_UNIT, distanceUnit)
-                .setByte(ConfigArg.TEMPERATURE_UNIT, temperatureUnit)
-                .setByte(ConfigArg.WEIGHT_UNIT, weightUnit)
+                .setByte(ConfigArg.DISTANCE_UNIT, encodeByte(ConfigArg.DISTANCE_UNIT, distanceUnit.name().toLowerCase(Locale.ROOT)))
+                .setByte(ConfigArg.TEMPERATURE_UNIT, encodeByte(ConfigArg.TEMPERATURE_UNIT, temperatureUnit.name().toLowerCase(Locale.ROOT)))
+                .setByte(ConfigArg.WEIGHT_UNIT, encodeByte(ConfigArg.WEIGHT_UNIT, weightUnit.name().toLowerCase(Locale.ROOT)))
                 .write(builder);
     }
 
@@ -795,8 +792,12 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
                 return encodeString(TIME_FORMAT_MAP, value);
             case DND_MODE:
                 return encodeEnum(DND_MODE_MAP, value);
+            case DISTANCE_UNIT:
+                return encodeEnum(DISTANCE_UNIT_MAP, value);
             case TEMPERATURE_UNIT:
                 return encodeEnum(TEMPERATURE_UNIT_MAP, value);
+            case WEIGHT_UNIT:
+                return encodeEnum(WEIGHT_UNIT_MAP, value);
             case NIGHT_MODE_MODE:
                 return encodeString(NIGHT_MODE_MAP, value);
             case WEARING_DIRECTION_BUTTONS:
@@ -1380,9 +1381,17 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
                 case DND_MODE:
                     decoder = b -> decodeEnum(DND_MODE_MAP, b);
                     break;
+                case DISTANCE_UNIT:
+                    // TODO: This should be per device...
+                    decoder = b -> decodeEnum(DISTANCE_UNIT_MAP, b);
+                    break;
                 case TEMPERATURE_UNIT:
                     // TODO: This should be per device...
                     decoder = b -> decodeEnum(TEMPERATURE_UNIT_MAP, b);
+                    break;
+                case WEIGHT_UNIT:
+                    // TODO: This should be per device...
+                    decoder = b -> decodeEnum(WEIGHT_UNIT_MAP, b);
                     break;
                 case NIGHT_MODE_MODE:
                     decoder = b -> decodeString(NIGHT_MODE_MAP, b);
@@ -1534,20 +1543,20 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
     }};
 
     private static final Map<Byte, Enum<?>> DISTANCE_UNIT_MAP = new HashMap<>() {{
-        put((byte) 0x00, MiBandConst.DistanceUnit.METRIC);
-        put((byte) 0x01, MiBandConst.DistanceUnit.IMPERIAL);
+        put((byte) 0x00, DistanceUnit.METRIC);
+        put((byte) 0x01, DistanceUnit.IMPERIAL);
     }};
 
     private static final Map<Byte, Enum<?>> TEMPERATURE_UNIT_MAP = new HashMap<>() {{
-        put((byte) 0x00, MiBandConst.DistanceUnit.METRIC);
-        put((byte) 0x01, MiBandConst.DistanceUnit.IMPERIAL);
+        put((byte) 0x00, DistanceUnit.METRIC);
+        put((byte) 0x01, DistanceUnit.IMPERIAL);
     }};
 
     private static final Map<Byte, Enum<?>> WEIGHT_UNIT_MAP = new HashMap<>() {{
-        put((byte) 0x00, MiBandConst.DistanceUnit.METRIC);
-        //put((byte) 0x01, MiBandConst.DistanceUnit.IMPERIAL); // jin (500g)
-        put((byte) 0x02, MiBandConst.DistanceUnit.IMPERIAL);
-        //put((byte) 0x03, MiBandConst.DistanceUnit.IMPERIAL); // stone (1 stone = 14 pounds)
+        put((byte) 0x00, WeightUnit.KILOGRAM);
+        put((byte) 0x01, WeightUnit.JIN); // jin (500g)
+        put((byte) 0x02, WeightUnit.POUND);
+        put((byte) 0x03, WeightUnit.STONE); // stone (1 stone = 14 pounds)
     }};
 
     private static final Map<Byte, String> TIME_FORMAT_MAP = new HashMap<>() {{

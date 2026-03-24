@@ -37,8 +37,9 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
-import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureUnit;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
@@ -68,7 +69,8 @@ public class CmfPreferences {
             case ActivityUser.PREF_USER_CALORIES_BURNT:
                 setGoals(builder);
                 break;
-            case SettingsActivity.PREF_MEASUREMENT_SYSTEM:
+            case SettingsActivity.PREF_UNIT_DISTANCE:
+            case SettingsActivity.PREF_UNIT_TEMPERATURE:
                 setMeasurementSystem(builder);
                 break;
             case DeviceSettingsPreferenceConst.PREF_LANGUAGE:
@@ -161,15 +163,16 @@ public class CmfPreferences {
     }
 
     protected void setMeasurementSystem(final TransactionBuilder builder) {
-        final String measurementSystem = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, "metric");
+        final DistanceUnit distanceUnit = GBApplication.getPrefs().getDistanceUnit();
+        final TemperatureUnit temperatureUnit = GBApplication.getPrefs().getTemperatureUnit();
 
-        LOG.debug("Setting measurement system to {}", measurementSystem);
+        LOG.debug("Setting measurement system - distance={}, temperature={}", distanceUnit, temperatureUnit);
 
-        final byte unitByte = (byte) ("metric".equals(measurementSystem) ? 0x00 : 0x01);
+        final byte distanceByte = (byte) (distanceUnit == DistanceUnit.METRIC ? 0x00 : 0x01);
+        mSupport.sendCommand(builder, CmfCommand.UNIT_LENGTH, new byte[]{0x01, distanceByte});
 
-        final byte[] cmd = new byte[]{0x01, unitByte};
-        mSupport.sendCommand(builder, CmfCommand.UNIT_LENGTH, cmd);
-        mSupport.sendCommand(builder, CmfCommand.UNIT_TEMPERATURE, cmd);
+        final byte temperatureByte = (byte) (temperatureUnit == TemperatureUnit.CELSIUS ? 0x00 : 0x01);
+        mSupport.sendCommand(builder, CmfCommand.UNIT_TEMPERATURE, new byte[]{0x01, temperatureByte});
     }
 
     protected void setLanguage(final TransactionBuilder builder) {

@@ -32,6 +32,7 @@ import java.util.SimpleTimeZone;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
@@ -46,6 +47,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.MijiaLywsdRealtimeSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureUnit;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
@@ -153,9 +155,9 @@ public class MijiaLywsdSupport extends AbstractBTLESingleDeviceSupport {
         builder.read(MijiaLywsdSupport.UUID_TIME);
     }
 
-    private void setTemperatureScale(TransactionBuilder builder, SharedPreferences prefs) {
-        String scale = prefs.getString(PREF_TEMPERATURE_SCALE_CF, "");
-        builder.write(MijiaLywsdSupport.UUID_SCALE, new byte[]{(byte) ("f".equals(scale) ? 0x01 : 0xff)});
+    private void setTemperatureScale(TransactionBuilder builder) {
+        final TemperatureUnit temperatureUnit = GBApplication.getPrefs().getTemperatureUnit();
+        builder.write(MijiaLywsdSupport.UUID_SCALE, (byte) (temperatureUnit == TemperatureUnit.FAHRENHEIT ? 0x01 : 0xff));
     }
 
     private void setComfortLevel(TransactionBuilder builder, SharedPreferences prefs) {
@@ -485,8 +487,8 @@ public class MijiaLywsdSupport extends AbstractBTLESingleDeviceSupport {
             TransactionBuilder builder = performInitialized("Sending configuration for option: " + config);
 
             switch (config) {
-                case PREF_TEMPERATURE_SCALE_CF:
-                    setTemperatureScale(builder, prefs);
+                case SettingsActivity.PREF_UNIT_TEMPERATURE:
+                    setTemperatureScale(builder);
                     break;
                 case PREF_MIJIA_LYWSD_COMFORT_TEMPERATURE_LOWER:
                 case PREF_MIJIA_LYWSD_COMFORT_TEMPERATURE_UPPER:

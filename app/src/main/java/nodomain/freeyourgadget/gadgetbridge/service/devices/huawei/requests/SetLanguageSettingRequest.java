@@ -24,12 +24,11 @@ import java.util.List;
 import java.util.Locale;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.LocaleConfig;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.LocaleConfig.SetLanguageSetting;
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
 
 public class SetLanguageSettingRequest extends Request {
@@ -62,11 +61,9 @@ public class SetLanguageSettingRequest extends Request {
             localeString = localeString.replace("_", "-");
         }
         LOG.debug("localeString: {}", localeString);
-        String measurementString = GBApplication
-            .getPrefs()
-            .getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, getContext().getString(R.string.p_unit_metric));
-        LOG.debug("measurementString: {}", measurementString);
-        byte measurement = measurementString.equals("metric") ? LocaleConfig.MeasurementSystem.metric : LocaleConfig.MeasurementSystem.imperial;
+        final DistanceUnit distanceUnit = GBApplication.getPrefs().getDistanceUnit();
+        LOG.debug("distanceUnit: {}", distanceUnit);
+        byte measurement = distanceUnit == DistanceUnit.METRIC ? LocaleConfig.MeasurementSystem.metric : LocaleConfig.MeasurementSystem.imperial;
         try {
             return new SetLanguageSetting(paramsProvider, localeString.getBytes(StandardCharsets.UTF_8), measurement).serialize();
         } catch (HuaweiPacket.CryptoException e) {

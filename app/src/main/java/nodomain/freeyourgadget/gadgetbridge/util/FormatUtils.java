@@ -22,7 +22,7 @@ import java.text.DecimalFormatSymbols;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
 
 public class FormatUtils {
 
@@ -45,8 +45,8 @@ public class FormatUtils {
             distanceFormatted = distanceMeters / 1000;
             unit = GBApplication.getContext().getString(R.string.distance_format_kilometers);
         }
-        String units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
-        if (units.equals(GBApplication.getContext().getString(R.string.p_unit_imperial))) {
+        final DistanceUnit distanceUnit = GBApplication.getPrefs().getDistanceUnit();
+        if (distanceUnit == DistanceUnit.IMPERIAL) {
             unit = GBApplication.getContext().getString(R.string.distance_format_feet);
             distanceFormatted = distanceFeet;
             if (distanceFeet > 6000) {

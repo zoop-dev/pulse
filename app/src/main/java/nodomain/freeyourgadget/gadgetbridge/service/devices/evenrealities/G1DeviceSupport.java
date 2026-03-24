@@ -46,13 +46,13 @@ import java.util.concurrent.Callable;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.Logging;
-import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.ItemWithDetails;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureUnit;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEMultiDeviceSupport;
@@ -95,11 +95,7 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
     private List<CalendarEvent> lastSyncedEvents;
 
     public G1DeviceSupport() {
-        this(LOG);
-    }
-
-    public G1DeviceSupport(Logger logger) {
-        super(logger, 2);
+        super(LOG, 2);
         addSupportedService(G1Constants.UUID_SERVICE_NORDIC_UART,
                             G1Constants.Side.LEFT.getDeviceIndex());
 
@@ -738,7 +734,7 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
             case DeviceSettingsPreferenceConst.PREF_EVEN_REALITIES_SCREEN_DEPTH:
                 sendDisplaySettings();
                 break;
-            case SettingsActivity.PREF_MEASUREMENT_SYSTEM:
+            case SettingsActivity.PREF_UNIT_TEMPERATURE:
             case DeviceSettingsPreferenceConst.PREF_TIMEFORMAT:
                 // Units or time format updated, update the time and weather on the glasses to match
                 onSetTimeOrWeather();
@@ -792,10 +788,8 @@ public class G1DeviceSupport extends AbstractBTLEMultiDeviceSupport {
         long timeMilliseconds = currentMilliseconds + tzOffset;
 
         // Check if the GB settings are set to metric, if not, set the temp to use Fahrenheit.
-        String metricString = GBApplication.getContext().getString(R.string.p_unit_metric);
-        boolean useFahrenheit = !GBApplication.getPrefs()
-                                              .getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM,
-                                                         metricString).equals(metricString);
+        final TemperatureUnit temperatureUnit = GBApplication.getPrefs().getTemperatureUnit();
+        boolean useFahrenheit = temperatureUnit == TemperatureUnit.FAHRENHEIT;
 
         // Pull the weather into a local variable so that if it changes between the two lenses being
         // updated, we won't end up with a skewed value.

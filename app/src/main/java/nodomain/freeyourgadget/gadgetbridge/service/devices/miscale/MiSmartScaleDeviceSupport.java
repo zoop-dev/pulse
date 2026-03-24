@@ -32,6 +32,7 @@ import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
@@ -39,6 +40,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandService;
 import nodomain.freeyourgadget.gadgetbridge.devices.miscale.MiScaleSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.MiScaleWeightSample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.WeightUnit;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
@@ -188,10 +190,14 @@ public class MiSmartScaleDeviceSupport extends AbstractBTLESingleDeviceSupport {
         try {
             TransactionBuilder builder = performInitialized("config");
 
-            if (config.equals(PREF_MISCALE_WEIGHT_UNIT)) {
-                int unit = Integer.parseInt(prefs.getString(PREF_MISCALE_WEIGHT_UNIT, "0"));
-
-                setConfigValue(builder, CFG_WEIGHT_UNIT, (byte)unit);
+            if (config.equals(SettingsActivity.PREF_UNIT_WEIGHT)) {
+                final WeightUnit weightUnit = GBApplication.getPrefs().getWeightUnit();
+                final byte unitByte = switch (weightUnit) {
+                    case POUND -> (byte) 1;
+                    case KILOGRAM, STONE -> (byte) 0;
+                    case JIN -> (byte) 2;
+                };
+                setConfigValue(builder, CFG_WEIGHT_UNIT, unitByte);
             } else if (config.equals(PREF_MISCALE_SMALL_OBJECTS)) {
                 boolean enabled = prefs.getBoolean(PREF_MISCALE_SMALL_OBJECTS, false);
 

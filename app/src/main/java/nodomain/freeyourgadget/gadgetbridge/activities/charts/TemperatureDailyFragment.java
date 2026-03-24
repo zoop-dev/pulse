@@ -45,12 +45,12 @@ import java.util.Locale;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.HeartRateUtils;
-import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureUnit;
 import nodomain.freeyourgadget.gadgetbridge.util.Accumulator;
 
 public class TemperatureDailyFragment extends AbstractChartFragment<TemperatureDailyFragment.TemperatureChartData> {
@@ -69,7 +69,7 @@ public class TemperatureDailyFragment extends AbstractChartFragment<TemperatureD
     private TextView tempMaximum;
     private LineChart tempLineChart;
 
-    private final boolean isMetric = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, "metric").equals("metric");
+    private final TemperatureUnit temperatureUnit = GBApplication.getPrefs().getTemperatureUnit();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -192,9 +192,11 @@ public class TemperatureDailyFragment extends AbstractChartFragment<TemperatureD
         for (int i =0; i < samples.size(); i++) {
             TemperatureSample sample = samples.get(i);
             int timestamp_in_seconds = (int) (sample.getTimestamp() / 1000L);
-            final float temperature = isMetric ? sample.getTemperature() : celsiusToFahrenheit(sample.getTemperature());
-            lineEntries.add(new Entry(tsTranslation.shorten(timestamp_in_seconds), temperature));
-            accumulator.add(temperature);
+            final float temperatureValue = temperatureUnit == TemperatureUnit.CELSIUS ?
+                    sample.getTemperature() :
+                    (float) ((sample.getTemperature() * 1.8) + 32);
+            lineEntries.add(new Entry(tsTranslation.shorten(timestamp_in_seconds), temperatureValue));
+            accumulator.add(temperatureValue);
         }
 
         LineDataSet dataSet = new LineDataSet(lineEntries, "Temperature");
@@ -211,12 +213,12 @@ public class TemperatureDailyFragment extends AbstractChartFragment<TemperatureD
         final double minimum = accumulator.getCount() > 0 ? accumulator.getMin() : -1;
         final double maximum = accumulator.getCount() > 0 ? accumulator.getMax() : -1;
 
-        final String unit = getString(isMetric ? R.string.unit_celsius : R.string.unit_fahrenheit);
+        final String unit = getString(temperatureUnit == TemperatureUnit.CELSIUS ? R.string.unit_celsius : R.string.unit_fahrenheit);
         tempAverage.setText(average > 0 ? String.format(Locale.ROOT, "%.1f %s", average, unit) : "-");
         tempMinimum.setText(minimum > 0 ? String.format(Locale.ROOT, "%.1f %s", minimum, unit) : "-");
         tempMaximum.setText(maximum > 0 ? String.format(Locale.ROOT, "%.1f %s", maximum, unit) : "-");
 
-        final int axisGap = (isMetric ? 3 : 6);
+        final int axisGap = (temperatureUnit == TemperatureUnit.CELSIUS ? 3 : 6);
         if (minimum > 0) {
             long axisMin = Math.max(Math.round(minimum) - axisGap, 0);
             tempLineChart.getAxisLeft().setAxisMinimum(axisMin);

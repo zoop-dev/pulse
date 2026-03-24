@@ -133,7 +133,9 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureUnit;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
@@ -449,7 +451,7 @@ public class LaxasFitDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 case DeviceSettingsPreferenceConst.PREF_DISPLAY_ON_LIFT_END:
                     setDisplayOnLift(builder);
                     break;
-                case SettingsActivity.PREF_MEASUREMENT_SYSTEM:
+                case SettingsActivity.PREF_UNIT_DISTANCE:
                 case ActivityUser.PREF_USER_WEIGHT_KG:
                 case ActivityUser.PREF_USER_GENDER:
                 case ActivityUser.PREF_USER_HEIGHT_CM:
@@ -508,8 +510,8 @@ public class LaxasFitDeviceSupport extends AbstractBTLESingleDeviceSupport {
         short todayMax = (short) (weatherSpec.getTodayMaxTemp() - 273);
         short todayMin = (short) (weatherSpec.getTodayMinTemp() - 273);
         byte weatherUnit = 0;
-        String units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
-        if (units.equals(GBApplication.getContext().getString(R.string.p_unit_imperial))) {
+        final TemperatureUnit temperatureUnit = GBApplication.getPrefs().getTemperatureUnit();
+        if (temperatureUnit == TemperatureUnit.FAHRENHEIT) {
             todayMax = (short) (todayMax * 1.8f + 32);
             todayMin = (short) (todayMin * 1.8f + 32);
             weatherUnit = 1;
@@ -683,8 +685,7 @@ public class LaxasFitDeviceSupport extends AbstractBTLESingleDeviceSupport {
         int weightKg = activityUser.getWeightKg();
 
         byte distanceUnit = UNIT_METRIC;
-        String units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
-        if (units.equals(GBApplication.getContext().getString(R.string.p_unit_imperial))) {
+        if (GBApplication.getPrefs().getDistanceUnit() == DistanceUnit.IMPERIAL) {
             distanceUnit = UNIT_IMPERIAL;
         }
 

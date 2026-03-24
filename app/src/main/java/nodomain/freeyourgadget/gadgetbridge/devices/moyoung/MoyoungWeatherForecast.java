@@ -18,8 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices.moyoung;
 
 import lineageos.weather.util.WeatherUtils;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureUnit;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 
 public class MoyoungWeatherForecast {
@@ -35,8 +34,8 @@ public class MoyoungWeatherForecast {
 
     public MoyoungWeatherForecast(WeatherSpec.Daily forecast) {
         conditionId = MoyoungConstants.openWeatherConditionToMoyoungConditionId(forecast.getConditionCode());
-        String units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
-        if (units.equals(GBApplication.getContext().getString(R.string.p_unit_imperial))) {
+        final TemperatureUnit temperatureUnit = GBApplication.getPrefs().getTemperatureUnit();
+        if (temperatureUnit == TemperatureUnit.FAHRENHEIT) {
             minTemp = (byte) WeatherUtils.celsiusToFahrenheit(forecast.getMinTemp() - 273); // Kelvin -> Fahrenheit
             maxTemp = (byte) WeatherUtils.celsiusToFahrenheit(forecast.getMaxTemp() - 273); // Kelvin -> Fahrenheit
         } else {

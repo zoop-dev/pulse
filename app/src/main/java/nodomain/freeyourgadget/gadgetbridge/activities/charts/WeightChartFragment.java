@@ -22,8 +22,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -38,19 +36,18 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.WeightSample;
+import nodomain.freeyourgadget.gadgetbridge.model.WeightUnit;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 
@@ -59,7 +56,7 @@ public class WeightChartFragment extends AbstractChartFragment<WeightChartFragme
     private int colorSecondaryText;
 
     private int totalDays;
-    private boolean imperialUnits;
+    private WeightUnit weightUnit = WeightUnit.KILOGRAM;
     private int weightTargetKg;
 
     private LineChart chart;
@@ -84,12 +81,7 @@ public class WeightChartFragment extends AbstractChartFragment<WeightChartFragme
         else
             totalDays = 7;
 
-        String unitSystem = prefs.getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, getString(R.string.p_unit_metric));
-
-        if (unitSystem.equals(getString(R.string.p_unit_imperial)))
-            imperialUnits = true;
-        else
-            imperialUnits = false;
+        weightUnit = prefs.getWeightUnit();
 
         weightTargetKg = prefs.getInt(ActivityUser.PREF_USER_GOAL_WEIGHT_KG, ActivityUser.defaultUserGoalWeightKg);
     }
@@ -205,17 +197,11 @@ public class WeightChartFragment extends AbstractChartFragment<WeightChartFragme
     }
 
     private float weightFromKg(float weight) {
-        // Convert to lbs
-        if (imperialUnits)
-            weight *= 2.2046226f;
-
-        return weight;
+        return (float) WeightUnit.Companion.convertWeight(weight, weightUnit);
     }
 
     private String formatWeight(float weight) {
-        int weightString = imperialUnits ? R.string.weight_lbs : R.string.weight_kg;
-
-        return getString(weightString, weight);
+        return WeightUnit.Companion.formatWeight(requireContext(), weight, weightUnit);
     }
 
     protected static class WeightChartsData extends DefaultChartsData<LineData> {

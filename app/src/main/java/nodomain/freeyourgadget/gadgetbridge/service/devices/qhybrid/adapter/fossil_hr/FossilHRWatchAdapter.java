@@ -123,6 +123,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
 import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
 import nodomain.freeyourgadget.gadgetbridge.model.ItemWithDetails;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
@@ -571,10 +572,9 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
     }
 
     private void setUnitsConfig() {
-        Prefs prefs = GBApplication.getPrefs();
-        String unit = prefs.getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
+        final DistanceUnit distanceUnit = GBApplication.getPrefs().getDistanceUnit();
         int value = 8; // dont know what this bit means but it was set for me before tampering
-        if (!unit.equals("metric")) {
+        if (distanceUnit != DistanceUnit.METRIC) {
             value |= (4 | 1); // temperature and distance
         }
         queueWrite(
@@ -1939,7 +1939,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                 saveRawActivityFiles = getDeviceSpecificPreferences().getBoolean("save_raw_activity_files", false);
                 break;
             }
-            case SettingsActivity.PREF_MEASUREMENT_SYSTEM:
+            case SettingsActivity.PREF_UNIT_DISTANCE:
                 setUnitsConfig();
                 break;
             case DeviceSettingsPreferenceConst.PREF_HYBRID_HR_ACTIVITY_RECOGNITION_RUNNING_ENABLED:

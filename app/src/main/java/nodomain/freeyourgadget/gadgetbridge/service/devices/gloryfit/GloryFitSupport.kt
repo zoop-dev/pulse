@@ -41,9 +41,11 @@ import nodomain.freeyourgadget.gadgetbridge.model.BatteryState
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec
 import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec
 import nodomain.freeyourgadget.gadgetbridge.model.Contact
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureUnit
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.wena3.protocol.packets.notification.defines.VibrationKind
@@ -395,7 +397,9 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
                 setLanguage(builder)
             }
 
-            SettingsActivity.PREF_MEASUREMENT_SYSTEM -> {
+            SettingsActivity.PREF_UNIT_DISTANCE,
+            SettingsActivity.PREF_UNIT_TEMPERATURE,
+            SettingsActivity.PREF_UNIT_WEIGHT -> {
                 setUserInfo(builder) // user info also has temperature unit
                 setUnits(builder)
             }
@@ -953,8 +957,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
             0x00.toByte()
         }
 
-        val measurementSystem =
-            GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, "metric")
+        val temperatureUnit = GBApplication.getPrefs().temperatureUnit
 
         val buf = ByteBuffer.allocate(19).order(ByteOrder.BIG_ENDIAN)
         buf.put(CMD_USER_INFO)
@@ -976,7 +979,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
             }
         )
         buf.put(0x00) // ?
-        buf.put(if (measurementSystem == "metric") 0x02 else 0x01) // 0x02 celsius, 0x01 fahrenheit
+        buf.put(if (temperatureUnit == TemperatureUnit.CELSIUS) 0x02 else 0x01) // 0x02 celsius, 0x01 fahrenheit
         buf.put(0x01) // ?
         buf.put(heartRateAlertLow)
 
@@ -1100,18 +1103,16 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
     }
 
     private fun setUnits(builder: TransactionBuilder) {
-        val measurementSystem =
-            GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, "metric")
+        val distanceUnit = GBApplication.getPrefs().distanceUnit
         val devicePrefs = getDevicePrefs()
 
-        val metric = measurementSystem == "metric"
         val timeFormat24h = DeviceSettingsPreferenceConst.PREF_TIMEFORMAT_24H == devicePrefs.timeFormat
 
-        LOG.debug("Setting units metric={} 24h={}", metric, timeFormat24h)
+        LOG.debug("Setting units unit={} 24h={}", distanceUnit, timeFormat24h)
 
         val buf = ByteBuffer.allocate(3).order(ByteOrder.BIG_ENDIAN)
         buf.put(CMD_UNITS)
-        buf.put(if (metric) 0x01 else 0x02)
+        buf.put(if (distanceUnit == DistanceUnit.METRIC) 0x01 else 0x02)
         buf.put(if (timeFormat24h) 0x01 else 0x02)
 
         builder.write(UUID_CHARACTERISTIC_GLORYFIT_CMD_WRITE, *buf.array())

@@ -50,6 +50,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureUnit;
 
 public class TemperatureChartFragment extends AbstractChartFragment<TemperatureChartFragment.TemperatureChartsData> {
     protected static final Logger LOG = LoggerFactory.getLogger(TemperatureChartFragment.class);
@@ -61,7 +62,7 @@ public class TemperatureChartFragment extends AbstractChartFragment<TemperatureC
 
     protected final int TOTAL_DAYS = getRangeDays();
 
-    private final boolean isMetric = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, "metric").equals("metric");
+    private final TemperatureUnit temperatureUnit = GBApplication.getPrefs().getTemperatureUnit();
 
     @Override
     protected void init() {
@@ -93,6 +94,7 @@ public class TemperatureChartFragment extends AbstractChartFragment<TemperatureC
         mTemperatureChart.getXAxis().setAvoidFirstLastClipping(true);
 
         // Using approximately the range of survivable body-temperatures (in celsius), rounded to multiples of 5
+        final boolean isMetric = temperatureUnit == TemperatureUnit.CELSIUS;
         mTemperatureChart.getAxisLeft().setAxisMinimum((float) (isMetric ? 30f : celsiusToFahrenheit(30d)));
         mTemperatureChart.getAxisLeft().setAxisMaximum((float) (isMetric ? 45f : celsiusToFahrenheit(45f)));
 
@@ -181,6 +183,7 @@ public class TemperatureChartFragment extends AbstractChartFragment<TemperatureC
             TimestampTranslation tsTranslation = new TimestampTranslation();
             List<Entry> entries = new ArrayList<>();
             long firstTs = 0;
+            final boolean isMetric = temperatureUnit == TemperatureUnit.CELSIUS;
 
             for (TemperatureSample sample : samples) {
                 int timestamp_in_seconds = (int) (sample.getTimestamp() / 1000L);

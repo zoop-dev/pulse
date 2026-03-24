@@ -71,6 +71,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
@@ -862,7 +863,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
             builder = performInitialized("sendConfig: " + config);
             switch (config) {
                 // settings from App Settings
-                case SettingsActivity.PREF_MEASUREMENT_SYSTEM:
+                case SettingsActivity.PREF_UNIT_DISTANCE:
                     setUnitsSettings();
                     break;
                 case ActivityUser.PREF_USER_STEPS_GOAL:
@@ -1094,9 +1095,9 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
      */
     private void setUnitsSettings() {
         int units = 0;
-        String unitsPref = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
+        final DistanceUnit distanceUnit = GBApplication.getPrefs().getDistanceUnit();
 
-        if (unitsPref.equals(GBApplication.getContext().getString(R.string.p_unit_imperial))) {
+        if (distanceUnit == DistanceUnit.IMPERIAL) {
             units = 1;
             LOG.info(" Changed units: imperial ");
         } else {

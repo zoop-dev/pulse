@@ -97,7 +97,6 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_CALENDAR_SYNC_COLOR_BLACKLIST = "calendar_sync_color_blacklist";
     public static final String PREF_CALENDAR_SYNC_EVENT_REMINDERS = "calendar_sync_event_reminders";
     public static final String PREF_TIME_SYNC = "time_sync";
-    public static final String PREF_WEIGHT_SCALE_UNIT = "pref_weight_scale_unit";
     public static final String PREF_USE_CUSTOM_DEVICEICON = "use_custom_deviceicon";
     public static final String PREF_BUTTON_1_FUNCTION_SHORT = "button_1_function_short";
     public static final String PREF_BUTTON_2_FUNCTION_SHORT = "button_2_function_short";
@@ -590,7 +589,6 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_MOONDROP_TOUCH_ANC_MODE_EARBUD = "pref_moondrop_touch_anc_mode_earbud";
     public static final String PREF_MOONDROP_TOUCH_ANC_MODE_TRIGGER = "pref_moondrop_touch_anc_mode_trigger";
 
-    public static final String PREF_MISCALE_WEIGHT_UNIT = "pref_miscale_weight_unit";
     public static final String PREF_MISCALE_SMALL_OBJECTS = "pref_miscale_small_objects";
 
     public static final String PREF_MIJIA_LYWSD_COMFORT_CHARACTERISTIC_LENGTH = "pref_mijia_lywsd_comfort_characteristic_length";
@@ -637,8 +635,6 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_HOURLY_CHIME_END = "hourly_chime_end";
 
     public static final String PREF_VOICE_SERVICE_LANGUAGE = "voice_service_language";
-
-    public static final String PREF_TEMPERATURE_SCALE_CF = "temperature_scale_cf";
 
     public static final String PREF_FAKE_ANDROID_ID = "fake_android_id";
 

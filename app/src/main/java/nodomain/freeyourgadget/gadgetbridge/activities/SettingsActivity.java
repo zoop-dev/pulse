@@ -76,8 +76,10 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class SettingsActivity extends AbstractSettingsActivityV2 {
-    public static final String PREF_MEASUREMENT_SYSTEM = "measurement_system";
     public static final String PREF_LANGUAGE = "language";
+    public static final String PREF_UNIT_WEIGHT = "unit_weight";
+    public static final String PREF_UNIT_TEMPERATURE = "unit_temperature";
+    public static final String PREF_UNIT_DISTANCE = "unit_distance";
 
     @Override
     protected PreferenceFragmentCompat newFragment() {
@@ -238,10 +240,24 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
                 });
             }
 
-            final Preference unit = findPreference(PREF_MEASUREMENT_SYSTEM);
-            if (unit != null) {
-                unit.setOnPreferenceChangeListener((preference, newVal) -> {
-                    invokeLater(() -> GBApplication.deviceService().onSendConfiguration(PREF_MEASUREMENT_SYSTEM));
+            final Preference unitDistance = findPreference(PREF_UNIT_DISTANCE);
+            if (unitDistance != null) {
+                unitDistance.setOnPreferenceChangeListener((preference, newVal) -> {
+                    invokeLater(() -> GBApplication.deviceService().onSendConfiguration(PREF_UNIT_DISTANCE));
+                    return true;
+                });
+            }
+            final Preference unitTemperature = findPreference(PREF_UNIT_TEMPERATURE);
+            if (unitTemperature != null) {
+                unitTemperature.setOnPreferenceChangeListener((preference, newVal) -> {
+                    invokeLater(() -> GBApplication.deviceService().onSendConfiguration(PREF_UNIT_TEMPERATURE));
+                    return true;
+                });
+            }
+            final Preference unitWeight = findPreference(PREF_UNIT_WEIGHT);
+            if (unitWeight != null) {
+                unitWeight.setOnPreferenceChangeListener((preference, newVal) -> {
+                    invokeLater(() -> GBApplication.deviceService().onSendConfiguration(PREF_UNIT_WEIGHT));
                     return true;
                 });
             }

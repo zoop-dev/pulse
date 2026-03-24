@@ -101,7 +101,6 @@ public class FemometerVinca2DeviceCoordinator extends AbstractBLEDeviceCoordinat
         return new int[]{
                 R.xml.devicesettings_volume,
                 R.xml.devicesettings_femometer,
-                R.xml.devicesettings_temperature_scale_cf,
         };
     }
 

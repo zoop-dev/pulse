@@ -44,7 +44,6 @@ import de.greenrobot.dao.query.CloseableListIterator;
 import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.TimestampTranslation;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.DefaultWorkoutCharts;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryProgressEntry;
@@ -78,6 +77,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZones;
 import nodomain.freeyourgadget.gadgetbridge.model.heartratezones.HeartRateZonesSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.workout.WorkoutChart;
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
@@ -1199,9 +1199,9 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
                     )
             );
 
-            String measurementSystem = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, "metric");
+            final DistanceUnit distanceUnit = GBApplication.getPrefs().getDistanceUnit();
 
-            byte unitType = (byte) (measurementSystem.equals("metric") ? 0 : 1);
+            byte unitType = (byte) (distanceUnit == DistanceUnit.METRIC ? 0 : 1);
             try (CloseableListIterator<HuaweiWorkoutPaceSample> it = qbPace.build().listIterator()) {
 
                 int paceWeightSum = 0;

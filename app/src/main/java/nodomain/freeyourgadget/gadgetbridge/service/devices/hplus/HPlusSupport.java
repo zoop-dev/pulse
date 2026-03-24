@@ -584,7 +584,7 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
         try {
             builder = performInitialized("Sending configuration for option: " + config);
             switch (config) {
-                case SettingsActivity.PREF_MEASUREMENT_SYSTEM:
+                case SettingsActivity.PREF_UNIT_DISTANCE:
                     setUnit(builder);
                     break;
             }

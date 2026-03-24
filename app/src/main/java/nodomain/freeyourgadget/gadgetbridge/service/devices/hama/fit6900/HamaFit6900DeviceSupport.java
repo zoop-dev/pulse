@@ -56,6 +56,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
@@ -115,7 +116,7 @@ public final class HamaFit6900DeviceSupport extends AbstractBTLESingleDeviceSupp
                 sendMessage("update-language+timeformat", makeSetSystemDataMessage());
                 return;
 
-            case SettingsActivity.PREF_MEASUREMENT_SYSTEM:
+            case SettingsActivity.PREF_UNIT_DISTANCE:
                 sendMessage("update-units", makeSetUnitMessage());
                 return;
 
@@ -424,10 +425,9 @@ public final class HamaFit6900DeviceSupport extends AbstractBTLESingleDeviceSupp
     }
 
     private byte[] makeSetUnitMessage() {
-        final Prefs prefs = GBApplication.getPrefs();
-        String unit = prefs.getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, "metric");
+        final DistanceUnit distanceUnit = GBApplication.getPrefs().getDistanceUnit();
 
-        return Message.encodeSetUnit(unit.equals("metric"));
+        return Message.encodeSetUnit(distanceUnit == DistanceUnit.METRIC);
     }
 
     private byte[] makeSetUserInfoMessage() {

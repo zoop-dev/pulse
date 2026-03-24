@@ -1130,7 +1130,7 @@ public class HuaweiSupportProvider {
                     setDateFormat();
                     break;
                 }
-                case SettingsActivity.PREF_MEASUREMENT_SYSTEM:
+                case SettingsActivity.PREF_UNIT_DISTANCE:
                 case DeviceSettingsPreferenceConst.PREF_LANGUAGE: {
                     setLanguageSetting();
                     break;
@@ -1173,7 +1173,7 @@ public class HuaweiSupportProvider {
                     setContinuousSkinTemperatureMeasurement();
                     break;
                 }
-                case DeviceSettingsPreferenceConst.PREF_TEMPERATURE_SCALE_CF: {
+                case SettingsActivity.PREF_UNIT_TEMPERATURE: {
                     setTemperatureUnit();
                     break;
                 }

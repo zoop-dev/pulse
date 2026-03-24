@@ -14,6 +14,7 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_100_YARDS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_NAUTICAL_MILES;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_RAW_STRING;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_100_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_100_YARDS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_KM;
@@ -32,6 +33,8 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries;
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
+import nodomain.freeyourgadget.gadgetbridge.model.WeightUnit;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 
 public class WorkoutValueFormatter {
@@ -40,9 +43,8 @@ public class WorkoutValueFormatter {
     private boolean show_raw_data = false;
 
     private final ActivityKind activityKind;
-    private final String units;
-    private final String UNIT_IMPERIAL;
-    private final String UNIT_METRIC;
+    private final DistanceUnit distanceUnit;
+    private final WeightUnit weightUnit;
     private final boolean useNauticalUnits;
     private final DecimalFormat df = new DecimalFormat("#.##");
 
@@ -52,9 +54,8 @@ public class WorkoutValueFormatter {
 
     public WorkoutValueFormatter(final ActivityKind activityKind) {
         this.activityKind = activityKind;
-        this.units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
-        this.UNIT_IMPERIAL = GBApplication.getContext().getString(R.string.p_unit_imperial);
-        this.UNIT_METRIC = GBApplication.getContext().getString(R.string.p_unit_metric);
+        this.distanceUnit = GBApplication.getPrefs().getDistanceUnit();
+        this.weightUnit = GBApplication.getPrefs().getWeightUnit();
         this.useNauticalUnits = ActivityKind.isNauticalActivity(activityKind) && GBApplication.getPrefs().getBoolean("units_nautical", true);
     }
 
@@ -67,7 +68,7 @@ public class WorkoutValueFormatter {
             return GBApplication.getContext().getString(R.string.stats_empty_value);
         }
 
-        if (ActivitySummaryEntries.UNIT_RAW_STRING.equals(unit)) {
+        if (UNIT_RAW_STRING.equals(unit)) {
             return String.valueOf(rawValue);
         }
 
@@ -102,25 +103,17 @@ public class WorkoutValueFormatter {
 
             switch (unit) {
                 case UNIT_KG:
-                    if (units.equals(UNIT_IMPERIAL)) {
-                        value = value * 2.2046226f;
-                        unit = UNIT_LB;
-                    }
-                    break;
+                    return WeightUnit.Companion.formatWeight(GBApplication.getContext(), value, weightUnit);
                 case UNIT_LB:
-                    if (units.equals(UNIT_METRIC)) {
-                        value = value / 2.2046226f;
-                        unit = UNIT_KG;
-                    }
-                    break;
+                    return WeightUnit.Companion.formatWeight(GBApplication.getContext(), value / 2.2046226f, weightUnit);
                 case UNIT_CM:
-                    if (units.equals(UNIT_IMPERIAL)) {
+                    if (distanceUnit == DistanceUnit.IMPERIAL) {
                         value = value * 0.0328084;
                         unit = "ft";
                     }
                     break;
                 case UNIT_METERS_PER_SECOND:
-                    if (units.equals(UNIT_IMPERIAL)) {
+                    if (distanceUnit == DistanceUnit.IMPERIAL) {
                         value = value * 2.236936D;
                         unit = "mi_h";
                     } else { //metric
@@ -129,13 +122,13 @@ public class WorkoutValueFormatter {
                     }
                     break;
                 case UNIT_METERS_PER_HOUR:
-                    if (units.equals(UNIT_IMPERIAL)) {
+                    if (distanceUnit == DistanceUnit.IMPERIAL) {
                         value = value * 3.28084D;
                         unit = "foot_per_hour";
                     }
                     break;
                 case UNIT_SECONDS_PER_M:
-                    if (units.equals(UNIT_IMPERIAL)) {
+                    if (distanceUnit == DistanceUnit.IMPERIAL) {
                         value = value * (1609.344 / 60D);
                         unit = "minutes_mi";
                     } else { //metric
@@ -144,7 +137,7 @@ public class WorkoutValueFormatter {
                     }
                     break;
                 case UNIT_SECONDS_PER_KM:
-                    if (units.equals(UNIT_IMPERIAL)) {
+                    if (distanceUnit == DistanceUnit.IMPERIAL) {
                         value = value / 60D * 1.609344;
                         unit = "minutes_mi";
                     } else { //metric
@@ -153,7 +146,7 @@ public class WorkoutValueFormatter {
                     }
                     break;
                 case UNIT_KILOMETERS:
-                    if (units.equals(UNIT_IMPERIAL)) {
+                    if (distanceUnit == DistanceUnit.IMPERIAL) {
                         value = value * 0.621371D;
                         unit = "mi";
                     }
@@ -162,7 +155,7 @@ public class WorkoutValueFormatter {
                     if (useNauticalUnits) {
                         value = value / 1852D;
                         unit = UNIT_NAUTICAL_MILES;
-                    } else if (units.equals(UNIT_IMPERIAL)) {
+                    } else if (distanceUnit == DistanceUnit.IMPERIAL) {
                         value = value * 3.28084D;
                         unit = "ft";
                         if (value > 6000) {
@@ -180,13 +173,13 @@ public class WorkoutValueFormatter {
                     if (useNauticalUnits) {
                         value = value / 1.852D;
                         unit = UNIT_KNOTS;
-                    } else if (units.equals(UNIT_IMPERIAL)) {
+                    } else if (distanceUnit == DistanceUnit.IMPERIAL) {
                         value = value * 0.621371D;
                         unit = "mi_h";
                     }
                     break;
                 case UNIT_SECONDS_PER_100_METERS:
-                    if (units.equals(UNIT_IMPERIAL)) {
+                    if (distanceUnit == DistanceUnit.IMPERIAL) {
                         value = (value * 0.9144) / 60D;
                         unit = UNIT_MINUTES_PER_100_YARDS;
                     } else { //metric
@@ -195,7 +188,7 @@ public class WorkoutValueFormatter {
                     }
                     break;
                 case UNIT_SECONDS_PER_100_YARDS:
-                    if (units.equals(UNIT_IMPERIAL)) {
+                    if (distanceUnit == DistanceUnit.IMPERIAL) {
                         value = value / 60D;
                         unit = UNIT_MINUTES_PER_100_YARDS;
                     } else { //metric

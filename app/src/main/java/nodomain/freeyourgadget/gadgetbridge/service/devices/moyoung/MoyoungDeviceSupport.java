@@ -104,6 +104,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
@@ -607,16 +608,15 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void setMeasurementSystem(TransactionBuilder builder) {
-        Prefs prefs = GBApplication.getPrefs();
-        String unit = prefs.getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
+        final DistanceUnit distanceUnit = GBApplication.getPrefs().getDistanceUnit();
 
         MoyoungEnumMetricSystem metricSystem = null;
-        if (unit.equals(getContext().getString(R.string.p_unit_metric)))
+        if (distanceUnit == DistanceUnit.METRIC)
             metricSystem = MoyoungEnumMetricSystem.METRIC_SYSTEM;
-        else if (unit.equals(getContext().getString(R.string.p_unit_imperial)))
+        else if (distanceUnit == DistanceUnit.IMPERIAL)
             metricSystem = MoyoungEnumMetricSystem.IMPERIAL_SYSTEM;
         else
-            LOG.warn("Invalid unit preference: {}", unit);
+            LOG.warn("Invalid unit preference: {}", distanceUnit);
 
         if (metricSystem != null) {
             if (builder == null)
@@ -1606,7 +1606,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 sendSetting(getSetting("TIME_SYSTEM"), timeSystem);
                 break;
 
-            case SettingsActivity.PREF_MEASUREMENT_SYSTEM:
+            case SettingsActivity.PREF_UNIT_DISTANCE:
                 setMeasurementSystem(null);
                 break;
 
@@ -1854,7 +1854,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
 //            case "METRIC_SYSTEM":
 //                MoyoungEnumMetricSystem metricSystem = (MoyoungEnumMetricSystem) value;
 //                if (metricSystem == MoyoungEnumMetricSystem.METRIC_SYSTEM)
-//                    changedProperties.put(DeviceSettingsPreferenceConst.PREF_MEASUREMENTSYSTEM, getContext().getString(R.string.p_unit_metric));
+//                    changedProperties.put(DeviceSettingsPreferenceConst.PREF_MEASUREMENTSYSTEM, SettingsActivity.PREF_UNIT_METRIC);
 //                else if (metricSystem == MoyoungEnumMetricSystem.IMPERIAL_SYSTEM)
 //                    changedProperties.put(DeviceSettingsPreferenceConst.PREF_MEASUREMENTSYSTEM, getContext().getString(R.string.p_unit_imperial));
 //                else

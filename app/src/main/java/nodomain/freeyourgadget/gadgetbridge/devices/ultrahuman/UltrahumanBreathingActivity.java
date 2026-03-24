@@ -39,9 +39,8 @@ import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
-import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
-import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureUnit;
 
 // TODO: updates when multiple devices are active
 // TODO: polish and localize the GUI
@@ -82,10 +81,8 @@ public class UltrahumanBreathingActivity extends AbstractGBActivity {
         filter.addAction(UltrahumanConstants.ACTION_EXERCISE_UPDATE);
         LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(UpdateReceiver, filter);
 
-        final GBPrefs prefs = GBApplication.getPrefs();
-        final String metric = getString(R.string.p_unit_metric);
-        final String unitSystem = prefs.getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, metric);
-        MetricUnits = unitSystem.equals(metric);
+        final TemperatureUnit temperatureUnit = GBApplication.getPrefs().getTemperatureUnit();
+        MetricUnits = temperatureUnit == TemperatureUnit.CELSIUS;
 
         Button temperatureUom = findViewById(R.id.ultrahuman_exercise_temperature_uom);
         temperatureUom.setText(MetricUnits ? R.string.unit_celsius : R.string.unit_fahrenheit);

@@ -431,11 +431,6 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
             DeviceSettingsUtils.sortListPreference(transliterationPreference, false);
         }
 
-        final ListPreference weightScaleUnitPreference = findPreference(PREF_WEIGHT_SCALE_UNIT);
-        if (weightScaleUnitPreference != null) {
-            DeviceSettingsUtils.sortListPreference(weightScaleUnitPreference, false);
-        }
-
         String disconnectNotificationState = prefs.getString(PREF_DISCONNECT_NOTIFICATION, PREF_DO_NOT_DISTURB_OFF);
         boolean disconnectNotificationScheduled = disconnectNotificationState.equals(PREF_DO_NOT_DISTURB_SCHEDULED);
 
@@ -927,7 +922,6 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_MOONDROP_TOUCH_ANC_MODE_EARBUD);
         addPreferenceHandlerFor(PREF_MOONDROP_TOUCH_ANC_MODE_TRIGGER);
 
-        addPreferenceHandlerFor(PREF_MISCALE_WEIGHT_UNIT);
         addPreferenceHandlerFor(PREF_MISCALE_SMALL_OBJECTS);
 
         addPreferenceHandlerFor(PREF_MIJIA_LYWSD_COMFORT_TEMPERATURE_LOWER);
@@ -989,8 +983,6 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_OFFLINE_VOICE_LANGUAGE);
 
         addPreferenceHandlerFor(PREF_VOICE_SERVICE_LANGUAGE);
-
-        addPreferenceHandlerFor(PREF_TEMPERATURE_SCALE_CF);
 
         addPreferenceHandlerFor(PREF_PREFIX_NOTIFICATION_WITH_APP);
 

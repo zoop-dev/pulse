@@ -135,7 +135,9 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureUnit;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.WeatherMapper;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
@@ -486,7 +488,7 @@ public class FitProDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 case DeviceSettingsPreferenceConst.PREF_DISPLAY_ON_LIFT_END:
                     setDisplayOnLift(builder);
                     break;
-                case SettingsActivity.PREF_MEASUREMENT_SYSTEM:
+                case SettingsActivity.PREF_UNIT_DISTANCE:
                 case ActivityUser.PREF_USER_WEIGHT_KG:
                 case ActivityUser.PREF_USER_GENDER:
                 case ActivityUser.PREF_USER_HEIGHT_CM:
@@ -554,8 +556,8 @@ public class FitProDeviceSupport extends AbstractBTLESingleDeviceSupport {
         short todayMax = (short) (weatherSpec.getTodayMaxTemp() - 273);
         short todayMin = (short) (weatherSpec.getTodayMinTemp() - 273);
         byte weatherUnit = 0;
-        String units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
-        if (units.equals(GBApplication.getContext().getString(R.string.p_unit_imperial))) {
+        final TemperatureUnit temperatureUnit = GBApplication.getPrefs().getTemperatureUnit();
+        if (temperatureUnit == TemperatureUnit.FAHRENHEIT) {
             todayMax = (short) (todayMax * 1.8f + 32);
             todayMin = (short) (todayMin * 1.8f + 32);
             weatherUnit = 1;
@@ -728,13 +730,13 @@ public class FitProDeviceSupport extends AbstractBTLESingleDeviceSupport {
         int heightCm = activityUser.getHeightCm();
         int weightKg = activityUser.getWeightKg();
 
-        byte distanceUnit = UNIT_METRIC;
-        String units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
-        if (units.equals(GBApplication.getContext().getString(R.string.p_unit_imperial))) {
-            distanceUnit = UNIT_IMPERIAL;
+        byte distanceUnitByte = UNIT_METRIC;
+        final DistanceUnit distanceUnit = GBApplication.getPrefs().getDistanceUnit();
+        if (distanceUnit == DistanceUnit.IMPERIAL) {
+            distanceUnitByte = UNIT_IMPERIAL;
         }
 
-        int userData = genderUnit << 31 | age << 24 | heightCm << 15 | weightKg << 5 | distanceUnit;
+        int userData = genderUnit << 31 | age << 24 | heightCm << 15 | weightKg << 5 | distanceUnitByte;
         byte[] data = craftData(CMD_GROUP_GENERAL, CMD_SET_USER_DATA, ByteBuffer.allocate(4).putInt(userData).array());
         builder.write(writeCharacteristic, data);
         return this;

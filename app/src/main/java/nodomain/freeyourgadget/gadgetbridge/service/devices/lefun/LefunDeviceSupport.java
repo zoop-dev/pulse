@@ -64,6 +64,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
@@ -100,7 +101,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 public class LefunDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(LefunDeviceSupport.class);
 
-    private final List<Request> inProgressRequests = Collections.synchronizedList(new ArrayList<Request>());
+    private final List<Request> inProgressRequests = Collections.synchronizedList(new ArrayList<>());
     private final Queue<Request> queuedRequests = new ConcurrentLinkedQueue<>();
 
     private int lastStepsCount = -1;
@@ -338,7 +339,7 @@ public class LefunDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 }
                 break;
             }
-            case SettingsActivity.PREF_MEASUREMENT_SYSTEM: {
+            case SettingsActivity.PREF_UNIT_DISTANCE: {
                 sendUnitsSetting(null);
                 break;
             }
@@ -357,12 +358,10 @@ public class LefunDeviceSupport extends AbstractBTLESingleDeviceSupport {
      * @param builder the transaction builder to append to
      */
     private void sendUnitsSetting(TransactionBuilder builder) {
-        Prefs prefs = GBApplication.getPrefs();
-        String units = prefs.getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM,
-                getContext().getString(R.string.p_unit_metric));
+        final DistanceUnit distanceUnit = GBApplication.getPrefs().getDistanceUnit();
 
         byte lefunUnits;
-        if (getContext().getString(R.string.p_unit_metric).equals(units)) {
+        if (distanceUnit == DistanceUnit.METRIC) {
             lefunUnits = SettingsCommand.MEASUREMENT_UNIT_METRIC;
         } else {
             lefunUnits = SettingsCommand.MEASUREMENT_UNIT_IMPERIAL;

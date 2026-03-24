@@ -87,9 +87,6 @@
     <item name="p_normal" type="string">normal</item>
     <item name="p_sensitive" type="string">sensitive</item>
 
-    <item name="p_unit_metric" type="string">metric</item>
-    <item name="p_unit_imperial" type="string">imperial</item>
-
     <item name="p_timeformat_auto" type="string">auto</item>
     <item name="p_timeformat_24h" type="string">24h</item>
     <item name="p_timeformat_am_pm" type="string">am/pm</item>

@@ -35,9 +35,9 @@ import java.util.Locale;
 import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.XiaomiWeatherConditions;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureUnit;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.proto.xiaomi.XiaomiProto;
@@ -237,7 +237,7 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
         // TODO add preference for warning notifications (if that has any effect at all)
 
         switch (config) {
-            case SettingsActivity.PREF_MEASUREMENT_SYSTEM:
+            case SettingsActivity.PREF_UNIT_TEMPERATURE:
                 setMeasurementSystem();
                 return true;
         }
@@ -474,16 +474,14 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
     }
 
     private void setMeasurementSystem() {
-        final String metricScale = getSupport().getContext().getString(R.string.p_unit_metric);
-        final String imperialScale = getSupport().getContext().getString(R.string.p_unit_imperial);
-        final String measurementSystem = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, metricScale);
-        LOG.info("Setting measurement system to {}", measurementSystem);
+        final TemperatureUnit temperatureUnit = GBApplication.getPrefs().getTemperatureUnit();
+        LOG.info("Setting temperature unit to {}", temperatureUnit);
 
         int unitValue = TEMPERATURE_SCALE_CELSIUS;
 
-        if (measurementSystem.equals(imperialScale)) {
+        if (temperatureUnit == TemperatureUnit.FAHRENHEIT) {
             unitValue = TEMPERATURE_SCALE_FAHRENHEIT;
-        } else if (!measurementSystem.equals(metricScale)) {
+        } else if (temperatureUnit != TemperatureUnit.CELSIUS) {
             LOG.warn("Unknown measurement system, defaulting to celsius");
         }
 

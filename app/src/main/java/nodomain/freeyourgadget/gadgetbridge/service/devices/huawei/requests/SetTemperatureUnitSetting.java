@@ -22,9 +22,9 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.LocaleConfig;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureUnit;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
 
 public class SetTemperatureUnitSetting extends Request {
@@ -38,8 +38,8 @@ public class SetTemperatureUnitSetting extends Request {
 
     @Override
     protected List<byte[]> createRequest() throws RequestCreationException {
-        String temperatureScale = GBApplication.getDeviceSpecificSharedPrefs(this.getDevice().getAddress()).getString(DeviceSettingsPreferenceConst.PREF_TEMPERATURE_SCALE_CF, "");
-        byte isFahrenheit = (byte) ((temperatureScale.equals("f")) ? 1 : 0);
+        TemperatureUnit temperatureUnit = GBApplication.getPrefs().getTemperatureUnit();
+        byte isFahrenheit = (byte) (temperatureUnit == TemperatureUnit.FAHRENHEIT ? 1 : 0);
         try {
             return new LocaleConfig.SetTemperatureUnitSetting(paramsProvider, isFahrenheit).serialize();
         } catch (HuaweiPacket.CryptoException e) {

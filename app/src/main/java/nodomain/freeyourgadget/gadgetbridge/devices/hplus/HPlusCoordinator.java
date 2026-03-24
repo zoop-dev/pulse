@@ -38,7 +38,6 @@ import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
@@ -47,15 +46,14 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HPlusHealthActivitySampleDa
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.hplus.HPlusSupport;
-import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
-
-import static nodomain.freeyourgadget.gadgetbridge.GBApplication.getContext;
+import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 
 public class HPlusCoordinator extends AbstractBLEDeviceCoordinator {
     protected static final Logger LOG = LoggerFactory.getLogger(HPlusCoordinator.class);
-    protected static Prefs prefs = GBApplication.getPrefs();
+    protected static GBPrefs prefs = GBApplication.getPrefs();
 
     @NonNull
     @Override
@@ -140,9 +138,9 @@ public class HPlusCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     public static byte getUnit(String address) {
-        String units = prefs.getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, getContext().getString(R.string.p_unit_metric));
+        final DistanceUnit distanceUnit = prefs.getDistanceUnit();
 
-        if (units.equals(getContext().getString(R.string.p_unit_metric))) {
+        if (distanceUnit == DistanceUnit.METRIC) {
             return HPlusConstants.ARG_UNIT_METRIC;
         } else {
             return HPlusConstants.ARG_UNIT_IMPERIAL;

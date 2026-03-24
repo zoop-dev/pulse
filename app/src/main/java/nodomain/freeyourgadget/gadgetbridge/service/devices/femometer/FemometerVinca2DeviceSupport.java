@@ -29,6 +29,7 @@ import java.util.GregorianCalendar;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
@@ -39,6 +40,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.FemometerVinca2TemperatureS
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureUnit;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
@@ -222,9 +224,9 @@ public class FemometerVinca2DeviceSupport extends AbstractBTLESingleDeviceSuppor
                 case DeviceSettingsPreferenceConst.PREF_VOLUME:
                     setVolume(sharedPreferences);
                     break;
-                case DeviceSettingsPreferenceConst.PREF_TEMPERATURE_SCALE_CF:
-                    String scale = sharedPreferences.getString(DeviceSettingsPreferenceConst.PREF_TEMPERATURE_SCALE_CF,  "c");
-                    int value = "c".equals(scale) ? 0x0a : 0x0b;
+                case SettingsActivity.PREF_UNIT_TEMPERATURE:
+                    final TemperatureUnit temperatureUnit = GBApplication.getPrefs().getTemperatureUnit();
+                    int value = temperatureUnit == TemperatureUnit.CELSIUS ? 0x0a : 0x0b;
                     applySetting(byteArray(value), null);
             }
             builder.queue();

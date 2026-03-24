@@ -71,21 +71,6 @@
                 android:title="@string/pref_title_language"
                 android:icon="@drawable/ic_translate"
                 app:useSimpleSummaryProvider="true" />
-            <ListPreference
-                android:defaultValue="metric"
-                android:entries="@array/pref_entries_unit_system"
-                android:entryValues="@array/pref_values_unit_system"
-                android:key="measurement_system"
-                android:title="@string/pref_title_unit_system"
-                android:icon="@drawable/ic_straighten"
-                app:useSimpleSummaryProvider="true" />
-            <SwitchPreferenceCompat
-                android:defaultValue="true"
-                android:key="units_nautical"
-                android:layout="@layout/preference_checkbox"
-                android:summary="@string/pref_summary_nautical_units"
-                android:icon="@drawable/ic_sailing"
-                android:title="@string/pref_title_nautical_units" />
             <PreferenceScreen
                 android:key="pref_screen_rtl"
                 android:title="@string/preferences_rtl_settings"
@@ -113,6 +98,42 @@
                     android:title="@string/pref_rtl_max_line_length"
                     app:iconSpaceReserved="false" />
             </PreferenceScreen>
+        </PreferenceCategory>
+
+        <PreferenceCategory
+            android:key="pref_key_units"
+            android:title="@string/pref_title_unit_system">
+            <ListPreference
+                android:defaultValue="metric"
+                android:entries="@array/pref_entries_unit_system"
+                android:entryValues="@array/pref_values_unit_system"
+                android:key="unit_distance"
+                android:title="@string/pref_title_unit_distance"
+                android:icon="@drawable/ic_straighten"
+                app:useSimpleSummaryProvider="true" />
+            <ListPreference
+                android:defaultValue="metric"
+                android:entries="@array/temperature_scales"
+                android:entryValues="@array/temperature_scales_values"
+                android:key="unit_temperature"
+                android:title="@string/pref_title_unit_temperature"
+                android:icon="@drawable/ic_temperature"
+                app:useSimpleSummaryProvider="true" />
+            <ListPreference
+                android:defaultValue="metric"
+                android:entries="@array/weight_scale_units"
+                android:entryValues="@array/weight_scale_values"
+                android:key="unit_weight"
+                android:title="@string/pref_title_unit_weight"
+                android:icon="@drawable/ic_weight"
+                app:useSimpleSummaryProvider="true" />
+            <SwitchPreferenceCompat
+                android:defaultValue="true"
+                android:key="units_nautical"
+                android:layout="@layout/preference_checkbox"
+                android:summary="@string/pref_summary_nautical_units"
+                android:icon="@drawable/ic_sailing"
+                android:title="@string/pref_title_nautical_units" />
         </PreferenceCategory>
 
         <PreferenceCategory

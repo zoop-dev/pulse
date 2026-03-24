@@ -118,7 +118,9 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
 import nodomain.freeyourgadget.gadgetbridge.model.SleepState;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureUnit;
 import nodomain.freeyourgadget.gadgetbridge.model.WearingState;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
@@ -2688,7 +2690,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
                 case PREF_HOURLY_CHIME_END:
                     setHourlyChime(builder);
                     break;
-                case SettingsActivity.PREF_MEASUREMENT_SYSTEM:
+                case SettingsActivity.PREF_UNIT_DISTANCE:
                     setDistanceUnit(builder);
                     break;
                 case MiBandConst.PREF_SWIPE_UNLOCK:
@@ -2872,7 +2874,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             return;
         }
 
-        MiBandConst.DistanceUnit unit = HuamiCoordinator.getDistanceUnit();
+        final TemperatureUnit temperatureUnit = GBApplication.getPrefs().getTemperatureUnit();
         int tz_offset_hours = SimpleTimeZone.getDefault().getOffset(weatherSpec.getTimestamp() * 1000L) / (1000 * 60 * 60);
         try {
             TransactionBuilder builder;
@@ -2893,7 +2895,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
             buf.put(condition);
 
             int currentTemp = weatherSpec.getCurrentTemp() - 273;
-            if (unit == MiBandConst.DistanceUnit.IMPERIAL) {
+            if (temperatureUnit == TemperatureUnit.FAHRENHEIT) {
                 currentTemp = (int) WeatherUtils.celsiusToFahrenheit(currentTemp);
             }
             buf.put((byte) currentTemp);
@@ -2978,7 +2980,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
 
             int todayMaxTemp = weatherSpec.getTodayMaxTemp() - 273;
             int todayMinTemp = weatherSpec.getTodayMinTemp() - 273;
-            if (unit == MiBandConst.DistanceUnit.IMPERIAL) {
+            if (temperatureUnit == TemperatureUnit.FAHRENHEIT) {
                 todayMaxTemp = (int) WeatherUtils.celsiusToFahrenheit(todayMaxTemp);
                 todayMinTemp = (int) WeatherUtils.celsiusToFahrenheit(todayMinTemp);
             }
@@ -2997,7 +2999,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
 
                 int forecastMaxTemp = forecast.getMaxTemp() - 273;
                 int forecastMinTemp = forecast.getMinTemp() - 273;
-                if (unit == MiBandConst.DistanceUnit.IMPERIAL) {
+                if (temperatureUnit == TemperatureUnit.FAHRENHEIT) {
                     forecastMaxTemp = (int) WeatherUtils.celsiusToFahrenheit(forecastMaxTemp);
                     forecastMinTemp = (int) WeatherUtils.celsiusToFahrenheit(forecastMinTemp);
                 }
@@ -3638,9 +3640,9 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
     }
 
     private void setDistanceUnit(TransactionBuilder builder) {
-        MiBandConst.DistanceUnit unit = HuamiCoordinator.getDistanceUnit();
-        LOG.info("Setting distance unit to " + unit);
-        if (unit == MiBandConst.DistanceUnit.METRIC) {
+        DistanceUnit distanceUnit = GBApplication.getPrefs().getDistanceUnit();
+        LOG.info("Setting distance unit to {}", distanceUnit);
+        if (distanceUnit == DistanceUnit.METRIC) {
             writeToConfiguration(builder,  HuamiService.COMMAND_DISTANCE_UNIT_METRIC);
         } else {
             writeToConfiguration(builder,  HuamiService.COMMAND_DISTANCE_UNIT_IMPERIAL);

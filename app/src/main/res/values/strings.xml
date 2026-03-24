@@ -481,6 +481,9 @@
     <string name="pref_title_unit_system">Units</string>
     <string name="pref_title_nautical_units">Nautical units</string>
     <string name="pref_summary_nautical_units">Display speed and distance units in knots / miles for nautical activities</string>
+    <string name="pref_title_unit_distance">Distance unit</string>
+    <string name="pref_title_unit_temperature">Temperature unit</string>
+    <string name="pref_title_unit_weight">Weight unit</string>
     <string name="pref_title_timeformat">Time format</string>
     <string name="pref_title_screentime">Screen on duration</string>
     <string name="pref_title_goal_secondary">Secondary goal</string>

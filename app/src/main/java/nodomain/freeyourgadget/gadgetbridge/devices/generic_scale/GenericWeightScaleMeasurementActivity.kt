@@ -29,24 +29,23 @@ import androidx.core.content.ContextCompat
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericWeightSampleProvider
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericWeightSample
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
+import nodomain.freeyourgadget.gadgetbridge.model.WeightUnit
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.weightScale.WeightScaleMeasurement
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.weightScale.WeightScaleProfile
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.time.Instant
-import kotlin.math.roundToInt
 
 class GenericWeightScaleMeasurementActivity : AbstractGBActivity() {
     private val weightUpdatedReceiver: WeightUpdatedReceiver = WeightUpdatedReceiver()
     private var actual: TextView? = null
     private var save: Button? = null
     private lateinit var device: GBDevice
-    private var unit: String? = null
+    private var unit: WeightUnit? = null
 
     private var measurement: WeightScaleMeasurement? = null
 
@@ -59,12 +58,7 @@ class GenericWeightScaleMeasurementActivity : AbstractGBActivity() {
         val manager = GBApplication.app().deviceManager
         device = manager.getDeviceByAddress(address)!!
 
-        val settings = GBApplication.getDevicePrefs(device)
-        unit = settings.getString(DeviceSettingsPreferenceConst.PREF_WEIGHT_SCALE_UNIT, null)
-
-        if (unit == null) {
-            unit = if (GBApplication.getPrefs().isMetricUnits) "kilogram" else "pound"
-        }
+        unit = GBApplication.getPrefs().weightUnit
 
         setContentView(R.layout.activity_weight_scale_measurement)
 
@@ -86,20 +80,7 @@ class GenericWeightScaleMeasurementActivity : AbstractGBActivity() {
         val raw: Double? = measurement?.weightKilogram
         val kg: Double = if (raw == null || raw.isNaN()) 0.0 else raw
 
-        if (unit.equals("jin")) {
-            val jin: Double = kg * 2
-            actual?.text = getString(R.string.weight_scale_jin_format, jin)
-        } else if (unit.equals("pound")) {
-            val pound: Double = kg / 0.45359237
-            actual?.text = getString(R.string.weight_scale_pound_format, pound)
-        } else if (unit.equals("stone")) {
-            val total: Int = (kg / 0.45359237).roundToInt()
-            val stone: Int = total / 14
-            val pound: Int = total % 14
-            actual?.text = getString(R.string.weight_scale_stone_format, stone, pound)
-        } else {
-            actual?.text = getString(R.string.weight_scale_kilogram_format, kg)
-        }
+        actual?.text = WeightUnit.formatWeight(this, kg, unit?: WeightUnit.KILOGRAM)
     }
 
     internal fun saveWeightInfo(measurement: WeightScaleMeasurement) {

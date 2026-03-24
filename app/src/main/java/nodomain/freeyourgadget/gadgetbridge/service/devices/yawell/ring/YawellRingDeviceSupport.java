@@ -55,6 +55,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.ColmiHeartRateSample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattService;
@@ -523,7 +524,7 @@ public class YawellRingDeviceSupport extends AbstractBTLESingleDeviceSupport {
     public void onSendConfiguration(String config) {
         final Prefs prefs = getDevicePrefs();
         switch (config) {
-            case SettingsActivity.PREF_MEASUREMENT_SYSTEM:
+            case SettingsActivity.PREF_UNIT_DISTANCE:
                 setUserPreferences();
                 break;
             case DeviceSettingsPreferenceConst.PREF_SPO2_ALL_DAY_MONITORING:
@@ -601,9 +602,8 @@ public class YawellRingDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     private void setUserPreferences() {
-        final Prefs prefs = getDevicePrefs();
         final ActivityUser user = new ActivityUser();
-        final String measurementSystem = prefs.getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, "metric");
+        final DistanceUnit distanceUnit = GBApplication.getPrefs().getDistanceUnit();
         byte userGender;
         switch (user.getGender()) {
             case ActivityUser.GENDER_FEMALE:
@@ -620,7 +620,7 @@ public class YawellRingDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 YawellRingConstants.CMD_PREFERENCES,
                 YawellRingConstants.PREF_WRITE,
                 0x00,  // 24h format, 0x01 is 12h format
-                (byte) ("metric".equals(measurementSystem) ? 0x00 : 0x01),
+                (byte) (distanceUnit == DistanceUnit.METRIC ? 0x00 : 0x01),
                 userGender,
                 (byte) user.getAge(),
                 (byte) user.getHeightCm(),

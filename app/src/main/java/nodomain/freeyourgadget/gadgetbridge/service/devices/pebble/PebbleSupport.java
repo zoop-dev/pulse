@@ -38,11 +38,11 @@ import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.AlarmReceiver;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
@@ -114,8 +114,8 @@ public class PebbleSupport extends AbstractSerialDeviceSupport {
         // Catch fake URLs first
         if (uri.equals(Uri.parse("fake://health"))) {
             getDeviceIOThread().write(pebbleProtocol.encodeActivateHealth(true));
-            String units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, getContext().getString(R.string.p_unit_metric));
-            if (units.equals(getContext().getString(R.string.p_unit_metric))) {
+            final DistanceUnit distanceUnit = GBApplication.getPrefs().getDistanceUnit();
+            if (distanceUnit == DistanceUnit.METRIC) {
                 pebbleIoThread.write(pebbleProtocol.encodeSetSaneDistanceUnit(true));
             } else {
                 pebbleIoThread.write(pebbleProtocol.encodeSetSaneDistanceUnit(false));
@@ -145,8 +145,7 @@ public class PebbleSupport extends AbstractSerialDeviceSupport {
             while (keysIterator.hasNext()) {
                 String keyStr = keysIterator.next();
                 Object object = json.get(keyStr);
-                if (object instanceof JSONArray) {
-                    JSONArray jsonArray = (JSONArray) object;
+                if (object instanceof JSONArray jsonArray) {
                     byte[] byteArray = new byte[jsonArray.length()];
                     for (int i = 0; i < jsonArray.length(); i++) {
                         byteArray[i] = ((Integer) jsonArray.get(i)).byteValue();
