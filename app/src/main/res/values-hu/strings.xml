@@ -4166,4 +4166,5 @@
     <string name="uploading_rpk">RPK feltöltése…</string>
     <string name="uploadrpkoperation_complete">RPK-telepítés kész</string>
     <string name="uploadrpkoperation_failed">RPK-telepítés sikertelen</string>
+    <string name="redmi_buds_6_active_equalizer_preset_volume">Hangerő növelése</string>
 </resources>
