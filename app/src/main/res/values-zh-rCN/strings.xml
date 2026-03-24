@@ -4320,4 +4320,12 @@
     <string name="uploading_rpk">正在上传 rpk…</string>
     <string name="uploadrpkoperation_complete">Rpk 安装完毕</string>
     <string name="uploadrpkoperation_failed">Rpk 安装失败</string>
+    <string name="pref_title_nautical_units">航海单位</string>
+    <string name="pref_summary_nautical_units">对航海活动以节/海里显示速度和距离</string>
+    <string name="pref_title_unit_distance">距离单位</string>
+    <string name="pref_title_unit_temperature">气温单位</string>
+    <string name="pref_title_unit_weight">重量单位</string>
+    <string name="nautical_miles">海里</string>
+    <string name="knots">节</string>
+    <string name="redmi_buds_6_active_equalizer_preset_volume">提高音量</string>
 </resources>
