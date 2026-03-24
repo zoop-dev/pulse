@@ -2270,7 +2270,7 @@
     <string name="menuitem_buzzer_intensity">Summer-Intensität</string>
     <string name="zepp_os_watchface_lightning_flash">Blitzschlag</string>
     <string name="uploading_watchface">Zifferblatt wird hochladen…</string>
-    <string name="uploadwatchfaceoperation_in_progress">Zifferblatt hochladen</string>
+    <string name="uploadwatchfaceoperation_in_progress">Zifferblatt wird hochladen</string>
     <string name="pref_title_fossil_hr_nav_vibrate">Vibrieren bei neuer Anweisung</string>
     <string name="pref_title_fossil_hr_nav_foreground">In den Vordergrund rücken</string>
     <string name="prefs_device_name">Gerätebezeichnung</string>
@@ -4210,4 +4210,7 @@
     <string name="pref_summary_supported_devices">Diese Funktion wird nicht von allen Geräten unterstützt. Klicken Sie hier für weitere Informationen.</string>
     <string name="activity_type_floorball">Unihockey</string>
     <string name="intent_api_allow_global_settings_summary">Erlauben Sie Drittanbieter-Apps, globale Gadgetbridge-Einstellungen festzulegen. Bitte starten Sie Gadgetbridge neu, damit die Änderungen wirksam werden.</string>
+    <string name="uploading_rpk">rpk wird hochgeladen…</string>
+    <string name="uploadrpkoperation_complete">Rpk installation abgeschlossen</string>
+    <string name="uploadrpkoperation_failed">Rpk installation fehlgeschlagen</string>
 </resources>
