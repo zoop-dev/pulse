@@ -4317,4 +4317,7 @@
     <string name="pref_summary_supported_devices">不是所有设备都支持此功能。单击此处获得更多信息。</string>
     <string name="pref_title_supported_devices">支持的设备</string>
     <string name="intent_api_allow_global_settings_summary">允许第三方应用通过 intent 设置全局 Gadgetbridge 设置。要生效请重启 Gadgetbridge。</string>
+    <string name="uploading_rpk">正在上传 rpk…</string>
+    <string name="uploadrpkoperation_complete">Rpk 安装完毕</string>
+    <string name="uploadrpkoperation_failed">Rpk 安装失败</string>
 </resources>
