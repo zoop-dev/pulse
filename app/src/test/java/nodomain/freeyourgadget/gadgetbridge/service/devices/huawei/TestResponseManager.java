@@ -141,16 +141,6 @@ public class TestResponseManager {
         }
 
         @Override
-        public Long addWorkoutTotalsData(Workout.WorkoutTotals.Response packet) {
-            return null;
-        }
-
-        @Override
-        public void addWorkoutSampleData(Long workoutId, List<Workout.WorkoutData.Response.Data> dataList) {
-
-        }
-
-        @Override
         public void sendSetMusic() {
 
         }
