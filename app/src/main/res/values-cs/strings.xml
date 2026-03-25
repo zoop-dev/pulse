@@ -4320,4 +4320,15 @@
     <string name="pref_summary_supported_devices">Tato funkce není podporována všemi zařízeními. Klikněte sem pro více informací.</string>
     <string name="pref_title_supported_devices">Podporovaná zařízení</string>
     <string name="intent_api_allow_global_settings_summary">Povolit aplikacím třetích stran nastavovat globální nastavení Gadgetbridge skrze intenty. Pro použití změny restartujte Gadgetbridge.</string>
+    <string name="pref_title_nautical_units">Námořní jednotky</string>
+    <string name="pref_summary_nautical_units">Zobrazit jednotky rychlosti a vzdálenost v uzlech / mílích pro námořní aktivity</string>
+    <string name="pref_title_unit_distance">Jednotka vzdálenosti</string>
+    <string name="pref_title_unit_temperature">Jednotka teploty</string>
+    <string name="pref_title_unit_weight">Jednotka váhy</string>
+    <string name="nautical_miles">M</string>
+    <string name="knots">kt</string>
+    <string name="redmi_buds_6_active_equalizer_preset_volume">Hlasitost zesílení</string>
+    <string name="uploading_rpk">Nahrávám rpk…</string>
+    <string name="uploadrpkoperation_complete">Instalace rpk dokončena</string>
+    <string name="uploadrpkoperation_failed">Instalace rpk selhala</string>
 </resources>
