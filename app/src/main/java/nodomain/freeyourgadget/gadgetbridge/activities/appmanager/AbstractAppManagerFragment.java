@@ -92,6 +92,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GridAutoFitLayoutManager;
 import nodomain.freeyourgadget.gadgetbridge.util.InternetHelperSingleton;
 import nodomain.freeyourgadget.gadgetbridge.util.InternetUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.PebbleUtils;
+import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleHardware;
 import nodomain.freeyourgadget.gadgetbridge.util.Version;
 
 
@@ -415,16 +416,19 @@ public abstract class AbstractAppManagerFragment extends Fragment {
                             }
                             */
                             if (mGBDevice != null) {
-                                if (PebbleUtils.hasHealth(mGBDevice.getModel())) {
-                                    if (baseName.equals(PebbleProtocol.UUID_PEBBLE_HEALTH.toString())) {
-                                        cachedAppList.add(new GBDeviceApp(PebbleProtocol.UUID_PEBBLE_HEALTH, "Health (System)", "Pebble Inc.", "", GBDeviceApp.Type.APP_SYSTEM));
-                                        continue;
+                                PebbleHardware.HardwareRevision hw = PebbleHardware.getByModelString(mGBDevice.getModel());
+                                if (hw != null) {
+                                    if (hw.hasHealth()) {
+                                        if (baseName.equals(PebbleProtocol.UUID_PEBBLE_HEALTH.toString())) {
+                                            cachedAppList.add(new GBDeviceApp(PebbleProtocol.UUID_PEBBLE_HEALTH, "Health (System)", "Pebble Inc.", "", GBDeviceApp.Type.APP_SYSTEM));
+                                            continue;
+                                        }
                                     }
-                                }
-                                if (PebbleUtils.hasHRM(mGBDevice.getModel())) {
-                                    if (baseName.equals(PebbleProtocol.UUID_WORKOUT.toString())) {
-                                        cachedAppList.add(new GBDeviceApp(PebbleProtocol.UUID_WORKOUT, "Workout (System)", "Pebble Inc.", "", GBDeviceApp.Type.APP_SYSTEM));
-                                        continue;
+                                    if (hw.hasHRM()) {
+                                        if (baseName.equals(PebbleProtocol.UUID_WORKOUT.toString())) {
+                                            cachedAppList.add(new GBDeviceApp(PebbleProtocol.UUID_WORKOUT, "Workout (System)", "Pebble Inc.", "", GBDeviceApp.Type.APP_SYSTEM));
+                                            continue;
+                                        }
                                     }
                                 }
                                 if (PebbleUtils.getFwMajor(mGBDevice.getFirmwareVersion()) >= 4) {

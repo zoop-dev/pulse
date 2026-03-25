@@ -46,6 +46,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
+import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleHardware;
 import nodomain.freeyourgadget.gadgetbridge.util.PebbleUtils;
 
 public class PBWInstallHandler implements InstallHandler {
@@ -73,7 +74,7 @@ public class PBWInstallHandler implements InstallHandler {
             return;
         }
 
-        String platformName = PebbleUtils.getPlatformName(device.getModel());
+        String platformName = PebbleHardware.getPlatformName(device.getModel());
 
         try {
             mPBWReader = new PBWReader(mUri, mContext, platformName);

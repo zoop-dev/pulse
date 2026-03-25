@@ -41,6 +41,7 @@ import java.util.SimpleTimeZone;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleHardware;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventAppInfo;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventAppManagement;
@@ -282,24 +283,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
 
     private static final long GB_UUID_MASK = 0x4767744272646700L;
 
-    // base is -8
-    private static final String[] hwRevisions = {
-            // Emulator
-            "silk_bb2", "robert_bb", "silk_bb",
-            "spalding_bb2", "snowy_bb2", "snowy_bb",
-            "bb2", "bb",
-            "unknown",
-            // Pebble Classic Series
-            "ev1", "ev2", "ev2_3", "ev2_4", "v1_5", "v2_0",
-            // Pebble Time Series
-            "snowy_evt2", "snowy_dvt", "spalding_dvt", "snowy_s3", "spalding",
-            // Pebble 2 Series
-            "silk_evt", "robert_evt", "silk",
-            // Pebble 2 Duo
-            "asterix",
-            // Pebble Time 2
-            "obelix",
-    };
+    // Hardware revisions are now defined in PebbleHardware class
 
     private static final Random mRandom = new Random();
 
@@ -2411,9 +2395,10 @@ public class PebbleProtocol extends GBDeviceProtocol {
                 String gitHash = getFixedString(buf, 8);
                 int fwFlags = buf.get();
                 LOG.info("git hash: {}, flags: {}", gitHash, fwFlags);
-                int hwRev = buf.get() + 8;
-                if (hwRev >= 0 && hwRev < hwRevisions.length) {
-                    versionCmd.hwVersion = hwRevisions[hwRev];
+                int hwRev = buf.get() & 0xFF;  // Convert to unsigned
+                String codename = PebbleHardware.getCodenameByHardwareId(hwRev);
+                if (codename != null) {
+                    versionCmd.hwVersion = codename;
                 } else {
                     LOG.warn("unknown hw revision {}", hwRev);
                 }

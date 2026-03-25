@@ -63,6 +63,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.ble.PebbleLES
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.PebbleJsService;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
+import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleHardware;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.PebbleUtils;
@@ -602,7 +603,7 @@ class PebbleIoThread extends GBDeviceIoThread {
             return;
         }
 
-        String platformName = PebbleUtils.getPlatformName(gbDevice.getModel());
+        String platformName = PebbleHardware.getPlatformName(gbDevice.getModel());
 
         try {
             mPBWReader = new PBWReader(uri, getContext(), platformName);

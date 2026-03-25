@@ -45,6 +45,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
+import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleHardware;
 import nodomain.freeyourgadget.gadgetbridge.util.PebbleUtils;
 import nodomain.freeyourgadget.gadgetbridge.webview.CurrentPosition;
 
@@ -132,8 +133,8 @@ public class JSInterface {
         JSONObject wi = new JSONObject();
         try {
             wi.put("firmware", device.getFirmwareVersion());
-            wi.put("platform", PebbleUtils.getPlatformName(device.getModel()));
-            wi.put("model", PebbleUtils.getModel(device.getModel()));
+            wi.put("platform", PebbleHardware.getPlatformName(device.getModel()));
+            wi.put("model", PebbleHardware.getModelDisplayName(device.getModel()));
             //TODO: use real info
             wi.put("language", "en");
         } catch (JSONException e) {

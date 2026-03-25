@@ -39,67 +39,16 @@ import java.util.UUID;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.PebbleJsService;
 
+/**
+ * Utility methods for Pebble devices.
+ * For hardware definitions and BLE detection, see
+ * {@link nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleHardware}.
+ */
 public class PebbleUtils {
     private static final Logger LOG = LoggerFactory.getLogger(PebbleUtils.class);
 
-    public static String getPlatformName(String hwRev) {
-        final String DEFAULT_PLATFORM = "aplite";
-        if (hwRev == null || hwRev.isEmpty()) {
-            return DEFAULT_PLATFORM;
-        }
-
-        if (hwRev.startsWith("snowy")) {
-            return "basalt";
-        } else if (hwRev.startsWith("spalding")) {
-            return "chalk";
-        } else if (hwRev.startsWith("silk")) {
-            return "diorite";
-        } else if (hwRev.startsWith("robert") || hwRev.startsWith("obelix")) {
-            return "emery";
-        } else if (hwRev.startsWith("asterix")) {
-            return "flint";
-        } else if (hwRev.startsWith("getafix")) {
-            return "gabbro";
-        }
-        return DEFAULT_PLATFORM;
-    }
-
-    public static String getModel(String hwRev) {
-        //TODO: get real data?
-        final String DEFAULT_MODEL = "pebble_black";
-        if (hwRev == null || hwRev.isEmpty()) {
-            return DEFAULT_MODEL;
-        }
-        if (hwRev.startsWith("snowy")) {
-            return "pebble_time_black";
-        } else if (hwRev.startsWith("spalding")) {
-            return "pebble_time_round_black_20mm";
-        } else if (hwRev.startsWith("silk")) {
-            return "pebble2_black";
-        } else if (hwRev.startsWith("robert")) {
-            return "pebble_time2_black";
-        } else if (hwRev.startsWith("asterix")) {
-            return "coredevices_p2d_black";
-        } else if (hwRev.startsWith("obelix")) {
-            return "coredevices_pt2_black_grey";
-        } else if (hwRev.startsWith("getafix")) {
-            return "coredevices_ptr2_black";
-        }
-        return DEFAULT_MODEL;
-    }
-
     public static int getFwMajor(String fwString) {
         return fwString.charAt(1) - 48;
-    }
-
-    public static boolean hasHRM(String hwRev) {
-        String platformName = getPlatformName(hwRev);
-        return "diorite".equals(platformName) || "emery".equals(platformName);
-    }
-
-    public static boolean hasHealth(String hwRev) {
-        String platformName = getPlatformName(hwRev);
-        return !"aplite".equals(platformName);
     }
 
     /**
@@ -126,7 +75,6 @@ public class PebbleUtils {
     public static byte getPebbleColor(String colorHex) {
         return getPebbleColor(Color.parseColor(colorHex));
     }
-
 
     /**
      * Returns the directory containing the .pbw cache.
