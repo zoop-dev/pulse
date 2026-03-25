@@ -211,6 +211,8 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
                 )
 
                 currentWorkout?.let { workout ->
+                    workoutValueFormatter.setActivityKind(ActivityKind.fromCode(workout.summary.activityKind))
+
                     updateWorkoutHeader(workout.summary)
                     updateWorkoutDetails(workout)
                     updateFragments(workout)

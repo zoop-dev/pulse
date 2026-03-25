@@ -30,7 +30,6 @@ import java.util.concurrent.TimeUnit;
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries;
 import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
@@ -42,7 +41,7 @@ public class WorkoutValueFormatter {
 
     private boolean show_raw_data = false;
 
-    private final ActivityKind activityKind;
+    private ActivityKind activityKind;
     private final DistanceUnit distanceUnit;
     private final WeightUnit weightUnit;
     private final boolean useNauticalUnits;
@@ -56,7 +55,11 @@ public class WorkoutValueFormatter {
         this.activityKind = activityKind;
         this.distanceUnit = GBApplication.getPrefs().getDistanceUnit();
         this.weightUnit = GBApplication.getPrefs().getWeightUnit();
-        this.useNauticalUnits = ActivityKind.isNauticalActivity(activityKind) && GBApplication.getPrefs().getBoolean("units_nautical", true);
+        this.useNauticalUnits = GBApplication.getPrefs().getBoolean("units_nautical", true);
+    }
+
+    public void setActivityKind(final ActivityKind activityKind) {
+        this.activityKind = activityKind;
     }
 
     public void toggleRawData() {
@@ -152,7 +155,7 @@ public class WorkoutValueFormatter {
                     }
                     break;
                 case UNIT_METERS:
-                    if (useNauticalUnits) {
+                    if (useNauticalUnits && ActivityKind.isNauticalActivity(activityKind)) {
                         value = value / 1852D;
                         unit = UNIT_NAUTICAL_MILES;
                     } else if (distanceUnit == DistanceUnit.IMPERIAL) {
@@ -170,7 +173,7 @@ public class WorkoutValueFormatter {
                     }
                     break;
                 case UNIT_KMPH:
-                    if (useNauticalUnits) {
+                    if (useNauticalUnits && ActivityKind.isNauticalActivity(activityKind)) {
                         value = value / 1.852D;
                         unit = UNIT_KNOTS;
                     } else if (distanceUnit == DistanceUnit.IMPERIAL) {
