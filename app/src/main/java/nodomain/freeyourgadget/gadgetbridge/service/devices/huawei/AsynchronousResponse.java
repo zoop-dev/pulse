@@ -823,7 +823,7 @@ public class AsynchronousResponse {
                 throw new Request.ResponseTypeMismatchException(response, OTA.DeviceRequest.class);
             }
             OTA.DeviceRequest.Response resp = (OTA.DeviceRequest.Response) response;
-            support.getHuaweiOTAManager().handleDeviceRequest(resp.unkn1);
+            support.getHuaweiOTAManager().handleDeviceRequest(resp.status, resp.type);
         } else  if (response.commandId == OTA.DataChunkRequest.id) {
             if (!(response instanceof OTA.DataChunkRequest.Response)) {
                 throw new Request.ResponseTypeMismatchException(response, OTA.DataChunkRequest.class);

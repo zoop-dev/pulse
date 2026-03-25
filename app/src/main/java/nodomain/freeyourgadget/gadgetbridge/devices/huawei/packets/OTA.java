@@ -323,7 +323,8 @@ public class OTA {
         }
 
         public static class Response extends HuaweiPacket {
-            public byte unkn1;
+            public int status = 0;
+            public int type = 0;
             public Response (ParamsProvider paramsProvider) {
                 super(paramsProvider);
             }
@@ -331,7 +332,10 @@ public class OTA {
             @Override
             public void parseTlv() throws HuaweiPacket.ParseException {
                 if(this.tlv.contains(0x01)) {
-                    unkn1 = this.tlv.getByte(0x01);
+                    status = this.tlv.getAsInteger(0x01);
+                }
+                if(this.tlv.contains(0x02)) {
+                    type = this.tlv.getAsInteger(0x02);
                 }
             }
         }

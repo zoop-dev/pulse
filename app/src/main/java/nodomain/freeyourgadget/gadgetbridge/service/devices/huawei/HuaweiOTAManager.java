@@ -568,7 +568,9 @@ public class HuaweiOTAManager {
     }
 
 
-    public void handleDeviceRequest(byte unkn1) {
+    public void handleDeviceRequest(int status, int type) {
+        LOG.info("Status: {}, SearchType: {}", status, type);
+        // TODO: if status != 0 - error
         try {
             int code = 100000;
             if (this.state == 2) {
