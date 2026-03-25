@@ -4167,4 +4167,11 @@
     <string name="uploadrpkoperation_complete">RPK-telepítés kész</string>
     <string name="uploadrpkoperation_failed">RPK-telepítés sikertelen</string>
     <string name="redmi_buds_6_active_equalizer_preset_volume">Hangerő növelése</string>
+    <string name="pref_title_unit_temperature">Hőmérsékleti egység</string>
+    <string name="pref_title_unit_weight">Tömegmértékegység</string>
+    <string name="pref_title_nautical_units">Tengeri mértékegységek</string>
+    <string name="pref_summary_nautical_units">A sebesség és a távolság mértékegységeinek megjelenítése csomóban vagy mérföldben a vízi sportokhoz</string>
+    <string name="pref_title_unit_distance">Távolság-mértékegység</string>
+    <string name="nautical_miles">M</string>
+    <string name="knots">kn</string>
 </resources>
