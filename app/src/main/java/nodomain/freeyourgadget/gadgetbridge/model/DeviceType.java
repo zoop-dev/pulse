@@ -378,6 +378,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.redmibuds.RedmiBuds4ActiveCo
 import nodomain.freeyourgadget.gadgetbridge.devices.redmibuds.RedmiBuds5ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.redmibuds.RedmiBuds6ActiveCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.redmibuds.RedmiBuds6ProCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.redmibuds.RedmiBuds8ActiveCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.roidmi.Roidmi1Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.roidmi.Roidmi3Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.sbm_67.SanitasSBM67Coordinator;
@@ -530,6 +531,7 @@ public enum DeviceType {
     REDMIBUDS5PRO(RedmiBuds5ProCoordinator.class),
     REDMIBUDS6ACTIVE(RedmiBuds6ActiveCoordinator.class),
     REDMIBUDS6PRO(RedmiBuds6ProCoordinator.class),
+    REDMIBUDS8ACTIVE(RedmiBuds8ActiveCoordinator.class),
     REDMIWATCH3ACTIVE(RedmiWatch3ActiveCoordinator.class),
     REDMIWATCH3(RedmiWatch3Coordinator.class),
     REDMISMARTBAND2(RedmiSmartBand2Coordinator.class),

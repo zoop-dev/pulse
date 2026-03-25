@@ -813,9 +813,19 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_REDMI_BUDS_6_ACTIVE_CONTROL_DOUBLE_TAP_RIGHT);
         addPreferenceHandlerFor(PREF_REDMI_BUDS_6_ACTIVE_CONTROL_TRIPLE_TAP_LEFT);
         addPreferenceHandlerFor(PREF_REDMI_BUDS_6_ACTIVE_CONTROL_TRIPLE_TAP_RIGHT);
-        addPreferenceHandlerFor(PREF_REDMI_BUDS_6_ACTIVE_CONTROL_LONG_TAP_MODE_LEFT );
-        addPreferenceHandlerFor(PREF_REDMI_BUDS_6_ACTIVE_CONTROL_LONG_TAP_MODE_RIGHT );
+        addPreferenceHandlerFor(PREF_REDMI_BUDS_6_ACTIVE_CONTROL_LONG_TAP_MODE_LEFT);
+        addPreferenceHandlerFor(PREF_REDMI_BUDS_6_ACTIVE_CONTROL_LONG_TAP_MODE_RIGHT);
         addPreferenceHandlerFor(PREF_REDMI_BUDS_6_ACTIVE_EQUALIZER_PRESET);
+
+        addPreferenceHandlerFor(PREF_REDMI_BUDS_8_ACTIVE_CONTROL_SINGLE_TAP_LEFT);
+        addPreferenceHandlerFor(PREF_REDMI_BUDS_8_ACTIVE_CONTROL_SINGLE_TAP_RIGHT);
+        addPreferenceHandlerFor(PREF_REDMI_BUDS_8_ACTIVE_CONTROL_DOUBLE_TAP_LEFT);
+        addPreferenceHandlerFor(PREF_REDMI_BUDS_8_ACTIVE_CONTROL_DOUBLE_TAP_RIGHT);
+        addPreferenceHandlerFor(PREF_REDMI_BUDS_8_ACTIVE_CONTROL_TRIPLE_TAP_LEFT);
+        addPreferenceHandlerFor(PREF_REDMI_BUDS_8_ACTIVE_CONTROL_TRIPLE_TAP_RIGHT);
+        addPreferenceHandlerFor(PREF_REDMI_BUDS_8_ACTIVE_CONTROL_LONG_TAP_MODE_LEFT);
+        addPreferenceHandlerFor(PREF_REDMI_BUDS_8_ACTIVE_CONTROL_LONG_TAP_MODE_RIGHT);
+        addPreferenceHandlerFor(PREF_REDMI_BUDS_8_ACTIVE_EQUALIZER_PRESET);
 
         addPreferenceHandlerFor(PREF_SONY_AMBIENT_SOUND_CONTROL);
         addPreferenceHandlerFor(PREF_SONY_AMBIENT_SOUND_CONTROL_BUTTON_MODE);
