@@ -3991,10 +3991,12 @@
     </string-array>
 
     <string-array name="redmi_buds_6_active_long_button_mode_names">
+        <item>@string/none</item>
         <item>@string/pref_title_touch_voice_assistant</item>
     </string-array>
 
     <string-array name="redmi_buds_6_active_long_button_mode_values">
+        <item>8</item>
         <item>0</item>
     </string-array>
 
