@@ -26,7 +26,14 @@ import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Handler;
+import android.os.Looper;
+
+import androidx.core.content.ContextCompat;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,6 +78,12 @@ class PebbleGATTClient extends BluetoothGattCallback {
 
     private CountDownLatch mWaitWriteCompleteLatch;
 
+    // New pairing state management
+    private ConnectivityStatus mConnectivityStatus;
+    private CountDownLatch mBondingLatch;
+    private BroadcastReceiver mBondingReceiver;
+    private static final long BONDING_TIMEOUT_MS = 60000; // 60 seconds
+
     PebbleGATTClient(PebbleLESupport pebbleLESupport, Context context, BluetoothDevice btDevice) {
         mContext = context;
         mPebbleLESupport = pebbleLESupport;
@@ -106,17 +119,20 @@ class PebbleGATTClient extends BluetoothGattCallback {
         LOG.info("onCharacteristicRead() status = {}", status);
         if (status == BluetoothGatt.GATT_SUCCESS) {
             LOG.info("onCharacteristicRead() {} {}", characteristic.getUuid().toString(), GB.hexdump(characteristic.getValue(), 0, -1));
-            if (characteristic.getUuid().equals(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL)) {
+
+            if (characteristic.getUuid().equals(CONNECTIVITY_CHARACTERISTIC)) {
+                // This is required for Pebble Time 2 (EMERY) pairing
+                handleConnectivityRead(gatt, characteristic.getValue());
+            } else if (characteristic.getUuid().equals(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL)) {
                 int battery_percent = ValueDecoder.decodePercent(characteristic, characteristic.getValue());
                 LOG.info("Got battery level through read, is at {}%", battery_percent);
                 GBDeviceEventBatteryInfo gbDeviceEventBatteryInfo = new GBDeviceEventBatteryInfo();
                 gbDeviceEventBatteryInfo.level = battery_percent;
                 gbDeviceEventBatteryInfo.state = BatteryState.BATTERY_NORMAL;
                 mPebbleLESupport.getPebbleSupport().evaluateGBDeviceEvent(gbDeviceEventBatteryInfo);
-            } else if ((characteristic.getUuid().equals(PAIRING_TRIGGER_CHARACTERISTIC))) {
-                // this is just a hack to force sequential ble commands for initialization
-                // kind of event driven
-                // And this never happens when not READING the pairing trigger which is only done for old pebbles running fw 3.x
+            } else if (characteristic.getUuid().equals(PAIRING_TRIGGER_CHARACTERISTIC)) {
+                // Legacy path: this is just a hack to force sequential ble commands for initialization
+                // Only happens when READING the pairing trigger for old pebbles running fw 3.x
                 if (hasConnectivityCharacteristics) {
                     subscribeToConnectivity(gatt);
                 } else {
@@ -155,9 +171,13 @@ class PebbleGATTClient extends BluetoothGattCallback {
             } else {
                 LOG.warn("mWaitWriteCompleteLatch is null!");
             }
-        } else if (characteristic.getUuid().equals(PAIRING_TRIGGER_CHARACTERISTIC) || characteristic.getUuid().equals(CONNECTIVITY_CHARACTERISTIC)) {
-            //mBtDevice.createBond(); // did not work when last tried
-
+        } else if (characteristic.getUuid().equals(PAIRING_TRIGGER_CHARACTERISTIC)) {
+            // Pairing trigger written - now initiate Bluetooth bonding
+            // This is required for Pebble Time 2 (EMERY) pairing
+            LOG.info("Pairing trigger written successfully (status={}), initiating bond", status);
+            initiateBluetoothBond(gatt);
+        } else if (characteristic.getUuid().equals(CONNECTIVITY_CHARACTERISTIC)) {
+            // Legacy path for connectivity characteristic write
             if (hasConnectivityCharacteristics) {
                 subscribeToConnectivity(gatt);
             } else {
@@ -202,41 +222,44 @@ class PebbleGATTClient extends BluetoothGattCallback {
         }
 
         LOG.info("onServicesDiscovered() status = {}", status);
-        if (status == BluetoothGatt.GATT_SUCCESS) {
-            BluetoothGattCharacteristic connectionParamCharacteristic = gatt.getService(SERVICE_UUID).getCharacteristic(CONNECTION_PARAMETERS_CHARACTERISTIC);
-            hasConnectivityCharacteristics = connectionParamCharacteristic == null;
+        if (status != BluetoothGatt.GATT_SUCCESS) {
+            LOG.error("Service discovery failed with status {}", status);
+            return;
+        }
 
-            if (hasConnectivityCharacteristics) {
-                LOG.info("This seems to be an older le enabled Pebble (Pebble Time), or a 2025 Pebble");
-            }
+        BluetoothGattService pairingService = gatt.getService(SERVICE_UUID);
+        if (pairingService == null) {
+            LOG.error("Pairing service not found");
+            return;
+        }
 
-            if (doPairing) {
-                BluetoothGattCharacteristic characteristic = gatt.getService(SERVICE_UUID).getCharacteristic(PAIRING_TRIGGER_CHARACTERISTIC);
-                if ((characteristic.getProperties() & PROPERTY_WRITE) != 0) {
-                    LOG.info("This seems to be a >=4.0 FW Pebble, writing to pairing trigger");
-                    // flags:
-                    // 0 - always 1
-                    // 1 - unknown
-                    // 2 - always 0
-                    // 3 - unknown, set on kitkat (seems to help to get a "better" pairing)
-                    // 4 - unknown, set on some phones
-                    byte[] value;
-                    if (mPebbleLESupport.clientOnly) {
-                        value = new byte[]{0x11}; // needed in clientOnly mode (TODO: try 0x19)
-                    } else {
-                        value = new byte[]{0x09}; // I just keep this, because it worked
-                    }
-                    WriteAction.writeCharacteristic(gatt, characteristic, value);
-                } else {
-                    LOG.info("This seems to be some <4.0 FW Pebble, reading pairing trigger");
-                    gatt.readCharacteristic(characteristic);
-                }
+        BluetoothGattCharacteristic connectionParamCharacteristic =
+                pairingService.getCharacteristic(CONNECTION_PARAMETERS_CHARACTERISTIC);
+        hasConnectivityCharacteristics = connectionParamCharacteristic == null;
+
+        if (hasConnectivityCharacteristics) {
+            LOG.info("This seems to be an older LE Pebble (Pebble Time), or a 2025 Pebble");
+        }
+
+        if (doPairing) {
+            // Read Connectivity characteristic FIRST to determine pairing state
+            // This is required for Pebble Time 2 (EMERY) pairing
+            BluetoothGattCharacteristic connectivityChar =
+                    pairingService.getCharacteristic(CONNECTIVITY_CHARACTERISTIC);
+            if (connectivityChar != null) {
+                LOG.info("Reading connectivity characteristic to check pairing state");
+                gatt.readCharacteristic(connectivityChar);
+                // Continue in onCharacteristicRead() -> handleConnectivityRead()
             } else {
-                if (hasConnectivityCharacteristics) {
-                    subscribeToConnectivity(gatt);
-                } else {
-                    subscribeToConnectionParams(gatt);
-                }
+                // Fallback for very old firmware - use legacy method
+                LOG.warn("Connectivity characteristic not found, using legacy pairing");
+                proceedWithLegacyPairing(gatt);
+            }
+        } else {
+            if (hasConnectivityCharacteristics) {
+                subscribeToConnectivity(gatt);
+            } else {
+                subscribeToConnectionParams(gatt);
             }
         }
     }
@@ -354,7 +377,240 @@ class PebbleGATTClient extends BluetoothGattCallback {
         mWaitWriteCompleteLatch = null;
     }
 
+    // ================== New Pairing Methods (based on libpebble3) ==================
+
+    /**
+     * Handle the connectivity characteristic read to determine pairing state.
+     * Based on libpebble3 ConnectivityWatcher and PebblePairing.
+     */
+    private void handleConnectivityRead(BluetoothGatt gatt, byte[] value) {
+        mConnectivityStatus = new ConnectivityStatus(value);
+        LOG.info("Connectivity status: {}", mConnectivityStatus);
+
+        BluetoothDevice device = gatt.getDevice();
+        int bondState = device.getBondState();
+        boolean phoneBonded = bondState == BluetoothDevice.BOND_BONDED;
+        LOG.info("Phone bond state: {} (BONDED={})", bondState, BluetoothDevice.BOND_BONDED);
+
+        // If BOTH sides are already paired, skip pairing trigger and bonding entirely
+        if (mConnectivityStatus.paired && phoneBonded) {
+            LOG.info("Already paired on both sides - skipping pairing trigger, proceeding with subscriptions");
+            proceedAfterPairing(gatt);
+            return;
+        }
+
+        LOG.info("Proceeding with pairing trigger write (watch.paired={}, phone.bonded={})",
+                mConnectivityStatus.paired, phoneBonded);
+
+        BluetoothGattCharacteristic pairingTrigger =
+                gatt.getService(SERVICE_UUID).getCharacteristic(PAIRING_TRIGGER_CHARACTERISTIC);
+
+        if (pairingTrigger == null) {
+            LOG.error("Pairing trigger characteristic not found");
+            proceedAfterPairing(gatt);
+            return;
+        }
+
+        if ((pairingTrigger.getProperties() & PROPERTY_WRITE) != 0) {
+            LOG.info("Writing pairing trigger for Pebble Time 2 / modern Pebble");
+
+            // Use the original working values, but we'll add createBond() after
+            // 0x09 = pinAddress(1) + autoAccept(8) - worked for normal mode
+            // 0x11 = pinAddress(1) + watchAsServer(16) - for clientOnly mode
+            byte[] triggerValue;
+            if (mPebbleLESupport.clientOnly) {
+                triggerValue = new byte[]{0x11};
+                LOG.info("Using clientOnly pairing trigger: 0x11");
+            } else {
+                triggerValue = new byte[]{0x09};
+                LOG.info("Using normal pairing trigger: 0x09");
+            }
+            WriteAction.writeCharacteristic(gatt, pairingTrigger, triggerValue);
+            // Continue in onCharacteristicWrite() -> initiateBluetoothBond()
+        } else {
+            // Old firmware - just read the characteristic (legacy path)
+            LOG.info("Pairing trigger not writable, using legacy read");
+            gatt.readCharacteristic(pairingTrigger);
+        }
+    }
+
+    /**
+     * Initiate Bluetooth bonding after writing the pairing trigger.
+     * Based on libpebble3 PebblePairing.requestBlePairing().
+     */
+    private void initiateBluetoothBond(BluetoothGatt gatt) {
+        BluetoothDevice device = gatt.getDevice();
+        int currentBondState = device.getBondState();
+        LOG.info("Current bond state before pairing: {} (NONE={}, BONDING={}, BONDED={})",
+                currentBondState, BluetoothDevice.BOND_NONE,
+                BluetoothDevice.BOND_BONDING, BluetoothDevice.BOND_BONDED);
+
+        // If already bonded, just proceed - don't try to re-bond
+        if (currentBondState == BluetoothDevice.BOND_BONDED) {
+            LOG.info("Device already bonded, proceeding with subscriptions");
+            proceedAfterPairing(gatt);
+            return;
+        }
+
+        LOG.info("Initiating Bluetooth bond with {}ms timeout", BONDING_TIMEOUT_MS);
+
+        // Register bond state receiver
+        mBondingLatch = new CountDownLatch(1);
+        mBondingReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                BluetoothDevice bondDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                if (bondDevice == null || !bondDevice.getAddress().equals(device.getAddress())) {
+                    return;
+                }
+                int bondState = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.BOND_NONE);
+                LOG.info("Bond state changed: {}", bondState);
+
+                if (bondState == BluetoothDevice.BOND_BONDED) {
+                    LOG.info("Bonding succeeded!");
+                    mBondingLatch.countDown();
+                } else if (bondState == BluetoothDevice.BOND_NONE) {
+                    int reason = intent.getIntExtra("android.bluetooth.device.extra.REASON", -1);
+                    LOG.error("Bonding failed with reason: {}", reason);
+                    mBondingLatch.countDown();
+                }
+            }
+        };
+
+        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+        ContextCompat.registerReceiver(mContext, mBondingReceiver, filter, ContextCompat.RECEIVER_EXPORTED);
+
+        // Start bonding on background thread to avoid blocking GATT callbacks
+        new Thread(() -> {
+            try {
+                LOG.info("Calling createBond() on device {}", device.getAddress());
+                boolean bondInitiated = device.createBond();
+                LOG.info("createBond() returned: {}", bondInitiated);
+
+                if (!bondInitiated) {
+                    LOG.error("Failed to initiate bonding - createBond() returned false");
+                    LOG.info("Current bond state after failed createBond: {}", device.getBondState());
+                    cleanupBondingReceiver();
+                    // Still proceed to try connection
+                    new Handler(Looper.getMainLooper()).post(() -> proceedAfterPairing(gatt));
+                    return;
+                }
+
+                LOG.info("Waiting for bond state change (timeout: {}ms)...", BONDING_TIMEOUT_MS);
+                boolean bonded = mBondingLatch.await(BONDING_TIMEOUT_MS, java.util.concurrent.TimeUnit.MILLISECONDS);
+                int finalBondState = device.getBondState();
+                LOG.info("Bond wait completed: latch={}, finalState={}", bonded, finalBondState);
+
+                if (bonded && finalBondState == BluetoothDevice.BOND_BONDED) {
+                    LOG.info("Bonding completed successfully!");
+                } else {
+                    LOG.warn("Bonding timed out or failed (latch={}, state={}), proceeding anyway",
+                            bonded, finalBondState);
+                }
+            } catch (InterruptedException e) {
+                LOG.error("Bonding interrupted", e);
+            } catch (SecurityException e) {
+                LOG.error("SecurityException during createBond - missing BLUETOOTH_CONNECT permission?", e);
+            } catch (Exception e) {
+                LOG.error("Unexpected error during bonding", e);
+            } finally {
+                cleanupBondingReceiver();
+                // Continue with subscription chain on main thread
+                new Handler(Looper.getMainLooper()).post(() -> proceedAfterPairing(gatt));
+            }
+        }).start();
+    }
+
+    /**
+     * Clean up the bonding broadcast receiver.
+     */
+    private void cleanupBondingReceiver() {
+        if (mBondingReceiver != null) {
+            try {
+                mContext.unregisterReceiver(mBondingReceiver);
+            } catch (Exception e) {
+                LOG.warn("Error unregistering bonding receiver: {}", e.getMessage());
+            }
+            mBondingReceiver = null;
+        }
+    }
+
+    /**
+     * Continue with the subscription chain after pairing is complete or skipped.
+     */
+    private void proceedAfterPairing(BluetoothGatt gatt) {
+        LOG.info("Proceeding after pairing to subscription chain");
+        if (hasConnectivityCharacteristics) {
+            subscribeToConnectivity(gatt);
+        } else {
+            subscribeToConnectionParams(gatt);
+        }
+    }
+
+    /**
+     * Legacy pairing path for backward compatibility with older firmwares.
+     */
+    private void proceedWithLegacyPairing(BluetoothGatt gatt) {
+        LOG.info("Using legacy pairing method");
+        BluetoothGattCharacteristic characteristic =
+                gatt.getService(SERVICE_UUID).getCharacteristic(PAIRING_TRIGGER_CHARACTERISTIC);
+        if ((characteristic.getProperties() & PROPERTY_WRITE) != 0) {
+            byte[] value = mPebbleLESupport.clientOnly ? new byte[]{0x11} : new byte[]{0x09};
+            WriteAction.writeCharacteristic(gatt, characteristic, value);
+        } else {
+            gatt.readCharacteristic(characteristic);
+        }
+    }
+
+    /**
+     * Determines if we need to pair based on connectivity status and bond state.
+     * Based on libpebble3 PebbleBle.kt pairing logic.
+     */
+    private boolean shouldPair(ConnectivityStatus status, boolean phoneBonded) {
+        if (status.paired && phoneBonded) {
+            LOG.info("Already paired on both sides, skipping pairing");
+            return false;
+        }
+        if (status.paired && !phoneBonded) {
+            LOG.info("Watch thinks it's paired, phone does not - need to re-pair");
+            return true;
+        }
+        if (!status.paired && phoneBonded) {
+            LOG.info("Phone thinks it's paired, watch does not - need to re-pair");
+            return true;
+        }
+        LOG.info("Neither side paired - need full pairing");
+        return true;
+    }
+
+    /**
+     * Builds the pairing trigger value with proper bit flags.
+     * Based on libpebble3 PebblePairing.makePairingTriggerValue()
+     *
+     * Bit 0: pinAddress - pin BLE address to prevent MAC rotation
+     * Bit 1: noSecurityRequest - if true, watch won't request security (phone will via createBond)
+     * Bit 2: forceSecurityRequest - if true, watch will request security (inverse of bit 1)
+     * Bit 3: autoAcceptFuturePairing
+     * Bit 4: watchAsGattServer - for reversed PPoG mode
+     *
+     * When phone calls createBond(), set noSecurityRequest=true so watch doesn't also request.
+     */
+    private byte buildPairingTriggerValue(boolean pinAddress, boolean noSecurityRequest,
+                                          boolean autoAcceptFuture, boolean watchAsGattServer) {
+        byte value = 0;
+        if (pinAddress) value |= 0b00001;          // Bit 0
+        if (noSecurityRequest) value |= 0b00010;   // Bit 1
+        if (!noSecurityRequest) value |= 0b00100;  // Bit 2: force security (only if bit 1 is 0)
+        if (autoAcceptFuture) value |= 0b01000;    // Bit 3
+        if (watchAsGattServer) value |= 0b10000;   // Bit 4
+        LOG.debug("buildPairingTriggerValue: pin={}, noSec={}, auto={}, server={} -> 0x{}",
+                pinAddress, noSecurityRequest, autoAcceptFuture, watchAsGattServer,
+                String.format("%02X", value));
+        return value;
+    }
+
     public void close() {
+        cleanupBondingReceiver();
         if (mBluetoothGatt != null) {
             mBluetoothGatt.disconnect();
             mBluetoothGatt.close();

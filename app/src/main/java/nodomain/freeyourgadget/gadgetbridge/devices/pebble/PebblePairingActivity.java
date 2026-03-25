@@ -46,6 +46,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.ControlCenterv2;
 import nodomain.freeyourgadget.gadgetbridge.activities.discovery.DiscoveryActivityV2;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceManager;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.DeviceDao;
@@ -56,6 +57,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.BondingInterface;
 import nodomain.freeyourgadget.gadgetbridge.util.BondingUtil;
 import nodomain.freeyourgadget.gadgetbridge.util.DeviceHelper;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
+import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleHardware;
 
 
 public class PebblePairingActivity extends AbstractGBActivity implements BondingInterface {
@@ -104,7 +106,7 @@ public class PebblePairingActivity extends AbstractGBActivity implements Bonding
         message.setText(getString(R.string.pairing, btDevice.getAddress()));
 
         GBDevice device;
-        if (BondingUtil.isLePebble(btDevice)) {
+        if (PebbleHardware.isLePebbleCompanion(btDevice)) {
             if (!GBApplication.getPrefs().getBoolean("pebble_force_le", false)) {
                 GB.toast(this, "Please switch on \"Always prefer BLE\" option in Pebble settings before pairing you Pebble LE", Toast.LENGTH_LONG, GB.ERROR);
                 onBondingComplete(false);
@@ -119,6 +121,30 @@ public class PebblePairingActivity extends AbstractGBActivity implements Bonding
 
             registerBroadcastReceivers();
             BondingUtil.connectThenComplete(this, device);
+            return;
+        }
+
+        // Pebble 2, Pebble Time 2, and Pebble 2 Duo are BLE-only and need GATT connection first.
+        // They require writing to a pairing trigger characteristic before createBond() works.
+        // PebbleGATTClient handles the pairing trigger write and initiates bonding.
+        // Note: These devices are BLE-only, so we don't need the "pebble_force_le" setting -
+        // PebbleIoThread automatically uses BLE based on isPebble2() detection.
+        // Use deviceCandidate to leverage manufacturer data for reliable device identification.
+        if (BondingUtil.needsConnectFirstPairing(deviceCandidate)) {
+            LOG.info("Pebble 2/Time 2/2 Duo detected via manufacturer data - using connect-first pairing (BLE-only device)");
+
+            registerBroadcastReceivers();
+
+            // Create device and initiate connection - BLE mode will be auto-detected in PebbleIoThread
+            GBDevice gbDevice = DeviceHelper.getInstance().toSupportedDevice(deviceCandidate);
+            if (gbDevice != null) {
+                GB.toast(this, getString(R.string.discovery_trying_to_connect_to, gbDevice.getName()), Toast.LENGTH_SHORT, GB.INFO);
+                GBApplication.deviceService(gbDevice).connect(true);
+                // Don't call onBondingComplete() here - wait for bonding via broadcast receiver
+            } else {
+                LOG.error("Failed to create GBDevice for Pebble 2/Time 2/2 Duo");
+                onBondingComplete(false);
+            }
             return;
         }
 
@@ -171,6 +197,13 @@ public class PebblePairingActivity extends AbstractGBActivity implements Bonding
     public void onBondingComplete(boolean success) {
         LOG.debug("ONBONDINGCOMPLETE");
         unregisterBroadcastReceivers();
+
+        // Trigger device list refresh so the new device appears immediately
+        if (success) {
+            LocalBroadcastManager.getInstance(this).sendBroadcast(
+                    new Intent(DeviceManager.ACTION_REFRESH_DEVICELIST));
+        }
+
         if (success) {
             startActivity(new Intent(this, ControlCenterv2.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         } else {
@@ -178,7 +211,7 @@ public class PebblePairingActivity extends AbstractGBActivity implements Bonding
         }
 
         // If it's not a LE Pebble, initiate a connection when bonding is complete
-        if (!BondingUtil.isLePebble(getCurrentTarget().getDevice()) && success) {
+        if (!PebbleHardware.isLePebbleCompanion(getCurrentTarget().getDevice()) && success) {
             BondingUtil.attemptToFirstConnect(getCurrentTarget().getDevice());
         }
         finish();
