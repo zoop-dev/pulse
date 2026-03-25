@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<gpx xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0"
+	 creator="GPSLogger 79 - http://gpslogger.mendhak.com/"
+	 xmlns="http://www.topografix.com/GPX/1/0"
+	 xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd"
+	 xmlns:ns3="http://www.garmin.com/xmlschemas/TrackPointExtension/v1">
+
+	<name>Five Hikes in the White Mountains</name>
+	<desc>Five Hikes in the White Mountains!!</desc>
+	<author>Franz Wilhelmstötter</author>
+	<email>franz.wilhelmstoetter@gmail.com</email>
+	<url>https://github.com/jenetics/jpx</url>
+	<urlname>Visit my New Hampshire hiking website!</urlname>
+	<time>2016-08-21T12:24:27Z</time>
+	<keywords>Hiking, NH, Presidential Range</keywords>
+
+
+	<wpt lat="48.2033471" lon="16.3608048">
+		<time>2016-08-21T12:51:30Z <!-- comment -->
+		</time>
+		<name>khm</name>
+		<src>network</src>
+		<extensions><foo>asdf</foo><foo>asdf</foo></extensions>
+	</wpt>
+	<wpt lat="48.34067" lon="16.71754">
+        <ele>164.0 <!-- comment -->
+		</ele>
+        <name>Gänserndorf</name>
+    </wpt>
+	<trk>
+		<name>March 21</name>
+		<trkseg>
+			<trkpt lat="48.19949341" lon="16.40377444">
+				<ele>212.0 <!--comment-->
+				</ele>
+				<time>2016-08-21T12:24:27Z <!--comment-->
+				</time>
+				<course>341.6 <!--comment-->
+				</course>
+				<speed>0.67052215 <!--comment-->
+				</speed>
+				<src>gps <!--comment-->
+				</src>
+				<sat>14 <!--comment-->
+				</sat>
+			</trkpt>
+			<trkpt lat="-48.19948359" lon="16.40371021">
+				<ele>212.0 <ignoreBrokenXml /></ele>
+				<time>2016-08-21T12:24:31Z <!-- comment -->
+				</time>
+				<course>298.6 <!-- comment -->
+				</course>
+				<speed>0.7424285 <!-- comment -->
+				</speed>
+				<geoidheight>43.0 <!-- comment -->
+				</geoidheight>
+				<src>gps</src>
+				<sat>2</sat>
+				<hdop>0.7 <!-- comment -->
+				</hdop>
+				<vdop>0.8 <!-- comment -->
+				</vdop>
+				<pdop>1.1 <!-- comment -->
+				</pdop>
+			</trkpt>
+			<trkpt lat="45.589817" lon="-73.67511">
+				<ele>42.05 <!-- comment -->
+				</ele>
+				<time>2023-05-07T18:34:59Z <!-- comment -->
+				</time>
+				<name>Position 1</name>
+				<extensions>
+					<ns3:TrackPointExtension>
+						<ns3:speed>2.3255813 <!-- comment -->
+						</ns3:speed> <!-- comment -->
+						<ns3:cad>0.0 <!-- comment -->
+						</ns3:cad>
+						<ns3:hr>72 <!-- comment -->
+						</ns3:hr>
+					</ns3:TrackPointExtension>
+				</extensions>
+			</trkpt>
+			<trkpt lat="52.52543" lon="0.07307"><speed>NaN</speed></trkpt>
+			<trkpt lat="52.52483" lon="0.07329" />
+		</trkseg>
+	</trk>
+	<trk>
+		<trkseg>
+			<trkpt lat="52.53395" lon="0.07863">
+				<extensions />
+			</trkpt>
+		</trkseg>
+		<trkseg>
+			<trkpt lat="52.53667" lon="0.09328"></trkpt>
+			<trkpt lat="52.5367" lon="0.09352"></trkpt>
+		</trkseg>
+	</trk>
+</gpx>

@@ -17,18 +17,18 @@
     </metadata>
 
     <wpt lat="47.5048828125" lon="9.7393798828125">
-        <ele>-470.1</ele>
-        <time>2025-10-03T14:10:59Z</time>
+        <ele>-470.1 <!-- comment --></ele>
+        <time>2025-10-03T14:10:59Z <!-- comment --></time>
         <name>Bregenz</name>
         <desc>city in Österreich</desc>
         <sym>Airport</sym>
-        <hdop>1.4</hdop>
-        <vdop>3.2</vdop>
-        <pdop>1.5</pdop>
+        <hdop>1.4 <!-- comment --></hdop>
+        <vdop>3.2 <!-- comment --></vdop>
+        <pdop>1.5 <!-- comment --></pdop>
         <extensions>
             <wpx:WaypointExtension>
-                <wpx:Temperature>9.1</wpx:Temperature>
-                <wpx:Depth>6.1</wpx:Depth>
+                <wpx:Temperature>9.1 <!-- comment --></wpx:Temperature>
+                <wpx:Depth>6.1 <!-- comment --></wpx:Depth>
             </wpx:WaypointExtension>
         </extensions>
     </wpt>
@@ -41,8 +41,8 @@
         <sym>Anchor</sym>
         <extensions>
             <ge:WaypointExtension>
-                <ge:Temperature>19.2</ge:Temperature>
-                <ge:Depth>16.2</ge:Depth>
+                <ge:Temperature>19.2 <!-- comment --></ge:Temperature>
+                <ge:Depth>16.2 <!-- comment --></ge:Depth>
             </ge:WaypointExtension>
         </extensions>
     </wpt>
@@ -74,23 +74,23 @@
         <name>Gadgetbridge import test track</name>
         <trkseg>
             <trkpt lat="47.5048828125" lon="9.7393798828125">
-                <ele>-440.2</ele>
-                <time>2025-10-03T15:10:59Z</time>
+                <ele>-440.2 <!-- comment --></ele>
+                <time>2025-10-03T15:10:59Z <!-- comment --></time>
                 <name>Tp1</name>
                 <desc>a description</desc>
                 <sym>Summit</sym>
-                <hdop>1.4</hdop>
-                <vdop>3.2</vdop>
-                <pdop>1.5</pdop>
+                <hdop>1.4 <!-- comment --></hdop>
+                <vdop>3.2 <!-- comment --></vdop>
+                <pdop>1.5 <!-- comment --></pdop>
                 <extensions>
                     <t1:TrackPointExtension>
-                        <t1:atemp>28.3</t1:atemp>
-                        <t1:depth>26.3</t1:depth>
-                        <t1:hr>123</t1:hr>
-                        <t1:cad>22</t1:cad>
+                        <t1:atemp>28.3 <!-- comment --></t1:atemp>
+                        <t1:depth>26.3 <!-- comment --></t1:depth>
+                        <t1:hr>123 <!-- comment --></t1:hr>
+                        <t1:cad>22 <!-- comment --></t1:cad>
                     </t1:TrackPointExtension>
                     <ax:TrackPointExtension>
-                        <ax:speed>23.3</ax:speed>
+                        <ax:speed>23.3 <!-- comment --></ax:speed>
                     </ax:TrackPointExtension>
                 </extensions>
             </trkpt>
@@ -102,8 +102,8 @@
                 <sym>Water</sym>
                 <extensions>
                     <ge:TrackPointExtension>
-                        <ge:Temperature>34.3</ge:Temperature>
-                        <ge:Depth>10345</ge:Depth>
+                        <ge:Temperature>34.3 <!-- comment --></ge:Temperature>
+                        <ge:Depth>10345 <!-- comment --></ge:Depth>
                     </ge:TrackPointExtension>
                 </extensions>
             </trkpt>
@@ -111,11 +111,11 @@
                 <time>2025-10-03T03:30:00-12:00</time>
                 <extensions>
                     <t2:TrackPointExtension>
-                        <t2:atemp>40.4</t2:atemp>
-                        <t2:depth>41.4</t2:depth>
-                        <t2:hr>42</t2:hr>
-                        <t2:cad>43</t2:cad>
-                        <t2:speed>44.4</t2:speed>
+                        <t2:atemp>40.4 <!-- comment --></t2:atemp>
+                        <t2:depth>41.4 <!-- comment --></t2:depth>
+                        <t2:hr>42 <!-- comment --></t2:hr>
+                        <t2:cad>43 <!-- comment --></t2:cad>
+                        <t2:speed>44.4 <!-- comment --></t2:speed>
                     </t2:TrackPointExtension>
                 </extensions>
             </trkpt>

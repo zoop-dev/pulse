@@ -1,4 +1,4 @@
-/*  Copyright (C) 2023-2025 José Rebelo, Thomas Kuehne
+/*  Copyright (C) 2023-2026 José Rebelo, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -199,5 +199,23 @@ public class GPXParserTest extends TestBase {
         Assert.assertEquals(trackpoint.getTemperature(), activityPoint.getTemperature(), 0.0);
         Assert.assertEquals(trackpoint.getTime(), activityPoint.getTime());
         Assert.assertEquals(trackpoint.getVdop(), activityPoint.getLocation().getVdop(), 0.0);
+    }
+
+    // test import of old GPX v1.0
+    @Test
+    public void TestGpxImportOld() throws Exception {
+        final byte[] actual;
+        try (final InputStream gpx = getClass().getResourceAsStream("/TestGpxImportOld.gpx")) {
+            actual = GpxParser.transformGpx(gpx);
+        }
+
+        byte[] expected = readBinaryResource("/TestGpxImportOld.xml");
+        Assert.assertArrayEquals(expected, actual);
+
+        final GpxFile file1;
+        try (final InputStream gpx = getClass().getResourceAsStream("/TestGpxImportOld.gpx")) {
+            file1 = new GpxParser(gpx).getGpxFile();
+        }
+        Assert.assertNotNull(file1);
     }
 }

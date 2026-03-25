@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><gpx name="Five Hikes in the White Mountains" author="Franz Wilhelmstötter" time="2016-08-21T12:24:27Z">
+    <wpt lat="48.2033471" lon="16.3608048" time="2016-08-21T12:51:30Z" name="khm"/>
+    <wpt lat="48.34067" lon="16.71754" ele="164.0" name="Gänserndorf"/>
+    <trk name="March 21">
+        <trkseg>
+            <trkpt lat="48.19949341" lon="16.40377444" ele="212.0" time="2016-08-21T12:24:27Z" speed="0.67052215"/>
+            <trkpt lat="-48.19948359" lon="16.40371021" ele="212.0" time="2016-08-21T12:24:31Z" hdop="0.7" vdop="0.8" pdop="1.1" speed="0.7424285"/>
+            <trkpt lat="45.589817" lon="-73.67511" ele="42.05" time="2023-05-07T18:34:59Z" name="Position 1" hr="72" cad="0.0" speed="2.3255813"/>
+            <trkpt lat="52.52543" lon="0.07307" speed="NaN"/>
+            <trkpt lat="52.52483" lon="0.07329"/>
+        </trkseg>
+    </trk>
+    <trk>
+        <trkseg>
+            <trkpt lat="52.53395" lon="0.07863"/>
+        </trkseg>
+        <trkseg>
+            <trkpt lat="52.53667" lon="0.09328"/>
+            <trkpt lat="52.5367" lon="0.09352"/>
+        </trkseg>
+    </trk>
+</gpx>
