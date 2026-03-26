@@ -1,9 +1,9 @@
 Utilizza il tuo smart watch, fitness tracker e altri dispositivi bluetooth senza dipendere dall'applicazione proprietaria del vendor e senza bisogno di creare accounts e trasferire i tuoi dati altrove.
-La lista completa dei dispositivi supportati è disponibile sulla Homepage e nel README.md nel repository git.
-\
-Vedi le notifiche direttamente sul tuo polso, e inoltre (a seconda del dispositivo):
+La lista completa dei dispositivi supportati è disponibile sul nostro sito https://gadgetbridge.org/gadgets/.
 
-- memorizza i dati della tua attività fisica dai sensori
+Ricevi le notifiche direttamente sul dispositivo, e inoltre (a seconda del supporto):
+
+- memorizza i dati dai sensori
 - controlla le app per riprodurre musica sul tuo dispositivo android
 - vedi le condizioni meteorologiche
 - vedi le indicazioni stradali
