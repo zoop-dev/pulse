@@ -4334,4 +4334,15 @@
     <string name="pref_summary_supported_devices">Ta funkcja nie jest obsługiwana przez wszystkie urządzenia. Kliknij tutaj, aby uzyskać więcej informacji.</string>
     <string name="pref_title_supported_devices">Wspierane urządzenia</string>
     <string name="intent_api_allow_global_settings_summary">Zezwól aplikacjom innych producentów na konfigurowanie ogólnych ustawień Gadgetbridge za pomocą intents. Aby zmiany zaczęły obowiązywać, uruchom ponownie aplikację Gadgetbridge.</string>
+    <string name="pref_summary_nautical_units">Wyświetlanie prędkości i odległości w węzłach / milach podczas aktywności związanych z żeglarstwem</string>
+    <string name="pref_title_nautical_units">Jednostki miar morskich</string>
+    <string name="pref_title_unit_distance">Jednostki odległości</string>
+    <string name="pref_title_unit_temperature">Jednostki temperatury</string>
+    <string name="pref_title_unit_weight">Jednostki wagi</string>
+    <string name="nautical_miles">M</string>
+    <string name="knots">węzłów</string>
+    <string name="redmi_buds_6_active_equalizer_preset_volume">Zwiększ głośność</string>
+    <string name="uploading_rpk">Wysyłanie pliku rpk…</string>
+    <string name="uploadrpkoperation_complete">Instalacja rpk zakończona</string>
+    <string name="uploadrpkoperation_failed">Instalacja rpk nie powiodła się</string>
 </resources>
