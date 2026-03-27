@@ -22,7 +22,10 @@ import java.nio.ByteBuffer;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.Request;
 
 public class MoveHandsRequest extends Request {
-    public MoveHandsRequest(MovementConfiguration movement){
+    private boolean isHybridHR;
+
+    public MoveHandsRequest(MovementConfiguration movement, boolean isHybridHR){
+        this.isHybridHR = isHybridHR;
         init(movement);
     }
 
@@ -37,8 +40,10 @@ public class MoveHandsRequest extends Request {
         buffer.put((byte)count);
 
         if(movement.isHourSet()){
+            short degrees = (short)Math.abs(movement.getHourDegrees());
+            if (!isHybridHR && degrees == 1) degrees++;
             buffer.put((byte)1);
-            buffer.putShort((short)Math.abs(movement.getHourDegrees()));
+            buffer.putShort(degrees);
             if(movement.isRelativeMovement()){
                 buffer.put(movement.getHourDegrees() >= 0 ? (byte) 1 : (byte) 2);
             }else {
@@ -48,8 +53,10 @@ public class MoveHandsRequest extends Request {
         }
 
         if(movement.isMinuteSet()){
+            short degrees = (short)Math.abs(movement.getMinuteDegrees());
+            if (!isHybridHR && degrees == 1) degrees++;
             buffer.put((byte)2);
-            buffer.putShort((short)Math.abs(movement.getMinuteDegrees()));
+            buffer.putShort(degrees);
             if(movement.isRelativeMovement()){
                 buffer.put(movement.getMinuteDegrees() >= 0 ? (byte) 1 : (byte) 2);
             }else {
@@ -59,8 +66,10 @@ public class MoveHandsRequest extends Request {
         }
 
         if(movement.isSubSet()){
+            short degrees = (short)Math.abs(movement.getSubDegrees());
+            if (!isHybridHR && degrees == 1) degrees++;
             buffer.put((byte)3);
-            buffer.putShort((short)Math.abs(movement.getSubDegrees()));
+            buffer.putShort(degrees);
             if(movement.isRelativeMovement()){
                 buffer.put(movement.getSubDegrees() >= 0 ? (byte) 1 : (byte) 2);
             }else {
@@ -74,7 +83,7 @@ public class MoveHandsRequest extends Request {
 
     @Override
     public byte[] getStartSequence() {
-        return new byte[]{2, 21, 3};
+        return new byte[]{0x02, 0x15, 0x03};
     }
 
     static public class MovementConfiguration{

@@ -385,7 +385,7 @@ public class MisfitWatchAdapter extends WatchAdapter {
 
     @Override
     public void setHands(MoveHandsRequest.MovementConfiguration movement) {
-        queueWrite(new MoveHandsRequest(movement));
+        queueWrite(new MoveHandsRequest(movement, false));
     }
 
     @Override

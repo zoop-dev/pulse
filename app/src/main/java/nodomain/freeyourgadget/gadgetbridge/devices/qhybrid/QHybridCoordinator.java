@@ -269,7 +269,7 @@ public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_fossilqhybrid_legacy);
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_qhybrid);
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_fossilhybridhr_vibration);
-//            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_fossilhybridhr_calibration);  // TODO
+            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_fossilhybridhr_calibration);
             final List<Integer> developer = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DEVELOPER);
             developer.add(R.xml.devicesettings_fossilhybrids_dev);
             return deviceSpecificSettings;
@@ -345,7 +345,7 @@ public class QHybridCoordinator extends AbstractBLEDeviceCoordinator {
         return false;
     }
 
-    private boolean isHybridHR(GBDevice device){
+    public boolean isHybridHR(GBDevice device){
         if(!isFossilHybrid(device)) return false;
         return device.getName().startsWith("Hybrid HR") || device.getName().equals("Fossil Gen. 6 Hybrid");
     }

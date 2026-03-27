@@ -58,6 +58,7 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.HybridHRActivitySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.NotificationConfiguration;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.PackageConfigHelper;
+import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.QHybridCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.entities.HybridHRActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
@@ -372,7 +373,9 @@ public class FossilWatchAdapter extends WatchAdapter {
 
     @Override
     public void setHands(MoveHandsRequest.MovementConfiguration movement) {
-        queueWrite(new MoveHandsRequest(movement), false);
+        GBDevice dev = getDeviceSupport().getDevice();
+        boolean isHybridHR = ((QHybridCoordinator) dev.getDeviceCoordinator()).isHybridHR(dev);
+        queueWrite(new MoveHandsRequest(movement, isHybridHR), false);
     }
 
     @Override
