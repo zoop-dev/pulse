@@ -62,10 +62,6 @@ public abstract class IGPSportAbstractCoordinator extends AbstractBLEDeviceCoord
         return BONDING_STYLE_ASK;
     }
 
-    @Override
-    public boolean supportsActivityTracks(final GBDevice device) {
-        return true;
-    }
 
     @Override
     public boolean supportsAppsManagement(final GBDevice device) {
@@ -93,5 +89,8 @@ public abstract class IGPSportAbstractCoordinator extends AbstractBLEDeviceCoord
         return null;
     }
 
-
+    @Override
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.BIKE_COMPUTER;
+    }
 }

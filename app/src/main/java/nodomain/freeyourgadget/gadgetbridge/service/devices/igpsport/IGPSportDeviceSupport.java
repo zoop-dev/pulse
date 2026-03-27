@@ -58,11 +58,14 @@ import nodomain.freeyourgadget.gadgetbridge.devices.igpsport.IGPSportConstants;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureUnit;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.WeightUnit;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Back;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Ble;
@@ -85,6 +88,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Common;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Factory;
+import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
 
 
@@ -103,6 +107,7 @@ public class IGPSportDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private IGPSportDownloadManager downloadManager;
     private IGPSportWeather weatherManager;
     private MediaManager mediaManager;
+    private static GBPrefs prefs = GBApplication.getPrefs();
 
 
     private int mtuSize=247; //FIXME use actual device mtu
@@ -609,7 +614,9 @@ public class IGPSportDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 case ActivityUser.PREF_USER_DATE_OF_BIRTH:
                     setUserData(builder);
                     break;
-                case SettingsActivity.PREF_MEASUREMENT_SYSTEM:
+                case SettingsActivity.PREF_UNIT_DISTANCE:
+                case SettingsActivity.PREF_UNIT_TEMPERATURE:
+                case SettingsActivity.PREF_UNIT_WEIGHT:
                     setMeasurementSystem(builder);
                     break;
             }
@@ -627,19 +634,30 @@ public class IGPSportDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
         Config.unit_msg.Builder unitMsgBuilder = Config.unit_msg.newBuilder();
 
-        //unitMsgBuilder.setUnitItem()  ??? need all unit items?
-        String units = GBApplication.getPrefs().getString(SettingsActivity.PREF_MEASUREMENT_SYSTEM, GBApplication.getContext().getString(R.string.p_unit_metric));
-        if (units.equals(GBApplication.getContext().getString(R.string.p_unit_imperial))) {
-            configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_DISTANCE).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_INCH));
-            configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_ELEVATION).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_INCH));
-            configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_WEIGHT).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_INCH));
-            configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_TEMPERATURE).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_INCH));
-        } else {
+        final DistanceUnit distanceUnit = prefs.getDistanceUnit();
+        final TemperatureUnit temperatureUnit = prefs.getTemperatureUnit();
+        final WeightUnit weightUnit = prefs.getWeightUnit();
+
+        if (distanceUnit == DistanceUnit.METRIC) {
             configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_DISTANCE).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_METRIC));
             configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_ELEVATION).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_METRIC));
-            configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_WEIGHT).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_METRIC));
-            configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_TEMPERATURE).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_METRIC));
+        } else {
+            configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_DISTANCE).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_INCH));
+            configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_ELEVATION).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_INCH));
         }
+
+        if (temperatureUnit == TemperatureUnit.CELSIUS) {
+            configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_TEMPERATURE).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_METRIC));
+        } else {
+            configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_TEMPERATURE).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_INCH));
+        }
+
+        if (weightUnit == WeightUnit.KILOGRAM) {
+            configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_WEIGHT).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_METRIC));
+        } else {
+            configMsgBuilder.addUnitMessage(Config.unit_msg.newBuilder().setUnitItem(Config.UNIT_ITEM.enum_UNIT_ITEM_WEIGHT).setUnitType(Config.UNIT_TYPE.enum_UNIT_TYPE_INCH));
+        }
+
         configMsgBuilder.addUnitMessage(unitMsgBuilder);
 
         byte[] confMsgBytes = craftData(configMsgBuilder.getServiceType().getNumber(),
