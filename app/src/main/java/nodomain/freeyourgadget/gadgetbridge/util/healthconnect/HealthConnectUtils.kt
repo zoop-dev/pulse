@@ -260,6 +260,11 @@ class HealthConnectUtils {
             LOG.info("$HC_SYNC_TAG Starting sync for device: {}", gbDevice.aliasOrName)
 
             val deviceCoordinator = gbDevice.deviceCoordinator
+            val manufacturer = deviceCoordinator.manufacturer
+            var deviceName = context.getString(deviceCoordinator.deviceNameResource)
+            if (deviceName.startsWith(manufacturer) && deviceName != manufacturer) {
+                deviceName = deviceName.replace(manufacturer, "");
+            }
             val device = Device(
                 type = when (deviceCoordinator.getDeviceKind(gbDevice)) {
                     DeviceCoordinator.DeviceKind.WATCH -> Device.TYPE_WATCH
@@ -272,12 +277,12 @@ class HealthConnectUtils {
                     DeviceCoordinator.DeviceKind.SMART_DISPLAY -> Device.TYPE_SMART_DISPLAY
                     else -> Device.TYPE_UNKNOWN
                 },
-                manufacturer = deviceCoordinator.manufacturer,
-                model = gbDevice.model
+                manufacturer = manufacturer,
+                model = deviceName
             )
 
             dataTypeLoop@ for (dataType in HealthConnectPermissionManager.HealthConnectDataType.entries) {
-                // Check if worker has been cancelled
+                // Check if worker has been canceled
                 if (worker?.isStopped == true) {
                     LOG.info("$HC_SYNC_TAG Worker has been cancelled, aborting sync")
                     break@dataTypeLoop
