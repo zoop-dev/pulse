@@ -63,6 +63,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HybridHRActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
+import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.adapter.WatchAdapter;
@@ -240,8 +241,11 @@ public class FossilWatchAdapter extends WatchAdapter {
                 requestQueue.clear();
             }
             log("characteristic write failed: " + status);
-            if (BuildConfig.DEBUG)
-                GB.toast(fossilRequest.getName() + " characteristic write failed: " + status, Toast.LENGTH_SHORT, GB.ERROR);
+            if (BuildConfig.DEBUG) {
+                // ADDED NULL CHECK: Prevents crash if the failure came from a raw direct BLE write
+                String requestName = (fossilRequest != null) ? fossilRequest.getName() : "Raw BLE Write";
+                GB.toast(requestName + " characteristic write failed: " + status, Toast.LENGTH_SHORT, GB.ERROR);
+            }
             fossilRequest = null;
 
             queueNextRequest();
@@ -306,6 +310,33 @@ public class FossilWatchAdapter extends WatchAdapter {
             return;
         }
         queueWrite(new PlayTextNotificationRequest(config.getPackageName(), this), false);
+    }
+
+    @Override
+    public void onSetCallState(CallSpec callSpec) {
+        if (callSpec.command == CallSpec.CALL_INCOMING) {
+            LOG.info("Incoming call, triggering vibration on watch");
+            try {
+                getDeviceSupport().createTransactionBuilder("vibrate call")
+                        .write(
+                                UUID.fromString("3dda0005-957f-7d4a-34a6-74696673696d"),
+                                (byte) 0x01, (byte) 0x04, (byte) 0x30, (byte) 0x75, (byte) 0x00, (byte) 0x00)
+                        .queue();
+            } catch (Exception e) {
+                LOG.error("Error triggering call vibration", e);
+            }
+        } else {
+            LOG.info("Call ended, stopping vibration on watch");
+            try {
+                getDeviceSupport().createTransactionBuilder("stop call vibration")
+                        .write(
+                                UUID.fromString("3dda0005-957f-7d4a-34a6-74696673696d"),
+                                (byte) 0x02, (byte) 0x05, (byte) 0x04)
+                        .queue();
+            } catch (Exception e) {
+                LOG.error("Error stopping call vibration", e);
+            }
+        }
     }
 
     @Override
