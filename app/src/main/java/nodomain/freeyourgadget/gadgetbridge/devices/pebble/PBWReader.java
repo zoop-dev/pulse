@@ -75,7 +75,18 @@ public class PBWReader {
 
     private JSONObject mAppKeys = null;
 
+    /**
+     * For dual-slot firmware devices, the slot to install to.
+     * null for non-dual-slot devices, 0 or 1 for dual-slot devices.
+     */
+    private final Integer targetSlot;
+
     public PBWReader(Uri uri, Context context, String platform) throws IOException {
+        this(uri, context, platform, null);
+    }
+
+    public PBWReader(Uri uri, Context context, String platform, Integer targetSlot) throws IOException {
+        this.targetSlot = targetSlot;
         uriHelper = UriHelper.get(uri, context);
 
         if (uriHelper.getFileName().endsWith(".pbl")) {
@@ -99,7 +110,11 @@ public class PBWReader {
         }
 
         String platformDir = "";
-        if (!uriHelper.getFileName().endsWith(".pbz")) {
+        boolean isPbzFirmware = uriHelper.getFileName().endsWith(".pbz");
+        int firmwareSlotCount = 0;
+        String firstSlotHwRevision = null;
+
+        if (!isPbzFirmware) {
             platformDir = determinePlatformDir(uriHelper, platform);
 
             if (platform.equals("chalk") && platformDir.equals("")) {
@@ -125,7 +140,35 @@ public class PBWReader {
         try (ZipInputStream zis = new ZipInputStream(uriHelper.openInputStream())) {
             while ((ze = zis.getNextEntry()) != null) {
                 String fileName = ze.getName();
-                if (fileName.equals(platformDir + "manifest.json")) {
+
+                // For .pbz firmware files, check for slot-based manifests (slot0/, slot1/)
+                // as well as root manifest.json
+                String slotPrefix = "";
+                boolean isManifest = fileName.equals(platformDir + "manifest.json");
+                if (isPbzFirmware && !isManifest) {
+                    // Check for dual-slot firmware format (e.g., slot0/manifest.json, slot1/manifest.json)
+                    if (fileName.matches("slot\\d+/manifest\\.json")) {
+                        slotPrefix = fileName.substring(0, fileName.indexOf('/') + 1);
+
+                        // If targetSlot is specified, only match that slot's manifest
+                        if (targetSlot != null) {
+                            String expectedPrefix = "slot" + targetSlot + "/";
+                            if (slotPrefix.equals(expectedPrefix)) {
+                                isManifest = true;
+                                LOG.info("Using target slot {} firmware manifest: {}", targetSlot, fileName);
+                            } else {
+                                LOG.info("Skipping slot manifest {} (target is slot {})", fileName, targetSlot);
+                            }
+                        } else {
+                            // No target slot specified, process all slots (legacy behavior)
+                            isManifest = true;
+                            LOG.info("Found slot-based firmware manifest: " + fileName);
+                        }
+                    }
+                }
+
+                if (isManifest) {
+                    String manifestSlotPrefix = slotPrefix.isEmpty() ? platformDir : slotPrefix;
                     long bytes = ze.getSize();
                     if (bytes > 8192) // that should be too much
                         break;
@@ -138,17 +181,47 @@ public class PBWReader {
                     String jsonString = baos.toString();
                     try {
                         JSONObject json = new JSONObject(jsonString);
-                        HashMap<String, Byte> fileTypeMap;
+                        HashMap<String, Byte> fileTypeMap = null;
 
                         try {
                             JSONObject firmware = json.getJSONObject("firmware");
                             fileTypeMap = fwFileTypesMap;
                             isFirmware = true;
-                            hwRevision = firmware.getString("hwrev");
+                            String slotHwRevision = firmware.getString("hwrev");
+
+                            // For dual-slot firmware, validate consistency
+                            if (!slotPrefix.isEmpty()) {
+                                firmwareSlotCount++;
+                                if (firstSlotHwRevision == null) {
+                                    firstSlotHwRevision = slotHwRevision;
+                                    hwRevision = slotHwRevision;
+                                } else if (!firstSlotHwRevision.equals(slotHwRevision)) {
+                                    isValid = false;
+                                    invalidReason = "Dual-slot firmware hwrev mismatch: " + firstSlotHwRevision + " vs " + slotHwRevision;
+                                    LOG.error(invalidReason);
+                                    // Will exit via invalidReason check below
+                                }
+                                LOG.info("Slot {} firmware hwrev: {}", slotPrefix, slotHwRevision);
+                            } else {
+                                hwRevision = slotHwRevision;
+                            }
                         } catch (JSONException e) {
-                            fileTypeMap = appFileTypesMap;
-                            isFirmware = false;
+                            // For dual-slot .pbz files, all slots must be firmware
+                            if (isPbzFirmware && !slotPrefix.isEmpty()) {
+                                isValid = false;
+                                invalidReason = "Slot " + slotPrefix + " is not firmware (missing firmware object in manifest)";
+                                LOG.error(invalidReason);
+                            } else {
+                                fileTypeMap = appFileTypesMap;
+                                isFirmware = false;
+                            }
                         }
+
+                        // Exit early if validation failed
+                        if (invalidReason != null || fileTypeMap == null) {
+                            break;
+                        }
+
                         for (Map.Entry<String, Byte> entry : fileTypeMap.entrySet()) {
                             try {
                                 JSONObject jo = json.getJSONObject(entry.getKey());
@@ -156,8 +229,8 @@ public class PBWReader {
                                 int size = jo.getInt("size");
                                 long crc = jo.getLong("crc");
                                 byte type = entry.getValue();
-                                pebbleInstallables.add(new PebbleInstallable(platformDir + name, size, (int) crc, type));
-                                LOG.info("found file to install: " + platformDir + name);
+                                pebbleInstallables.add(new PebbleInstallable(manifestSlotPrefix + name, size, (int) crc, type));
+                                LOG.info("found file to install: " + manifestSlotPrefix + name);
                                 isValid = true;
                             } catch (JSONException e) {
                                 // not fatal
@@ -247,6 +320,29 @@ public class PBWReader {
                     invalidReason = "No installable files found in manifest.json for platform";
                 } else {
                     invalidReason = "Unknown app parsing error";
+                }
+            }
+        }
+
+        // Validate dual-slot firmware
+        if (isValid && isFirmware && firmwareSlotCount > 0) {
+            if (targetSlot != null) {
+                // When target slot is specified, we should have exactly 1 slot
+                if (firmwareSlotCount == 1) {
+                    LOG.info("Target slot {} firmware ready for install, hwrev '{}'", targetSlot, hwRevision);
+                } else {
+                    // This shouldn't happen if our filtering is correct
+                    LOG.warn("Expected 1 slot for target {}, found {}", targetSlot, firmwareSlotCount);
+                }
+            } else {
+                // Legacy behavior: when no target slot specified, require both slots
+                if (firmwareSlotCount < 2) {
+                    isValid = false;
+                    invalidReason = "Dual-slot firmware incomplete: found only " + firmwareSlotCount + " slot(s), expected 2. " +
+                            "Device may need to report its running slot for single-slot install.";
+                    LOG.error(invalidReason);
+                } else {
+                    LOG.info("Dual-slot firmware validated: both slots present with matching hwrev '{}'", hwRevision);
                 }
             }
         }

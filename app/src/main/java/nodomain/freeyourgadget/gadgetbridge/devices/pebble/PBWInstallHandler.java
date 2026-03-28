@@ -48,6 +48,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleHardware;
 import nodomain.freeyourgadget.gadgetbridge.util.PebbleUtils;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
 
 public class PBWInstallHandler implements InstallHandler {
     private static final Logger LOG = LoggerFactory.getLogger(PBWInstallHandler.class);
@@ -75,9 +76,10 @@ public class PBWInstallHandler implements InstallHandler {
         }
 
         String platformName = PebbleHardware.getPlatformName(device.getModel());
+        Integer targetSlot = (Integer) device.getExtraInfo(GBDeviceEventVersionInfo.EXTRA_FW_UPDATE_TARGET_SLOT);
 
         try {
-            mPBWReader = new PBWReader(mUri, mContext, platformName);
+            mPBWReader = new PBWReader(mUri, mContext, platformName, targetSlot);
         } catch (FileNotFoundException e) {
             installActivity.setInfoText("file not found");
             installActivity.setInstallEnabled(false);

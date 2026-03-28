@@ -608,9 +608,10 @@ class PebbleIoThread extends GBDeviceIoThread {
         }
 
         String platformName = PebbleHardware.getPlatformName(gbDevice.getModel());
+        Integer targetSlot = (Integer) gbDevice.getExtraInfo(GBDeviceEventVersionInfo.EXTRA_FW_UPDATE_TARGET_SLOT);
 
         try {
-            mPBWReader = new PBWReader(uri, getContext(), platformName);
+            mPBWReader = new PBWReader(uri, getContext(), platformName, targetSlot);
         } catch (FileNotFoundException e) {
             LOG.warn("app file not found", e);
             return;

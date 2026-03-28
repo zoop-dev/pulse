@@ -293,6 +293,11 @@ public class PebbleProtocol extends GBDeviceProtocol {
 
     int mFwMajor = 3;
     boolean isNewEraPebble = false;
+
+    // Dual-slot firmware support
+    // Bit 2 (0x04) = IsDualSlot, Bit 3 (0x08) = IsSlot0
+    private boolean mIsDualSlot = false;
+    private boolean mIsSlot0 = false;
     boolean mEnablePebbleKit = false;
     boolean mAlwaysACKPebbleKit = false;
     private byte[] screenshotData = null;
@@ -2423,6 +2428,16 @@ public class PebbleProtocol extends GBDeviceProtocol {
                 String gitHash = getFixedString(buf, 8);
                 int fwFlags = buf.get();
                 LOG.info("git hash: {}, flags: {}", gitHash, fwFlags);
+
+                // Extract dual-slot firmware flags
+                mIsDualSlot = (fwFlags & 0x04) != 0;  // Bit 2: IsDualSlot
+                mIsSlot0 = (fwFlags & 0x08) != 0;      // Bit 3: IsSlot0
+                if (mIsDualSlot) {
+                    int runningSlot = mIsSlot0 ? 0 : 1;
+                    int targetSlot = mIsSlot0 ? 1 : 0;
+                    versionCmd.fwUpdateTargetSlot = targetSlot;
+                    LOG.info("Dual-slot firmware detected: running slot {}, will update slot {}", runningSlot, targetSlot);
+                }
                 int hwRev = buf.get() & 0xFF;  // Convert to unsigned
                 String codename = PebbleHardware.getCodenameByHardwareId(hwRev);
                 if (codename != null) {
