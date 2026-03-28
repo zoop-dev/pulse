@@ -66,6 +66,7 @@ public class PBWReader {
     private boolean isFirmware = false;
     private boolean isLanguage = false;
     private boolean isValid = false;
+    private String invalidReason = null;
     private String hwRevision = null;
     private short mSdkVersion;
     private short mAppVersion;
@@ -102,7 +103,12 @@ public class PBWReader {
             platformDir = determinePlatformDir(uriHelper, platform);
 
             if (platform.equals("chalk") && platformDir.equals("")) {
+                invalidReason = "No chalk/ directory found - app doesn't support Pebble Time Round";
                 return;
+            }
+
+            if (platformDir.equals("")) {
+                LOG.info("No platform-specific directory found for {}, will try root", platform);
             }
         }
 
@@ -160,6 +166,7 @@ public class PBWReader {
                     } catch (JSONException e) {
                         // no JSON at all that is a problem
                         isValid = false;
+                        invalidReason = "Failed to parse manifest.json: " + e.getMessage();
                         LOG.warn("exception 1 in constructor", e);
                         break;
                     }
@@ -190,6 +197,7 @@ public class PBWReader {
                         }
                     } catch (JSONException e) {
                         isValid = false;
+                        invalidReason = "Failed to parse appinfo.json: " + e.getMessage();
                         LOG.warn("exception 2 in constructor", e);
                         break;
                     }
@@ -227,6 +235,28 @@ public class PBWReader {
             }
             else if (!isFirmware) {
                 isValid = false;
+                StringBuilder missing = new StringBuilder();
+                if (appUUID == null) missing.append("uuid, ");
+                if (appName == null) missing.append("shortName, ");
+                if (appCreator == null) missing.append("companyName, ");
+                if (appVersion == null) missing.append("versionLabel, ");
+                if (missing.length() > 0) {
+                    missing.setLength(missing.length() - 2); // Remove trailing ", "
+                    invalidReason = "Missing required fields in appinfo.json: " + missing;
+                } else if (pebbleInstallables.isEmpty()) {
+                    invalidReason = "No installable files found in manifest.json for platform";
+                } else {
+                    invalidReason = "Unknown app parsing error";
+                }
+            }
+        }
+
+        // Set default invalid reason if still not valid and no specific reason
+        if (!isValid && invalidReason == null) {
+            if (pebbleInstallables == null || pebbleInstallables.isEmpty()) {
+                invalidReason = "No manifest.json found or no installable files for platform: " + platform;
+            } else {
+                invalidReason = "Unknown validation error";
             }
         }
     }
@@ -279,6 +309,14 @@ public class PBWReader {
 
     public boolean isValid() {
         return isValid;
+    }
+
+    /**
+     * Get the reason why this pbw/pbz is invalid.
+     * @return Human-readable reason string, or null if valid
+     */
+    public String getInvalidReason() {
+        return invalidReason;
     }
 
     public GBDeviceApp getGBDeviceApp() {
