@@ -91,13 +91,7 @@ public class ActivityFileParser {
             int hrByte = file[pos + 2] & 0xFF;
             int flags  = file[pos + 3] & 0xFF;
 
-            if (hrByte != 0xFF) break;   // sentinel / corrupt record → stop
-
-            if ((flags & 0x40) != 0) {   // special marker → skip, tick clock
-                currentTimestamp += 60;
-                pos += 4;
-                continue;
-            }
+            if (hrByte != 0xFF) break;   // not a known no-HR record
 
             ActivityEntry entry = new ActivityEntry();
             entry.id = currentId++;
@@ -106,11 +100,10 @@ public class ActivityFileParser {
 
             parseVariabilityBytes(varLo, varHi, entry);
 
-            int intensity = flags & 0x03;
-            entry.isActive = intensity > 0;
-            // intensity 0=none, 1=light, 2=moderate, 3=vigorous
-            // stored in calories field for compatibility (0–3)
-//            entry.calories = intensity;
+            entry.isActive = (flags & 0x40) == 0x40;
+            int calories = flags & 0xFF;
+            calories &= 0x3F;
+            entry.calories = calories;
 
             samples.add(entry);
             currentTimestamp += 60;
