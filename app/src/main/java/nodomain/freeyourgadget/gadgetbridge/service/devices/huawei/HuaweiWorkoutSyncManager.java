@@ -113,6 +113,8 @@ public class HuaweiWorkoutSyncManager {
     private int currentNumber; // Used for data, pace, etc...
     private int retryCounter;
 
+    private boolean currentWorkoutMissingData;
+
     public HuaweiWorkoutSyncManager(HuaweiSupportProvider supportProvider) {
         this.supportProvider = supportProvider;
         this.syncRequests = new ArrayList<>();
@@ -144,17 +146,22 @@ public class HuaweiWorkoutSyncManager {
             this.workoutNumbersList = null;
             this.currentDatabaseId = null;
             this.smallerTimeslotDepth = 0;
+            this.currentWorkoutMissingData = false;
         }
     }
 
     private void handleException(@Nullable Exception e) {
         GB.toast("Exception synchronizing workout", Toast.LENGTH_SHORT, GB.ERROR, e);
+        if (this.currentWorkoutMissingData)
+            dataSkippedToast();
         this.callback.handleException();
         resetState();
     }
 
     private void handleTimeout() {
         GB.toast("Timeout when synchronizing workout", Toast.LENGTH_SHORT, GB.WARN);
+        if (this.currentWorkoutMissingData)
+            dataSkippedToast();
         this.callback.handleTimeout();
         resetState();
     }
@@ -255,6 +262,7 @@ public class HuaweiWorkoutSyncManager {
         }
         this.currentWorkoutNumbers = this.workoutNumbersList.remove(0);
         this.retryCounter = 0;
+        this.currentWorkoutMissingData = false;
         syncWorkoutTotals();
     }
 
@@ -386,7 +394,7 @@ public class HuaweiWorkoutSyncManager {
         if (err) {
             if (this.retryCounter >= MAX_RETRIES) {
                 LOG.error("Max tries for workout data exceeded, moving to next data");
-                dataSkippedToast();
+                this.currentWorkoutMissingData = true;
                 this.currentNumber += 1;
                 this.retryCounter = 0;
                 syncData();
@@ -467,7 +475,7 @@ public class HuaweiWorkoutSyncManager {
         if (err) {
             if (this.retryCounter >= MAX_RETRIES) {
                 LOG.error("Max tries for workout pace exceeded, moving to next data");
-                dataSkippedToast();
+                this.currentWorkoutMissingData = true;
                 this.currentNumber += 1;
                 this.retryCounter = 0;
                 syncPace();
@@ -545,7 +553,7 @@ public class HuaweiWorkoutSyncManager {
         if (err) {
             if (this.retryCounter >= MAX_RETRIES) {
                 LOG.error("Max tries for workout swim segment exceeded, moving to next data");
-                dataSkippedToast();
+                this.currentWorkoutMissingData = true;
                 this.currentNumber += 1;
                 this.retryCounter = 0;
                 syncSwimSegments();
@@ -611,7 +619,7 @@ public class HuaweiWorkoutSyncManager {
             LOG.error("Error {} occurred during workout SpO2 sync", packet.error);
             if (this.retryCounter >= MAX_RETRIES) {
                 LOG.error("Max tries for workout SpO2 exceeded, moving to next data");
-                dataSkippedToast();
+                this.currentWorkoutMissingData = true;
                 this.currentNumber += 1;
                 this.retryCounter = 0;
                 syncSpO2();
@@ -679,7 +687,7 @@ public class HuaweiWorkoutSyncManager {
                     LOG.warn("Error 0001E079 occurred during workout swim segments sync. This seems to be normal, so it's ignored.");
                 } else {
                     LOG.error("Max tries for workout sections exceeded, moving to next data");
-                    dataSkippedToast();
+                    this.currentWorkoutMissingData = true;
                 }
                 this.currentNumber += 1;
                 this.retryCounter = 0;
@@ -706,6 +714,10 @@ public class HuaweiWorkoutSyncManager {
     }
 
     private void finishSingleWorkoutSync() {
+        // Show toast if we could not download some data
+        if (this.currentWorkoutMissingData)
+            dataSkippedToast();
+
         new HuaweiWorkoutGbParser(
                 this.supportProvider.getDevice(),
                 this.supportProvider.getContext()
