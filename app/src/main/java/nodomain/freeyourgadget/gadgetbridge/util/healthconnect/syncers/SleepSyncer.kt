@@ -28,7 +28,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample
 import nodomain.freeyourgadget.gadgetbridge.util.healthconnect.HealthConnectUtils
 import org.slf4j.LoggerFactory
 import java.time.Instant
-import java.time.ZoneOffset
+import java.time.ZoneId
 
 private val LOG = LoggerFactory.getLogger("SleepSyncer")
 
@@ -38,7 +38,7 @@ internal object SleepSyncer : ContextualActivitySampleSyncer {
         healthConnectClient: HealthConnectClient,
         gbDevice: GBDevice,
         metadata: Metadata,
-        offset: ZoneOffset,
+        offset: ZoneId,
         sliceStartBoundary: Instant,
         sliceEndBoundary: Instant,
         grantedPermissions: Set<String>,
@@ -114,7 +114,7 @@ internal object SleepSyncer : ContextualActivitySampleSyncer {
         sortedDeviceSamples: List<ActivitySample>,
         sliceStartBoundary: Instant,
         sliceEndBoundary: Instant,
-        offset: ZoneOffset,
+        offset: ZoneId,
         metadata: Metadata,
         context: Context,
         deviceName: String
@@ -182,9 +182,9 @@ internal object SleepSyncer : ContextualActivitySampleSyncer {
 
         return SleepSessionRecord(
             startTime = recordFinalStartTime,
-            startZoneOffset = offset,
+            startZoneOffset = offset.rules.getOffset(recordFinalStartTime),
             endTime = recordFinalEndTime,
-            endZoneOffset = offset,
+            endZoneOffset = offset.rules.getOffset(recordFinalEndTime),
             title = context.getString(nodomain.freeyourgadget.gadgetbridge.R.string.health_connect_sleep_session_title, deviceName),
             notes = context.getString(nodomain.freeyourgadget.gadgetbridge.R.string.health_connect_sleep_session_notes, deviceName),
             stages = stages,

@@ -25,6 +25,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample
 import nodomain.freeyourgadget.gadgetbridge.util.healthconnect.HealthConnectUtils
 import org.slf4j.Logger
 import java.time.Instant
+import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.temporal.ChronoUnit
 import kotlin.reflect.KClass
@@ -44,7 +45,7 @@ internal abstract class AbstractActivitySampleSyncer<TRecord : Record> : Activit
         healthConnectClient: HealthConnectClient,
         gbDevice: GBDevice,
         metadata: Metadata,
-        offset: ZoneOffset,
+        offset: ZoneId,
         sliceStartBoundary: Instant,
         sliceEndBoundary: Instant,
         grantedPermissions: Set<String>,
@@ -89,7 +90,7 @@ internal abstract class AbstractActivitySampleSyncer<TRecord : Record> : Activit
                 return@forEach
             }
 
-            val record = convertSample(sample = currentSample, offset, metadata, deviceName)
+            val record = convertSample(sample = currentSample, offset.rules.getOffset(endTs), metadata, deviceName)
             if (record == null) {
                 skippedCount++
                 return@forEach

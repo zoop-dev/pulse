@@ -52,6 +52,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs
 import nodomain.freeyourgadget.gadgetbridge.util.healthconnect.HealthConnectUtils
 import org.slf4j.LoggerFactory
 import java.time.Instant
+import java.time.ZoneId
 import java.time.ZoneOffset
 import java.util.Date
 
@@ -69,7 +70,7 @@ internal object RecordedWorkoutSyncer {
         healthConnectClient: HealthConnectClient,
         gbDevice: GBDevice,
         metadata: Metadata,
-        offset: ZoneOffset,
+        zoneId: ZoneId,
         sliceStartBoundary: Instant,
         sliceEndBoundary: Instant,
         grantedPermissions: Set<String>,
@@ -115,6 +116,8 @@ internal object RecordedWorkoutSyncer {
 
                 workoutsProcessedInThisSlice++
                 LOG.info("Processing workout for device '$deviceName' (Type: ${workout.activityKind}, Start: $workoutStartInstant, End: $workoutEndInstant).")
+
+                val offset = zoneId.rules.getOffset(workoutStartInstant)
 
                 val recordsToInsert = mutableListOf<Record>()
                 val activityKind = ActivityKind.fromCode(workout.activityKind)

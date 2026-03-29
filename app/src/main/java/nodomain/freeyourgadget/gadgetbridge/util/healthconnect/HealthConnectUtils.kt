@@ -238,7 +238,7 @@ class HealthConnectUtils {
         val recordsSyncedByType = mutableMapOf<String, Int>() // Track records per data type
         val dataTypesWithErrors = mutableSetOf<String>() // Track which data types had errors
 
-        val offset = ZonedDateTime.now(TimeZone.getDefault().toZoneId()).offset
+        val zoneId = TimeZone.getDefault().toZoneId()
         val manager = GBApplication.app().deviceManager
         val syncIntervalInSeconds: Long = 24 * 60 * 60 // 1 day slices
         val lookBackInSeconds: Long = 24 * 60 * 60
@@ -263,7 +263,7 @@ class HealthConnectUtils {
             val manufacturer = deviceCoordinator.manufacturer
             var deviceName = context.getString(deviceCoordinator.deviceNameResource)
             if (deviceName.startsWith(manufacturer) && deviceName != manufacturer) {
-                deviceName = deviceName.replace(manufacturer, "");
+                deviceName = deviceName.replace(manufacturer, "").trim();
             }
             val device = Device(
                 type = when (deviceCoordinator.getDeviceKind(gbDevice)) {
@@ -393,7 +393,7 @@ class HealthConnectUtils {
                             healthConnectClient = healthConnectClient,
                             gbDevice = gbDevice,
                             metadata = metadata,
-                            offset = offset,
+                            offset = zoneId,
                             currentSliceStartTs = currentSliceStartTs,
                             currentSliceEndTs = currentSliceEndTs,
                             grantedPermissions = grantedPermissions,
@@ -575,7 +575,7 @@ class HealthConnectUtils {
             healthConnectClient: HealthConnectClient,
             gbDevice: GBDevice,
             metadata: Metadata,
-            offset: java.time.ZoneOffset,
+            offset: java.time.ZoneId,
             currentSliceStartTs: Instant,
             currentSliceEndTs: Instant,
             grantedPermissions: Set<String>,

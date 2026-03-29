@@ -31,7 +31,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.healthconnect.HealthConnectUtil
 import nodomain.freeyourgadget.gadgetbridge.util.healthconnect.SyncException
 import org.slf4j.LoggerFactory
 import java.time.Instant
-import java.time.ZoneOffset
+import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 
 private val LOG = LoggerFactory.getLogger("TemperatureSyncer")
@@ -47,7 +47,7 @@ internal object TemperatureSyncer : HealthConnectSyncer {
         healthConnectClient: HealthConnectClient,
         gbDevice: GBDevice,
         metadata: Metadata,
-        offset: ZoneOffset,
+        offset: ZoneId,
         sliceStartBoundary: Instant,
         sliceEndBoundary: Instant,
         grantedPermissions: Set<String>
@@ -108,7 +108,7 @@ internal object TemperatureSyncer : HealthConnectSyncer {
                     recordsToInsert.add(
                         BodyTemperatureRecord(
                             time = timestamp,
-                            zoneOffset = offset,
+                            zoneOffset = offset.rules.getOffset(timestamp),
                             temperature = Temperature.celsius(sampleTemp),
                             measurementLocation = sample.temperatureLocation,
                             metadata = metadata
@@ -178,9 +178,9 @@ internal object TemperatureSyncer : HealthConnectSyncer {
                     recordsToInsert.add(
                         SkinTemperatureRecord(
                             startTime = recordStartTime,
-                            startZoneOffset = offset,
+                            startZoneOffset = offset.rules.getOffset(recordStartTime),
                             endTime = recordEndTime,
-                            endZoneOffset = offset,
+                            endZoneOffset = offset.rules.getOffset(recordEndTime),
                             deltas = deltas,
                             baseline = Temperature.celsius(baselineForCurrentRecord),
                             metadata = metadata

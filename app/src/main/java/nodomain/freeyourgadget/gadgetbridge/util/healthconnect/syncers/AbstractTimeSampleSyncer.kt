@@ -29,6 +29,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.healthconnect.HealthConnectUtil
 import nodomain.freeyourgadget.gadgetbridge.util.healthconnect.SyncException
 import org.slf4j.Logger
 import java.time.Instant
+import java.time.ZoneId
 import java.time.ZoneOffset
 import kotlin.reflect.KClass
 
@@ -59,7 +60,7 @@ internal abstract class AbstractTimeSampleSyncer<TSample : TimeSample, TRecord :
         healthConnectClient: HealthConnectClient,
         gbDevice: GBDevice,
         metadata: Metadata,
-        offset: ZoneOffset,
+        offset: ZoneId,
         sliceStartBoundary: Instant,
         sliceEndBoundary: Instant,
         grantedPermissions: Set<String>
@@ -114,9 +115,10 @@ internal abstract class AbstractTimeSampleSyncer<TSample : TimeSample, TRecord :
             }
             return@filter true
         }.mapNotNull { sample ->
+            val sampleOffset = offset.rules.getOffset(Instant.ofEpochMilli(sample.timestamp))
             convertSample(
                 sample,
-                offset,
+                sampleOffset,
                 metadata,
                 deviceName
             )?.also {

@@ -26,6 +26,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample
 import nodomain.freeyourgadget.gadgetbridge.util.healthconnect.HealthConnectUtils
 import org.slf4j.LoggerFactory
 import java.time.Instant
+import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
 
@@ -36,7 +37,7 @@ internal object HeartRateSyncer : ActivitySampleSyncer {
         healthConnectClient: HealthConnectClient,
         gbDevice: GBDevice,
         metadata: Metadata,
-        offset: ZoneOffset,
+        offset: ZoneId,
         sliceStartBoundary: Instant,
         sliceEndBoundary: Instant,
         grantedPermissions: Set<String>,
@@ -99,7 +100,7 @@ internal object HeartRateSyncer : ActivitySampleSyncer {
                                 recordEndTime,
                                 currentHcSamples.size
                             )
-                            heartRateRecordList.add(HeartRateRecord(recordStartTime, offset, recordEndTime, offset, ArrayList(currentHcSamples), metadata))
+                            heartRateRecordList.add(HeartRateRecord(recordStartTime, offset.rules.getOffset(recordStartTime), recordEndTime, offset.rules.getOffset(recordEndTime), ArrayList(currentHcSamples), metadata))
                         } else {
                              LOG.warn("Skipping HeartRateRecord for device '$deviceName' from $recordStartTime to $recordEndTime due to invalid duration even after adjustment.")
                         }
@@ -126,7 +127,7 @@ internal object HeartRateSyncer : ActivitySampleSyncer {
                     recordEndTime,
                     currentHcSamples.size
                 )
-                heartRateRecordList.add(HeartRateRecord(recordStartTime, offset, recordEndTime, offset, ArrayList(currentHcSamples), metadata))
+                heartRateRecordList.add(HeartRateRecord(recordStartTime, offset.rules.getOffset(recordStartTime), recordEndTime, offset.rules.getOffset(recordEndTime), ArrayList(currentHcSamples), metadata))
             } else {
                 LOG.warn("Skipping final HeartRateRecord for device '$deviceName' from $recordStartTime to $recordEndTime due to invalid duration even after adjustment.")
             }
