@@ -117,7 +117,8 @@ internal object RecordedWorkoutSyncer {
                 workoutsProcessedInThisSlice++
                 LOG.info("Processing workout for device '$deviceName' (Type: ${workout.activityKind}, Start: $workoutStartInstant, End: $workoutEndInstant).")
 
-                val offset = zoneId.rules.getOffset(workoutStartInstant)
+                val startOffset = zoneId.rules.getOffset(workoutStartInstant)
+                val endOffset = zoneId.rules.getOffset(workoutEndInstant)
 
                 val recordsToInsert = mutableListOf<Record>()
                 val activityKind = ActivityKind.fromCode(workout.activityKind)
@@ -145,7 +146,8 @@ internal object RecordedWorkoutSyncer {
                         activityPoints,
                         workoutStartInstant,
                         workoutEndInstant,
-                        offset,
+                        startOffset,
+                        endOffset,
                         metadata,
                         grantedPermissions,
                         recordsToInsert,
@@ -167,7 +169,8 @@ internal object RecordedWorkoutSyncer {
                         workout,
                         workoutStartInstant,
                         workoutEndInstant,
-                        offset,
+                        startOffset,
+                        endOffset,
                         metadata,
                         grantedPermissions,
                         recordsToInsert,
@@ -287,7 +290,8 @@ internal object RecordedWorkoutSyncer {
         activityPoints: List<ActivityPoint>,
         workoutStartInstant: Instant,
         workoutEndInstant: Instant,
-        offset: ZoneOffset,
+        startOffset: ZoneOffset,
+        endOffset: ZoneOffset,
         metadata: Metadata,
         grantedPermissions: Set<String>,
         recordsToInsert: MutableList<Record>,
@@ -331,9 +335,9 @@ internal object RecordedWorkoutSyncer {
         recordsToInsert.add(
             ExerciseSessionRecord(
                 startTime = workoutStartInstant,
-                startZoneOffset = offset,
+                startZoneOffset = startOffset,
                 endTime = workoutEndInstant,
-                endZoneOffset = offset,
+                endZoneOffset = endOffset,
                 exerciseType = exerciseType,
                 title = workout.name ?: activityKind.getLabel(context),
                 exerciseRoute = exerciseRoute,
@@ -341,18 +345,18 @@ internal object RecordedWorkoutSyncer {
             )
         )
 
-        addDetailedHeartRateRecords(activityPoints, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
-        addDetailedSpeedRecords(activityPoints, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
-        addDetailedPowerRecords(activityPoints, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
+        addDetailedHeartRateRecords(activityPoints, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
+        addDetailedSpeedRecords(activityPoints, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
+        addDetailedPowerRecords(activityPoints, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
 
         val summaryData = parseSummaryData(workout.summaryData)
         if (summaryData != null) {
-            addDistanceRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
+            addDistanceRecord(summaryData, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
             if (!device.deviceCoordinator.supportsActiveCalories(device)) {
-                addCaloriesRecords(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
+                addCaloriesRecords(summaryData, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
             }
-            addElevationGainedRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
-            addCadenceRecords(summaryData, activityKind, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
+            addElevationGainedRecord(summaryData, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
+            addCadenceRecords(summaryData, activityKind, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
         }
     }
 
@@ -361,7 +365,8 @@ internal object RecordedWorkoutSyncer {
         workout: BaseActivitySummary,
         workoutStartInstant: Instant,
         workoutEndInstant: Instant,
-        offset: ZoneOffset,
+        startOffset: ZoneOffset,
+        endOffset: ZoneOffset,
         metadata: Metadata,
         grantedPermissions: Set<String>,
         recordsToInsert: MutableList<Record>,
@@ -373,9 +378,9 @@ internal object RecordedWorkoutSyncer {
         recordsToInsert.add(
             ExerciseSessionRecord(
                 startTime = workoutStartInstant,
-                startZoneOffset = offset,
+                startZoneOffset = startOffset,
                 endTime = workoutEndInstant,
-                endZoneOffset = offset,
+                endZoneOffset = endOffset,
                 exerciseType = exerciseType,
                 title = workout.name ?: activityKind.getLabel(context),
                 metadata = metadata
@@ -384,13 +389,13 @@ internal object RecordedWorkoutSyncer {
 
         val summaryData = parseSummaryData(workout.summaryData)
         if (summaryData != null) {
-            addDistanceRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
-            addSpeedRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
+            addDistanceRecord(summaryData, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
+            addSpeedRecord(summaryData, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
             if (!gbDevice.deviceCoordinator.supportsActiveCalories(gbDevice)) {
-                addCaloriesRecords(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
+                addCaloriesRecords(summaryData, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
             }
-            addElevationGainedRecord(summaryData, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
-            addCadenceRecords(summaryData, activityKind, workoutStartInstant, workoutEndInstant, offset, metadata, grantedPermissions, recordsToInsert, deviceName)
+            addElevationGainedRecord(summaryData, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
+            addCadenceRecords(summaryData, activityKind, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
         } else {
             LOG.warn("No summary data available for workout on device '{}' at {}", deviceName, workoutStartInstant)
         }
@@ -400,7 +405,8 @@ internal object RecordedWorkoutSyncer {
         activityPoints: List<ActivityPoint>,
         startTime: Instant,
         endTime: Instant,
-        offset: ZoneOffset,
+        startOffset: ZoneOffset,
+        endOffset: ZoneOffset,
         metadata: Metadata,
         grantedPermissions: Set<String>,
         recordsToInsert: MutableList<Record>,
@@ -429,9 +435,9 @@ internal object RecordedWorkoutSyncer {
             recordsToInsert.add(
                 HeartRateRecord(
                     startTime = startTime,
-                    startZoneOffset = offset,
+                    startZoneOffset = startOffset,
                     endTime = endTime,
-                    endZoneOffset = offset,
+                    endZoneOffset = endOffset,
                     samples = hrSamples,
                     metadata = metadata
                 )
@@ -444,7 +450,8 @@ internal object RecordedWorkoutSyncer {
         activityPoints: List<ActivityPoint>,
         startTime: Instant,
         endTime: Instant,
-        offset: ZoneOffset,
+        startOffset: ZoneOffset,
+        endOffset: ZoneOffset,
         metadata: Metadata,
         grantedPermissions: Set<String>,
         recordsToInsert: MutableList<Record>,
@@ -473,9 +480,9 @@ internal object RecordedWorkoutSyncer {
             recordsToInsert.add(
                 SpeedRecord(
                     startTime = startTime,
-                    startZoneOffset = offset,
+                    startZoneOffset = startOffset,
                     endTime = endTime,
-                    endZoneOffset = offset,
+                    endZoneOffset = endOffset,
                     samples = speedSamples,
                     metadata = metadata
                 )
@@ -488,7 +495,8 @@ internal object RecordedWorkoutSyncer {
         activityPoints: List<ActivityPoint>,
         startTime: Instant,
         endTime: Instant,
-        offset: ZoneOffset,
+        startOffset: ZoneOffset,
+        endOffset: ZoneOffset,
         metadata: Metadata,
         grantedPermissions: Set<String>,
         recordsToInsert: MutableList<Record>,
@@ -517,9 +525,9 @@ internal object RecordedWorkoutSyncer {
             recordsToInsert.add(
                 PowerRecord(
                     startTime = startTime,
-                    startZoneOffset = offset,
+                    startZoneOffset = startOffset,
                     endTime = endTime,
-                    endZoneOffset = offset,
+                    endZoneOffset = endOffset,
                     samples = powerSamples,
                     metadata = metadata
                 )
@@ -544,7 +552,8 @@ internal object RecordedWorkoutSyncer {
         summaryData: ActivitySummaryData,
         startTime: Instant,
         endTime: Instant,
-        offset: ZoneOffset,
+        startOffset: ZoneOffset,
+        endOffset: ZoneOffset,
         metadata: Metadata,
         grantedPermissions: Set<String>,
         recordsToInsert: MutableList<Record>,
@@ -561,9 +570,9 @@ internal object RecordedWorkoutSyncer {
             recordsToInsert.add(
                 DistanceRecord(
                     startTime = startTime,
-                    startZoneOffset = offset,
+                    startZoneOffset = startOffset,
                     endTime = endTime,
-                    endZoneOffset = offset,
+                    endZoneOffset = endOffset,
                     distance = Length.meters(distanceMeters.toDouble()),
                     metadata = metadata
                 )
@@ -576,7 +585,8 @@ internal object RecordedWorkoutSyncer {
         summaryData: ActivitySummaryData,
         startTime: Instant,
         endTime: Instant,
-        offset: ZoneOffset,
+        startOffset: ZoneOffset,
+        endOffset: ZoneOffset,
         metadata: Metadata,
         grantedPermissions: Set<String>,
         recordsToInsert: MutableList<Record>,
@@ -594,9 +604,9 @@ internal object RecordedWorkoutSyncer {
             recordsToInsert.add(
                 SpeedRecord(
                     startTime = midTime,
-                    startZoneOffset = offset,
+                    startZoneOffset = startOffset,
                     endTime = midTime,
-                    endZoneOffset = offset,
+                    endZoneOffset = startOffset,
                     samples = listOf(
                         SpeedRecord.Sample(
                             time = midTime,
@@ -614,7 +624,8 @@ internal object RecordedWorkoutSyncer {
         summaryData: ActivitySummaryData,
         startTime: Instant,
         endTime: Instant,
-        offset: ZoneOffset,
+        startOffset: ZoneOffset,
+        endOffset: ZoneOffset,
         metadata: Metadata,
         grantedPermissions: Set<String>,
         recordsToInsert: MutableList<Record>,
@@ -630,9 +641,9 @@ internal object RecordedWorkoutSyncer {
                 recordsToInsert.add(
                     ActiveCaloriesBurnedRecord(
                         startTime = startTime,
-                        startZoneOffset = offset,
+                        startZoneOffset = startOffset,
                         endTime = endTime,
-                        endZoneOffset = offset,
+                        endZoneOffset = endOffset,
                         energy = Energy.kilocalories(activeCalories),
                         metadata = metadata
                     )
@@ -657,9 +668,9 @@ internal object RecordedWorkoutSyncer {
                 recordsToInsert.add(
                     TotalCaloriesBurnedRecord(
                         startTime = startTime,
-                        startZoneOffset = offset,
+                        startZoneOffset = startOffset,
                         endTime = endTime,
-                        endZoneOffset = offset,
+                        endZoneOffset = endOffset,
                         energy = Energy.kilocalories(totalCalories),
                         metadata = metadata
                     )
@@ -677,7 +688,8 @@ internal object RecordedWorkoutSyncer {
         summaryData: ActivitySummaryData,
         startTime: Instant,
         endTime: Instant,
-        offset: ZoneOffset,
+        startOffset: ZoneOffset,
+        endOffset: ZoneOffset,
         metadata: Metadata,
         grantedPermissions: Set<String>,
         recordsToInsert: MutableList<Record>,
@@ -701,9 +713,9 @@ internal object RecordedWorkoutSyncer {
             recordsToInsert.add(
                 ElevationGainedRecord(
                     startTime = startTime,
-                    startZoneOffset = offset,
+                    startZoneOffset = startOffset,
                     endTime = endTime,
-                    endZoneOffset = offset,
+                    endZoneOffset = endOffset,
                     elevation = Length.meters(elevationGain),
                     metadata = metadata
                 )
@@ -717,7 +729,8 @@ internal object RecordedWorkoutSyncer {
         activityKind: ActivityKind,
         startTime: Instant,
         endTime: Instant,
-        offset: ZoneOffset,
+        startOffset: ZoneOffset,
+        endOffset: ZoneOffset,
         metadata: Metadata,
         grantedPermissions: Set<String>,
         recordsToInsert: MutableList<Record>,
@@ -740,9 +753,9 @@ internal object RecordedWorkoutSyncer {
                     recordsToInsert.add(
                         StepsCadenceRecord(
                             startTime = midTime,
-                            startZoneOffset = offset,
+                            startZoneOffset = startOffset,
                             endTime = midTime,
-                            endZoneOffset = offset,
+                            endZoneOffset = startOffset,
                             samples = listOf(
                                 StepsCadenceRecord.Sample(
                                     time = midTime,
@@ -763,9 +776,9 @@ internal object RecordedWorkoutSyncer {
                     recordsToInsert.add(
                         CyclingPedalingCadenceRecord(
                             startTime = midTime,
-                            startZoneOffset = offset,
+                            startZoneOffset = startOffset,
                             endTime = midTime,
-                            endZoneOffset = offset,
+                            endZoneOffset = startOffset,
                             samples = listOf(
                                 CyclingPedalingCadenceRecord.Sample(
                                     time = midTime,
