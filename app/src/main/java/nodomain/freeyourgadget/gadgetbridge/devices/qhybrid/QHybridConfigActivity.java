@@ -17,7 +17,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.qhybrid;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -29,27 +28,18 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.NumberPicker;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,7 +56,6 @@ import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,8 +85,6 @@ public class QHybridConfigActivity extends AbstractGBActivity {
 
     SharedPreferences prefs;
 
-    TextView timeOffsetView, timezoneOffsetView;
-
     GBDevice device;
 
     @Override
@@ -114,102 +101,13 @@ public class QHybridConfigActivity extends AbstractGBActivity {
 
         setContentView(R.layout.activity_qhybrid_settings);
 
-        findViewById(R.id.buttonOverwriteButtons).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LocalBroadcastManager.getInstance(QHybridConfigActivity.this).sendBroadcast(new Intent(QHybridSupport.QHYBRID_COMMAND_OVERWRITE_BUTTONS));
-            }
-        });
+//        findViewById(R.id.buttonOverwriteButtons).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                LocalBroadcastManager.getInstance(QHybridConfigActivity.this).sendBroadcast(new Intent(QHybridSupport.QHYBRID_COMMAND_OVERWRITE_BUTTONS));
+//            }
+//        });
 
-        prefs = GBApplication.getDeviceSpecificSharedPrefs(device.getAddress());
-        timeOffsetView = findViewById(R.id.qhybridTimeOffset);
-        timeOffsetView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int timeOffset = prefs.getInt("QHYBRID_TIME_OFFSET", 0);
-                LinearLayout layout2 = new LinearLayout(QHybridConfigActivity.this);
-                layout2.setOrientation(LinearLayout.HORIZONTAL);
-
-                final NumberPicker hourPicker = new NumberPicker(QHybridConfigActivity.this);
-                hourPicker.setMinValue(0);
-                hourPicker.setMaxValue(23);
-                hourPicker.setValue(timeOffset / 60);
-
-                final NumberPicker minPicker = new NumberPicker(QHybridConfigActivity.this);
-                minPicker.setMinValue(0);
-                minPicker.setMaxValue(59);
-                minPicker.setValue(timeOffset % 60);
-
-                layout2.addView(hourPicker);
-                TextView tw = new TextView(QHybridConfigActivity.this);
-                tw.setText(":");
-                layout2.addView(tw);
-                layout2.addView(minPicker);
-
-                layout2.setGravity(Gravity.CENTER);
-
-                new MaterialAlertDialogBuilder(QHybridConfigActivity.this)
-                        .setTitle(getString(R.string.qhybrid_offset_time_by))
-                        .setView(layout2)
-                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                prefs.edit().putInt("QHYBRID_TIME_OFFSET", hourPicker.getValue() * 60 + minPicker.getValue()).apply();
-                                updateTimeOffset();
-                                LocalBroadcastManager.getInstance(QHybridConfigActivity.this).sendBroadcast(new Intent(QHybridSupport.QHYBRID_COMMAND_UPDATE));
-                                GB.toast(getString(R.string.qhybrid_changes_delay_prompt), Toast.LENGTH_SHORT, GB.INFO);
-                            }
-                        })
-                        .setNegativeButton("cancel", null)
-                        .show();
-            }
-        });
-        updateTimeOffset();
-
-
-        timezoneOffsetView = findViewById(R.id.timezoneOffset);
-        timezoneOffsetView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int timeOffset = prefs.getInt("QHYBRID_TIMEZONE_OFFSET", 0);
-                LinearLayout layout2 = new LinearLayout(QHybridConfigActivity.this);
-                layout2.setOrientation(LinearLayout.HORIZONTAL);
-
-                final NumberPicker hourPicker = new NumberPicker(QHybridConfigActivity.this);
-                hourPicker.setMinValue(0);
-                hourPicker.setMaxValue(23);
-                hourPicker.setValue(timeOffset / 60);
-
-                final NumberPicker minPicker = new NumberPicker(QHybridConfigActivity.this);
-                minPicker.setMinValue(0);
-                minPicker.setMaxValue(59);
-                minPicker.setValue(timeOffset % 60);
-
-                layout2.addView(hourPicker);
-                TextView tw = new TextView(QHybridConfigActivity.this);
-                tw.setText(":");
-                layout2.addView(tw);
-                layout2.addView(minPicker);
-
-                layout2.setGravity(Gravity.CENTER);
-
-                new MaterialAlertDialogBuilder(QHybridConfigActivity.this)
-                        .setTitle(getString(R.string.qhybrid_offset_timezone))
-                        .setView(layout2)
-                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                prefs.edit().putInt("QHYBRID_TIMEZONE_OFFSET", hourPicker.getValue() * 60 + minPicker.getValue()).apply();
-                                updateTimezoneOffset();
-                                LocalBroadcastManager.getInstance(QHybridConfigActivity.this).sendBroadcast(new Intent(QHybridSupport.QHYBRID_COMMAND_UPDATE_TIMEZONE));
-                                GB.toast(getString(R.string.qhybrid_changes_delay_prompt), Toast.LENGTH_SHORT, GB.INFO);
-                            }
-                        })
-                        .setNegativeButton("cancel", null)
-                        .show();
-            }
-        });
-        updateTimezoneOffset();
 
         setTitle(R.string.preferences_qhybrid_settings);
 
@@ -292,25 +190,6 @@ public class QHybridConfigActivity extends AbstractGBActivity {
         }
     }
 
-    private void updateTimeOffset() {
-        int timeOffset = prefs.getInt("QHYBRID_TIME_OFFSET", 0);
-        DecimalFormat format = new DecimalFormat("00");
-        timeOffsetView.setText(
-                format.format(timeOffset / 60) + ":" +
-                        format.format(timeOffset % 60)
-        );
-    }
-
-
-    private void updateTimezoneOffset() {
-        int timeOffset = prefs.getInt("QHYBRID_TIMEZONE_OFFSET", 0);
-        DecimalFormat format = new DecimalFormat("00");
-        timezoneOffsetView.setText(
-                format.format(timeOffset / 60) + ":" +
-                        format.format(timeOffset % 60)
-        );
-    }
-
     @NonNull
     private String getDeviceInfoDetails(final String name) {
         ItemWithDetails deviceInfo = device.getDeviceInfo(name);
@@ -342,7 +221,7 @@ public class QHybridConfigActivity extends AbstractGBActivity {
 
                     LinearLayout buttonLayout = findViewById(R.id.buttonConfigLayout);
                     buttonLayout.removeAllViews();
-                    findViewById(R.id.buttonOverwriteButtons).setVisibility(View.GONE);
+//                    findViewById(R.id.buttonOverwriteButtons).setVisibility(View.GONE);
                     final ConfigPayload[] payloads = ConfigPayload.values();
                     final String[] names = new String[payloads.length];
                     for (int i = 0; i < payloads.length; i++)

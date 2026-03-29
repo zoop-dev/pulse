@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/qhybridMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,47 +13,11 @@
         android:id="@+id/settingsLayout"
         android:focusableInTouchMode="true" >
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:text="@string/qhybrid_time_shift" />
-
-            <TextView
-                android:id="@+id/qhybridTimeOffset"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:text="@string/qhybrid_second_timezone_offset_relative_to_utc" />
-
-            <TextView
-                android:id="@+id/timezoneOffset"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true" />
-
-        </RelativeLayout>
-
-        <Button
-            android:id="@+id/buttonOverwriteButtons"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/qhybrid_overwrite_buttons" />
+<!--        <Button-->
+<!--            android:id="@+id/buttonOverwriteButtons"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/qhybrid_overwrite_buttons" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
