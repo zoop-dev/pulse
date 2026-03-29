@@ -1,4 +1,4 @@
-/*  Copyright (C) 2024 José Rebelo
+/*  Copyright (C) 2024-2026 José Rebelo, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -42,6 +42,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.FileType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitCourse;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitLocation;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitSegmentId;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitWorkout;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.UriHelper;
@@ -188,6 +190,25 @@ public class GarminFitFileInstallHandler implements InstallHandler {
                         .map(r -> (FitWorkout) r)
                         .findFirst()
                         .map(FitWorkout::getName)
+                        .orElse(filename);
+                break;
+            case LOCATION:
+                kindName = mContext.getString(R.string.kind_waypoints);
+                supported = coordinator.supports(device, GarminCapability.EXPLORE_SYNC)
+                        || coordinator.supports(device, GarminCapability.WAYPOINT_TRANSFER);
+                long count = fitFile.getRecords().stream()
+                        .filter(r -> r instanceof FitLocation)
+                        .count();
+                name = mContext.getString(R.string.waypoint_count, count);
+                break;
+            case SEGMENTS:
+                kindName = mContext.getString(R.string.kind_segments);
+                supported = coordinator.supports(device, GarminCapability.SEGMENTS);
+                name = fitFile.getRecords().stream()
+                        .filter(r -> r instanceof FitSegmentId)
+                        .map(r -> (FitSegmentId) r)
+                        .findFirst()
+                        .map(FitSegmentId::getName)
                         .orElse(filename);
                 break;
             default:

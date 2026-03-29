@@ -2536,6 +2536,9 @@
     <string name="qhybrid_offset_timezone">offset timezone by</string>
     <string name="qhybrid_changes_delay_prompt">change might take some seconds…</string>
     <string name="qhybrid_offset_time_by">offset time by</string>
+    <string name="kind_waypoints">Waypoints</string>
+    <string name="kind_segments">Segments</string>
+    <string name="waypoint_count">%d waypoints</string>
     <string name="hr_widget_heart_rate">Heart rate</string>
     <string name="hr_widget_steps">Steps</string>
     <string name="hr_widget_date">Date</string>
