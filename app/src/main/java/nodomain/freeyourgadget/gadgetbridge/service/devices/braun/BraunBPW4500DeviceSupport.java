@@ -21,24 +21,16 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.braun;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.widget.Toast;
-
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
-import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
 import nodomain.freeyourgadget.gadgetbridge.devices.sbm_67.GenericBloodPressureSampleProvider;
@@ -98,33 +90,12 @@ public class BraunBPW4500DeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     // -------------------------------------------------------------------------
 
-    private final List<GenericBloodPressureSample> pendingSamples = new ArrayList<>();
-
-    private final BroadcastReceiver disconnectReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(final Context context, final Intent intent) {
-            if (GBDevice.ACTION_DEVICE_CHANGED.equals(intent.getAction())) {
-                final GBDevice.DeviceUpdateSubject subject =
-                        (GBDevice.DeviceUpdateSubject) intent.getSerializableExtra(GBDevice.EXTRA_UPDATE_SUBJECT);
-                if (GBDevice.DeviceUpdateSubject.CONNECTION_STATE.equals(subject) &&
-                        GBDevice.State.NOT_CONNECTED.equals(gbDevice.getState()) &&
-                        !pendingSamples.isEmpty()) {
-                    persistSamples();
-                    pendingSamples.clear();
-                }
-            }
-        }
-    };
+    private int persistedMeasurements = 0;
 
     public BraunBPW4500DeviceSupport() {
         super(LOG);
         addSupportedService(SERVICE_MEASUREMENT);
         addSupportedService(SERVICE_CONTROL);
-
-        final IntentFilter filter = new IntentFilter(GBDevice.ACTION_DEVICE_CHANGED);
-        //noinspection deprecation
-        LocalBroadcastManager.getInstance(GBApplication.getContext())
-                .registerReceiver(disconnectReceiver, filter);
     }
 
     @Override
@@ -135,7 +106,7 @@ public class BraunBPW4500DeviceSupport extends AbstractBTLESingleDeviceSupport {
     @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
         LOG.info("Initializing Braun BPW4500");
-        pendingSamples.clear();
+        persistedMeasurements = 0;
 
         builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZING, getContext()));
 
@@ -165,6 +136,17 @@ public class BraunBPW4500DeviceSupport extends AbstractBTLESingleDeviceSupport {
         builder.add(new SetDeviceStateAction(getDevice(), GBDevice.State.INITIALIZED, getContext()));
 
         return builder;
+    }
+
+    @Override
+    public void onConnectionStateChange(final BluetoothGatt gatt, final int status, final int newState) {
+        super.onConnectionStateChange(gatt, status, newState);
+        if (newState != BluetoothGatt.STATE_CONNECTED && persistedMeasurements > 0) {
+            // This device disconnects automatically once the transfer is finished
+            // We persist all samples as we receive them, but we need to signal that we finished the fetch
+            persistedMeasurements = 0;
+            GB.signalActivityDataFinish(getDevice());
+        }
     }
 
     /**
@@ -216,7 +198,7 @@ public class BraunBPW4500DeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     /**
-     * Parses a 19-byte measurement packet from the BPW4500.
+     * Parses a 19-byte measurement packet from the BPW4500 and persists it immediately.
      */
     private void handleMeasurement(final byte[] data) {
         if (data == null || data.length < 19) {
@@ -254,38 +236,16 @@ public class BraunBPW4500DeviceSupport extends AbstractBTLESingleDeviceSupport {
         sample.setUserIndex(0);
         sample.setMeasurementStatus(0);
 
-        pendingSamples.add(sample);
-
-        // Persist immediately as the device disconnects after transmission
-        persistSamples();
-        pendingSamples.clear();
-
-        GB.signalActivityDataFinish(getDevice());
-    }
-
-    private void persistSamples() {
-        if (pendingSamples.isEmpty()) return;
-
         try (DBHandler handler = GBApplication.acquireDB()) {
             final DaoSession session = handler.getDaoSession();
             final GenericBloodPressureSampleProvider provider =
                     new GenericBloodPressureSampleProvider(getDevice(), session);
-            provider.persistForDevice(getContext(), getDevice(), pendingSamples);
-            LOG.info("Persisted {} blood pressure samples", pendingSamples.size());
+            provider.persistForDevice(getContext(), getDevice(), List.of(sample));
+
+            persistedMeasurements++;
+            LOG.info("Persisted blood pressure measurement ({} total)", persistedMeasurements);
         } catch (final Exception e) {
             GB.toast(getContext(), "Error saving blood pressure data", Toast.LENGTH_LONG, GB.ERROR, e);
         }
-    }
-
-    @Override
-    public void dispose() {
-        try {
-            //noinspection deprecation
-            LocalBroadcastManager.getInstance(GBApplication.getContext())
-                    .unregisterReceiver(disconnectReceiver);
-        } catch (final Exception e) {
-            LOG.error("Failed to unregister receiver", e);
-        }
-        super.dispose();
     }
 }
