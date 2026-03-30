@@ -4331,4 +4331,7 @@
     <string name="uploading_rpk">Nahrávám rpk…</string>
     <string name="uploadrpkoperation_complete">Instalace rpk dokončena</string>
     <string name="uploadrpkoperation_failed">Instalace rpk selhala</string>
+    <string name="kind_waypoints">Značky</string>
+    <string name="kind_segments">Úseky</string>
+    <string name="waypoint_count">%d značek</string>
 </resources>
