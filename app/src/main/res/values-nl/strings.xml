@@ -4306,4 +4306,18 @@
     <string name="ratingOfPerceivedExertion">Mate van gevoelde inspanning</string>
     <string name="activity_type_stop_watch">Stopwatch</string>
     <string name="activity_type_ccr_diving">Duiken met rebreather</string>
+    <string name="waypoint_count">%d waypoints</string>
+    <string name="kind_segments">Segmenten</string>
+    <string name="kind_waypoints">Waypoints</string>
+    <string name="pref_title_unit_weight">Gewichtseenheid</string>
+    <string name="pref_title_unit_temperature">Temperatuureenheid</string>
+    <string name="pref_title_unit_distance">Afstandseenheid</string>
+    <string name="knots">kn</string>
+    <string name="nautical_miles">M</string>
+    <string name="pref_summary_nautical_units">Snelheid en afstand weergeven in knopen / mijl voor nautische activiteiten</string>
+    <string name="pref_title_nautical_units">Nautische eenheden</string>
+    <string name="redmi_buds_6_active_equalizer_preset_volume">Volumeversterking</string>
+    <string name="uploadrpkoperation_failed">Rpk-installatie mislukt</string>
+    <string name="uploadrpkoperation_complete">Rpk-installatie voltooid</string>
+    <string name="uploading_rpk">Rpk uploaden…</string>
 </resources>
