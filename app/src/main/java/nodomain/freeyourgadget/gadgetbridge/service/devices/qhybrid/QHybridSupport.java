@@ -43,7 +43,6 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Objects;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -62,7 +61,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
-import nodomain.freeyourgadget.gadgetbridge.model.ItemWithDetails;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NavigationInfoSpec;
@@ -176,6 +174,16 @@ public class QHybridSupport extends QHybridBaseSupport {
                 Bundle extras = intent.getExtras();
                 NotificationConfiguration config = extras == null ? null : (NotificationConfiguration) intent.getExtras().get("CONFIG");
                 if (intent.getAction() == null) {
+                    return;
+                }
+
+                final GBDevice intentDevice = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE);
+                if (intentDevice == null) {
+                    logger.warn("Received command Intent without device extra. Command will not be sent to any device.");
+                    return;
+                }
+                if (!intentDevice.getAddress().equals(gbDevice.getAddress())) {
+                    // Abort, the command is targeted at another device
                     return;
                 }
 

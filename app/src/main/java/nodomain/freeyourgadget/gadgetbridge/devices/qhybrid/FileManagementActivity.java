@@ -38,12 +38,14 @@ import java.io.IOException;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.file.FileHandle;
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class FileManagementActivity extends AbstractGBActivity implements View.OnClickListener {
+    private GBDevice device;
     private final int REQUEST_CODE_PICK_UPLOAD_FILE = 0;
 
     private Spinner fileTypesSpinner;
@@ -78,6 +80,13 @@ public class FileManagementActivity extends AbstractGBActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qhybrid_file_management);
+
+        device = getIntent().getParcelableExtra(GBDevice.EXTRA_DEVICE);
+        if (device == null || !device.isInitialized()) {
+            GB.toast(this, getString(R.string.watch_not_connected), Toast.LENGTH_LONG, GB.ERROR);
+            finish();
+            return;
+        }
 
         initViews();
     }
@@ -156,6 +165,7 @@ public class FileManagementActivity extends AbstractGBActivity implements View.O
             }
 
             Intent callIntent = new Intent(QHybridSupport.QHYBRID_COMMAND_UPLOAD_FILE);
+            callIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
             callIntent.putExtra("EXTRA_HANDLE", (FileHandle) fileTypesSpinner.getSelectedItem());
             callIntent.putExtra("EXTRA_ENCRYPTED", encryptedFile.isChecked());
             callIntent.putExtra("EXTRA_GENERATE_FILE_HEADER", generateFileHeader);
@@ -173,9 +183,9 @@ public class FileManagementActivity extends AbstractGBActivity implements View.O
         boolean isEncrypted = encryptedFile.isChecked();
 
         if (v.getId() == R.id.qhybrid_button_download_file) {
-            Intent fileIntent = new Intent();
+            Intent fileIntent = new Intent(QHybridSupport.QHYBRID_COMMAND_DOWNLOAD_FILE);
+            fileIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
             fileIntent.putExtra("EXTRA_ENCRYPTED", isEncrypted);
-            fileIntent.setAction(QHybridSupport.QHYBRID_COMMAND_DOWNLOAD_FILE);
             fileIntent.putExtra("EXTRA_MAJORHANDLE", ((FileHandle) fileTypesSpinner.getSelectedItem()).getMajorHandle());
             fileIntent.putExtra("EXTRA_MINORHANDLE", ((FileHandle) fileTypesSpinner.getSelectedItem()).getMinorHandle());
             fileIntent.putExtra("EXTRA_NAME", ((FileHandle) fileTypesSpinner.getSelectedItem()).name());

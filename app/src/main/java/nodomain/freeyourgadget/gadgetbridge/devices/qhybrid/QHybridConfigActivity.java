@@ -85,7 +85,7 @@ public class QHybridConfigActivity extends AbstractGBActivity {
 
     SharedPreferences prefs;
 
-    GBDevice device;
+    private GBDevice device;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +142,9 @@ public class QHybridConfigActivity extends AbstractGBActivity {
                                         if (success) {
                                             try {
                                                 helper.saveNotificationConfiguration(config);
-                                                LocalBroadcastManager.getInstance(QHybridConfigActivity.this).sendBroadcast(new Intent(QHybridSupport.QHYBRID_COMMAND_NOTIFICATION_CONFIG_CHANGED));
+                                                final Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_NOTIFICATION_CONFIG_CHANGED);
+                                                intent.putExtra(GBDevice.EXTRA_DEVICE, device);
+                                                LocalBroadcastManager.getInstance(QHybridConfigActivity.this).sendBroadcast(intent);
                                             } catch (Exception e) {
                                                 GB.toast("error saving notification", Toast.LENGTH_SHORT, GB.ERROR, e);
                                             }
@@ -158,7 +160,9 @@ public class QHybridConfigActivity extends AbstractGBActivity {
                             case 1: {
                                 try {
                                     helper.deleteNotificationConfiguration((NotificationConfiguration) adapterView.getItemAtPosition(i));
-                                    LocalBroadcastManager.getInstance(QHybridConfigActivity.this).sendBroadcast(new Intent(QHybridSupport.QHYBRID_COMMAND_NOTIFICATION_CONFIG_CHANGED));
+                                    final Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_NOTIFICATION_CONFIG_CHANGED);
+                                    intent.putExtra(GBDevice.EXTRA_DEVICE, device);
+                                    LocalBroadcastManager.getInstance(QHybridConfigActivity.this).sendBroadcast(intent);
                                 } catch (Exception e) {
                                     GB.toast("error deleting setting", Toast.LENGTH_SHORT, GB.ERROR, e);
                                 }
@@ -178,6 +182,7 @@ public class QHybridConfigActivity extends AbstractGBActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent notificationIntent = new Intent(QHybridSupport.QHYBRID_COMMAND_NOTIFICATION);
+                notificationIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
                 notificationIntent.putExtra("CONFIG", (NotificationConfiguration) adapterView.getItemAtPosition(i));
                 LocalBroadcastManager.getInstance(QHybridConfigActivity.this).sendBroadcast(notificationIntent);
             }
@@ -253,6 +258,7 @@ public class QHybridConfigActivity extends AbstractGBActivity {
                                                     device.addDeviceInfo(new GenericItem(FossilWatchAdapter.ITEM_BUTTONS, buttonConfig.toString()));
                                                     updateSettings();
                                                     Intent buttonIntent = new Intent(QHybridSupport.QHYBRID_COMMAND_OVERWRITE_BUTTONS);
+                                                    buttonIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
                                                     buttonIntent.putExtra(FossilWatchAdapter.ITEM_BUTTONS, buttonConfig.toString());
                                                     LocalBroadcastManager.getInstance(QHybridConfigActivity.this).sendBroadcast(buttonIntent);
                                                 } catch (JSONException e) {
@@ -278,6 +284,7 @@ public class QHybridConfigActivity extends AbstractGBActivity {
     private void setControl(boolean control, NotificationConfiguration config) {
         if (hasControl == control) return;
         Intent intent = new Intent(control ? QHybridSupport.QHYBRID_COMMAND_CONTROL : QHybridSupport.QHYBRID_COMMAND_UNCONTROL);
+        intent.putExtra(GBDevice.EXTRA_DEVICE, device);
         intent.putExtra("CONFIG", config);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
         this.hasControl = control;
@@ -293,6 +300,7 @@ public class QHybridConfigActivity extends AbstractGBActivity {
 
     private void sendControl(NotificationConfiguration config, String request) {
         Intent intent = new Intent(request);
+        intent.putExtra(GBDevice.EXTRA_DEVICE, device);
         intent.putExtra("CONFIG", config);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
@@ -373,11 +381,10 @@ public class QHybridConfigActivity extends AbstractGBActivity {
                 Button addButton = new Button(QHybridConfigActivity.this);
                 addButton.setText("+");
                 addButton.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                addButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivityForResult(new Intent(QHybridConfigActivity.this, QHybridAppChooserActivity.class), REQUEST_CODE_ADD_APP);
-                    }
+                addButton.setOnClickListener(view1 -> {
+                    final Intent appChooserIntent = new Intent(QHybridConfigActivity.this, QHybridAppChooserActivity.class);
+                    appChooserIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
+                    startActivityForResult(appChooserIntent, REQUEST_CODE_ADD_APP);
                 });
                 return addButton;
             }

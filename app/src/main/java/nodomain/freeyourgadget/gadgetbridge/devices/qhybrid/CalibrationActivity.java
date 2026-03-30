@@ -23,22 +23,20 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import java.util.List;
-
-import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class CalibrationActivity extends AbstractGBActivity {
+    GBDevice device;
+
     enum HAND{
         MINUTE,
         HOUR,
@@ -87,33 +85,25 @@ public class CalibrationActivity extends AbstractGBActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qhybrid_calibration);
 
-        List<GBDevice> devices = GBApplication.app().getDeviceManager().getSelectedDevices();
-        boolean atLeastOneConnected = false;
-        for(GBDevice device : devices){
-            if(device.getType() == DeviceType.FOSSILQHYBRID){
-                atLeastOneConnected = true;
-                break;
-            }
-        }
-
-        if(!atLeastOneConnected){
-            Toast.makeText(this, R.string.watch_not_connected, Toast.LENGTH_LONG).show();
+        device = getIntent().getParcelableExtra(GBDevice.EXTRA_DEVICE);
+        if (device == null || !device.isInitialized()) {
+            GB.toast(this, getString(R.string.watch_not_connected), Toast.LENGTH_LONG, GB.ERROR);
             finish();
             return;
         }
 
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
 
-        localBroadcastManager.sendBroadcast(
-                new Intent(QHybridSupport.QHYBRID_COMMAND_CONTROL)
-        );
+        final Intent cncIntent = new Intent(QHybridSupport.QHYBRID_COMMAND_CONTROL);
+        cncIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
+        localBroadcastManager.sendBroadcast(cncIntent);
 
         initViews();
     }
 
     private void initViews(){
         Spinner handSpinner = findViewById(R.id.qhybrid_calibration_hand_spinner);
-        handSpinner.setAdapter(new ArrayAdapter<HAND>(this, android.R.layout.simple_spinner_dropdown_item, HAND.values()));
+        handSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, HAND.values()));
         handSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -122,21 +112,18 @@ public class CalibrationActivity extends AbstractGBActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
         for(final MOVE_BUTTON buttonDeclaration : MOVE_BUTTON.values()) {
             final Button button = findViewById(buttonDeclaration.layoutId);
 
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_MOVE);
-                    intent.putExtra("EXTRA_DISTANCE_" + selectedHand.getVariableName(), (short) buttonDeclaration.distance);
+            button.setOnClickListener(v -> {
+                final Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_MOVE);
+                intent.putExtra(GBDevice.EXTRA_DEVICE, device);
+                intent.putExtra("EXTRA_DISTANCE_" + selectedHand.getVariableName(), (short) buttonDeclaration.distance);
 
-                    localBroadcastManager.sendBroadcast(intent);
-                }
+                localBroadcastManager.sendBroadcast(intent);
             });
         }
     }
@@ -151,8 +138,12 @@ public class CalibrationActivity extends AbstractGBActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (localBroadcastManager != null) {
-            localBroadcastManager.sendBroadcast(new Intent(QHybridSupport.QHYBRID_COMMAND_SAVE_CALIBRATION));
-            localBroadcastManager.sendBroadcast(new Intent(QHybridSupport.QHYBRID_COMMAND_UNCONTROL));
+            final Intent saveIntent = new Intent(QHybridSupport.QHYBRID_COMMAND_SAVE_CALIBRATION);
+            saveIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
+            localBroadcastManager.sendBroadcast(saveIntent);
+            final Intent uncontrolIntent = new Intent(QHybridSupport.QHYBRID_COMMAND_UNCONTROL);
+            uncontrolIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
+            localBroadcastManager.sendBroadcast(uncontrolIntent);
         }
     }
 }

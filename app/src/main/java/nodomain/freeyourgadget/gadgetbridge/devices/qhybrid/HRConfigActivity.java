@@ -17,8 +17,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.qhybrid;
 
-import static nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport.QHYBRID_COMMAND_UPDATE_WIDGETS;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -62,6 +60,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.Version;
 
 public class HRConfigActivity extends AbstractGBActivity {
+    private GBDevice device;
     private SharedPreferences sharedPreferences;
     private WidgetListAdapter widgetListAdapter;
     private ArrayList<CustomWidget> customWidgets = new ArrayList<>();
@@ -76,6 +75,13 @@ public class HRConfigActivity extends AbstractGBActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qhybrid_hr_settings);
+
+        device = getIntent().getParcelableExtra(GBDevice.EXTRA_DEVICE);
+        if (device == null || !device.isInitialized()) {
+            GB.toast(this, getString(R.string.watch_not_connected), Toast.LENGTH_LONG, GB.ERROR);
+            finish();
+            return;
+        }
 
         sharedPreferences = GBApplication.getPrefs().getPreferences();
 
@@ -133,6 +139,7 @@ public class HRConfigActivity extends AbstractGBActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_SET_BACKGROUND_IMAGE);
+                intent.putExtra(GBDevice.EXTRA_DEVICE, device);
                 intent.putIntegerArrayListExtra("EXTRA_PIXELS", null);
                 LocalBroadcastManager.getInstance(HRConfigActivity.this).sendBroadcast(intent);
             }
@@ -203,7 +210,9 @@ public class HRConfigActivity extends AbstractGBActivity {
                 refreshWidgetList();
                 saveCustomWidgetList();
 
-                LocalBroadcastManager.getInstance(HRConfigActivity.this).sendBroadcast(new Intent(QHYBRID_COMMAND_UPDATE_WIDGETS));
+                final Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_UPDATE_WIDGETS);
+                intent.putExtra(GBDevice.EXTRA_DEVICE, device);
+                LocalBroadcastManager.getInstance(HRConfigActivity.this).sendBroadcast(intent);
             } else if (resultCode == WidgetSettingsActivity.RESULT_CODE_WIDGET_UPDATED) {
                 CustomWidget widget = (CustomWidget) data.getExtras().get("EXTRA_WIDGET");
                 int updateIndex = data.getIntExtra("EXTRA_WIDGET_IDNEX", -1);
@@ -221,7 +230,9 @@ public class HRConfigActivity extends AbstractGBActivity {
                 refreshWidgetList();
                 saveCustomWidgetList();
 
-                LocalBroadcastManager.getInstance(HRConfigActivity.this).sendBroadcast(new Intent(QHYBRID_COMMAND_UPDATE_WIDGETS));
+                final Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_UPDATE_WIDGETS);
+                intent.putExtra(GBDevice.EXTRA_DEVICE, device);
+                LocalBroadcastManager.getInstance(HRConfigActivity.this).sendBroadcast(intent);
             } else if (resultCode == WidgetSettingsActivity.RESULT_CODE_WIDGET_DELETED) {
                 int updateIndex = data.getIntExtra("EXTRA_WIDGET_IDNEX", -1);
 
@@ -230,7 +241,9 @@ public class HRConfigActivity extends AbstractGBActivity {
                 refreshWidgetList();
                 saveCustomWidgetList();
 
-                LocalBroadcastManager.getInstance(HRConfigActivity.this).sendBroadcast(new Intent(QHYBRID_COMMAND_UPDATE_WIDGETS));
+                final Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_UPDATE_WIDGETS);
+                intent.putExtra(GBDevice.EXTRA_DEVICE, device);
+                LocalBroadcastManager.getInstance(HRConfigActivity.this).sendBroadcast(intent);
             }
         }else if(requestCode == REQUEST_CODE_IMAGE_PICK){
             if (resultCode == RESULT_OK)
@@ -245,6 +258,7 @@ public class HRConfigActivity extends AbstractGBActivity {
         }else if(requestCode == REQUEST_CODE_IMAGE_EDIT){
             if(resultCode == ImageEditActivity.RESULT_CODE_EDIT_SUCCESS){
                 data.setAction(QHybridSupport.QHYBRID_COMMAND_SET_BACKGROUND_IMAGE);
+                data.putExtra(GBDevice.EXTRA_DEVICE, device);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(data);
             }
         }
@@ -343,7 +357,10 @@ public class HRConfigActivity extends AbstractGBActivity {
                 keyConfig.remove(jsonKey);
             }
             sharedPreferences.edit().putString("FOSSIL_HR_WIDGETS", keyConfig.toString()).apply();
-            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(QHYBRID_COMMAND_UPDATE_WIDGETS));
+
+            final Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_UPDATE_WIDGETS);
+            intent.putExtra(GBDevice.EXTRA_DEVICE, device);
+            LocalBroadcastManager.getInstance(HRConfigActivity.this).sendBroadcast(intent);
 
             loadWidgetConfigs();
         } catch (JSONException e) {

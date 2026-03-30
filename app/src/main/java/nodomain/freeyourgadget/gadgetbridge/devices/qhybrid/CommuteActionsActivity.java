@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -43,11 +44,14 @@ import java.util.List;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class CommuteActionsActivity extends AbstractGBActivity implements CommuteActionsListAdapter.ItemClickListener, DialogInterface.OnClickListener, View.OnClickListener {
     protected final List<String> actionsList = new ArrayList<>();
     private static final Logger LOG = LoggerFactory.getLogger(CommuteActionsActivity.class);
+    private GBDevice device;
     private SharedPreferences sharedPreferences;
     private ItemTouchHelper actionTouchHelper;
     private CommuteActionsListAdapter actionsListAdapter;
@@ -57,6 +61,14 @@ public class CommuteActionsActivity extends AbstractGBActivity implements Commut
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commute_actions);
+
+        device = getIntent().getParcelableExtra(GBDevice.EXTRA_DEVICE);
+        if (device == null || !device.isInitialized()) {
+            GB.toast(this, getString(R.string.watch_not_connected), Toast.LENGTH_LONG, GB.ERROR);
+            finish();
+            return;
+        }
+
         sharedPreferences = GBApplication.getPrefs().getPreferences();
 
         findViewById(R.id.actionAddFab).setOnClickListener(this);
@@ -134,7 +146,9 @@ public class CommuteActionsActivity extends AbstractGBActivity implements Commut
                         putActionItems(actionsList);
                         refreshActions();
 
-                        LocalBroadcastManager.getInstance(CommuteActionsActivity.this).sendBroadcast(new Intent(QHybridSupport.QHYBRID_COMMAND_OVERWRITE_BUTTONS));
+                        final Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_OVERWRITE_BUTTONS);
+                        intent.putExtra(GBDevice.EXTRA_DEVICE, device);
+                        LocalBroadcastManager.getInstance(CommuteActionsActivity.this).sendBroadcast(intent);
                     }
                 })
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -144,7 +158,9 @@ public class CommuteActionsActivity extends AbstractGBActivity implements Commut
                         putActionItems(actionsList);
                         refreshActions();
 
-                        LocalBroadcastManager.getInstance(CommuteActionsActivity.this).sendBroadcast(new Intent(QHybridSupport.QHYBRID_COMMAND_OVERWRITE_BUTTONS));
+                        final Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_OVERWRITE_BUTTONS);
+                        intent.putExtra(GBDevice.EXTRA_DEVICE, device);
+                        LocalBroadcastManager.getInstance(CommuteActionsActivity.this).sendBroadcast(intent);
                     }
                 })
                 .setTitle(R.string.fossil_hr_edit_action)
@@ -162,7 +178,9 @@ public class CommuteActionsActivity extends AbstractGBActivity implements Commut
             sharedPreferences.edit().putString(CONFIG_KEY_Q_ACTIONS, actionArray.toString()).apply();
             refreshActions();
 
-            LocalBroadcastManager.getInstance(CommuteActionsActivity.this).sendBroadcast(new Intent(QHybridSupport.QHYBRID_COMMAND_OVERWRITE_BUTTONS));
+            final Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_OVERWRITE_BUTTONS);
+            intent.putExtra(GBDevice.EXTRA_DEVICE, device);
+            LocalBroadcastManager.getInstance(CommuteActionsActivity.this).sendBroadcast(intent);
         } catch (JSONException e) {
             LOG.error("Error adding new commute action", e);
         }
@@ -207,7 +225,9 @@ public class CommuteActionsActivity extends AbstractGBActivity implements Commut
         public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
             super.clearView(recyclerView, viewHolder);
             putActionItems(actionsList);
-            LocalBroadcastManager.getInstance(CommuteActionsActivity.this).sendBroadcast(new Intent(QHybridSupport.QHYBRID_COMMAND_OVERWRITE_BUTTONS));
+            final Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_OVERWRITE_BUTTONS);
+            intent.putExtra(GBDevice.EXTRA_DEVICE, device);
+            LocalBroadcastManager.getInstance(CommuteActionsActivity.this).sendBroadcast(intent);
         }
     }
 }

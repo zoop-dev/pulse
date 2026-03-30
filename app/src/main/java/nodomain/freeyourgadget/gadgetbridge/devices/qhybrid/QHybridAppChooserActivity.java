@@ -47,12 +47,14 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class QHybridAppChooserActivity extends AbstractGBActivity {
     private static final AtomicLong THREAD_COUNTER = new AtomicLong(0L);
 
+    private GBDevice device;
     boolean hasControl = false;
 
     private PackageConfigHelper helper;
@@ -61,6 +63,13 @@ public class QHybridAppChooserActivity extends AbstractGBActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qhybrid_app_chooser);
+
+        device = getIntent().getParcelableExtra(GBDevice.EXTRA_DEVICE);
+        if (device == null || !device.isInitialized()) {
+            GB.toast(this, getString(R.string.watch_not_connected), Toast.LENGTH_LONG, GB.ERROR);
+            finish();
+            return;
+        }
 
         helper = new PackageConfigHelper(getApplicationContext());
 
@@ -111,6 +120,7 @@ public class QHybridAppChooserActivity extends AbstractGBActivity {
     private void setControl(boolean control) {
         if (hasControl == control) return;
         Intent intent = new Intent(control ? QHybridSupport.QHYBRID_COMMAND_CONTROL : QHybridSupport.QHYBRID_COMMAND_UNCONTROL);
+        intent.putExtra(GBDevice.EXTRA_DEVICE, device);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
         this.hasControl = control;
     }
@@ -125,6 +135,7 @@ public class QHybridAppChooserActivity extends AbstractGBActivity {
 
     private void sendControl(NotificationConfiguration config, String request){
         Intent intent = new Intent(request);
+        intent.putExtra(GBDevice.EXTRA_DEVICE, device);
         intent.putExtra("CONFIG", config);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
@@ -140,7 +151,9 @@ public class QHybridAppChooserActivity extends AbstractGBActivity {
                 if(success){
                     try {
                         helper.saveNotificationConfiguration(config);
-                        LocalBroadcastManager.getInstance(QHybridAppChooserActivity.this).sendBroadcast(new Intent(QHybridSupport.QHYBRID_COMMAND_NOTIFICATION_CONFIG_CHANGED));
+                        final Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_NOTIFICATION_CONFIG_CHANGED);
+                        intent.putExtra(GBDevice.EXTRA_DEVICE, device);
+                        LocalBroadcastManager.getInstance(QHybridAppChooserActivity.this).sendBroadcast(intent);
                     } catch (Exception e) {
                         GB.toast("error saving configuration", Toast.LENGTH_SHORT, GB.ERROR, e);
                     }

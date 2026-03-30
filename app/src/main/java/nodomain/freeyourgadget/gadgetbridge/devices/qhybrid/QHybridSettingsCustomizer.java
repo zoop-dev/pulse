@@ -38,10 +38,30 @@ public class QHybridSettingsCustomizer implements DeviceSpecificSettingsCustomiz
     public void customizeSettings(final DeviceSpecificSettingsHandler handler, final Prefs prefs, final String rootKey) {
         handler.addPreferenceHandlerFor("use_activity_hand_as_notification_counter");
 
-        final Preference pref = handler.findPreference("pref_key_qhybrid_legacy");
-        if (pref != null) {
-            pref.setOnPreferenceClickListener(preference -> {
+        final Preference legacyPref = handler.findPreference("pref_key_qhybrid_legacy");
+        if (legacyPref != null) {
+            legacyPref.setOnPreferenceClickListener(preference -> {
                 final Intent intent = new Intent(handler.getContext(), QHybridConfigActivity.class);
+                intent.putExtra(GBDevice.EXTRA_DEVICE, handler.getDevice());
+                handler.getContext().startActivity(intent);
+                return true;
+            });
+        }
+
+        final Preference calibrationPref = handler.findPreference("pref_key_qhybrid_calibration");
+        if (calibrationPref != null) {
+            calibrationPref.setOnPreferenceClickListener(preference -> {
+                final Intent intent = new Intent(handler.getContext(), CalibrationActivity.class);
+                intent.putExtra(GBDevice.EXTRA_DEVICE, handler.getDevice());
+                handler.getContext().startActivity(intent);
+                return true;
+            });
+        }
+
+        final Preference commutePref = handler.findPreference("pref_key_qhybrid_commute_actions");
+        if (commutePref != null) {
+            commutePref.setOnPreferenceClickListener(preference -> {
+                final Intent intent = new Intent(handler.getContext(), CommuteActionsActivity.class);
                 intent.putExtra(GBDevice.EXTRA_DEVICE, handler.getDevice());
                 handler.getContext().startActivity(intent);
                 return true;
@@ -80,7 +100,9 @@ public class QHybridSettingsCustomizer implements DeviceSpecificSettingsCustomiz
                             int value = hourPicker.getValue() * 60 + minPicker.getValue();
                             prefs.getPreferences().edit().putInt("QHYBRID_TIME_OFFSET", value).apply();
                             updateTimeOffsetSummary(value);
-                            LocalBroadcastManager.getInstance(handler.getContext()).sendBroadcast(new Intent(QHybridSupport.QHYBRID_COMMAND_UPDATE));
+                            final Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_UPDATE);
+                            intent.putExtra(GBDevice.EXTRA_DEVICE, handler.getDevice());
+                            LocalBroadcastManager.getInstance(handler.getContext()).sendBroadcast(intent);
                             GB.toast(handler.getContext().getString(R.string.qhybrid_changes_delay_prompt), Toast.LENGTH_SHORT, GB.INFO);
                         })
                         .setNegativeButton(handler.getContext().getString(R.string.fossil_hr_new_action_cancel), null)
@@ -122,7 +144,9 @@ public class QHybridSettingsCustomizer implements DeviceSpecificSettingsCustomiz
                             int value = hourPicker.getValue() * 60 + minPicker.getValue();
                             prefs.getPreferences().edit().putInt("QHYBRID_TIMEZONE_OFFSET", value).apply();
                             updateTimezoneOffsetSummary(value);
-                            LocalBroadcastManager.getInstance(handler.getContext()).sendBroadcast(new Intent(QHybridSupport.QHYBRID_COMMAND_UPDATE_TIMEZONE));
+                            final Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_UPDATE_TIMEZONE);
+                            intent.putExtra(GBDevice.EXTRA_DEVICE, handler.getDevice());
+                            LocalBroadcastManager.getInstance(handler.getContext()).sendBroadcast(intent);
                             GB.toast(handler.getContext().getString(R.string.qhybrid_changes_delay_prompt), Toast.LENGTH_SHORT, GB.INFO);
                         })
                         .setNegativeButton(handler.getContext().getString(R.string.fossil_hr_new_action_cancel), null)
