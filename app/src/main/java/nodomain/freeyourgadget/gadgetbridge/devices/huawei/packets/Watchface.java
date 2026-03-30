@@ -114,14 +114,8 @@ public class Watchface {
             @Override
             public void parseTlv() throws ParseException {
                 this.params.maxVersion = this.tlv.getString(0x01);
-                if (this.tlv.getBytes(0x02).length == 4)
-                    this.params.width = this.tlv.getInteger(0x02);
-                else
-                    this.params.width = this.tlv.getShort(0x02);
-                if (this.tlv.getBytes(0x03).length == 4)
-                    this.params.height = this.tlv.getInteger(0x03);
-                else
-                    this.params.height = this.tlv.getShort(0x03);
+                this.params.width = this.tlv.getAsInteger(0x02);
+                this.params.height = this.tlv.getAsInteger(0x03);
                 this.params.supportFileType = this.tlv.getByte(0x04);
                 this.params.sort = this.tlv.getByte(0x05);
                 if (this.tlv.contains(0x06))
@@ -140,7 +134,7 @@ public class Watchface {
                 this.commandId = id;
                 this.tlv = new HuaweiTLV()
                         .put(0x01)
-                        .put(0x06, (byte) 0x03); //3 -overseas non-test, 2 - test, 1 -null?
+                        .put(0x06, (byte) 0x03); //3 - overseas non-test, 2 - test, 1 -null?
             }
         }
 
@@ -212,7 +206,7 @@ public class Watchface {
         }
 
         public static class Response extends HuaweiPacket {
-            public byte reportType = 0;
+            public int reportType = 0;
             public String fileName;
 
             public Response(ParamsProvider paramsProvider) {
@@ -224,11 +218,10 @@ public class Watchface {
                 String name = this.tlv.getString(0x01);
                 String version = this.tlv.getString(0x02);
                 if (this.tlv.contains(0x03)) {
-                    this.reportType = this.tlv.getByte(0x03);
+                    this.reportType = this.tlv.getAsInteger(0x03);
                 }
                 this.fileName = name + "_" + version;
             }
-
         }
     }
 
