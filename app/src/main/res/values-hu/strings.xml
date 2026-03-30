@@ -4174,4 +4174,7 @@
     <string name="pref_title_unit_distance">Távolság-mértékegység</string>
     <string name="nautical_miles">M</string>
     <string name="knots">kn</string>
+    <string name="kind_waypoints">Útpontok</string>
+    <string name="kind_segments">Szakaszok</string>
+    <string name="waypoint_count">%d útpont</string>
 </resources>
