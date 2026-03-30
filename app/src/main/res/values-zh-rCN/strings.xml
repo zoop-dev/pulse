@@ -4328,4 +4328,7 @@
     <string name="nautical_miles">海里</string>
     <string name="knots">节</string>
     <string name="redmi_buds_6_active_equalizer_preset_volume">提高音量</string>
+    <string name="kind_waypoints">停留处</string>
+    <string name="waypoint_count">%d 个停留处</string>
+    <string name="kind_segments">段</string>
 </resources>
