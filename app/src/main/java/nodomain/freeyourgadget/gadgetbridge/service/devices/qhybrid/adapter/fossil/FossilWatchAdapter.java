@@ -889,10 +889,10 @@ public class FossilWatchAdapter extends WatchAdapter {
         queueNextRequest();
     }
 
-    public void queueWrite(RequestMtuRequest request, boolean priorise) {
+    public void queueWrite(RequestMtuRequest request, boolean prioritise) {
         log("is connected: " + getDeviceSupport().isConnected());
         if (!getDeviceSupport().isConnected()) {
-            log("dropping requetst " + request.getName());
+            log("dropping request " + request.getName());
             return;
         }
         getDeviceSupport().createTransactionBuilder("requestMtu")
@@ -906,10 +906,10 @@ public class FossilWatchAdapter extends WatchAdapter {
         LOG.debug(message);
     }
 
-    public void queueWrite(SetDeviceStateRequest request, boolean priorise) {
+    public void queueWrite(SetDeviceStateRequest request, boolean prioritise) {
         if (fossilRequest != null && !fossilRequest.isFinished()) {
             log("queing request: " + request.getName());
-            if (priorise) {
+            if (prioritise) {
                 requestQueue.add(0, request);
             } else {
                 requestQueue.add(request);
@@ -925,15 +925,15 @@ public class FossilWatchAdapter extends WatchAdapter {
         getDeviceSupport().getDevice().setUpdateState(state, getContext());
     }
 
-    public void queueWrite(FossilRequest request, boolean priorise) {
+    public void queueWrite(FossilRequest request, boolean prioritise) {
         log("is connected: " + getDeviceSupport().isConnected());
         if (!getDeviceSupport().isConnected()) {
-            log("dropping requetst " + request.getName());
+            log("dropping request " + request.getName());
             return;
         }
         if (fossilRequest != null && !fossilRequest.isFinished()) {
             log("queing request: " + request.getName());
-            if (priorise) {
+            if (prioritise) {
                 requestQueue.add(0, request);
             } else {
                 requestQueue.add(request);
@@ -952,10 +952,10 @@ public class FossilWatchAdapter extends WatchAdapter {
         }
     }
 
-    public void queueWrite(Request request, boolean priorise) {
+    public void queueWrite(Request request, boolean prioritise) {
         log("is connected: " + getDeviceSupport().isConnected());
         if (!getDeviceSupport().isConnected()) {
-            log("dropping requetst " + request.getName());
+            log("dropping request " + request.getName());
             return;
         }
         restartRequestTimeout();
@@ -967,7 +967,7 @@ public class FossilWatchAdapter extends WatchAdapter {
     protected void queueWrite(Request request) {
         log("is connected: " + getDeviceSupport().isConnected());
         if (!getDeviceSupport().isConnected()) {
-            log("dropping requetst " + request.getName());
+            log("dropping request " + request.getName());
             return;
         }
         if (request instanceof SetDeviceStateRequest)

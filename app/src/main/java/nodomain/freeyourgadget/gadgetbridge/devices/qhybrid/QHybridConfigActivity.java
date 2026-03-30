@@ -376,7 +376,7 @@ public class QHybridConfigActivity extends AbstractGBActivity {
                 addButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        startActivityForResult(new Intent(QHybridConfigActivity.this, QHybridAppChoserActivity.class), REQUEST_CODE_ADD_APP);
+                        startActivityForResult(new Intent(QHybridConfigActivity.this, QHybridAppChooserActivity.class), REQUEST_CODE_ADD_APP);
                     }
                 });
                 return addButton;

@@ -973,7 +973,7 @@
             android:exported="true"
             android:parentActivityName=".activities.devicesettings.DeviceSettingsActivity" />
         <activity
-            android:name=".devices.qhybrid.QHybridAppChoserActivity"
+            android:name=".devices.qhybrid.QHybridAppChooserActivity"
             android:label="@string/qhybrid_title_apps"
             android:exported="true"
             android:parentActivityName=".devices.qhybrid.QHybridConfigActivity" />

@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.qhybrid;
 
+import static android.view.View.GONE;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -48,9 +50,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
-import static android.view.View.GONE;
-
-public class QHybridAppChoserActivity extends AbstractGBActivity {
+public class QHybridAppChooserActivity extends AbstractGBActivity {
     private static final AtomicLong THREAD_COUNTER = new AtomicLong(0L);
 
     boolean hasControl = false;
@@ -60,7 +60,7 @@ public class QHybridAppChoserActivity extends AbstractGBActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qhybrid_app_choser);
+        setContentView(R.layout.activity_qhybrid_app_chooser);
 
         helper = new PackageConfigHelper(getApplicationContext());
 
@@ -89,7 +89,7 @@ public class QHybridAppChoserActivity extends AbstractGBActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        appList.setAdapter(new ConfigArrayAdapter(QHybridAppChoserActivity.this, R.layout.qhybrid_app_view, packages, manager));
+                        appList.setAdapter(new ConfigArrayAdapter(QHybridAppChooserActivity.this, R.layout.qhybrid_app_view, packages, manager));
                         findViewById(R.id.qhybrid_packageChooserLoading).setVisibility(GONE);
                     }
                 });
@@ -140,7 +140,7 @@ public class QHybridAppChoserActivity extends AbstractGBActivity {
                 if(success){
                     try {
                         helper.saveNotificationConfiguration(config);
-                        LocalBroadcastManager.getInstance(QHybridAppChoserActivity.this).sendBroadcast(new Intent(QHybridSupport.QHYBRID_COMMAND_NOTIFICATION_CONFIG_CHANGED));
+                        LocalBroadcastManager.getInstance(QHybridAppChooserActivity.this).sendBroadcast(new Intent(QHybridSupport.QHYBRID_COMMAND_NOTIFICATION_CONFIG_CHANGED));
                     } catch (Exception e) {
                         GB.toast("error saving configuration", Toast.LENGTH_SHORT, GB.ERROR, e);
                     }
