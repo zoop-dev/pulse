@@ -4,7 +4,7 @@
     <Preference
         android:title="@string/qhybrid_title_calibration"
         android:key="pref_key_qhybrid_calibration"
-        android:icon="@drawable/ic_sensor_calibration"
+        android:icon="@drawable/ic_angle_calibrate"
         android:summary="@string/qhybrid_summary_calibration">
     </Preference>
 

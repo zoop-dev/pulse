@@ -5,52 +5,9 @@
     android:layout_height="match_parent"
     android:layout_margin="5dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical"
-        android:id="@+id/settingsLayout"
-        android:focusableInTouchMode="true" >
-
-<!--        <Button-->
-<!--            android:id="@+id/buttonOverwriteButtons"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/qhybrid_overwrite_buttons" />-->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/buttonConfigLayout"
-            android:orientation="vertical"/>
-
-    </LinearLayout>
-
-    <!-- <ProgressBar
-        android:id="@+id/vibrationSettingProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/settingsLayout"
-        android:layout_alignTop="@id/settingsLayout"
-        android:layout_centerHorizontal="true"
-        android:gravity="center" /> -->
-
-    <TextView
-        android:id="@+id/settingsErrorText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/settingsLayout"
-        android:layout_alignBottom="@id/settingsLayout"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone"
-        android:gravity="center" />
     <ListView
         android:id="@+id/qhybrid_appList"
-        android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_below="@id/settingsLayout"
-        android:layout_alignParentBottom="true"/>
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

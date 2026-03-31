@@ -109,11 +109,9 @@ public class FossilWatchAdapter extends WatchAdapter {
     private int MTU = 23;
 
     private final String ITEM_MTU = "MTU: ";
-    static public final String ITEM_BUTTONS = "BUTTONS: ";
 
     private final String CONFIG_ITEM_VIBRATION_STRENGTH = "vibration_strength";
     private final String CONFIG_ITEM_TIMEZONE_OFFSET = "timezone_offset";
-    public final String CONFIG_ITEM_BUTTONS = "buttons";
 
     private int lastButtonIndex = -1;
     protected boolean saveRawActivityFiles = false;
@@ -227,9 +225,7 @@ public class FossilWatchAdapter extends WatchAdapter {
     }
 
     private void syncButtonSettings() {
-        String buttonConfig = getDeviceSpecificPreferences().getString(CONFIG_ITEM_BUTTONS, null);
-        getDeviceSupport().getDevice().addDeviceInfo(new GenericItem(ITEM_BUTTONS, buttonConfig));
-        overwriteButtons(buttonConfig);
+        overwriteButtons(null);
     }
 
     @Override
@@ -360,16 +356,16 @@ public class FossilWatchAdapter extends WatchAdapter {
     @Override
     public void overwriteButtons(String jsonConfigString) {
         try {
-            if (jsonConfigString == null) return;
-            getDeviceSpecificPreferences()
-                    .edit()
-                    .putString(CONFIG_ITEM_BUTTONS, jsonConfigString)
-                    .apply();
-            JSONArray buttonConfigJson = new JSONArray(jsonConfigString);
-            // JSONArray buttonConfigJson = new JSONArray(getDeviceSupport().getDevice().getDeviceInfo(ITEM_BUTTONS).getDetails());
+            String upperButtonFunction = getDeviceSpecificPreferences().getString("top_button_function", "");
+            String middleButtonFunction = getDeviceSpecificPreferences().getString("middle_button_function", "");
+            String bottomButtonFunction = getDeviceSpecificPreferences().getString("bottom_button_function", "");
+            JSONArray buttonConfigJson = new JSONArray();
+            buttonConfigJson.put(upperButtonFunction);
+            buttonConfigJson.put(middleButtonFunction);
+            buttonConfigJson.put(bottomButtonFunction);
+            LOG.info("overwriteButtons: " + buttonConfigJson);
 
             ConfigPayload[] payloads = new ConfigPayload[buttonConfigJson.length()];
-
             for (int i = 0; i < buttonConfigJson.length(); i++) {
                 try {
                     payloads[i] = ConfigPayload.valueOf(buttonConfigJson.getString(i));
@@ -380,7 +376,7 @@ public class FossilWatchAdapter extends WatchAdapter {
 
             ConfigFileBuilder builder = new ConfigFileBuilder(payloads);
 
-            FilePutRequest fileUploadRequets = new FilePutRequest(FileHandle.SETTINGS_BUTTONS, builder.build(true), this) {
+            FilePutRequest fileUploadRequest = new FilePutRequest(FileHandle.SETTINGS_BUTTONS, builder.build(true), this) {
                 @Override
                 public void onFilePut(boolean success) {
                     if (success)
@@ -388,7 +384,7 @@ public class FossilWatchAdapter extends WatchAdapter {
                     else LOG.error("error overwriting button settings");
                 }
             };
-            queueWrite(fileUploadRequets);
+            queueWrite(fileUploadRequest);
         } catch (JSONException e) {
             LOG.error("error", e);
         }

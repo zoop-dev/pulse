@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -44,6 +45,36 @@ public class QHybridSettingsCustomizer implements DeviceSpecificSettingsCustomiz
                 final Intent intent = new Intent(handler.getContext(), QHybridConfigActivity.class);
                 intent.putExtra(GBDevice.EXTRA_DEVICE, handler.getDevice());
                 handler.getContext().startActivity(intent);
+                return true;
+            });
+        }
+
+        final ListPreference upperButtonPref = handler.findPreference("top_button_function");
+        if (upperButtonPref != null) {
+            upperButtonPref.setOnPreferenceChangeListener((preference, newValue) -> {
+                final Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_OVERWRITE_BUTTONS);
+                intent.putExtra(GBDevice.EXTRA_DEVICE, handler.getDevice());
+                LocalBroadcastManager.getInstance(handler.getContext()).sendBroadcast(intent);
+                return true;
+            });
+        }
+
+        final ListPreference middleButtonPref = handler.findPreference("middle_button_function");
+        if (middleButtonPref != null) {
+            middleButtonPref.setOnPreferenceChangeListener((preference, newValue) -> {
+                final Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_OVERWRITE_BUTTONS);
+                intent.putExtra(GBDevice.EXTRA_DEVICE, handler.getDevice());
+                LocalBroadcastManager.getInstance(handler.getContext()).sendBroadcast(intent);
+                return true;
+            });
+        }
+
+        final ListPreference bottomButtonPref = handler.findPreference("bottom_button_function");
+        if (bottomButtonPref != null) {
+            bottomButtonPref.setOnPreferenceChangeListener((preference, newValue) -> {
+                final Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_OVERWRITE_BUTTONS);
+                intent.putExtra(GBDevice.EXTRA_DEVICE, handler.getDevice());
+                LocalBroadcastManager.getInstance(handler.getContext()).sendBroadcast(intent);
                 return true;
             });
         }

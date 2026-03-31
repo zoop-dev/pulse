@@ -1,23 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ListPreference
+        android:key="top_button_function"
+        android:title="@string/pref_title_qhybrid_top_button_function"
+        android:icon="@drawable/ic_edit"
+        android:entries="@array/qhybrid_button_functions"
+        android:entryValues="@array/qhybrid_button_functions_values"
+        app:useSimpleSummaryProvider="true" />
+
+    <ListPreference
+        android:key="middle_button_function"
+        android:title="@string/pref_title_qhybrid_middle_button_function"
+        android:icon="@drawable/ic_edit"
+        android:entries="@array/qhybrid_button_functions"
+        android:entryValues="@array/qhybrid_button_functions_values"
+        app:useSimpleSummaryProvider="true" />
+
+    <ListPreference
+        android:key="bottom_button_function"
+        android:title="@string/pref_title_qhybrid_bottom_button_function"
+        android:icon="@drawable/ic_edit"
+        android:entries="@array/qhybrid_button_functions"
+        android:entryValues="@array/qhybrid_button_functions_values"
+        app:useSimpleSummaryProvider="true" />
 
     <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="use_activity_hand_as_notification_counter"
         android:layout="@layout/preference_checkbox"
         android:title="@string/qhybrid_use_activity_hand_as_notification_counter"
-        android:icon="@drawable/ic_timer" />
+        android:icon="@drawable/ic_notifications" />
 
     <Preference
         android:defaultValue="00:00"
         android:key="time_offset"
         android:title="@string/qhybrid_time_shift"
-        android:icon="@drawable/ic_timer" />
+        android:icon="@drawable/ic_access_time" />
 
     <Preference
         android:defaultValue="00:00"
         android:key="second_tz_offset"
         android:title="@string/qhybrid_second_timezone_offset_relative_to_utc"
-        android:icon="@drawable/ic_timer" />
+        android:icon="@drawable/ic_access_time" />
 
 </androidx.preference.PreferenceScreen>

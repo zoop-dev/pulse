@@ -256,8 +256,7 @@ public class QHybridSupport extends QHybridBaseSupport {
                         break;
                     }
                     case QHYBRID_COMMAND_OVERWRITE_BUTTONS: {
-                        String buttonConfig = intent.getStringExtra(FossilWatchAdapter.ITEM_BUTTONS);
-                        watchAdapter.overwriteButtons(buttonConfig);
+                        watchAdapter.overwriteButtons(null);
                         break;
                     }
                     case QHYBRID_COMMAND_NOTIFICATION_CONFIG_CHANGED: {
