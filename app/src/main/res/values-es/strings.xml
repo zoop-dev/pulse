@@ -4169,4 +4169,16 @@
     <string name="uploading_rpk">Subiendo rpk…</string>
     <string name="uploadrpkoperation_complete">Rpk instalación completada</string>
     <string name="uploadrpkoperation_failed">Rpk instalación fallida</string>
+    <string name="pref_title_nautical_units">Unidades náuticas</string>
+    <string name="pref_summary_nautical_units">Mostrar las unidades de velocidad y distancia en nudos y millas para actividades náuticas</string>
+    <string name="pref_title_unit_distance">Unidad de distancia</string>
+    <string name="pref_title_unit_temperature">Unidad de temperatura</string>
+    <string name="pref_title_unit_weight">Unidades de peso</string>
+    <string name="blood_pressure_export_dob">Nac.: %s</string>
+    <string name="blood_pressure_avg_format">%1$d/%2$d</string>
+    <string name="kind_waypoints">Puntos de ruta</string>
+    <string name="kind_segments">Segmentos</string>
+    <string name="waypoint_count">%d puntos de ruta</string>
+    <string name="nautical_miles">M</string>
+    <string name="knots">kn</string>
 </resources>
