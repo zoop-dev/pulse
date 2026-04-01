@@ -62,7 +62,6 @@ public abstract class WatchAdapter {
     public abstract void setHands(MoveHandsRequest.MovementConfiguration movement);
     public abstract void saveCalibration();
     public abstract void vibrate(PlayNotificationRequest.VibrationType vibration);
-    public abstract void vibrateFindMyDevicePattern();
     public abstract void requestHandsControl();
     public abstract void releaseHandsControl();
     public abstract void setStepGoal(int stepGoal);
@@ -72,7 +71,6 @@ public abstract class WatchAdapter {
     public abstract void setTimezoneOffsetMinutes(short offset);
     public abstract void onInstallApp(Uri uri);
 
-    public abstract boolean supportsFindDevice();
     public abstract boolean supportsExtendedVibration();
     public abstract boolean supportsActivityHand();
 

@@ -308,30 +308,38 @@ public class FossilWatchAdapter extends WatchAdapter {
         queueWrite(new PlayTextNotificationRequest(config.getPackageName(), this), false);
     }
 
+    private void vibrateStartCall() {
+        try {
+            getDeviceSupport().createTransactionBuilder("vibrate call")
+                    .write(
+                            UUID.fromString("3dda0005-957f-7d4a-34a6-74696673696d"),
+                            (byte) 0x01, (byte) 0x04, (byte) 0x30, (byte) 0x75, (byte) 0x00, (byte) 0x00)
+                    .queue();
+        } catch (Exception e) {
+            LOG.error("Error triggering call vibration", e);
+        }
+    }
+
+    private void vibrateEndCall() {
+        try {
+            getDeviceSupport().createTransactionBuilder("stop call vibration")
+                    .write(
+                            UUID.fromString("3dda0005-957f-7d4a-34a6-74696673696d"),
+                            (byte) 0x02, (byte) 0x05, (byte) 0x04)
+                    .queue();
+        } catch (Exception e) {
+            LOG.error("Error stopping call vibration", e);
+        }
+    }
+
     @Override
     public void onSetCallState(CallSpec callSpec) {
         if (callSpec.command == CallSpec.CALL_INCOMING) {
             LOG.info("Incoming call, triggering vibration on watch");
-            try {
-                getDeviceSupport().createTransactionBuilder("vibrate call")
-                        .write(
-                                UUID.fromString("3dda0005-957f-7d4a-34a6-74696673696d"),
-                                (byte) 0x01, (byte) 0x04, (byte) 0x30, (byte) 0x75, (byte) 0x00, (byte) 0x00)
-                        .queue();
-            } catch (Exception e) {
-                LOG.error("Error triggering call vibration", e);
-            }
+            vibrateStartCall();
         } else {
             LOG.info("Call ended, stopping vibration on watch");
-            try {
-                getDeviceSupport().createTransactionBuilder("stop call vibration")
-                        .write(
-                                UUID.fromString("3dda0005-957f-7d4a-34a6-74696673696d"),
-                                (byte) 0x02, (byte) 0x05, (byte) 0x04)
-                        .queue();
-            } catch (Exception e) {
-                LOG.error("Error stopping call vibration", e);
-            }
+            vibrateEndCall();
         }
     }
 
@@ -433,12 +441,6 @@ public class FossilWatchAdapter extends WatchAdapter {
     public void vibrate(nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.misfit.PlayNotificationRequest.VibrationType vibration) {
         // queueWrite(new nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.misfit.PlayNotificationRequest(vibration, -1, -1));
     }
-
-    @Override
-    public void vibrateFindMyDevicePattern() {
-
-    }
-
 
     @Override
     public void requestHandsControl() {
@@ -561,11 +563,6 @@ public class FossilWatchAdapter extends WatchAdapter {
                 GB.toast(getContext(), "Firmware cannot be installed: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
             }
         }
-    }
-
-    @Override
-    public boolean supportsFindDevice() {
-        return false;
     }
 
     @Override
@@ -793,46 +790,13 @@ public class FossilWatchAdapter extends WatchAdapter {
     @Override
     public void onFindDevice(boolean start) {
         try {
-            if (!this.supportsExtendedVibration()) {
-                if (start) {
-                    getDeviceSupport().createTransactionBuilder("vibrate find")
-                            .write(
-                                    UUID.fromString("3dda0005-957f-7d4a-34a6-74696673696d"),
-                                    new byte[]{(byte) 0x01, (byte) 0x04, (byte) 0x30, (byte) 0x75, (byte) 0x00, (byte) 0x00}
-                            )
-                            .queue();
-                } else {
-                    getDeviceSupport().createTransactionBuilder("vibrate find")
-                            .write(
-                                    UUID.fromString("3dda0005-957f-7d4a-34a6-74696673696d"),
-                                    new byte[]{(byte) 0x02, (byte) 0x05, (byte) 0x04}
-                            )
-                            .queue();
-                }
+            if (start) {
+                vibrateStartCall();
+            } else {
+                vibrateEndCall();
             }
         } catch (UnsupportedOperationException e) {
             LOG.error("error", e);
-        }
-
-        if (start && getDeviceSupport().searchDevice) return;
-
-        getDeviceSupport().searchDevice = start;
-
-        if (start) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    int i = 0;
-                    while (getDeviceSupport().searchDevice) {
-                        vibrateFindMyDevicePattern();
-                        try {
-                            Thread.sleep(2500);
-                        } catch (InterruptedException e) {
-                            LOG.error("error", e);
-                        }
-                    }
-                }
-            }).start();
         }
     }
 

@@ -368,7 +368,6 @@ public class MisfitWatchAdapter extends WatchAdapter {
         queueWrite(new PlayNotificationRequest(vibration, -1, -1));
     }
 
-    @Override
     public void vibrateFindMyDevicePattern() {
         queueWrite(new VibrateRequest(false, (short) 4, (short) 1));
     }
@@ -421,11 +420,6 @@ public class MisfitWatchAdapter extends WatchAdapter {
     @Override
     public void onInstallApp(Uri uri) {
 
-    }
-
-    @Override
-    public boolean supportsFindDevice() {
-        return supportsExtendedVibration();
     }
 
     @Override
