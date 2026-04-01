@@ -360,6 +360,25 @@ public class FossilWatchAdapter extends WatchAdapter {
             String middleButtonFunction = getDeviceSpecificPreferences().getString("middle_button_function", "");
             String bottomButtonFunction = getDeviceSpecificPreferences().getString("bottom_button_function", "");
             JSONArray buttonConfigJson = new JSONArray();
+            if (upperButtonFunction.isEmpty() && middleButtonFunction.isEmpty() && bottomButtonFunction.isEmpty()) {
+                // Migrate old type button settings
+                String buttonConfig = getDeviceSpecificPreferences().getString("buttons", null);
+                if (buttonConfig != null) {
+                    JSONArray parsedConfig = new JSONArray(buttonConfig);
+                    if (parsedConfig.length() >= 3) {
+                        LOG.info("Found unmigrated button preferences, migrating now.");
+                        upperButtonFunction = parsedConfig.getString(0);
+                        middleButtonFunction = parsedConfig.getString(1);
+                        bottomButtonFunction = parsedConfig.getString(2);
+                        getDeviceSpecificPreferences()
+                                .edit()
+                                .putString("top_button_function", upperButtonFunction)
+                                .putString("middle_button_function", middleButtonFunction)
+                                .putString("bottom_button_function", bottomButtonFunction)
+                                .apply();
+                    }
+                }
+            }
             buttonConfigJson.put(upperButtonFunction);
             buttonConfigJson.put(middleButtonFunction);
             buttonConfigJson.put(bottomButtonFunction);
@@ -386,7 +405,7 @@ public class FossilWatchAdapter extends WatchAdapter {
             };
             queueWrite(fileUploadRequest);
         } catch (JSONException e) {
-            LOG.error("error", e);
+            LOG.error("JSON error", e);
         }
     }
 
