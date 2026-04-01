@@ -389,7 +389,7 @@ public class NativeFITMessage {
     public static NativeFITMessage LAP = new NativeFITMessage(19, "LAP", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "event"), // 9 lap
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "event_type"), // 1 stop
-            new FieldDefinitionPrimitive(2, BaseType.UINT32, "start_time"),
+            new FieldDefinitionPrimitive(2, BaseType.UINT32, "start_time", FieldDefinitionFactory.FIELD.TIMESTAMP),
             new FieldDefinitionPrimitive(3, BaseType.SINT32, "start_lat", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(4, BaseType.SINT32, "start_long", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(5, BaseType.SINT32, "end_lat", FieldDefinitionFactory.FIELD.COORDINATE),

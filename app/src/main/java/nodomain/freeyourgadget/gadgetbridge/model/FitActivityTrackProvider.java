@@ -1,4 +1,4 @@
-/*  Copyright (C) 2026 José Rebelo
+/*  Copyright (C) 2026 José Rebelo, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -24,12 +24,13 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Iterator;
+import java.util.Objects;
 
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitLap;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitRecord;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 
@@ -58,14 +59,43 @@ public class FitActivityTrackProvider implements ActivityTrackProvider {
             return null;
         }
 
-        final List<ActivityPoint> activityPoints = fitFile.getRecords().stream()
-                .filter(r -> r instanceof FitRecord)
-                .map(r -> ((FitRecord) r).toActivityPoint())
-                .collect(Collectors.toList());
-
         final ActivityTrack activityTrack = new ActivityTrack();
         activityTrack.setName(summary.getName());
-        activityTrack.addTrackPoints(activityPoints);
+
+        final Iterator<FitRecord> records = fitFile.getRecords().stream()
+                .filter(r -> r instanceof FitRecord)
+                .map(r -> (FitRecord) r)
+                .iterator();
+
+        final Iterator<Long> lapStarts = fitFile.getRecords().stream()
+                .filter(record -> record instanceof FitLap)
+                .map(record -> (FitLap) record)
+                .filter(lap -> {
+                    Integer event = lap.getEvent();
+                    if (event != null && event != 9) {
+                        return false;
+                    }
+                    Integer eventType = lap.getEventType();
+                    return (eventType == null || eventType == 1);
+                })
+                .map(FitLap::getStartTime)
+                .filter(Objects::nonNull)
+                .iterator();
+
+        // skip first lap start
+        if(lapStarts.hasNext()){
+            lapStarts.next();
+        }
+
+        long nextLapStart = (lapStarts.hasNext() ? lapStarts.next() : Long.MAX_VALUE);
+        while (records.hasNext()) {
+            FitRecord record = records.next();
+            if (record.getComputedTimestamp() >= nextLapStart) {
+                activityTrack.startNewSegment();
+                nextLapStart = (lapStarts.hasNext() ? lapStarts.next() : Long.MAX_VALUE);
+            }
+            activityTrack.addTrackPoint(record.toActivityPoint());
+        }
 
         return activityTrack;
     }
