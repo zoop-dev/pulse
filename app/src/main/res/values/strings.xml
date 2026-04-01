@@ -4714,4 +4714,14 @@
     <string name="pref_title_qhybrid_top_button_function">Top button function</string>
     <string name="pref_title_qhybrid_middle_button_function">Middle button function</string>
     <string name="pref_title_qhybrid_bottom_button_function">Bottom button function</string>
+    <string name="qhybrid_button_function_forward">Forward to phone</string>
+    <string name="qhybrid_button_function_forward_multi">Forward to phone (multifunction)</string>
+    <string name="qhybrid_button_function_stopwatch">Stopwatch</string>
+    <string name="qhybrid_button_function_date">Date</string>
+    <string name="qhybrid_button_function_last_notif">Last notification</string>
+    <string name="qhybrid_button_function_2nd_tz">Second timezone</string>
+    <string name="qhybrid_button_function_volume_up">Volume up</string>
+    <string name="qhybrid_button_function_volume_down">Volume down</string>
+    <string name="qhybrid_button_function_step_goal">Step goal progress</string>
+    <string name="qhybrid_button_function_control_music">Control music player</string>
 </resources>

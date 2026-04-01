@@ -27,7 +27,6 @@ import static nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.reque
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil.configuration.ConfigurationPutRequest.UnitsConfigItem;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil.configuration.ConfigurationPutRequest.VibrationStrengthConfigItem;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil_hr.music.MusicControlRequest.MUSIC_PHONE_REQUEST;
-import static nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil_hr.music.MusicControlRequest.MUSIC_WATCH_REQUEST;
 import static nodomain.freeyourgadget.gadgetbridge.util.BitmapUtil.convertDrawableToBitmap;
 import static nodomain.freeyourgadget.gadgetbridge.util.GB.NOTIFICATION_CHANNEL_ID;
 import static nodomain.freeyourgadget.gadgetbridge.util.StringUtils.shortenPackageName;
@@ -103,7 +102,6 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventAppInfo;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventCallControl;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventFindPhone;
-import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventMusicControl;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventNotificationControl;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.CommuteActionsActivity;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.FossilFileReader;
@@ -130,9 +128,8 @@ import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NavigationInfoSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
-import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
-import nodomain.freeyourgadget.gadgetbridge.webview.CurrentPosition;
+import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.adapter.fossil.FossilWatchAdapter;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.file.FileHandle;
@@ -196,6 +193,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.UriHelper;
 import nodomain.freeyourgadget.gadgetbridge.util.Version;
 import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarEvent;
 import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarManager;
+import nodomain.freeyourgadget.gadgetbridge.webview.CurrentPosition;
 
 public class FossilHRWatchAdapter extends FossilWatchAdapter {
     public static final int MESSAGE_WHAT_VOICE_DATA_RECEIVED = 0;
@@ -1964,8 +1962,6 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
             } else if (value[7] == 0x03) {
                 handleQuickReplyRequest(value);
             }
-        } else if (requestType == (byte) 0x05) {
-            handleMusicRequest(value);
         } else if (requestType == (byte) 0x01) {
             int eventId = value[2];
             LOG.info("got event id " + eventId);
@@ -2141,47 +2137,6 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
         devEvtNotificationControl.event = GBDeviceEventNotificationControl.Event.REPLY;
         getDeviceSupport().evaluateGBDeviceEvent(devEvtNotificationControl);
         queueWrite(new QuickReplyConfirmationPutRequest(callId));
-    }
-
-    private void handleMusicRequest(byte[] value) {
-        byte command = value[3];
-        LOG.info("got music command: " + command);
-        MUSIC_WATCH_REQUEST request = MUSIC_WATCH_REQUEST.fromCommandByte(command);
-
-        GBDeviceEventMusicControl deviceEventMusicControl = new GBDeviceEventMusicControl();
-        deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.PLAY;
-
-        // TODO add skipping/seeking
-
-        switch (request) {
-            case MUSIC_REQUEST_PLAY_PAUSE: {
-                queueWrite(new MusicControlRequest(MUSIC_PHONE_REQUEST.MUSIC_REQUEST_PLAY_PAUSE));
-                deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.PLAYPAUSE;
-                break;
-            }
-            case MUSIC_REQUEST_NEXT: {
-                queueWrite(new MusicControlRequest(MUSIC_PHONE_REQUEST.MUSIC_REQUEST_NEXT));
-                deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.NEXT;
-                break;
-            }
-            case MUSIC_REQUEST_PREVIOUS: {
-                queueWrite(new MusicControlRequest(MUSIC_PHONE_REQUEST.MUSIC_REQUEST_PREVIOUS));
-                deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.PREVIOUS;
-                break;
-            }
-            case MUSIC_REQUEST_LOUDER: {
-                queueWrite(new MusicControlRequest(MUSIC_PHONE_REQUEST.MUSIC_REQUEST_LOUDER));
-                deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.VOLUMEUP;
-                break;
-            }
-            case MUSIC_REQUEST_QUITER: {
-                queueWrite(new MusicControlRequest(MUSIC_PHONE_REQUEST.MUSIC_REQUEST_QUITER));
-                deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.VOLUMEDOWN;
-                break;
-            }
-        }
-
-        getDeviceSupport().evaluateGBDeviceEvent(deviceEventMusicControl);
     }
 
     @Override

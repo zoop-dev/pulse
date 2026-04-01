@@ -55,6 +55,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventMusicControl;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.HybridHRActivitySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.NotificationConfiguration;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.PackageConfigHelper;
@@ -88,6 +89,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fos
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil.file.FirmwareFilePutRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil.notification.NotificationFilterPutRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil.notification.PlayTextNotificationRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.fossil_hr.music.MusicControlRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.misfit.AnimationRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.misfit.MoveHandsRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.misfit.ReleaseHandsControlRequest;
@@ -801,13 +803,15 @@ public class FossilWatchAdapter extends WatchAdapter {
     }
 
     protected void handleBackgroundCharacteristic(BluetoothGattCharacteristic characteristic, byte[] value) {
-        switch (value[1]) {
-            case 2: {
+        byte requestType = value[1];
+
+        switch (requestType) {
+            case 0x02: {
                 byte syncId = value[2];
                 getDeviceSupport().getDevice().addDeviceInfo(new GenericItem(QHybridSupport.ITEM_LAST_HEARTBEAT, DateFormat.getTimeInstance().format(new Date())));
                 break;
             }
-            case 8: {
+            case 0x08: { // FORWARD_TO_PHONE
                 if (value.length != 12) {
                     throw new RuntimeException("wrong button message");
                 }
@@ -819,34 +823,93 @@ public class FossilWatchAdapter extends WatchAdapter {
                     log("Button press on button " + button);
 
                     Intent i = new Intent(QHYBRID_EVENT_BUTTON_PRESS);
-                    i.setPackage(BuildConfig.APPLICATION_ID);
                     i.putExtra("BUTTON", button);
                     getContext().sendBroadcast(i);
+
+                    LOG.debug("Sent broadcast intent: ACTION={} EXTRA=BUTTON={}", QHYBRID_EVENT_BUTTON_PRESS, button);
                 }
                 break;
             }
 
-            case 5: {
+            case 0x05: { // FORWARD_TO_PHONE_MULTI / VOLUME_UP / VOLUME_DOWN / MUSIC_CONTROL
                 if (value.length != 4) {
                     throw new RuntimeException("wrong button message");
                 }
                 int action = value[3];
 
-                String actionString = "SINGLE";
-                if (action == 3) actionString = "DOUBLE";
-                else if (action == 4) actionString = "LONG";
+                String upperButtonFunction = getDeviceSpecificPreferences().getString("top_button_function", "");
+                String middleButtonFunction = getDeviceSpecificPreferences().getString("middle_button_function", "");
+                String bottomButtonFunction = getDeviceSpecificPreferences().getString("bottom_button_function", "");
+                boolean musicControlEnabled = upperButtonFunction.equals("MUSIC_CONTROL") || middleButtonFunction.equals("MUSIC_CONTROL") || bottomButtonFunction.equals("MUSIC_CONTROL");
+                MusicControlRequest.MUSIC_WATCH_REQUEST request = MusicControlRequest.MUSIC_WATCH_REQUEST.fromCommandByte((byte)action);
+                GBDevice currentDevice = getDeviceSupport().getDevice();
+                if (((QHybridCoordinator) currentDevice.getDeviceCoordinator()).isHybridHR(currentDevice)
+                    || request == MusicControlRequest.MUSIC_WATCH_REQUEST.MUSIC_REQUEST_LOUDER
+                    || request == MusicControlRequest.MUSIC_WATCH_REQUEST.MUSIC_REQUEST_QUITER
+                    || (musicControlEnabled && request == MusicControlRequest.MUSIC_WATCH_REQUEST.MUSIC_REQUEST_PLAY_PAUSE)
+                    || (musicControlEnabled && request == MusicControlRequest.MUSIC_WATCH_REQUEST.MUSIC_REQUEST_NEXT)
+                    || (musicControlEnabled && request == MusicControlRequest.MUSIC_WATCH_REQUEST.MUSIC_REQUEST_PREVIOUS)
+                ) {
+                    handleMusicRequest(value);
+                } else {
+                    String actionString = "SINGLE";
+                    if (action == 3) actionString = "DOUBLE";
+                    else if (action == 4) actionString = "LONG";
 
-                // lastButtonIndex = index;
-                log(actionString + " button press");
+                    // lastButtonIndex = index;
+                    log(actionString + " button press");
 
-                Intent i = new Intent(QHYBRID_EVENT_MULTI_BUTTON_PRESS);
-                i.putExtra("ACTION", actionString);
-                getContext().sendBroadcast(i);
+                    Intent i = new Intent(QHYBRID_EVENT_MULTI_BUTTON_PRESS);
+                    i.putExtra("ACTION", actionString);
+                    getContext().sendBroadcast(i);
+
+                    LOG.debug("Sent broadcast intent: ACTION={} EXTRA=ACTION={}", QHYBRID_EVENT_MULTI_BUTTON_PRESS, actionString);
+                }
                 break;
             }
         }
     }
 
+    private void handleMusicRequest(byte[] value) {
+        byte command = value[3];
+        LOG.info("got music command: " + command);
+        MusicControlRequest.MUSIC_WATCH_REQUEST request = MusicControlRequest.MUSIC_WATCH_REQUEST.fromCommandByte(command);
+
+        GBDeviceEventMusicControl deviceEventMusicControl = new GBDeviceEventMusicControl();
+        deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.PLAY;
+
+        // TODO add skipping/seeking
+
+        switch (request) {
+            case MUSIC_REQUEST_PLAY_PAUSE: {
+                queueWrite(new MusicControlRequest(MusicControlRequest.MUSIC_PHONE_REQUEST.MUSIC_REQUEST_PLAY_PAUSE));
+                deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.PLAYPAUSE;
+                break;
+            }
+            case MUSIC_REQUEST_NEXT: {
+                queueWrite(new MusicControlRequest(MusicControlRequest.MUSIC_PHONE_REQUEST.MUSIC_REQUEST_NEXT));
+                deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.NEXT;
+                break;
+            }
+            case MUSIC_REQUEST_PREVIOUS: {
+                queueWrite(new MusicControlRequest(MusicControlRequest.MUSIC_PHONE_REQUEST.MUSIC_REQUEST_PREVIOUS));
+                deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.PREVIOUS;
+                break;
+            }
+            case MUSIC_REQUEST_LOUDER: {
+                queueWrite(new MusicControlRequest(MusicControlRequest.MUSIC_PHONE_REQUEST.MUSIC_REQUEST_LOUDER));
+                deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.VOLUMEUP;
+                break;
+            }
+            case MUSIC_REQUEST_QUITER: {
+                queueWrite(new MusicControlRequest(MusicControlRequest.MUSIC_PHONE_REQUEST.MUSIC_REQUEST_QUITER));
+                deviceEventMusicControl.event = GBDeviceEventMusicControl.Event.VOLUMEDOWN;
+                break;
+            }
+        }
+
+        getDeviceSupport().evaluateGBDeviceEvent(deviceEventMusicControl);
+    }
 
     @Override
     public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {

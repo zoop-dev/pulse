@@ -5439,15 +5439,16 @@
     </string-array>
 
     <string-array name="qhybrid_button_functions">
-        <item>Forward to phone</item>
-        <item>Forward to phone (multifunction)</item>
-        <item>Stopwatch</item>
-        <item>Date</item>
-        <item>Last notification</item>
-        <item>Second timezone</item>
-        <item>Volume up</item>
-        <item>Volume down</item>
-        <item>Step goal progress</item>
+        <item>@string/qhybrid_button_function_forward</item>
+        <item>@string/qhybrid_button_function_forward_multi</item>
+        <item>@string/qhybrid_button_function_stopwatch</item>
+        <item>@string/qhybrid_button_function_date</item>
+        <item>@string/qhybrid_button_function_last_notif</item>
+        <item>@string/qhybrid_button_function_2nd_tz</item>
+        <item>@string/qhybrid_button_function_volume_up</item>
+        <item>@string/qhybrid_button_function_volume_down</item>
+        <item>@string/qhybrid_button_function_step_goal</item>
+        <item>@string/qhybrid_button_function_control_music</item>
     </string-array>
 
     <string-array name="qhybrid_button_functions_values">
@@ -5461,6 +5462,7 @@
         <item>VOLUME_UP</item>
         <item>VOLUME_DOWN</item>
         <item>STEP_GOAL_COMPLETION</item>
+        <item>MUSIC_CONTROL</item>
     </string-array>
 
 </resources>
