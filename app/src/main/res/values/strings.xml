@@ -4724,4 +4724,5 @@
     <string name="qhybrid_button_function_volume_down">Volume down</string>
     <string name="qhybrid_button_function_step_goal">Step goal progress</string>
     <string name="qhybrid_button_function_control_music">Control music player</string>
+    <string name="qhybrid_button_function_ring_phone">Ring phone</string>
 </resources>

@@ -55,6 +55,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventFindPhone;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventMusicControl;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.HybridHRActivitySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.NotificationConfiguration;
@@ -117,6 +118,7 @@ public class FossilWatchAdapter extends WatchAdapter {
 
     private int lastButtonIndex = -1;
     protected boolean saveRawActivityFiles = false;
+    private boolean findPhoneActive = false;
 
     protected final Logger LOG = LoggerFactory.getLogger(getClass().getSimpleName());
 
@@ -805,13 +807,17 @@ public class FossilWatchAdapter extends WatchAdapter {
     protected void handleBackgroundCharacteristic(BluetoothGattCharacteristic characteristic, byte[] value) {
         byte requestType = value[1];
 
+        String upperButtonFunction = getDeviceSpecificPreferences().getString("top_button_function", "");
+        String middleButtonFunction = getDeviceSpecificPreferences().getString("middle_button_function", "");
+        String bottomButtonFunction = getDeviceSpecificPreferences().getString("bottom_button_function", "");
+
         switch (requestType) {
             case 0x02: {
                 byte syncId = value[2];
                 getDeviceSupport().getDevice().addDeviceInfo(new GenericItem(QHybridSupport.ITEM_LAST_HEARTBEAT, DateFormat.getTimeInstance().format(new Date())));
                 break;
             }
-            case 0x08: { // FORWARD_TO_PHONE
+            case 0x08: { // FORWARD_TO_PHONE / RING_PHONE
                 if (value.length != 12) {
                     throw new RuntimeException("wrong button message");
                 }
@@ -822,11 +828,20 @@ public class FossilWatchAdapter extends WatchAdapter {
                     lastButtonIndex = index;
                     log("Button press on button " + button);
 
-                    Intent i = new Intent(QHYBRID_EVENT_BUTTON_PRESS);
-                    i.putExtra("BUTTON", button);
-                    getContext().sendBroadcast(i);
+                    if ((button == 1 && upperButtonFunction.equals("RING_PHONE"))
+                        || (button == 2 && middleButtonFunction.equals("RING_PHONE"))
+                        || (button == 3 && bottomButtonFunction.equals("RING_PHONE"))) {
+                        GBDeviceEventFindPhone findPhoneEvent = new GBDeviceEventFindPhone();
+                        findPhoneEvent.event = findPhoneActive ? GBDeviceEventFindPhone.Event.STOP : GBDeviceEventFindPhone.Event.START;
+                        getDeviceSupport().evaluateGBDeviceEvent(findPhoneEvent);
+                        findPhoneActive = !findPhoneActive;
+                    } else {
+                        Intent i = new Intent(QHYBRID_EVENT_BUTTON_PRESS);
+                        i.putExtra("BUTTON", button);
+                        getContext().sendBroadcast(i);
 
-                    LOG.debug("Sent broadcast intent: ACTION={} EXTRA=BUTTON={}", QHYBRID_EVENT_BUTTON_PRESS, button);
+                        LOG.debug("Sent broadcast intent: ACTION={} EXTRA=BUTTON={}", QHYBRID_EVENT_BUTTON_PRESS, button);
+                    }
                 }
                 break;
             }
@@ -837,9 +852,6 @@ public class FossilWatchAdapter extends WatchAdapter {
                 }
                 int action = value[3];
 
-                String upperButtonFunction = getDeviceSpecificPreferences().getString("top_button_function", "");
-                String middleButtonFunction = getDeviceSpecificPreferences().getString("middle_button_function", "");
-                String bottomButtonFunction = getDeviceSpecificPreferences().getString("bottom_button_function", "");
                 boolean musicControlEnabled = upperButtonFunction.equals("MUSIC_CONTROL") || middleButtonFunction.equals("MUSIC_CONTROL") || bottomButtonFunction.equals("MUSIC_CONTROL");
                 MusicControlRequest.MUSIC_WATCH_REQUEST request = MusicControlRequest.MUSIC_WATCH_REQUEST.fromCommandByte((byte)action);
                 GBDevice currentDevice = getDeviceSupport().getDevice();

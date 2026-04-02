@@ -5449,6 +5449,7 @@
         <item>@string/qhybrid_button_function_volume_down</item>
         <item>@string/qhybrid_button_function_step_goal</item>
         <item>@string/qhybrid_button_function_control_music</item>
+        <item>@string/qhybrid_button_function_ring_phone</item>
     </string-array>
 
     <string-array name="qhybrid_button_functions_values">
@@ -5463,6 +5464,6 @@
         <item>VOLUME_DOWN</item>
         <item>STEP_GOAL_COMPLETION</item>
         <item>MUSIC_CONTROL</item>
+        <item>RING_PHONE</item>
     </string-array>
-
 </resources>
