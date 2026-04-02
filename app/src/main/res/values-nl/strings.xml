@@ -88,7 +88,7 @@
     <string name="pref_blacklist_calendars">Zwarte lijst Kalenders</string>
     <string name="pref_title_canned_replies">Antwoorden</string>
     <string name="pref_title_canned_reply_suffix">Vaak voorkomend achtervoegsel</string>
-    <string name="pref_title_canned_messages_dismisscall">Telefoongesprek afwijzen met SMS</string>
+    <string name="pref_title_canned_messages_dismisscall">Oproep weigeren</string>
     <string name="pref_title_canned_messages_set">Update op apparaat</string>
     <string name="pref_header_development">Ontwikkelaarsopties</string>
     <string name="pref_title_development_miaddr">Mi Band adres</string>
