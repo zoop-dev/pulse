@@ -39,10 +39,10 @@ public class QHybridSettingsCustomizer implements DeviceSpecificSettingsCustomiz
     public void customizeSettings(final DeviceSpecificSettingsHandler handler, final Prefs prefs, final String rootKey) {
         handler.addPreferenceHandlerFor("use_activity_hand_as_notification_counter");
 
-        final Preference legacyPref = handler.findPreference("pref_key_qhybrid_legacy");
+        final Preference legacyPref = handler.findPreference("notifications");
         if (legacyPref != null) {
             legacyPref.setOnPreferenceClickListener(preference -> {
-                final Intent intent = new Intent(handler.getContext(), QHybridConfigActivity.class);
+                final Intent intent = new Intent(handler.getContext(), QHybridNotificationsConfigActivity.class);
                 intent.putExtra(GBDevice.EXTRA_DEVICE, handler.getDevice());
                 handler.getContext().startActivity(intent);
                 return true;

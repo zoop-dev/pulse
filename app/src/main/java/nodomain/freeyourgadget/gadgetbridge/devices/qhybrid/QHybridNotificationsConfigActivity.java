@@ -51,13 +51,12 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.ItemWithDetails;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.QHybridSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.NotificationUtils;
 
-public class QHybridConfigActivity extends AbstractGBActivity {
-    private static final Logger LOG = LoggerFactory.getLogger(QHybridConfigActivity.class);
+public class QHybridNotificationsConfigActivity extends AbstractGBActivity {
+    private static final Logger LOG = LoggerFactory.getLogger(QHybridNotificationsConfigActivity.class);
 
     PackageAdapter adapter;
     ArrayList<NotificationConfiguration> list;
@@ -80,9 +79,9 @@ public class QHybridConfigActivity extends AbstractGBActivity {
             return;
         }
 
-        setContentView(R.layout.activity_qhybrid_settings);
+        setContentView(R.layout.activity_qhybrid_apps_notifications);
 
-        setTitle(R.string.preferences_qhybrid_settings);
+        setTitle(R.string.pref_header_notifications);
 
         ListView appList = findViewById(R.id.qhybrid_appList);
 
@@ -97,13 +96,13 @@ public class QHybridConfigActivity extends AbstractGBActivity {
         list.add(null);
         appList.setAdapter(adapter = new PackageAdapter(this, R.layout.qhybrid_package_settings_item, list));
         appList.setOnItemLongClickListener((adapterView, view, i, l) -> {
-            PopupMenu menu = new PopupMenu(QHybridConfigActivity.this, view);
+            PopupMenu menu = new PopupMenu(QHybridNotificationsConfigActivity.this, view);
             menu.getMenu().add(0, 0, 0, "edit");
             menu.getMenu().add(0, 1, 1, "delete");
             menu.setOnMenuItemClickListener(menuItem -> {
                 switch (menuItem.getItemId()) {
                     case 0: {
-                        TimePicker picker = new TimePicker(QHybridConfigActivity.this, (NotificationConfiguration) adapterView.getItemAtPosition(i));
+                        TimePicker picker = new TimePicker(QHybridNotificationsConfigActivity.this, (NotificationConfiguration) adapterView.getItemAtPosition(i));
                         picker.finishListener = (success, config) -> {
                             setControl(false, null);
                             if (success) {
@@ -111,15 +110,15 @@ public class QHybridConfigActivity extends AbstractGBActivity {
                                     helper.saveNotificationConfiguration(config);
                                     final Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_NOTIFICATION_CONFIG_CHANGED);
                                     intent.putExtra(GBDevice.EXTRA_DEVICE, device);
-                                    LocalBroadcastManager.getInstance(QHybridConfigActivity.this).sendBroadcast(intent);
+                                    LocalBroadcastManager.getInstance(QHybridNotificationsConfigActivity.this).sendBroadcast(intent);
                                 } catch (Exception e) {
                                     GB.toast("error saving notification", Toast.LENGTH_SHORT, GB.ERROR, e);
                                 }
                                 refreshList();
                             }
                         };
-                        picker.handsListener = QHybridConfigActivity.this::setHands;
-                        picker.vibrationListener = QHybridConfigActivity.this::vibrate;
+                        picker.handsListener = QHybridNotificationsConfigActivity.this::setHands;
+                        picker.vibrationListener = QHybridNotificationsConfigActivity.this::vibrate;
                         setControl(true, picker.getSettings());
                         break;
                     }
@@ -128,7 +127,7 @@ public class QHybridConfigActivity extends AbstractGBActivity {
                             helper.deleteNotificationConfiguration((NotificationConfiguration) adapterView.getItemAtPosition(i));
                             final Intent intent = new Intent(QHybridSupport.QHYBRID_COMMAND_NOTIFICATION_CONFIG_CHANGED);
                             intent.putExtra(GBDevice.EXTRA_DEVICE, device);
-                            LocalBroadcastManager.getInstance(QHybridConfigActivity.this).sendBroadcast(intent);
+                            LocalBroadcastManager.getInstance(QHybridNotificationsConfigActivity.this).sendBroadcast(intent);
                         } catch (Exception e) {
                             GB.toast("error deleting setting", Toast.LENGTH_SHORT, GB.ERROR, e);
                         }
@@ -146,14 +145,8 @@ public class QHybridConfigActivity extends AbstractGBActivity {
             Intent notificationIntent = new Intent(QHybridSupport.QHYBRID_COMMAND_NOTIFICATION);
             notificationIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
             notificationIntent.putExtra("CONFIG", (NotificationConfiguration) adapterView.getItemAtPosition(i));
-            LocalBroadcastManager.getInstance(QHybridConfigActivity.this).sendBroadcast(notificationIntent);
+            LocalBroadcastManager.getInstance(QHybridNotificationsConfigActivity.this).sendBroadcast(notificationIntent);
         });
-    }
-
-    @NonNull
-    private String getDeviceInfoDetails(final String name) {
-        ItemWithDetails deviceInfo = device.getDeviceInfo(name);
-        return deviceInfo != null ? deviceInfo.getDetails() : "";
     }
 
     private void setControl(boolean control, NotificationConfiguration config) {
@@ -232,11 +225,11 @@ public class QHybridConfigActivity extends AbstractGBActivity {
             NotificationConfiguration settings = getItem(position);
 
             if (settings == null) {
-                Button addButton = new Button(QHybridConfigActivity.this);
+                Button addButton = new Button(QHybridNotificationsConfigActivity.this);
                 addButton.setText("+");
                 addButton.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 addButton.setOnClickListener(view1 -> {
-                    final Intent appChooserIntent = new Intent(QHybridConfigActivity.this, QHybridAppChooserActivity.class);
+                    final Intent appChooserIntent = new Intent(QHybridNotificationsConfigActivity.this, QHybridAppChooserActivity.class);
                     appChooserIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
                     startActivityForResult(appChooserIntent, REQUEST_CODE_ADD_APP);
                 });
