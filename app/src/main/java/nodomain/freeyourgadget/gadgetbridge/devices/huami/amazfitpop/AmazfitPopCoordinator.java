@@ -18,6 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitpop;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
@@ -37,7 +38,7 @@ public class AmazfitPopCoordinator extends AmazfitBipUCoordinator {
     }
 
     @Override
-    public InstallHandler findInstallHandler(final Uri uri, final Context context) {
+    public InstallHandler findInstallHandler(final Uri uri, final Bundle options, final Context context) {
         final AmazfitPopFWInstallHandler handler = new AmazfitPopFWInstallHandler(uri, context);
         return handler.isValid() ? handler : null;
     }

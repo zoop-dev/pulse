@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitx;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
@@ -49,7 +50,7 @@ public class AmazfitXCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public InstallHandler findInstallHandler(final Uri uri, final Context context) {
+    public InstallHandler findInstallHandler(final Uri uri, final Bundle options, final Context context) {
         // TOOD Need to be checked first
         final AmazfitXFWInstallHandler handler = new AmazfitXFWInstallHandler(uri, context);
         return handler.isValid() ? handler : null;

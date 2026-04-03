@@ -208,7 +208,7 @@ public class AppManagerActivity extends AbstractGBActivity {
         super.onActivityResult(requestCode, resultCode, resultData);
         if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             final Uri uri = resultData.getData();
-            final InstallHandler installHandler = mGBDevice.getDeviceCoordinator().findInstallHandler(uri, this);
+            final InstallHandler installHandler = mGBDevice.getDeviceCoordinator().findInstallHandler(uri, Bundle.EMPTY, this);
             if (installHandler == null) {
                 GB.toast(getString(R.string.fwinstaller_file_not_compatible_to_device), Toast.LENGTH_LONG, GB.INFO);
                 return;

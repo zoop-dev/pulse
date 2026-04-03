@@ -62,6 +62,7 @@ public class OpenFwAppInstallerActivity extends AbstractGBActivity {
         if (requestCode == READ_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             final InstallHandler installHandler = device.getDeviceCoordinator().findInstallHandler(
                     resultData.getData(),
+                    Bundle.EMPTY,
                     GBApplication.app().getApplicationContext()
             );
 

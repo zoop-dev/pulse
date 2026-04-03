@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.bluetooth.le.ScanFilter;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.ParcelUuid;
 
 import androidx.annotation.NonNull;
@@ -117,7 +118,7 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Nullable
     @Override
-    public InstallHandler findInstallHandler(final Uri uri, final Context context) {
+    public InstallHandler findInstallHandler(final Uri uri, final Bundle options, final Context context) {
         final XiaomiInstallHandler handler = new XiaomiInstallHandler(uri, context);
         return handler.isValid() ? handler : null;
     }

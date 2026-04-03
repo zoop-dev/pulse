@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices.garmin;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
@@ -58,7 +59,7 @@ public class GarminFitFileInstallHandler implements InstallHandler {
     private FileType.FILETYPE fileType;
     private FitParseException fitParseException;
 
-    public GarminFitFileInstallHandler(final Uri uri, final Context context) {
+    public GarminFitFileInstallHandler(final Uri uri, final Bundle options, final Context context) {
         this.mContext = context;
 
         final UriHelper uriHelper;

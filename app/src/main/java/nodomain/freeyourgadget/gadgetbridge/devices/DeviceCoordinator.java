@@ -23,6 +23,7 @@ import android.app.Activity;
 import android.bluetooth.le.ScanFilter;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -513,14 +514,13 @@ public interface DeviceCoordinator {
     boolean supportsFlashing(@NonNull GBDevice device);
 
     /**
-     * Finds an install handler for the given uri that can install the given
+     * Finds an {@link InstallHandler} for the given {@link Uri} that can install the given
      * uri on the device being managed.
-     *
-     * @param uri
-     * @param context
-     * @return the install handler or null if that uri cannot be installed on the device
+     * @return the {@link InstallHandler} or {@code null} if the {@link Uri} cannot be installed
+     *   on the device
      */
-    InstallHandler findInstallHandler(Uri uri, Context context);
+    @Nullable
+    InstallHandler findInstallHandler(Uri uri, Bundle options, Context context);
 
     /**
      * Returns true if this device/coordinator supports taking screenshots.

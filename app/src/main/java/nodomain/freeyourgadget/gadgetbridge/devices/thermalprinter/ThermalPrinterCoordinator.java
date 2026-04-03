@@ -3,6 +3,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices.thermalprinter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -65,7 +66,7 @@ public class ThermalPrinterCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Nullable
     @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
+    public InstallHandler findInstallHandler(Uri uri, Bundle options, Context context) {
         final ImageFilePrinterHandler imageFilePrinterHandler = new ImageFilePrinterHandler(uri, context);
         if (imageFilePrinterHandler.isValid()) {
             return imageFilePrinterHandler;

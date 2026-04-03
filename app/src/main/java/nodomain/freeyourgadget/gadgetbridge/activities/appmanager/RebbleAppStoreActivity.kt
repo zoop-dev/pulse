@@ -114,7 +114,7 @@ class RebbleAppStoreActivity : AbstractGBActivity()  {
     }
 
     fun installFile(file: File) {
-        val installHandler: InstallHandler? = mGBDevice?.deviceCoordinator?.findInstallHandler(file.toUri(), applicationContext)
+        val installHandler: InstallHandler? = mGBDevice?.deviceCoordinator?.findInstallHandler(file.toUri(), Bundle.EMPTY, applicationContext)
         if (installHandler == null) {
             GB.toast(getString(R.string.fwinstaller_file_not_compatible_to_device), Toast.LENGTH_LONG, GB.ERROR)
             LOG.error("Installable file not compatible with device")

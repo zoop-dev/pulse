@@ -20,6 +20,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices.pinetime;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
@@ -47,7 +48,7 @@ public class PineTimeJFCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
+    public InstallHandler findInstallHandler(Uri uri, Bundle options, Context context) {
         PineTimeInstallHandler handler = new PineTimeInstallHandler(uri, context);
         return handler.isValid() ? handler : null;
     }

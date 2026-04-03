@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitbipupro;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
@@ -47,7 +48,7 @@ public class AmazfitBipUProCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public InstallHandler findInstallHandler(final Uri uri, final Context context) {
+    public InstallHandler findInstallHandler(final Uri uri, final Bundle options, final Context context) {
         final AmazfitBipUProFWInstallHandler handler = new AmazfitBipUProFWInstallHandler(uri, context);
         return handler.isValid() ? handler : null;
     }

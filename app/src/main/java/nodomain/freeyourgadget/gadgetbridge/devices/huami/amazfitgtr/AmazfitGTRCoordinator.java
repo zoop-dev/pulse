@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitgtr;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
@@ -46,7 +47,7 @@ public class AmazfitGTRCoordinator extends HuamiCoordinator {
         return Pattern.compile("Amazfit GTR", Pattern.CASE_INSENSITIVE);
     }
     @Override
-    public InstallHandler findInstallHandler(final Uri uri, final Context context) {
+    public InstallHandler findInstallHandler(final Uri uri, final Bundle options, final Context context) {
         final AmazfitGTRFWInstallHandler handler = new AmazfitGTRFWInstallHandler(uri, context);
         return handler.isValid() ? handler : null;
     }

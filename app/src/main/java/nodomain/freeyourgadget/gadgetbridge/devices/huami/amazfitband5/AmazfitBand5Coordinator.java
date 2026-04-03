@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huami.amazfitband5;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
@@ -49,7 +50,7 @@ public class AmazfitBand5Coordinator extends HuamiCoordinator {
     }
 
     @Override
-    public InstallHandler findInstallHandler(final Uri uri, final Context context) {
+    public InstallHandler findInstallHandler(final Uri uri, final Bundle options, final Context context) {
         final AmazfitBand5FWInstallHandler handler = new AmazfitBand5FWInstallHandler(uri, context);
         return handler.isValid() ? handler : null;
     }

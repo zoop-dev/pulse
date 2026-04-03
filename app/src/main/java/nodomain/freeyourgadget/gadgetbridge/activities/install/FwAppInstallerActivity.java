@@ -222,7 +222,7 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
             uri = getIntent().getParcelableExtra(Intent.EXTRA_STREAM);
         }
 
-        installHandler = device.getDeviceCoordinator().findInstallHandler(uri, this);
+        installHandler = device.getDeviceCoordinator().findInstallHandler(uri, Bundle.EMPTY, this);
 
         if (installHandler == null) {
             // Should never happen? at this point, we got here by installing to the device

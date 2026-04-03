@@ -1326,7 +1326,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
     @Override
     public void onInstallApp(Uri uri, @NonNull final Bundle options) {
-        final GarminFitFileInstallHandler fitFileInstallHandler = new GarminFitFileInstallHandler(uri, getContext());
+        final GarminFitFileInstallHandler fitFileInstallHandler = new GarminFitFileInstallHandler(uri, options, getContext());
         if (fitFileInstallHandler.isValid()) {
             communicator.sendMessage(
                     "upload fit file",

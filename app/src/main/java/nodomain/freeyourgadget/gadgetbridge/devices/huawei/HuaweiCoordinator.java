@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.bluetooth.le.ScanFilter;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.ParcelUuid;
 
 import androidx.annotation.NonNull;
@@ -375,7 +376,7 @@ public abstract class HuaweiCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
+    public InstallHandler findInstallHandler(Uri uri, Bundle options, Context context) {
         final HuaweiInstallHandler handler = new HuaweiInstallHandler(uri, context);
         return handler.isValid() ? handler : null;
     }

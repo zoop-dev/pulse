@@ -21,6 +21,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices.pebble;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -97,7 +98,7 @@ public class PebbleCoordinator extends AbstractBLClassicDeviceCoordinator {
     }
 
     @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
+    public InstallHandler findInstallHandler(Uri uri, Bundle options, Context context) {
         PBWInstallHandler installHandler = new PBWInstallHandler(uri, context);
         return installHandler.isValid() ? installHandler : null;
     }

@@ -23,6 +23,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.ScanFilter;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.ParcelUuid;
 
 import androidx.annotation.DrawableRes;
@@ -122,7 +123,7 @@ public class MiBandCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public InstallHandler findInstallHandler(Uri uri, Context context) {
+    public InstallHandler findInstallHandler(Uri uri, Bundle options, Context context) {
         MiBandFWInstallHandler handler = new MiBandFWInstallHandler(uri, context);
         return handler.isValid() ? handler : null;
     }

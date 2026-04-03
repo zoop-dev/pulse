@@ -1,6 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.install
 
 import android.net.Uri
+import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -38,7 +39,7 @@ class FileInstallerViewModel(private val application: GBApplication) : ViewModel
                 for (device in getAllDeviceTypesConnectedFirst()) {
                     val coordinator = device.deviceCoordinator
                     try {
-                        val handler = coordinator.findInstallHandler(uri, application.applicationContext)
+                        val handler = coordinator.findInstallHandler(uri, Bundle.EMPTY, application.applicationContext)
                         if (handler != null) {
                             LOG.debug(
                                 "Found compatible install handler {} for {}",
