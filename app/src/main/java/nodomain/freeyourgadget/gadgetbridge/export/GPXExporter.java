@@ -1,4 +1,4 @@
-/*  Copyright (C) 2017-2025 Andreas Shimokawa, AndrewH, Carsten Pfeiffer,
+/*  Copyright (C) 2017-2026 Andreas Shimokawa, AndrewH, Carsten Pfeiffer,
     Daniele Gobbetti, Dikay900, José Rebelo, Nick Spacek, Petr Vaněk, Thomas Kuehne
 
     This file is part of Gadgetbridge.
@@ -147,6 +147,13 @@ public class GPXExporter implements ActivityTrackExporter {
     private void exportTrack(XmlSerializer ser, ActivityTrack track) throws IOException, GPXTrackEmptyException {
         String uuid = ((this.uuid != null) ? this.uuid : UUID.randomUUID()).toString();
         ser.startTag(NS_GPX_URI, "trk");
+
+        // some Garmin devices only read gpx/trk/name and ignore gpx/metadata/name
+        String trackName = track.getName();
+        if (trackName != null) {
+            ser.startTag(NS_GPX_URI, "name").text(trackName).endTag(NS_GPX_URI, "name");
+        }
+
         ser.startTag(NS_GPX_URI, "extensions");
         ser.startTag(NS_GPX_URI, OPENTRACKS_PREFIX + ":trackid").text(uuid).endTag(NS_GPX_URI, OPENTRACKS_PREFIX + ":trackid");
         ser.endTag(NS_GPX_URI, "extensions");
