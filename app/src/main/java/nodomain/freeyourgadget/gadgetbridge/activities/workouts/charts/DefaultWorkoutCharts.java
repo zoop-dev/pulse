@@ -72,7 +72,7 @@ public class DefaultWorkoutCharts {
             }
 
             // Elevation
-            if (point.getLocation() != null && point.getLocation().getAltitude() != GPSCoordinate.UNKNOWN_ALTITUDE) {
+            if (point.getLocation() != null && point.getLocation().hasAltitude()) {
                 elevationDataPoints.add(new Entry(tsShorten, (float) point.getLocation().getAltitude()));
                 if (point.getLocation().getAltitude() != 0) {
                     // Some devices provide all points at zero

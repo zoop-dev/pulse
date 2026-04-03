@@ -130,7 +130,7 @@ public class BangleJSWorkoutParser implements ActivitySummaryParser, ActivityTra
             if (p.getSteps() > 0) {
                 accStride.add(distanceDiff / p.getSteps());
             }
-            if (p.getLocation() != null && p.getLocation().getAltitude() != GPSCoordinate.UNKNOWN_ALTITUDE) {
+            if (p.getLocation() != null && p.getLocation().hasAltitude()) {
                 accAltitude.add(p.getLocation().getAltitude());
             }
             totalTime += timeDiff;

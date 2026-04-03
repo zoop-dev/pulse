@@ -126,9 +126,9 @@ public class GPSCoordinate implements Parcelable {
     }
 
     public double getAltitudeDifference(GPSCoordinate source) {
-        if (this.getAltitude() == UNKNOWN_ALTITUDE)
+        if (!hasAltitude())
             return 0;
-        if (source.getAltitude() == UNKNOWN_ALTITUDE)
+        if (!source.hasAltitude())
             return 0;
         return this.getAltitude() - source.getAltitude();
     }
