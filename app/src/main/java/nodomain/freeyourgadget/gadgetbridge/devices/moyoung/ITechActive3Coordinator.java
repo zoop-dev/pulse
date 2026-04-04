@@ -1,4 +1,4 @@
-/*  Copyright (C) 2025 Arjan Schrijver
+/*  Copyright (C) 2025 Lucas Stegman
 
     This file is part of Gadgetbridge.
 
@@ -16,7 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.moyoung;
 
-import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 
 import java.util.regex.Pattern;
@@ -51,13 +50,18 @@ public class ITechActive3Coordinator extends AbstractMoyoungDeviceCoordinator {
     }
 
     @Override
-    public int getWorldClocksSlotCount() {
-        return 6;
+    public boolean supportsCalendarEvents(@NonNull GBDevice device) {
+        return false;
     }
 
     @Override
-    public int getWorldClocksLabelLength() {
-        return 30;
+    public boolean supportsHeartRateRestingMeasurement(@NonNull GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsManualHeartRateMeasurement(@NonNull GBDevice device) {
+        return true;
     }
 
     @Override
@@ -66,7 +70,57 @@ public class ITechActive3Coordinator extends AbstractMoyoungDeviceCoordinator {
     }
 
     @Override
+    public boolean supportsSleepMeasurement(@NonNull GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsSleepScore(@NonNull GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsSpeedzones(@NonNull GBDevice device) {
+        return false;
+    }
+
+    @Override
+    public boolean supportsSpo2(@NonNull GBDevice device) {
+        return false;
+    }
+
+    @Override
+    public boolean supportsStepCounter(@NonNull GBDevice device) {
+        return true;
+    }
+
+    @Override
     public boolean supportsStressMeasurement(@NonNull GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsWatchfaceManagement(@NonNull GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsDisabledWorldClocks(@NonNull GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsCyclingData(@NonNull GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsAwakeSleep(@NonNull GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsActiveCalories(@NonNull GBDevice device) {
         return true;
     }
 }
