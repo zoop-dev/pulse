@@ -707,7 +707,7 @@
     <string name="Swimming">Úszás</string>
     <string name="hr_widget_nothing">Semmi</string>
     <string name="activity_type_walking">Séta</string>
-    <string name="qhybrid_offset_timezone">időzóna eltolása ennyivel</string>
+    <string name="qhybrid_offset_timezone">Időzóna eltolása ennyivel</string>
     <string name="turkish">Török</string>
     <string name="descentMeters">Lejtő</string>
     <string name="watch9_time_hours">Óra:</string>
@@ -755,7 +755,7 @@
     <string name="menuitem_weather">Időjárás</string>
     <string name="pref_title_auto_export_interval">Exportálási időköz</string>
     <string name="menuitem_notifications">Értesítések</string>
-    <string name="qhybrid_offset_time_by">idő eltolása ennyivel</string>
+    <string name="qhybrid_offset_time_by">Idő eltolása ennyivel</string>
     <string name="activity_DB_delete_legacy_button">Régi adatbázis törlése</string>
     <string name="watch9_time_seconds">Másodperc:</string>
     <string name="activity_type_jump_roping">Ugrálókötél</string>
@@ -863,7 +863,7 @@
     <string name="vibration_profile_default">Alapértelmezett</string>
     <string name="activity_prefs_chart_min_steps_per_minute_for_run">Minimum percenkénti lépés futás észleléséhez</string>
     <string name="pref_screen_notification_profile_inactivity">Inaktivitási értesítés</string>
-    <string name="qhybrid_changes_delay_prompt">a változtatás eltarthat néhány másodpercig…</string>
+    <string name="qhybrid_changes_delay_prompt">A változtatás eltarthat néhány másodpercig…</string>
     <string name="watch_not_connected">Az óra nincs kapcsolódva</string>
     <string name="weeksleepchart_sleep_a_month">Havi alvás</string>
     <string name="descentSeconds">Csökkenő</string>
@@ -1849,8 +1849,8 @@
     <string name="pref_title_middle_button_function_long">Középső gomb hosszan</string>
     <string name="filter_submode_at_least_one">Legalább egy szót</string>
     <string name="filter_submode_all">Minden szót</string>
-    <string name="qhybrid_second_timezone_offset_relative_to_utc">második időzóna eltolódás a UTC-hez képest</string>
-    <string name="qhybrid_use_activity_hand_as_notification_counter">tevékenységmutató használata mint értesítési számláló</string>
+    <string name="qhybrid_second_timezone_offset_relative_to_utc">Második időzóna-eltolódás a UTC-hez képest</string>
+    <string name="qhybrid_use_activity_hand_as_notification_counter">Tevékenységmutató használata mint értesítési számláló</string>
     <string name="pref_title_middle_button_function_short">Középső gomb röviden</string>
     <string name="prefs_button_double_press_action_selection_title">2. esemény művelet</string>
     <string name="prefs_button_triple_press_action_selection_title">3. esemény művelet</string>
@@ -1869,7 +1869,7 @@
     <string name="text_receiver_activity_title">Szöveg küldése az eszközre</string>
     <string name="pref_title_upper_button_function_double">Felső gomb duplán</string>
     <string name="companiondevice_pairing">Társeszköz párosítás</string>
-    <string name="qhybrid_time_shift">időeltolódás</string>
+    <string name="qhybrid_time_shift">Időeltolódás</string>
     <string name="baseAltitude">Bázismagasság</string>
     <string name="error_retrieving_devices_database">Hiba történt az eszközök adatbázisból való lekérésekor</string>
     <string name="error_background_service">Nem sikerült elindítani a háttérszolgáltatást</string>
@@ -4177,4 +4177,18 @@
     <string name="kind_waypoints">Útpontok</string>
     <string name="kind_segments">Szakaszok</string>
     <string name="waypoint_count">%d útpont</string>
+    <string name="pref_title_qhybrid_top_button_function">Felső gomb funkciója</string>
+    <string name="pref_title_qhybrid_middle_button_function">Középső gomb funkciója</string>
+    <string name="pref_title_qhybrid_bottom_button_function">Alsó gomb funkciója</string>
+    <string name="qhybrid_button_function_forward">Továbbítás a telefonra</string>
+    <string name="qhybrid_button_function_forward_multi">Továbbítás a telefonra (több funkció)</string>
+    <string name="qhybrid_button_function_stopwatch">Stopperóra</string>
+    <string name="qhybrid_button_function_date">Dátum</string>
+    <string name="qhybrid_button_function_last_notif">Legutóbbi értesítés</string>
+    <string name="qhybrid_button_function_2nd_tz">Második időzóna</string>
+    <string name="qhybrid_button_function_volume_up">Hangerő növelése</string>
+    <string name="qhybrid_button_function_volume_down">Hangerő csökkentése</string>
+    <string name="qhybrid_button_function_step_goal">Előrehaladás a léspéscélban</string>
+    <string name="qhybrid_button_function_control_music">Zenelejátszó vezérlése</string>
+    <string name="qhybrid_button_function_ring_phone">Telefon csörgése</string>
 </resources>
