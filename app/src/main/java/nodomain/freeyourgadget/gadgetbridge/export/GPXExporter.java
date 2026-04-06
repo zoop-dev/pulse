@@ -53,8 +53,8 @@ public class GPXExporter implements ActivityTrackExporter {
     private static final String NS_TRACKPOINT_EXTENSION = "gpxtpx";
     private static final String NS_TRACKPOINT_EXTENSION_URI = "http://www.garmin.com/xmlschemas/TrackPointExtension/v2";
     private static final String NS_XSI_URI = "http://www.w3.org/2001/XMLSchema-instance";
-    private static final String TRACKPOINT_EXTENSION_XSD = "http://www.garmin.com/xmlschemas/TrackPointExtensionv2.xsd";
-    private static final String TOPOGRAFIX_NAMESPACE_XSD = "http://www.topografix.com/GPX/1/1/gpx.xsd";
+    private static final String TRACKPOINT_EXTENSION_XSD = "https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd";
+    private static final String TOPOGRAFIX_NAMESPACE_XSD = "https://www.topografix.com/GPX/1/1/gpx.xsd";
     private static final String OPENTRACKS_PREFIX = "opentracks";
     private static final String OPENTRACKS_NAMESPACE_URI = "http://opentracksapp.com/xmlschemas/v1";
     private static final String OPENTRACKS_XSD = "https://raw.githubusercontent.com/OpenTracksApp/OpenTracks/main/doc/opentracks-schema-1.0.xsd";
