@@ -2179,6 +2179,7 @@
     <string name="devicetype_redmi_buds_5_pro" translatable="false">Redmi Buds 5 Pro</string>
     <string name="devicetype_redmi_buds_6_active" translatable="false">Redmi Buds 6 Active</string>
     <string name="devicetype_redmi_buds_6_pro" translatable="false">Redmi Buds 6 Pro</string>
+    <string name="devicetype_redmi_buds_8_active" translatable="false">Redmi Buds 8 Active</string>
     <string name="devicetype_redmi_smart_band_2" translatable="false">Redmi Smart Band 2</string>
     <string name="devicetype_redmi_smart_band_3" translatable="false">Redmi Smart Band 3</string>
     <string name="devicetype_redmi_watch_2" translatable="false">Redmi Watch 2</string>
