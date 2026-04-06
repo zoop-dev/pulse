@@ -29,8 +29,11 @@ import nodomain.freeyourgadget.gadgetbridge.util.healthconnect.HealthConnectUtil
 import org.slf4j.LoggerFactory
 import java.time.Instant
 import java.time.ZoneId
+import java.time.temporal.ChronoUnit
 
 private val LOG = LoggerFactory.getLogger("SleepSyncer")
+
+private const val IN_PROGRESS_THRESHOLD_HOURS = 6L
 
 internal object SleepSyncer : ContextualActivitySampleSyncer {
 
@@ -101,7 +104,22 @@ internal object SleepSyncer : ContextualActivitySampleSyncer {
         LOG.info("Attempting to insert ${sleepSessionRecordList.size} SleepSessionRecord(s) for device '$deviceName' for slice $sliceStartBoundary to $sliceEndBoundary.")
         HealthConnectUtils.insertRecords(sleepSessionRecordList, healthConnectClient)
         LOG.info("Successfully inserted SleepSessionRecord(s) for device '$deviceName' for slice $sliceStartBoundary to $sliceEndBoundary.")
-        val latestTs = sleepSessionRecordList.maxOfOrNull { it.endTime }
+
+        val now = Instant.now()
+        var latestTs: Instant? = null
+        for (record in sleepSessionRecordList) {
+            val sessionEnd = record.endTime
+            val sessionStart = record.startTime
+            val effectiveTs = if (sessionEnd.isAfter(now.minus(IN_PROGRESS_THRESHOLD_HOURS, ChronoUnit.HOURS))) {
+                LOG.info("Sleep session ending at $sessionEnd may still be in progress — holding cursor at $sessionStart for re-processing.")
+                sessionStart.minusSeconds(1)
+            } else {
+                sessionEnd
+            }
+            if (latestTs == null || effectiveTs.isAfter(latestTs)) {
+                latestTs = effectiveTs
+            }
+        }
         return SyncerStatistics(recordsSynced = sleepSessionRecordList.size, recordsSkipped = skippedCount, recordType = "Sleep", latestRecordTimestamp = latestTs)
     }
 
@@ -180,6 +198,15 @@ internal object SleepSyncer : ContextualActivitySampleSyncer {
 
         LOG.info("Prepared SleepSessionRecord for device '$deviceName' (Session: $recordFinalStartTime to $recordFinalEndTime). Stages: ${stages.size}")
 
+        val startHourEpoch = recordFinalStartTime.epochSecond / 3600 * 3600
+        val clientRecordId = "gb-sleep-${metadata.device?.manufacturer ?: "unknown"}-${metadata.device?.model ?: "unknown"}-$startHourEpoch"
+        val sessionMetadata = Metadata.autoRecorded(
+            clientRecordId = clientRecordId,
+            clientRecordVersion = stages.size.toLong(),
+            device = metadata.device!!
+        )
+        LOG.info("Sleep session clientRecordId=$clientRecordId, clientRecordVersion=${stages.size}")
+
         return SleepSessionRecord(
             startTime = recordFinalStartTime,
             startZoneOffset = offset.rules.getOffset(recordFinalStartTime),
@@ -188,7 +215,7 @@ internal object SleepSyncer : ContextualActivitySampleSyncer {
             title = context.getString(nodomain.freeyourgadget.gadgetbridge.R.string.health_connect_sleep_session_title, deviceName),
             notes = context.getString(nodomain.freeyourgadget.gadgetbridge.R.string.health_connect_sleep_session_notes, deviceName),
             stages = stages,
-            metadata = metadata
+            metadata = sessionMetadata
         )
     }
 
