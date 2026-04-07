@@ -128,7 +128,7 @@ public class FossilWatchAdapter extends WatchAdapter {
         super(deviceSupport);
     }
 
-    private final int REQUEST_TIMEOUT = 60 * 1000;
+    private final int REQUEST_TIMEOUT = 5 * 60 * 1000;
 
     private Looper timeoutLooper = null;
     private Handler timeoutHandler;
