@@ -103,6 +103,11 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     }
 
     @Override
+    public boolean supportsActivityDistance(@NonNull GBDevice device) {
+        return true;
+    }
+
+    @Override
     public int[] getStressRanges() {
         // 1-25 = relaxed
         // 26-50 = low

@@ -28,6 +28,11 @@ public abstract class GarminBikeComputerCoordinator extends GarminCoordinator {
     }
 
     @Override
+    public boolean supportsActivityDistance(@NonNull GBDevice device) {
+        return true;
+    }
+
+    @Override
     public boolean supportsVO2Max(@NonNull GBDevice device) {
         return true;
     }
