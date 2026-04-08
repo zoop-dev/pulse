@@ -709,7 +709,7 @@
     <string name="qhybrid_buttons_overwrite_success">Tasten überschrieben</string>
     <string name="qhybrid_buttons_overwrite_error">Fehler beim Überschreiben der Tasten</string>
     <string name="qhybrid_offset_timezone">Verschiebung der Zeitzone um</string>
-    <string name="qhybrid_changes_delay_prompt">Änderung kann einige Sekunden dauern …</string>
+    <string name="qhybrid_changes_delay_prompt">Änderung kann einige Sekunden dauern…</string>
     <string name="qhybrid_offset_time_by">Zeitverschiebung um</string>
     <string name="pref_disable_new_ble_scanning">Deaktivieren des neuen BLE Scans</string>
     <string name="pref_summary_disable_new_ble_scanning">Aktiviere diese Option, wenn dein Gerät bei der Erkennung nicht gefunden wird</string>
@@ -3031,7 +3031,7 @@
     <string name="permission_call_phone_summary">Anrufe vom Gadget aus starten</string>
     <string name="permission_read_call_log_title">Anrufeliste auslesen</string>
     <string name="battery_minimum_charge">Mindestakkuladung in %</string>
-    <string name="summary_battery_discharge_intervals_set">Untenstehenden Konfiguration an das Gerät senden</string>
+    <string name="summary_battery_discharge_intervals_set">Untenstehende Konfiguration an das Gerät senden</string>
     <string name="charts_show_balance_sleep_summary">Schlafmangel und -überschuss in wöchentlichen und monatlichen Diagrammen anzeigen</string>
     <string name="permission_internet_access_title">Internetzugriff</string>
     <string name="permission_bluetooth_admin_title">Bluetooth-Administrator</string>
@@ -3551,12 +3551,12 @@
     <string name="pref_notifications_app_icon_upload_summary">Symbole für Benachrichtigungsanwendungen auf das Gerät hochladen</string>
     <string name="pref_huawei_activity_reminder_progress_title">Fortschritt</string>
     <string name="pref_huawei_activity_reminder_goal_reached_title">Ziel erreicht</string>
-    <string name="notifications_app_icon_upload_to_device">an Gerät senden</string>
+    <string name="notifications_app_icon_upload_to_device">An Gerät senden</string>
     <string name="metabolic_rate">Stoffwechselrate</string>
     <string name="workout_intervals">Intervalle</string>
     <string name="busy_task_fetch_weight_data">Abrufen der Gewichtsdaten</string>
     <string name="restingCalories">Ruhekalorien</string>
-    <string name="notifications_app_icon_info">Wähle Anwendungen und drücke «an Gerät senden». Alle zuvor hochgeladenen Symbole können ersetzt werden. Aktuelle Gerätebeschränkungen unbekannt.</string>
+    <string name="notifications_app_icon_info">Wähle Anwendungen und drücke «An Gerät senden». Alle zuvor hochgeladenen Symbole können ersetzt werden. Aktuelle Gerätebeschränkungen unbekannt.</string>
     <string name="notifications_app_icon_uploading">Die Symbole werden im Hintergrund hochgeladen. Du kannst diese Aktivität schließen</string>
     <string name="pref_huawei_activity_reminders">Aktivitätserinnerungen</string>
     <string name="pref_huawei_activity_reminder_stand_title">Stand</string>
@@ -3761,7 +3761,7 @@
     <string name="error_receiver_is_dead">Empfangs-Thread von GB ist ausgefallen</string>
     <string name="devicetype_generic_headphones">Kopfhörer</string>
     <string name="devicetype_generic_heart_rate_sensor">Pulssensor</string>
-    <string name="submit_button_text">Abenden</string>
+    <string name="submit_button_text">Absenden</string>
     <string name="auth_key_required_message">Der Auth-Schlüssel darf nicht leer sein</string>
     <string name="invalid_auth_key_message">Ungültiger Auth-Schlüssel – bitte erneut versuchen</string>
     <string name="auth_key_activity_title_for">Auth-Schlüssel für %1$s</string>
@@ -3966,7 +3966,7 @@
     <string name="movementContinuity">Kontinuität</string>
     <string name="movementRhythm">Rhythmus</string>
     <string name="movement_evaluation">Bewegungsanalyse</string>
-    <string name="pref_notifications_pictures_enable_summary">Benachrichtigungs-Bilder an dieses Gerät senden</string>
+    <string name="pref_notifications_pictures_enable_summary">Benachrichtigungsbilder an dieses Gerät senden</string>
     <string name="prefs_pinch_and_hold_action">Zusammenziehen und halten</string>
     <string name="prefs_noise_modes_to_cycle">Geräuschunterdrückungs-Modi wechseln</string>
     <string name="prefs_media_controls">Mediensteuerung</string>
