@@ -44,7 +44,7 @@ public class SonyWHULT900NCoordinator extends SonyHeadphonesCoordinator {
     public Set<SonyHeadphonesCapabilities> getCapabilities() {
         return new HashSet<>(Arrays.asList(
                 SonyHeadphonesCapabilities.BatterySingle,
-                SonyHeadphonesCapabilities.AmbientSoundControl,
+                SonyHeadphonesCapabilities.AmbientSoundControl2,
                 SonyHeadphonesCapabilities.PowerOffFromPhone,
                 SonyHeadphonesCapabilities.PauseWhenTakenOff,
                 SonyHeadphonesCapabilities.QuickAccess,
