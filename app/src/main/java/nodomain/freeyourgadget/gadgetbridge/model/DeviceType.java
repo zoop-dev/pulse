@@ -74,6 +74,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.bike.GarminEdge840Coo
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.bike.GarminEdgeExplore2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.bike.GarminEdgeExploreCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.gps.GarminGpsmap66sCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.hrm.GarminHrm600Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.hrm.GarminHrmProPlusCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.gps.GarminETrexSeCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.gps.GarminInReachMini2;
@@ -632,6 +633,7 @@ public enum DeviceType {
     VIVOMOVE_HR(GarminVivomoveHrCoordinator.class),
     GARMIN_HRM_PRO_PLUS(GarminHrmProPlusCoordinator.class),
     GARMIN_HRM_200(GarminHrm200Coordinator.class),
+    GARMIN_HRM_600(GarminHrm600Coordinator.class),
     GARMIN_EDGE_25(GarminEdge25Coordinator.class),
     GARMIN_EDGE_130(GarminEdge130Coordinator.class),
     GARMIN_EDGE_130_PLUS(GarminEdge130PlusCoordinator.class),

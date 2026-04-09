@@ -167,6 +167,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("CASIO STB-1000", DeviceType.CASIOGB6900); // #1902
             put("Amazfit Bip 3 Pro", DeviceType.AMAZFITBIP3PRO); // #3249
             put("Redmi Band Pro AB01", DeviceType.REDMISMARTBANDPRO); // #3069
+            put("HRM600:1234", DeviceType.GARMIN_HRM_600); // #5633
             put("HRMPro+:123456", DeviceType.GARMIN_HRM_PRO_PLUS); // #5364
             put("Instinct 2S Solar", DeviceType.GARMIN_INSTINCT_2S_SOLAR); // #3063
             put("LE_WH-1000XM5", DeviceType.SONY_WH_1000XM5); // #2969

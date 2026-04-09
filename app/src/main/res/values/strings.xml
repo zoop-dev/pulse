@@ -2251,6 +2251,7 @@
     <string name="devicetype_coospo_hw9" translatable="false">Coospo HW9</string>
     <string name="devicetype_coospo_hw807" translatable="false">Coospo HW807</string>
     <string name="devicetype_garmin_hrm_200" translatable="false">Garmin HRM 200</string>
+    <string name="devicetype_garmin_hrm_600" translatable="false">Garmin HRM 600</string>
     <string name="devicetype_coospo_h9z" translatable="false">Coospo H9Z</string>
     <string name="devicetype_solarflow">SolarFlow</string>
     <string name="devicetype_braun_bpw4500" translatable="false">Braun iCheck 7 BPW4500</string>
