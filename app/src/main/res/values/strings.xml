@@ -1056,6 +1056,14 @@
     <string name="respiratoryrate">Respiratory Rate</string>
     <string name="active_calories">Active calories</string>
     <string name="distance">Distance</string>
+    <string name="stride">Stride</string>
+    <string name="stamina">Stamina</string>
+    <string name="step_length">Step Length</string>
+    <string name="diving_cns_toxicity">CNS toxicity</string>
+    <string name="diving_nitrogen_load">Nitrogen load</string>
+    <string name="diving_oxygen_toxicity">Oxygen toxicity</string>
+    <string name="unit_oxygen_toxicity_units">OTU</string>
+    <string name="diving_surface_interval">Surface interval</string>
     <string name="clock">Clock</string>
     <string name="heart_rate">Heart rate</string>
     <string name="hr_resting">Resting</string>

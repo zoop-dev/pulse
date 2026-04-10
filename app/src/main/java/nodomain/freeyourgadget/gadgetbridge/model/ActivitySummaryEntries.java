@@ -257,6 +257,7 @@ public class ActivitySummaryEntries {
     public static final String UNIT_NAUTICAL_MILES = "nautical_miles";
     public static final String UNIT_KNOTS = "knots";
     public static final String UNIT_CELSIUS = "unit_celsius";
+    public static final String UNIT_OXYGEN_TOXICITY_UNITs = "unit_oxygen_toxicity_units";
 
     public static final String GROUP_PACE = "Pace";
     public static final String GROUP_ACTIVITY = "Activity";
@@ -280,6 +281,8 @@ public class ActivitySummaryEntries {
     public static final String GROUP_DIVING = "activity_type_diving";
     public static final String GROUP_RECOVERY_HEART_RATE = "recovery_heart_rate";
     public static final String GROUP_MOVEMENT_EVALUATION = "movement_evaluation";
+    public static final String GROUP_DISTANCE = "Distance";
+    public static final String GROUP_STEPS = "Steps";
     public static final String AVG_DEPTH = "diving_avg_depth";
     public static final String START_CNS = "diving_start_cns";
     public static final String END_CNS = "diving_end_cns";
@@ -287,6 +290,8 @@ public class ActivitySummaryEntries {
     public static final String END_N2 = "diving_end_n2";
     public static final String DIVE_NUMBER = "dive_number";
     public static final String BOTTOM_TIME = "diving_bottom_time";
+    public static final String OXYGEN_TOXICITY = "diving_oxygen_toxicity";
+    public static final String SURFACE_INTERVAL = "diving_surface_interval";
 
     // DIVING parameters
     public static final String MAX_DEPTH = "diving_maximum_diving_depth";

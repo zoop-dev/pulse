@@ -102,6 +102,13 @@
     <color name="chart_line_stroke_rate" type="color">#6495ED</color>
     <color name="chart_highline_dolor" type="color">#ffff8800</color>
     <color name="chart_line_depth" type="color">#ff4040ff</color>
+    <color name="chart_line_distance" type="color">#88FF88</color>
+    <color name="chart_line_stride" type="color">#FF8888</color>
+    <color name="chart_line_body_energy" type="color">#884088</color>
+    <color name="chart_line_stamina" type="color">#8888FF</color>
+    <color name="chart_line_step_length" type="color">#FF4088</color>
+    <color name="chart_cns_toxicity" type="color">#FF4040</color>
+    <color name="chart_n2_load" type="color">#FF8840</color>
 
     <attr name="row_separator" format="color" />
     <color name="alternate_row_background_light">#FFEDEDED</color>

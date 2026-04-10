@@ -316,7 +316,7 @@ public class ZeppOsActivityDetailsParser extends AbstractHuamiActivityDetailsPar
         final short pace = buf.getShort(); // sec/km
 
         activityPointBuilder.setCadence(cadence);
-        activityPointBuilder.setStrideCm(stride);
+        activityPointBuilder.setStride(stride * 10.0f);
         if (pace != 0) {
             activityPointBuilder.setSpeed(1000f / pace); // s/km -> m/s
         }

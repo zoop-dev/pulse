@@ -1,3 +1,19 @@
+/*  Copyright (C) 2025-2026 José Rebelo, a0z, Me7c7, Martin Piatka, Thomas Kuehne
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries
 
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData
@@ -280,6 +296,8 @@ object ActivitySummaryGroup {
                     ActivitySummaryEntries.END_N2,
                     ActivitySummaryEntries.DIVE_NUMBER,
                     ActivitySummaryEntries.BOTTOM_TIME,
+                    ActivitySummaryEntries.OXYGEN_TOXICITY,
+                    ActivitySummaryEntries.SURFACE_INTERVAL,
                 )
             )
 
@@ -315,6 +333,32 @@ object ActivitySummaryGroup {
                 )
             )
 
+            // Distance
+            put(ActivitySummaryEntries.GROUP_DISTANCE, listOf(
+                ActivitySummaryEntries.DISTANCE_METERS
+            ))
+
+            // Steps
+            put(ActivitySummaryEntries.GROUP_STEPS, listOf(
+                ActivitySummaryEntries.AVG_GROUND_CONTACT_TIME,
+                ActivitySummaryEntries.AVG_GROUND_CONTACT_TIME_BALANCE,
+                ActivitySummaryEntries.AVG_VERTICAL_OSCILLATION,
+                ActivitySummaryEntries.AVG_VERTICAL_RATIO,
+                ActivitySummaryEntries.STANDING_COUNT,
+                ActivitySummaryEntries.STANDING_TIME,
+                ActivitySummaryEntries.STEPS,
+                ActivitySummaryEntries.STEP_LENGTH_AVG,
+                ActivitySummaryEntries.STEP_RATE_AVG,
+                ActivitySummaryEntries.STEP_RATE_MAX,
+                ActivitySummaryEntries.STEP_RATE_SUM,
+                ActivitySummaryEntries.STEP_SPEED_LOSS,
+                ActivitySummaryEntries.STEP_SPEED_LOSS_PERCENTAGE,
+                ActivitySummaryEntries.STRIDE_AVG,
+                ActivitySummaryEntries.STRIDE_MAX,
+                ActivitySummaryEntries.STRIDE_MIN,
+                ActivitySummaryEntries.STRIDE_TOTAL,
+            ))
+
             // Other
             put(
                 ActivitySummaryEntries.GROUP_OTHER, listOf<String>(
@@ -323,15 +367,6 @@ object ActivitySummaryGroup {
                     ActivitySummaryEntries.CALORIES_BURNT,
                     ActivitySummaryEntries.CALORIES_TOTAL,
                     ActivitySummaryEntries.CALORIES_RESTING,
-                    ActivitySummaryEntries.STRIDE_AVG,
-                    ActivitySummaryEntries.STRIDE_MAX,
-                    ActivitySummaryEntries.STRIDE_MIN,
-                    ActivitySummaryEntries.STEP_LENGTH_AVG,
-                    ActivitySummaryEntries.CADENCE_AVG,
-                    ActivitySummaryEntries.CADENCE_MAX,
-                    ActivitySummaryEntries.CADENCE_MIN,
-                    ActivitySummaryEntries.STEP_RATE_AVG,
-                    ActivitySummaryEntries.STEP_RATE_MAX,
                 )
             )
         }
