@@ -2144,6 +2144,7 @@
     <string name="devicetype_huawei_band9" translatable="false">Huawei Band 9</string>
     <string name="devicetype_huawei_band10" translatable="false">Huawei Band 10</string>
     <string name="devicetype_huawei_band11" translatable="false">Huawei Band 11</string>
+    <string name="devicetype_huawei_band11pro" translatable="false">Huawei Band 11 Pro</string>
     <string name="devicetype_huawei_watch_gt" translatable="false">Huawei Watch GT</string>
     <string name="devicetype_huawei_band2pro" translatable="false">Huawei Band 2 (Pro)</string>
     <string name="devicetype_huawei_band3pro" translatable="false">Huawei Band 3 (Pro)</string>
