@@ -1,4 +1,4 @@
-/*  Copyright (C) 2024 José Rebelo, CaptKentish, Daniele Gobbetti, Thomas Kuehne
+/*  Copyright (C) 2024-2026 José Rebelo, CaptKentish, Daniele Gobbetti, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -42,7 +42,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.AbstractTimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GarminSleepRestlessMomentsSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericTrainingLoadAcuteSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericTrainingLoadChronicSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.cmfwatchpro.workout.CmfActivityTrackProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminActivitySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminBodyEnergySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminEventSampleProvider;
@@ -160,7 +159,7 @@ public class FitImporter {
     /**
      * @noinspection StatementWithEmptyBody
      */
-    public void importFile(final File file) throws IOException, FitParseException {
+    public void importFile(final File file, boolean isReprocessing) throws IOException, FitParseException {
         LOG.debug("Parsing {}", file.getAbsolutePath());
 
         reset();
@@ -461,7 +460,7 @@ public class FitImporter {
 
             switch (fileId.getType()) {
                 case ACTIVITY:
-                    persistWorkout(finalExportFile, session);
+                    persistWorkout(finalExportFile, session, isReprocessing);
                     break;
                 case MONITOR:
                     persistActivitySamples(session);
@@ -527,21 +526,44 @@ public class FitImporter {
         }
     }
 
-    private void persistWorkout(final File file, final DaoSession session) {
+    private void persistWorkout(final File file, final DaoSession session, boolean isReprocessing) {
         LOG.debug("Persisting workout for {}", fileId);
 
-        final BaseActivitySummary summary;
+        Long sessionStart = workoutParser.getSessionStartTime();
+        Long timeCreated = fileId.getTimeCreated();
+        BaseActivitySummary summary = null;
 
         // This ensures idempotency when re-processing
-        try {
-            summary = ActivitySummaryParser.findOrCreateBaseActivitySummary(
-                    session,
-                    gbDevice,
-                    Objects.requireNonNull(fileId.getTimeCreated()).intValue()
-            );
-        } catch (final Exception e) {
-            GB.toast(context, "Error finding base summary", Toast.LENGTH_LONG, GB.ERROR, e);
-            return;
+        if (isReprocessing && timeCreated != null) {
+            try {
+                summary = ActivitySummaryParser.findBaseActivitySummary(
+                        session,
+                        gbDevice,
+                        timeCreated
+                );
+
+                if (summary != null && sessionStart != null) {
+                    summary.setStartTime(new Date(sessionStart * 1000L));
+                }
+            } catch (final Exception e) {
+                LOG.error("Error finding existing base summary", e);
+                // continue to findOrCreateBaseActivitySummary
+            }
+        }
+
+        if (summary == null) {
+            final Long start = (sessionStart == null) ? timeCreated : sessionStart;
+
+            try {
+                summary = ActivitySummaryParser.findOrCreateBaseActivitySummary(
+                        session,
+                        gbDevice,
+                        Objects.requireNonNull(start)
+                );
+            } catch (final Exception e) {
+                GB.toast(context, "Error finding base summary", Toast.LENGTH_LONG, GB.ERROR, e);
+                return;
+            }
         }
 
         workoutParser.updateSummary(summary);

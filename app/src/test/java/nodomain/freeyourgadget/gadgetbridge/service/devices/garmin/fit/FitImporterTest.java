@@ -13,7 +13,7 @@ public class FitImporterTest extends TestBase {
     @Ignore("helper test for development, remove this while debugging")
     public void localTest() throws Exception {
         final FitImporter fitImporter = new FitImporter(  null, null);
-        fitImporter.importFile(new File("/storage/SKIN_TEMP.fit"));
+        fitImporter.importFile(new File("/storage/SKIN_TEMP.fit"), false);
     }
 
     @Test
@@ -27,7 +27,7 @@ public class FitImporterTest extends TestBase {
                 continue;
             }
             final FitImporter fitImporter = new FitImporter(  null, null);
-            fitImporter.importFile(file);
+            fitImporter.importFile(file, false);
         }
     }
 }

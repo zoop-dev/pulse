@@ -106,7 +106,7 @@ public class GarminSettingsCustomizer implements DeviceSpecificSettingsCustomize
 
                             final FitAsyncProcessor fitAsyncProcessor = new FitAsyncProcessor(context, handler.getDevice());
                             final long[] lastNotificationUpdateTs = new long[]{System.currentTimeMillis()};
-                            fitAsyncProcessor.process(filesToProcess, new FitAsyncProcessor.Callback() {
+                            fitAsyncProcessor.process(filesToProcess, false, new FitAsyncProcessor.Callback() {
                                 @Override
                                 public void onProgress(final int i) {
                                     final long now = System.currentTimeMillis();
@@ -405,7 +405,7 @@ public class GarminSettingsCustomizer implements DeviceSpecificSettingsCustomize
         //}
 
         final FitAsyncProcessor fitAsyncProcessor = new FitAsyncProcessor(context, device);
-        fitAsyncProcessor.process(fitFiles, new FitAsyncProcessor.Callback() {
+        fitAsyncProcessor.process(fitFiles, true, new FitAsyncProcessor.Callback() {
             @Override
             public void onProgress(final int i) {
                 transferNotification.setTotalProgress(i);

@@ -948,7 +948,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             transferNotification.start(R.string.busy_task_processing_files, 0, filesToProcess.size());
 
             final FitAsyncProcessor fitAsyncProcessor = new FitAsyncProcessor(getContext(), getDevice());
-            fitAsyncProcessor.process(filesToProcess, new FitAsyncProcessor.Callback() {
+            fitAsyncProcessor.process(filesToProcess, false, new FitAsyncProcessor.Callback() {
                 @Override
                 public void onProgress(final int i) {
                     transferNotification.setTotalProgress(i);
@@ -1439,7 +1439,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
                 try {
                     final FitImporter fitImporter = new FitImporter(getContext(), gbDevice);
-                    fitImporter.importFile(file);
+                    fitImporter.importFile(file, false);
                 } catch (final Exception e) {
                     LOG.error("Failed to parse file as fit", e);
                     if (currentlyDownloading != null && currentlyDownloading.getSyncFile() != null) {
