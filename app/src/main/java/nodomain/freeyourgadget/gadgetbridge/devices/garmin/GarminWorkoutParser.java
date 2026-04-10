@@ -603,6 +603,12 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         summaryData.add(TRAINING_LOAD, safeRound(session.getTrainingLoadPeak()), UNIT_NONE);
 
         if (diveSummary != null) {
+            if (diveSummary.getDiveNumber() != null) {
+                summaryData.add(DIVE_NUMBER, diveSummary.getDiveNumber(), UNIT_NONE);
+            }
+            if (diveSummary.getBottomTime() != null) {
+                summaryData.add(BOTTOM_TIME, diveSummary.getBottomTime(), UNIT_SECONDS);
+            }
             if (diveSummary.getAvgDepth() != null) {
                 summaryData.add(AVG_DEPTH, diveSummary.getAvgDepth(), UNIT_METERS);
             }
@@ -610,22 +616,22 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                 summaryData.add(MAX_DEPTH, diveSummary.getMaxDepth(), UNIT_METERS);
             }
             if (diveSummary.getStartCns() != null) {
-                summaryData.add(START_CNS, diveSummary.getStartCns(), UNIT_PERCENTAGE);
+                summaryData.add(START_CNS, diveSummary.getStartCns(), UNIT_PERCENTAGE, true);
             }
             if (diveSummary.getEndCns() != null) {
                 summaryData.add(END_CNS, diveSummary.getEndCns(), UNIT_PERCENTAGE);
             }
             if (diveSummary.getStartN2() != null) {
-                summaryData.add(START_N2, diveSummary.getStartN2(), UNIT_PERCENTAGE);
+                summaryData.add(START_N2, diveSummary.getStartN2(), UNIT_PERCENTAGE, true);
             }
             if (diveSummary.getEndN2() != null) {
                 summaryData.add(END_N2, diveSummary.getEndN2(), UNIT_PERCENTAGE);
             }
-            if (diveSummary.getDiveNumber() != null) {
-                summaryData.add(DIVE_NUMBER, diveSummary.getDiveNumber(), UNIT_NONE);
+            if (diveSummary.getO2Toxicity() != null) {
+                summaryData.add(OXYGEN_TOXICITY, diveSummary.getO2Toxicity(), UNIT_OXYGEN_TOXICITY_UNITs);
             }
-            if (diveSummary.getBottomTime() != null) {
-                summaryData.add(BOTTOM_TIME, diveSummary.getBottomTime(), UNIT_SECONDS);
+            if (diveSummary.getSurfaceInterval() != null) {
+                summaryData.add(SURFACE_INTERVAL, diveSummary.getSurfaceInterval(), UNIT_SECONDS);
             }
         }
         summaryData.add(TEMPERATURE_MIN, session.getMinTemperature(), UNIT_CELSIUS);

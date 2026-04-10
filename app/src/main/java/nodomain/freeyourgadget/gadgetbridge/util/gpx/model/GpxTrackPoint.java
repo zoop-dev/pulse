@@ -1,4 +1,4 @@
-/*  Copyright (C) 2023-2025 José Rebelo, Thomas Kuehne
+/*  Copyright (C) 2023-2026 José Rebelo, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -124,24 +124,15 @@ public class GpxTrackPoint extends GPSCoordinate {
     }
 
     public ActivityPoint toActivityPoint() {
-        final ActivityPoint activityPoint = new ActivityPoint();
-        activityPoint.setTime(time);
-        activityPoint.setLocation(this);
-        activityPoint.setHeartRate(heartRate);
-        if (!Float.isNaN(speed)) {
-            activityPoint.setSpeed(speed);
-        }
-        activityPoint.setCadence(cadence);
-        if (!Double.isNaN(depth)) {
-            activityPoint.setDepth(depth);
-        }
-        if (!Double.isNaN(temperature)) {
-            activityPoint.setTemperature(temperature);
-        }
-        if (description != null && description.length() > 0) {
-            activityPoint.setDescription(description);
-        }
+        final ActivityPoint.Builder builder = new ActivityPoint.Builder(time);
+        builder.setLocation(this);
+        builder.setHeartRate(heartRate);
+        builder.setSpeed(speed);
+        builder.setCadence(cadence);
+        builder.setDepth(depth);
+        builder.setTemperature(temperature);
+        builder.setDescription(description);
 
-        return activityPoint;
+        return builder.build();
     }
 }

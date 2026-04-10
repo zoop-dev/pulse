@@ -597,6 +597,8 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(127, BaseType.SINT32, "ascent_rate", 1000, 0), // m/s
             new FieldDefinitionPrimitive(129, BaseType.UINT8, "po2", 100, 0), // %
             new FieldDefinitionPrimitive(136, BaseType.UINT8, "wrist_heart_rate"),
+            new FieldDefinitionPrimitive(137, BaseType.UINT8, "stamina_potential"), // %
+            new FieldDefinitionPrimitive(138, BaseType.UINT8, "stamina"), // %
             new FieldDefinitionPrimitive(139, BaseType.UINT16, "core_temperature", 100, 0), // °C
             new FieldDefinitionPrimitive(143, BaseType.UINT8, "body_battery"),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
