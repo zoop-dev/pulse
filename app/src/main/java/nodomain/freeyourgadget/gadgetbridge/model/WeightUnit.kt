@@ -22,26 +22,29 @@ enum class WeightUnit {
         }
 
         fun formatWeight(context: Context, kg: Double, target: WeightUnit): String {
+            val convertedWeight = convertWeight(kg, target)
+            return formatConvertedWeight(context, convertedWeight, target)
+        }
+
+        fun formatConvertedWeight(context: Context, convertedWeight: Double, target: WeightUnit): String {
             return when (target) {
                 JIN -> {
-                    val jin: Double = kg * 2
-                    context.getString(R.string.weight_scale_jin_format, jin)
+                    context.getString(R.string.weight_scale_jin_format, convertedWeight)
                 }
 
                 POUND -> {
-                    val pound: Double = kg / 0.45359237
-                    context.getString(R.string.weight_scale_pound_format, pound)
+                    context.getString(R.string.weight_scale_pound_format, convertedWeight)
                 }
 
                 STONE -> {
-                    val total: Int = (kg / 0.45359237).roundToInt()
-                    val stone: Int = total / 14
-                    val pound: Int = total % 14
+                    val totalPounds: Int = (convertedWeight * 14).roundToInt()
+                    val stone: Int = totalPounds / 14
+                    val pound: Int = totalPounds % 14
                     context.getString(R.string.weight_scale_stone_format, stone, pound)
                 }
 
                 KILOGRAM -> {
-                    context.getString(R.string.weight_scale_kilogram_format, kg)
+                    context.getString(R.string.weight_scale_kilogram_format, convertedWeight)
                 }
             }
         }

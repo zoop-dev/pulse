@@ -200,8 +200,8 @@ public class WeightChartFragment extends AbstractChartFragment<WeightChartFragme
         return (float) WeightUnit.Companion.convertWeight(weight, weightUnit);
     }
 
-    private String formatWeight(float weight) {
-        return WeightUnit.Companion.formatWeight(requireContext(), weight, weightUnit);
+    private String formatWeight(float convertedWeight) {
+        return WeightUnit.Companion.formatConvertedWeight(requireContext(), convertedWeight, weightUnit);
     }
 
     protected static class WeightChartsData extends DefaultChartsData<LineData> {
