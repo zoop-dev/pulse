@@ -44,6 +44,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
+import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.model.workout.Workout;
 import nodomain.freeyourgadget.gadgetbridge.model.workout.WorkoutChart;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
@@ -761,13 +762,27 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         }
 
         summaryData.setHasGps(
-                activityPoints.stream().anyMatch(p -> p.getLocation() != null) ||
-                        sessionActivityPoints.stream().anyMatch(p -> p.getLocation() != null)
+                activityPoints.stream().anyMatch(GarminWorkoutParser::hasNonNullIslandLocation) ||
+                        sessionActivityPoints.stream().anyMatch(GarminWorkoutParser::hasNonNullIslandLocation)
         );
 
         summary.setSummaryData(summaryData.toString());
 
         return summaryData;
+    }
+
+    // Some indoor activities record all points with fake Null Island (0°N 0°E) position.
+    private static boolean hasNonNullIslandLocation(final ActivityPoint point) {
+        if (point != null) {
+            final GPSCoordinate location = point.getLocation();
+            if (location != null) {
+                final double lat = location.getLatitude();
+                final double lon = location.getLongitude();
+                // test for any value other than NaN and 0.0
+                return (lat == lat && lat != 0.0) || (lon == lon && lon != 0.0);
+            }
+        }
+        return false;
     }
 
     public Number safeRound(final Number number) {
