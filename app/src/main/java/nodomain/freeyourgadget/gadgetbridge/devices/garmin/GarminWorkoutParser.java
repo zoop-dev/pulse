@@ -209,12 +209,23 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                 // We only support 1 user profile
                 userProfile = (FitUserProfile) record;
             }
-        } else if (record instanceof FitDiveSummary) {
+        } else if (record instanceof FitDiveSummary newDiveSummary) {
             LOG.trace("Dive summary: {}", record);
             if (diveSummary != null) {
-                return false; // for some reason there is more than one message, in my activities the first one contains all data
+                Integer referenceMesg = newDiveSummary.getReferenceMesg();
+                if(referenceMesg != null && referenceMesg != 18){
+                    // prioritize diving session (18) over records like diving laps (19)
+                    // wish list for apnea diving: parse the multiple laps (19)
+                    return false;
+                }
+
+                Integer referenceIndex = newDiveSummary.getReferenceIndex();
+                if(referenceIndex != null && referenceIndex != 0){
+                    // prioritize first session/lap over other session/lap
+                    return false;
+                }
             }
-            diveSummary = (FitDiveSummary) record;
+            diveSummary = newDiveSummary;
         } else if (record instanceof FitDiveGas) {
             LOG.trace("Dive gas: {}", record);
             diveGases.add((FitDiveGas) record);
