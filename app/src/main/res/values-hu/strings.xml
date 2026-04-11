@@ -4191,4 +4191,12 @@
     <string name="qhybrid_button_function_step_goal">Előrehaladás a léspéscélban</string>
     <string name="qhybrid_button_function_control_music">Zenelejátszó vezérlése</string>
     <string name="qhybrid_button_function_ring_phone">Telefon csörgése</string>
+    <string name="stride">Lépés</string>
+    <string name="stamina">Kitartás</string>
+    <string name="step_length">Lépéshossz</string>
+    <string name="diving_cns_toxicity">Központi idegrendszeri mérgezés</string>
+    <string name="diving_nitrogen_load">Nitrogénterhelés</string>
+    <string name="diving_oxygen_toxicity">Oxigénmérgezés</string>
+    <string name="unit_oxygen_toxicity_units">OTU</string>
+    <string name="diving_surface_interval">Felületi időköz</string>
 </resources>
