@@ -4345,4 +4345,12 @@
     <string name="qhybrid_button_function_step_goal">步数目标进度</string>
     <string name="qhybrid_button_function_control_music">控制音乐播放器</string>
     <string name="qhybrid_button_function_ring_phone">手机响铃</string>
+    <string name="stride">大步走</string>
+    <string name="stamina">耐力</string>
+    <string name="step_length">步长</string>
+    <string name="diving_cns_toxicity">中枢神经系统毒性</string>
+    <string name="diving_nitrogen_load">氮气量</string>
+    <string name="diving_oxygen_toxicity">氧毒性</string>
+    <string name="unit_oxygen_toxicity_units">氧毒性单位</string>
+    <string name="diving_surface_interval">水面休息时间</string>
 </resources>
