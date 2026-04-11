@@ -4362,4 +4362,12 @@
     <string name="qhybrid_button_function_step_goal">Postęp w realizacji celu kroków</string>
     <string name="qhybrid_button_function_control_music">Sterowanie odtwarzaczem muzyki</string>
     <string name="qhybrid_button_function_ring_phone">Zadzwonić na telefon</string>
+    <string name="stride">Krok</string>
+    <string name="stamina">Wytrzymałość</string>
+    <string name="step_length">Długość kroku</string>
+    <string name="diving_cns_toxicity">Toksyczność dla OUN</string>
+    <string name="diving_nitrogen_load">Obciążenie azotem</string>
+    <string name="diving_oxygen_toxicity">Zatrucie tlenowe</string>
+    <string name="unit_oxygen_toxicity_units">OTU (jednostka zatrucia tlenem)</string>
+    <string name="diving_surface_interval">Przerwa na powierzchni</string>
 </resources>
