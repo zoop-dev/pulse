@@ -683,6 +683,11 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
+    public boolean supportsActivityDistance(@NonNull GBDevice device) {
+        return false;
+    }
+
+    @Override
     public boolean supportsTrainingLoad(@NonNull GBDevice device) {
         return false;
     }

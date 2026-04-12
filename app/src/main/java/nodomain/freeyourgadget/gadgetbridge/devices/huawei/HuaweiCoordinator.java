@@ -305,6 +305,11 @@ public abstract class HuaweiCoordinator extends AbstractDeviceCoordinator {
     }
 
     @Override
+    public boolean supportsActivityDistance(@NonNull final GBDevice device) {
+        return true;
+    }
+
+    @Override
     public boolean supportsActivityTracking(@NonNull final GBDevice device) {
         return true;
     }

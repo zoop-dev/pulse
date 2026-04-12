@@ -292,6 +292,7 @@ public interface DeviceCoordinator {
     boolean supportsSpeedzones(@NonNull GBDevice device);
     boolean supportsCharts(@NonNull GBDevice device);
     boolean supportsActiveCalories(@NonNull GBDevice device);
+    boolean supportsActivityDistance(@NonNull GBDevice device);
     boolean supportsTrainingLoad(@NonNull GBDevice device);
     boolean supportsGlucoseMeasurement(@NonNull GBDevice device);
 

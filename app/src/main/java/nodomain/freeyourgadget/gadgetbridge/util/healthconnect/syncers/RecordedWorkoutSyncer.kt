@@ -351,7 +351,9 @@ internal object RecordedWorkoutSyncer {
 
         val summaryData = parseSummaryData(workout.summaryData)
         if (summaryData != null) {
-            addDistanceRecord(summaryData, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
+            if (!device.deviceCoordinator.supportsActivityDistance(device)) {
+                addDistanceRecord(summaryData, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
+            }
             if (!device.deviceCoordinator.supportsActiveCalories(device)) {
                 addCaloriesRecords(summaryData, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
             }
@@ -389,7 +391,9 @@ internal object RecordedWorkoutSyncer {
 
         val summaryData = parseSummaryData(workout.summaryData)
         if (summaryData != null) {
-            addDistanceRecord(summaryData, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
+            if (!gbDevice.deviceCoordinator.supportsActivityDistance(gbDevice)) {
+                addDistanceRecord(summaryData, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
+            }
             addSpeedRecord(summaryData, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
             if (!gbDevice.deviceCoordinator.supportsActiveCalories(gbDevice)) {
                 addCaloriesRecords(summaryData, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
