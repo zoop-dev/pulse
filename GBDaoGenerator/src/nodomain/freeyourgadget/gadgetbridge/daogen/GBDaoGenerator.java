@@ -76,7 +76,7 @@ public class GBDaoGenerator {
             outputDir.mkdirs();
         }
 
-        final Schema schema = new Schema(129, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(130, MAIN_PACKAGE + ".entities");
 
         final List<Entity> sampleProvidersToGenerate = new LinkedList<>();
 
@@ -248,6 +248,7 @@ public class GBDaoGenerator {
         sampleProvidersToGenerate.add(addGenericTrainingLoadChronicSample(schema, user, device));
         sampleProvidersToGenerate.add(addGenericWeightSample(schema, user, device));
         sampleProvidersToGenerate.add(addGlucoseSample(schema, user, device));
+        sampleProvidersToGenerate.add(addGenericMetricsSample(schema, user, device));
 
         deleteOldFiles();
 
@@ -2294,6 +2295,17 @@ public class GBDaoGenerator {
         bloodPressureSample.addIntProperty("pulseRate");
         bloodPressureSample.addIntProperty("measurementStatus");
         return bloodPressureSample;
+    }
+
+    private static Entity addGenericMetricsSample(Schema schema, Entity user, Entity device) {
+        Entity sample = addEntity(schema, "GenericMetricSample");
+        sample.implementsInterface(MAIN_PACKAGE + ".model.MetricSample");
+        addCommonTimeSampleProperties("AbstractTimeSample", sample, user, device);
+        sample.addIntProperty("metricType").notNull().primaryKey().codeBeforeGetterAndSetter(OVERRIDE);
+        sample.addDoubleProperty("metricScore").codeBeforeGetterAndSetter(OVERRIDE);
+        sample.addLongProperty("metricExtra").codeBeforeGetterAndSetter(OVERRIDE);
+
+        return sample;
     }
 
     private static final String SAMPLE_PROVIDER_TEMPLATE = """

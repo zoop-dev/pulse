@@ -1855,12 +1855,12 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "unknown_0"),
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "unknown_2"),
             new FieldDefinitionPrimitive(3, BaseType.UINT32, "unknown_3"),
-            new FieldDefinitionPrimitive(4, BaseType.UINT16, "functional_threshold_power"), // W
+            new FieldDefinitionPrimitive(4, BaseType.UINT16, "functional_threshold_power"), // Watt
             new FieldDefinitionPrimitive(5, BaseType.UINT8, "unknown_5"),
             new FieldDefinitionPrimitive(6, BaseType.UINT8, "unknown_6"),
-            new FieldDefinitionPrimitive(7, BaseType.UINT16, "running_lactate_threshold_power"),
-            new FieldDefinitionPrimitive(8, BaseType.UINT8, "running_lactate_threshold_hr"),
-            new FieldDefinitionPrimitive(9, BaseType.UINT8, "cycling_lactace_threshold_hr"),
+            new FieldDefinitionPrimitive(7, BaseType.UINT16, "running_lactate_threshold_power"), // Watt
+            new FieldDefinitionPrimitive(8, BaseType.UINT8, "running_lactate_threshold_hr"), // BPM
+            new FieldDefinitionPrimitive(9, BaseType.UINT8, "cycling_lactace_threshold_hr"), // BPM
             new FieldDefinitionPrimitive(10, BaseType.UINT16, "unknown_10"),
             new FieldDefinitionPrimitive(11, BaseType.ENUM, "unknown_11"),
             new FieldDefinitionPrimitive(12, BaseType.ENUM, "unknown_12"),
@@ -1870,7 +1870,7 @@ public class NativeFITMessage {
     // Source: #5710
     public static NativeFITMessage TRAINING_READINESS = new NativeFITMessage(369, "TRAINING_READINESS", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT8, "training_readiness"),
-            new FieldDefinitionPrimitive(1, BaseType.ENUM, "level"), // 4 high, 5 prime
+            new FieldDefinitionPrimitive(1, BaseType.ENUM, "level"), // 1=poor, 2=low, 3=moderate, 4=high, 5=prime
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "unknown_2"),
             new FieldDefinitionPrimitive(3, BaseType.ENUM, "unknown_3"),
             new FieldDefinitionPrimitive(4, BaseType.UINT8, "unknown_4"),
@@ -2028,7 +2028,7 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "hill_strength"),
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "hill_endurance"),
             new FieldDefinitionPrimitive(3, BaseType.ENUM, "unknown_3"), // 2?
-            new FieldDefinitionPrimitive(4, BaseType.ENUM, "unknown_4"), // 2?
+            new FieldDefinitionPrimitive(4, BaseType.ENUM, "level"), // 1=recreational, 2=challenger, 3=trained, 4=skilled, 5=expert, 6=elite
             new FieldDefinitionPrimitive(5, BaseType.ENUM, "unknown_5"),
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
@@ -2036,7 +2036,7 @@ public class NativeFITMessage {
     // Source: #5708
     public static NativeFITMessage ENDURANCE_SCORE = new NativeFITMessage(403, "ENDURANCE_SCORE", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "endurance_score"),
-            new FieldDefinitionPrimitive(1, BaseType.ENUM, "level"), // 6 superior 7 elite
+            new FieldDefinitionPrimitive(1, BaseType.ENUM, "level"), // 1=recreational, 2=intermediate, 3=trained, 4=well-trained, 5=expert, 6=superior, 7=elite
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "unknown_2"),
             // Matches the boundaries from https://www8.garmin.com/manuals/webhelp/GUID-C001C335-A8EC-4A41-AB0E-BAC434259F92/EN-US/GUID-573861DC-64B1-4120-847F-A944BA683DBA.html
             new FieldDefinitionPrimitive(3, BaseType.UINT16, "lower_bound_intermediate"),

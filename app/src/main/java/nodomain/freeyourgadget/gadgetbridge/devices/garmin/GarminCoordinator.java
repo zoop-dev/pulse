@@ -50,6 +50,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.GarminSleepStageSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminSleepStatsSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminSpo2SampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.GarminStressSampleDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.GenericMetricSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericTrainingLoadAcuteSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericTrainingLoadAcuteSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericTrainingLoadChronicSample;
@@ -126,6 +127,7 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
             put(session.getPendingFileDao(), PendingFileDao.Properties.DeviceId);
             put(session.getGenericTrainingLoadAcuteSampleDao(), GenericTrainingLoadAcuteSampleDao.Properties.DeviceId);
             put(session.getGenericTrainingLoadChronicSampleDao(), GenericTrainingLoadChronicSampleDao.Properties.DeviceId);
+            put(session.getGenericMetricSampleDao(), GenericMetricSampleDao.Properties.DeviceId);
         }};
     }
 

@@ -60,7 +60,7 @@ public class FitHillScore extends RecordData {
     }
 
     @Nullable
-    public Integer getUnknown4() {
+    public Integer getLevel() {
         return getFieldByNumber(4, Integer.class);
     }
 
@@ -102,7 +102,7 @@ public class FitHillScore extends RecordData {
             return this;
         }
 
-        public Builder setUnknown4(final Integer value) {
+        public Builder setLevel(final Integer value) {
             setFieldByNumber(4, value);
             return this;
         }
