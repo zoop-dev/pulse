@@ -35,6 +35,7 @@ import org.slf4j.LoggerFactory;
 import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -60,11 +61,13 @@ public class UM25Support extends UM25BaseSupport {
     public static final String EXTRA_KEY_MEASUREMENT_DATA = "EXTRA_MEASUREMENT_DATA";
     public static final int LOOP_DELAY = 500;
 
+    public static final int NOTIFICATION_ID_USB_CURRENT = new Random().nextInt();
+
     private final byte[] COMMAND_UPDATE = new byte[]{(byte) 0xF0};
     private final byte[] COMMAND_RESET_STATS = new byte[]{(byte) 0xF4};
     private final int PAYLOAD_LENGTH = 130;
 
-    private ByteBuffer buffer = ByteBuffer.allocate(PAYLOAD_LENGTH);
+    private final ByteBuffer buffer = ByteBuffer.allocate(PAYLOAD_LENGTH);
 
     ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
 
@@ -216,7 +219,7 @@ public class UM25Support extends UM25BaseSupport {
                     .build();
 
             GB.notify(
-                    GB.NOTIFICATION_ID_LOW_BATTERY,
+                    NOTIFICATION_ID_USB_CURRENT,
                     notification,
                     getContext()
             );

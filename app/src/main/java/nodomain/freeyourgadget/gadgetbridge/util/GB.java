@@ -64,7 +64,6 @@ import nodomain.freeyourgadget.gadgetbridge.activities.ControlCenterv2;
 import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventScreenshot;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceCommunicationService;
@@ -87,13 +86,11 @@ public class GB {
 
     public static final int NOTIFICATION_ID = 1;
     public static final int NOTIFICATION_ID_INSTALL = 2;
-    public static final int NOTIFICATION_ID_LOW_BATTERY = 3;
     public static final int NOTIFICATION_ID_TRANSFER = 4;
     public static final int NOTIFICATION_ID_EXPORT_FAILED = 5;
     public static final int NOTIFICATION_ID_PHONE_FIND = 6;
     public static final int NOTIFICATION_ID_GPS = 7;
     public static final int NOTIFICATION_ID_SCAN = 8;
-    public static final int NOTIFICATION_ID_FULL_BATTERY = 9;
     public static final int NOTIFICATION_ID_PEBBLE_JS = 10;
     public static final int NOTIFICATION_ID_ERROR = 42;
 
@@ -628,74 +625,6 @@ public class GB {
     public static void updateInstallNotification(CharSequence text, boolean ongoing, int percentage, Context context) {
         Notification notification = createInstallNotification(text, ongoing, percentage, context);
         notify(NOTIFICATION_ID_INSTALL, notification, context);
-    }
-
-    private static Notification createBatteryLowNotification(CharSequence text, CharSequence bigText, Context context) {
-        Intent notificationIntent = new Intent(context, ControlCenterv2.class);
-        notificationIntent.setPackage(BuildConfig.APPLICATION_ID);
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
-
-        NotificationCompat.Builder nb = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID_LOW_BATTERY)
-                .setContentTitle(context.getString(R.string.notif_battery_low_title))
-                .setContentText(text)
-                .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.ic_notification_low_battery)
-                .setPriority(Notification.PRIORITY_HIGH)
-                .setOngoing(false);
-
-        if (bigText != null) {
-            nb.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText));
-        }
-
-        return nb.build();
-    }
-
-    private static Notification createBatteryFullNotification(CharSequence text, CharSequence bigText, Context context) {
-        Intent notificationIntent = new Intent(context, ControlCenterv2.class);
-        notificationIntent.setPackage(BuildConfig.APPLICATION_ID);
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
-
-        NotificationCompat.Builder nb = new NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID_FULL_BATTERY)
-                .setContentTitle(context.getString(R.string.notif_battery_full_title))
-                .setContentText(text)
-                .setContentIntent(pendingIntent)
-                .setSmallIcon(R.drawable.ic_notification_full_battery)
-                .setPriority(Notification.PRIORITY_HIGH)
-                .setOngoing(false);
-
-        if (bigText != null) {
-            nb.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText));
-        }
-
-        return nb.build();
-    }
-
-    public static void updateBatteryLowNotification(CharSequence text, CharSequence bigText, Context context) {
-        if (GBEnvironment.env().isLocalTest()) {
-            return;
-        }
-        Notification notification = createBatteryLowNotification(text, bigText, context);
-        notify(NOTIFICATION_ID_LOW_BATTERY, notification, context);
-    }
-
-    public static void removeBatteryLowNotification(Context context) {
-        removeNotification(NOTIFICATION_ID_LOW_BATTERY, context);
-    }
-
-    public static void updateBatteryFullNotification(CharSequence text, CharSequence bigText, Context context) {
-        if (GBEnvironment.env().isLocalTest()) {
-            return;
-        }
-        Notification notification = createBatteryFullNotification(text, bigText, context);
-        notify(NOTIFICATION_ID_FULL_BATTERY, notification, context);
-    }
-
-    public static void removeBatteryFullNotification(Context context) {
-        removeNotification(NOTIFICATION_ID_FULL_BATTERY, context);
     }
 
     public static Notification createExportFailedNotification(CharSequence text, Context context) {
