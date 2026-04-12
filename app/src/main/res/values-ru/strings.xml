@@ -304,7 +304,7 @@
     <string name="miband_prefs_device_time_offset_hours">Смещение времени в часах (для тех, кто работает по ночам)</string>
     <string name="miband2_prefs_dateformat">Формат даты</string>
     <string name="dateformat_time">Время</string>
-    <string name="dateformat_date_time"><![CDATA[Time & date]]></string>
+    <string name="dateformat_date_time"><![CDATA[Время и дата]]></string>
     <string name="mi2_prefs_activate_display_on_lift">Активировать экран поднятием руки</string>
     <string name="FetchActivityOperation_about_to_transfer_since">Готов к передаче данных с %1$s</string>
     <string name="waiting_for_reconnect">Ожидание переподключения</string>
@@ -2093,7 +2093,7 @@
     <string name="pref_activity_full_sync_trigger_title">Полная синхронизация</string>
     <string name="info_menu_structure_set">Структура меню JSON, заданная в ГБ</string>
     <string name="button_open_menu_companion">Открыть меню приложения-спутника</string>
-    <string name="error_menu_companion_not_installed">Скорее всего, не установлено приложение HR Menu Companion</string>
+    <string name="error_menu_companion_not_installed">Скорее всего, не установлено приложение \"HR Menu Companion\"</string>
     <string name="loyalty_cards_catima_not_installed">Для управления бонусными картами требуется Catima</string>
     <string name="loyalty_cards_catima_permissions_title">Отсутствующие разрешения</string>
     <string name="error_invalid_menu_structure">Некорректная структура меню JSON</string>
