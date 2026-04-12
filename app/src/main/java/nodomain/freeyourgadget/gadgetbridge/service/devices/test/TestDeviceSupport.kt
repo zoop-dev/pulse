@@ -20,6 +20,7 @@ import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.os.Handler
 import nodomain.freeyourgadget.gadgetbridge.R
+import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.LoyaltyCard
 import nodomain.freeyourgadget.gadgetbridge.devices.test.TestDeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.devices.test.TestFeature
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
@@ -28,6 +29,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB
 import nodomain.freeyourgadget.gadgetbridge.util.notifications.GBProgressNotification
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.util.ArrayList
 
 open class TestDeviceSupport : AbstractDeviceSupport() {
     private lateinit var progressNotification: GBProgressNotification
@@ -96,6 +98,14 @@ open class TestDeviceSupport : AbstractDeviceSupport() {
             device.unsetBusyTask()
             device.sendDeviceUpdateIntent(context)
         }, 5000L)
+    }
+
+    override fun onSetLoyaltyCards(cards: ArrayList<LoyaltyCard>) {
+        LOG.debug("Syncing {} loyalty cards", cards.size)
+
+        for (card in cards) {
+            LOG.debug("Loyalty card: {}", card.toStringFull())
+        }
     }
 
     protected val coordinator: TestDeviceCoordinator

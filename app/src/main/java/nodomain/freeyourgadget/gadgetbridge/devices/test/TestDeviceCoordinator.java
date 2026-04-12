@@ -39,6 +39,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpec
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.HeartRateCapability;
+import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.BarcodeFormat;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.password.PasswordCapabilityImpl;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.widgets.WidgetManager;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractDeviceCoordinator;
@@ -536,6 +537,23 @@ public class TestDeviceCoordinator extends AbstractDeviceCoordinator {
                 "auto",
                 "en_US",
         };
+    }
+
+    @Override
+    public Set<BarcodeFormat> getSupportedBarcodeFormats(@NonNull final GBDevice device) {
+        return Set.of(
+                BarcodeFormat.CODABAR,
+                BarcodeFormat.CODE_128,
+                BarcodeFormat.CODE_39,
+                BarcodeFormat.DATA_MATRIX,
+                BarcodeFormat.EAN_13,
+                BarcodeFormat.EAN_8,
+                BarcodeFormat.ITF,
+                BarcodeFormat.PDF_417,
+                BarcodeFormat.QR_CODE,
+                BarcodeFormat.UPC_A,
+                BarcodeFormat.UPC_E
+        );
     }
 
     @Nullable

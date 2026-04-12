@@ -152,6 +152,25 @@ public class LoyaltyCard implements Serializable, Comparable<LoyaltyCard> {
         );
     }
 
+    public String toStringFull() {
+        return "LoyaltyCard{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", note='" + note + '\'' +
+                ", expiry=" + expiry +
+                ", balance=" + balance +
+                ", balanceType=" + balanceType +
+                ", cardId='" + cardId + '\'' +
+                ", barcodeId='" + barcodeId + '\'' +
+                ", barcodeFormat=" + barcodeFormat +
+                ", color=" + color +
+                ", barcodeEncoding='" + barcodeEncoding + '\'' +
+                ", starred=" + starred +
+                ", archived=" + archived +
+                ", lastUsed=" + lastUsed +
+                '}';
+    }
+
     @Override
     public int compareTo(final LoyaltyCard o) {
         return new CompareToBuilder()
