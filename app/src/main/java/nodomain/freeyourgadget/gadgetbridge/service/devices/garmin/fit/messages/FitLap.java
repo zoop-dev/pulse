@@ -176,6 +176,26 @@ public class FitLap extends RecordData {
     }
 
     @Nullable
+    public Double getNecLat() {
+        return getFieldByNumber(25, Double.class);
+    }
+
+    @Nullable
+    public Double getNecLong() {
+        return getFieldByNumber(26, Double.class);
+    }
+
+    @Nullable
+    public Double getSwcLat() {
+        return getFieldByNumber(27, Double.class);
+    }
+
+    @Nullable
+    public Double getSwcLong() {
+        return getFieldByNumber(28, Double.class);
+    }
+
+    @Nullable
     public Integer getNumLengths() {
         return getFieldByNumber(32, Integer.class);
     }
@@ -591,6 +611,11 @@ public class FitLap extends RecordData {
     }
 
     @Nullable
+    public Integer getEstSweatLoss() {
+        return getFieldByNumber(145, Integer.class);
+    }
+
+    @Nullable
     public Integer getAvgRespirationRate() {
         return getFieldByNumber(147, Integer.class);
     }
@@ -613,6 +638,11 @@ public class FitLap extends RecordData {
     @Nullable
     public Integer getJumpCount() {
         return getFieldByNumber(151, Integer.class);
+    }
+
+    @Nullable
+    public Integer getExecutionScore() {
+        return getFieldByNumber(152, Integer.class);
     }
 
     @Nullable
@@ -800,6 +830,26 @@ public class FitLap extends RecordData {
 
         public Builder setEventGroup(final Integer value) {
             setFieldByNumber(26, value);
+            return this;
+        }
+
+        public Builder setNecLat(final Double value) {
+            setFieldByNumber(25, value);
+            return this;
+        }
+
+        public Builder setNecLong(final Double value) {
+            setFieldByNumber(26, value);
+            return this;
+        }
+
+        public Builder setSwcLat(final Double value) {
+            setFieldByNumber(27, value);
+            return this;
+        }
+
+        public Builder setSwcLong(final Double value) {
+            setFieldByNumber(28, value);
             return this;
         }
 
@@ -1218,6 +1268,11 @@ public class FitLap extends RecordData {
             return this;
         }
 
+        public Builder setEstSweatLoss(final Integer value) {
+            setFieldByNumber(145, value);
+            return this;
+        }
+
         public Builder setAvgRespirationRate(final Integer value) {
             setFieldByNumber(147, value);
             return this;
@@ -1240,6 +1295,11 @@ public class FitLap extends RecordData {
 
         public Builder setJumpCount(final Integer value) {
             setFieldByNumber(151, value);
+            return this;
+        }
+
+        public Builder setExecutionScore(final Integer value) {
+            setFieldByNumber(152, value);
             return this;
         }
 

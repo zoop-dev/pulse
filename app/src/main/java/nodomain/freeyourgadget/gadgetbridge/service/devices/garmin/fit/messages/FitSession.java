@@ -396,6 +396,11 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Long getWorkTime() {
+        return getFieldByNumber(78, Long.class);
+    }
+
+    @Nullable
     public Float getAvgSwimCadence() {
         return getFieldByNumber(79, Float.class);
     }
@@ -726,6 +731,16 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Integer getTotalSets() {
+        return getFieldByNumber(151, Integer.class);
+    }
+
+    @Nullable
+    public Double getVolume() {
+        return getFieldByNumber(152, Double.class);
+    }
+
+    @Nullable
     public Integer getO2Toxicity() {
         return getFieldByNumber(155, Integer.class);
     }
@@ -783,6 +798,11 @@ public class FitSession extends RecordData {
     @Nullable
     public Integer getJumpCount() {
         return getFieldByNumber(183, Integer.class);
+    }
+
+    @Nullable
+    public Integer getExecutionScore() {
+        return getFieldByNumber(185, Integer.class);
     }
 
     @Nullable
@@ -891,6 +911,31 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
+    public Double getGradeAdjustedSpeed() {
+        return getFieldByNumber(211, Double.class);
+    }
+
+    @Nullable
+    public Integer getWindData() {
+        return getFieldByNumber(212, Integer.class);
+    }
+
+    @Nullable
+    public Integer getBeginningBodyBattery() {
+        return getFieldByNumber(215, Integer.class);
+    }
+
+    @Nullable
+    public Integer getEndingBodyBattery() {
+        return getFieldByNumber(216, Integer.class);
+    }
+
+    @Nullable
+    public Float getPackWeight() {
+        return getFieldByNumber(220, Float.class);
+    }
+
+    @Nullable
     public Float getStepSpeedLoss() {
         return getFieldByNumber(222, Float.class);
     }
@@ -898,6 +943,21 @@ public class FitSession extends RecordData {
     @Nullable
     public Float getStepSpeedLossPercentage() {
         return getFieldByNumber(223, Float.class);
+    }
+
+    @Nullable
+    public Double getAvgForce() {
+        return getFieldByNumber(224, Double.class);
+    }
+
+    @Nullable
+    public Double getMaxForce() {
+        return getFieldByNumber(225, Double.class);
+    }
+
+    @Nullable
+    public Double getNormalizedForce() {
+        return getFieldByNumber(226, Double.class);
     }
 
     @Nullable
@@ -1268,6 +1328,11 @@ public class FitSession extends RecordData {
             return this;
         }
 
+        public Builder setWorkTime(final Long value) {
+            setFieldByNumber(78, value);
+            return this;
+        }
+
         public Builder setAvgSwimCadence(final Float value) {
             setFieldByNumber(79, value);
             return this;
@@ -1598,6 +1663,16 @@ public class FitSession extends RecordData {
             return this;
         }
 
+        public Builder setTotalSets(final Integer value) {
+            setFieldByNumber(151, value);
+            return this;
+        }
+
+        public Builder setVolume(final Double value) {
+            setFieldByNumber(152, value);
+            return this;
+        }
+
         public Builder setO2Toxicity(final Integer value) {
             setFieldByNumber(155, value);
             return this;
@@ -1655,6 +1730,11 @@ public class FitSession extends RecordData {
 
         public Builder setJumpCount(final Integer value) {
             setFieldByNumber(183, value);
+            return this;
+        }
+
+        public Builder setExecutionScore(final Integer value) {
+            setFieldByNumber(185, value);
             return this;
         }
 
@@ -1763,6 +1843,31 @@ public class FitSession extends RecordData {
             return this;
         }
 
+        public Builder setGradeAdjustedSpeed(final Double value) {
+            setFieldByNumber(211, value);
+            return this;
+        }
+
+        public Builder setWindData(final Integer value) {
+            setFieldByNumber(212, value);
+            return this;
+        }
+
+        public Builder setBeginningBodyBattery(final Integer value) {
+            setFieldByNumber(215, value);
+            return this;
+        }
+
+        public Builder setEndingBodyBattery(final Integer value) {
+            setFieldByNumber(216, value);
+            return this;
+        }
+
+        public Builder setPackWeight(final Float value) {
+            setFieldByNumber(220, value);
+            return this;
+        }
+
         public Builder setStepSpeedLoss(final Float value) {
             setFieldByNumber(222, value);
             return this;
@@ -1770,6 +1875,21 @@ public class FitSession extends RecordData {
 
         public Builder setStepSpeedLossPercentage(final Float value) {
             setFieldByNumber(223, value);
+            return this;
+        }
+
+        public Builder setAvgForce(final Double value) {
+            setFieldByNumber(224, value);
+            return this;
+        }
+
+        public Builder setMaxForce(final Double value) {
+            setFieldByNumber(225, value);
+            return this;
+        }
+
+        public Builder setNormalizedForce(final Double value) {
+            setFieldByNumber(226, value);
             return this;
         }
 
