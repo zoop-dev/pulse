@@ -37,6 +37,7 @@ tasks.register("buildGitChangelog"){
 
         def commitVersionCode = getVersionCode()
         def includedCommits = 0
+        def includedTranslations = 0
         final def changelogNode = new Node(null, 'changelog')
 
         allCommits.trim().eachLine { final line ->
@@ -46,6 +47,11 @@ tasks.register("buildGitChangelog"){
 
             final def (commitHash, commitMessage) = line.split(" ", 2)
             if (commitMessage.contains("Translated using Weblate")) {
+                if (includedTranslations == 0) {
+                    final def releaseNode = new Node(changelogNode, 'release', [version: commitHash, versioncode: commitVersionCode--])
+                    def _ = new Node(releaseNode, 'change', [:], "Sync translations from Weblate")
+                }
+                includedTranslations++
                 return true
             }
 
