@@ -112,7 +112,7 @@ public class ActivityPoint {
     /// nitrogen (N2) tissue load (e.g. Diving)
     /// @see ActivitySummaryEntries#UNIT_PERCENTAGE
     public float getN2Load() {
-        return cnsToxicity;
+        return n2Load;
     }
 
     /// @see ActivitySummaryEntries#UNIT_METERS
