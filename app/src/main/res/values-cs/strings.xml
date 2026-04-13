@@ -4348,4 +4348,12 @@
     <string name="qhybrid_button_function_step_goal">Průběh plnění cíle kroků</string>
     <string name="qhybrid_button_function_control_music">Ovládání hudebního přehrávače</string>
     <string name="qhybrid_button_function_ring_phone">Prozvonění telefonu</string>
+    <string name="stride">Pokrok</string>
+    <string name="stamina">Výdrž</string>
+    <string name="step_length">Délka kroku</string>
+    <string name="diving_cns_toxicity">Toxicita CNS</string>
+    <string name="diving_nitrogen_load">Zátěž dusíkem</string>
+    <string name="diving_oxygen_toxicity">Toxicita kyslíku</string>
+    <string name="unit_oxygen_toxicity_units">OTU</string>
+    <string name="diving_surface_interval">Interval vynoření</string>
 </resources>
