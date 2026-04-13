@@ -27,6 +27,10 @@ public class ActivitySummaryTableBuilder {
         rows.put(rowId, row);
     }
 
+    public boolean hasRows() {
+        return !rows.isEmpty();
+    }
+
     public void addToSummaryData(final ActivitySummaryData summaryData) {
         final int numColumns = headerColumns.size();
         final boolean[] anyNonNullOrZero = new boolean[numColumns];

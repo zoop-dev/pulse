@@ -29,10 +29,12 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDef
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes.BaseType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionAlarmLabel;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionBatteryStatus;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionCoursePoint;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionExerciseCategory;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionGoalSource;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionGoalType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWaterType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherReport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionHrvStatus;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionLanguage;
@@ -366,6 +368,8 @@ public class FitCodeGen {
                 case LOCATION_SYMBOL -> FieldDefinitionLocationSymbol.LocationSymbol.class;
                 case COURSE_POINT -> FieldDefinitionCoursePoint.CoursePoint.class;
                 case WEATHER_REPORT -> FieldDefinitionWeatherReport.Type.class;
+                case BATTERY_STATUS -> FieldDefinitionBatteryStatus.BatteryStatus.class;
+                case WATER_TYPE -> FieldDefinitionWaterType.WaterType.class;
             };
         }
 

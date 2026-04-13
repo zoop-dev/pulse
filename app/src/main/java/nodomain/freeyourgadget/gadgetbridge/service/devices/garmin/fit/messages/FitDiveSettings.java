@@ -22,6 +22,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecord
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWaterType.WaterType;
 
 /**
  * WARNING: This class was auto-generated, please avoid modifying it directly.
@@ -60,8 +61,8 @@ public class FitDiveSettings extends RecordData {
     }
 
     @Nullable
-    public Integer getWaterType() {
-        return getFieldByNumber(4, Integer.class);
+    public WaterType getWaterType() {
+        return getFieldByNumber(4, WaterType.class);
     }
 
     @Nullable
@@ -242,7 +243,7 @@ public class FitDiveSettings extends RecordData {
             return this;
         }
 
-        public Builder setWaterType(final Integer value) {
+        public Builder setWaterType(final WaterType value) {
             setFieldByNumber(4, value);
             return this;
         }

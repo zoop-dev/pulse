@@ -4,6 +4,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionAlarm;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionAlarmLabel;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionArray;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionBatteryStatus;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionBoolean;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionCoursePoint;
@@ -12,6 +13,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefi
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionFileType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionGoalSource;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionGoalType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWaterType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherReport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionHrTimeInZone;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionHrZoneHighBoundary;
@@ -56,6 +58,8 @@ public class FieldDefinitionFactory {
             case LOCATION_SYMBOL -> new FieldDefinitionLocationSymbol(localNumber, size, baseType, name, scale, offset);
             case COURSE_POINT -> new FieldDefinitionCoursePoint(localNumber, size, baseType, name, scale, offset);
             case WEATHER_REPORT -> new FieldDefinitionWeatherReport(localNumber, size, baseType, name);
+            case BATTERY_STATUS -> new FieldDefinitionBatteryStatus(localNumber, size, baseType, name, scale, offset);
+            case WATER_TYPE -> new FieldDefinitionWaterType(localNumber, size, baseType, name, scale, offset);
         };
     }
 
@@ -84,5 +88,7 @@ public class FieldDefinitionFactory {
         LOCATION_SYMBOL,
         COURSE_POINT,
         WEATHER_REPORT,
+        BATTERY_STATUS,
+        WATER_TYPE
     }
 }

@@ -671,7 +671,7 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(6, BaseType.UINT8, "hardware_version"),
             new FieldDefinitionPrimitive(7, BaseType.UINT32, "cum_operating_time"), // s
             new FieldDefinitionPrimitive(10, BaseType.UINT16, "battery_voltage", 256, 0), // V
-            new FieldDefinitionPrimitive(11, BaseType.UINT8, "battery_status"),
+            new FieldDefinitionPrimitive(11, BaseType.UINT8, "battery_status", FieldDefinitionFactory.FIELD.BATTERY_STATUS),
             new FieldDefinitionPrimitive(18, BaseType.ENUM, "sensor_position"),
             new FieldDefinitionPrimitive(19, BaseType.STRING, "descriptor"),
             new FieldDefinitionPrimitive(20, BaseType.UINT8Z, "ant_transmission_type"),
@@ -1546,7 +1546,7 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "model"),
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "gf_low"), // %
             new FieldDefinitionPrimitive(3, BaseType.UINT8, "gf_high"), // %
-            new FieldDefinitionPrimitive(4, BaseType.ENUM, "water_type"), // %
+            new FieldDefinitionPrimitive(4, BaseType.ENUM, "water_type", FieldDefinitionFactory.FIELD.WATER_TYPE),
             new FieldDefinitionPrimitive(5, BaseType.FLOAT32, "water_density"), // kg/m^3
             new FieldDefinitionPrimitive(6, BaseType.UINT8, "po2_warn", 100, 0), // %
             new FieldDefinitionPrimitive(7, BaseType.UINT8, "po2_critical", 100, 0), // %
