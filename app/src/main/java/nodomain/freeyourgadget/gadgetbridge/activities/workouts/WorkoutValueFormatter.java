@@ -45,7 +45,8 @@ public class WorkoutValueFormatter {
     private final DistanceUnit distanceUnit;
     private final WeightUnit weightUnit;
     private final boolean useNauticalUnits;
-    private final DecimalFormat df = new DecimalFormat("#.##");
+    private final DecimalFormat df2 = new DecimalFormat("#.##");
+    private final DecimalFormat df1 = new DecimalFormat("#.#");
 
     public WorkoutValueFormatter() {
         this(ActivityKind.UNKNOWN);
@@ -215,7 +216,13 @@ public class WorkoutValueFormatter {
             );
         } else {
             String format = showUnit ? "%s %s" : "%s";
-            return String.format(format, df.format(value), getStringResourceByName(unit));
+            // Reduce precision for certain measurements
+            final String formattedValue = switch (unit) {
+                case ActivitySummaryEntries.UNIT_ML_KG_MIN -> df1.format(value);
+                case ActivitySummaryEntries.UNIT_BREATHS_PER_MIN -> String.valueOf(Math.round(value));
+                default -> df2.format(value);
+            };
+            return String.format(format, formattedValue, getStringResourceByName(unit));
         }
     }
 
