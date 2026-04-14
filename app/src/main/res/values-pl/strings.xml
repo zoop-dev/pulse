@@ -473,7 +473,7 @@
     <string name="find_device_you_found_it">Znalezione!</string>
     <string name="mi2_fw_installhandler_fw53_hint">Zanim wgrasz to firmware, musisz wgrać wersję %1$s!</string>
     <string name="mi2_enable_text_notifications">Powiadomienia tekstowe</string>
-    <string name="mi2_enable_text_notifications_summary">Wymaga firmware w wersji &gt;= 1.0.1.28 i zainstalowanego Mili_pro.ft*</string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[Wymaga firmware w wersji &gt;= 1.0.1.28 i zainstalowanego Mili_pro.ft*]]></string>
     <string name="on">Wł.</string>
     <string name="off">Wył.</string>
     <string name="mi2_dnd_off">Wył.</string>
