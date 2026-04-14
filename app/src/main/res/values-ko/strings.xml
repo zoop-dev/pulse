@@ -334,7 +334,7 @@
     <string name="miband_prefs_device_time_offset_hours">기기 시간 오프셋(시간) (교대 근무자의 수면 감지용)</string>
     <string name="miband2_prefs_dateformat">날짜 형식</string>
     <string name="dateformat_time">시간</string>
-    <string name="dateformat_date_time">시간 및 날짜</string>
+    <string name="dateformat_date_time"><![CDATA[시간 및 날짜]]></string>
     <string name="mi2_prefs_button_actions">버튼 동작</string>
     <string name="mi2_prefs_button_actions_summary">버튼 누름 동작 지정</string>
     <string name="mi2_prefs_button_press_count">버튼 누름 횟수</string>
@@ -406,7 +406,7 @@
     <string name="miband2_prefs_timeformat">Mi2: 시간 형식</string>
     <string name="mi2_fw_installhandler_fw53_hint">이 펌웨어를 설치하기 전에 %1$s 버전을 먼저 설치해야 합니다!</string>
     <string name="mi2_enable_text_notifications">텍스트 알림</string>
-    <string name="mi2_enable_text_notifications_summary">펌웨어 버전 1.0.1.28 이상 및 Mili_pro.ft* 파일이 설치되어 있어야 합니다.</string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[펌웨어 버전 1.0.1.28 이상 및 Mili_pro.ft* 파일이 설치되어 있어야 합니다.]]></string>
     <string name="off">끄기</string>
     <string name="mi2_dnd_off">끄기</string>
     <string name="mi2_dnd_automatic">자동 (수면 감지)</string>
