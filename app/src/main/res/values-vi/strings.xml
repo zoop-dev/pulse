@@ -184,7 +184,7 @@
     <string name="pref_title_location_longitude">Kinh độ</string>
     <string name="pref_title_location_keep_uptodate">Giữ địa điểm luôn được cập nhật</string>
     <string name="dateformat_time">Giờ</string>
-    <string name="dateformat_date_time">Giờ và ngày</string>
+    <string name="dateformat_date_time"><![CDATA[Giờ và ngày]]></string>
     <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>
     <string name="sonyswr12_settings_title">Cài đặt Sony SWR12</string>
     <string name="sonyswr12_settings_stamina">Chế độ tiết kiệm pin đang bật</string>
