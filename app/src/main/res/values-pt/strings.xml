@@ -314,7 +314,7 @@
     <string name="miband_prefs_device_time_offset_hours">Compensação da hora do aparelho em horas (para detetar o sono de trabalhadores por turnos)</string>
     <string name="miband2_prefs_dateformat">Formato da data</string>
     <string name="dateformat_time">Hora</string>
-    <string name="dateformat_date_time">Horário &amp; data</string>
+    <string name="dateformat_date_time"><![CDATA[Horário & data]]></string>
     <string name="mi2_prefs_goal_notification">Notificação de objectivo</string>
     <string name="mi2_prefs_goal_notification_summary">A pulseira vai vibrar quando o objectivo diário de passos for atingido</string>
     <string name="mi2_prefs_display_items">Items do ecrã</string>
