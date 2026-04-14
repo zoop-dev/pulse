@@ -56,7 +56,8 @@ body:
       description: >
         If possible, please attach [logs](https://gadgetbridge.org/internals/topics/logs/)
         that might help identifying the problem. This will be automatically formatted into 
-        code, so no need for backticks.
+        code, so no need for backticks. If possible please attach it as a file, so they do not get
+        cut off.
       render: shell
   - type: input
     id: gadget
