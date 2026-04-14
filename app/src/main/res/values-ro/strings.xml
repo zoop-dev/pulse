@@ -951,7 +951,7 @@
     <string name="pref_sleep_breathing_quality_monitoring">Monitorizarea calității respirației în somn</string>
     <string name="miband_prefs_device_time_offset_hours">Compensarea timpului dispozitivului în ore (pentru detectarea somnului lucrătorilor în ture)</string>
     <string name="miband2_prefs_dateformat">Formatul datei</string>
-    <string name="dateformat_date_time">Timp și dată</string>
+    <string name="dateformat_date_time"><![CDATA[Timp și dată]]></string>
     <string name="prefs_disconnect_notification_summary">Notificare pe dispozitiv când este deconectat de la Bluetooth.</string>
     <string name="mi2_prefs_button_actions">Acțiunile butonului</string>
     <string name="button_watchface_select_image">Schimbă imaginea de fundal</string>
