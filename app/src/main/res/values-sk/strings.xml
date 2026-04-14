@@ -337,7 +337,7 @@
     <string name="miband_prefs_device_time_offset_hours">Časový posun zariadenia v hodinách (pre zisťovanie spánku v pracujúcich na smeny)</string>
     <string name="miband2_prefs_dateformat">Mi2: formát datumu</string>
     <string name="dateformat_time">Čas</string>
-    <string name="dateformat_date_time">Čas a dátum</string>
+    <string name="dateformat_date_time"><![CDATA[Čas a dátum]]></string>
     <string name="mi2_prefs_button_actions">Akcie tlačidla</string>
     <string name="mi2_prefs_button_actions_summary">Nastavenie akcií po stlačení tlačidla Mi Band 2</string>
     <string name="mi2_prefs_button_press_count">Počet stlačení tlačidla</string>
@@ -432,7 +432,7 @@
     <string name="miband2_prefs_timeformat">Formát času Mi2</string>
     <string name="mi2_fw_installhandler_fw53_hint">Pred inštaláciou tohto firmvéru musíte nainštalovať verziu %1$s!</string>
     <string name="mi2_enable_text_notifications">Textové upozornenia</string>
-    <string name="mi2_enable_text_notifications_summary">Vyžaduje nainštalovaný súbor fontu &gt;= 1.0.1.28 and Mili_pro.ft*.</string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[Vyžaduje nainštalovaný súbor fontu &gt;= 1.0.1.28 and Mili_pro.ft*.]]></string>
     <string name="off">Vyp.</string>
     <string name="mi2_dnd_off">Vyp.</string>
     <string name="mi2_dnd_automatic">Automaticky (detekcia spánku)</string>
