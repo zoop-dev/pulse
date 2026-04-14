@@ -345,7 +345,7 @@
     <string name="mi2_dnd_automatic">Automatique (détection de sommeil)</string>
     <string name="mi2_dnd_off">Éteint</string>
     <string name="off">Éteint</string>
-    <string name="mi2_enable_text_notifications_summary">Requis : micrologiciel version 1.0.1.28 ou plus, fichier Mili_pro.ft* installé.</string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[Requis : micrologiciel version 1.0.1.28 ou plus, fichier Mili_pro.ft* installé.]]></string>
     <string name="mi2_enable_text_notifications">Notifications textuelles</string>
     <string name="miband2_prefs_timeformat">Mi2 : format de l\'heure</string>
     <string name="StringUtils_sender">(%1$s)</string>
@@ -404,7 +404,7 @@
     <string name="mi2_prefs_display_items">Éléments à afficher</string>
     <string name="mi2_prefs_goal_notification_summary">Le bracelet vibrera lorsque l\'objectif de pas quotidien sera atteint</string>
     <string name="mi2_prefs_goal_notification">Notification d\'objectif</string>
-    <string name="dateformat_date_time">Date et heure</string>
+    <string name="dateformat_date_time"><![CDATA[Date et heure]]></string>
     <string name="dateformat_time">Heure</string>
     <string name="miband2_prefs_dateformat">Format de la date</string>
     <string name="miband_prefs_device_time_offset_hours">La compensation de temps en heure (pour travailleurs en rotation, par exemple)</string>
