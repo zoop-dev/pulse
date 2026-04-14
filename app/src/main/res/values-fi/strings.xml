@@ -570,7 +570,7 @@
     <string name="device_not_connected">Ei yhdistetty.</string>
     <string name="pref_header_audio">Ääni</string>
     <string name="dateformat_time">Aika</string>
-    <string name="dateformat_date_time">Aika ja päivämäärä</string>
+    <string name="dateformat_date_time"><![CDATA[Aika ja päivämäärä]]></string>
     <string name="prefs_find_phone">Etsi puhelin</string>
     <string name="button_watchface_add_widget">Lisää widgetti</string>
     <string name="pref_header_workout">Kuntoilu</string>
