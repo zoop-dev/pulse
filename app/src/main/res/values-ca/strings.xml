@@ -328,7 +328,7 @@
     <string name="miband_prefs_device_time_offset_hours">Desplaçament de temps de l\'aparell, en hores (per detectar el son de treballadors/es de torns)</string>
     <string name="miband2_prefs_dateformat">Format de data</string>
     <string name="dateformat_time">Temps</string>
-    <string name="dateformat_date_time">Hora i data</string>
+    <string name="dateformat_date_time"><![CDATA[Hora i data]]></string>
     <string name="mi2_prefs_button_actions">Accions del botó</string>
     <string name="mi2_prefs_button_actions_summary">Especifiqueu les accions en prémer el botó</string>
     <string name="mi2_prefs_button_press_count">Nombre de pulsacions del botó</string>
@@ -471,7 +471,7 @@
     <string name="miband2_prefs_timeformat">Mi2: format d\'hora</string>
     <string name="mi2_fw_installhandler_fw53_hint">Heu d\'instal·lar la versió %1$s abans d\'instal·lar aquest microprogramari!</string>
     <string name="mi2_enable_text_notifications">Notifications de text</string>
-    <string name="mi2_enable_text_notifications_summary">Necessita tenir instal·lats el microrprogramari &gt;= 1.10.1.28 i Mili_pro.ft*.</string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[Necessita tenir instal·lats el microrprogramari &gt;= 1.10.1.28 i Mili_pro.ft*.]]></string>
     <string name="off">Desactivat</string>
     <string name="mi2_dnd_off">Desactivat</string>
     <string name="mi2_dnd_automatic">Automàtic (detecció de son)</string>
