@@ -511,7 +511,7 @@
     <string name="mi2_prefs_button_actions_summary">Nurodykite mygtuko paspaudimo veiksmus</string>
     <string name="mi2_prefs_button_press_count">Mygtuko paspaudimų skaičius</string>
     <string name="miband2_prefs_dateformat">Datos formatas</string>
-    <string name="dateformat_date_time">Laikas ir data</string>
+    <string name="dateformat_date_time"><![CDATA[Laikas ir data]]></string>
     <string name="pref_title_location_aquire">Rasti vietovę</string>
     <string name="cannot_connect_bt_address_invalid_">Nepavyko prisijungti. Neteisingas Bluetooth adresas\?</string>
     <string name="mi2_prefs_button_actions">Mygtuko veiksmai</string>
