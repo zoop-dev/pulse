@@ -380,7 +380,7 @@
     <string name="miband2_prefs_timeformat">Mi2: idő formátum</string>
     <string name="mi2_fw_installhandler_fw53_hint">Ezt a verziót kell telepítenie %1$s firmware telepítés előtt!</string>
     <string name="mi2_enable_text_notifications">Szöveges értesítések</string>
-    <string name="mi2_enable_text_notifications_summary">Telepítve kell legyen a firmware &gt;= 1.0.1.28 és a Mili_pro.ft*</string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[Telepítve kell legyen a firmware &gt;= 1.0.1.28 és a Mili_pro.ft*]]></string>
     <string name="off">Ki</string>
     <string name="mi2_dnd_off">Ki</string>
     <string name="mi2_dnd_automatic">Automatikus (alvásérzékelés)</string>
