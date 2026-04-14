@@ -398,7 +398,7 @@
     <string name="find_lost_device_you_found_it">Ketemu!</string>
     <string name="find_device_you_found_it">Anda menemukannya!</string>
     <string name="mi2_fw_installhandler_fw53_hint">Anda harus memasang versi %1$s sebelum memasang perangkat tegar ini!</string>
-    <string name="mi2_enable_text_notifications_summary">Membutuhkan perangkat tegar &gt;= 1.0.1.28 dan Mili_pro.ft terpasang.</string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[Membutuhkan perangkat tegar &gt;= 1.0.1.28 dan Mili_pro.ft terpasang.]]></string>
     <string name="discovery_dont_pair">Jangan Sandingkan</string>
     <string name="discovery_successfully_bonded">Dijalin ke %1$s.</string>
     <string name="discovery_pair_title">Sandingkan dengan %1$s\?</string>
@@ -978,7 +978,7 @@
     <string name="world_clock_no_free_slots_description">Perangkat ini tidak memiliki tempat kosong untuk jam dunia (jumlah tempat: %1$s)</string>
     <string name="world_clock_label">Label</string>
     <string name="prefs_stress_monitoring_title">Pemantauan stres</string>
-    <string name="dateformat_date_time">Waktu &amp; tanggal</string>
+    <string name="dateformat_date_time"><![CDATA[Waktu & tanggal]]></string>
     <string name="mi2_prefs_button_press_broadcast">Siarkan pesan untuk dikirim</string>
     <string name="prefs_disconnect_notification">Putuskan notifikasi</string>
     <string name="prefs_reserve_reminder_calendar_summary">Jumlah acara kalender yang akan disinkron</string>
