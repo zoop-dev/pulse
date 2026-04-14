@@ -23,4 +23,10 @@ public class GarminVivoActive6Coordinator extends GarminWatchCoordinator {
     public boolean supportsTrainingLoad(@NonNull final GBDevice device) {
         return false;
     }
+
+    @Override
+    public boolean defaultNewSyncProtocol() {
+        // #5948
+        return true;
+    }
 }
