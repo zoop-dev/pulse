@@ -4647,6 +4647,7 @@
     <string name="internet_firewall_block">Block</string>
     <string name="internet_firewall_no_domains">No domain rules found. Default action: %s</string>
     <string name="internet_firewall_add_domain">Add domain</string>
+    <string name="internet_firewall_note_subdomain">Domains must include the full subdomain, without protocol. For example: \"subdomain.example.org\".</string>
     <string name="internet_firewall_edit_domain">Edit domain</string>
     <string name="internet_firewall_blacklisted_domains_title">Blocked domains</string>
     <string name="internet_firewall_blacklisted_domains_summary">The following domains and all their subdomains will ignore the setting above and always be blocked.</string>
