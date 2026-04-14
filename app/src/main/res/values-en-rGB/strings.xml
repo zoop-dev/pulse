@@ -392,7 +392,7 @@
     <string name="mi2_dnd_automatic">Automatic (sleep detection)</string>
     <string name="mi2_dnd_off">Off</string>
     <string name="off">Off</string>
-    <string name="mi2_enable_text_notifications_summary">Needs firmware &gt;= 1.0.1.28 and Mili_pro.ft* installed.</string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[Needs firmware &gt;= 1.0.1.28 and Mili_pro.ft* installed.]]></string>
     <string name="mi2_enable_text_notifications">Text notifications</string>
     <string name="mi2_fw_installhandler_fw53_hint">You need to install version %1$s before installing this firmware!</string>
     <string name="miband2_prefs_timeformat">Mi2: Time format</string>
@@ -458,7 +458,7 @@
     <string name="mi2_prefs_display_items">Display items</string>
     <string name="mi2_prefs_goal_notification_summary">The band will vibrate when the daily steps goal is reached</string>
     <string name="mi2_prefs_goal_notification">Goal notification</string>
-    <string name="dateformat_date_time">Time &amp; date</string>
+    <string name="dateformat_date_time"><![CDATA[Time & date]]></string>
     <string name="dateformat_time">Time</string>
     <string name="miband2_prefs_dateformat">Date format</string>
     <string name="miband_prefs_device_time_offset_hours">Device time offset in hours (for detecting sleep of shift workers)</string>
