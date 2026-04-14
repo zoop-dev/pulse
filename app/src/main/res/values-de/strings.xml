@@ -4224,4 +4224,15 @@
     <string name="kind_segments">Segmente</string>
     <string name="waypoint_count">%d Wegpunkte</string>
     <string name="redmi_buds_6_active_equalizer_preset_volume">Lautstärke erhöhen</string>
+    <string name="pref_title_qhybrid_bottom_button_function">Funktion der unteren Taste</string>
+    <string name="pref_title_qhybrid_middle_button_function">Funktion der mittleren Taste</string>
+    <string name="pref_title_qhybrid_top_button_function">Funktion der oberen Taste</string>
+    <string name="qhybrid_button_function_stopwatch">Stoppuhr</string>
+    <string name="qhybrid_button_function_date">Datum</string>
+    <string name="qhybrid_button_function_last_notif">Letzte Benachrichtigung</string>
+    <string name="qhybrid_button_function_2nd_tz">Zweite Zeitzone</string>
+    <string name="qhybrid_button_function_volume_up">Lauter</string>
+    <string name="qhybrid_button_function_volume_down">Leiser</string>
+    <string name="qhybrid_button_function_step_goal">Fortschritt beim Schrittziel</string>
+    <string name="qhybrid_button_function_control_music">Musikplayer steuern</string>
 </resources>
