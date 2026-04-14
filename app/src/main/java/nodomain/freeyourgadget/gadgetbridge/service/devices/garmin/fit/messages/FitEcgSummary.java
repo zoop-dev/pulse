@@ -50,12 +50,12 @@ public class FitEcgSummary extends RecordData {
     }
 
     @Nullable
-    public Float getUnknown2() {
+    public Float getRawSampleRate() {
         return getFieldByNumber(2, Float.class);
     }
 
     @Nullable
-    public Float getUnknown3() {
+    public Float getSmoothSampleRate() {
         return getFieldByNumber(3, Float.class);
     }
 
@@ -85,12 +85,12 @@ public class FitEcgSummary extends RecordData {
     }
 
     @Nullable
-    public Integer getUnknown11() {
+    public Integer getSampleTime() {
         return getFieldByNumber(11, Integer.class);
     }
 
     @Nullable
-    public Integer getUnknown12() {
+    public Integer getSdrrHrv() {
         return getFieldByNumber(12, Integer.class);
     }
 
@@ -112,12 +112,12 @@ public class FitEcgSummary extends RecordData {
             return this;
         }
 
-        public Builder setUnknown2(final Float value) {
+        public Builder setRawSampleRate(final Float value) {
             setFieldByNumber(2, value);
             return this;
         }
 
-        public Builder setUnknown3(final Float value) {
+        public Builder setSmoothSampleRate(final Float value) {
             setFieldByNumber(3, value);
             return this;
         }
@@ -147,12 +147,12 @@ public class FitEcgSummary extends RecordData {
             return this;
         }
 
-        public Builder setUnknown11(final Integer value) {
+        public Builder setSampleTime(final Integer value) {
             setFieldByNumber(11, value);
             return this;
         }
 
-        public Builder setUnknown12(final Integer value) {
+        public Builder setSdrrHrv(final Integer value) {
             setFieldByNumber(12, value);
             return this;
         }

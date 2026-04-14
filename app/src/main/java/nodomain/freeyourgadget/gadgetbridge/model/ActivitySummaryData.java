@@ -66,6 +66,14 @@ public class ActivitySummaryData {
         add(null, key, value, unit, false);
     }
 
+    public void add(final String key, final String unit, final Number value, final Number valueFallback) {
+        if (value != null) {
+            add(null, key, value, unit, false);
+        } else {
+            add(null, key, valueFallback, unit, false);
+        }
+    }
+
     public void add(final String key, final Number value, final String unit, boolean forceDisplay) {
         add(null, key, value, unit, forceDisplay);
     }

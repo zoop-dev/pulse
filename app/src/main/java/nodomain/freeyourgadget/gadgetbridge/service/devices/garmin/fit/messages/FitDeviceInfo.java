@@ -22,6 +22,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecord
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionBatteryStatus.BatteryStatus;
 
 /**
  * WARNING: This class was auto-generated, please avoid modifying it directly.
@@ -85,8 +86,8 @@ public class FitDeviceInfo extends RecordData {
     }
 
     @Nullable
-    public Integer getBatteryStatus() {
-        return getFieldByNumber(11, Integer.class);
+    public BatteryStatus getBatteryStatus() {
+        return getFieldByNumber(11, BatteryStatus.class);
     }
 
     @Nullable
@@ -192,7 +193,7 @@ public class FitDeviceInfo extends RecordData {
             return this;
         }
 
-        public Builder setBatteryStatus(final Integer value) {
+        public Builder setBatteryStatus(final BatteryStatus value) {
             setFieldByNumber(11, value);
             return this;
         }

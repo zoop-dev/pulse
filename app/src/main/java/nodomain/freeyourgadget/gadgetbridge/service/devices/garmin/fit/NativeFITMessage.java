@@ -281,6 +281,7 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(69, BaseType.UINT32, "avg_lap_time", 1000, 0), // s
             new FieldDefinitionPrimitive(70, BaseType.UINT16, "best_lap_index"),
             new FieldDefinitionPrimitive(71, BaseType.UINT16, "min_altitude", 5, 500), // m
+            new FieldDefinitionPrimitive(78, BaseType.UINT32, "work_time"), // ms
             new FieldDefinitionPrimitive(79, BaseType.UINT16, "avg_swim_cadence", 10, 0), // rpm
             new FieldDefinitionPrimitive(80, BaseType.UINT16, "avg_swolf"),
             new FieldDefinitionPrimitive(82, BaseType.UINT16, "player_score"),
@@ -347,6 +348,8 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(148, BaseType.UINT8, "max_respiration_rate"),
             new FieldDefinitionPrimitive(149, BaseType.UINT8, "min_respiration_rate"),
             new FieldDefinitionPrimitive(150, BaseType.SINT8, "min_temperature"), // C
+            new FieldDefinitionPrimitive(151, BaseType.UINT16, "total_sets"),
+            new FieldDefinitionPrimitive(152, BaseType.UINT32, "volume", 100, 0), // kg
             new FieldDefinitionPrimitive(155, BaseType.UINT16, "o2_toxicity"), // OTUs
             new FieldDefinitionPrimitive(156, BaseType.UINT32, "dive_number"),
             new FieldDefinitionPrimitive(168, BaseType.SINT32, "training_load_peak", 65536, 0),
@@ -359,6 +362,7 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(181, BaseType.FLOAT32, "total_grit"),
             new FieldDefinitionPrimitive(182, BaseType.FLOAT32, "total_flow"),
             new FieldDefinitionPrimitive(183, BaseType.UINT16, "jump_count"),
+            new FieldDefinitionPrimitive(185, BaseType.UINT8, "execution_score"), // %
             new FieldDefinitionPrimitive(186, BaseType.FLOAT32, "avg_grit"),
             new FieldDefinitionPrimitive(187, BaseType.FLOAT32, "avg_flow"),
             new FieldDefinitionPrimitive(188, BaseType.ENUM, "primary_benefit"), // 1 recovery
@@ -380,8 +384,16 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(208, BaseType.UINT16, "avg_core_temperature", 100, 0), // °C
             new FieldDefinitionPrimitive(209, BaseType.UINT16, "min_core_temperature", 100, 0), // °C
             new FieldDefinitionPrimitive(210, BaseType.UINT16, "max_core_temperature", 100, 0), // °C
+            new FieldDefinitionPrimitive(211, BaseType.UINT32, "grade_adjusted_speed", 1000, 0), // m/s
+            new FieldDefinitionPrimitive(212, BaseType.ENUM, "wind_data"),
+            new FieldDefinitionPrimitive(215, BaseType.UINT8, "beginning_body_battery"),
+            new FieldDefinitionPrimitive(216, BaseType.UINT8, "ending_body_battery"),
+            new FieldDefinitionPrimitive(220, BaseType.UINT16, "pack_weight", 10, 0), // kg
             new FieldDefinitionPrimitive(222, BaseType.UINT16, "step_speed_loss", 100, 0),
             new FieldDefinitionPrimitive(223, BaseType.UINT16, "step_speed_loss_percentage", 100, 0),
+            new FieldDefinitionPrimitive(224, BaseType.SINT32, "avg_force", 1000, 0), // N
+            new FieldDefinitionPrimitive(225, BaseType.SINT32, "max_force", 1000, 0), // N
+            new FieldDefinitionPrimitive(226, BaseType.SINT32, "normalized_force", 1000, 0), // N
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP),
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
@@ -414,6 +426,10 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(24, BaseType.ENUM, "lap_trigger"), // 0 manual
             new FieldDefinitionPrimitive(25, BaseType.ENUM, "sport"), // 5 swimming
             new FieldDefinitionPrimitive(26, BaseType.UINT8, "event_group"),
+            new FieldDefinitionPrimitive(25, BaseType.SINT32, "nec_lat", FieldDefinitionFactory.FIELD.COORDINATE),
+            new FieldDefinitionPrimitive(26, BaseType.SINT32, "nec_long", FieldDefinitionFactory.FIELD.COORDINATE),
+            new FieldDefinitionPrimitive(27, BaseType.SINT32, "swc_lat", FieldDefinitionFactory.FIELD.COORDINATE),
+            new FieldDefinitionPrimitive(28, BaseType.SINT32, "swc_long", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(32, BaseType.UINT16, "num_lengths"),
             new FieldDefinitionPrimitive(33, BaseType.UINT16, "normalized_power"), // watt
             new FieldDefinitionPrimitive(34, BaseType.UINT16, "left_right_balance"),
@@ -497,11 +513,13 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(124, BaseType.SINT8, "min_temperature"), // °C
             new FieldDefinitionPrimitive(136, BaseType.UINT16, "enhanced_avg_respiration_rate", 100, 0), // breath / min
             new FieldDefinitionPrimitive(137, BaseType.UINT16, "enhanced_max_respiration_rate", 100, 0), // breath / min
+            new FieldDefinitionPrimitive(145, BaseType.UINT16, "est_sweat_loss"),
             new FieldDefinitionPrimitive(147, BaseType.UINT8, "avg_respiration_rate"),
             new FieldDefinitionPrimitive(148, BaseType.UINT8, "max_respiration_rate"),
             new FieldDefinitionPrimitive(149, BaseType.FLOAT32, "total_grit"),
             new FieldDefinitionPrimitive(150, BaseType.FLOAT32, "total_flow"),
             new FieldDefinitionPrimitive(151, BaseType.UINT16, "jump_count"),
+            new FieldDefinitionPrimitive(152, BaseType.UINT8, "execution_score"),
             new FieldDefinitionPrimitive(153, BaseType.FLOAT32, "avg_grit"),
             new FieldDefinitionPrimitive(154, BaseType.FLOAT32, "avg_flow"),
             new FieldDefinitionPrimitive(156, BaseType.UINT8, "total_fractional_ascent", 100, 0), // m
@@ -573,6 +591,7 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(84, BaseType.UINT16, "stance_time_balance", 100, 0), // %
             new FieldDefinitionPrimitive(85, BaseType.UINT16, "step_length", 10, 0), // mm
             new FieldDefinitionPrimitive(87, BaseType.UINT16, "cycle_length16", 100, 0), // m
+            new FieldDefinitionPrimitive(90, BaseType.SINT8, "performance_condition"),
             new FieldDefinitionPrimitive(91, BaseType.UINT32, "absolute_pressure", 1, 0), // Pa
             new FieldDefinitionPrimitive(92, BaseType.UINT32, "depth", 1000, 0), // m
             new FieldDefinitionPrimitive(93, BaseType.UINT32, "next_stop_depth", 1000, 0), // m
@@ -590,17 +609,23 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(118, BaseType.UINT8, "ebike_battery_level"), // %
             new FieldDefinitionPrimitive(119, BaseType.UINT8, "ebike_assist_mode"),
             new FieldDefinitionPrimitive(120, BaseType.UINT8, "ebike_assist_level_percent"), // %
+            new FieldDefinitionPrimitive(121, BaseType.UINT16, "total_ascent"), // m
             new FieldDefinitionPrimitive(123, BaseType.UINT32, "air_time_remaining"), // s
             new FieldDefinitionPrimitive(124, BaseType.UINT16, "pressure_sac", 100, 0), // bar / min
             new FieldDefinitionPrimitive(125, BaseType.UINT16, "volume_sac", 100, 0), // liter / min
             new FieldDefinitionPrimitive(126, BaseType.UINT16, "rmv", 100, 0), // liter / min
             new FieldDefinitionPrimitive(127, BaseType.SINT32, "ascent_rate", 1000, 0), // m/s
             new FieldDefinitionPrimitive(129, BaseType.UINT8, "po2", 100, 0), // %
-            new FieldDefinitionPrimitive(136, BaseType.UINT8, "wrist_heart_rate"),
+            new FieldDefinitionPrimitive(136, BaseType.UINT8, "wrist_heart_rate"), // BPM
             new FieldDefinitionPrimitive(137, BaseType.UINT8, "stamina_potential"), // %
             new FieldDefinitionPrimitive(138, BaseType.UINT8, "stamina"), // %
             new FieldDefinitionPrimitive(139, BaseType.UINT16, "core_temperature", 100, 0), // °C
+            new FieldDefinitionPrimitive(140, BaseType.UINT32, "grade_adjusted_speed", 1000, 0), // m/s
             new FieldDefinitionPrimitive(143, BaseType.UINT8, "body_battery"),
+            new FieldDefinitionPrimitive(144, BaseType.UINT8, "external_heart_rate"), // BPM
+            new FieldDefinitionPrimitive(146, BaseType.UINT16, "step_speed_loss_distance", 100, 0), // cm/s
+            new FieldDefinitionPrimitive(147, BaseType.UINT16, "step_speed_loss_percentage", 100, 0), // %
+            new FieldDefinitionPrimitive(148, BaseType.SINT32, "force", 1000, 0), // N
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
@@ -646,7 +671,7 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(6, BaseType.UINT8, "hardware_version"),
             new FieldDefinitionPrimitive(7, BaseType.UINT32, "cum_operating_time"), // s
             new FieldDefinitionPrimitive(10, BaseType.UINT16, "battery_voltage", 256, 0), // V
-            new FieldDefinitionPrimitive(11, BaseType.UINT8, "battery_status"),
+            new FieldDefinitionPrimitive(11, BaseType.UINT8, "battery_status", FieldDefinitionFactory.FIELD.BATTERY_STATUS),
             new FieldDefinitionPrimitive(18, BaseType.ENUM, "sensor_position"),
             new FieldDefinitionPrimitive(19, BaseType.STRING, "descriptor"),
             new FieldDefinitionPrimitive(20, BaseType.UINT8Z, "ant_transmission_type"),
@@ -861,6 +886,8 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(32, BaseType.UINT32, "descent", 1000, 0), // m
             new FieldDefinitionPrimitive(33, BaseType.UINT16, "moderate_activity_minutes"),
             new FieldDefinitionPrimitive(34, BaseType.UINT16, "vigorous_activity_minutes"),
+            new FieldDefinitionPrimitive(35, BaseType.UINT32, "total_ascent", 1000, 0), // m
+            new FieldDefinitionPrimitive(36, BaseType.UINT32, "total_descent", 1000, 0), // m
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
@@ -1519,7 +1546,7 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "model"),
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "gf_low"), // %
             new FieldDefinitionPrimitive(3, BaseType.UINT8, "gf_high"), // %
-            new FieldDefinitionPrimitive(4, BaseType.ENUM, "water_type"), // %
+            new FieldDefinitionPrimitive(4, BaseType.ENUM, "water_type", FieldDefinitionFactory.FIELD.WATER_TYPE),
             new FieldDefinitionPrimitive(5, BaseType.FLOAT32, "water_density"), // kg/m^3
             new FieldDefinitionPrimitive(6, BaseType.UINT8, "po2_warn", 100, 0), // %
             new FieldDefinitionPrimitive(7, BaseType.UINT8, "po2_critical", 100, 0), // %
@@ -1811,15 +1838,15 @@ public class NativeFITMessage {
     public static NativeFITMessage ECG_SUMMARY = new NativeFITMessage(336, "ECG_SUMMARY", Arrays.asList(
             new FieldDefinitionPrimitive(0, BaseType.UINT16, "unknown_0"), // 10103
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "unknown_1"), // 3
-            new FieldDefinitionPrimitive(2, BaseType.FLOAT32, "unknown_2"), // 512
-            new FieldDefinitionPrimitive(3, BaseType.FLOAT32, "unknown_3"), // 128
+            new FieldDefinitionPrimitive(2, BaseType.FLOAT32, "raw_sample_rate"), // 512
+            new FieldDefinitionPrimitive(3, BaseType.FLOAT32, "smooth_sample_rate"), // 128
             new FieldDefinitionPrimitive(4, BaseType.UINT32, "ecg_timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP),
             new FieldDefinitionPrimitive(5, BaseType.UINT32, "local_timestamp"), // garmin timestamp, but in user timezone
             new FieldDefinitionPrimitive(6, BaseType.ENUM, "unknown_6"), // 1
             new FieldDefinitionPrimitive(7, BaseType.FLOAT32, "average_heart_rate"), // bpm
             new FieldDefinitionPrimitive(10, BaseType.STRING, "unknown_10"), // ?
-            new FieldDefinitionPrimitive(11, BaseType.UINT16, "unknown_11"), // 30
-            new FieldDefinitionPrimitive(12, BaseType.UINT8, "unknown_12") // 39
+            new FieldDefinitionPrimitive(11, BaseType.UINT16, "sample_time"), // s
+            new FieldDefinitionPrimitive(12, BaseType.UINT8, "sdrr_hrv") // ms
     ));
 
     public static NativeFITMessage ECG_RAW_SAMPLE = new NativeFITMessage(337, "ECG_RAW_SAMPLE", Arrays.asList(

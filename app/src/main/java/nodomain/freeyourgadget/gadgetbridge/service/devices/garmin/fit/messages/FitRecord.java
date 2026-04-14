@@ -336,6 +336,11 @@ public class FitRecord extends RecordData {
     }
 
     @Nullable
+    public Integer getPerformanceCondition() {
+        return getFieldByNumber(90, Integer.class);
+    }
+
+    @Nullable
     public Long getAbsolutePressure() {
         return getFieldByNumber(91, Long.class);
     }
@@ -421,6 +426,11 @@ public class FitRecord extends RecordData {
     }
 
     @Nullable
+    public Integer getTotalAscent() {
+        return getFieldByNumber(121, Integer.class);
+    }
+
+    @Nullable
     public Long getAirTimeRemaining() {
         return getFieldByNumber(123, Long.class);
     }
@@ -471,8 +481,33 @@ public class FitRecord extends RecordData {
     }
 
     @Nullable
+    public Double getGradeAdjustedSpeed() {
+        return getFieldByNumber(140, Double.class);
+    }
+
+    @Nullable
     public Integer getBodyBattery() {
         return getFieldByNumber(143, Integer.class);
+    }
+
+    @Nullable
+    public Integer getExternalHeartRate() {
+        return getFieldByNumber(144, Integer.class);
+    }
+
+    @Nullable
+    public Float getStepSpeedLossDistance() {
+        return getFieldByNumber(146, Float.class);
+    }
+
+    @Nullable
+    public Float getStepSpeedLossPercentage() {
+        return getFieldByNumber(147, Float.class);
+    }
+
+    @Nullable
+    public Double getForce() {
+        return getFieldByNumber(148, Double.class);
     }
 
     @Nullable
@@ -783,6 +818,11 @@ public class FitRecord extends RecordData {
             return this;
         }
 
+        public Builder setPerformanceCondition(final Integer value) {
+            setFieldByNumber(90, value);
+            return this;
+        }
+
         public Builder setAbsolutePressure(final Long value) {
             setFieldByNumber(91, value);
             return this;
@@ -868,6 +908,11 @@ public class FitRecord extends RecordData {
             return this;
         }
 
+        public Builder setTotalAscent(final Integer value) {
+            setFieldByNumber(121, value);
+            return this;
+        }
+
         public Builder setAirTimeRemaining(final Long value) {
             setFieldByNumber(123, value);
             return this;
@@ -918,8 +963,33 @@ public class FitRecord extends RecordData {
             return this;
         }
 
+        public Builder setGradeAdjustedSpeed(final Double value) {
+            setFieldByNumber(140, value);
+            return this;
+        }
+
         public Builder setBodyBattery(final Integer value) {
             setFieldByNumber(143, value);
+            return this;
+        }
+
+        public Builder setExternalHeartRate(final Integer value) {
+            setFieldByNumber(144, value);
+            return this;
+        }
+
+        public Builder setStepSpeedLossDistance(final Float value) {
+            setFieldByNumber(146, value);
+            return this;
+        }
+
+        public Builder setStepSpeedLossPercentage(final Float value) {
+            setFieldByNumber(147, value);
+            return this;
+        }
+
+        public Builder setForce(final Double value) {
+            setFieldByNumber(148, value);
             return this;
         }
 

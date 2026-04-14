@@ -123,6 +123,8 @@ public class ActivitySummaryEntries {
     public static final String HR_AVG = "averageHR";
     public static final String HR_MAX = "maxHR";
     public static final String HR_MIN = "minHR";
+    public static final String HR_USER_RESTING = "hr_user_resting";
+    public static final String HR_USER_MAX = "hr_user_max";
     public static final String HR_ZONE_NA = "hrZoneNa";
     public static final String HR_ZONE_WARM_UP = "hrZoneWarmUp";
     public static final String HR_ZONE_EASY = "hrZoneEasy";
@@ -182,6 +184,7 @@ public class ActivitySummaryEntries {
     public static final String CALORIES_RESTING = "restingCalories";
     public static final String TRAINING_EFFECT_AEROBIC = "aerobicTrainingEffect";
     public static final String TRAINING_EFFECT_ANAEROBIC = "anaerobicTrainingEffect";
+    public static final String TRAINING_EFFECT_TOTAL = "training_effect_total";
     public static final String WORKOUT_LOAD = "currentWorkoutLoad";
     public static final String MAXIMUM_OXYGEN_UPTAKE = "maximumOxygenUptake";
     public static final String RECOVERY_TIME = "recoveryTime";
@@ -190,6 +193,7 @@ public class ActivitySummaryEntries {
     public static final String ESTIMATED_SWEAT_LOSS = "estimatedSweatLoss";
     public static final String LACTATE_THRESHOLD_HR = "lactateThresholdHeartRate";
     public static final String RATING_OF_PERCEIVED_EXERTION = "ratingOfPerceivedExertion";
+    public static final String WORKOUT_FEEL = "workout_feel";
 
     public static final String CYCLING_POWER_AVERAGE = "cyclingPowerAverage";
     public static final String CYCLING_POWER_MIN = "cyclingPowerMin";
@@ -258,6 +262,9 @@ public class ActivitySummaryEntries {
     public static final String UNIT_KNOTS = "knots";
     public static final String UNIT_CELSIUS = "unit_celsius";
     public static final String UNIT_OXYGEN_TOXICITY_UNITs = "unit_oxygen_toxicity_units";
+    public static final String UNIT_BAR_PER_MINUTE = "unit_bar_per_minute";
+    public static final String UNIT_VOLT = "unit_volt";
+    public static final String UNIT_KG_PER_M3 = "unit_kg_per_m3";
 
     public static final String GROUP_PACE = "Pace";
     public static final String GROUP_ACTIVITY = "Activity";
@@ -283,6 +290,8 @@ public class ActivitySummaryEntries {
     public static final String GROUP_MOVEMENT_EVALUATION = "movement_evaluation";
     public static final String GROUP_DISTANCE = "Distance";
     public static final String GROUP_STEPS = "Steps";
+    public static final String GROUP_BIKE = "activity_type_biking";
+    public static final String GROUP_GEAR_INFO = "Gear";
     public static final String AVG_DEPTH = "diving_avg_depth";
     public static final String START_CNS = "diving_start_cns";
     public static final String END_CNS = "diving_end_cns";
@@ -292,11 +301,19 @@ public class ActivitySummaryEntries {
     public static final String BOTTOM_TIME = "diving_bottom_time";
     public static final String OXYGEN_TOXICITY = "diving_oxygen_toxicity";
     public static final String SURFACE_INTERVAL = "diving_surface_interval";
-
+    public static final String PRESSURE_SAC_AVG = "diving_pressure_sac_avg";
+    public static final String RECOVERY_TIME_REMAINING_AT_START = "recovery_time_remaining_at_start";
+    public static final String BODY_ENERGY_AT_START = "body_energy_at_start";
+    public static final String BODY_ENERGY_AT_END = "body_energy_at_end";
+    public static final String TOTAL_WORK = "total_work";
+    public static final String BATTERY_LEVEL_START = "battery_level_start";
+    public static final String BATTERY_LEVEL_END = "battery_level_end";
+    public static final String BATTERY_LEVEL_EBIKE_START = "battery_level_ebike_start";
+    public static final String BATTERY_LEVEL_EBIKE_END = "battery_level_ebike_end";
     // DIVING parameters
     public static final String MAX_DEPTH = "diving_maximum_diving_depth";
     public static final String WATER_TYPE = "diving_water_type";
-    public static final String GAS = "diving_gas";
+    public static final String GROUP_GAS = "diving_gas";
 
     /**
      * Used to signal that this activity has a gps track. This is currently used by ActivitySummaryDetail

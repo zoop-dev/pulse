@@ -183,6 +183,16 @@ public class FitMonitoring extends RecordData {
     }
 
     @Nullable
+    public Double getTotalAscent() {
+        return getFieldByNumber(35, Double.class);
+    }
+
+    @Nullable
+    public Double getTotalDescent() {
+        return getFieldByNumber(36, Double.class);
+    }
+
+    @Nullable
     public Long getTimestamp() {
         return getFieldByNumber(253, Long.class);
     }
@@ -332,6 +342,16 @@ public class FitMonitoring extends RecordData {
 
         public Builder setVigorousActivityMinutes(final Integer value) {
             setFieldByNumber(34, value);
+            return this;
+        }
+
+        public Builder setTotalAscent(final Double value) {
+            setFieldByNumber(35, value);
+            return this;
+        }
+
+        public Builder setTotalDescent(final Double value) {
+            setFieldByNumber(36, value);
             return this;
         }
 

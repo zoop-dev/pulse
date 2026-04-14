@@ -120,6 +120,7 @@ public enum GarminSport {
     SOFTBALL(50, 0, ActivityKind.SOFTBALL),
     SOFTBALL_SLOW_PITCH(51, 0, ActivityKind.SOFTBALL_SLOW_PITCH),
     STOPWATCH(52, 0, ActivityKind.STOP_WATCH),
+    DIVING(53, 0, ActivityKind.DIVING),
     SINGLE_GAS_DIVING(53, 53, ActivityKind.SCUBA_DIVING),
     MULTI_GAS_DIVING(53, 54, ActivityKind.SCUBA_DIVING),
     GAUGE_DIVING(53, 55, ActivityKind.DIVING),
