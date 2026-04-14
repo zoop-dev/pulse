@@ -310,7 +310,7 @@
     <string name="miband_prefs_device_time_offset_hours">デバイス時刻のオフセット (交代勤務者の睡眠検知用)</string>
     <string name="miband2_prefs_dateformat">日付形式</string>
     <string name="dateformat_time">時刻</string>
-    <string name="dateformat_date_time">時刻と日付</string>
+    <string name="dateformat_date_time"><![CDATA[時刻と日付]]></string>
     <string name="mi2_prefs_goal_notification">目標達成通知</string>
     <string name="mi2_prefs_goal_notification_summary">1日の歩数が目標に達するとバンドが振動します</string>
     <string name="mi2_prefs_display_items">表示アイテム</string>
@@ -389,7 +389,7 @@
     <string name="miband2_prefs_timeformat">Mi2: 時刻の形式</string>
     <string name="mi2_fw_installhandler_fw53_hint">このファームウェアをインストールする前に、バージョン %1$s をインストールする必要があります！</string>
     <string name="mi2_enable_text_notifications">テキスト通知</string>
-    <string name="mi2_enable_text_notifications_summary">ファームウェア 1.0.1.28 以上 と Mili_pro.ft* をインストールしていることが必要です。</string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[ファームウェア 1.0.1.28 以上 と Mili_pro.ft* をインストールしていることが必要です。]]></string>
     <string name="off">オフ</string>
     <string name="mi2_dnd_off">オフ</string>
     <string name="mi2_dnd_automatic">自動（睡眠検出）</string>
