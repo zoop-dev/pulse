@@ -303,7 +303,7 @@
     <string name="miband_prefs_hr_sleep_detection">Usar sensor de ritmo cardíaco para mellorar a detección de sono</string>
     <string name="miband2_prefs_dateformat">Formato de data</string>
     <string name="dateformat_time">Hora</string>
-    <string name="dateformat_date_time">Hora e data</string>
+    <string name="dateformat_date_time"><![CDATA[Hora e data]]></string>
     <string name="mi2_prefs_button_actions">Accións do botón</string>
     <string name="mi2_prefs_button_actions_summary">Especificar accións para pulsación do botón do Mi Band 2</string>
     <string name="mi2_prefs_button_press_count">Conta de pulsacións do botón</string>
@@ -389,7 +389,7 @@
     <string name="miband2_prefs_timeformat">Mi2: formato de hora</string>
     <string name="mi2_fw_installhandler_fw53_hint">Debe instalar a versión %1$s antes de instalar este firmware!</string>
     <string name="mi2_enable_text_notifications">Notificacións de texto</string>
-    <string name="mi2_enable_text_notifications_summary">Require firmware &gt;= 1.0.1.28 e Mili_pro.ft* instalado.</string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[Require firmware &gt;= 1.0.1.28 e Mili_pro.ft* instalado.]]></string>
     <string name="off">Apagado</string>
     <string name="mi2_dnd_off">Apagado</string>
     <string name="mi2_dnd_automatic">Automático (detección de sono)</string>
