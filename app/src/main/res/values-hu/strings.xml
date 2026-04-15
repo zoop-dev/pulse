@@ -380,7 +380,7 @@
     <string name="miband2_prefs_timeformat">Mi2: idő formátum</string>
     <string name="mi2_fw_installhandler_fw53_hint">Ezt a verziót kell telepítenie %1$s firmware telepítés előtt!</string>
     <string name="mi2_enable_text_notifications">Szöveges értesítések</string>
-    <string name="mi2_enable_text_notifications_summary"><![CDATA[Telepítve kell legyen a firmware &gt;= 1.0.1.28 és a Mili_pro.ft*]]></string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[Legalább 1.0.1.28-as firmware és telepített Mili_pro.ft* szükséges.]]></string>
     <string name="off">Ki</string>
     <string name="mi2_dnd_off">Ki</string>
     <string name="mi2_dnd_automatic">Automatikus (alvásérzékelés)</string>
@@ -4199,4 +4199,34 @@
     <string name="diving_oxygen_toxicity">Oxigénmérgezés</string>
     <string name="unit_oxygen_toxicity_units">OTU</string>
     <string name="diving_surface_interval">Felületi időköz</string>
+    <string name="battery_level_ebike_end">Végső akkumulátorszint</string>
+    <string name="battery_level_ebike_start">Kezdeti akkumulátorszint</string>
+    <string name="battery_level_end">Végső akkumulátorszint</string>
+    <string name="battery_level_start">Kezdeti akkumulátorszint</string>
+    <string name="battery_status">Akkumulátor állapota</string>
+    <string name="battery_status_charging">Töltés</string>
+    <string name="battery_status_critical">Kritikus</string>
+    <string name="battery_status_good">Jó</string>
+    <string name="battery_status_invalid">Érvénytelen</string>
+    <string name="battery_status_low">Alacsony</string>
+    <string name="battery_status_new">Új</string>
+    <string name="battery_status_ok">Megfelelő</string>
+    <string name="battery_status_unknown">Ismeretlen</string>
+    <string name="body_energy_at_end">Záró energiaszint</string>
+    <string name="body_energy_at_start">Kezdeti energiaszint</string>
+    <string name="device">Eszköz</string>
+    <string name="diving_pressure_sac_avg">Felszíni levegőfogyasztás</string>
+    <string name="hr_user_max">Legnagyobb pulzusszám</string>
+    <string name="hr_user_resting">Nyugalmi pulzusszám</string>
+    <string name="recovery_time_remaining_at_start">Kezdeti regenerálódási idő</string>
+    <string name="total_work">Összes munka</string>
+    <string name="training_effect_total">Összesített hatás</string>
+    <string name="unit_bar_per_minute">bar/perc</string>
+    <string name="unit_kg_per_m3">kg/m³</string>
+    <string name="unit_volt">V</string>
+    <string name="water_type_custom">Egyéni</string>
+    <string name="water_type_en13319">EN13319</string>
+    <string name="water_type_fresh">Édesvíz</string>
+    <string name="water_type_salt">Sós víz</string>
+    <string name="workout_feel">Edzésérzet</string>
 </resources>
