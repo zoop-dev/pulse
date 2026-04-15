@@ -4383,4 +4383,15 @@
     <string name="battery_status_critical">不佳</string>
     <string name="total_work">总做功</string>
     <string name="training_effect_total">总效能</string>
+    <string name="loyalty_cards_sync_tags_only">只同步特定标签</string>
+    <string name="loyalty_cards_sync_tags">要同步的标签</string>
+    <string name="app_package_name">包名</string>
+    <string name="install_app_name">安装 %s</string>
+    <string name="open_app">打开 %s</string>
+    <string name="install_app_fail">打开应用商店安装 %s 失败</string>
+    <string name="loyalty_cards_app_not_installed">管理会员卡需要会员卡应用。请安装下方支持的应用中的一个。</string>
+    <string name="loyalty_cards_app_not_compatible">已安装的版本 %1s 不兼容 Gadgetbridge0。请更新 %1s 和 Gadgetbrige 到最新版。</string>
+    <string name="loyalty_cards_app_permissions_summary">Gadgetbridge 需要读取 %1s 张卡片的权限来同步它们。轻触此按钮授予权限。</string>
+    <string name="weight_scale_gram_format">%1$d 克</string>
+    <string name="internet_firewall_note_subdomain">域名必须包含完整子域，不带协议。如 “subdomain.example.org”。</string>
 </resources>
