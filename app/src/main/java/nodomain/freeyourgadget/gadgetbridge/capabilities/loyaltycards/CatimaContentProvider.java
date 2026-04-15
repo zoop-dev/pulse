@@ -25,7 +25,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Currency;
@@ -38,9 +37,11 @@ import java.util.Map;
 public class CatimaContentProvider {
     private static final Logger LOG = LoggerFactory.getLogger(CatimaContentProvider.class);
 
-    public static final List<String> KNOWN_PACKAGES = new ArrayList<String>() {{
+    public static final List<String> KNOWN_PACKAGES = new ArrayList<>() {{
         add("me.hackerchick.catima");
         add("me.hackerchick.catima.debug");
+        add("nz.eloque.foss_wallet");
+        add("nz.eloque.foss_wallet.dev");
     }};
 
     private final Context mContext;
@@ -146,13 +147,7 @@ public class CatimaContentProvider {
             while (cursor.moveToNext()) {
                 final int cardId = cursor.getInt(cursor.getColumnIndexOrThrow(LoyaltyCardDbIdsGroups.cardID));
                 final String groupId = cursor.getString(cursor.getColumnIndexOrThrow(LoyaltyCardDbIdsGroups.groupID));
-                final List<Integer> group;
-                if (groupCards.containsKey(groupId)) {
-                    group = groupCards.get(groupId);
-                } else {
-                    group = new ArrayList<>();
-                    groupCards.put(groupId, group);
-                }
+                final List<Integer> group = groupCards.computeIfAbsent(groupId, ignored -> new ArrayList<>());
                 group.add(cardId);
             }
         } catch (final Exception e) {
@@ -229,6 +224,7 @@ public class CatimaContentProvider {
      * Copied from Catima, protect.card_locker.DBHelper.LoyaltyCardDbGroups.
      * Commit: a5599dc
      */
+    @SuppressWarnings("unused")
     public static class LoyaltyCardDbGroups {
         public static final String TABLE = "groups";
         public static final String ID = "_id";
@@ -239,6 +235,7 @@ public class CatimaContentProvider {
      * Copied from Catima, protect.card_locker.DBHelper.LoyaltyCardDbIds.
      * Commit: a5599dc
      */
+    @SuppressWarnings("unused")
     public static class LoyaltyCardDbIds {
         public static final String TABLE = "cards";
         public static final String ID = "_id";

@@ -28,6 +28,7 @@ public final class LoyaltyCardsSettingsConst {
     public static final String LOYALTY_CARDS_CATIMA_NOT_INSTALLED = "loyalty_cards_catima_not_installed";
     public static final String LOYALTY_CARDS_CATIMA_NOT_COMPATIBLE = "loyalty_cards_catima_not_compatible";
     public static final String LOYALTY_CARDS_INSTALL_CATIMA = "loyalty_cards_install_catima";
+    public static final String LOYALTY_CARDS_INSTALL_FOSSWALLET = "loyalty_cards_install_fosswallet";
     public static final String LOYALTY_CARDS_CATIMA_PERMISSIONS = "loyalty_cards_catima_permissions";
     public static final String LOYALTY_CARDS_SYNC = "loyalty_cards_sync";
     public static final String LOYALTY_CARDS_SYNC_GROUPS_ONLY = "loyalty_cards_sync_groups_only";

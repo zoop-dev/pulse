@@ -3,40 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
         android:key="pref_key_header_loyalty_cards_catima"
-        android:title="@string/loyalty_cards_catima">
+        android:title="@string/loyalty_cards">
 
         <ListPreference
             android:defaultValue="me.hackerchick.catima"
             android:entries="@array/pref_huami2021_empty_array"
             android:entryValues="@array/pref_huami2021_empty_array"
+            android:icon="@drawable/ic_deployed_code"
             android:key="loyalty_cards_catima_package"
-            android:title="@string/loyalty_cards_catima_package"
+            android:title="@string/app_package_name"
             app:useSimpleSummaryProvider="true" />
 
         <Preference
             android:icon="@drawable/ic_loyalty"
             android:key="loyalty_cards_open_catima"
-            android:title="@string/loyalty_cards_open_catima" />
+            android:title="@string/open_app" />
 
         <Preference
             android:icon="@drawable/ic_warning_gray"
             android:key="loyalty_cards_catima_not_installed"
-            android:summary="@string/loyalty_cards_catima_not_installed" />
+            android:summary="@string/loyalty_cards_app_not_installed" />
 
         <Preference
             android:icon="@drawable/ic_warning_gray"
             android:key="loyalty_cards_catima_not_compatible"
-            android:summary="@string/loyalty_cards_catima_not_compatible" />
+            android:summary="@string/loyalty_cards_app_not_compatible" />
 
         <Preference
             android:icon="@drawable/ic_loyalty"
             android:key="loyalty_cards_install_catima"
-            android:title="@string/loyalty_cards_install" />
+            android:title="@string/install_app_name" />
+
+        <Preference
+            android:icon="@drawable/ic_loyalty"
+            android:key="loyalty_cards_install_fosswallet"
+            android:title="@string/install_app_name" />
 
         <Preference
             android:icon="@drawable/ic_warning_gray"
             android:key="loyalty_cards_catima_permissions"
-            android:summary="@string/loyalty_cards_catima_permissions_summary"
+            android:summary="@string/loyalty_cards_app_permissions_summary"
             android:title="@string/loyalty_cards_catima_permissions_title" />
     </PreferenceCategory>
 
