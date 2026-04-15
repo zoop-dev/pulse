@@ -38,6 +38,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.Abstrac
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsTransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.util.MapUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
+import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
 public class ZeppOsLoyaltyCardService extends AbstractZeppOsService {
     private static final Logger LOG = LoggerFactory.getLogger(ZeppOsLoyaltyCardService.class);
@@ -205,7 +206,7 @@ public class ZeppOsLoyaltyCardService extends AbstractZeppOsService {
             baos.write(0);
 
             // This is optional
-            baos.write(card.getCardId().getBytes(StandardCharsets.UTF_8));
+            baos.write(StringUtils.truncateToBytes(card.getCardId(), 60));
             baos.write(0);
 
             if (card.getBarcodeId() != null) {
