@@ -44,7 +44,11 @@ enum class WeightUnit {
                 }
 
                 KILOGRAM -> {
-                    context.getString(R.string.weight_scale_kilogram_format, convertedWeight)
+                    if (convertedWeight != 0.0 && convertedWeight < 1) {
+                        context.getString(R.string.weight_scale_gram_format, (convertedWeight * 1000).roundToInt())
+                    } else {
+                        context.getString(R.string.weight_scale_kilogram_format, convertedWeight)
+                    }
                 }
             }
         }

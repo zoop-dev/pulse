@@ -3682,7 +3682,7 @@
     <string name="unit_celsius">℃</string>
     <string name="unit_fahrenheit">℉</string>
     <string name="weight_scale_kilogram">kilogram - kg</string>
-    <string name="weight_scale_kilogram_format">%1$.3f kg</string>
+    <string name="weight_scale_kilogram_format">%1$.2f kg</string>
     <string name="weight_scale_pound_format">%1$.3f lb</string>
     <string name="weight_scale_show_measurement">Ağırlığı Göster</string>
     <string name="weight_scale_stone_format">%1$d st %2$d lb</string>

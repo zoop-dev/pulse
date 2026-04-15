@@ -3830,7 +3830,7 @@
     <string name="weight_scale_jin">Jin (500 g)</string>
     <string name="weight_scale_jin_format">%1$.2f Jin (500 g)</string>
     <string name="weight_scale_kilogram">Kilogramm – kg</string>
-    <string name="weight_scale_kilogram_format">%1$.3f kg</string>
+    <string name="weight_scale_kilogram_format">%1$.2f kg</string>
     <string name="weight_scale_pound">Pfund – lb</string>
     <string name="weight_scale_pound_format">%1$.3f lb</string>
     <string name="weight_scale_show_measurement">Gewicht anzeigen</string>

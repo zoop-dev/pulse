@@ -3638,7 +3638,7 @@
     <string name="unit_celsius">℃</string>
     <string name="unit_fahrenheit">℉</string>
     <string name="weight_scale_kilogram">kilogramme - Kg</string>
-    <string name="weight_scale_kilogram_format">%1$.3f Kg</string>
+    <string name="weight_scale_kilogram_format">%1$.2f Kg</string>
     <string name="weight_scale_show_measurement">Afficher poids</string>
     <string name="workout_charts">Graphiques d’entraînement</string>
     <string name="pref_display_enabled_title">Affichage activé</string>

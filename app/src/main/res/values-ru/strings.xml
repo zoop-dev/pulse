@@ -3915,7 +3915,7 @@
     <string name="first_start_permissions_do_not_ask_again">Больше не спрашивать</string>
     <string name="first_start_permissions_do_not_ask_warning_summary">Отказ от предоставления разрешения может вызвать проблемы. Вы можете снова открыть этот экран с экрана настроек.</string>
     <string name="weight_scale_kilogram">килограмм - кг</string>
-    <string name="weight_scale_kilogram_format">%1$.3f кг</string>
+    <string name="weight_scale_kilogram_format">%1$.2f кг</string>
     <string name="weight_scale_pound">фунт - фт</string>
     <string name="weight_scale_pound_format">%1$.3f фт</string>
     <string name="weight_scale_show_measurement">Показать вес</string>

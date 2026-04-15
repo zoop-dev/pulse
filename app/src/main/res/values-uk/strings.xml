@@ -3803,7 +3803,7 @@
     <string name="weight_scale_jin">чути - 市斤</string>
     <string name="weight_scale_jin_format">%1$.2f 市斤</string>
     <string name="weight_scale_kilogram">кілограм - кг</string>
-    <string name="weight_scale_kilogram_format">%1$.3f кг</string>
+    <string name="weight_scale_kilogram_format">%1$.2f кг</string>
     <string name="weight_scale_pound">фунт - фунт</string>
     <string name="weight_scale_pound_format">%1$.3f фунт</string>
     <string name="weight_scale_show_measurement">Показати вагу</string>

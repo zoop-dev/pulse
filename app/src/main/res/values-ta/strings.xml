@@ -3879,7 +3879,7 @@
     <string name="weight_scale_jin">சின் - இச்சிகோ</string>
     <string name="weight_scale_jin_format">%1$.2f நகர வகை</string>
     <string name="weight_scale_kilogram">கிலோகிராம் - கிலோ</string>
-    <string name="weight_scale_kilogram_format">%1$.3f கிலோ</string>
+    <string name="weight_scale_kilogram_format">%1$.2f கிலோ</string>
     <string name="weight_scale_pound">பவுண்டு - பவுண்டு</string>
     <string name="weight_scale_show_measurement">எடையைக் காட்டு</string>
     <string name="weight_scale_stone">கல் - ச்டம்ப்</string>
