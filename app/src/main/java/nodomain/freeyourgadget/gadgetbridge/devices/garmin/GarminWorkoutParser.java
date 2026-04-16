@@ -49,6 +49,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.model.workout.Workout;
 import nodomain.freeyourgadget.gadgetbridge.model.workout.WorkoutChart;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.AntGadget;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums.GarminSport;
@@ -805,13 +806,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             for (final Map.Entry<Integer, FitDeviceInfo> entry : deviceInfos.entrySet()) {
                 final Integer deviceIndex = entry.getKey();
                 final FitDeviceInfo deviceInfo = entry.getValue();
-                Object device = deviceInfo.getProductName();
-                if (device == null) {
-                    device = deviceInfo.getSerialNumber();
-                    if (device == null) {
-                        device = deviceIndex;
-                    }
-                }
+                final String device = AntGadget.Companion.NameGadget(deviceInfo);
 
                 BatteryStatus rawStatus = deviceInfo.getBatteryStatus();
                 @Nullable final String status;
