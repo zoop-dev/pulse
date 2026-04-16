@@ -385,7 +385,7 @@
     <string name="dbmanagementactivity_error_importing_shared">Chyba při importu preferencí: %1$s</string>
     <string name="mi2_fw_installhandler_fw53_hint">Před instalací tohoto firmwaru musíte nainstalovat verzi %1$s!</string>
     <string name="mi2_enable_text_notifications">Textové upozornění</string>
-    <string name="mi2_enable_text_notifications_summary"><![CDATA[Vyžaduje nainstalovaný firmware >= 1.0.1.28 and Mili_pro.ft*]]></string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[Vyžaduje nainstalovaný firmware &gt;= 1.0.1.28 and Mili_pro.ft*.]]></string>
     <string name="off">Vypnuto</string>
     <string name="mi2_dnd_off">Vypnuto</string>
     <string name="mi2_dnd_automatic">Automaticky (detekce spánku)</string>
@@ -4356,4 +4356,45 @@
     <string name="diving_oxygen_toxicity">Toxicita kyslíku</string>
     <string name="unit_oxygen_toxicity_units">OTU</string>
     <string name="diving_surface_interval">Interval vynoření</string>
+    <string name="battery_level_ebike_end">Úroveň baterie na konci</string>
+    <string name="battery_level_ebike_start">Úroveň baterie na začátku</string>
+    <string name="battery_level_end">Úroveň baterie na konci</string>
+    <string name="battery_level_start">Úroveň baterie na začátku</string>
+    <string name="battery_status">Stav baterie</string>
+    <string name="battery_status_charging">Nabíjení</string>
+    <string name="battery_status_critical">Kritický</string>
+    <string name="battery_status_good">Dobrý</string>
+    <string name="battery_status_invalid">Neplatný</string>
+    <string name="battery_status_low">Nízký</string>
+    <string name="battery_status_new">Nová</string>
+    <string name="battery_status_ok">OK</string>
+    <string name="battery_status_unknown">Neznámý</string>
+    <string name="body_energy_at_end">Energie těla na konci</string>
+    <string name="body_energy_at_start">Energie těla na začátku</string>
+    <string name="device">Zařízení</string>
+    <string name="diving_pressure_sac_avg">Spotřeba vzduchu</string>
+    <string name="hr_user_max">Max. tep uživatele</string>
+    <string name="hr_user_resting">Tep v klidu</string>
+    <string name="recovery_time_remaining_at_start">Čas na zotavení na začátku</string>
+    <string name="total_work">Celková práce</string>
+    <string name="training_effect_total">Celkový efekt</string>
+    <string name="unit_bar_per_minute">bar/min</string>
+    <string name="unit_kg_per_m3">kg/m³</string>
+    <string name="unit_volt">V</string>
+    <string name="water_type_custom">Vlastní</string>
+    <string name="water_type_en13319">EN13319</string>
+    <string name="water_type_fresh">Sladká</string>
+    <string name="water_type_salt">Slaná</string>
+    <string name="workout_feel">Pocit ze cvičení</string>
+    <string name="loyalty_cards_sync_tags_only">Synchronizovat pouze specifické značky</string>
+    <string name="loyalty_cards_sync_tags">Značky k synchronizaci</string>
+    <string name="app_package_name">Název balíčku</string>
+    <string name="install_app_name">Instalovat %s</string>
+    <string name="open_app">Otevřít %s</string>
+    <string name="install_app_fail">Nepodařilo se otevřít obchod s aplikacemi pro nainstalování %s</string>
+    <string name="loyalty_cards_app_not_installed">Pro správu věrnostních kartiček je potřeba samostatná aplikace. Nainstalujte si prosím jednu z podorovaných níže.</string>
+    <string name="loyalty_cards_app_not_compatible">Nainstalovaná verze aplikace %1s není kompatibilní s Gadgetbridge. Aktualizujte prosím aplikacei %1s a Gadgetbridge na nejnovější verze.</string>
+    <string name="loyalty_cards_app_permissions_summary">Gadgetbridge potřebuje oprávnění aplikace %1s ke čteníkaret pro jejich synchronizaci. Klepněte na toto tlačítko pro jejich udělení.</string>
+    <string name="weight_scale_gram_format">%1$d g</string>
+    <string name="internet_firewall_note_subdomain">Domény musí obsahovat celou subdoménu, bez protokolu. Například: „subdomena.example.org“.</string>
 </resources>
