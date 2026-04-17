@@ -57,6 +57,7 @@ data class AntGadget(val manufacturer: Int, val product: Int, val name: String) 
             AntGadget(1, 4607, "HRM 600"),
             AntGadget(1, 10007, "SDM4 Pod"),
             AntGadget(1, 65534, "Connect"),
+            AntGadget(123, 2, "Polar H10"),
             AntGadget(263, 10, "Assioma Uno"),
             AntGadget(263, 12, "Assioma Duo"),
             AntGadget(268, 1013, "XX1 Eagle AXS"),
