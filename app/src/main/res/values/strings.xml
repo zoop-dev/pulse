@@ -4769,4 +4769,12 @@
     <string name="qhybrid_button_function_step_goal">Step goal progress</string>
     <string name="qhybrid_button_function_control_music">Control music player</string>
     <string name="qhybrid_button_function_ring_phone">Ring phone</string>
+    <string name="gymlink_title">GymLink</string>
+    <string name="gymlink_summary">Allow GymLink-compatible equipment to connect to the device.</string>
+    <string name="antplus_title">ANT+</string>
+    <string name="antplus_summary">Nearby compatible ANT+ devices can pick up your heart rate.</string>
+    <string name="broadcast_heart_rate_title">Broadcast heart rate</string>
+    <string name="broadcast_heart_rate_summary">Any nearby device or app can pick up your heart rate.</string>
+    <string name="dual_connection_title">Dual connection</string>
+    <string name="dual_connection_summary">Allow two apps or devices to connect simultaneously.</string>
 </resources>

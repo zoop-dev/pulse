@@ -575,6 +575,11 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_SONY_ADAPTIVE_VOLUME_CONTROL = "pref_adaptive_volume_control";
     public static final String PREF_SONY_WIDE_AREA_TAP = "pref_wide_area_tap";
 
+    public static final String PREF_GYMLINK_ENABLED = "gymlink_enabled";
+    public static final String PREF_ANTPLUS_ENABLED = "antplus_enabled";
+    public static final String PREF_HR_BROADCAST = "hr_broadcast";
+    public static final String PREF_DUAL_CONNECTION = "dual_connection";
+
     public static final String PREF_MEDIA_SOURCE = "pref_media_source";
     public static final String PREF_MEDIA_PLAYBACK_MODE = "pref_media_playback_mode";
     public static final String PREF_SHOKZ_EQUALIZER_BLUETOOTH = "pref_shokz_equalizer_bluetooth";

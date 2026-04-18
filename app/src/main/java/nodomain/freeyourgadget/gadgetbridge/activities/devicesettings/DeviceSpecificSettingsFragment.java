@@ -857,6 +857,11 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_SONY_ADAPTIVE_VOLUME_CONTROL);
         addPreferenceHandlerFor(PREF_SONY_WIDE_AREA_TAP);
 
+        addPreferenceHandlerFor(PREF_GYMLINK_ENABLED);
+        addPreferenceHandlerFor(PREF_ANTPLUS_ENABLED);
+        addPreferenceHandlerFor(PREF_HR_BROADCAST);
+        addPreferenceHandlerFor(PREF_DUAL_CONNECTION);
+
         addPreferenceHandlerFor(PREF_MEDIA_SOURCE);
         addPreferenceHandlerFor(PREF_MEDIA_PLAYBACK_MODE);
         addPreferenceHandlerFor(PREF_SHOKZ_EQUALIZER_BLUETOOTH);
