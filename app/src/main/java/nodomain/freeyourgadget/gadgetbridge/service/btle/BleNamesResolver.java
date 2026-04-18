@@ -597,6 +597,7 @@ public class BleNamesResolver {
         mServices.put("000056ff-0000-1000-8000-00805f9b34fb", "(Propr: GloryFit Data");
         mServices.put("af9df7a1-e595-11e3-96b4-0002a5d5c51b", "(Propr: OneTouch");
         mServices.put("9b012401-bc30-ce9a-e111-0f67e491abde", "(Propr: Garmin GFDI V0)");
+        mServices.put("6217ff4b-fb31-1140-ad5a-a45545d7ecf3", "(Propr: Polar Settings)");
         mServices.put("6a4e2401-667b-11e3-949a-0800200c9a66", "(Propr: Garmin GFDI V1)");
         mServices.put("6a4e2800-667b-11e3-949a-0800200c9a66", "(Propr: Garmin ML)");
         mServices.put("86f61000-f706-58a0-95b2-1fb9261e4dc7", "(Propr: Ultrahuman State)");
@@ -1194,6 +1195,7 @@ public class BleNamesResolver {
         mCharacteristics.put("86f65002-f706-58a0-95b2-1fb9261e4dc7", "(Propr: Ultrahuman Response)");
         mCharacteristics.put("86f66001-f706-58a0-95b2-1fb9261e4dc7", "(Propr: Ultrahuman Data)");
         mCharacteristics.put("da2e7828-fbce-4e01-ae9e-261174997c48", "(Propr: SMP - Simple Management Protocol)");
+        mCharacteristics.put("6217ff4d-91bb-91d0-7e2a-7cd3bda8a1f3", "(Propr: Polar Settings)");
         mCharacteristics.put("6e400002-b5a3-f393-e0a9-e50e24dcca9e", "(Propr: Nordic UART TX)");
         mCharacteristics.put("6e400003-b5a3-f393-e0a9-e50e24dcca9e", "(Propr: Nordic UART RX)");
         mCharacteristics.put("de5bf729-d711-4e47-af26-65e3012a5dc7", "(Propr: Yawell Notify)");

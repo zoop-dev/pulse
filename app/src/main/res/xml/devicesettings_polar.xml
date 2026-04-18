@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:key="gymlink_enabled"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/gymlink_summary"
+        android:title="@string/gymlink_title" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:key="antplus_enabled"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/antplus_summary"
+        android:title="@string/antplus_title" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:key="hr_broadcast"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/broadcast_heart_rate_summary"
+        android:title="@string/broadcast_heart_rate_title" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:key="dual_connection"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/dual_connection_summary"
+        android:title="@string/dual_connection_title" />
+</androidx.preference.PreferenceScreen>
