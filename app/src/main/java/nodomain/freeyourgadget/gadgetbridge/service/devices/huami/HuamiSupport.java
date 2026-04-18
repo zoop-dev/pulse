@@ -894,7 +894,10 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
      */
     public String getNotificationBody(NotificationSpec notificationSpec) {
         String senderOrTitle = StringUtils.getFirstOf(notificationSpec.sender, notificationSpec.title);
-
+        if (senderOrTitle.isEmpty()) {
+            // if we have no title we have to send at least something on some devices, else they reboot (Bip S)
+            senderOrTitle = " ";
+        }
         String message = StringUtils.truncate(senderOrTitle, 32) + "\0";
         if (notificationSpec.subject != null) {
             message += StringUtils.truncate(notificationSpec.subject, 128) + "\n\n";
