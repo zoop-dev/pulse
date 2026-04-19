@@ -4405,4 +4405,10 @@
     <string name="broadcast_heart_rate_summary">Jakékoli zařízení nebo aplikace v okolí může zjistit váš tep.</string>
     <string name="dual_connection_title">Dvojité spojení</string>
     <string name="dual_connection_summary">Povolit současné připojení dvou aplikací nebo zařízení.</string>
+    <string name="sony_audio_hd">HD zvuk</string>
+    <string name="sony_audio_hd_summary">Povolit zvukový kodek vyšší kvality (LDAC)</string>
+    <string name="sony_button_function_nc_ambient">Funkce tlačítka NC/Ambient</string>
+    <string name="sony_button_function_nc_ambient_switch_ambient_sound">Přepnout ambientní zvuk</string>
+    <string name="sony_button_function_nc_ambient_google_assistant">Asistent Google</string>
+    <string name="sony_button_function_nc_ambient_alexa_assistant">Amazon Alexa</string>
 </resources>
