@@ -4248,4 +4248,10 @@
     <string name="broadcast_heart_rate_summary">Bármely közeli eszköz vagy alkalmazás érzékelheti az Ön pulzusát.</string>
     <string name="dual_connection_title">Kettős kapcsolat</string>
     <string name="dual_connection_summary">Lehetővé teszi két alkalmazás vagy eszköz egyidejű társítását.</string>
+    <string name="sony_audio_hd">HD-hang</string>
+    <string name="sony_audio_hd_summary">Jobb minőségű hangkodek (LDAC) engedélyezése</string>
+    <string name="sony_button_function_nc_ambient">NC/Környezeti gomb funkciója</string>
+    <string name="sony_button_function_nc_ambient_switch_ambient_sound">Váltás környezeti hangra</string>
+    <string name="sony_button_function_nc_ambient_google_assistant">Google segéd</string>
+    <string name="sony_button_function_nc_ambient_alexa_assistant">Alexa segéd</string>
 </resources>
