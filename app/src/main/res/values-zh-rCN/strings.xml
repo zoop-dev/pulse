@@ -4394,4 +4394,12 @@
     <string name="loyalty_cards_app_permissions_summary">Gadgetbridge 需要读取 %1s 张卡片的权限来同步它们。轻触此按钮授予权限。</string>
     <string name="weight_scale_gram_format">%1$d 克</string>
     <string name="internet_firewall_note_subdomain">域名必须包含完整子域，不带协议。如 “subdomain.example.org”。</string>
+    <string name="gymlink_title">GymLink</string>
+    <string name="gymlink_summary">允许兼容 GymLink 的设备链接到此设备。</string>
+    <string name="antplus_title">ANT+</string>
+    <string name="antplus_summary">附近的兼容的 ANT+ 设备可以读取你的心率。</string>
+    <string name="broadcast_heart_rate_title">广播心率</string>
+    <string name="broadcast_heart_rate_summary">任何附近的设备或应用均可读取你的心率。</string>
+    <string name="dual_connection_title">双连接</string>
+    <string name="dual_connection_summary">允许两个应用或设备同时连接。</string>
 </resources>
