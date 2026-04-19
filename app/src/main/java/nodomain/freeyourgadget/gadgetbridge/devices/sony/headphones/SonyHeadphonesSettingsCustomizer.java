@@ -40,11 +40,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Parcel;
+import android.ranging.oob.DeviceHandle;
 
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.MultiSelectListPreference;
 import androidx.preference.Preference;
+import androidx.preference.SwitchPreferenceCompat;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
@@ -55,6 +57,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AmbientSoundControl;
@@ -114,6 +117,35 @@ public class SonyHeadphonesSettingsCustomizer implements DeviceSpecificSettingsC
                     default:
                         ancOptimizerProgressDialog.setMessage(optimizerStatus.i18n(preference.getContext()));
                 }
+            }
+        }
+
+        final Preference prefSonyWarningSbcCodec = handler.findPreference("pref_sony_warning_sbc_codec_1");
+        if (prefSonyWarningSbcCodec != null) {
+            final SwitchPreferenceCompat prefAudioHd = handler.findPreference(DeviceSettingsPreferenceConst.PREF_SONY_AUDIO_HD);
+            if (prefAudioHd != null) {
+                prefAudioHd.setOnPreferenceChangeListener((ignored, newValue) -> {
+                    handleScbWarning((boolean) newValue, handler);
+                    return true;
+                });
+                handleScbWarning(prefAudioHd.isChecked(), handler);
+            }
+        }
+    }
+
+    private void handleScbWarning(final boolean hdEnabled, final DeviceSpecificSettingsHandler handler) {
+        final Preference prefSonyWarningSbcCodec = handler.findPreference("pref_sony_warning_sbc_codec_1");
+        if (prefSonyWarningSbcCodec != null) {
+            prefSonyWarningSbcCodec.setVisible(hdEnabled);
+        }
+        final Preference[] prefsToToggle = new Preference[]{
+                handler.findPreference(PREF_SONY_EQUALIZER),
+                handler.findPreference(PREF_SONY_SOUND_POSITION),
+                handler.findPreference(PREF_SONY_SURROUND_MODE)
+        };
+        for (Preference preference : prefsToToggle) {
+            if (preference != null) {
+                preference.setEnabled(!hdEnabled);
             }
         }
     }
