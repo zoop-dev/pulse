@@ -4402,4 +4402,10 @@
     <string name="broadcast_heart_rate_summary">任何附近的设备或应用均可读取你的心率。</string>
     <string name="dual_connection_title">双连接</string>
     <string name="dual_connection_summary">允许两个应用或设备同时连接。</string>
+    <string name="sony_audio_hd">Audio HD</string>
+    <string name="sony_audio_hd_summary">启用 LDAC 音频编解码器</string>
+    <string name="sony_button_function_nc_ambient">NC/Ambient 按钮功能</string>
+    <string name="sony_button_function_nc_ambient_switch_ambient_sound">切换环境声</string>
+    <string name="sony_button_function_nc_ambient_google_assistant">Google 助手</string>
+    <string name="sony_button_function_nc_ambient_alexa_assistant">Alexa 助手</string>
 </resources>
