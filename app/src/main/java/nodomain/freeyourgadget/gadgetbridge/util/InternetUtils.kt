@@ -172,7 +172,8 @@ class InternetUtils {
             // Convert body string to RequestBody if allowed
             val requestBody: RequestBody? =
                 if (body != null && method.uppercase() !in listOf("GET", "HEAD")) {
-                    body.toRequestBody("application/octet-stream".toMediaType())
+                    val contentType = getHeader(requestHeaders, "content-type") ?: "application/octet-stream"
+                    body.toRequestBody(contentType.toMediaType())
                 } else null
 
             // Configure HTTP method
@@ -224,6 +225,16 @@ class InternetUtils {
                 result[name] = this.values(name).joinToString(",")
             }
             return result
+        }
+
+        private fun getHeader(headers: Map<String, String>, key: String): String? {
+            for (e in headers) {
+                if (e.key.equals(key, ignoreCase = true)) {
+                    return e.value
+                }
+            }
+
+            return null
         }
 
         /**
