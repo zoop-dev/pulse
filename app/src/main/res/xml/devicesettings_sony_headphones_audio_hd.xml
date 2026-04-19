@@ -5,5 +5,6 @@
         android:icon="@drawable/ic_extension"
         android:key="pref_sony_audio_hd"
         android:layout="@layout/preference_checkbox"
+        android:summary="@string/sony_audio_hd_summary"
         android:title="@string/sony_audio_hd" />
 </androidx.preference.PreferenceScreen>

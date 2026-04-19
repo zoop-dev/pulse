@@ -145,8 +145,8 @@ public abstract class SonyHeadphonesCoordinator extends AbstractBLClassicDeviceC
         }
 
         addSettingsUnderHeader(deviceSpecificSettings, device, R.xml.devicesettings_header_other, new LinkedHashMap<>() {{
-            put(SonyHeadphonesCapabilities.AudioSettingsOnlyOnSbcCodec, R.xml.devicesettings_sony_warning_wh1000xm3);
             put(SonyHeadphonesCapabilities.AudioLDAC, R.xml.devicesettings_sony_headphones_audio_hd);
+            put(SonyHeadphonesCapabilities.AudioSettingsOnlyOnSbcCodec, R.xml.devicesettings_sony_warning_wh1000xm3);
             put(SonyHeadphonesCapabilities.EqualizerSimple, R.xml.devicesettings_sony_headphones_equalizer);
             put(SonyHeadphonesCapabilities.EqualizerWithCustomBands, R.xml.devicesettings_sony_headphones_equalizer_with_custom_bands);
             put(SonyHeadphonesCapabilities.SoundPosition, R.xml.devicesettings_sony_headphones_sound_position);
