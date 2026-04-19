@@ -88,7 +88,11 @@ public abstract class AbstractSonyProtocolImpl {
 
     public abstract Request getAudioUpsampling();
 
+    public abstract Request getAudioLDAC();
+
     public abstract Request setAudioLDAC(final AudioLDAC config);
+
+    public abstract Request getButtonFunctionNcAmbient();
 
     public abstract Request setButtonFunctionNcAmbient(final ButtonFunctionNcAmbient config);
 

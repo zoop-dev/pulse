@@ -262,6 +262,17 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
     }
 
     @Override
+    public Request getAudioLDAC() {
+        return new Request(
+                PayloadTypeV1.AUDIO_UPSAMPLING_GET.getMessageType(),
+                new byte[]{
+                        PayloadTypeV1.AUDIO_UPSAMPLING_GET.getCode(),
+                        (byte) 0x01
+                }
+        );
+    }
+
+    @Override
     public Request setAudioLDAC(final AudioLDAC config) {
         return new Request(
                 PayloadTypeV1.AUDIO_UPSAMPLING_SET.getMessageType(),
@@ -271,6 +282,17 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
                         (byte) 0x00,
                         (byte) (config.isEnabled() ? 0x00 : 0x01)
                 }
+        );
+    }
+
+    @Override
+    public Request getButtonFunctionNcAmbient() {
+        return new Request(
+            PayloadTypeV1.TOUCH_SENSOR_GET.getMessageType(),
+            new byte[]{
+                PayloadTypeV1.TOUCH_SENSOR_GET.getCode(),
+                (byte) 0xd1
+            }
         );
     }
 
@@ -675,7 +697,7 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
         capabilityRequests.add(getFirmwareVersion());
         capabilityRequests.add(getAudioCodec());
 
-        final Map<SonyHeadphonesCapabilities, Request> capabilityRequestMap = new LinkedHashMap<SonyHeadphonesCapabilities, Request>() {{
+        final Map<SonyHeadphonesCapabilities, Request> capabilityRequestMap = new LinkedHashMap<>() {{
             put(SonyHeadphonesCapabilities.BatterySingle, getBattery(BatteryType.SINGLE));
             put(SonyHeadphonesCapabilities.BatteryDual, getBattery(BatteryType.DUAL));
             put(SonyHeadphonesCapabilities.BatteryDual2, getBattery(BatteryType.DUAL2));
@@ -684,6 +706,8 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
             put(SonyHeadphonesCapabilities.AmbientSoundControl2, getAmbientSoundControl());
             put(SonyHeadphonesCapabilities.AncOptimizer, getNoiseCancellingOptimizerState());
             put(SonyHeadphonesCapabilities.AudioUpsampling, getAudioUpsampling());
+            put(SonyHeadphonesCapabilities.AudioLDAC, getAudioLDAC());
+            put(SonyHeadphonesCapabilities.ButtonFunctionNcAmbient, getButtonFunctionNcAmbient());
             put(SonyHeadphonesCapabilities.ButtonModesLeftRight, getButtonModes());
             put(SonyHeadphonesCapabilities.VoiceNotifications, getVoiceNotifications());
             put(SonyHeadphonesCapabilities.AutomaticPowerOffWhenTakenOff, getAutomaticPowerOff());
@@ -856,14 +880,27 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
 
         final Boolean enabled = booleanFromByte(payload[3]);
         if (enabled == null) {
-            LOG.warn("Unknown audio upsampling code {}", String.format("%02x", payload[3]));
+            LOG.warn("Unknown audio upsampling value {}", String.format("%02x", payload[3]));
             return Collections.emptyList();
         }
 
-        LOG.debug("Audio Upsampling: {}", enabled);
+        final GBDeviceEventUpdatePreferences event = new GBDeviceEventUpdatePreferences();
 
-        final GBDeviceEventUpdatePreferences event = new GBDeviceEventUpdatePreferences()
-                .withPreferences(new AudioUpsampling(enabled).toPreferences());
+        switch (payload[1]) {
+            case 0x01:
+                // LDAC
+                LOG.debug("Audio Upsampling LDAC: {}", !enabled);
+                event.withPreferences(new AudioLDAC(!enabled).toPreferences());
+                break;
+            case 0x02:
+                // DSEE / Audio upsampling
+                LOG.debug("Audio Upsampling DSEE: {}", enabled);
+                event.withPreferences(new AudioUpsampling(enabled).toPreferences());
+                break;
+            default:
+                LOG.warn("Unknown audio upsampling code {}", String.format("%02x", payload[1]));
+                return Collections.emptyList();
+        }
 
         return Collections.singletonList(event);
     }
@@ -1215,24 +1252,34 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
             return Collections.emptyList();
         }
 
-        boolean enabled;
+        final GBDeviceEventUpdatePreferences event = new GBDeviceEventUpdatePreferences();
 
-        switch (payload[3]) {
-            case 0x00:
-                enabled = false;
+        switch (payload[1]) {
+            case (byte) 0xd1:
+                final ButtonFunctionNcAmbient.Mode mode = ButtonFunctionNcAmbient.Mode.fromCode(payload[3]);
+                event.withPreferences(new ButtonFunctionNcAmbient(mode).toPreferences());
+                LOG.debug("Nc Ambient button mode: {}", mode);
                 break;
-            case 0x01:
-                enabled = true;
+            case (byte) 0xd2:
+                boolean enabled;
+                switch (payload[3]) {
+                    case 0x00:
+                        enabled = false;
+                        break;
+                    case 0x01:
+                        enabled = true;
+                        break;
+                    default:
+                        LOG.warn("Unknown touch sensor value {}", String.format("%02x", payload[3]));
+                        return Collections.emptyList();
+                }
+                LOG.debug("Touch Sensor: {}", enabled);
+                event.withPreferences(new TouchSensor(enabled).toPreferences());
                 break;
             default:
-                LOG.warn("Unknown touch sensor code {}", String.format("%02x", payload[3]));
+                LOG.warn("Unknown touch sensor code {}", String.format("%02x", payload[1]));
                 return Collections.emptyList();
         }
-
-        LOG.debug("Touch Sensor: {}", enabled);
-
-        final GBDeviceEventUpdatePreferences event = new GBDeviceEventUpdatePreferences()
-                .withPreferences(new TouchSensor(enabled).toPreferences());
 
         return Collections.singletonList(event);
     }

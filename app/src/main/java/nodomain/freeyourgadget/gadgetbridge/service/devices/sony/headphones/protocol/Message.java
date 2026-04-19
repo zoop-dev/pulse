@@ -86,7 +86,7 @@ public class Message {
 
     public String toString() {
         if (payload.length > 0) {
-            return String.format(Locale.getDefault(), "Message{Cmd=%s, Seq=%d, PayloadType=%d, Payload=%s}", type, sequenceNumber, payload[0], GB.hexdump(payload));
+            return String.format(Locale.getDefault(), "Message{Cmd=%s, Seq=%d, PayloadType=%s, Payload=%s}", type, sequenceNumber, String.format("0x%02x", payload[0]), GB.hexdump(payload));
         } else {
             return String.format(Locale.getDefault(), "Message{Cmd=%s, Seq=%d}", type, sequenceNumber);
         }

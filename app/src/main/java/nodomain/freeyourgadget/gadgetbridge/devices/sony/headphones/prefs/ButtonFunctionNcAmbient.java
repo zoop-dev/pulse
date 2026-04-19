@@ -45,6 +45,16 @@ public class ButtonFunctionNcAmbient {
             return code;
         }
 
+        public static ButtonFunctionNcAmbient.Mode fromCode(final byte b) {
+            for (ButtonFunctionNcAmbient.Mode value : ButtonFunctionNcAmbient.Mode.values()) {
+                if (value.getCode() == b) {
+                    return value;
+                }
+            }
+
+            return null;
+        }
+
         public static Mode fromPrefValue(final String prefValue) {
             for (final Mode mode : values()) {
                 if (mode.prefValue.equals(prefValue)) {

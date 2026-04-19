@@ -226,14 +226,26 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
     }
 
     @Override
+    public Request getAudioLDAC() {
+        LOG.warn("Audio LDAC get not implemented for V2");
+        return null;
+    }
+
+    @Override
     public Request setAudioLDAC(final AudioLDAC config) {
-        LOG.warn("Audio LDAC not implemented for V2");
+        LOG.warn("Audio LDAC set not implemented for V2");
+        return null;
+    }
+
+    @Override
+    public Request getButtonFunctionNcAmbient() {
+        LOG.warn("Button function NC ambient get not implemented for V2");
         return null;
     }
 
     @Override
     public Request setButtonFunctionNcAmbient(final ButtonFunctionNcAmbient config) {
-        LOG.warn("Button function NC ambient not implemented for V2");
+        LOG.warn("Button function NC ambient set not implemented for V2");
         return null;
     }
 
