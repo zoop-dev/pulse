@@ -4240,4 +4240,12 @@
     <string name="loyalty_cards_app_permissions_summary">A Gadgetbridge alkalmazásnak olvasási jogosultságra van szüksége a(z) %1s kártyákhoz a szinkronizáláshoz. Érintse meg ezt a gombot a megadásukhoz.</string>
     <string name="weight_scale_gram_format">%1$d g</string>
     <string name="internet_firewall_note_subdomain">A domaineknek tartalmazniuk kell a teljes aldomaint, protokoll nélkül. Például: „subdomain.example.org”.</string>
+    <string name="gymlink_title">GymLink</string>
+    <string name="gymlink_summary">Lehetővé teszi a GymLinkkel kompatibilis eszközök társítását a készülékhez.</string>
+    <string name="antplus_title">ANT+</string>
+    <string name="antplus_summary">A közelben lévő kompatibilis ANT+ eszközök érzékelhetik az Ön pulzusát.</string>
+    <string name="broadcast_heart_rate_title">Pulzus közvetítése</string>
+    <string name="broadcast_heart_rate_summary">Bármely közeli eszköz vagy alkalmazás érzékelheti az Ön pulzusát.</string>
+    <string name="dual_connection_title">Kettős kapcsolat</string>
+    <string name="dual_connection_summary">Lehetővé teszi két alkalmazás vagy eszköz egyidejű társítását.</string>
 </resources>
