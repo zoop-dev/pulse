@@ -3384,7 +3384,12 @@
     <string name="sony_equalizer_band_6300">6.3k</string>
     <string name="sony_equalizer_band_16000">16k</string>
     <string name="sony_equalizer_clear_bass">Clear Bass</string>
+    <string name="sony_audio_hd">Audio HD</string>
     <string name="sony_audio_upsampling">Audio Upsampling</string>
+    <string name="sony_button_function_nc_ambient">NC/Ambient Button Function</string>
+    <string name="sony_button_function_nc_ambient_switch_ambient_sound">Switch ambient sound</string>
+    <string name="sony_button_function_nc_ambient_google_assistant">Google Assistant</string>
+    <string name="sony_button_function_nc_ambient_alexa_assistant">Alexa Assistant</string>
     <string name="sony_touch_sensor">Touch sensor control</string>
     <string name="pref_wide_area_tap_summary">Recognize taps between cheeks and ears</string>
     <string name="pref_wide_area_tap_title">Wide area tap</string>

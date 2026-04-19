@@ -42,8 +42,10 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.SonyHeadphon
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AdaptiveVolumeControl;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AmbientSoundControl;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AmbientSoundControlButtonMode;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AudioLDAC;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AudioUpsampling;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AutomaticPowerOff;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ButtonFunctionNcAmbient;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ButtonModes;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.EqualizerCustomBands;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.EqualizerPreset;
@@ -256,6 +258,32 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
                         PayloadTypeV1.AUDIO_UPSAMPLING_GET.getCode(),
                         (byte) 0x02
                 }
+        );
+    }
+
+    @Override
+    public Request setAudioLDAC(final AudioLDAC config) {
+        return new Request(
+                PayloadTypeV1.AUDIO_UPSAMPLING_SET.getMessageType(),
+                new byte[]{
+                        PayloadTypeV1.AUDIO_UPSAMPLING_SET.getCode(),
+                        (byte) 0x01,
+                        (byte) 0x00,
+                        (byte) (config.isEnabled() ? 0x00 : 0x01)
+                }
+        );
+    }
+
+    @Override
+    public Request setButtonFunctionNcAmbient(final ButtonFunctionNcAmbient config) {
+        return new Request(
+            PayloadTypeV1.TOUCH_SENSOR_SET.getMessageType(),
+            new byte[]{
+                PayloadTypeV1.TOUCH_SENSOR_SET.getCode(),
+                (byte) 0xd1,
+                (byte) 0x02,
+                config.getMode().getCode()
+            }
         );
     }
 
@@ -543,6 +571,19 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
                         (byte) 0x00,
                         (byte) 0x01
                 }
+        );
+    }
+
+    @Override
+    public Request reboot() {
+        return new Request(
+            MessageType.COMMAND_1,
+            new byte[]{
+                (byte) 0x98,
+                (byte) 0x01,
+                (byte) 0x02,
+                (byte) 0x01
+            }
         );
     }
 

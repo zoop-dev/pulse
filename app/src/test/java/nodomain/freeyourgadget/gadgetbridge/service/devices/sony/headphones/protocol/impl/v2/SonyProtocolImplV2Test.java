@@ -40,8 +40,10 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.SonyHeadphon
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.SonyHeadphonesCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.coordinators.SonyWF1000XM4Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AmbientSoundControlButtonMode;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AudioLDAC;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AudioUpsampling;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AutomaticPowerOff;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ButtonFunctionNcAmbient;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.EqualizerCustomBands;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.EqualizerPreset;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.PauseWhenTakenOff;
@@ -172,6 +174,22 @@ public class SonyProtocolImplV2Test {
 
         final Request requestDisabled = protocol.setAudioUpsampling(new AudioUpsampling(false));
         assertRequest(requestDisabled, "3e:0c:01:00:00:00:03:e8:01:00:f9:3c");
+    }
+
+    @Test
+    public void setAudioLDAC() {
+        // TODO
+    }
+
+    @Test
+    public void setButtonFunctionNcAmbient() {
+        // TODO
+    }
+
+    @Test
+    public void reboot() {
+        final Request request = protocol.reboot();
+        assertRequest(request, 0x0c, "98:00:16:01");
     }
 
     @Test

@@ -47,6 +47,8 @@ public class SonyWH1000XM3Coordinator extends SonyHeadphonesCoordinator {
                 SonyHeadphonesCapabilities.WindNoiseReduction,
                 SonyHeadphonesCapabilities.AncOptimizer,
                 SonyHeadphonesCapabilities.AudioSettingsOnlyOnSbcCodec,
+                SonyHeadphonesCapabilities.AudioLDAC,
+                SonyHeadphonesCapabilities.ButtonFunctionNcAmbient,
                 SonyHeadphonesCapabilities.EqualizerWithCustomBands,
                 SonyHeadphonesCapabilities.SoundPosition,
                 SonyHeadphonesCapabilities.SurroundMode,

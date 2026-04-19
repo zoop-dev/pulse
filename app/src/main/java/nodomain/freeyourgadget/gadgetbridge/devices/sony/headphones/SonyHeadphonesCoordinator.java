@@ -146,6 +146,7 @@ public abstract class SonyHeadphonesCoordinator extends AbstractBLClassicDeviceC
 
         addSettingsUnderHeader(deviceSpecificSettings, device, R.xml.devicesettings_header_other, new LinkedHashMap<>() {{
             put(SonyHeadphonesCapabilities.AudioSettingsOnlyOnSbcCodec, R.xml.devicesettings_sony_warning_wh1000xm3);
+            put(SonyHeadphonesCapabilities.AudioLDAC, R.xml.devicesettings_sony_headphones_audio_hd);
             put(SonyHeadphonesCapabilities.EqualizerSimple, R.xml.devicesettings_sony_headphones_equalizer);
             put(SonyHeadphonesCapabilities.EqualizerWithCustomBands, R.xml.devicesettings_sony_headphones_equalizer_with_custom_bands);
             put(SonyHeadphonesCapabilities.SoundPosition, R.xml.devicesettings_sony_headphones_sound_position);
@@ -162,6 +163,7 @@ public abstract class SonyHeadphonesCoordinator extends AbstractBLClassicDeviceC
             put(SonyHeadphonesCapabilities.ButtonModesLeftRight, R.xml.devicesettings_sony_headphones_button_modes_left_right);
             put(SonyHeadphonesCapabilities.AmbientSoundControlButtonMode, R.xml.devicesettings_sony_headphones_ambient_sound_control_button_modes);
             put(SonyHeadphonesCapabilities.QuickAccess, R.xml.devicesettings_sony_headphones_quick_access);
+            put(SonyHeadphonesCapabilities.ButtonFunctionNcAmbient, R.xml.devicesettings_sony_headphones_button_function_nc_ambient);
             put(SonyHeadphonesCapabilities.TouchSensorSingle, R.xml.devicesettings_sony_headphones_touch_sensor_single);
             put(SonyHeadphonesCapabilities.PauseWhenTakenOff, R.xml.devicesettings_sony_headphones_pause_when_taken_off);
             put(SonyHeadphonesCapabilities.AutomaticPowerOffWhenTakenOff, R.xml.devicesettings_automatic_power_off_when_taken_off);

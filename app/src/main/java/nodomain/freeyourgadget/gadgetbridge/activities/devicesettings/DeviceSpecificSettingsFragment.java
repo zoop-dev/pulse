@@ -840,6 +840,8 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_SONY_EQUALIZER_BAND_6300);
         addPreferenceHandlerFor(PREF_SONY_EQUALIZER_BAND_16000);
         addPreferenceHandlerFor(PREF_SONY_EQUALIZER_BASS);
+        addPreferenceHandlerFor(PREF_SONY_AUDIO_HD);
+        addPreferenceHandlerFor(PREF_SONY_BUTTON_FUNCTION_NC_AMBIENT);
         addPreferenceHandlerFor(PREF_SONY_AUDIO_UPSAMPLING);
         addPreferenceHandlerFor(PREF_SONY_TOUCH_SENSOR);
         addPreferenceHandlerFor(PREF_SONY_PAUSE_WHEN_TAKEN_OFF);

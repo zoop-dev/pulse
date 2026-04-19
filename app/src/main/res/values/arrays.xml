@@ -4473,6 +4473,18 @@
         <item>as_off</item>
     </string-array>
 
+    <string-array name="sony_button_function_nc_ambient_names">
+        <item>@string/sony_button_function_nc_ambient_switch_ambient_sound</item>
+        <item>@string/sony_button_function_nc_ambient_google_assistant</item>
+        <item>@string/sony_button_function_nc_ambient_alexa_assistant</item>
+    </string-array>
+
+    <string-array name="sony_button_function_nc_ambient_values">
+        <item>switch_ambient_sound</item>
+        <item>google_assistant</item>
+        <item>alexa_assistant</item>
+    </string-array>
+
     <string-array name="oppo_touch_tap_names">
         <!-- superset of values, unsupported are hidden by the coordinator -->
         <item>@string/sony_button_mode_off</item>

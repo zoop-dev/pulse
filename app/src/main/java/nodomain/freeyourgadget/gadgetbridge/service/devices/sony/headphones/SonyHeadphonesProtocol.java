@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -35,8 +36,10 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePref
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AdaptiveVolumeControl;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AmbientSoundControl;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AmbientSoundControlButtonMode;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AudioLDAC;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AudioUpsampling;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AutomaticPowerOff;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ButtonFunctionNcAmbient;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ButtonModes;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.EqualizerCustomBands;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.EqualizerPreset;
@@ -228,6 +231,16 @@ public class SonyHeadphonesProtocol extends GBDeviceProtocol {
             case DeviceSettingsPreferenceConst.PREF_SONY_EQUALIZER_BASS:
                 configRequest = protocolImpl.setEqualizerCustomBands(EqualizerCustomBands.fromPreferences(prefs));
                 break;
+            case DeviceSettingsPreferenceConst.PREF_SONY_AUDIO_HD:
+                configRequest = protocolImpl.setAudioLDAC(AudioLDAC.fromPreferences(prefs));
+                break;
+            case DeviceSettingsPreferenceConst.PREF_SONY_BUTTON_FUNCTION_NC_AMBIENT:
+                configRequest = protocolImpl.setButtonFunctionNcAmbient(ButtonFunctionNcAmbient.fromPreferences(prefs));
+                    final Request rebootRequest = protocolImpl.reboot();
+                if (rebootRequest != null) {
+                    enqueueRequests(Collections.singletonList(rebootRequest));
+                }
+                break;
             case DeviceSettingsPreferenceConst.PREF_SONY_AUDIO_UPSAMPLING:
                 configRequest = protocolImpl.setAudioUpsampling(AudioUpsampling.fromPreferences(prefs));
                 break;
@@ -300,6 +313,28 @@ public class SonyHeadphonesProtocol extends GBDeviceProtocol {
         }
 
         return super.encodePowerOff();
+    }
+
+    @Override
+    public byte[] encodeReset(final int flags) {
+        if ((flags & RESET_FLAGS_REBOOT) == 0) {
+            return super.encodeReset(flags);
+        }
+
+        if (protocolImpl == null) {
+            LOG.error("No protocol implementation, ignoring reboot request");
+            return super.encodeReset(flags);
+        }
+
+        final Request rebootRequest = protocolImpl.reboot();
+        if (rebootRequest == null) {
+            LOG.warn("Failed to encode reboot request");
+            return super.encodeReset(flags);
+        }
+
+        pendingAcks++;
+
+        return rebootRequest.encode(sequenceNumber);
     }
 
     public byte[] encodeAck(byte sequenceNumber) {

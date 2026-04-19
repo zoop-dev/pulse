@@ -33,8 +33,10 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.SonyHeadphon
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AdaptiveVolumeControl;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AmbientSoundControl;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AmbientSoundControlButtonMode;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AudioLDAC;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AudioUpsampling;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AutomaticPowerOff;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ButtonFunctionNcAmbient;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ButtonModes;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.EqualizerCustomBands;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.EqualizerPreset;
@@ -221,6 +223,18 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
                         (byte) 0x01
                 }
         );
+    }
+
+    @Override
+    public Request setAudioLDAC(final AudioLDAC config) {
+        LOG.warn("Audio LDAC not implemented for V2");
+        return null;
+    }
+
+    @Override
+    public Request setButtonFunctionNcAmbient(final ButtonFunctionNcAmbient config) {
+        LOG.warn("Button function NC ambient not implemented for V2");
+        return null;
     }
 
     @Override
@@ -501,6 +515,19 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
                         (byte) 0x03,
                         (byte) 0x01
                 }
+        );
+    }
+
+    @Override
+    public Request reboot() {
+        return new Request(
+            MessageType.COMMAND_1,
+            new byte[]{
+                (byte) 0x98,
+                (byte) 0x00,
+                (byte) 0x16,
+                (byte) 0x01
+            }
         );
     }
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ListPreference
+        android:defaultValue="switch_ambient_sound"
+        android:entries="@array/sony_button_function_nc_ambient_names"
+        android:entryValues="@array/sony_button_function_nc_ambient_values"
+        android:icon="@drawable/ic_touch"
+        android:key="pref_sony_button_function_nc_ambient"
+        app:useSimpleSummaryProvider="true"
+        android:title="@string/sony_button_function_nc_ambient" />
+</androidx.preference.PreferenceScreen>

@@ -552,6 +552,8 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_SONY_SURROUND_MODE = "pref_sony_surround_mode";
     public static final String PREF_SONY_EQUALIZER = "pref_sony_equalizer";
     public static final String PREF_SONY_EQUALIZER_MODE = "pref_sony_equalizer_mode";
+    public static final String PREF_SONY_AUDIO_HD = "pref_sony_audio_hd";
+    public static final String PREF_SONY_BUTTON_FUNCTION_NC_AMBIENT = "pref_sony_button_function_nc_ambient";
     public static final String PREF_SONY_AUDIO_UPSAMPLING = "pref_sony_audio_upsampling";
     public static final String PREF_SONY_EQUALIZER_BAND_400 = "pref_sony_equalizer_band_400";
     public static final String PREF_SONY_EQUALIZER_BAND_1000 = "pref_sony_equalizer_band_1000";
