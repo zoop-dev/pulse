@@ -168,9 +168,12 @@ class WeatherSpec() : Parcelable {
     fun isTimeNight(unixTimeMilliSeconds: Long): Boolean {
         if (isPolarNight()) return true
         if (isPolarDay()) return false
-        val millisPastMidnight = unixTimeMilliSeconds % 86400000
-        if ( millisPastMidnight < (this.sunRise % 86400 * 1000L ) ) return true
-        return ( millisPastMidnight > (this.sunSet % 86400 * 1000L ) )
+        // Compute where our time falls relative to sunrise. Negative numbers mean before sunrise.
+        val millisAfterSunrise = unixTimeMilliSeconds - (this.sunRise * 1000L)
+        // Compute where sunset falls relative to sunrise. We assume it's always after, thus giving a positive number.
+        val lengthOfSolarDayInMillis = (this.sunSet - this.sunRise) * 1000L
+        // Map the input time into positive time in a 24-hour solar cycle, and compare to sunset.
+        return ( millisAfterSunrise.mod(86400000) > lengthOfSolarDayInMillis )
     }
 
     fun getLocationObject(): Location? {
