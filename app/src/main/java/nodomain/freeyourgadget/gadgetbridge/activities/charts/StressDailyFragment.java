@@ -80,7 +80,6 @@ public class StressDailyFragment extends StressFragment<StressDailyFragment.Stre
     private String STRESS_AVERAGE_LABEL;
 
     private final Prefs prefs = GBApplication.getPrefs();
-    private final boolean CHARTS_SLEEP_RANGE_24H = prefs.getBoolean("chart_sleep_range_24h", false);
     private final boolean SHOW_CHARTS_AVERAGE = prefs.getBoolean("charts_show_average", true);
 
     private boolean showStressLevelInPercents = false;
@@ -259,7 +258,7 @@ public class StressDailyFragment extends StressFragment<StressDailyFragment.Stre
     protected void setupLegend(final Chart<?> chart) {
         final List<LegendEntry> legendEntries = createLegendEntries(chart);
 
-        if (!CHARTS_SLEEP_RANGE_24H && SHOW_CHARTS_AVERAGE) {
+        if (SHOW_CHARTS_AVERAGE) {
             final LegendEntry averageEntry = new LegendEntry();
             averageEntry.label = STRESS_AVERAGE_LABEL;
             averageEntry.formColor = Color.GRAY;

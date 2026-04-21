@@ -77,7 +77,7 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
     protected Locale mLocale;
     protected int mTargetValue = 0;
 
-    private final int mOffsetHours = getOffsetHours();
+    private final int mCutOffHour = GBApplication.getPrefs().getString("chart_sleep_range_mode", "18:00").equals("18:00") ? 18 : 12;
 
     protected boolean SHOW_BALANCE;
 
@@ -475,7 +475,7 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
     }
 
     int getOffsetHours() {
-        return -12;
+        return GBApplication.getPrefs().getString("chart_sleep_range_mode", "18:00").equals("18:00") ? -18 : -12;
     }
 
 
@@ -627,7 +627,7 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
         ActivityAmounts amounts = null;
 
         Activity activity = getActivity();
-        int key = (int) (day.getTimeInMillis() / 1000) + (mOffsetHours * 3600);
+        int key = (int) (day.getTimeInMillis() / 1000) + (-mCutOffHour * 3600);
         if (activity != null) {
             activityAmountCache = ((ActivityChartsActivity) activity).mActivityAmountCache;
             amounts = activityAmountCache.lookup(key);
@@ -635,7 +635,7 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
 
         if (amounts == null) {
             ActivityAnalysis analysis = new ActivityAnalysis();
-            amounts = analysis.calculateActivityAmounts(getSamplesOfDay(db, day, mOffsetHours, device));
+            amounts = analysis.calculateActivityAmounts(getSamplesOfDay(db, day, mCutOffHour, device));
             if (activityAmountCache != null) {
                 activityAmountCache.add(key, amounts);
             }
@@ -644,20 +644,22 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
         return amounts;
     }
 
-    private List<? extends ActivitySample> getSamplesOfDay(DBHandler db, Calendar day, int offsetHours, GBDevice device) {
-        int startTs;
-        int endTs;
-
+    private List<? extends ActivitySample> getSamplesOfDay(DBHandler db, Calendar day, int cutoffHour, GBDevice device) {
         day = (Calendar) day.clone(); // do not modify the caller's argument
-        day.set(Calendar.HOUR_OF_DAY, 0);
+
+        day.set(Calendar.HOUR_OF_DAY, cutoffHour);
         day.set(Calendar.MINUTE, 0);
         day.set(Calendar.SECOND, 0);
-        day.add(Calendar.HOUR, offsetHours);
+        final int tsEnd = toTimestamp(day.getTime());
 
-        startTs = (int) (day.getTimeInMillis() / 1000);
-        endTs = startTs + 24 * 60 * 60 - 1;
+        int tsStart = tsEnd - 24 * 60 * 60;
+        day.setTimeInMillis(tsStart * 1000L);
+        day.set(Calendar.HOUR_OF_DAY, cutoffHour);
+        day.set(Calendar.MINUTE, 0);
+        day.set(Calendar.SECOND, 0);
+        tsStart = toTimestamp(day.getTime());
 
-        return getSamples(db, device, startTs, endTs);
+        return getSamples(db, device, tsStart, tsEnd);
     }
 
     private int getRangeDays() {

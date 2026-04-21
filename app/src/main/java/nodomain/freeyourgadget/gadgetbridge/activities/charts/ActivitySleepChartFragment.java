@@ -51,17 +51,12 @@ public class ActivitySleepChartFragment extends AbstractActivityChartFragment<De
 
     private LineChart mChart;
 
-    private int mSmartAlarmFrom = -1;
-    private int mSmartAlarmTo = -1;
-    private int mTimestampFrom = -1;
-    private int mSmartAlarmGoneOff = -1;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_charts, container, false);
 
-        mChart = (LineChart) rootView.findViewById(R.id.activitysleepchart);
+        mChart = rootView.findViewById(R.id.activitysleepchart);
 
         setupChart();
 
@@ -114,12 +109,7 @@ public class ActivitySleepChartFragment extends AbstractActivityChartFragment<De
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-        if (action.equals(ChartsHost.REFRESH)) {
-            // TODO: use LimitLines to visualize smart alarms?
-            mSmartAlarmFrom = intent.getIntExtra("smartalarm_from", -1);
-            mSmartAlarmTo = intent.getIntExtra("smartalarm_to", -1);
-            mTimestampFrom = intent.getIntExtra("recording_base_timestamp", -1);
-            mSmartAlarmGoneOff = intent.getIntExtra("alarm_gone_off", -1);
+        if (ChartsHost.REFRESH.equals(action)) {
             refresh();
         } else {
             super.onReceive(context, intent);
@@ -140,7 +130,7 @@ public class ActivitySleepChartFragment extends AbstractActivityChartFragment<De
         mChart.getLegend().setTextColor(LEGEND_TEXT_COLOR);
         mChart.setData(null); // workaround for https://github.com/PhilJay/MPAndroidChart/issues/2317
         mChart.getXAxis().setValueFormatter(dcd.getXValueFormatter());
-        mChart.setData((LineData) dcd.getData());
+        mChart.setData(dcd.getData());
     }
 
     @Override

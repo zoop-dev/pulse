@@ -421,7 +421,8 @@ public abstract class AbstractActivityChartFragment<D extends ChartsData> extend
     }
 
     protected List<? extends ActivitySample> getSamplesofSleep(DBHandler db, GBDevice device) {
-        int SLEEP_HOUR_LIMIT = 12;
+        final String chartSleepRangeMode = GBApplication.getPrefs().getString("chart_sleep_range_mode", "18:00");
+        final int SLEEP_HOUR_LIMIT = "18:00".equals(chartSleepRangeMode) ? 18 : 12;
 
         int tsStart = getTSStart();
         Calendar day = GregorianCalendar.getInstance();
