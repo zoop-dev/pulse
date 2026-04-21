@@ -91,12 +91,8 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
 
     private FragmentSleepchartBinding binding;
 
-    private int mSmartAlarmFrom = -1;
-    private int mSmartAlarmTo = -1;
-    private int mTimestampFrom = -1;
-    private int mSmartAlarmGoneOff = -1;
     Prefs prefs = GBApplication.getPrefs();
-    private final boolean CHARTS_SLEEP_RANGE_24H = prefs.getBoolean("chart_sleep_range_24h", false);
+    private final boolean CHARTS_SLEEP_RANGE_24H = prefs.getString("chart_sleep_range_mode", "18:00").equals("24h");
     private final boolean SHOW_CHARTS_AVERAGE = prefs.getBoolean("charts_show_average", true);
     private final int sleepLinesLimit = prefs.getInt("chart_sleep_lines_limit", 6);
 
@@ -643,11 +639,6 @@ public class SleepDailyFragment extends SleepFragment<SleepDailyFragment.MyChart
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
         if (action != null && action.equals(ChartsHost.REFRESH)) {
-            // TODO: use LimitLines to visualize smart alarms?
-            mSmartAlarmFrom = intent.getIntExtra("smartalarm_from", -1);
-            mSmartAlarmTo = intent.getIntExtra("smartalarm_to", -1);
-            mTimestampFrom = intent.getIntExtra("recording_base_timestamp", -1);
-            mSmartAlarmGoneOff = intent.getIntExtra("alarm_gone_off", -1);
             refresh();
         } else {
             super.onReceive(context, intent);

@@ -5039,6 +5039,17 @@
         <item>23</item>
     </string-array>
 
+    <string-array name="sleep_range_entries">
+        <item>@string/pref_chart_sleep_range_rolling_24h</item>
+        <item>@string/pref_chart_sleep_range_noon</item>
+        <item>@string/pref_chart_sleep_range_18h</item>
+    </string-array>
+    <string-array name="sleep_range_values">
+        <item>24h</item>
+        <item>12:00</item>
+        <item>18:00</item>
+    </string-array>
+
     <string-array name="prefs_wena3_button_action_list">
         <item>@string/menuitem_nothing</item>
         <!-- <item>@string/menuitem_alexa</item> -->
