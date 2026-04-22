@@ -4410,4 +4410,5 @@
     <string name="broadcast_heart_rate_title">Transmituj tętno</string>
     <string name="dual_connection_title">Podwójne połączenie</string>
     <string name="dual_connection_summary">Umożliwia jednoczesne połączenie dwóch aplikacji lub urządzeń.</string>
+    <string name="device">Urządzenie</string>
 </resources>
