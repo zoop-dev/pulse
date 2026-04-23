@@ -2844,6 +2844,7 @@
     <string name="unit_millimeter">mm</string>
     <string name="unit_watt">Watt</string>
     <string name="unit_joule">Joule</string>
+    <string name="unit_kilojoule">kJ</string>
     <string name="training_load">Training Load</string>
     <string name="standing_count">Standing count</string>
     <string name="average_left_platform_center_offset">Avg Left Platform Center Offset</string>

@@ -200,6 +200,11 @@ public class WorkoutValueFormatter {
                         unit = UNIT_MINUTES_PER_100_METERS;
                     }
                     break;
+                case ActivitySummaryEntries.UNIT_JOULE:
+                    if (value > 10000) {
+                        value = value / 1000D;
+                        unit = "unit_kilojoule";
+                    }
             }
         }
 
