@@ -455,7 +455,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         }
         if (speedAvg != null) {
             if (ActivityKind.isPaceActivity(activityKind)) {
-                summaryData.add(PACE_AVG_SECONDS_KM, Math.round((60 / (speedAvg.doubleValue() * 3.6)) * 60), UNIT_SECONDS);
+                summaryData.add(PACE_AVG_SECONDS_KM, Math.round((60 / (speedAvg.doubleValue() * 3.6)) * 60), UNIT_SECONDS_PER_KM);
             } else if (ActivityKind.isDiving(activityKind)) {
                 // Hide speed for diving activities
             } else {
@@ -469,7 +469,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         }
         if (speedMax != null) {
             if (ActivityKind.isPaceActivity(activityKind)) {
-                summaryData.add(PACE_MAX, Math.round((60 / (speedMax.doubleValue() * 3.6)) * 60), UNIT_SECONDS);
+                summaryData.add(PACE_MAX, Math.round((60 / (speedMax.doubleValue() * 3.6)) * 60), UNIT_SECONDS_PER_KM);
             } else if (ActivityKind.isDiving(activityKind)) {
                 // Hide speed for diving activities
             } else {
@@ -928,7 +928,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                 if (lap.getEnhancedAvgSpeed() != null) {
                     if (ActivityKind.isPaceActivity(activityKind)) {
                         speedValue = (double) Math.round((60 / (lap.getEnhancedAvgSpeed() * 3.6)) * 60);
-                        speedUnit = UNIT_SECONDS;
+                        speedUnit = UNIT_SECONDS_PER_KM;
                     } else {
                         speedValue = Math.round((lap.getEnhancedAvgSpeed() * 3600 / 1000) * 100.0) / 100.0;
                         speedUnit = UNIT_KMPH;
