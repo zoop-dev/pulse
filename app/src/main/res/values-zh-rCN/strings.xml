@@ -4408,4 +4408,9 @@
     <string name="sony_button_function_nc_ambient_switch_ambient_sound">切换环境声</string>
     <string name="sony_button_function_nc_ambient_google_assistant">Google 助手</string>
     <string name="sony_button_function_nc_ambient_alexa_assistant">Alexa 助手</string>
+    <string name="pref_summary_chart_sleep_range">确定将睡眠周期分派到哪一天</string>
+    <string name="pref_chart_sleep_range_rolling_24h">滚动 24 小时</string>
+    <string name="pref_chart_sleep_range_noon">正午（12:00）</string>
+    <string name="pref_chart_sleep_range_18h">傍晚（18:00）</string>
+    <string name="unit_kilojoule">千焦</string>
 </resources>
