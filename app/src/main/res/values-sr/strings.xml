@@ -1546,7 +1546,7 @@
     <string name="open_fw_installer_getting_files_text">Пошто не можемо раздељивати датотеке драма, мора да их добавите сами. То значи да треба да претражите датотеке у датотекама apk, форумима, на „Amazfitwatchfaces“ (за уређаје Мибанда/Амејзфита) и тако даље.</string>
     <string name="pref_summary_banglejs_txt_bitmap_size">Величина приказа писма битмапе</string>
     <string name="pref_title_banglejs_webview_url">Адреса пуњача програма</string>
-    <string name="pref_summary_banglejs_webview_url">Ако желите произвољни пуњач програма усмерите своју адресу https://…/android.html овде. Иначе оставите празним https://banglejs.com/apps</string>
+    <string name="pref_summary_banglejs_webview_url">Ако ли желите произвољан учитавач програма усмерите своју адресу https://…/android.html овде. Иначе оставите празним https://banglejs.com/apps</string>
     <string name="pref_rtl_max_line_length">Највећа дужина с’десна-на-лево</string>
     <string name="pref_title_weather_summary">Коришћено за погон временских прилика на ЛинеагеОС-у, друго издање Андроида које је потребно ради коришћења програма као што је „Временска обавештења“. Пронађите опширније податке на страницама ГеџетБрвна.</string>
     <string name="pref_summary_pebble_forcele">Користи опитну подршку Пебла ЛЕ за све Пебле, уместо БТ уобичајеног. Захтева упаривање за не-ЛЕ претходно, па затим на Пебл ЛЕ</string>
@@ -1592,7 +1592,7 @@
     <string name="open_fw_installer_warning_text">Ова могућност носи опасност да трајно онеспособи уређај. То јест, то се није дешавало ником од развијача кроз поступак, али, запамтите да ово радите на сопствену одговорност.</string>
     <string name="pref_summary_notification_media_ignores_application_list">Обрађује обавештења медија пре списка програма. Ако ли је ова поставка неозначена, програми медија морају бити одобрени у програмском списку да би медији радили на уређају.</string>
     <string name="pref_summary_enable_pebblekit">Омогући опитну подршку за програме Андроида коришћењем ПеблКита</string>
-    <string name="pref_explanation_authkey_new_protocol">Уколико добијете поруку „Надгради програм на најновије издање“ на наруквици, обавезно означите изнад „Нови начин пријаве“. Тапните овде за опширнија сазнања са викија.</string>
+    <string name="pref_explanation_authkey_new_protocol">Уколико добијете поруку „Надгради програм на најновије издање“ на наруквици, обавезно означите изнад „Нови начин пријаве“. Тапните овде за опширнија сазнања са страница.</string>
     <string name="pref_explanation_authkey">Неки уређаји захтевају нарочиту лозинку за упаривање ради оверавања првог покретања на уређају. Тапните овде за опширнија сазнања са странице.</string>
     <string name="pref_write_logfiles_not_available">Покретање дневника датотеке није успело, писање дневника није тренутно доступно. Поново покрените програм ради покушаја да се поново покрене дневник датотеке.</string>
     <string name="zetime_date_format_3">ММ/ДД/ГГ</string>
@@ -1631,7 +1631,7 @@
     <string name="pref_title_banglejs_phone_gps_update_interval">Међувреме освежавања података ГПС-а</string>
     <string name="search">Тражи</string>
     <string name="appmanager_downloaded_to_cache">Преузето је %s у захват</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Идите на поставке Блутута телефона и упарите нови уређај који ће се појавити (слично име тренутном сату, али са наставком, нпр. „Amazfit GTR 4 - AFC8“.</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Идите на поставке Блутута телефона и упарите нови уређај који ће се појавити (слично име тренутном сату, али са наставком, нпр. „Amazfit GTR“.</string>
     <string name="pref_display_caller_title">Приказуј податке о познанику</string>
     <string name="pref_summary_banglejs_phone_gps_enbale">Користи податке ГПС-а телефона ради преписивања података ГПС-а уређаја бангла</string>
     <string name="pref_summary_receive_calls_watch">Оствари и прими позиве непосредно на сату</string>
@@ -2037,7 +2037,7 @@
     <string name="hrv_status_unit">%1$d мс</string>
     <string name="zepp_os_watchface_vital">Животно</string>
     <string name="zepp_os_install_map_instructions">Након што уградња почне на телефону, морате је одобрити и на часовнику.</string>
-    <string name="pref_summary_banglejs_phone_gps_update_interval">Међувреме освежавања положаја ГПС-а</string>
+    <string name="pref_summary_banglejs_phone_gps_update_interval">Међувреме освежавања положаја ГПС-а, у милисекундама</string>
     <string name="pref_header_intent_api">Циљани АПИ</string>
     <string name="pref_workout_send_gps_timeout_summary">"Заустави слање ГПС-а када је отворено да  уређај не шаље податке о вежбању (милисекунде)"</string>
     <string name="map_upload_failed">Нисам успео да отпремим карту</string>
@@ -2679,4 +2679,9 @@
     <string name="aerobicTrainingEffect">Ваздушно дејство</string>
     <string name="anaerobicTrainingEffect">Безваздушно дејство</string>
     <string name="fluid_consumed">Унесена течност</string>
+    <string name="pref_header_dashboard">Управљачка табла</string>
+    <string name="map_theme_indigo">Индиго</string>
+    <string name="step_length">Дужина корака</string>
+    <string name="blood_pressure_measurement_count">Мерења</string>
+    <string name="blood_pressure_export_date">Датум</string>
 </resources>
