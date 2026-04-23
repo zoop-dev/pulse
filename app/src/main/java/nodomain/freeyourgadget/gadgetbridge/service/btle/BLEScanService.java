@@ -231,10 +231,17 @@ public class BLEScanService extends Service {
     private void startForeground() {
         Notification serviceNotification = createNotification(false, 0);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            ServiceCompat.startForeground(this, GB.NOTIFICATION_ID_SCAN, serviceNotification, ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE);
-        } else {
-            ServiceCompat.startForeground(this, GB.NOTIFICATION_ID_SCAN, serviceNotification, 0);
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                ServiceCompat.startForeground(this, GB.NOTIFICATION_ID_SCAN, serviceNotification, ServiceInfo.FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE);
+            } else {
+                ServiceCompat.startForeground(this, GB.NOTIFICATION_ID_SCAN, serviceNotification, 0);
+            }
+        } catch (final SecurityException e) {
+            // FOREGROUND_SERVICE_TYPE_CONNECTED_DEVICE will fail if the user has not granted the necessary permissions
+            // this can cause a crash on startup when restoring a zip with BLE scan service enabled
+            LOG.error("Failed to start foreground service", e);
+            updateNotification(e.getMessage());
         }
     }
 
