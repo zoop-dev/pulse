@@ -110,25 +110,14 @@ public class GBReminderListAdapter extends RecyclerView.Adapter<GBReminderListAd
             format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         }
 
-        int stringResId = 0;
-
-        switch (reminder.getRepetition()) {
-            case Reminder.ONCE:
-                stringResId = R.string.reminder_time_once;
-                break;
-            case Reminder.EVERY_DAY:
-                stringResId = R.string.reminder_time_every_day;
-                break;
-            case Reminder.EVERY_WEEK:
-                stringResId = R.string.reminder_time_every_week;
-                break;
-            case Reminder.EVERY_MONTH:
-                stringResId = R.string.reminder_time_every_month;
-                break;
-            case Reminder.EVERY_YEAR:
-                stringResId = R.string.reminder_time_every_year;
-                break;
-        }
+        final int stringResId = switch (reminder.getRepetition()) {
+            case Reminder.ONCE -> R.string.reminder_time_once;
+            case Reminder.EVERY_DAY -> R.string.reminder_time_every_day;
+            case Reminder.EVERY_WEEK -> R.string.reminder_time_every_week;
+            case Reminder.EVERY_MONTH -> R.string.reminder_time_every_month;
+            case Reminder.EVERY_YEAR -> R.string.reminder_time_every_year;
+            default -> R.string.unknown;
+        };
 
         final String reminderTimeText = mContext.getString(stringResId, format.format(time));
         holder.reminderTime.setText(reminderTimeText);
