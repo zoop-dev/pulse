@@ -1,4 +1,4 @@
-/*  Copyright (C) 2025 Freeyourgadget
+/*  Copyright (C) 2026 Freeyourgadget
 
     This file is part of Gadgetbridge.
 
@@ -29,54 +29,44 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  *
  * @noinspection unused
  */
-public class FitNap extends RecordData {
-    public FitNap(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitWorkoutSchedule extends RecordData {
+    public FitWorkoutSchedule(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
-        if (nativeNumber != 412) {
-            throw new IllegalArgumentException("FitNap expects native messages of " + 412 + ", got " + nativeNumber);
+        if (nativeNumber != 428) {
+            throw new IllegalArgumentException("FitWorkoutSchedule expects native messages of " + 428 + ", got " + nativeNumber);
         }
     }
 
     @Nullable
-    public Long getStartTimestamp() {
-        return getFieldByNumber(0, Long.class);
-    }
-
-    @Nullable
-    public Integer getStartTzOffset() {
+    public Integer getWorkoutIndex() {
         return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
-    public Long getEndTimestamp() {
-        return getFieldByNumber(2, Long.class);
-    }
-
-    @Nullable
-    public Integer getEndTzOffset() {
+    public Integer getEstBenefit() {
         return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
-    public Integer getUnknown4() {
-        return getFieldByNumber(4, Integer.class);
+    public Float getEstAerobicTe() {
+        return getFieldByNumber(5, Float.class);
     }
 
     @Nullable
-    public Integer getUnknown6() {
-        return getFieldByNumber(6, Integer.class);
+    public Float getEstAnaerTe() {
+        return getFieldByNumber(6, Float.class);
     }
 
     @Nullable
-    public Long getTimestamp7() {
-        return getFieldByNumber(7, Long.class);
+    public Integer getSport() {
+        return getFieldByNumber(7, Integer.class);
     }
 
     @Nullable
-    public Long getTimestamp() {
-        return getFieldByNumber(253, Long.class);
+    public Double getDuration() {
+        return getFieldByNumber(9, Double.class);
     }
 
     /**
@@ -84,57 +74,47 @@ public class FitNap extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(412);
+            super(428);
         }
 
-        public Builder setStartTimestamp(final Long value) {
-            setFieldByNumber(0, value);
-            return this;
-        }
-
-        public Builder setStartTzOffset(final Integer value) {
+        public Builder setWorkoutIndex(final Integer value) {
             setFieldByNumber(1, value);
             return this;
         }
 
-        public Builder setEndTimestamp(final Long value) {
-            setFieldByNumber(2, value);
-            return this;
-        }
-
-        public Builder setEndTzOffset(final Integer value) {
+        public Builder setEstBenefit(final Integer value) {
             setFieldByNumber(3, value);
             return this;
         }
 
-        public Builder setUnknown4(final Integer value) {
-            setFieldByNumber(4, value);
+        public Builder setEstAerobicTe(final Float value) {
+            setFieldByNumber(5, value);
             return this;
         }
 
-        public Builder setUnknown6(final Integer value) {
+        public Builder setEstAnaerTe(final Float value) {
             setFieldByNumber(6, value);
             return this;
         }
 
-        public Builder setTimestamp7(final Long value) {
+        public Builder setSport(final Integer value) {
             setFieldByNumber(7, value);
             return this;
         }
 
-        public Builder setTimestamp(final Long value) {
-            setFieldByNumber(253, value);
+        public Builder setDuration(final Double value) {
+            setFieldByNumber(9, value);
             return this;
         }
 
         @Override
-        public FitNap build() {
-            return (FitNap) super.build();
+        public FitWorkoutSchedule build() {
+            return (FitWorkoutSchedule) super.build();
         }
 
         @Override
-        public FitNap build(final int localMessageType) {
-            return (FitNap) super.build(localMessageType);
+        public FitWorkoutSchedule build(final int localMessageType) {
+            return (FitWorkoutSchedule) super.build(localMessageType);
         }
     }
 }

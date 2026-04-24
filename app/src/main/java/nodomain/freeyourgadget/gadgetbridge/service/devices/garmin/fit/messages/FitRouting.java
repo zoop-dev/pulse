@@ -1,4 +1,4 @@
-/*  Copyright (C) 2025 Freeyourgadget
+/*  Copyright (C) 2026 Freeyourgadget
 
     This file is part of Gadgetbridge.
 
@@ -29,54 +29,49 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  *
  * @noinspection unused
  */
-public class FitNap extends RecordData {
-    public FitNap(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitRouting extends RecordData {
+    public FitRouting(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
-        if (nativeNumber != 412) {
-            throw new IllegalArgumentException("FitNap expects native messages of " + 412 + ", got " + nativeNumber);
+        if (nativeNumber != 71) {
+            throw new IllegalArgumentException("FitRouting expects native messages of " + 71 + ", got " + nativeNumber);
         }
     }
 
     @Nullable
-    public Long getStartTimestamp() {
-        return getFieldByNumber(0, Long.class);
+    public Integer getRoutingMode() {
+        return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
-    public Integer getStartTzOffset() {
+    public Integer getCalculationMethod() {
         return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
-    public Long getEndTimestamp() {
-        return getFieldByNumber(2, Long.class);
+    public Integer getLockOnRoad() {
+        return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
-    public Integer getEndTzOffset() {
+    public Integer getAvoidances() {
         return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
-    public Integer getUnknown4() {
+    public Integer getRouteRecalculation() {
         return getFieldByNumber(4, Integer.class);
     }
 
     @Nullable
-    public Integer getUnknown6() {
-        return getFieldByNumber(6, Integer.class);
+    public Integer getType() {
+        return getFieldByNumber(5, Integer.class);
     }
 
     @Nullable
-    public Long getTimestamp7() {
-        return getFieldByNumber(7, Long.class);
-    }
-
-    @Nullable
-    public Long getTimestamp() {
-        return getFieldByNumber(253, Long.class);
+    public Integer getCourseRecalculation() {
+        return getFieldByNumber(7, Integer.class);
     }
 
     /**
@@ -84,57 +79,52 @@ public class FitNap extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(412);
+            super(71);
         }
 
-        public Builder setStartTimestamp(final Long value) {
+        public Builder setRoutingMode(final Integer value) {
             setFieldByNumber(0, value);
             return this;
         }
 
-        public Builder setStartTzOffset(final Integer value) {
+        public Builder setCalculationMethod(final Integer value) {
             setFieldByNumber(1, value);
             return this;
         }
 
-        public Builder setEndTimestamp(final Long value) {
+        public Builder setLockOnRoad(final Integer value) {
             setFieldByNumber(2, value);
             return this;
         }
 
-        public Builder setEndTzOffset(final Integer value) {
+        public Builder setAvoidances(final Integer value) {
             setFieldByNumber(3, value);
             return this;
         }
 
-        public Builder setUnknown4(final Integer value) {
+        public Builder setRouteRecalculation(final Integer value) {
             setFieldByNumber(4, value);
             return this;
         }
 
-        public Builder setUnknown6(final Integer value) {
-            setFieldByNumber(6, value);
+        public Builder setType(final Integer value) {
+            setFieldByNumber(5, value);
             return this;
         }
 
-        public Builder setTimestamp7(final Long value) {
+        public Builder setCourseRecalculation(final Integer value) {
             setFieldByNumber(7, value);
             return this;
         }
 
-        public Builder setTimestamp(final Long value) {
-            setFieldByNumber(253, value);
-            return this;
+        @Override
+        public FitRouting build() {
+            return (FitRouting) super.build();
         }
 
         @Override
-        public FitNap build() {
-            return (FitNap) super.build();
-        }
-
-        @Override
-        public FitNap build(final int localMessageType) {
-            return (FitNap) super.build(localMessageType);
+        public FitRouting build(final int localMessageType) {
+            return (FitRouting) super.build(localMessageType);
         }
     }
 }

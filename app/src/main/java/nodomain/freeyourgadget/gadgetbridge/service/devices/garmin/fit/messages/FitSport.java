@@ -54,6 +54,41 @@ public class FitSport extends RecordData {
         return getFieldByNumber(3, String.class);
     }
 
+    @Nullable
+    public Integer getPopularityRouting() {
+        return getFieldByNumber(15, Integer.class);
+    }
+
+    @Nullable
+    public Integer getNavigationPrompt() {
+        return getFieldByNumber(17, Integer.class);
+    }
+
+    @Nullable
+    public Integer getSharpBendWarnings() {
+        return getFieldByNumber(18, Integer.class);
+    }
+
+    @Nullable
+    public Integer getWorkoutVideos() {
+        return getFieldByNumber(21, Integer.class);
+    }
+
+    @Nullable
+    public Integer getHighTrafficRoadWarnings() {
+        return getFieldByNumber(22, Integer.class);
+    }
+
+    @Nullable
+    public Integer getRoadHazardWarnings() {
+        return getFieldByNumber(23, Integer.class);
+    }
+
+    @Nullable
+    public Integer getUnpavedRoadWarnings() {
+        return getFieldByNumber(24, Integer.class);
+    }
+
     /**
      * @noinspection unused
      */
@@ -74,6 +109,41 @@ public class FitSport extends RecordData {
 
         public Builder setName(final String value) {
             setFieldByNumber(3, value);
+            return this;
+        }
+
+        public Builder setPopularityRouting(final Integer value) {
+            setFieldByNumber(15, value);
+            return this;
+        }
+
+        public Builder setNavigationPrompt(final Integer value) {
+            setFieldByNumber(17, value);
+            return this;
+        }
+
+        public Builder setSharpBendWarnings(final Integer value) {
+            setFieldByNumber(18, value);
+            return this;
+        }
+
+        public Builder setWorkoutVideos(final Integer value) {
+            setFieldByNumber(21, value);
+            return this;
+        }
+
+        public Builder setHighTrafficRoadWarnings(final Integer value) {
+            setFieldByNumber(22, value);
+            return this;
+        }
+
+        public Builder setRoadHazardWarnings(final Integer value) {
+            setFieldByNumber(23, value);
+            return this;
+        }
+
+        public Builder setUnpavedRoadWarnings(final Integer value) {
+            setFieldByNumber(24, value);
             return this;
         }
 

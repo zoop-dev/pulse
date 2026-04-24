@@ -1,4 +1,4 @@
-/*  Copyright (C) 2025 Freeyourgadget
+/*  Copyright (C) 2026 Freeyourgadget
 
     This file is part of Gadgetbridge.
 
@@ -18,13 +18,10 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages
 
 import androidx.annotation.Nullable;
 
-import java.time.LocalTime;
-
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionAlarmLabel.Label;
 
 /**
  * WARNING: This class was auto-generated, please avoid modifying it directly.
@@ -32,64 +29,69 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefi
  *
  * @noinspection unused
  */
-public class FitAlarmSettings extends RecordData {
-    public FitAlarmSettings(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitRaceEvent extends RecordData {
+    public FitRaceEvent(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
-        if (nativeNumber != 222) {
-            throw new IllegalArgumentException("FitAlarmSettings expects native messages of " + 222 + ", got " + nativeNumber);
+        if (nativeNumber != 358) {
+            throw new IllegalArgumentException("FitRaceEvent expects native messages of " + 358 + ", got " + nativeNumber);
         }
     }
 
     @Nullable
-    public LocalTime getTime() {
-        return getFieldByNumber(0, LocalTime.class);
+    public String getEventId() {
+        return getFieldByNumber(1, String.class);
     }
 
     @Nullable
-    public Long getRepeat() {
-        return getFieldByNumber(1, Long.class);
+    public Long getStartTime() {
+        return getFieldByNumber(2, Long.class);
     }
 
     @Nullable
-    public Integer getEnabled() {
-        return getFieldByNumber(2, Integer.class);
+    public Long getLocalTimestamp() {
+        return getFieldByNumber(3, Long.class);
     }
 
     @Nullable
-    public Integer getSound() {
-        return getFieldByNumber(3, Integer.class);
+    public String getName() {
+        return getFieldByNumber(4, String.class);
     }
 
     @Nullable
-    public Integer getBacklight() {
-        return getFieldByNumber(4, Integer.class);
+    public String getLocation() {
+        return getFieldByNumber(5, String.class);
     }
 
     @Nullable
-    public Long getTimeCreated() {
-        return getFieldByNumber(5, Long.class);
+    public Double getStartPointLat() {
+        return getFieldByNumber(6, Double.class);
     }
 
     @Nullable
-    public Integer getUnknown7() {
-        return getFieldByNumber(7, Integer.class);
+    public Double getStartPointLong() {
+        return getFieldByNumber(7, Double.class);
     }
 
     @Nullable
-    public Label getLabel() {
-        return getFieldByNumber(8, Label.class);
+    public Double getDistance() {
+        return getFieldByNumber(10, Double.class);
     }
 
     @Nullable
-    public Long getTimeUpdated() {
-        return getFieldByNumber(11, Long.class);
+    public Double getTargetTime() {
+        return getFieldByNumber(12, Double.class);
     }
 
     @Nullable
-    public Integer getMessageIndex() {
-        return getFieldByNumber(254, Integer.class);
+    public String getCity() {
+        return getFieldByNumber(24, String.class);
+    }
+
+    @Nullable
+    public String getCountry() {
+        return getFieldByNumber(26, String.class);
     }
 
     /**
@@ -97,67 +99,72 @@ public class FitAlarmSettings extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(222);
+            super(358);
         }
 
-        public Builder setTime(final LocalTime value) {
-            setFieldByNumber(0, value);
-            return this;
-        }
-
-        public Builder setRepeat(final Long value) {
+        public Builder setEventId(final String value) {
             setFieldByNumber(1, value);
             return this;
         }
 
-        public Builder setEnabled(final Integer value) {
+        public Builder setStartTime(final Long value) {
             setFieldByNumber(2, value);
             return this;
         }
 
-        public Builder setSound(final Integer value) {
+        public Builder setLocalTimestamp(final Long value) {
             setFieldByNumber(3, value);
             return this;
         }
 
-        public Builder setBacklight(final Integer value) {
+        public Builder setName(final String value) {
             setFieldByNumber(4, value);
             return this;
         }
 
-        public Builder setTimeCreated(final Long value) {
+        public Builder setLocation(final String value) {
             setFieldByNumber(5, value);
             return this;
         }
 
-        public Builder setUnknown7(final Integer value) {
+        public Builder setStartPointLat(final Double value) {
+            setFieldByNumber(6, value);
+            return this;
+        }
+
+        public Builder setStartPointLong(final Double value) {
             setFieldByNumber(7, value);
             return this;
         }
 
-        public Builder setLabel(final Label value) {
-            setFieldByNumber(8, value);
+        public Builder setDistance(final Double value) {
+            setFieldByNumber(10, value);
             return this;
         }
 
-        public Builder setTimeUpdated(final Long value) {
-            setFieldByNumber(11, value);
+        public Builder setTargetTime(final Double value) {
+            setFieldByNumber(12, value);
             return this;
         }
 
-        public Builder setMessageIndex(final Integer value) {
-            setFieldByNumber(254, value);
+        public Builder setCity(final String value) {
+            setFieldByNumber(24, value);
+            return this;
+        }
+
+        public Builder setCountry(final String value) {
+            setFieldByNumber(26, value);
             return this;
         }
 
         @Override
-        public FitAlarmSettings build() {
-            return (FitAlarmSettings) super.build();
+        public FitRaceEvent build() {
+            return (FitRaceEvent) super.build();
         }
 
         @Override
-        public FitAlarmSettings build(final int localMessageType) {
-            return (FitAlarmSettings) super.build(localMessageType);
+        public FitRaceEvent build(final int localMessageType) {
+            return (FitRaceEvent) super.build(localMessageType);
         }
     }
 }

@@ -29,29 +29,29 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  *
  * @noinspection unused
  */
-public class FitSleepRestlessMoments extends RecordData {
-    public FitSleepRestlessMoments(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitPowerMode extends RecordData {
+    public FitPowerMode(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
-        if (nativeNumber != 382) {
-            throw new IllegalArgumentException("FitSleepRestlessMoments expects native messages of " + 382 + ", got " + nativeNumber);
+        if (nativeNumber != 321) {
+            throw new IllegalArgumentException("FitPowerMode expects native messages of " + 321 + ", got " + nativeNumber);
         }
     }
 
     @Nullable
-    public Long getUnknown0() {
+    public Long getLowBatteryAlert() {
         return getFieldByNumber(0, Long.class);
     }
 
     @Nullable
-    public Integer getRestlessMomentsCount() {
-        return getFieldByNumber(1, Integer.class);
+    public Long getDefaultMode() {
+        return getFieldByNumber(1, Long.class);
     }
 
     @Nullable
-    public Number[] getDurations() {
-        return getArrayFieldByNumber(2, Number.class);
+    public Long getAutoEnableTime() {
+        return getFieldByNumber(3, Long.class);
     }
 
     /**
@@ -59,32 +59,32 @@ public class FitSleepRestlessMoments extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(382);
+            super(321);
         }
 
-        public Builder setUnknown0(final Long value) {
+        public Builder setLowBatteryAlert(final Long value) {
             setFieldByNumber(0, value);
             return this;
         }
 
-        public Builder setRestlessMomentsCount(final Integer value) {
+        public Builder setDefaultMode(final Long value) {
             setFieldByNumber(1, value);
             return this;
         }
 
-        public Builder setDurations(final Number[] value) {
-            setFieldByNumber(2, (Object[]) value);
+        public Builder setAutoEnableTime(final Long value) {
+            setFieldByNumber(3, value);
             return this;
         }
 
         @Override
-        public FitSleepRestlessMoments build() {
-            return (FitSleepRestlessMoments) super.build();
+        public FitPowerMode build() {
+            return (FitPowerMode) super.build();
         }
 
         @Override
-        public FitSleepRestlessMoments build(final int localMessageType) {
-            return (FitSleepRestlessMoments) super.build(localMessageType);
+        public FitPowerMode build(final int localMessageType) {
+            return (FitPowerMode) super.build(localMessageType);
         }
     }
 }

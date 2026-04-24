@@ -50,6 +50,31 @@ public class FitSensorSettings extends RecordData {
     }
 
     @Nullable
+    public Integer getWheelSizeManual() {
+        return getFieldByNumber(10, Integer.class);
+    }
+
+    @Nullable
+    public Integer getCalibrationFactor() {
+        return getFieldByNumber(11, Integer.class);
+    }
+
+    @Nullable
+    public Integer getWheelSizeAuto() {
+        return getFieldByNumber(21, Integer.class);
+    }
+
+    @Nullable
+    public Integer getProduct() {
+        return getFieldByNumber(32, Integer.class);
+    }
+
+    @Nullable
+    public Integer getManufacturer() {
+        return getFieldByNumber(33, Integer.class);
+    }
+
+    @Nullable
     public Integer getUseForSpeed() {
         return getFieldByNumber(45, Integer.class);
     }
@@ -62,6 +87,16 @@ public class FitSensorSettings extends RecordData {
     @Nullable
     public Integer getConnectionType() {
         return getFieldByNumber(51, Integer.class);
+    }
+
+    @Nullable
+    public Integer getSensorType() {
+        return getFieldByNumber(52, Integer.class);
+    }
+
+    @Nullable
+    public String getProductName() {
+        return getFieldByNumber(91, String.class);
     }
 
     @Nullable
@@ -87,6 +122,31 @@ public class FitSensorSettings extends RecordData {
             return this;
         }
 
+        public Builder setWheelSizeManual(final Integer value) {
+            setFieldByNumber(10, value);
+            return this;
+        }
+
+        public Builder setCalibrationFactor(final Integer value) {
+            setFieldByNumber(11, value);
+            return this;
+        }
+
+        public Builder setWheelSizeAuto(final Integer value) {
+            setFieldByNumber(21, value);
+            return this;
+        }
+
+        public Builder setProduct(final Integer value) {
+            setFieldByNumber(32, value);
+            return this;
+        }
+
+        public Builder setManufacturer(final Integer value) {
+            setFieldByNumber(33, value);
+            return this;
+        }
+
         public Builder setUseForSpeed(final Integer value) {
             setFieldByNumber(45, value);
             return this;
@@ -99,6 +159,16 @@ public class FitSensorSettings extends RecordData {
 
         public Builder setConnectionType(final Integer value) {
             setFieldByNumber(51, value);
+            return this;
+        }
+
+        public Builder setSensorType(final Integer value) {
+            setFieldByNumber(52, value);
+            return this;
+        }
+
+        public Builder setProductName(final String value) {
+            setFieldByNumber(91, value);
             return this;
         }
 

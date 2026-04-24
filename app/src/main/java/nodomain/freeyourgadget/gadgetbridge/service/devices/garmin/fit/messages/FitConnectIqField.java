@@ -29,29 +29,34 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  *
  * @noinspection unused
  */
-public class FitSleepRestlessMoments extends RecordData {
-    public FitSleepRestlessMoments(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitConnectIqField extends RecordData {
+    public FitConnectIqField(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
-        if (nativeNumber != 382) {
-            throw new IllegalArgumentException("FitSleepRestlessMoments expects native messages of " + 382 + ", got " + nativeNumber);
+        if (nativeNumber != 170) {
+            throw new IllegalArgumentException("FitConnectIqField expects native messages of " + 170 + ", got " + nativeNumber);
         }
     }
 
     @Nullable
-    public Long getUnknown0() {
-        return getFieldByNumber(0, Long.class);
+    public Number[] getAppId() {
+        return getArrayFieldByNumber(1, Number.class);
     }
 
     @Nullable
-    public Integer getRestlessMomentsCount() {
-        return getFieldByNumber(1, Integer.class);
+    public Long getDataField() {
+        return getFieldByNumber(2, Long.class);
     }
 
     @Nullable
-    public Number[] getDurations() {
-        return getArrayFieldByNumber(2, Number.class);
+    public Integer getScreenId() {
+        return getFieldByNumber(100, Integer.class);
+    }
+
+    @Nullable
+    public Integer getFieldBits() {
+        return getFieldByNumber(101, Integer.class);
     }
 
     /**
@@ -59,32 +64,37 @@ public class FitSleepRestlessMoments extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(382);
+            super(170);
         }
 
-        public Builder setUnknown0(final Long value) {
-            setFieldByNumber(0, value);
+        public Builder setAppId(final Number[] value) {
+            setFieldByNumber(1, (Object[]) value);
             return this;
         }
 
-        public Builder setRestlessMomentsCount(final Integer value) {
-            setFieldByNumber(1, value);
+        public Builder setDataField(final Long value) {
+            setFieldByNumber(2, value);
             return this;
         }
 
-        public Builder setDurations(final Number[] value) {
-            setFieldByNumber(2, (Object[]) value);
+        public Builder setScreenId(final Integer value) {
+            setFieldByNumber(100, value);
+            return this;
+        }
+
+        public Builder setFieldBits(final Integer value) {
+            setFieldByNumber(101, value);
             return this;
         }
 
         @Override
-        public FitSleepRestlessMoments build() {
-            return (FitSleepRestlessMoments) super.build();
+        public FitConnectIqField build() {
+            return (FitConnectIqField) super.build();
         }
 
         @Override
-        public FitSleepRestlessMoments build(final int localMessageType) {
-            return (FitSleepRestlessMoments) super.build(localMessageType);
+        public FitConnectIqField build(final int localMessageType) {
+            return (FitConnectIqField) super.build(localMessageType);
         }
     }
 }

@@ -1068,7 +1068,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                     .setEnabled(alarm.getEnabled() ? 1 : 0)
                     .setSound(soundCode)
                     .setBacklight(alarm.getBacklight() ? 1 : 0)
-                    .setSomeTimestamp((long) currentTime)
+                    .setTimeCreated((long) currentTime)
                     .setUnknown7(0)
                     .setLabel(label)
                     .setMessageIndex(numberEnabledAlarms);

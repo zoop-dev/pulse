@@ -177,7 +177,7 @@ public class FitUserProfile extends RecordData {
     }
 
     @Nullable
-    public Float getLtspeed() {
+    public Float getLactateThresholdSpeed() {
         return getFieldByNumber(37, Float.class);
     }
 
@@ -349,7 +349,7 @@ public class FitUserProfile extends RecordData {
             return this;
         }
 
-        public Builder setLtspeed(final Float value) {
+        public Builder setLactateThresholdSpeed(final Float value) {
             setFieldByNumber(37, value);
             return this;
         }

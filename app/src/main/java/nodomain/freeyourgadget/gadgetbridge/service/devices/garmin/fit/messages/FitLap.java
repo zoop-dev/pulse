@@ -681,6 +681,41 @@ public class FitLap extends RecordData {
     }
 
     @Nullable
+    public Double getGradeAdjustedSpeed() {
+        return getFieldByNumber(161, Double.class);
+    }
+
+    @Nullable
+    public Integer getUnpaved() {
+        return getFieldByNumber(163, Integer.class);
+    }
+
+    @Nullable
+    public Float getStepSpeedLossDistance() {
+        return getFieldByNumber(164, Float.class);
+    }
+
+    @Nullable
+    public Float getStepSpeedLossPercentage() {
+        return getFieldByNumber(165, Float.class);
+    }
+
+    @Nullable
+    public Double getAvgForce() {
+        return getFieldByNumber(166, Double.class);
+    }
+
+    @Nullable
+    public Double getMaxForce() {
+        return getFieldByNumber(167, Double.class);
+    }
+
+    @Nullable
+    public Double getNormalizedForce() {
+        return getFieldByNumber(168, Double.class);
+    }
+
+    @Nullable
     public Long getTimestamp() {
         return getFieldByNumber(253, Long.class);
     }
@@ -1335,6 +1370,41 @@ public class FitLap extends RecordData {
 
         public Builder setMaxCoreTemperature(final Float value) {
             setFieldByNumber(160, value);
+            return this;
+        }
+
+        public Builder setGradeAdjustedSpeed(final Double value) {
+            setFieldByNumber(161, value);
+            return this;
+        }
+
+        public Builder setUnpaved(final Integer value) {
+            setFieldByNumber(163, value);
+            return this;
+        }
+
+        public Builder setStepSpeedLossDistance(final Float value) {
+            setFieldByNumber(164, value);
+            return this;
+        }
+
+        public Builder setStepSpeedLossPercentage(final Float value) {
+            setFieldByNumber(165, value);
+            return this;
+        }
+
+        public Builder setAvgForce(final Double value) {
+            setFieldByNumber(166, value);
+            return this;
+        }
+
+        public Builder setMaxForce(final Double value) {
+            setFieldByNumber(167, value);
+            return this;
+        }
+
+        public Builder setNormalizedForce(final Double value) {
+            setFieldByNumber(168, value);
             return this;
         }
 

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2025 Freeyourgadget
+/*  Copyright (C) 2026 Freeyourgadget
 
     This file is part of Gadgetbridge.
 
@@ -29,54 +29,39 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  *
  * @noinspection unused
  */
-public class FitNap extends RecordData {
-    public FitNap(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitRangeAlert extends RecordData {
+    public FitRangeAlert(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
-        if (nativeNumber != 412) {
-            throw new IllegalArgumentException("FitNap expects native messages of " + 412 + ", got " + nativeNumber);
+        if (nativeNumber != 17) {
+            throw new IllegalArgumentException("FitRangeAlert expects native messages of " + 17 + ", got " + nativeNumber);
         }
     }
 
     @Nullable
-    public Long getStartTimestamp() {
-        return getFieldByNumber(0, Long.class);
-    }
-
-    @Nullable
-    public Integer getStartTzOffset() {
+    public Integer getMetric() {
         return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
-    public Long getEndTimestamp() {
-        return getFieldByNumber(2, Long.class);
+    public Integer getLowStatus() {
+        return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
-    public Integer getEndTzOffset() {
+    public Integer getLowValue() {
         return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
-    public Integer getUnknown4() {
+    public Integer getHighStatus() {
         return getFieldByNumber(4, Integer.class);
     }
 
     @Nullable
-    public Integer getUnknown6() {
-        return getFieldByNumber(6, Integer.class);
-    }
-
-    @Nullable
-    public Long getTimestamp7() {
-        return getFieldByNumber(7, Long.class);
-    }
-
-    @Nullable
-    public Long getTimestamp() {
-        return getFieldByNumber(253, Long.class);
+    public Integer getHighValue() {
+        return getFieldByNumber(5, Integer.class);
     }
 
     /**
@@ -84,57 +69,42 @@ public class FitNap extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(412);
+            super(17);
         }
 
-        public Builder setStartTimestamp(final Long value) {
-            setFieldByNumber(0, value);
-            return this;
-        }
-
-        public Builder setStartTzOffset(final Integer value) {
+        public Builder setMetric(final Integer value) {
             setFieldByNumber(1, value);
             return this;
         }
 
-        public Builder setEndTimestamp(final Long value) {
+        public Builder setLowStatus(final Integer value) {
             setFieldByNumber(2, value);
             return this;
         }
 
-        public Builder setEndTzOffset(final Integer value) {
+        public Builder setLowValue(final Integer value) {
             setFieldByNumber(3, value);
             return this;
         }
 
-        public Builder setUnknown4(final Integer value) {
+        public Builder setHighStatus(final Integer value) {
             setFieldByNumber(4, value);
             return this;
         }
 
-        public Builder setUnknown6(final Integer value) {
-            setFieldByNumber(6, value);
-            return this;
-        }
-
-        public Builder setTimestamp7(final Long value) {
-            setFieldByNumber(7, value);
-            return this;
-        }
-
-        public Builder setTimestamp(final Long value) {
-            setFieldByNumber(253, value);
+        public Builder setHighValue(final Integer value) {
+            setFieldByNumber(5, value);
             return this;
         }
 
         @Override
-        public FitNap build() {
-            return (FitNap) super.build();
+        public FitRangeAlert build() {
+            return (FitRangeAlert) super.build();
         }
 
         @Override
-        public FitNap build(final int localMessageType) {
-            return (FitNap) super.build(localMessageType);
+        public FitRangeAlert build(final int localMessageType) {
+            return (FitRangeAlert) super.build(localMessageType);
         }
     }
 }

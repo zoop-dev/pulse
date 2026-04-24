@@ -110,6 +110,11 @@ public class FitWorkoutStep extends RecordData {
     }
 
     @Nullable
+    public Integer getSkipLastRecover() {
+        return getFieldByNumber(18, Integer.class);
+    }
+
+    @Nullable
     public Integer getSecondaryTargetType() {
         return getFieldByNumber(19, Integer.class);
     }
@@ -127,6 +132,11 @@ public class FitWorkoutStep extends RecordData {
     @Nullable
     public Long getSecondaryCustomTargetValueHigh() {
         return getFieldByNumber(22, Long.class);
+    }
+
+    @Nullable
+    public Integer getWorkoutIndex() {
+        return getFieldByNumber(31, Integer.class);
     }
 
     @Nullable
@@ -212,6 +222,11 @@ public class FitWorkoutStep extends RecordData {
             return this;
         }
 
+        public Builder setSkipLastRecover(final Integer value) {
+            setFieldByNumber(18, value);
+            return this;
+        }
+
         public Builder setSecondaryTargetType(final Integer value) {
             setFieldByNumber(19, value);
             return this;
@@ -229,6 +244,11 @@ public class FitWorkoutStep extends RecordData {
 
         public Builder setSecondaryCustomTargetValueHigh(final Long value) {
             setFieldByNumber(22, value);
+            return this;
+        }
+
+        public Builder setWorkoutIndex(final Integer value) {
+            setFieldByNumber(31, value);
             return this;
         }
 

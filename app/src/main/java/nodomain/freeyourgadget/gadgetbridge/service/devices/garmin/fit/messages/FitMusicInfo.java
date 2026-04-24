@@ -1,4 +1,4 @@
-/*  Copyright (C) 2025 Freeyourgadget
+/*  Copyright (C) 2026 Freeyourgadget
 
     This file is part of Gadgetbridge.
 
@@ -29,54 +29,39 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  *
  * @noinspection unused
  */
-public class FitNap extends RecordData {
-    public FitNap(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitMusicInfo extends RecordData {
+    public FitMusicInfo(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
-        if (nativeNumber != 412) {
-            throw new IllegalArgumentException("FitNap expects native messages of " + 412 + ", got " + nativeNumber);
+        if (nativeNumber != 243) {
+            throw new IllegalArgumentException("FitMusicInfo expects native messages of " + 243 + ", got " + nativeNumber);
         }
     }
 
     @Nullable
-    public Long getStartTimestamp() {
+    public Long getStartTime() {
         return getFieldByNumber(0, Long.class);
     }
 
     @Nullable
-    public Integer getStartTzOffset() {
-        return getFieldByNumber(1, Integer.class);
+    public String getTitle() {
+        return getFieldByNumber(2, String.class);
     }
 
     @Nullable
-    public Long getEndTimestamp() {
-        return getFieldByNumber(2, Long.class);
+    public String getArtist() {
+        return getFieldByNumber(3, String.class);
     }
 
     @Nullable
-    public Integer getEndTzOffset() {
-        return getFieldByNumber(3, Integer.class);
+    public String getGenre() {
+        return getFieldByNumber(4, String.class);
     }
 
     @Nullable
-    public Integer getUnknown4() {
-        return getFieldByNumber(4, Integer.class);
-    }
-
-    @Nullable
-    public Integer getUnknown6() {
-        return getFieldByNumber(6, Integer.class);
-    }
-
-    @Nullable
-    public Long getTimestamp7() {
-        return getFieldByNumber(7, Long.class);
-    }
-
-    @Nullable
-    public Long getTimestamp() {
-        return getFieldByNumber(253, Long.class);
+    public Integer getDuration() {
+        return getFieldByNumber(5, Integer.class);
     }
 
     /**
@@ -84,57 +69,42 @@ public class FitNap extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(412);
+            super(243);
         }
 
-        public Builder setStartTimestamp(final Long value) {
+        public Builder setStartTime(final Long value) {
             setFieldByNumber(0, value);
             return this;
         }
 
-        public Builder setStartTzOffset(final Integer value) {
-            setFieldByNumber(1, value);
-            return this;
-        }
-
-        public Builder setEndTimestamp(final Long value) {
+        public Builder setTitle(final String value) {
             setFieldByNumber(2, value);
             return this;
         }
 
-        public Builder setEndTzOffset(final Integer value) {
+        public Builder setArtist(final String value) {
             setFieldByNumber(3, value);
             return this;
         }
 
-        public Builder setUnknown4(final Integer value) {
+        public Builder setGenre(final String value) {
             setFieldByNumber(4, value);
             return this;
         }
 
-        public Builder setUnknown6(final Integer value) {
-            setFieldByNumber(6, value);
-            return this;
-        }
-
-        public Builder setTimestamp7(final Long value) {
-            setFieldByNumber(7, value);
-            return this;
-        }
-
-        public Builder setTimestamp(final Long value) {
-            setFieldByNumber(253, value);
+        public Builder setDuration(final Integer value) {
+            setFieldByNumber(5, value);
             return this;
         }
 
         @Override
-        public FitNap build() {
-            return (FitNap) super.build();
+        public FitMusicInfo build() {
+            return (FitMusicInfo) super.build();
         }
 
         @Override
-        public FitNap build(final int localMessageType) {
-            return (FitNap) super.build(localMessageType);
+        public FitMusicInfo build(final int localMessageType) {
+            return (FitMusicInfo) super.build(localMessageType);
         }
     }
 }

@@ -75,13 +75,33 @@ public class FitUserMetrics extends RecordData {
     }
 
     @Nullable
-    public Integer getInitialBodyBattery() {
+    public Integer getLactateThresholdHeartRate() {
+        return getFieldByNumber(11, Integer.class);
+    }
+
+    @Nullable
+    public Integer getLactateThresholdPower() {
+        return getFieldByNumber(12, Integer.class);
+    }
+
+    @Nullable
+    public Float getLactateThresholdSpeed() {
+        return getFieldByNumber(13, Float.class);
+    }
+
+    @Nullable
+    public Integer getBeginningBodyBattery() {
         return getFieldByNumber(15, Integer.class);
     }
 
     @Nullable
     public Long getStartOfActivity() {
         return getFieldByNumber(16, Long.class);
+    }
+
+    @Nullable
+    public Long getFirstVo2Max() {
+        return getFieldByNumber(19, Long.class);
     }
 
     @Nullable
@@ -147,13 +167,33 @@ public class FitUserMetrics extends RecordData {
             return this;
         }
 
-        public Builder setInitialBodyBattery(final Integer value) {
+        public Builder setLactateThresholdHeartRate(final Integer value) {
+            setFieldByNumber(11, value);
+            return this;
+        }
+
+        public Builder setLactateThresholdPower(final Integer value) {
+            setFieldByNumber(12, value);
+            return this;
+        }
+
+        public Builder setLactateThresholdSpeed(final Float value) {
+            setFieldByNumber(13, value);
+            return this;
+        }
+
+        public Builder setBeginningBodyBattery(final Integer value) {
             setFieldByNumber(15, value);
             return this;
         }
 
         public Builder setStartOfActivity(final Long value) {
             setFieldByNumber(16, value);
+            return this;
+        }
+
+        public Builder setFirstVo2Max(final Long value) {
+            setFieldByNumber(19, value);
             return this;
         }
 

@@ -29,29 +29,34 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  *
  * @noinspection unused
  */
-public class FitSleepRestlessMoments extends RecordData {
-    public FitSleepRestlessMoments(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitRace extends RecordData {
+    public FitRace(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
-        if (nativeNumber != 382) {
-            throw new IllegalArgumentException("FitSleepRestlessMoments expects native messages of " + 382 + ", got " + nativeNumber);
+        if (nativeNumber != 310) {
+            throw new IllegalArgumentException("FitRace expects native messages of " + 310 + ", got " + nativeNumber);
         }
     }
 
     @Nullable
-    public Long getUnknown0() {
-        return getFieldByNumber(0, Long.class);
+    public Double getGoalTime() {
+        return getFieldByNumber(3, Double.class);
     }
 
     @Nullable
-    public Integer getRestlessMomentsCount() {
-        return getFieldByNumber(1, Integer.class);
+    public Float getGoalSpeed() {
+        return getFieldByNumber(4, Float.class);
     }
 
     @Nullable
-    public Number[] getDurations() {
-        return getArrayFieldByNumber(2, Number.class);
+    public Double getDistance() {
+        return getFieldByNumber(5, Double.class);
+    }
+
+    @Nullable
+    public Double getSplitDistance() {
+        return getFieldByNumber(7, Double.class);
     }
 
     /**
@@ -59,32 +64,37 @@ public class FitSleepRestlessMoments extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(382);
+            super(310);
         }
 
-        public Builder setUnknown0(final Long value) {
-            setFieldByNumber(0, value);
+        public Builder setGoalTime(final Double value) {
+            setFieldByNumber(3, value);
             return this;
         }
 
-        public Builder setRestlessMomentsCount(final Integer value) {
-            setFieldByNumber(1, value);
+        public Builder setGoalSpeed(final Float value) {
+            setFieldByNumber(4, value);
             return this;
         }
 
-        public Builder setDurations(final Number[] value) {
-            setFieldByNumber(2, (Object[]) value);
+        public Builder setDistance(final Double value) {
+            setFieldByNumber(5, value);
+            return this;
+        }
+
+        public Builder setSplitDistance(final Double value) {
+            setFieldByNumber(7, value);
             return this;
         }
 
         @Override
-        public FitSleepRestlessMoments build() {
-            return (FitSleepRestlessMoments) super.build();
+        public FitRace build() {
+            return (FitRace) super.build();
         }
 
         @Override
-        public FitSleepRestlessMoments build(final int localMessageType) {
-            return (FitSleepRestlessMoments) super.build(localMessageType);
+        public FitRace build(final int localMessageType) {
+            return (FitRace) super.build(localMessageType);
         }
     }
 }

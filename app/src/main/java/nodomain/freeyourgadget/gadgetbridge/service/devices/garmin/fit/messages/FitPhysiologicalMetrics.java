@@ -40,6 +40,11 @@ public class FitPhysiologicalMetrics extends RecordData {
     }
 
     @Nullable
+    public Integer getNewHrMax() {
+        return getFieldByNumber(1, Integer.class);
+    }
+
+    @Nullable
     public Float getAerobicEffect() {
         return getFieldByNumber(4, Float.class);
     }
@@ -55,13 +60,78 @@ public class FitPhysiologicalMetrics extends RecordData {
     }
 
     @Nullable
+    public Integer getSport() {
+        return getFieldByNumber(11, Integer.class);
+    }
+
+    @Nullable
     public Integer getLactateThresholdHeartRate() {
         return getFieldByNumber(14, Integer.class);
     }
 
     @Nullable
+    public Integer getLactateThresholdPower() {
+        return getFieldByNumber(15, Integer.class);
+    }
+
+    @Nullable
+    public Float getLactateThresholdSpeed() {
+        return getFieldByNumber(16, Float.class);
+    }
+
+    @Nullable
+    public Integer getEndingPerformanceCondition() {
+        return getFieldByNumber(17, Integer.class);
+    }
+
+    @Nullable
     public Float getAnaerobicEffect() {
         return getFieldByNumber(20, Float.class);
+    }
+
+    @Nullable
+    public Integer getEndingBodyBattery() {
+        return getFieldByNumber(25, Integer.class);
+    }
+
+    @Nullable
+    public Double getFirstVo2Max() {
+        return getFieldByNumber(29, Double.class);
+    }
+
+    @Nullable
+    public Integer getPrimaryBenefit() {
+        return getFieldByNumber(41, Integer.class);
+    }
+
+    @Nullable
+    public Long getLocalTimestamp() {
+        return getFieldByNumber(48, Long.class);
+    }
+
+    @Nullable
+    public Integer getEndingPotential() {
+        return getFieldByNumber(50, Integer.class);
+    }
+
+    @Nullable
+    public Integer getTotalAscent() {
+        return getFieldByNumber(60, Integer.class);
+    }
+
+    @Nullable
+    public Integer getTotalDescent() {
+        return getFieldByNumber(61, Integer.class);
+    }
+
+    @Nullable
+    public Integer getAveragePower() {
+        return getFieldByNumber(62, Integer.class);
+    }
+
+    @Nullable
+    public Integer getAverageHeartRate() {
+        return getFieldByNumber(63, Integer.class);
     }
 
     @Nullable
@@ -75,6 +145,11 @@ public class FitPhysiologicalMetrics extends RecordData {
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
             super(140);
+        }
+
+        public Builder setNewHrMax(final Integer value) {
+            setFieldByNumber(1, value);
+            return this;
         }
 
         public Builder setAerobicEffect(final Float value) {
@@ -92,13 +167,78 @@ public class FitPhysiologicalMetrics extends RecordData {
             return this;
         }
 
+        public Builder setSport(final Integer value) {
+            setFieldByNumber(11, value);
+            return this;
+        }
+
         public Builder setLactateThresholdHeartRate(final Integer value) {
             setFieldByNumber(14, value);
             return this;
         }
 
+        public Builder setLactateThresholdPower(final Integer value) {
+            setFieldByNumber(15, value);
+            return this;
+        }
+
+        public Builder setLactateThresholdSpeed(final Float value) {
+            setFieldByNumber(16, value);
+            return this;
+        }
+
+        public Builder setEndingPerformanceCondition(final Integer value) {
+            setFieldByNumber(17, value);
+            return this;
+        }
+
         public Builder setAnaerobicEffect(final Float value) {
             setFieldByNumber(20, value);
+            return this;
+        }
+
+        public Builder setEndingBodyBattery(final Integer value) {
+            setFieldByNumber(25, value);
+            return this;
+        }
+
+        public Builder setFirstVo2Max(final Double value) {
+            setFieldByNumber(29, value);
+            return this;
+        }
+
+        public Builder setPrimaryBenefit(final Integer value) {
+            setFieldByNumber(41, value);
+            return this;
+        }
+
+        public Builder setLocalTimestamp(final Long value) {
+            setFieldByNumber(48, value);
+            return this;
+        }
+
+        public Builder setEndingPotential(final Integer value) {
+            setFieldByNumber(50, value);
+            return this;
+        }
+
+        public Builder setTotalAscent(final Integer value) {
+            setFieldByNumber(60, value);
+            return this;
+        }
+
+        public Builder setTotalDescent(final Integer value) {
+            setFieldByNumber(61, value);
+            return this;
+        }
+
+        public Builder setAveragePower(final Integer value) {
+            setFieldByNumber(62, value);
+            return this;
+        }
+
+        public Builder setAverageHeartRate(final Integer value) {
+            setFieldByNumber(63, value);
             return this;
         }
 

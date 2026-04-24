@@ -33,9 +33,16 @@
  */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit;
 
+import static nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.NativeFITMessage.KNOWN_MESSAGES;
+
 public final class FitDebug {
     /// format a native number (Native FIT message number) for logging
     public static String mesgNumLookup(int nativeMessageNumber) {
+        final NativeFITMessage fit = KNOWN_MESSAGES.getOrDefault(nativeMessageNumber, null);
+        if (fit != null) {
+            return fit.getNumber() + "_" + fit.name();
+        }
+
         return switch (nativeMessageNumber) {
             case 0 -> "0_file_id";
             case 1 -> "1_capabilities";

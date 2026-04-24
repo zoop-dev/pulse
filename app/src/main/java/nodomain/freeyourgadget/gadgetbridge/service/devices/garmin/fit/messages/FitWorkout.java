@@ -60,6 +60,16 @@ public class FitWorkout extends RecordData {
     }
 
     @Nullable
+    public Integer getDurationType() {
+        return getFieldByNumber(9, Integer.class);
+    }
+
+    @Nullable
+    public Long getDurationValue() {
+        return getFieldByNumber(10, Long.class);
+    }
+
+    @Nullable
     public Integer getSubSport() {
         return getFieldByNumber(11, Integer.class);
     }
@@ -77,6 +87,21 @@ public class FitWorkout extends RecordData {
     @Nullable
     public String getNotes() {
         return getFieldByNumber(17, String.class);
+    }
+
+    @Nullable
+    public Integer getWorkoutIndex() {
+        return getFieldByNumber(20, Integer.class);
+    }
+
+    @Nullable
+    public Double getTime() {
+        return getFieldByNumber(21, Double.class);
+    }
+
+    @Nullable
+    public Double getDistance() {
+        return getFieldByNumber(22, Double.class);
     }
 
     @Nullable
@@ -112,6 +137,16 @@ public class FitWorkout extends RecordData {
             return this;
         }
 
+        public Builder setDurationType(final Integer value) {
+            setFieldByNumber(9, value);
+            return this;
+        }
+
+        public Builder setDurationValue(final Long value) {
+            setFieldByNumber(10, value);
+            return this;
+        }
+
         public Builder setSubSport(final Integer value) {
             setFieldByNumber(11, value);
             return this;
@@ -129,6 +164,21 @@ public class FitWorkout extends RecordData {
 
         public Builder setNotes(final String value) {
             setFieldByNumber(17, value);
+            return this;
+        }
+
+        public Builder setWorkoutIndex(final Integer value) {
+            setFieldByNumber(20, value);
+            return this;
+        }
+
+        public Builder setTime(final Double value) {
+            setFieldByNumber(21, value);
+            return this;
+        }
+
+        public Builder setDistance(final Double value) {
+            setFieldByNumber(22, value);
             return this;
         }
 

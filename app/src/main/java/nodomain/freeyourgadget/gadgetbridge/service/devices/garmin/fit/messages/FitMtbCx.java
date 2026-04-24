@@ -29,29 +29,24 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  *
  * @noinspection unused
  */
-public class FitSleepRestlessMoments extends RecordData {
-    public FitSleepRestlessMoments(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitMtbCx extends RecordData {
+    public FitMtbCx(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
-        if (nativeNumber != 382) {
-            throw new IllegalArgumentException("FitSleepRestlessMoments expects native messages of " + 382 + ", got " + nativeNumber);
+        if (nativeNumber != 309) {
+            throw new IllegalArgumentException("FitMtbCx expects native messages of " + 309 + ", got " + nativeNumber);
         }
     }
 
     @Nullable
-    public Long getUnknown0() {
-        return getFieldByNumber(0, Long.class);
-    }
-
-    @Nullable
-    public Integer getRestlessMomentsCount() {
+    public Integer getGritFlowJumpRecording() {
         return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
-    public Number[] getDurations() {
-        return getArrayFieldByNumber(2, Number.class);
+    public Integer getJumpAlerts() {
+        return getFieldByNumber(2, Integer.class);
     }
 
     /**
@@ -59,32 +54,27 @@ public class FitSleepRestlessMoments extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(382);
+            super(309);
         }
 
-        public Builder setUnknown0(final Long value) {
-            setFieldByNumber(0, value);
-            return this;
-        }
-
-        public Builder setRestlessMomentsCount(final Integer value) {
+        public Builder setGritFlowJumpRecording(final Integer value) {
             setFieldByNumber(1, value);
             return this;
         }
 
-        public Builder setDurations(final Number[] value) {
-            setFieldByNumber(2, (Object[]) value);
+        public Builder setJumpAlerts(final Integer value) {
+            setFieldByNumber(2, value);
             return this;
         }
 
         @Override
-        public FitSleepRestlessMoments build() {
-            return (FitSleepRestlessMoments) super.build();
+        public FitMtbCx build() {
+            return (FitMtbCx) super.build();
         }
 
         @Override
-        public FitSleepRestlessMoments build(final int localMessageType) {
-            return (FitSleepRestlessMoments) super.build(localMessageType);
+        public FitMtbCx build(final int localMessageType) {
+            return (FitMtbCx) super.build(localMessageType);
         }
     }
 }
