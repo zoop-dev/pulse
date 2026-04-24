@@ -20,7 +20,7 @@ public enum BaseType {
     BASE_TYPE_BYTE(0x0D, new BaseTypeByte(true, 0xFF)),
     SINT64(0x8E, new BaseTypeLong(false, 0x7FFFFFFFFFFFFFFFL)),
     UINT64(0x8F, new BaseTypeLong(true, 0xFFFFFFFFFFFFFFFFL)),
-    UINT64Z(0x8F, new BaseTypeLong(true, 0)),
+    UINT64Z(0x90, new BaseTypeLong(true, 0)),
     ;
 
     private final int identifier;
