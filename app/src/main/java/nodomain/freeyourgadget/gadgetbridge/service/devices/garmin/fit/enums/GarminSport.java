@@ -10,6 +10,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 // and FIT files
 public enum GarminSport {
     GENERIC(0, 0, ActivityKind.ACTIVITY),
+    ELLIPTICAL_TRAINER(0, 15, ActivityKind.ELLIPTICAL_TRAINER),
     EXERCISE(0, 23, ActivityKind.EXERCISE),
     NAVIGATE(0, 50, ActivityKind.NAVIGATE),
     TRACK_ME(0, 51, ActivityKind.TRACK_ME),
@@ -32,6 +33,7 @@ public enum GarminSport {
     BIKE_INDOOR(2, 6, ActivityKind.INDOOR_CYCLING),
     ROAD_BIKE(2, 7, ActivityKind.ROAD_BIKE),
     MTB(2, 8, ActivityKind.MOUNTAIN_BIKE),
+    CYCLING_DOWNHILL(2, 9, ActivityKind.CYCLING_DOWNHILL),
     CYCLOCROSS(2, 11, ActivityKind.CYCLO_CROSS),
     HANDCYCLING(2, 12, ActivityKind.HANDCYCLING),
     E_BIKE(2, 28, ActivityKind.E_BIKE),
@@ -48,6 +50,7 @@ public enum GarminSport {
     ELLIPTICAL(4, 15, ActivityKind.ELLIPTICAL_TRAINER),
     STAIR_STEPPER(4, 16, ActivityKind.STAIR_STEPPER),
     CALISTHENICS(4, 20, ActivityKind.STRENGTH_TRAINING),
+    INDOOR_SKIING(4, 25, ActivityKind.INDOOR_SKIING),
     YOGA_EQUIPMENT(4, 43, ActivityKind.YOGA),
     PILATES(4, 44, ActivityKind.PILATES),
     SWIMMING(5, 0, ActivityKind.SWIMMING),
@@ -70,7 +73,7 @@ public enum GarminSport {
     XC_CLASSIC_SKI(12, 0, ActivityKind.XC_CLASSIC_SKI),
     XC_SKATE_SKI(12, 42, ActivityKind.XC_SKATE_SKI),
     SKI(13, 0, ActivityKind.SKIING),
-    TELEMARKSKIING(13, 9, ActivityKind.XC_CLASSIC_SKI),
+    TELEMARK_SKIING(13, 9, ActivityKind.XC_CLASSIC_SKI),
     BACKCOUNTRY_SKI(13, 37, ActivityKind.BACKCOUNTRY_SKIING),
     SNOWBOARD(14, 0, ActivityKind.SNOWBOARDING),
     BACKCOUNTRY_SNOWBOARD(14, 37, ActivityKind.BACKCOUNTRY_SNOWBOARDING),
@@ -160,12 +163,18 @@ public enum GarminSport {
     VOLLEYBALL(75, 0, ActivityKind.VOLLEYBALL),
     WATER_TUBING(76, 0, ActivityKind.WATER_TUBING),
     WAKESURFING(77, 0, ActivityKind.WAKESURFING),
+    WATER_SPORT(78, 0, ActivityKind.OTHER_WATER_SPORTS),
     ARCHERY(79, 0, ActivityKind.ARCHERY),
     MIXED_MARTIAL_ARTS(80, 0, ActivityKind.MIXED_MARTIAL_ARTS), // aka MMA
+    MOTOR_SPORT(81, 0, ActivityKind.MOTOR_SPORT),
     OVERLAND(81, 98, ActivityKind.OVERLANDING),
     SNORKELING(82, 0, ActivityKind.SNORKELING),
     DANCE(83, 0, ActivityKind.DANCE),
     JUMP_ROPE(84, 0, ActivityKind.JUMP_ROPING),
+    POOL_APNEA(85, 0, ActivityKind.APNEA_TRAINING),
+    MOBILITY(86, 0, ActivityKind.MOBILITY),
+    GEOCACHING(87, 0, ActivityKind.GEOCACHING),
+    CANOEING(88, 0, ActivityKind.CANOEING),
     TROLLING_MOTOR(99, 0, ActivityKind.TROLLING_MOTOR),
     ;
 

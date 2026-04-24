@@ -1813,6 +1813,11 @@
     <string name="activity_type_ultra_run">Ultra Run</string>
     <string name="activity_type_virtual_run">Virtual Run</string>
     <string name="activity_type_xc_skate_ski">XC Skate Ski</string>
+    <string name="activity_type_geocaching">Geocaching</string>
+    <string name="activity_type_mobility">Mobility</string>
+    <string name="activity_type_motor_sport">Motor Sport</string>
+    <string name="activity_type_cycling_downhill">Downhill</string>
+    <string name="activity_type_indoor_skiing">Indoor Skiing</string>
     <string name="activity_summaries">Sport Activities</string>
     <string name="activity_summary_detail">Sport Activity Detail</string>
     <string name="activity_summary_edit_name_title">Edit label</string>

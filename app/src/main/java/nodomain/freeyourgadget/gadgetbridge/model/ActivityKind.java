@@ -341,6 +341,11 @@ public enum ActivityKind {
     STOP_WATCH(0x04000136, R.string.activity_type_stop_watch, R.drawable.ic_timer),
     CCR_DIVING(0x04000137, R.string.activity_type_ccr_diving, R.drawable.ic_activity_diving),
     FLOORBALL(0x04000138, R.string.activity_type_floorball, R.drawable.ic_activity_hockey),
+    GEOCACHING(0x04000139, R.string.activity_type_geocaching, R.drawable.ic_travel_explore),
+    MOBILITY(0x0400013A, R.string.activity_type_mobility),
+    MOTOR_SPORT(0x0400013B, R.string.activity_type_motor_sport, R.drawable.ic_sports_motorsports),
+    CYCLING_DOWNHILL(0x0400013C, R.string.activity_type_cycling_downhill, R.drawable.ic_landscape),
+    INDOOR_SKIING(0x0400013D, R.string.activity_type_indoor_skiing, R.drawable.ic_activity_skiing),
     ;
 
     private final int code;
@@ -446,6 +451,7 @@ public enum ActivityKind {
             case GRAVEL_BIKE:
             case MOUNTAIN_BIKE:
             case ROAD_BIKE:
+            case CYCLING_DOWNHILL:
                 return CycleUnit.REVOLUTIONS;
             case FLEXIBILITY:
             case BARBELL:
