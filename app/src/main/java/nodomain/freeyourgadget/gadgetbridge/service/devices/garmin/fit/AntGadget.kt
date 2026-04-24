@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit
 
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.AntGadget
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitDeviceInfo
 import java.util.Locale
 
@@ -48,10 +49,11 @@ data class AntGadget(val manufacturer: Int, val product: Int, val name: String) 
             AntGadget(1, 1623, "Forerunner 620"),
             AntGadget(1, 1632, "Forerunner 220"),
             AntGadget(1, 1736, "Edge Touring"),
-            AntGadget(1, 1743, "HRM-Tri"),
+            AntGadget(1, 1743, "HRM-Tri"), // also HRM-Swim
             AntGadget(1, 1752, "HRM-Run"),
             AntGadget(1, 1765, "Forerunner 920XT"),
             AntGadget(1, 1836, "Edge 1000"),
+            AntGadget(1, 1837, "Vivo Fit"),
             AntGadget(1, 1903, "Forerunner 15"),
             AntGadget(1, 1907, "Vivoactive"),
             AntGadget(1, 1932, "Forerunner 15"),
@@ -96,7 +98,7 @@ data class AntGadget(val manufacturer: Int, val product: Int, val name: String) 
             AntGadget(1, 2700, "Vivoactive 3"),
             AntGadget(1, 2713, "Edge 1030"),
             AntGadget(1, 2772, "Vivomove HR"),
-            AntGadget(1, 2787, "Vector 3S"),
+            AntGadget(1, 2787, "Vector 3"),
             AntGadget(1, 2806, "Approach Z80"),
             AntGadget(1, 2859, "Descent Mk1"),
             AntGadget(1, 2886, "Forerunner 645"),
@@ -175,7 +177,7 @@ data class AntGadget(val manufacturer: Int, val product: Int, val name: String) 
             AntGadget(1, 4061, "Edge 540"),
             AntGadget(1, 4062, "Edge 840"),
             AntGadget(1, 4105, "MARQ Athlete (Gen 2)"),
-            AntGadget(1, 4130, "HRM-Pro Plus"),
+            AntGadget(1, 4130, "HRMPro+"),
             AntGadget(1, 4145, "inReach Mini 2"),
             AntGadget(1, 4155, "Instinct Crossover"),
             AntGadget(1, 4169, "Edge Explore 2"),
@@ -197,7 +199,8 @@ data class AntGadget(val manufacturer: Int, val product: Int, val name: String) 
             AntGadget(1, 4440, "Edge 1050"),
             AntGadget(1, 4442, "Descent T2"),
             AntGadget(1, 4446, "HRM-Fit"),
-            AntGadget(1, 4525, "Rally X10"),
+            AntGadget(1, 4518, "Descent X50i"),
+            AntGadget(1, 4525, "Rallyx10"),
             AntGadget(1, 4532, "Fenix 8 Solar"),
             AntGadget(1, 4533, "Fenix 8 Solar Large"),
             AntGadget(1, 4534, "Fenix 8 Small"),
@@ -210,8 +213,8 @@ data class AntGadget(val manufacturer: Int, val product: Int, val name: String) 
             AntGadget(1, 4587, "Instinct 3"),
             AntGadget(1, 4588, "Descent G2"),
             AntGadget(1, 4603, "Venu X1"),
-            AntGadget(1, 4606, "HRM 200"),
-            AntGadget(1, 4607, "HRM 600"),
+            AntGadget(1, 4606, "HRM200"),
+            AntGadget(1, 4607, "HRM600"),
             AntGadget(1, 4631, "Fenix 8 Pro"),
             AntGadget(1, 4633, "Edge 550"),
             AntGadget(1, 4634, "Edge 850"),
@@ -223,6 +226,8 @@ data class AntGadget(val manufacturer: Int, val product: Int, val name: String) 
             AntGadget(1, 4759, "Instinct 3 Solar"),
             AntGadget(1, 4825, "Approach J1"),
             AntGadget(1, 10007, "SDM4 Pod"),
+            AntGadget(1, 20119, "Training Center"),
+            AntGadget(1, 30025, "Golf iOS"),
             AntGadget(1, 65534, "Connect"),
             AntGadget(16, 87, "Timex Ironman GPS"),
             AntGadget(23, 22, "Suunto Ambit3 Peak"),
@@ -237,6 +242,7 @@ data class AntGadget(val manufacturer: Int, val product: Int, val name: String) 
             AntGadget(23, 62, "Suunto Ocean"),
             AntGadget(23, 66, "Suunto Race 2"),
             AntGadget(23, 67, "Suunto Vertical 2"),
+            AntGadget(32, 8, "TICKRX"),
             AntGadget(32, 33, "ELEMNT RIVAL"),
             AntGadget(32, 35, "TICKR FIT"),
             AntGadget(32, 37, "ELEMNT ROAM"),
@@ -248,6 +254,7 @@ data class AntGadget(val manufacturer: Int, val product: Int, val name: String) 
             AntGadget(69, 3, "Stages M200"),
             AntGadget(123, 2, "Polar H10"),
             AntGadget(123, 3, "Polar H9"),
+            AntGadget(123, 4, "Polar Verity Sense"),
             AntGadget(258, 4, "Lezyne Super GPS"),
             AntGadget(263, 10, "Assioma Uno"),
             AntGadget(263, 12, "Assioma Duo"),
@@ -282,27 +289,47 @@ data class AntGadget(val manufacturer: Int, val product: Int, val name: String) 
         }
 
         fun NameGadget(deviceInfo: FitDeviceInfo): String {
-            val n = deviceInfo.productName
-            if (!n.isNullOrEmpty()) {
-                return n
+            val descriptor = deviceInfo.descriptor
+            if (!descriptor.isNullOrEmpty()) {
+                return descriptor
+            }
+
+            val name = deviceInfo.productName
+            if (!name.isNullOrEmpty()) {
+                return name
             }
 
             val gadget = FindGadget(deviceInfo.manufacturer, deviceInfo.product)
-            if (gadget != null) {
-                return gadget.name
-            }
-
-            val ant = formatAntID(deviceInfo.antId)
-            if (ant != null) {
-                return ant
-            }
+            // by default most newer Garmin UIs append ":" and the compressed serial number (first 20 bits)
+            // The ANT ID is only available for ANT devices while the serial number is also available
+            // for Bluetooth devices, so use the compressed serial number instead of the compressed
+            // ANT ID. For ANT devices both result in the same compressed value.
 
             val serial = deviceInfo.serialNumber
             if (serial != null) {
-                return serial.toString()
+                if (gadget != null) {
+                    return gadget.name + ":" + (serial and 0xFFFFF).toString()
+                } else {
+                    return (serial and 0xFFFFF).toString()
+                }
+            } else if (gadget != null) {
+                return gadget.name
             }
 
-            return deviceInfo.deviceIndex!!.toString()
+            // instead of full hexadecimal ANT IDs shown by some older Garmin UIs, most modern UIs
+            // display a compressed decimal ANT ID
+            val ant = deviceInfo.antId
+            if (ant != null) {
+                return compressAntID(ant).toString()
+            }
+
+            val index = deviceInfo.deviceIndex
+            if (index != null){
+                return index.toString()
+            }
+
+            // fallback of the fallback -> very unlikely to get here -> no localization implemented
+            return "<???>"
         }
 
         // format ANT id to the common text representation (e.g. 1234567890 to "4-9-96-02D2")
@@ -319,6 +346,13 @@ data class AntGadget(val manufacturer: Int, val product: Int, val name: String) 
                 (id ushr 16) and 0xFF,
                 id and 0xFFFF
             )
+        }
+
+        // convert ANT id to the compressed ANT ID format - top 4 + bottom 16 bits
+        // (0xF000_FFFF -> 0xF_FFFF) - shown in decimal format by many Garmin UIs
+        // see also Sensor Settings (record 147) / Name (field 2) and ANT ID (field 0)
+        fun compressAntID(ant: Long): Int {
+            return (((ant ushr 12) and 0xF0000L) or (ant and 0xFFFFL)).toInt()
         }
     }
 }
