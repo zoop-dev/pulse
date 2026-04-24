@@ -20,6 +20,7 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
@@ -54,10 +55,10 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums.GarminSport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionBatteryStatus.BatteryStatus;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionBatteryStatus;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionExerciseCategory.ExerciseCategory;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionMeasurementSystem;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWaterType.WaterType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWaterType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitDeviceInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitDeviceStatus;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitDiveGas;
@@ -84,12 +85,19 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
     private final List<FitTimeInZone> timesInZone = new ArrayList<>();
     private final List<ActivityPoint> activityPoints = new ArrayList<>();
     private List<ActivityPoint> sessionActivityPoints;
+    @Nullable
     private FitSession session = null;
+    @Nullable
     private FitSport sport = null;
+    @Nullable
     private FitUserMetrics userMetrics = null;
+    @Nullable
     private FitUserProfile userProfile = null;
+    @Nullable
     private FitPhysiologicalMetrics physiologicalMetrics = null;
+    @Nullable
     private FitDiveSettings diveSettings = null;
+    @Nullable
     private FitDiveSummary diveSummary = null;
     private final List<FitDiveGas> diveGases = new ArrayList<>();
     private final List<FitSet> sets = new ArrayList<>();
@@ -111,7 +119,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
     }
 
     @Nullable
-    public Long getSessionStartTime(){
+    public Long getSessionStartTime() {
         return (session != null) ? session.getStartTime() : null;
     }
 
@@ -122,7 +130,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
     }
 
     @Override
-    public Workout parseWorkout(BaseActivitySummary summary, final boolean forDetails) {
+    public Workout parseWorkout(final BaseActivitySummary summary, final boolean forDetails) {
         if (!forDetails) {
             // Our parsing is too slow, especially without a RecyclerView
             return new Workout(summary, ActivitySummaryData.fromJson(summary.getSummaryData()));
@@ -211,72 +219,72 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                     ebikeBatteryEnd = ebikeBattery;
                 }
             }
-        } else if (record instanceof FitSession) {
-            LOG.debug("Session: {}", record);
+        } else if (record instanceof FitSession fitSession) {
+            LOG.debug("Session: {}", fitSession);
             if (session != null) {
-                LOG.warn("Got multiple sessions - NOT SUPPORTED: {}", record);
+                LOG.warn("Got multiple sessions - NOT SUPPORTED: {}", fitSession);
             } else {
                 // We only support 1 session
-                session = (FitSession) record;
+                session = fitSession;
                 sessionActivityPoints = (session.toActivityPoints());
             }
-        } else if (record instanceof FitPhysiologicalMetrics) {
-            LOG.debug("Physiological Metrics: {}", record);
-            physiologicalMetrics = (FitPhysiologicalMetrics) record;
-        } else if (record instanceof FitSport) {
-            LOG.debug("Sport: {}", record);
+        } else if (record instanceof FitPhysiologicalMetrics fitPhysiologicalMetrics) {
+            LOG.debug("Physiological Metrics: {}", fitPhysiologicalMetrics);
+            physiologicalMetrics = fitPhysiologicalMetrics;
+        } else if (record instanceof FitSport fitSport) {
+            LOG.debug("Sport: {}", fitSport);
             if (sport != null) {
-                LOG.warn("Got multiple sports - NOT SUPPORTED: {}", record);
+                LOG.warn("Got multiple sports - NOT SUPPORTED: {}", fitSport);
             } else {
                 // We only support 1 sport
-                sport = (FitSport) record;
+                sport = fitSport;
             }
-        } else if (record instanceof FitTimeInZone) {
-            LOG.trace("Time in zone: {}", record);
-            timesInZone.add((FitTimeInZone) record);
-        } else if (record instanceof FitSet) {
-            LOG.trace("Set: {}", record);
-            sets.add((FitSet) record);
-        } else if (record instanceof FitLap) {
-            LOG.trace("Lap: {}", record);
-            laps.add((FitLap) record);
-        } else if (record instanceof FitUserProfile) {
-            LOG.trace("User Profile: {}", record);
+        } else if (record instanceof FitTimeInZone fitTimeInZone) {
+            LOG.trace("Time in zone: {}", fitTimeInZone);
+            timesInZone.add(fitTimeInZone);
+        } else if (record instanceof FitSet fitSet) {
+            LOG.trace("Set: {}", fitSet);
+            sets.add(fitSet);
+        } else if (record instanceof FitLap fitLap) {
+            LOG.trace("Lap: {}", fitLap);
+            laps.add(fitLap);
+        } else if (record instanceof FitUserProfile fitUserProfile) {
+            LOG.trace("User Profile: {}", fitUserProfile);
             if (userProfile != null) {
-                LOG.warn("Got multiple user profiles - NOT SUPPORTED: {}", record);
+                LOG.warn("Got multiple user profiles - NOT SUPPORTED: {}", fitUserProfile);
             } else {
                 // We only support 1 user profile
-                userProfile = (FitUserProfile) record;
+                userProfile = fitUserProfile;
             }
         } else if (record instanceof FitUserMetrics metrics) {
             if (userMetrics != null) {
-                LOG.warn("Got multiple user metrics - NOT SUPPORTED: {}", record);
+                LOG.warn("Got multiple user metrics - NOT SUPPORTED: {}", metrics);
             } else {
                 userMetrics = metrics;
             }
         } else if (record instanceof FitDiveSummary newDiveSummary) {
-            LOG.trace("Dive summary: {}", record);
+            LOG.trace("Dive summary: {}", newDiveSummary);
             if (diveSummary != null) {
                 Integer referenceMesg = newDiveSummary.getReferenceMesg();
-                if(referenceMesg != null && referenceMesg != 18){
+                if (referenceMesg != null && referenceMesg != 18) {
                     // prioritize diving session (18) over records like diving laps (19)
                     // wish list for apnea diving: parse the multiple laps (19)
                     return false;
                 }
 
                 Integer referenceIndex = newDiveSummary.getReferenceIndex();
-                if(referenceIndex != null && referenceIndex != 0){
+                if (referenceIndex != null && referenceIndex != 0) {
                     // prioritize first session/lap over other session/lap
                     return false;
                 }
             }
             diveSummary = newDiveSummary;
-        } else if (record instanceof FitDiveGas) {
-            LOG.trace("Dive gas: {}", record);
-            diveGases.add((FitDiveGas) record);
-        }else if(record instanceof FitDiveSettings settings){
+        } else if (record instanceof FitDiveGas fitDiveGas) {
+            LOG.trace("Dive gas: {}", fitDiveGas);
+            diveGases.add(fitDiveGas);
+        } else if (record instanceof FitDiveSettings settings) {
             if (diveSettings != null) {
-                LOG.warn("Got multiple dive settings - NOT SUPPORTED: {}", record);
+                LOG.warn("Got multiple dive settings - NOT SUPPORTED: {}", settings);
             } else {
                 diveSettings = settings;
             }
@@ -297,8 +305,8 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                 if (volt != null && volt != 0) {
                     relevant = true;
                 } else {
-                    BatteryStatus batteryStatus = deviceInfo.getBatteryStatus();
-                    if (batteryStatus != null && batteryStatus != BatteryStatus.Unknown) {
+                    FieldDefinitionBatteryStatus.BatteryStatus batteryStatus = deviceInfo.getBatteryStatus();
+                    if (batteryStatus != null && batteryStatus != FieldDefinitionBatteryStatus.BatteryStatus.Unknown) {
                         relevant = true;
                     }
                 }
@@ -317,7 +325,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             return false;
         } else if (record instanceof FitWorkout fitWorkout) {
             if (workout != null) {
-                LOG.warn("Got multiple workout - NOT SUPPORTED: {}", record);
+                LOG.warn("Got multiple workout - NOT SUPPORTED: {}", fitWorkout);
             } else {
                 workout = fitWorkout;
             }
@@ -376,10 +384,10 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         }
 
         if (session.getTotalTimerTime() != null) {
-            summaryData.add(ACTIVE_SECONDS, session.getTotalTimerTime() / 1000f, UNIT_SECONDS);
+            summaryData.add(ACTIVE_SECONDS, session.getTotalTimerTime() / 1000.0f, UNIT_SECONDS);
         }
         if (session.getTotalDistance() != null) {
-            summaryData.add(DISTANCE_METERS, session.getTotalDistance() / 100f, UNIT_METERS);
+            summaryData.add(DISTANCE_METERS, session.getTotalDistance() / 100.0f, UNIT_METERS);
         }
         summaryData.add(POOL_LENGTH, session.getPoolLength(), UNIT_METERS);
         summaryData.add(SWOLF_AVG, session.getAvgSwolf(), UNIT_NONE);
@@ -450,7 +458,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         summaryData.add(SWIM_AVG_CADENCE, session.getAvgSwimCadence(), UNIT_STROKES_PER_LENGTH);
 
         Number speedAvg = session.getEnhancedAvgSpeed();
-        if(speedAvg == null){
+        if (speedAvg == null) {
             speedAvg = session.getAvgSpeed();
         }
         if (speedAvg != null) {
@@ -464,7 +472,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         }
 
         Number speedMax = session.getEnhancedMaxSpeed();
-        if(speedMax == null){
+        if (speedMax == null) {
             speedMax = session.getMaxSpeed();
         }
         if (speedMax != null) {
@@ -502,7 +510,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                     context.getString(
                             R.string.range_percentage_float,
                             session.getAvgStanceTimeBalance(),
-                            100f - session.getAvgStanceTimeBalance()
+                            100.0f - session.getAvgStanceTimeBalance()
                     )
             );
         }
@@ -603,16 +611,16 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
 
         final Integer balance = session.getLeftRightBalance();
         if (balance != null) {
-            final float balancePercentage = (balance & 0x3fff) / 100f;
+            final float balancePercentage = (balance & 0x3fff) / 100.0f;
             final boolean isRight = (balance & 0x8000) != 0;
             final float balanceL;
             final float balanceR;
             if (isRight) {
-                balanceL = 100f - balancePercentage;
+                balanceL = 100.0f - balancePercentage;
                 balanceR = balancePercentage;
             } else {
                 balanceL = balancePercentage;
-                balanceR = 100f - balancePercentage;
+                balanceR = 100.0f - balancePercentage;
             }
             summaryData.add(
                     LEFT_RIGHT_BALANCE,
@@ -658,7 +666,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                     continue;
                 }
                 final List<String> zoneOrder = Arrays.asList(HR_ZONE_NA, HR_ZONE_WARM_UP, HR_ZONE_EASY, HR_ZONE_AEROBIC, HR_ZONE_THRESHOLD, HR_ZONE_MAXIMUM);
-                final int[] zoneColors = new int[]{
+                final int[] zoneColors = {
                         0,
                         context.getResources().getColor(R.color.hr_zone_warm_up_color),
                         context.getResources().getColor(R.color.hr_zone_easy_color),
@@ -720,7 +728,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             if (diveSettings.getWaterDensity() != null) {
                 summaryData.add(WATER_TYPE, diveSettings.getWaterDensity(), UNIT_KG_PER_M3);
             } else {
-                WaterType waterType = diveSettings.getWaterType();
+                FieldDefinitionWaterType.WaterType waterType = diveSettings.getWaterType();
                 if (waterType != null) {
                     summaryData.add(WATER_TYPE, waterType.toString(context));
                 }
@@ -745,7 +753,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         summaryData.add(BODY_ENERGY_AT_START, session.getBeginningBodyBattery(), UNIT_PERCENTAGE);
         summaryData.add(BODY_ENERGY_AT_END, session.getEndingBodyBattery(), UNIT_PERCENTAGE);
 
-        summaryData.add(SOLAR_INTENSITY, safeRound(session.getSolarIntensity()), UNIT_PERCENTAGE);
+        summaryData.add(SOLAR_INTENSITY, session.getSolarIntensity(), UNIT_PERCENTAGE);
         summaryData.add(BATTERY_GAIN, session.getBatteryGain(), UNIT_SECONDS);
 
         if (!diveGases.isEmpty()) {
@@ -808,7 +816,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                 final FitDeviceInfo deviceInfo = entry.getValue();
                 final String device = AntGadget.Companion.NameGadget(deviceInfo);
 
-                BatteryStatus rawStatus = deviceInfo.getBatteryStatus();
+                FieldDefinitionBatteryStatus.BatteryStatus rawStatus = deviceInfo.getBatteryStatus();
                 @Nullable final String status;
                 if (rawStatus != null) {
                     status = rawStatus.toString(context);
@@ -981,15 +989,8 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         return false;
     }
 
-    public Number safeRound(final Number number) {
-        if (number == null) {
-            return null;
-        }
-
-        return Math.round(number.doubleValue());
-    }
-
-    private static ActivityKind getActivityKind(Integer sport, Integer subsport) {
+    @NonNull
+    private static ActivityKind getActivityKind(@Nullable Integer sport, @Nullable Integer subsport) {
         // Garmin inReach Mini 2: sport and subsport are missing (null)
         if (sport == null) {
             sport = 0;
