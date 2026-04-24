@@ -265,6 +265,8 @@ public class ActivitySummaryEntries {
     public static final String UNIT_BAR_PER_MINUTE = "unit_bar_per_minute";
     public static final String UNIT_VOLT = "unit_volt";
     public static final String UNIT_KG_PER_M3 = "unit_kg_per_m3";
+    public static final String UNIT_BAR = "unit_bar";
+    public static final String UNIT_LITER = "unit_liter";
 
     public static final String GROUP_PACE = "Pace";
     public static final String GROUP_ACTIVITY = "Activity";
@@ -314,6 +316,7 @@ public class ActivitySummaryEntries {
     public static final String MAX_DEPTH = "diving_maximum_diving_depth";
     public static final String WATER_TYPE = "diving_water_type";
     public static final String GROUP_GAS = "diving_gas";
+    public static final String DIVING_HANG_TIME = "diving_hang_time";
 
     /**
      * Used to signal that this activity has a gps track. This is currently used by ActivitySummaryDetail

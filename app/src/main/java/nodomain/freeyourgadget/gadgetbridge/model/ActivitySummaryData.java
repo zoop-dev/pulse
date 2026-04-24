@@ -1,4 +1,4 @@
-/*  Copyright (C) 2024 José Rebelo
+/*  Copyright (C) 2024-2026 José Rebelo, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -62,42 +62,51 @@ public class ActivitySummaryData {
         this.entries = entries;
     }
 
-    public void add(final String key, final Number value, final String unit) {
-        add(null, key, value, unit, false);
+    /// @return {@code true} if the value was actually added
+    public boolean add(final String key, final Number value, final String unit) {
+        return add(null, key, value, unit, false);
     }
 
-    public void add(final String key, final String unit, final Number value, final Number valueFallback) {
+    /// @return {@code true} if the value was actually added
+    public boolean add(final String key, final String unit, final Number value, final Number valueFallback) {
         if (value != null) {
-            add(null, key, value, unit, false);
+            return add(null, key, value, unit, false);
         } else {
-            add(null, key, valueFallback, unit, false);
+            return add(null, key, valueFallback, unit, false);
         }
     }
 
-    public void add(final String key, final Number value, final String unit, boolean forceDisplay) {
-        add(null, key, value, unit, forceDisplay);
+    /// @return {@code true} if the value was actually added
+    public boolean add(final String key, final Number value, final String unit, boolean forceDisplay) {
+        return add(null, key, value, unit, forceDisplay);
     }
 
-    public void add(final String group, final String key, final Number value, final String unit) {
-        add(group, key, value, unit, false);
+    /// @return {@code true} if the value was actually added
+    public boolean add(final String group, final String key, final Number value, final String unit) {
+        return add(group, key, value, unit, false);
     }
 
-    public void add(final String group, final String key, final Number value, final String unit, boolean forceDisplay) {
+    /// @return {@code true} if the value was actually added
+    public boolean add(final String group, final String key, final Number value, final String unit, boolean forceDisplay) {
         if (value != null && (value.doubleValue() != 0 || forceDisplay)) {
             entries.put(key, new ActivitySummarySimpleEntry(group, value, unit));
+            return true;
         }
+        return false;
     }
 
-    public void add(final String key, final String value) {
-        add(null, key, value);
+    /// @return {@code true} if the value was actually added
+    public boolean add(final String key, final String value) {
+        return add(null, key, value);
     }
 
-    public void add(final String group, final String key, final String value) {
+    public boolean add(final String group, final String key, final String value) {
         if (StringUtils.isBlank(key) || StringUtils.isBlank(value)) {
-            return;
+            return false;
         }
 
         entries.put(key, new ActivitySummarySimpleEntry(group, value, ActivitySummaryEntries.UNIT_STRING));
+        return true;
     }
 
     public void add(final String key, final ActivitySummaryEntry entry) {

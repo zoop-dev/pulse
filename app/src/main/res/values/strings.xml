@@ -1063,7 +1063,7 @@
     <string name="diving_nitrogen_load">Nitrogen load</string>
     <string name="diving_oxygen_toxicity">Oxygen toxicity</string>
     <string name="unit_oxygen_toxicity_units">OTU</string>
-    <string name="diving_surface_interval">Surface interval</string>
+    <string name="diving_surface_interval">Surface Interval</string>
     <string name="clock">Clock</string>
     <string name="heart_rate">Heart rate</string>
     <string name="hr_resting">Resting</string>
@@ -2735,6 +2735,12 @@
     <string name="unit_bar_per_minute">bar/min</string>
     <string name="unit_kg_per_m3">kg/m³</string>
     <string name="unit_volt">V</string>
+    <string name="unit_bar">bar</string>
+    <string name="unit_liter">L</string>
+    <string name="diving_tank">Tank</string>
+    <!-- consumed volume or pressure from a diving gas tank -->
+    <string name="diving_tank_used">Used</string>
+    <string name="diving_hang_time">Hang Time</string>
     <string name="water_type_custom">Custom</string>
     <string name="water_type_en13319">EN13319</string>
     <string name="water_type_fresh">Fresh</string>
@@ -2820,7 +2826,7 @@
     <string name="diving_start_n2">Start N2 load</string>
     <string name="diving_end_n2">End N2 load</string>
     <string name="dive_number">Dive number</string>
-    <string name="diving_bottom_time">Bottom time</string>
+    <string name="diving_bottom_time">Bottom Time</string>
     <!-- activity summary units-->
     <string name="meters">m</string>
     <string name="cm">cm</string>
