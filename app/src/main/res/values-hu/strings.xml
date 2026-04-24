@@ -4254,4 +4254,9 @@
     <string name="sony_button_function_nc_ambient_switch_ambient_sound">Váltás környezeti hangra</string>
     <string name="sony_button_function_nc_ambient_google_assistant">Google segéd</string>
     <string name="sony_button_function_nc_ambient_alexa_assistant">Alexa segéd</string>
+    <string name="pref_summary_chart_sleep_range">Meghatározza, hogy egy alvási munkamenet melyik napra legyen beosztva</string>
+    <string name="pref_chart_sleep_range_rolling_24h">24 órás működés</string>
+    <string name="pref_chart_sleep_range_noon">Dél (12:00)</string>
+    <string name="pref_chart_sleep_range_18h">Este (18:00)</string>
+    <string name="unit_kilojoule">kJ</string>
 </resources>
