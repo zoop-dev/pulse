@@ -173,7 +173,7 @@
     <string name="devicetype_unknown">Bilinmeyen Aygıt</string>
     <string name="discovery_attempting_to_pair">%1$s ile eşleşmeye çalışılıyor</string>
     <string name="discovery_bonding_failed_immediately">%1$s ile etkileşim anında başarısız oldu.</string>
-    <string name="discovery_connected_devices_hint">Aygıtınızı bulunabilir hale getirin. Şu anda bağlı aygıtlar muhtemelen keşfedilmeyecek. Android 6+ için konumu (örn. GPS) etkinleştirin. Gadgetbridge için Gizlilik Korumasını (Privacy Guard) devre dışı bırakın, çünkü çökebilir ve telefonunuzu yeniden başlatabilir. Birkaç dakika sonra hiçbir aygıt bulunmazsa, mobil aygıtınızı yeniden başlattıktan sonra tekrar deneyin.</string>
+    <string name="discovery_connected_devices_hint">Aygıtınızı bulunabilir hale getirin. Şu anda bağlı aygıtlar muhtemelen keşfedilmeyecek. Konumu (örn. GPS) etkinleştirin. Gadgetbridge için Gizlilik Korumasını (Privacy Guard) devre dışı bırakın, çünkü çökebilir ve telefonunuzu yeniden başlatabilir. Birkaç dakika sonra hiçbir aygıt bulunmazsa, mobil aygıtınızı yeniden başlattıktan sonra tekrar deneyin.</string>
     <string name="discovery_dont_pair">Eşleştirme</string>
     <string name="discovery_enable_bluetooth">Aygıtları bulmak için Bluetooth\'u etkinleştir.</string>
     <string name="discovery_need_to_enter_authkey">Bu aygıt için gizli bir kimlik doğrulama anahtarı gerekiyor, girmek için aygıta uzun basın. Daha fazla bilgi için web sitesini ziyaret edin.</string>
@@ -373,7 +373,7 @@
     <string name="miband2_prefs_dateformat">Tarih biçimi</string>
     <string name="miband2_prefs_timeformat">Mi2: Zaman biçimi</string>
     <string name="miband_firmware_known">Bu ürün yazılımı test edilmiştir ve Gadgetbridge ile uyumlu olduğu bilinmektedir.</string>
-    <string name="miband_firmware_suggest_whitelist">Her şey düzgün çalışıyorsa, lütfen Gadgetbridge geliştiricilerine %s ürün yazılımı sürümünü beyaz listeye eklemelerini söyleyin.</string>
+    <string name="miband_firmware_suggest_whitelist">Yine de devam etmek istiyorsanız ve sonrasında her şey düzgün çalışmaya devam ederse, lütfen Gadgetbridge geliştiricilerine %s ürün yazılımı sürümünü beyaz listeye eklemelerini söyleyin.</string>
     <string name="miband_firmware_unknown_warning">Bu ürün yazılımı test edilmemiştir ve Gadgetbridge ile uyumlu olmayabilir.
 \n
 \nKurulması TAVSİYE EDİLMEZ!</string>
@@ -1911,7 +1911,7 @@
     <string name="pref_title_notification_media_ignores_application_list">Medya bildirimleri uygulama listesini yok sayar</string>
     <string name="pref_summary_notification_media_ignores_application_list">Medya bildirimlerini uygulama listesinden önce işle. Bu tercih işaretli değilse, medya denetimlerinin aygıtta çalışması için uygulama listesinde medya uygulamalarına izin verilmesi gerekir.</string>
     <string name="debugactivity_confirm_remove_device_preferences_title">Aygıt tercihleri kaldırılsın mı\?</string>
-    <string name="debugactivity_confirm_remove_device_preferences">Bu, bağlı tüm aygıtlar için aygıt tercihlerini sıfırlayacak. Emin misiniz?</string>
+    <string name="debugactivity_confirm_remove_device_preferences">Bu işlem, bu aygıt için aygıt tercihlerini sıfırlayacak. Emin misiniz?</string>
     <string name="fw_upgrade_notice_amazfit_band7">Amazfit Band 7 aygıtınıza %s ürün yazılımını kurmak üzeresiniz.
 \n
 \nBilekliğiniz .zip dosyasını kurduktan sonra yeniden başlatılacak.
@@ -2939,7 +2939,7 @@
     <string name="activity_type_jai_alai">Jai alai</string>
     <string name="activity_type_jujitsu">Jujutsu</string>
     <string name="activity_type_modern_dance">Çağdaş Dans</string>
-    <string name="activity_type_muay_thai">Muay thai</string>
+    <string name="activity_type_muay_thai">Muay Thai</string>
     <string name="activity_type_parallel_bars">Paralel çubuk</string>
     <string name="activity_type_shuffleboard">Disk İteleme Oyunu</string>
     <string name="activity_type_somatosensory_game">Somatosensoriyel oyun</string>
@@ -3820,4 +3820,54 @@
     <string name="pref_huawei_arterial_stiffness_detection">Damar sertliği algılama</string>
     <string name="pref_huawei_arterial_stiffness_detection_enable_title">Damar sertliği algılamayı etkinleştir</string>
     <string name="pref_huawei_arterial_stiffness_detection_enable_summary">Aygıtta damar sertliği algılamayı etkinleştirin</string>
+    <string name="pref_header_sync">Eşzamanlama</string>
+    <string name="pref_header_dashboard">Gösterge tablosu</string>
+    <string name="pref_title_notifications_when_screen_saver">…ayrıca ekran koruyucu açıkken</string>
+    <string name="permission_not_granted_contacts">Kişiler izni verilmedi</string>
+    <string name="permission_not_granted_calendar">Takvim izni verilmedi</string>
+    <string name="pref_summary_calendar_sync_choose">Aygıtla eşzamanlanacak takvimleri ve renk etiketlerini seçin</string>
+    <string name="pref_title_calendar_sync_choose">Eşzamanlanacak takvimler</string>
+    <string name="pref_title_calendar_sync_colors">Eşzamanlanacak etkinlik renkleri</string>
+    <string name="pref_summary_calendar_sync_canceled">İptal edilen takvim etkinlikleri aygıtla eşzamanlanacaktır</string>
+    <string name="pref_title_calendar_sync_canceled">İptal edilen etkinlikleri eşzamanla</string>
+    <string name="pref_summary_calendar_sync_declined">Reddettiğiniz takvim etkinlikleri aygıtla eşzamanlanacaktır</string>
+    <string name="pref_title_calendar_sync_declined">Reddedilen etkinlikleri eşzamanla</string>
+    <string name="pref_summary_calendar_sync_all_day">\"Tüm Gün\" olarak işaretlenen takvim etkinlikleri aygıtla eşzamanlanacaktır</string>
+    <string name="pref_title_calendar_sync_all_day">Tüm gün etkinliklerini eşzamanla</string>
+    <string name="pref_summary_calendar_sync_focus_time">\"Odaklanma Zamanı\" olarak etiketlenen takvim etkinlikleri aygıtla eşzamanlanacaktır</string>
+    <string name="pref_title_calendar_sync_focus_time">Odaklanma zamanı etkinliklerini eşzamanla</string>
+    <string name="pref_summary_calendar_sync_working_location">Özel \"Çalışma Yerleri\" olarak işaretlenen takvim etkinlikleri aygıtla eşzamanlanacaktır</string>
+    <string name="pref_title_calendar_sync_working_location">Çalışma yeri etkinliklerini eşzamanla</string>
+    <string name="pref_summary_calendar_sync_event_reminders">Etkinlik hatırlatıcı bildirimler aygıtla eşzamanlanacaktır</string>
+    <string name="pref_title_calendar_sync_event_reminders">Etkinlik hatırlatıcıları eşzamanla</string>
+    <string name="pref_title_nautical_units">Denizcilik birimleri</string>
+    <string name="pref_summary_nautical_units">Denizcilik etkinlikleri için hız ve mesafe birimlerini knot / mil olarak göster</string>
+    <string name="pref_title_unit_distance">Mesafe birimi</string>
+    <string name="pref_title_unit_temperature">Sıcaklık birimi</string>
+    <string name="pref_title_unit_weight">Ağırlık birimi</string>
+    <string name="pref_header_auto_export_gpx">GPX izlemelerini otomatik dışa aktar</string>
+    <string name="pref_auto_export_gpx_summary">Etkinlik izlemelerini eşzamanlarken GPX dosyalarını otomatik dışa aktar</string>
+    <string name="pref_export_directory">Dışa aktarma dizini</string>
+    <string name="pref_auto_export_gpx_all_devices_summary">Tüm aygıtlardan GPX izlemelerini dışa aktar</string>
+    <string name="pref_auto_export_gpx_selected_devices">Seçili aygıtlar</string>
+    <string name="pref_auto_export_gpx_selected_devices_summary">GPX izlemelerini hangi aygıtlardan dışa aktaracağınızı seçin</string>
+    <string name="pref_restart_logging_title">Günlük kaydını başlat</string>
+    <string name="pref_restart_logging_summary">Günlük dosyasını başlatmayı denemek için buraya tıklayın</string>
+    <string name="pref_experimental_settings_title">Deneysel ayarlar</string>
+    <string name="pref_experimental_settings_summary">Deneysel ayarlar kararsız olabilir veya beklendiği gibi çalışmayabilir. İlerlemeniz durumunda risk size aittir.</string>
+    <string name="busy_task_fetch_glucose_data">Glikoz verileri getiriliyor</string>
+    <string name="busy_task_fetch_blood_pressure_data">Kan basıncı verileri getiriliyor</string>
+    <string name="glucose_level_threshold_high">Yüksek glikoz eşiği</string>
+    <string name="glucose_level_threshold_low">Düşük glikoz eşiği</string>
+    <string name="uploading_resources">Kaynaklar yükleniyor…</string>
+    <string name="stride">Adım</string>
+    <string name="stamina">Dayanıklılık</string>
+    <string name="step_length">Adım Uzunluğu</string>
+    <string name="blood_pressure_measurement_count">Ölçümler</string>
+    <string name="blood_pressure_export_date">Tarih</string>
+    <string name="blood_pressure_avg_format">%1$d/%2$d</string>
+    <string name="prefs_device_alias">Aygıt takma adı</string>
+    <string name="auto_export_invalid_location">Geçersiz dışa aktarma konumu: %s</string>
+    <string name="save">Kaydet</string>
+    <string name="done">Bitti</string>
 </resources>
