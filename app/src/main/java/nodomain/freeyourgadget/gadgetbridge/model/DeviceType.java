@@ -308,6 +308,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.huaweiwatchgt5.Huawei
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.huaweiwatchgt6.HuaweiWatchGT6Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.huaweiwatchgtcyber.HuaweiWatchGTCyberCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.huaweiwatchgtrunner.HuaweiWatchGTRunnerCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.huaweiwatchgtrunner2.HuaweiWatchGTRunner2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.huaweiwatchultimate.HuaweiWatchUltimateCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.id115.ID115Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.idasen.IdasenCoordinator;
@@ -829,6 +830,7 @@ public enum DeviceType {
     HUAWEIWATCHGT5(HuaweiWatchGT5Coordinator.class),
     HUAWEIWATCHGT6(HuaweiWatchGT6Coordinator.class),
     HUAWEIWATCHGTRUNNER(HuaweiWatchGTRunnerCoordinator.class),
+    HUAWEIWATCHGTRUNNER2(HuaweiWatchGTRunner2Coordinator.class),
     HUAWEIWATCHGTCYBER(HuaweiWatchGTCyberCoordinator.class),
     HUAWEIBAND8(HuaweiBand8Coordinator.class),
     HUAWEIBAND9(HuaweiBand9Coordinator.class),
