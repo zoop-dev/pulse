@@ -4259,4 +4259,14 @@
     <string name="pref_chart_sleep_range_noon">Dél (12:00)</string>
     <string name="pref_chart_sleep_range_18h">Este (18:00)</string>
     <string name="unit_kilojoule">kJ</string>
+    <string name="activity_type_geocaching">Geoláda-keresés</string>
+    <string name="activity_type_mobility">Mozgékonyság</string>
+    <string name="activity_type_motor_sport">Motorsport</string>
+    <string name="activity_type_cycling_downhill">Lesiklás</string>
+    <string name="activity_type_indoor_skiing">Beltéri síelés</string>
+    <string name="unit_bar">bar</string>
+    <string name="unit_liter">L</string>
+    <string name="diving_tank">Búvárpalack</string>
+    <string name="diving_tank_used">Használt</string>
+    <string name="diving_hang_time">Merülési idő</string>
 </resources>
