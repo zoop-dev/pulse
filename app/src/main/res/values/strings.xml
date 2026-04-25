@@ -2045,6 +2045,7 @@
     <string name="devicetype_garmin_forerunner_255s_music" translatable="false">Garmin Forerunner 255S Music</string>
     <string name="devicetype_garmin_forerunner_265" translatable="false">Garmin Forerunner 265</string>
     <string name="devicetype_garmin_forerunner_265s" translatable="false">Garmin Forerunner 265S</string>
+    <string name="devicetype_garmin_forerunner_570" translatable="false">Garmin Forerunner 570</string>
     <string name="devicetype_garmin_forerunner_620" translatable="false">Garmin Forerunner 620</string>
     <string name="devicetype_garmin_forerunner_630" translatable="false">Garmin Forerunner 630</string>
     <string name="devicetype_garmin_forerunner_645_music" translatable="false">Garmin Forerunner 645 Music</string>
