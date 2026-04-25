@@ -4413,4 +4413,14 @@
     <string name="pref_chart_sleep_range_noon">正午（12:00）</string>
     <string name="pref_chart_sleep_range_18h">傍晚（18:00）</string>
     <string name="unit_kilojoule">千焦</string>
+    <string name="activity_type_geocaching">地理寻宝</string>
+    <string name="activity_type_mobility">活动性</string>
+    <string name="activity_type_motor_sport">摩托车运动</string>
+    <string name="activity_type_cycling_downhill">下山</string>
+    <string name="activity_type_indoor_skiing">室内滑雪</string>
+    <string name="unit_bar">巴</string>
+    <string name="unit_liter">升</string>
+    <string name="diving_tank">气罐</string>
+    <string name="diving_tank_used">已用</string>
+    <string name="diving_hang_time">滞留时间</string>
 </resources>
