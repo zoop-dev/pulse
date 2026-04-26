@@ -937,7 +937,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                 tableBuilder.addRow(
                         "device_info_" + deviceIndex,
                         Arrays.asList(
-                                new ActivitySummaryValue(device, UNIT_NONE),
+                                new ActivitySummaryValue(device, UNIT_RAW_STRING),
                                 new ActivitySummaryValue(status),
                                 new ActivitySummaryValue(level, level_uom)
                         )
