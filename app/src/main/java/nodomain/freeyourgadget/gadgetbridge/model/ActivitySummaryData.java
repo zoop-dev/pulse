@@ -88,7 +88,11 @@ public class ActivitySummaryData {
 
     /// @return {@code true} if the value was actually added
     public boolean add(final String group, final String key, final Number value, final String unit, boolean forceDisplay) {
-        if (value != null && (value.doubleValue() != 0 || forceDisplay)) {
+        if (value == null || !Double.isFinite(value.doubleValue())) {
+            return false;
+        }
+
+        if (value.doubleValue() != 0 || forceDisplay) {
             entries.put(key, new ActivitySummarySimpleEntry(group, value, unit));
             return true;
         }
