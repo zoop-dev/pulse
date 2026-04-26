@@ -31,7 +31,7 @@ tasks.register("buildGitChangelog"){
     outputs.file(changelogFile)
 
     doLast {
-        final def allCommits
+        def allCommits
         try {
             allCommits = providers.exec {
                 commandLine('git', 'log', '--pretty=format:%h %s')
