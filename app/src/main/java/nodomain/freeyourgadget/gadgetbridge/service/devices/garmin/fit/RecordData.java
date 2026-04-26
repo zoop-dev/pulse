@@ -234,6 +234,11 @@ public class RecordData {
             if(clazz.equals(Integer.class)){
                 return clazz.cast(number.intValue());
             }
+
+            // required for common COROS size mismatches like: FitEvent[event] type UINT32 with actual size 1
+            if (Long.class.equals(clazz)) {
+                return clazz.cast(number.longValue());
+            }
         }
 
         LOG.error(
