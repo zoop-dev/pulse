@@ -1,6 +1,11 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.event.Level;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -2567,17 +2572,58 @@ public class NativeFITMessage {
     }
 
     @Nullable
-    FieldDefinition getFieldDefinition(int id, int size) {
+    FieldDefinition getFieldDefinition(int id, int size, @NonNull BaseType baseType) {
         if (null == fieldDefinitionPrimitives)
             return null;
         for (NativeFITMessage.FieldDefinitionPrimitive fieldDefinitionPrimitive :
                 fieldDefinitionPrimitives) {
             if (fieldDefinitionPrimitive.number == id) {
+                // some .FIT encoders don't strictly stick to current standard
+                // try to handle common cases gracefully
+                Level logLevel = null;
+
+                final BaseType stdBaseType = fieldDefinitionPrimitive.baseType;
+                if (stdBaseType == BaseType.ENUM && baseType == BaseType.UINT8) {
+                    // very common issue
+                    logLevel = Level.DEBUG;
+                } else if (stdBaseType == BaseType.UINT32Z && baseType == BaseType.UINT32) {
+                    // quite common issue
+                    logLevel = Level.INFO;
+                } else if (stdBaseType != baseType) {
+                    logLevel = Level.WARN;
+                }
+
+                if ((size % baseType.getSize()) != 0) {
+                    logLevel = Level.WARN;
+                }
+
+                if (logLevel != null) {
+                    LOG.atLevel(logLevel).log(
+                            "Native for {}[{}] is of type {} with size {} (base: {}), but message declares {} with size {} (base: {})",
+                            name(),
+                            fieldDefinitionPrimitive.name,
+                            stdBaseType,
+                            fieldDefinitionPrimitive.size,
+                            stdBaseType.getSize(),
+                            baseType,
+                            size,
+                            baseType.getSize()
+                    );
+
+                    if (size == 1 && (baseType == BaseType.UINT16 || baseType == BaseType.UINT32 || baseType == BaseType.UINT64)) {
+                        // very common issue for COROS:
+                        // Native for EVENT[data] is of type UINT32 with size 4 (base: 4), but message declares UINT32 with size 1 (base: 4)
+                        LOG.warn("redefining field base type from {} to {} due to size",
+                                baseType, BaseType.UINT8);
+                        baseType = BaseType.UINT8;
+                    }
+                }
+
                 return FieldDefinitionFactory.create(
                         fieldDefinitionPrimitive.number,
                         size,
                         fieldDefinitionPrimitive.type,
-                        fieldDefinitionPrimitive.baseType,
+                        baseType,
                         fieldDefinitionPrimitive.name,
                         fieldDefinitionPrimitive.scale,
                         fieldDefinitionPrimitive.offset
@@ -2690,4 +2736,6 @@ public class NativeFITMessage {
             return result;
         }
     }
+
+    private static final Logger LOG = LoggerFactory.getLogger(NativeFITMessage.class);
 }
