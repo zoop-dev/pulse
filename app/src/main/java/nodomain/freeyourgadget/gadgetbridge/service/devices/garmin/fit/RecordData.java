@@ -174,7 +174,16 @@ public class RecordData {
     }
 
     public <T> T getFieldByNumber(int number, final Class<T> clazz) {
-        return safeCast(getFieldByNumber(number), clazz);
+        Object object = getFieldByNumber(number);
+        if (object == null)
+            return null;
+
+        // when CIQ fields are used value arrays instead of single values are sometimes recorded
+        if (!clazz.isArray() && object.getClass().isArray() && 0 < Array.getLength(object)) {
+            object = Array.get(object, 0);
+        }
+
+        return safeCast(object, clazz);
     }
 
     public <T> T[] getArrayFieldByNumber(int number, final Class<T> clazz) {
@@ -213,6 +222,18 @@ public class RecordData {
         }
         if (clazz.isInstance(object)) {
             return clazz.cast(object);
+        }
+
+        if(object instanceof Number number){
+            // some older Garmin devices encoded e.g.
+            // [distance] and [enhanced_speed] as float instead of double
+            // [cadence] as float instead of integer
+            if(clazz.equals(Double.class)){
+                return clazz.cast(number.doubleValue());
+            }
+            if(clazz.equals(Integer.class)){
+                return clazz.cast(number.intValue());
+            }
         }
 
         LOG.error(
