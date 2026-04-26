@@ -42,29 +42,20 @@ public class FieldDefinition implements FieldInterface {
         int size = garminByteBufferReader.readByte();
         int baseTypeIdentifier = garminByteBufferReader.readByte();
         BaseType baseType = BaseType.fromIdentifier(baseTypeIdentifier);
-        FieldDefinition nativeFITMessageFieldDefinition = nativeFITMessage.getFieldDefinition(number, size);
+        FieldDefinition nativeFITMessageFieldDefinition = nativeFITMessage.getFieldDefinition(number, size, baseType);
         if (nativeFITMessageFieldDefinition != null) {
-            if (nativeFITMessageFieldDefinition.getBaseType().equals(baseType)) {
-                return nativeFITMessageFieldDefinition;
-            } else {
-                if (baseType == BaseType.UINT8 && nativeFITMessageFieldDefinition.getBaseType() == BaseType.ENUM) {
-                    // Allow uint8 -> enum, as older fit versions changed the type of some fields
-                    return nativeFITMessageFieldDefinition;
-                }
-                LOG.warn(
-                        "Native for {}[{}] is of type {}, but message declares {}",
-                        nativeFITMessage.name(),
-                        nativeFITMessageFieldDefinition.name,
-                        nativeFITMessageFieldDefinition.getBaseType(),
-                        baseType
-                );
-            }
+            return nativeFITMessageFieldDefinition;
         }
 
         if (number == 253 && size == 4 && baseType.equals(BaseType.UINT32)) {
             return new FieldDefinitionTimestamp(number, size, baseType, "253_timestamp");
         }
 
+        if (0 != (size % baseType.getSize())) {
+            LOG.warn("inconsistent size of field {} in record {}/{} - total size: {}, base size: {}, base type: {}",
+                    number, nativeFITMessage.getNumber(), nativeFITMessage.name(), size,
+                    baseType.getSize(), baseType);
+        }
         return new FieldDefinition(number, size, baseType, "");
     }
 
