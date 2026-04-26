@@ -1918,6 +1918,12 @@ public class FitSession extends RecordData {
 
     public List<ActivityPoint> toActivityPoints() {
         final List<ActivityPoint> activityPoints = new ArrayList<ActivityPoint>();
+
+        if(getComputedTimestamp() == null) {
+            // some sessions - especially from Strava, have no time stamp
+            return activityPoints;
+        }
+
         final ActivityPoint startActivityPoint = new ActivityPoint();
         startActivityPoint.setTime(new Date(getComputedTimestamp() * 1000L));
         if (getStartLatitude() != null && getStartLongitude() != null) {
