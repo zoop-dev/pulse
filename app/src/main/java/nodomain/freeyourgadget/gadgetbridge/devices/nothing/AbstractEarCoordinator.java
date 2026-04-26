@@ -82,5 +82,11 @@ public abstract class AbstractEarCoordinator extends AbstractBLClassicDeviceCoor
 
     public abstract boolean incrementCounter();
 
-    public abstract boolean supportsLightAncAndTransparency();
+    public boolean supportsInEarDetection() {
+        return true;
+    }
+
+    public abstract boolean supportsLightAnc();
+
+    public abstract boolean supportsTransparency();
 }

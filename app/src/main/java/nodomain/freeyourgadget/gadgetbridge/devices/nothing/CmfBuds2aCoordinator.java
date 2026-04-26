@@ -1,5 +1,4 @@
-/*  Copyright (C) 2021-2024 Damien Gaignon, Daniel Dakhno, Daniele Gobbetti,
-    José Rebelo, Petr Vaněk
+/*  Copyright (C) 2026 José Rebelo
 
     This file is part of Gadgetbridge.
 
@@ -21,25 +20,35 @@ import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 
-public class Ear1Coordinator extends AbstractEarCoordinator {
+public class CmfBuds2aCoordinator extends AbstractEarCoordinator {
+    @Override
+    public boolean isExperimental() {
+        return true;
+    }
+
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("Nothing ear (1)", Pattern.LITERAL);
+        return Pattern.compile("^CMF Buds 2a$");
     }
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_nothingear1;
+        return R.string.devicetype_nothing_cmf_buds_2a;
     }
 
     @Override
     public boolean incrementCounter() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsInEarDetection() {
         return false;
     }
 
     @Override
     public boolean supportsLightAnc() {
-        return true;
+        return false;
     }
 
     @Override

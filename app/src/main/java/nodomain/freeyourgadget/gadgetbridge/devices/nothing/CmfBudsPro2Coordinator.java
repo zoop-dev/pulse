@@ -37,7 +37,12 @@ public class CmfBudsPro2Coordinator extends AbstractEarCoordinator {
     }
 
     @Override
-    public boolean supportsLightAncAndTransparency() {
+    public boolean supportsLightAnc() {
+        return true;
+    }
+
+    @Override
+    public boolean supportsTransparency() {
         return true;
     }
 }

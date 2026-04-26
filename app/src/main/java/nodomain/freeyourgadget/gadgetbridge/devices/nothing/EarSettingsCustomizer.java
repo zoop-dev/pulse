@@ -52,7 +52,14 @@ public class EarSettingsCustomizer implements DeviceSpecificSettingsCustomizer {
     public void customizeSettings(final DeviceSpecificSettingsHandler handler, final Prefs prefs, final String rootKey) {
         final AbstractEarCoordinator earCoordinator = (AbstractEarCoordinator) handler.getDevice().getDeviceCoordinator();
 
-        if (!earCoordinator.supportsLightAncAndTransparency()) {
+        if (!earCoordinator.supportsInEarDetection()) {
+            final Preference inEarPreference = handler.findPreference(DeviceSettingsPreferenceConst.PREF_NOTHING_EAR1_INEAR);
+            if (inEarPreference != null) {
+                inEarPreference.setVisible(false);
+            }
+        }
+
+        if (!earCoordinator.supportsLightAnc() || !earCoordinator.supportsTransparency()) {
             // If light anc and transparency is not supported, remove the values from the preference
             final Preference audioModePref = handler.findPreference(DeviceSettingsPreferenceConst.PREF_NOTHING_EAR1_AUDIOMODE);
 
@@ -64,10 +71,14 @@ public class EarSettingsCustomizer implements DeviceSpecificSettingsCustomizer {
                 final List<CharSequence> entryValues = new ArrayList<>();
 
                 for (int i = 0; i < originalEntries.length; i++) {
-                    if ("anc".equals(originalEntryValues[i].toString()) || "off".equals(originalEntryValues[i].toString())) {
-                        entries.add(originalEntries[i]);
-                        entryValues.add(originalEntryValues[i]);
+                    if ("anclight".equals(originalEntryValues[i].toString()) && !earCoordinator.supportsLightAnc()) {
+                        continue;
                     }
+                    if ("transparency".equals(originalEntryValues[i].toString()) && !earCoordinator.supportsTransparency()) {
+                        continue;
+                    }
+                    entries.add(originalEntries[i]);
+                    entryValues.add(originalEntryValues[i]);
                 }
 
                 ((ListPreference) audioModePref).setEntries(entries.toArray(new CharSequence[0]));

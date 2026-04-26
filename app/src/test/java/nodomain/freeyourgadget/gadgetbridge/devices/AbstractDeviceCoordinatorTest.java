@@ -30,6 +30,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("Xiaomi Band 9 Active AB01", DeviceType.MIBAND9ACTIVE);
             put("vívoactive 6", DeviceType.GARMIN_VIVOACTIVE_6);
             put("CMF Buds 2", DeviceType.NOTHING_CMF_BUDS_2); // #5579
+            put("CMF Buds 2a", DeviceType.NOTHING_CMF_BUDS_2A); // #6028
             put("HC96", DeviceType.HC96);
             put("P8", DeviceType.WASPOS); // from wasp-os source
             put("P8DFU", DeviceType.WASPOS); // from wasp-os source
