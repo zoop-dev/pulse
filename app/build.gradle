@@ -31,9 +31,17 @@ tasks.register("buildGitChangelog"){
     outputs.file(changelogFile)
 
     doLast {
-        final def allCommits = providers.exec {
-            commandLine('git', 'log', '--pretty=format:%h %s')
-        }.standardOutput.asText.get()
+        final def allCommits
+        try {
+            allCommits = providers.exec {
+                commandLine('git', 'log', '--pretty=format:%h %s')
+            }.standardOutput.asText.get()
+        } catch (ignored) {
+            logger.warn("Skipping git changelog: git is not available")
+            changelogFile.getParentFile().mkdirs()
+            changelogFile.write(groovy.xml.XmlUtil.serialize(new Node(null, 'changelog')))
+            return
+        }
 
         def commitVersionCode = getVersionCode()
         def includedCommits = 0
