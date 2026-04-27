@@ -4356,4 +4356,7 @@
     <string name="health_connect_no_permissions">Не предоставлены разрешения Health Connect. Синхронизация невозможна.</string>
     <string name="health_connect_finished">Синхронизация данных Health Connect завершена для всех выбранных устройств.</string>
     <string name="health_connect_finished_no_data">Синхронизация данных Health Connect завершена (синхронизировать нечего)</string>
+    <string name="pref_summary_chart_sleep_range">Определяет, на какой день назначен сеанс сна</string>
+    <string name="pref_chart_sleep_range_rolling_24h">Прокатка 24 часа</string>
+    <string name="pref_chart_sleep_range_noon">Полдень (12:00)</string>
 </resources>
