@@ -1186,7 +1186,7 @@
     <string name="menuitem_barometer">Barometar</string>
     <string name="watch9_time_minutes">Minute:</string>
     <string name="qhybrid_second_timezone_offset_relative_to_utc">drugi pomak vremenske zone u odnosu na UTC</string>
-    <string name="mi2_enable_text_notifications_summary"><![CDATA[Firmware >= 1.0.1.28 i Mili_pro.ft* moraju biti instalirani.]]></string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[Firmware &gt;= 1.0.1.28 i Mili_pro.ft* moraju biti instalirani.]]></string>
     <string name="fossil_hr_synced_activity_data">Sinkronizirani podaci o aktivnostima</string>
     <string name="fossil_hr_auth_failed">Provjera autentičnosti nije uspjela, ograničena funkcionalnost</string>
     <string name="prefs_touch_lock">Zaključavanje dodirom</string>
