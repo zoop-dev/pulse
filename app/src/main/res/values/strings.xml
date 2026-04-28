@@ -3210,6 +3210,8 @@
     <string name="prefs_ambient_settings_title">Ambient Sound Options</string>
     <string name="prefs_active_noise_cancelling">Active Noise Cancelling</string>
     <string name="prefs_active_noise_cancelling_light">Light Active Noise Cancelling</string>
+    <string name="prefs_active_noise_cancelling_medium">Medium Active Noise Cancelling</string>
+    <string name="prefs_active_noise_cancelling_adaptive">Adaptive Noise Cancelling</string>
     <string name="prefs_active_noise_cancelling_transparency">Transparency</string>
     <string name="prefs_active_noise_cancelling_level">Active Noise Cancelling Level</string>
     <string name="prefs_active_noise_cancelling_level_high">High</string>

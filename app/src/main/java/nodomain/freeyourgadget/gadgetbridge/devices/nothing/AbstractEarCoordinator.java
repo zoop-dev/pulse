@@ -89,4 +89,8 @@ public abstract class AbstractEarCoordinator extends AbstractBLClassicDeviceCoor
     public abstract boolean supportsLightAnc();
 
     public abstract boolean supportsTransparency();
+
+    public abstract boolean supportsAdaptiveAnc();
+
+    public abstract boolean supportsMediumAnc();
 }

@@ -171,7 +171,9 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
 
         private enum NothingAudioMode {
             anc(0x01),
+            ancmedium(0x02),
             anclight(0x03),
+            ancadaptive(0x04),
             off(0x05),
             transparency(0x07),
             ;

@@ -74,6 +74,12 @@ public class EarSettingsCustomizer implements DeviceSpecificSettingsCustomizer {
                     if ("anclight".equals(originalEntryValues[i].toString()) && !earCoordinator.supportsLightAnc()) {
                         continue;
                     }
+                    if ("ancmedium".equals(originalEntryValues[i].toString()) && !earCoordinator.supportsTransparency()) {
+                        continue;
+                    }
+                    if ("ancadaptive".equals(originalEntryValues[i].toString()) && !earCoordinator.supportsTransparency()) {
+                        continue;
+                    }
                     if ("transparency".equals(originalEntryValues[i].toString()) && !earCoordinator.supportsTransparency()) {
                         continue;
                     }

@@ -45,4 +45,9 @@ public class EarACoordinator extends AbstractEarCoordinator {
     public boolean supportsTransparency() {
         return false;
     }
+    @Override
+    public boolean supportsMediumAnc() { return true; }
+
+    @Override
+    public boolean supportsAdaptiveAnc() { return true; }
 }

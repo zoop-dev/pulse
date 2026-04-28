@@ -44,4 +44,9 @@ public class CmfBuds2PlusCoordinator extends AbstractEarCoordinator {
         return true;
     }
 
+    @Override
+    public boolean supportsMediumAnc() { return true; }
+
+    @Override
+    public boolean supportsAdaptiveAnc() { return true; }
 }
