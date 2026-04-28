@@ -357,6 +357,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.no1f1.No1F1Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.nothing.CmfBuds2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.nothing.CmfBuds2aCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.nothing.CmfBudsPro2Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.nothing.CmfBuds2PlusCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.nothing.Ear1Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.nothing.Ear2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.nothing.EarACoordinator;
@@ -766,6 +767,7 @@ public enum DeviceType {
     NOTHING_CMF_BUDS_2(CmfBuds2Coordinator.class),
     NOTHING_CMF_BUDS_2A(CmfBuds2aCoordinator.class),
     NOTHING_CMF_BUDS_PRO_2(CmfBudsPro2Coordinator.class),
+    NOTHING_CMF_BUDS_2_PLUS(CmfBuds2PlusCoordinator.class),
     NOTHING_CMF_WATCH_PRO(CmfWatchProCoordinator.class),
     NOTHING_CMF_WATCH_PRO_2(CmfWatchPro2Coordinator.class),
     NOTHING_CMF_WATCH_PRO_3(CmfWatchPro3Coordinator.class),
