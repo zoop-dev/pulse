@@ -10,10 +10,21 @@ public final class GarminUtils {
         // utility class
     }
 
+    /** Watch lat/lon resolution: 180° spans the signed-32-bit range, so 1 semicircle = 180/2^31 degrees. */
+    public static final double SEMICIRCLE_DEGREES = 180.0D / 0x80000000L;
+
+    public static double semicirclesToDegrees(final int semicircles) {
+        return semicircles * SEMICIRCLE_DEGREES;
+    }
+
+    public static int degreesToSemicircles(final double degrees) {
+        return (int) Math.round(degrees / SEMICIRCLE_DEGREES);
+    }
+
     public static GdiCore.CoreService.LocationData toLocationData(final Location location, final GdiCore.CoreService.DataType dataType) {
         final GdiCore.CoreService.LatLon positionForWatch = GdiCore.CoreService.LatLon.newBuilder()
-                .setLat((int) ((location.getLatitude() * 2.147483648E9d) / 180.0d))
-                .setLon((int) ((location.getLongitude() * 2.147483648E9d) / 180.0d))
+                .setLat(degreesToSemicircles(location.getLatitude()))
+                .setLon(degreesToSemicircles(location.getLongitude()))
                 .build();
 
         float vAccuracy = 0;
