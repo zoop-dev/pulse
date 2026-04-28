@@ -90,6 +90,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrackProvider;
 import nodomain.freeyourgadget.gadgetbridge.model.BodyEnergySample;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.FitActivityTrackProvider;
+import nodomain.freeyourgadget.gadgetbridge.model.GpxActivityTrackProvider;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvValueSample;
 import nodomain.freeyourgadget.gadgetbridge.model.PaiSample;
@@ -182,7 +183,20 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     @Nullable
     public ActivityTrackProvider getActivityTrackProvider(@NonNull final GBDevice device, @NonNull final Context context) {
-        return new FitActivityTrackProvider();
+        // Pick the richer source when both are present:
+        //  - FIT (rawDetailsPath) carries detailed sensor streams.
+        //  - GPX (gpxTrack) is the polyline-only fallback that
+        //    ExploreSync writes when no FIT has arrived yet.
+        // If a later FIT delivery dedup-links onto an existing
+        // ExploreSync row, both fields will be set; we should return
+        // the FIT view rather than hide its richer data behind GPX.
+        return summary -> {
+            final ActivityTrackProvider provider = summary.getRawDetailsPath() != null
+                    ? new FitActivityTrackProvider()
+                    : new GpxActivityTrackProvider();
+
+            return provider.getActivityTrack(summary);
+        };
     }
 
     @Override

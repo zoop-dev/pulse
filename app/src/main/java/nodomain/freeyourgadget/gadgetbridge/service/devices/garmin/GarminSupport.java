@@ -216,6 +216,10 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             if (communicator != null) {
                 communicator.dispose();
             }
+            // BT disconnect: tell ExploreSync to drop in-flight buffers.
+            if (protocolBufferHandler != null && protocolBufferHandler.getExploreSyncHandler() != null) {
+                protocolBufferHandler.getExploreSyncHandler().onDisconnected();
+            }
             GBLocationService.stop(getContext(), getDevice());
             try {
                 LocalBroadcastManager.getInstance(GBApplication.getContext()).unregisterReceiver(broadcastReceiver);
@@ -533,6 +537,12 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         // We initiate download here even in the new sync protocol so that the watch "flushes" the data
         // otherwise we might get incomplete monitor files
         sendOutgoingMessage("fetch recorded data", fileTransferHandler.initiateDownload());
+
+        // Re-arm the ExploreSync historical catalog walk so any activities
+        // recorded since the initial connect get picked up. Watches that
+        // don't support the service reject our StartSyncRequest and the
+        // handler tears the session down on its own.
+        protocolBufferHandler.getExploreSyncHandler().startSession();
 
         //TODO: ask the watch to initiate the sync? Something like:
         //        sendOutgoingMessage("set sync ready", new SystemEventMessage(SystemEventMessage.GarminSystemEventType.SYNC_READY, 0));

@@ -1,0 +1,318 @@
+syntax = "proto2";
+
+package garmin_vivomovehr;
+option java_package = "nodomain.freeyourgadget.gadgetbridge.proto.garmin";
+option java_outer_classname = "GdiExploreSyncService";
+
+// GDI ExploreSync sub-service definitions, restricted to what GB actually
+// parses. Messages we don't read are stubbed to {status} so we can still
+// ack the watch; messages we don't even ack (Collection bodies, Waypoint
+// bodies, asset-tracking, sync limits) are omitted.
+
+enum SyncType {
+  SYNC_TYPE_FULL = 1;
+  SYNC_TYPE_INCREMENTAL = 2;
+}
+
+enum StartSyncStatus {
+  START_SYNC_ACCEPTED = 1;
+  START_SYNC_REJECTED = 2;
+  START_SYNC_UNSUPPORTED_PROTOCOL_VERSION = 3;
+}
+
+enum SyncFinishedStatus {
+  SYNC_FINISHED_OK = 1;
+  SYNC_FINISHED_FAILED = 2;
+  SYNC_FINISHED_FAILED_STORAGE_OUT = 3;
+  SYNC_FINISHED_FAILED_DATA_LIMIT = 4;
+}
+
+enum WriteStatus {
+  WRITE_STATUS_SUCCESS = 0;
+  WRITE_STATUS_ERROR = 1;
+  WRITE_STATUS_ABORT = 2;
+}
+
+enum ReadStatus {
+  READ_STATUS_SUCCESS = 0;
+  READ_STATUS_MORE = 1;
+  READ_STATUS_ERROR = 2;
+}
+
+enum LinePart {
+  LINE_PART_SUMMARY = 1;
+  LINE_PART_POINTS = 2;
+  LINE_PART_STAT = 4;
+  LINE_PART_DISPLAY = 8;
+  LINE_PART_SPORT = 16;
+  LINE_PART_TRACKING_EVENT = 32;
+}
+
+enum SyncCapability {
+  SYNC_CAPABILITY_BASIC = 0;
+  SYNC_CAPABILITY_GCJ02 = 1;
+  SYNC_CAPABILITY_ACTIVE_LINES = 2;
+  SYNC_CAPABILITY_TRACKING_EVENT = 4;
+  SYNC_CAPABILITY_COURSES = 8;
+  SYNC_CAPABILITY_SINGLE_ITEM = 16;
+  SYNC_CAPABILITY_SYNC_LIMITS = 32;
+}
+
+enum ActiveLineType {
+  ACTIVE_LINE_TYPE_ACTIVE_RECORDING = 0;
+  ACTIVE_LINE_TYPE_ACTIVE_NAVIGATION = 1;
+  ACTIVE_LINE_TYPE_TRACKING_EVENT = 2;
+}
+
+enum LineType {
+  LINE_TYPE_TRACK = 0;
+  LINE_TYPE_ROUTE = 1;
+  LINE_TYPE_ACTIVITY = 2;
+  LINE_TYPE_CURRENT_RECORDING = 3;
+  LINE_TYPE_TRACBACK = 4;
+  LINE_TYPE_GOTO_COURSE = 5;
+  LINE_TYPE_GOTO_BEARING = 6;
+  LINE_TYPE_ON_ROAD_ROUTE = 7;
+  LINE_TYPE_TRACKING_EVENT = 8;
+  LINE_TYPE_COURSE = 9;
+}
+
+message ExploreSyncService {
+  optional StartSyncRequest start_sync_request = 1;
+  optional StartSyncResponse start_sync_response = 2;
+  optional SyncFinishedNotification sync_finished_notification = 3;
+  optional CollectionListWriteRequest collection_list_write_request = 4;
+  optional CollectionListWriteResponse collection_list_write_response = 5;
+  optional CollectionReadRequest collection_read_request = 6;
+  optional CollectionReadResponse collection_read_response = 7;
+  optional CollectionDigestWriteRequest collection_digest_write_request = 8;
+  optional CollectionDigestWriteResponse collection_digest_write_response = 9;
+  optional CollectionDigestReadRequest collection_digest_read_request = 10;
+  optional CollectionDigestReadResponse collection_digest_read_response = 11;
+  optional WaypointReadRequest waypoint_read_request = 12;
+  optional WaypointReadResponse waypoint_read_response = 13;
+  optional WaypointDigestWriteRequest waypoint_digest_write_request = 14;
+  optional WaypointDigestWriteResponse waypoint_digest_write_response = 15;
+  optional WaypointDigestReadRequest waypoint_digest_read_request = 16;
+  optional WaypointDigestReadResponse waypoint_digest_read_response = 17;
+  optional ChangeSummaryRequest change_summary_request = 18;
+  optional ChangeSummaryResponse change_summary_response = 19;
+  optional LineDigestWriteRequest line_digest_write_request = 24;
+  optional LineDigestWriteResponse line_digest_write_response = 25;
+  optional LineDigestReadRequest line_digest_read_request = 26;
+  optional LineDigestReadResponse line_digest_read_response = 27;
+  optional LineDataReadyRequest line_data_ready_request = 28;
+  optional LineDataReadyResponse line_data_ready_response = 29;
+  optional LineReadRequest line_read_request = 30;
+  optional LineReadResponse line_read_response = 31;
+  optional ActiveLineDigestWriteRequest active_line_digest_write_request = 32;
+  optional ActiveLineDigestWriteResponse active_line_digest_write_response = 33;
+}
+
+message VersionStamp {
+  required uint32 edit_time = 1;
+  optional bool derived = 2;
+}
+
+message StartSyncRequest {
+  optional SyncType sync_type = 1;
+  optional int32 protocol_version = 2;
+  optional bytes app_uuid = 3;
+  optional uint32 sync_capabilities = 4;
+  optional uint32 actual_capabilities = 6;
+}
+
+message StartSyncResponse {
+  optional StartSyncStatus status = 1;
+  optional int32 supported_protocol_version = 3;
+  optional bytes app_uuid = 4;
+  optional uint32 sync_capabilities = 5;
+  optional uint32 actual_capabilities = 7;
+}
+
+message SyncFinishedNotification {
+  optional SyncFinishedStatus status = 1;
+}
+
+// CollectionList / Collection / Waypoint stubs — we ack the watch with a
+// success status but do nothing with the contents.
+
+message CollectionListWriteRequest {
+}
+
+message CollectionListWriteResponse {
+  required WriteStatus status = 1;
+}
+
+message CollectionDigestWriteRequest {
+}
+
+message CollectionDigestWriteResponse {
+  required WriteStatus status = 1;
+}
+
+message CollectionDigestReadRequest {
+}
+
+message CollectionDigestReadResponse {
+  required ReadStatus status = 1;
+}
+
+message CollectionReadRequest {
+}
+
+message CollectionReadResponse {
+  required ReadStatus status = 1;
+}
+
+message WaypointDigestWriteRequest {
+}
+
+message WaypointDigestWriteResponse {
+  required WriteStatus status = 1;
+}
+
+message WaypointDigestReadRequest {
+}
+
+message WaypointDigestReadResponse {
+  required ReadStatus status = 1;
+}
+
+message WaypointReadRequest {
+}
+
+message WaypointReadResponse {
+  required ReadStatus status = 1;
+}
+
+message ActiveLineDigest {
+  message ActiveLineReference {
+    required ActiveLineType active_line_type = 1;
+    required bool valid = 2;
+    optional bytes uuid = 3;
+    optional uint32 point_cnt = 5;
+  }
+  repeated ActiveLineDigest.ActiveLineReference lines = 1;
+}
+
+message ActiveLineDigestWriteRequest {
+  optional ActiveLineDigest digest = 1;
+}
+
+message ActiveLineDigestWriteResponse {
+  required WriteStatus status = 1;
+  optional LineDataRequestOp line_read_op = 2;
+}
+
+message LineDigest {
+  message LineReference {
+    required bytes uuid = 1;
+    required LineType line_type = 2;
+    optional bool deleted = 3;
+    optional VersionStamp summary_part_version_stamp = 4;
+    optional VersionStamp stat_part_version_stamp = 5;
+    optional VersionStamp display_part_version_stamp = 6;
+    optional VersionStamp sport_part_version_stamp = 7;
+    optional VersionStamp point_part_version_stamp = 8;
+  }
+  repeated LineDigest.LineReference lines = 1;
+}
+
+message LineDigestWriteRequest {
+  optional LineDigest digest = 1;
+}
+
+message LineDigestWriteResponse {
+  required WriteStatus status = 1;
+  optional LineDataRequestOp line_read_op = 2;
+}
+
+message LineDigestReadRequest {
+}
+
+message LineDigestReadResponse {
+  required ReadStatus status = 1;
+}
+
+message Line {
+  message PointPart {
+    optional VersionStamp version_stamp = 1;
+    // All arrays below are either zero-length or have exactly one
+    // entry per point in generic_positions.
+    repeated fixed64 generic_positions = 2;
+    repeated float altitudes = 3;
+    repeated uint32 timestamps = 4;
+    optional bytes heart_rates = 5;
+    optional bytes cadences = 6;
+    repeated float temperatures = 7;
+    repeated float speeds = 8;
+    optional uint32 point_offset = 9;
+    repeated float water_depth = 19;
+  }
+  message SummaryPart {
+    optional VersionStamp version_stamp = 1;
+    optional string name = 2;
+    optional uint32 creation_time = 3;
+  }
+  message StatPart {
+    optional VersionStamp version_stamp = 1;
+    optional float distance = 2;
+    optional float total_ascent = 3;
+    optional float total_descent = 4;
+    optional uint32 timer_time = 5;
+    optional uint32 elapsed_time = 6;
+    optional uint32 moving_time = 7;
+    optional uint32 stopped_time = 8;
+    optional float moving_speed = 9;
+    optional float max_speed = 10;
+    optional float max_elevation = 11;
+    optional float min_elevation = 12;
+    optional uint32 calories = 13;
+    optional uint32 avg_heart_rate = 14;
+    optional uint32 avg_cadence = 15;
+    optional float avg_speed = 16;
+  }
+  message SportPart {
+    optional VersionStamp version_stamp = 1;
+    optional uint32 sport = 2;
+    optional uint32 sub_sport = 3;
+  }
+  required bytes uuid = 1;
+  required LineType line_type = 2;
+  optional Line.SummaryPart summary_part = 4;
+  optional Line.StatPart stat_part = 5;
+  optional Line.SportPart sport_part = 7;
+  optional Line.PointPart point_part = 8;
+}
+
+message LineDataRequestOp {
+  required bytes uuid = 1;
+  optional LinePart part = 2;
+  optional uint32 point_offset = 3;
+}
+
+message LineReadRequest {
+}
+
+message LineReadResponse {
+  required ReadStatus status = 1;
+}
+
+message LineDataReadyRequest {
+  required ReadStatus status = 1;
+  optional Line line = 2;
+  optional uint32 next_point_offset = 3;
+}
+
+message LineDataReadyResponse {
+  optional LineDataRequestOp next_data_request = 1;
+}
+
+message ChangeSummaryRequest {
+  optional uint32 starting_transaction_id = 1;
+}
+
+message ChangeSummaryResponse {
+  optional uint32 ending_transaction_id = 1;
+}

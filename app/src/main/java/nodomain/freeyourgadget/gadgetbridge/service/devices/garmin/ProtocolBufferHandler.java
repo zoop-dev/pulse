@@ -51,6 +51,7 @@ import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiInstalledAppsService
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiSmartProto;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiSmsNotification;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiEcgService;
+import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiExploreSyncService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.DataTransferHandler;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.HttpHandler;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.messages.GFDIMessage;
@@ -74,6 +75,7 @@ public class ProtocolBufferHandler implements MessageHandler {
     private final DataTransferHandler dataTransferHandler;
     private final FileSyncServiceHandler fileSyncServiceHandler;
     private final EcgServiceHandler ecgServiceHandler;
+    private final ExploreSyncHandler exploreSyncHandler;
 
     private final Map<GdiSmsNotification.SmsNotificationService.CannedListType, String[]> cannedListTypeMap = new HashMap<>();
 
@@ -84,6 +86,7 @@ public class ProtocolBufferHandler implements MessageHandler {
         dataTransferHandler = new DataTransferHandler();
         fileSyncServiceHandler = new FileSyncServiceHandler(deviceSupport);
         ecgServiceHandler = new EcgServiceHandler(deviceSupport);
+        exploreSyncHandler = new ExploreSyncHandler(deviceSupport);
     }
 
     public void setContext(final GBDevice gbDevice, final BluetoothAdapter btAdapter, final Context context) {
@@ -231,6 +234,13 @@ public class ProtocolBufferHandler implements MessageHandler {
             }
             if (smart.hasAppConfigService()) {
                 processed = appConfigHandler.process(smart.getAppConfigService());
+            }
+            if (smart.hasExploreSyncService()) {
+                processed = true;
+                final GdiExploreSyncService.ExploreSyncService response = exploreSyncHandler.handle(smart.getExploreSyncService());
+                if (response != null) {
+                    return prepareProtobufResponse(GdiSmartProto.Smart.newBuilder().setExploreSyncService(response).build(), message.getRequestId());
+                }
             }
             if (processed) {
                 message.setStatusMessage(new ProtobufStatusMessage(
@@ -674,6 +684,10 @@ public class ProtocolBufferHandler implements MessageHandler {
 
     public AppConfigHandler getAppConfigHandler() {
         return appConfigHandler;
+    }
+
+    ExploreSyncHandler getExploreSyncHandler() {
+        return exploreSyncHandler;
     }
 
     private class ProtobufFragment {
