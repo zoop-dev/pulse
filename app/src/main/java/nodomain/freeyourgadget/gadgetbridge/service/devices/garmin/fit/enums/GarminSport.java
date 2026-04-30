@@ -11,6 +11,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 public enum GarminSport {
     GENERIC(0, 0, ActivityKind.ACTIVITY),
     ELLIPTICAL_TRAINER(0, 15, ActivityKind.ELLIPTICAL_TRAINER),
+    OPENWATER(0, 18, ActivityKind.SWIMMING_OPENWATER),
     EXERCISE(0, 23, ActivityKind.EXERCISE),
     NAVIGATE(0, 50, ActivityKind.NAVIGATE),
     TRACK_ME(0, 51, ActivityKind.TRACK_ME),
@@ -30,6 +31,7 @@ public enum GarminSport {
     OBSTACLE_RACING(1, 59, ActivityKind.OBSTACLE_RACE),
     ULTRA_RUN(1, 67, ActivityKind.ULTRA_RUN),
     BIKE(2, 0, ActivityKind.CYCLING),
+    CYCLING_SPIN(2, 5, ActivityKind.SPINNING),
     BIKE_INDOOR(2, 6, ActivityKind.INDOOR_CYCLING),
     ROAD_BIKE(2, 7, ActivityKind.ROAD_BIKE),
     MTB(2, 8, ActivityKind.MOUNTAIN_BIKE),
