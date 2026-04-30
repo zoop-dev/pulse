@@ -63,8 +63,8 @@ public class FitMonitoring extends RecordData {
     }
 
     @Nullable
-    public Long getActiveTime() {
-        return getFieldByNumber(4, Long.class);
+    public Double getActiveTime() {
+        return getFieldByNumber(4, Double.class);
     }
 
     @Nullable
@@ -225,7 +225,7 @@ public class FitMonitoring extends RecordData {
             return this;
         }
 
-        public Builder setActiveTime(final Long value) {
+        public Builder setActiveTime(final Double value) {
             setFieldByNumber(4, value);
             return this;
         }

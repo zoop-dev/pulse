@@ -351,6 +351,11 @@ public class FitLap extends RecordData {
     }
 
     @Nullable
+    public Double getActiveTime() {
+        return getFieldByNumber(70, Double.class);
+    }
+
+    @Nullable
     public Integer getWktStepIndex() {
         return getFieldByNumber(71, Integer.class);
     }
@@ -1040,6 +1045,11 @@ public class FitLap extends RecordData {
 
         public Builder setMinHeartRate(final Integer value) {
             setFieldByNumber(63, value);
+            return this;
+        }
+
+        public Builder setActiveTime(final Double value) {
+            setFieldByNumber(70, value);
             return this;
         }
 

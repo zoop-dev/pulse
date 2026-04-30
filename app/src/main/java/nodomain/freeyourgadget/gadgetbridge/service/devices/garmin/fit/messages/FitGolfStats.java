@@ -1,4 +1,4 @@
-/*  Copyright (C) 2025 Freeyourgadget
+/*  Copyright (C) 2026 Freeyourgadget
 
     This file is part of Gadgetbridge.
 
@@ -29,49 +29,49 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  *
  * @noinspection unused
  */
-public class FitNap extends RecordData {
-    public FitNap(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitGolfStats extends RecordData {
+    public FitGolfStats(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
-        if (nativeNumber != 412) {
-            throw new IllegalArgumentException("FitNap expects native messages of " + 412 + ", got " + nativeNumber);
+        if (nativeNumber != 191) {
+            throw new IllegalArgumentException("FitGolfStats expects native messages of " + 191 + ", got " + nativeNumber);
         }
     }
 
     @Nullable
-    public Long getStartTimestamp() {
-        return getFieldByNumber(0, Long.class);
+    public String getName() {
+        return getFieldByNumber(0, String.class);
     }
 
     @Nullable
-    public Integer getStartTzOffset() {
-        return getFieldByNumber(1, Integer.class);
+    public Integer getOut() {
+        return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
-    public Long getEndTimestamp() {
-        return getFieldByNumber(2, Long.class);
-    }
-
-    @Nullable
-    public Integer getEndTzOffset() {
+    public Integer getIn() {
         return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
-    public Integer getFeedback() {
+    public Integer getTotal() {
         return getFieldByNumber(4, Integer.class);
     }
 
     @Nullable
-    public Boolean getDeleted() {
-        return getFieldByNumber(6, Boolean.class);
+    public Integer getFairwayHit() {
+        return getFieldByNumber(7, Integer.class);
     }
 
     @Nullable
-    public Long getUpdatedTimestamp() {
-        return getFieldByNumber(7, Long.class);
+    public Integer getGir() {
+        return getFieldByNumber(8, Integer.class);
+    }
+
+    @Nullable
+    public Integer getPutts() {
+        return getFieldByNumber(9, Integer.class);
     }
 
     @Nullable
@@ -79,51 +79,46 @@ public class FitNap extends RecordData {
         return getFieldByNumber(253, Long.class);
     }
 
-    @Nullable
-    public Integer getMessageIndex() {
-        return getFieldByNumber(254, Integer.class);
-    }
-
     /**
      * @noinspection unused
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(412);
+            super(191);
         }
 
-        public Builder setStartTimestamp(final Long value) {
+        public Builder setName(final String value) {
             setFieldByNumber(0, value);
             return this;
         }
 
-        public Builder setStartTzOffset(final Integer value) {
-            setFieldByNumber(1, value);
-            return this;
-        }
-
-        public Builder setEndTimestamp(final Long value) {
+        public Builder setOut(final Integer value) {
             setFieldByNumber(2, value);
             return this;
         }
 
-        public Builder setEndTzOffset(final Integer value) {
+        public Builder setIn(final Integer value) {
             setFieldByNumber(3, value);
             return this;
         }
 
-        public Builder setFeedback(final Integer value) {
+        public Builder setTotal(final Integer value) {
             setFieldByNumber(4, value);
             return this;
         }
 
-        public Builder setDeleted(final Boolean value) {
-            setFieldByNumber(6, value);
+        public Builder setFairwayHit(final Integer value) {
+            setFieldByNumber(7, value);
             return this;
         }
 
-        public Builder setUpdatedTimestamp(final Long value) {
-            setFieldByNumber(7, value);
+        public Builder setGir(final Integer value) {
+            setFieldByNumber(8, value);
+            return this;
+        }
+
+        public Builder setPutts(final Integer value) {
+            setFieldByNumber(9, value);
             return this;
         }
 
@@ -132,19 +127,14 @@ public class FitNap extends RecordData {
             return this;
         }
 
-        public Builder setMessageIndex(final Integer value) {
-            setFieldByNumber(254, value);
-            return this;
+        @Override
+        public FitGolfStats build() {
+            return (FitGolfStats) super.build();
         }
 
         @Override
-        public FitNap build() {
-            return (FitNap) super.build();
-        }
-
-        @Override
-        public FitNap build(final int localMessageType) {
-            return (FitNap) super.build(localMessageType);
+        public FitGolfStats build(final int localMessageType) {
+            return (FitGolfStats) super.build(localMessageType);
         }
     }
 }

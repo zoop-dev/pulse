@@ -396,8 +396,8 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
-    public Long getWorkTime() {
-        return getFieldByNumber(78, Long.class);
+    public Double getActiveTime() {
+        return getFieldByNumber(78, Double.class);
     }
 
     @Nullable
@@ -1328,7 +1328,7 @@ public class FitSession extends RecordData {
             return this;
         }
 
-        public Builder setWorkTime(final Long value) {
+        public Builder setActiveTime(final Double value) {
             setFieldByNumber(78, value);
             return this;
         }

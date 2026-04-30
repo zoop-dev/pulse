@@ -1,4 +1,4 @@
-/*  Copyright (C) 2025 Freeyourgadget
+/*  Copyright (C) 2026 Freeyourgadget
 
     This file is part of Gadgetbridge.
 
@@ -29,49 +29,34 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  *
  * @noinspection unused
  */
-public class FitNap extends RecordData {
-    public FitNap(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitScore extends RecordData {
+    public FitScore(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
-        if (nativeNumber != 412) {
-            throw new IllegalArgumentException("FitNap expects native messages of " + 412 + ", got " + nativeNumber);
+        if (nativeNumber != 192) {
+            throw new IllegalArgumentException("FitScore expects native messages of " + 192 + ", got " + nativeNumber);
         }
     }
 
     @Nullable
-    public Long getStartTimestamp() {
-        return getFieldByNumber(0, Long.class);
-    }
-
-    @Nullable
-    public Integer getStartTzOffset() {
+    public Integer getHoleNumber() {
         return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
-    public Long getEndTimestamp() {
-        return getFieldByNumber(2, Long.class);
+    public Integer getScore() {
+        return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
-    public Integer getEndTzOffset() {
-        return getFieldByNumber(3, Integer.class);
+    public Integer getPutts() {
+        return getFieldByNumber(5, Integer.class);
     }
 
     @Nullable
-    public Integer getFeedback() {
-        return getFieldByNumber(4, Integer.class);
-    }
-
-    @Nullable
-    public Boolean getDeleted() {
-        return getFieldByNumber(6, Boolean.class);
-    }
-
-    @Nullable
-    public Long getUpdatedTimestamp() {
-        return getFieldByNumber(7, Long.class);
+    public Integer getFairway() {
+        return getFieldByNumber(6, Integer.class);
     }
 
     @Nullable
@@ -79,51 +64,31 @@ public class FitNap extends RecordData {
         return getFieldByNumber(253, Long.class);
     }
 
-    @Nullable
-    public Integer getMessageIndex() {
-        return getFieldByNumber(254, Integer.class);
-    }
-
     /**
      * @noinspection unused
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(412);
+            super(192);
         }
 
-        public Builder setStartTimestamp(final Long value) {
-            setFieldByNumber(0, value);
-            return this;
-        }
-
-        public Builder setStartTzOffset(final Integer value) {
+        public Builder setHoleNumber(final Integer value) {
             setFieldByNumber(1, value);
             return this;
         }
 
-        public Builder setEndTimestamp(final Long value) {
+        public Builder setScore(final Integer value) {
             setFieldByNumber(2, value);
             return this;
         }
 
-        public Builder setEndTzOffset(final Integer value) {
-            setFieldByNumber(3, value);
+        public Builder setPutts(final Integer value) {
+            setFieldByNumber(5, value);
             return this;
         }
 
-        public Builder setFeedback(final Integer value) {
-            setFieldByNumber(4, value);
-            return this;
-        }
-
-        public Builder setDeleted(final Boolean value) {
+        public Builder setFairway(final Integer value) {
             setFieldByNumber(6, value);
-            return this;
-        }
-
-        public Builder setUpdatedTimestamp(final Long value) {
-            setFieldByNumber(7, value);
             return this;
         }
 
@@ -132,19 +97,14 @@ public class FitNap extends RecordData {
             return this;
         }
 
-        public Builder setMessageIndex(final Integer value) {
-            setFieldByNumber(254, value);
-            return this;
+        @Override
+        public FitScore build() {
+            return (FitScore) super.build();
         }
 
         @Override
-        public FitNap build() {
-            return (FitNap) super.build();
-        }
-
-        @Override
-        public FitNap build(final int localMessageType) {
-            return (FitNap) super.build(localMessageType);
+        public FitScore build(final int localMessageType) {
+            return (FitScore) super.build(localMessageType);
         }
     }
 }
