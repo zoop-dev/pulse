@@ -98,7 +98,7 @@ public class AutoGpxExporter {
             try (OutputStream outputStream = context.getContentResolver().openOutputStream(targetFile.getUri());
                  BufferedOutputStream bos = new BufferedOutputStream(outputStream)) {
                 final GPXExporter exporter = new GPXExporter();
-                exporter.performExport(activityTrack, bos);
+                exporter.performExport(activityTrack, bos, summary);
             }
 
             LOG.info("Auto-exported GPX to: {}", targetFile.getUri());

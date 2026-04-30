@@ -74,7 +74,7 @@ public final class ActivitySummaryUtils {
         final File gpxFile = new File(rawCacheDir, gpxFileName);
 
         final GPXExporter gpxExporter = new GPXExporter();
-        gpxExporter.performExport(activityTrack, gpxFile);
+        gpxExporter.performExport(activityTrack, gpxFile, summary);
 
         return gpxFile;
     }
