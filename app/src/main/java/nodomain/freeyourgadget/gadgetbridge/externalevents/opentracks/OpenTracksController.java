@@ -165,7 +165,7 @@ public class OpenTracksController extends Activity {
             gpxDir.mkdirs();
             final File gpxFile = new File(gpxDir, gpxName + ".gpx");
             final GPXExporter gpxExporter = new GPXExporter();
-            gpxExporter.performExport(activityTrack, gpxFile);
+            gpxExporter.performExport(activityTrack, gpxFile, null);
             LOG.info("Saved GPX received from OpenTracks to {}", gpxFile.getPath());
         } catch (IOException | ActivityTrackExporter.GPXTrackEmptyException e) {
             LOG.error("Error while writing generated GPX file", e);

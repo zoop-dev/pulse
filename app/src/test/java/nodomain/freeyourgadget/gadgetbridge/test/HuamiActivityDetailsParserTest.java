@@ -94,7 +94,7 @@ public class HuamiActivityDetailsParserTest extends TestBase {
             exporter.setCreator(getClass().getName());
             File targetFile = File.createTempFile("gadgetbridge-track", ".gpx");
             System.out.println("Writing GPX file: " + targetFile);
-            exporter.performExport(track, targetFile);
+            exporter.performExport(track, targetFile, summary);
 
             assertTrue(targetFile.length() > 1024);
         }

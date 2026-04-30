@@ -41,7 +41,9 @@ import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.activities.HeartRateUtils;
+import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
@@ -80,14 +82,14 @@ public class GPXExporter implements ActivityTrackExporter {
     }
 
     @Override
-    public void performExport(ActivityTrack track, File targetFile) throws IOException, GPXTrackEmptyException {
+    public void performExport(ActivityTrack track, File targetFile, @Nullable BaseActivitySummary summary) throws IOException, GPXTrackEmptyException {
         try (FileOutputStream outputStream = new FileOutputStream(targetFile);
              BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream)) {
-            performExport(track, bufferedOutputStream);
+            performExport(track, bufferedOutputStream, summary);
         }
     }
 
-    public void performExport(ActivityTrack track, OutputStream outputStream) throws IOException, GPXTrackEmptyException {
+    public void performExport(ActivityTrack track, OutputStream outputStream, @Nullable BaseActivitySummary summary) throws IOException, GPXTrackEmptyException {
         String encoding = StandardCharsets.UTF_8.name();
         XmlSerializer ser = Xml.newSerializer();
 
@@ -111,7 +113,19 @@ public class GPXExporter implements ActivityTrackExporter {
                 + " " + OPENTRACKS_NAMESPACE_URI + " " + OPENTRACKS_XSD);
 
         exportMetadata(ser, track);
-        exportTrack(ser, track);
+
+        // don't localize trackType - it is used by importing applications
+        final String trackType;
+        if (summary != null) {
+            final ActivityKind activityKind = ActivityKind.fromCode(summary.getActivityKind());
+            trackType = switch (activityKind) {
+                case NOT_MEASURED, UNKNOWN, ACTIVITY -> null;
+                default -> activityKind.name();
+            };
+        } else {
+            trackType = null;
+        }
+        exportTrack(ser, track, trackType);
 
         ser.endTag(NS_GPX_URI, "gpx");
         ser.endDocument();
@@ -144,7 +158,7 @@ public class GPXExporter implements ActivityTrackExporter {
         return DateTimeUtils.formatIso8601UTC(date);
     }
 
-    private void exportTrack(XmlSerializer ser, ActivityTrack track) throws IOException, GPXTrackEmptyException {
+    private void exportTrack(XmlSerializer ser, ActivityTrack track, @Nullable String trackType) throws IOException, GPXTrackEmptyException {
         String uuid = ((this.uuid != null) ? this.uuid : UUID.randomUUID()).toString();
         ser.startTag(NS_GPX_URI, "trk");
 
@@ -152,6 +166,10 @@ public class GPXExporter implements ActivityTrackExporter {
         String trackName = track.getName();
         if (trackName != null) {
             ser.startTag(NS_GPX_URI, "name").text(trackName).endTag(NS_GPX_URI, "name");
+        }
+
+        if (trackType != null && !trackType.isBlank()) {
+            ser.startTag(NS_GPX_URI, "type").text(trackType).endTag(NS_GPX_URI, "type");
         }
 
         ser.startTag(NS_GPX_URI, "extensions");

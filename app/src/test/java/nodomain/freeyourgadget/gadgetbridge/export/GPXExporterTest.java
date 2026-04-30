@@ -46,9 +46,11 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
+import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.export.ActivityTrackExporter.GPXTrackEmptyException;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
@@ -70,7 +72,7 @@ public class GPXExporterTest extends TestBase {
         final File tempFile = File.createTempFile("gpx-exporter-test-track", ".gpx");
         tempFile.deleteOnExit();
 
-        gpxExporter.performExport(track, tempFile);
+        gpxExporter.performExport(track, tempFile, null);
         validateGpxFile(tempFile);
     }
 
@@ -85,7 +87,7 @@ public class GPXExporterTest extends TestBase {
         final File tempFile = File.createTempFile("gpx-exporter-test-track", ".gpx");
         tempFile.deleteOnExit();
 
-        gpxExporter.performExport(track, tempFile);
+        gpxExporter.performExport(track, tempFile, null);
         validateGpxFile(tempFile);
     }
 
@@ -192,7 +194,9 @@ public class GPXExporterTest extends TestBase {
         final File tempFile = File.createTempFile("gpx-exporter-test-import-export", ".gpx");
         tempFile.deleteOnExit();
 
-        gpxExporter.performExport(track, tempFile);
+        BaseActivitySummary summary = new BaseActivitySummary();
+        summary.setActivityKind(ActivityKind.TRAIL_RUN.getCode());
+        gpxExporter.performExport(track, tempFile, summary);
 
         byte[] exported = Files.readAllBytes(tempFile.toPath());
         byte[] expected = readBinaryResource("/TestGpxExport.gpx");

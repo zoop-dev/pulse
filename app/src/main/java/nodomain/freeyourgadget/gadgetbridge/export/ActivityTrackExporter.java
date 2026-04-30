@@ -1,4 +1,4 @@
-/*  Copyright (C) 2017-2024 Carsten Pfeiffer, Daniele Gobbetti, José Rebelo
+/*  Copyright (C) 2017-2026 Carsten Pfeiffer, Daniele Gobbetti, José Rebelo, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -16,13 +16,16 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.export;
 
+import androidx.annotation.Nullable;
+
 import java.io.File;
 import java.io.IOException;
 
+import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
 
 public interface ActivityTrackExporter {
-    void performExport(ActivityTrack track, File targetFile) throws IOException, GPXTrackEmptyException;
+    void performExport(ActivityTrack track, File targetFile, @Nullable BaseActivitySummary summary) throws IOException, GPXTrackEmptyException;
 
     class GPXTrackEmptyException extends Exception {
     }
