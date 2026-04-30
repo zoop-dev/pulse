@@ -100,6 +100,11 @@ public class FitSplitSummary extends RecordData {
     }
 
     @Nullable
+    public Double getActiveTime() {
+        return getFieldByNumber(65, Double.class);
+    }
+
+    @Nullable
     public Double getTotalMovingTime() {
         return getFieldByNumber(77, Double.class);
     }
@@ -179,6 +184,11 @@ public class FitSplitSummary extends RecordData {
 
         public Builder setTotalCalories(final Long value) {
             setFieldByNumber(13, value);
+            return this;
+        }
+
+        public Builder setActiveTime(final Double value) {
+            setFieldByNumber(65, value);
             return this;
         }
 

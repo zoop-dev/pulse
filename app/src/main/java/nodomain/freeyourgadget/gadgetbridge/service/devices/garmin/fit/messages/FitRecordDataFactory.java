@@ -79,6 +79,7 @@ public class FitRecordDataFactory {
             case 80 -> new FitAntRx(recordDefinition, recordHeader);
             case 81 -> new FitAntTx(recordDefinition, recordHeader);
             case 82 -> new FitAntChannelId(recordDefinition, recordHeader);
+            case 89 -> new FitOpenWaterEvent(recordDefinition, recordHeader);
             case 101 -> new FitLength(recordDefinition, recordHeader);
             case 103 -> new FitMonitoringInfo(recordDefinition, recordHeader);
             case 104 -> new FitDeviceStatus(recordDefinition, recordHeader);
@@ -120,6 +121,11 @@ public class FitRecordDataFactory {
             case 186 -> new FitVideoDescription(recordDefinition, recordHeader);
             case 187 -> new FitVideoClip(recordDefinition, recordHeader);
             case 188 -> new FitOhrSettings(recordDefinition, recordHeader);
+            case 190 -> new FitGolfCourse(recordDefinition, recordHeader);
+            case 191 -> new FitGolfStats(recordDefinition, recordHeader);
+            case 192 -> new FitScore(recordDefinition, recordHeader);
+            case 193 -> new FitHole(recordDefinition, recordHeader);
+            case 194 -> new FitShot(recordDefinition, recordHeader);
             case 200 -> new FitExdScreenConfiguration(recordDefinition, recordHeader);
             case 201 -> new FitExdDataFieldConfiguration(recordDefinition, recordHeader);
             case 202 -> new FitExdDataConceptConfiguration(recordDefinition, recordHeader);
