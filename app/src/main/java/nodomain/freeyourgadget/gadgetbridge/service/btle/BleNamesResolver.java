@@ -1110,6 +1110,8 @@ public class BleNamesResolver {
         mCharacteristics.put("00002c36-0000-1000-8000-00805f9b34fb", "Voice Assistant Session Flag");
         mCharacteristics.put("00002c37-0000-1000-8000-00805f9b34fb", "Voice Assistant Supported Languages");
         mCharacteristics.put("00002c38-0000-1000-8000-00805f9b34fb", "Voice Assistant Supported Features");
+        mCharacteristics.put("00002c39-0000-1000-8000-00805f9b34fb", "HID SCI Mode");
+        mCharacteristics.put("00002c3A-0000-1000-8000-00805f9b34fb", "HID SCI Information");
 
         mCharacteristics.put("14702856-620a-3973-7c78-9cfff0876abd", "(Propr: HPLUS Control)");
         mCharacteristics.put("14702853-620a-3973-7c78-9cfff0876abd", "(Propr: HPLUS Measurements)");
