@@ -300,7 +300,7 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
         private GBDeviceEventUpdatePreferences handleAudioModeStatus(byte[] payload) {
             final GBDeviceEventUpdatePreferences preferencesEvent = new GBDeviceEventUpdatePreferences();
 
-            if (payload.length == 3 && payload[0] == 0x01 && payload[2] == 0x00) {
+            if (payload.length >= 3 && payload[0] == 0x01 && payload[2] == 0x00) {
                 try {
                     NothingAudioMode mode = NothingAudioMode.fromBitmask(payload[1]);
                     LOG.info("Audio mode: " + mode.name());
