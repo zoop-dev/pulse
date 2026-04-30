@@ -152,6 +152,7 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
         private static final short battery_status = (short) 0xe001;
         private static final short battery_status2 = (short) 0xc007;
         private static final short audio_mode_status = (short) 0xc01e;
+        private static final short audio_mode_status2 = (short) 0xe003;
 
         private static final short unk_maybe_ack = (short) 0xf002;
         private static final short unk_close_case = (short) 0xe002; //sent twice when the case is closed with earphones in
@@ -232,13 +233,13 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
 
             byte[] payload = Arrays.copyOfRange(responseData, incoming.position(), incoming.position() + length);
 
-
             switch (getRequestCommand(command)) {
                 case battery_status:
                 case battery_status2:
                     devEvts.addAll(handleBatteryInfo(payload));
                     break;
                 case audio_mode_status:
+                case audio_mode_status2:
                     devEvts.add(handleAudioModeStatus(payload));
                     break;
 
