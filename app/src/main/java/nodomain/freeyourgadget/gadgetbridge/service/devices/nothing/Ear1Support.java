@@ -160,6 +160,7 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
         //outgoing
         private static final short find_device = (short) 0xf002;
         private static final short in_ear_detection = (short) 0xf004;
+        private static final short in_ear_detection2 = (short) 0xc00e;
         private static final short audio_mode = (short) 0xf00f;
 
         private final boolean incrementCounter;
@@ -243,6 +244,10 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
                     devEvts.add(handleAudioModeStatus(payload));
                     break;
 
+                case in_ear_detection2:
+                    devEvts.add(handleInEarStatus(payload));
+                    break;
+
                 case unk_maybe_ack:
                     LOG.debug("received ack");
                     break;
@@ -311,6 +316,15 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
                 }
             } else {
                 LOG.warn("Invalid audio mode payload format. Payload: " + hexdump(payload));
+            }
+            return preferencesEvent;
+        }
+
+        private GBDeviceEventUpdatePreferences handleInEarStatus(byte[] payload) {
+            final GBDeviceEventUpdatePreferences preferencesEvent = new GBDeviceEventUpdatePreferences();
+
+            if (payload.length >= 3) {
+                preferencesEvent.withPreference(DeviceSettingsPreferenceConst.PREF_NOTHING_EAR1_INEAR, payload[2] == 0x01 ? true : false);
             }
             return preferencesEvent;
         }
