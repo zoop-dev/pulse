@@ -71,6 +71,7 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
         nothingProtocol = new NothingProtocol(getCoordinator().incrementCounter());
 
+        sendCommand(builder, nothingProtocol.encodeFirmwareVersionReq());
         sendCommand(builder, nothingProtocol.encodeBatteryStatusReq());
         sendCommand(builder, nothingProtocol.encodeAudioModeStatusReq());
 
@@ -122,11 +123,14 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
                 byte enabled = (byte) (prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_NOTHING_EAR1_INEAR, true) ? 0x01 : 0x00);
                 sendCommand("set in ear detection", nothingProtocol.encodeInEarDetection(enabled));
                 // response: 55 20 01 04 70 00 00 00
+                break;
             case DeviceSettingsPreferenceConst.PREF_NOTHING_EAR1_AUDIOMODE:
                 sendCommand("set audio mode", nothingProtocol.encodeAudioMode(prefs.getString(DeviceSettingsPreferenceConst.PREF_NOTHING_EAR1_AUDIOMODE, "off")));
                 // response: 55 20 01 0F 70 00 00 00
+                break;
             default:
                 LOG.debug("CONFIG: " + config);
+                break;
         }
 
         super.onSendConfiguration(config);
@@ -151,6 +155,7 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
         //incoming
         private static final short battery_status = (short) 0xe001;
         private static final short battery_status2 = (short) 0xc007;
+        private static final short firmware_version = (short) 0xc042;
         private static final short audio_mode_status = (short) 0xc01e;
         private static final short audio_mode_status2 = (short) 0xe003;
 
@@ -204,9 +209,7 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
 
             if (isFirstExchange) {
                 isFirstExchange = false;
-                devEvts.add(new GBDeviceEventVersionInfo()); //TODO: this is a weird hack to make the DBHelper happy. Replace with proper firmware detection
                 devEvts.add(new GBDeviceEventUpdateDeviceState(GBDevice.State.INITIALIZED));
-
             }
 
             ByteBuffer incoming = ByteBuffer.wrap(responseData);
@@ -254,7 +257,9 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
                 case unk_close_case:
                     LOG.debug("case closed");
                     break;
-
+                case firmware_version:
+                    devEvts.add(handleFirmwareVersion(payload));
+                    break;
                 default:
                     LOG.debug("Incoming message - control:" + control + " requestCommand: " + (getRequestCommand(command) & 0xffff) + "length: " + length + " dump: " + hexdump(responseData));
 
@@ -299,10 +304,19 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
             return encodeMessage((short) 0x5120, battery_status2, new byte[]{});
         }
 
+        byte[] encodeFirmwareVersionReq() {
+            return encodeMessage((short) 0x120, firmware_version, new byte[]{});
+        }
+
         byte[] encodeAudioModeStatusReq() {
             return encodeMessage((short) 0x120, audio_mode_status, new byte[]{});
         }
 
+        private GBDeviceEventVersionInfo handleFirmwareVersion(byte[] payload) {
+            GBDeviceEventVersionInfo evt = new GBDeviceEventVersionInfo();
+            evt.fwVersion = new String(payload);
+            return evt;
+        }
         private GBDeviceEventUpdatePreferences handleAudioModeStatus(byte[] payload) {
             final GBDeviceEventUpdatePreferences preferencesEvent = new GBDeviceEventUpdatePreferences();
 
