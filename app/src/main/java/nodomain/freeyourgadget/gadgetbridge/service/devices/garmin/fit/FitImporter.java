@@ -701,10 +701,12 @@ public class FitImporter {
         }
 
         // Export to gpx
-        final FitActivityTrackProvider activityTrackProvider = new FitActivityTrackProvider();
-        final ActivityTrack activityTrack = activityTrackProvider.getActivityTrack(summary);
-        if (activityTrack != null) {
-            AutoGpxExporter.doExport(context, gbDevice, summary, activityTrack);
+        if (AutoGpxExporter.isExportEnabled(gbDevice)) {
+            final FitActivityTrackProvider activityTrackProvider = new FitActivityTrackProvider();
+            final ActivityTrack activityTrack = activityTrackProvider.getActivityTrack(summary);
+            if (activityTrack != null) {
+                AutoGpxExporter.doExport(context, gbDevice, summary, activityTrack);
+            }
         }
     }
 
