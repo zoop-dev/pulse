@@ -308,6 +308,7 @@ data class AntGadget(val manufacturer: Int, val product: Int, val name: String) 
             AntGadget(123, 3, "Polar H9"),
             AntGadget(123, 4, "Polar Verity Sense"),
             AntGadget(123, 261, "Polar Pacer Pro"),
+            AntGadget(132, 3, "Cycplus C3"),
             AntGadget(258, 4, "Lezyne Super GPS"),
             AntGadget(263, 10, "Assioma Uno"),
             AntGadget(263, 12, "Assioma Duo"),
