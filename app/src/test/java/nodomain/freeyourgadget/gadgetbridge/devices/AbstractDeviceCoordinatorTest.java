@@ -180,6 +180,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("Redmi Watch 2 Lite 31A5", DeviceType.REDMIWATCH2LITE); // #2637
             put("honor Watch-7EE", DeviceType.HONORMAGICWATCH); // #5816
             put("HUAWEI Band 6-A47", DeviceType.HUAWEIBAND6); // #2569
+            put("WATCH Ultimate 2-D96", DeviceType.HUAWEIWATCHULTIMATE2); // matrix
             put("716", DeviceType.FITPRO);
             put("LH716", DeviceType.FITPRO);
             put("Sunset 6", DeviceType.FITPRO);
