@@ -566,7 +566,7 @@ public class FitImporter {
 
             switch (fileId.getType()) {
                 case ACTIVITY:
-                    persistWorkout(finalExportFile, session, isReprocessing);
+                    persistWorkout(finalExportFile, session, isReprocessing, fitFile);
                     break;
                 case MONITOR:
                     persistActivitySamples(session);
@@ -644,7 +644,7 @@ public class FitImporter {
         }
     }
 
-    private void persistWorkout(final File file, final DaoSession session, boolean isReprocessing) {
+    private void persistWorkout(final File file, final DaoSession session, boolean isReprocessing, FitFile fitFile) {
         LOG.debug("Persisting workout for {}", fileId);
 
         Long sessionStart = workoutParser.getSessionStartTime();
@@ -703,7 +703,7 @@ public class FitImporter {
         // Export to gpx
         if (AutoGpxExporter.isExportEnabled(gbDevice)) {
             final FitActivityTrackProvider activityTrackProvider = new FitActivityTrackProvider();
-            final ActivityTrack activityTrack = activityTrackProvider.getActivityTrack(summary);
+            final ActivityTrack activityTrack = activityTrackProvider.getActivityTrack(summary, fitFile);
             if (activityTrack != null) {
                 AutoGpxExporter.doExport(context, gbDevice, summary, activityTrack);
             }

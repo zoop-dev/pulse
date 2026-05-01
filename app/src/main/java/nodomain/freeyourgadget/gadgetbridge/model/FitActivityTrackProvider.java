@@ -58,7 +58,11 @@ public class FitActivityTrackProvider implements ActivityTrackProvider {
             LOG.error("Failed to parse fit file", e);
             return null;
         }
+        return getActivityTrack(summary, fitFile);
+    }
 
+    @Nullable
+    public ActivityTrack getActivityTrack(@NonNull final BaseActivitySummary summary, @NonNull final FitFile fitFile) {
         final ActivityTrack activityTrack = new ActivityTrack();
         activityTrack.setName(summary.getName());
 
