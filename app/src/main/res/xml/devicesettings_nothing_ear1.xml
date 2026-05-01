@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <SwitchPreferenceCompat
         android:defaultValue="true"
-        android:icon="@drawable/ic_extension"
+        android:icon="@drawable/ic_autoplay"
         android:key="pref_nothing_inear_detection"
         android:layout="@layout/preference_checkbox"
         android:summary="@string/nothing_prefs_inear_summary"
         android:title="@string/nothing_prefs_inear_title" />
     <ListPreference
-        android:icon="@drawable/ic_extension"
+        android:icon="@drawable/ic_auto_awesome"
         android:entryValues="@array/nothing_ear1_audio_mode_values"
         android:entries="@array/nothing_ear1_audio_mode_names"
         android:key="pref_nothing_audiomode"
