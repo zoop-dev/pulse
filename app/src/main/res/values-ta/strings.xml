@@ -314,7 +314,7 @@
     <string name="pref_title_minimize_priority">கேசெட் பிரிட்ச் அறிவிப்பை மறைக்கவும்</string>
     <string name="bluetooth_calls_pairing">ஊடலை அழைப்புகள் இணைத்தல்</string>
     <string name="pref_title_notifications_sms">எச்.எம்.எச்</string>
-    <string name="pref_summary_notifications_pebblemsg">PEBBLEKIT வழியாக கூழாங்கலுக்கு அறிவிப்புகளை அனுப்பும் பயன்பாடுகளுக்கான உதவி.</string>
+    <string name="pref_summary_notifications_pebblemsg">Pebble வழியாகக் கூழாங்கலுக்கு அறிவிப்புகளை அனுப்பும் பயன்பாடுகளுக்கான உதவி.</string>
     <string name="pref_title_notifications_generic">பொதுவான அறிவிப்பு உதவி</string>
     <string name="pref_title_whenscreenon">… திரை இயக்கத்தில் இருக்கும்போது</string>
     <string name="pref_title_notification_use_as_allow">தேர்ந்தெடுக்கப்பட்ட பயன்பாடுகளிலிருந்து அறிவிப்புகளை அனுமதிக்கவும்</string>
@@ -1825,7 +1825,7 @@
     <string name="sleep_score_value">ச்கோர்: %1d</string>
     <string name="miband_fwinstaller_incompatible_version">பொருந்தாத ஃபார்ம்வேர்</string>
     <string name="fwinstaller_firmware_not_compatible_to_device">இந்த ஃபார்ம்வேர் சாதனத்துடன் பொருந்தாது</string>
-    <string name="dateformat_date_time"><![CDATA[நேரம் & தேதி]]></string>
+    <string name="dateformat_date_time"><![CDATA[நேரம் &amp; தேதி]]></string>
     <string name="prefs_disconnect_notification">அறிவிப்பைத் துண்டிக்கவும்</string>
     <string name="mi2_prefs_button_actions">பொத்தான் செயல்கள்</string>
     <string name="mi2_prefs_button_press_broadcast">அனுப்ப செய்தி ஒளிபரப்பு</string>
@@ -2227,12 +2227,12 @@
     <string name="fw_upgrade_notice_zepp_os">உங்கள் %2$s இல் %1$s ஃபார்ம்வேரை நிறுவ உள்ளீர்கள். \n\n.Zip கோப்பை நிறுவிய பின் உங்கள் கடிகாரம் மறுதொடக்கம் செய்யும். \n\nஉங்கள் சொந்த ஆபத்தில் தொடரவும்!</string>
     <string name="fw_upgrade_notice_amazfitx">உங்கள் அமாச்ஃபிட் எக்சில் %s ஃபார்ம்வேரை நிறுவ உள்ளீர்கள்.\n\n தயவுசெய்து .fw கோப்பை நிறுவுவதை உறுதிசெய்து கொள்ளுங்கள், அதன் பிறகு .res கோப்பை. .Fw கோப்பை நிறுவிய பின் உங்கள் இசைக்குழு மறுதொடக்கம் செய்யும்.\n\n குறிப்பு: முன்னர் நிறுவப்பட்டதைப் போலவே இருந்தால் .res ஐ நிறுவ வேண்டியதில்லை.\n\n உங்கள் சொந்த ஆபத்தில் தொடரவும்!</string>
     <string name="fw_upgrade_notice_amazfitneo">உங்கள் AMAZFIT நியோ இல் %s ஃபார்ம்வேரை நிறுவ உள்ளீர்கள்.\n\n .Fw கோப்பை நிறுவிய பின் உங்கள் இசைக்குழு மறுதொடக்கம் செய்யும்.\n\n உங்கள் சொந்த ஆபத்தில் தொடரவும்!</string>
-    <string name="fw_multi_upgrade_notice">தற்போது உங்கள் MI இசைக்குழுவில் உள்ளவற்றுக்கு பதிலாக %1$s மற்றும் %2$s ஃபார்ம்வேரை நிறுவ உள்ளீர்கள்.</string>
+    <string name="fw_multi_upgrade_notice">தற்போது உங்கள் எம்ஐ இசைக்குழுவில் உள்ளவற்றுக்கு பதிலாக %1$s மற்றும் %2$s ஃபார்ம்வேரை நிறுவ உள்ளீர்கள்.</string>
     <string name="miband_firmware_unknown_warning">இந்த ஃபார்ம்வேர் சோதிக்கப்படாதது மற்றும் கேசெட் பிரிட்சுடன் இணக்கமாக இருக்காது.\n\n அதை ஒளிரச் செய்வதில் நீங்கள் சோர்வடைகிறீர்கள்!</string>
     <string name="open_fw_installer_info_text">Firmware/Watchface/App/File Installer ஆனது ஆதரிக்கப்படும் கோப்புகளை (Firmware, watchfaces, applications, GPS,sources, fonts...) சாதனத்தில் பதிவேற்ற/நிறுவ அனுமதிக்கிறது. இணையதளத்தில் மேலும் சில தகவல்களைப் பார்க்கவும்: https://gadgetbridge.org/internals/features/installer/</string>
     <string name="open_fw_installer_warning_text">இந்த நற்பொருத்தம் உங்கள் சாதனத்தை செங்கல் செய்யும் ஆற்றலைக் கொண்டுள்ளது. ஒளிரும் மூலம் எந்த டெவலப்பர்களுக்கும் இது ஒருபோதும் நடக்கவில்லை, ஆனால் நீங்கள் இதை உங்கள் சொந்த ஆபத்தில் செய்கிறீர்கள் என்பதை நினைவில் கொள்ளுங்கள்.</string>
     <string name="pref_header_main_screen">முதன்மையான திரை</string>
-    <string name="open_fw_installer_getting_files_text">ஃபார்ம்வேர் கோப்புகளை நாங்கள் விநியோகிக்காததால், கோப்புகளை நீங்களே பெற வேண்டும். இதன் பொருள் நீங்கள் APK கோப்புகளில், ஆன்லைனில், மன்றங்களில், அமாச்ஃபிட்வாட்ச்ஃபேச்களில் (MIBAND/AMAZFIT சாதனங்களுக்கு) மற்றும் பலவற்றில் கோப்புகளைத் தேட வேண்டும்.</string>
+    <string name="open_fw_installer_getting_files_text">ஃபார்ம்வேர் கோப்புகளை நாங்கள் விநியோகிக்காததால், கோப்புகளை நீங்களே பெற வேண்டும். இதன் பொருள் நீங்கள் APK கோப்புகளில், ஆன்லைனில், மன்றங்களில், அமாச்ஃபிட்வாட்ச்ஃபேச்களில் (Miband/Amazfit சாதனங்களுக்கு) மற்றும் பலவற்றில் கோப்புகளைத் தேட வேண்டும்.</string>
     <string name="open_fw_installer_pick_file">கோப்பைத் தேர்ந்தெடு</string>
     <string name="open_fw_installer_select_file">சாதனத்தில் நீங்கள் பதிவேற்ற விரும்பும் கோப்பைத் தேர்ந்தெடுக்கவும்: %s</string>
     <string name="open_fw_installer_connect_minimum_one_device">நீங்கள் கோப்பை அனுப்ப விரும்பும் குறைந்தது ஒரு சாதனத்தையாவது இணைக்கவும்.</string>
@@ -2316,7 +2316,7 @@
     <string name="pref_title_pebble_forceprotocol">படை அறிவிப்பு நெறிமுறை</string>
     <string name="pref_summary_pebble_forceuntested">சோதிக்கப்படாத அம்சங்களை இயக்கவும். நீங்கள் என்ன செய்கிறீர்கள் என்று தெரிந்து கொள்ளுங்கள்!</string>
     <string name="pref_title_pebble_forcele">எப்போதும் PLE ஐ விரும்புங்கள்</string>
-    <string name="pref_summary_pebble_mtu_limit">உங்கள் Pebble 2/Pebble LE எதிர்பார்த்தபடி வேலை செய்யவில்லை என்றால், MTU (செல்லுபடியாகும் வரம்பு 20 – 512) வரம்பிட இந்த அமைப்பை முயற்சிக்கவும்.</string>
+    <string name="pref_summary_pebble_mtu_limit">உங்கள் கூழாங்கல் 2/கூழாங்கல் LE எதிர்பார்த்தபடி வேலை செய்யவில்லை என்றால், MTU (செல்லுபடியாகும் வரம்பு 20 – 512) வரம்பிட இந்த அமைப்பை முயற்சி</string>
     <string name="pref_summary_pebble_always_ack_pebblekit">வெளிப்புற 3 வது தரப்பு பயன்பாடுகளுக்கு அனுப்பப்படும் செய்திகளை எப்போதும் மற்றும் உடனடியாக ஒப்புக் கொள்ளும்</string>
     <string name="pref_summary_expose_hr">கேசெட் பிரிட்ச் இணைக்கப்படும்போது மற்ற பயன்பாடுகளை நிகழ்நேரத்தில் மனிதவள தரவை அணுக அனுமதிக்கிறது</string>
     <string name="pref_title_calendar_lookahead">முன்னால் நாட்களின் எண்ணிக்கை</string>
@@ -2401,13 +2401,13 @@
     <string name="action_discover">புதிய சாதனத்தை இணைக்கவும்</string>
     <string name="title_activity_android_pairing">இணை சாதனம்</string>
     <string name="android_pairing_hint">சாதனத்தை இணைக்க ஆண்ட்ராய்டு ஊடலை இணைத்தல் உரையாடலைப் பயன்படுத்தவும்.</string>
-    <string name="title_activity_mi_band_pairing">உங்கள் MI இசைக்குழுவை இணைக்கவும்</string>
+    <string name="title_activity_mi_band_pairing">உங்கள் எம்ஐ இசைக்குழுவை இணை</string>
     <string name="pairing">%s உடன் இணைத்தல்…</string>
     <string name="no_supported_devices_found">உதவி சாதனங்கள் எதுவும் கிடைக்கவில்லை</string>
     <string name="pairing_creating_bond_with">%1$s ( %2$s) உடன் பிணைப்பை உருவாக்குதல்</string>
     <string name="message_cannot_pair_no_mac">மேக் முகவரி எதுவும் கடக்கப்படவில்லை, இணைக்க முடியாது.</string>
     <string name="preferences_miband_1_2_settings" tools:ignore="TypographyFractions">மி பேண்ட் 1/2 அமைப்புகள்</string>
-    <string name="preferences_miband_1_2_warning">எச்சரிக்கை: இந்த விருப்பத்தேர்வுகள் MI பட்டைகள் 1 மற்றும் 2 க்கு மட்டுமே பொருந்தும்.</string>
+    <string name="preferences_miband_1_2_warning">எச்சரிக்கை: இந்த விருப்பத்தேர்வுகள் எம்ஐ பட்டைகள் 1 மற்றும் 2 க்கு மட்டுமே பொருந்தும்.</string>
     <string name="female">பெண்</string>
     <string name="miband_pairing_using_dummy_userdata">போலி பயனர் தரவைப் பயன்படுத்தி சரியான பயனர் தரவு எதுவும் கொடுக்கப்படவில்லை.</string>
     <string name="discovery_entered_invalid_authkey">நீங்கள் உள்ளிட்ட ரகசிய அங்கீகார விசை தவறானது! திருத்த சாதனத்தில் நீண்ட நேரம் அழுத்தவும்.</string>
@@ -2583,7 +2583,7 @@
     <string name="pref_screen_notification_profile_alarm_clock">அலாரம் கடிகாரம்</string>
     <string name="StringUtils_sender">(%1$s)</string>
     <string name="find_lost_device_you_found_it">அதைக் கண்டுபிடித்தார்!</string>
-    <string name="miband2_prefs_timeformat">MI2: நேர வடிவம்</string>
+    <string name="miband2_prefs_timeformat">எம்ஐ2: நேர வடிவம்</string>
     <string name="on">ஆன்</string>
     <string name="mi2_dnd_always">எப்போதும்</string>
     <string name="dnd_all_day">நாள் முழுவதும்</string>
@@ -3227,7 +3227,7 @@
     <string name="bahasa_melayu">மலாய்</string>
     <string name="activity_prefs_goal_standing_hours">நாள்தோறும் இலக்கு: நிற்கும் நேரம்</string>
     <string name="notifications_dismiss_all">அனைத்தையும் நிராகரிக்கவும்</string>
-    <string name="mi2_enable_text_notifications_summary"><![CDATA[Needs firmware >= 1.0.1.28 மற்றும் Mili_pro.ft* நிறுவப்பட்டது.]]></string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[நிலைபொருள் தேவை &gt;= 1.0.1.28 மற்றும் மிலி_ப்ரோ.ft* நிறுவப்பட்டது.]]></string>
     <string name="enhanced">மேம்படுத்தப்பட்டது</string>
     <string name="discovery_bonding_error">பிணைப்பு தோல்வியுற்றது: %1$s</string>
     <string name="copy_to_clipboard">நகலெடு</string>
