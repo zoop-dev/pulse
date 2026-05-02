@@ -56,6 +56,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
+import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiActivityFileDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiDailySummarySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiManualSampleDao;
@@ -125,9 +126,10 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public Map<AbstractDao<?, ?>, Property> getAllDeviceDao(@NonNull final DaoSession session) {
-        Map<AbstractDao<?, ?>, Property> map = new HashMap<>(6);
+        Map<AbstractDao<?, ?>, Property> map = new HashMap<>(7);
         map.put(session.getBaseActivitySummaryDao(), BaseActivitySummaryDao.Properties.DeviceId);
         map.put(session.getXiaomiActivitySampleDao(), XiaomiActivitySampleDao.Properties.DeviceId);
+        map.put(session.getXiaomiActivityFileDao(), XiaomiActivityFileDao.Properties.DeviceId);
         map.put(session.getXiaomiDailySummarySampleDao(), XiaomiDailySummarySampleDao.Properties.DeviceId);
         map.put(session.getXiaomiManualSampleDao(), XiaomiManualSampleDao.Properties.DeviceId);
         map.put(session.getXiaomiSleepStageSampleDao(), XiaomiSleepStageSampleDao.Properties.DeviceId);

@@ -79,7 +79,7 @@ public class GBDaoGenerator {
             outputDir.mkdirs();
         }
 
-        final Schema schema = new Schema(132, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(133, MAIN_PACKAGE + ".entities");
 
         final List<Entity> sampleProvidersToGenerate = new LinkedList<>();
 
@@ -111,6 +111,7 @@ public class GBDaoGenerator {
         sampleProvidersToGenerate.add(addHuamiSleepRespiratoryRateSample(schema, user, device));
         addHuamiSleepSessionSample(schema, user, device);
         addXiaomiActivitySample(schema, user, device);
+        addXiaomiActivityFile(schema, user, device);
         sampleProvidersToGenerate.add(addXiaomiSleepTimeSamples(schema, user, device));
         sampleProvidersToGenerate.add(addHeartPulseSamples(schema, user, device));
         sampleProvidersToGenerate.add(addHeartRrIntervalSamples(schema, user, device));
@@ -580,6 +581,22 @@ public class GBDaoGenerator {
         activitySample.addIntProperty("activeCalories").notNull().codeBeforeGetterAndSetter(OVERRIDE);
         activitySample.addIntProperty("energy").notNull();
         return activitySample;
+    }
+
+    private static Entity addXiaomiActivityFile(Schema schema, Entity user, Entity device) {
+        final Entity entity = addEntity(schema, "XiaomiActivityFile");
+        entity.implementsSerializable();
+        entity.setJavaDoc("Index of raw Xiaomi activity files dumped to disk (SUMMARY/DETAILS/GPS_TRACK).");
+        final Property deviceId = entity.addLongProperty("deviceId").notNull().primaryKey().getProperty();
+        entity.addToOne(device, deviceId);
+        entity.addLongProperty("timestamp").notNull().primaryKey();
+        entity.addIntProperty("type").notNull().primaryKey();
+        entity.addIntProperty("subtype").notNull().primaryKey();
+        entity.addIntProperty("detailType").notNull().primaryKey();
+        entity.addIntProperty("timezone").notNull();
+        entity.addIntProperty("version").notNull();
+        entity.addStringProperty("filePath").notNull();
+        return entity;
     }
 
     private static Entity addXiaomiSleepTimeSamples(Schema schema, Entity user, Entity device) {

@@ -46,6 +46,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpec
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityFileFetcher;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityFileId;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityParser;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
@@ -202,6 +203,14 @@ public class XiaomiSettingsCustomizer implements DeviceSpecificSettingsCustomize
                         final byte[] fixedData = XiaomiActivityParser.fixAndWrap(data).array();
                         if (activityParser.parse(context, device, fileId, fixedData)) {
                             LOG.info("Successfully parsed {}", fileId);
+                            // Mirror the registry write that XiaomiActivityFileFetcher does
+                            // during initial fetch — needed after DB import / restore so
+                            // XiaomiActivityTrackProvider can resolve the raw file on demand.
+                            XiaomiActivityFileFetcher.registerActivityFile(device, fileId, activityFile);
+                        } else if (fixedData.length <= 16) {
+                            // Placeholder file (e.g. indoor GPS_TRACK with no fix) — logged
+                            // separately inside the parser. Avoid the WARN-level "Failed to parse".
+                            LOG.info("Skipped empty placeholder {}", fileId);
                         } else {
                             LOG.warn("Failed to parse {}", fileId);
                         }

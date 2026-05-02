@@ -2739,7 +2739,7 @@
     <string name="electrical_current">Current</string>
     <string name="mountain_bike_grit_score">Grit score</string>
     <string name="mountain_bike_flow_score">Flow score</string>
-    <string name="caloriesBurnt">Calories</string>
+    <string name="caloriesBurnt">Total calories</string>
     <string name="restingCalories">Resting Calories</string>
     <string name="metabolic_rate">Metabolic Rate</string>
     <string name="active_calories_avg">Active AVG</string>
@@ -2826,6 +2826,13 @@
     <string name="lactateThresholdHeartRate">Lactate Threshold Heart Rate</string>
     <string name="recoveryTime">Recovery Time</string>
     <string name="recoveryHr">Recovery Heart Rate</string>
+    <string name="workout_throws_count">Throws</string>
+    <string name="workout_throws_low">Low Intensity Throws</string>
+    <string name="workout_throws_medium">Medium Intensity Throws</string>
+    <string name="workout_throws_high">High Intensity Throws</string>
+    <string name="workout_distance_goal">Distance Goal</string>
+    <string name="workout_distance_goal_percent">Distance Goal Reached</string>
+    <string name="workout_distance_meters_calibrated">Calibrated Distance</string>
     <string name="ratingOfPerceivedExertion">Rate of Perceived Exertion</string>
     <string name="averageStride">Average Stride</string>
     <string name="maxStride">Max Stride</string>
@@ -2992,6 +2999,7 @@
     <string name="degrees">degrees</string>
     <string name="minutes_100m">min/100m</string>
     <string name="minutes_100yd">min/100yd</string>
+    <string name="minutes_500m">min/500m</string>
     <string name="Pace">Pace</string>
     <!-- activity summary groups-->
     <string name="Strokes">Strokes</string>
@@ -5052,4 +5060,36 @@
     <string name="pref_category_wanderer" translatable="false">Wanderer</string>
     <string name="activity_detail_upload_to_wanderer">Upload GPX to Wanderer</string>
     <string name="select_at_least_option">Please select at least %1$d option</string>
+
+    <!-- Workout summary section headers -->
+    <string name="goals">Goals</string>
+    <string name="predictions">Predictions</string>
+    <string name="punches">Punches</string>
+    <string name="Throws">Throws</string>
+
+    <!-- Workout summary field labels (Xiaomi parsers and generic) -->
+    <string name="vitality_gain">Vitality gain</string>
+    <string name="v02maxLevel">VO₂max level</string>
+    <string name="goalCount">Goal count</string>
+    <string name="groupCount">Group count</string>
+    <string name="configuredTimeGoal">Time goal</string>
+    <string name="configuredCaloriesGoal">Calories goal</string>
+    <string name="maximumCaloriesGoal">Max calories goal</string>
+    <string name="configuredPaceGoal">Pace goal</string>
+    <string name="configuredSpeedGoal">Speed goal</string>
+    <string name="configuredCadenceGoal">Cadence goal</string>
+    <string name="time_goal_percent">Time goal reached</string>
+    <string name="calories_goal_percent">Calories goal reached</string>
+    <string name="pace_goal_percent">Pace goal reached</string>
+    <string name="speed_goal_percent">Speed goal reached</string>
+    <string name="cadence_goal_percent">Cadence goal reached</string>
+    <string name="lengths_goal_percent">Lengths goal reached</string>
+    <string name="projectedTime5km">Projected 5 km time</string>
+    <string name="projectedTime10km">Projected 10 km time</string>
+    <string name="projectedTimeHalfMarathon">Projected half-marathon time</string>
+    <string name="projectedTimeMarathon">Projected marathon time</string>
+    <string name="totalPunchCount">Total punches</string>
+    <string name="perfectPunchCount">Perfect punches</string>
+    <string name="goodPunchCount">Good punches</string>
+    <string name="missPunchCount">Missed punches</string>
 </resources>

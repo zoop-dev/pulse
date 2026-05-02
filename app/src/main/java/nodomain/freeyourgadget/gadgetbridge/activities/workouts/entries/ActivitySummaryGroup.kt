@@ -85,6 +85,8 @@ object ActivitySummaryGroup {
                     ActivitySummaryEntries.SPEED_AVG,
                     ActivitySummaryEntries.ELEVATION_GAIN,
                     ActivitySummaryEntries.ASCENT_METERS,
+                    ActivitySummaryEntries.VITALITY_GAIN,
+                    ActivitySummaryEntries.WORKOUT_LOAD,
                 )
             )
 
@@ -130,7 +132,10 @@ object ActivitySummaryGroup {
                     ActivitySummaryEntries.PACE_AVG_SECONDS_KM,
                     ActivitySummaryEntries.PACE_MIN,
                     ActivitySummaryEntries.PACE_MAX,
-                    "averageSpeed2",
+                    ActivitySummaryEntries.PACE_GOAL,
+                    ActivitySummaryEntries.PACE_GOAL_PERCENT,
+                    ActivitySummaryEntries.SPEED_GOAL,
+                    ActivitySummaryEntries.SPEED_GOAL_PERCENT,
                 )
             )
 
@@ -140,6 +145,8 @@ object ActivitySummaryGroup {
                     ActivitySummaryEntries.CADENCE_AVG,
                     ActivitySummaryEntries.CADENCE_MAX,
                     ActivitySummaryEntries.CADENCE_MIN,
+                    ActivitySummaryEntries.CADENCE_GOAL,
+                    ActivitySummaryEntries.CADENCE_GOAL_PERCENT,
                 )
             )
 
@@ -195,6 +202,26 @@ object ActivitySummaryGroup {
                     ActivitySummaryEntries.STROKES,
                     ActivitySummaryEntries.STROKE_RATE_AVG,
                     ActivitySummaryEntries.STROKE_RATE_MAX,
+                    ActivitySummaryEntries.GROUP_COUNT,
+                )
+            )
+
+            // Punches (boxing freestyle)
+            put(
+                ActivitySummaryEntries.GROUP_PUNCHES, listOf<String>(
+                    ActivitySummaryEntries.PUNCH_TOTAL,
+                    ActivitySummaryEntries.PUNCH_PERFECT,
+                    ActivitySummaryEntries.PUNCH_GOOD,
+                    ActivitySummaryEntries.PUNCH_MISS,
+                )
+            )
+
+            // Throws (frisbee freestyle)
+            put(
+                ActivitySummaryEntries.GROUP_THROWS, listOf<String>(
+                    ActivitySummaryEntries.THROWS_LOW,
+                    ActivitySummaryEntries.THROWS_MEDIUM,
+                    ActivitySummaryEntries.THROWS_HIGH,
                 )
             )
 
@@ -257,7 +284,6 @@ object ActivitySummaryGroup {
                     ActivitySummaryEntries.TRAINING_EFFECT_AEROBIC,
                     ActivitySummaryEntries.TRAINING_EFFECT_ANAEROBIC,
                     ActivitySummaryEntries.TRAINING_EFFECT_TOTAL,
-                    ActivitySummaryEntries.WORKOUT_LOAD,
                     ActivitySummaryEntries.TRAINING_LOAD,
                     ActivitySummaryEntries.INTENSITY_FACTOR,
                     ActivitySummaryEntries.TRAINING_STRESS_SCORE,
@@ -272,6 +298,32 @@ object ActivitySummaryGroup {
                     ActivitySummaryEntries.LACTATE_THRESHOLD_HR,
                     ActivitySummaryEntries.RATING_OF_PERCEIVED_EXERTION,
                     ActivitySummaryEntries.WORKOUT_FEEL,
+                    ActivitySummaryEntries.V02MAX_LEVEL,
+                )
+            )
+
+            // Goals (configured workout targets + their percent-reached counterparts)
+            put(
+                ActivitySummaryEntries.GROUP_GOALS, listOf<String>(
+                    ActivitySummaryEntries.TIME_GOAL,
+                    ActivitySummaryEntries.TIME_GOAL_PERCENT,
+                    ActivitySummaryEntries.CALORIES_GOAL,
+                    ActivitySummaryEntries.CALORIES_GOAL_PERCENT,
+                    ActivitySummaryEntries.CALORIES_GOAL_MAX,
+                    ActivitySummaryEntries.ACTIVE_CALORIES_GOAL,
+                    ActivitySummaryEntries.LENGTHS_GOAL,
+                    ActivitySummaryEntries.LENGTHS_GOAL_PERCENT,
+                    ActivitySummaryEntries.GOAL_COUNT,
+                )
+            )
+
+            // Predictions (projected race times)
+            put(
+                ActivitySummaryEntries.GROUP_PREDICTIONS, listOf<String>(
+                    ActivitySummaryEntries.PROJECTED_TIME_5KM,
+                    ActivitySummaryEntries.PROJECTED_TIME_10KM,
+                    ActivitySummaryEntries.PROJECTED_TIME_HALF_MARATHON,
+                    ActivitySummaryEntries.PROJECTED_TIME_MARATHON,
                 )
             )
 
@@ -357,12 +409,16 @@ object ActivitySummaryGroup {
 
             // Distance
             put(ActivitySummaryEntries.GROUP_DISTANCE, listOf(
-                ActivitySummaryEntries.DISTANCE_METERS
+                ActivitySummaryEntries.DISTANCE_METERS,
+                ActivitySummaryEntries.DISTANCE_METERS_CALIBRATED,
+                ActivitySummaryEntries.DISTANCE_GOAL,
+                ActivitySummaryEntries.DISTANCE_GOAL_PERCENT,
             ))
 
             // Steps
             put(ActivitySummaryEntries.GROUP_STEPS, listOf(
                 ActivitySummaryEntries.AVG_GROUND_CONTACT_TIME,
+                ActivitySummaryEntries.MIN_GROUND_CONTACT_TIME,
                 ActivitySummaryEntries.AVG_GROUND_CONTACT_TIME_BALANCE,
                 ActivitySummaryEntries.AVG_VERTICAL_OSCILLATION,
                 ActivitySummaryEntries.AVG_VERTICAL_RATIO,
@@ -396,8 +452,6 @@ object ActivitySummaryGroup {
                 ActivitySummaryEntries.GROUP_OTHER, listOf<String>(
                     ActivitySummaryEntries.FLUID_CONSUMED,
                     ActivitySummaryEntries.ESTIMATED_SWEAT_LOSS,
-                    ActivitySummaryEntries.CALORIES_BURNT,
-                    ActivitySummaryEntries.CALORIES_TOTAL,
                     ActivitySummaryEntries.CALORIES_RESTING,
                     ActivitySummaryEntries.CALORIES_CONSUMED,
                     ActivitySummaryEntries.SPO2_AVG,

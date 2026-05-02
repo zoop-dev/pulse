@@ -32,6 +32,7 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MILE_PER_HOUR;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_100_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_100_YARDS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_500_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_KM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_MILE;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MM;
@@ -40,6 +41,7 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_100_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_100_YARDS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_500_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_KM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_M;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_SPORT;
@@ -224,6 +226,10 @@ public class WorkoutValueFormatter {
                         unit = UNIT_MINUTES_PER_100_METERS;
                     }
                     break;
+                case UNIT_SECONDS_PER_500_METERS:
+                    value = value / 60D;
+                    unit = UNIT_MINUTES_PER_500_METERS;
+                    break;
                 case ActivitySummaryEntries.UNIT_JOULE:
                     if (value > 10000) {
                         value = value / 1000D;
@@ -234,12 +240,12 @@ public class WorkoutValueFormatter {
 
         if (unit.equals(UNIT_SECONDS) && !show_raw_data && showUnit) { //rather than plain seconds, show formatted duration
             return DateTimeUtils.formatDurationHoursMinutes((long) value, TimeUnit.SECONDS);
-        }else if (unit.equals(UNIT_SECONDS_SPORT) && !show_raw_data && showUnit) {
-                return DateTimeUtils.formatSportsDuration(Math.round(1000L * (double) value), TimeUnit.MILLISECONDS);
+        } else if (unit.equals(UNIT_SECONDS_SPORT) && !show_raw_data && showUnit) {
+            return DateTimeUtils.formatSportsDuration(Math.round(1000L * (double) value), TimeUnit.MILLISECONDS);
         } else if (UNIT_EPOC_TIME.equals(unit) && !show_raw_data) {
             long epoc = ((Number) rawValue).longValue();
             return DateTimeUtils.formatLocalTime(epoc * 1000L);
-        } else if (unit.equals(UNIT_MINUTES_PER_KM) || unit.equals(UNIT_MINUTES_PER_MILE) || unit.equals(UNIT_MINUTES_PER_100_METERS) || unit.equals(UNIT_MINUTES_PER_100_YARDS)) {
+        } else if (unit.equals(UNIT_MINUTES_PER_KM) || unit.equals(UNIT_MINUTES_PER_MILE) || unit.equals(UNIT_MINUTES_PER_100_METERS) || unit.equals(UNIT_MINUTES_PER_100_YARDS) || unit.equals(UNIT_MINUTES_PER_500_METERS)) {
             // Format pace
             String format = showUnit ? "%d:%02d %s" : "%d:%02d";
             return String.format(

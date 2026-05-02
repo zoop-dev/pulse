@@ -41,6 +41,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl.DailySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl.SleepDetailsParser;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl.SleepStagesParser;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl.WorkoutDetailsParser;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl.WorkoutGpsParser;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.impl.WorkoutSummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.util.CheckSums;
@@ -129,6 +130,7 @@ public abstract class XiaomiActivityParser {
         return switch (fileId.getDetailType()) {
             case SUMMARY -> new WorkoutSummaryParser();
             case GPS_TRACK -> new WorkoutGpsParser();
+            case DETAILS -> new WorkoutDetailsParser();
             default -> null;
         };
 
