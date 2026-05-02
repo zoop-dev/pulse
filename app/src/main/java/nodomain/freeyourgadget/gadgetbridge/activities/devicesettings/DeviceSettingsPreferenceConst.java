@@ -374,6 +374,7 @@ public class DeviceSettingsPreferenceConst {
 
     public static final String PREF_NOTHING_EAR1_INEAR = "pref_nothing_inear_detection";
     public static final String PREF_NOTHING_EAR1_AUDIOMODE = "pref_nothing_audiomode";
+    public static final String PREF_HEADPHONES_LOW_LATENCY = "pref_headphones_low_latency";
 
 
     public static final String PREF_HUAWEI_FREEBUDS_INEAR = "pref_freebuds_inear_detection";

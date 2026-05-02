@@ -128,6 +128,13 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
                 sendCommand("set audio mode", nothingProtocol.encodeAudioMode(prefs.getString(DeviceSettingsPreferenceConst.PREF_NOTHING_EAR1_AUDIOMODE, "off")));
                 // response: 55 20 01 0F 70 00 00 00
                 break;
+            case DeviceSettingsPreferenceConst.PREF_HEADPHONES_LOW_LATENCY:
+                sendCommand("set low latency", nothingProtocol.encodeLowLatency(prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_HEADPHONES_LOW_LATENCY, false)));
+                // ON:           55 6001 40F0 0100 34 01 47 0253
+                // ON Response:  55 6001 4070 0000 34 FF FF95
+                // OFF:          55 6001 40F0 0100 5C 02 28 9353
+                // OFF Response: 55 6001 4070 0000 5C FF FF95
+                break;
             default:
                 LOG.debug("CONFIG: " + config);
                 break;
@@ -158,6 +165,7 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
         private static final short firmware_version = (short) 0xc042;
         private static final short audio_mode_status = (short) 0xc01e;
         private static final short audio_mode_status2 = (short) 0xe003;
+        private static final short low_latency = (short) 0xf040;
 
         private static final short unk_maybe_ack = (short) 0xf002;
         private static final short unk_close_case = (short) 0xe002; //sent twice when the case is closed with earphones in
@@ -357,6 +365,11 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
             byte[] payload = new byte[]{0x01, (byte) modeBitmask, 0x00};
 
             return encodeMessage((short) 0x120, audio_mode, payload);
+        }
+
+        byte[] encodeLowLatency(boolean enabled) {
+            final byte payload = (byte) (enabled ? 0x01 : 0x02);
+            return encodeMessage((short) 0x120, low_latency, new byte[]{payload});
         }
 
         public byte[] encodeFindDevice(boolean start) {

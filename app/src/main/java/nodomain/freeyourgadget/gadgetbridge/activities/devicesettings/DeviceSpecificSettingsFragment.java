@@ -730,6 +730,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
 
         addPreferenceHandlerFor(PREF_NOTHING_EAR1_INEAR);
         addPreferenceHandlerFor(PREF_NOTHING_EAR1_AUDIOMODE);
+        addPreferenceHandlerFor(PREF_HEADPHONES_LOW_LATENCY);
 
         addPreferenceHandlerFor(PREF_HUAWEI_FREEBUDS_INEAR);
         addPreferenceHandlerFor(PREF_HUAWEI_FREEBUDS_AUDIOMODE);

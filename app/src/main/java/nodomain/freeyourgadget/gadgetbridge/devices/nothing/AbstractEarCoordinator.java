@@ -66,6 +66,9 @@ public abstract class AbstractEarCoordinator extends AbstractBLClassicDeviceCoor
     public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
         final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_nothing_ear1);
+        if (supportsLowLatency()) {
+            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_headphones_low_latency);
+        }
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_headphones);
         return deviceSpecificSettings;
     }
@@ -93,4 +96,8 @@ public abstract class AbstractEarCoordinator extends AbstractBLClassicDeviceCoor
     public abstract boolean supportsAdaptiveAnc();
 
     public abstract boolean supportsMediumAnc();
+
+    public boolean supportsLowLatency() {
+        return false;
+    }
 }
