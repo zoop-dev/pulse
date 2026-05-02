@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreferenceCompat
         android:defaultValue="false"
         android:icon="@drawable/ic_settings_applications"
@@ -7,4 +8,18 @@
         android:layout="@layout/preference_checkbox"
         android:summary="Allow installed app management from Gadgetbridge. Not heavily tested. Uninstalling system apps might be dangerous."
         android:title="App management" />
+    <nodomain.freeyourgadget.gadgetbridge.util.XTimePreference
+        android:key="garmin_experimental_sleep_WakeTime"
+        app:useSimpleSummaryProvider="true"
+        app:defaultValue="06:00"
+        android:title="SleepTest: wake time" />
+    <nodomain.freeyourgadget.gadgetbridge.util.XTimePreference
+        android:key="garmin_experimental_sleep_SleepTime"
+        android:title="SleepTest: sleep time"
+        app:useSimpleSummaryProvider="true"
+        app:defaultValue="22:00" />
+    <Preference
+        android:key="garmin_experimental_sleep_send"
+        android:summary="Click this to try to send the above typical wake and sleep times to the gadget."
+        android:title="SleepTest: Send" />
 </androidx.preference.PreferenceScreen>
