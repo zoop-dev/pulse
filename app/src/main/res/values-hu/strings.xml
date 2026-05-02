@@ -4269,4 +4269,6 @@
     <string name="diving_tank">Búvárpalack</string>
     <string name="diving_tank_used">Használt</string>
     <string name="diving_hang_time">Merülési idő</string>
+    <string name="prefs_active_noise_cancelling_medium">Közepes szintű aktív zajszűrés</string>
+    <string name="prefs_active_noise_cancelling_adaptive">Adaptív zajszűrés</string>
 </resources>
