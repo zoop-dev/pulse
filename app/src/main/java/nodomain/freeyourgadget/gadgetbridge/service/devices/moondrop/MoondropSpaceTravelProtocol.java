@@ -63,19 +63,22 @@ public class MoondropSpaceTravelProtocol extends GBDeviceProtocol {
             if (packet.getPduType() != GaiaPacket.PDU_RESPONSE)
                 continue;
 
-            short featureId = packet.getFeatureId();
-            short pduId = packet.getPduId();
-            byte[] payload = packet.getPayload();
-
-            if (featureId == EQUALIZER_PRESET_FEATURE && pduId == EQUALIZER_PRESET_PDU_GET)
-                events.add(handlePacketEqualizerPreset(payload));
-            else if (featureId == TOUCH_ACTIONS_FEATURE && pduId == TOUCH_ACTIONS_PDU_GET)
-                events.add(handlePacketTouchActions(payload));
-            else if (featureId == AUDIO_CURATION_FEATURE && pduId == AUDIO_CURATION_PDU_GET_MODE)
-                events.add(handlePacketAudioCurationMode(payload));
+            GBDeviceEvent event = decodePacket(packet.getFeatureId(), packet.getPduId(), packet.getPayload());
+            if (event != null)
+                events.add(event);
         }
 
         return events.toArray(new GBDeviceEvent[0]);
+    }
+
+    protected GBDeviceEvent decodePacket(short featureId, short pduId, byte[] payload) {
+        if (featureId == EQUALIZER_PRESET_FEATURE && pduId == EQUALIZER_PRESET_PDU_GET)
+            return handlePacketEqualizerPreset(payload);
+        else if (featureId == TOUCH_ACTIONS_FEATURE && pduId == TOUCH_ACTIONS_PDU_GET)
+            return handlePacketTouchActions(payload);
+        else if (featureId == AUDIO_CURATION_FEATURE && pduId == AUDIO_CURATION_PDU_GET_MODE)
+            return handlePacketAudioCurationMode(payload);
+        return null;
     }
 
     private GBDeviceEvent handlePacketEqualizerPreset(byte[] payload) {
@@ -85,21 +88,6 @@ public class MoondropSpaceTravelProtocol extends GBDeviceProtocol {
         byte preset = payload[0];
 
         return new GBDeviceEventUpdatePreferences(PREF_MOONDROP_EQUALIZER_PRESET, String.valueOf(preset));
-    }
-
-    private GBDeviceEvent handlePacketAudioCurationMode(byte[] payload) {
-        if (payload.length < 1)
-            return null;
-
-        // GET_MODE returns a 0-based slot index, SET_MODE and the UI dropdown use a
-        // bitmask (Normal=1, ANC=2, Transparency=4). Convert before storing the
-        // preference.
-        int slot = payload[0] & 0xff;
-        if (slot > 2)
-            return null;
-        int mode = 1 << slot;
-
-        return new GBDeviceEventUpdatePreferences(PREF_MOONDROP_ANC_MODE, String.valueOf(mode));
     }
 
     private GBDeviceEvent handlePacketTouchActions(byte[] payload) {
@@ -117,6 +105,21 @@ public class MoondropSpaceTravelProtocol extends GBDeviceProtocol {
         prefs.putAll(decodeTouchAction(PREF_MOONDROP_TOUCH_ANC_MODE_EARBUD, PREF_MOONDROP_TOUCH_ANC_MODE_TRIGGER, payload[10]));
 
         return new GBDeviceEventUpdatePreferences(prefs);
+    }
+
+    private GBDeviceEvent handlePacketAudioCurationMode(byte[] payload) {
+        if (payload.length < 1)
+            return null;
+
+        // GET_MODE returns a 0-based slot index, SET_MODE and the UI dropdown use a
+        // bitmask (Normal=1, ANC=2, Transparency=4). Convert before storing the
+        // preference.
+        int slot = payload[0] & 0xff;
+        if (slot > 2)
+            return null;
+        int mode = 1 << slot;
+
+        return new GBDeviceEventUpdatePreferences(PREF_MOONDROP_ANC_MODE, String.valueOf(mode));
     }
 
     @Override
@@ -150,12 +153,12 @@ public class MoondropSpaceTravelProtocol extends GBDeviceProtocol {
         return new GaiaPacket(EQUALIZER_PRESET_FEATURE, EQUALIZER_PRESET_PDU_GET).encode();
     }
 
-    public byte[] encodeGetAudioCurationMode() {
-        return new GaiaPacket(AUDIO_CURATION_FEATURE, AUDIO_CURATION_PDU_GET_MODE).encode();
-    }
-
     public byte[] encodeGetTouchActions() {
         return new GaiaPacket(TOUCH_ACTIONS_FEATURE, TOUCH_ACTIONS_PDU_GET).encode();
+    }
+
+    public byte[] encodeGetAudioCurationMode() {
+        return new GaiaPacket(AUDIO_CURATION_FEATURE, AUDIO_CURATION_PDU_GET_MODE).encode();
     }
 
     private byte[] encodeSetEqualizerPreset() {

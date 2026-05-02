@@ -38,7 +38,7 @@ public class MoondropSpaceTravelCoordinator extends AbstractBLClassicDeviceCoord
 
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("^(?:Moondrop )?Space Travel(?: 2)?$");
+        return Pattern.compile("Moondrop Space Travel");
     }
 
     @Override
