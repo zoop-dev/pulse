@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.garmin;
 
+import static nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport.BUNDLE_EXTRA_INSTALL_BYTES;
+
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
@@ -61,6 +63,20 @@ public class GarminFitFileInstallHandler implements InstallHandler {
 
     public GarminFitFileInstallHandler(final Uri uri, final Bundle options, final Context context) {
         this.mContext = context;
+
+        if (options != null && options.containsKey(BUNDLE_EXTRA_INSTALL_BYTES)) {
+            try {
+                rawBytes = options.getByteArray(BUNDLE_EXTRA_INSTALL_BYTES);
+                fitFile = FitFile.parseIncoming(rawBytes);
+                fileType = fitFile.getFileType();
+                return;
+            } catch (final FitParseException e) {
+                LOG.error("bundle fit bytes are corrupted", e);
+                fitParseException = e;
+            } catch (final Exception e) {
+                LOG.error("failed to read bundle fit bytes", e);
+            }
+        }
 
         final UriHelper uriHelper;
         try {

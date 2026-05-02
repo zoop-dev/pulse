@@ -1328,13 +1328,15 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     public void onInstallApp(Uri uri, @NonNull final Bundle options) {
         final GarminFitFileInstallHandler fitFileInstallHandler = new GarminFitFileInstallHandler(uri, options, getContext());
         if (fitFileInstallHandler.isValid()) {
+            final FileType.FILETYPE fileType = fitFileInstallHandler.getFileType();
             communicator.sendMessage(
-                    "upload fit file",
+                    options.getString(BUNDLE_EXTRA_INSTALL_TASK_NAME, "upload " + fileType + " file"),
                     fileTransferHandler.initiateUpload(
                             fitFileInstallHandler.getRawBytes(),
-                            fitFileInstallHandler.getFileType()
+                            fileType
                     ).getOutgoingMessage()
             );
+            return;
         }
 
         final GarminGpxRouteInstallHandler garminGpxRouteInstallHandler = new GarminGpxRouteInstallHandler(uri, getContext());
@@ -1346,19 +1348,30 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             );
             final FitFile convertedFile = gpxRouteFileConverter.getConvertedFile();
             final FileType.FILETYPE fileType = convertedFile.getFileType();
-            communicator.sendMessage("upload " + fileType + " file", fileTransferHandler.initiateUpload(convertedFile.getOutgoingMessage(), fileType).getOutgoingMessage());
+            communicator.sendMessage(
+                    options.getString(BUNDLE_EXTRA_INSTALL_TASK_NAME, "upload " + fileType + " file"),
+                    fileTransferHandler.initiateUpload(
+                            convertedFile.getOutgoingMessage(),
+                            fileType
+                    ).getOutgoingMessage()
+            );
+            return;
         }
 
         final GarminPrgFileInstallHandler prgFileInstallHandler = new GarminPrgFileInstallHandler(uri, getContext());
         if (prgFileInstallHandler.isValid()) {
+            final FileType.FILETYPE fileType = FileType.FILETYPE.PRG;
             communicator.sendMessage(
-                    "upload prg file",
+                    options.getString(BUNDLE_EXTRA_INSTALL_TASK_NAME, "upload " + fileType + " file"),
                     fileTransferHandler.initiateUpload(
                             prgFileInstallHandler.getRawBytes(),
-                            FileType.FILETYPE.PRG
+                            fileType
                     ).getOutgoingMessage()
             );
+            return;
         }
+
+        LOG.warn("no install handler found for {} {}", uri, options.getString(BUNDLE_EXTRA_INSTALL_TASK_NAME));
     }
 
     @Override
