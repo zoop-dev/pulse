@@ -59,37 +59,34 @@ public class EarSettingsCustomizer implements DeviceSpecificSettingsCustomizer {
             }
         }
 
-        if (!earCoordinator.supportsLightAnc() || !earCoordinator.supportsTransparency()) {
-            // If light anc and transparency is not supported, remove the values from the preference
-            final Preference audioModePref = handler.findPreference(DeviceSettingsPreferenceConst.PREF_NOTHING_EAR1_AUDIOMODE);
+        // Remove unsupported anc modes from the preference
+        final Preference audioModePref = handler.findPreference(DeviceSettingsPreferenceConst.PREF_NOTHING_EAR1_AUDIOMODE);
+        if (audioModePref != null) {
+            final CharSequence[] originalEntries = ((ListPreference) audioModePref).getEntries();
+            final CharSequence[] originalEntryValues = ((ListPreference) audioModePref).getEntryValues();
 
-            if (audioModePref != null) {
-                final CharSequence[] originalEntries = ((ListPreference) audioModePref).getEntries();
-                final CharSequence[] originalEntryValues = ((ListPreference) audioModePref).getEntryValues();
+            final List<CharSequence> entries = new ArrayList<>();
+            final List<CharSequence> entryValues = new ArrayList<>();
 
-                final List<CharSequence> entries = new ArrayList<>();
-                final List<CharSequence> entryValues = new ArrayList<>();
-
-                for (int i = 0; i < originalEntries.length; i++) {
-                    if ("anclight".equals(originalEntryValues[i].toString()) && !earCoordinator.supportsLightAnc()) {
-                        continue;
-                    }
-                    if ("ancmedium".equals(originalEntryValues[i].toString()) && !earCoordinator.supportsTransparency()) {
-                        continue;
-                    }
-                    if ("ancadaptive".equals(originalEntryValues[i].toString()) && !earCoordinator.supportsTransparency()) {
-                        continue;
-                    }
-                    if ("transparency".equals(originalEntryValues[i].toString()) && !earCoordinator.supportsTransparency()) {
-                        continue;
-                    }
-                    entries.add(originalEntries[i]);
-                    entryValues.add(originalEntryValues[i]);
+            for (int i = 0; i < originalEntries.length; i++) {
+                if ("anclight".equals(originalEntryValues[i].toString()) && !earCoordinator.supportsLightAnc()) {
+                    continue;
                 }
-
-                ((ListPreference) audioModePref).setEntries(entries.toArray(new CharSequence[0]));
-                ((ListPreference) audioModePref).setEntryValues(entryValues.toArray(new CharSequence[0]));
+                if ("ancmedium".equals(originalEntryValues[i].toString()) && !earCoordinator.supportsMediumAnc()) {
+                    continue;
+                }
+                if ("ancadaptive".equals(originalEntryValues[i].toString()) && !earCoordinator.supportsAdaptiveAnc()) {
+                    continue;
+                }
+                if ("transparency".equals(originalEntryValues[i].toString()) && !earCoordinator.supportsTransparency()) {
+                    continue;
+                }
+                entries.add(originalEntries[i]);
+                entryValues.add(originalEntryValues[i]);
             }
+
+            ((ListPreference) audioModePref).setEntries(entries.toArray(new CharSequence[0]));
+            ((ListPreference) audioModePref).setEntryValues(entryValues.toArray(new CharSequence[0]));
         }
     }
 
