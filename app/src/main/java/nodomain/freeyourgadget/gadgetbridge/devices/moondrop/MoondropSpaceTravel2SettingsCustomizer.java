@@ -31,10 +31,10 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_MOONDROP_ANC_MODE;
 
-public class MoondropSpaceTravelSettingsCustomizer implements DeviceSpecificSettingsCustomizer {
+public class MoondropSpaceTravel2SettingsCustomizer implements DeviceSpecificSettingsCustomizer {
     private final GBDevice device;
 
-    public MoondropSpaceTravelSettingsCustomizer(final GBDevice device) {
+    public MoondropSpaceTravel2SettingsCustomizer(final GBDevice device) {
         this.device = device;
     }
 
@@ -58,16 +58,16 @@ public class MoondropSpaceTravelSettingsCustomizer implements DeviceSpecificSett
         return Collections.emptySet();
     }
 
-    public static final Creator<MoondropSpaceTravelSettingsCustomizer> CREATOR = new Creator<MoondropSpaceTravelSettingsCustomizer>() {
+    public static final Creator<MoondropSpaceTravel2SettingsCustomizer> CREATOR = new Creator<MoondropSpaceTravel2SettingsCustomizer>() {
         @Override
-        public MoondropSpaceTravelSettingsCustomizer createFromParcel(final Parcel in) {
-            final GBDevice device = in.readParcelable(MoondropSpaceTravelSettingsCustomizer.class.getClassLoader());
-            return new MoondropSpaceTravelSettingsCustomizer(device);
+        public MoondropSpaceTravel2SettingsCustomizer createFromParcel(final Parcel in) {
+            final GBDevice device = in.readParcelable(MoondropSpaceTravel2SettingsCustomizer.class.getClassLoader());
+            return new MoondropSpaceTravel2SettingsCustomizer(device);
         }
 
         @Override
-        public MoondropSpaceTravelSettingsCustomizer[] newArray(final int size) {
-            return new MoondropSpaceTravelSettingsCustomizer[size];
+        public MoondropSpaceTravel2SettingsCustomizer[] newArray(final int size) {
+            return new MoondropSpaceTravel2SettingsCustomizer[size];
         }
     };
 

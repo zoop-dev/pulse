@@ -16,8 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.moondrop;
 
-import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_MOONDROP_ANC_MODE;
-
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractHeadphoneSerialDeviceSupportV2;
@@ -32,18 +30,8 @@ public class MoondropSpaceTravelDeviceSupport extends AbstractHeadphoneSerialDev
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
         builder.write(mDeviceProtocol.encodeGetEqualizerPreset());
         builder.write(mDeviceProtocol.encodeGetTouchActions());
-        builder.write(mDeviceProtocol.encodeGetAudioCurationMode());
         builder.setDeviceState(GBDevice.State.INITIALIZED);
 
         return builder;
-    }
-
-    @Override
-    public void onReadConfiguration(final String config) {
-        if (PREF_MOONDROP_ANC_MODE.equals(config)) {
-            final TransactionBuilder builder = createTransactionBuilder("read anc mode");
-            builder.write(mDeviceProtocol.encodeGetAudioCurationMode());
-            builder.queue();
-        }
     }
 }

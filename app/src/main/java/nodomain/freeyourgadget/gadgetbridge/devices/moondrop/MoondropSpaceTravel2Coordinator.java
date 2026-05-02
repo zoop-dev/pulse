@@ -21,6 +21,9 @@ import androidx.annotation.NonNull;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.moondrop.MoondropSpaceTravel2DeviceSupport;
@@ -34,6 +37,28 @@ public class MoondropSpaceTravel2Coordinator extends MoondropSpaceTravelCoordina
     @Override
     public int getDeviceNameResource() {
         return R.string.devicetype_moondrop_space_travel_2;
+    }
+
+    @Override
+    public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
+        final DeviceSpecificSettings settings = new DeviceSpecificSettings();
+
+        settings.addRootScreen(R.xml.devicesettings_moondrop_space_travel_2_audio);
+        settings.addRootScreen(DeviceSpecificSettingsScreen.TOUCH_OPTIONS);
+        settings.addSubScreen(
+                DeviceSpecificSettingsScreen.TOUCH_OPTIONS,
+                R.xml.devicesettings_moondrop_space_travel_touch);
+        settings.addRootScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS);
+        settings.addSubScreen(
+                DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS,
+                R.xml.devicesettings_headphones);
+
+        return settings;
+    }
+
+    @Override
+    public DeviceSpecificSettingsCustomizer getDeviceSpecificSettingsCustomizer(final GBDevice device) {
+        return new MoondropSpaceTravel2SettingsCustomizer(device);
     }
 
     @NonNull
