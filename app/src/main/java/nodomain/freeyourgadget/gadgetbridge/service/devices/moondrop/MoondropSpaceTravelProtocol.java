@@ -41,6 +41,10 @@ public class MoondropSpaceTravelProtocol extends GBDeviceProtocol {
     private static final byte TOUCH_ACTIONS_PDU_GET = (byte)0x02;
     private static final byte TOUCH_ACTIONS_PDU_SET = (byte)0x03;
 
+    private static final byte AUDIO_CURATION_FEATURE = (byte)0x08;
+    private static final byte AUDIO_CURATION_PDU_GET_MODE = (byte)0x03;
+    private static final byte AUDIO_CURATION_PDU_SET_MODE = (byte)0x04;
+
     protected MoondropSpaceTravelProtocol(GBDevice device) {
         super(device);
     }
@@ -67,6 +71,8 @@ public class MoondropSpaceTravelProtocol extends GBDeviceProtocol {
                 events.add(handlePacketEqualizerPreset(payload));
             else if (featureId == TOUCH_ACTIONS_FEATURE && pduId == TOUCH_ACTIONS_PDU_GET)
                 events.add(handlePacketTouchActions(payload));
+            else if (featureId == AUDIO_CURATION_FEATURE && pduId == AUDIO_CURATION_PDU_GET_MODE)
+                events.add(handlePacketAudioCurationMode(payload));
         }
 
         return events.toArray(new GBDeviceEvent[0]);
@@ -79,6 +85,21 @@ public class MoondropSpaceTravelProtocol extends GBDeviceProtocol {
         byte preset = payload[0];
 
         return new GBDeviceEventUpdatePreferences(PREF_MOONDROP_EQUALIZER_PRESET, String.valueOf(preset));
+    }
+
+    private GBDeviceEvent handlePacketAudioCurationMode(byte[] payload) {
+        if (payload.length < 1)
+            return null;
+
+        // GET_MODE returns a 0-based slot index, SET_MODE and the UI dropdown use a
+        // bitmask (Normal=1, ANC=2, Transparency=4). Convert before storing the
+        // preference.
+        int slot = payload[0] & 0xff;
+        if (slot > 2)
+            return null;
+        int mode = 1 << slot;
+
+        return new GBDeviceEventUpdatePreferences(PREF_MOONDROP_ANC_MODE, String.valueOf(mode));
     }
 
     private GBDeviceEvent handlePacketTouchActions(byte[] payload) {
@@ -103,6 +124,8 @@ public class MoondropSpaceTravelProtocol extends GBDeviceProtocol {
         switch (config) {
             case PREF_MOONDROP_EQUALIZER_PRESET:
                 return encodeSetEqualizerPreset();
+            case PREF_MOONDROP_ANC_MODE:
+                return encodeSetAudioCurationMode();
             case PREF_MOONDROP_TOUCH_PLAY_PAUSE_EARBUD:
             case PREF_MOONDROP_TOUCH_PLAY_PAUSE_TRIGGER:
             case PREF_MOONDROP_TOUCH_MEDIA_PREV_EARBUD:
@@ -127,6 +150,10 @@ public class MoondropSpaceTravelProtocol extends GBDeviceProtocol {
         return new GaiaPacket(EQUALIZER_PRESET_FEATURE, EQUALIZER_PRESET_PDU_GET).encode();
     }
 
+    public byte[] encodeGetAudioCurationMode() {
+        return new GaiaPacket(AUDIO_CURATION_FEATURE, AUDIO_CURATION_PDU_GET_MODE).encode();
+    }
+
     public byte[] encodeGetTouchActions() {
         return new GaiaPacket(TOUCH_ACTIONS_FEATURE, TOUCH_ACTIONS_PDU_GET).encode();
     }
@@ -138,6 +165,15 @@ public class MoondropSpaceTravelProtocol extends GBDeviceProtocol {
         byte[] payload = new byte[] { preset };
 
         return new GaiaPacket(EQUALIZER_PRESET_FEATURE, EQUALIZER_PRESET_PDU_SET, payload).encode();
+    }
+
+    private byte[] encodeSetAudioCurationMode() {
+        Prefs prefs = getDevicePrefs();
+        byte mode = Byte.parseByte(prefs.getString(PREF_MOONDROP_ANC_MODE, "1"));
+
+        byte[] payload = new byte[] { mode };
+
+        return new GaiaPacket(AUDIO_CURATION_FEATURE, AUDIO_CURATION_PDU_SET_MODE, payload).encode();
     }
 
     private byte[] encodeSetTouchActions() {
