@@ -4426,4 +4426,6 @@
     <string name="diving_tank">Láhev</string>
     <string name="diving_tank_used">Použito</string>
     <string name="diving_hang_time">Doba letu</string>
+    <string name="prefs_active_noise_cancelling_medium">Střední aktivní potlačení hluku</string>
+    <string name="prefs_active_noise_cancelling_adaptive">Adaptivní potlačení hluku</string>
 </resources>
