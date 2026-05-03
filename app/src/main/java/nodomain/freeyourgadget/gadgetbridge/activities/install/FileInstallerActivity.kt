@@ -1,3 +1,19 @@
+/*  Copyright (C) 2025-2026 José Rebelo, Thomas Kuehne
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities.install
 
 import android.annotation.SuppressLint
@@ -17,11 +33,14 @@ import nodomain.freeyourgadget.gadgetbridge.adapter.DeviceInstallAdapter
 import nodomain.freeyourgadget.gadgetbridge.databinding.ActivityFileInstallerBinding
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
+import nodomain.freeyourgadget.gadgetbridge.model.DeviceService.EXTRA_OPTIONS
 import org.slf4j.LoggerFactory
 
 class FileInstallerActivity : AppCompatActivity() {
     private val viewModel: FileInstallerViewModel by viewModels {
-        FileInstallerViewModelFactory(GBApplication.app())
+        FileInstallerViewModelFactory(GBApplication.app(),
+            intent.getParcelableExtra(EXTRA_OPTIONS) ?: Bundle.EMPTY
+        )
     }
 
     private lateinit var binding: ActivityFileInstallerBinding
@@ -124,6 +143,10 @@ class FileInstallerActivity : AppCompatActivity() {
                     Intent.FLAG_ACTIVITY_TASK_ON_HOME or
                     Intent.FLAG_GRANT_READ_URI_PERMISSION
         }
+        val installAppBundle = getIntent().getParcelableExtra<Bundle?>(EXTRA_OPTIONS)
+        if (installAppBundle != null) {
+            intent.putExtra(EXTRA_OPTIONS, installAppBundle)
+        }
         startActivity(intent)
         finish()
     }
@@ -136,12 +159,13 @@ class FileInstallerActivity : AppCompatActivity() {
 
 // FileInstallerViewModelFactory remains the same
 class FileInstallerViewModelFactory(
-    private val application: GBApplication
+    private val application: GBApplication,
+    private val fwOptions: Bundle
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(FileInstallerViewModel::class.java)) {
-            return FileInstallerViewModel(application) as T
+            return FileInstallerViewModel(application, fwOptions) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

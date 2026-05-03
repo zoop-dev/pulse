@@ -1,5 +1,6 @@
-/*  Copyright (C) 2015-2024 Andreas Shimokawa, Carsten Pfeiffer, Daniel
-    Dakhno, Daniele Gobbetti, José Rebelo, Lem Dulfo, Petr Vaněk, Taavi Eomäe
+/*  Copyright (C) 2015-2026 Andreas Shimokawa, Carsten Pfeiffer, Daniel
+    Dakhno, Daniele Gobbetti, José Rebelo, Lem Dulfo, Petr Vaněk, Taavi Eomäe,
+    Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -16,6 +17,8 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities.install;
+
+import static nodomain.freeyourgadget.gadgetbridge.model.DeviceService.EXTRA_OPTIONS;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -212,7 +215,11 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
         installButton.setOnClickListener(v -> {
             setInstallEnabled(false);
             installHandler.onStartInstall(device);
-            GBApplication.deviceService(device).onInstallApp(uri, Bundle.EMPTY);
+            Bundle options = getIntent().getParcelableExtra(EXTRA_OPTIONS);
+            if (options == null) {
+                options = Bundle.EMPTY;
+            }
+            GBApplication.deviceService(device).onInstallApp(uri, options);
         });
 
         closeButton.setOnClickListener(v -> finish());
@@ -222,7 +229,11 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
             uri = getIntent().getParcelableExtra(Intent.EXTRA_STREAM);
         }
 
-        installHandler = device.getDeviceCoordinator().findInstallHandler(uri, Bundle.EMPTY, this);
+        Bundle options = getIntent().getParcelableExtra(EXTRA_OPTIONS);
+        if (options == null) {
+            options = Bundle.EMPTY;
+        }
+        installHandler = device.getDeviceCoordinator().findInstallHandler(uri, options, this);
 
         if (installHandler == null) {
             // Should never happen? at this point, we got here by installing to the device
