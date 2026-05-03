@@ -18,6 +18,9 @@ package nodomain.freeyourgadget.gadgetbridge.devices.nothing;
 
 import androidx.annotation.NonNull;
 
+import java.util.Collections;
+import java.util.List;
+
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
@@ -66,6 +69,12 @@ public abstract class AbstractEarCoordinator extends AbstractBLClassicDeviceCoor
     public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
         final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_nothing_ear1);
+        if (!getEqualizerPresets().isEmpty()) {
+            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_nothing_equalizer);
+        }
+        if (supportsUltraBass()) {
+            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_nothing_ultra_bass);
+        }
         if (supportsLowLatency()) {
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_headphones_low_latency);
         }
@@ -98,6 +107,14 @@ public abstract class AbstractEarCoordinator extends AbstractBLClassicDeviceCoor
     public abstract boolean supportsMediumAnc();
 
     public boolean supportsLowLatency() {
+        return false;
+    }
+
+    public List<NothingEqualizer> getEqualizerPresets() {
+        return Collections.emptyList();
+    }
+
+    public boolean supportsUltraBass() {
         return false;
     }
 }

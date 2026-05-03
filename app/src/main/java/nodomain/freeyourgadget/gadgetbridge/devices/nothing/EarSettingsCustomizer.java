@@ -18,6 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices.nothing;
 
 import android.os.Parcel;
 
+import androidx.annotation.NonNull;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 
@@ -32,7 +33,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpec
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class EarSettingsCustomizer implements DeviceSpecificSettingsCustomizer {
-    public static final Creator<EarSettingsCustomizer> CREATOR = new Creator<EarSettingsCustomizer>() {
+    public static final Creator<EarSettingsCustomizer> CREATOR = new Creator<>() {
         @Override
         public EarSettingsCustomizer createFromParcel(final Parcel in) {
             return new EarSettingsCustomizer();
@@ -88,6 +89,33 @@ public class EarSettingsCustomizer implements DeviceSpecificSettingsCustomizer {
             ((ListPreference) audioModePref).setEntries(entries.toArray(new CharSequence[0]));
             ((ListPreference) audioModePref).setEntryValues(entryValues.toArray(new CharSequence[0]));
         }
+
+        final Preference equalizerPref = handler.findPreference(DeviceSettingsPreferenceConst.PREF_HEADPHONES_EQUALIZER);
+        if (equalizerPref instanceof ListPreference listPreference) {
+            final List<NothingEqualizer> supportedPresets = earCoordinator.getEqualizerPresets();
+            if (supportedPresets.isEmpty()) {
+                listPreference.setVisible(false);
+            } else {
+                final CharSequence[] originalEntries = listPreference.getEntries();
+                final CharSequence[] originalEntryValues = listPreference.getEntryValues();
+
+                final List<CharSequence> entries = new ArrayList<>();
+                final List<CharSequence> entryValues = new ArrayList<>();
+
+                for (int i = 0; i < originalEntryValues.length; i++) {
+                    final NothingEqualizer preset = NothingEqualizer.fromPreferenceValue(originalEntryValues[i].toString());
+                    if (preset == null || !supportedPresets.contains(preset)) {
+                        continue;
+                    }
+
+                    entries.add(originalEntries[i]);
+                    entryValues.add(originalEntryValues[i]);
+                }
+
+                listPreference.setEntries(entries.toArray(new CharSequence[0]));
+                listPreference.setEntryValues(entryValues.toArray(new CharSequence[0]));
+            }
+        }
     }
 
     @Override
@@ -101,6 +129,6 @@ public class EarSettingsCustomizer implements DeviceSpecificSettingsCustomizer {
     }
 
     @Override
-    public void writeToParcel(final Parcel dest, final int flags) {
+    public void writeToParcel(@NonNull final Parcel dest, final int flags) {
     }
 }

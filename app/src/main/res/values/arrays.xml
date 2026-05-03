@@ -3564,6 +3564,24 @@
         <item>off</item>
     </string-array>
 
+    <string-array name="nothing_ear1_equalizer_names">
+        <item>@string/nothing_equalizer_rock</item>
+        <item>@string/nothing_equalizer_electronic</item>
+        <item>@string/nothing_equalizer_pop</item>
+        <item>@string/nothing_equalizer_enhance_vocals</item>
+        <item>@string/nothing_equalizer_classical</item>
+        <item>@string/nothing_equalizer_dirac</item>
+    </string-array>
+
+    <string-array name="nothing_ear1_equalizer_values">
+        <item>ROCK</item>
+        <item>ELECTRONIC</item>
+        <item>POP</item>
+        <item>ENHANCE_VOCALS</item>
+        <item>CLASSICAL</item>
+        <item>DIRAC</item>
+    </string-array>
+
     <string-array name="notification_list_is_blacklist_names">
         <item>@string/pref_title_notification_use_as_deny</item>
         <item>@string/pref_title_notification_use_as_allow</item>

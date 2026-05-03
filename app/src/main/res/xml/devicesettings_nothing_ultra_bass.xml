@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_speaker"
+        android:key="pref_nothing_ultra_bass"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/nothing_prefs_ultra_bass_summary"
+        android:title="@string/nothing_prefs_ultra_bass_title" />
+    <SeekBarPreference
+        android:defaultValue="2"
+        android:dependency="pref_nothing_ultra_bass"
+        android:icon="@drawable/ic_speaker"
+        android:key="pref_nothing_ultra_bass_level"
+        android:max="5"
+        android:title="@string/nothing_prefs_ultra_bass_level_title"
+        app:min="1"
+        app:showSeekBarValue="true" />
+</androidx.preference.PreferenceScreen>

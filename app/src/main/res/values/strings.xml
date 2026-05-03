@@ -3177,6 +3177,15 @@
     <string name="nothing_prefs_inear_title">In-Ear detection</string>
     <string name="prefs_in_ear_detection_summary">Play calls through your earbuds when they are in your ears</string>
     <string name="nothing_prefs_audiomode_title">Audio mode</string>
+    <string name="nothing_prefs_ultra_bass_title">Ultra Bass</string>
+    <string name="nothing_prefs_ultra_bass_summary">Boost low frequencies for a stronger bass response</string>
+    <string name="nothing_prefs_ultra_bass_level_title">Ultra Bass Level</string>
+    <string name="nothing_equalizer_rock">Rock</string>
+    <string name="nothing_equalizer_electronic">Electronic</string>
+    <string name="nothing_equalizer_pop">Pop</string>
+    <string name="nothing_equalizer_enhance_vocals">Enhance vocals</string>
+    <string name="nothing_equalizer_classical">Classical</string>
+    <string name="nothing_equalizer_dirac">Dirac</string>
     <string name="prefs_equalizer_preset">Equalizer Preset</string>
     <string name="pref_title_equalizer_normal">Normal</string>
     <string name="pref_title_equalizer_bass_boost">Bass boost</string>

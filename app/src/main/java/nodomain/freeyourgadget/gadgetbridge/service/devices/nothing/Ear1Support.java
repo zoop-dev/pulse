@@ -37,6 +37,7 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdateDevi
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
 import nodomain.freeyourgadget.gadgetbridge.devices.nothing.AbstractEarCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.nothing.NothingEqualizer;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 import nodomain.freeyourgadget.gadgetbridge.service.AbstractHeadphoneBTBRDeviceSupport;
@@ -74,6 +75,12 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
         sendCommand(builder, nothingProtocol.encodeFirmwareVersionReq());
         sendCommand(builder, nothingProtocol.encodeBatteryStatusReq());
         sendCommand(builder, nothingProtocol.encodeAudioModeStatusReq());
+        if (!getCoordinator().getEqualizerPresets().isEmpty()) {
+            sendCommand(builder, nothingProtocol.encodeEqualizerStatusReq());
+        }
+        if (getCoordinator().supportsUltraBass()) {
+            sendCommand(builder, nothingProtocol.encodeUltraBassStatusReq());
+        }
 
         return builder;
     }
@@ -135,6 +142,19 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
                 // OFF:          55 6001 40F0 0100 5C 02 28 9353
                 // OFF Response: 55 6001 4070 0000 5C FF FF95
                 break;
+            case DeviceSettingsPreferenceConst.PREF_HEADPHONES_EQUALIZER:
+                sendCommand("set equalizer", nothingProtocol.encodeEqualizer(prefs.getString(DeviceSettingsPreferenceConst.PREF_HEADPHONES_EQUALIZER, NothingEqualizer.DIRAC.name())));
+                break;
+            case DeviceSettingsPreferenceConst.PREF_NOTHING_EAR1_ULTRA_BASS_ENABLED:
+            case DeviceSettingsPreferenceConst.PREF_NOTHING_EAR1_ULTRA_BASS_LEVEL:
+                sendCommand(
+                        "set ultra bass",
+                        nothingProtocol.encodeUltraBass(
+                                prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_NOTHING_EAR1_ULTRA_BASS_ENABLED, false),
+                                prefs.getInt(DeviceSettingsPreferenceConst.PREF_NOTHING_EAR1_ULTRA_BASS_LEVEL, 2)
+                        )
+                );
+                break;
             default:
                 LOG.debug("CONFIG: " + config);
                 break;
@@ -166,6 +186,8 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
         private static final short audio_mode_status = (short) 0xc01e;
         private static final short audio_mode_status2 = (short) 0xe003;
         private static final short low_latency = (short) 0xf040;
+        private static final short equalizer_status = (short) 0xc050;
+        private static final short ultra_bass_status = (short) 0xc04e;
 
         private static final short unk_maybe_ack = (short) 0xf002;
         private static final short unk_close_case = (short) 0xe002; //sent twice when the case is closed with earphones in
@@ -175,6 +197,8 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
         private static final short in_ear_detection = (short) 0xf004;
         private static final short in_ear_detection2 = (short) 0xc00e;
         private static final short audio_mode = (short) 0xf00f;
+        private static final short equalizer = (short) 0xf01d;
+        private static final short ultra_bass = (short) 0xf051;
 
         private final boolean incrementCounter;
         private int messageCounter = 0x00;
@@ -259,6 +283,20 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
                     devEvts.add(handleInEarStatus(payload));
                     break;
 
+                case equalizer_status:
+                case equalizer:
+                    if (payload.length > 0) {
+                        devEvts.add(handleEqualizerStatus(payload));
+                    }
+                    break;
+
+                case ultra_bass_status:
+                case ultra_bass:
+                    if (payload.length > 0) {
+                        devEvts.add(handleUltraBassStatus(payload));
+                    }
+                    break;
+
                 case unk_maybe_ack:
                     LOG.debug("received ack");
                     break;
@@ -320,6 +358,14 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
             return encodeMessage((short) 0x120, audio_mode_status, new byte[]{});
         }
 
+        byte[] encodeEqualizerStatusReq() {
+            return encodeMessage((short) 0x120, equalizer_status, new byte[]{});
+        }
+
+        byte[] encodeUltraBassStatusReq() {
+            return encodeMessage((short) 0x120, ultra_bass_status, new byte[]{});
+        }
+
         private GBDeviceEventVersionInfo handleFirmwareVersion(byte[] payload) {
             GBDeviceEventVersionInfo evt = new GBDeviceEventVersionInfo();
             evt.fwVersion = new String(payload);
@@ -351,6 +397,32 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
             return preferencesEvent;
         }
 
+        private GBDeviceEventUpdatePreferences handleEqualizerStatus(final byte[] payload) {
+            final GBDeviceEventUpdatePreferences preferencesEvent = new GBDeviceEventUpdatePreferences();
+
+            final NothingEqualizer equalizerPreset = NothingEqualizer.fromCode(payload[0]);
+            if (equalizerPreset == null) {
+                LOG.warn("Unknown equalizer code: {}", payload[0] & 0xff);
+                return preferencesEvent;
+            }
+
+            preferencesEvent.withPreference(DeviceSettingsPreferenceConst.PREF_HEADPHONES_EQUALIZER, equalizerPreset.name());
+            return preferencesEvent;
+        }
+
+        private GBDeviceEventUpdatePreferences handleUltraBassStatus(final byte[] payload) {
+            final GBDeviceEventUpdatePreferences preferencesEvent = new GBDeviceEventUpdatePreferences();
+
+            preferencesEvent.withPreference(DeviceSettingsPreferenceConst.PREF_NOTHING_EAR1_ULTRA_BASS_ENABLED, payload[0] == 0x01);
+
+            if (payload.length >= 2) {
+                final int level = Math.max(1, Math.min(5, ((payload[1] & 0xff) + 1) / 2));
+                preferencesEvent.withPreference(DeviceSettingsPreferenceConst.PREF_NOTHING_EAR1_ULTRA_BASS_LEVEL, level);
+            }
+
+            return preferencesEvent;
+        }
+
         byte[] encodeInEarDetection(byte enabled) {
             return encodeMessage((short) 0x120, in_ear_detection, new byte[]{0x01, 0x01, enabled});
         }
@@ -370,6 +442,26 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
         byte[] encodeLowLatency(boolean enabled) {
             final byte payload = (byte) (enabled ? 0x01 : 0x02);
             return encodeMessage((short) 0x120, low_latency, new byte[]{payload});
+        }
+
+        byte[] encodeEqualizer(final String desired) {
+            NothingEqualizer preset = NothingEqualizer.DIRAC;
+
+            final NothingEqualizer requested = NothingEqualizer.fromPreferenceValue(desired);
+            if (requested != null) {
+                preset = requested;
+            } else {
+                LOG.warn("Unknown equalizer preset: {}, using default", desired);
+            }
+
+            return encodeMessage((short) 0x120, equalizer, new byte[]{preset.getCode(), 0x00});
+        }
+
+        byte[] encodeUltraBass(final boolean enabled, final int level) {
+            final int clampedLevel = Math.max(1, Math.min(5, level));
+            final byte rawLevel = (byte) (clampedLevel * 2);
+
+            return encodeMessage((short) 0x120, ultra_bass, new byte[]{(byte) (enabled ? 0x01 : 0x00), rawLevel});
         }
 
         public byte[] encodeFindDevice(boolean start) {

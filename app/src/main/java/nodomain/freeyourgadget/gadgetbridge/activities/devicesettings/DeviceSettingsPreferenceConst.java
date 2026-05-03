@@ -374,6 +374,9 @@ public class DeviceSettingsPreferenceConst {
 
     public static final String PREF_NOTHING_EAR1_INEAR = "pref_nothing_inear_detection";
     public static final String PREF_NOTHING_EAR1_AUDIOMODE = "pref_nothing_audiomode";
+    public static final String PREF_NOTHING_EAR1_ULTRA_BASS_ENABLED = "pref_nothing_ultra_bass_enabled";
+    public static final String PREF_NOTHING_EAR1_ULTRA_BASS_LEVEL = "pref_nothing_ultra_bass_level";
+    public static final String PREF_HEADPHONES_EQUALIZER = "pref_headphones_equalizer";
     public static final String PREF_HEADPHONES_LOW_LATENCY = "pref_headphones_low_latency";
 
 
