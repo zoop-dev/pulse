@@ -1,5 +1,7 @@
-[FitFileId{type=LOCATION, manufacturer=5759, product=65534, number=65533, product_name=Gadgetbridge},
-FitFileCreator{software_version=2318, hardware_version=254},
-FitLocation{name=Bregenz, position_lat=47.50499999150634, position_long=9.73999997600913, symbol=Airport, altitude=-495.0, message_index=0},
-FitLocation{name=腓特烈港, position_lat=47.65599997714162, position_long=9.472999982535839, symbol=Anchor, altitude=0.0, message_index=1},
-FitLocation{name=קרויצלינגן, position_lat=47.633000034838915, position_long=9.166999999433756, symbol=Water Source, altitude=8850.0, message_index=2}]
+[FitFileId{type=LOCATION, manufacturer=1, product=65534, serial_number=1, time_created=1774688353, number=1, product_name=Gadgetbridge},
+FitFileCreator{software_version=246},
+FitLocation{2026-03-28 08:59:13.000, name=Aconcagua, position_lat=-32.65305555425584, position_long=-70.01166670583189, altitude=6967.0, timestamp=1774688353, message_index=0},
+FitLocation{2026-03-28 08:59:13.000, name=ים המלח, position_lat=31.499999966472387, position_long=35.4999999795109, altitude=-439.0, timestamp=1774688353, message_index=1},
+FitLocation{2026-03-28 08:59:13.000, name=सगरमाथा, position_lat=27.988333320245147, position_long=86.92527777515352, altitude=8848.0, timestamp=1774688353, message_index=2},
+FitLocation{2026-03-28 08:59:13.000, name=Wihnächtsmann, position_lat=89.9997222237289, position_long=-179.9997222237289, timestamp=1774688353, message_index=3},
+FitLocation{2026-03-28 08:59:13.000, name=Ilhéu das Rolas, position_lat=-0.0027221906930208206, position_long=6.516722263768315, altitude=0.0, timestamp=1774688353, message_index=4}]

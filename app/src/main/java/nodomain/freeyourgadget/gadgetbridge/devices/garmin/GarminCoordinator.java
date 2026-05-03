@@ -263,6 +263,10 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
             );
         }
 
+        if (supportsSendWaypoint(device)) {
+            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_garmin_send_waypoint);
+        }
+
         final List<Integer> notifications = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS);
 
         notifications.add(R.xml.devicesettings_send_app_notifications);
@@ -366,6 +370,12 @@ public abstract class GarminCoordinator extends AbstractBLEDeviceCoordinator {
 
     public boolean supportsAgpsUpdates(final GBDevice device) {
         return !getPrefs(device).getString(GarminPreferences.PREF_AGPS_KNOWN_URLS, "").isEmpty();
+    }
+
+    public boolean supportsSendWaypoint(@NonNull final GBDevice device){
+        return supports(device, GarminCapability.WAYPOINT_TRANSFER)
+                || supports(device, GarminCapability.EXPLORE_SYNC)
+                || GBApplication.getDevicePrefs(device).installUnsupportedFiles();
     }
 
     public boolean supports(final GBDevice device, final GarminCapability capability) {

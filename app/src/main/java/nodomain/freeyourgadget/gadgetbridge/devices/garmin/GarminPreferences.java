@@ -12,6 +12,7 @@ public class GarminPreferences {
     public static final String PREF_GARMIN_AGPS_FOLDER = "garmin_agps_folder";
     public static final String PREF_GARMIN_AGPS_FILENAME = "garmin_agps_filename_%s";
     public static final String PREF_GARMIN_REALTIME_SETTINGS = "garmin_realtime_settings";
+    public static final String PREF_GARMIN_SEND_WAYPOINT = "garmin_send_waypoint";
 
     public static String agpsStatus(final String url) {
         return String.format(GarminPreferences.PREF_GARMIN_AGPS_STATUS, CheckSums.md5(url));

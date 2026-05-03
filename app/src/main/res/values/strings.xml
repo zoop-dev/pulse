@@ -4725,6 +4725,33 @@
     <string name="pref_title_pebble_search_app_updates">Search for app updates</string>
     <string name="pref_summary_pebble_search_app_updates">Automatically search for watch app and watchface updates when opening the app manager</string>
     <string name="pref_sos_contact_title">SOS contact</string>
+
+    <string name="activity_send_waypoint_device">Device</string>
+    <string name="activity_send_waypoint_elevation">Elevation</string>
+    <string name="activity_send_waypoint_elevation_label">Elevation (%s)</string>
+    <string name="activity_send_waypoint_elevation_number">elevation must be empty or a number</string>
+    <string name="activity_send_waypoint_elevation_range_imperial">elevation must be between -1\'600 ft and +38\'713 ft</string>
+    <string name="activity_send_waypoint_elevation_range_metric">elevation must be between -500m and +11\'800m</string>
+    <string name="activity_send_waypoint_feet">feet</string>
+    <string name="activity_send_waypoint_latitude_missing">latitude is empty</string>
+    <string name="activity_send_waypoint_latitude_number">latitude must be a number</string>
+    <string name="activity_send_waypoint_latitude_range">latitude must be between -90° and +90°</string>
+    <string name="activity_send_waypoint_longitude_missing">longitude is empty</string>
+    <string name="activity_send_waypoint_longitude_number">longitude must be a number</string>
+    <string name="activity_send_waypoint_longitude_range">longitude must be between -180° and +180°</string>
+    <string name="activity_send_waypoint_meter">meter</string>
+    <string name="activity_send_waypoint_name">Name</string>
+    <plurals name="activity_send_waypoint_name_length">
+                <item quantity="one">name is %d character too long</item>
+                <item quantity="other">name is %d characters too long</item>
+    </plurals>
+    <string name="activity_send_waypoint_name_missing">name is empty</string>
+    <string name="activity_send_waypoint_paste">Paste</string>
+    <string name="activity_send_waypoint_titel">Send Waypoint</string>
+    <string name="activity_send_waypoint_no_location">No Location</string>
+    <string name="activity_send_waypoint_no_location_details">No location information found in the received data.</string>
+    <string name="activity_send_waypoint_to_device">Send</string>
+
     <!-- Export Health Connect preferences -->
     <string name="healthconnect_settings">Health Connect</string>
     <string name="pref_health_connect_enabled">Enable Health Connect Export</string>

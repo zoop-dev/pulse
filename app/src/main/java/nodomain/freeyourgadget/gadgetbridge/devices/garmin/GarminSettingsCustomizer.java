@@ -59,6 +59,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsHandler;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.actions.GarminSendWaypointActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.FileType;
@@ -277,6 +278,12 @@ public class GarminSettingsCustomizer implements DeviceSpecificSettingsCustomize
         final Preference prefSleepSend = handler.findPreference("garmin_experimental_sleep_send");
         if (prefSleepSend != null) {
             prefSleepSend.setOnPreferenceClickListener(dummy -> sendSleep(handler));
+        }
+
+        final Preference prefSendWaypoint = handler.findPreference(GarminPreferences.PREF_GARMIN_SEND_WAYPOINT);
+        if (prefSendWaypoint != null) {
+            prefSendWaypoint.setOnPreferenceClickListener(dummy ->
+                    GarminSendWaypointActivity.Companion.handlePreferenceClick(handler));
         }
     }
 
