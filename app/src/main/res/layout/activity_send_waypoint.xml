@@ -1,147 +1,153 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingHorizontal="@dimen/activity_horizontal_margin"
-    android:paddingVertical="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
-    android:scrollbars="vertical">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/activity_send_waypoint_name" />
-
-    <EditText
-        android:id="@+id/waypointName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_label_24px"
-        android:drawablePadding="@dimen/cpv_item_horizontal_padding"
-        android:hint="@string/activity_send_waypoint_name"
-        android:inputType="text"
-        android:minHeight="48dp"
-        android:singleLine="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:labelFor="@id/waypointLatitude"
-        android:text="@string/pref_title_location_latitude" />
-
-    <EditText
-        android:id="@+id/waypointLatitude"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_swap_vert"
-        android:drawablePadding="@dimen/cpv_item_horizontal_padding"
-        android:hint="@string/pref_title_location_latitude"
-        android:inputType="number|numberDecimal|numberSigned"
-        android:minHeight="48dp"
-        android:singleLine="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:labelFor="@id/waypointLongitude"
-        android:text="@string/pref_title_location_longitude" />
-
-    <EditText
-        android:id="@+id/waypointLongitude"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_swap_horiz"
-        android:drawablePadding="@dimen/cpv_item_horizontal_padding"
-        android:hint="@string/pref_title_location_longitude"
-        android:inputType="number|numberDecimal|numberSigned"
-        android:minHeight="48dp"
-        android:singleLine="true" />
-
-    <TextView
-        android:id="@+id/waypointElevationLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:labelFor="@id/waypointElevation"
-        android:text="@string/activity_send_waypoint_elevation" />
-
-    <EditText
-        android:id="@+id/waypointElevation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_altitude_24px"
-        android:drawablePadding="@dimen/cpv_item_horizontal_padding"
-        android:hint="@string/activity_send_waypoint_elevation"
-        android:inputType="number|numberDecimal|numberSigned"
-        android:minHeight="48dp"
-        android:singleLine="true" />
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/activity_vertical_margin">
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/activity_horizontal_margin"
+        android:paddingVertical="@dimen/activity_vertical_margin">
 
-        <Button
-            android:id="@+id/waypointPaste"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_send_waypoint_name" />
+
+        <EditText
+            android:id="@+id/waypointName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/about_margin"
-            android:layout_weight="1"
-            android:text="@string/activity_send_waypoint_paste"
-            app:icon="@drawable/ic_content_paste_go_24px" />
+            android:drawableStart="@drawable/ic_label_24px"
+            android:drawablePadding="@dimen/cpv_item_horizontal_padding"
+            android:hint="@string/activity_send_waypoint_name"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:singleLine="true" />
 
-        <Button
-            android:id="@+id/waypointSend"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:labelFor="@id/waypointLatitude"
+            android:text="@string/pref_title_location_latitude" />
+
+        <EditText
+            android:id="@+id/waypointLatitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_swap_vert"
+            android:drawablePadding="@dimen/cpv_item_horizontal_padding"
+            android:hint="@string/pref_title_location_latitude"
+            android:inputType="number|numberDecimal|numberSigned"
+            android:minHeight="48dp"
+            android:singleLine="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:labelFor="@id/waypointLongitude"
+            android:text="@string/pref_title_location_longitude" />
+
+        <EditText
+            android:id="@+id/waypointLongitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_swap_horiz"
+            android:drawablePadding="@dimen/cpv_item_horizontal_padding"
+            android:hint="@string/pref_title_location_longitude"
+            android:inputType="number|numberDecimal|numberSigned"
+            android:minHeight="48dp"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/waypointElevationLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:labelFor="@id/waypointElevation"
+            android:text="@string/activity_send_waypoint_elevation" />
+
+        <EditText
+            android:id="@+id/waypointElevation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_altitude_24px"
+            android:drawablePadding="@dimen/cpv_item_horizontal_padding"
+            android:hint="@string/activity_send_waypoint_elevation"
+            android:inputType="number|numberDecimal|numberSigned"
+            android:minHeight="48dp"
+            android:singleLine="true" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginStart="@dimen/about_margin"
-            android:layout_weight="1"
-            android:enabled="false"
-            android:text="@string/activity_send_waypoint_to_device"
-            app:icon="@drawable/ic_add_location_alt_24px" />
+            android:layout_marginTop="@dimen/activity_vertical_margin">
+
+            <Button
+                android:id="@+id/waypointPaste"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/about_margin"
+                android:layout_weight="1"
+                android:text="@string/activity_send_waypoint_paste"
+                app:icon="@drawable/ic_content_paste_go_24px" />
+
+            <Button
+                android:id="@+id/waypointSend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="@dimen/about_margin"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:text="@string/activity_send_waypoint_to_device"
+                app:icon="@drawable/ic_add_location_alt_24px" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/waypoint_info_0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:clickable="true"
+            android:focusable="true"
+            android:textAlignment="center"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/waypoint_info_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:clickable="true"
+            android:focusable="true"
+            android:textAlignment="center"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/waypoint_info_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:clickable="true"
+            android:focusable="true"
+            android:textAlignment="center"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/waypoint_info_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:clickable="true"
+            android:focusable="true"
+            android:textAlignment="center"
+            android:textIsSelectable="false" />
+
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/waypoint_info_0"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:clickable="true"
-        android:focusable="true"
-        android:textAlignment="center"
-        android:textIsSelectable="false" />
-
-    <TextView
-        android:id="@+id/waypoint_info_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:clickable="true"
-        android:focusable="true"
-        android:textAlignment="center"
-        android:textIsSelectable="false" />
-
-    <TextView
-        android:id="@+id/waypoint_info_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:clickable="true"
-        android:focusable="true"
-        android:textAlignment="center"
-        android:textIsSelectable="false" />
-
-    <TextView
-        android:id="@+id/waypoint_info_3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:clickable="true"
-        android:focusable="true"
-        android:textAlignment="center"
-        android:textIsSelectable="false" />
-</LinearLayout>
+</ScrollView>
