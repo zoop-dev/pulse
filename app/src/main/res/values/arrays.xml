@@ -3570,6 +3570,7 @@
         <item>@string/nothing_equalizer_pop</item>
         <item>@string/nothing_equalizer_enhance_vocals</item>
         <item>@string/nothing_equalizer_classical</item>
+        <item>@string/nothing_equalizer_custom</item>
         <item>@string/nothing_equalizer_dirac</item>
     </string-array>
 
@@ -3579,6 +3580,7 @@
         <item>POP</item>
         <item>ENHANCE_VOCALS</item>
         <item>CLASSICAL</item>
+        <item>CUSTOM</item>
         <item>DIRAC</item>
     </string-array>
 

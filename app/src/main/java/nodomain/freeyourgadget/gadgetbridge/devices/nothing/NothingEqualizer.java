@@ -6,6 +6,7 @@ public enum NothingEqualizer {
     POP((byte) 0x03),
     ENHANCE_VOCALS((byte) 0x04),
     CLASSICAL((byte) 0x05),
+    CUSTOM((byte) 0x06),
     DIRAC((byte) 0x07),
     ;
 

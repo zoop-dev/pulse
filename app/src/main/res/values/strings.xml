@@ -3185,6 +3185,7 @@
     <string name="nothing_equalizer_pop">Pop</string>
     <string name="nothing_equalizer_enhance_vocals">Enhance vocals</string>
     <string name="nothing_equalizer_classical">Classical</string>
+    <string name="nothing_equalizer_custom">Custom</string>
     <string name="nothing_equalizer_dirac">Dirac</string>
     <string name="prefs_equalizer_preset">Equalizer Preset</string>
     <string name="pref_title_equalizer_normal">Normal</string>
