@@ -4,13 +4,13 @@
     <SwitchPreferenceCompat
         android:defaultValue="false"
         android:icon="@drawable/ic_speaker"
-        android:key="pref_nothing_ultra_bass"
+        android:key="pref_nothing_ultra_bass_enabled"
         android:layout="@layout/preference_checkbox"
         android:summary="@string/nothing_prefs_ultra_bass_summary"
         android:title="@string/nothing_prefs_ultra_bass_title" />
     <SeekBarPreference
         android:defaultValue="2"
-        android:dependency="pref_nothing_ultra_bass"
+        android:dependency="pref_nothing_ultra_bass_enabled"
         android:icon="@drawable/ic_speaker"
         android:key="pref_nothing_ultra_bass_level"
         android:max="5"
