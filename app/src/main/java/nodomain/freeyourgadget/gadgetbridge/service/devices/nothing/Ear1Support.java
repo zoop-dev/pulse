@@ -74,12 +74,16 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
 
         sendCommand(builder, nothingProtocol.encodeFirmwareVersionReq());
         sendCommand(builder, nothingProtocol.encodeBatteryStatusReq());
+        sendCommand(builder, nothingProtocol.encodeInEarDetectionReq());
         sendCommand(builder, nothingProtocol.encodeAudioModeStatusReq());
         if (!getCoordinator().getEqualizerPresets().isEmpty()) {
             sendCommand(builder, nothingProtocol.encodeEqualizerStatusReq());
         }
         if (getCoordinator().supportsUltraBass()) {
             sendCommand(builder, nothingProtocol.encodeUltraBassStatusReq());
+        }
+        if (getCoordinator().supportsLowLatency()) {
+            sendCommand(builder, nothingProtocol.encodeLowLatencyReq());
         }
 
         return builder;
@@ -183,9 +187,10 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
         private static final short battery_status = (short) 0xe001;
         private static final short battery_status2 = (short) 0xc007;
         private static final short firmware_version = (short) 0xc042;
+        private static final short in_ear_detection_status = (short) 0xc00e;
         private static final short audio_mode_status = (short) 0xc01e;
         private static final short audio_mode_status2 = (short) 0xe003;
-        private static final short low_latency = (short) 0xf040;
+        private static final short low_latency_status = (short) 0xc041;
         private static final short equalizer_status = (short) 0xc050;
         private static final short ultra_bass_status = (short) 0xc04e;
 
@@ -195,8 +200,8 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
         //outgoing
         private static final short find_device = (short) 0xf002;
         private static final short in_ear_detection = (short) 0xf004;
-        private static final short in_ear_detection2 = (short) 0xc00e;
         private static final short audio_mode = (short) 0xf00f;
+        private static final short low_latency = (short) 0xf040;
         private static final short equalizer = (short) 0xf01d;
         private static final short ultra_bass = (short) 0xf051;
 
@@ -279,7 +284,7 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
                     devEvts.add(handleAudioModeStatus(payload));
                     break;
 
-                case in_ear_detection2:
+                case in_ear_detection_status:
                     devEvts.add(handleInEarStatus(payload));
                     break;
 
@@ -296,7 +301,9 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
                         devEvts.add(handleUltraBassStatus(payload));
                     }
                     break;
-
+                case low_latency_status:
+                    devEvts.add(handleLowLatency(payload));
+                    break;
                 case unk_maybe_ack:
                     LOG.debug("received ack");
                     break;
@@ -366,6 +373,14 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
             return encodeMessage((short) 0x120, ultra_bass_status, new byte[]{});
         }
 
+        byte[] encodeInEarDetectionReq() {
+            return encodeMessage((short) 0x120, in_ear_detection_status, new byte[]{});
+        }
+
+        byte[] encodeLowLatencyReq() {
+            return encodeMessage((short) 0x120, low_latency_status, new byte[]{});
+        }
+
         private GBDeviceEventVersionInfo handleFirmwareVersion(byte[] payload) {
             GBDeviceEventVersionInfo evt = new GBDeviceEventVersionInfo();
             evt.fwVersion = new String(payload);
@@ -422,6 +437,15 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
 
             return preferencesEvent;
         }
+
+        private GBDeviceEventUpdatePreferences handleLowLatency(byte[] payload) {
+            final GBDeviceEventUpdatePreferences preferencesEvent = new GBDeviceEventUpdatePreferences();
+            if (payload.length >= 1) {
+                preferencesEvent.withPreference(DeviceSettingsPreferenceConst.PREF_HEADPHONES_LOW_LATENCY, payload[0] == 0x01 ? true : false);
+            }
+            return preferencesEvent;
+        }
+
 
         byte[] encodeInEarDetection(byte enabled) {
             return encodeMessage((short) 0x120, in_ear_detection, new byte[]{0x01, 0x01, enabled});
