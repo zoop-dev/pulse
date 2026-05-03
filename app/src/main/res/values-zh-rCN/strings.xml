@@ -4423,4 +4423,6 @@
     <string name="diving_tank">气罐</string>
     <string name="diving_tank_used">已用</string>
     <string name="diving_hang_time">滞留时间</string>
+    <string name="prefs_active_noise_cancelling_medium">中度活跃噪声消除</string>
+    <string name="prefs_active_noise_cancelling_adaptive">自适应噪声消除</string>
 </resources>
