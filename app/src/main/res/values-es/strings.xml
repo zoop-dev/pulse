@@ -4273,4 +4273,6 @@
     <string name="broadcast_heart_rate_summary">Cualquier dispositivo o aplicación cercana puede leer tu frecuencia cardíaca.</string>
     <string name="dual_connection_title">Conexión dual</string>
     <string name="dual_connection_summary">Permitir que dos aplicaciones o dispositivos se conecten simultáneamente.</string>
+    <string name="prefs_active_noise_cancelling_medium">Cancelación activa del ruido media</string>
+    <string name="prefs_active_noise_cancelling_adaptive">Cancelación activa del ruido adaptativa</string>
 </resources>
