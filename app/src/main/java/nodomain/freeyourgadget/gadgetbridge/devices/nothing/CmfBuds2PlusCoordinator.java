@@ -23,7 +23,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 public class CmfBuds2PlusCoordinator extends AbstractEarCoordinator {
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("^CMF Buds 2 Plus$");
+        return Pattern.compile("^CMF Buds 2 Plus.*$");
     }
 
     @Override
