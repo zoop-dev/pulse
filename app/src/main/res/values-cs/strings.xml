@@ -4464,4 +4464,5 @@
     <string name="activity_send_waypoint_no_location">Žádná poloha</string>
     <string name="activity_send_waypoint_no_location_details">V obdržených datech nebyla nalezena žádná poloha.</string>
     <string name="activity_send_waypoint_to_device">Odeslat</string>
+    <string name="nothing_equalizer_custom">Vlastní</string>
 </resources>
