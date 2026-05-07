@@ -20,6 +20,7 @@ import static nodomain.freeyourgadget.gadgetbridge.GBApplication.getContext;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminTimeUtils.garminTimestampToJavaMillis;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
@@ -40,6 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.Common;
 import nodomain.freeyourgadget.gadgetbridge.proto.igpsport.CyclingData;
@@ -54,6 +56,8 @@ import nodomain.freeyourgadget.gadgetbridge.util.notifications.GBProgressNotific
 
 public class IGPSportDownloadManager {
 
+        private static final String PREF_LAST_SYNC_GARMIN_TIMESTAMP = "lastSyncGarminTimestamp";
+
         Logger LOG = LoggerFactory.getLogger(IGPSportDownloadManager.class);
         private IGPSportDeviceSupport support = null;
         private List<FileInfo> avaliableActivityFiles = new ArrayList<>();
@@ -64,7 +68,11 @@ public class IGPSportDownloadManager {
         private FitImporter fitImporter;
         private GBProgressNotification transferNotification;
         private List<File> filesToProcess = new ArrayList<>();
-        int pbSize=0;
+        private int pbSize = 0;
+        private int downloadFileSize = 0;
+        private int expectedDownloadSize = 0;
+        private int lastProgressPercent = -1;
+        private int maxDownloadedGarminTimestamp = 0;
 
 
 
@@ -82,12 +90,18 @@ public class IGPSportDownloadManager {
         public void setFilesAvaliable(byte[] pbData) throws InvalidProtocolBufferException {
 
             List<CyclingData.cycling_data_file_flag_message> message =  CyclingData.cycling_data_msg.parseFrom(pbData).getCyclingDataFileFlagMsgList();
+            final int lastSyncTimestamp = getLastSyncGarminTimestamp();
+            avaliableActivityFiles.clear();
+            filesToProcess.clear();
+            maxDownloadedGarminTimestamp = lastSyncTimestamp;
             for (final CyclingData.cycling_data_file_flag_message  fileMsg : message) {
-                avaliableActivityFiles.add(new FileInfo(fileMsg));
+                final FileInfo fileInfo = new FileInfo(fileMsg);
+                if (fileInfo.getGarminTimeStamp() > lastSyncTimestamp) {
+                    avaliableActivityFiles.add(fileInfo);
+                }
             }
 
-            LOG.info("Found " + message.size() + " files");
-            filesToProcess.clear();
+            LOG.info("Found {} iGPSPORT activity files, {} new since {}", message.size(), avaliableActivityFiles.size(), lastSyncTimestamp);
             syncNextFile();
 
         }
@@ -107,6 +121,7 @@ public class IGPSportDownloadManager {
 
                     @Override
                     public void onFinish() {
+                        setLastSyncGarminTimestamp(maxDownloadedGarminTimestamp);
                         support.getDevice().unsetBusyTask();
                         GB.signalActivityDataFinish(support.getDevice());
                         transferNotification.finish();
@@ -144,6 +159,10 @@ public class IGPSportDownloadManager {
             recievingDataBuffer.reset();
             downloadInProgress = true;
             firstChunk = true;
+            pbSize = 0;
+            downloadFileSize = 0;
+            expectedDownloadSize = 0;
+            lastProgressPercent = -1;
 
         }
 
@@ -154,14 +173,45 @@ public class IGPSportDownloadManager {
                 LOG.error("Failed to add data to buffer" + e);
             }
 
-            if (firstChunk) {
+            if (firstChunk && recievingDataBuffer.size() >= 24) {
                 firstChunk = false;
                 pbSize = ByteBuffer.wrap(recievingDataBuffer.toByteArray(), 20, 4).getInt();
             }
 
-            LOG.debug("current data stored size: " + recievingDataBuffer.size() + " need " + (downloadingFile.getFileSize() + 20 + 4 + pbSize) );
+            if (expectedDownloadSize == 0 && pbSize > 0 && recievingDataBuffer.size() >= 20 + 4 + pbSize) {
+                try {
+                    final byte[] pbData = new byte[pbSize];
+                    System.arraycopy(recievingDataBuffer.toByteArray(), 20 + 4, pbData, 0, pbSize);
+                    final FileDownload.file_download pbInfo = FileDownload.file_download.parseFrom(pbData);
+                    downloadFileSize = pbInfo.getFileSize();
+                    expectedDownloadSize = 20 + 4 + pbSize + downloadFileSize;
 
-            if (recievingDataBuffer.size() >= (downloadingFile.getFileSize() + 20 + 4 + pbSize) ) { // fileSize + header + pbSize + pbInfo
+                    LOG.info("Downloading iGPSPORT FIT file {}, {} bytes", downloadingFile.getFileName(), downloadFileSize);
+                    if (transferNotification != null) {
+                        transferNotification.start(R.string.busy_task_fetch_activity_data, 0, expectedDownloadSize);
+                    }
+                } catch (final IOException e) {
+                    LOG.warn("Failed to parse iGPSPORT file download header, falling back to list size", e);
+                    downloadFileSize = downloadingFile.getFileSize();
+                    expectedDownloadSize = 20 + 4 + pbSize + downloadFileSize;
+                }
+            }
+
+            if (expectedDownloadSize == 0) {
+                LOG.debug("Received {} bytes of iGPSPORT FIT file, waiting for file header", recievingDataBuffer.size());
+                return;
+            }
+
+            final int progressPercent = Math.min(100, (int) ((recievingDataBuffer.size() * 100L) / expectedDownloadSize));
+            if (progressPercent != lastProgressPercent) {
+                lastProgressPercent = progressPercent;
+                LOG.debug("iGPSPORT FIT download progress: {} / {} bytes ({}%)", recievingDataBuffer.size(), expectedDownloadSize, progressPercent);
+                if (transferNotification != null) {
+                    transferNotification.setTotalProgress(Math.min(recievingDataBuffer.size(), expectedDownloadSize));
+                }
+            }
+
+            if (recievingDataBuffer.size() >= expectedDownloadSize) { // fileSize + header + pbSize + pbInfo
                 //LOG.info(GB.hexdump(recievingDataBuffer.toByteArray()));
                 downloadInProgress = false;
 
@@ -172,15 +222,15 @@ public class IGPSportDownloadManager {
                     dir = support.getWritableExportDirectory();
                     outputFile = new File(dir, downloadingFile.getFileName());
 
-                    pbSize = ByteBuffer.wrap(recievingDataBuffer.toByteArray(), 20, 4).getInt();
                     byte[] pbData = new byte[pbSize];
                     System.arraycopy(recievingDataBuffer.toByteArray(), 20+4, pbData, 0, pbSize);
                     FileDownload.file_download pbInfo = FileDownload.file_download.parseFrom(pbData);
                     FileUtils.copyStreamToFile(new ByteArrayInputStream(recievingDataBuffer.toByteArray(), 20+4+pbSize, pbInfo.getFileSize()), outputFile);
                     outputFile.setLastModified(garminTimestampToJavaMillis(downloadingFile.getGarminTimeStamp()));
                     filesToProcess.add(outputFile);
+                    maxDownloadedGarminTimestamp = Math.max(maxDownloadedGarminTimestamp, downloadingFile.getGarminTimeStamp());
                 } catch (IOException e) {
-                    LOG.error("Failed to save fit file to: " + outputFile.getAbsolutePath() + e);
+                    LOG.error("Failed to save fit file to: {}", outputFile != null ? outputFile.getAbsolutePath() : "<unknown>", e);
                 }
 
                 syncNextFile();
@@ -192,7 +242,30 @@ public class IGPSportDownloadManager {
             if (!downloadInProgress) {
                 return false;
             }
-            return recievingDataBuffer.size() < (downloadingFile.getFileSize() + 20 + 4 + pbSize);
+            return expectedDownloadSize == 0 || recievingDataBuffer.size() < expectedDownloadSize;
+        }
+
+        public boolean isDownloading() {
+            return downloadInProgress;
+        }
+
+        private int getLastSyncGarminTimestamp() {
+            return getDevicePrefs().getInt(PREF_LAST_SYNC_GARMIN_TIMESTAMP, 0);
+        }
+
+        private void setLastSyncGarminTimestamp(final int timestamp) {
+            if (timestamp <= getLastSyncGarminTimestamp()) {
+                return;
+            }
+
+            getDevicePrefs()
+                    .edit()
+                    .putInt(PREF_LAST_SYNC_GARMIN_TIMESTAMP, timestamp)
+                    .apply();
+        }
+
+        private SharedPreferences getDevicePrefs() {
+            return GBApplication.getDeviceSpecificSharedPrefs(support.getDevice().getAddress());
         }
 
         public static class FileInfo {

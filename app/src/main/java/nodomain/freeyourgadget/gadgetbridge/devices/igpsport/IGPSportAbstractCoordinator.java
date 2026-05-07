@@ -62,6 +62,15 @@ public abstract class IGPSportAbstractCoordinator extends AbstractBLEDeviceCoord
         return BONDING_STYLE_ASK;
     }
 
+    @Override
+    public boolean supportsDataFetching(@NonNull final GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public boolean supportsRecordedActivities(@NonNull final GBDevice device) {
+        return true;
+    }
 
     @Override
     public boolean supportsAppsManagement(final GBDevice device) {

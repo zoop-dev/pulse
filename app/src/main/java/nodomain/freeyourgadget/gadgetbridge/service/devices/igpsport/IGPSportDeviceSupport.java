@@ -284,8 +284,10 @@ public class IGPSportDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
         UUID characteristicUUID = characteristic.getUuid();
 
-        LOG.info("Characteristic changed UUID: " + characteristicUUID);
-        LOG.info("Characteristic changed value: " + GB.hexdump(characteristic.getValue()));
+        // deactivated this, as this leads to huge logs while synching files
+//            LOG.info("Characteristic changed UUID: " + characteristicUUID);
+//            LOG.info("Characteristic changed value: " + GB.hexdump(characteristic.getValue()));
+
 
 
         if (downloadManager.needMoreData()) {
