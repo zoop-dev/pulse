@@ -1,4 +1,4 @@
-/*  Copyright (C) 2025 Freeyourgadget
+/*  Copyright (C) 2026 Freeyourgadget
 
     This file is part of Gadgetbridge.
 
@@ -29,49 +29,64 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  *
  * @noinspection unused
  */
-public class FitZonesTarget extends RecordData {
-    public FitZonesTarget(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitMultisportSettings extends RecordData {
+    public FitMultisportSettings(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
-        if (nativeNumber != 7) {
-            throw new IllegalArgumentException("FitZonesTarget expects native messages of " + 7 + ", got " + nativeNumber);
+        if (nativeNumber != 143) {
+            throw new IllegalArgumentException("FitMultisportSettings expects native messages of " + 143 + ", got " + nativeNumber);
         }
     }
 
     @Nullable
-    public Integer getFunctionalThresholdPower() {
-        return getFieldByNumber(3, Integer.class);
+    public String getName() {
+        return getFieldByNumber(0, String.class);
     }
 
     @Nullable
-    public Integer getMaxHeartRate() {
+    public Integer getTransitions() {
         return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
-    public Integer getThresholdHeartRate() {
+    public Integer getNumberOfActivities() {
         return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
-    public Integer getHrCalcType() {
+    public Integer getAutoPause() {
+        return getFieldByNumber(3, Integer.class);
+    }
+
+    @Nullable
+    public Integer getAlerts() {
+        return getFieldByNumber(4, Integer.class);
+    }
+
+    @Nullable
+    public Integer getAutoLap() {
         return getFieldByNumber(5, Integer.class);
     }
 
     @Nullable
-    public Integer getPwrCalcType() {
+    public Integer getPowerSaveTimeout() {
+        return getFieldByNumber(6, Integer.class);
+    }
+
+    @Nullable
+    public Integer getAutoScroll() {
         return getFieldByNumber(7, Integer.class);
     }
 
     @Nullable
-    public Long getTimestamp() {
-        return getFieldByNumber(253, Long.class);
+    public Integer getRepeat() {
+        return getFieldByNumber(8, Integer.class);
     }
 
     @Nullable
-    public Integer getMessageIndex() {
-        return getFieldByNumber(254, Integer.class);
+    public Integer getSportChange() {
+        return getFieldByNumber(10, Integer.class);
     }
 
     /**
@@ -79,52 +94,67 @@ public class FitZonesTarget extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(7);
+            super(143);
         }
 
-        public Builder setFunctionalThresholdPower(final Integer value) {
-            setFieldByNumber(3, value);
+        public Builder setName(final String value) {
+            setFieldByNumber(0, value);
             return this;
         }
 
-        public Builder setMaxHeartRate(final Integer value) {
+        public Builder setTransitions(final Integer value) {
             setFieldByNumber(1, value);
             return this;
         }
 
-        public Builder setThresholdHeartRate(final Integer value) {
+        public Builder setNumberOfActivities(final Integer value) {
             setFieldByNumber(2, value);
             return this;
         }
 
-        public Builder setHrCalcType(final Integer value) {
+        public Builder setAutoPause(final Integer value) {
+            setFieldByNumber(3, value);
+            return this;
+        }
+
+        public Builder setAlerts(final Integer value) {
+            setFieldByNumber(4, value);
+            return this;
+        }
+
+        public Builder setAutoLap(final Integer value) {
             setFieldByNumber(5, value);
             return this;
         }
 
-        public Builder setPwrCalcType(final Integer value) {
+        public Builder setPowerSaveTimeout(final Integer value) {
+            setFieldByNumber(6, value);
+            return this;
+        }
+
+        public Builder setAutoScroll(final Integer value) {
             setFieldByNumber(7, value);
             return this;
         }
 
-        public Builder setTimestamp(final Long value) {
-            setFieldByNumber(253, value);
+        public Builder setRepeat(final Integer value) {
+            setFieldByNumber(8, value);
             return this;
         }
 
-        public Builder setMessageIndex(final Integer value) {
-            setFieldByNumber(254, value);
+        public Builder setSportChange(final Integer value) {
+            setFieldByNumber(10, value);
             return this;
         }
 
         @Override
-        public FitZonesTarget build() {
-            return (FitZonesTarget) super.build();
+        public FitMultisportSettings build() {
+            return (FitMultisportSettings) super.build();
         }
 
         @Override
-        public FitZonesTarget build(final int localMessageType) {
-            return (FitZonesTarget) super.build(localMessageType);
+        public FitMultisportSettings build(final int localMessageType) {
+            return (FitMultisportSettings) super.build(localMessageType);
         }
     }
 }

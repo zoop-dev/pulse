@@ -69,6 +69,11 @@ public class FitWorkoutSchedule extends RecordData {
         return getFieldByNumber(9, Double.class);
     }
 
+    @Nullable
+    public Long getTimestamp() {
+        return getFieldByNumber(253, Long.class);
+    }
+
     /**
      * @noinspection unused
      */
@@ -104,6 +109,11 @@ public class FitWorkoutSchedule extends RecordData {
 
         public Builder setDuration(final Double value) {
             setFieldByNumber(9, value);
+            return this;
+        }
+
+        public Builder setTimestamp(final Long value) {
+            setFieldByNumber(253, value);
             return this;
         }
 

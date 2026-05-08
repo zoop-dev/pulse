@@ -135,6 +135,11 @@ public class FitSplit extends RecordData {
     }
 
     @Nullable
+    public Long getTimestamp() {
+        return getFieldByNumber(253, Long.class);
+    }
+
+    @Nullable
     public Integer getMessageIndex() {
         return getFieldByNumber(254, Integer.class);
     }
@@ -239,6 +244,11 @@ public class FitSplit extends RecordData {
 
         public Builder setTotalMovingTime(final Double value) {
             setFieldByNumber(110, value);
+            return this;
+        }
+
+        public Builder setTimestamp(final Long value) {
+            setFieldByNumber(253, value);
             return this;
         }
 
