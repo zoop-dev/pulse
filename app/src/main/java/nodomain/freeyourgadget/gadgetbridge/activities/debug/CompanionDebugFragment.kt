@@ -172,6 +172,13 @@ class CompanionDebugFragment : AbstractDebugFragment() {
                 }
             }
 
+            /** 
+	         * older and deprecated name for onAssociationPending, needed for compatibility with Android 12.
+	         */
+	        override fun onDeviceFound(chooserLauncher: IntentSender) {
+	            onAssociationPending(chooserLauncher)
+	        }
+
             override fun onAssociationCreated(associationInfo: AssociationInfo) {
                 GB.toast("Companion pairing success", Toast.LENGTH_SHORT, GB.INFO)
                 reloadDevices()
