@@ -307,6 +307,9 @@ public class ActivitySummaryEntries {
     public static final String RECOVERY_TIME_REMAINING_AT_START = "recovery_time_remaining_at_start";
     public static final String BODY_ENERGY_AT_START = "body_energy_at_start";
     public static final String BODY_ENERGY_AT_END = "body_energy_at_end";
+    public static final String STAMINA_AT_START = "stamina_at_start";
+    public static final String STAMINA_AT_END = "stamina_at_end";
+    public static final String STAMINA_MIN = "stamina_min";
     public static final String TOTAL_WORK = "total_work";
     public static final String BATTERY_LEVEL_START = "battery_level_start";
     public static final String BATTERY_LEVEL_END = "battery_level_end";
