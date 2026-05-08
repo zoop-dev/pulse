@@ -86,13 +86,13 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
-    public Long getTotalTimerTime() {
-        return getFieldByNumber(8, Long.class);
+    public Double getTotalTimerTime() {
+        return getFieldByNumber(8, Double.class);
     }
 
     @Nullable
-    public Long getTotalDistance() {
-        return getFieldByNumber(9, Long.class);
+    public Double getTotalDistance() {
+        return getFieldByNumber(9, Double.class);
     }
 
     @Nullable
@@ -551,8 +551,8 @@ public class FitSession extends RecordData {
     }
 
     @Nullable
-    public Long getStandTime() {
-        return getFieldByNumber(112, Long.class);
+    public Double getStandTime() {
+        return getFieldByNumber(112, Double.class);
     }
 
     @Nullable
@@ -1018,12 +1018,12 @@ public class FitSession extends RecordData {
             return this;
         }
 
-        public Builder setTotalTimerTime(final Long value) {
+        public Builder setTotalTimerTime(final Double value) {
             setFieldByNumber(8, value);
             return this;
         }
 
-        public Builder setTotalDistance(final Long value) {
+        public Builder setTotalDistance(final Double value) {
             setFieldByNumber(9, value);
             return this;
         }
@@ -1483,7 +1483,7 @@ public class FitSession extends RecordData {
             return this;
         }
 
-        public Builder setStandTime(final Long value) {
+        public Builder setStandTime(final Double value) {
             setFieldByNumber(112, value);
             return this;
         }

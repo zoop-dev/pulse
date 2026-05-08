@@ -398,12 +398,8 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             summary.setEndTime(new Date(summary.getStartTime().getTime() + session.getTotalElapsedTime().intValue()));
         }
 
-        if (session.getTotalTimerTime() != null) {
-            summaryData.add(ACTIVE_SECONDS, session.getTotalTimerTime() / 1000.0f, UNIT_SECONDS);
-        }
-        if (session.getTotalDistance() != null) {
-            summaryData.add(DISTANCE_METERS, session.getTotalDistance() / 100.0f, UNIT_METERS);
-        }
+        summaryData.add(ACTIVE_SECONDS, session.getTotalTimerTime(), UNIT_SECONDS);
+        summaryData.add(DISTANCE_METERS, session.getTotalDistance(), UNIT_METERS);
         summaryData.add(POOL_LENGTH, session.getPoolLength(), UNIT_METERS);
         summaryData.add(SWOLF_AVG, session.getAvgSwolf(), UNIT_NONE);
         if (cycleUnit != ActivityKind.CycleUnit.NONE) {
@@ -537,9 +533,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         summaryData.add(NORMALIZED_POWER, session.getNormalizedPower(), UNIT_WATT);
         summaryData.add(TOTAL_WORK, session.getTotalWork(), UNIT_JOULE);
 
-        if (session.getStandTime() != null) {
-            summaryData.add(STANDING_TIME, session.getStandTime() / 1000, UNIT_SECONDS);
-        }
+        summaryData.add(STANDING_TIME, session.getStandTime(), UNIT_SECONDS);
         summaryData.add(STANDING_COUNT, session.getStandCount(), UNIT_NONE);
         summaryData.add(AVG_LEFT_PCO, session.getAvgLeftPco(), UNIT_MM);
         summaryData.add(AVG_RIGHT_PCO, session.getAvgRightPco(), UNIT_MM);

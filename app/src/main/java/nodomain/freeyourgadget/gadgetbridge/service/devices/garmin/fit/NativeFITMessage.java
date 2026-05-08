@@ -296,9 +296,9 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(4, BaseType.SINT32, "start_longitude", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(5, BaseType.ENUM, "sport"),
             new FieldDefinitionPrimitive(6, BaseType.ENUM, "sub_sport"),
-            new FieldDefinitionPrimitive(7, BaseType.UINT32, "total_elapsed_time"), // with pauses
-            new FieldDefinitionPrimitive(8, BaseType.UINT32, "total_timer_time"), // no pauses
-            new FieldDefinitionPrimitive(9, BaseType.UINT32, "total_distance"), // cm
+            new FieldDefinitionPrimitive(7, BaseType.UINT32, "total_elapsed_time"), // ms - with pauses - keep it in ms to avoid rounding issue for DB calculations
+            new FieldDefinitionPrimitive(8, BaseType.UINT32, "total_timer_time", 1000, 0), // s - no pauses
+            new FieldDefinitionPrimitive(9, BaseType.UINT32, "total_distance", 100, 0), // m
             new FieldDefinitionPrimitive(10, BaseType.UINT32, "total_cycles"),
             new FieldDefinitionPrimitive(11, BaseType.UINT16, "total_calories"),
             new FieldDefinitionPrimitive(13, BaseType.UINT16, "total_fat_calories"), // kcal
@@ -390,7 +390,7 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(108, BaseType.UINT16, "rear_shifts"),
             new FieldDefinitionPrimitive(110, BaseType.STRING, 64, "sport_profile_name"),
             new FieldDefinitionPrimitive(111, BaseType.UINT8, "sport_index"),
-            new FieldDefinitionPrimitive(112, BaseType.UINT32, "stand_time"), // s
+            new FieldDefinitionPrimitive(112, BaseType.UINT32, "stand_time", 1000, 0), // s
             new FieldDefinitionPrimitive(113, BaseType.UINT16, "stand_count"),
             new FieldDefinitionPrimitive(114, BaseType.SINT8, "avg_left_pco"), // mm
             new FieldDefinitionPrimitive(115, BaseType.SINT8, "avg_right_pco"), // mm
