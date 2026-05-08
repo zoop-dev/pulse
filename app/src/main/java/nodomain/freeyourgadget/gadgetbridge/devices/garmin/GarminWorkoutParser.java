@@ -406,14 +406,22 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         }
         summaryData.add(POOL_LENGTH, session.getPoolLength(), UNIT_METERS);
         summaryData.add(SWOLF_AVG, session.getAvgSwolf(), UNIT_NONE);
-        if (session.getTotalCycles() != null && cycleUnit != ActivityKind.CycleUnit.NONE) {
-            if (cycleUnit == ActivityKind.CycleUnit.STEPS) {
-                summaryData.addTotal(session.getTotalCycles() * 2, cycleUnit);
-            } else {
-                // FIXME some of the rest might also need adjusting...
-                summaryData.addTotal(session.getTotalCycles(), cycleUnit);
+        if (cycleUnit != ActivityKind.CycleUnit.NONE) {
+            Number totalCycles = session.getTotalCycles();
+            if (totalCycles != null) {
+                final Number totalFractionalCycles = session.getTotalFractionalCycles();
+                if (totalFractionalCycles != null) {
+                    totalCycles = totalCycles.doubleValue() + totalFractionalCycles.doubleValue();
+                }
+                if (cycleUnit == ActivityKind.CycleUnit.STEPS) {
+                    summaryData.addTotal(totalCycles.doubleValue() * 2, cycleUnit);
+                } else {
+                    // FIXME some of the rest might also need adjusting...
+                    summaryData.addTotal(totalCycles, cycleUnit);
+                }
             }
         }
+
         summaryData.add(STEP_LENGTH_AVG, session.getAvgStepLength(), UNIT_MM);
         if (session.getTotalCalories() != null) {
             summaryData.add(CALORIES_CONSUMED, session.getCaloriesConsumed(), UNIT_KCAL);
@@ -449,22 +457,34 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                 session.getEnhancedAvgAltitude(), session.getAvgAltitude());
 
         summaryData.add(STRESS_AVG, session.getAvgStress(), UNIT_NONE);
-        if (session.getAvgCadence() != null) {
+        Number avgCadence = session.getAvgCadence();
+        if (avgCadence != null) {
+            final Number avgFractionalCadence = session.getAvgFractionalCadence();
+            if (avgFractionalCadence != null) {
+                avgCadence = avgCadence.doubleValue() + avgFractionalCadence.doubleValue();
+            }
             if (cycleUnit == ActivityKind.CycleUnit.STEPS) {
-                summaryData.addCadenceAvg(session.getAvgCadence() * 2, cycleUnit);
+                summaryData.addCadenceAvg(avgCadence.doubleValue() * 2, cycleUnit);
             } else {
                 // FIXME some of the rest might also need adjusting...
-                summaryData.addCadenceAvg(session.getAvgCadence(), cycleUnit);
+                summaryData.addCadenceAvg(avgCadence, cycleUnit);
             }
         }
-        if (session.getMaxCadence() != null) {
+
+        Number maxCadence = session.getMaxCadence();
+        if (maxCadence != null) {
+            final Number maxFractionalCadence = session.getMaxFractionalCadence();
+            if (maxFractionalCadence != null) {
+                maxCadence = maxCadence.doubleValue() + maxFractionalCadence.doubleValue();
+            }
             if (cycleUnit == ActivityKind.CycleUnit.STEPS) {
-                summaryData.addCadenceMax(session.getMaxCadence() * 2, cycleUnit);
+                summaryData.addCadenceMax(maxCadence.doubleValue() * 2, cycleUnit);
             } else {
                 // FIXME some of the rest might also need adjusting...
-                summaryData.addCadenceMax(session.getMaxCadence(), cycleUnit);
+                summaryData.addCadenceMax(maxCadence, cycleUnit);
             }
         }
+
         if (!ActivityKind.isDiving(activityKind)) {
             if(!summaryData.add(TOTAL_ASCENT, session.getTotalAscent(), UNIT_METERS) && physiologicalMetrics != null){
                 summaryData.add(TOTAL_ASCENT, physiologicalMetrics.getTotalAscent(), UNIT_METERS);
@@ -733,20 +753,24 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             summaryData.add(LACTATE_THRESHOLD_HR, physiologicalMetrics.getLactateThresholdHeartRate(), UNIT_BPM);
         }
 
+        // diving related
+        summaryData.add(DIVE_NUMBER, UNIT_NONE, session.getDiveNumber(), diveSummary != null ? diveSummary.getDiveNumber() : null);
         if (diveSummary != null) {
-            summaryData.add(DIVE_NUMBER, diveSummary.getDiveNumber(), UNIT_NONE);
             summaryData.add(BOTTOM_TIME, diveSummary.getBottomTime(), UNIT_SECONDS);
-            summaryData.add(AVG_DEPTH, diveSummary.getAvgDepth(), UNIT_METERS);
-            summaryData.add(MAX_DEPTH, diveSummary.getMaxDepth(), UNIT_METERS);
+        }
+        summaryData.add(AVG_DEPTH, UNIT_METERS, session.getAvgDepth(), diveSummary != null ? diveSummary.getAvgDepth() : null);
+        summaryData.add(MAX_DEPTH, UNIT_METERS, session.getMaxDepth(), diveSummary != null ? diveSummary.getMaxDepth() : null);
 
-            // force display even if value is 0
-            summaryData.add(START_CNS, diveSummary.getStartCns(), UNIT_PERCENTAGE, true);
-            summaryData.add(END_CNS, diveSummary.getEndCns(), UNIT_PERCENTAGE, true);
-            summaryData.add(START_N2, diveSummary.getStartN2(), UNIT_PERCENTAGE, true);
-            summaryData.add(END_N2, diveSummary.getEndN2(), UNIT_PERCENTAGE, true);
-            summaryData.add(OXYGEN_TOXICITY, diveSummary.getO2Toxicity(), UNIT_OXYGEN_TOXICITY_UNITs, true);
+        // force display even if value is 0
+        summaryData.add(START_CNS, UNIT_PERCENTAGE, session.getStartCns(), diveSummary != null ? diveSummary.getStartCns() : null, true);
+        summaryData.add(END_CNS, UNIT_PERCENTAGE, session.getEndCns(), diveSummary != null ? diveSummary.getEndCns() : null, true);
+        summaryData.add(START_N2, UNIT_PERCENTAGE, session.getStartN2(), diveSummary != null ? diveSummary.getStartN2() : null, true);
+        summaryData.add(END_N2, UNIT_PERCENTAGE, session.getEndN2(), diveSummary != null ? diveSummary.getEndN2() : null, true);
+        summaryData.add(OXYGEN_TOXICITY, UNIT_OXYGEN_TOXICITY_UNITs, session.getO2Toxicity(), diveSummary != null ? diveSummary.getO2Toxicity() : null, true);
 
-            summaryData.add(SURFACE_INTERVAL, diveSummary.getSurfaceInterval(), UNIT_SECONDS);
+        summaryData.add(SURFACE_INTERVAL, UNIT_SECONDS, session.getSurfaceInterval(), diveSummary != null ? diveSummary.getSurfaceInterval() : null);
+
+        if (diveSummary != null) {
             summaryData.add(PRESSURE_SAC_AVG, diveSummary.getAvgPressureSac(), UNIT_BAR_PER_MINUTE);
         }
 
@@ -816,6 +840,9 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                 summaryData.add(BODY_ENERGY_AT_END, physiologicalMetrics.getEndingBodyBattery(), UNIT_PERCENTAGE);
             }
         }
+        summaryData.add(STAMINA_AT_START, session.getBeginningPotential(), UNIT_PERCENTAGE);
+        summaryData.add(STAMINA_AT_END, session.getEndingPotential(), UNIT_PERCENTAGE);
+        summaryData.add(STAMINA_MIN, session.getMinStamina(), UNIT_PERCENTAGE);
 
         summaryData.add(SOLAR_INTENSITY, session.getSolarIntensity(), UNIT_PERCENTAGE);
         summaryData.add(BATTERY_GAIN, session.getBatteryGain(), UNIT_SECONDS);
