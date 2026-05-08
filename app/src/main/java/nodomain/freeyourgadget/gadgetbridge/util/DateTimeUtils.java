@@ -339,6 +339,17 @@ public class DateTimeUtils {
         return format.format(date);
     }
 
+    /// format duration day - milli seconds with max 3 units shown
+    public static String formatSportsDuration(long duration, TimeUnit unit) {
+        DurationFormatter df = DurationFormatter.Builder.SYMBOLS
+                .maximum(TimeUnit.HOURS)
+                .minimum(TimeUnit.MILLISECONDS)
+                .suppressZeros(DurationFormatter.SuppressZeros.LEADING, DurationFormatter.SuppressZeros.TRAILING)
+                .maximumAmountOfUnitsToShow(3)
+                .build();
+        return df.format(duration, unit);
+    }
+
     /// number of seconds since UTC epoch of 1970-01-01T00:00:00Z
     public static long getEpochSeconds() {
         final long epoc;

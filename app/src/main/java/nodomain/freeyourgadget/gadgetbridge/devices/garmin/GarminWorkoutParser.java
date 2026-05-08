@@ -1036,7 +1036,35 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         final boolean anySwimmingLaps = laps.stream()
                 .anyMatch(lap -> lap.getSwimStyle() != null);
 
-        if (anyValidLaps && diveLaps.isEmpty()) {
+        if (activityKind == ActivityKind.STOP_WATCH) {
+            // The start value encoded in the FIT file is shifted to a later time if the stop watch was paused.
+            // There is not enough information in the FIT file to fix this so display the values as they
+            // were encoded.
+            // The duration / active seconds are accurate.
+            final ActivitySummaryTableBuilder tableBuilder = new ActivitySummaryTableBuilder(GROUP_INTERVALS, "intervals_header", Arrays.asList(
+                    "#",
+                    "start",
+                    "stop",
+                    ACTIVE_SECONDS
+            ));
+            for (int lapIndex = 0; lapIndex < laps.size(); lapIndex++) {
+                FitLap lap = laps.get(lapIndex);
+                Integer index = lap.getMessageIndex();
+                if (index != null) {
+                    index = index + 1;
+                } else {
+                    index = lapIndex + 1;
+                }
+
+                final List<ActivitySummaryValue> row = new ArrayList<>();
+                row.add(new ActivitySummaryValue(index, UNIT_NONE));
+                row.add(new ActivitySummaryValue(lap.getStartTime(), UNIT_EPOC_TIME));
+                row.add(new ActivitySummaryValue(lap.getTimestamp(), UNIT_EPOC_TIME));
+                row.add(new ActivitySummaryValue(lap.getTotalTimerTime(), UNIT_SECONDS_SPORT));
+                tableBuilder.addRow("interval_" + lapIndex, row);
+            }
+            tableBuilder.addToSummaryData(summaryData);
+        } else if (anyValidLaps && diveLaps.isEmpty()) {
             // Unfortunately our tables do not yet scroll horizontally, so can't always add all possible columns
             final List<String> header = new ArrayList<>();
             header.add("#");

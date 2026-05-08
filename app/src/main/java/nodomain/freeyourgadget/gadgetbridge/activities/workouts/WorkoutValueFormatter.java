@@ -1,7 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.workouts;
 
-import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.DISTANCE_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_CM;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_EPOC_TIME;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KG;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KILOMETERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KMPH;
@@ -19,6 +19,7 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_100_YARDS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_KM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_M;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_SPORT;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -210,6 +211,11 @@ public class WorkoutValueFormatter {
 
         if (unit.equals("seconds") && !show_raw_data && showUnit) { //rather then plain seconds, show formatted duration
             return DateTimeUtils.formatDurationHoursMinutes((long) value, TimeUnit.SECONDS);
+        }else if (unit.equals(UNIT_SECONDS_SPORT) && !show_raw_data && showUnit) {
+                return DateTimeUtils.formatSportsDuration(Math.round(1000L * (double) value), TimeUnit.MILLISECONDS);
+        } else if (UNIT_EPOC_TIME.equals(unit) && !show_raw_data) {
+            long epoc = ((Number) rawValue).longValue();
+            return DateTimeUtils.formatLocalTime(epoc * 1000L);
         } else if (unit.equals("minutes_km") || unit.equals("minutes_mi") || unit.equals("minutes_100m") || unit.equals("minutes_100yd")) {
             // Format pace
             String format = showUnit ? "%d:%02d %s" : "%d:%02d";
