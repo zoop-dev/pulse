@@ -1,7 +1,25 @@
+/*  Copyright (C) 2024-2026 José Rebelo, Thomas Kuehne
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities.workouts;
 
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_CM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_EPOC_TIME;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_FOOT;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_FOOT_PER_HOUR;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KG;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KILOMETERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KMPH;
@@ -10,11 +28,16 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS_PER_HOUR;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS_PER_SECOND;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MILE;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MILE_PER_HOUR;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_100_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_100_YARDS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_KM;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_MILE;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_NAUTICAL_MILES;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_RAW_STRING;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_100_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_100_YARDS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_KM;
@@ -114,46 +137,46 @@ public class WorkoutValueFormatter {
                 case UNIT_CM:
                     if (distanceUnit == DistanceUnit.IMPERIAL) {
                         value = value * 0.0328084;
-                        unit = "ft";
+                        unit = UNIT_FOOT;
                     }
                     break;
                 case UNIT_METERS_PER_SECOND:
                     if (distanceUnit == DistanceUnit.IMPERIAL) {
                         value = value * 2.236936D;
-                        unit = "mi_h";
+                        unit = UNIT_MILE_PER_HOUR;
                     } else { //metric
                         value = value * 3.6;
-                        unit = "km_h";
+                        unit = UNIT_KMPH;
                     }
                     break;
                 case UNIT_METERS_PER_HOUR:
                     if (distanceUnit == DistanceUnit.IMPERIAL) {
                         value = value * 3.28084D;
-                        unit = "foot_per_hour";
+                        unit = UNIT_FOOT_PER_HOUR;
                     }
                     break;
                 case UNIT_SECONDS_PER_M:
                     if (distanceUnit == DistanceUnit.IMPERIAL) {
                         value = value * (1609.344 / 60D);
-                        unit = "minutes_mi";
+                        unit = UNIT_MINUTES_PER_MILE;
                     } else { //metric
                         value = value * (1000 / 60D);
-                        unit = "minutes_km";
+                        unit = UNIT_MINUTES_PER_KM;
                     }
                     break;
                 case UNIT_SECONDS_PER_KM:
                     if (distanceUnit == DistanceUnit.IMPERIAL) {
                         value = value / 60D * 1.609344;
-                        unit = "minutes_mi";
+                        unit = UNIT_MINUTES_PER_MILE;
                     } else { //metric
                         value = value / 60D;
-                        unit = "minutes_km";
+                        unit = UNIT_MINUTES_PER_KM;
                     }
                     break;
                 case UNIT_KILOMETERS:
                     if (distanceUnit == DistanceUnit.IMPERIAL) {
                         value = value * 0.621371D;
-                        unit = "mi";
+                        unit = UNIT_MILE;
                     }
                     break;
                 case UNIT_METERS:
@@ -162,15 +185,15 @@ public class WorkoutValueFormatter {
                         unit = UNIT_NAUTICAL_MILES;
                     } else if (distanceUnit == DistanceUnit.IMPERIAL) {
                         value = value * 3.28084D;
-                        unit = "ft";
+                        unit = UNIT_FOOT;
                         if (value > 6000) {
                             value = value * 0.0001893939D;
-                            unit = "mi";
+                            unit = UNIT_MILE;
                         }
                     } else { //metric
                         if (value > 2000) {
                             value = value / 1000;
-                            unit = "km";
+                            unit = UNIT_KILOMETERS;
                         }
                     }
                     break;
@@ -180,7 +203,7 @@ public class WorkoutValueFormatter {
                         unit = UNIT_KNOTS;
                     } else if (distanceUnit == DistanceUnit.IMPERIAL) {
                         value = value * 0.621371D;
-                        unit = "mi_h";
+                        unit = UNIT_MILE_PER_HOUR;
                     }
                     break;
                 case UNIT_SECONDS_PER_100_METERS:
@@ -209,14 +232,14 @@ public class WorkoutValueFormatter {
             }
         }
 
-        if (unit.equals("seconds") && !show_raw_data && showUnit) { //rather then plain seconds, show formatted duration
+        if (unit.equals(UNIT_SECONDS) && !show_raw_data && showUnit) { //rather then plain seconds, show formatted duration
             return DateTimeUtils.formatDurationHoursMinutes((long) value, TimeUnit.SECONDS);
         }else if (unit.equals(UNIT_SECONDS_SPORT) && !show_raw_data && showUnit) {
                 return DateTimeUtils.formatSportsDuration(Math.round(1000L * (double) value), TimeUnit.MILLISECONDS);
         } else if (UNIT_EPOC_TIME.equals(unit) && !show_raw_data) {
             long epoc = ((Number) rawValue).longValue();
             return DateTimeUtils.formatLocalTime(epoc * 1000L);
-        } else if (unit.equals("minutes_km") || unit.equals("minutes_mi") || unit.equals("minutes_100m") || unit.equals("minutes_100yd")) {
+        } else if (unit.equals(UNIT_MINUTES_PER_KM) || unit.equals(UNIT_MINUTES_PER_MILE) || unit.equals(UNIT_MINUTES_PER_100_METERS) || unit.equals(UNIT_MINUTES_PER_100_YARDS)) {
             // Format pace
             String format = showUnit ? "%d:%02d %s" : "%d:%02d";
             return String.format(

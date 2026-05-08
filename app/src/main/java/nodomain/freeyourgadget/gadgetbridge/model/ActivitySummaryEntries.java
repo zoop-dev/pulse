@@ -271,6 +271,11 @@ public class ActivitySummaryEntries {
     public static final String UNIT_EPOC_TIME = "unit_epoc_time";
     /// display time including milli seconds if any
     public static final String UNIT_SECONDS_SPORT = "unit_sports_seconds";
+    public static final String UNIT_FOOT = "ft";
+    public static final String UNIT_FOOT_PER_HOUR = "foot_per_hour";
+    public static final String UNIT_MILE = "mi";
+    public static final String UNIT_MILE_PER_HOUR = "mi_h";
+    public static final String UNIT_MINUTES_PER_MILE = "minutes_mi";
 
     public static final String GROUP_PACE = "Pace";
     public static final String GROUP_ACTIVITY = "Activity";
