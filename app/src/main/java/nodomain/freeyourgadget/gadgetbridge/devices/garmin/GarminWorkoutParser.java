@@ -541,13 +541,14 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         summaryData.add(AVG_VERTICAL_OSCILLATION, session.getAvgVerticalOscillation(), UNIT_MM);
         summaryData.add(AVG_GROUND_CONTACT_TIME, session.getAvgStanceTime(), UNIT_MILLISECONDS);
         summaryData.add(AVG_VERTICAL_RATIO, session.getAvgVerticalRatio(), UNIT_PERCENTAGE);
-        if (session.getAvgStanceTimeBalance() != null) {
+        final Float avgStanceTimeBalance = session.getAvgStanceTimeBalance();
+        if (avgStanceTimeBalance != null && avgStanceTimeBalance > 0.0f) {
             summaryData.add(
                     AVG_GROUND_CONTACT_TIME_BALANCE,
                     context.getString(
                             R.string.range_percentage_float,
-                            session.getAvgStanceTimeBalance(),
-                            100.0f - session.getAvgStanceTimeBalance()
+                            avgStanceTimeBalance,
+                            100.0f - avgStanceTimeBalance
                     )
             );
         }
