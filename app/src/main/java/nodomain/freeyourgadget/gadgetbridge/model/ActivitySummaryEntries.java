@@ -267,6 +267,10 @@ public class ActivitySummaryEntries {
     public static final String UNIT_KG_PER_M3 = "unit_kg_per_m3";
     public static final String UNIT_BAR = "unit_bar";
     public static final String UNIT_LITER = "unit_liter";
+    /// UNIX epoc seconds to be formated in local time without showing date
+    public static final String UNIT_EPOC_TIME = "unit_epoc_time";
+    /// display time including milli seconds if any
+    public static final String UNIT_SECONDS_SPORT = "unit_sports_seconds";
 
     public static final String GROUP_PACE = "Pace";
     public static final String GROUP_ACTIVITY = "Activity";
