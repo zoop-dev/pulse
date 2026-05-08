@@ -123,7 +123,7 @@ internal object WorkoutSyncerUtils {
             ActivityKind.FITNESS_EQUIPMENT, ActivityKind.INDOOR_FITNESS, ActivityKind.SOMATOSENSORY_GAME, ActivityKind.VIDEO_GAMING,
             ActivityKind.HEALTH_SNAPSHOT, ActivityKind.TACTICAL, ActivityKind.GRINDING, ActivityKind.WINTER_SPORT, ActivityKind.TEAM_SPORT,
             ActivityKind.SNOW_SPORTS, ActivityKind.DISC_SPORTS, ActivityKind.OTHER_WATER_SPORTS, ActivityKind.OTHER_WINTER_SPORTS,
-            ActivityKind.MARINE, ActivityKind.PARA_SPORT, ActivityKind.RACKET, ActivityKind.NAVIGATE, ActivityKind.INDOOR_TRACK,
+            ActivityKind.MARINE, ActivityKind.PARA_SPORT, ActivityKind.RACKET, ActivityKind.NAVIGATE, ActivityKind.INDOOR_TRACK_RUNNING,
             ActivityKind.TRANSITION, ActivityKind.VIVOMOVE_HR_TRANSITION,
             ActivityKind.FLYING, ActivityKind.MOTORCYCLING, ActivityKind.BOATING, ActivityKind.DRIVING, ActivityKind.HUNTING, ActivityKind.FISHING,
             ActivityKind.AUTO_RACING, ActivityKind.SNOWMOBILING, ActivityKind.KARTING, ActivityKind.BILLIARDS, ActivityKind.BOWLING,
