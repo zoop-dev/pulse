@@ -76,7 +76,6 @@ public class DefaultWorkoutCharts {
         final List<Entry> temperatureDataPoints = new ArrayList<>(initalCapacity);
         final List<Entry> depthDataPoints = new ArrayList<>(initalCapacity);
         final List<Entry> distancePoints = new ArrayList<>(initalCapacity);
-        final List<Entry> stridePoints = new ArrayList<>(initalCapacity);
         final List<Entry> staminaPoints = new ArrayList<>(initalCapacity);
         final List<Entry> bodyEnergyPoints = new ArrayList<>(initalCapacity);
         final List<Entry> stepLengthPoints = new ArrayList<>(initalCapacity);
@@ -92,7 +91,6 @@ public class DefaultWorkoutCharts {
         boolean hasTemperatureValues = false;
         boolean hasDepthValues = false;
         boolean hasDistanceValues = false;
-        boolean hasStrideValues = false;
         boolean hasBodyEnergyValues = false;
         boolean hasStaminaValues = false;
         boolean hasStepLengthValues = false;
@@ -168,13 +166,6 @@ public class DefaultWorkoutCharts {
                 hasDistanceValues = hasDistanceValues || (distance > 0);
             }
 
-            // Stride
-            final float stride = point.getStride();
-            if (stride >= 0.0f) {
-                stridePoints.add(new Entry(tsShorten, stride));
-                hasStrideValues = hasStrideValues || (stride > 0.0f);
-            }
-
             // Body Energy
             final float bodyEnergy = point.getBodyEnergy();
             if (bodyEnergy >= 0.0f) {
@@ -245,10 +236,6 @@ public class DefaultWorkoutCharts {
 
         if (hasDistanceValues && !distancePoints.isEmpty()) {
             charts.add(createDistanceChart(context, distancePoints));
-        }
-
-        if (hasStrideValues && !stridePoints.isEmpty()) {
-            charts.add(createStrideChart(context, stridePoints));
         }
 
         if (hasBodyEnergyValues && !bodyEnergyPoints.isEmpty()) {
@@ -483,26 +470,6 @@ public class DefaultWorkoutCharts {
                 new LineData(dataset),
                 valueFormatter,
                 getUnitString(context, UNIT_METERS)
-        );
-    }
-
-    private static WorkoutChart createStrideChart(final Context context,
-                                                  final List<Entry> stridePoints) {
-        final String label = String.format("%s(%s)", context.getString(R.string.stride), getUnitString(context, UNIT_MM));
-        final LineDataSet dataset = createLineDataSet(context, stridePoints, label, ContextCompat.getColor(context, R.color.chart_line_stride));
-        final ValueFormatter valueFormatter = new ValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                return String.valueOf((int) value);
-            }
-        };
-        return new WorkoutChart(
-                "chart_stride",
-                context.getString(R.string.stride),
-                ActivitySummaryEntries.GROUP_STEPS,
-                new LineData(dataset),
-                valueFormatter,
-                getUnitString(context, UNIT_MM)
         );
     }
 
