@@ -4212,7 +4212,7 @@
     <string name="battery_status_new">Új</string>
     <string name="battery_status_ok">Megfelelő</string>
     <string name="battery_status_unknown">Ismeretlen</string>
-    <string name="body_energy_at_end">Záró energiaszint</string>
+    <string name="body_energy_at_end">Befejező energiaszint</string>
     <string name="body_energy_at_start">Kezdeti energiaszint</string>
     <string name="device">Eszköz</string>
     <string name="diving_pressure_sac_avg">Felszíni levegőfogyasztás</string>
@@ -4306,4 +4306,7 @@
     <string name="activity_send_waypoint_no_location">Nincsenek helyadatok</string>
     <string name="activity_send_waypoint_no_location_details">A fogadott adatok nem tartalmaznak helyadatokat.</string>
     <string name="activity_send_waypoint_to_device">Küldés</string>
+    <string name="stamina_at_end">Befejező állóképesség</string>
+    <string name="stamina_at_start">Kezdeti állóképesség</string>
+    <string name="stamina_min">Minimális állóképesség</string>
 </resources>
