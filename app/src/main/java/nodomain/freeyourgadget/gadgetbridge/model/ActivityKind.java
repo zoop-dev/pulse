@@ -60,7 +60,7 @@ public enum ActivityKind {
 
     // Non-legacy activity kinds after 0x04000000
     NAVIGATE(0x04000000, R.string.activity_type_navigate, R.drawable.ic_navigation),
-    INDOOR_TRACK(0x04000001, R.string.activity_type_indoor_track),
+    INDOOR_TRACK_RUNNING(0x04000001, R.string.activity_type_indoor_track, R.drawable.ic_run_circle),
     HANDCYCLING(0x04000002, R.string.activity_type_handcycling),
     E_BIKE(0x04000003, R.string.activity_type_e_bike, R.drawable.ic_activity_electric_bike),
     BIKE_COMMUTE(0x04000004, R.string.activity_type_bike_commute, R.drawable.ic_activity_bike_lane),

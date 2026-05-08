@@ -195,6 +195,11 @@ public class FitBikeProfile extends RecordData {
     }
 
     @Nullable
+    public Long getTimestamp() {
+        return getFieldByNumber(253, Long.class);
+    }
+
+    @Nullable
     public Integer getMessageIndex() {
         return getFieldByNumber(254, Integer.class);
     }
@@ -359,6 +364,11 @@ public class FitBikeProfile extends RecordData {
 
         public Builder setShimanoDi2Enabled(final Boolean value) {
             setFieldByNumber(44, value);
+            return this;
+        }
+
+        public Builder setTimestamp(final Long value) {
+            setFieldByNumber(253, value);
             return this;
         }
 

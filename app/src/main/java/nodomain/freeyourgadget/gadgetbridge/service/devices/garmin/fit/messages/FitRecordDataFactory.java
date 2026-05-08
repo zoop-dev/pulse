@@ -95,6 +95,7 @@ public class FitRecordDataFactory {
             case 140 -> new FitPhysiologicalMetrics(recordDefinition, recordHeader);
             case 141 -> new FitEpoStatus(recordDefinition, recordHeader);
             case 142 -> new FitSegmentLap(recordDefinition, recordHeader);
+            case 143 -> new FitMultisportSettings(recordDefinition, recordHeader);
             case 144 -> new FitMultisportActivity(recordDefinition, recordHeader);
             case 145 -> new FitMemoGlob(recordDefinition, recordHeader);
             case 147 -> new FitSensorSettings(recordDefinition, recordHeader);
@@ -113,6 +114,7 @@ public class FitRecordDataFactory {
             case 167 -> new FitThreeDSensorCalibration(recordDefinition, recordHeader);
             case 169 -> new FitVideoFrame(recordDefinition, recordHeader);
             case 170 -> new FitConnectIqField(recordDefinition, recordHeader);
+            case 173 -> new FitClubs(recordDefinition, recordHeader);
             case 174 -> new FitObdiiData(recordDefinition, recordHeader);
             case 177 -> new FitNmeaSentence(recordDefinition, recordHeader);
             case 178 -> new FitAviationAttitude(recordDefinition, recordHeader);
@@ -121,6 +123,7 @@ public class FitRecordDataFactory {
             case 186 -> new FitVideoDescription(recordDefinition, recordHeader);
             case 187 -> new FitVideoClip(recordDefinition, recordHeader);
             case 188 -> new FitOhrSettings(recordDefinition, recordHeader);
+            case 189 -> new FitWaypointHandling(recordDefinition, recordHeader);
             case 190 -> new FitGolfCourse(recordDefinition, recordHeader);
             case 191 -> new FitGolfStats(recordDefinition, recordHeader);
             case 192 -> new FitScore(recordDefinition, recordHeader);

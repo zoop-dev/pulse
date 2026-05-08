@@ -27,7 +27,6 @@ public class ActivityPoint {
     private GPSCoordinate location;
     private int heartRate;
     private float speed = -1;
-    private int stride = -1;
     private int stepLength = -1;
     private int cadence = -1;
     private float power = -1;
@@ -145,12 +144,6 @@ public class ActivityPoint {
         this.speed = speed;
     }
 
-    /// distance from one foot landing to the same foot landing again
-    /// @see ActivitySummaryEntries#UNIT_MM
-    public int getStride() {
-        return stride;
-    }
-
     /// distance from one foot landing to the opposite foot landing
     /// @see ActivitySummaryEntries#UNIT_MM
     public int getStepLength() {
@@ -210,7 +203,6 @@ public class ActivityPoint {
         if (!(o instanceof ActivityPoint that)) return false;
         return heartRate == that.heartRate &&
                 Float.compare(speed, that.speed) == 0 &&
-                stride == that.stride &&
                 cadence == that.cadence &&
                 Float.compare(power, that.power) == 0 &&
                 Float.compare(respiratoryRate, that.respiratoryRate) == 0 &&
@@ -227,7 +219,7 @@ public class ActivityPoint {
 
     @Override
     public int hashCode() {
-        return Objects.hash(time, location, heartRate, speed, stride, cadence, power, respiratoryRate, depth, temperature, description, distance, altitude, bodyEnergy, stamina);
+        return Objects.hash(time, location, heartRate, speed, cadence, power, respiratoryRate, depth, temperature, description, distance, altitude, bodyEnergy, stamina);
     }
 
     public static class Builder {
@@ -245,7 +237,6 @@ public class ActivityPoint {
 
         private int heartRate = Integer.MIN_VALUE;
         private float speed = Float.NaN;
-        private int stride = Integer.MIN_VALUE;
         private int stepLength = Integer.MIN_VALUE;
         private int cadence = Integer.MIN_VALUE;
         private float power = Float.NaN;
@@ -347,23 +338,6 @@ public class ActivityPoint {
         /// @see ActivitySummaryEntries#UNIT_METERS_PER_SECOND
         public void setSpeed(final float speed) {
             this.speed = speed;
-        }
-
-        /// @see ActivitySummaryEntries#UNIT_MM
-        public int getStride() {
-            return stride;
-        }
-
-        /// distance from one foot landing to the same foot landing again
-        /// @see ActivitySummaryEntries#UNIT_MM
-        public void setStride(@Nullable Number stride) {
-            this.stride = (stride == null) ? Integer.MIN_VALUE : stride.intValue();
-        }
-
-        /// distance from one foot landing to the same foot landing again
-        /// @see ActivitySummaryEntries#UNIT_MM
-        public void setStride(int stride) {
-            this.stride = stride;
         }
 
         public int getCadence() {
@@ -563,9 +537,6 @@ public class ActivityPoint {
             }
             if (cadence > Integer.MIN_VALUE) {
                 activityPoint.setCadence(cadence);
-            }
-            if (stride > Integer.MIN_VALUE) {
-                activityPoint.stride = stride;
             }
             if (!Float.isNaN(power)) {
                 activityPoint.setPower(power);

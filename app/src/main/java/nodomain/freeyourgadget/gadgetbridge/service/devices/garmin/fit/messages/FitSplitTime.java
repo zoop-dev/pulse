@@ -94,6 +94,11 @@ public class FitSplitTime extends RecordData {
         return getFieldByNumber(14, Double.class);
     }
 
+    @Nullable
+    public Integer getMessageIndex() {
+        return getFieldByNumber(254, Integer.class);
+    }
+
     /**
      * @noinspection unused
      */
@@ -154,6 +159,11 @@ public class FitSplitTime extends RecordData {
 
         public Builder setEndAltitude(final Double value) {
             setFieldByNumber(14, value);
+            return this;
+        }
+
+        public Builder setMessageIndex(final Integer value) {
+            setFieldByNumber(254, value);
             return this;
         }
 

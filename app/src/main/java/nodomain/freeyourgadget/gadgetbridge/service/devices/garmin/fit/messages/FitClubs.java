@@ -29,44 +29,24 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  *
  * @noinspection unused
  */
-public class FitBestEffort extends RecordData {
-    public FitBestEffort(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitClubs extends RecordData {
+    public FitClubs(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
-        if (nativeNumber != 113) {
-            throw new IllegalArgumentException("FitBestEffort expects native messages of " + 113 + ", got " + nativeNumber);
+        if (nativeNumber != 173) {
+            throw new IllegalArgumentException("FitClubs expects native messages of " + 173 + ", got " + nativeNumber);
         }
     }
 
     @Nullable
-    public Integer getSport() {
-        return getFieldByNumber(1, Integer.class);
+    public Double getAverageDistance() {
+        return getFieldByNumber(6, Double.class);
     }
 
     @Nullable
-    public Double getDistance() {
-        return getFieldByNumber(2, Double.class);
-    }
-
-    @Nullable
-    public Double getTime() {
-        return getFieldByNumber(3, Double.class);
-    }
-
-    @Nullable
-    public Long getStartTime() {
-        return getFieldByNumber(4, Long.class);
-    }
-
-    @Nullable
-    public Integer getPersonalRecord() {
-        return getFieldByNumber(5, Integer.class);
-    }
-
-    @Nullable
-    public Long getTimestamp() {
-        return getFieldByNumber(253, Long.class);
+    public Double getMaxDistance() {
+        return getFieldByNumber(19, Double.class);
     }
 
     /**
@@ -74,47 +54,27 @@ public class FitBestEffort extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(113);
+            super(173);
         }
 
-        public Builder setSport(final Integer value) {
-            setFieldByNumber(1, value);
+        public Builder setAverageDistance(final Double value) {
+            setFieldByNumber(6, value);
             return this;
         }
 
-        public Builder setDistance(final Double value) {
-            setFieldByNumber(2, value);
-            return this;
-        }
-
-        public Builder setTime(final Double value) {
-            setFieldByNumber(3, value);
-            return this;
-        }
-
-        public Builder setStartTime(final Long value) {
-            setFieldByNumber(4, value);
-            return this;
-        }
-
-        public Builder setPersonalRecord(final Integer value) {
-            setFieldByNumber(5, value);
-            return this;
-        }
-
-        public Builder setTimestamp(final Long value) {
-            setFieldByNumber(253, value);
+        public Builder setMaxDistance(final Double value) {
+            setFieldByNumber(19, value);
             return this;
         }
 
         @Override
-        public FitBestEffort build() {
-            return (FitBestEffort) super.build();
+        public FitClubs build() {
+            return (FitClubs) super.build();
         }
 
         @Override
-        public FitBestEffort build(final int localMessageType) {
-            return (FitBestEffort) super.build(localMessageType);
+        public FitClubs build(final int localMessageType) {
+            return (FitClubs) super.build(localMessageType);
         }
     }
 }

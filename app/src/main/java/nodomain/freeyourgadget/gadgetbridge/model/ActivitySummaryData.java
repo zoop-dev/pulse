@@ -69,10 +69,15 @@ public class ActivitySummaryData {
 
     /// @return {@code true} if the value was actually added
     public boolean add(final String key, final String unit, final Number value, final Number valueFallback) {
+        return add(key, unit, value, valueFallback, false);
+    }
+
+    /// @return {@code true} if the value was actually added
+    public boolean add(final String key, final String unit, final Number value, final Number valueFallback, boolean force) {
         if (value != null) {
-            return add(null, key, value, unit, false);
+            return add(null, key, value, unit, force);
         } else {
-            return add(null, key, valueFallback, unit, false);
+            return add(null, key, valueFallback, unit, force);
         }
     }
 

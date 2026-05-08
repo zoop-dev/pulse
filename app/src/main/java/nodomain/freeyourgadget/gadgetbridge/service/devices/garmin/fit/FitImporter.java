@@ -309,6 +309,9 @@ public class FitImporter {
                 if (event.getEvent() == null) {
                     LOG.warn("Event in {} is null", event);
                     continue;
+                } else if (ts == null) {
+                    LOG.warn("Timestamp for {} is null", event);
+                    continue;
                 }
 
                 LOG.trace("Event at {}: {}", ts, event);

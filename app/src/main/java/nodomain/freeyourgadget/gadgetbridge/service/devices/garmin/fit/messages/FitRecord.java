@@ -1025,7 +1025,7 @@ public class FitRecord extends RecordData {
         builder.setN2Load(getN2Load());
         builder.setPower(getPower());
         builder.setStamina(getStamina());
-        builder.setStride(getStepLength());
+        builder.setStepLength(getStepLength());
         builder.setTemperature(getTemperature());
 
         final Double enhancedAltitude = getEnhancedAltitude();

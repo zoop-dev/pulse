@@ -1059,9 +1059,9 @@
     <string name="stride">Stride</string>
     <string name="stamina">Stamina</string>
     <string name="step_length">Step Length</string>
-    <string name="diving_cns_toxicity">CNS toxicity</string>
-    <string name="diving_nitrogen_load">Nitrogen load</string>
-    <string name="diving_oxygen_toxicity">Oxygen toxicity</string>
+    <string name="diving_cns_toxicity">CNS Toxicity</string>
+    <string name="diving_nitrogen_load">Nitrogen Load</string>
+    <string name="diving_oxygen_toxicity">Oxygen Toxicity</string>
     <string name="unit_oxygen_toxicity_units">OTU</string>
     <string name="diving_surface_interval">Surface Interval</string>
     <string name="clock">Clock</string>
@@ -2726,8 +2726,11 @@
     <string name="battery_status_new">New</string>
     <string name="battery_status_ok">Ok</string>
     <string name="battery_status_unknown">Unknown</string>
-    <string name="body_energy_at_end">Finishing body energy</string>
-    <string name="body_energy_at_start">Initial body energy</string>
+    <string name="body_energy_at_end">Finishing Body Energy</string>
+    <string name="body_energy_at_start">Initial Body Energy</string>
+    <string name="stamina_at_end">Finishing Stamina</string>
+    <string name="stamina_at_start">Initial Stamina</string>
+    <string name="stamina_min">Minimum Stamina</string>
     <string name="device">Device</string>
     <string name="diving_pressure_sac_avg">Surface air consumption</string>
     <string name="hr_user_max">User Max Heart Rate</string>
