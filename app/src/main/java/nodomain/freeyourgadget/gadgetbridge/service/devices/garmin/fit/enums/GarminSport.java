@@ -25,7 +25,7 @@ public enum GarminSport {
     STREET_RUN(1, 2, ActivityKind.STREET_RUNNING),
     TRAIL_RUN(1, 3, ActivityKind.TRAIL_RUN),
     TRACK_RUN(1, 4, ActivityKind.TRACK_RUN),
-    INDOOR_TRACK(1, 45, ActivityKind.INDOOR_TRACK),
+    INDOOR_TRACK(1, 45, ActivityKind.INDOOR_TRACK_RUNNING),
     ORIENTEERING(1, 50, ActivityKind.ORIENTEERING),
     VIRTUAL_RUN(1, 58, ActivityKind.VIRTUAL_RUN),
     OBSTACLE_RACING(1, 59, ActivityKind.OBSTACLE_RACE),
