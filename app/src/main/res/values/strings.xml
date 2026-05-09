@@ -2143,6 +2143,7 @@
     <string name="devicetype_soundcore_aerofit2" translatable="false">Soundcore AeroFit 2</string>
     <string name="devicetype_pixel_buds_a_series" translatable="false">Pixel Buds A-Series</string>
     <string name="devicetype_moondrop_space_travel" translatable="false">Moondrop Space Travel</string>
+    <string name="devicetype_moondrop_space_travel_2" translatable="false">Moondrop Space Travel 2</string>
     <string name="devicetype_binary_sensor">Binary sensor</string>
     <string name="devicetype_honor_band3" translatable="false">Honor Band 3</string>
     <string name="devicetype_honor_band4" translatable="false">Honor Band 4</string>

@@ -59,17 +59,20 @@ public class MoondropSpaceTravelProtocol extends GBDeviceProtocol {
             if (packet.getPduType() != GaiaPacket.PDU_RESPONSE)
                 continue;
 
-            short featureId = packet.getFeatureId();
-            short pduId = packet.getPduId();
-            byte[] payload = packet.getPayload();
-
-            if (featureId == EQUALIZER_PRESET_FEATURE && pduId == EQUALIZER_PRESET_PDU_GET)
-                events.add(handlePacketEqualizerPreset(payload));
-            else if (featureId == TOUCH_ACTIONS_FEATURE && pduId == TOUCH_ACTIONS_PDU_GET)
-                events.add(handlePacketTouchActions(payload));
+            GBDeviceEvent event = decodePacket(packet.getFeatureId(), packet.getPduId(), packet.getPayload());
+            if (event != null)
+                events.add(event);
         }
 
         return events.toArray(new GBDeviceEvent[0]);
+    }
+
+    protected GBDeviceEvent decodePacket(short featureId, short pduId, byte[] payload) {
+        if (featureId == EQUALIZER_PRESET_FEATURE && pduId == EQUALIZER_PRESET_PDU_GET)
+            return handlePacketEqualizerPreset(payload);
+        else if (featureId == TOUCH_ACTIONS_FEATURE && pduId == TOUCH_ACTIONS_PDU_GET)
+            return handlePacketTouchActions(payload);
+        return null;
     }
 
     private GBDeviceEvent handlePacketEqualizerPreset(byte[] payload) {

@@ -611,6 +611,7 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_MOONDROP_TOUCH_ASSISTANT_TRIGGER = "pref_moondrop_touch_assistant_trigger";
     public static final String PREF_MOONDROP_TOUCH_ANC_MODE_EARBUD = "pref_moondrop_touch_anc_mode_earbud";
     public static final String PREF_MOONDROP_TOUCH_ANC_MODE_TRIGGER = "pref_moondrop_touch_anc_mode_trigger";
+    public static final String PREF_MOONDROP_ANC_MODE = "pref_moondrop_anc_mode";
 
     public static final String PREF_MISCALE_SMALL_OBJECTS = "pref_miscale_small_objects";
 

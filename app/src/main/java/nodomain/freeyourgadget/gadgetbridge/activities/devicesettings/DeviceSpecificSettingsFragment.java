@@ -928,6 +928,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_SOUNDCORE_EQUALIZER_BAND9_VALUE);
 
         addPreferenceHandlerFor(PREF_MOONDROP_EQUALIZER_PRESET);
+        addPreferenceHandlerFor(PREF_MOONDROP_ANC_MODE);
         addPreferenceHandlerFor(PREF_MOONDROP_TOUCH_PLAY_PAUSE_EARBUD);
         addPreferenceHandlerFor(PREF_MOONDROP_TOUCH_PLAY_PAUSE_TRIGGER);
         addPreferenceHandlerFor(PREF_MOONDROP_TOUCH_MEDIA_PREV_EARBUD);

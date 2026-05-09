@@ -4773,6 +4773,18 @@
         <item>2</item>
     </string-array>
 
+    <string-array name="moondrop_anc_mode_names">
+        <item>@string/prefs_active_noise_cancelling_level_normal</item>
+        <item>@string/prefs_active_noise_cancelling</item>
+        <item>@string/prefs_active_noise_cancelling_transparency</item>
+    </string-array>
+
+    <string-array name="moondrop_anc_mode_values">
+        <item>1</item>
+        <item>2</item>
+        <item>4</item>
+    </string-array>
+
     <string-array name="moondrop_touch_earbud_names">
         <item>@string/left</item>
         <item>@string/right</item>
