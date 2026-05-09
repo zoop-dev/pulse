@@ -132,6 +132,11 @@ public class HuaweiTLV {
             VarInt varInt = new VarInt(buffer, offset + parsed);
             int size = varInt.dValue;
             parsed += varInt.size;
+            if (size < 0 || size > length - parsed) {
+                throw new ArrayIndexOutOfBoundsException(
+                        "TLV element size " + size + " exceeds remaining buffer length " + (length - parsed)) {
+                };
+            }
             byte[] value = new byte[size];
             System.arraycopy(buffer, offset + parsed, value, 0, size);
             put(tag, value);
