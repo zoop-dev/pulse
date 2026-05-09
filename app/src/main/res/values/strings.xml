@@ -2287,6 +2287,7 @@
     <string name="devicetype_bohemic_smart_bracelet" translatable="false">Bohemic Smart Bracelet</string>
     <string name="devicetype_vivitar_hr_bp_monitor_activity_tracker" translatable="false">Vivitar HR &amp; BP Monitor Activity Tracker</string>
     <string name="devicetype_hama_fit6900" translatable="false">Hama Fit6900</string>
+    <string name="devicetype_xplora_xmove" translatable="false">Xplora XMOVE</string>
     <string name="devicetype_generic_thermal_printer">Thermal Printer</string>
     <string name="devicetype_garmin_hrm_pro_plus" translatable="false">Garmin HRM-Pro Plus</string>
     <string name="devicetype_generic_headphones">Headphones</string>

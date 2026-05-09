@@ -196,6 +196,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.Y66Coordina
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.Y6Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gree.GreeAcCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.hama.fit6900.HamaFit6900DeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.xplora.XploraXmoveDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.hplus.EXRIZUK8Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.hplus.HPlusCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.hplus.MakibesF68Coordinator;
@@ -914,6 +915,7 @@ public enum DeviceType {
     FEMOMETER_VINCA2(FemometerVinca2DeviceCoordinator.class),
     PIXOO(PixooCoordinator.class),
     HAMA_FIT6900(HamaFit6900DeviceCoordinator.class),
+    XPLORA_XMOVE(XploraXmoveDeviceCoordinator.class),
     YAWELL_R05(YawellR05Coordinator.class),
     YAWELL_R10(YawellR10Coordinator.class),
     YAWELL_R11(YawellR11Coordinator.class),

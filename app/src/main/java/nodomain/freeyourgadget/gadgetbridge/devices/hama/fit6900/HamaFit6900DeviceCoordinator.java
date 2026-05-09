@@ -29,7 +29,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.hama.fit6900.HamaFit6900DeviceSupport;
 
-public final class HamaFit6900DeviceCoordinator extends AbstractBLEDeviceCoordinator {
+public class HamaFit6900DeviceCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     protected Pattern getSupportedDeviceName() {
         return Pattern.compile("^Fit6900$");
