@@ -113,7 +113,7 @@ public class IGPSportDownloadManager {
                 transferNotification.start(R.string.busy_task_processing_files, 0, filesToProcess.size());
 
                 final FitAsyncProcessor fitAsyncProcessor = new FitAsyncProcessor(getContext(), support.getDevice());
-                fitAsyncProcessor.process(filesToProcess, new FitAsyncProcessor.Callback() {
+                fitAsyncProcessor.process(filesToProcess, false, new FitAsyncProcessor.Callback() {
                     @Override
                     public void onProgress(final int i) {
                         transferNotification.setTotalProgress(i);
