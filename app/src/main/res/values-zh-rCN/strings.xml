@@ -4459,4 +4459,7 @@
     <string name="activity_send_waypoint_no_location">无位置</string>
     <string name="activity_send_waypoint_no_location_details">在接收到的数据中没有位置信息。</string>
     <string name="activity_send_waypoint_to_device">发送</string>
+    <string name="stamina_at_end">最终耐力</string>
+    <string name="stamina_at_start">初始耐力</string>
+    <string name="stamina_min">最小耐力</string>
 </resources>
