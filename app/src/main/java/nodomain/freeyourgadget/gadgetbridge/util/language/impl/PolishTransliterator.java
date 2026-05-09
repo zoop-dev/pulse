@@ -24,7 +24,15 @@ public class PolishTransliterator extends SimpleTransliterator {
     public PolishTransliterator() {
         super(new HashMap<Character, String>() {{
             // Polish
+            put('Ą', "A"); put('ą', "a");
+            put('Ć', "C"); put('ć', "c");
+            put('Ę', "E"); put('ę', "e");
             put('Ł', "L"); put('ł', "l");
+            put('Ń', "N"); put('ń', "n");
+            put('Ó', "O"); put('ó', "o");
+            put('Ś', "S"); put('ś', "s");
+            put('Ź', "Z"); put('ź', "z");
+            put('Ż', "Z"); put('ż', "z");
         }});
     }
 }

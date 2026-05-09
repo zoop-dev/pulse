@@ -259,6 +259,16 @@ public class LanguageUtilsTest extends TestBase {
     }
 
     @Test
+    public void testStringTransliteratePolish() {
+        final Transliterator transliterator = LanguageUtils.getTransliterator("polish");
+
+        String input = "ą ć ę ł ń ó ś ź ż Ą Ć Ę Ł Ń Ó Ś Ź Ż";
+        String output = transliterator.transliterate(input);
+        String expected = "a c e l n o s z z A C E L N O S Z Z";
+        assertEquals("polish transliteration failed", expected, output);
+    }
+
+    @Test
     public void testFlattenToAscii() throws Exception {
         final FlattenToAsciiTransliterator transliterator = new FlattenToAsciiTransliterator();
         String input = "ä ș ț ă ﬁne";
