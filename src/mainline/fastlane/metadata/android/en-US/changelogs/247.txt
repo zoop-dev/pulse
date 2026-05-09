@@ -1,4 +1,4 @@
-• Support for 13 new devices
+• Support for 14 new devices
 • Auto export of GPX files
 • FossWallet support
 • Fossil Q: extensive improvements - find device, vibrate on call, hand calibration, button actions, music/volume control, and more
