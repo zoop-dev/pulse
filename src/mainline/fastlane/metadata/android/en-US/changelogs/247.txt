@@ -1,0 +1,9 @@
+• Support for 13 new devices
+• Auto export of GPX files
+• FossWallet support
+• Fossil Q: extensive improvements - find device, vibrate on call, hand calibration, button actions, music/volume control, and more
+• Garmin: improvements to activity summaries, waypoint upload support, and more
+• Health Connect: distance sync, sleep session and daylight savings fixes
+• Multiple fixes across Huawei, Pebble, Zepp OS, Sony, Garmin, Xiaomi, and others
+
+Read the full changelog in the project repository.

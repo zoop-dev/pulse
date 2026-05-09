@@ -1,5 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="0.91.0" versioncode="247">
+        <change>Initial support for Braun iCheck 7 BPW4500 blood pressure monitor</change>
+        <change>Initial support for CMF Buds 2a, Buds 2 Plus</change>
+        <change>Initial support for Garmin Descent G1, Forerunner 570</change>
+        <change>Initial support for Garmin HRM 600</change>
+        <change>Initial support for Huawei Band 11 Pro, Watch GT Runner 2, Watch Ultimate 2</change>
+        <change>Initial support for Redmi Buds 8 Active</change>
+        <change>Initial support for iTECH Active 3 (MoYoung / Da Fit)</change>
+        <change>Initial support for ZL02D (MoYoung / Da Fit)</change>
+        <change>Experimental support for Sony WH-1000XM6</change>
+        <change>Add and adjust default sleep range to 18:00</change>
+        <change>Add auto export of gpx files</change>
+        <change>Add FossWallet support</change>
+        <change>Add support for nautical units</change>
+        <change>Adjust value precision depending on unit</change>
+        <change>Amazfit Bip S: Attempt to fix reboot on notification without title</change>
+        <change>Avoid crash when BLE Scan Service is enabled on zip restore</change>
+        <change>Bangle.js: Honor Content-Type header</change>
+        <change>CMF Buds 2a: Add equalizer, low latency mode, ultra bass</change>
+        <change>CMF Buds: Fix ANC modes list update</change>
+        <change>CMF Buds: Fix reading ANC status on newer buds</change>
+        <change>CMF Buds: Handle ANC mode change on buds</change>
+        <change>CMF Buds: Handle In-Ear detection change</change>
+        <change>CMF Buds: Read low latency / in-ear status on init</change>
+        <change>CMF Buds: Request firmware version on initialization</change>
+        <change>CMF Buds: Support more ANC modes</change>
+        <change>CMF Buds: Use better icons for device specific settings</change>
+        <change>CMF Watch Pro 3: Initial workout sync for some activities</change>
+        <change>CMF Watch Pro: Fix crash when chunks larger than mtu are received</change>
+        <change>Fix connection to device on gpx upload</change>
+        <change>Fix crash on companion pairing in Android 12</change>
+        <change>Fix crash on timezones without daylight savings</change>
+        <change>Fix duplicated weight conversion</change>
+        <change>Fossil Q: Add button action for showing step goal progress</change>
+        <change>Fossil Q: Add button function to ring phone</change>
+        <change>Fossil Q: Add dev preference for saving raw activity files</change>
+        <change>Fossil Q: Add/fix button actions for music and volume control</change>
+        <change>Fossil Q: Extend activity files parser for non-HR watches</change>
+        <change>Fossil Q: Fix commands being sent to all connected Fossil watches</change>
+        <change>Fossil Q: Fix steps detection during increased activity</change>
+        <change>Fossil Q: Hide unused authentication key preference</change>
+        <change>Fossil Q: Improve device details output</change>
+        <change>Fossil Q: Improve time picker visuals</change>
+        <change>Fossil Q: Increase request timeout for big activity file downloads</change>
+        <change>Fossil Q: Limit amount of toasts</change>
+        <change>Fossil Q: Move button config to device preferences</change>
+        <change>Fossil Q: Move notifications configuration to dedicated top-level device preference</change>
+        <change>Fossil Q: Move subdial notifications to preferences</change>
+        <change>Fossil Q: Move time offsets to device preferences</change>
+        <change>Fossil Q: Move vibration strength preference into device prefs</change>
+        <change>Fossil Q: Stop misusing app manager button on device card</change>
+        <change>Fossil Q: Support calibration of physical hands</change>
+        <change>Fossil Q: Support for find device</change>
+        <change>Fossil Q: Use global step goal preference instead of custom one</change>
+        <change>Fossil Q: Vibrate watch on incoming call</change>
+        <change>Garmin: Add basic activity to send waypoints</change>
+        <change>Garmin: add support for installing FIT location and segment files</change>
+        <change>Garmin: Display human friendly names for ANT+ gear in activity summaries</change>
+        <change>Garmin: Enhance activity summaries</change>
+        <change>Garmin: Experimental settings for wake / sleep times</change>
+        <change>Garmin: Export FIT laps as GPX track segments</change>
+        <change>Garmin: Extend support for non-GPS activities</change>
+        <change>Garmin: Extract and store some metrics endurance score, FTP, training readiness (no UI)</change>
+        <change>Garmin: Fix activity sync stuck when keep activity data on device is enabled</change>
+        <change>Garmin: Fix edge case in encoding some commands</change>
+        <change>Garmin: Fix identification of relevant dive session summary</change>
+        <change>Garmin: Fix start time handling for stopwatch activities</change>
+        <change>Garmin: Fix step length visualisation</change>
+        <change>Garmin: Ignore invalid location when checking for activity GPS</change>
+        <change>Garmin: Improve FIT file parsing</change>
+        <change>Gpx: Add support for importing older GPX version 1.0 files</change>
+        <change>Gpx: Export track name</change>
+        <change>Health Connect: Add distance sync</change>
+        <change>Health Connect: Bridge non-sleep gaps with no activity as awake sleep</change>
+        <change>Health Connect: Fix device model</change>
+        <change>Health Connect: Fix partial sleep sessions not being replaced by full data</change>
+        <change>Health Connect: Fix sleep sessions being interrupted by awake sections</change>
+        <change>Health Connect: Fix sync on daylight savings switch</change>
+        <change>Huawei: Fix crash on sync for some devices</change>
+        <change>Huawei: Fix watchface installation on some devices</change>
+        <change>Huawei: Improve workout sync error handling</change>
+        <change>Improve battery notifications</change>
+        <change>Include awake-sleep duration in sleep sessions</change>
+        <change>Intent API: Add Intent to change global settings</change>
+        <change>Pebble: Add toggle for PebbleKit support</change>
+        <change>Pebble: Added support for pebble-findmygadgetbridge (findmyphone pebble app)</change>
+        <change>Pebble: Improve PebbleKit when multiple pebble devices are paired</change>
+        <change>Polar H10: Add configuration settings</change>
+        <change>Redmi Buds 6 Active: Add battery, firmware, EQ presets, touch options</change>
+        <change>Sony WH-1000XM3: Add support for LDAC and NC/AMBIENT button switch</change>
+        <change>Sony WHULT900N: Fix ambient sound control</change>
+        <change>Split measurement system units</change>
+        <change>Use grams for weight values under 1kg</change>
+        <change>Weather: Fix night computation when sunrise and sunset are on different UTC dates</change>
+        <change>Xiaomi-protobuf: Add support for Rpk</change>
+        <change>Xiaomi-protobuf: Enable App Manager UI</change>
+        <change>Xiaomi-protobuf: Enable awake sleep</change>
+        <change>Xiaomi-protobuf: Fix re-processing of some older activities</change>
+        <change>Xiaomi-protobuf: Fix reminder crash on unknown repetition</change>
+        <change>Zepp OS: Add Floorball activity</change>
+        <change>Zepp OS: Fix notification icons and pictures on some devices</change>
+    </release>
     <release version="0.90.0" versioncode="246">
         <change>Initial support for Honor Magic Watch</change>
         <change>Initial support for Y6 (GloryFit)</change>
