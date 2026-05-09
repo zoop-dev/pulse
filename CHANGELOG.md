@@ -1,5 +1,108 @@
 ### Changelog
 
+#### 0.91.0
+
+* Initial support for Braun iCheck 7 BPW4500 blood pressure monitor
+* Initial support for CMF Buds 2a, Buds 2 Plus
+* Initial support for Garmin Descent G1, Forerunner 570
+* Initial support for Garmin HRM 600
+* Initial support for Huawei Band 11 Pro, Watch GT Runner 2, Watch Ultimate 2
+* Initial support for Redmi Buds 8 Active
+* Initial support for iTECH Active 3 (MoYoung / Da Fit)
+* Initial support for ZL02D (MoYoung / Da Fit)
+* Experimental support for Sony WH-1000XM6
+* Add and adjust default sleep range to 18:00
+* Add auto export of gpx files
+* Add FossWallet support
+* Add support for nautical units
+* Adjust value precision depending on unit
+* Amazfit Bip S: Attempt to fix reboot on notification without title
+* Avoid crash when BLE Scan Service is enabled on zip restore
+* Bangle.js: Honor Content-Type header
+* CMF Buds 2a: Add equalizer, low latency mode, ultra bass
+* CMF Buds: Fix ANC modes list update
+* CMF Buds: Fix reading ANC status on newer buds
+* CMF Buds: Handle ANC mode change on buds
+* CMF Buds: Handle In-Ear detection change
+* CMF Buds: Read low latency / in-ear status on init
+* CMF Buds: Request firmware version on initialization
+* CMF Buds: Support more ANC modes
+* CMF Buds: Use better icons for device specific settings
+* CMF Watch Pro 3: Initial workout sync for some activities
+* CMF Watch Pro: Fix crash when chunks larger than mtu are received
+* Fix connection to device on gpx upload
+* Fix crash on companion pairing in Android 12
+* Fix crash on timezones without daylight savings
+* Fix duplicated weight conversion
+* Fossil Q: Add button action for showing step goal progress
+* Fossil Q: Add button function to ring phone
+* Fossil Q: Add dev preference for saving raw activity files
+* Fossil Q: Add/fix button actions for music and volume control
+* Fossil Q: Extend activity files parser for non-HR watches
+* Fossil Q: Fix commands being sent to all connected Fossil watches
+* Fossil Q: Fix steps detection during increased activity
+* Fossil Q: Hide unused authentication key preference
+* Fossil Q: Improve device details output
+* Fossil Q: Improve time picker visuals
+* Fossil Q: Increase request timeout for big activity file downloads
+* Fossil Q: Limit amount of toasts
+* Fossil Q: Move button config to device preferences
+* Fossil Q: Move notifications configuration to dedicated top-level device preference
+* Fossil Q: Move subdial notifications to preferences
+* Fossil Q: Move time offsets to device preferences
+* Fossil Q: Move vibration strength preference into device prefs
+* Fossil Q: Stop misusing app manager button on device card
+* Fossil Q: Support calibration of physical hands
+* Fossil Q: Support for find device
+* Fossil Q: Use global step goal preference instead of custom one
+* Fossil Q: Vibrate watch on incoming call
+* Garmin: Add basic activity to send waypoints
+* Garmin: add support for installing FIT location and segment files
+* Garmin: Display human friendly names for ANT+ gear in activity summaries
+* Garmin: Enhance activity summaries
+* Garmin: Experimental settings for wake / sleep times
+* Garmin: Export FIT laps as GPX track segments
+* Garmin: Extend support for non-GPS activities
+* Garmin: Extract and store some metrics endurance score, FTP, training readiness (no UI)
+* Garmin: Fix activity sync stuck when keep activity data on device is enabled
+* Garmin: Fix edge case in encoding some commands
+* Garmin: Fix identification of relevant dive session summary
+* Garmin: Fix start time handling for stopwatch activities
+* Garmin: Fix step length visualisation
+* Garmin: Ignore invalid location when checking for activity GPS
+* Garmin: Improve FIT file parsing
+* Gpx: Add support for importing older GPX version 1.0 files
+* Gpx: Export track name
+* Health Connect: Add distance sync
+* Health Connect: Bridge non-sleep gaps with no activity as awake sleep
+* Health Connect: Fix device model
+* Health Connect: Fix partial sleep sessions not being replaced by full data
+* Health Connect: Fix sleep sessions being interrupted by awake sections
+* Health Connect: Fix sync on daylight savings switch
+* Huawei: Fix crash on sync for some devices
+* Huawei: Fix watchface installation on some devices
+* Huawei: Improve workout sync error handling
+* Improve battery notifications
+* Include awake-sleep duration in sleep sessions
+* Intent API: Add Intent to change global settings
+* Pebble: Add toggle for PebbleKit support
+* Pebble: Added support for pebble-findmygadgetbridge (findmyphone pebble app)
+* Pebble: Improve PebbleKit when multiple pebble devices are paired
+* Polar H10: Add configuration settings
+* Redmi Buds 6 Active: Add battery, firmware, EQ presets, touch options
+* Sony WH-1000XM3: Add support for LDAC and NC/AMBIENT button switch
+* Sony WHULT900N: Fix ambient sound control
+* Split measurement system units
+* Use grams for weight values under 1kg
+* Weather: Fix night computation when sunrise and sunset are on different UTC dates
+* Xiaomi-protobuf: Add support for Rpk
+* Xiaomi-protobuf: Enable App Manager UI
+* Xiaomi-protobuf: Enable awake sleep
+* Xiaomi-protobuf: Fix re-processing of some older activities
+* Xiaomi-protobuf: Fix reminder crash on unknown repetition
+* Zepp OS: Add Floorball activity
+* Zepp OS: Fix notification icons and pictures on some devices
+
 #### 0.90.0
 
 * Initial support for Honor Magic Watch
