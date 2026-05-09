@@ -16,7 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin;
 
-import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -46,7 +45,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -1178,14 +1176,9 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             return true;
         }
 
-        // Legacy filename 1, before we had per-type/year folder
-        @SuppressLint("SimpleDateFormat") final SimpleDateFormat legacyDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.ROOT);
-        final StringBuilder sbLegacy1 = new StringBuilder(entry.getFiletype().name());
-        if (entry.getFileDate().getTime() != GarminTimeUtils.GARMIN_TIME_EPOCH * 1000L) {
-            sbLegacy1.append("_").append(legacyDateFormat.format(entry.getFileDate()));
-        }
-        sbLegacy1.append("_").append(entry.getFileIndex()).append(entry.getFiletype().isFitFile() ? ".fit" : ".bin");
-        final String legacyName1 = sbLegacy1.toString();
+        // Legacy filename 1, before we had per-type/year folder.
+        // Same shape as DirectoryEntry's basename.
+        final String legacyName1 = entry.getFileName();
         final Optional<File> legacyFile1 = getFile(legacyName1);
         if (legacyFile1.isPresent()) {
             if (legacyFile1.get().length() == 0) {
@@ -1195,18 +1188,24 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             return true;
         }
 
-        // Legacy filename 2
-        final String legacyName2 = entry.getFiletype().name() + "_" +
-                entry.getFileIndex() + "_" +
-                legacyDateFormat.format(entry.getFileDate()) +
-                (entry.getFiletype().isFitFile() ? ".fit" : ".bin");
-        final Optional<File> legacyFile2 = getFile(legacyName2);
-        if (legacyFile2.isPresent()) {
-            if (legacyFile2.get().length() == 0) {
-                LOG.warn("Legacy file 2 {} is empty", legacyName2);
-                return false;
+        // Legacy filename 2: [TYPE]_[INDEX]_[timestamp].[fit/bin]
+        // (timestamp segment swapped vs filename 1). Skipped when the
+        // entry has no date — there's no plausible legacy file to
+        // match against without a timestamp segment.
+        if (entry.getFileDate() != null) {
+            final String legacyTimestamp = GarminUtils.FILENAME_TIMESTAMP_FORMAT.format(entry.getFileDate().toInstant());
+            final String legacyName2 = entry.getFiletype().name() + "_" +
+                    entry.getFileIndex() + "_" +
+                    legacyTimestamp +
+                    (entry.getFiletype().isFitFile() ? ".fit" : ".bin");
+            final Optional<File> legacyFile2 = getFile(legacyName2);
+            if (legacyFile2.isPresent()) {
+                if (legacyFile2.get().length() == 0) {
+                    LOG.warn("Legacy file 2 {} is empty", legacyName2);
+                    return false;
+                }
+                return true;
             }
-            return true;
         }
 
         return false;
