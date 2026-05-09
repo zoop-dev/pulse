@@ -99,6 +99,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.FitActivityTrackProvider;
 import nodomain.freeyourgadget.gadgetbridge.model.MetricSample;
 import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.FileType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminUtils;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionHrvStatus;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionSleepStage;
@@ -951,32 +952,11 @@ public class FitImporter {
     }
 
     public static String getFilePath(final FitFileId fileId) {
-        final SimpleDateFormat SDF_FULL = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.ROOT);
-        final SimpleDateFormat SDF_YEAR = new SimpleDateFormat("yyyy", Locale.ROOT);
-
-        // [FILE_TYPE]/
-        final StringBuilder sb = new StringBuilder();
-        if (fileId.getType() != null) {
-            sb.append(fileId.getType());
-        } else {
-            sb.append("NULL");
-        }
-        sb.append(File.separator);
-
-        // If we have a valid date, place the file inside a folder for each year
-        // [YEAR]/
-        if (fileId.getTimeCreated() != null && fileId.getTimeCreated() != 0) {
-            sb.append(SDF_YEAR.format(new Date(fileId.getTimeCreated() * 1000L)));
-            sb.append(File.separator);
-        }
-
-        // [FILE_TYPE]_[yyyy-MM-dd_HH-mm-ss]_[INDEX].[fit/bin]
-        sb.append(fileId.getType().name());
-        if (fileId.getTimeCreated() != null && fileId.getTimeCreated() != 0) {
-            sb.append("_").append(SDF_FULL.format(new Date(fileId.getTimeCreated() * 1000L)));
-        }
-        sb.append(".fit");
-
-        return sb.toString();
+        // FitFileId.getTimeCreated() is a boxed Long because the FIT
+        // schema marks the field optional; null-check before unboxing.
+        final Date created = fileId.getTimeCreated() != null
+                ? new Date(fileId.getTimeCreated() * 1000L)
+                : null;
+        return GarminUtils.buildExportPath(fileId.getType(), created, "", "fit");
     }
 }
