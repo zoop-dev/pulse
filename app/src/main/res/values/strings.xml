@@ -2772,6 +2772,7 @@
     <string name="unit_volt">V</string>
     <string name="unit_bar">bar</string>
     <string name="unit_liter">L</string>
+    <string name="unit_kcal_per_day">kcal/day</string>
     <string name="diving_tank">Tank</string>
     <!-- consumed volume or pressure from a diving gas tank -->
     <string name="diving_tank_used">Used</string>
