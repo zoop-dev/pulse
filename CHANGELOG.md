@@ -7,6 +7,7 @@
 * Initial support for Garmin Descent G1, Forerunner 570
 * Initial support for Garmin HRM 600
 * Initial support for Huawei Band 11 Pro, Watch GT Runner 2, Watch Ultimate 2
+* Initial support for Moondrop Space Travel 2
 * Initial support for Redmi Buds 8 Active
 * Initial support for iTECH Active 3 (MoYoung / Da Fit)
 * Initial support for ZL02D (MoYoung / Da Fit)
