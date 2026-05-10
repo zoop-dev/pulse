@@ -642,7 +642,7 @@
     <string name="title_activity_device_specific_settings">Paramètres spécifiques de l\'appareil</string>
     <string name="pref_title_authkey">Clé d\'autorisation</string>
     <string name="pref_summary_authkey">Changez la clé d\'autorisation pour une clé commune à tous vos appareils Android sur lesquels vous souhaitez vous connecter. La précédente clé par défaut est 0123456789@ABCDE</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Vous êtes sur le point d\'installer le micrologiciel %s sur votre Amazfit Cor 2. \n \nVeuillez installer le fichier .fw, puis le fichier .res. Votre montre redémarrera après installation du fichier .fw. \n \nNote : il n\'est pas nécessaire d\'installer le fichier .res si celui-ci est identique à celui installé précédemment. \n \nCONTINUEZ À VOS RISQUES ET PÉRILS ! \n \nNON TESTÉ, IL PEUT ÊTRE NÉCESSAIRE DE FLASHER UN MICROLOGICIEL BEATS_W SI LE NOM DE L\'APPAREIL EST Amazfit Band 2</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Vous êtes sur le point d\'installer le micrologiciel %s sur votre Amazfit Cor 2. \n \nVeuillez installer le fichier .fw, puis le fichier .res. Votre montre redémarrera après installation du fichier .fw. \n \nNote : il n\'est pas nécessaire d\'installer le fichier .res si celui-ci est identique à celui installé précédemment. \n \nCONTINUEZ À VOS RISQUES ET PÉRILS ! \n \nNON TESTÉ, IL PEUT ÊTRE NÉCESSAIRE DE FLASHER UN MICROLOGICIEL BEATS_W SI LE NOM DE L\'APPAREIL EST \"Amazfit Band 2\"</string>
     <string name="dutch">Néerlandais</string>
     <string name="turkish">Turc</string>
     <string name="ukrainian">Ukrainien</string>
@@ -2000,7 +2000,7 @@
     <string name="pref_summary_receive_calls_watch">Passer et recevoir des appels directement depuis la montre</string>
     <string name="pref_pair_bluetooth_calls_title">Appairage pour les appels Bluetooth</string>
     <string name="pref_pair_bluetooth_calls_help_summary">Afin de recevoir les appels en Bluetooth, vous devez appairer votre téléphone avec une seconde instance de la montre.</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Rendez-vous dans les réglages Bluetooth de votre téléphone, et appairez-le avec le nouvel appareil qui apparaitra (nom similaire à votre montre existante, mais avec un suffixe, du style \"Amazfit GTR 4 - AFC8\".</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Rendez-vous dans les réglages Bluetooth de votre téléphone, et appairez-le avec le nouvel appareil qui apparaîtra (nom similaire à votre montre existante, mais avec un suffixe, du genre \"Amazfit GTR 4 - AFC8\".</string>
     <string name="pref_title_notification_cache_while_disconnected">Garder en cache lorsque hors de portée</string>
     <string name="pref_summary_notification_cache_while_disconnected">Envoyer les notifications manquées lorsqu\'un appareil se reconnecte après avoir été hors de portée</string>
     <string name="pref_switch_controls_anc_ambient_off">Annulation de bruit ←→ Ambiance ←→ Off</string>
@@ -4073,4 +4073,8 @@
     <string name="pref_title_calendar_sync_event_reminders">Sync rappels d’événements</string>
     <string name="pref_auto_export_gpx_selected_devices">Appareils sélectionnés</string>
     <string name="blood_pressure_export_date">Date</string>
+    <string name="pref_summary_nautical_units">Afficher la vitesse et les unités de distance en nœuds / miles pour les activités nautiques</string>
+    <string name="pref_title_unit_distance">Unité distance</string>
+    <string name="pref_title_unit_temperature">Unité température</string>
+    <string name="pref_title_unit_weight">Unité poids</string>
 </resources>
