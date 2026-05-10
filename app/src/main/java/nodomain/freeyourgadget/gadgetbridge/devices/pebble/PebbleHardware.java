@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.pebble;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 import android.util.SparseArray;
 
@@ -33,6 +34,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
  * Unified source of truth for Pebble hardware definitions.
  * Contains platform types, hardware revisions, codenames, and BLE-only status.
  */
+@SuppressLint("MissingPermission")
 public class PebbleHardware {
     private static final Logger LOG = LoggerFactory.getLogger(PebbleHardware.class);
 
