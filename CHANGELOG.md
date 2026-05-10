@@ -16,6 +16,7 @@
 * Add and adjust default sleep range to 18:00
 * Add auto export of gpx files
 * Add FossWallet support
+* Add missing characters to polish transliterator
 * Add support for nautical units
 * Adjust value precision depending on unit
 * Amazfit Bip S: Attempt to fix reboot on notification without title
