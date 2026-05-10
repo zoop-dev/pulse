@@ -11,6 +11,7 @@
 * Initial support for Redmi Buds 8 Active
 * Initial support for iTECH Active 3 (MoYoung / Da Fit)
 * Initial support for ZL02D (MoYoung / Da Fit)
+* Experimental support for Amazfit Active 3 Premium, Cheetah 2 Pro, T-Rex Ultra 2
 * Experimental support for Sony WH-1000XM6
 * Add and adjust default sleep range to 18:00
 * Add auto export of gpx files

@@ -237,6 +237,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.straps.AmazfitH
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitActive2RoundCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitActive2NfcCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitActive2SquareCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitActive3PremiumCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitActiveCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitActiveEdgeCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitActiveMaxCoordinator;
@@ -247,6 +248,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.Amazfit
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitBip5Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitBip5UnityCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitBip6Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitCheetah2ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitCheetahProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitCheetahRoundCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitCheetahSquareCoordinator;
@@ -263,6 +265,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.Amazfit
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitTRex3Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitTRex3Pro44mmCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitTRex3Pro48mmCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitTRexUltra2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitTRexUltraCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.MiBand7Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.freearc.HuaweiFreearcCoordinator;
@@ -572,12 +575,14 @@ public enum DeviceType {
     AMAZFITBIP3(AmazfitBip3Coordinator.class),
     AMAZFITBIP3PRO(AmazfitBip3ProCoordinator.class),
     AMAZFITCHEETAHPRO(AmazfitCheetahProCoordinator.class),
+    AMAZFITCHEETAH2PRO(AmazfitCheetah2ProCoordinator.class),
     AMAZFITCHEETAHSQUARE(AmazfitCheetahSquareCoordinator.class),
     AMAZFITCHEETAHROUND(AmazfitCheetahRoundCoordinator.class),
     AMAZFITBIP5(AmazfitBip5Coordinator.class),
     AMAZFITBIP5UNITY(AmazfitBip5UnityCoordinator.class),
     AMAZFITBIP6(AmazfitBip6Coordinator.class),
     AMAZFITTREXULTRA(AmazfitTRexUltraCoordinator.class),
+    AMAZFITTREXULTRA2(AmazfitTRexUltra2Coordinator.class),
     AMAZFITGTRMINI(AmazfitGTRMiniCoordinator.class),
     AMAZFITFALCON(AmazfitFalconCoordinator.class),
     AMAZFITBALANCE(AmazfitBalanceCoordinator.class),
@@ -587,6 +592,7 @@ public enum DeviceType {
     AMAZFITACTIVE2(AmazfitActive2RoundCoordinator.class),
     AMAZFITACTIVE2NFC(AmazfitActive2NfcCoordinator.class),
     AMAZFITACTIVE2SQUARE(AmazfitActive2SquareCoordinator.class),
+    AMAZFITACTIVE3PREMIUM(AmazfitActive3PremiumCoordinator.class),
     AMAZFITACTIVEEDGE(AmazfitActiveEdgeCoordinator.class),
     AMAZFITACTIVEMAX(AmazfitActiveMaxCoordinator.class),
     AMAZFITHELIORING(AmazfitHelioRingCoordinator.class),

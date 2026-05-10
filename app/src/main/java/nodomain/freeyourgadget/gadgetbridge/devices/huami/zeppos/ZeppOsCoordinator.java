@@ -661,7 +661,7 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     public boolean supportsFtpServer(final GBDevice device) {
-        return false;
+        return supportsWifiHotspot(device);
     }
 
     public boolean hasGps(final GBDevice device) {

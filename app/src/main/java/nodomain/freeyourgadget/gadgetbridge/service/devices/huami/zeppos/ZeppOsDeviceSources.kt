@@ -1,7 +1,8 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos
 
 object ZeppOsDeviceSources {
-    // jq '.[] | [.value.productId, .value.productVersion, .deviceSource] | @csv' -r devices.json
+    // jq '.[] | [.value.productId, .value.productVersion, .deviceSource] | @csv' -r devices.json | \
+    //     sed 's/,/, /g; s/^/ZeppOsDeviceInfo(/; s/$/),/'
     // TODO: A few are missing: mi band 7, amazfit band 7, amazfit gtr mini
     val DEVICE_SOURCES = listOf(
         ZeppOsDeviceInfo(94, 256, 224),
@@ -15,6 +16,13 @@ object ZeppOsDeviceSources {
         ZeppOsDeviceInfo(115, 259, 247),
         ZeppOsDeviceInfo(116, 257, 251),
         ZeppOsDeviceInfo(117, 259, 254),
+        ZeppOsDeviceInfo(103, 256, 260),
+        ZeppOsDeviceInfo(103, 257, 261),
+        ZeppOsDeviceInfo(103, 258, 262),
+        ZeppOsDeviceInfo(103, 259, 263),
+        ZeppOsDeviceInfo(103, 260, 264),
+        ZeppOsDeviceInfo(103, 261, 265),
+        ZeppOsDeviceInfo(103, 262, 266),
         ZeppOsDeviceInfo(63, 256, 414),
         ZeppOsDeviceInfo(63, 257, 415),
         ZeppOsDeviceInfo(113, 256, 418),
@@ -22,6 +30,7 @@ object ZeppOsDeviceSources {
         ZeppOsDeviceInfo(93, 258, 6095106),
         ZeppOsDeviceInfo(100, 256, 6553856),
         ZeppOsDeviceInfo(100, 257, 6553857),
+        ZeppOsDeviceInfo(103, 263, 6750471),
         ZeppOsDeviceInfo(120, 257, 7864577),
         ZeppOsDeviceInfo(121, 256, 7930112),
         ZeppOsDeviceInfo(121, 257, 7930113),
@@ -82,6 +91,13 @@ object ZeppOsDeviceSources {
         ZeppOsDeviceInfo(163, 259, 10682627),
         ZeppOsDeviceInfo(165, 257, 10813697),
         ZeppOsDeviceInfo(165, 259, 10813699),
+        ZeppOsDeviceInfo(166, 256, 10879232),
+        ZeppOsDeviceInfo(166, 257, 10879233),
+        ZeppOsDeviceInfo(166, 259, 10879235),
+        ZeppOsDeviceInfo(167, 256, 10944768),
+        ZeppOsDeviceInfo(167, 257, 10944769),
+        ZeppOsDeviceInfo(167, 259, 10944771),
+        ZeppOsDeviceInfo(167, 4355, 10948867),
     )
 
     fun resolve(productId: Int, productVersion: Int): ZeppOsDeviceInfo? {
