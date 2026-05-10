@@ -84,6 +84,7 @@
 * Huawei: Fix crash on sync for some devices
 * Huawei: Fix watchface installation on some devices
 * Huawei: Improve workout sync error handling
+* Ignore notifications from suspended apps
 * Improve battery notifications
 * Include awake-sleep duration in sleep sessions
 * Intent API: Add Intent to change global settings

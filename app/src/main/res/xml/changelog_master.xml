@@ -83,6 +83,7 @@
         <change>Huawei: Fix crash on sync for some devices</change>
         <change>Huawei: Fix watchface installation on some devices</change>
         <change>Huawei: Improve workout sync error handling</change>
+        <change>Ignore notifications from suspended apps</change>
         <change>Improve battery notifications</change>
         <change>Include awake-sleep duration in sleep sessions</change>
         <change>Intent API: Add Intent to change global settings</change>

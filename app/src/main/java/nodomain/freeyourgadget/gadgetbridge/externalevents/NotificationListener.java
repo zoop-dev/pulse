@@ -65,7 +65,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -134,17 +133,17 @@ public class NotificationListener extends NotificationListenerService {
     }};
 
     private static final Set<String> PHONE_CALL_APPS = new HashSet<>() {{
-            add("com.android.dialer");
-            add("com.android.incallui");
-            add("com.asus.asusincallui");
-            add("com.google.android.dialer");
-            add("com.samsung.android.incallui");
-            add("org.fossify.phone");
+        add("com.android.dialer");
+        add("com.android.incallui");
+        add("com.asus.asusincallui");
+        add("com.google.android.dialer");
+        add("com.samsung.android.incallui");
+        add("org.fossify.phone");
     }};
 
     private static final Set<String> NOTI_USE_TITLE_APPS = new HashSet<>() {{
-            add("com.whatsapp");
-            add("org.thoughtcrime.securesms");
+        add("com.whatsapp");
+        add("org.thoughtcrime.securesms");
     }};
 
     public static final ArrayList<String> notificationStack = new ArrayList<>();
@@ -383,6 +382,21 @@ public class NotificationListener extends NotificationListenerService {
             if (rankingMap.getRanking(sbn.getKey(), ranking)) {
                 if (!ranking.matchesInterruptionFilter()) dndSuppressed = 1;
             }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                // Digital Wellbeing app pause and similar restrictions can suppress notifications
+                // changing the interruption filter, but the app will be marked as suspended
+                if (ranking.isSuspended()) {
+                    LOG.debug("Ignoring notification - app is suspended");
+                    return;
+                }
+
+                // If importance is none, it should also not even show up
+                if (ranking.getImportance() == NotificationManager.IMPORTANCE_NONE) {
+                    LOG.debug("Ignoring notification - importance is NONE");
+                    return;
+                }
+            }
         }
 
         if (prefs.getBoolean("notification_filter", false) && dndSuppressed == 1) {
@@ -430,7 +444,7 @@ public class NotificationListener extends NotificationListenerService {
         // If this notification contains a picture, and we did not yet send a picture inside the timeout interval,
         // we should still send it (eg. notification updates)
         final boolean newPicture = hasPicture &&
-                notification.when - lastPictureNotificationTime  > TimeUnit.SECONDS.toMillis(notificationsTimeoutSeconds);
+                notification.when - lastPictureNotificationTime > TimeUnit.SECONDS.toMillis(notificationsTimeoutSeconds);
 
         if (notificationBurstPreventionValue != null) {
             long diff = curTime - notificationBurstPreventionValue;
@@ -482,7 +496,7 @@ public class NotificationListener extends NotificationListenerService {
         LOG.info(
                 "Processing notification {}, age: {}, source: {}, flags: {}",
                 notificationSpec.getId(),
-                (System.currentTimeMillis() - notification.when) ,
+                (System.currentTimeMillis() - notification.when),
                 source,
                 notification.flags
         );
@@ -1112,6 +1126,7 @@ public class NotificationListener extends NotificationListenerService {
         this.notificationPictureCacheDirectory = new File(cacheDir, "notification-pictures");
         this.notificationPictureCacheDirectory.mkdir();
     }
+
     private void logNotification(StatusBarNotification sbn, boolean posted) {
         LOG.debug(
                 "Notification {} {}: packageName={}, when={}, priority={}, category={}",
