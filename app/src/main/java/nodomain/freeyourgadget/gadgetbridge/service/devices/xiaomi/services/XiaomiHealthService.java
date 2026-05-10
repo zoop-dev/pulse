@@ -211,6 +211,9 @@ public class XiaomiHealthService extends AbstractXiaomiService {
     @Override
     public void dispose() {
         gpsTimeoutHandler.removeCallbacksAndMessages(null);
+        gpsStarted = false;
+        gpsFixAcquired = false;
+        workoutStarted = false;
         activityFetcher.dispose();
     }
 
@@ -652,8 +655,6 @@ public class XiaomiHealthService extends AbstractXiaomiService {
                 gpsFixAcquired
         );
 
-        workoutStarted = false;
-
         final boolean sendGpsToBand = getDevicePrefs().getBoolean(DeviceSettingsPreferenceConst.PREF_WORKOUT_SEND_GPS_TO_BAND, false);
         if (!sendGpsToBand) {
             getSupport().sendCommand(
@@ -678,15 +679,21 @@ public class XiaomiHealthService extends AbstractXiaomiService {
             GBLocationService.start(getSupport().getContext(), getSupport().getDevice(), GBLocationProviderType.GPS, 1000);
         }
 
-        final int timeout = getDevicePrefs().getInt(DeviceSettingsPreferenceConst.PREF_WORKOUT_SEND_GPS_TO_BAND_TIMEOUT, 5000);
-        gpsTimeoutHandler.removeCallbacksAndMessages(null);
-        // Timeout if the watch stops sending workout open
-        gpsTimeoutHandler.postDelayed(() -> {
-            LOG.debug("Timed out waiting for workout");
-            gpsStarted = false;
-            gpsFixAcquired = false;
-            GBLocationService.stop(getSupport().getContext(), getSupport().getDevice());
-        }, timeout);
+        if (!workoutStarted) {
+            // Only schedule the timeout while we are still waiting for the watch to confirm
+            // workout start. Once WORKOUT_STARTED has arrived, only WORKOUT_FINISHED should
+            // stop GPS - newer firmwares (Mi Band 10 HyperOS 3.2.x) stop emitting
+            // WorkoutOpenWatch shortly after start, so a rescheduled timeout would fire
+            // mid-workout and starve the watch of GPS updates.
+            final int timeout = getDevicePrefs().getInt(DeviceSettingsPreferenceConst.PREF_WORKOUT_SEND_GPS_TO_BAND_TIMEOUT, 5000);
+            gpsTimeoutHandler.removeCallbacksAndMessages(null);
+            gpsTimeoutHandler.postDelayed(() -> {
+                LOG.debug("Timed out waiting for workout");
+                gpsStarted = false;
+                gpsFixAcquired = false;
+                GBLocationService.stop(getSupport().getContext(), getSupport().getDevice());
+            }, timeout);
+        }
     }
 
     private void handleWorkoutStatus(final XiaomiProto.WorkoutStatusWatch workoutStatus) {
