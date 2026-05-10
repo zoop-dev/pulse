@@ -37,24 +37,16 @@
 * Fix crash on companion pairing in Android 12
 * Fix crash on timezones without daylight savings
 * Fix duplicated weight conversion
-* Fossil Q: Add button action for showing step goal progress
-* Fossil Q: Add button function to ring phone
+* Fossil: Increase request timeout for big activity file downloads
+* Fossil Q: Add button actions for showing step goal progress and ringing phone
 * Fossil Q: Add dev preference for saving raw activity files
 * Fossil Q: Add/fix button actions for music and volume control
-* Fossil Q: Extend activity files parser for non-HR watches
 * Fossil Q: Fix commands being sent to all connected Fossil watches
-* Fossil Q: Fix steps detection during increased activity
 * Fossil Q: Hide unused authentication key preference
-* Fossil Q: Improve device details output
 * Fossil Q: Improve time picker visuals
-* Fossil Q: Increase request timeout for big activity file downloads
 * Fossil Q: Limit amount of toasts
-* Fossil Q: Move button config to device preferences
-* Fossil Q: Move notifications configuration to dedicated top-level device preference
-* Fossil Q: Move subdial notifications to preferences
-* Fossil Q: Move time offsets to device preferences
-* Fossil Q: Move vibration strength preference into device prefs
-* Fossil Q: Stop misusing app manager button on device card
+* Fossil Q: Move configuration from custom screen to device preferences
+* Fossil Q: Support activity data syncing
 * Fossil Q: Support calibration of physical hands
 * Fossil Q: Support for find device
 * Fossil Q: Use global step goal preference instead of custom one

@@ -36,24 +36,16 @@
         <change>Fix crash on companion pairing in Android 12</change>
         <change>Fix crash on timezones without daylight savings</change>
         <change>Fix duplicated weight conversion</change>
-        <change>Fossil Q: Add button action for showing step goal progress</change>
-        <change>Fossil Q: Add button function to ring phone</change>
+        <change>Fossil: Increase request timeout for big activity file downloads</change>
+        <change>Fossil Q: Add button actions for showing step goal progress and ringing phone</change>
         <change>Fossil Q: Add dev preference for saving raw activity files</change>
         <change>Fossil Q: Add/fix button actions for music and volume control</change>
-        <change>Fossil Q: Extend activity files parser for non-HR watches</change>
         <change>Fossil Q: Fix commands being sent to all connected Fossil watches</change>
-        <change>Fossil Q: Fix steps detection during increased activity</change>
         <change>Fossil Q: Hide unused authentication key preference</change>
-        <change>Fossil Q: Improve device details output</change>
         <change>Fossil Q: Improve time picker visuals</change>
-        <change>Fossil Q: Increase request timeout for big activity file downloads</change>
         <change>Fossil Q: Limit amount of toasts</change>
-        <change>Fossil Q: Move button config to device preferences</change>
-        <change>Fossil Q: Move notifications configuration to dedicated top-level device preference</change>
-        <change>Fossil Q: Move subdial notifications to preferences</change>
-        <change>Fossil Q: Move time offsets to device preferences</change>
-        <change>Fossil Q: Move vibration strength preference into device prefs</change>
-        <change>Fossil Q: Stop misusing app manager button on device card</change>
+        <change>Fossil Q: Move configuration from custom screen to device preferences</change>
+        <change>Fossil Q: Support activity data syncing</change>
         <change>Fossil Q: Support calibration of physical hands</change>
         <change>Fossil Q: Support for find device</change>
         <change>Fossil Q: Use global step goal preference instead of custom one</change>
