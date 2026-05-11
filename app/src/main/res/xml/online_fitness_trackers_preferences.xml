@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:icon="@drawable/ic_warning"
+        android:key="pref_key_network_required"
+        android:title="@string/warning_network_required_title"
+        android:summary="@string/warning_network_required_summary" />
+    <PreferenceCategory
+        android:title="Endurain">
+        <Preference
+            android:icon="@drawable/ic_info"
+            android:key="pref_key_status"
+            android:title="@string/pref_info_endurain_status_title"
+            android:summary="Logged in on endurain.example.com" />
+        <Preference
+            android:icon="@drawable/ic_language"
+            android:key="pref_key_log_in"
+            android:title="@string/pref_endurain_log_in_title"
+            android:summary="@string/pref_endurain_log_in_summary" />
+        <Preference
+            android:icon="@drawable/ic_language"
+            android:key="pref_key_log_out"
+            android:title="@string/pref_endurain_log_out_title"
+            android:summary="@string/pref_endurain_log_out_summary" />
+    </PreferenceCategory>
+</PreferenceScreen>

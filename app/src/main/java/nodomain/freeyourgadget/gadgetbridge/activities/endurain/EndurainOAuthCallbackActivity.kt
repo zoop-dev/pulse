@@ -35,7 +35,7 @@ class EndurainOAuthCallbackActivity : AbstractGBActivity() {
         super.onCreate(savedInstanceState)
 
         // Bring us back to front to dismiss the custom tab
-        val dismissIntent = Intent(applicationContext, EndurainPreferencesActivity::class.java).apply {
+        val dismissIntent = Intent(applicationContext, OnlineFitnessTrackersPreferencesActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         }
         startActivity(dismissIntent)

@@ -53,7 +53,7 @@
             <item
                 android:id="@+id/activity_action_upload_to_endurain"
                 android:icon="@drawable/ic_file_upload"
-                android:title="Upload to Endurain"
+                android:title="@string/activity_detail_upload_to_endurain"
                 app:showAsAction="never" />
 
             <item

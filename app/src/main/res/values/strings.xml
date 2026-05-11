@@ -4960,4 +4960,26 @@
     <string name="endurain_server_version">\nServer version: %1$s</string>
     <string name="endurain_logout_failed">Logout failed</string>
     <string name="endurain_logged_out_successfully">Logged out successfully</string>
+    <string name="prefs_online_fitness_trackers_title">Online fitness trackers</string>
+    <string name="prefs_online_fitness_trackers_summary">Configure how to reach and use online fitness trackers</string>
+    <string name="warning_network_required_title">Network required</string>
+    <string name="warning_network_required_summary">This integration requires network connectivity. Please install and enable the internet helper add-on app.</string>
+    <string name="pref_info_endurain_status_title">Endurain status</string>
+    <string name="pref_endurain_log_in_title">Log in to Endurain</string>
+    <string name="pref_endurain_log_in_summary">Tap here to enter the Endurain server and log in</string>
+    <string name="pref_endurain_log_out_title">Log out of Endurain</string>
+    <string name="pref_endurain_log_out_summary">Tap here to log out, this disables the integration</string>
+    <string name="no_gpx_track_in_activity_toast">No GPX track in this activity</string>
+    <string name="unable_to_display_gpx_track_toast">Unable to display GPX track: %1$s</string>
+    <string name="unable_to_share_gpx_track_toast">Unable to share GPX track: %1$s</string>
+    <string name="endurain_successfully_uploaded_toast">Successfully uploaded to Endurain</string>
+    <string name="endurain_error_while_uploading_toast">Error while uploading to Endurain</string>
+    <string name="endurain_unable_to_upload_gpx_file_toast">Unable to upload GPX file to Endurain: %1$s</string>
+    <string name="endurain_setup_title">Endurain setup</string>
+    <string name="endurain_setup_server">Endurain server</string>
+    <string name="endurain_setup_login_type_local">Local</string>
+    <string name="endurain_setup_login_type_sso">SSO</string>
+    <string name="endurain_setup_mfa_code">MFA code</string>
+    <string name="endurain_setup_next">Next</string>
+    <string name="activity_detail_upload_to_endurain">Upload to Endurain</string>
 </resources>

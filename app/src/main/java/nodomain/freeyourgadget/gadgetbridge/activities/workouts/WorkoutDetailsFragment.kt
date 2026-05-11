@@ -704,7 +704,8 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         val gpxFile = ActivitySummaryUtils.getShareableGpxFile(activityTrackProvider, workout.summary)
 
         if (gpxFile == null) {
-            GB.toast(requireContext(), "No GPX track in this activity", Toast.LENGTH_LONG, GB.INFO)
+            GB.toast(requireContext(),
+                getString(R.string.no_gpx_track_in_activity_toast), Toast.LENGTH_LONG, GB.INFO)
             return
         }
 
@@ -713,7 +714,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         } catch (e: Exception) {
             GB.toast(
                 requireContext(),
-                "Unable to display GPX track: ${e.localizedMessage}",
+                getString(R.string.unable_to_display_gpx_track_toast, e.localizedMessage),
                 Toast.LENGTH_LONG,
                 GB.ERROR,
                 e
@@ -727,7 +728,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         val gpxFile = ActivitySummaryUtils.getShareableGpxFile(activityTrackProvider, workout.summary)
 
         if (gpxFile == null) {
-            GB.toast(requireContext(), "No GPX track in this activity", Toast.LENGTH_LONG, GB.INFO)
+            GB.toast(requireContext(), getString(R.string.no_gpx_track_in_activity_toast), Toast.LENGTH_LONG, GB.INFO)
             return
         }
 
@@ -736,7 +737,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         } catch (e: Exception) {
             GB.toast(
                 requireContext(),
-                "Unable to share GPX track: ${e.localizedMessage}",
+                getString(R.string.unable_to_share_gpx_track_toast, e.localizedMessage),
                 Toast.LENGTH_LONG,
                 GB.ERROR,
                 e
@@ -752,7 +753,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         val gpxFile = ActivitySummaryUtils.getShareableGpxFile(activityTrackProvider, workout.summary)
 
         if (gpxFile == null) {
-            GB.toast("No GPX track in this activity", Toast.LENGTH_LONG, GB.INFO)
+            GB.toast(getString(R.string.no_gpx_track_in_activity_toast), Toast.LENGTH_LONG, GB.INFO)
             return
         }
 
@@ -770,13 +771,13 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
                     activity?.runOnUiThread {
                         if (newId != null)
                             GB.toast(
-                                "Successfully uploaded to Endurain",
+                                getString(R.string.endurain_successfully_uploaded_toast),
                                 Toast.LENGTH_SHORT,
                                 GB.INFO
                             )
                         else
                             GB.toast(
-                                "Error while uploading to Endurain",
+                                getString(R.string.endurain_error_while_uploading_toast),
                                 Toast.LENGTH_SHORT,
                                 GB.INFO
                             )
@@ -785,7 +786,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             }
         } catch (e: Exception) {
             GB.toast(
-                "Unable to upload GPX file to Endurain: ${e.localizedMessage}",
+                getString(R.string.endurain_unable_to_upload_gpx_file_toast, e.localizedMessage),
                 Toast.LENGTH_LONG,
                 GB.ERROR,
                 e

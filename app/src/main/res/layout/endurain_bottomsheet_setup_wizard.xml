@@ -12,7 +12,7 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Endurain setup"
+        android:text="@string/endurain_setup_title"
         android:textAppearance="?attr/textAppearanceHeadlineSmall" />
 
     <!-- SERVER -->
@@ -20,7 +20,7 @@
         android:id="@+id/server_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Endurain server">
+        android:hint="@string/endurain_setup_server">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/server_input"
@@ -42,14 +42,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Local" />
+            android:text="@string/endurain_setup_login_type_local" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/sso_login_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="SSO" />
+            android:text="@string/endurain_setup_login_type_sso" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
     <!-- LOCAL LOGIN -->
@@ -91,7 +91,7 @@
             android:id="@+id/mfa_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="MFA Code"
+            android:hint="@string/endurain_setup_mfa_code"
             android:inputType="number"
             android:maxLength="6" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -114,7 +114,7 @@
             android:id="@+id/next_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Next" />
+            android:text="@string/endurain_setup_next" />
     </LinearLayout>
 
 </LinearLayout>

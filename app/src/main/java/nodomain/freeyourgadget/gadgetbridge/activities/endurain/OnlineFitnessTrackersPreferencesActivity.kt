@@ -28,16 +28,16 @@ import nodomain.freeyourgadget.gadgetbridge.activities.AbstractSettingsActivityV
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 
-class EndurainPreferencesActivity : AbstractSettingsActivityV2() {
+class OnlineFitnessTrackersPreferencesActivity : AbstractSettingsActivityV2() {
     override fun newFragment(): PreferenceFragmentCompat =
-        EndurainPreferencesFragment()
+        OnlineFitnessTrackersPreferencesFragment()
 
-    class EndurainPreferencesFragment : AbstractPreferenceFragment() {
+    class OnlineFitnessTrackersPreferencesFragment : AbstractPreferenceFragment() {
 
         private val vm: EndurainSetupViewModel by viewModels()
 
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.endurain_preferences, rootKey)
+            setPreferencesFromResource(R.xml.online_fitness_trackers_preferences, rootKey)
 
             updateNetworkWarning()
             wireLoginPreference()
