@@ -1008,9 +1008,13 @@ public class ZeppOsSupport extends AbstractDeviceSupport
                 final float gx = (x * gravity) / scaleFactor;
                 final float gy = (y * gravity) / scaleFactor;
                 final float gz = (z * gravity) / scaleFactor;
-                sleepAsAndroidSender.onAccelChanged(gx, gy, gz);
+                if (sleepAsAndroidSender != null) {
+                    sleepAsAndroidSender.onAccelChanged(gx, gy, gz);
+                }
 
-                LOG.info("Raw sensor g: x={} y={} z={}", gx, gy, gz);
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug("Raw sensor g: x={} y={} z={}", gx, gy, gz);
+                }
             }
         } else if (type == 0x01) {
             // TODO not sure what this is?
@@ -1021,7 +1025,9 @@ public class ZeppOsSupport extends AbstractDeviceSupport
 
             for (int i = 2; i < value.length; i += 4) {
                 int val = BLETypeConversions.toUint32(value, i);
-                LOG.info("Raw sensor 1: {}", val);
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug("Raw sensor type 1: {}", val);
+                }
             }
         } else if (type == 0x07) {
             // Timestamp for the targetType, sent in intervals of ~10 seconds

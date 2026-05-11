@@ -30,10 +30,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
@@ -54,6 +56,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.HuamiSleepRespiratoryRateSam
 import nodomain.freeyourgadget.gadgetbridge.devices.HuamiSpo2SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.HuamiStressSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.SleepAsAndroidFeature;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.DateTimeDisplay;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.DoNotDisturb;
@@ -166,6 +169,20 @@ public abstract class HuamiCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public boolean supportsHeartRateRestingMeasurement(@NonNull final GBDevice device) {
         return true;
+    }
+
+    @Override
+    public boolean supportsSleepAsAndroid(@NonNull final GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public Set<SleepAsAndroidFeature> getSleepAsAndroidFeatures() {
+        return EnumSet.of(
+                SleepAsAndroidFeature.ACCELEROMETER,
+                SleepAsAndroidFeature.HEART_RATE,
+                SleepAsAndroidFeature.ALARMS,
+                SleepAsAndroidFeature.NOTIFICATIONS);
     }
 
     @Override
