@@ -33,9 +33,11 @@ import org.apache.commons.lang3.ArrayUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
@@ -51,6 +53,7 @@ import nodomain.freeyourgadget.gadgetbridge.capabilities.HeartRateCapability;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.password.PasswordCapabilityImpl;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.widgets.WidgetManager;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.SleepAsAndroidFeature;
 import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
@@ -397,6 +400,21 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     @Override
     public boolean supportsRealtimeData(@NonNull GBDevice device) {
         return true;
+    }
+
+    @Override
+    public boolean supportsSleepAsAndroid(@NonNull GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public Set<SleepAsAndroidFeature> getSleepAsAndroidFeatures() {
+        // Raw accelerometer streaming over FE95 chars 0050-0053 is not yet
+        // reverse-engineered in Gadgetbridge; ship HR + ALARMS + NOTIFICATIONS only.
+        return EnumSet.of(
+                SleepAsAndroidFeature.HEART_RATE,
+                SleepAsAndroidFeature.ALARMS,
+                SleepAsAndroidFeature.NOTIFICATIONS);
     }
 
     @Override

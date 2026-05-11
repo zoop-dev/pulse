@@ -56,6 +56,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
 import nodomain.freeyourgadget.gadgetbridge.proto.xiaomi.XiaomiProto;
+import nodomain.freeyourgadget.gadgetbridge.service.SleepAsAndroidSender;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiPreferences;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.XiaomiSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi.activity.XiaomiActivityFileFetcher;
@@ -120,6 +121,11 @@ public class XiaomiHealthService extends AbstractXiaomiService {
     private static final int GOAL_STANDING_TIME = 4;
 
     private final XiaomiActivityFileFetcher activityFetcher = new XiaomiActivityFileFetcher(this);
+    private SleepAsAndroidSender sleepAsAndroidSender;
+
+    public void setSleepAsAndroidSender(final SleepAsAndroidSender sender) {
+        this.sleepAsAndroidSender = sender;
+    }
 
     public XiaomiHealthService(final XiaomiSupport support) {
         super(support);
@@ -969,5 +975,9 @@ public class XiaomiHealthService extends AbstractXiaomiService {
                 .putExtra(GBDevice.EXTRA_DEVICE, getSupport().getDevice())
                 .putExtra(DeviceService.EXTRA_REALTIME_SAMPLE, sample);
         LocalBroadcastManager.getInstance(getSupport().getContext()).sendBroadcast(intent);
+
+        if (sleepAsAndroidSender != null && realTimeStats.getHeartRate() > 0) {
+            sleepAsAndroidSender.onHrChanged(realTimeStats.getHeartRate(), 0);
+        }
     }
 }
