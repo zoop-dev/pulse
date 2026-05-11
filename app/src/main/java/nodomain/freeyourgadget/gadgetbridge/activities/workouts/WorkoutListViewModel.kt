@@ -42,9 +42,17 @@ class WorkoutListViewModel : ViewModel() {
         dateToFilter: Long,
         nameContainsFilter: String?,
         deviceFilter: Long,
-        itemsFilter: List<Long>?
+        itemsFilter: List<Long>?,
+        /** When true, skip the [isLoading] / [isDashboardLoading]
+         *  flips so the swipe-refresh spinner and dashboard shimmer
+         *  don't blink. Used by per-line refreshes during
+         *  long-running syncs, where the loading animation
+         *  distracts from the actual content updates. */
+        silent: Boolean = false
     ) {
-        _isLoading.value = true
+        if (!silent) {
+            _isLoading.value = true
+        }
         _error.value = null
 
         viewModelScope.launch {
@@ -70,18 +78,22 @@ class WorkoutListViewModel : ViewModel() {
 
                 _summaries.value = allSummaries
 
-                loadDashboardStats(gbDevice, summaries)
+                loadDashboardStats(gbDevice, summaries, silent)
             } catch (e: Exception) {
                 LOG.error("Error loading summaries", e)
                 _error.value = "Error loading summaries: ${e.localizedMessage}"
             } finally {
-                _isLoading.value = false
+                if (!silent) {
+                    _isLoading.value = false
+                }
             }
         }
     }
 
-    private fun loadDashboardStats(gbDevice: GBDevice, summaries: List<BaseActivitySummary>) {
-        _isDashboardLoading.value = true
+    private fun loadDashboardStats(gbDevice: GBDevice, summaries: List<BaseActivitySummary>, silent: Boolean) {
+        if (!silent) {
+            _isDashboardLoading.value = true
+        }
 
         viewModelScope.launch {
             try {
@@ -94,7 +106,9 @@ class WorkoutListViewModel : ViewModel() {
                 LOG.error("Error loading dashboard stats", e)
                 _error.value = "Error loading dashboard stats: ${e.localizedMessage}"
             } finally {
-                _isDashboardLoading.value = false
+                if (!silent) {
+                    _isDashboardLoading.value = false
+                }
             }
         }
     }

@@ -14,6 +14,8 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.FileProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -52,26 +54,36 @@ class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
 
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            if (intent.action != GBDevice.ACTION_DEVICE_CHANGED) {
-                LOG.warn("Got unexpected action {}", intent.action)
-                return
-            }
-            val device = intent.getParcelableExtra<GBDevice>(GBDevice.EXTRA_DEVICE)
-            if (device == null) {
-                LOG.error("Got device changed without device")
-                return
-            }
-            if (device != gbDevice) {
-                return
-            }
-            if (device.isBusy) {
-                swipeLayout.isRefreshing = true
-            } else {
-                val wasBusy = swipeLayout.isRefreshing
-                swipeLayout.isRefreshing = false
-                if (wasBusy) {
-                    refresh()
+            when (intent.action) {
+                GBDevice.ACTION_DEVICE_CHANGED -> {
+                    val device = intent.getParcelableExtra<GBDevice>(GBDevice.EXTRA_DEVICE)
+                    if (device == null) {
+                        LOG.error("Got device changed without device")
+                        return
+                    }
+                    if (device != gbDevice) {
+                        return
+                    }
+                    if (device.isBusy) {
+                        swipeLayout.isRefreshing = true
+                    } else {
+                        val wasBusy = swipeLayout.isRefreshing
+                        swipeLayout.isRefreshing = false
+                        if (wasBusy) {
+                            refresh()
+                        }
+                    }
                 }
+                // ExploreSync (and other long-running fetches) hold the
+                // device busy for the whole catalog walk, so the
+                // busy→idle edge above only fires at session end.
+                // Refresh on every per-line flush as well so newly
+                // imported activities appear in the list right away.
+                // Pass silent=true so the dashboard's loading shimmer
+                // and swipe-refresh spinner don't blink on every
+                // incremental update.
+                GBApplication.ACTION_NEW_DATA -> refresh(silent = true)
+                else -> LOG.warn("Got unexpected action {}", intent.action)
             }
         }
     }
@@ -132,7 +144,10 @@ class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
         // Load and apply saved quick filter
         applySavedQuickFilter()
 
-        val filterLocal = IntentFilter(GBDevice.ACTION_DEVICE_CHANGED)
+        val filterLocal = IntentFilter().apply {
+            addAction(GBDevice.ACTION_DEVICE_CHANGED)
+            addAction(GBApplication.ACTION_NEW_DATA)
+        }
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filterLocal)
 
         super.onCreate(savedInstanceState)
@@ -194,6 +209,13 @@ class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
         }
 
         setItemAdapter(workoutSummariesAdapter)
+
+        // The dashboard row gets a notifyItemChanged on every silent
+        // refresh during sync; the default ChangeAnimator cross-fades
+        // that, which reads as a distracting opacity blink. Disable
+        // just the change animation — add/remove animations still run.
+        val recycler = findViewById<RecyclerView>(R.id.itemListView)
+        (recycler.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
 
         swipeLayout = findViewById(R.id.list_activity_swipe_layout)
         swipeLayout.setOnRefreshListener {
@@ -478,6 +500,10 @@ class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
     }
 
     override fun refresh() {
+        refresh(silent = false)
+    }
+
+    private fun refresh(silent: Boolean) {
         gbDevice?.let { device ->
             viewModel.loadSummaries(
                 device,
@@ -486,7 +512,8 @@ class WorkoutListActivity : AbstractListActivity<BaseActivitySummary>() {
                 dateToFilter,
                 nameContainsFilter,
                 deviceFilter,
-                itemsFilter
+                itemsFilter,
+                silent
             )
         }
     }
