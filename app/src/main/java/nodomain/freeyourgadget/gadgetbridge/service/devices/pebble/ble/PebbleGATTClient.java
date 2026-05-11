@@ -17,7 +17,6 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.ble;
 
 import static android.bluetooth.BluetoothGattCharacteristic.FORMAT_UINT16;
-import static android.bluetooth.BluetoothGattCharacteristic.PROPERTY_WRITE;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
@@ -44,21 +43,10 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.ValueDecoder;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 @SuppressLint("MissingPermission")
-class PebbleGATTClient extends BluetoothGattCallback {
+class PebbleGATTClient extends BluetoothGattCallback implements PairingCallback {
 
     private static final Logger LOG = LoggerFactory.getLogger(PebbleGATTClient.class);
 
-    private static final UUID SERVICE_UUID = UUID.fromString("0000fed9-0000-1000-8000-00805f9b34fb");
-    private static final UUID CONNECTIVITY_CHARACTERISTIC = UUID.fromString("00000001-328E-0FBB-C642-1AA6699BDADA");
-    private static final UUID PAIRING_TRIGGER_CHARACTERISTIC = UUID.fromString("00000002-328E-0FBB-C642-1AA6699BDADA");
-    private static final UUID MTU_CHARACTERISTIC = UUID.fromString("00000003-328e-0fbb-c642-1aa6699bdada");
-    private static final UUID CONNECTION_PARAMETERS_CHARACTERISTIC = UUID.fromString("00000005-328E-0FBB-C642-1AA6699BDADA");
-    private static final UUID CHARACTERISTIC_CONFIGURATION_DESCRIPTOR = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
-
-    //PPoGATT service (Pebble side)
-    private static final UUID PPOGATT_SERVICE_UUID = UUID.fromString("30000003-328E-0FBB-C642-1AA6699BDADA");
-    private static final UUID PPOGATT_CHARACTERISTIC_READ = UUID.fromString("30000004-328E-0FBB-C642-1AA6699BDADA");
-    private static final UUID PPOGATT_CHARACTERISTIC_WRITE = UUID.fromString("30000006-328E-0FBB-C642-1AA6699BDADA");
 
     private BluetoothGattCharacteristic writeCharacteristics;
 
@@ -66,10 +54,12 @@ class PebbleGATTClient extends BluetoothGattCallback {
     private final PebbleLESupport mPebbleLESupport;
 
     private boolean hasConnectivityCharacteristics = false;
-    private final boolean doPairing = true;
     private BluetoothGatt mBluetoothGatt;
 
     private CountDownLatch mWaitWriteCompleteLatch;
+
+    // Pairing flow strategy
+    private PebblePairingFlow mPairingFlow;
 
     PebbleGATTClient(PebbleLESupport pebbleLESupport, Context context, BluetoothDevice btDevice) {
         mContext = context;
@@ -83,11 +73,11 @@ class PebbleGATTClient extends BluetoothGattCallback {
             return;
         }
 
-        if (characteristic.getUuid().equals(MTU_CHARACTERISTIC)) {
+        if (characteristic.getUuid().equals(PebbleGATTConstants.MTU_CHARACTERISTIC)) {
             int newMTU = characteristic.getIntValue(FORMAT_UINT16, 0);
             LOG.info("Pebble requested MTU: {}", newMTU);
             mPebbleLESupport.setMTU(newMTU);
-        } else if (characteristic.getUuid().equals(PPOGATT_CHARACTERISTIC_READ)) {
+        } else if (characteristic.getUuid().equals(PebbleGATTConstants.PPOGATT_CHARACTERISTIC_READ)) {
             mPebbleLESupport.handlePPoGATTPacket(characteristic.getValue().clone());
         } else if (characteristic.getUuid().equals(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL)) {
             int battery_percent = ValueDecoder.decodePercent(characteristic, characteristic.getValue());
@@ -106,6 +96,13 @@ class PebbleGATTClient extends BluetoothGattCallback {
         LOG.info("onCharacteristicRead() status = {}", status);
         if (status == BluetoothGatt.GATT_SUCCESS) {
             LOG.info("onCharacteristicRead() {} {}", characteristic.getUuid().toString(), GB.hexdump(characteristic.getValue(), 0, -1));
+
+            // Delegate to pairing flow if applicable
+            if (mPairingFlow != null && mPairingFlow.onCharacteristicRead(gatt, characteristic, characteristic.getValue())) {
+                return; // Pairing flow handled it
+            }
+
+            // Handle non-pairing characteristics
             if (characteristic.getUuid().equals(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL)) {
                 int battery_percent = ValueDecoder.decodePercent(characteristic, characteristic.getValue());
                 LOG.info("Got battery level through read, is at {}%", battery_percent);
@@ -113,15 +110,6 @@ class PebbleGATTClient extends BluetoothGattCallback {
                 gbDeviceEventBatteryInfo.level = battery_percent;
                 gbDeviceEventBatteryInfo.state = BatteryState.BATTERY_NORMAL;
                 mPebbleLESupport.getPebbleSupport().evaluateGBDeviceEvent(gbDeviceEventBatteryInfo);
-            } else if ((characteristic.getUuid().equals(PAIRING_TRIGGER_CHARACTERISTIC))) {
-                // this is just a hack to force sequential ble commands for initialization
-                // kind of event driven
-                // And this never happens when not READING the pairing trigger which is only done for old pebbles running fw 3.x
-                if (hasConnectivityCharacteristics) {
-                    subscribeToConnectivity(gatt);
-                } else {
-                    subscribeToConnectionParams(gatt);
-                }
             }
         }
     }
@@ -146,7 +134,14 @@ class PebbleGATTClient extends BluetoothGattCallback {
         if (mPebbleLESupport.isUnexpectedDevice(gatt.getDevice())) {
             return;
         }
-        if (characteristic.getUuid().equals(PPOGATT_CHARACTERISTIC_WRITE)) {
+
+        // Delegate to pairing flow if applicable
+        if (mPairingFlow != null && mPairingFlow.onCharacteristicWrite(gatt, characteristic, status)) {
+            return; // Pairing flow handled it
+        }
+
+        // Handle non-pairing characteristics
+        if (characteristic.getUuid().equals(PebbleGATTConstants.PPOGATT_CHARACTERISTIC_WRITE)) {
             if (status != BluetoothGatt.GATT_SUCCESS) {
                 LOG.error("something went wrong when writing to PPoGATT characteristics");
             }
@@ -155,15 +150,7 @@ class PebbleGATTClient extends BluetoothGattCallback {
             } else {
                 LOG.warn("mWaitWriteCompleteLatch is null!");
             }
-        } else if (characteristic.getUuid().equals(PAIRING_TRIGGER_CHARACTERISTIC) || characteristic.getUuid().equals(CONNECTIVITY_CHARACTERISTIC)) {
-            //mBtDevice.createBond(); // did not work when last tried
-
-            if (hasConnectivityCharacteristics) {
-                subscribeToConnectivity(gatt);
-            } else {
-                subscribeToConnectionParams(gatt);
-            }
-        } else if (characteristic.getUuid().equals(MTU_CHARACTERISTIC)) {
+        } else if (characteristic.getUuid().equals(PebbleGATTConstants.MTU_CHARACTERISTIC)) {
             gatt.requestMtu(339);
         }
     }
@@ -180,17 +167,17 @@ class PebbleGATTClient extends BluetoothGattCallback {
 
         // this is just a hack to force sequential ble commands for initialization
         // kind of event driven
-        if (CHARACTERISTICUUID.equals(CONNECTION_PARAMETERS_CHARACTERISTIC)) {
+        if (CHARACTERISTICUUID.equals(PebbleGATTConstants.CONNECTION_PARAMETERS_CHARACTERISTIC)) {
             subscribeToConnectivity(gatt);
-        } else if (CHARACTERISTICUUID.equals(CONNECTIVITY_CHARACTERISTIC)) {
+        } else if (CHARACTERISTICUUID.equals(PebbleGATTConstants.CONNECTIVITY_CHARACTERISTIC)) {
             subscribeToMTUOrBattery(gatt);
-        } else if (CHARACTERISTICUUID.equals(MTU_CHARACTERISTIC) || CHARACTERISTICUUID.equals(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL)) {
+        } else if (CHARACTERISTICUUID.equals(PebbleGATTConstants.MTU_CHARACTERISTIC) || CHARACTERISTICUUID.equals(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL)) {
             if (mPebbleLESupport.clientOnly) {
                 subscribeToPPoGATT(gatt);
             } else {
                 setMTU(gatt);
             }
-        } else if (CHARACTERISTICUUID.equals(PPOGATT_CHARACTERISTIC_READ)) {
+        } else if (CHARACTERISTICUUID.equals(PebbleGATTConstants.PPOGATT_CHARACTERISTIC_READ)) {
             setMTU(gatt);
         }
     }
@@ -202,43 +189,40 @@ class PebbleGATTClient extends BluetoothGattCallback {
         }
 
         LOG.info("onServicesDiscovered() status = {}", status);
-        if (status == BluetoothGatt.GATT_SUCCESS) {
-            BluetoothGattCharacteristic connectionParamCharacteristic = gatt.getService(SERVICE_UUID).getCharacteristic(CONNECTION_PARAMETERS_CHARACTERISTIC);
-            hasConnectivityCharacteristics = connectionParamCharacteristic == null;
-
-            if (hasConnectivityCharacteristics) {
-                LOG.info("This seems to be an older le enabled Pebble (Pebble Time), or a 2025 Pebble");
-            }
-
-            if (doPairing) {
-                BluetoothGattCharacteristic characteristic = gatt.getService(SERVICE_UUID).getCharacteristic(PAIRING_TRIGGER_CHARACTERISTIC);
-                if ((characteristic.getProperties() & PROPERTY_WRITE) != 0) {
-                    LOG.info("This seems to be a >=4.0 FW Pebble, writing to pairing trigger");
-                    // flags:
-                    // 0 - always 1
-                    // 1 - unknown
-                    // 2 - always 0
-                    // 3 - unknown, set on kitkat (seems to help to get a "better" pairing)
-                    // 4 - unknown, set on some phones
-                    byte[] value;
-                    if (mPebbleLESupport.clientOnly) {
-                        value = new byte[]{0x11}; // needed in clientOnly mode (TODO: try 0x19)
-                    } else {
-                        value = new byte[]{0x09}; // I just keep this, because it worked
-                    }
-                    WriteAction.writeCharacteristic(gatt, characteristic, value);
-                } else {
-                    LOG.info("This seems to be some <4.0 FW Pebble, reading pairing trigger");
-                    gatt.readCharacteristic(characteristic);
-                }
-            } else {
-                if (hasConnectivityCharacteristics) {
-                    subscribeToConnectivity(gatt);
-                } else {
-                    subscribeToConnectionParams(gatt);
-                }
-            }
+        if (status != BluetoothGatt.GATT_SUCCESS) {
+            LOG.error("Service discovery failed with status {}", status);
+            return;
         }
+
+        BluetoothGattService pairingService = gatt.getService(PebbleGATTConstants.SERVICE_UUID);
+        if (pairingService == null) {
+            LOG.error("Pairing service not found");
+            return;
+        }
+
+        // Detect device characteristics for subscription chain selection
+        BluetoothGattCharacteristic connectionParamCharacteristic =
+                pairingService.getCharacteristic(PebbleGATTConstants.CONNECTION_PARAMETERS_CHARACTERISTIC);
+        hasConnectivityCharacteristics = connectionParamCharacteristic == null;
+
+        if (hasConnectivityCharacteristics) {
+            LOG.info("This seems to be an older LE Pebble (Pebble Time), or a 2025 Pebble");
+        }
+
+        // Get device model for hardware-based pairing flow detection
+        String deviceModel = null;
+        try {
+            deviceModel = mPebbleLESupport.getPebbleSupport().getDevice().getModel();
+        } catch (Exception e) {
+            LOG.warn("Could not get device model: {}", e.getMessage());
+        }
+
+        // Create appropriate pairing flow
+        mPairingFlow = PebblePairingFlowFactory.createPairingFlow(
+                mContext, deviceModel, pairingService, mPebbleLESupport.clientOnly, this);
+
+        // Start pairing
+        mPairingFlow.startPairing(gatt, pairingService);
     }
 
     @Override
@@ -270,18 +254,18 @@ class PebbleGATTClient extends BluetoothGattCallback {
 
     private void subscribeToConnectivity(BluetoothGatt gatt) {
         LOG.info("subscribing to connectivity characteristic");
-        BluetoothGattDescriptor descriptor = gatt.getService(SERVICE_UUID).getCharacteristic(CONNECTIVITY_CHARACTERISTIC).getDescriptor(CHARACTERISTIC_CONFIGURATION_DESCRIPTOR);
+        BluetoothGattDescriptor descriptor = gatt.getService(PebbleGATTConstants.SERVICE_UUID).getCharacteristic(PebbleGATTConstants.CONNECTIVITY_CHARACTERISTIC).getDescriptor(PebbleGATTConstants.CHARACTERISTIC_CONFIGURATION_DESCRIPTOR);
         NotifyAction.writeDescriptor(gatt, descriptor, BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-        gatt.setCharacteristicNotification(gatt.getService(SERVICE_UUID).getCharacteristic(CONNECTIVITY_CHARACTERISTIC), true);
+        gatt.setCharacteristicNotification(gatt.getService(PebbleGATTConstants.SERVICE_UUID).getCharacteristic(PebbleGATTConstants.CONNECTIVITY_CHARACTERISTIC), true);
     }
 
     private void subscribeToMTU(BluetoothGatt gatt) {
-        BluetoothGattCharacteristic characteristic = gatt.getService(SERVICE_UUID).getCharacteristic(MTU_CHARACTERISTIC);
+        BluetoothGattCharacteristic characteristic = gatt.getService(PebbleGATTConstants.SERVICE_UUID).getCharacteristic(PebbleGATTConstants.MTU_CHARACTERISTIC);
         if (characteristic != null) {
             LOG.info("subscribing to mtu characteristic");
-            BluetoothGattDescriptor descriptor = gatt.getService(SERVICE_UUID).getCharacteristic(MTU_CHARACTERISTIC).getDescriptor(CHARACTERISTIC_CONFIGURATION_DESCRIPTOR);
+            BluetoothGattDescriptor descriptor = gatt.getService(PebbleGATTConstants.SERVICE_UUID).getCharacteristic(PebbleGATTConstants.MTU_CHARACTERISTIC).getDescriptor(PebbleGATTConstants.CHARACTERISTIC_CONFIGURATION_DESCRIPTOR);
             NotifyAction.writeDescriptor(gatt, descriptor, BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-            gatt.setCharacteristicNotification(gatt.getService(SERVICE_UUID).getCharacteristic(MTU_CHARACTERISTIC), true);
+            gatt.setCharacteristicNotification(gatt.getService(PebbleGATTConstants.SERVICE_UUID).getCharacteristic(PebbleGATTConstants.MTU_CHARACTERISTIC), true);
         } else {
             LOG.info("Could not find MTU Characteristic. This seems to be a 2025 Pebble");
         }
@@ -289,14 +273,14 @@ class PebbleGATTClient extends BluetoothGattCallback {
 
     private void subscribeToConnectionParams(BluetoothGatt gatt) {
         LOG.info("subscribing to connection parameters characteristic");
-        BluetoothGattDescriptor descriptor = gatt.getService(SERVICE_UUID).getCharacteristic(CONNECTION_PARAMETERS_CHARACTERISTIC).getDescriptor(CHARACTERISTIC_CONFIGURATION_DESCRIPTOR);
+        BluetoothGattDescriptor descriptor = gatt.getService(PebbleGATTConstants.SERVICE_UUID).getCharacteristic(PebbleGATTConstants.CONNECTION_PARAMETERS_CHARACTERISTIC).getDescriptor(PebbleGATTConstants.CHARACTERISTIC_CONFIGURATION_DESCRIPTOR);
         NotifyAction.writeDescriptor(gatt, descriptor, BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-        gatt.setCharacteristicNotification(gatt.getService(SERVICE_UUID).getCharacteristic(CONNECTION_PARAMETERS_CHARACTERISTIC), true);
+        gatt.setCharacteristicNotification(gatt.getService(PebbleGATTConstants.SERVICE_UUID).getCharacteristic(PebbleGATTConstants.CONNECTION_PARAMETERS_CHARACTERISTIC), true);
     }
 
     private void subscribeToMTUOrBattery(BluetoothGatt gatt) {
         // This is dumb, right now there is only one of them present in all pebbles
-        BluetoothGattCharacteristic characteristic = gatt.getService(SERVICE_UUID).getCharacteristic(MTU_CHARACTERISTIC);
+        BluetoothGattCharacteristic characteristic = gatt.getService(PebbleGATTConstants.SERVICE_UUID).getCharacteristic(PebbleGATTConstants.MTU_CHARACTERISTIC);
         if (characteristic != null) {
             subscribeToMTU(gatt);
         } else {
@@ -308,7 +292,7 @@ class PebbleGATTClient extends BluetoothGattCallback {
         BluetoothGattCharacteristic characteristic = gatt.getService(GattService.UUID_SERVICE_BATTERY_SERVICE).getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL);
         if (characteristic != null) {
             LOG.info("subscribing to battery characteristic");
-            BluetoothGattDescriptor descriptor = gatt.getService(GattService.UUID_SERVICE_BATTERY_SERVICE).getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL).getDescriptor(CHARACTERISTIC_CONFIGURATION_DESCRIPTOR);
+            BluetoothGattDescriptor descriptor = gatt.getService(GattService.UUID_SERVICE_BATTERY_SERVICE).getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL).getDescriptor(PebbleGATTConstants.CHARACTERISTIC_CONFIGURATION_DESCRIPTOR);
             NotifyAction.writeDescriptor(gatt, descriptor, BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
             gatt.setCharacteristicNotification(gatt.getService(GattService.UUID_SERVICE_BATTERY_SERVICE).getCharacteristic(GattCharacteristic.UUID_CHARACTERISTIC_BATTERY_LEVEL), true);
         } else {
@@ -318,9 +302,9 @@ class PebbleGATTClient extends BluetoothGattCallback {
 
     private void setMTU(BluetoothGatt gatt) {
         LOG.info("setting MTU");
-        BluetoothGattCharacteristic characteristic = gatt.getService(SERVICE_UUID).getCharacteristic(MTU_CHARACTERISTIC);
+        BluetoothGattCharacteristic characteristic = gatt.getService(PebbleGATTConstants.SERVICE_UUID).getCharacteristic(PebbleGATTConstants.MTU_CHARACTERISTIC);
         if (characteristic != null) {
-            BluetoothGattDescriptor descriptor = characteristic.getDescriptor(CHARACTERISTIC_CONFIGURATION_DESCRIPTOR);
+            BluetoothGattDescriptor descriptor = characteristic.getDescriptor(PebbleGATTConstants.CHARACTERISTIC_CONFIGURATION_DESCRIPTOR);
             descriptor.setValue(new byte[]{0x0b, 0x01}); // unknown
             // descriptor is not wrote back to the device, but the characteristic is.
             // Reason is unclear but writing back the descriptor instead of the characteristic breaks the connection.
@@ -332,10 +316,10 @@ class PebbleGATTClient extends BluetoothGattCallback {
 
     private void subscribeToPPoGATT(BluetoothGatt gatt) {
         LOG.info("subscribing to PPoGATT read characteristic");
-        BluetoothGattDescriptor descriptor = gatt.getService(PPOGATT_SERVICE_UUID).getCharacteristic(PPOGATT_CHARACTERISTIC_READ).getDescriptor(CHARACTERISTIC_CONFIGURATION_DESCRIPTOR);
+        BluetoothGattDescriptor descriptor = gatt.getService(PebbleGATTConstants.PPOGATT_SERVICE_UUID).getCharacteristic(PebbleGATTConstants.PPOGATT_CHARACTERISTIC_READ).getDescriptor(PebbleGATTConstants.CHARACTERISTIC_CONFIGURATION_DESCRIPTOR);
         NotifyAction.writeDescriptor(gatt, descriptor, new byte[]{1, 0});
-        gatt.setCharacteristicNotification(gatt.getService(PPOGATT_SERVICE_UUID).getCharacteristic(PPOGATT_CHARACTERISTIC_READ), true);
-        writeCharacteristics = gatt.getService(PPOGATT_SERVICE_UUID).getCharacteristic(PPOGATT_CHARACTERISTIC_WRITE);
+        gatt.setCharacteristicNotification(gatt.getService(PebbleGATTConstants.PPOGATT_SERVICE_UUID).getCharacteristic(PebbleGATTConstants.PPOGATT_CHARACTERISTIC_READ), true);
+        writeCharacteristics = gatt.getService(PebbleGATTConstants.PPOGATT_SERVICE_UUID).getCharacteristic(PebbleGATTConstants.PPOGATT_CHARACTERISTIC_WRITE);
     }
 
     synchronized void sendDataToPebble(byte[] data) {
@@ -354,7 +338,23 @@ class PebbleGATTClient extends BluetoothGattCallback {
         mWaitWriteCompleteLatch = null;
     }
 
+    // ================== Pairing Callback Implementation ==================
+
+    @Override
+    public void onPairingComplete(BluetoothGatt gatt, boolean hasConnectivityCharacteristics) {
+        LOG.info("Pairing complete, starting subscription chain (hasConnectivityChar={})", hasConnectivityCharacteristics);
+        if (hasConnectivityCharacteristics) {
+            subscribeToConnectivity(gatt);
+        } else {
+            subscribeToConnectionParams(gatt);
+        }
+    }
+
     public void close() {
+        if (mPairingFlow != null) {
+            mPairingFlow.close();
+            mPairingFlow = null;
+        }
         if (mBluetoothGatt != null) {
             mBluetoothGatt.disconnect();
             mBluetoothGatt.close();

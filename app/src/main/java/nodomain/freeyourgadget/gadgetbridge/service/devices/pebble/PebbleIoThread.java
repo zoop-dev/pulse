@@ -64,6 +64,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.pebble.webview.Pebbl
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceIoThread;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleHardware;
+import nodomain.freeyourgadget.gadgetbridge.util.BondingUtil;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.PebbleUtils;
@@ -182,8 +183,11 @@ class PebbleIoThread extends GBDeviceIoThread {
                     deviceAddress = gbDevice.getVolatileAddress();
                 }
                 BluetoothDevice btDevice = mBtAdapter.getRemoteDevice(deviceAddress);
-                if (btDevice.getType() == BluetoothDevice.DEVICE_TYPE_LE) {
-                    LOG.info("This is a Pebble 2 or Pebble-LE/Pebble Time LE, will use BLE");
+                // Use BLE for DEVICE_TYPE_LE or for Pebble 2/Time 2/2 Duo which are DEVICE_TYPE_DUAL but BLE-only
+                // Check both btDevice and gbDevice (btDevice.getName() can be null during reconnection)
+                boolean isPebble2 = PebbleHardware.isBleOnly(gbDevice, btDevice);
+                if (btDevice.getType() == BluetoothDevice.DEVICE_TYPE_LE || isPebble2) {
+                    LOG.info("This is a Pebble 2/Time 2/2 Duo or Pebble-LE/Pebble Time LE, will use BLE (isPebble2={})", isPebble2);
                     mInStream = new PipedInputStream();
                     mOutStream = new PipedOutputStream();
                     mPebbleLESupport = new PebbleLESupport(this.getContext(), mPebbleSupport, gbDevice, btDevice, (PipedInputStream) mInStream, (PipedOutputStream) mOutStream);
