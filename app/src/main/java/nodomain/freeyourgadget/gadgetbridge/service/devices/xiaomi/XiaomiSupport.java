@@ -490,11 +490,11 @@ public class XiaomiSupport extends AbstractDeviceSupport {
                 sleepAsAndroidSender.confirmConnected();
                 break;
             case SleepAsAndroidAction.START_TRACKING:
-                healthService.enableRealtimeStats(true);
+                healthService.startRawSensor();
                 sleepAsAndroidSender.startTracking();
                 break;
             case SleepAsAndroidAction.STOP_TRACKING:
-                healthService.enableRealtimeStats(false);
+                healthService.stopRawSensor();
                 sleepAsAndroidSender.stopTracking();
                 break;
             case SleepAsAndroidAction.SET_PAUSE: {

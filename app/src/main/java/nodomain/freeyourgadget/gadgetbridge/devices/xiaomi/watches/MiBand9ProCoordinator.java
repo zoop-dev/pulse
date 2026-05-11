@@ -18,10 +18,13 @@ package nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watches;
 
 import androidx.annotation.NonNull;
 
+import java.util.EnumSet;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.SleepAsAndroidFeature;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.XiaomiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
@@ -54,5 +57,16 @@ public class MiBand9ProCoordinator extends XiaomiCoordinator {
     @Override
     public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
         return DeviceCoordinator.DeviceKind.FITNESS_BAND;
+    }
+
+    @Override
+    public Set<SleepAsAndroidFeature> getSleepAsAndroidFeatures() {
+        // Mi Band 9 Pro uses the same BT_CLASSIC SPP transport as Mi Band 10 and
+        // is expected to honor the same synthetic-workout raw-accel protocol.
+        return EnumSet.of(
+                SleepAsAndroidFeature.HEART_RATE,
+                SleepAsAndroidFeature.ACCELEROMETER,
+                SleepAsAndroidFeature.ALARMS,
+                SleepAsAndroidFeature.NOTIFICATIONS);
     }
 }

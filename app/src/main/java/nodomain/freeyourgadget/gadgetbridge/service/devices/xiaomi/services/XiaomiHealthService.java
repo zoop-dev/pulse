@@ -94,6 +94,17 @@ public class XiaomiHealthService extends AbstractXiaomiService {
     private static final int CMD_REALTIME_STATS_START = 45;
     private static final int CMD_REALTIME_STATS_STOP = 46;
     private static final int CMD_REALTIME_STATS_EVENT = 47;
+    // SaA synthetic workout raw-sensor channels (subtype names per AstroBox FitnessID enum)
+    private static final int CMD_RAW_SENSOR_ACK = 49;       // FitnessID.PHONE_SPORT_DATA_V2A
+    private static final int CMD_WEAR_SPORT_DATA_V2A = 50;  // FitnessID.WEAR_SPORT_DATA_V2A — rich sport metrics; only forwarded to SaA today
+    private static final int CMD_RAW_SENSOR_BATCH = 53;     // FitnessID.WEAR_SENSOR_DATA
+    // Synthetic-sport id used to mark the workout as hidden / non-persistent
+    private static final int SAA_SYNTHETIC_SPORT = 810;     // AstroBox SportType.MOTION_SENSING_GAME
+    // Sport-info nested message required by the band in WorkoutStatusWatch.sportInfo
+    // for the SaA synthetic workout (wire bytes: 0x08 0x10).
+    private static final int SAA_SPORT_INFO_TYPE = 16;      // AstroBox SportType.HIGH_INTERVAL_TRAINING
+    // Number of accel batches between phone acks
+    private static final int RAW_SENSOR_ACK_INTERVAL = 10;
 
     private static final int GENDER_MALE = 1;
     private static final int GENDER_FEMALE = 2;
@@ -111,6 +122,9 @@ public class XiaomiHealthService extends AbstractXiaomiService {
     private boolean gpsFixAcquired = false;
     private boolean workoutStarted = false;
     private final Handler gpsTimeoutHandler = new Handler();
+    private boolean saaRawSensorActive = false;
+    private int rawSensorBatchesSinceAck = 0;
+    private int rawSensorAckCounter = 0;
 
     private final Set<Integer> currentGoals = new LinkedHashSet<>();
     private final Set<Integer> supportedGoals = new LinkedHashSet<>();
@@ -191,6 +205,15 @@ public class XiaomiHealthService extends AbstractXiaomiService {
                 return;
             case CMD_REALTIME_STATS_EVENT:
                 handleRealtimeStats(cmd.getHealth().getRealTimeStats());
+                return;
+            case CMD_RAW_SENSOR_BATCH:
+                handleRawSensorBatch(cmd.getHealth().getRawSensorBatch());
+                return;
+            case CMD_WEAR_SPORT_DATA_V2A:
+                LOG.debug("Got wear sport data v2a, ignoring");
+                return;
+            case CMD_RAW_SENSOR_ACK:
+                LOG.debug("Got raw sensor ack echo");
                 return;
         }
 
@@ -654,12 +677,33 @@ public class XiaomiHealthService extends AbstractXiaomiService {
 
     private void handleWorkoutOpen(final XiaomiProto.WorkoutOpenWatch workoutOpenWatch) {
         LOG.debug(
-                "Workout open on watch: {}, workoutStarted={}, gpsStarted={}, gpsFixAcquired={}",
+                "Workout open on watch: {}, workoutStarted={}, gpsStarted={}, gpsFixAcquired={}, saa={}",
                 workoutOpenWatch.getSport(),
                 workoutStarted,
                 gpsStarted,
-                gpsFixAcquired
+                gpsFixAcquired,
+                saaRawSensorActive
         );
+
+        // SaA synthetic mode: the band is asking us to confirm a hidden workout. Reply
+        // (0, 2, 2) immediately without starting GPS so the band proceeds to stream raw accel.
+        if (saaRawSensorActive) {
+            getSupport().sendCommand(
+                    "saa raw-sensor open ack",
+                    XiaomiProto.Command.newBuilder()
+                            .setType(COMMAND_TYPE)
+                            .setSubtype(CMD_WORKOUT_WATCH_OPEN)
+                            .setHealth(XiaomiProto.Health.newBuilder().setWorkoutOpenReply(
+                                    XiaomiProto.WorkoutOpenReply.newBuilder()
+                                            .setUnknown1(0)
+                                            .setUnknown2(2)
+                                            .setUnknown3(2)
+                            ))
+                            .build()
+            );
+            return;
+        }
+
 
         final boolean sendGpsToBand = getDevicePrefs().getBoolean(DeviceSettingsPreferenceConst.PREF_WORKOUT_SEND_GPS_TO_BAND, false);
         if (!sendGpsToBand || !GBLocationService.isGpsSupportedAndEnabled()) {
@@ -703,7 +747,13 @@ public class XiaomiHealthService extends AbstractXiaomiService {
     }
 
     private void handleWorkoutStatus(final XiaomiProto.WorkoutStatusWatch workoutStatus) {
-        LOG.debug("Got workout status: {}", workoutStatus.getStatus());
+        LOG.debug("Got workout status: {}, sport={}", workoutStatus.getStatus(), workoutStatus.getSport());
+
+        // Ignore the synthetic SaA workout — it must not trigger OpenTracks or
+        // any GPS bookkeeping.
+        if (saaRawSensorActive || workoutStatus.getSport() == SAA_SYNTHETIC_SPORT) {
+            return;
+        }
 
         final boolean startOnPhone = getDevicePrefs().getBoolean(DeviceSettingsPreferenceConst.PREF_WORKOUT_START_ON_PHONE, false);
 
@@ -979,5 +1029,91 @@ public class XiaomiHealthService extends AbstractXiaomiService {
         if (sleepAsAndroidSender != null && realTimeStats.getHeartRate() > 0) {
             sleepAsAndroidSender.onHrChanged(realTimeStats.getHeartRate(), 0);
         }
+    }
+
+    /**
+     * Start a SaA synthetic workout on the band. Sequence:
+     *  1. REALTIME_STATS_START -- enables HR/steps stream (existing path)
+     *  2. WORKOUT_WATCH_STATUS(status=STARTED, sport=SAA_SYNTHETIC_SPORT) -- tells the band to
+     *     open a hidden workout. Band then sends WORKOUT_WATCH_OPEN to us; handleWorkoutOpen
+     *     replies (0, 2, 2) when saaRawSensorActive is true and the band starts streaming
+     *     subtype-53 raw accel batches.
+     */
+    public void startRawSensor() {
+        saaRawSensorActive = true;
+        rawSensorBatchesSinceAck = 0;
+        rawSensorAckCounter = 0;
+
+        enableRealtimeStats(true);
+        sendWorkoutStatus(WORKOUT_STARTED);
+    }
+
+    /**
+     * Tear down the SaA synthetic workout. Sequence:
+     *  1. REALTIME_STATS_STOP
+     *  2. WORKOUT_WATCH_STATUS(status=RESUMED, ...) -- semantics unclear but required by the band
+     *  3. WORKOUT_WATCH_STATUS(status=FINISHED, ...) -- final close
+     */
+    public void stopRawSensor() {
+        if (!saaRawSensorActive) return;
+
+        enableRealtimeStats(false);
+        sendWorkoutStatus(WORKOUT_RESUMED);
+        sendWorkoutStatus(WORKOUT_FINISHED);
+        saaRawSensorActive = false;
+    }
+
+    private void sendWorkoutStatus(final int status) {
+        final int ts = (int) (System.currentTimeMillis() / 1000);
+        getSupport().sendCommand(
+                "saa workout status " + status,
+                XiaomiProto.Command.newBuilder()
+                        .setType(COMMAND_TYPE)
+                        .setSubtype(CMD_WORKOUT_WATCH_STATUS)
+                        .setHealth(XiaomiProto.Health.newBuilder().setWorkoutStatusWatch(
+                                XiaomiProto.WorkoutStatusWatch.newBuilder()
+                                        .setTimestamp(ts)
+                                        .setSportInfo(XiaomiProto.WorkoutStatusWatchSport.newBuilder()
+                                                .setType(SAA_SPORT_INFO_TYPE))
+                                        .setSport(SAA_SYNTHETIC_SPORT)
+                                        .setStatus(status)
+                                        .setUnknown6(3)
+                        ))
+                        .build()
+        );
+    }
+
+    private void handleRawSensorBatch(final XiaomiProto.RawSensorBatch batch) {
+        final int n = batch.getAccelCount();
+        LOG.debug("Got raw sensor batch: {} accel samples", n);
+        if (sleepAsAndroidSender != null && n > 0) {
+            for (int i = 0; i < n; i++) {
+                final XiaomiProto.AxisSensor s = batch.getAccel(i);
+                sleepAsAndroidSender.onAccelChanged(s.getX(), s.getY(), s.getZ());
+            }
+        }
+
+        rawSensorBatchesSinceAck++;
+        if (rawSensorBatchesSinceAck >= RAW_SENSOR_ACK_INTERVAL) {
+            rawSensorBatchesSinceAck = 0;
+            rawSensorAckCounter++;
+            sendRawSensorAck(rawSensorAckCounter);
+        }
+    }
+
+    private void sendRawSensorAck(final int counter) {
+        getSupport().sendCommand(
+                "saa raw-sensor ack " + counter,
+                XiaomiProto.Command.newBuilder()
+                        .setType(COMMAND_TYPE)
+                        .setSubtype(CMD_RAW_SENSOR_ACK)
+                        .setHealth(XiaomiProto.Health.newBuilder().setRawSensorAck(
+                                XiaomiProto.RawSensorAck.newBuilder()
+                                        .setCounter(counter)
+                                        .setUnknown2(0)
+                                        .setUnknown3(0)
+                        ))
+                        .build()
+        );
     }
 }

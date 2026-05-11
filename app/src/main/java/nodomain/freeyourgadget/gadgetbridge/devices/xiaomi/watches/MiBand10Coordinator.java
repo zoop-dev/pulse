@@ -18,10 +18,13 @@ package nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watches;
 
 import androidx.annotation.NonNull;
 
+import java.util.EnumSet;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.SleepAsAndroidFeature;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.XiaomiCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
@@ -80,4 +83,14 @@ public class MiBand10Coordinator extends XiaomiCoordinator {
         return getVibrationPresetNameRes(id) != 0;
     }
 
+    @Override
+    public Set<SleepAsAndroidFeature> getSleepAsAndroidFeatures() {
+        // Mi Band 10 streams raw accel via a synthetic Xiaomi workout (subtype 53).
+        // Protocol established through interoperability reverse engineering.
+        return EnumSet.of(
+                SleepAsAndroidFeature.HEART_RATE,
+                SleepAsAndroidFeature.ACCELEROMETER,
+                SleepAsAndroidFeature.ALARMS,
+                SleepAsAndroidFeature.NOTIFICATIONS);
+    }
 }
