@@ -20,16 +20,19 @@ package nodomain.freeyourgadget.gadgetbridge.externalevents;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.text.format.DateFormat;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
+import nodomain.freeyourgadget.gadgetbridge.util.NotificationUtils;
 
 public class AlarmClockReceiver extends BroadcastReceiver {
     private static final Logger LOG = LoggerFactory.getLogger(AlarmClockReceiver.class);
@@ -92,20 +95,24 @@ public class AlarmClockReceiver extends BroadcastReceiver {
         }
 
         if (ALARM_ALERT_ACTION.equals(action) || GOOGLE_CLOCK_ALARM_ALERT_ACTION.equals(action)) {
-            sendAlarm(context, true);
+            sendAlarm(context, true, packageName);
         } else if (ALARM_DONE_ACTION.equals(action) || GOOGLE_CLOCK_ALARM_DONE_ACTION.equals(action)) {
-            sendAlarm(context, false);
+            sendAlarm(context, false, packageName);
         }
     }
 
-    private synchronized void sendAlarm(Context context, boolean on) {
+    private synchronized void sendAlarm(Context context, boolean on, String packageName) {
         dismissLastAlarm();
         if (on) {
             NotificationSpec notificationSpec = new NotificationSpec();
             //TODO: can we attach a dismiss action to the notification and not use the notification ID explicitly?
             lastId = notificationSpec.getId();
             notificationSpec.type = NotificationType.GENERIC_ALARM_CLOCK;
-            notificationSpec.sourceName = "ALARMCLOCKRECEIVER";
+            notificationSpec.sourceAppId = packageName;
+            final String appLabel = NotificationUtils.getApplicationLabel(context, packageName);
+            notificationSpec.sourceName = appLabel != null ? appLabel : "Alarm Clock";
+            notificationSpec.title = context.getString(R.string.menuitem_alarm);
+            notificationSpec.body = DateFormat.getTimeFormat(context).format(new Date());
             notificationSpec.attachedActions = new ArrayList<>();
 
             // DISMISS ALL action
@@ -114,7 +121,6 @@ public class AlarmClockReceiver extends BroadcastReceiver {
             dismissAllAction.type = NotificationSpec.Action.TYPE_SYNTECTIC_DISMISS_ALL;
             notificationSpec.attachedActions.add(dismissAllAction);
 
-            // can we get the alarm title somehow?
             GBApplication.deviceService().onNotification(notificationSpec);
         }
     }
