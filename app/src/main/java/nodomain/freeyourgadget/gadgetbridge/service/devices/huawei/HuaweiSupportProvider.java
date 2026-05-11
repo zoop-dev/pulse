@@ -947,12 +947,27 @@ public class HuaweiSupportProvider {
             if (!getDeviceState().supportsChangingAlarm() && firstConnection)
                 initializeAlarms();
 
+            RequestCallback allowFailFinalize = new RequestCallback() {
+                @Override
+                public void handleException(Request request, Request.ResponseParseException e) {
+                    LOG.info("Exception on init request {} allowed", request, e);
+                    request.handleNext();
+                }
+            };
+
             // Queue all the requests
             for (int i = 1; i < initRequestQueue.size(); i++) {
                 initRequestQueue.get(i - 1).setupTimeoutUntilNext(initTimeout);
                 if (initRequestQueue.get(i - 1) instanceof SendSetUpDeviceStatusRequest) {
                     // NOTE: The watch is never answer to this command. To decrease init time timeout for it is 50 ms
                     initRequestQueue.get(i - 1).setupTimeoutUntilNext(50);
+                }
+                if (
+                        initRequestQueue.get(i - 1) instanceof GetEventAlarmList ||
+                        initRequestQueue.get(i - 1) instanceof GetSmartAlarmList
+                ) {
+                    // NOTE: Some watches fail to properly respond to this, but this should still allow the connection to complete
+                    initRequestQueue.get(i - 1).setFinalizeReq(allowFailFinalize);
                 }
                 initRequestQueue.get(i - 1).nextRequest(initRequestQueue.get(i));
             }

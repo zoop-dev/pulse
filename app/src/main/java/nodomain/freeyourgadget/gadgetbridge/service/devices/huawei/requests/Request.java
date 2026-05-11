@@ -121,12 +121,17 @@ public class Request {
         public RequestCallback(HuaweiSupportProvider supportProvider) {
             support = supportProvider;
         }
+        @Deprecated
         public void call() {}
         public void call(Request request) {
             call(); // To keep everything working as it was as well
         }
+        @Deprecated
         public void handleException(ResponseParseException e) {
             LOG.error("Callback request exception", e);
+        }
+        public void handleException(Request request, ResponseParseException e) {
+            handleException(e); // To keep everything working as it was as well
         }
         public void timeout(Request request) {
             request.handleNext();
@@ -243,14 +248,14 @@ public class Request {
         } catch (HuaweiPacket.ParseException e) {
             LOG.error("Parse TLV exception", e);
             if (finalizeReq != null)
-                finalizeReq.handleException(new ResponseParseException("Parse TLV exception", e));
+                finalizeReq.handleException(this, new ResponseParseException("Parse TLV exception", e));
             return;
         }
         try {
             processResponse();
         } catch (ResponseParseException e) {
             if (finalizeReq != null)
-                finalizeReq.handleException(e);
+                finalizeReq.handleException(this, e);
             return;
         }
         handleNext();
@@ -264,7 +269,7 @@ public class Request {
                 GB.toast(supportProvider.getContext(), "nextRequest failed", Toast.LENGTH_SHORT, GB.ERROR, e);
                 LOG.error("Next request failed", e);
                 if (finalizeReq != null)
-                    finalizeReq.handleException(new ResponseParseException("Next request failed", e));
+                    finalizeReq.handleException(this, new ResponseParseException("Next request failed", e));
                 return;
             }
         }

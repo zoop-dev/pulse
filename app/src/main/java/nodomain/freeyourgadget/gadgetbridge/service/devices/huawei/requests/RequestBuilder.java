@@ -94,7 +94,7 @@ public class RequestBuilder<T extends HuaweiPacket> {
                     //noinspection unchecked
                     onCallback.callback((T) request.receivedPacket);
                 } catch (ClassCastException e) {
-                    handleException(new GenericTypeException(serviceId, commandId, e));
+                    handleException(request, new GenericTypeException(serviceId, commandId, e));
                 }
             }
 
@@ -107,7 +107,7 @@ public class RequestBuilder<T extends HuaweiPacket> {
                     //noinspection unchecked
                     onTimeout.timeout((T) request.receivedPacket);
                 } catch (ClassCastException e) {
-                    handleException(new GenericTypeException(serviceId, commandId, e));
+                    handleException(request, new GenericTypeException(serviceId, commandId, e));
                 }
             }
 
