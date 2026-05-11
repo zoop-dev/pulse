@@ -133,7 +133,6 @@ public class OpenTracksContentObserver extends ContentObserver {
     public static final String TIME = "time";
     public static final String TYPE = "type";
     public static final String SPEED = "speed";
-    public static final String ELEVATION = "elevation";
     public static final double PAUSE_LATITUDE = 100.0;
     public static final double LAT_LON_FACTOR = 1E6;
     public static final String[] PROJECTION_V1 = {
@@ -151,8 +150,7 @@ public class OpenTracksContentObserver extends ContentObserver {
             LONGITUDE,
             TIME,
             TYPE,
-            SPEED,
-            ELEVATION
+            SPEED
     };
     public void readTrackPointsBySegments(Uri data) {
         String[] projection = PROJECTION_V2;
@@ -169,7 +167,6 @@ public class OpenTracksContentObserver extends ContentObserver {
                 double longitude = cursor.getInt(cursor.getColumnIndexOrThrow(LONGITUDE)) / LAT_LON_FACTOR;
                 int typeIndex = cursor.getColumnIndex(TYPE);
                 double speed = cursor.getDouble(cursor.getColumnIndexOrThrow(SPEED));
-                double elevation = cursor.getDouble(cursor.getColumnIndexOrThrow(ELEVATION));
                 Date time = Date.from(Instant.ofEpochMilli(cursor.getLong(cursor.getColumnIndexOrThrow(TIME))));
 
                 int type = 0;
@@ -182,13 +179,13 @@ public class OpenTracksContentObserver extends ContentObserver {
                     lastTrackId = trackId;
                 }
 
-                LOG.debug("Trackpoint received from OpenTracks: {}/{} type={} speed={} elev={} time={}", latitude, longitude, type, speed, elevation, time);
+                LOG.debug("Trackpoint received from OpenTracks: {}/{} type={} speed={} time={}", latitude, longitude, type, speed, time);
 
                 ActivityPoint activityPoint = new ActivityPoint();
                 activityPoint.setTime(time);
                 activityPoint.setSpeed((float) speed);
                 if ((latitude != 0 || longitude != 0) && latitude != PAUSE_LATITUDE) {
-                    activityPoint.setLocation(new GPSCoordinate(longitude, latitude, elevation));
+                    activityPoint.setLocation(new GPSCoordinate(longitude, latitude));
                 } else if (previousActivityPoint != null && previousActivityPoint.getLocation() != null && (type == 3 || latitude == PAUSE_LATITUDE)) {
                     activityPoint.setLocation(previousActivityPoint.getLocation());
                 }
