@@ -16,7 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos;
 
-import static java.lang.Thread.sleep;
 import static nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions.fromUint8;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.HEART_RATE_ALL_DAY_MONITORING;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.services.ZeppOsConfigService.ConfigArg.SLEEP_HIGH_ACCURACY_MONITORING;
@@ -684,6 +683,11 @@ public class ZeppOsSupport extends AbstractDeviceSupport
 
     @Override
     public void onSleepAsAndroidAction(String action, Bundle extras) {
+        if (sleepAsAndroidSender == null) {
+            LOG.warn("SaA sender not initialized, dropping {}", action);
+            return;
+        }
+
         // Validate if our device can work with an action
         try {
             sleepAsAndroidSender.validateAction(action);
@@ -710,18 +714,17 @@ public class ZeppOsSupport extends AbstractDeviceSupport
                 sleepAsAndroidSender.stopTracking();
                 break;
             // Received when the app pauses sleep tracking
-//            case SleepAsAndroidAction.SET_PAUSE:
-//                long pauseTimestamp = extras.getLong("TIMESTAMP");
-//                long delay = pauseTimestamp > 0 ? pauseTimestamp - System.currentTimeMillis() : 0;
-//                setRawSensor(delay > 0);
-//                enableRealtimeSamplesTimer(delay > 0);
-//                sleepAsAndroidSender.pauseTracking(delay);
-//                break;
+            case SleepAsAndroidAction.SET_PAUSE: {
+                long pauseTimestamp = extras.getLong("TIMESTAMP");
+                long delay = pauseTimestamp > 0 ? pauseTimestamp - System.currentTimeMillis() : 0;
+                setRawSensor(delay > 0);
+                sleepAsAndroidSender.pauseTracking(delay);
+                break;
+            }
             // Same as above but controlled by a boolean value
             case SleepAsAndroidAction.SET_SUSPENDED:
                 boolean suspended = extras.getBoolean("SUSPENDED", false);
                 setRawSensor(!suspended);
-                //FIXME is this really needed? enableRealtimeSamplesTimer(!suspended);
                 sleepAsAndroidSender.pauseTracking(suspended);
                 break;
             // Received when the app changes the batch size for the movement data
@@ -731,16 +734,7 @@ public class ZeppOsSupport extends AbstractDeviceSupport
                 break;
             // Received when the app requests the wearable to vibrate
             case SleepAsAndroidAction.HINT:
-                int repeat = extras.getInt("REPEAT");
-                for (int i = 0; i < repeat; i++) {
-                    sendFindDeviceCommand(true);
-                    try {
-                        sleep(500);
-                        sendFindDeviceCommand(false);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
+                triggerSleepAsAndroidHint(extras.getInt("REPEAT", 1));
                 break;
             // Received when the app sends a notificaation
             case SleepAsAndroidAction.SHOW_NOTIFICATION:
@@ -761,16 +755,67 @@ public class ZeppOsSupport extends AbstractDeviceSupport
                 break;
             // Received when an app alarm is stopped
             case SleepAsAndroidAction.STOP_ALARM:
-                // Manually stop an alarm
+                cancelSleepAsAndroidAlarmVibration();
                 break;
             // Received when an app alarm starts
             case SleepAsAndroidAction.START_ALARM:
-                // Manually start an alarm
+                scheduleSleepAsAndroidAlarmVibration(extras.getInt("DELAY", 60000));
                 break;
             default:
                 LOG.warn("Received unsupported " + action);
                 break;
         }
+    }
+
+    private ScheduledExecutorService saaHintScheduler;
+    private ScheduledExecutorService saaAlarmScheduler;
+
+    private void triggerSleepAsAndroidHint(int repeat) {
+        if (repeat <= 0) return;
+        if (saaHintScheduler != null) {
+            saaHintScheduler.shutdownNow();
+        }
+        saaHintScheduler = Executors.newSingleThreadScheduledExecutor();
+        final int repeats = repeat;
+        saaHintScheduler.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    for (int i = 0; i < repeats; i++) {
+                        sendFindDeviceCommand(true);
+                        Thread.sleep(500);
+                        sendFindDeviceCommand(false);
+                        if (i + 1 < repeats) Thread.sleep(300);
+                    }
+                } catch (InterruptedException ignored) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        });
+    }
+
+    private void scheduleSleepAsAndroidAlarmVibration(int delayMs) {
+        cancelSleepAsAndroidAlarmVibration();
+        if (delayMs == -1) return;
+        saaAlarmScheduler = Executors.newSingleThreadScheduledExecutor();
+        saaAlarmScheduler.schedule(new Runnable() {
+            @Override
+            public void run() {
+                triggerSleepAsAndroidHint(3);
+            }
+        }, Math.max(0, delayMs), TimeUnit.MILLISECONDS);
+    }
+
+    private void cancelSleepAsAndroidAlarmVibration() {
+        if (saaAlarmScheduler != null) {
+            saaAlarmScheduler.shutdownNow();
+            saaAlarmScheduler = null;
+        }
+        if (saaHintScheduler != null) {
+            saaHintScheduler.shutdownNow();
+            saaHintScheduler = null;
+        }
+        sendFindDeviceCommand(false);
     }
 
     private void setSleepAsAndroidAlarm(long alarmTimestamp) {

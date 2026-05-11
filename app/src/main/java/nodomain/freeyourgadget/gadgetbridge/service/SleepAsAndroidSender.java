@@ -31,6 +31,9 @@ public class SleepAsAndroidSender {
     private final String ACTION_DISMISS_FROM_WATCH = "com.urbandroid.sleep.watch.DISMISS_FROM_WATCH";
 
     private final String MAX_RAW_DATA = "MAX_RAW_DATA";
+    private final String MAX_DATA = "MAX_DATA";
+    private final String MIN_DATA = "MIN_DATA";
+    private final String SUM_DATA = "SUM_DATA";
     private final String DATA = "DATA";
     private final String EXTRA_DATA_HR = "com.urbandroid.sleep.EXTRA_DATA_HR";
     private final String EXTRA_DATA_RR = "com.urbandroid.sleep.EXTRA_DATA_RR";
@@ -40,6 +43,10 @@ public class SleepAsAndroidSender {
     private final String EXTRA_DATA_FRAMERATE = "com.urbandroid.sleep.EXTRA_DATA_FRAMERATE";
     private final String EXTRA_DATA_BATCH = "com.urbandroid.sleep.EXTRA_DATA_BATCH";
 
+    static final long ACCEL_AGGREGATE_INTERVAL_MS = 10_000L;
+    static final int HR_BUFFER_MAX = 60;
+    static final float HR_MIN_VALID = 10f;
+    static final float HR_MAX_VALID = 240f;
 
     private GBDevice device;
     private boolean trackingOngoing = false;
@@ -48,11 +55,18 @@ public class SleepAsAndroidSender {
     private ScheduledExecutorService trackingPauseScheduler;
     private long batchSize = 1;
     private long lastRawDataMs = 0;
+    private final Object accelLock = new Object();
     private float maxRawData = 0;
+    private float minRawData = Float.MAX_VALUE;
+    private float sumRawData = 0;
+    private int sampleCount = 0;
     private long lastHrDataMs = 0;
     private ArrayList<Float> hrData = new ArrayList<>();
 
-    private ArrayList<Float> accData = new ArrayList<>();
+    private ArrayList<Float> accDataMaxRaw = new ArrayList<>();
+    private ArrayList<Float> accDataMax = new ArrayList<>();
+    private ArrayList<Float> accDataMin = new ArrayList<>();
+    private ArrayList<Float> accDataSum = new ArrayList<>();
     private ScheduledExecutorService accDataScheduler;
     private Set<SleepAsAndroidFeature> features;
 
@@ -128,7 +142,7 @@ public class SleepAsAndroidSender {
             public void run() {
                 aggregateAndSendAccelData();
             }
-        }, 9999, 9999, TimeUnit.MILLISECONDS);
+        }, ACCEL_AGGREGATE_INTERVAL_MS, ACCEL_AGGREGATE_INTERVAL_MS, TimeUnit.MILLISECONDS);
 
         lastRawDataMs = System.currentTimeMillis();
         lastHrDataMs = System.currentTimeMillis();
@@ -147,8 +161,17 @@ public class SleepAsAndroidSender {
         }
 
         this.trackingOngoing = false;
-        this.hrData = new ArrayList<>();
-        this.accData = new ArrayList<>();
+        synchronized (accelLock) {
+            this.hrData = new ArrayList<>();
+            this.accDataMaxRaw = new ArrayList<>();
+            this.accDataMax = new ArrayList<>();
+            this.accDataMin = new ArrayList<>();
+            this.accDataSum = new ArrayList<>();
+            this.maxRawData = 0;
+            this.minRawData = Float.MAX_VALUE;
+            this.sumRawData = 0;
+            this.sampleCount = 0;
+        }
         this.lastHrDataMs = 0;
         this.lastRawDataMs = 0;
     }
@@ -265,25 +288,47 @@ public class SleepAsAndroidSender {
     /**
      * Aggregate and send the acceleration data
      */
-    private synchronized void aggregateAndSendAccelData() {
+    private void aggregateAndSendAccelData() {
         if (!trackingOngoing || trackingPaused) return;
-        if (maxRawData > 0) {
-            accData.add(maxRawData);
+        final float windowMax;
+        final float windowMin;
+        final float windowSum;
+        final int windowCount;
+        synchronized (accelLock) {
+            if (sampleCount == 0) return;
+            windowMax = maxRawData;
+            windowMin = minRawData;
+            windowSum = sumRawData;
+            windowCount = sampleCount;
             maxRawData = 0;
-            if (accData.size() == batchSize) {
+            minRawData = Float.MAX_VALUE;
+            sumRawData = 0;
+            sampleCount = 0;
+            accDataMaxRaw.add(windowMax);
+            accDataMax.add(windowMax);
+            accDataMin.add(windowMin);
+            accDataSum.add(windowSum);
+            if (accDataMaxRaw.size() >= batchSize) {
                 sendAccelData();
             }
         }
+        LOG.debug("Accel window: max={} min={} sum={} count={}", windowMax, windowMin, windowSum, windowCount);
     }
 
     /**
-     * Send the acceleration data
+     * Send the acceleration data. Caller MUST hold accelLock.
      */
     private void sendAccelData() {
-        LOG.debug("Sending movement data: " + this.accData + " batch size: " + batchSize + " array size: " + accData.size());
+        LOG.debug("Sending movement data: batch size {} array size {}", batchSize, accDataMaxRaw.size());
         Intent intent = new Intent(ACTION_MOVEMENT_DATA_UPDATE);
-        intent.putExtra(MAX_RAW_DATA, convertToFloatArray(this.accData));
-        accData.clear();
+        intent.putExtra(MAX_RAW_DATA, convertToFloatArray(accDataMaxRaw));
+        intent.putExtra(MAX_DATA, convertToFloatArray(accDataMax));
+        intent.putExtra(MIN_DATA, convertToFloatArray(accDataMin));
+        intent.putExtra(SUM_DATA, convertToFloatArray(accDataSum));
+        accDataMaxRaw.clear();
+        accDataMax.clear();
+        accDataMin.clear();
+        accDataSum.clear();
         broadcastToSleepAsAndroid(intent);
     }
 
@@ -294,9 +339,16 @@ public class SleepAsAndroidSender {
      * @param z the z value
      */
     private void updateMaxRawData(float x, float y, float z) {
-        float maxRaw = calculateAccelerationMagnitude(x, y, z);
-        if (maxRaw > maxRawData) {
-            maxRawData = maxRaw;
+        float magnitude = calculateAccelerationMagnitude(x, y, z);
+        synchronized (accelLock) {
+            if (magnitude > maxRawData) {
+                maxRawData = magnitude;
+            }
+            if (magnitude < minRawData) {
+                minRawData = magnitude;
+            }
+            sumRawData += magnitude;
+            sampleCount++;
         }
     }
 
@@ -308,8 +360,26 @@ public class SleepAsAndroidSender {
      * @return
      */
     protected float calculateAccelerationMagnitude(float x, float y, float z) {
-        double sqrt = Math.sqrt((x * x) + (y * y) + (z * z));
-        return (float)sqrt;
+        return computeAccelerationMagnitude(x, y, z);
+    }
+
+    static float computeAccelerationMagnitude(float x, float y, float z) {
+        return (float) Math.sqrt((x * x) + (y * y) + (z * z));
+    }
+
+    /** Test hook: aggregate one (max, min, sum) window into output arrays. */
+    static void aggregateWindow(float[] samples, float[] out) {
+        float max = Float.NEGATIVE_INFINITY;
+        float min = Float.POSITIVE_INFINITY;
+        float sum = 0f;
+        for (float s : samples) {
+            if (s > max) max = s;
+            if (s < min) min = s;
+            sum += s;
+        }
+        out[0] = max;
+        out[1] = min;
+        out[2] = sum;
     }
 
     /**
@@ -322,6 +392,7 @@ public class SleepAsAndroidSender {
         if (!isDeviceDefault() || !isFeatureEnabled(SleepAsAndroidFeature.HEART_RATE) || !hasFeature(SleepAsAndroidFeature.HEART_RATE) || !trackingOngoing)
             return;
         if (trackingPaused) return;
+        if (hr <= HR_MIN_VALID || hr > HR_MAX_VALID) return;
 
         updateLastHrData(hr);
 
@@ -350,8 +421,11 @@ public class SleepAsAndroidSender {
      * Update the last heart rate data
      * @param hr the heart rate
      */
-    private void updateLastHrData(float hr) {
+    private synchronized void updateLastHrData(float hr) {
         this.hrData.add(hr);
+        while (this.hrData.size() > HR_BUFFER_MAX) {
+            this.hrData.remove(0);
+        }
     }
 
     /**
@@ -529,6 +603,15 @@ public class SleepAsAndroidSender {
                     break;
                 case SleepAsAndroidAction.START_TRACKING:
                 case SleepAsAndroidAction.STOP_TRACKING:
+                case SleepAsAndroidAction.SET_PAUSE:
+                case SleepAsAndroidAction.SET_SUSPENDED: {
+                    boolean accel = hasFeature(SleepAsAndroidFeature.ACCELEROMETER) && isFeatureEnabled(SleepAsAndroidFeature.ACCELEROMETER);
+                    boolean hr = hasFeature(SleepAsAndroidFeature.HEART_RATE) && isFeatureEnabled(SleepAsAndroidFeature.HEART_RATE);
+                    if (!accel && !hr) {
+                        throw new UnsupportedOperationException("Action not valid");
+                    }
+                    break;
+                }
                 case SleepAsAndroidAction.SET_BATCH_SIZE:
                     if (!hasFeature(SleepAsAndroidFeature.ACCELEROMETER) || !isFeatureEnabled(SleepAsAndroidFeature.ACCELEROMETER)) {
                         throw new UnsupportedOperationException("Action not valid");
