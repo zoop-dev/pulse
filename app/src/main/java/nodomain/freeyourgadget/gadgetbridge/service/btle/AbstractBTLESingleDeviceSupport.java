@@ -366,10 +366,13 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
 
         initializeDevice(builder);
 
-        boolean lowPower = getDevicePrefs().getConnectionPriorityLowPower();
-        // have to explicitly request normal ("balanced") as some Android devices remember the last
-        // request. Else low power would become a set once option.
-        builder.requestConnectionPriority(lowPower ? BluetoothGatt.CONNECTION_PRIORITY_LOW_POWER : BluetoothGatt.CONNECTION_PRIORITY_BALANCED);
+        if (getDevice().getDeviceCoordinator().supportsConnectionPriority()) {
+            final boolean lowPower = getDevicePrefs().getConnectionPriorityLowPower();
+            // have to explicitly request normal ("balanced") as some Android devices remember the last
+            // request. Else low power would become a set once option.
+            // #5054 / #5956 - However, on some devices requesting it altogether can make the connection fail
+            builder.requestConnectionPriority(lowPower ? BluetoothGatt.CONNECTION_PRIORITY_LOW_POWER : BluetoothGatt.CONNECTION_PRIORITY_BALANCED);
+        }
 
         builder.queue();
     }

@@ -990,7 +990,9 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
         if (connectionType.usesBluetoothClassic() || connectionType.usesBluetoothLE()) {
             settings = ArrayUtils.insert(0, settings, R.xml.devicesettings_reconnect_periodic);
             settings = ArrayUtils.insert(0, settings, R.xml.devicesettings_device_connect_back);
-            settings = ArrayUtils.add(settings, R.xml.devicesettings_connection_priority_low_power);
+            if (supportsConnectionPriority()) {
+                settings = ArrayUtils.add(settings, R.xml.devicesettings_connection_priority_low_power);
+            }
         }
 
         return settings;
@@ -1200,5 +1202,10 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     public int getReconnectionDelay() {
         // 2 seconds.
         return 2000;
+    }
+
+    @Override
+    public boolean supportsConnectionPriority() {
+        return true;
     }
 }
