@@ -109,7 +109,9 @@ class GBProgressNotification(
     fun incrementTotalSize(inc: Long) {
         LOG.debug("incrementTotalSize id={}: {}+={}", notificationId, totalSize, inc)
         this.totalSize += inc
-        refresh(false)
+        if (visible) {
+            refresh(false)
+        }
     }
 
     fun setProgress(chunkProgress: Long, totalProgress: Long) {
