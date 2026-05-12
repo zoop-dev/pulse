@@ -327,6 +327,7 @@ class EndurainApiClient(
         try {
             val uri = "$baseUrl/api/v1/activities/edit".toUri()
             val headers = buildHeaders(AuthType.AUTH_TOKEN)
+            headers["Content-Type"] = "application/json"
 
             var activityType = 10  // Generic workout
             if (activityLookup.containsKey(activityKind.ordinal)) {
