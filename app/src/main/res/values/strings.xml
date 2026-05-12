@@ -2252,6 +2252,7 @@
     <string name="devicetype_atc_ble_oepl" translatable="false">ATC_BLE_OEPL</string>
     <string name="devicetype_igpsport_bsc200" translatable="false">iGPSPORT BSC200</string>
     <string name="devicetype_igpsport_bsc200s" translatable="false">iGPSPORT BSC200S</string>
+    <string name="devicetype_igpsport_bsc300" translatable="false">iGPSPORT BSC300</string>
     <string name="devicetype_igpsport_igs630" translatable="false">iGPSPORT iGS630</string>
     <string name="devicetype_igpsport_igs630s" translatable="false">iGPSPORT iGS630S</string>
     <string name="devicetype_igpsport_igs800" translatable="false">iGPSPORT iGS800</string>
