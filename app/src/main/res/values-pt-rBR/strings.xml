@@ -39,7 +39,7 @@
     <string name="miband_firmware_unknown_warning">Este firmware não foi testado e pode não ser compatível com o Gadgetbridge.
 \n
 \nNÃO É RECOMENDADO que você instale-o!</string>
-    <string name="miband_firmware_suggest_whitelist">Se você ainda desejar continuar e tudo funcionar corretamente, por favor, diga aos desenvolvedores do Gadgetbridge para incluírem a versão de firmware %s na lista.</string>
+    <string name="miband_firmware_suggest_whitelist">Se você ainda desejar continuar e tudo funcionar corretamente, por favor, diga aos desenvolvedores do Gadgetbridge para incluírem a versão de firmware %s na lista branca.</string>
     <!--Strings related to Settings-->
     <string name="title_activity_settings">Configurações</string>
     <string name="pref_header_general">Configurações gerais</string>
@@ -286,7 +286,7 @@
     <string name="miband_prefs_device_time_offset_hours">Desvio do tempo do dispositivo em horas (para detectar o sono dos trabalhadores por turnos)</string>
     <string name="miband2_prefs_dateformat">Formato da data</string>
     <string name="dateformat_time">Hora</string>
-    <string name="dateformat_date_time"><![CDATA[Time & date]]></string>
+    <string name="dateformat_date_time"><![CDATA[Hora &amp; data]]></string>
     <string name="mi2_prefs_activate_display_on_lift">Ativar exibição ao levantar</string>
     <string name="FetchActivityOperation_about_to_transfer_since">Sobre para transferir dados desde %1$s</string>
     <string name="waiting_for_reconnect">Aguardando para reconectar</string>
@@ -443,7 +443,7 @@
     <string name="miband2_prefs_timeformat">Mi2: Formato da hora</string>
     <string name="mi2_fw_installhandler_fw53_hint">Você precisa instalar a versão %1$s antes de instalar esse firmware!</string>
     <string name="mi2_enable_text_notifications">Notificações de texto</string>
-    <string name="mi2_enable_text_notifications_summary"><![CDATA[Needs firmware >= 1.0.1.28 e Mili_pro.ft* instalados.]]></string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[Precisa de firmware &gt;= 1.0.1.28 e Mili_pro.ft* instalados.]]></string>
     <string name="off">Desligado</string>
     <string name="mi2_dnd_off">Desligado</string>
     <string name="mi2_dnd_automatic">Automático (detecção de sono)</string>
@@ -640,7 +640,7 @@
     <string name="title_activity_device_specific_settings">Configurações específicas do dispositivo</string>
     <string name="pref_title_authkey">Chave de autenticação</string>
     <string name="pref_summary_authkey">Altere a chave de autenticação para um chave comum em todos os dispositivos Android a partir dos quais você gostaria de se conectar. A chave padrão anterior para todos dispositivos é 0123456789@ABCDE</string>
-    <string name="fw_upgrade_notice_amazfitcor2">Você está prestes a instalar o firmware %s no seu Amazfit Cor 2.\n \nCertifique-se de instalar o arquivo .fw e, em seguida, o arquivo .res. Sua pulseira será reiniciada após a instalação do arquivo .fw. \n \nObservação: você não precisa instalar o .res se ele for exatamente igual ao instalado anteriormente.\n \nPROCEDA POR SUA PRÓPRIA CONTA E RISCO!\n \nCOMPLETAMENTE NÃO TESTADO, PROVAVELMENTE VOCÊ PRECISARÁ FLASHAR UM FIRMWARE BEATS_W SE O NOME DO SEU DISPOSITIVO FOR Amazfit Band 2</string>
+    <string name="fw_upgrade_notice_amazfitcor2">Você está prestes a instalar o firmware %s no seu Amazfit Cor 2.\n \nCertifique-se de instalar o arquivo .fw e, em seguida, o arquivo .res. Sua pulseira será reiniciada após a instalação do arquivo .fw. \n \nObservação: você não precisa instalar o .res se ele for exatamente igual ao instalado anteriormente.\n \nPROCEDA POR SUA PRÓPRIA CONTA E RISCO!\n \nCOMPLETAMENTE NÃO TESTADO, PROVAVELMENTE VOCÊ PRECISARÁ FLASHAR UM FIRMWARE BEATS_W SE O NOME DO SEU DISPOSITIVO FOR \"Amazfit Band 2\"</string>
     <string name="dutch">Holandês</string>
     <string name="turkish">Turco</string>
     <string name="ukrainian">Ucraniano</string>
@@ -841,7 +841,7 @@
     <string name="about_description_generic">Um substituto livre, protegido por copyleft, sem nuvem, aos aplicativos Android de código fechado das fabricantes de acessórios.</string>
     <string name="about_activity_title_generic">Sobre o Gadgetbridge</string>
     <string name="about_title">Sobre</string>
-    <string name="pref_title_weather_summary">Usado para o provedor de meteorologia LineageOS, outras versões do Android precisam usar um aplicativo como o Weather notification. Encontre mais informações na wiki do Gadgetbridge.</string>
+    <string name="pref_title_weather_summary">Usado para o provedor de meteorologia LineageOS, outras versões do Android precisam usar um aplicativo como o \"Breezy Weather\". Encontre mais informações no site do Gadgetbridge.</string>
     <string name="menuitem_worldclock">Relógio mundial</string>
     <string name="error_version_check_extreme_caution">CUIDADO: Erro ao verificar informação da versão! Você não deve continuar! Encontrei o nome de versão %s</string>
     <string name="permission_granting_mandatory">Todas estas permissões são necessárias e instabilidade pode ocorrer se não concedidas</string>
@@ -2262,7 +2262,7 @@
     <string name="pref_title_block_screenshot">Bloquear capturas de tela</string>
     <string name="pref_summary_block_screenshots">Impede capturas de tela e visualização em telas não seguras. Requer uma reinicialização do GB para se tornar totalmente eficaz.</string>
     <string name="phone_calls">Chamadas telefônicas</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Acesse as configurações de Bluetooth do seu telefone e emparelhe com o novo dispositivo que aparecerá (nome semelhante ao do seu relógio atual, mas com um sufixo, por exemplo, Amazfit GTR 4 - AFC8).</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Acesse as configurações de Bluetooth do seu telefone e emparelhe/pareie com o novo dispositivo que aparecerá (nome semelhante ao do seu relógio atual, mas com um sufixo, por exemplo, \"Amazfit GTR 4 - AFC8\").</string>
     <string name="pref_pair_bluetooth_calls_help_3">3. Ative a configuração de \"chamadas Bluetooth\" abaixo.</string>
     <string name="pref_title_notification_times_enabled">Horários de notificação</string>
     <string name="pref_title_banglejs_text_bitmap">Texto como Bitmaps</string>
@@ -2270,7 +2270,7 @@
     <string name="pref_title_banglejs_txt_bitmap_size">Tamanho do Texto Bitmap</string>
     <string name="pref_summary_banglejs_txt_bitmap_size">Tamanho a ser usado para renderização de texto bitmap</string>
     <string name="pref_title_banglejs_webview_url">URL do carregador de app</string>
-    <string name="pref_summary_banglejs_webview_url">Se você deseja um carregador de app personalizado, insira aqui a URL https://…/android.html. Caso contrário, deixe em branco para https://banglejs.com/apps</string>
+    <string name="pref_summary_banglejs_webview_url">Se você deseja um carregador de aplicativo personalizado, insira aqui a URL https://…/android.html. Caso contrário, deixe em branco para https://banglejs.com/apps</string>
     <string name="pref_message_privacy_mode_bodyonly">Ocultar somente corpo</string>
     <string name="pref_time_sync">Sincronização automática da hora</string>
     <string name="pref_title_screen_on_on_notifications">Tela ligada em notificações</string>
@@ -3274,4 +3274,23 @@
     <string name="pref_header_dashboard">Painel</string>
     <string name="permission_not_granted_contacts">Permissão de acessar contatos negada</string>
     <string name="permission_not_granted_calendar">Permissão de acessar calendário negada</string>
+    <string name="pref_summary_calendar_sync_choose">Escolha quais cores e etiquetas de calendário serão sincronizadas ao dispositivo</string>
+    <string name="pref_title_calendar_sync_choose">Calendários que serão sincronizados</string>
+    <string name="pref_title_calendar_sync_colors">Cores de eventos que serão sincronizadas</string>
+    <string name="pref_summary_calendar_sync_canceled">Eventos de calendário que estão cancelados serão sinceonizados ao dispositivo</string>
+    <string name="pref_title_calendar_sync_canceled">Sincronizar eventos cancelados</string>
+    <string name="pref_summary_calendar_sync_declined">Eventos de calendário que você recusou serão sincronizados ao dispositivo</string>
+    <string name="pref_title_calendar_sync_declined">Sincronizar eventos negados</string>
+    <string name="pref_summary_calendar_sync_focus_time">Eventos de calendário que estão etiquetados como \"Tempo de Foco\" serão sincronizados ao dispositivo</string>
+    <string name="pref_title_calendar_sync_focus_time">Sincronizar eventos de tempo de foco</string>
+    <string name="pref_summary_calendar_sync_all_day">Eventos de calendário marcados como \"Todo o Dia\" serão sincronizados ao dispositivo</string>
+    <string name="pref_title_calendar_sync_all_day">Sincronizar eventos \"Todo o Dia\"</string>
+    <string name="pref_summary_calendar_sync_working_location">Eventos de calendário que são \"Locais de Trabalho\" especiais serão sincronizados ao dispositivo</string>
+    <string name="pref_title_calendar_sync_working_location">Sincronizar eventos de local de trabalho</string>
+    <string name="pref_summary_calendar_sync_event_reminders">Notificações de lembretes de eventos serão sincronizados ao dispositivo</string>
+    <string name="pref_title_calendar_sync_event_reminders">Sincronizar lembretes de eventos</string>
+    <string name="pref_title_nautical_units">Unidades náuticas</string>
+    <string name="pref_summary_nautical_units">Mostrar unidades de velocidade e distância em nós / milhas para atividades náuticas</string>
+    <string name="pref_title_unit_distance">Unidade de distância</string>
+    <string name="pref_title_unit_temperature">Unidade de temperatura</string>
 </resources>
