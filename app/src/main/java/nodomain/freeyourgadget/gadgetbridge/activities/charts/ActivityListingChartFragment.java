@@ -188,6 +188,9 @@ public class ActivityListingChartFragment extends AbstractActivityChartFragment<
     }
 
     private void showOngoingActivitySnackbar(ActivitySession ongoingSession) {
+        if (!isAdded() || getView() == null) {
+            return;
+        }
 
         String distanceLabel = FormatUtils.getFormattedDistanceLabel(ongoingSession.getDistance());
         String stepLabel = String.valueOf(ongoingSession.getActiveSteps());
@@ -197,7 +200,7 @@ public class ActivityListingChartFragment extends AbstractActivityChartFragment<
         int icon = ongoingSession.getActivityKind().getIcon();
 
         String text = String.format("%s:\u00A0%s, %s:\u00A0%s, %s:\u00A0%s, %s:\u00A0%s", activityName, durationLabel, getString(R.string.heart_rate), hrLabel, getString(R.string.steps), stepLabel, getString(R.string.distance), distanceLabel);
-        final Snackbar snackbar = Snackbar.make(rootView, text, 1000 * 8);
+        final Snackbar snackbar = Snackbar.make(getView(), text, 1000 * 8);
 
         View snackbarView = snackbar.getView();
         snackbarView.setBackgroundColor(requireContext().getResources().getColor(R.color.accent));
