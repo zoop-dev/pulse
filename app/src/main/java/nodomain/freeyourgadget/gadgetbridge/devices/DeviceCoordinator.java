@@ -965,4 +965,10 @@ public interface DeviceCoordinator {
      * @return delay in ms for this device to wait before a reconnection attempt is made.
      */
     int getReconnectionDelay();
+
+    /**
+     * Returns whether the device supports changing bluetooth connection priority.
+     * @return
+     */
+    boolean supportsConnectionPriority();
 }

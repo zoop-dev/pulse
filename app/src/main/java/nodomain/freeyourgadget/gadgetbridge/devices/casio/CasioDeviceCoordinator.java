@@ -46,4 +46,9 @@ public abstract class CasioDeviceCoordinator extends AbstractBLEDeviceCoordinato
     public DeviceKind getDeviceKind(@NonNull GBDevice device) {
         return DeviceKind.WATCH;
     }
+
+    @Override
+    public boolean supportsConnectionPriority() {
+        return false;
+    }
 }
