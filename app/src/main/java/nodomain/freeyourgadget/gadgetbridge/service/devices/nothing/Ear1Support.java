@@ -89,6 +89,9 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
         if (getCoordinator().supportsTouchOptions()) {
             sendCommand(builder, nothingProtocol.encodeTouchOptionsRequest());
         }
+        if (getCoordinator().supportsSpatialAudio()) {
+            sendCommand(builder, nothingProtocol.encodeSpatialAudioReq());
+        }
 
         return builder;
     }
@@ -175,6 +178,10 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
                         "set touch options " + config,
                         nothingProtocol.encodeTouchOptions(config, prefs)
                 );
+
+            case DeviceSettingsPreferenceConst.PREF_NOTHING_EAR1_SPATIAL_AUDIO:
+                byte spatial = (byte)(prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_NOTHING_EAR1_SPATIAL_AUDIO, false) ? 0x01 : 0x00);
+                sendCommand("set spatial audio", nothingProtocol.encodeSpatialAudio(spatial));
                 break;
             default:
                 LOG.debug("CONFIG: " + config);
@@ -211,6 +218,7 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
         private static final short low_latency_status = (short) 0xc041;
         private static final short equalizer_status = (short) 0xc050;
         private static final short ultra_bass_status = (short) 0xc04e;
+        private static final short spatial_audio_status = (short) 0xc04f;
 
         private static final short unk_maybe_ack = (short) 0xf002;
         private static final short unk_close_case = (short) 0xe002; //sent twice when the case is closed with earphones in
@@ -223,6 +231,7 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
         private static final short low_latency = (short) 0xf040;
         private static final short equalizer = (short) 0xf01d;
         private static final short ultra_bass = (short) 0xf051;
+        private static final short spatial_audio = (short) 0xf052;
 
         private final boolean incrementCounter;
         private int messageCounter = 0x00;
@@ -322,6 +331,9 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
                         devEvts.add(handleUltraBassStatus(payload));
                     }
                     break;
+                case spatial_audio_status:
+                    devEvts.add(handleSpatialAudio(payload));
+                    break;
                 case low_latency_status:
                     devEvts.add(handleLowLatency(payload));
                     break;
@@ -399,6 +411,10 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
             return encodeMessage((short) 0x120, ultra_bass_status, new byte[]{});
         }
 
+        byte[] encodeSpatialAudioReq() {
+            return encodeMessage((short) 0x120, spatial_audio_status, new byte[]{});
+        }
+
         byte[] encodeInEarDetectionReq() {
             return encodeMessage((short) 0x120, in_ear_detection_status, new byte[]{});
         }
@@ -465,7 +481,14 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
                 final int level = Math.max(1, Math.min(5, ((payload[1] & 0xff) + 1) / 2));
                 preferencesEvent.withPreference(DeviceSettingsPreferenceConst.PREF_NOTHING_EAR1_ULTRA_BASS_LEVEL, level);
             }
+            return preferencesEvent;
+        }
 
+        private GBDeviceEventUpdatePreferences handleSpatialAudio(byte[] payload) {
+            final GBDeviceEventUpdatePreferences preferencesEvent = new GBDeviceEventUpdatePreferences();
+            if (payload.length >= 1) {
+                preferencesEvent.withPreference(DeviceSettingsPreferenceConst.PREF_NOTHING_EAR1_SPATIAL_AUDIO, payload[0] == 0x01 ? true : false);
+            }
             return preferencesEvent;
         }
 
@@ -526,6 +549,10 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
 
         byte[] encodeInEarDetection(byte enabled) {
             return encodeMessage((short) 0x120, in_ear_detection, new byte[]{0x01, 0x01, enabled});
+        }
+
+        byte[] encodeSpatialAudio(byte enabled) {
+            return encodeMessage((short) 0x120, spatial_audio, new byte[]{enabled});
         }
 
         byte[] encodeAudioMode(String desired) {

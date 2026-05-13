@@ -3218,6 +3218,8 @@
     <string name="nothing_equalizer_classical">Classical</string>
     <string name="nothing_equalizer_custom">Custom</string>
     <string name="nothing_equalizer_dirac">Dirac</string>
+    <string name="nothing_prefs_spatial_audio_title">Spatial Audio</string>
+    <string name="nothing_prefs_spatial_audio_summary">An immersive listening experience that makes you feel like you\'re part of the music, movie or game.</string>
     <string name="prefs_equalizer_preset">Equalizer Preset</string>
     <string name="pref_title_equalizer_normal">Normal</string>
     <string name="pref_title_equalizer_bass_boost">Bass boost</string>

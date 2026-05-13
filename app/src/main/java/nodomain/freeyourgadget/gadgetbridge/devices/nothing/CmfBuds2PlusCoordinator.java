@@ -69,4 +69,8 @@ public class CmfBuds2PlusCoordinator extends AbstractEarCoordinator {
 
     @Override
     public boolean supportsLowLatency() { return true; }
+
+    @Override
+    public boolean supportsSpatialAudio() { return true; }
+
 }

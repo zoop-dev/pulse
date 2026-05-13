@@ -81,6 +81,9 @@ public abstract class AbstractEarCoordinator extends AbstractBLClassicDeviceCoor
             final List<Integer> touchOptions = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.TOUCH_OPTIONS);
             touchOptions.add(R.xml.devicesettings_cmf_buds_touch_options);
         }
+        if (supportsSpatialAudio()) {
+            audio.add(R.xml.devicesettings_nothing_spatial_audio);
+        }
         if (supportsLowLatency()) {
             final List<Integer> connection = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.CONNECTION);
             connection.add(R.xml.devicesettings_headphones_low_latency);
@@ -129,4 +132,6 @@ public abstract class AbstractEarCoordinator extends AbstractBLClassicDeviceCoor
     public boolean supportsTouchOptions() {
         return false;
     }
+
+    public boolean supportsSpatialAudio() { return false; }
 }
