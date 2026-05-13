@@ -50,4 +50,7 @@ public class CmfBuds2Coordinator extends AbstractEarCoordinator {
 
     @Override
     public boolean supportsAdaptiveAnc() { return false; }
+
+    @Override
+    public boolean supportsUltraBass() { return true; }
 }
