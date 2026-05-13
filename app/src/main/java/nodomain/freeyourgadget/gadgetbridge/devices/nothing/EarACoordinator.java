@@ -50,4 +50,7 @@ public class EarACoordinator extends AbstractEarCoordinator {
 
     @Override
     public boolean supportsAdaptiveAnc() { return true; }
+
+    @Override
+    public boolean supportsLowLatency() { return true; }
 }
