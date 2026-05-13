@@ -194,7 +194,7 @@ public class IGPSportRoutesManager {
         }
         waitRoutes -= gbDeviceApps.size();
 
-        if (waitRoutes <= 0) {
+        if (waitRoutes <= 0 || routeList.isEmpty() ) {
             final GBDeviceEventAppInfo appInfoCmd = new GBDeviceEventAppInfo();
             appInfoCmd.apps = gbDeviceApps.toArray(new GBDeviceApp[0]);
             support.evaluateGBDeviceEvent(appInfoCmd);
@@ -237,9 +237,6 @@ public class IGPSportRoutesManager {
         startFile = 0;
 
         requestFiles();
-
-
-
     }
 
     public void activateRoute(final UUID uuid) {
