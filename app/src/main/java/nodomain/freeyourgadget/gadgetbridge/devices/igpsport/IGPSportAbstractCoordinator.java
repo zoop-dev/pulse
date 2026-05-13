@@ -103,4 +103,9 @@ public abstract class IGPSportAbstractCoordinator extends AbstractBLEDeviceCoord
     public DeviceKind getDeviceKind(@NonNull GBDevice device) {
         return DeviceKind.BIKE_COMPUTER;
     }
+
+    @Override
+    public boolean supportsWatchfaceManagement(@NonNull final GBDevice device) {
+        return false;
+    }
 }
