@@ -441,6 +441,14 @@ public class XiaomiSupport extends AbstractDeviceSupport {
         return this.healthService;
     }
 
+    public XiaomiRpkService getRpkService() {
+        return this.rpkService;
+    }
+
+    public XiaomiWatchfaceService getWatchfaceService() {
+        return this.watchfaceService;
+    }
+
     @Override
     public String customStringFilter(final String inputString) {
         return StringUtils.replaceEach(inputString, EMOJI_SOURCE, EMOJI_TARGET);
