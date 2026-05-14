@@ -678,7 +678,9 @@ class PebbleIoThread extends GBDeviceIoThread {
         if (mPBWReader.isFirmware()) {
             LOG.info("starting firmware installation");
             mIsInstalling = true;
-            mInstallSlot = 0;
+            // For dual-slot watches, mInstallSlot is the PUTBYTES bank number (0 or 1).
+            // It must match the inactive slot so we don't write into the running firmware.
+            mInstallSlot = (targetSlot != null) ? targetSlot : 0;
             int totalFirmwareBytes = 0;
             for (PebbleInstallable pi : mPebbleInstallables) {
                 totalFirmwareBytes += pi.getFileSize();
