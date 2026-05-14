@@ -45,6 +45,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleHardware;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventAppInfo;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventAppManagement;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.pebble.GBDeviceEventFirmwareUpdateStart;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventAppMessage;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventCallControl;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventMusicControl;
@@ -234,6 +235,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
     private static final byte SYSTEMMESSAGE_FIRMWARE_OUTOFDATE = 5;
     private static final byte SYSTEMMESSAGE_STOPRECONNECTING = 6;
     private static final byte SYSTEMMESSAGE_STARTRECONNECTING = 7;
+    private static final byte SYSTEMMESSAGE_FIRMWARESTART_RESPONSE = 0x0a;
 
     private static final byte PHONEVERSION_REQUEST = 0;
     private static final byte PHONEVERSION_APPVERSION_MAGIC = 2; // increase this if pebble complains
@@ -1538,16 +1540,28 @@ public class PebbleProtocol extends GBDeviceProtocol {
 
     /* pebble specific install methods */
     byte[] encodeUploadStart(byte type, int app_id, int size, String filename) {
+        // The watch uses two different INIT packet formats:
+        // - Firmware/recovery/sysresources: type without bit 7, 1-byte bank number
+        // - App binary/resources/worker:    type with bit 7 set, 4-byte app slot
+        // - File (language):                type as-is, 1-byte slot, optional filename
+        boolean isFirmwareType = (type == PUTBYTES_TYPE_FIRMWARE ||
+                                   type == PUTBYTES_TYPE_RECOVERY ||
+                                   type == PUTBYTES_TYPE_SYSRESOURCES);
+        boolean isFileType = (type == PUTBYTES_TYPE_FILE);
+
         short length;
-        if (type != PUTBYTES_TYPE_FILE) {
+        if (isFileType) {
+            length = (short) 7;
+            if (filename != null) {
+                length += (short) (filename.getBytes().length + 1);
+            }
+        } else if (isFirmwareType) {
+            // 1-byte bank number; type without bit 7
+            length = (short) 7;
+        } else {
+            // App slot: 4-byte; type with bit 7 to select app-init variant
             length = (short) 10;
             type |= (byte) 0b10000000;
-        } else {
-            length = (short) 7;
-        }
-
-        if (type == PUTBYTES_TYPE_FILE && filename != null) {
-            length += (short) ((short) filename.getBytes().length + 1);
         }
 
         ByteBuffer buf = ByteBuffer.allocate(LENGTH_PREFIX + length);
@@ -1558,16 +1572,16 @@ public class PebbleProtocol extends GBDeviceProtocol {
         buf.putInt(size);
         buf.put(type);
 
-        if (type != PUTBYTES_TYPE_FILE) {
-            buf.putInt(app_id);
-        } else {
-            // slot
+        if (isFileType) {
             buf.put((byte) app_id);
-        }
-
-        if (type == PUTBYTES_TYPE_FILE && filename != null) {
-            buf.put(filename.getBytes());
-            buf.put((byte) 0);
+            if (filename != null) {
+                buf.put(filename.getBytes());
+                buf.put((byte) 0);
+            }
+        } else if (isFirmwareType) {
+            buf.put((byte) app_id);  // 1-byte bank number
+        } else {
+            buf.putInt(app_id);      // 4-byte app slot
         }
 
         return buf.array();
@@ -1632,8 +1646,20 @@ public class PebbleProtocol extends GBDeviceProtocol {
 
     }
 
-    byte[] encodeInstallFirmwareStart() {
-        return encodeSystemMessage(SYSTEMMESSAGE_FIRMWARESTART);
+    byte[] encodeInstallFirmwareStart(int totalBytes) {
+        // FirmwareUpdateStart includes bytesAlreadyTransferred + bytesToSend
+        // so the watch knows how much data is coming and can pre-erase the full flash region.
+        final short LENGTH_FIRMWARESTART = 10; // command(1) + messageType(1) + alreadyTransferred(4LE) + bytesToSend(4LE)
+        ByteBuffer buf = ByteBuffer.allocate(LENGTH_PREFIX + LENGTH_FIRMWARESTART);
+        buf.order(ByteOrder.BIG_ENDIAN);
+        buf.putShort(LENGTH_FIRMWARESTART);
+        buf.putShort(ENDPOINT_SYSTEMMESSAGE);
+        buf.put((byte) 0); // command
+        buf.put(SYSTEMMESSAGE_FIRMWARESTART);
+        buf.order(ByteOrder.LITTLE_ENDIAN); // size fields are little-endian per Pebble protocol
+        buf.putInt(0); // bytesAlreadyTransferred: always 0 (fresh install)
+        buf.putInt(totalBytes);
+        return buf.array();
     }
 
     byte[] encodeInstallFirmwareComplete() {
@@ -2136,6 +2162,14 @@ public class PebbleProtocol extends GBDeviceProtocol {
                 break;
             case SYSTEMMESSAGE_STARTRECONNECTING:
                 LOG.info(ENDPOINT_NAME + ": start reconnecting");
+                break;
+            case SYSTEMMESSAGE_FIRMWARESTART_RESPONSE:
+                if (buf.remaining() >= 1) {
+                    byte status = buf.get();
+                    LOG.info(ENDPOINT_NAME + ": firmware update start response, status={}", status);
+                    return new GBDeviceEventFirmwareUpdateStart(status);
+                }
+                LOG.warn(ENDPOINT_NAME + ": firmware update start response missing status byte");
                 break;
             default:
                 LOG.info(ENDPOINT_NAME + ": {}", command);

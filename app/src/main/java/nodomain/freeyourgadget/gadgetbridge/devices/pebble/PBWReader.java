@@ -33,6 +33,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.zip.ZipEntry;
@@ -55,7 +56,8 @@ public class PBWReader {
     }
 
     static {
-        fwFileTypesMap = new HashMap<>();
+        // LinkedHashMap - preserve insertion order. We should send the firmware blob before the resources
+        fwFileTypesMap = new LinkedHashMap<>();
         fwFileTypesMap.put("firmware", PebbleProtocol.PUTBYTES_TYPE_FIRMWARE);
         fwFileTypesMap.put("resources", PebbleProtocol.PUTBYTES_TYPE_SYSRESOURCES);
     }
