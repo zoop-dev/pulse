@@ -4468,4 +4468,7 @@
     <string name="stamina_at_end">Výdrž na konci</string>
     <string name="stamina_at_start">Výdrž na začátku</string>
     <string name="stamina_min">Minimální výdrž</string>
+    <string name="task_installing_route">Instalace cesty</string>
+    <string name="route_upload_completed">Cesta úspěšně nahrána</string>
+    <string name="route_upload_failed">Nepodařilo se nahrát cestu</string>
 </resources>
