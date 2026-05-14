@@ -4462,4 +4462,7 @@
     <string name="stamina_at_end">最终耐力</string>
     <string name="stamina_at_start">初始耐力</string>
     <string name="stamina_min">最小耐力</string>
+    <string name="task_installing_route">安装路径</string>
+    <string name="route_upload_completed">路径更新完成</string>
+    <string name="route_upload_failed">路径更新失败</string>
 </resources>
