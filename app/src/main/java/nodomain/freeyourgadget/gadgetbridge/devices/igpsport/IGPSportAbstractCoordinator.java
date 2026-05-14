@@ -74,6 +74,11 @@ public abstract class IGPSportAbstractCoordinator extends AbstractBLEDeviceCoord
     }
 
     @Override
+    public boolean supportsFlashing(@NonNull GBDevice device) {
+        return true;
+    }
+
+    @Override
     public boolean supportsAppsManagement(final GBDevice device) {
         return true;
     }

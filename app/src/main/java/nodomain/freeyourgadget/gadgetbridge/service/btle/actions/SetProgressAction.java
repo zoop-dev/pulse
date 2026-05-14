@@ -52,7 +52,13 @@ public class SetProgressAction extends PlainAction {
         GB.updateInstallNotification(this.text, this.ongoing, this.percentage, this.context);
 
         final LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(context);
-        broadcastManager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_BAR).putExtra(GB.PROGRESS_BAR_PROGRESS, percentage));
+        final Intent intent = new Intent(GB.ACTION_SET_PROGRESS_BAR);
+        if (ongoing && percentage == 0) {
+            intent.putExtra(GB.PROGRESS_BAR_INDETERMINATE, true);
+        } else {
+            intent.putExtra(GB.PROGRESS_BAR_PROGRESS, percentage);
+        }
+        broadcastManager.sendBroadcast(intent);
 
         return true;
     }

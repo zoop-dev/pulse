@@ -30,6 +30,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -358,15 +359,14 @@ public class IGPSportDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     if (mainOperation == Common.SERVICE_OPERATE_TYPE.enum_SERVICE_OPERATE_TYPE_ADD_VALUE) {
                         gbDevice.unsetBusyTask();
                         gbDevice.sendDeviceUpdateIntent(getContext());
-                        TransactionBuilder builder = createTransactionBuilder("Route  upload finished");
+                        final LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(GBApplication.getContext());
+                        broadcastManager.sendBroadcast(new Intent(GB.ACTION_SET_INFO_TEXT).putExtra(GB.DISPLAY_MESSAGE_MESSAGE, ""));
                         if (result == 0) {
-                            builder.setProgress(R.string.route_upload_completed, false, 100);
-                            handleGBDeviceEvent(new GBDeviceEventDisplayMessage("Route upload completed", Toast.LENGTH_LONG, GB.INFO));
+                            broadcastManager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_TEXT).putExtra(GB.DISPLAY_MESSAGE_MESSAGE, getContext().getString(R.string.route_upload_completed)));
                         } else {
-                            builder.setProgress(R.string.route_upload_failed, false, 0);
-                            handleGBDeviceEvent(new GBDeviceEventDisplayMessage("Failed to upload route", Toast.LENGTH_LONG, GB.ERROR));
+                            broadcastManager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_TEXT).putExtra(GB.DISPLAY_MESSAGE_MESSAGE, getContext().getString(R.string.route_upload_failed)));
                         }
-                        builder.queue();
+                        broadcastManager.sendBroadcast(new Intent(GB.ACTION_SET_FINISHED));
                     }
                     break;
 

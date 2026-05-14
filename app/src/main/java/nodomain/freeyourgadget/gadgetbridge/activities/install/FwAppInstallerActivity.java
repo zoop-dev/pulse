@@ -88,19 +88,21 @@ public class FwAppInstallerActivity extends AbstractGBActivity implements Instal
             String action = intent.getAction();
             if (GBDevice.ACTION_DEVICE_CHANGED.equals(action)) {
                 final GBDevice changedDevice = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE);
-                if (changedDevice != null && changedDevice.equals(device)) {
-                    refreshBusyState(device);
-                    if (!device.isInitialized()) {
-                        setInstallEnabled(false);
-                        if (mayConnect) {
-                            GB.toast(FwAppInstallerActivity.this, getString(R.string.connecting), Toast.LENGTH_SHORT, GB.INFO);
-                            connect();
-                        } else {
-                            setInfoText(getString(R.string.fwappinstaller_connection_state, device.getStateString(context)));
-                        }
+                if(changedDevice == null || !changedDevice.equals(device)) {
+                    return;
+                }
+                device = changedDevice;
+                refreshBusyState(device);
+                if (!device.isInitialized()) {
+                    setInstallEnabled(false);
+                    if (mayConnect) {
+                        GB.toast(FwAppInstallerActivity.this, getString(R.string.connecting), Toast.LENGTH_SHORT, GB.INFO);
+                        connect();
                     } else {
-                        validateInstallation();
+                        setInfoText(getString(R.string.fwappinstaller_connection_state, device.getStateString(context)));
                     }
+                } else {
+                    validateInstallation();
                 }
             } else if (GB.ACTION_SET_PROGRESS_BAR.equals(action)) {
                 if (intent.hasExtra(GB.PROGRESS_BAR_INDETERMINATE)) {

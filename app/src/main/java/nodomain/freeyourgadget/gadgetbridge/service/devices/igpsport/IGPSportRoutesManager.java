@@ -125,8 +125,9 @@ public class IGPSportRoutesManager {
                     fileOperationbuilder.getOperateType().getNumber(),
                     fileOperationbuilder.build().toByteArray(),
                     handler.getBytes());
-            builder.writeChunkedData(support.writeCharacteristicFourth, fileOperationBytes, support.getMTU());
             builder.setBusyTask(R.string.task_installing_route);
+            builder.setProgress(R.string.task_installing_route, true, 0);
+            builder.writeChunkedData(support.writeCharacteristicFourth, fileOperationBytes, support.getMTU());
             builder.queue();
 
         } catch (final Exception e) {
