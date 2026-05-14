@@ -22,11 +22,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -154,8 +154,10 @@ public class XiaomiRpkService extends AbstractXiaomiService implements XiaomiDat
             GBDeviceApp gbDeviceApp = new GBDeviceApp(UUID.nameUUIDFromBytes(packageName.getBytes()), appName, packageName, "", GBDeviceApp.Type.APP_GENERIC);
             apps.add(gbDeviceApp);
         }
+        final List<GBDeviceApp> appsAndFaces = new ArrayList<>(apps);
+        appsAndFaces.addAll(getSupport().getWatchfaceService().getInstalledFacesCache());
         final GBDeviceEventAppInfo appInfoCmd = new GBDeviceEventAppInfo();
-        appInfoCmd.apps = apps.toArray(new GBDeviceApp[0]);
+        appInfoCmd.apps = appsAndFaces.toArray(new GBDeviceApp[0]);
         getSupport().evaluateGBDeviceEvent(appInfoCmd);
     }
 
@@ -204,5 +206,9 @@ public class XiaomiRpkService extends AbstractXiaomiService implements XiaomiDat
             }
             device.sendDeviceUpdateIntent(getSupport().getContext());
         }
+    }
+
+    public Collection<? extends GBDeviceApp> getInstalledAppsCache() {
+        return Collections.unmodifiableList(apps);
     }
 }

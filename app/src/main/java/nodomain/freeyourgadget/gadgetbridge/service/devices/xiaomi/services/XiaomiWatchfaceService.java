@@ -20,6 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -45,6 +47,7 @@ public class XiaomiWatchfaceService extends AbstractXiaomiService implements Xia
 
     private final Set<UUID> allWatchfaces = new HashSet<>();
     private final Set<UUID> userWatchfaces = new HashSet<>();
+    private final List<GBDeviceApp> facesCache = new ArrayList<>();
     private UUID activeWatchface = null;
 
     // Not null if we're installing a firmware
@@ -102,9 +105,8 @@ public class XiaomiWatchfaceService extends AbstractXiaomiService implements Xia
 
         allWatchfaces.clear();
         userWatchfaces.clear();
+        facesCache.clear();
         activeWatchface = null;
-
-        final List<GBDeviceApp> gbDeviceApps = new ArrayList<>();
 
         for (final XiaomiProto.WatchfaceInfo watchface : watchfaceList.getWatchfaceList()) {
             final UUID uuid = toWatchfaceUUID(watchface.getId());
@@ -123,11 +125,13 @@ public class XiaomiWatchfaceService extends AbstractXiaomiService implements Xia
                     "",
                     GBDeviceApp.Type.WATCHFACE
             );
-            gbDeviceApps.add(gbDeviceApp);
+            facesCache.add(gbDeviceApp);
         }
 
+        final List<GBDeviceApp> appsAndFaces = new ArrayList<>(facesCache);
+        appsAndFaces.addAll(getSupport().getRpkService().getInstalledAppsCache());
         final GBDeviceEventAppInfo appInfoCmd = new GBDeviceEventAppInfo();
-        appInfoCmd.apps = gbDeviceApps.toArray(new GBDeviceApp[0]);
+        appInfoCmd.apps = appsAndFaces.toArray(new GBDeviceApp[0]);
         getSupport().evaluateGBDeviceEvent(appInfoCmd);
     }
 
@@ -280,5 +284,9 @@ public class XiaomiWatchfaceService extends AbstractXiaomiService implements Xia
             }
             device.sendDeviceUpdateIntent(getSupport().getContext());
         }
+    }
+
+    public Collection<? extends GBDeviceApp> getInstalledFacesCache() {
+        return Collections.unmodifiableList(facesCache);
     }
 }
