@@ -476,7 +476,7 @@ class PebbleIoThread extends GBDeviceIoThread {
     }
 
 
-    private void write_real(byte[] bytes) {
+    private void write_stream(byte[] bytes) {
         try {
             if (mIsTCP) {
                 ByteBuffer buf = ByteBuffer.allocate(bytes.length + 8);
@@ -495,6 +495,10 @@ class PebbleIoThread extends GBDeviceIoThread {
         } catch (IOException e) {
             LOG.error("Error writing.", e);
         }
+    }
+
+    private void write_real(byte[] bytes) {
+        write_stream(bytes);
         try {
             Thread.sleep(100);
         } catch (InterruptedException ignored) {
@@ -651,7 +655,10 @@ class PebbleIoThread extends GBDeviceIoThread {
             return;
         }
         LOG.info("got {}bytes for writeInstallApp()", bytes.length);
-        write_real(bytes);
+        // Bypass the 100ms post-write sleep in write_real — that sleep prevents appmessage
+        // NACKs on firmware 3.0+ and is not relevant here. IoThread's blocking read is woken
+        // immediately when the watch responds, via notifyAll() in writeToPipedOutputStream.
+        write_stream(bytes);
     }
 
     void installApp(Uri uri, int appId) {
