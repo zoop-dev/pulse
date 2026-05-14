@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="0.91.1" versioncode="248">
+        <change>Casio: Fix connection issues after first pairing</change>
+        <change>Fix occasional crash when leaving activity list</change>
+        <change>Garmin: Fix unknown transfer notification</change>
+        <change>Huawei: Fix connection stuck on authentication on newer firmware</change>
+        <change>OpenTracks integration: Remove unsupported elevation field</change>
+        <change>Xiaomi-protobuf: Fix GPS dropping mid-workout on newer firmware</change>
+    </release>
     <release version="0.91.0" versioncode="247">
         <change>Initial support for Braun iCheck 7 BPW4500 blood pressure monitor</change>
         <change>Initial support for CMF Buds 2a, Buds 2 Plus</change>
