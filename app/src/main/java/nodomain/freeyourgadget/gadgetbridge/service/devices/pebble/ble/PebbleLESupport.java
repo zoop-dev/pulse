@@ -256,7 +256,8 @@ public class PebbleLESupport {
                     while (payloadToSend > 0) {
                         int chunkSize = Math.min(payloadToSend, maxChunkSize);
                         byte[] outBuf = new byte[chunkSize + 1];
-                        outBuf[0] = (byte) ((mmSequence++ << 3) & 0xff);
+                        outBuf[0] = (byte) ((mmSequence << 3) & 0xff);
+                        mmSequence = (mmSequence + 1) & 0x1f; // keep serial in 5-bit range (0-31)
                         System.arraycopy(buf, srcPos, outBuf, 1, chunkSize);
                         sendDataToPebble(outBuf);
                         srcPos += chunkSize;
