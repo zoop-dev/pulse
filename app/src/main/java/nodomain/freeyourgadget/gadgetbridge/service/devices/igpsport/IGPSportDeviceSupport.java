@@ -357,15 +357,14 @@ public class IGPSportDeviceSupport extends AbstractBTLESingleDeviceSupport {
             switch (mainService) {
                 case Common.service_type_index.enum_SERVICE_TYPE_INDEX_FILE_OPERATION_VALUE:
                     if (mainOperation == Common.SERVICE_OPERATE_TYPE.enum_SERVICE_OPERATE_TYPE_ADD_VALUE) {
+                        final String resultMessage = result == 0 ? getContext().getString(R.string.route_upload_completed) : getContext().getString(R.string.route_upload_failed);
+                        GB.updateInstallNotification(resultMessage, false, 100, getContext());
+
                         gbDevice.unsetBusyTask();
                         gbDevice.sendDeviceUpdateIntent(getContext());
                         final LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(GBApplication.getContext());
                         broadcastManager.sendBroadcast(new Intent(GB.ACTION_SET_INFO_TEXT).putExtra(GB.DISPLAY_MESSAGE_MESSAGE, ""));
-                        if (result == 0) {
-                            broadcastManager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_TEXT).putExtra(GB.DISPLAY_MESSAGE_MESSAGE, getContext().getString(R.string.route_upload_completed)));
-                        } else {
-                            broadcastManager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_TEXT).putExtra(GB.DISPLAY_MESSAGE_MESSAGE, getContext().getString(R.string.route_upload_failed)));
-                        }
+                        broadcastManager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_TEXT).putExtra(GB.DISPLAY_MESSAGE_MESSAGE, resultMessage));
                         broadcastManager.sendBroadcast(new Intent(GB.ACTION_SET_FINISHED));
                     }
                     break;
