@@ -2470,6 +2470,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
                     int runningSlot = mIsSlot0 ? 0 : 1;
                     int targetSlot = mIsSlot0 ? 1 : 0;
                     versionCmd.fwUpdateTargetSlot = targetSlot;
+                    versionCmd.fwVersion2 = "slot " + runningSlot + " active";
                     LOG.info("Dual-slot firmware detected: running slot {}, will update slot {}", runningSlot, targetSlot);
                 }
                 int hwRev = buf.get() & 0xFF;  // Convert to unsigned
