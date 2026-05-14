@@ -4309,4 +4309,7 @@
     <string name="stamina_at_end">Befejező állóképesség</string>
     <string name="stamina_at_start">Kezdeti állóképesség</string>
     <string name="stamina_min">Minimális állóképesség</string>
+    <string name="task_installing_route">Útvonal telepítése</string>
+    <string name="route_upload_completed">Útvonal sikeresen feltöltve</string>
+    <string name="route_upload_failed">Nem sikerült feltölteni az útvonalat</string>
 </resources>
