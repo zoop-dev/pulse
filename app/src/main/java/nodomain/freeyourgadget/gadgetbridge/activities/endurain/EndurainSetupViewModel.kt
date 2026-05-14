@@ -76,7 +76,11 @@ class EndurainSetupViewModel(application: Application) : AndroidViewModel(applic
             try {
                 // Fetch server settings from the public endpoint
                 val settingsUri = "$serverUrl/api/v1/public/server_settings".toUri()
-                val settingsResponse = InternetUtils.doJsonRequest(settingsUri)
+                val headers = mutableMapOf("X-Client-Type" to "mobile")
+                val settingsResponse = InternetUtils.doJsonRequest(
+                    uri = settingsUri,
+                    requestHeaders = headers
+                )
 
                 if (settingsResponse != null) {
                     // Parse server settings to determine available authentication methods

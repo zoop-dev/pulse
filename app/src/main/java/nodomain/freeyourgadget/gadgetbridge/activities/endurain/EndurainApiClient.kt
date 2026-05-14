@@ -214,7 +214,13 @@ class EndurainApiClient(
         try {
             val uri = "$baseUrl/api/v1/public/idp".toUri()
 
-            val responseText = InternetUtils.doStringRequest(uri = uri)
+            val headers = buildHeaders(AuthType.NONE)
+            headers["Content-Type"] = "application/json"
+
+            val responseText = InternetUtils.doStringRequest(
+                uri = uri,
+                requestHeaders = headers
+            )
 
             return if (responseText != null) {
                 val type = object : com.google.gson.reflect.TypeToken<List<IdentityProvider>>() {}.type
