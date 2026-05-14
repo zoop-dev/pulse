@@ -665,7 +665,7 @@
     <string name="heartrate_bpm_145">145 نبضة في الدقيقة</string>
     <string name="heartrate_bpm_150">150 نبضة في الدقيقة</string>
     <string name="prefs_find_phone_summary">استخدم سوارك لتشغيل نغمة رنين هاتفك.</string>
-    <string name="mi2_enable_text_notifications_summary"><![CDATA[Needs firmware >= 1.0.1.28 and Mili_pro.ft* installed.]]></string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[يتطلب تثبيت إصدار البرنامج 1.0.1.28 أو أحدث وملف Mili_pro.ft*.]]></string>
     <string name="warning">تحذير!</string>
     <string name="pref_chart_heartrate_color_red">أحمر</string>
     <string name="pref_charts_range_on">تم تعيين نطاق الرسوم البيانية إلى شهر</string>
@@ -1429,7 +1429,7 @@
     <string name="live_activity_current_steps_per_minute">الخطوات الحالية / دقيقة</string>
     <string name="device_not_connected">غير متصل.</string>
     <string name="prefs_find_phone_duration">مدة الرنين بالثواني</string>
-    <string name="dateformat_date_time"><![CDATA[Time & date]]></string>
+    <string name="dateformat_date_time"><![CDATA[الوقت والتاريخ]]></string>
     <string name="prefs_disconnect_notification">إشعار قطع الاتصال</string>
     <string name="mi2_prefs_button_press_count">عدد مرات الضغط على الزر</string>
     <string name="mi2_prefs_button_action">تمكين إجراء الزر</string>
@@ -1719,12 +1719,12 @@
     <string name="error_setting_alias">خطأ في تعيين الاسم المستعار:</string>
     <string name="device_unsupported">غير مدعوم</string>
     <plurals name="widget_alarm_target_hours">
-        <item quantity="zero">%d ساعة</item>
-        <item quantity="one">%d ساعة</item>
-        <item quantity="two">%dساعتان</item>
-        <item quantity="few">%dساعات</item>
-        <item quantity="many">%dساعات</item>
-        <item quantity="other">%d ساعات</item>
+        <item quantity="zero">%1$d:%2$02d ساعة</item>
+        <item quantity="one">%1$d:%2$02d ساعة</item>
+        <item quantity="two">%1$d:%2$02d ساعتان</item>
+        <item quantity="few">%1$d:%2$02d ساعات</item>
+        <item quantity="many">%1$d:%2$02d ساعات</item>
+        <item quantity="other">%1$d:%2$02d ساعات</item>
     </plurals>
     <string name="watchface_setting_display_refresh_full">تحديث كامل (بالدقائق)</string>
     <string name="sony_ambient_sound_noise_cancelling">إلغاء الضوضاء</string>
@@ -2462,7 +2462,7 @@
     <string name="huawei_alarm_event_description">لا تحدد خانة اختيار التنبيه الذكي.</string>
     <string name="huawei_trusleep_title">هواوي ترو سليب™</string>
     <string name="huawei_trusleep_summary_light">تحسين مراقبة النوم</string>
-    <string name="huawei_trusleep_summary">مراقبة نوعية نومك ونمط التنفس في الوقت الحقيقي. \nقم بتحليل أنماط نومك وتشخيص 6 أنواع من مشاكل النوم بدقة.</string>
+    <string name="huawei_trusleep_summary">تتبع جودة نومك في الوقت الفعلي.</string>
     <string name="pref_force_wear_location_summary">فرض دعم موقع wear.
 \nاستخدام على مسؤوليتك الخاصة</string>
     <string name="huawei_reparse_workout_data_description">لن يقدم هذا شيئا إلا بعد تحديثات معينة</string>
@@ -2662,7 +2662,7 @@
     <string name="pref_dashboard_widget_show_legend_title">عرض الأسطورة</string>
     <string name="pref_dashboard_widget_goals_chart_title">خريطة الأهداف</string>
     <string name="pref_dashboard_all_devices_title">جميع الأجهزة</string>
-    <string name="pref_dashboard_select_devices_title">تحديد الأجهزة...</string>
+    <string name="pref_dashboard_select_devices_title">حدد الأجهزة…</string>
     <string name="pref_dashboard_widgets_order_summary">حدد الأدوات التي تم تمكينها وبأي ترتيب يتم عرضها على لوحة المعلومات</string>
     <string name="pref_dashboard_widget_today_24h_summary">اعرض النشاط في دائرة واحدة مدتها 24 ساعة بدلاً من دائرة مزدوجة مدتها 12 ساعة</string>
     <string name="pref_dashboard_widget_double_size_summary">اسمح للأداة بشغل عمودين على لوحة المعلومات</string>
@@ -2715,7 +2715,7 @@
     <string name="cyclingPowerMax">أقصى قوة ركوب الدراجة</string>
     <string name="cyclingPowerAverage">متوسط قوة ركوب الدراجة</string>
     <string name="cyclingPowerMin">الحد الأدنى من قوة ركوب الدراجة</string>
-    <string name="huawei_trusleep_warning">تحذير: سيؤدي تمكين هذا إلى جعل كل وقت النوم يظهر كنوم خفيف في Gadgetbridge! اضغط هنا إذا قبلت هذا.</string>
+    <string name="huawei_trusleep_warning">تحذير: لم يتم تفعيل ميزة TruSleep™ بالكامل. سيؤدي تفعيلها على بعض الأجهزة إلى ظهور جميع بيانات النوم على أنها ”نوم خفيف“ في Gadgetbridge!</string>
     <string name="pref_touch_tone">نغمة اللمس</string>
     <string name="pref_touch_tone_summary">يصدر نغمة عند لمس سماعة الأذن</string>
     <string name="pref_wearing_tone">نغمة الإرتداء</string>
@@ -2754,7 +2754,7 @@
     <string name="folder">مجلد</string>
     <string name="url">رابط</string>
     <string name="garmin_agps_local_file">الملف المحلي</string>
-    <string name="pref_garmin_agps_help">تحتوي القائمة أدناه على جميع عناوين URL التي طلبتها الساعة لتحديثات AGPS. يمكنك تحديد ملف من مساحة تخزين الهاتف ليتم إرساله إلى الساعة عندما تطلب التحديث.</string>
+    <string name="pref_garmin_agps_help">تحتوي القائمة أدناه على جميع عناوين الويب التي تطلبها الساعة للحصول على تحديثات AGPS. يمكنك اختيار ملف من ذاكرة الهاتف ليتم إرساله إلى الساعة عندما تطلب تحديثًا.\n\nيكفي تكوين ملف واحد فقط.</string>
     <string name="copied_to_clipboard">تم النسخ إلى الحافظة</string>
     <string name="pref_summary_garmin_default_reply_suffix">تم إلحاقه بالإضافة إلى اللاحقة المعينة في Gadgetbridge</string>
     <string name="intent_api_broadcast_activity_sync_title">البث عند انتهاء مزامنة النشاط</string>
@@ -3228,9 +3228,9 @@
     <string name="respiratoryrate">المعدل التنفسي</string>
     <string name="sleep_avg">متوسط النوم</string>
     <string name="activity_prefs_goal_standing_hours">الهدف اليومي: ساعات الوقوف</string>
-    <string name="fw_upgrade_notice_huawei">أنت على وشك رفع البرنامج الثابت %1$s على %2$s الخاص بك.\n\nالبرنامج الثابت الحالي هو %s\n\nسيتم إعادة تشغيل جهازك بعد الرفع.\n\nتابع على مسؤوليتك الخاصة!</string>
+    <string name="fw_upgrade_notice_huawei">أنت على وشك رفع البرنامج الثابت %1$s على %2$s الخاص بك.\n\nالبرنامج الثابت الحالي هو %3$s\n\nسيتم إعادة تشغيل جهازك بعد الرفع.\n\nتابع على مسؤوليتك الخاصة!</string>
     <string name="charts_show_balance_steps_summary">إظهار الزيادة / عدم وجود خطوات في الرسوم البيانية الأسبوعية والشهرية</string>
-    <string name="range_percentage_float">%1$.1f%% - %2$.1f%%</string>
+    <string name="range_percentage_float">%1$.1f%% – %2$.1f%%</string>
     <string name="audio_recordings">التسجيلات الصوتية</string>
     <string name="open_source_licenses">التراخيص</string>
     <string name="dialog_close">أغلق</string>
@@ -3239,8 +3239,8 @@
     <string name="pref_workout_send_gps_timeout_summary">أوقف GPS عندما لا يرسل الجهاز بيانات التمرين مفتوحة (بالمللي ثانية)</string>
     <string name="pref_title_stable_connection">اتصال مستقر</string>
     <string name="zepp_os_install_map_instructions">بعد بدء التثبيت على الهاتف، يجب عليك الموافقة على الساعة أيضًا.</string>
-    <string name="range_percentage">%1$d%% - %2$d%%</string>
-    <string name="range_degrees">%1$dº - %2$dº</string>
+    <string name="range_percentage">%1$d%% – %2$d%%</string>
+    <string name="range_degrees">%1$dº – %2$dº</string>
     <string name="pref_watch_face">واجهة الساعة</string>
     <string name="pref_device_version">إصدار الجهاز</string>
     <string name="pref_vibration_intensity">شدة الاهتزاز</string>
@@ -3248,4 +3248,10 @@
     <string name="map_theme_osmarender">أوسمارندر</string>
     <string name="map_theme_motorider">موتوريدر</string>
     <string name="connection_priority_low_power_title">اطلب طاقة منخفضة</string>
+    <string name="pref_header_sync">التزامن</string>
+    <string name="pref_header_dashboard">لوحة التحكم</string>
+    <string name="sound_and_vibration">الصوت + الاهتزاز</string>
+    <string name="map_theme_biker">دراج</string>
+    <string name="pref_title_block_screenshot">منع لقطات الشاشة</string>
+    <string name="pref_summary_block_screenshots">منع أخذ لقطات الشاشة وعرضها على شاشات غير آمنة. يتطلب إعادة تشغيل الجهاز حتى تصبح هذه الإعدادات سارية المفعول بالكامل.</string>
 </resources>
