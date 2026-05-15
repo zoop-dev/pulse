@@ -4268,4 +4268,17 @@
     <string name="qhybrid_button_function_forward">An Telefon weiterleiten</string>
     <string name="qhybrid_button_function_forward_multi">An Telefon weiterleiten (Multifunktion)</string>
     <string name="qhybrid_button_function_ring_phone">Telefon klingeln</string>
+    <string name="antplus_title">ANT+</string>
+    <string name="diving_nitrogen_load">Stickstoffbelastung</string>
+    <string name="diving_oxygen_toxicity">Sauerstofftoxikose</string>
+    <string name="unit_oxygen_toxicity_units">OTU</string>
+    <string name="pref_chart_sleep_range_rolling_24h">24 Stunden</string>
+    <string name="pref_chart_sleep_range_noon">Mittag (12:00)</string>
+    <string name="pref_chart_sleep_range_18h">Abend (18:00)</string>
+    <string name="activity_type_geocaching">Schnitzeljagd</string>
+    <string name="activity_type_indoor_skiing">Hallen-Ski</string>
+    <string name="task_installing_route">Route installieren</string>
+    <string name="battery_level_ebike_end">Finales Batterieniveau</string>
+    <string name="battery_level_ebike_start">Initiales Batterieniveau</string>
+    <string name="battery_level_end">Finales Batterieniveau</string>
 </resources>
