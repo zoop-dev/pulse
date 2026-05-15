@@ -44,12 +44,12 @@ import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.Dev
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_WEARLOCATION;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.GENDER_MALE;
 
-public class SetConfigurationOperation  extends AbstractBTLEOperation<CasioGBX100DeviceSupport> {
+public class SetConfigurationOperation extends AbstractBTLEOperation<Casio2C2DSupport> {
     private static final Logger LOG = LoggerFactory.getLogger(SetConfigurationOperation.class);
-    private final CasioGBX100DeviceSupport support;
+    private final Casio2C2DSupport support;
     private final CasioConstants.ConfigurationOption option;
 
-    public SetConfigurationOperation(CasioGBX100DeviceSupport support, CasioConstants.ConfigurationOption option) {
+    public SetConfigurationOperation(Casio2C2DSupport support, CasioConstants.ConfigurationOption option) {
         super(support);
         this.support = support;
         this.option = option;

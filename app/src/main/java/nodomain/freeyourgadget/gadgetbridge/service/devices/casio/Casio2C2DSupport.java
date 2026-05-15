@@ -104,9 +104,21 @@ public abstract class Casio2C2DSupport extends CasioSupport {
     public static final byte FEATURE_SETTING_FOR_TARGET_VALUE = 0x43;
     public static final byte FEATURE_SETTING_FOR_USER_PROFILE = 0x45;
     public static final byte FEATURE_SERVICE_DISCOVERY_MANAGER = 0x47;
+    public static final byte FEATURE_SESSION_EVENT = 0x48;
+    // GBD-200 specific features
+    public static final byte FEATURE_GPS = 0x24;
+    public static final byte FEATURE_FEAT_2F = 0x2f;
+    public static final byte FEATURE_CONVOY_INIT = 0x1c;
+    public static final byte FEATURE_BLE_PARAM = 0x3d;
 
     protected static Logger LOG;
     LinkedList<RequestWithHandler> requests = new LinkedList<>();
+
+    /** Called when a GetConfigurationOperation finishes. Override in device support subclasses. */
+    public void onGetConfigurationFinished() {}
+
+    /** Sync user profile / settings to the watch. Override in device support subclasses. */
+    public void syncProfile() {}
 
     public Casio2C2DSupport(Logger logger) {
         super(logger);

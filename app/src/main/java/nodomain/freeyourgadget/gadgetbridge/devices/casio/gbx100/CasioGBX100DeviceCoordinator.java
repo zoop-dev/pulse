@@ -56,7 +56,6 @@ public class CasioGBX100DeviceCoordinator extends Casio2C2DDeviceCoordinator {
 
     public static final String[] VARIANTS = {
             GBX_100_SUB_MODEL,
-            GBD_200_SUB_MODEL,
             GBD_100_SUB_MODEL,
             GBD_H1000_SUB_MODEL};
 

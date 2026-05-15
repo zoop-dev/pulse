@@ -154,6 +154,11 @@ public class OpenTracksController extends Activity {
     }
 
     private static void saveToGpx(ActivityTrack activityTrack) {
+        if (activityTrack == null || activityTrack.getSegments().isEmpty()) {
+            LOG.debug("No GPS track points to save — skipping GPX export");
+            return;
+        }
+
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
         final String gpxName = sdf.format(new Date());
 

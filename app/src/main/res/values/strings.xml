@@ -2095,6 +2095,7 @@
     <string name="devicetype_casiogbx100" translatable="false">Casio GBX-100</string>
     <string name="devicetype_casiogwb5600" translatable="false">Casio GW-B5600</string>
     <string name="devicetype_casiogmwb5000" translatable="false">Casio GMW-B5000</string>
+    <string name="devicetype_casiogbd200" translatable="false">Casio GBD-200</string>
     <string name="devicetype_mismartscale" translatable="false">Mi Smart Scale 2</string>
     <string name="devicetype_micompositionscale" translatable="false">Mi Body Composition Scale 2</string>
     <string name="devicetype_itag" translatable="false">iTag</string>
