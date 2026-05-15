@@ -2213,6 +2213,7 @@
     <string name="devicetype_redmi_watch_5" translatable="false">Redmi Watch 5</string>
     <string name="devicetype_redmi_watch_5_active" translatable="false">Redmi Watch 5 Active</string>
     <string name="devicetype_redmi_watch_5_lite" translatable="false">Redmi Watch 5 Lite</string>
+    <string name="devicetype_redmi_watch_move" translatable="false">Redmi Watch Move</string>
     <string name="devicetype_aawireless" translatable="false">AAWireless</string>
     <string name="devicetype_yawell_r05" translatable="false">Yawell R05</string>
     <string name="devicetype_yawell_r10" translatable="false">Yawell R10</string>
