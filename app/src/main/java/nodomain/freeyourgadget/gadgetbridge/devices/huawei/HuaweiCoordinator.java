@@ -573,6 +573,7 @@ public abstract class HuaweiCoordinator extends AbstractDeviceCoordinator {
 
         // Developer
         final List<Integer> developer = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.DEVELOPER);
+        developer.add(R.xml.devicesettings_force_encryption);
         developer.add(R.xml.devicesettings_huawei_debug);
         if (deviceState.supportsGpsAndTimeToDevice())
             developer.add(R.xml.devicesettings_huawei_gps_and_time);

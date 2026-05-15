@@ -4055,6 +4055,10 @@
     <string name="pref_force_connection_type_auto">Automatic</string>
     <string name="pref_force_connection_type_ble">Bluetooth LE</string>
     <string name="pref_force_connection_type_bt_classic">Bluetooth Classic</string>
+    <string name="encryption">Encryption</string>
+    <string name="development_preference_do_not_change">Do not change unless instructed, or if you are developer</string>
+    <string name="preference_force_enabled">Force enabled</string>
+    <string name="preference_force_disabled">Force disabled</string>
     <string name="pref_force_connection_type_auto_value" translatable="false">BOTH</string>
     <string name="pref_force_connection_type_ble_value" translatable="false">BLE</string>
     <string name="pref_force_connection_type_bt_classic_value" translatable="false">BT_CLASSIC</string>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ListPreference
+        android:defaultValue="default"
+        android:entries="@array/pref_force_encryption_names"
+        android:entryValues="@array/pref_force_encryption_values"
+        android:icon="@drawable/ic_lock_open"
+        android:key="force_encryption"
+        android:summary="@string/development_preference_do_not_change"
+        android:title="@string/encryption" />
+</androidx.preference.PreferenceScreen>

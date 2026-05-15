@@ -236,6 +236,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.MediaManager;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 public class HuaweiSupportProvider {
     private static final Logger LOG = LoggerFactory.getLogger(HuaweiSupportProvider.class);
@@ -381,7 +382,13 @@ public class HuaweiSupportProvider {
         this.context = context;
         this.huaweiType = getCoordinator().getHuaweiType();
         this.paramsProvider.setAW(getCoordinator().getHuaweiType() == HuaweiDeviceType.AW);
-        this.paramsProvider.setTransactionsCrypted(getCoordinator().isTransactionCrypted());
+        final DevicePrefs devicePrefs = GBApplication.getDevicePrefs(device);
+        final boolean transactionCrypted = switch (devicePrefs.getString("force_encryption", "default")) {
+            case "force_enabled" -> true;
+            case "force_disabled" -> false;
+            default -> getCoordinator().isTransactionCrypted();
+        };
+        this.paramsProvider.setTransactionsCrypted(transactionCrypted);
         mediaManager = new MediaManager(context);
     }
 

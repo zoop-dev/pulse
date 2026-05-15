@@ -5351,6 +5351,17 @@
         <item>@string/pref_force_connection_type_bt_classic_value</item>
     </string-array>
 
+    <string-array name="pref_force_encryption_names">
+        <item>@string/pref_default</item>
+        <item>@string/preference_force_enabled</item>
+        <item>@string/preference_force_disabled</item>
+    </string-array>
+    <string-array name="pref_force_encryption_values">
+        <item>default</item>
+        <item>force_enabled</item>
+        <item>force_disabled</item>
+    </string-array>
+
     <string-array name="pref_dashboard_widgets_order">
         <item>@string/pref_dashboard_widget_today_title</item>
         <item>@string/pref_dashboard_widget_goals_chart_title</item>
