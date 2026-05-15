@@ -62,6 +62,13 @@
             export GRADLE_OPTS="-Dorg.gradle.daemon=false -Dorg.gradle.project.android.aapt2FromMavenOverride=$ANDROID_SDK_ROOT/build-tools/36.0.0/aapt2"
 
             echo "Java version: $(java -version 2>&1 | head -n1)"
+
+            # Remove sdk.dir from local.properties if present, otherwise aidl
+            # will fail to run
+            if [ -f local.properties ]; then
+              sed -i -E '/^sdk\.dir=/d' local.properties
+            fi
+
             echo "✅ Environment ready!"
             echo "• JAVA_HOME: $JAVA_HOME"
             echo "• ANDROID_SDK_ROOT: $ANDROID_SDK_ROOT"
