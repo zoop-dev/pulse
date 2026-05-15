@@ -720,7 +720,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         }
 
         try {
-            AndroidUtils.shareFile(requireContext(), gpxFile)
+            AndroidUtils.shareFile(requireContext(), gpxFile, "application/gpx+xml")
         } catch (e: Exception) {
             GB.toast(
                 requireContext(),
@@ -742,7 +742,12 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             FileUtils.makeValidFileName("${DateTimeUtils.formatIso8601(workout.summary.startTime)}_summary.bin")
 
         try {
-            AndroidUtils.shareBytesAsFile(requireContext(), filename, workout.summary.rawSummaryData)
+            AndroidUtils.shareBytesAsFile(
+                requireContext(),
+                filename,
+                workout.summary.rawSummaryData,
+                "application/octet-stream"
+            )
         } catch (e: Exception) {
             GB.toast(
                 requireContext(),
@@ -766,7 +771,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         }
 
         try {
-            AndroidUtils.shareFile(requireContext(), file)
+            AndroidUtils.shareFile(requireContext(), file, "application/octet-stream")
         } catch (e: Exception) {
             GB.toast(
                 requireContext(),
@@ -785,7 +790,8 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             AndroidUtils.shareBytesAsFile(
                 requireContext(),
                 filename,
-                workout.data.toString().toByteArray(StandardCharsets.UTF_8)
+                workout.data.toString().toByteArray(StandardCharsets.UTF_8),
+                "application/json"
             )
         } catch (e: Exception) {
             GB.toast(

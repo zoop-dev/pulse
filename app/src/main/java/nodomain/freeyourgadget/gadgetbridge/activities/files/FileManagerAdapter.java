@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
@@ -111,8 +112,16 @@ public class FileManagerAdapter extends RecyclerView.Adapter<FileManagerAdapter.
                     final int itemId = item.getItemId();
                     if (itemId == R.id.file_manager_file_menu_share) {
                         try {
-                            AndroidUtils.shareFile(mContext, file, "*/*");
-                        } catch (final IOException e) {
+                            String mimeType = null;
+                            final String extension = MimeTypeMap.getFileExtensionFromUrl(file.getPath());
+                            if (extension != null) {
+                                mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+                            }
+                            if (mimeType == null) {
+                                mimeType = "*/*";
+                            }
+                            AndroidUtils.shareFile(mContext, file, mimeType);
+                        } catch (final Exception e) {
                             GB.toast("Failed to share file", Toast.LENGTH_LONG, GB.ERROR, e);
                         }
                         return true;
