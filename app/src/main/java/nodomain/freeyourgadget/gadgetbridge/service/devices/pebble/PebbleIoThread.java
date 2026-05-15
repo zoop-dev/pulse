@@ -725,7 +725,12 @@ class PebbleIoThread extends GBDeviceIoThread {
         mInstallSlot = -2;
     }
 
-    @Override
+    public void readBatteryCharacteristic() {
+        if (mPebbleLESupport != null) {
+            mPebbleLESupport.readBatteryCharacteristic();
+        }
+    }
+
     public void quit() {
         mQuit = true;
         cleanup();

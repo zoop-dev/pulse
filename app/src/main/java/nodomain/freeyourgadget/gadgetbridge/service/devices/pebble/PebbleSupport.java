@@ -262,6 +262,12 @@ public class PebbleSupport extends AbstractSerialDeviceSupport {
     }
 
     @Override
+    public void onFetchRecordedData(int dataTypes) {
+        super.onFetchRecordedData(dataTypes);
+        getDeviceIOThread().readBatteryCharacteristic();
+    }
+
+    @Override
     public void onSendWeather() {
         if (reconnect()) {
             super.onSendWeather();
