@@ -171,17 +171,17 @@ class InternetUtils {
                 }
 
                 val boundary = "----GadgetbridgeFormBoundary${System.currentTimeMillis()}"
-                val multipartBody = buildMultipartBody(file, fileName, mimeType, boundary)
+                val multipartBodyBytes = buildMultipartBody(file, fileName, mimeType, boundary)
 
                 val headers = requestHeaders.toMutableMap()
                 headers["Content-Type"] = "multipart/form-data; boundary=$boundary"
 
                 val response = if (GBApplication.hasDirectInternetAccess()) {
-                    directRequest(
+                    directBinaryRequest(
                         uri = uri,
                         method = "POST",
                         requestHeaders = headers,
-                        body = multipartBody,
+                        body = multipartBodyBytes,
                         allowInsecure = allowInsecure
                     )
                 } else {
@@ -189,7 +189,7 @@ class InternetUtils {
                         uri,
                         HttpRequest.Method.POST,
                         headers,
-                        multipartBody.toByteArray(),
+                        multipartBodyBytes,
                         allowInsecure
                     )
                 }
@@ -207,24 +207,57 @@ class InternetUtils {
             fileName: String,
             mimeType: String,
             boundary: String
-        ): String {
+        ): ByteArray {
             val fileBytes = file.readBytes()
             val output = ByteArrayOutputStream()
-            val writer = output.bufferedWriter()
 
-            writer.write("--$boundary\r\n")
-            writer.write("Content-Disposition: form-data; name=\"file\"; filename=\"$fileName\"\r\n")
-            writer.write("Content-Type: $mimeType\r\n")
-            writer.write("\r\n")
-            writer.flush()
-
+            val header = "--$boundary\r\n" +
+                "Content-Disposition: form-data; name=\"file\"; filename=\"$fileName\"\r\n" +
+                "Content-Type: $mimeType\r\n" +
+                "\r\n"
+            output.write(header.toByteArray(Charsets.US_ASCII))
             output.write(fileBytes)
+            output.write("\r\n--$boundary--\r\n".toByteArray(Charsets.US_ASCII))
 
-            writer.write("\r\n")
-            writer.write("--$boundary--\r\n")
-            writer.flush()
+            return output.toByteArray()
+        }
 
-            return output.toString("UTF-8")
+        /**
+         * Direct HTTP request using OkHttp with a binary body.
+         */
+        private fun directBinaryRequest(
+            uri: Uri,
+            method: String,
+            requestHeaders: Map<String, String>,
+            body: ByteArray,
+            allowInsecure: Boolean
+        ): WebResourceResponse {
+            val client = if (allowInsecure) createInsecureClient() else defaultClient
+            val builder = Request.Builder().url(uri.toString())
+
+            for ((key, value) in headersWithUserAgent(requestHeaders)) {
+                builder.addHeader(key, value)
+            }
+
+            val contentType = getHeader(requestHeaders, "content-type") ?: "application/octet-stream"
+            val requestBody = body.toRequestBody(contentType.toMediaType())
+            builder.method(method.uppercase(), requestBody)
+
+            client.newCall(builder.build()).execute().use { response ->
+                val statusCode = response.code
+                val message = if (!response.message.isEmpty()) response.message else "OK"
+                val headers = response.headers.toMap()
+                val respContentType = response.header("content-type") ?: "application/octet-stream"
+                val encoding = response.header("content-encoding") ?: "UTF-8"
+                return WebResourceResponse(
+                    respContentType,
+                    encoding,
+                    statusCode,
+                    message,
+                    headers,
+                    ByteArrayInputStream(response.body.bytes())
+                )
+            }
         }
 
         /**

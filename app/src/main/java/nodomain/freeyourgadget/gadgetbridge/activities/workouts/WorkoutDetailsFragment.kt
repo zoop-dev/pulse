@@ -750,10 +750,15 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         val workoutName = currentWorkout!!.summary.name
         val activityKind = ActivityKind.fromCode(currentWorkout!!.summary.activityKind)
         val activityTrackProvider = gbDevice.deviceCoordinator.getActivityTrackProvider(gbDevice, requireContext())
-        val gpxFile = ActivitySummaryUtils.getShareableGpxFile(activityTrackProvider, workout.summary)
 
-        if (gpxFile == null) {
-            GB.toast(getString(R.string.no_gpx_track_in_activity_toast), Toast.LENGTH_LONG, GB.INFO)
+        val activityFile = if (workout.summary.rawDetailsPath?.endsWith(".fit") == true) {
+            FileUtils.tryFixPath(workout.summary.rawDetailsPath)
+        } else {
+            ActivitySummaryUtils.getShareableGpxFile(activityTrackProvider, workout.summary)
+        }
+
+        if (activityFile == null) {
+            GB.toast(getString(R.string.no_activity_track_in_activity_toast), Toast.LENGTH_LONG, GB.INFO)
             return
         }
 
@@ -763,7 +768,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             val apiClient = EndurainApiClient(serverUrl!!, endurainVm.tokenManager)
             endurainVm.tokenManager.performTokenRefresh(serverUrl) {
                 LOG.info("Uploading workout '{}' (type {}) to Endurain", workoutName, activityKind)
-                apiClient.uploadActivity(gpxFile) { newId ->
+                apiClient.uploadActivity(activityFile) { newId ->
                     if (newId != null) {
                         // Update activity type on the server
                         apiClient.editActivity(newId, activityKind, workoutName)
