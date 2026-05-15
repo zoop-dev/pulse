@@ -58,6 +58,12 @@
       "matchPackageNames": [
         "org.freemarker:freemarker"
       ]
+    },
+    {
+      "matchPackageNames": [
+        "com.google.guava:guava"
+      ],
+      "versionCompatibility": "^(?<version>[^-]+)(?<compatibility>-.*)?$"
     }
   ]
 }
