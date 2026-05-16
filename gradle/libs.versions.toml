@@ -48,7 +48,7 @@ protobuf = "4.34.1"
 protobuf-plugin = "0.10.0"
 robolectric = "4.16.1"
 searchpreference = "2.7.3"
-slf4j = "2.0.17"
+slf4j = "2.0.18"
 solarpositioning = "0.1.10"
 
 [libraries]
