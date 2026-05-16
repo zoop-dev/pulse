@@ -46,7 +46,7 @@ internal object Vo2MaxSyncer : AbstractTimeSampleSyncer<Vo2MaxSample, Vo2MaxReco
         deviceName: String
     ): Vo2MaxRecord? {
         if (sample.value <= 0) {
-            logger.debug("Skipping VO2Max sample for device '$deviceName' due to invalid value: ${sample.value}.")
+            logger.trace("Skipping VO2Max sample for device '$deviceName' due to invalid value: ${sample.value}.")
             return null
         }
 

@@ -115,7 +115,7 @@ internal object TemperatureSyncer : HealthConnectSyncer {
                         )
                     )
                 } else {
-                    LOG.debug(
+                    LOG.trace(
                         "Skipping Body Temperature sample for device '{}' at {} (value: {}°C) as it's outside slice {} - {}.",
                         deviceName,
                         timestamp,

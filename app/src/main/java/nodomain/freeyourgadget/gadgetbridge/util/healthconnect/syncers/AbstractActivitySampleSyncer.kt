@@ -77,7 +77,7 @@ internal abstract class AbstractActivitySampleSyncer<TRecord : Record> : Activit
             val startTs = endTs.minus(1, ChronoUnit.MINUTES)
 
             if (endTs.isBefore(sliceStartBoundary) || startTs.isAfter(sliceEndBoundary)) {
-                logger.debug(
+                logger.trace(
                     "Skipping {} for device '{}' for sample at {} (interval {} to {}) as its interval is outside the slice {} - {}.",
                     recordTypeName,
                     deviceName,

@@ -404,7 +404,7 @@ public abstract class AbstractSampleProvider<T extends AbstractActivitySample> i
         T previousSample = it.next();
 
         if (LOG.isTraceEnabled()) {
-            LOG.trace("Starting filling gapps at {}", DateTimeUtils.formatDateTime(DateTimeUtils.parseTimestampMillis(previousSample.getTimestamp() * 1000L)));
+            LOG.trace("Starting filling gaps at {}", DateTimeUtils.formatDateTime(DateTimeUtils.parseTimestampMillis(previousSample.getTimestamp() * 1000L)));
         }
 
         while (it.hasNext()) {
