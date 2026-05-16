@@ -656,7 +656,7 @@ public class XiaomiHealthService extends AbstractXiaomiService {
         );
 
         final boolean sendGpsToBand = getDevicePrefs().getBoolean(DeviceSettingsPreferenceConst.PREF_WORKOUT_SEND_GPS_TO_BAND, false);
-        if (!sendGpsToBand) {
+        if (!sendGpsToBand || !GBLocationService.isGpsSupportedAndEnabled()) {
             getSupport().sendCommand(
                     "send location disabled",
                     XiaomiProto.Command.newBuilder()

@@ -21,6 +21,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.LocationManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,6 +38,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -86,18 +88,17 @@ public class GBLocationService extends BroadcastReceiver {
 
                 LOG.debug("Starting location provider {} for {}", providerType, device.getAliasOrName());
 
-                if (!providersByDevice.containsKey(device)) {
-                    providersByDevice.put(device, new ArrayList<>());
-                }
-
-                updateNotification();
-
-                final List<GBLocationProvider> existingProviders = providersByDevice.get(device);
-
                 final GBLocationListener locationListener = new GBLocationListener(device);
                 final GBLocationProvider locationProvider = providerType.newInstance(context, locationListener);
-                locationProvider.start(updateInterval);
+                try {
+                    locationProvider.start(updateInterval);
+                } catch (final Exception e) {
+                    LOG.error("Failed to start location provider {} for {}", providerType, device.getAliasOrName(), e);
+                    return;
+                }
+                final List<GBLocationProvider> existingProviders = providersByDevice.computeIfAbsent(device, ignored -> new ArrayList<>());
                 Objects.requireNonNull(existingProviders).add(locationProvider);
+                updateNotification();
                 return;
             case ACTION_STOP:
                 if (device != null) {
@@ -142,6 +143,11 @@ public class GBLocationService extends BroadcastReceiver {
         }
 
         updateNotification();
+    }
+
+    public static boolean isGpsSupportedAndEnabled() {
+        final LocationManager locationManager = (LocationManager) GBApplication.getContext().getSystemService(Context.LOCATION_SERVICE);
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     public static void start(final Context context,

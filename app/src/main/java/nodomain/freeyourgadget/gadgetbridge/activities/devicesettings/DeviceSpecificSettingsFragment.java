@@ -93,6 +93,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceManager;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.HuamiConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandConst;
+import nodomain.freeyourgadget.gadgetbridge.externalevents.gps.GBLocationService;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.model.CannedMessagesSpec;
@@ -682,6 +683,12 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_SOUNDS);
         addPreferenceHandlerFor(PREF_CAMERA_REMOTE);
         addPreferenceHandlerFor(PREF_SCREEN_LIFT_WRIST);
+
+        final Preference sendGpsToBandPref = findPreference(PREF_WORKOUT_SEND_GPS_TO_BAND);
+        if (sendGpsToBandPref != null && !GBLocationService.isGpsSupportedAndEnabled()) {
+            sendGpsToBandPref.setEnabled(false);
+            sendGpsToBandPref.setSummary(R.string.phone_gps_not_available);
+        }
 
         addPreferenceHandlerFor(PREF_BATTERY_POLLING_ENABLE);
         addPreferenceHandlerFor(PREF_BATTERY_POLLING_INTERVAL);

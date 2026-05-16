@@ -1,4 +1,4 @@
-/*  Copyright (C) 2022-2024 José Rebelo, LukasEdl
+/*  Copyright (C) 2022-2026 José Rebelo, LukasEdl
 
     This file is part of Gadgetbridge.
 
@@ -47,7 +47,7 @@ public class PhoneLocationProvider extends GBLocationProvider {
 
     @Override
     public void start(final int interval) {
-        LOG.info("Starting phone gps location provider");
+        LOG.info("Starting phone location provider ({})", provider);
 
         if (!GB.checkPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) && !GB.checkPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)) {
             GB.toast("Location permission not granted", Toast.LENGTH_SHORT, GB.ERROR);

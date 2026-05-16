@@ -155,7 +155,7 @@ public class ZeppOsWorkoutService extends AbstractZeppOsService {
         final boolean sendGpsToBand = getDevicePrefs().getBoolean(DeviceSettingsPreferenceConst.PREF_WORKOUT_SEND_GPS_TO_BAND, false);
 
         if (workoutNeedsGps) {
-            if (sendGpsToBand) {
+            if (sendGpsToBand && GBLocationService.isGpsSupportedAndEnabled()) {
                 lastPhoneGpsSent = 0;
                 sendPhoneGps(HuamiPhoneGpsStatus.SEARCHING, null);
                 GBLocationService.start(getContext(), getSupport().getDevice(), GBLocationProviderType.GPS, 1000);

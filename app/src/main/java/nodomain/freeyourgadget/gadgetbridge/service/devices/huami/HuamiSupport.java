@@ -1859,7 +1859,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
         final boolean sendGpsToBand = HuamiCoordinator.getWorkoutSendGpsToBand(getDevice().getAddress());
 
         if (workoutNeedsGps) {
-            if (sendGpsToBand) {
+            if (sendGpsToBand && GBLocationService.isGpsSupportedAndEnabled()) {
                 lastPhoneGpsSent = 0;
                 sendPhoneGps(HuamiPhoneGpsStatus.SEARCHING, null);
                 GBLocationService.start(getContext(), getDevice(), GBLocationProviderType.GPS, 1000);

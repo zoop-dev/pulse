@@ -78,6 +78,7 @@
     <string name="all_satellites">All Satellites</string>
     <string name="speed_first">Speed first</string>
     <string name="accuracy_first">Accuracy First</string>
+    <string name="phone_gps_not_available">Phone GPS is not available</string>
 
     <string name="device_card_activity_card_title">Activity info on device card</string>
     <string name="device_card_activity_card_title_summary">Choose what activity details are displayed on device card</string>
