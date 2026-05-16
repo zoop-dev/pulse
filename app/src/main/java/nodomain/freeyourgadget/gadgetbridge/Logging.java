@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.Locale;
 
+import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder;
 import ch.qos.logback.classic.spi.ILoggingEvent;
@@ -57,8 +58,9 @@ public class Logging {
         return INSTANCE;
     }
 
-    public void initialize(final boolean enable) {
+    public void initialize(final boolean enable, final boolean trace) {
         setFileLoggingEnabled(enable);
+        setTraceLogging(trace);
         // prepare for log shutdown
         if (!initialized) {
             final Thread thread = new Thread(this::shutdown, "shutdownHook");
@@ -134,6 +136,15 @@ public class Logging {
 
     public boolean isFileLoggerInitialized() {
         return logDirectory != null;
+    }
+
+    public void setTraceLogging(final boolean traceEnabled) {
+        try {
+            ch.qos.logback.classic.Logger root = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+            root.setLevel(traceEnabled ? Level.TRACE : Level.DEBUG);
+        } catch (final Throwable e) {
+            LOG.error("Error changing log level", e);
+        }
     }
 
     public void debugLoggingConfiguration() {

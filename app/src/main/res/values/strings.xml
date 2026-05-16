@@ -2638,6 +2638,8 @@
     <string name="error_background_service_reason_truncated">Starting the background service failed because…</string>
     <string name="pref_crash_notification_title">Notify on crash</string>
     <string name="pref_crash_notification_summary">When the app crashes, display a notification with the error</string>
+    <string name="pref_log_level_trace_title">Trace logging</string>
+    <string name="pref_log_level_trace_summary">Increase logging level to TRACE</string>
     <string name="app_crash_notification_title">%1s has crashed</string>
     <string name="app_crash_share_stacktrace">Share error</string>
     <string name="device_is_currently_bonded">ALREADY BONDED</string>

@@ -237,7 +237,10 @@ public class GBApplication extends Application {
             GBDatabaseManager.setupDatabase(this);
         }
 
-        Logging.getInstance().initialize(prefs.getBoolean("log_to_file", false));
+        Logging.getInstance().initialize(
+                prefs.getBoolean("log_to_file", false),
+                prefs.getBoolean("log_level_trace", false)
+        );
 
         migratePrefsIfNeeded();
 
