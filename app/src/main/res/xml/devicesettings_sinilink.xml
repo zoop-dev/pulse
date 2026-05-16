@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ListPreference
+        android:defaultValue="bluetooth"
+        android:entries="@array/sinilink_media_source_names"
+        android:entryValues="@array/sinilink_media_source_values"
+        android:icon="@drawable/ic_music_note"
+        android:key="pref_media_source"
+        android:title="@string/media_source"
+        app:useSimpleSummaryProvider="true" />
+
+    <ListPreference
+        android:defaultValue="normal"
+        android:entries="@array/sinilink_equalizer_names"
+        android:entryValues="@array/sinilink_equalizer_values"
+        android:icon="@drawable/ic_equalizer"
+        android:key="pref_headphones_equalizer"
+        android:title="@string/prefs_equalizer_preset"
+        app:useSimpleSummaryProvider="true" />
+
+    <ListPreference
+        android:defaultValue="list_cycle"
+        android:entries="@array/sinilink_playback_mode_names"
+        android:entryValues="@array/sinilink_playback_mode_values"
+        android:icon="@drawable/ic_play"
+        android:key="pref_media_playback_mode"
+        android:title="@string/media_playback_mode"
+        app:useSimpleSummaryProvider="true" />
+
+    <SeekBarPreference
+        android:defaultValue="15"
+        android:icon="@drawable/ic_volume_up"
+        android:key="volume"
+        android:max="30"
+        android:title="@string/menuitem_volume"
+        app:showSeekBarValue="true" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:icon="@drawable/ic_notifications"
+        android:key="prompt_tone"
+        android:title="@string/sinilink_prompt_tone" />
+
+</androidx.preference.PreferenceScreen>

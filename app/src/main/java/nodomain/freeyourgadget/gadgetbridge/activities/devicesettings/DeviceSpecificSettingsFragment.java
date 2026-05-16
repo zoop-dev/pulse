@@ -1001,6 +1001,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
 
         addPreferenceHandlerFor(PREF_VOLUME);
         addPreferenceHandlerFor(PREF_CROWN_VIBRATION);
+        addPreferenceHandlerFor(PREF_PROMPT_TONE);
         addPreferenceHandlerFor(PREF_ALERT_TONE);
         addPreferenceHandlerFor(PREF_COVER_TO_MUTE);
         addPreferenceHandlerFor(PREF_VIBRATE_FOR_ALERT);

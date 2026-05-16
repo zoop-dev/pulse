@@ -170,6 +170,7 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_ALWAYS_ON_DISPLAY_STYLE = "always_on_display_style";
 
     public static final String PREF_VOLUME = "volume";
+    public static final String PREF_PROMPT_TONE = "prompt_tone";
     public static final String PREF_CROWN_VIBRATION = "crown_vibration";
     public static final String PREF_ALERT_TONE = "alert_tone";
     public static final String PREF_COVER_TO_MUTE = "cover_to_mute";

@@ -606,6 +606,7 @@ public class BleNamesResolver {
         mServices.put("8d53dc1d-1db7-4cd3-868b-8a527460aa84", "(Propr: SMP - Simple Management Protocol)");
         mServices.put("6e40fff0-b5a3-f393-e0a9-e50e24dcca9e", "(Propr: NUS - Nordic UART Service)");
         mServices.put("de5bf728-d711-4e47-af26-65e3012a5dc7", "(Propr: Yawell Serial)");
+        mServices.put("0000ae00-0000-1000-8000-00805f9b34fb", "(Propr: Sinilink-APP)");
 
         // source https://bitbucket.org/bluetooth-SIG/public/src/main/assigned_numbers/uuids/characteristic_uuids.yaml
         mCharacteristics.put("00002a00-0000-1000-8000-00805f9b34fb", "Device Name");
@@ -1202,6 +1203,8 @@ public class BleNamesResolver {
         mCharacteristics.put("6e400003-b5a3-f393-e0a9-e50e24dcca9e", "(Propr: Nordic UART RX)");
         mCharacteristics.put("de5bf729-d711-4e47-af26-65e3012a5dc7", "(Propr: Yawell Notify)");
         mCharacteristics.put("de5bf72a-d711-4e47-af26-65e3012a5dc7", "(Propr: Yawell Write)");
+        mCharacteristics.put("0000ae04-0000-1000-8000-00805f9b34fb", "(Propr: Sinilink-APP RX)");
+        mCharacteristics.put("0000ae10-0000-1000-8000-00805f9b34fb", "(Propr: Sinilink-APP TX)");
 
         mValueFormats.put(52, "32bit float");
         mValueFormats.put(50, "16bit float");

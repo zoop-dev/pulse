@@ -34,6 +34,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsHandler;
 
 public class PasswordCapabilityImpl {
+    public static final String PREF_SCREEN_PASSWORD = "pref_screen_password";
     public static final String PREF_PASSWORD = "pref_password";
     public static final String PREF_PASSWORD_ENABLED = "pref_password_enabled";
 
@@ -42,6 +43,7 @@ public class PasswordCapabilityImpl {
         NUMBERS_4_DIGITS_0_TO_9,
         NUMBERS_4_DIGITS_1_TO_4,
         NUMBERS_6,
+        VISIBLE_NUMBERS_4_DIGITS_0_TO_9,
     }
 
     public void registerPreferences(final Context context, final Mode mode, final DeviceSpecificSettingsHandler handler) {
@@ -62,6 +64,7 @@ public class PasswordCapabilityImpl {
                 password.setSummary(R.string.prefs_password_6_digits_0_to_9_summary);
                 break;
             case NUMBERS_4_DIGITS_0_TO_9:
+            case VISIBLE_NUMBERS_4_DIGITS_0_TO_9:
                 password.setSummary(R.string.prefs_password_4_digits_0_to_9_summary);
                 break;
             case NUMBERS_4_DIGITS_1_TO_4:
@@ -71,43 +74,49 @@ public class PasswordCapabilityImpl {
                 break;
         }
 
-        password.setOnBindEditTextListener(new EditTextPreference.OnBindEditTextListener() {
-            @Override
-            public void onBindEditText(@NonNull final EditText editText) {
-                final int expectedLength;
-                final List<InputFilter> inputFilters = new ArrayList<>();
+        password.setOnBindEditTextListener(editText -> {
+            final int expectedLength;
+            final List<InputFilter> inputFilters = new ArrayList<>();
 
-                switch (mode) {
-                    case NUMBERS_6:
-                        password.setSummary(R.string.prefs_password_6_digits_0_to_9_summary);
-                        editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-                        expectedLength = 6;
-                        break;
-                    case NUMBERS_4_DIGITS_0_TO_9:
-                        password.setSummary(R.string.prefs_password_4_digits_0_to_9_summary);
-                        editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-                        expectedLength = 4;
-                        break;
-                    case NUMBERS_4_DIGITS_1_TO_4:
-                        password.setSummary(R.string.prefs_password_4_digits_1_to_4_summary);
-                        editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-                        expectedLength = 4;
-                        inputFilters.add(new InputFilter_Digits_1to4());
-                        break;
-                    default:
-                        editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                        expectedLength = -1;
-                        break;
-                }
+            int inputType;
 
-                if (expectedLength != -1) {
-                    inputFilters.add(new InputFilter.LengthFilter(expectedLength));
-                }
-
-                editText.setSelection(editText.getText().length());
-                editText.setFilters(inputFilters.toArray(new InputFilter[0]));
-                editText.addTextChangedListener(new ExpectedLengthTextWatcher(editText, expectedLength));
+            switch (mode) {
+                case NUMBERS_6:
+                    password.setSummary(R.string.prefs_password_6_digits_0_to_9_summary);
+                    inputType = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD;
+                    expectedLength = 6;
+                    break;
+                case NUMBERS_4_DIGITS_0_TO_9:
+                    password.setSummary(R.string.prefs_password_4_digits_0_to_9_summary);
+                    inputType = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD;
+                    expectedLength = 4;
+                    break;
+                case VISIBLE_NUMBERS_4_DIGITS_0_TO_9:
+                    password.setSummary(R.string.prefs_password_4_digits_0_to_9_summary);
+                    inputType = InputType.TYPE_CLASS_NUMBER;
+                    expectedLength = 4;
+                    break;
+                case NUMBERS_4_DIGITS_1_TO_4:
+                    password.setSummary(R.string.prefs_password_4_digits_1_to_4_summary);
+                    inputType = InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD;
+                    expectedLength = 4;
+                    inputFilters.add(new InputFilter_Digits_1to4());
+                    break;
+                default:
+                    inputType = InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD;
+                    expectedLength = -1;
+                    break;
             }
+
+            editText.setInputType(inputType);
+
+            if (expectedLength != -1) {
+                inputFilters.add(new InputFilter.LengthFilter(expectedLength));
+            }
+
+            editText.setSelection(editText.getText().length());
+            editText.setFilters(inputFilters.toArray(new InputFilter[0]));
+            editText.addTextChangedListener(new ExpectedLengthTextWatcher(editText, expectedLength));
         });
     }
 

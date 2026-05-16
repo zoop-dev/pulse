@@ -888,7 +888,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
             }
 
             final String label = action.getLabel(device, context);
-            if (!StringUtils.isEmpty(label)) {
+            if (!StringUtils.isNullOrEmpty(label)) {
                 holder.customActions[i].label.setVisibility(View.VISIBLE);
                 holder.customActions[i].label.setText(label);
             } else {

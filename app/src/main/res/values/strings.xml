@@ -3544,6 +3544,7 @@
     <string name="soundcore_equalizer_preset_lounge">Lounge</string>
     <string name="soundcore_equalizer_preset_piano">Piano</string>
     <string name="soundcore_equalizer_preset_rnb">R&amp;B</string>
+    <string name="equalizer_preset_country">Country</string>
     <string name="soundcore_equalizer_preset_small_speakers">Small Speakers</string>
     <string name="soundcore_equalizer_preset_spoken_word">Spoken Word</string>
     <string name="soundcore_equalizer_preset_treble_reducer">Treble Reducer</string>
@@ -4630,6 +4631,7 @@
     <string name="cannot_open_help_url">Could not open URL</string>
     <string name="auth_settings">Authentication settings</string>
     <string name="devicetype_shokz_openswim_pro" translatable="false">Shokz OpenSwim Pro</string>
+    <string name="devicetype_sinilink" translatable="false">Sinilink</string>
     <string name="devicetype_onetouch" translatable="false">OneTouch Glucose Meter</string>
     <string name="equalizer_preset_standard">Standard</string>
     <string name="media_playback_mode">Playback mode</string>
@@ -4895,4 +4897,14 @@
     <string name="broadcast_heart_rate_summary">Any nearby device or app can pick up your heart rate.</string>
     <string name="dual_connection_title">Dual connection</string>
     <string name="dual_connection_summary">Allow two apps or devices to connect simultaneously.</string>
+    <string name="sinilink_playback_mode_list_cycle">List cycle</string>
+    <string name="sinilink_playback_mode_single_head">Single (head)</string>
+    <string name="sinilink_playback_mode_single_cycle">Single cycle</string>
+    <string name="sinilink_playback_mode_random">Random</string>
+    <string name="sinilink_playback_mode_order">Order</string>
+    <string name="media_source_tf">TF card</string>
+    <string name="media_source_usb">USB</string>
+    <string name="media_source_audio_card">Audio card</string>
+    <string name="media_source_aux">AUX</string>
+    <string name="sinilink_prompt_tone">Prompt tone</string>
 </resources>

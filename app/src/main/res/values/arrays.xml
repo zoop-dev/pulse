@@ -5712,4 +5712,51 @@
         <item>MUSIC_CONTROL</item>
         <item>RING_PHONE</item>
     </string-array>
+
+    <string-array name="sinilink_equalizer_names">
+        <item>@string/pref_title_equalizer_normal</item>
+        <item>@string/nothing_equalizer_rock</item>
+        <item>@string/nothing_equalizer_pop</item>
+        <item>@string/nothing_equalizer_classical</item>
+        <item>@string/soundcore_equalizer_preset_jazz</item>
+        <item>@string/equalizer_preset_country</item>
+    </string-array>
+    <string-array name="sinilink_equalizer_values">
+        <item>normal</item>
+        <item>rock</item>
+        <item>pop</item>
+        <item>classic</item>
+        <item>jazz</item>
+        <item>country</item>
+    </string-array>
+
+    <string-array name="sinilink_playback_mode_names">
+        <item>@string/sinilink_playback_mode_list_cycle</item>
+        <item>@string/sinilink_playback_mode_single_head</item>
+        <item>@string/sinilink_playback_mode_single_cycle</item>
+        <item>@string/sinilink_playback_mode_random</item>
+        <item>@string/sinilink_playback_mode_order</item>
+    </string-array>
+    <string-array name="sinilink_playback_mode_values">
+        <item>list_cycle</item>
+        <item>single_head</item>
+        <item>single_cycle</item>
+        <item>random</item>
+        <item>order</item>
+    </string-array>
+
+    <string-array name="sinilink_media_source_names">
+        <item>@string/media_source_tf</item>
+        <item>@string/media_source_usb</item>
+        <item>@string/menuitem_bluetooth</item>
+        <item>@string/media_source_audio_card</item>
+        <item>@string/media_source_aux</item>
+    </string-array>
+    <string-array name="sinilink_media_source_values">
+        <item>tf</item>
+        <item>usb</item>
+        <item>bluetooth</item>
+        <item>audio_card</item>
+        <item>aux</item>
+    </string-array>
 </resources>
