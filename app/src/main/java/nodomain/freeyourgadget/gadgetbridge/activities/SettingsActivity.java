@@ -204,6 +204,13 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
                         });
                     }
                 }
+
+                final SwitchPreferenceCompat logLevelTrace = findPreference("log_level_trace");
+                logLevelTrace.setOnPreferenceChangeListener((preference, newVal) -> {
+                    final boolean traceEnabled = Boolean.TRUE.equals(newVal);
+                    Logging.getInstance().setTraceLogging(traceEnabled);
+                    return true;
+                });
             }
 
             pref = findPreference(PREF_LANGUAGE);
