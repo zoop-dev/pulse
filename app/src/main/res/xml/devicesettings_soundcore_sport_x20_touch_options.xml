@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="@string/single_tap">
+        <ListPreference
+            android:entries="@array/soundcore_sport_x20_single_tap_function_names"
+            android:entryValues="@array/soundcore_sport_x20_single_tap_function_values"
+            android:icon="@drawable/ic_touch"
+            android:key="pref_soundcore_control_single_tap_action_left"
+            android:title="@string/prefs_left"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            android:entries="@array/soundcore_sport_x20_single_tap_function_names"
+            android:entryValues="@array/soundcore_sport_x20_single_tap_function_values"
+            android:icon="@drawable/ic_touch"
+            android:key="pref_soundcore_control_single_tap_action_right"
+            android:title="@string/prefs_right"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/double_tap">
+        <ListPreference
+            android:entries="@array/soundcore_sport_x20_double_tap_function_names"
+            android:entryValues="@array/soundcore_sport_x20_double_tap_function_values"
+            android:icon="@drawable/ic_touch"
+            android:key="pref_soundcore_control_double_tap_action_left"
+            android:title="@string/prefs_left"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            android:entries="@array/soundcore_sport_x20_double_tap_function_names"
+            android:entryValues="@array/soundcore_sport_x20_double_tap_function_values"
+            android:icon="@drawable/ic_touch"
+            android:key="pref_soundcore_control_double_tap_action_right"
+            android:title="@string/prefs_right"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/long_press">
+        <ListPreference
+            android:entries="@array/soundcore_sport_x20_long_press_function_names"
+            android:entryValues="@array/soundcore_sport_x20_long_press_function_values"
+            android:icon="@drawable/ic_touch"
+            android:key="pref_soundcore_control_long_press_action_left"
+            android:title="@string/prefs_left"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            android:entries="@array/soundcore_sport_x20_long_press_function_names"
+            android:entryValues="@array/soundcore_sport_x20_long_press_function_values"
+            android:icon="@drawable/ic_touch"
+            android:key="pref_soundcore_control_long_press_action_right"
+            android:title="@string/prefs_right"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

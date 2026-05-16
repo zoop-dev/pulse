@@ -520,6 +520,8 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_SOUNDCORE_VOICE_PROMPTS = "pref_soundcore_voice_prompts";
     public static final String PREF_SOUNDCORE_BUTTON_BRIGHTNESS = "pref_soundcore_button_brightness";
     public static final String PREF_SOUNDCORE_AUTO_POWER_OFF = "pref_soundcore_auto_power_off";
+    public static final String PREF_SOUNDCORE_3D_SURROUND = "pref_soundcore_3d_surround";
+    public static final String PREF_SOUNDCORE_ENABLE_PAIRING_MODE = "pref_soundcore_enable_pairing_mode";
     public static final String PREF_SOUNDCORE_LDAC_MODE = "pref_soundcore_ldac_mode";
     public static final String PREF_SOUNDCORE_GAMING_MODE = "pref_soundcore_gaming_mode";
     public static final String PREF_SOUNDCORE_ADAPTIVE_DIRECTION = "pref_soundcore_adaptive_direction";

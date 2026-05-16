@@ -910,6 +910,7 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_SOUNDCORE_VOICE_PROMPTS);
         addPreferenceHandlerFor(PREF_SOUNDCORE_BUTTON_BRIGHTNESS);
         addPreferenceHandlerFor(PREF_SOUNDCORE_AUTO_POWER_OFF);
+        addPreferenceHandlerFor(PREF_SOUNDCORE_3D_SURROUND);
         addPreferenceHandlerFor(PREF_SOUNDCORE_LDAC_MODE);
         addPreferenceHandlerFor(PREF_SOUNDCORE_GAMING_MODE);
         addPreferenceHandlerFor(PREF_SOUNDCORE_ADAPTIVE_DIRECTION);

@@ -4567,6 +4567,120 @@
         <item>AMBIENT_SOUND_CONTROL</item>
     </string-array>
 
+    <string-array name="soundcore_sport_x20_single_tap_function_names">
+        <item>@string/pref_media_volumedown</item>
+        <item>@string/pref_media_volumeup</item>
+        <item>@string/pref_media_next</item>
+        <item>@string/pref_media_previous</item>
+        <item>@string/pref_media_playpause</item>
+        <item>@string/none</item>
+    </string-array>
+
+    <string-array name="soundcore_sport_x20_single_tap_function_values">
+        <item>VOLUME_DOWN</item>
+        <item>VOLUME_UP</item>
+        <item>MEDIA_NEXT</item>
+        <item>MEDIA_PREV</item>
+        <item>PLAYPAUSE</item>
+        <item>NONE</item>
+    </string-array>
+
+    <string-array name="soundcore_sport_x20_double_tap_function_names">
+        <item>@string/pref_media_volumedown</item>
+        <item>@string/pref_media_volumeup</item>
+        <item>@string/pref_media_next</item>
+        <item>@string/pref_media_previous</item>
+        <item>@string/pref_media_playpause</item>
+        <item>@string/pref_title_touch_voice_assistant</item>
+        <item>@string/sony_button_mode_ambient_sound_control</item>
+        <item>@string/none</item>
+    </string-array>
+
+    <string-array name="soundcore_sport_x20_double_tap_function_values">
+        <item>VOLUME_DOWN</item>
+        <item>VOLUME_UP</item>
+        <item>MEDIA_NEXT</item>
+        <item>MEDIA_PREV</item>
+        <item>PLAYPAUSE</item>
+        <item>VOICE_ASSISTANT</item>
+        <item>AMBIENT_SOUND_CONTROL</item>
+        <item>NONE</item>
+    </string-array>
+
+    <string-array name="soundcore_sport_x20_long_press_function_names">
+        <item>@string/pref_media_volumedown</item>
+        <item>@string/pref_media_volumeup</item>
+        <item>@string/pref_media_next</item>
+        <item>@string/pref_media_previous</item>
+        <item>@string/pref_media_playpause</item>
+        <item>@string/pref_title_touch_voice_assistant</item>
+        <item>@string/sony_button_mode_ambient_sound_control</item>
+        <item>@string/none</item>
+    </string-array>
+
+    <string-array name="soundcore_sport_x20_long_press_function_values">
+        <item>VOLUME_DOWN</item>
+        <item>VOLUME_UP</item>
+        <item>MEDIA_NEXT</item>
+        <item>MEDIA_PREV</item>
+        <item>PLAYPAUSE</item>
+        <item>VOICE_ASSISTANT</item>
+        <item>AMBIENT_SOUND_CONTROL</item>
+        <item>NONE</item>
+    </string-array>
+
+    <string-array name="soundcore_sport_x20_equalizer_preset_names">
+        <item>@string/soundcore_equalizer_preset_signature</item>
+        <item>@string/soundcore_equalizer_preset_acoustic</item>
+        <item>@string/sony_equalizer_preset_bass_boost</item>
+        <item>@string/soundcore_equalizer_preset_bass_reducer</item>
+        <item>@string/soundcore_equalizer_preset_classical</item>
+        <item>@string/soundcore_equalizer_preset_podcast</item>
+        <item>@string/soundcore_equalizer_preset_dance</item>
+        <item>@string/soundcore_equalizer_preset_deep</item>
+        <item>@string/soundcore_equalizer_preset_electronic</item>
+        <item>@string/soundcore_equalizer_preset_flat</item>
+        <item>@string/soundcore_equalizer_preset_hip_hop</item>
+        <item>@string/soundcore_equalizer_preset_jazz</item>
+        <item>@string/soundcore_equalizer_preset_latin</item>
+        <item>@string/soundcore_equalizer_preset_lounge</item>
+        <item>@string/soundcore_equalizer_preset_piano</item>
+        <item>@string/soundcore_equalizer_preset_pop</item>
+        <item>@string/soundcore_equalizer_preset_rnb</item>
+        <item>@string/soundcore_equalizer_preset_rock</item>
+        <item>@string/soundcore_equalizer_preset_small_speakers</item>
+        <item>@string/soundcore_equalizer_preset_spoken_word</item>
+        <item>@string/sony_equalizer_preset_treble_boost</item>
+        <item>@string/soundcore_equalizer_preset_treble_reducer</item>
+        <item>@string/custom</item>
+    </string-array>
+
+    <string-array name="soundcore_sport_x20_equalizer_preset_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>254</item>
+    </string-array>
+
     <string-array name="soundcore_button_brightness_names">
         <item>@string/off</item>
         <item>@string/soundcore_button_brightness_low</item>
