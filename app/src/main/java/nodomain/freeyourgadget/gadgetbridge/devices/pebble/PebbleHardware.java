@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 
 /**
  * Unified source of truth for Pebble hardware definitions.
@@ -467,6 +468,20 @@ public class PebbleHardware {
 
         String name = btDevice.getName();
         return name != null && (name.startsWith("Pebble-LE ") || name.startsWith("Pebble Time LE "));
+    }
+
+    /**
+     * Check if a device candidate needs connect-first pairing (GATT connection before createBond).
+     * Uses manufacturer data for reliable identification, falling back to name-based detection.
+     */
+    public static boolean needsConnectFirstPairing(GBDeviceCandidate candidate) {
+        if (candidate == null) {
+            return false;
+        }
+        if (isBleOnly(candidate.getManufacturerSpecificData())) {
+            return true;
+        }
+        return isBleOnly(candidate.getDevice());
     }
 
     // ======================= Platform Utilities =======================

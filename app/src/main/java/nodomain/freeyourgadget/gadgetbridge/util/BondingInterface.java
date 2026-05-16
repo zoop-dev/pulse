@@ -54,6 +54,15 @@ public interface BondingInterface {
     }
 
     boolean getAttemptToConnect();
+
+    /**
+     * Whether the connection should be restarted after bonding completes.
+     * Return false for connect-first pairing flows where bonding occurs within an existing
+     * GATT connection — the connection should not be interrupted.
+     */
+    default boolean shouldReconnectAfterBond() {
+        return true;
+    }
     /**
      * This forces bonding activities to handle the addition
      * of all broadcast receivers in the same place

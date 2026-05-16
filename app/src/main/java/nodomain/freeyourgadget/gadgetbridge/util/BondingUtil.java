@@ -134,14 +134,18 @@ public class BondingUtil {
                     } else {
                         switch (bondState) {
                             case BluetoothDevice.BOND_BONDED: {
+
                                 LOG.info("Bonded with {}", device.getAddress());
-                                if (PebbleHardware.isLePebbleCompanion(device) || PebbleHardware.isBleOnly(device) || !bondingInterface.getAttemptToConnect()) {
-                                    // Do not initiate connection to LE Pebble and Pebble 2/Time 2/2 Duo
-                                    // For Pebble 2/Time 2/2 Duo, the connection was already started before bonding
-                                    // Just signal that bonding is complete
-                                    LOG.info("LE/Pebble2/Pebble2Duo device bonded - signaling completion");
+                                if (!bondingInterface.getAttemptToConnect()) {
+                                    LOG.info("Device bonded - notifying onBondingComplete without reconnecting.");
                                     bondingInterface.onBondingComplete(true);
+                                } else if (!bondingInterface.shouldReconnectAfterBond()) {
+                                    // connect-first pairing, existing connection completes to INITIALIZED
+                                    // Don't interrupt by disconnecting and reconnecting in the middle of the pairing flow.
+                                    LOG.info("Device bonded - connect first pairing, connection already established.");
                                 } else {
+                                    // Bond-then-connect flow: reconnect now that bonding is complete.
+                                    LOG.info("Device bonded - reconnecting and waiting for initialization");
                                     attemptToFirstConnect(device);
                                 }
                                 return;
@@ -332,34 +336,6 @@ public class BondingUtil {
                 }
             }
         }
-    }
-
-    /**
-     * Checks if device needs connect-first pairing (GATT connection before createBond).
-     * Pebble 2, Pebble Time 2, and Pebble 2 Duo require writing to a pairing trigger
-     * characteristic before Android's createBond() will succeed.
-     *
-     * @param candidate Device candidate with manufacturer data from BLE scan
-     * @return true if this device needs connect-first pairing
-     */
-    public static boolean needsConnectFirstPairing(GBDeviceCandidate candidate) {
-        if (candidate == null) {
-            return false;
-        }
-        // First try manufacturer data - this is the most reliable method
-        if (PebbleHardware.isBleOnly(candidate.getManufacturerSpecificData())) {
-            return true;
-        }
-        // Fall back to name-based detection
-        return PebbleHardware.isBleOnly(candidate.getDevice());
-    }
-
-    /**
-     * Checks if device needs connect-first pairing (GATT connection before createBond).
-     * Uses name-based detection when GBDeviceCandidate is not available.
-     */
-    public static boolean needsConnectFirstPairing(BluetoothDevice device) {
-        return PebbleHardware.isBleOnly(device);
     }
 
     /**
