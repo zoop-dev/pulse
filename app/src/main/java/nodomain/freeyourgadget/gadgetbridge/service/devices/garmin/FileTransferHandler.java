@@ -70,6 +70,16 @@ public class FileTransferHandler implements MessageHandler {
         add(FileType.FILETYPE.HRV_STATUS);
         add(FileType.FILETYPE.SLEEP);
         add(FileType.FILETYPE.SKIN_TEMP);
+        // #5824 - We need to sync some files we don't handle, to prevent the watches
+        // from starting to have issues / run out of memory
+        add(FileType.FILETYPE.DEVICE_58);
+        add(FileType.FILETYPE.SLP_DISR);
+        add(FileType.FILETYPE.ERROR_SHUTDOWN_REPORTS);
+        add(FileType.FILETYPE.SCORE);
+        add(FileType.FILETYPE.HSA);
+        add(FileType.FILETYPE.COM_ACT);
+        add(FileType.FILETYPE.AREA_COURSES);
+        add(FileType.FILETYPE.SEGMENT_LIST);
     }};
 
     public FileTransferHandler(GarminSupport deviceSupport) {

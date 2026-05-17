@@ -174,6 +174,16 @@ class FileSyncServiceHandler(val deviceSupport: GarminSupport) {
             "FIT_TYPE_49", // SLEEP
             "FIT_TYPE_61", // ECG
             "FIT_TYPE_73", // SKIN_TEMP
+            // #5824 - We need to sync some files we don't handle, to prevent the watches
+            // from starting to have issues / run out of memory
+            "FIT_TYPE_58", // DEVICE_58
+            "FIT_TYPE_79", // SLP_DISR
+            "ErrorShutdownReports", // ERROR_SHUTDOWN_REPORTS
+            "FIT_TYPE_38", // SCORE
+            "FIT_TYPE_70", // HSA
+            "FIT_TYPE_71", // COM_ACT
+            "FIT_TYPE_82", // AREA_COURSES
+            "FIT_TYPE_35", // SEGMENT_LIST
         )
     }
 }

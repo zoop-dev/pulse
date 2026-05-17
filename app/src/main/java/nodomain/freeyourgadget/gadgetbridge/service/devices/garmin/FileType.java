@@ -87,6 +87,8 @@ public class FileType {
         FBT_PTD_BACKUP(128, 74),
         SCHEDULE(128, 77),
         SLP_DISR(128, 79),
+        AREA_COURSES(128, 82), // #5824
+        GEAR(128, 87), // #5824
 
         // Other files
         DOWNLOAD_COURSE(255, 4),
