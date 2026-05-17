@@ -4346,4 +4346,14 @@
     <string name="soundcore_equalizer_preset_lounge">Pihentető</string>
     <string name="soundcore_equalizer_preset_treble_reducer">Magas hangok csökkentése</string>
     <string name="equalizer_preset_country">Country</string>
+    <string name="sinilink_playback_mode_random">Véletlenszerű</string>
+    <string name="media_source_usb">USB</string>
+    <string name="media_source_audio_card">Hangkártya</string>
+    <string name="media_source_aux">AUX</string>
+    <string name="sinilink_playback_mode_list_cycle">Lista ismétlése</string>
+    <string name="sinilink_playback_mode_single_head">Egyszeri lejátszás</string>
+    <string name="sinilink_playback_mode_single_cycle">Szám ismétlése</string>
+    <string name="sinilink_playback_mode_order">Sorrendben</string>
+    <string name="sinilink_prompt_tone">Jelzőhang</string>
+    <string name="media_source_tf">TF-kártya</string>
 </resources>
