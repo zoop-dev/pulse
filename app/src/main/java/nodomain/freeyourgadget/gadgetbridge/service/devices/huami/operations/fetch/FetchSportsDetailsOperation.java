@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -118,8 +119,22 @@ public class FetchSportsDetailsOperation extends AbstractFetchOperation {
         }
 
         // Always increment the sync timestamp on success, even if we did not get data
+        final GregorianCalendar startTime = BLETypeConversions.createCalendar();
+        startTime.setTime(summary.getStartTime());
         final GregorianCalendar endTime = BLETypeConversions.createCalendar();
         endTime.setTime(summary.getEndTime());
+
+        if (sameMinute(startTime, endTime)) {
+            // #6072 #2958 #3199 - If the activity starts and ends in the same minute, we might get stuck fetching it
+            // over and over again. Move the start timestamp to the next minute if we're truncating fetch operation timestamps
+            final boolean truncate = GBApplication.getDevicePrefs(fetcher.getDevice())
+                    .getBoolean("huami_truncate_fetch_operation_timestamps", true);
+            if (truncate) {
+                LOG.warn("Activity starts and ends in the same minute - pushing timestamp forward 1 minute");
+                endTime.add(Calendar.MINUTE, 1);
+            }
+        }
+
         saveLastSyncTimestamp(endTime);
 
         if (needsAnotherFetch(endTime)) {
@@ -128,6 +143,14 @@ public class FetchSportsDetailsOperation extends AbstractFetchOperation {
         }
 
         return true;
+    }
+
+    private boolean sameMinute(final GregorianCalendar startTime, final GregorianCalendar endTime) {
+        return startTime.get(Calendar.YEAR) == endTime.get(Calendar.YEAR)
+                && startTime.get(Calendar.MONTH) == endTime.get(Calendar.MONTH)
+                && startTime.get(Calendar.DAY_OF_MONTH) == endTime.get(Calendar.DAY_OF_MONTH)
+                && startTime.get(Calendar.HOUR_OF_DAY) == endTime.get(Calendar.HOUR_OF_DAY)
+                && startTime.get(Calendar.MINUTE) == endTime.get(Calendar.MINUTE);
     }
 
     private boolean needsAnotherFetch(GregorianCalendar lastSyncTimestamp) {
