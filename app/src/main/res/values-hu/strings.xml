@@ -4345,4 +4345,5 @@
     <string name="soundcore_equalizer_preset_flat">Egyenletes</string>
     <string name="soundcore_equalizer_preset_lounge">Pihentető</string>
     <string name="soundcore_equalizer_preset_treble_reducer">Magas hangok csökkentése</string>
+    <string name="equalizer_preset_country">Country</string>
 </resources>
