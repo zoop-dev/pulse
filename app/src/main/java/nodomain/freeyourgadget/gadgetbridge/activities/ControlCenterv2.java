@@ -39,8 +39,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.MenuProvider;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -171,10 +174,16 @@ public class ControlCenterv2 extends AppCompatActivity
             }
         }
 
-
         // Initialize drawer
         NavigationView drawerNavigationView = findViewById(R.id.nav_view);
         drawerNavigationView.setNavigationItemSelectedListener(this);
+
+        View navigationHeaderView = drawerNavigationView.getHeaderView(0);
+        ViewCompat.setOnApplyWindowInsetsListener(navigationHeaderView, (view, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
+            view.setPadding(view.getPaddingLeft(), insets.top, view.getPaddingRight(), view.getPaddingBottom());
+            return windowInsets;
+        });
 
         // Initialize bottom navigation
         BottomNavigationView navigationView = findViewById(R.id.bottom_nav_bar);
@@ -318,10 +327,10 @@ public class ControlCenterv2 extends AppCompatActivity
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-       if (clDialog != null){
-           outState.putBoolean("cl", clDialog.isShowing());
-       }
-       super.onSaveInstanceState(outState);
+        if (clDialog != null) {
+            outState.putBoolean("cl", clDialog.isShowing());
+        }
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -402,9 +411,9 @@ public class ControlCenterv2 extends AppCompatActivity
     }
 
     private void handleShortcut(Intent intent) {
-        if(ACTION_CONNECT.equals(intent.getAction())) {
+        if (ACTION_CONNECT.equals(intent.getAction())) {
             String btDeviceAddress = intent.getStringExtra("device");
-            if(btDeviceAddress!=null){
+            if (btDeviceAddress != null) {
                 GBDevice candidate = DeviceHelper.getInstance().findAvailableDevice(btDeviceAddress);
                 if (candidate != null && !candidate.isConnected()) {
                     GBApplication.deviceService(candidate).connect();
