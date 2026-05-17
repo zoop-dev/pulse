@@ -4077,4 +4077,24 @@
     <string name="pref_title_unit_distance">Unité distance</string>
     <string name="pref_title_unit_temperature">Unité température</string>
     <string name="pref_title_unit_weight">Unité poids</string>
+    <string name="phone_gps_not_available">GPS du téléphone non disponible</string>
+    <string name="pref_export_directory">Répertoire d\'exportation</string>
+    <string name="pref_restart_logging_title">Initialiser journalisation</string>
+    <string name="uploading_resources">Téléversement ressources …</string>
+    <string name="stamina">Endurance</string>
+    <string name="step_length">Longueur de pas</string>
+    <string name="blood_pressure_systolic">Systolique</string>
+    <string name="blood_pressure_diastolic">Diastolique</string>
+    <string name="blood_pressure_measurement_count">Mesures</string>
+    <string name="blood_pressure_avg_format">%1$d / %2$d</string>
+    <string name="pref_chart_sleep_range_noon">Midi (12:00)</string>
+    <string name="activity_type_geocaching">Géocaching</string>
+    <string name="activity_type_mobility">Mobilité</string>
+    <string name="qhybrid_button_function_date">Date</string>
+    <string name="qhybrid_button_function_last_notif">Dernière notification</string>
+    <string name="broadcast_heart_rate_summary">Tout appareil ou app à proximité peut détecter votre rythme cardiaque.</string>
+    <string name="dual_connection_summary">Autoriser la connexion simultanée de deux apps ou appareils.</string>
+    <string name="media_source_tf">Carte TF (microSD)</string>
+    <string name="media_source_usb">USB</string>
+    <string name="media_source_audio_card">Carte audio</string>
 </resources>
