@@ -893,23 +893,27 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
      * @return
      */
     public String getNotificationBody(NotificationSpec notificationSpec) {
-        String senderOrTitle = StringUtils.getFirstOf(notificationSpec.sender, notificationSpec.title);
-        if (senderOrTitle.isEmpty()) {
+        final StringBuilder sb = new StringBuilder();
+        final String senderOrTitle = StringUtils.getFirstOf(notificationSpec.sender, notificationSpec.title);
+        if (!senderOrTitle.isEmpty()) {
+            sb.append(StringUtils.truncate(senderOrTitle, 32));
+        } else {
             // if we have no title we have to send at least something on some devices, else they reboot (Bip S)
-            senderOrTitle = " ";
+            sb.append(" ");
         }
-        String message = StringUtils.truncate(senderOrTitle, 32) + "\0";
-        if (notificationSpec.subject != null) {
-            message += StringUtils.truncate(notificationSpec.subject, 128) + "\n\n";
+        sb.append("\0");
+        if (!StringUtils.isNullOrEmpty(notificationSpec.subject)) {
+            sb.append(StringUtils.truncate(notificationSpec.subject, 128)).append("\n\n");
         }
-        if (notificationSpec.body != null) {
-            message += StringUtils.truncate(notificationSpec.body, 512);
+        if (!StringUtils.isNullOrEmpty(notificationSpec.body)) {
+            sb.append(StringUtils.truncate(notificationSpec.body, 512)).append("\n\n");
         }
-        if (notificationSpec.body == null && notificationSpec.subject == null) {
-            message += " "; // if we have no body we have to send at least something on some devices, else they reboot (Bip S)
+        if (StringUtils.isNullOrEmpty(notificationSpec.subject) && StringUtils.isNullOrEmpty(notificationSpec.body)) {
+            // if we have no body we have to send at least something on some devices, else they reboot (Bip S)
+            sb.append(" ");
         }
 
-        return message;
+        return sb.toString();
     }
 
     /**
