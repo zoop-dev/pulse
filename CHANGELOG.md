@@ -1,5 +1,22 @@
 ### Changelog
 
+#### Next release (WIP)
+
+* Initial support for Anker Soundcore Sport X20
+* Initial support for iGPSPORT bike computers (BiNavi Air, BSC200, BSC200S, BSC300, iGS630, iGS630S, iGS800)
+* Initial support for Redmi Buds 6
+* Initial support for Redmi Watch Move
+* Initial support for Sinilink audio amplifiers
+* Add setting to enable TRACE log level
+* Casio GBD-200: Improved support
+* Fix file type when sharing
+* Huawei: Allow encryption to be enabled / disabled
+* Pebble: Add support for pull to refresh for pebble health data
+* Pebble: Fix Pebble [Core 2 Duo / Time 2 / 2 Round] BLE pairing
+* Prevent crash on devices without GPS
+* Xiaomi-protobuf: Fix alarm notifications
+* Xiaomi-protobuf: Fix watchface management
+
 #### 0.91.1
 
 * Casio: Fix connection issues after first pairing
