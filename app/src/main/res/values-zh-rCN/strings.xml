@@ -4483,7 +4483,7 @@
     <string name="soundcore_equalizer_preset_lounge">休息室</string>
     <string name="soundcore_equalizer_preset_piano">钢琴</string>
     <string name="soundcore_equalizer_preset_rnb">节奏布鲁斯</string>
-    <string name="soundcore_equalizer_preset_small_speakers">Small Speakers</string>
+    <string name="soundcore_equalizer_preset_small_speakers">小扬声器</string>
     <string name="soundcore_equalizer_preset_spoken_word">口语</string>
     <string name="soundcore_equalizer_preset_treble_reducer">高音减弱</string>
     <string name="soundcore_equalizer_band1_freq">100 赫兹</string>
@@ -4498,4 +4498,15 @@
     <string name="development_preference_do_not_change">没有指导或者非开发者请不要更改</string>
     <string name="preference_force_enabled">已强制启用</string>
     <string name="preference_force_disabled">已强制禁用</string>
+    <string name="equalizer_preset_country">区域</string>
+    <string name="sinilink_playback_mode_list_cycle">列表循环</string>
+    <string name="sinilink_playback_mode_single_cycle">单曲循环</string>
+    <string name="sinilink_playback_mode_random">随机</string>
+    <string name="sinilink_playback_mode_order">顺序</string>
+    <string name="media_source_tf">TF 卡</string>
+    <string name="media_source_usb">USB</string>
+    <string name="media_source_audio_card">声卡</string>
+    <string name="media_source_aux">AUX</string>
+    <string name="sinilink_prompt_tone">提示音</string>
+    <string name="sinilink_playback_mode_single_head">单（头）</string>
 </resources>
