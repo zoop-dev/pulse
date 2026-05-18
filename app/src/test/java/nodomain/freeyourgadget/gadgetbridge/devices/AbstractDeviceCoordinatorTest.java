@@ -57,6 +57,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("Forerunner 165 Music", DeviceType.GARMIN_FORERUNNER_165_MUSIC);
             put("R60", DeviceType.BLACKVIEW_R60);
             put("eTrex SE", DeviceType.GARMIN_ETREX_SE);
+            put("GPSMAP H1", DeviceType.GARMIN_GPSMAP_H1); // #6122
             put("GPSMAP 66S", DeviceType.GARMIN_GPSMAP_66S); // matrix
             put("GPSMAP 66S #1234512345", DeviceType.GARMIN_GPSMAP_66S); // matrix
             put("Instinct Tactical", DeviceType.GARMIN_INSTINCT_TACTICAL);

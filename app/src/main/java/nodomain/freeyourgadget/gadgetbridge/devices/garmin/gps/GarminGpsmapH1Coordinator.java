@@ -8,7 +8,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class GarminGpsmap66sCoordinator extends GarminCoordinator {
+public class GarminGpsmapH1Coordinator extends GarminCoordinator {
     @Override
     public boolean supportsDataFetching(@NonNull final GBDevice device) {
         // for gps tracks
@@ -33,12 +33,12 @@ public class GarminGpsmap66sCoordinator extends GarminCoordinator {
 
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("^GPSMAP 66S( #\\d+)?");
+        return Pattern.compile("^GPSMAP H1$");
     }
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_garmin_gpsmap_66s;
+        return R.string.devicetype_garmin_gpsmap_h1;
     }
 
     @Override
