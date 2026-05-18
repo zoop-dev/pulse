@@ -4471,4 +4471,9 @@
     <string name="task_installing_route">Instalace cesty</string>
     <string name="route_upload_completed">Cesta úspěšně nahrána</string>
     <string name="route_upload_failed">Nepodařilo se nahrát cestu</string>
+    <string name="phone_gps_not_available">GPS telefonu není dostupná</string>
+    <string name="pref_log_level_trace_title">Podrobnější protokolování</string>
+    <string name="pref_log_level_trace_summary">Zvýšit úroveň protokolování na TRACE</string>
+    <string name="soundcore_3d_surround_title">3D prostorový zvuk</string>
+    <string name="soundcore_3d_surround_summary">Povolit 3D prostorový zvuk</string>
 </resources>
