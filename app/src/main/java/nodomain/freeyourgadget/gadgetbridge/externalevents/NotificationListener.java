@@ -482,9 +482,9 @@ public class NotificationListener extends NotificationListenerService {
         notificationSpec.category = notification.category;
 
         //FIXME: some quirks lookup table would be the minor evil here
-        if (source.startsWith("com.fsck.k9")) {
+        if (source.startsWith("com.fsck.k9") || source.startsWith("net.thunderbird.android")) {
             if (NotificationCompat.isGroupSummary(notification)) {
-                LOG.info("ignore K9 group summary");
+                LOG.info("ignore K9/Thunderbird group summary");
                 return;
             }
         }

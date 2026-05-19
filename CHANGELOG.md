@@ -16,6 +16,7 @@
 * Prevent crash on devices without GPS
 * Xiaomi-protobuf: Fix alarm notifications
 * Xiaomi-protobuf: Fix watchface management
+* Recognize Thunderbird for Android as email and ignore its summary notifications
 
 #### 0.91.1
 
