@@ -409,10 +409,13 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public Set<SleepAsAndroidFeature> getSleepAsAndroidFeatures() {
-        // Raw accelerometer streaming over FE95 chars 0050-0053 is not yet
-        // reverse-engineered in Gadgetbridge; ship HR + ALARMS + NOTIFICATIONS only.
+        // Default set for Xiaomi protobuf devices. Raw accelerometer is streamed via the
+        // synthetic-workout raw-sensor protocol (sport=810, subtype 53; see
+        // XiaomiHealthService.startRawSensor). Devices that do not honor it should override
+        // this to remove ACCELEROMETER.
         return EnumSet.of(
                 SleepAsAndroidFeature.HEART_RATE,
+                SleepAsAndroidFeature.ACCELEROMETER,
                 SleepAsAndroidFeature.ALARMS,
                 SleepAsAndroidFeature.NOTIFICATIONS);
     }
