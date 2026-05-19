@@ -328,8 +328,8 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
                             "Unknown" // TODO describe AQI level
                     ))
                     .setTemperatureRange(XiaomiProto.WeatherRange.newBuilder()
-                            .setFrom(weatherSpec.getTodayMinTemp() - 273)
-                            .setTo(weatherSpec.getTodayMaxTemp() - 273))
+                            .setFrom(weatherSpec.getTodayMaxTemp() - 273)
+                            .setTo(weatherSpec.getTodayMinTemp() - 273))
                     // FIXME: should preferable be replaced with a best and worst case condition whenever that becomes available
                     .setConditionRange(XiaomiProto.WeatherRange.newBuilder()
                             .setFrom(XiaomiWeatherConditions.convertOwmConditionToXiaomi(weatherSpec.getCurrentConditionCode()))
@@ -352,8 +352,8 @@ public class XiaomiWeatherService extends AbstractXiaomiService {
                             .setFrom(XiaomiWeatherConditions.convertOwmConditionToXiaomi(currentEntry.getConditionCode()))
                             .setTo(XiaomiWeatherConditions.convertOwmConditionToXiaomi(currentEntry.getConditionCode())))
                     .setTemperatureRange(XiaomiProto.WeatherRange.newBuilder()
-                            .setTo(currentEntry.getMaxTemp() - 273)
-                            .setFrom(currentEntry.getMinTemp() - 273))
+                            .setTo(currentEntry.getMinTemp() - 273)
+                            .setFrom(currentEntry.getMaxTemp() - 273))
                     .setTemperatureSymbol("℃")
                     .setSunriseSunset(XiaomiProto.WeatherSunriseSunset.newBuilder()
                             .setSunrise(currentEntry.getSunRise() != 0 ? unixTimestampToISOWithColons(currentEntry.getSunRise()) : "")
