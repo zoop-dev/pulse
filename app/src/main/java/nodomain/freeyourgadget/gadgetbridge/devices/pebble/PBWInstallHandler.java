@@ -48,6 +48,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleHardware;
 import nodomain.freeyourgadget.gadgetbridge.util.PebbleUtils;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
 
 public class PBWInstallHandler implements InstallHandler {
     private static final Logger LOG = LoggerFactory.getLogger(PBWInstallHandler.class);
@@ -75,9 +76,10 @@ public class PBWInstallHandler implements InstallHandler {
         }
 
         String platformName = PebbleHardware.getPlatformName(device.getModel());
+        Integer targetSlot = (Integer) device.getExtraInfo(GBDeviceEventVersionInfo.EXTRA_FW_UPDATE_TARGET_SLOT);
 
         try {
-            mPBWReader = new PBWReader(mUri, mContext, platformName);
+            mPBWReader = new PBWReader(mUri, mContext, platformName, targetSlot);
         } catch (FileNotFoundException e) {
             installActivity.setInfoText("file not found");
             installActivity.setInstallEnabled(false);
@@ -89,7 +91,12 @@ public class PBWInstallHandler implements InstallHandler {
         }
 
         if (!mPBWReader.isValid()) {
-            installActivity.setInfoText("pbw/pbz is broken or incompatible with your Hardware or Firmware.");
+            String reason = mPBWReader.getInvalidReason();
+            if (reason != null) {
+                installActivity.setInfoText("Invalid: " + reason);
+            } else {
+                installActivity.setInfoText("pbw/pbz is broken or incompatible with your Hardware or Firmware.");
+            }
             installActivity.setInstallEnabled(false);
             return;
         }
@@ -101,7 +108,10 @@ public class PBWInstallHandler implements InstallHandler {
             installItem.setIcon(R.drawable.ic_firmware);
 
             String hwRevision = mPBWReader.getHWRevision();
-            if (hwRevision != null && hwRevision.equals(device.getModel())) {
+            String deviceModel = device.getModel();
+
+            // Use platform-aware compatibility check instead of exact string match
+            if (PebbleHardware.isFirmwareCompatible(hwRevision, deviceModel)) {
                 installItem.setName(mContext.getString(R.string.pbw_installhandler_pebble_firmware, ""));
                 installItem.setDetails(mContext.getString(R.string.pbwinstallhandler_correct_hw_revision));
 
@@ -112,7 +122,13 @@ public class PBWInstallHandler implements InstallHandler {
                     installItem.setName(mContext.getString(R.string.pbw_installhandler_pebble_firmware, hwRevision));
                     installItem.setDetails(mContext.getString(R.string.pbwinstallhandler_incorrect_hw_revision));
                 }
-                installActivity.setInfoText(mContext.getString(R.string.pbw_install_handler_hw_revision_mismatch));
+                // Show detailed incompatibility reason
+                String reason = PebbleHardware.getFirmwareIncompatibilityReason(hwRevision, deviceModel);
+                if (reason != null) {
+                    installActivity.setInfoText(reason);
+                } else {
+                    installActivity.setInfoText(mContext.getString(R.string.pbw_install_handler_hw_revision_mismatch));
+                }
                 installActivity.setInstallEnabled(false);
             }
         } else {

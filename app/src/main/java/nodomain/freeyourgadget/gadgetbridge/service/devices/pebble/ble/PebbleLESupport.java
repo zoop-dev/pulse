@@ -45,6 +45,10 @@ public class PebbleLESupport {
     private PebbleGATTClient mPebbleGATTClient;
     private final PipedInputStream mPipedInputStream;
     private final PipedOutputStream mPipedOutputStream;
+    // IoThread's PipedInputStream (its mInStream). We hold this reference so that
+    // writeToPipedOutputStream can call notifyAll() on the correct monitor to wake
+    // IoThread's blocking read immediately to receive the ACK for a write.
+    private final PipedInputStream mIoThreadInputStream;
     private int mMTU = 20;
     private int mMTULimit;
     public boolean clientOnly; // currently experimental, and only possible for Pebble 2
@@ -58,6 +62,7 @@ public class PebbleLESupport {
         mBtDevice = btDevice;
         mPipedInputStream = new PipedInputStream();
         mPipedOutputStream = new PipedOutputStream();
+        mIoThreadInputStream = pipedInputStream;
         try {
             pipedOutputStream.connect(mPipedInputStream);
             pipedInputStream.connect(mPipedOutputStream);
@@ -100,6 +105,12 @@ public class PebbleLESupport {
     private void writeToPipedOutputStream(byte[] value, int count) {
         try {
             mPipedOutputStream.write(value, 1, count);
+            // Wake IoThread's blocking read() immediately to receive the ACK after 
+            // finishing a write. Otherwise it just polls every 1000ms which is a
+            // significant slow-down for large data transfers (firmware).
+            synchronized (mIoThreadInputStream) {
+                mIoThreadInputStream.notifyAll();
+            }
         } catch (IOException e) {
             LOG.warn("error writing to output stream", e);
         }
@@ -245,7 +256,8 @@ public class PebbleLESupport {
                     while (payloadToSend > 0) {
                         int chunkSize = Math.min(payloadToSend, maxChunkSize);
                         byte[] outBuf = new byte[chunkSize + 1];
-                        outBuf[0] = (byte) ((mmSequence++ << 3) & 0xff);
+                        outBuf[0] = (byte) ((mmSequence << 3) & 0xff);
+                        mmSequence = (mmSequence + 1) & 0x1f; // keep serial in 5-bit range (0-31)
                         System.arraycopy(buf, srcPos, outBuf, 1, chunkSize);
                         sendDataToPebble(outBuf);
                         srcPos += chunkSize;

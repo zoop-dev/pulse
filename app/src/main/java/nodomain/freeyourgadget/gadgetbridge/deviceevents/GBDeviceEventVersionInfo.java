@@ -30,9 +30,22 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 public class GBDeviceEventVersionInfo extends GBDeviceEvent {
     private static final Logger LOG = LoggerFactory.getLogger(GBDeviceEventVersionInfo.class);
 
+    /**
+     * Extra info key for dual-slot firmware target slot.
+     * Value is Integer: 0 for slot 0, 1 for slot 1.
+     */
+    public static final String EXTRA_FW_UPDATE_TARGET_SLOT = "pebble_fw_update_target_slot";
+
     public String fwVersion = "N/A";
     public String fwVersion2 = null;
     public String hwVersion = "N/A";
+
+    /**
+     * For dual-slot firmware devices (like Pebble Time 2), this indicates which slot
+     * firmware updates should target. null means not a dual-slot device.
+     * 0 = update slot 0, 1 = update slot 1
+     */
+    public Integer fwUpdateTargetSlot = null;
 
     public GBDeviceEventVersionInfo() {
         if (GBApplication.getContext() != null) {
@@ -62,6 +75,9 @@ public class GBDeviceEventVersionInfo extends GBDeviceEvent {
         }
         if (hwVersion != null) {
             device.setModel(hwVersion);
+        }
+        if (fwUpdateTargetSlot != null) {
+            device.setExtraInfo(EXTRA_FW_UPDATE_TARGET_SLOT, fwUpdateTargetSlot);
         }
         device.sendDeviceUpdateIntent(context);
     }
