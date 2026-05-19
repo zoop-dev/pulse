@@ -135,6 +135,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("vívomove Trend", DeviceType.GARMIN_VIVOMOVE_TREND); // #3875
             put("fenix 5", DeviceType.GARMIN_FENIX_5); // #3869
             put("Forerunner 255S", DeviceType.GARMIN_FORERUNNER_255S); // #3841
+            put("Space Travel 2 Ultra", DeviceType.MOONDROP_SPACE_TRAVEL_2_ULTRA); // matrix
             put("Venu 2", DeviceType.GARMIN_VENU_2); // #3835
             put("Venu 4 45mm", DeviceType.GARMIN_VENU_4); // #5461
             put("Venu 4 - 45mm", DeviceType.GARMIN_VENU_4); // matrix
