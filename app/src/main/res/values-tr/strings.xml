@@ -3870,4 +3870,7 @@
     <string name="auto_export_invalid_location">Geçersiz dışa aktarma konumu: %s</string>
     <string name="save">Kaydet</string>
     <string name="done">Bitti</string>
+    <string name="phone_gps_not_available">Telefon GPS\'i erişilebilir değil.</string>
+    <string name="diving_nitrogen_load">Azot yükü</string>
+    <string name="diving_oxygen_toxicity">Oksijen Toksisitesi</string>
 </resources>
