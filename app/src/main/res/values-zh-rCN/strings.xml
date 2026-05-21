@@ -4509,4 +4509,6 @@
     <string name="media_source_aux">AUX</string>
     <string name="sinilink_prompt_tone">提示音</string>
     <string name="sinilink_playback_mode_single_head">单（头）</string>
+    <string name="tap_and_hold">轻按并保持不动</string>
+    <string name="double_tap_and_hold">轻按两次并保持不动</string>
 </resources>
