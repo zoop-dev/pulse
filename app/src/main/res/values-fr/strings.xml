@@ -377,7 +377,7 @@
     <string name="title_activity_vibration">Vibration</string>
     <!--Strings related to Pebble Pairing Activity-->
     <string name="title_activity_pebble_pairing">Jumelage avec une Pebble</string>
-    <string name="pebble_pairing_hint">Une fenêtre de jumelage va s’afficher sur votre téléphone. Si cela ne se produit pas, regardez dans vos notifications et acceptez-la. Acceptez ensuite la demande de jumelage sur votre Pebble.</string>
+    <string name="pebble_pairing_hint">Une fenêtre d\'appairage va s’afficher sur votre appareil Android. Sinon, regardez dans vos notifications et acceptez la demande d\'appairage. Acceptez ensuite la demande d\'appairage sur votre Pebble.</string>
     <string name="pref_title_setup_bt_pairing">Activer le jumelage Bluetooth</string>
     <string name="pref_summary_setup_bt_pairing">Désactivez ceci si vous avez des problèmes de connexion</string>
     <string name="unit_metric">Métrique</string>
@@ -538,7 +538,7 @@
     <string name="minutes_30">30 minutes</string>
     <string name="lack_of_step">Manque d\'activité : %1$d</string>
     <string name="overstep">Trop d\'activité : %1$d</string>
-    <string name="live_activity_max_heart_rate">Mesure cardiaque actuelle / maximum : %1$d / %2$d</string>
+    <string name="live_activity_max_heart_rate">Fréquence cardiaque actuelle / maximum : %1$d / %2$d</string>
     <string name="you_slept">%1$s – %2$s</string>
     <string name="you_did_not_sleep">Vous n\'avez pas dormi</string>
     <string name="mi3_prefs_band_screen_unlock_summary">Glisser le doigt vers le haut pour débloquer l\'écran du bracelet</string>
@@ -1361,7 +1361,7 @@
     <string name="prefs_reserve_reminder_calendar_summary">Nombre d\'évènements du calendrier qui seront synchronisés</string>
     <string name="title_activity_reminder_details">Détails du rappel</string>
     <string name="mi2_prefs_do_not_disturb_lift_wrist">Activer l\'écran lors d\'un retournement en mode Ne Pas Déranger</string>
-    <string name="maxHR">Fréquence cardiaque max</string>
+    <string name="maxHR">Fréquence cardiaque maximum</string>
     <string name="maxStride">Distance de pas max</string>
     <string name="minStride">Distance de pas min</string>
     <string name="minCadence">Cadence min</string>
@@ -1369,7 +1369,7 @@
     <string name="averageAltitude">Moyenne</string>
     <string name="averageCadence">Cadence moyenne</string>
     <string name="minSpeed">Minimum</string>
-    <string name="minHR">Fréquence cardiaque min</string>
+    <string name="minHR">Fréquence cardiaque minimum</string>
     <string name="maxCadence">Cadence max</string>
     <string name="activity_prefs_discovery_pairing">Options de découverte et de pairage</string>
     <string name="discover_unsupported_devices">Découvrir les appareils non pris en charge</string>
@@ -1494,25 +1494,25 @@
     <string name="activity_type_elliptical">Ellyptique</string>
     <string name="prefs_seamless_connection_switch_title">Changement de connexion sans coupure</string>
     <string name="gadgetbridge_running_main_nopebble">GB nightly non Pebble en cours de fonctionnement</string>
-    <string name="heartrate_bpm_105">105 battements/minute</string>
+    <string name="heartrate_bpm_105">105 bpm</string>
     <string name="about_description_main_nopebble">Remplaçant autonome et sous licence libre pour remplacer les applications propriétaires des fabricants. Version Nightly de Gadgetbridge. Cette ersion contient le fournisseur Pebble renommé pour éviter les conflits, donc certaines intégrations Pebble ne marcheront pas, mais elle peut être installé à côté d\'une installation GadgetBridge existante.</string>
-    <string name="heartrate_bpm_145">145 battements/minute</string>
+    <string name="heartrate_bpm_145">145 bpm</string>
     <string name="prefs_heartrate_alert_experimental_title">Alerte de fréquence cardiaque (expérimentale)</string>
     <string name="prefs_stress_monitoring_description">Surveiller le niveau de stress pendant le repos</string>
     <string name="mi2_prefs_heart_rate_monitoring">Surveillance de la fréquence cardiaque</string>
     <string name="mi2_prefs_heart_rate_monitoring_alerts_summary">Configuration de la surveillance de la fréquence cardiaque et des seuils d\'alerte</string>
     <string name="mi2_prefs_heart_rate_monitoring_summary">Configuration de la surveillance de la fréquence cardiaque</string>
-    <string name="heartrate_bpm_100">100 battements/minute</string>
-    <string name="heartrate_bpm_110">110 battements/minute</string>
-    <string name="heartrate_bpm_120">120 battements/minute</string>
-    <string name="heartrate_bpm_125">125 battements/minute</string>
-    <string name="heartrate_bpm_130">130 battements/minute</string>
-    <string name="heartrate_bpm_135">135 battements/minute</string>
-    <string name="heartrate_bpm_140">140 battements/minute</string>
+    <string name="heartrate_bpm_100">100 bpm</string>
+    <string name="heartrate_bpm_110">110 bpm</string>
+    <string name="heartrate_bpm_120">120 bpm</string>
+    <string name="heartrate_bpm_125">125 bpm</string>
+    <string name="heartrate_bpm_130">130 bpm</string>
+    <string name="heartrate_bpm_135">135 bpm</string>
+    <string name="heartrate_bpm_140">140 bpm</string>
     <string name="world_clock_delete_confirm_description">Etes-vous sûr de vouloir supprimer l\'horloge mondiale \?</string>
     <string name="world_clock_no_free_slots_title">Aucun emplacement de libre</string>
     <string name="world_clock_no_free_slots_description">Cet appareil n\'a plus d\'emplacement disponible pour des fuseaux horaires (total des emplacements : %1$s)</string>
-    <string name="prefs_heartrate_alert_experimental_description">Faire vibrer le bracelet quand la fréquence cardiaque passe un seuil, sans aucune activité physique évidente dans les 10 dernières minutes. Cette fonctionnalité est expérimentale, et n\'a pas été complètement testée.</string>
+    <string name="prefs_heartrate_alert_experimental_description">Faire vibrer le bracelet quand la fréquence cardiaque dépasse un seuil, sans aucune activité physique évidente dans les 10 dernières minutes. Cette fonctionnalité est expérimentale, et n\'a pas été complètement testée.</string>
     <string name="prefs_heartrate_alert_threshold">Seuil d\'alerte de fréquence cardiaque</string>
     <string name="prefs_stress_monitoring_title">Surveillance du stress</string>
     <string name="prefs_activity_monitoring_title">Surveillante de l\'activité</string>
@@ -1522,7 +1522,7 @@
     <string name="prefs_customize_ambient_sound_summary">Personnaliser le son ambiant</string>
     <string name="prefs_ambient_sound_during_call_title">Son ambiant pendant un appel</string>
     <string name="prefs_ambient_settings_title">Options pour le son ambiant</string>
-    <string name="heartrate_bpm_150">150 battements/minute</string>
+    <string name="heartrate_bpm_150">150 bpm</string>
     <string name="prefs_in_ear_detection_summary">Recevoir les appels dans les écouteurs lorsque vous les portez</string>
     <string name="prefs_seamless_connection_switch_summary">Commutation entre les appareils déja pairés automatiquement</string>
     <string name="prefs_ambient_sound_during_call_summary">Entendre sa propre voix clairement durant un appel</string>
@@ -1712,7 +1712,7 @@
     <string name="pref_screen_brightness">Luminosité de l\'écran</string>
     <string name="seconds_8">8 secondes</string>
     <string name="menuitem_female_health">Santé féminine</string>
-    <string name="heartrate_bpm_115">115 battements/minute</string>
+    <string name="heartrate_bpm_115">115 bpm</string>
     <string name="fw_upgrade_notice_miband7">Vous êtes sur le point d\'installer le micro-logiciel %s dans votne Xiaomi Smart Band 7.
 \n
 \nVotre bracelet redémarrera après l\'installation du fichier .zip.
@@ -1724,9 +1724,9 @@
     <string name="pref_header_health">Santé</string>
     <string name="pref_cache_weather">Mettre en cache les informations météo</string>
     <string name="pref_cache_weather_summary">Les informations météo seront conservées en cache entre les redémarrages de l\'application.</string>
-    <string name="heartrate_bpm_40">40 battements/minute</string>
-    <string name="heartrate_bpm_45">45 battements/minute</string>
-    <string name="heartrate_bpm_50">50 battements/minute</string>
+    <string name="heartrate_bpm_40">40 bpm</string>
+    <string name="heartrate_bpm_45">45 bpm</string>
+    <string name="heartrate_bpm_50">50 bpm</string>
     <string name="prefs_heartrate_alert_low_threshold">Seuil d\'alerte pour une fréquence cardiaque trop basse</string>
     <string name="prefs_relaxation_reminder_title">Rappel de relaxation</string>
     <string name="spo2_perc_90">90%</string>
@@ -1742,7 +1742,7 @@
     <string name="mi2_dnd_always">Toujours</string>
     <string name="menuitem_workout_history">Historique des entrainements</string>
     <string name="menuitem_workout_status">État des entrainements</string>
-    <string name="pref_header_heartrate_alerts">Alerte pour la fréquence cardiaque</string>
+    <string name="pref_header_heartrate_alerts">Alertes de fréquence cardiaque</string>
     <string name="pref_title_notifications_ignore_low_priority">Ignorer les notifications de faible priorité</string>
     <string name="pref_summary_notifications_ignore_low_priority">Ne pas envoyer les notifications de priorité minimum ou faible à la montre</string>
     <string name="activity_prefs_allow_bluetooth_intent_api">API Bluetooth d\'intention</string>
@@ -2404,7 +2404,7 @@
     <string name="huawei_trusleep_summary">Surveiller la qualité de votre sommeil temps réel.</string>
     <string name="pref_enable_call_accept">Autoriser les appels</string>
     <string name="pref_enable_call_reject_summary">Permettre le rejet des appels depuis l\'appareil</string>
-    <string name="pref_heartrate_automatic_enable">Permettre la mesure automatique de la fréquence cardiaque</string>
+    <string name="pref_heartrate_automatic_enable">Activer la mesure automatique de la fréquence cardiaque</string>
     <string name="pref_force_options">Forcer les options</string>
     <string name="pref_title_debug">Demande de dépannage</string>
     <string name="pref_title_fossil_hr_nav_vibrate">Vibrer lors d\'une nouvelle instruction</string>
@@ -2442,7 +2442,7 @@
     <string name="wearmode_pebble">Pebble (boucle de chaussure)</string>
     <string name="wearmode_band">Bracelet (poignet)</string>
     <string name="alarm_smart_wakeup_interval_default">5 minutes</string>
-    <string name="prefs_heartrate_alert_active_high_threshold">Seuil d\'alerte pour fréquence cardiaque élevée</string>
+    <string name="prefs_heartrate_alert_active_high_threshold">Seuil d\'alerte pour une fréquence cardiaque élevée pendant une période active</string>
     <string name="updatefirmwareoperation_updateproblem_low_battery">La batterie de l\'appareil est trop faible</string>
     <string name="hydration_dnd_summary">Désactiver les alertes d\'hydratation durant un moment</string>
     <string name="silent_mode_vibrate_silent">Vibreur / Silencieux</string>
@@ -2537,12 +2537,12 @@
     <string name="uploadwatchfaceoperation_in_progress">Envoi d\'un thème</string>
     <string name="uploadwatchfaceoperation_complete">Installation du thème terminé</string>
     <string name="uploadwatchfaceoperation_failed">Installation du thème échouée</string>
-    <string name="heartrate_bpm_155">155 battements/minute</string>
-    <string name="heartrate_bpm_165">165 battements/minute</string>
-    <string name="heartrate_bpm_175">175 battements/minute</string>
-    <string name="heartrate_bpm_185">185 battements/minute</string>
-    <string name="heartrate_bpm_195">195 battements/minute</string>
-    <string name="heartrate_bpm_205">205 battements/minute</string>
+    <string name="heartrate_bpm_155">155 bpm</string>
+    <string name="heartrate_bpm_165">165 bpm</string>
+    <string name="heartrate_bpm_175">175 bpm</string>
+    <string name="heartrate_bpm_185">185 bpm</string>
+    <string name="heartrate_bpm_195">195 bpm</string>
+    <string name="heartrate_bpm_205">205 bpm</string>
     <string name="pref_enable_call_accept_summary">Autoriser les appels depuis l\'appareil</string>
     <string name="widget_move_up">Déplacer vers le haut</string>
     <string name="pref_force_connection_type_auto">Automatique</string>
@@ -2609,7 +2609,7 @@
     <string name="devicetype_scannable">Appareil scannable</string>
     <string name="pref_header_sony_sound_control">Contrôle audio</string>
     <string name="companion_pairing_request_title">Appareil compagnon</string>
-    <string name="pref_force_enable_heartrate_support_summary">Forcer la prise en charge de la fréquence cardiaque \nUTILISER À VOS RISQUES ET PÉRILS</string>
+    <string name="pref_force_enable_heartrate_support_summary">Forcer la prise en charge de la fréquence cardiaque \nUTILISEZ À VOS RISQUES ET PÉRILS</string>
     <string name="pref_force_enable_spo2_support">Forcer la prise en charge du SpO₂</string>
     <string name="device_state_waiting_scan">En attente du scan des appareils</string>
     <string name="waiting_for_bluetooth">En attente du Bluetooth…</string>
@@ -2648,12 +2648,12 @@
     <string name="error_showing_changelog">Erreur lors de l\'affichage du Changelog</string>
     <string name="dashboard_settings">Réglages du Tableau de bord</string>
     <string name="activity_type_worn">Porté</string>
-    <string name="pref_dashboard_widget_today_hr_interval_title">intervalle de rythme cardiaque</string>
+    <string name="pref_dashboard_widget_today_hr_interval_title">Intervalle de fréquence cardiaque</string>
     <string name="pref_sleepasandroid_features_title">Fonctionnalités</string>
     <string name="bottom_nav_dashboard">Tableau de bord</string>
     <string name="pref_dashboard_widget_double_size_title">Taille double</string>
     <string name="pref_auto_reply_calls_summary">Le téléphone décrochera automatiquement les appels entrants</string>
-    <string name="pref_sleepasandroid_feat_heartrate">Rythme cardiaque</string>
+    <string name="pref_sleepasandroid_feat_heartrate">Fréquence cardiaque</string>
     <string name="pref_sleepasandroid_feat_oximetry">Oximétrie</string>
     <string name="widget_layout_top_wide_bot_large">Large au dessus, grand en dessous</string>
     <string name="pref_dashboard_cards_title">Afficher les widgets sur les cartes</string>
@@ -2674,7 +2674,7 @@
     <string name="open_camera">Open Camera</string>
     <string name="toast_camera_photo_taken">La photo a été prise et sauvegardée dans %s</string>
     <string name="pref_auto_reply_calls_title">Répond automatiquement aux appels téléphoniques</string>
-    <string name="pref_dashboard_widget_today_hr_interval_summary">Le temps en minutes pendant lequel le graphique affiche \"porté\" après chaque mesure du rythme cardiaque</string>
+    <string name="pref_dashboard_widget_today_hr_interval_summary">Le temps en minutes pendant lequel le graphique affiche \"porté\" après chaque mesure de la fréquence cardiaque</string>
     <string name="devicesetting_scannable_rssi">Seuil RSSI minimum</string>
     <string name="devicesetting_scannable_minimum_unseen_summary">Une fois scanné, l\'appareil sera invisible pour cette durée avant de pouvoir être enregistré de nouveau</string>
     <string name="devicesetting_scannable_rssi_summary">Seuil minimum de RSSI pour la détection</string>
@@ -2901,7 +2901,7 @@
     <string name="activity_type_judo">Judo</string>
     <string name="activity_type_dragon_boat">Bateau-dragon</string>
     <string name="activity_type_tug_of_war">Tir à la corde</string>
-    <string name="activity_type_muay_thai">Muay thai</string>
+    <string name="activity_type_muay_thai">Muay-thaï</string>
     <string name="activity_type_water_polo">Water-polo</string>
     <string name="activity_type_paddling">Sport à pagaie</string>
     <string name="activity_type_para_sport">Handisport</string>
@@ -3044,7 +3044,7 @@
     <string name="activity_type_rem_sleep">Sommeil REM</string>
     <string name="menuitem_weight">Poids</string>
     <string name="target">Cible</string>
-    <string name="lactateThresholdHeartRate">Fréquence cardiaque du seuil de lactate</string>
+    <string name="lactateThresholdHeartRate">Fréquence cardiaque au seuil de lactate</string>
     <string name="recoveryTime">Temps de récupération</string>
     <string name="sleep_colored_stats_awake_avg">Moy. éveillé</string>
     <string name="weight_lbs">%1$.2f livres</string>
@@ -3127,7 +3127,7 @@
     <string name="hr_maximum">Maximum</string>
     <string name="hr_minimum">Minimum</string>
     <string name="hr_average">Moyenne</string>
-    <string name="menuitem_heart_rate_push">Push fréquence cardiaque</string>
+    <string name="menuitem_heart_rate_push">\"Push\" fréquence cardiaque</string>
     <string name="bpm_value_unit">%1$d bpm</string>
     <string name="label_distance_trip_mph">Voyage : %.1f mi</string>
     <string name="label_distance_total_mph">Total : %.1f mi</string>
@@ -3753,8 +3753,8 @@
     <string name="pref_enable_sms_quick_reply_summary">Autoriser le rejet des appels avec une réponse par SMS</string>
     <string name="pref_heart_rate_realtime_mode">Mode de mesure automatique de la fréquence cardiaque en temps réel</string>
     <string name="pref_heart_rate_realtime_mode_summary">Si activé, utilise le mode en temps réel, sinon utilise le mode intelligent. Ce mode consomme plus d’énergie.</string>
-    <string name="pref_heart_rate_high_alert">Alerte fréquence cardiaque élevée</string>
-    <string name="pref_heart_rate_low_alert">Alerte faible fréquence cardiaque</string>
+    <string name="pref_heart_rate_high_alert">Alerte de fréquence cardiaque élevée</string>
+    <string name="pref_heart_rate_low_alert">Alerte de fréquence cardiaque basse</string>
     <string name="pref_spo_low_alert">Alerte SpO2 faible</string>
     <string name="intent_api_allow_trigger_zip_export_title">Autoriser export Zip</string>
     <string name="intent_api_allow_trigger_zip_export_summary">Autoriser le déclenchement de l’exportation Zip via l’API Intent</string>
@@ -3790,7 +3790,7 @@
     <string name="devicetype_generic_heart_rate_sensor">Capteur de fréquence cardiaque</string>
     <string name="menuitem_calculator">Calculateur</string>
     <string name="menuitem_running_calculator">Calculateur de course</string>
-    <string name="menuitem_real_time_heart_rate">Fréquence cardiaque temps réel</string>
+    <string name="menuitem_real_time_heart_rate">Fréquence cardiaque en temps réel</string>
     <string name="menuitem_watch_storage_space">Espace stockage montre</string>
     <string name="zepp_os_sun_moon_utc_summary">Activez cela si votre montre affiche des valeurs incorrectes pour les heures du soleil et de la lune</string>
     <string name="weather_condition_thunderstorm_with_light_rain">orage avec pluie légère</string>
@@ -3859,10 +3859,10 @@
     <string name="huawei_send_gps_and_time_title">Envoyer les données GPS et l\'heure à l\'appareil</string>
     <string name="feature_experimental_unstable">Expérimental, peut être instable</string>
     <string name="hr_settings_zones_calculation_method">Méthode de calcul</string>
-    <string name="hr_settings_zones_resting_hr">Battements de coeur au repos</string>
-    <string name="hr_settings_zones_max_hr">Battements de coeur maximum</string>
+    <string name="hr_settings_zones_resting_hr">Fréquence cardiaque au repos</string>
+    <string name="hr_settings_zones_max_hr">Fréquence cardiaque maximum</string>
     <string name="hr_settings_zones_remove_all">Tout réinitialiser</string>
-    <string name="pref_huawei_pulse_wave_arrhythmia_alert_summary">Être alerté quand vos battements de coeur sont anormaux</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_alert_summary">Être alerté quand votre fréquence cardiaque est anormale</string>
     <string name="pref_screen_ecg">ECG</string>
     <string name="pref_huawei_ecg_activate_title">Activer l\'ECG</string>
     <string name="pref_huawei_ecg_activate_summary">Activer ou désactiver l\'ECG sur l\'appareil</string>
@@ -3931,8 +3931,8 @@
     <string name="pref_aawireless_vag_crash_fix_title">Correctif crash sur VAG</string>
     <string name="single_click">Simple clic</string>
     <string name="garmin_mlr_protocol">Protocole fiable multiliaison</string>
-    <string name="heart_rate_settings">Paramètres fréquence cardiaque</string>
-    <string name="heart_rate_settings_summary">Afficher les paramètres de fréquence cardiaque et les zones d’entraînement actuels</string>
+    <string name="heart_rate_settings">Paramètres de fréquence cardiaque</string>
+    <string name="heart_rate_settings_summary">Afficher les paramètres de fréquence cardiaque et les zones actuels en entraînement</string>
     <string name="hr_settings_zones_remove_all_description">Êtes-vous sûr(e) de vouloir supprimer les zones et limites de fréquence cardiaque pour toutes les configurations de posture et les réinitialiser à leurs valeurs par défaut ?</string>
     <string name="pref_huawei_health_features_config_title">Config fonctionnalités santé</string>
     <string name="pref_huawei_health_features_config_summary">Config fonctionnalités étendues de santé.</string>
@@ -3946,7 +3946,7 @@
     <string name="pref_huawei_force_features_settings_title">Forcer à afficher les paramètres restreints par pays</string>
     <string name="pref_huawei_force_features_settings_summary">Forcer à afficher les paramètres spécifiques au pays dans l’application Gadgetbridge.\n Avertissement : Gadgetbridge affichera les paramètres signalés par votre appareil comme pris en charge. Veuillez noter que certains paramètres peuvent être restreints par l’application du fournisseur sur votre appareil et ne pas fonctionner, ou fonctionner de manière incorrecte.</string>
     <string name="pref_huawei_pulse_wave_arrhythmia_automatic_title">Détection automatique d’arythmie</string>
-    <string name="pref_huawei_pulse_wave_arrhythmia_automatic_summary">L’appareil surveillera automatiquement votre rythme cardiaque.</string>
+    <string name="pref_huawei_pulse_wave_arrhythmia_automatic_summary">L’appareil surveillera automatiquement votre fréquence cardiaque.</string>
     <string name="pref_huawei_pulse_wave_arrhythmia_alert_title">Alerte arythmie</string>
     <string name="pref_huawei_arterial_stiffness_detection">Détection rigidité artérielle</string>
     <string name="pref_huawei_arterial_stiffness_detection_enable_title">Activer la détection de la rigidité artérielle</string>
@@ -4089,7 +4089,7 @@
     <string name="activity_type_mobility">Mobilité</string>
     <string name="qhybrid_button_function_date">Date</string>
     <string name="qhybrid_button_function_last_notif">Dernière notification</string>
-    <string name="broadcast_heart_rate_summary">Tout appareil ou app à proximité peut détecter votre rythme cardiaque.</string>
+    <string name="broadcast_heart_rate_summary">Tout appareil ou appli à proximité peut détecter votre fréquence cardiaque.</string>
     <string name="dual_connection_summary">Autoriser la connexion simultanée de deux apps ou appareils.</string>
     <string name="media_source_tf">Carte TF (microSD)</string>
     <string name="media_source_usb">USB</string>
@@ -4177,7 +4177,7 @@
     <string name="uploadrpkoperation_failed">Echec de l\'installation du rpk</string>
     <string name="encryption">Chiffrement</string>
     <string name="development_preference_do_not_change">Ne pas modifier à moins d\'y être invité, ou si vous êtes développeur</string>
-    <string name="activity_type_stop_watch"></string>
+    <string name="activity_type_stop_watch"/>
     <string name="pref_dashboard_widget_today_dim_yesterday_data_title">Afficher hier en grisé</string>
     <string name="pref_dashboard_widget_today_dim_yesterday_data_summary">Afficher les données d\'hier avec des couleurs atténuées</string>
     <string name="earfun_earbud_mode_automatic">Choisir automatiquement le meilleur écouteur</string>
@@ -4256,7 +4256,7 @@
     <string name="health_connect_finished_with_stats_and_errors">Synchronisation des données Santé Connect terminée (%1$s) [%2$s erreurs]</string>
     <string name="health_connect_finished_with_errors">La synchronisation Santé Connect a rencontré des erreurs, une partie des données ne sera pas disponible.</string>
     <string name="notification_channel_health_connect_sync_name">Synchronisation Santé Connect</string>
-    <string name="pref_health_connect_detailed_workout_sync_summary">Synchroniser les traces GPS et des mesures par seconde (fréquence cardiaque, vitesse, puissance) pour les exercices. Ceci fournit des données plus riches, mais peut prendre plus de temps.</string>
+    <string name="pref_health_connect_detailed_workout_sync_summary">Synchroniser les traces GPS et les mesures par seconde (fréquence cardiaque, vitesse, puissance) pour les exercices. Ceci fournit des données plus riches, mais peut prendre plus de temps.</string>
     <string name="health_connect_initial_sync_custom_date">Synchroniser à partir d\'une date donnée</string>
     <string name="health_connect_initial_sync_dialog_title">Synchronisation Santé Connect initiale</string>
     <string name="health_connect_initial_sync_dialog_message">Choisir les données à synchroniser pour la synchronisation Santé Connect initiale :</string>
@@ -4275,4 +4275,16 @@
     <string name="broadcast_heart_rate_title">Diffuser la fréquence cardiaque</string>
     <string name="sinilink_playback_mode_random">Aléatoire</string>
     <string name="sinilink_playback_mode_order">Ordre</string>
+    <string name="hr_user_max">Fréquence cardiaque maximum utilisateur</string>
+    <string name="recoveryHr">Fréquence cardiaque de récupération</string>
+    <string name="recovery_heart_rate">Fréquence cardiaque de récupération</string>
+    <string name="hr_settings_zones_lactate_threshold_hr">Fréquence cardiaque au seuil de lactate</string>
+    <string name="diving_oxygen_toxicity">Toxicité due à l\'oxygène</string>
+    <string name="unit_oxygen_toxicity_units">OTU</string>
+    <string name="blood_pressure_export_dob">Né(e) le : %s</string>
+    <string name="bahasa_melayu">Malais</string>
+    <string name="pref_chart_sleep_range_rolling_24h">24 dernières heures</string>
+    <string name="activity_type_floorball">Floorball</string>
+    <string name="activity_type_bike_tour">Circuit à vélo</string>
+    <string name="activity_type_track_me">Suivez-moi</string>
 </resources>
