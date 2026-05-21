@@ -697,9 +697,9 @@
     <string name="activity_db_management_empty_db_warning">Attention ! En cliquant sur ce bouton, vous supprimerez toutes vos données et recommencerez à zéro.</string>
     <string name="appwidget_sleep_alarm_widget_label">Réveil</string>
     <plurals name="widget_alarm_target_hours" tools:ignore="MissingQuantity">
-        <item quantity="one">%d heure</item>
-        <item quantity="many">%d heures</item>
-        <item quantity="other">%d heures</item>
+        <item quantity="one">%1$d:%2$02d heure</item>
+        <item quantity="many">%1$d:%2$02d heures</item>
+        <item quantity="other">%1$d:%2$02d heures</item>
     </plurals>
     <string name="pref_display_add_device_fab">Bouton pour connecter un nouvel appareil</string>
     <string name="activity_error_no_app_for_gpx">Pour visualiser votre géolocalisation, installez une appli qui lit les fichiers GPX.</string>
@@ -1136,7 +1136,7 @@
     <string name="fossil_hr_new_action_cancel">annuler</string>
     <string name="fossil_hr_edit_action">Modifier l\'action</string>
     <string name="fossil_hr_edit_action_delete">supprimer</string>
-    <string name="fossil_hr_commute_actions_explanation">Les actions configurées ici apparaitront dans l\'app Commute dans votre bracelet. Consulter le wiki pour plus d\'informations sur la gestion des intentions générés par ces actions.</string>
+    <string name="fossil_hr_commute_actions_explanation">Les actions configurées ici apparaitront dans l\'app Commute dans votre bracelet. Consulter le site web pour plus d\'informations sur la gestion des intentions générées par ces actions.</string>
     <string name="qhybrid_title_watchface">Configuration du cadran</string>
     <string name="notification_channel_low_battery_name">Batterie faible</string>
     <string name="notification_channel_transfer_name">Transfert de données</string>
@@ -1218,7 +1218,7 @@
     <string name="prefs_sleep_time_label">Configurer les heures de sommeil</string>
     <string name="prefs_sleep_time">Durées de sommeil</string>
     <string name="pref_title_ping_tone">Sonnerie du Ping</string>
-    <string name="nothing_prefs_inear_summary">Mettre en lecture/pause la musique selon si vous portez les écouteurs ou pas</string>
+    <string name="nothing_prefs_inear_summary">Mettre en lecture/pause la musique selon que vous portez les écouteurs ou pas</string>
     <string name="nothing_prefs_audiomode_title">Mode Audio</string>
     <string name="nothing_prefs_inear_title">Détection In-Ear</string>
     <string name="check_all_applications">Activer toutes les applications</string>
@@ -1439,7 +1439,7 @@
     <string name="pref_header_sony_device_info">Information de l\'appareil</string>
     <string name="start">Départ</string>
     <string name="pref_header_sony_anc_optimizer">Optimisation de l\'annulation de bruits</string>
-    <string name="sony_anc_optimize_description">Cliquer pour lancer l\'optimiseur d\'annulation de bruits.</string>
+    <string name="sony_anc_optimize_description">Cliquer pour lancer l\'optimiseur de réduction de bruits.</string>
     <string name="sony_anc_optimize_confirmation_title">Optimiseur d\'annulation de bruits</string>
     <string name="pref_anc_optimizer_state_pressure">Pression atmosphérique</string>
     <string name="sony_anc_optimizer_status_starting">Démarrage…</string>
@@ -1979,7 +1979,7 @@
     <string name="ftp_server_status">État du serveur FTP</string>
     <string name="username">Nom d\'utilisateur</string>
     <string name="address">Adresse</string>
-    <string name="sony_speak_to_chat_summary">Désactiver l\'annulation de bruit automatiquement lors d\'un appel.</string>
+    <string name="sony_speak_to_chat_summary">Désactiver automatiquement le réducteur de bruit lorsque vous commencez à parler.</string>
     <string name="yesterdays_activity">Activité d\'hier</string>
     <string name="pref_morning_updates_title">Mises à jour le matin</string>
     <string name="pref_morning_updates_summary">Afficher les mises à jour tous les matins</string>
@@ -2193,7 +2193,7 @@
     <string name="fw_upgrade_notice_zepp_os">Vous êtes sur le point d\'installer le micro-logiciel %1$s dans votre %2$s. \n \nVotre montre va redémarrer après l\'installation du fichier .zip. \n \nA VOS RISQUES ET PÉRILS !</string>
     <string name="device_experimental">EXPÉRIMENTAL</string>
     <string name="info_menu_structure_removed">Structure de menu enlevé</string>
-    <string name="error_menu_companion_not_installed">\'Compagnon HR\' probablement non installé</string>
+    <string name="error_menu_companion_not_installed">\"Compagnon HR\" probablement non installé</string>
     <string name="info_fossil_rebuild_watchface_custom_menu">Merci de reconstruire l\'écran de la montre pour un menu personnalisé</string>
     <string name="info_menu_structure_set">Structure JSON définie dans GB</string>
     <string name="info_menu_structure_contents">Structure de menu : %s</string>
@@ -2400,7 +2400,7 @@
     <string name="prefs_active_noise_cancelling_transparency">Transparence</string>
     <string name="sony_protocol_v3">Version 3</string>
     <string name="huawei_alarm_smart_description">Ne pas désactiver l\'option réveil intelligent.</string>
-    <string name="huawei_trusleep_title">HUAWEI TruSleep ™</string>
+    <string name="huawei_trusleep_title">HUAWEI TruSleep™</string>
     <string name="huawei_trusleep_summary">Surveiller la qualité de votre sommeil temps réel.</string>
     <string name="pref_enable_call_accept">Autoriser les appels</string>
     <string name="pref_enable_call_reject_summary">Permettre le rejet des appels depuis l\'appareil</string>
@@ -2430,7 +2430,7 @@
     <string name="prefs_password_4_digits_0_to_9_summary">Le mot de passe doit comporter 4 chiffres, et uniquement des chiffres</string>
     <string name="prefs_workmode">Mode de fonctionnement</string>
     <string name="huawei_reparse_workout_data_description">Cela fera quelque chose uniquement après certaines mises à jour</string>
-    <string name="widget_screen_delete_confirm_description">Êtes-vous sûr de vouloir effacer \'%1$s\'?</string>
+    <string name="widget_screen_delete_confirm_description">Êtes-vous sûr de vouloir effacer \"%1$s\" ?</string>
     <string name="widget_screen_no_free_slots_description">Cet appareil n\'a plus d\'emplacement libre pour un widget d\'écran (nombre de widgets: %1$s)</string>
     <string name="widget_layout_top_1_bot_2">1 haut, 2 bas</string>
     <string name="widget_layout_top_2_bot_1">2 hauts, 1 bas</string>
@@ -2546,7 +2546,7 @@
     <string name="pref_enable_call_accept_summary">Autoriser les appels depuis l\'appareil</string>
     <string name="widget_move_up">Déplacer vers le haut</string>
     <string name="pref_force_connection_type_auto">Automatique</string>
-    <string name="pref_force_options_summary">Certains appareils prétendent à tort ne pas prendre en charge certaines options. Ces réglages peuvent être utilisés pour les activer malgré tout. \nÀ UTILISER À VOS RISQUES ET PÉRILS \nLire le wiki</string>
+    <string name="pref_force_options_summary">Certains appareils prétendent à tort ne pas prendre en charge certaines options. Ces réglages peuvent être utilisés pour les activer malgré tout. \nÀ UTILISER À VOS RISQUES ET PÉRILS \nLire le site web</string>
     <string name="pref_force_smart_alarm">Forcer l\'alarme intelligente</string>
     <string name="pref_force_smart_alarm_summary">Forcer la gestion des alarmes intelligentes
 \nUTILISER À VOS RISQUES ET PÉRILS</string>
@@ -2667,7 +2667,7 @@
     <string name="pref_sleepasandroid_slot_summary">Quel emplacement d\'alarme utiliser lors de la configuration des alarmes</string>
     <string name="pref_sleepasandroid_feat_notifications">Notifications</string>
     <string name="pref_sleepasandroid_feat_movement">Accéléromètre</string>
-    <string name="watchface_resolution_doesnt_match">La résolution du thème d\'écran ne correspond pas à la résolution de l\'appareil. Le thème d\'écran est %1$s l\'écran de l\'appareil est %2$s</string>
+    <string name="watchface_resolution_doesnt_match">La définition du thème d\'écran ne correspond pas à celle de l\'appareil. Le thème d\'écran est de %1$s, l\'écran de l\'appareil est de %2$s</string>
     <string name="device_name_cycling_sensor">Capteur cyclisme</string>
     <string name="devicetype_cycling_sensor">Capteur de vitesse pour vélo</string>
     <string name="pref_summary_wheel_diameter">Diamètre de la roue en pouces. Habituellement 29, 27,5 or 26.</string>
@@ -3142,7 +3142,7 @@
     <string name="idasen_pref_mid_height">Hauteur de la position moyenne (en centimètres)</string>
     <string name="idasen_pref_sit_height">Hauteur de la position assise (en centimètres)</string>
     <string name="idasen_pref_stand_height">Hauteur de la position du support (en centimètres)</string>
-    <string name="idasen_pref_value_warning">La valeur doit être comprise entre 62 - 126 cm</string>
+    <string name="idasen_pref_value_warning">La valeur doit être comprise entre 62 – 126 cm</string>
     <string name="pref_dashboard_widget_today_time_indicator_summary">Afficher un indicateur à l’heure actuelle, pour séparer visuellement les données d’hier et d’aujourd’hui</string>
     <string name="pref_dnd_follow_phone_title">Suivre le réglage NPD du téléphone</string>
     <string name="pref_dnd_follow_phone_summary">Lorsque le mode NPD est activé ou désactivé sur le téléphone, il bascule automatiquement sur l’appareil également</string>
@@ -3151,13 +3151,13 @@
     <string name="date_placeholders__start_time__end_time">%1$s – %2$s</string>
     <string name="date_placeholders__date__time">%1$s, %2$s</string>
     <string name="mijia_lywsd_comfort_temperature_title">Temperature (°C)</string>
-    <string name="mijia_lywsd_comfort_temperature_summary">Plage recommandée : 19 - 27</string>
+    <string name="mijia_lywsd_comfort_temperature_summary">Plage recommandée : 19 – 27</string>
     <string name="mijia_lywsd_comfort_level_title">Niveau confort</string>
     <string name="mijia_lywsd_comfort_humidity_title">Humidité (%)</string>
     <string name="mijia_lywsd_comfort_level_summary">Configurer les limites de température et d’humidité pour l’affihage d\'emoji</string>
     <string name="mijia_lywsd_comfort_lower">limite inférieure</string>
     <string name="mijia_lywsd_comfort_upper">Limite supérieure</string>
-    <string name="mijia_lywsd_comfort_humidity_summary">Plage recommandée : 20 - 85</string>
+    <string name="mijia_lywsd_comfort_humidity_summary">Plage recommandée : 20 – 85</string>
     <string name="pref_summary_sync_birthdays">Synchroniser les anniversaires de contact avec les événements du calendrier</string>
     <string name="pref_title_sync_birthdays">Synchroniser les anniversaires</string>
     <string name="birthdays">Anniversaires</string>
@@ -3232,7 +3232,7 @@
     <string name="redmi_buds_5_pro_equalizer_neg3">-3 dB</string>
     <string name="redmi_buds_5_pro_equalizer_6">6 dB</string>
     <string name="redmi_buds_5_pro_anc_deep">Profond</string>
-    <string name="music_delete_confirm_description">Êtes-vous sûr(e) de vouloir supprimer %1$s ?</string>
+    <string name="music_delete_confirm_description">Êtes-vous sûr(e) de vouloir supprimer \"%1$s\" ?</string>
     <string name="music_rename_playlist">Renommer la playlist</string>
     <string name="first_start_overview_dashboard">Le tableau de bord vous permet d’avoir une idée rapide de comment vous allez aujourd\'hui. L’affichage du calendrier indique l’état de vos objectifs sur un mois entier.</string>
     <string name="permission_fine_location_summary">Rechercher les appareils Bluetooth</string>
@@ -3276,7 +3276,7 @@
     <string name="redmi_buds_5_pro_equalizer_2">2 dB</string>
     <string name="first_start_overview_desc">Gadgetbridge a deux vues principales, chacune avec son propre but.</string>
     <string name="redmi_buds_5_pro_equalizer_4">4 dB</string>
-    <string name="music_delete_multiple_confirm_description">Êtes-vous sûr(e) de vouloir supprimer %1$d chansons ?</string>
+    <string name="music_delete_multiple_confirm_description">Êtes-vous sûr(e) de vouloir supprimer \"%1$d\" morceaux ?</string>
     <string name="first_start_overview_devices">La vue des appareils affiche tous les appareils que vous avez configurés et leur statut, et donne accès à des fonctions spécifiques aux appareils telles que des graphiques détaillés, des paramètres, des applications et des alarmes.</string>
     <string name="permission_notifications_summary">Transfert des notifications vers les gadgets connectés</string>
     <string name="permission_displayover_title">Afficher par-dessus d\'autres applications</string>
@@ -3630,7 +3630,7 @@
     <string name="filter_charts">Filtrer graphiques</string>
     <string name="earfun_change_device_name_confirm_message">1) Une fois que vous avez mis à jour le nom, placez les écouteurs dans l’étui de charge, fermez le couvercle et attendez environ 10 secondes.\n\n2) Dans les paramètres de votre appareil, supprimez l’appareil d’origine.\n\n3) Ouvrez à nouveau l\'étui de charge, recherchez l’appareil et le changement de nom doit être appliqué avec succès.</string>
     <string name="earfun_change_confirm_title">Changer %s ?</string>
-    <string name="earfun_reboot_confirm_message">Après avoir appliqué ce paramètre, votre appareil redémarrera. Une fois qu’il s’allumera à nouveau, naviguez vers l’écran Appareils et reconnectez-vous.</string>
+    <string name="earfun_reboot_confirm_message">Après avoir appliqué ce paramètre, votre appareil redémarrera. Une fois qu’il s’allumera à nouveau, naviguez vers l’écran \"Appareils\" et reconnectez-vous.</string>
     <string name="ultrahuman_breathing_stop">Stop</string>
     <string name="unit_celsius">℃</string>
     <string name="unit_fahrenheit">℉</string>
@@ -3653,7 +3653,7 @@
     <string name="pref_aawireless_disable_media_sink_summary">Autoriser la lecture multimédia via un autre appareil Bluetooth</string>
     <string name="pref_aawireless_disable_media_sink_title">Désactiver récepteur médias</string>
     <string name="pref_aawireless_disable_tts_sink_summary">Autoriser instructions vocales à travers un autre appareil Bluetooth</string>
-    <string name="pref_aawireless_dongle_mode_summary">Utilisez la logique native du dongle pour Android Auto. Cela peut aider avec les problèmes de connectivité mains libres Bluetooth. Lorsqu’il est activé, le commutation manuelle du téléphone n’est pas possible.</string>
+    <string name="pref_aawireless_dongle_mode_summary">Utilisez la logique native du dongle pour Android Auto. Cela peut aider avec les problèmes de connectivité mains libres Bluetooth. Si ce réglage est activé, la commutation manuelle du téléphone n’est pas possible.</string>
     <string name="pref_aawireless_dongle_mode_title">Mode Dongle</string>
     <string name="pref_aawireless_dpi_summary">Mettre à 0 pour utiliser la valeur par défaut de la voiture</string>
     <string name="pref_aawireless_passthrough_summary">Transmettre les données directement, sans aucun traitement</string>
@@ -3915,12 +3915,12 @@
     <string name="pref_even_realities_g1_screen_activation_angle_enable_title">Montrer sur tête haute</string>
     <string name="pref_even_realities_g1_screen_activation_angle_enable_summary">Permettre l’affichage automatique du tableau de bord lorsque le porteur regarde en haut</string>
     <string name="pref_even_realities_g1_touch_double_left_title">Double tape gauche</string>
-    <string name="pref_even_realities_g1_touch_double_left_summary">Lorsque le pavé tactile gauche est tapé deux fois, effectuer cette action : %s</string>
+    <string name="pref_even_realities_g1_touch_double_left_summary">Lorsque le pavé tactile gauche est tapé deux fois, exécuter cette action : %s</string>
     <string name="pref_even_realities_g1_touch_double_right_title">Double tape droite</string>
     <string name="pref_even_realities_g1_touch_double_right_summary">Lorsque le pavé tactile droit est tapé deux fois, effectuer cette action : %s</string>
     <string name="pref_even_realities_g1_touch_long_left_title">Pression longue à gauche</string>
     <string name="pref_even_realities_g1_touch_long_right_title">Pression longue à droite</string>
-    <string name="pref_even_realities_g1_touch_long_left_summary">Lorsque le pavé tactile gauche est enfoncé longtemps, effectuer cette action : %s</string>
+    <string name="pref_even_realities_g1_touch_long_left_summary">Lorsque le pavé tactile gauche est enfoncé longtemps, exécuter cette action : %s</string>
     <string name="pref_even_realities_g1_touch_long_right_summary">Lorsque le pavé tactile droit est enfoncé longtemps, effectuer cette action : %s</string>
     <string name="even_realities_left_lens">Lentille gauche</string>
     <string name="even_realities_right_lens">Lentille droite</string>
@@ -4177,7 +4177,7 @@
     <string name="uploadrpkoperation_failed">Echec de l\'installation du rpk</string>
     <string name="encryption">Chiffrement</string>
     <string name="development_preference_do_not_change">Ne pas modifier à moins d\'y être invité, ou si vous êtes développeur</string>
-    <string name="activity_type_stop_watch"/>
+    <string name="activity_type_stop_watch">Chronomètre</string>
     <string name="pref_dashboard_widget_today_dim_yesterday_data_title">Afficher hier en grisé</string>
     <string name="pref_dashboard_widget_today_dim_yesterday_data_summary">Afficher les données d\'hier avec des couleurs atténuées</string>
     <string name="earfun_earbud_mode_automatic">Choisir automatiquement le meilleur écouteur</string>
@@ -4293,4 +4293,45 @@
     <string name="sleep_restless_moments">Sommeil agité</string>
     <string name="kind_waypoints">Points de passage</string>
     <string name="waypoint_count">%d points de passage</string>
+    <string name="battery_status_ok">OK</string>
+    <string name="body_energy_at_end">Énergie corporelle finale</string>
+    <string name="body_energy_at_start">Énergie corporelle initiale</string>
+    <string name="stamina_at_end">Endurance finale</string>
+    <string name="stamina_at_start">Endurance initiale</string>
+    <string name="stamina_min">Endurance minimum</string>
+    <string name="diving_pressure_sac_avg">Consommation d\'air en surface</string>
+    <string name="recovery_time_remaining_at_start">Temps de récupération initial</string>
+    <string name="unit_bar_per_minute">bar/min</string>
+    <string name="unit_bar">bar</string>
+    <string name="diving_tank">Bouteille</string>
+    <string name="diving_tank_used">Consommé</string>
+    <string name="water_type_custom">Personnalisé</string>
+    <string name="water_type_en13319">EN13319</string>
+    <string name="water_type_fresh">Douce</string>
+    <string name="water_type_salt">Salée</string>
+    <string name="ratingOfPerceivedExertion">Mesure de perception de l\'effort</string>
+    <string name="diving_end_cns">Toxicité CNS finale</string>
+    <string name="diving_start_cns">Toxicité CNS initiale</string>
+    <string name="max_vertical_oscillation">Oscillation verticale maximum</string>
+    <string name="min_vertical_oscillation">Oscillation verticale minimum</string>
+    <string name="sports_activity_quick_filter_distant_past">Historique ancien (tous exercices)</string>
+    <string name="nothing_equalizer_custom">Personnalisé</string>
+    <string name="soundcore_equalizer_preset_small_speakers">Petits haut-parleurs</string>
+    <string name="soundcore_equalizer_preset_spoken_word">Parole</string>
+    <string name="pref_summary_supported_devices">Cette fonction n\'est pas offerte par tous les appareils. Cliquez ici pour plus d\'informations.</string>
+    <string name="unset">Désactiver</string>
+    <string name="loyalty_cards_app_not_compatible">La version de %1s installée n\'est pas compatible avec Gadgetbridge. Veuillez mettre à jour %1s et Gadgetbridge.</string>
+    <string name="hr_settings_zones_calculation_method_hrr">HRR</string>
+    <string name="hr_settings_zones_calculation_method_lthr">LTHR</string>
+    <string name="internet_firewall_action">Action</string>
+    <string name="internet_firewall_add_domain">Ajouter un domaine</string>
+    <string name="internet_helper_permission_title">Extension Assistant Internet</string>
+    <string name="internet_helper_permission_summary">Autoriser l\'accès par l\'extension Gadgetbridge Assistant Internet</string>
+    <string name="activity_send_waypoint_titel">Envoyer le point de passage</string>
+    <string name="health_connect_permissions_rationale_title">Politique de confidentialité et autorisations</string>
+    <string name="health_connect_no_devices_selected">Aucun appareil activé pour la synchronisation Santé Connect.</string>
+    <string name="qhybrid_button_function_forward">Envoyer au téléphone</string>
+    <string name="qhybrid_button_function_forward_multi">Envoyer au téléphone (multifonction)</string>
+    <string name="qhybrid_button_function_control_music">Contrôler le lecteur de musique</string>
+    <string name="antplus_summary">Les appareils compatibles ANT+ proches peuvent capter votre fréquence cardiaque.</string>
 </resources>
