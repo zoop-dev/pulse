@@ -2047,7 +2047,7 @@
     <string name="watchface_widget_type_uv_index">UV Index</string>
     <string name="pref_switch_controls_anc_ambient_off">Potlačení Hluku ←→ Zvuky Okolí ←→ Vypnuto</string>
     <string name="sony_quick_access_double_tap">Rychlý Přístup (dvojité ťuknutí)</string>
-    <string name="continue_pressing">Dlouhý Stisk</string>
+    <string name="continue_pressing">Dlouhý stisk</string>
     <string name="quick_attention">Rychlá pozornost</string>
     <string name="changelog_show_full">Více…</string>
     <string name="pref_show_changelog">Zobrazit seznam změn při spuštění aplikace</string>
@@ -4515,4 +4515,6 @@
     <string name="media_source_audio_card">Zvuková karta</string>
     <string name="media_source_aux">AUX</string>
     <string name="sinilink_prompt_tone">Tón dotazu</string>
+    <string name="tap_and_hold">Klepnutí a držení</string>
+    <string name="double_tap_and_hold">Dvojité klepnutí a držení</string>
 </resources>
