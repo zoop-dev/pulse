@@ -29,10 +29,19 @@ import org.slf4j.LoggerFactory
 
 class WorkoutGpsFragment : Fragment() {
     private val viewModel: MapsTrackViewModel by viewModels()
-    private lateinit var binding: FragmentWorkoutGpsBinding
+    private var _binding: FragmentWorkoutGpsBinding? = null
+    private val binding: FragmentWorkoutGpsBinding
+        get() = _binding!!
 
-    private lateinit var mapsManager: MapsManager
+    // In ViewPager2, adjacent pages can create views while still offscreen.
+    // Keep map resources null until this fragment is actually resumed.
+    private var mapsManager: MapsManager? = null
     private var mapValid = true
+    private var receiverRegistered = false
+    // Avoid reloading the same workout when parent fragment re-sends identical data.
+    private var loadedWorkoutId: Long? = null
+    // Track data may arrive before the map is initialized; render it once ready.
+    private var pendingTrackPoints: List<GPSCoordinate>? = null
 
     private var baseActivitySummary: BaseActivitySummary? = null
     private var gbDevice: GBDevice? = null
@@ -43,7 +52,7 @@ class WorkoutGpsFragment : Fragment() {
                 if (!isResumed) {
                     mapValid = false
                 } else {
-                    mapsManager.reload()
+                    mapsManager?.reload()
                 }
                 return
             }
@@ -57,32 +66,26 @@ class WorkoutGpsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentWorkoutGpsBinding.inflate(inflater, container, false)
+        _binding = FragmentWorkoutGpsBinding.inflate(inflater, container, false)
 
         binding.mapView.setBuiltInZoomControls(false)
 
-        mapsManager = MapsManager(requireContext(), binding.mapView)
-        mapsManager.loadMaps()
-        if (mapsManager.isMapLoaded) {
-            binding.missingMapsWarning.visibility = View.GONE
-        }
-
-        LocalBroadcastManager.getInstance(requireActivity()).registerReceiver(mReceiver, IntentFilter().apply {
-            addAction(MapsSettingsFragment.ACTION_SETTING_CHANGE)
-        })
-
-        baseActivitySummary?.let { viewModel.loadTrackData(it, gbDevice!!) }
-
-        observeViewModel()
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeViewModel()
     }
 
     private fun observeViewModel() {
         viewModel.trackPoints.observe(viewLifecycleOwner) { points ->
             if (points.isNotEmpty()) {
+                pendingTrackPoints = points
                 lifecycleScope.launch {
-                    drawTrack(points)
+                    if (mapsManager != null) {
+                        drawTrack(points)
+                    }
                 }
             } else {
                 LOG.warn("No track points to display or file was empty.")
@@ -102,22 +105,93 @@ class WorkoutGpsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        // Expensive setup happens only when the page becomes visible to the user.
+        ensureMapInitialized()
+        registerReceiver()
+
         if (!mapValid) {
-            mapsManager.reload()
+            mapsManager?.reload()
             mapValid = true
         }
+
+        loadTrackDataIfReady()
+        drawPendingTrackIfReady()
+    }
+
+    override fun onPause() {
+        unregisterReceiver()
+        super.onPause()
     }
 
     override fun onDestroyView() {
-        LocalBroadcastManager.getInstance(requireActivity()).unregisterReceiver(mReceiver)
-        mapsManager.onDestroy()
+        unregisterReceiver()
+        mapsManager?.onDestroy()
+        mapsManager = null
+        _binding = null
         super.onDestroyView()
     }
 
     fun setTrackData(baseActivitySummary: BaseActivitySummary, gbDevice: GBDevice) {
         this.baseActivitySummary = baseActivitySummary
         this.gbDevice = gbDevice
-        viewModel.loadTrackData(baseActivitySummary, gbDevice)
+        loadTrackDataIfReady()
+    }
+
+    private fun ensureMapInitialized() {
+        if (_binding == null || mapsManager != null) {
+            return
+        }
+
+        mapsManager = MapsManager(requireContext(), binding.mapView).also { manager ->
+            manager.loadMaps()
+            if (manager.isMapLoaded) {
+                binding.missingMapsWarning.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun registerReceiver() {
+        if (receiverRegistered) {
+            return
+        }
+
+        LocalBroadcastManager.getInstance(requireActivity()).registerReceiver(mReceiver, IntentFilter().apply {
+            addAction(MapsSettingsFragment.ACTION_SETTING_CHANGE)
+        })
+        receiverRegistered = true
+    }
+
+    private fun unregisterReceiver() {
+        if (!receiverRegistered || activity == null) {
+            return
+        }
+
+        LocalBroadcastManager.getInstance(requireActivity()).unregisterReceiver(mReceiver)
+        receiverRegistered = false
+    }
+
+    private fun loadTrackDataIfReady() {
+        val summary = baseActivitySummary ?: return
+        val device = gbDevice ?: return
+
+        // Only load when visible and map is available, otherwise defer.
+        if (!isResumed || mapsManager == null || loadedWorkoutId == summary.id) {
+            return
+        }
+
+        loadedWorkoutId = summary.id
+        viewModel.loadTrackData(summary, device)
+    }
+
+    private fun drawPendingTrackIfReady() {
+        val trackPoints = pendingTrackPoints ?: return
+        if (mapsManager == null) {
+            return
+        }
+
+        lifecycleScope.launch {
+            drawTrack(trackPoints)
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -136,7 +210,7 @@ class WorkoutGpsFragment : Fragment() {
     private suspend fun drawTrack(trackPoints: List<GPSCoordinate>) {
         withContext(Dispatchers.Main) {
             try {
-                mapsManager.setTrack(trackPoints)
+                mapsManager?.setTrack(trackPoints)
 
                 setupMapTouchListener()
             } catch (e: Exception) {
