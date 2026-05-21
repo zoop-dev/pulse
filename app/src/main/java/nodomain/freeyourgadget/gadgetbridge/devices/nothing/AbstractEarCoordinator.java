@@ -24,6 +24,7 @@ import java.util.List;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLClassicDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
@@ -68,17 +69,24 @@ public abstract class AbstractEarCoordinator extends AbstractBLClassicDeviceCoor
     @Override
     public DeviceSpecificSettings getDeviceSpecificSettings(final GBDevice device) {
         final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
-        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_nothing_ear1);
+        final List<Integer> audio = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.AUDIO);
+        audio.add(R.xml.devicesettings_nothing_ear1);
         if (!getEqualizerPresets().isEmpty()) {
-            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_nothing_equalizer);
+            audio.add(R.xml.devicesettings_nothing_equalizer);
         }
         if (supportsUltraBass()) {
-            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_nothing_ultra_bass);
+            audio.add(R.xml.devicesettings_nothing_ultra_bass);
+        }
+        if (supportsTouchOptions()) {
+            final List<Integer> touchOptions = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.TOUCH_OPTIONS);
+            touchOptions.add(R.xml.devicesettings_cmf_buds_touch_options);
         }
         if (supportsLowLatency()) {
-            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_headphones_low_latency);
+            final List<Integer> connection = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.CONNECTION);
+            connection.add(R.xml.devicesettings_headphones_low_latency);
         }
-        deviceSpecificSettings.addRootScreen(R.xml.devicesettings_headphones);
+        final List<Integer> callsAndNotif = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS);
+        callsAndNotif.add(R.xml.devicesettings_headphones);
         return deviceSpecificSettings;
     }
 
@@ -115,6 +123,10 @@ public abstract class AbstractEarCoordinator extends AbstractBLClassicDeviceCoor
     }
 
     public boolean supportsUltraBass() {
+        return false;
+    }
+
+    public boolean supportsTouchOptions() {
         return false;
     }
 }

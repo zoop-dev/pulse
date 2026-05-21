@@ -90,4 +90,9 @@ public class CmfBuds2aCoordinator extends AbstractEarCoordinator {
     public boolean supportsUltraBass() {
         return true;
     }
+
+    @Override
+    public boolean supportsTouchOptions() {
+        return true;
+    }
 }

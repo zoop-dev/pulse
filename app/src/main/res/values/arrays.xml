@@ -4535,6 +4535,31 @@
         <item>game_mode</item>
     </string-array>
 
+    <string-array name="cmf_buds_touch_tap_names">
+        <item>@string/sony_button_mode_off</item>
+        <item>@string/pref_media_previous</item>
+        <item>@string/pref_media_next</item>
+        <item>@string/pref_media_volumeup</item>
+        <item>@string/pref_media_volumedown</item>
+        <item>@string/pref_title_touch_voice_assistant</item>
+        <item>@string/redmi_buds_5_pro_combo_all</item>
+        <item>@string/redmi_buds_5_pro_combo_anc_transparency</item>
+        <item>@string/redmi_buds_5_pro_combo_anc_off</item>
+        <item>@string/redmi_buds_5_pro_combo_transparency_off</item>
+    </string-array>
+    <string-array name="cmf_buds_touch_tap_values">
+        <item>off</item>
+        <item>previous_track</item>
+        <item>next_track</item>
+        <item>volume_up</item>
+        <item>volume_down</item>
+        <item>voice_assistant</item>
+        <item>anc_mode__anc_transparency_off</item>
+        <item>anc_mode__anc_transparency</item>
+        <item>anc_mode__anc_off</item>
+        <item>anc_mode__transparency_off</item>
+    </string-array>
+
     <string-array name="soundcore_anc_mode_names">
         <item>@string/prefs_active_noise_cancelling_transport</item>
         <item>@string/prefs_active_noise_cancelling_indoor</item>

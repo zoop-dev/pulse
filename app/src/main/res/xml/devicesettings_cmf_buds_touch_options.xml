@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:key="oppo_touch_header_left"
+        android:title="@string/left_earbud"
+        app:iconSpaceReserved="false">
+        <ListPreference
+            android:defaultValue="nothing"
+            android:entries="@array/cmf_buds_touch_tap_names"
+            android:entryValues="@array/cmf_buds_touch_tap_values"
+            android:icon="@drawable/ic_filter_2"
+            android:key="cmf_buds_touch__left__tap_2"
+            app:useSimpleSummaryProvider="true"
+            android:title="@string/double_tap" />
+        <ListPreference
+            android:defaultValue="nothing"
+            android:entries="@array/cmf_buds_touch_tap_names"
+            android:entryValues="@array/cmf_buds_touch_tap_values"
+            android:icon="@drawable/ic_filter_3"
+            android:key="cmf_buds_touch__left__tap_3"
+            app:useSimpleSummaryProvider="true"
+            android:title="@string/triple_tap" />
+        <ListPreference
+            android:defaultValue="nothing"
+            android:entries="@array/cmf_buds_touch_tap_names"
+            android:entryValues="@array/cmf_buds_touch_tap_values"
+            android:icon="@drawable/ic_horizontal_rule"
+            android:key="cmf_buds_touch__left__tap_1_hold"
+            app:useSimpleSummaryProvider="true"
+            android:title="@string/tap_and_hold" />
+        <ListPreference
+            android:defaultValue="nothing"
+            android:entries="@array/cmf_buds_touch_tap_names"
+            android:entryValues="@array/cmf_buds_touch_tap_values"
+            android:icon="@drawable/ic_double_tap_hold"
+            android:key="cmf_buds_touch__left__tap_2_hold"
+            app:useSimpleSummaryProvider="true"
+            android:title="@string/double_tap_and_hold" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="oppo_touch_header_right"
+        android:title="@string/right_earbud"
+        app:iconSpaceReserved="false">
+        <ListPreference
+            android:defaultValue="nothing"
+            android:entries="@array/cmf_buds_touch_tap_names"
+            android:entryValues="@array/cmf_buds_touch_tap_values"
+            android:icon="@drawable/ic_filter_2"
+            android:key="cmf_buds_touch__right__tap_2"
+            app:useSimpleSummaryProvider="true"
+            android:title="@string/double_tap" />
+        <ListPreference
+            android:defaultValue="nothing"
+            android:entries="@array/cmf_buds_touch_tap_names"
+            android:entryValues="@array/cmf_buds_touch_tap_values"
+            android:icon="@drawable/ic_filter_3"
+            android:key="cmf_buds_touch__right__tap_3"
+            app:useSimpleSummaryProvider="true"
+            android:title="@string/triple_tap" />
+        <ListPreference
+            android:defaultValue="nothing"
+            android:entries="@array/cmf_buds_touch_tap_names"
+            android:entryValues="@array/cmf_buds_touch_tap_values"
+            android:icon="@drawable/ic_horizontal_rule"
+            android:key="cmf_buds_touch__right__tap_1_hold"
+            app:useSimpleSummaryProvider="true"
+            android:title="@string/tap_and_hold" />
+        <ListPreference
+            android:defaultValue="nothing"
+            android:entries="@array/cmf_buds_touch_tap_names"
+            android:entryValues="@array/cmf_buds_touch_tap_values"
+            android:icon="@drawable/ic_double_tap_hold"
+            android:key="cmf_buds_touch__right__tap_2_hold"
+            app:useSimpleSummaryProvider="true"
+            android:title="@string/double_tap_and_hold" />
+    </PreferenceCategory>
+</androidx.preference.PreferenceScreen>
