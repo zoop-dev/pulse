@@ -3602,6 +3602,8 @@
     <string name="double_tap">Double Tap</string>
     <string name="triple_tap">Triple Tap</string>
     <string name="long_press">Long Press</string>
+    <string name="tap_and_hold">Tap and Hold</string>
+    <string name="double_tap_and_hold">Double Tap and Hold</string>
     <string name="continue_pressing">Continue Pressing</string>
     <string name="quick_attention">Quick Attention</string>
     <string name="watchface_widget_type_custom">Custom widget</string>

@@ -30,6 +30,7 @@ import java.util.Set;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsHandler;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.nothing.NothingBudsPreferences;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class EarSettingsCustomizer implements DeviceSpecificSettingsCustomizer {
@@ -116,6 +117,15 @@ public class EarSettingsCustomizer implements DeviceSpecificSettingsCustomizer {
                 listPreference.setEntryValues(entryValues.toArray(new CharSequence[0]));
             }
         }
+
+        handler.addPreferenceHandlerFor(NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__LEFT__TAP_2);
+        handler.addPreferenceHandlerFor(NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__LEFT__TAP_3);
+        handler.addPreferenceHandlerFor(NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__LEFT__TAP_1_HOLD);
+        handler.addPreferenceHandlerFor(NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__LEFT__TAP_2_HOLD);
+        handler.addPreferenceHandlerFor(NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__RIGHT__TAP_2);
+        handler.addPreferenceHandlerFor(NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__RIGHT__TAP_3);
+        handler.addPreferenceHandlerFor(NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__RIGHT__TAP_1_HOLD);
+        handler.addPreferenceHandlerFor(NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__RIGHT__TAP_2_HOLD);
     }
 
     @Override

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -159,6 +160,19 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
                         )
                 );
                 break;
+            case NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__LEFT__TAP_2:
+            case NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__LEFT__TAP_3:
+            case NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__LEFT__TAP_1_HOLD:
+            case NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__LEFT__TAP_2_HOLD:
+            case NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__RIGHT__TAP_2:
+            case NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__RIGHT__TAP_3:
+            case NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__RIGHT__TAP_1_HOLD:
+            case NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__RIGHT__TAP_2_HOLD:
+                sendCommand(
+                        "set touch options " + config,
+                        nothingProtocol.encodeTouchOptions(config, prefs)
+                );
+                break;
             default:
                 LOG.debug("CONFIG: " + config);
                 break;
@@ -224,11 +238,13 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
 
             private final int bitmask;
 
-            NothingAudioMode (int bitmask) {
+            NothingAudioMode(int bitmask) {
                 this.bitmask = bitmask;
             }
 
-            public int getBitmask() { return bitmask; }
+            public int getBitmask() {
+                return bitmask;
+            }
 
             public static NothingAudioMode fromBitmask(int bitmask) {
                 for (NothingAudioMode flag : values()) {
@@ -386,6 +402,7 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
             evt.fwVersion = new String(payload);
             return evt;
         }
+
         private GBDeviceEventUpdatePreferences handleAudioModeStatus(byte[] payload) {
             final GBDeviceEventUpdatePreferences preferencesEvent = new GBDeviceEventUpdatePreferences();
 
@@ -500,6 +517,58 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
             return encodeAudioModeStatusReq();
         }
 
+        public byte[] encodeTouchOptions(final String key, SharedPreferences prefs) {
+            final String actionString = prefs.getString(key, NothingTapAction.OFF.name());
+            final NothingTapAction action = NothingTapAction.valueOf(actionString.toUpperCase(Locale.ROOT));
+            final byte side;
+            final NothingTapType tapType;
+            switch (key) {
+                case NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__LEFT__TAP_2:
+                    side = battery_earphone_left;
+                    tapType = NothingTapType.TAP_2;
+                    break;
+                case NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__LEFT__TAP_3:
+                    side = battery_earphone_left;
+                    tapType = NothingTapType.TAP_3;
+                    break;
+                case NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__LEFT__TAP_1_HOLD:
+                    side = battery_earphone_left;
+                    tapType = NothingTapType.TAP_1_HOLD;
+                    break;
+                case NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__LEFT__TAP_2_HOLD:
+                    side = battery_earphone_left;
+                    tapType = NothingTapType.TAP_2_HOLD;
+                    break;
+                case NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__RIGHT__TAP_2:
+                    side = battery_earphone_right;
+                    tapType = NothingTapType.TAP_2;
+                    break;
+                case NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__RIGHT__TAP_3:
+                    side = battery_earphone_right;
+                    tapType = NothingTapType.TAP_3;
+                    break;
+                case NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__RIGHT__TAP_1_HOLD:
+                    side = battery_earphone_right;
+                    tapType = NothingTapType.TAP_1_HOLD;
+                    break;
+                case NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__RIGHT__TAP_2_HOLD:
+                    side = battery_earphone_right;
+                    tapType = NothingTapType.TAP_2_HOLD;
+                    break;
+                default:
+                    LOG.error("Unknown touch option preference key {}", key);
+                    return null;
+            }
+
+            return new byte[]{
+                    0x01,
+                    side,
+                    0x01,
+                    (byte) tapType.getCode(),
+                    (byte) action.getCode()
+            };
+        }
+
         private List<GBDeviceEvent> handleBatteryInfo(byte[] payload) {
             List<GBDeviceEvent> batEvts = new ArrayList<>();
 
@@ -518,9 +587,9 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
             If one of the batteries is recharging, we consider the battery as recharging.
              */
 
-    //        GBDeviceEventBatteryInfo evBattery = new GBDeviceEventBatteryInfo();
-    //        evBattery.level = 0;
-    //        boolean batteryCharging = false;
+            //        GBDeviceEventBatteryInfo evBattery = new GBDeviceEventBatteryInfo();
+            //        evBattery.level = 0;
+            //        boolean batteryCharging = false;
 
             int numBatteries = payload[0];
             for (int i = 0; i < numBatteries; i++) {
@@ -531,17 +600,17 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
 
                 batEvts.add(batteries.get(payload[1 + 2 * i]));
 
-    //            evBattery.level += (short) ((payload[2 + 2 * i] & MASK_BATTERY) / numBatteries);
-    //            if (!batteryCharging) {
-    //                batteryCharging = ((payload[2 + 2 * i] & MASK_BATTERY_CHARGING) == MASK_BATTERY_CHARGING);
-    //            }
-    //            LOG.debug("single battery level: " + hexdump(payload, 2+2*i,1) +"-"+ ((payload[2+2*i] & 0xff))+":" + evBattery.level);
-                }
+                //            evBattery.level += (short) ((payload[2 + 2 * i] & MASK_BATTERY) / numBatteries);
+                //            if (!batteryCharging) {
+                //                batteryCharging = ((payload[2 + 2 * i] & MASK_BATTERY_CHARGING) == MASK_BATTERY_CHARGING);
+                //            }
+                //            LOG.debug("single battery level: " + hexdump(payload, 2+2*i,1) +"-"+ ((payload[2+2*i] & 0xff))+":" + evBattery.level);
+            }
 
-    //        evBattery.state = BatteryState.UNKNOWN;
-    //        evBattery.state = batteryCharging ? BatteryState.BATTERY_CHARGING : evBattery.state;
+            //        evBattery.state = BatteryState.UNKNOWN;
+            //        evBattery.state = batteryCharging ? BatteryState.BATTERY_CHARGING : evBattery.state;
 
-    //        return evBattery;
+            //        return evBattery;
             return batEvts;
         }
 
@@ -568,9 +637,9 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
             batteries.put(battery_earphone_right, new GBDeviceEventBatteryInfo());
             batteries.put(battery_case, new GBDeviceEventBatteryInfo());
 
-            batteries.get(battery_case).batteryIndex=0;
-            batteries.get(battery_earphone_left).batteryIndex=1;
-            batteries.get(battery_earphone_right).batteryIndex=2;
+            batteries.get(battery_case).batteryIndex = 0;
+            batteries.get(battery_earphone_left).batteryIndex = 1;
+            batteries.get(battery_earphone_right).batteryIndex = 2;
 
             this.incrementCounter = incrementCounter;
         }
