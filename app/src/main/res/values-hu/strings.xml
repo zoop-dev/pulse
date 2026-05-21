@@ -4356,4 +4356,6 @@
     <string name="sinilink_playback_mode_order">Sorrendben</string>
     <string name="sinilink_prompt_tone">Jelzőhang</string>
     <string name="media_source_tf">TF-kártya</string>
+    <string name="tap_and_hold">Koppintson és tartsa nyomva</string>
+    <string name="double_tap_and_hold">Koppintson kétszer és tartsa nyomva</string>
 </resources>
