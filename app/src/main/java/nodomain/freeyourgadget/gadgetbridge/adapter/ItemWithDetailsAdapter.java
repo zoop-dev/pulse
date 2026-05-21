@@ -1,5 +1,5 @@
 /*  Copyright (C) 2015-2024 Andreas Shimokawa, Arjan Schrijver, Carsten
-    Pfeiffer
+    Pfeiffer, Martin Braun
 
     This file is part of Gadgetbridge.
 
@@ -17,11 +17,19 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.adapter;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import java.util.List;
 
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.model.ItemWithDetails;
 
 /**
@@ -51,5 +59,30 @@ public class ItemWithDetailsAdapter extends AbstractItemAdapter<ItemWithDetails>
     @Override
     protected Bitmap getPreview(ItemWithDetails item) {
         return item.getPreview();
+    }
+
+    @Override
+    @NonNull
+    public View getView(final int position, final View view, final ViewGroup parent) {
+        final View itemView = super.getView(position, view, parent);
+        final ItemWithDetails item = getItem(position);
+
+        if (item != null && item.getDetails() != null && !item.getDetails().isEmpty()) {
+            itemView.setOnClickListener(v -> {
+                final ClipboardManager clipboard = (ClipboardManager)
+                        getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                if (clipboard != null) {
+                    clipboard.setPrimaryClip(
+                            ClipData.newPlainText(item.getName(), item.getDetails())
+                    );
+                    Toast.makeText(getContext(), R.string.copied_to_clipboard, Toast.LENGTH_SHORT)
+                            .show();
+                }
+            });
+        } else {
+            itemView.setOnClickListener(null);
+        }
+
+        return itemView;
     }
 }

@@ -68,6 +68,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.ValidByDate;
+import nodomain.freeyourgadget.gadgetbridge.util.AlarmUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 
@@ -557,6 +558,52 @@ public class DBHelper {
         }
         return Collections.emptyList();
     }
+
+    /**
+     * Returns all user-configurable alarms for the given user and device filled with default alarms
+     * for unoccupied slots. The list is sorted by {@link Alarm#getPosition()}. Calendar events that
+     * may also be modeled as alarms are not stored in the database and hence not returned by this
+     * method.
+     * @param gbDevice the device for which the alarms shall be loaded
+     * @return the list of alarms for the given device
+     */
+    @NonNull
+    public static List<Alarm> getAlarmsWithDefaults(@NonNull GBDevice gbDevice) {
+        List<Alarm> alarms = getAlarms(gbDevice);
+        fillMissingAlarms(gbDevice, alarms);
+        return alarms;
+    }
+
+    /**
+     * Fills default alarms in the alarm list for unoccupied slots of the device.
+     * @param gbDevice the device for which the alarms shall be loaded
+     * @param alarms list of alarms to fill
+     */
+    public static void fillMissingAlarms(@NonNull GBDevice gbDevice, List<Alarm> alarms) {
+        DeviceCoordinator coordinator = gbDevice.getDeviceCoordinator();
+        int supportedNumAlarms = coordinator.getAlarmSlotCount(gbDevice);
+        if (supportedNumAlarms > alarms.size()) {
+            try (DBHandler db = GBApplication.acquireDB()) {
+                DaoSession daoSession = db.getDaoSession();
+                for (int position = 0; position < supportedNumAlarms; position++) {
+                    boolean found = false;
+                    for (Alarm alarm : alarms) {
+                        if (alarm.getPosition() == position) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        LOG.info("adding missing alarm at position {}", position);
+                        alarms.add(position, AlarmUtils.createDefaultAlarm(daoSession, gbDevice, position));
+                    }
+                }
+            } catch (Exception e) {
+                LOG.error("Error accessing database", e);
+            }
+        }
+    }
+
 
     public static void store(Alarm alarm) {
         try (DBHandler db = GBApplication.acquireDB()) {

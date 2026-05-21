@@ -65,6 +65,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -1664,11 +1665,20 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
                     R.xml.devicesettings_device_support_can_reconnect
             );
 
-            deviceSpecificSettings.addRootScreen(
-                    DeviceSpecificSettingsScreen.DEVELOPER,
+            final List<Integer> intentApiSubScreens = new ArrayList<>();
+            Collections.addAll(
+                    intentApiSubScreens,
                     R.xml.devicesettings_header_intent_api,
                     R.xml.devicesettings_settings_third_party_apps
             );
+            if (coordinator.getAlarmSlotCount(device) > 0) {
+                intentApiSubScreens.add(R.xml.devicesettings_alarms_third_party_apps);
+            }
+            deviceSpecificSettings.addRootScreen(
+                    DeviceSpecificSettingsScreen.DEVELOPER,
+                    intentApiSubScreens
+            );
+
             if (coordinator.getConnectionType().usesBluetoothLE()) {
                 deviceSpecificSettings.addRootScreen(
                         DeviceSpecificSettingsScreen.DEVELOPER,

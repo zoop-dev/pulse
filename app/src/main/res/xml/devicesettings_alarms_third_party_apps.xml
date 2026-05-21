@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:icon="@drawable/ic_developer_mode"
+        android:defaultValue="false"
+        android:key="third_party_apps_set_alarms"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/pref_summary_third_party_app_device_alarms"
+        android:title="@string/pref_title_third_party_app_device_alarms" />
+</androidx.preference.PreferenceScreen>

@@ -1,11 +1,11 @@
-/*  Copyright (C) 2015-2025 Andreas Böhler, Andreas Shimokawa, Arjan
+/*  Copyright (C) 2015-2026 Andreas Böhler, Andreas Shimokawa, Arjan
     Schrijver, Avamander, Carsten Pfeiffer, Daniel Dakhno, Daniele Gobbetti,
     Daniel Hauck, Davis Mosenkovs, Dikay900, Dmitriy Bogdanov, Frank Slezak,
     Gabriele Monaco, Gordon Williams, ivanovlev, João Paulo Barraca, José
-    Rebelo, Julien Pivotto, Kasha, keeshii, Martin, Matthieu Baerts, mvn23,
-    NekoBox, Nephiel, Petr Vaněk, Sebastian Kranz, Sergey Trofimov, Steffen
-    Liebergeld, Taavi Eomäe, TylerWilliamson, Uwe Hermann, Yoran Vulker,
-    Thomas Kuehne
+    Rebelo, Julien Pivotto, Kasha, keeshii, Martin, Martin Braun, Matthieu
+    Baerts, mvn23, NekoBox, Nephiel, Petr Vaněk, Sebastian Kranz, Sergey
+    Trofimov, Steffen Liebergeld, Taavi Eomäe, TylerWilliamson, Uwe Hermann,
+    Yoran Vulker, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -79,6 +79,7 @@ import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.LoyaltyCar
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventCameraRemote;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.AlarmClockReceiver;
+import nodomain.freeyourgadget.gadgetbridge.externalevents.DeviceAlarmReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.BluetoothConnectReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.BluetoothPairingRequestReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.CMWeatherReceiver;
@@ -552,6 +553,10 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         deviceSettingsIntentFilter.addAction(DeviceSettingsReceiver.COMMAND);
         ContextCompat.registerReceiver(this, deviceSettingsReceiver, deviceSettingsIntentFilter, ContextCompat.RECEIVER_EXPORTED);
         globalReceivers.add(deviceSettingsReceiver);
+
+        final DeviceAlarmReceiver deviceAlarmReceiver = new DeviceAlarmReceiver();
+        ContextCompat.registerReceiver(this, deviceAlarmReceiver, deviceAlarmReceiver.buildFilter(), ContextCompat.RECEIVER_EXPORTED);
+        globalReceivers.add(deviceAlarmReceiver);
 
         final IntentApiReceiver intentApiReceiver = new IntentApiReceiver();
         ContextCompat.registerReceiver(this, intentApiReceiver, intentApiReceiver.buildFilter(), ContextCompat.RECEIVER_EXPORTED);

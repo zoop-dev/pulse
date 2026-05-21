@@ -1,5 +1,6 @@
 /*  Copyright (C) 2015-2024 Andreas Shimokawa, Carsten Pfeiffer, Daniel
-    Dakhno, Daniele Gobbetti, Dmitry Markin, Lem Dulfo, Taavi Eomäe, Martin.JM
+    Dakhno, Daniele Gobbetti, Dmitry Markin, Lem Dulfo, Martin.JM, Martin Braun,
+    Taavi Eomäe
 
     This file is part of Gadgetbridge.
 
@@ -167,7 +168,7 @@ public class AlarmDetails extends AbstractGBActivity {
             binding.soundModeSpinner.setAdapter(adapter);
         }
 
-        binding.title.setVisibility(supportsTitle() ? View.VISIBLE : View.GONE);
+        binding.title.setVisibility(shouldShowTitle() ? View.VISIBLE : View.GONE);
         binding.title.setText(alarm.getTitle());
 
         final int titleLimit = getAlarmTitleLimit();
@@ -202,8 +203,10 @@ public class AlarmDetails extends AbstractGBActivity {
         return device.getDeviceCoordinator().forcedSmartWakeup(device, position);
     }
 
-    private boolean supportsTitle() {
-        return device.getDeviceCoordinator().supportsAlarmTitle(device);
+    private boolean shouldShowTitle() {
+        return device.getDeviceCoordinator().supportsAlarmTitle(device) ||
+                GBApplication.getDeviceSpecificSharedPrefs(device.getAddress())
+                        .getBoolean("third_party_apps_set_alarms", false);
     }
 
     private int getAlarmTitleLimit() {

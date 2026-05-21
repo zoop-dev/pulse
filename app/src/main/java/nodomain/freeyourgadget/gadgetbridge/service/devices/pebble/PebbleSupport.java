@@ -38,7 +38,7 @@ import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.AlarmReceiver;
+import nodomain.freeyourgadget.gadgetbridge.externalevents.SunriseSunsetAlarmReceiver;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
@@ -52,7 +52,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 
 public class PebbleSupport extends AbstractSerialDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(PebbleSupport.class);
-    private AlarmReceiver mAlarmReceiver = null;
+    private SunriseSunsetAlarmReceiver mAlarmReceiver = null;
 
     @Override
     public void dispose() {
@@ -69,7 +69,7 @@ public class PebbleSupport extends AbstractSerialDeviceSupport {
         }
         unregisterSunriseSunsetAlarmReceiver();
         LOG.info("registering sunrise and sunset receiver");
-        this.mAlarmReceiver = new AlarmReceiver();
+        this.mAlarmReceiver = new SunriseSunsetAlarmReceiver();
         ContextCompat.registerReceiver(GBApplication.getContext(), mAlarmReceiver, new IntentFilter("DAILY_ALARM"), ContextCompat.RECEIVER_EXPORTED);
     }
 

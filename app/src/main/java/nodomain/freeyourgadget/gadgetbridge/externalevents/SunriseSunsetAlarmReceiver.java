@@ -39,10 +39,10 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.model.CalendarEventSpec;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 
-public class AlarmReceiver extends BroadcastReceiver {
-    private static final Logger LOG = LoggerFactory.getLogger(AlarmReceiver.class);
+public class SunriseSunsetAlarmReceiver extends BroadcastReceiver {
+    private static final Logger LOG = LoggerFactory.getLogger(SunriseSunsetAlarmReceiver.class);
 
-    public AlarmReceiver() {
+    public SunriseSunsetAlarmReceiver() {
         Context context = GBApplication.getContext();
         Intent intent = new Intent("DAILY_ALARM");
         intent.setPackage(BuildConfig.APPLICATION_ID);
