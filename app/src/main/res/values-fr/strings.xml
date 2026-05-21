@@ -739,18 +739,18 @@
     <string name="watch_not_connected">Montre non connectée</string>
     <string name="qhybrid_vibration_strength">Puissance de vibration :</string>
     <string name="qhybrid_goal_in_steps">Objectif de pas</string>
-    <string name="qhybrid_time_shift">décalage horaire</string>
-    <string name="qhybrid_second_timezone_offset_relative_to_utc">décalage du deuxième fuseau horaire par rapport à UTC</string>
+    <string name="qhybrid_time_shift">Décalage horaire</string>
+    <string name="qhybrid_second_timezone_offset_relative_to_utc">Décalage du deuxième fuseau horaire par rapport à UTC</string>
     <string name="qhybrid_prompt_million_steps">Veuillez régler le compteur de pas à un million pour l\'activer.</string>
-    <string name="qhybrid_changes_delay_prompt">le changement peut prendre quelques secondes…</string>
+    <string name="qhybrid_changes_delay_prompt">La modification peut prendre quelques secondes…</string>
     <string name="pref_disable_new_ble_scanning">Désactiver la nouvelle détection BLE</string>
     <string name="pref_summary_disable_new_ble_scanning">Cochez cette option si votre appareil ne peut être découvert</string>
     <string name="qhybrid_overwrite_buttons">modifier les boutons</string>
-    <string name="qhybrid_use_activity_hand_as_notification_counter">utilise l\'activité de la main comme compteur de notification</string>
+    <string name="qhybrid_use_activity_hand_as_notification_counter">Utilise l\'activité de la main comme compteur de notification</string>
     <string name="qhybrid_buttons_overwrite_success">Boutons modifiés</string>
     <string name="qhybrid_buttons_overwrite_error">Une erreur est survenue lors de la modification des boutons</string>
-    <string name="qhybrid_offset_timezone">décale le fuseau horaire de</string>
-    <string name="qhybrid_offset_time_by">décale l\'heure de</string>
+    <string name="qhybrid_offset_timezone">Décaler le fuseau horaire de</string>
+    <string name="qhybrid_offset_time_by">Décaler l\'heure de</string>
     <string name="prefs_button_single_press_action_selection_title">Action de l\'évènement 1</string>
     <string name="prefs_button_double_press_action_selection_title">Action de l\'évènement 2</string>
     <string name="prefs_button_triple_press_action_selection_title">Action de l\'évènement 3</string>
@@ -1565,7 +1565,7 @@
     <string name="prefs_double_tap_edge_summary">Détecter un double appui même si hors zone tactile</string>
     <string name="pref_voice_detect_duration_10">10 secondes</string>
     <string name="pref_device_action_phone_gps_location_listener_stop">Arrêt du gestionnaire GPS</string>
-    <string name="permission_notification_policy_access">%1$s a besoin d’accéder aux paramètres « Ne pas déranger » pour les appliquer sur votre montre lorsque l’écran de votre téléphone est éteint.\n\nVeuillez appuyer sur « %2$s », puis sélectionner « %1$s » et activer « Autoriser l’accès à Ne pas déranger ». Ensuite, appuyez sur « Retour » pour revenir à %1$s.</string>
+    <string name="permission_notification_policy_access">%1$s a besoin d’accéder aux paramètres « Ne pas déranger » afin de les respecter sur votre montre lorsque l’écran de votre téléphone est éteint.\n\nAppuyez sur « %2$s », puis sélectionnez « %1$s » et activez « Autoriser l’accès à Ne pas déranger ». Ensuite, appuyez sur « Retour » pour revenir à %1$s.</string>
     <string name="prefs_voice_detect_summary">Activer le son ambiant et réduction de bruit automatique lors de la détection de voix</string>
     <string name="quick_alarm">Alarme rapide</string>
     <string name="quick_alarm_description">Alarme d\'un widget</string>
@@ -4287,4 +4287,10 @@
     <string name="activity_type_floorball">Floorball</string>
     <string name="activity_type_bike_tour">Circuit à vélo</string>
     <string name="activity_type_track_me">Suivez-moi</string>
+    <string name="activity_type_indoor_skiing">Ski intérieur</string>
+    <string name="weather_condition_gale">coups de vent</string>
+    <string name="weather_condition_severe_gale">coups de vent forts</string>
+    <string name="sleep_restless_moments">Sommeil agité</string>
+    <string name="kind_waypoints">Points de passage</string>
+    <string name="waypoint_count">%d points de passage</string>
 </resources>
