@@ -4358,4 +4358,6 @@
     <string name="media_source_tf">TF-kártya</string>
     <string name="tap_and_hold">Koppintson és tartsa nyomva</string>
     <string name="double_tap_and_hold">Koppintson kétszer és tartsa nyomva</string>
+    <string name="pref_title_third_party_app_device_alarms">Engedélyezze s harmadik féltől származó alkalmazások számára az ébresztők beállítását</string>
+    <string name="pref_summary_third_party_app_device_alarms">Engedélyezze más, telepített, harmadik féltől származó alkalmazások számára az eszközriasztások beállítását intentek alapján.</string>
 </resources>
