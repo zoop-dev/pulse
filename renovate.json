@@ -50,16 +50,6 @@
       ]
     },
     {
-      "description": "Version pinned to the one used by upstream greenDao to avoid regressions. Only used for code generation.",
-      "matchFileNames": [
-        "GBDaoGenerator/**"
-      ],
-      "allowedVersions": "2.3.23",
-      "matchPackageNames": [
-        "org.freemarker:freemarker"
-      ]
-    },
-    {
       "matchPackageNames": [
         "com.google.guava:guava"
       ],
