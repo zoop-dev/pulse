@@ -17,16 +17,20 @@
 
 package nodomain.freeyourgadget.gadgetbridge.devices.garmin.actions
 
+import android.content.BroadcastReceiver
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService.EXTRA_OPTIONS
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
@@ -47,6 +51,16 @@ class GarminSendWaypointActivity : AbstractGBActivity() {
     private lateinit var binding: ActivitySendWaypointBinding
 
     private var elevationInFeet = false
+
+    private val receiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            when (intent.action) {
+                GB.ACTION_SET_FINISHED -> {
+                    GB.toast(this@GarminSendWaypointActivity, R.string.devicestatus_upload_completed, Toast.LENGTH_SHORT, GB.INFO);
+                }
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,6 +129,15 @@ class GarminSendWaypointActivity : AbstractGBActivity() {
         if (!noLocationShared && binding.waypointLatitude.length() < 1) {
             noLocationFound()
         }
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, IntentFilter().apply {
+            addAction(GB.ACTION_SET_FINISHED)
+        })
+    }
+
+    override fun onDestroy() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver)
+        super.onDestroy()
     }
 
     fun noLocationFound() {
