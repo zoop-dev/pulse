@@ -4517,4 +4517,6 @@
     <string name="sinilink_prompt_tone">Tón dotazu</string>
     <string name="tap_and_hold">Klepnutí a držení</string>
     <string name="double_tap_and_hold">Dvojité klepnutí a držení</string>
+    <string name="pref_title_third_party_app_device_alarms">Povolit aplikacím třetích stran nastavovat budíky</string>
+    <string name="pref_summary_third_party_app_device_alarms">Povolit jiným nainstalovaným aplikacím třetích stran nastavovat budíky zařízení skrze intenty.</string>
 </resources>
