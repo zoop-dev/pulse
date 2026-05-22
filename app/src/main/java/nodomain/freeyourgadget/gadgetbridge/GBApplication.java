@@ -230,17 +230,25 @@ public class GBApplication extends Application {
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         prefs = new GBPrefs(sharedPrefs);
 
-        if (!GBEnvironment.isEnvironmentSetup()) {
+        final boolean environmentSetup = GBEnvironment.isEnvironmentSetup();
+
+        // We need to set up the environment before initializing logging, so that the logging
+        // path is properly set, and we should set up logging before the database setup, so that
+        // the database upgrade also gets logged as expected.
+        if (!environmentSetup) {
             GBEnvironment.setupEnvironment(GBEnvironment.createDeviceEnvironment());
-            // setup db after the environment is set up, but don't do it in test mode
-            // in test mode, it's done individually, see TestBase
-            GBDatabaseManager.setupDatabase(this);
         }
 
         Logging.getInstance().initialize(
                 prefs.getBoolean("log_to_file", false),
                 prefs.getBoolean("log_level_trace", false)
         );
+
+        if (!environmentSetup) {
+            // setup db after the environment is set up, but don't do it in test mode
+            // in test mode, it's done individually, see TestBase
+            GBDatabaseManager.setupDatabase(this);
+        }
 
         migratePrefsIfNeeded();
 
