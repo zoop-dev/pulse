@@ -68,4 +68,7 @@ public class CmfBuds2Coordinator extends AbstractEarCoordinator {
 
     @Override
     public boolean supportsUltraBass() { return true; }
+
+    @Override
+    public boolean supportsSpatialAudio() { return true; }
 }
