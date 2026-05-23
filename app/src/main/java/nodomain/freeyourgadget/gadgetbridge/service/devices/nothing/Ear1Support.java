@@ -178,7 +178,7 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
                         "set touch options " + config,
                         nothingProtocol.encodeTouchOptions(config, prefs)
                 );
-
+                break;
             case DeviceSettingsPreferenceConst.PREF_NOTHING_EAR1_SPATIAL_AUDIO:
                 byte spatial = (byte)(prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_NOTHING_EAR1_SPATIAL_AUDIO, false) ? 0x01 : 0x00);
                 sendCommand("set spatial audio", nothingProtocol.encodeSpatialAudio(spatial));

@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 
 public enum NothingTapAction {
     OFF(0x01),
+    PLAY_PAUSE(0x02),
     PREVIOUS_TRACK(0x08),
     NEXT_TRACK(0x09),
     VOICE_ASSISTANT(0x0b),

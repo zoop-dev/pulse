@@ -4537,6 +4537,7 @@
 
     <string-array name="cmf_buds_touch_tap_names">
         <item>@string/sony_button_mode_off</item>
+        <item>@string/pref_media_playpause</item>
         <item>@string/pref_media_previous</item>
         <item>@string/pref_media_next</item>
         <item>@string/pref_media_volumeup</item>
@@ -4549,6 +4550,7 @@
     </string-array>
     <string-array name="cmf_buds_touch_tap_values">
         <item>off</item>
+        <item>play_pause</item>
         <item>previous_track</item>
         <item>next_track</item>
         <item>volume_up</item>
