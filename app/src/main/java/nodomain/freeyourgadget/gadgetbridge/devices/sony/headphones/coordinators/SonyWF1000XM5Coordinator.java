@@ -52,10 +52,14 @@ public class SonyWF1000XM5Coordinator extends SonyHeadphonesCoordinator {
                 SonyHeadphonesCapabilities.BatteryCase,
                 SonyHeadphonesCapabilities.AmbientSoundControl,
                 SonyHeadphonesCapabilities.WindNoiseReduction,
-                SonyHeadphonesCapabilities.EqualizerSimple,
+                SonyHeadphonesCapabilities.EqualizerWithCustomBands,
                 SonyHeadphonesCapabilities.AudioUpsampling,
                 SonyHeadphonesCapabilities.ButtonModesLeftRight,
+                SonyHeadphonesCapabilities.AmbientSoundControlButtonMode,
+                SonyHeadphonesCapabilities.PowerOffFromPhone,
                 SonyHeadphonesCapabilities.PauseWhenTakenOff,
+                SonyHeadphonesCapabilities.SpeakToChatEnabled,
+                SonyHeadphonesCapabilities.SpeakToChatConfig,
                 SonyHeadphonesCapabilities.AutomaticPowerOffWhenTakenOff
         ));
     }
