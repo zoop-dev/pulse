@@ -51,7 +51,6 @@ public class SonyWF1000XM5Coordinator extends SonyHeadphonesCoordinator {
                 SonyHeadphonesCapabilities.BatteryDual,
                 SonyHeadphonesCapabilities.BatteryCase,
                 SonyHeadphonesCapabilities.AmbientSoundControl,
-                SonyHeadphonesCapabilities.WindNoiseReduction,
                 SonyHeadphonesCapabilities.EqualizerWithCustomBands,
                 SonyHeadphonesCapabilities.AudioUpsampling,
                 SonyHeadphonesCapabilities.ButtonModesLeftRight,
