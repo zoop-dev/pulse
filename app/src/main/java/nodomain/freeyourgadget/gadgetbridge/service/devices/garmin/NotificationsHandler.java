@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Queue;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventCallControl;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventNotificationControl;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
@@ -80,12 +81,13 @@ public class NotificationsHandler implements MessageHandler {
             return null;
         final int id = StringUtils.firstNonBlank(callSpec.number, "Gadgetbridge Call").hashCode();
         if (callSpec.command == CallSpec.CALL_INCOMING) {
-            NotificationSpec callNotificationSpec = new NotificationSpec(id);
+            final String caller = StringUtils.firstNonBlank(callSpec.name, callSpec.number, GBApplication.getContext().getString(R.string.unknown));
+            final NotificationSpec callNotificationSpec = new NotificationSpec(id);
             callNotificationSpec.phoneNumber = callSpec.number;
             callNotificationSpec.sourceAppId = callSpec.sourceAppId;
-            callNotificationSpec.title = StringUtils.isEmpty(callSpec.name) ? callSpec.number : callSpec.name;
+            callNotificationSpec.title = caller;
             callNotificationSpec.type = NotificationType.GENERIC_PHONE;
-            callNotificationSpec.body = StringUtils.isEmpty(callSpec.name) ? callSpec.number : callSpec.name;
+            callNotificationSpec.body = caller;
 
             // add an empty bogus action to toggle the hasActions boolean. The actions are hardcoded on the watch in case of incoming calls.
             callNotificationSpec.attachedActions = new ArrayList<>();
