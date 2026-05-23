@@ -574,7 +574,7 @@
     <string name="pref_title_contextual_arabic">Arabe contextuel</string>
     <string name="pref_summary_contextual_arabic">Activer ceci pour prendre en charge l\'arabe contextuel</string>
     <string name="debugactivity_really_factoryreset_title">Êtes-vous sûr de vouloir retourner aux paramètres d\'usine \?</string>
-    <string name="debugactivity_really_factoryreset">Une réinitialisation effacera toutes les données de l\'appareil connecté (si supporté). Les appareils Xiaomi/Huami modifient également l\'adresse MAC Bluetooth, ainsi ils apparaîtront comme nouveau dans Gadgetbridge.</string>
+    <string name="debugactivity_really_factoryreset">Une réinitialisation effacera toutes les données de l\'appareil connecté (si supporté). Les appareils Xiaomi/Huami modifient également l\'adresse MAC Bluetooth, ils sembleront donc être nouveau appareils pour Gadgetbridge.</string>
     <string name="mi3_prefs_band_screen_unlock">Déverrouillage de l\'écran du Band</string>
     <string name="activity_type_exercise">Activité physique</string>
     <string name="title_activity_notification_filter">Filtre de notifications</string>
@@ -934,11 +934,11 @@
     <string name="error_version_check_extreme_caution">ATTENTION: Erreur lors de la vérification de l\'information de version ! Vous ne devriez pas poursuivre ! Numéro de version \"%s\"</string>
     <string name="permission_granting_mandatory">Toutes ces permissions sont nécessaires et une instabilité peut se produire si elles ne sont pas accordées</string>
     <string name="about_links">Liens</string>
-    <string name="about_additional_contributions">Nombreux remerciements à tous les participants non indiqués pour la contribution au code, les traductions, le support, les idées, la motivation, les rapports de bugs, les soutiens financiers… ✊</string>
+    <string name="about_additional_contributions">Mille mercis à tous les participants non listés pour les contributions au code, les traductions, le support, les idées, la motivation, les rapports de bugs, les soutiens financiers… ✊</string>
     <string name="about_additional_device_support">Support d\'appareil supplémentaire</string>
     <string name="about_contributors">Contributeurs</string>
-    <string name="about_core_team_title">Équipe principal (dans l\'ordre de la première contribution au code)</string>
-    <string name="about_description_generic">Un remplaçant libre et sans cloud aux applications Android propriétaires des fabricants de vos bracelets.</string>
+    <string name="about_core_team_title">Équipe principale (dans l\'ordre de la première contribution au code)</string>
+    <string name="about_description_generic">Un remplaçant libre, copyleft et sans cloud aux applications Android propriétaires des fabricants de vos appareils.</string>
     <string name="about_activity_title_generic">À propos de Gadgetbridge</string>
     <string name="about_title">À propos</string>
     <string name="menuitem_worldclock">Horloge mondiale</string>
@@ -1471,7 +1471,7 @@
 \nEn raison des règles du Google Play Store, nous ne pouvons pas mettre de lien de don directement dans l\'application, mais si vous appréciez cette application, pensez à faire un don via la page web de Gadgetbridge ci-dessous.</string>
     <string name="about_activity_title_main_nightly">À propos de Gatgetbridge Nightly</string>
     <string name="about_activity_title_main_nopebble">À propos de Gadgetbridge Nightly sans Pebble</string>
-    <string name="about_description_main_nightly">Remplaçant autonome et sous licence libre pour remplacer les applications propriétaires des fabricants. Version Nightly de Gadgetbridge. Ne peut pas être installé si vous avez déja Gadgetbridge ou Pebble d\'installé, en raison d\'un conflit avec l\'application Pebble.</string>
+    <string name="about_description_main_nightly">Remplaçant sans connexion au cloud, en copyleft et sous licence libre pour remplacer les applications propriétaires des fabricants. Versions Nightly de Gadgetbridge. Ne peut pas être installé si vous avez déja Gadgetbridge ou Pebble d\'installé, en raison d\'un conflit avec l\'application Pebble.</string>
     <string name="application_name_main_nopebble">Gadgetbridage (Nightly, pas defournisseur Pebble)</string>
     <string name="title_activity_controlcenter_main_nopebble">Gadgetbridge Nightly Sans Pebble</string>
     <string name="gadgetbridge_running_main_nightly">GB Nightly en fonctionnement</string>
@@ -1495,7 +1495,7 @@
     <string name="prefs_seamless_connection_switch_title">Changement de connexion sans coupure</string>
     <string name="gadgetbridge_running_main_nopebble">GB nightly non Pebble en cours de fonctionnement</string>
     <string name="heartrate_bpm_105">105 bpm</string>
-    <string name="about_description_main_nopebble">Remplaçant autonome et sous licence libre pour remplacer les applications propriétaires des fabricants. Version Nightly de Gadgetbridge. Cette ersion contient le fournisseur Pebble renommé pour éviter les conflits, donc certaines intégrations Pebble ne marcheront pas, mais elle peut être installé à côté d\'une installation GadgetBridge existante.</string>
+    <string name="about_description_main_nopebble">Remplaçant sans connexion au cloud, en copyleft et sous licence libre pour remplacer les applications propriétaires des fabricants. Versions Nightly de Gadgetbridge. Dans cette version, le fournisseur Pebble est renommé pour éviter les conflits, en conséquence certaines intégrations Pebble ne fonctionneront pas, mais elle peut être installée à côté d\'une installation GadgetBridge existante.</string>
     <string name="heartrate_bpm_145">145 bpm</string>
     <string name="prefs_heartrate_alert_experimental_title">Alerte de fréquence cardiaque (expérimentale)</string>
     <string name="prefs_stress_monitoring_description">Surveiller le niveau de stress pendant le repos</string>
@@ -1628,7 +1628,7 @@
     <string name="open_fw_installer_info_text_title">Installateur de fichier</string>
     <string name="open_fw_installer_select_file">Sélectionner un fichier à envoyer à votre appareil : %s</string>
     <string name="open_fw_installer_warning_title">Avertissement</string>
-    <string name="open_fw_installer_info_text">L\'installateur de firmware/façade de montre/application/fichier vous permet d\'envoyer/installer des fichiers compatibles (firmwares, façades de montre, applications, GPS, ressources, polices, …) dans l\'appareil. Pour plus d\'information se reporter au site web : https://gadgetbridge.org/internals/features/installer/</string>
+    <string name="open_fw_installer_info_text">L\'installateur de firmware/façade de montre/application/fichier vous permet d\'envoyer/installer des fichiers compatibles (firmwares, cadrans de montre, applications, GPS, ressources, polices…) dans l\'appareil. Pour plus d\'information se reporter au site web : https://gadgetbridge.org/internals/features/installer/</string>
     <string name="open_fw_installer_warning_text">Cette fonction a la capacité de rendre inopérant/endommager votre appareil. Cela étant dit, cela ne s\'est jamais produit pour aucun des développeurs, mais rappelez-vous que vous faites cela à vos risques et périls.</string>
     <string name="open_fw_installer_ensure_device_connected">Assurez-vous que l\'appareil %s est bien connecté</string>
     <string name="open_fw_installer_connect_maximum_one_device">Merci de connecter UN SEUL appareil vers lequel vous souhaitez envoyer le fichier.</string>
@@ -1837,8 +1837,8 @@
     <string name="pref_screen_notification_profile_todo_list">Liste À faire</string>
     <string name="seconds_25">25 secondes</string>
     <string name="pref_enable_unsupported_settings_title">Activer les réglages non supportés</string>
-    <string name="pref_enable_unsupported_settings_summary">Cela donne l\'accès à tous les réglages disponibles, y compris ceux non supportés par l\'appareil. Cela peut causer des instabilités et des plantages de l\'appareil.</string>
-    <string name="prefs_always_on_display_follow_watchface">Le style suit le thème de façade</string>
+    <string name="pref_enable_unsupported_settings_summary">Ceci donne accès à tous les réglages disponibles, y compris ceux non gérés par l\'appareil. Cela peut causer des instabilités et des plantages de l\'appareil.</string>
+    <string name="prefs_always_on_display_follow_watchface">Le style suit le thème du cadran</string>
     <string name="prefs_control_center_summary">Choisir les éléments du menu contextuel du centre de contrôle</string>
     <string name="activity_prefs_target_weight_kg">Poids souhaité en kg</string>
     <string name="activity_type_indoor_walking">Marche intérieure</string>
@@ -2077,7 +2077,7 @@
     <string name="pref_app_logs_start_summary">Activer les logs pour les apps de la montre</string>
     <string name="pref_app_logs_title">Logs de l\'app</string>
     <string name="pref_app_logs_stop_summary">Arrêter les logs pour les apps de la montre</string>
-    <string name="fwapp_install_device_not_supported">Le fichier ne peut pas être installé, l\'appareil n\'est pas supporté.</string>
+    <string name="fwapp_install_device_not_supported">Le fichier ne peut pas être installé, l\'appareil n\'est pas géré.</string>
     <string name="share_screenshot">Partager la capture écran</string>
     <string name="screenshot_taken">Capture écran faite</string>
     <string name="stress_relaxed">Relaxé</string>
@@ -2142,7 +2142,7 @@
     <string name="permission_request">%1$s vous permet d’envoyer des messages et d’autres données depuis Android vers votre appareil. Pour cela, il a besoin d’accéder à ces données. Sans ces autorisations, certaines fonctionnalités pourraient ne pas fonctionner correctement.\n\nVous allez maintenant voir plusieurs fenêtres Android vous demandant ces autorisations.\n\nVeuillez appuyer sur « %2$s » pour continuer.</string>
     <string name="activity_type_handball">Handball</string>
     <string name="activity_type_windsurfing">Surf à voile</string>
-    <string name="activity_type_kitesurfing">Kitesurfing</string>
+    <string name="activity_type_kitesurfing">Kitesurf</string>
     <string name="activity_type_rugby">Rugby</string>
     <string name="activity_type_baseball">Baseball</string>
     <string name="activity_type_squash">Squash</string>
