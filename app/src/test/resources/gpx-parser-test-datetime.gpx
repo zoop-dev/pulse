@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes'?>
+<gpx version="1.1" creator="NonConformingDevice"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1"
+    xmlns="http://www.topografix.com/GPX/1/1">
+    <metadata>
+        <name>Test Timezone Variants</name>
+        <!-- No timezone indicator: should be treated as UTC -->
+        <time>2026-05-23T19:31:00</time>
+    </metadata>
+    <trk>
+        <trkseg>
+            <!-- No timezone: treated as UTC -->
+            <trkpt lon="9.7393798828125" lat="47.5048828125">
+                <ele>440.0</ele>
+                <time>2026-05-23T19:31:24</time>
+            </trkpt>
+            <!-- Explicit UTC (Z) -->
+            <trkpt lon="9.7394798828125" lat="47.5058828125">
+                <ele>441.0</ele>
+                <time>2026-05-23T19:32:00Z</time>
+            </trkpt>
+            <!-- Positive offset (+02:00): 21:33 local = 19:33 UTC -->
+            <trkpt lon="9.7395798828125" lat="47.5068828125">
+                <ele>442.0</ele>
+                <time>2026-05-23T21:33:00+02:00</time>
+            </trkpt>
+            <!-- Negative offset (-07:00): 12:34 local = 19:34 UTC -->
+            <trkpt lon="9.7396798828125" lat="47.5078828125">
+                <ele>443.0</ele>
+                <time>2026-05-23T12:34:00-07:00</time>
+            </trkpt>
+        </trkseg>
+    </trk>
+</gpx>

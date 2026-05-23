@@ -201,6 +201,31 @@ public class GPXParserTest extends TestBase {
         Assert.assertEquals(trackpoint.getVdop(), activityPoint.getLocation().getVdop(), 0.0);
     }
 
+    @Test
+    public void shouldParseDatetimeVariants() throws IOException, GpxParseException {
+        // Validates parsing of timestamps with no timezone (treated as UTC), explicit UTC (Z),
+        // positive offset, and negative offset.
+        try (final InputStream inputStream = getClass().getResourceAsStream("/gpx-parser-test-datetime.gpx")) {
+            final GpxParser gpxParser = new GpxParser(inputStream);
+            final GpxFile gpxFile = gpxParser.getGpxFile();
+
+            // Metadata time: No timezone indicator: should be treated as UTC
+            Assert.assertEquals(Date.from(Instant.parse("2026-05-23T19:31:00Z")), gpxFile.getTime());
+
+            final List<GpxTrackPoint> points = gpxFile.getPoints();
+            Assert.assertEquals(4, points.size());
+
+            // No timezone: treated as UTC
+            Assert.assertEquals(Date.from(Instant.parse("2026-05-23T19:31:24Z")), points.get(0).getTime());
+            // Explicit UTC (Z)
+            Assert.assertEquals(Date.from(Instant.parse("2026-05-23T19:32:00Z")), points.get(1).getTime());
+            // Positive offset (+02:00): 21:33 local = 19:33 UTC
+            Assert.assertEquals(Date.from(Instant.parse("2026-05-23T19:33:00Z")), points.get(2).getTime());
+            // Negative offset (-07:00): 12:34 local = 19:34 UTC
+            Assert.assertEquals(Date.from(Instant.parse("2026-05-23T19:34:00Z")), points.get(3).getTime());
+        }
+    }
+
     // test import of old GPX v1.0
     @Test
     public void TestGpxImportOld() throws Exception {

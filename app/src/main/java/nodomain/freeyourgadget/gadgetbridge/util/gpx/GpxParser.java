@@ -160,6 +160,10 @@ public class GpxParser {
         if (text == null || text.length() < 1) {
             return defaultDate;
         }
+        // If no timezone indicator is present, assume UTC
+        if (!text.endsWith("Z") && !text.contains("+") && !(text.length() > 19 && text.charAt(19) == '-')) {
+            return ISO8601Utils.parse(text + "Z", new ParsePosition(0));
+        }
         return ISO8601Utils.parse(text, new ParsePosition(0));
     }
 
