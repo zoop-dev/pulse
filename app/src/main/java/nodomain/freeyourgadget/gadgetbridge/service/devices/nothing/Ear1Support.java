@@ -86,6 +86,9 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
         if (getCoordinator().supportsLowLatency()) {
             sendCommand(builder, nothingProtocol.encodeLowLatencyReq());
         }
+        if (getCoordinator().supportsTouchOptions()) {
+            sendCommand(builder, nothingProtocol.encodeTouchOptionsRequest());
+        }
 
         return builder;
     }
@@ -198,6 +201,7 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
         private static final byte MASK_BATTERY_CHARGING = (byte) 0x80;
 
         //incoming
+        private static final short tap_configuration_status = (short) 0xc018;
         private static final short battery_status = (short) 0xe001;
         private static final short battery_status2 = (short) 0xc007;
         private static final short firmware_version = (short) 0xc042;
@@ -213,6 +217,7 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
 
         //outgoing
         private static final short find_device = (short) 0xf002;
+        private static final short tap_configuration = (short) 0xf003;
         private static final short in_ear_detection = (short) 0xf004;
         private static final short audio_mode = (short) 0xf00f;
         private static final short low_latency = (short) 0xf040;
@@ -320,6 +325,11 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
                 case low_latency_status:
                     devEvts.add(handleLowLatency(payload));
                     break;
+                case tap_configuration_status:
+                    if (payload.length > 0) {
+                        devEvts.add(handleTapConfigurationStatus(payload));
+                    }
+                    break;
                 case unk_maybe_ack:
                     LOG.debug("received ack");
                     break;
@@ -397,6 +407,10 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
             return encodeMessage((short) 0x120, low_latency_status, new byte[]{});
         }
 
+        byte[] encodeTouchOptionsRequest() {
+            return encodeMessage((short) 0x120, tap_configuration_status, new byte[]{});
+        }
+
         private GBDeviceEventVersionInfo handleFirmwareVersion(byte[] payload) {
             GBDeviceEventVersionInfo evt = new GBDeviceEventVersionInfo();
             evt.fwVersion = new String(payload);
@@ -463,6 +477,52 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
             return preferencesEvent;
         }
 
+        private GBDeviceEventUpdatePreferences handleTapConfigurationStatus(byte[] payload) {
+            final GBDeviceEventUpdatePreferences preferencesEvent = new GBDeviceEventUpdatePreferences();
+            final ByteBuffer buf = ByteBuffer.wrap(payload);
+            final int count = buf.get() & 0xff;
+            for (int i = 0; i < count; i++) {
+                final byte device = buf.get();
+                buf.get(); // 0x01
+                final byte tapTypeByte = buf.get();
+                final byte tapActionByte = buf.get();
+
+                final NothingTapType tapType = NothingTapType.fromCode(tapTypeByte);
+                if (tapType == null) {
+                    LOG.warn("Unknown tap type 0x{}", Integer.toHexString(tapTypeByte));
+                    continue;
+                }
+                final NothingTapAction tapAction = NothingTapAction.fromCode(tapActionByte);
+                if (tapAction == null) {
+                    LOG.warn("Unknown tap action 0x{}", Integer.toHexString(tapActionByte));
+                    continue;
+                }
+
+                final String preferenceKey = switch (device) {
+                    case battery_earphone_left -> switch (tapType) {
+                            case TAP_2 -> NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__LEFT__TAP_2;
+                            case TAP_3 -> NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__LEFT__TAP_3;
+                            case TAP_1_HOLD -> NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__LEFT__TAP_1_HOLD;
+                            case TAP_2_HOLD -> NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__LEFT__TAP_2_HOLD;
+                        };
+                    case battery_earphone_right -> switch (tapType) {
+                            case TAP_2 -> NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__RIGHT__TAP_2;
+                            case TAP_3 -> NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__RIGHT__TAP_3;
+                            case TAP_1_HOLD -> NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__RIGHT__TAP_1_HOLD;
+                            case TAP_2_HOLD -> NothingBudsPreferences.PREF_CMF_BUDS_TOUCH__RIGHT__TAP_2_HOLD;
+                        };
+                    default -> {
+                        LOG.warn("Unknown device {}", device);
+                        yield null;
+                    }
+                };
+
+                if (preferenceKey != null) {
+                    preferencesEvent.withPreference(preferenceKey, tapAction.name().toLowerCase(Locale.ROOT));
+                }
+            }
+            return preferencesEvent;
+        }
 
         byte[] encodeInEarDetection(byte enabled) {
             return encodeMessage((short) 0x120, in_ear_detection, new byte[]{0x01, 0x01, enabled});
@@ -560,13 +620,13 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
                     return null;
             }
 
-            return new byte[]{
+            return encodeMessage((short) 0x120, tap_configuration, new byte[]{
                     0x01,
                     side,
                     0x01,
                     (byte) tapType.getCode(),
                     (byte) action.getCode()
-            };
+            });
         }
 
         private List<GBDeviceEvent> handleBatteryInfo(byte[] payload) {
