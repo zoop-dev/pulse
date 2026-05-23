@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.nothing;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -50,6 +52,19 @@ public class CmfBuds2Coordinator extends AbstractEarCoordinator {
 
     @Override
     public boolean supportsAdaptiveAnc() { return false; }
+
+    @Override
+    public List<NothingEqualizer> getEqualizerPresets() {
+        return Arrays.asList(
+                NothingEqualizer.POP,
+                NothingEqualizer.ROCK,
+                NothingEqualizer.ELECTRONIC,
+                NothingEqualizer.ENHANCE_VOCALS,
+                NothingEqualizer.CLASSICAL,
+                NothingEqualizer.CUSTOM,
+                NothingEqualizer.DIRAC
+        );
+    }
 
     @Override
     public boolean supportsUltraBass() { return true; }
