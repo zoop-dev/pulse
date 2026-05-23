@@ -4337,4 +4337,15 @@
     <string name="pref_summary_supported_devices">Deze functie wordt niet door alle apparaten ondersteund. Klik hier voor meer informatie.</string>
     <string name="pref_title_supported_devices">Ondersteunde apparaten</string>
     <string name="intent_api_allow_global_settings_summary">Sta externe apps toe om globale Gadgetbridge-instellingen aan te passen via intents. Gadgetbridge moet herstart worden voordat deze instelling effect heeft.</string>
+    <string name="phone_gps_not_available">GPS van de telefoon is niet beschikbaar</string>
+    <string name="stamina">Uithoudingsvermogen</string>
+    <string name="step_length">Staplengte</string>
+    <string name="diving_cns_toxicity">CNS-toxiciteit</string>
+    <string name="diving_nitrogen_load">Stikstofbelasting</string>
+    <string name="diving_oxygen_toxicity">Zuurstoftoxiciteit</string>
+    <string name="unit_oxygen_toxicity_units">OTU</string>
+    <string name="diving_surface_interval">Oppervlakte-interval</string>
+    <string name="pref_title_third_party_app_device_alarms">Toestaan dat apps van derden alarmen instellen</string>
+    <string name="pref_summary_third_party_app_device_alarms">Sta andere geïnstalleerde apps van derden toe om alarmen op het apparaat in te stellen via intents.</string>
+    <string name="pref_summary_chart_sleep_range">Bepaalt aan welke dag een slaapsessie wordt toegewezen</string>
 </resources>
