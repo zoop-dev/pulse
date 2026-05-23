@@ -3,20 +3,37 @@
 #### Next release (WIP)
 
 * Initial support for Anker Soundcore Sport X20
+* Initial support for Garmin GPSMAP H1
+* Initial support for Huawei Watch Fit 5 / 5 Pro
 * Initial support for iGPSPORT bike computers (BiNavi Air, BSC200, BSC200S, BSC300, iGS630, iGS630S, iGS800)
+* Initial support for Moondrop Space Travel 2 Ultra
 * Initial support for Redmi Buds 6
 * Initial support for Redmi Watch Move
 * Initial support for Sinilink audio amplifiers
+* Initial support for Xplora XMOVE
 * Add setting to enable TRACE log level
+* Amazfit Bip S: Attempt to fix reboot on notification without subject or body
 * Casio GBD-200: Improved support
+* CMF Buds 2a: Add touch options
+* Fix drawer being drawn behind status bar
 * Fix file type when sharing
+* Garmin: Fix empty caller when unknown
+* Garmin: Show toast on waypoint upload complete
+* Garmin: Sync and archive some unknown files (should prevent Instinct series reboots)
+* GPX: Fix parsing of timestamps without timezone
+* Huami: Avoid infinite loop when fetching very short activity
 * Huawei: Allow encryption to be enabled / disabled
+* Intent API: Add Alarm Intent API
+* Maps: Reduce memory usage
+* Pebble: Add support for installing dual slot firmware
 * Pebble: Add support for pull to refresh for pebble health data
 * Pebble: Fix Pebble [Core 2 Duo / Time 2 / 2 Round] BLE pairing
 * Prevent crash on devices without GPS
-* Xiaomi-protobuf: Fix alarm notifications
-* Xiaomi-protobuf: Fix watchface management
 * Recognize Thunderbird for Android as email and ignore its summary notifications
+* Sony WF-1000XM5: Enable further capabilities
+* Xiaomi-protobuf: Fix alarm notifications
+* Xiaomi-protobuf: Fix swapped min and max temperatures
+* Xiaomi-protobuf: Fix watchface management
 
 #### 0.91.1
 
