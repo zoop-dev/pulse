@@ -1,5 +1,5 @@
-/*  Copyright (C) 2019-2024 Andreas Shimokawa, Carsten Pfeiffer, Daniel
-    Dakhno, José Rebelo, Petr Vaněk
+/*  Copyright (C) 2019-2026 Andreas Shimokawa, Carsten Pfeiffer, Daniel
+    Dakhno, José Rebelo, Petr Vaněk, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -16,6 +16,10 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.model;
+
+import static nodomain.freeyourgadget.gadgetbridge.devices.GenericMetricSampleProvider.getLatestMetricSample;
+import static nodomain.freeyourgadget.gadgetbridge.devices.GenericMetricSampleProvider.supportsMetrics;
+import static nodomain.freeyourgadget.gadgetbridge.model.MetricSample.Metric.GENERIC_RESTING_METABOLIC_RATE;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -159,8 +163,15 @@ public class DailyTotals implements Serializable {
         day.set(Calendar.MINUTE, 0);
         day.set(Calendar.SECOND, 0);
         day.add(Calendar.HOUR, 0);
-        RestingMetabolicRateSample metabolicRate = getRestingMetabolicRate(db, day, device);
-        if (metabolicRate == null) {
+        final Integer restingMetabolicRate;
+        if (GBApplication.getPrefs().experimentalMetrics() && supportsMetrics(device, GENERIC_RESTING_METABOLIC_RATE)) {
+            MetricSample sample = getLatestMetricSample(db, device, GENERIC_RESTING_METABOLIC_RATE, day);
+            restingMetabolicRate = (sample == null) ? null : (int) sample.getMetricScore();
+        } else {
+            RestingMetabolicRateSample sample = getRestingMetabolicRate(db, day, device);
+            restingMetabolicRate = (sample == null) ? null : sample.getRestingMetabolicRate();
+        }
+        if (restingMetabolicRate == null) {
             // should never happen
             return 0;
         }
@@ -170,7 +181,7 @@ public class DailyTotals implements Serializable {
         if (sameDay) {
             passedDayProportion = (double) (calendar.getTimeInMillis() - day.getTimeInMillis()) / (24L * 60 * 60 * 1000);
         }
-        return  (int) (metabolicRate.getRestingMetabolicRate() * passedDayProportion);
+        return  (int) (restingMetabolicRate * passedDayProportion);
     }
 
     public static List<? extends ActivitySample> getSamples(DBHandler db, GBDevice device, int tsFrom, int tsTo) {

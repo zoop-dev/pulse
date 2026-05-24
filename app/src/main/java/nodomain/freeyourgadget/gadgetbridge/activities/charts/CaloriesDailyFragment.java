@@ -1,4 +1,4 @@
-/*  Copyright (C) 2024-2025 a0z, José Rebelo, Martin.JM, Thomas Kuehne
+/*  Copyright (C) 2024-2026 a0z, José Rebelo, Martin.JM, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -16,6 +16,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities.charts;
 
+import static nodomain.freeyourgadget.gadgetbridge.devices.GenericMetricSampleProvider.getLatestMetricSample;
+import static nodomain.freeyourgadget.gadgetbridge.model.MetricSample.Metric.GENERIC_RESTING_METABOLIC_RATE;
+
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -30,6 +33,8 @@ import androidx.core.content.ContextCompat;
 import com.github.mikephil.charting.charts.Chart;
 
 import org.apache.commons.lang3.EnumUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -48,9 +53,11 @@ import nodomain.freeyourgadget.gadgetbridge.entities.AbstractActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
+import nodomain.freeyourgadget.gadgetbridge.model.MetricSample;
 import nodomain.freeyourgadget.gadgetbridge.model.RestingMetabolicRateSample;
 
 public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFragment.CaloriesData> {
+    private static final Logger LOG = LoggerFactory.getLogger(CaloriesDailyFragment.class);
 
     private ImageView caloriesGauge;
     private TextView dateView;
@@ -67,6 +74,7 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
         TOTAL_CALORIES_SEGMENT
     }
     private GaugeViewMode gaugeViewMode;
+    private boolean metricMetabolicResting;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -94,6 +102,12 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
         rootView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             getChartsHost().enableSwipeRefresh(scrollY == 0);
         });
+
+        metricMetabolicResting = GBApplication.getPrefs().experimentalMetrics()
+                && supportsMetrics(GENERIC_RESTING_METABOLIC_RATE);
+        if (metricMetabolicResting) {
+            LOG.info("using experimental MetricSample for resting metabolic rate");
+        }
 
         caloriesGauge = rootView.findViewById(R.id.calories_gauge);
         dateView = rootView.findViewById(R.id.date_view);
@@ -124,6 +138,9 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
     }
 
     public boolean supportsActiveCalories() {
+        if (metricMetabolicResting) {
+            return true;
+        }
         final GBDevice device = getChartsHost().getDevice();
         return device.getDeviceCoordinator().supportsActiveCalories(device);
     }
@@ -167,8 +184,15 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
         String formattedDate = new SimpleDateFormat("E, MMM dd").format(date);
         dateView.setText(formattedDate);
         List<? extends ActivitySample> samples = getActivitySamples(db, device, startTs, endTs);
-        RestingMetabolicRateSample metabolicRate = getRestingMetabolicRate(db, device);
-        if (metabolicRate == null) {
+        final Integer restingMetabolicRate;
+        if (metricMetabolicResting) {
+            MetricSample sample = getLatestMetricSample(db, device, GENERIC_RESTING_METABOLIC_RATE);
+            restingMetabolicRate = (sample == null) ? null : (int) sample.getMetricScore();
+        } else {
+            RestingMetabolicRateSample sample = getRestingMetabolicRate(db, device);
+            restingMetabolicRate = (sample == null) ? null : sample.getRestingMetabolicRate();
+        }
+        if (restingMetabolicRate == null) {
             return new CaloriesData(0, 0, 0, 0);
         }
         int totalBurnt;
@@ -179,7 +203,7 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
         if (sameDay) {
             passedDayProportion = (double) (calendar.getTimeInMillis() - day.getTimeInMillis()) / (24L * 60 * 60 * 1000);
         }
-        int restingBurnt = (int) (metabolicRate.getRestingMetabolicRate() * passedDayProportion);
+        int restingBurnt = (int) (restingMetabolicRate * passedDayProportion);
 
         for (int i = 0; i <= samples.size() - 1; i++) {
             ActivitySample sample = samples.get(i);
@@ -191,7 +215,7 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
         activeBurnt = activeBurnt / 1000;
         totalBurnt = restingBurnt + activeBurnt;
 
-        return new CaloriesData(totalBurnt, activeBurnt, restingBurnt, metabolicRate.getRestingMetabolicRate());
+        return new CaloriesData(totalBurnt, activeBurnt, restingBurnt, restingMetabolicRate);
     }
 
     @Override

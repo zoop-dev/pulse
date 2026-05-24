@@ -1,5 +1,6 @@
-/*  Copyright (C) 2015-2024 Andreas Shimokawa, Carsten Pfeiffer, Daniele
-    Gobbetti, Dikay900, José Rebelo, Pavel Elagin, Petr Vaněk, walkjivefly
+/*  Copyright (C) 2015-2026 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+    Gobbetti, Dikay900, José Rebelo, Pavel Elagin, Petr Vaněk, walkjivefly,
+    Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -48,7 +49,9 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBFragment;
 import nodomain.freeyourgadget.gadgetbridge.database.DBAccess;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
+import nodomain.freeyourgadget.gadgetbridge.devices.GenericMetricSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.MetricSample;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 
 /**
@@ -421,5 +424,10 @@ public abstract class AbstractChartFragment<D extends ChartsData> extends Abstra
         } else {
             getChartsHost().setDateInfo(DateTimeUtils.formatDateRange(from, to, dateFlags));
         }
+    }
+
+    public boolean supportsMetrics(MetricSample.Metric metric) {
+        final GBDevice device = getChartsHost().getDevice();
+        return GenericMetricSampleProvider.supportsMetrics(device, metric);
     }
 }
