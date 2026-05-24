@@ -4360,4 +4360,6 @@
     <string name="double_tap_and_hold">Koppintson kétszer és tartsa nyomva</string>
     <string name="pref_title_third_party_app_device_alarms">Engedélyezze a harmadik féltől származó alkalmazások számára az ébresztők beállítását</string>
     <string name="pref_summary_third_party_app_device_alarms">Engedélyezze más, telepített, harmadik féltől származó alkalmazások számára az eszközriasztások beállítását intentek alapján.</string>
+    <string name="nothing_prefs_spatial_audio_title">Térbeli hangzás</string>
+    <string name="nothing_prefs_spatial_audio_summary">Egy magával ragadó zenehallgatási élmény, amelytől úgy fogja érezni, mintha a zene, a film vagy a játék része lenne.</string>
 </resources>
