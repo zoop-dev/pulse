@@ -79,7 +79,7 @@ public class GBDaoGenerator {
             outputDir.mkdirs();
         }
 
-        final Schema schema = new Schema(134, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(135, MAIN_PACKAGE + ".entities");
 
         final List<Entity> sampleProvidersToGenerate = new LinkedList<>();
 
@@ -683,6 +683,8 @@ public class GBDaoGenerator {
         sample.addIntProperty("vitalityIncreaseModerate");
         sample.addIntProperty("vitalityIncreaseHigh");
         sample.addIntProperty("vitalityCurrent");
+        sample.addIntProperty("activeCalories");
+        sample.addIntProperty("recoveryHours");
         return sample;
     }
 
