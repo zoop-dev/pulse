@@ -1,10 +1,11 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,13 +36,13 @@ public class OauthInterceptor implements HttpInterceptor {
     }
 
     @Override
-    public boolean supports(@NotNull final GarminHttpRequest request) {
+    public boolean supports(@NonNull final GarminHttpRequest request) {
         return request.getPath().startsWith("/api/oauth") || request.getPath().startsWith("/oauthTokenExchangeService");
     }
 
     @Override
     @Nullable
-    public GarminHttpResponse handle(@NotNull final GarminHttpRequest request) {
+    public GarminHttpResponse handle(@NonNull final GarminHttpRequest request) {
         if (request.getRawRequest().getMethod() != GdiHttpService.HttpService.Method.POST) {
             LOG.warn("Known OAuth requests should be POST");
             return null;

@@ -1,11 +1,9 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors;
 
-import android.net.Uri;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.documentfile.provider.DocumentFile;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,14 +39,14 @@ public class AgpsInterceptor implements HttpInterceptor {
     }
 
     @Override
-    public boolean supports(@NotNull final GarminHttpRequest request) {
+    public boolean supports(@NonNull final GarminHttpRequest request) {
         return "api.gcs.garmin.com".equals(request.getDomain()) &&
                 request.getPath().startsWith("/ephemeris/");
     }
 
     @Override
     @Nullable
-    public GarminHttpResponse handle(@NotNull final GarminHttpRequest request) {
+    public GarminHttpResponse handle(@NonNull final GarminHttpRequest request) {
         saveKnownUrl(request.getUrl());
 
         try {

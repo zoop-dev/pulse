@@ -2,6 +2,9 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interce
 
 import android.location.Location;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -9,8 +12,6 @@ import net.e175.klaus.solarpositioning.DeltaT;
 import net.e175.klaus.solarpositioning.SPA;
 import net.e175.klaus.solarpositioning.SunriseTransitSet;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +43,7 @@ public class WeatherInterceptor implements HttpInterceptor {
             .create();
 
     @Override
-    public boolean supports(@NotNull final GarminHttpRequest request) {
+    public boolean supports(@NonNull final GarminHttpRequest request) {
         return "api.gcs.garmin.com".equals(request.getDomain()) &&
                 request.getPath().startsWith("/weather/");
     }
@@ -50,7 +51,7 @@ public class WeatherInterceptor implements HttpInterceptor {
     /// These get requested on connection at most every 5 minutes
     @Override
     @Nullable
-    public GarminHttpResponse handle(@NotNull final GarminHttpRequest request) {
+    public GarminHttpResponse handle(@NonNull final GarminHttpRequest request) {
         final String path = request.getPath();
         final Map<String, String> query = request.getQuery();
 

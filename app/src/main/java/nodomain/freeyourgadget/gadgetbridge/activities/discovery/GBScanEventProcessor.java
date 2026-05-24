@@ -20,9 +20,9 @@ import android.os.Build;
 import android.os.ParcelUuid;
 import android.util.SparseArray;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -189,7 +189,7 @@ public final class GBScanEventProcessor implements Runnable {
         return deviceType.isSupported();
     }
 
-    private boolean mfgDataEqual(@NotNull SparseArray<byte[]> a, @Nullable SparseArray<byte[]> b) {
+    private boolean mfgDataEqual(@NonNull SparseArray<byte[]> a, @Nullable SparseArray<byte[]> b) {
         // Objects.equals does not do a full deep comparison of the objects, but it is the best
         // option on older APIs.
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? a.contentEquals(b) : Objects.equals(a, b);
