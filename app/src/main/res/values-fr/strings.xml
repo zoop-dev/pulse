@@ -574,7 +574,7 @@
     <string name="pref_title_contextual_arabic">Arabe contextuel</string>
     <string name="pref_summary_contextual_arabic">Activer ceci pour prendre en charge l\'arabe contextuel</string>
     <string name="debugactivity_really_factoryreset_title">Êtes-vous sûr de vouloir retourner aux paramètres d\'usine \?</string>
-    <string name="debugactivity_really_factoryreset">Une réinitialisation effacera toutes les données de l\'appareil connecté (si supporté). Les appareils Xiaomi/Huami modifient également l\'adresse MAC Bluetooth, ils sembleront donc être nouveau appareils pour Gadgetbridge.</string>
+    <string name="debugactivity_really_factoryreset">Une réinitialisation effacera toutes les données de l\'appareil connecté (si supporté). Les appareils Xiaomi/Huami modifient également l\'adresse MAC Bluetooth, ils sembleront donc être de nouveaux appareils pour Gadgetbridge.</string>
     <string name="mi3_prefs_band_screen_unlock">Déverrouillage de l\'écran du Band</string>
     <string name="activity_type_exercise">Activité physique</string>
     <string name="title_activity_notification_filter">Filtre de notifications</string>
@@ -1022,7 +1022,7 @@
     <string name="gps_track">Trace GPS</string>
     <string name="about_version">Version %s</string>
     <string name="charts_legend_heartrate_average">Fréquence cardiaque moyenne</string>
-    <string name="charts_min_max_heartrate_popup">Fréquence cardiaque la plus basse : %1$d \nFréquence cardiaque la plus élevée : %2$d \nIntensité du mouvement : %3$s</string>
+    <string name="charts_min_max_heartrate_popup">Fréquence cardiaque minimum : %1$d \nFréquence cardiaque maximum : %2$d \nIntensité de mouvement : %3$s</string>
     <string name="find_lost_device_message">Rechercher %1$s \?</string>
     <string name="menuitem_stopwatch">Étape</string>
     <string name="menuitem_dnd">NPD</string>
@@ -1377,7 +1377,7 @@
     <string name="controlcenter_power_off">Éteindre</string>
     <string name="controlcenter_power_off_confirm_title">Éteindre</string>
     <string name="controlcenter_power_off_confirm_description">Etes-vous sûr de vouloir éteindre l\'appareil \?</string>
-    <string name="discover_unsupported_devices_description">Activer cette option pour afficher tous les appareils bluetooth lors du scan. Un appui bref copie le nom de l\'appareil et sa mac adresse dans le presse-papier. Un appui long lancera le processus \"Ajouter un appareil de test\". Peut potentiellement provoquer un blocage de l\'app.</string>
+    <string name="discover_unsupported_devices_description">Activez cette option pour afficher tous les appareils Bluetooth lors du scan. Un appui bref copie le nom de l\'appareil et son adresse mac dans le presse-papier. Un appui long ouvrira le dialogue \"Ajouter un appareil de test\". Peut provoquer un blocage de l\'application.</string>
     <string name="activity_type_hiking">Randonnée</string>
     <string name="ascentDistance">Distance en montée</string>
     <string name="descentDistance">Distance en descente</string>
@@ -1628,7 +1628,7 @@
     <string name="open_fw_installer_info_text_title">Installateur de fichier</string>
     <string name="open_fw_installer_select_file">Sélectionner un fichier à envoyer à votre appareil : %s</string>
     <string name="open_fw_installer_warning_title">Avertissement</string>
-    <string name="open_fw_installer_info_text">L\'installateur de firmware/façade de montre/application/fichier vous permet d\'envoyer/installer des fichiers compatibles (firmwares, cadrans de montre, applications, GPS, ressources, polices…) dans l\'appareil. Pour plus d\'information se reporter au site web : https://gadgetbridge.org/internals/features/installer/</string>
+    <string name="open_fw_installer_info_text">L\'installateur de firmware/cadran de montre/application/fichier vous permet d\'envoyer/installer des fichiers compatibles (firmwares, cadrans de montre, applications, GPS, ressources, polices…) dans l\'appareil. Pour plus d\'informations, reportez-vous au site web : https://gadgetbridge.org/internals/features/installer/</string>
     <string name="open_fw_installer_warning_text">Cette fonction a la capacité de rendre inopérant/endommager votre appareil. Cela étant dit, cela ne s\'est jamais produit pour aucun des développeurs, mais rappelez-vous que vous faites cela à vos risques et périls.</string>
     <string name="open_fw_installer_ensure_device_connected">Assurez-vous que l\'appareil %s est bien connecté</string>
     <string name="open_fw_installer_connect_maximum_one_device">Merci de connecter UN SEUL appareil vers lequel vous souhaitez envoyer le fichier.</string>
@@ -3391,7 +3391,7 @@
     <string name="title_activity_even_realities_g1_pairing">Même jumelage de G1</string>
     <string name="pairing_even_realities_g1_working">Jumelage avec %1s…</string>
     <string name="pairing_even_realities_g1_find_both_fail">Échec pour trouver les lentilles droites et gauches. Veuillez scanner à nouveau.</string>
-    <string name="pairing_even_realities_g1_select_next_lens">%1$s Critère sélectionné pour l\'appariement. Plusieurs candidats pour l\'objectif %2$s trouvé. Veuillez sélectionner l\'objectif %2$s dans la liste ci-dessous.</string>
+    <string name="pairing_even_realities_g1_select_next_lens">Lentile %1$s sélectionnée pour l\'appariement. Plusieurs candidats pour l\'objectif %2$s ont été trouvés. Veuillez sélectionner l\'objectif %2$s dans la liste ci-dessous.</string>
     <string name="pref_vibration_intensity">Intensité vibration</string>
     <string name="serbian_latin">Serbe (Latin)</string>
     <string name="catalan">Catalan</string>
@@ -4077,7 +4077,7 @@
     <string name="phone_gps_not_available">GPS du téléphone non disponible</string>
     <string name="pref_export_directory">Répertoire d\'exportation</string>
     <string name="pref_restart_logging_title">Initialiser journalisation</string>
-    <string name="uploading_resources">Téléversement ressources …</string>
+    <string name="uploading_resources">Téléversement ressources…</string>
     <string name="stamina">Endurance</string>
     <string name="step_length">Longueur de pas</string>
     <string name="blood_pressure_systolic">Systolique</string>
@@ -4166,7 +4166,7 @@
     <string name="soundcore_equalizer_band8_freq">12800 Hz</string>
     <string name="pref_title_supported_devices">Appareils pris en charge</string>
     <string name="info_no_devices_to_sync">Les appareils connectés ne permettent pas la synchronisation des données</string>
-    <string name="intent_api_allow_global_settings_summary">Permettre aux applis tierces de modifier les réglages de Gadgetbridge en passant par des \"Intents\". Veuillez redémarrer Gadgetbridge pour que ce réglage prenne effet.</string>
+    <string name="intent_api_allow_global_settings_summary">Permettre aux applis tierces de modifier les réglages de Gadgetbridge au moyen d\' \"Intents\". Veuillez redémarrer Gadgetbridge pour que ce réglage prenne effet.</string>
     <string name="loyalty_cards_sync_tags_only">Ne synchroniser que certaines étiquettes</string>
     <string name="loyalty_cards_sync_tags">Étiquettes à synchroniser</string>
     <string name="install_app_name">Installer %s</string>
@@ -4240,7 +4240,7 @@
     <string name="health_connect_settings_open_error">Impossible d\'ouvrir les réglages de Santé Connect. Veuillez ouvrir Santé Connect vous-même.</string>
     <string name="pref_health_connect_sync_on_event_title">Synchroniser après synchronisation de l\'appareil</string>
     <string name="pref_health_connect_sync_on_event_summary">Se synchroniser avec Santé Connect une fois que l\'appareil a fini de synchroniser ses données d\'actvité.</string>
-    <string name="health_connect_permissions_rationale_message">Gadgetbridge collecte les données de vos appareils et, avec votre permission, les partage avec Santé Connect. Ces données sont stockées sur votre appareil et ne sont pas partagées avec d\'autres.</string>
+    <string name="health_connect_permissions_rationale_message">Gadgetbridge collecte les données de vos appareils et, avec votre permission, les partage avec Santé Connect. Ces données sont stockées sur votre appareil et ne sont pas partagées avec des tiers.</string>
     <string name="health_connect_sync_notification_title">Synchronisation avec Santé Connect</string>
     <string name="health_connect_sync_notification_message">Synchronisation avec Santé Connect en cours…</string>
     <string name="health_connect_unavailable_summary">Santé Connect n\'est pas disponible sur cet appareil.</string>
@@ -4334,4 +4334,14 @@
     <string name="qhybrid_button_function_forward_multi">Envoyer au téléphone (multifonction)</string>
     <string name="qhybrid_button_function_control_music">Contrôler le lecteur de musique</string>
     <string name="antplus_summary">Les appareils compatibles ANT+ proches peuvent capter votre fréquence cardiaque.</string>
+    <string name="activity_type_track_run">Course sur piste</string>
+    <string name="pref_title_third_party_app_device_alarms">Permettre aux applications tierces de mettre des alarmes en place</string>
+    <string name="auto_export_invalid_location">Emplacement d\'exportation incorrect : %s</string>
+    <string name="pref_log_level_trace_title">Journalisation niveau trace</string>
+    <string name="pref_log_level_trace_summary">Mettre la journalisation au niveau TRACE</string>
+    <string name="internet_helper_pref_intercept_supported_summary">Il est possible d\'intercepter et gérer localement certaines requêtes sans les envoyer sur Internet.</string>
+    <string name="internet_helper_pref_intercept_supported_title">Intercepter les requêtes Internet gérées</string>
+    <string name="internet_helper_pref_pebble_background_js_summary">Permettre aux applications et cadrans Pebble d\'accéder à Internet</string>
+    <string name="internet_helper_pref_pebble_app_config_title">Pages de configuration des applications Pebble</string>
+    <string name="notification_pebble_js_service_title">Service JavaScript Pebble</string>
 </resources>
