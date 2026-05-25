@@ -2,8 +2,9 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interce
 
 import android.os.ParcelFileDescriptor;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,13 +40,13 @@ public class FirewallInterceptor implements HttpInterceptor {
     }
 
     @Override
-    public boolean supports(@NotNull final GarminHttpRequest request) {
+    public boolean supports(@NonNull final GarminHttpRequest request) {
         return true;
     }
 
     @Override
     @Nullable
-    public GarminHttpResponse handle(@NotNull final GarminHttpRequest request) {
+    public GarminHttpResponse handle(@NonNull final GarminHttpRequest request) {
         if (!GBApplication.hasInternetAccess()) {
             LOG.warn("Gb has no internet access");
             return null;
@@ -114,7 +115,7 @@ public class FirewallInterceptor implements HttpInterceptor {
         return garminHttpResponse;
     }
 
-    private void handleHttpResponse(@NotNull final GarminHttpRequest request,
+    private void handleHttpResponse(@NonNull final GarminHttpRequest request,
                                     final HttpResponse response) {
         final GarminHttpResponse garminHttpResponse = new GarminHttpResponse();
         garminHttpResponse.setStatus(response.getStatus());
@@ -136,13 +137,13 @@ public class FirewallInterceptor implements HttpInterceptor {
         }
     }
 
-    private void handleHttpException(@NotNull final GarminHttpRequest request) {
+    private void handleHttpException(@NonNull final GarminHttpRequest request) {
         final GdiHttpService.HttpService errorResponse = HttpHandler.createErrorResponse(request);
         sendHttpServiceRequest(request, errorResponse);
     }
 
-    private void sendHttpServiceRequest(@NotNull final GarminHttpRequest request,
-                                        @NotNull final GdiHttpService.HttpService httpService) {
+    private void sendHttpServiceRequest(@NonNull final GarminHttpRequest request,
+                                        @NonNull final GdiHttpService.HttpService httpService) {
         final GdiSmartProto.Smart smart = GdiSmartProto.Smart.newBuilder().setHttpService(httpService).build();
         deviceSupport.evaluateGBDeviceEvent(new ProtobufResponseEvent(
                 smart, request.getMessageRequestId()

@@ -1,7 +1,8 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,14 +31,14 @@ public class ContactsInterceptor implements HttpInterceptor {
     }
 
     @Override
-    public boolean supports(@NotNull final GarminHttpRequest request) {
+    public boolean supports(@NonNull final GarminHttpRequest request) {
         return "connectapi.garmin.com".equals(request.getDomain()) &&
                 request.getPath().startsWith("/device-gateway/usercontact/");
     }
 
     @Override
     @Nullable
-    public GarminHttpResponse handle(@NotNull final GarminHttpRequest request) {
+    public GarminHttpResponse handle(@NonNull final GarminHttpRequest request) {
         if (!request.getPath().equals("/device-gateway/usercontact/contacts")) {
             LOG.warn("Unknown contacts path {}", request.getPath());
             return null;

@@ -5,12 +5,11 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,14 +42,14 @@ public class ImageServiceInterceptor implements HttpInterceptor {
     }
 
     @Override
-    public boolean supports(@NotNull final GarminHttpRequest request) {
+    public boolean supports(@NonNull final GarminHttpRequest request) {
         return "api.gcs.garmin.com".equals(request.getDomain()) &&
                 request.getPath().startsWith("/image-service/");
     }
 
     @Override
     @Nullable
-    public GarminHttpResponse handle(@NotNull final GarminHttpRequest request) {
+    public GarminHttpResponse handle(@NonNull final GarminHttpRequest request) {
         if (request.getRawRequest().getMethod() != GdiHttpService.HttpService.Method.GET) {
             LOG.warn("Known image service requests should be GET");
             return null;

@@ -26,12 +26,13 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import androidx.annotation.NonNull;
+
 import net.e175.klaus.solarpositioning.DeltaT;
 import net.e175.klaus.solarpositioning.SPA;
 import net.e175.klaus.solarpositioning.SunriseTransitSet;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -72,7 +73,7 @@ public class GBWebClient extends WebViewClient {
     private final Map<String, List<Entry>> postData = new HashMap<>();
     private record Entry(long timestamp, String body) {}
 
-    public GBWebClient(final InternetRequestType type, @NotNull final GBDevice device) {
+    public GBWebClient(final InternetRequestType type, @NonNull final GBDevice device) {
         super();
         this.firewall = new InternetFirewall(type, device);
     }
