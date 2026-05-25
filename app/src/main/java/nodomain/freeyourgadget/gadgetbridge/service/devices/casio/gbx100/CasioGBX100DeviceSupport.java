@@ -243,6 +243,7 @@ public class CasioGBX100DeviceSupport extends Casio2C2DSupport implements Shared
         return super.onCharacteristicChanged(gatt, characteristic, data);
     }
 
+    @Override
     public void syncProfile() {
         try {
             new SetConfigurationOperation(this, CasioConstants.ConfigurationOption.OPTION_ALL).perform();
@@ -610,6 +611,7 @@ public class CasioGBX100DeviceSupport extends Casio2C2DSupport implements Shared
         onSharedPreferenceChanged(null, config);
     }
 
+    @Override
     public void onGetConfigurationFinished() {
         mGetConfigurationPending = false;
     }
