@@ -35,7 +35,7 @@ abstract class GarminHrmCoordinator: AbstractBLEDeviceCoordinator() {
         return "Garmin"
     }
 
-    override fun getDeviceSupportClass(device: GBDevice?): Class<out DeviceSupport> {
+    override fun getDeviceSupportClass(device: GBDevice): Class<out DeviceSupport> {
         return GenericHeartRateSupport::class.java
     }
 

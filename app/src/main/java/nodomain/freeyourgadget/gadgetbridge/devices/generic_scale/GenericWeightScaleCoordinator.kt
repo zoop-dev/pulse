@@ -64,7 +64,7 @@ class GenericWeightScaleCoordinator : AbstractBLEDeviceCoordinator() {
         return "Generic"
     }
 
-    override fun getDeviceSupportClass(device: GBDevice?): Class<out DeviceSupport?> {
+    override fun getDeviceSupportClass(device: GBDevice): Class<out DeviceSupport?> {
         return GenericWeightScaleSupport::class.java
     }
 
