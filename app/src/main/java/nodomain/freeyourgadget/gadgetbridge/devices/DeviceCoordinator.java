@@ -382,48 +382,57 @@ public interface DeviceCoordinator {
     /**
      * Returns the sample provider for the device being supported.
      */
+    @Nullable
     SampleProvider<? extends ActivitySample> getSampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
     /**
      * Returns the sample provider for stress data, for the device being supported.
      */
+    @Nullable
     TimeSampleProvider<? extends StressSample> getStressSampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
     /**
      * Returns the sample provider for body energy data, for the device being supported.
      */
+    @Nullable
     TimeSampleProvider<? extends BodyEnergySample> getBodyEnergySampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
     /**
      * Returns the sample provider for HRV summary, for the device being supported.
      */
+    @Nullable
     TimeSampleProvider<? extends HrvSummarySample> getHrvSummarySampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
     /**
      * Returns the sample provider for HRV values, for the device being supported.
      */
+    @Nullable
     TimeSampleProvider<? extends HrvValueSample> getHrvValueSampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
     /**
      * Returns the sample provider for Workout load values, for the device being supported.
      */
+    @Nullable
     TimeSampleProvider<? extends WorkoutLoadSample> getWorkoutLoadSampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
     /**
      * Returns the sample provider for training acute load values, for the device being supported.
      */
+    @Nullable
     TimeSampleProvider<? extends GenericTrainingLoadAcuteSample> getTrainingAcuteLoadSampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
 
     /**
      * Returns the sample provider for training chronic load values, for the device being supported.
      */
+    @Nullable
     TimeSampleProvider<? extends GenericTrainingLoadChronicSample> getTrainingChronicLoadSampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
 
     /**
      * Returns the sample provider for VO2 max values, for the device being supported.
      */
+    @Nullable
     TimeSampleProvider<? extends Vo2MaxSample> getVo2MaxSampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
     /**
@@ -443,55 +452,67 @@ public interface DeviceCoordinator {
     /**
      * Returns the sample provider for temperature data, for the device being supported.
      */
+    @Nullable
     TimeSampleProvider<? extends TemperatureSample> getTemperatureSampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
     /**
      * Returns the sample provider for SpO2 data, for the device being supported.
      */
+    @Nullable
     TimeSampleProvider<? extends Spo2Sample> getSpo2SampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
     /**
      * Returns the sample provider for Cycling data, for the device being supported.
      */
+    @Nullable
     TimeSampleProvider<CyclingSample> getCyclingSampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
     /**
      * Returns the sample provider for max HR data, for the device being supported.
      */
+    @Nullable
     TimeSampleProvider<? extends HeartRateSample> getHeartRateMaxSampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
     /**
      * Returns the sample provider for resting HR data, for the device being supported.
      */
+    @Nullable
     TimeSampleProvider<? extends HeartRateSample> getHeartRateRestingSampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
     /**
      * Returns the sample provider for manual HR data, for the device being supported.
      */
+    @Nullable
     TimeSampleProvider<? extends HeartRateSample> getHeartRateManualSampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
     /**
      * Returns the sample provider for PAI data, for the device being supported.
      */
+    @Nullable
     TimeSampleProvider<? extends PaiSample> getPaiSampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
     /**
      * Returns the sample provider for sleep respiratory rate data, for the device being supported.
      */
+    @Nullable
     TimeSampleProvider<? extends RespiratoryRateSample> getRespiratoryRateSampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
     /**
      * Returns the sample provider for weight data, for the device being supported.
      */
+    @Nullable
     TimeSampleProvider<? extends WeightSample> getWeightSampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
+    @Nullable
     TimeSampleProvider<? extends RestingMetabolicRateSample> getRestingMetabolicRateProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
+    @Nullable
     TimeSampleProvider<? extends SleepScoreSample> getSleepScoreProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
     /**
      * Returns the sample provider for blood pressure data, for the device being supported.
      */
+    @Nullable
     TimeSampleProvider<? extends BloodPressureSample> getBloodPressureSampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
     /**
@@ -624,6 +645,7 @@ public interface DeviceCoordinator {
      *
      * @return
      */
+    @Nullable
     Class<? extends Activity> getAppsManagementActivity(@NonNull final GBDevice device);
 
     /**
@@ -631,6 +653,7 @@ public interface DeviceCoordinator {
      *
      * @return
      */
+    @Nullable
     Class<? extends Activity> getWatchfaceDesignerActivity(@NonNull final GBDevice device);
 
     /**
@@ -648,6 +671,7 @@ public interface DeviceCoordinator {
     /**
      * Returns the device app cache directory.
      */
+    @Nullable
     File getAppCacheDir() throws IOException;
 
     /**
@@ -658,11 +682,13 @@ public interface DeviceCoordinator {
     /**
      * Returns a String containing the device app sort order filename.
      */
+    @Nullable
     String getAppCacheSortFilename();
 
     /**
      * Returns a String containing the file extension for watch apps.
      */
+    @Nullable
     String getAppFileExtension();
 
     /**
@@ -843,6 +869,7 @@ public interface DeviceCoordinator {
      * Returns device specific experimental settings. This screen is only shown when the global experimental settings
      * is enabled.
      */
+    @Nullable
     int[] getSupportedDeviceSpecificExperimentalSettings(@NonNull final GBDevice device);
 
     /**
@@ -851,6 +878,7 @@ public interface DeviceCoordinator {
      * @deprecated use getDeviceSpecificSettings
      */
     @Deprecated
+    @Nullable
     int[] getSupportedDeviceSpecificSettings(@NonNull final GBDevice device);
 
     /**
@@ -863,11 +891,13 @@ public interface DeviceCoordinator {
     /**
      * Returns the {@link DeviceSpecificSettingsCustomizer}, allowing for the customization of the devices specific settings screen.
      */
+    @Nullable
     DeviceSpecificSettingsCustomizer getDeviceSpecificSettingsCustomizer(@NonNull final GBDevice device);
 
     /**
      * Indicates which device specific language the device supports
      */
+    @Nullable
     String[] getSupportedLanguageSettings(@NonNull final GBDevice device);
 
     /**
