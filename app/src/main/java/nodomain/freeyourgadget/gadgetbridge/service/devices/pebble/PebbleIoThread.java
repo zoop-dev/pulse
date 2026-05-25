@@ -796,6 +796,7 @@ class PebbleIoThread extends GBDeviceIoThread {
         }
     }
 
+    @Override
     public void quit() {
         mQuit = true;
         cleanup();
