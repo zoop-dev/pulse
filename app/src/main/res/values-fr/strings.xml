@@ -2105,8 +2105,8 @@
     <string name="pai_plus_num">+%d</string>
     <string name="num_min">%d min</string>
     <string name="pai_chart_per_week">PAI par semaine</string>
-    <string name="pai_total">PAI Total</string>
-    <string name="pai_day">Augmentation journalière du PAI</string>
+    <string name="pai_total">Total</string>
+    <string name="pai_day">Augmentation journalière</string>
     <string name="loyalty_cards_install">Installer Catima</string>
     <string name="loyalty_cards_sync_groups">Groupes à synchroniser</string>
     <string name="loyalty_cards_install_catima_fail">Impossible d\'ouvrir l\'app store pour installer Catima</string>
@@ -3048,7 +3048,7 @@
     <string name="recoveryTime">Temps de récupération</string>
     <string name="sleep_colored_stats_awake_avg">Moy. éveillé</string>
     <string name="weight_lbs">%1$.2f livres</string>
-    <string name="weight_kg">%1$.2f kg</string>
+    <string name="weight_kg">%1$.2f Kg</string>
     <string name="pref_description_developer_options">Logs, API d’intention</string>
     <string name="pref_header_sound">Son</string>
     <string name="workoutSets">Série</string>
