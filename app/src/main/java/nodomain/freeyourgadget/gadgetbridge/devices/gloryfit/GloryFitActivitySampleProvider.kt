@@ -18,6 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices.gloryfit
 
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericHeartRateSampleProvider
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericSleepStageSampleProvider
+import nodomain.freeyourgadget.gadgetbridge.devices.GloryFitStepsSampleProvider
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericActivitySample

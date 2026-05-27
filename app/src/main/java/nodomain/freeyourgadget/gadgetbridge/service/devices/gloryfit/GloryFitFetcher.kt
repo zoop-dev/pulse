@@ -21,7 +21,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericHeartRateSampleProvider
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericSleepStageSampleProvider
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericSpo2SampleProvider
-import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.GloryFitStepsSampleProvider
+import nodomain.freeyourgadget.gadgetbridge.devices.GloryFitStepsSampleProvider
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericHeartRateSample
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericSleepStageSample
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericSpo2Sample

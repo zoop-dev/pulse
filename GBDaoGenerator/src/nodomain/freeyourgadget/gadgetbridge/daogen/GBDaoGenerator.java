@@ -193,7 +193,7 @@ public class GBDaoGenerator {
         addMoyoungBloodPressureSample(schema, user, device);
         addMoyoungSleepStageSample(schema, user, device);
         addMoyoungStressSample(schema, user, device);
-        addGloryFitStepsSample(schema, user, device);
+        sampleProvidersToGenerate.add(addGloryFitStepsSample(schema, user, device));
         addKeephealthActivitySample(schema, user, device);
         addKeephealthBloodPressureSample(schema, user, device);
         addKeephealthTemperatureSample(schema, user, device);
