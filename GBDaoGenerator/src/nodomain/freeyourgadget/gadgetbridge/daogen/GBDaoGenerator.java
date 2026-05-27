@@ -199,8 +199,8 @@ public class GBDaoGenerator {
         addKeephealthTemperatureSample(schema, user, device);
 
         addHuaweiActivitySample(schema, user, device);
-        addHuaweiStressSample(schema, user, device);
-        addHuaweiSleepStageSample(schema, user, device);
+        sampleProvidersToGenerate.add(addHuaweiStressSample(schema, user, device));
+        sampleProvidersToGenerate.add(addHuaweiSleepStageSample(schema, user, device));
         addHuaweiSleepStatsSample(schema, user, device);
         addHuaweiSleepApneaSample(schema, user, device);
         addHuaweiTemperatureSample(schema, user, device);
