@@ -46,15 +46,15 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSett
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventFindPhone;
+import nodomain.freeyourgadget.gadgetbridge.devices.Wena3BehaviorSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.Wena3CaloriesSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.Wena3EnergySampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.Wena3HeartRateSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.Wena3Vo2SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.wena3.SonyWena3ActivitySampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.sony.wena3.SonyWena3BehaviorSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.sony.wena3.SonyWena3CaloriesSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.wena3.SonyWena3Constants;
-import nodomain.freeyourgadget.gadgetbridge.devices.sony.wena3.SonyWena3EnergySampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.sony.wena3.SonyWena3HeartRateSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.wena3.SonyWena3SettingKeys;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.wena3.SonyWena3StressSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.sony.wena3.SonyWena3Vo2SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.database.AppSpecificNotificationSettingsRepository;
 import nodomain.freeyourgadget.gadgetbridge.entities.Wena3BehaviorSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.Wena3CaloriesSample;
@@ -321,7 +321,7 @@ public class SonyWena3DeviceSupport extends AbstractBTLESingleDeviceSupport {
 
             if(!syncAll) {
                 try (DBHandler db = GBApplication.acquireDB()) {
-                    Wena3HeartRateSample heartSample = new SonyWena3HeartRateSampleProvider(getDevice(), db.getDaoSession()).getLatestSample();
+                    Wena3HeartRateSample heartSample = new Wena3HeartRateSampleProvider(getDevice(), db.getDaoSession()).getLatestSample();
                     if(heartSample != null) {
                         heartLastSyncTime = new Date(heartSample.getTimestamp());
                     }
@@ -336,22 +336,22 @@ public class SonyWena3DeviceSupport extends AbstractBTLESingleDeviceSupport {
                         stepLastSyncTime = new Date(stepsSample.getTimestamp() * 1000L);
                     }
 
-                    Wena3BehaviorSample behaviorSample = new SonyWena3BehaviorSampleProvider(getDevice(), db.getDaoSession()).getLatestSample();
+                    Wena3BehaviorSample behaviorSample = new Wena3BehaviorSampleProvider(getDevice(), db.getDaoSession()).getLatestSample();
                     if(behaviorSample != null) {
                         behaviorLastSyncTime = new Date(behaviorSample.getTimestamp());
                     }
 
-                    Wena3Vo2Sample vo2Sample = new SonyWena3Vo2SampleProvider(getDevice(), db.getDaoSession()).getLatestSample();
+                    Wena3Vo2Sample vo2Sample = new Wena3Vo2SampleProvider(getDevice(), db.getDaoSession()).getLatestSample();
                     if(vo2Sample != null) {
                         vo2LastSyncTime = new Date(vo2Sample.getTimestamp());
                     }
 
-                    Wena3EnergySample energySample = new SonyWena3EnergySampleProvider(getDevice(), db.getDaoSession()).getLatestSample();
+                    Wena3EnergySample energySample = new Wena3EnergySampleProvider(getDevice(), db.getDaoSession()).getLatestSample();
                     if(energySample != null) {
                         energyLastSyncTime = new Date(energySample.getTimestamp());
                     }
 
-                    Wena3CaloriesSample caloriesSample = new SonyWena3CaloriesSampleProvider(getDevice(), db.getDaoSession()).getLatestSample();
+                    Wena3CaloriesSample caloriesSample = new Wena3CaloriesSampleProvider(getDevice(), db.getDaoSession()).getLatestSample();
                     if(caloriesSample != null) {
                         caloriesLastSyncTime = new Date(caloriesSample.getTimestamp());
                     }

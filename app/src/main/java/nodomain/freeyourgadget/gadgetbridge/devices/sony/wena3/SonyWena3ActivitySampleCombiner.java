@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import nodomain.freeyourgadget.gadgetbridge.devices.Wena3BehaviorSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.Wena3HeartRateSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.Wena3BehaviorSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.Wena3ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.Wena3HeartRateSample;
@@ -40,7 +42,7 @@ public class SonyWena3ActivitySampleCombiner {
         this.activitySampleProvider = activitySampleProvider;
     }
 
-    public void overlayBehaviorStartingAt(Date startDate, SonyWena3BehaviorSampleProvider behaviorSampleProvider) {
+    public void overlayBehaviorStartingAt(Date startDate, Wena3BehaviorSampleProvider behaviorSampleProvider) {
         List<Wena3BehaviorSample> behaviorSamples = behaviorSampleProvider.getAllSamples(startDate.getTime(), Long.MAX_VALUE);
         List<Wena3ActivitySample> alteredSamples = new ArrayList<>();
         for(Wena3BehaviorSample behaviorSample: behaviorSamples) {
@@ -55,7 +57,7 @@ public class SonyWena3ActivitySampleCombiner {
         activitySampleProvider.addGBActivitySamples(alteredSamples);
     }
 
-    public void overlayHeartRateStartingAt(Date startDate, SonyWena3HeartRateSampleProvider heartRateSampleProvider) {
+    public void overlayHeartRateStartingAt(Date startDate, Wena3HeartRateSampleProvider heartRateSampleProvider) {
         List<Wena3HeartRateSample> heartRateSamples = heartRateSampleProvider.getAllSamples(startDate.getTime(), Long.MAX_VALUE);
         List<Wena3ActivitySample> alteredSamples = new ArrayList<>();
         for(int i = 0; i < heartRateSamples.size(); i++) {

@@ -27,10 +27,9 @@ import java.util.List;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
-import nodomain.freeyourgadget.gadgetbridge.devices.sony.wena3.SonyWena3Vo2SampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.Wena3Vo2SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.Wena3Vo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.wena3.protocol.packets.activity.Vo2MaxSample;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.wena3.protocol.util.TimeUtil;
 
@@ -60,7 +59,7 @@ public class Vo2MaxPacketParser extends SamplePacketParser<Vo2MaxSample> {
     @Override
     public void finishReceiving(GBDevice device) {
         try (DBHandler db = GBApplication.acquireDB()) {
-            SonyWena3Vo2SampleProvider sampleProvider = new SonyWena3Vo2SampleProvider(device, db.getDaoSession());
+            Wena3Vo2SampleProvider sampleProvider = new Wena3Vo2SampleProvider(device, db.getDaoSession());
             Long userId = DBHelper.getUser(db.getDaoSession()).getId();
             Long deviceId = DBHelper.getDevice(device, db.getDaoSession()).getId();
             List<Wena3Vo2Sample> samples = new ArrayList<>();

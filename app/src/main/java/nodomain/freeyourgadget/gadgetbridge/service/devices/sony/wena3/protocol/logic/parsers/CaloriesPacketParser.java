@@ -27,7 +27,7 @@ import java.util.List;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
-import nodomain.freeyourgadget.gadgetbridge.devices.sony.wena3.SonyWena3CaloriesSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.Wena3CaloriesSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.Wena3CaloriesSample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
@@ -49,7 +49,7 @@ public class CaloriesPacketParser extends LinearSamplePacketParser<Integer> {
     @Override
     public void finishReceiving(GBDevice device) {
         try (DBHandler db = GBApplication.acquireDB()) {
-            SonyWena3CaloriesSampleProvider sampleProvider = new SonyWena3CaloriesSampleProvider(device, db.getDaoSession());
+            Wena3CaloriesSampleProvider sampleProvider = new Wena3CaloriesSampleProvider(device, db.getDaoSession());
             Long userId = DBHelper.getUser(db.getDaoSession()).getId();
             Long deviceId = DBHelper.getDevice(device, db.getDaoSession()).getId();
 

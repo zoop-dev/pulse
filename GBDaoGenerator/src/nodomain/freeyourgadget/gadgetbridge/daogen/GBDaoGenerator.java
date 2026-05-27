@@ -167,12 +167,12 @@ public class GBDaoGenerator {
         sampleProvidersToGenerate.add(addGarminNapSample(schema, user, device));
         sampleProvidersToGenerate.add(addGarminSleepRestlessMomentsSample(schema, user, device));
         addPendingFile(schema, user, device);
-        addWena3EnergySample(schema, user, device);
-        addWena3BehaviorSample(schema, user, device);
-        addWena3CaloriesSample(schema, user, device);
+        sampleProvidersToGenerate.add(addWena3EnergySample(schema, user, device));
+        sampleProvidersToGenerate.add(addWena3BehaviorSample(schema, user, device));
+        sampleProvidersToGenerate.add(addWena3CaloriesSample(schema, user, device));
         addWena3ActivitySample(schema, user, device);
-        addWena3HeartRateSample(schema, user, device);
-        addWena3Vo2Sample(schema, user, device);
+        sampleProvidersToGenerate.add(addWena3HeartRateSample(schema, user, device));
+        sampleProvidersToGenerate.add(addWena3Vo2Sample(schema, user, device));
         addWena3StressSample(schema, user, device);
         addFemometerVinca2TemperatureSample(schema, user, device);
         addMijiaLywsdRealtimeSample(schema, user, device);

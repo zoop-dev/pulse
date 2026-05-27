@@ -26,7 +26,7 @@ import java.util.List;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
-import nodomain.freeyourgadget.gadgetbridge.devices.sony.wena3.SonyWena3EnergySampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.Wena3EnergySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.Wena3EnergySample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
@@ -39,7 +39,7 @@ public class EnergyPacketParser extends OneBytePerSamplePacketParser {
     @Override
     public void finishReceiving(GBDevice device) {
         try (DBHandler db = GBApplication.acquireDB()) {
-            SonyWena3EnergySampleProvider sampleProvider = new SonyWena3EnergySampleProvider(device, db.getDaoSession());
+            Wena3EnergySampleProvider sampleProvider = new Wena3EnergySampleProvider(device, db.getDaoSession());
             Long userId = DBHelper.getUser(db.getDaoSession()).getId();
             Long deviceId = DBHelper.getDevice(device, db.getDaoSession()).getId();
             List<Wena3EnergySample> samples = new ArrayList<>();
