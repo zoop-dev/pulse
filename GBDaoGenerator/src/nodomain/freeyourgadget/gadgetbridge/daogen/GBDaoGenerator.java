@@ -146,7 +146,7 @@ public class GBDaoGenerator {
         addPineTimeActivitySample(schema, user, device);
         addPolarH10ActivitySample(schema, user, device);
         addWithingsSteelHRActivitySample(schema, user, device);
-        addGenericBloodPressureSample(schema, user, device);
+        sampleProvidersToGenerate.add(addGenericBloodPressureSample(schema, user, device));
         addHybridHRActivitySample(schema, user, device);
         addHybridHRSpo2Sample(schema, user, device);
         addVivomoveHrActivitySample(schema, user, device);
