@@ -45,14 +45,16 @@ internal object RespiratoryRateSyncer : AbstractTimeSampleSyncer<RespiratoryRate
         metadata: Metadata,
         deviceName: String
     ): RespiratoryRateRecord? {
-        if (sample.respiratoryRate <= 0) {
+        val rate = sample.respiratoryRate.toDouble()
+        if (rate !in 0.0..1000.0 || !rate.isFinite()) {
+            logger.skipOutOfRange(deviceName, "RespiratoryRate", rate, "0..1000 breaths/min")
             return null
         }
 
         return RespiratoryRateRecord(
             time = Instant.ofEpochMilli(sample.timestamp),
             zoneOffset = offset,
-            rate = sample.respiratoryRate.toDouble(),
+            rate = rate,
             metadata = metadata
         )
     }

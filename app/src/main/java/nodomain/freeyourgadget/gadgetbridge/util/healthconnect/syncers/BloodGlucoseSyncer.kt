@@ -47,11 +47,17 @@ internal object BloodGlucoseSyncer : AbstractTimeSampleSyncer<GlucoseSample, Blo
         offset: ZoneOffset,
         metadata: Metadata,
         deviceName: String
-    ): BloodGlucoseRecord {
+    ): BloodGlucoseRecord? {
+        // HC's BloodGlucoseRecord caps level at 50 mmol/L = 900.91 mg/dL.
+        val mgDl = sample.valueMgDl
+        if (!mgDl.isFinite() || mgDl !in 0.0..900.91) {
+            logger.skipOutOfRange(deviceName, "BloodGlucose", "$mgDl mg/dL", "0..900.91 mg/dL (50 mmol/L)")
+            return null
+        }
         return BloodGlucoseRecord(
             time = Instant.ofEpochMilli(sample.timestamp),
             zoneOffset = offset,
-            level = BloodGlucose.milligramsPerDeciliter(sample.valueMgDl),
+            level = BloodGlucose.milligramsPerDeciliter(mgDl),
             metadata = metadata
         )
     }

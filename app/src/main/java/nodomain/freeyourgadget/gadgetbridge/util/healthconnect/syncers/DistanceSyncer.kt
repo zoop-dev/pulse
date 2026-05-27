@@ -41,6 +41,11 @@ internal object DistanceSyncer : AbstractActivitySampleSyncer<DistanceRecord>() 
         if (distanceCm <= 0 || distanceCm == ActivitySample.NOT_MEASURED) {
             return null
         }
+        // HC's DistanceRecord caps distance at 1_000_000 m (= 1e8 cm).
+        if (distanceCm > 100_000_000) {
+            logger.skipOutOfRange(deviceName, "Distance", "$distanceCm cm", "<= 1000000 m per record")
+            return null
+        }
 
         val endTs = Instant.ofEpochSecond(sample.timestamp.toLong())
         val startTs = endTs.minus(1, ChronoUnit.MINUTES)

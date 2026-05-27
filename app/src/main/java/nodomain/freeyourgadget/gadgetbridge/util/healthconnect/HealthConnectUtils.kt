@@ -495,7 +495,7 @@ class HealthConnectUtils {
         internal const val MAX_SAMPLES_PER_HEART_RATE_RECORD = 1000
         private const val MAX_RETRIES = 5
         private const val INITIAL_DELAY_MS = 1000L
-        private const val HC_SYNC_TAG = "[HC_SYNC]"
+        internal const val HC_SYNC_TAG = "[HC_SYNC]"
 
         private fun getSyncTimestampRange(
             context: Context,

@@ -45,19 +45,16 @@ internal object HrvSyncer : AbstractTimeSampleSyncer<HrvValueSample, HeartRateVa
         metadata: Metadata,
         deviceName: String
     ): HeartRateVariabilityRmssdRecord? {
-        if (sample.value <= 0) {
-            logger.debug(
-                "Skipping HRV value sample for device '{}' due to non-positive value: {}.",
-                deviceName,
-                sample.value
-            )
+        val value = sample.value.toDouble()
+        if (value !in 1.0..200.0 || !value.isFinite()) {
+            logger.skipOutOfRange(deviceName, "HRV", value, "1..200 ms")
             return null
         }
 
         return HeartRateVariabilityRmssdRecord(
             time = Instant.ofEpochMilli(sample.timestamp),
             zoneOffset = offset,
-            heartRateVariabilityMillis = sample.value.toDouble(),
+            heartRateVariabilityMillis = value,
             metadata = metadata
         )
     }
