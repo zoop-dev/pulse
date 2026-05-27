@@ -31,6 +31,8 @@ import java.util.Map;
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.ColmiHeartRateSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.ColmiSleepStageSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring.YawellRingConstants;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiActivitySampleDao;
