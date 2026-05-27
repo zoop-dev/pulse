@@ -302,32 +302,8 @@ internal object RecordedWorkoutSyncer {
     ) {
         val deviceName = device.aliasOrName
 
-        // Build GPS route if location data is available and permission is granted
         val exerciseRoute = if (PERMISSION_WRITE_EXERCISE_ROUTE in grantedPermissions) {
-            val locationPoints = activityPoints
-                .filter { it.location != null && it.time != null }
-                .mapNotNull { point ->
-                    val pointInstant = point.time.toInstant()
-                    if (pointInstant.isBefore(workoutStartInstant) || pointInstant.isAfter(workoutEndInstant)) {
-                        return@mapNotNull null
-                    }
-                    val location = point.location ?: return@mapNotNull null
-                    ExerciseRoute.Location(
-                        time = pointInstant,
-                        latitude = location.latitude,
-                        longitude = location.longitude,
-                        altitude = if (location.hasAltitude()) Length.meters(location.altitude) else null,
-                        horizontalAccuracy = if (location.hasHdop()) Length.meters(location.hdop) else null,
-                        verticalAccuracy = if (location.hasVdop()) Length.meters(location.vdop) else null
-                    )
-                }
-
-            if (locationPoints.isNotEmpty()) {
-                LOG.info("Adding GPS route with ${locationPoints.size} location points for workout on device '$deviceName'.")
-                ExerciseRoute(locationPoints)
-            } else {
-                null
-            }
+            buildSanitisedRoute(activityPoints, workoutStartInstant, workoutEndInstant, deviceName)
         } else {
             null
         }
@@ -359,6 +335,80 @@ internal object RecordedWorkoutSyncer {
             }
             addElevationGainedRecord(summaryData, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
             addCadenceRecords(summaryData, activityKind, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
+        }
+    }
+
+    internal fun buildSanitisedRoute(
+        activityPoints: List<ActivityPoint>,
+        workoutStartInstant: Instant,
+        workoutEndInstant: Instant,
+        deviceName: String
+    ): ExerciseRoute? {
+        return try {
+            val locations = ArrayList<ExerciseRoute.Location>()
+            val seenInstants = HashSet<Instant>()
+            var droppedOutOfWindow = 0
+            var droppedInvalidCoords = 0
+            var droppedDuplicateTime = 0
+
+            for (point in activityPoints) {
+                val time = point.time ?: continue
+                val location = point.location ?: continue
+                val pointInstant = time.toInstant()
+                if (pointInstant.isBefore(workoutStartInstant) || pointInstant.isAfter(workoutEndInstant)) {
+                    droppedOutOfWindow++
+                    continue
+                }
+                val lat = location.latitude
+                val lng = location.longitude
+                if (!lat.isFinite() || !lng.isFinite() || lat !in -90.0..90.0 || lng !in -180.0..180.0) {
+                    droppedInvalidCoords++
+                    continue
+                }
+                if (!seenInstants.add(pointInstant)) {
+                    droppedDuplicateTime++
+                    continue
+                }
+                val altitude = if (location.hasAltitude() && location.altitude.isFinite()) {
+                    Length.meters(location.altitude)
+                } else null
+                val hdop = if (location.hasHdop() && location.hdop.isFinite() && location.hdop >= 0) {
+                    Length.meters(location.hdop)
+                } else null
+                val vdop = if (location.hasVdop() && location.vdop.isFinite() && location.vdop >= 0) {
+                    Length.meters(location.vdop)
+                } else null
+                locations.add(
+                    ExerciseRoute.Location(
+                        time = pointInstant,
+                        latitude = lat,
+                        longitude = lng,
+                        altitude = altitude,
+                        horizontalAccuracy = hdop,
+                        verticalAccuracy = vdop
+                    )
+                )
+            }
+
+            if (droppedOutOfWindow > 0 || droppedInvalidCoords > 0 || droppedDuplicateTime > 0) {
+                LOG.info(
+                    "[HC_SYNC] GPS route sanitisation for device '{}': dropped {} out-of-window, {} invalid coords, {} duplicate timestamps; kept {}.",
+                    deviceName, droppedOutOfWindow, droppedInvalidCoords, droppedDuplicateTime, locations.size
+                )
+            }
+
+            if (locations.size < 2) {
+                if (locations.isNotEmpty()) {
+                    LOG.info("[HC_SYNC] GPS route for device '{}' has only {} usable point(s); skipping route.", deviceName, locations.size)
+                }
+                return null
+            }
+
+            LOG.info("Adding GPS route with ${locations.size} location points for workout on device '$deviceName'.")
+            ExerciseRoute(locations)
+        } catch (e: IllegalArgumentException) {
+            LOG.error("[HC_SYNC] Failed to build GPS route for device '{}': {}. Skipping route.", deviceName, e.message)
+            null
         }
     }
 
