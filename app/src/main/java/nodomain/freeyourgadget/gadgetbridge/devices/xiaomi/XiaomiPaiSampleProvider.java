@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Objects;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.XiaomiDailySummarySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.XiaomiDailySummarySample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
