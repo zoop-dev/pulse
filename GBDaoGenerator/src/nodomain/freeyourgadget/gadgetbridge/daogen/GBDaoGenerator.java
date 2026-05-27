@@ -148,7 +148,7 @@ public class GBDaoGenerator {
         addWithingsSteelHRActivitySample(schema, user, device);
         sampleProvidersToGenerate.add(addGenericBloodPressureSample(schema, user, device));
         addHybridHRActivitySample(schema, user, device);
-        addHybridHRSpo2Sample(schema, user, device);
+        sampleProvidersToGenerate.add(addHybridHRSpo2Sample(schema, user, device));
         addVivomoveHrActivitySample(schema, user, device);
         addGarminFitFile(schema, user, device);
         addGarminActivitySample(schema, user, device);
