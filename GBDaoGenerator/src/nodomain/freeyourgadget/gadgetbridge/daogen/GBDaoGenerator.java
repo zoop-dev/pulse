@@ -208,7 +208,7 @@ public class GBDaoGenerator {
         addHuaweiEmotionsSample(schema, user, device);
 
         addUltrahumanActivitySample(schema, user, device);
-        addUltrahumanDeviceStateSample(schema, user, device);
+        sampleProvidersToGenerate.add(addUltrahumanDeviceStateSample(schema, user, device));
 
         Entity huaweiWorkoutSummary = addHuaweiWorkoutSummarySample(schema, user, device);
         addHuaweiWorkoutSummaryAdditionalValuesSample(schema, huaweiWorkoutSummary);

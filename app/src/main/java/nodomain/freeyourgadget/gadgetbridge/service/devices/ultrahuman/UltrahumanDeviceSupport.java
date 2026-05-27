@@ -79,11 +79,11 @@ import nodomain.freeyourgadget.gadgetbridge.devices.GenericHrvValueSampleProvide
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericSpo2SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericStressSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericTemperatureSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.UltrahumanDeviceStateSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.ultrahuman.UltrahumanConstants;
 import nodomain.freeyourgadget.gadgetbridge.devices.ultrahuman.UltrahumanExercise;
 import nodomain.freeyourgadget.gadgetbridge.devices.ultrahuman.UltrahumanExerciseData;
 import nodomain.freeyourgadget.gadgetbridge.devices.ultrahuman.samples.UltrahumanActivitySampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.ultrahuman.samples.UltrahumanDeviceStateSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericHeartRateSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericHrvValueSample;
