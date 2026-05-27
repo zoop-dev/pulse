@@ -3,6 +3,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.servic
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
+import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather.getWeatherSpec
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.ZeppOsWeatherHandler
@@ -18,6 +19,7 @@ import java.time.ZoneId
 import java.util.Calendar
 import java.util.Date
 import java.util.GregorianCalendar
+import java.util.Locale
 import kotlin.math.roundToInt
 
 @Suppress("unused")
@@ -88,14 +90,32 @@ object ZeppOsWeatherHandlerV5 {
         version = 1,
     )
 
-    private fun createPlace(weatherSpec: WeatherSpec) = Place(
-        locationKey = "accu:123456",
-        longitude = weatherSpec.longitude.toString(),
-        latitude = weatherSpec.latitude.toString(),
-        affiliation = weatherSpec.location,
-        name = weatherSpec.location,
-        countryCode = null,
-    )
+    private fun createPlace(weatherSpec: WeatherSpec): Place {
+        val (lat, lon) = resolveCoordinates(weatherSpec)
+        // Stable per-location id so the watch can dedupe responses. Hash of rounded
+        // coords keeps it deterministic across requests for the same location.
+        val coordKey = String.format(Locale.ROOT, "%.4f,%.4f", lat, lon)
+        val locationKeyId = coordKey.hashCode().toLong() and 0xFFFFFFFFL
+        return Place(
+            locationKey = "accu:$locationKeyId",
+            longitude = String.format(Locale.ROOT, "%.3f", lon),
+            latitude = String.format(Locale.ROOT, "%.3f", lat),
+            affiliation = weatherSpec.location,
+            name = weatherSpec.location,
+            countryCode = null,
+        )
+    }
+
+    // Some weather providers don't populate WeatherSpec.latitude/longitude on broadcast.
+    // Fall back to the user-configured location pref so the watch gets a non-zero place,
+    // which it requires to accept the response as authoritative (issue #5653).
+    private fun resolveCoordinates(weatherSpec: WeatherSpec): Pair<Float, Float> {
+        if (weatherSpec.latitude != 0f || weatherSpec.longitude != 0f) {
+            return weatherSpec.latitude to weatherSpec.longitude
+        }
+        val prefs = GBApplication.getPrefs()
+        return prefs.getFloat("location_latitude", 0f) to prefs.getFloat("location_longitude", 0f)
+    }
 
     private fun createHourlyWeather(weatherSpec: WeatherSpec): HourlyWeather {
         return HourlyWeather(

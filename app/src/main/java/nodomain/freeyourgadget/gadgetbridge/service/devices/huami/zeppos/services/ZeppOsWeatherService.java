@@ -21,7 +21,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.zeppos.AbstractZeppOsService;
@@ -67,7 +69,18 @@ public class ZeppOsWeatherService extends AbstractZeppOsService {
         // When we have a weather update, set the default location to that location on the band.
         // TODO: Support for multiple weather locations
 
-        final String locationKey = "1.234,-5.678,xiaomi_accu:" + System.currentTimeMillis(); // dummy
+        float lat = weatherSpec.getLatitude();
+        float lon = weatherSpec.getLongitude();
+        if (lat == 0f && lon == 0f) {
+            // Some weather providers don't populate WeatherSpec coords on broadcast.
+            // Fall back to user-configured location pref so the watch gets a valid
+            // default location and accepts subsequent v5 HTTP responses (issue #5653).
+            lat = GBApplication.getPrefs().getFloat("location_latitude", 0f);
+            lon = GBApplication.getPrefs().getFloat("location_longitude", 0f);
+        }
+        final String coordKey = String.format(Locale.ROOT, "%.4f,%.4f", lat, lon);
+        final long locationKeyId = ((long) coordKey.hashCode()) & 0xFFFFFFFFL;
+        final String locationKey = String.format(Locale.ROOT, "%.4f,%.4f,xiaomi_accu:%d", lat, lon, locationKeyId);
         final String locationName = weatherSpec.getLocation();
 
         try {
