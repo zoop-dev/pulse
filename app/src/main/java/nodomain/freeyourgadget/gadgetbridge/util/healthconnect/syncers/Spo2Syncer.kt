@@ -48,12 +48,8 @@ internal object Spo2Syncer : AbstractTimeSampleSyncer<Spo2Sample, OxygenSaturati
     ): OxygenSaturationRecord? {
         val spo2AsDouble = sample.spo2.toDouble()
 
-        if (spo2AsDouble <= 0 || spo2AsDouble > 100) {
-            logger.debug(
-                "Skipping SpO2 sample for device '{}' with invalid value ({}). Valid range: >0 and <=100.",
-                deviceName,
-                spo2AsDouble
-            )
+        if (spo2AsDouble !in 0.0..100.0 || !spo2AsDouble.isFinite()) {
+            logger.skipOutOfRange(deviceName, "SpO2", spo2AsDouble, "0..100 %")
             return null
         }
 

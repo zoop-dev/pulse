@@ -94,13 +94,8 @@ internal object TemperatureSyncer : HealthConnectSyncer {
             LOG.info("Processing ${bodySamples.size} body temperature samples for '$deviceName'.")
             for (sample in bodySamples) {
                 val sampleTemp = sample.temperature.toDouble()
-                if (sampleTemp !in MIN_PLAUSIBLE_BODY_TEMP_C..MAX_PLAUSIBLE_BODY_TEMP_C) {
-                    LOG.debug(
-                        "Skipping Body Temperature sample for device '{}' at {} due to implausible value: {}°C.",
-                        deviceName,
-                        Instant.ofEpochMilli(sample.timestamp),
-                        sample.temperature
-                    )
+                if (sampleTemp !in MIN_PLAUSIBLE_BODY_TEMP_C..MAX_PLAUSIBLE_BODY_TEMP_C || !sampleTemp.isFinite()) {
+                    LOG.skipOutOfRange(deviceName, "BodyTemperature", "${sample.temperature}°C", "$MIN_PLAUSIBLE_BODY_TEMP_C..$MAX_PLAUSIBLE_BODY_TEMP_C °C")
                     continue
                 }
                 val timestamp = Instant.ofEpochMilli(sample.timestamp)
@@ -163,6 +158,12 @@ internal object TemperatureSyncer : HealthConnectSyncer {
                     } else {
                         // First measurement: delta from baseline
                         currentTempC - baselineForCurrentRecord
+                    }
+
+                    if (deltaValue !in -30.0..30.0 || !deltaValue.isFinite()) {
+                        LOG.skipOutOfRange(deviceName, "SkinTemperatureDelta", deltaValue, "-30..30 °C")
+                        previousTempC = currentTempC
+                        continue
                     }
 
                     deltas.add(

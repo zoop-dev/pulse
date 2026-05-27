@@ -34,7 +34,7 @@ internal abstract class AbstractActivitySampleSyncer<TRecord : Record> : Activit
     protected abstract val logger: Logger
     protected abstract val recordClass: KClass<TRecord>
 
-    protected abstract fun convertSample(
+    internal abstract fun convertSample(
         sample: ActivitySample,
         offset: ZoneOffset,
         metadata: Metadata,

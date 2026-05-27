@@ -41,6 +41,11 @@ internal object ActiveCaloriesSyncer : AbstractActivitySampleSyncer<ActiveCalori
         if (caloriesInMinute <= 0) {
             return null
         }
+        // HC's ActiveCaloriesBurnedRecord caps energy at 1_000_000 kcal (= 1e9 cal).
+        if (caloriesInMinute > 1_000_000_000) {
+            logger.skipOutOfRange(deviceName, "ActiveCalories", "$caloriesInMinute cal", "<= 1000000 kcal per record")
+            return null
+        }
 
         val endTs = Instant.ofEpochSecond(sample.timestamp.toLong())
         val startTs = endTs.minus(1, ChronoUnit.MINUTES)
