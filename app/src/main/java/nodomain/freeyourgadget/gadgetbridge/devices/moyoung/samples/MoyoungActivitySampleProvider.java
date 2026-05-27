@@ -36,6 +36,8 @@ import de.greenrobot.dao.internal.SqlUtils;
 import de.greenrobot.dao.query.WhereCondition;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.MoyoungHeartRateSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.MoyoungSleepStageSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.MoyoungConstants;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;

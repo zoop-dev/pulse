@@ -188,11 +188,11 @@ public class GBDaoGenerator {
         addColmiHrvSummarySample(schema, user, device);
         addColmiTemperatureSample(schema, user, device);
         addMoyoungActivitySample(schema, user, device);
-        addMoyoungHeartRateSample(schema, user, device);
-        addMoyoungSpo2Sample(schema, user, device);
-        addMoyoungBloodPressureSample(schema, user, device);
-        addMoyoungSleepStageSample(schema, user, device);
-        addMoyoungStressSample(schema, user, device);
+        sampleProvidersToGenerate.add(addMoyoungHeartRateSample(schema, user, device));
+        sampleProvidersToGenerate.add(addMoyoungSpo2Sample(schema, user, device));
+        sampleProvidersToGenerate.add(addMoyoungBloodPressureSample(schema, user, device));
+        sampleProvidersToGenerate.add(addMoyoungSleepStageSample(schema, user, device));
+        sampleProvidersToGenerate.add(addMoyoungStressSample(schema, user, device));
         sampleProvidersToGenerate.add(addGloryFitStepsSample(schema, user, device));
         addKeephealthActivitySample(schema, user, device);
         addKeephealthBloodPressureSample(schema, user, device);
