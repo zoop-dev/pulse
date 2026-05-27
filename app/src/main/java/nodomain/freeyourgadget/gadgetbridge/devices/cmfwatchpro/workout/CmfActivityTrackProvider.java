@@ -14,8 +14,8 @@ import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
-import nodomain.freeyourgadget.gadgetbridge.devices.cmfwatchpro.samples.CmfHeartRateSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.cmfwatchpro.samples.CmfWorkoutGpsSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.CmfHeartRateSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.CmfWorkoutGpsSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.entities.CmfHeartRateSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.CmfWorkoutGpsSample;

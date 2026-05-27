@@ -33,6 +33,8 @@ import java.util.Objects;
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.CmfHeartRateSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.CmfSleepStageSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.CmfActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.CmfActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.CmfHeartRateSample;

@@ -115,12 +115,12 @@ public class GBDaoGenerator {
         addXiaomiManualSamples(schema, user, device);
         addXiaomiDailySummarySamples(schema, user, device);
         addCmfActivitySample(schema, user, device);
-        addCmfStressSample(schema, user, device);
-        addCmfSpo2Sample(schema, user, device);
-        addCmfSleepSessionSample(schema, user, device);
-        addCmfSleepStageSample(schema, user, device);
-        addCmfHeartRateSample(schema, user, device);
-        addCmfWorkoutGpsSample(schema, user, device);
+        sampleProvidersToGenerate.add(addCmfStressSample(schema, user, device));
+        sampleProvidersToGenerate.add(addCmfSpo2Sample(schema, user, device));
+        sampleProvidersToGenerate.add(addCmfSleepSessionSample(schema, user, device));
+        sampleProvidersToGenerate.add(addCmfSleepStageSample(schema, user, device));
+        sampleProvidersToGenerate.add(addCmfHeartRateSample(schema, user, device));
+        sampleProvidersToGenerate.add(addCmfWorkoutGpsSample(schema, user, device));
         addPebbleHealthActivitySample(schema, user, device);
         addPebbleHealthActivityKindOverlay(schema, user, device);
         addPebbleMisfitActivitySample(schema, user, device);
