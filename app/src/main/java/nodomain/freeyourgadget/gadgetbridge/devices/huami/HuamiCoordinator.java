@@ -46,6 +46,13 @@ import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.devices.ComputedHrvSummarySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericHrvValueSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericTemperatureSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.HuamiHeartRateManualSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.HuamiHeartRateMaxSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.HuamiHeartRateRestingSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.HuamiPaiSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.HuamiSleepRespiratoryRateSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.HuamiSpo2SampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.HuamiStressSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.DateTimeDisplay;
