@@ -230,7 +230,7 @@ public class GBDaoGenerator {
         addWorldClocks(schema, user, device);
         addContacts(schema, user, device);
         addAppSpecificNotificationSettings(schema, device);
-        addCyclingSample(schema, user, device);
+        sampleProvidersToGenerate.add(addCyclingSample(schema, user, device));
         addAudioRecordings(schema, device);
         addPebbleAppstoreIdEntry(schema);
 
