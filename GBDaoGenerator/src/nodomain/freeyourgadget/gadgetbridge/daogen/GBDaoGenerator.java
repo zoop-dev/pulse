@@ -177,7 +177,7 @@ public class GBDaoGenerator {
         addFemometerVinca2TemperatureSample(schema, user, device);
         addMijiaLywsdRealtimeSample(schema, user, device);
         sampleProvidersToGenerate.add(addMijiaLywsdHistoricSample(schema, user, device));
-        addMiScaleWeightSample(schema, user, device);
+        sampleProvidersToGenerate.add(addMiScaleWeightSample(schema, user, device));
         addColmiActivitySample(schema, user, device);
         addColmiHeartRateSample(schema, user, device);
         addColmiSpo2Sample(schema, user, device);

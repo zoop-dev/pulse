@@ -36,8 +36,8 @@ import nodomain.freeyourgadget.gadgetbridge.activities.SettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
+import nodomain.freeyourgadget.gadgetbridge.devices.MiScaleWeightSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.miband.MiBandService;
-import nodomain.freeyourgadget.gadgetbridge.devices.miscale.MiScaleSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.MiScaleWeightSample;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.WeightUnit;
@@ -269,7 +269,7 @@ public class MiSmartScaleDeviceSupport extends AbstractBTLESingleDeviceSupport {
         boolean allowSmallObjects = prefs.getBoolean(PREF_MISCALE_SMALL_OBJECTS, false);
 
         try (DBHandler db = GBApplication.acquireDB()) {
-            MiScaleSampleProvider provider = new MiScaleSampleProvider(getDevice(), db.getDaoSession());
+            MiScaleWeightSampleProvider provider = new MiScaleWeightSampleProvider(getDevice(), db.getDaoSession());
             List<MiScaleWeightSample> samples = new ArrayList<>();
             Long userId = DBHelper.getUser(db.getDaoSession()).getId();
             Long deviceId = DBHelper.getDevice(getDevice(), db.getDaoSession()).getId();
