@@ -4472,4 +4472,19 @@
     <string name="dual_connection_summary">Разрешите одновременное подключение двух приложений или устройств.</string>
     <string name="phone_gps_not_available">GPS-навигатор по телефону недоступен</string>
     <string name="battery_status_good">Хорошечно</string>
+    <string name="pref_summary_third_party_app_device_alarms">Разрешить сторонним приложениям устанавливать будильники</string>
+    <string name="pref_log_level_trace_title">Логирование трассировки</string>
+    <string name="pref_log_level_trace_summary">Повысить уровень логирования до TRACE</string>
+    <string name="nothing_prefs_spatial_audio_title">Пространственное аудио</string>
+    <string name="nothing_prefs_spatial_audio_summary">Захватывающий опыт прослушивания, заставляющий почувствовать себя частью музыки, фильма или игры.</string>
+    <string name="soundcore_3d_surround_title">Объемный 3D-звук</string>
+    <string name="soundcore_3d_surround_summary">Включить объемный 3D-звук</string>
+    <string name="soundcore_enable_pairing_mode_summary">Включите режим обнаружения/сопряжения для подключения нового устройства</string>
+    <string name="soundcore_equalizer_preset_acoustic">Акустика</string>
+    <string name="soundcore_equalizer_preset_bass_reducer">Уменьшение баса</string>
+    <string name="soundcore_equalizer_preset_podcast">Подкаст</string>
+    <string name="soundcore_equalizer_preset_dance">Танец</string>
+    <string name="soundcore_equalizer_preset_deep">Глубокий</string>
+    <string name="soundcore_equalizer_preset_hip_hop">Хип-хоп</string>
+    <string name="soundcore_equalizer_preset_jazz">Джаз</string>
 </resources>
