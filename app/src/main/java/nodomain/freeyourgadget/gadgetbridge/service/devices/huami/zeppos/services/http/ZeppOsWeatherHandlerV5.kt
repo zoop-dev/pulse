@@ -63,22 +63,23 @@ object ZeppOsWeatherHandlerV5 {
         val response = JsonObject()
 
         for (dataset in datasets) {
-            val datasetObject = when (dataset) {
+            val datasetObject: Any = when (dataset) {
                 "place" -> createPlace(weatherSpec)
                 "hourlyWeather" -> createHourlyWeather(weatherSpec)
                 "hourlyAirQuality" -> createHourlyAirQuality(weatherSpec)
                 "dailyIndices" -> createDailyIndices(weatherSpec)
                 "dailyWeather" -> createDailyWeather(weatherSpec)
                 "dailyTide" -> createDailyTide(weatherSpec)
-                // TODO "dailyAirQuality" -> createDailyAirQuality(weatherSpec)
-                else -> null
+                "dailyAirQuality" -> createDailyAirQuality(weatherSpec)
+                else -> {
+                    // Unknown dataset requested by newer firmware. Emit a shape stub instead of
+                    // omitting the key — firmwares treat a missing key as "no data, ask user".
+                    LOG.warn("Unknown weather dataset requested: {} — returning empty skeleton", dataset)
+                    UnknownDataset(metadata = createMetadata(weatherSpec))
+                }
             }
 
-            if (datasetObject != null) {
-                response.add(dataset, GSON.toJsonTree(datasetObject))
-            } else {
-                LOG.warn("Failed to compute dataset object for {}", dataset)
-            }
+            response.add(dataset, GSON.toJsonTree(datasetObject))
         }
 
         return GSON.toJson(response)
@@ -140,13 +141,14 @@ object ZeppOsWeatherHandlerV5 {
         )
     }
 
-    private fun createHourlyAirQuality(weatherSpec: WeatherSpec): Any {
-        // TODO WeatherSpec does not support hourly air quality
-        return EmptyResponse()
-        //return HourlyAirQuality(
-        //    metadata = createMetadata(weatherSpec),
-        //    hours = emptyList()
-        //)
+    private fun createHourlyAirQuality(weatherSpec: WeatherSpec): HourlyAirQuality {
+        // TODO WeatherSpec does not yet carry hourly air-quality samples. Return the
+        // metadata + empty hours array so the firmware sees the expected shape and
+        // does not flag the widget as "no companion data".
+        return HourlyAirQuality(
+            metadata = createMetadata(weatherSpec),
+            hours = emptyList()
+        )
     }
 
     private fun createDailyIndices(weatherSpec: WeatherSpec): DailyIndices {
@@ -241,9 +243,40 @@ object ZeppOsWeatherHandlerV5 {
         )
     }
 
-    private fun createDailyTide(weatherSpec: WeatherSpec) = EmptyResponse(
-        // We do not support tide data yet
-    )
+    private fun createDailyTide(weatherSpec: WeatherSpec): DailyTide {
+        // TODO We do not source real tide data. Emit a populated shape stub
+        // (metadata + empty days array) so the firmware accepts the response.
+        return DailyTide(
+            metadata = createMetadata(weatherSpec),
+            days = emptyList()
+        )
+    }
+
+    private fun createDailyAirQuality(weatherSpec: WeatherSpec): DailyAirQuality {
+        // TODO WeatherSpec does not yet carry per-day air-quality samples. We emit
+        // a 7-day skeleton with placeholder AQI 50 ("good") so the Bip 6 widget has
+        // the shape it expects. Real data ingestion is future work — once
+        // WeatherSpec.Daily exposes pollutant fields, populate from there.
+        val days = (listOf(weatherSpec.todayAsDaily()) + weatherSpec.forecasts)
+        return DailyAirQuality(
+            metadata = createMetadata(weatherSpec),
+            days = days.mapIndexed { i, _ ->
+                val dayTimestamp = weatherSpec.timestamp * 1000L + i * 86400_000L
+                DailyAirQualityDay(
+                    forecastStart = toOffsetDateTime(DateTimeUtils.dayStart(Date(dayTimestamp))),
+                    forecastEnd = toOffsetDateTime(DateTimeUtils.dayEnd(Date(dayTimestamp))),
+                    aqi = "50",
+                    aqiLevel = "1",
+                    co = "0",
+                    no2 = "0",
+                    o3 = "0",
+                    pm10 = "0",
+                    pm25 = "0",
+                    so2 = "0",
+                )
+            }
+        )
+    }
 
     private fun getMoonPhaseString(moonPhase: Int): String = when (moonPhase) {
         // TODO only seen waxingCrescent
@@ -379,5 +412,28 @@ object ZeppOsWeatherHandlerV5 {
         val days: List<DailyTideDay>,
     )
 
-    class EmptyResponse
+    data class DailyAirQualityDay(
+        val forecastStart: OffsetDateTime,
+        val forecastEnd: OffsetDateTime,
+        val aqi: String,
+        val aqiLevel: String,
+        val co: String,
+        val no2: String,
+        val o3: String,
+        val pm10: String,
+        val pm25: String,
+        val so2: String,
+    )
+
+    data class DailyAirQuality(
+        val metadata: Metadata,
+        val days: List<DailyAirQualityDay>,
+    )
+
+    // Fallback shape for unknown dataset names — gives the firmware the metadata
+    // it expects plus an empty items array so the key is never omitted.
+    data class UnknownDataset(
+        val metadata: Metadata,
+        val items: List<Nothing> = emptyList(),
+    )
 }
