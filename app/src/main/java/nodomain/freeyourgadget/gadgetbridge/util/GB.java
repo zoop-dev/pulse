@@ -463,57 +463,74 @@ public class GB {
     }
 
     /**
-     * Creates and display a Toast message using the application context.
-     * Additionally the toast is logged using the provided severity.
-     * Can be called from any thread.
+     * Creates and display a {@link Toast} message using the {@link GBApplication}'s {@link Context}.
+     * Additionally, the message is logged using the provided severity.
+     * Can be called from any {@link Thread}.
      *
-     * @param message     the message to display.
-     * @param displayTime something like Toast.LENGTH_SHORT
-     * @param severity    either INFO, WARNING, ERROR
+     * @param message     the message to display
+     * @param displayTime either {@link Toast#LENGTH_SHORT} or {@link Toast#LENGTH_LONG}
+     * @param severity    either {@link #DEBUG}, {@link #INFO}, {@link #WARN} or {@link #ERROR}
+     * @see #toast(Context, String, int, int, Throwable)
      */
     public static void toast(String message, int displayTime, int severity) {
         toast(GBApplication.getContext(), message, displayTime, severity, null);
     }
 
     /**
-     * Creates and display a Toast message using the application context.
-     * Additionally the toast is logged using the provided severity.
-     * Can be called from any thread.
+     * Creates and display a {@link Toast} message using the {@link GBApplication}'s {@link Context}.
+     * Additionally, the message is logged using the provided severity.
+     * Can be called from any {@link Thread}.
      *
      * @param message     the message to display.
-     * @param displayTime something like Toast.LENGTH_SHORT
-     * @param severity    either INFO, WARNING, ERROR
+     * @param displayTime either {@link Toast#LENGTH_SHORT} or {@link Toast#LENGTH_LONG}
+     * @param severity    either {@link #DEBUG}, {@link #INFO}, {@link #WARN} or {@link #ERROR}
+     * @param ex          optional {@link Throwable} to be logged
+     * @see #toast(Context, String, int, int, Throwable)
      */
     public static void toast(String message, int displayTime, int severity, Throwable ex) {
         toast(GBApplication.getContext(), message, displayTime, severity, ex);
     }
 
     /**
-     * Creates and display a Toast message using the application context
-     * Can be called from any thread.
+     * Creates and display a {@link Toast} message using the provided context.
+     * Additionally, the message is logged using the provided severity.
+     * Can be called from any {@link Thread}.
      *
      * @param context     the context to use
      * @param message     the message to display
-     * @param displayTime something like Toast.LENGTH_SHORT
-     * @param severity    either INFO, WARNING, ERROR
+     * @param displayTime either {@link Toast#LENGTH_SHORT} or {@link Toast#LENGTH_LONG}
+     * @param severity    either {@link #DEBUG}, {@link #INFO}, {@link #WARN} or {@link #ERROR}
+     * @see #toast(Context, String, int, int, Throwable)
      */
     public static void toast(final Context context, final String message, final int displayTime, final int severity) {
         toast(context, message, displayTime, severity, null);
     }
 
+    /**
+     * Creates and display a {@link Toast} message using the provided context.
+     * Additionally, the message is logged using the provided severity.
+     * Can be called from any {@link Thread}.
+     *
+     * @param context     the context to use
+     * @param message     the message to display
+     * @param displayTime either {@link Toast#LENGTH_SHORT} or {@link Toast#LENGTH_LONG}
+     * @param severity    either {@link #DEBUG}, {@link #INFO}, {@link #WARN} or {@link #ERROR}
+     * @see #toast(Context, String, int, int, Throwable)
+     */
     public static void toast(final Context context, @StringRes final int message, final int displayTime, final int severity) {
         toast(context, context.getString(message), displayTime, severity, null);
     }
 
     /**
-     * Creates and display a Toast message using the application context
-     * Can be called from any thread.
+     * Creates and display a {@link Toast} message using the provided context.
+     * Additionally, the message is logged using the provided severity.
+     * Can be called from any {@link Thread}.
      *
      * @param context     the context to use
      * @param message     the message to display
-     * @param displayTime something like Toast.LENGTH_SHORT
-     * @param severity    either INFO, WARNING, ERROR
-     * @param ex          optional exception to be logged
+     * @param displayTime something like {@link Toast#LENGTH_SHORT} or {@link Toast#LENGTH_LONG}
+     * @param severity    either {@link #DEBUG}, {@link #INFO}, {@link #WARN} or {@link #ERROR}
+     * @param ex          optional {@link Throwable} to be logged
      */
     public static void toast(final Context context, final String message, final int displayTime, final int severity, final Throwable ex) {
         log(message, severity, ex); // log immediately, not delayed
@@ -534,10 +551,12 @@ public class GB {
         }
     }
 
+    /// @param severity either {@link #DEBUG}, {@link #INFO}, {@link #WARN} or {@link #ERROR}
     public static void log(String message, int severity, Throwable ex) {
         log(LOG, message, severity, ex);
     }
 
+    /// @param severity either {@link #DEBUG}, {@link #INFO}, {@link #WARN} or {@link #ERROR}
     public static void log(Logger logger, String message, int severity, Throwable ex) {
         switch (severity) {
             case INFO:
