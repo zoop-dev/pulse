@@ -1055,7 +1055,19 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             Iterator<String> iter = extra.keys();
             while (iter.hasNext()) {
                 String key = iter.next();
-                in.putExtra(key, extra.getString(key)); // Should this be implemented for other types, e.g. extra.getInt(key)? Or will this always work even if receiving ints/doubles/etc.?
+                Object value = extra.get(key);
+
+                if (value instanceof Boolean) {
+                    in.putExtra(key, (Boolean) value);
+                } else if (value instanceof Integer) {
+                    in.putExtra(key, (Integer) value);
+                } else if (value instanceof Long) {
+                    in.putExtra(key, (Long) value);
+                } else if (value instanceof Double) {
+                    in.putExtra(key, (Double) value);
+                } else {
+                    in.putExtra(key, value.toString());
+                }
             }
         }
         LOG.info("Executing intent:\n\t" + String.valueOf(in) + "\n\tTargeting: " + target);
