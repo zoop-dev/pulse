@@ -397,7 +397,12 @@ class DatabaseTableDebugFragment : AbstractDebugFragment() {
                     val row = columns.map { column ->
                         val index = it.getColumnIndex(column)
                         if (index >= 0 && !it.isNull(index)) {
-                            escapeValueForCsv(it.getString(index) ?: "")
+                            val value = when (it.getType(index)) {
+                                android.database.Cursor.FIELD_TYPE_BLOB ->
+                                    "<blob:${it.getBlob(index).joinToString("") { b -> "%02x".format(b) }}>"
+                                else -> it.getString(index) ?: ""
+                            }
+                            escapeValueForCsv(value)
                         } else {
                             ""
                         }
