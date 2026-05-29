@@ -2700,17 +2700,13 @@ public class NativeFITMessage {
                 }
 
                 if (logLevel != null) {
-                    LOG.atLevel(logLevel).log(
-                            "Native for {}[{}] is of type {} with size {} (base: {}), but message declares {} with size {} (base: {})",
-                            name(),
-                            fieldDefinitionPrimitive.name,
-                            stdBaseType,
-                            fieldDefinitionPrimitive.size,
-                            stdBaseType.getSize(),
-                            baseType,
-                            size,
-                            baseType.getSize()
-                    );
+                    final String msg = "Native for {}[{}] is of type {} with size {} (base: {}), but message declares {} with size {} (base: {})";
+                    final Object[] args = new Object[]{name(), fieldDefinitionPrimitive.name, stdBaseType, fieldDefinitionPrimitive.size, stdBaseType.getSize(), baseType, size, baseType.getSize()};
+                    switch (logLevel) {
+                        case DEBUG: LOG.debug(msg, args); break;
+                        case INFO:  LOG.info(msg, args); break;
+                        default:    LOG.warn(msg, args); break;
+                    }
 
                     if (size == 1 && (baseType == BaseType.UINT16 || baseType == BaseType.UINT32 || baseType == BaseType.UINT64)) {
                         // very common issue for COROS:
