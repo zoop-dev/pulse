@@ -186,7 +186,7 @@ public final class BtBRQueue {
 
                             cleanup();
 
-                            if (!GBApplication.getPrefs().getAutoReconnect(mGbDevice)) {
+                            if (mDisposed.get() || !GBApplication.getPrefs().getAutoReconnect(mGbDevice)) {
                                 mGbDevice.setUpdateState(GBDevice.State.NOT_CONNECTED, mContext);
                             } else {
                                 mGbDevice.setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, mContext);
@@ -196,7 +196,7 @@ public final class BtBRQueue {
 
                             cleanup();
 
-                            if (!GBApplication.getPrefs().getAutoReconnect(mGbDevice)) {
+                            if (mDisposed.get() || !GBApplication.getPrefs().getAutoReconnect(mGbDevice)) {
                                 mGbDevice.setUpdateState(GBDevice.State.NOT_CONNECTED, mContext);
                             } else {
                                 mGbDevice.setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, mContext);
@@ -298,7 +298,7 @@ public final class BtBRQueue {
             LOG.debug("finished thread {}", mWriteHandlerThread.getName());
         }
 
-        if (mBtSocket != null && mBtSocket.isConnected()) {
+        if (mBtSocket != null) {
             try {
                 mBtSocket.close();
             } catch (IOException e) {
