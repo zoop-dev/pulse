@@ -834,7 +834,7 @@ public class C60DeviceSupport extends AbstractBTLESingleDeviceSupport {
                         }
                     }
 
-                    sampleProvider.addGBActivitySamples(activitySample);
+                    sampleProvider.addGBActivitySamples(Arrays.asList(activitySample));
                 } catch (Exception e) {
                     LOG.error("Error acquiring database", e);
                 }
