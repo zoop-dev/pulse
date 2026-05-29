@@ -57,7 +57,7 @@
     <string name="pref_default">Par défaut</string>
     <string name="pref_header_datetime">Date et heure</string>
     <string name="pref_title_datetime_syctimeonconnect">Synchroniser l\'heure</string>
-    <string name="pref_summary_datetime_syctimeonconnect">Synchroniser l\'heure sur les appareil(s) Gadgetbridge lors de la connexion, et lorsque l\'heure ou le fuseau horaire changent sur Android, et périodiquement</string>
+    <string name="pref_summary_datetime_syctimeonconnect">Synchroniser l\'heure sur le(s) appareil(s) Gadgetbridge lors de la connexion, lorsque l\'heure ou le fuseau horaire changent sur l\'appareil Android, et périodiquement</string>
     <string name="pref_title_theme">Thème</string>
     <string name="pref_theme_light">Clair</string>
     <string name="pref_theme_dark">Sombre</string>
@@ -2316,7 +2316,7 @@
     <string name="menuitem_zepp_pay">Zepp Pay</string>
     <string name="pref_call_rejection_method_title">Méthode de rejet d\'appel</string>
     <string name="busy_task_fetch_statistics">Récupération des statistiques</string>
-    <string name="femometer_measurement_mode_quick">Mode Rapide (30s)</string>
+    <string name="femometer_measurement_mode_quick">Mode rapide (30s)</string>
     <string name="zepp_os_watchface_starry_sky">Ciel étoilé</string>
     <string name="fossil_hr_nav_app_not_installed_notify_text">La navigation a démarrée mais pas d\'app de navigation installée dans la montre. Merci d\'en installer une depuis le Gestionnaire d\'App.</string>
     <string name="yard">yard</string>
@@ -2324,7 +2324,7 @@
     <string name="femometer_measurement_mode_title">Méthode de mesure</string>
     <string name="pref_call_rejection_method_summary">Quelle action à faire quand un appel entrant est rejeté depuis la montre</string>
     <string name="busy_task_fetch_temperature">Récupération des données de température</string>
-    <string name="femometer_measurement_mode_precise">Mode Précis (3 min)</string>
+    <string name="femometer_measurement_mode_precise">Mode précis (3 min)</string>
     <string name="zepp_os_watchface_vast_sky">Ciel clair</string>
     <string name="menuitem_workout_shortcuts">Raccourcis Exercice</string>
     <string name="maxStrokeRate">Vitesse maximale de course</string>
@@ -2362,7 +2362,7 @@
     <string name="pref_summary_osmand_packagename">Utilisé pour sélectionner la version d\'OsmAnd à laquelle se connecter</string>
     <string name="wake_up_time">Réveil</string>
     <string name="menuitem_stats">Stats</string>
-    <string name="pref_summary_preview_message_in_title">Afficher un aperçu du message dans le titre de la notification comme permis par l\'appareil</string>
+    <string name="pref_summary_preview_message_in_title">Afficher un aperçu du message dans le titre de la notification selon ce que permet l\'appareil</string>
     <string name="pref_title_osmand_packagename">nom du paquet OsmAnd</string>
     <string name="pref_navigation_app_osmand">OsmAnd(+)</string>
     <string name="pref_sleep_mode_schedule_summary">Envoyer un rappel et se mettre en veille à l\'heure du coucher. A l\'heure prévue de réveil, l\'alarme de réveil sonnera.</string>
@@ -2442,7 +2442,7 @@
     <string name="wearmode_pebble">Pebble (boucle de chaussure)</string>
     <string name="wearmode_band">Bracelet (poignet)</string>
     <string name="alarm_smart_wakeup_interval_default">5 minutes</string>
-    <string name="prefs_heartrate_alert_active_high_threshold">Seuil d\'alerte pour une fréquence cardiaque élevée pendant une période active</string>
+    <string name="prefs_heartrate_alert_active_high_threshold">Seuil d\'alerte de fréquence cardiaque élevée pendant une période d\'activité intense</string>
     <string name="updatefirmwareoperation_updateproblem_low_battery">La batterie de l\'appareil est trop faible</string>
     <string name="hydration_dnd_summary">Désactiver les alertes d\'hydratation durant un moment</string>
     <string name="silent_mode_vibrate_silent">Vibreur / Silencieux</string>
@@ -4064,8 +4064,8 @@
     <string name="weather_condition_high_windcase_near_gale">vent très fort</string>
     <string name="aqi_level_fair">acceptable</string>
     <string name="aqi_level_poor">mauvais</string>
-    <string name="permission_not_granted_contacts">Permission contacts non accordée</string>
-    <string name="permission_not_granted_calendar">Permission calendrier non accordée</string>
+    <string name="permission_not_granted_contacts">Autorisation d\'accès aux contacts non accordée</string>
+    <string name="permission_not_granted_calendar">Autorisation d\'accès au calendrier non accordée</string>
     <string name="pref_summary_calendar_sync_event_reminders">Les notifications de rappel d’événement seront synchronisées avec l’appareil</string>
     <string name="pref_title_calendar_sync_event_reminders">Sync rappels d’événements</string>
     <string name="pref_auto_export_gpx_selected_devices">Appareils sélectionnés</string>
