@@ -1,4 +1,4 @@
-/*  Copyright (C) 2023-2024 José Rebelo
+/*  Copyright (C) 2023-2026 José Rebelo, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices;
 
+import static nodomain.freeyourgadget.gadgetbridge.util.GB.toast;
+
 import android.content.Context;
 import android.widget.Toast;
 
@@ -31,6 +33,8 @@ import java.util.List;
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import de.greenrobot.dao.query.QueryBuilder;
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.entities.AbstractTimeSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
@@ -45,7 +49,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
  *
  * @param <T> the sample type
  */
-public abstract class AbstractTimeSampleProvider<T extends AbstractTimeSample> implements TimeSampleProvider<T> {
+public abstract class AbstractTimeSampleProvider<T extends AbstractTimeSample> implements TimeSampleProvider<T>, PersistanceProvider<T> {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractTimeSampleProvider.class);
 
     private final DaoSession mSession;
@@ -208,8 +212,13 @@ public abstract class AbstractTimeSampleProvider<T extends AbstractTimeSample> i
     protected abstract Property getDeviceIdentifierSampleProperty();
 
     public void persistForDevice(final Context context, final GBDevice gbDevice, final List<T> samples) {
+        persistSamples(samples, context);
+    }
+
+    @Override
+    public boolean persistSamples(@NonNull final List<T> samples, @Nullable final Context context) {
         if (samples.isEmpty()) {
-            return;
+            return true;
         }
 
         LOG.debug(
@@ -221,18 +230,30 @@ public abstract class AbstractTimeSampleProvider<T extends AbstractTimeSample> i
         try {
             final DaoSession session = getSession();
 
-            final Device device = DBHelper.getDevice(gbDevice, session);
+            final GBDevice gbDevice = getDevice();
+            final Device device = DBHelper.findDevice(gbDevice, session);
+            if (device == null) {
+                LOG.warn("Device not found in database for '{}'", gbDevice.getAliasOrName());
+                return false;
+            }
+            final long deviceId = device.getId();
+
             final User user = DBHelper.getUser(session);
+            final long userId = user.getId();
 
             for (final T sample : samples) {
-                sample.setDevice(device);
-                sample.setUser(user);
+                sample.setDeviceId(deviceId);
+                sample.setUserId(userId);
             }
 
-            this.addSamples(samples);
+            addSamples(samples);
         } catch (final Exception e) {
             LOG.error("Error saving samples", e);
-            GB.toast(context, "Error saving samples", Toast.LENGTH_LONG, GB.ERROR, e);
+            final Context ctx = (context != null) ? context : GBApplication.getContext();
+            final String message = ctx.getString(R.string.persisting_samples_failed, e.getLocalizedMessage());
+            toast(ctx, message, Toast.LENGTH_LONG, GB.ERROR, e);
+            return false;
         }
+        return true;
     }
 }
