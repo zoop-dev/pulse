@@ -88,6 +88,10 @@ open class GenericHeartRateActivitySampleProvider(device: GBDevice, session: Dao
         return heartRateProvider.firstSample?.let { hrSample -> toGenericActivitySample(hrSample) }
     }
 
+    override fun getFirstActivitySample(after: Int): GenericActivitySample? {
+        return getFirstActivitySample()?.takeIf { it.timestamp > after }
+    }
+
     private fun toGenericActivitySample(hrSample: GenericHeartRateSample): GenericActivitySample {
         val activitySample = GenericActivitySample()
         activitySample.provider = this

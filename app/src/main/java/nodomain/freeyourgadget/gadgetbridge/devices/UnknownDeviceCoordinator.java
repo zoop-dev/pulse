@@ -106,6 +106,12 @@ public class UnknownDeviceCoordinator extends AbstractDeviceCoordinator {
             return null;
         }
 
+        @Nullable
+        @Override
+        public AbstractActivitySample getFirstActivitySample(final int after) {
+            return null;
+        }
+
     }
 
     public UnknownDeviceCoordinator() {

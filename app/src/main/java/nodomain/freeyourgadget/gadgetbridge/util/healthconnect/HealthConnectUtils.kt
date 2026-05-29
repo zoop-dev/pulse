@@ -686,7 +686,7 @@ class HealthConnectUtils {
                     provider.firstSample?.timestamp?.takeIf { it > 0 }?.let { Instant.ofEpochMilli(it) }
                 }
                 is SampleProvider<*> -> { // For ActivitySample based providers
-                    provider.firstActivitySample?.timestamp?.takeIf { it > 0 }?.let { Instant.ofEpochSecond(it.toLong()) }
+                    provider.getFirstActivitySample(0)?.timestamp?.takeIf { it > 0 }?.let { Instant.ofEpochSecond(it.toLong()) }
                 }
                 is BaseActivitySummaryDao -> {
                     val deviceEntity = DBHelper.getDevice(device, db.daoSession) ?: return null

@@ -136,6 +136,12 @@ open class GloryFitActivitySampleProvider(device: GBDevice, session: DaoSession)
         return null
     }
 
+    override fun getFirstActivitySample(after: Int): GenericActivitySample? {
+        // TODO getFirstActivitySample
+        LOG.warn("getFirstActivitySample(after) not implemented");
+        return null
+    }
+
     fun overlaySleep(samples: MutableList<GenericActivitySample>, timestampFrom: Int, timestampTo: Int) {
         val stagesMap = RangeMap<Long, ActivityKind?>(RangeMap.Mode.LOWER_BOUND)
 

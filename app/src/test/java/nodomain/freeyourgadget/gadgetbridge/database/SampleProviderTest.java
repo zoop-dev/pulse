@@ -18,6 +18,7 @@ import nodomain.freeyourgadget.gadgetbridge.test.TestBase;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
@@ -167,6 +168,31 @@ public class SampleProviderTest extends TestBase {
         assertEquals(3, allSamples.size());
         // FIXME activitySamples = sampleProvider.getActivitySamples(10, 150);
         // FIXME assertEquals(1, activitySamples.size());
+    }
+
+    @Test
+    public void testGetFirstActivitySampleSkipsNonPositiveTimestamp() {
+        MiBandSampleProvider sampleProvider = new MiBandSampleProvider(dummyGBDevice, daoSession);
+        User user = DBHelper.getUser(daoSession);
+        Device device = DBHelper.getDevice(dummyGBDevice, daoSession);
+
+        MiBandActivitySample zero = createSample(sampleProvider, MiBandSampleProvider.TYPE_ACTIVITY, 0, 10, 70, 1000, user, device);
+        MiBandActivitySample valid = createSample(sampleProvider, MiBandSampleProvider.TYPE_ACTIVITY, 100, 20, 80, 1030, user, device);
+        sampleProvider.addGBActivitySamples(new MiBandActivitySample[] { zero, valid });
+
+        // oldest row overall is the timestamp 0 row
+        assertEquals(0, sampleProvider.getFirstActivitySample().getTimestamp());
+
+        // but the overload skips it and returns the first row with timestamp > 0
+        MiBandActivitySample first = sampleProvider.getFirstActivitySample(0);
+        assertNotNull(first);
+        assertEquals(100, first.getTimestamp());
+    }
+
+    @Test
+    public void testGetFirstActivitySampleNoSamples() {
+        MiBandSampleProvider sampleProvider = new MiBandSampleProvider(dummyGBDevice, daoSession);
+        assertNull(sampleProvider.getFirstActivitySample(0));
     }
 
     @Test

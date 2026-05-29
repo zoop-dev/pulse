@@ -172,6 +172,29 @@ public abstract class AbstractSampleProvider<T extends AbstractActivitySample> i
         return sample;
     }
 
+    @Nullable
+    @Override
+    public T getFirstActivitySample(final int after) {
+        QueryBuilder<T> qb = getSampleDao().queryBuilder();
+        Device dbDevice = DBHelper.findDevice(getDevice(), getSession());
+        if (dbDevice == null) {
+            // no device, no sample
+            return null;
+        }
+        Property deviceProperty = getDeviceIdentifierSampleProperty();
+        Property timestampProperty = getTimestampSampleProperty();
+        qb.where(timestampProperty.gt(after))
+                .where(deviceProperty.eq(dbDevice.getId()))
+                .orderAsc(timestampProperty).limit(1);
+        List<T> samples = qb.build().list();
+        if (samples.isEmpty()) {
+            return null;
+        }
+        T sample = samples.get(0);
+        sample.setProvider(this);
+        return sample;
+    }
+
     /**
      * Get the activity samples between two timestamps (inclusive). Exactly one every minute.
      * @param timestamp_from Start timestamp
