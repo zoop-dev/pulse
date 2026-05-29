@@ -100,7 +100,7 @@ public class HuaweiDictionarySyncEmotion implements  HuaweiDictionarySyncInterfa
         }
         try (DBHandler db = GBApplication.acquireDB()) {
             final DaoSession session = db.getDaoSession();
-            new HuaweiEmotionsSampleProvider(gbDevice, session).persistForDevice(context, gbDevice, emotionsSamples);
+            new HuaweiEmotionsSampleProvider(gbDevice, session).persistSamples(emotionsSamples, context);
         } catch (Exception e) {
             LOG.error("Cannot save emotions samples, continue");
         }

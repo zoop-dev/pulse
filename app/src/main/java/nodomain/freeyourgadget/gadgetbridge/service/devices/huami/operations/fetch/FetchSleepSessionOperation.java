@@ -90,7 +90,7 @@ public class FetchSleepSessionOperation extends AbstractRepeatingFetchOperation 
 
             final HuamiSleepSessionSampleProvider sampleProvider = new HuamiSleepSessionSampleProvider(getDevice(), session);
 
-            sampleProvider.persistForDevice(getContext(), getDevice(), samples);
+            sampleProvider.persistSamples(samples, getContext());
         } catch (final Exception e) {
             GB.toast(getContext(), "Error saving sleep session samples", Toast.LENGTH_LONG, GB.ERROR, e);
             return false;

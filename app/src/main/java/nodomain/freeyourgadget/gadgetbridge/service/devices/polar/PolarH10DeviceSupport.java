@@ -311,7 +311,7 @@ public class PolarH10DeviceSupport extends AbstractBTLESingleDeviceSupport {
                 }
 
                 final HeartRrIntervalSampleProvider rrIntervalSampleProvider = new HeartRrIntervalSampleProvider(this.getDevice(), db.getDaoSession());
-                rrIntervalSampleProvider.persistForDevice(getContext(), getDevice(), rrIntervalSampleList);
+                rrIntervalSampleProvider.persistSamples(rrIntervalSampleList, getContext());
             }
 
             newSamples = true;

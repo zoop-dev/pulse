@@ -91,7 +91,7 @@ public class FetchHrvOperation extends AbstractRepeatingFetchOperation {
             final HuamiCoordinator coordinator = (HuamiCoordinator) getDevice().getDeviceCoordinator();
             final GenericHrvValueSampleProvider sampleProvider = coordinator.getHrvValueSampleProvider(getDevice(), session);
 
-            sampleProvider.persistForDevice(getContext(), getDevice(), samples);
+            sampleProvider.persistSamples(samples, getContext());
         } catch (final Exception e) {
             GB.toast(getContext(), "Error saving hrv samples", Toast.LENGTH_LONG, GB.ERROR, e);
             return false;

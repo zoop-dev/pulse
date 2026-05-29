@@ -76,7 +76,7 @@ public class HuaweiDictionarySyncHRV implements  HuaweiDictionarySyncInterface {
         }
         try (DBHandler db = GBApplication.acquireDB()) {
             final DaoSession session = db.getDaoSession();
-            new HuaweiHrvValueSampleProvider(gbDevice, session).persistForDevice(context, gbDevice, hrvSamples);
+            new HuaweiHrvValueSampleProvider(gbDevice, session).persistSamples(hrvSamples, context);
         } catch (Exception e) {
             LOG.error("Cannot save HRV samples, continue");
         }

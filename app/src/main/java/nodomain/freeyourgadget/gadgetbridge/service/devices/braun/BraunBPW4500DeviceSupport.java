@@ -240,7 +240,7 @@ public class BraunBPW4500DeviceSupport extends AbstractBTLESingleDeviceSupport {
             final DaoSession session = handler.getDaoSession();
             final GenericBloodPressureSampleProvider provider =
                     new GenericBloodPressureSampleProvider(getDevice(), session);
-            provider.persistForDevice(getContext(), getDevice(), List.of(sample));
+            provider.persistSamples(List.of(sample), getContext());
 
             persistedMeasurements++;
             LOG.info("Persisted blood pressure measurement ({} total)", persistedMeasurements);

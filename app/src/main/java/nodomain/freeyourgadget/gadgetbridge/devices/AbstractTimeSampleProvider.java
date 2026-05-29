@@ -211,7 +211,9 @@ public abstract class AbstractTimeSampleProvider<T extends AbstractTimeSample> i
     @NonNull
     protected abstract Property getDeviceIdentifierSampleProperty();
 
-    public void persistForDevice(final Context context, final GBDevice gbDevice, final List<T> samples) {
+    /// @deprecated use {@link #persistSamples(List, Context)} instead
+    @Deprecated
+    public void persistForDevice(@NonNull final Context context, @Nullable final GBDevice gbDevice, @NonNull final List<T> samples) {
         persistSamples(samples, context);
     }
 

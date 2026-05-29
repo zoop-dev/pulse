@@ -379,7 +379,7 @@ class OneTouchSupport : AbstractBTLESingleDeviceSupport(LOG) {
             GBApplication.acquireDB().use { handler ->
                 val session = handler.getDaoSession()
                 val sampleProvider = GlucoseSampleProvider(device, session)
-                sampleProvider.persistForDevice(context, device, samples)
+                sampleProvider.persistSamples(samples, context)
             }
         } catch (e: Exception) {
             GB.toast(context, "Error storing glucose readings", Toast.LENGTH_LONG, GB.ERROR, e)
