@@ -41,10 +41,13 @@ import java.util.TreeMap;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
-import nodomain.freeyourgadget.gadgetbridge.devices.AbstractTimeSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.BaseActivitySummaryProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.BatteryLevelProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GarminSleepRestlessMomentsSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.GenericMetricSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericTrainingLoadAcuteSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericTrainingLoadChronicSampleProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.PersistanceProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminActivitySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminBodyEnergySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminEventSampleProvider;
@@ -60,7 +63,6 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminSleepStatsSampl
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminSpo2SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminStressSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminWorkoutParser;
-import nodomain.freeyourgadget.gadgetbridge.entities.AbstractTimeSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.entities.BatteryLevel;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
@@ -616,7 +618,7 @@ public class FitImporter {
             final DaoSession session = handler.getDaoSession();
             final long deviceId = DBHelper.getDevice(gbDevice, session).getId();
             final long userId = DBHelper.getUser(session).getId();
-            persistBattery(session, deviceId);
+            persistAbstractSamples(batterySamples, new BatteryLevelProvider(gbDevice, session));
             persistGenericMetrics(session, deviceId, userId);
         } catch (final Exception e) {
             GB.toast(context, "Error saving generic samples", Toast.LENGTH_LONG, GB.ERROR, e);
@@ -625,15 +627,6 @@ public class FitImporter {
         for (final Map.Entry<Integer, Integer> e : unknownRecords.entrySet()) {
             final String NativeMessageNumber = FitDebug.mesgNumLookup(e.getKey());
             LOG.warn("Unknown record of native number {} seen {} times", NativeMessageNumber, e.getValue());
-        }
-    }
-
-    private void persistBattery(final DaoSession session, final long deviceId) {
-        if (!batterySamples.isEmpty()) {
-            for (BatteryLevel batteryLevel : batterySamples) {
-                batteryLevel.setDeviceId(deviceId);
-            }
-            session.getBatteryLevelDao().insertOrReplaceInTx(batterySamples);
         }
     }
 
@@ -692,13 +685,7 @@ public class FitImporter {
         summary.setRawDetailsPath(file.getAbsolutePath());
 
         try {
-            final Device device = DBHelper.getDevice(gbDevice, session);
-            final User user = DBHelper.getUser(session);
-
-            summary.setDevice(device);
-            summary.setUser(user);
-
-            session.getBaseActivitySummaryDao().insertOrReplace(summary);
+            persistAbstractSamples(List.of(summary), new BaseActivitySummaryProvider(gbDevice, session));
         } catch (final Exception e) {
             GB.toast(context, "Error saving workout", Toast.LENGTH_LONG, GB.ERROR, e);
         }
@@ -874,20 +861,8 @@ public class FitImporter {
             }
         }
 
-        LOG.debug("Will persist {} activity samples", activitySamples.size());
-
         try {
-            final Device device = DBHelper.getDevice(gbDevice, session);
-            final User user = DBHelper.getUser(session);
-
-            final GarminActivitySampleProvider sampleProvider = new GarminActivitySampleProvider(gbDevice, session);
-
-            for (final GarminActivitySample sample : activitySamples) {
-                sample.setDevice(device);
-                sample.setUser(user);
-            }
-
-            sampleProvider.addGBActivitySamples(activitySamples);
+            persistAbstractSamples(activitySamples, new GarminActivitySampleProvider(gbDevice, session));
         } catch (final Exception e) {
             GB.toast(context, "Error saving activity samples", Toast.LENGTH_LONG, GB.ERROR, e);
         }
@@ -924,9 +899,6 @@ public class FitImporter {
 
         // We only need to fake sleep start and end times, the sample provider will take care of the rest
         try {
-            final Device device = DBHelper.getDevice(gbDevice, session);
-            final User user = DBHelper.getUser(session);
-
             final GarminEventSampleProvider sampleProvider = new GarminEventSampleProvider(gbDevice, session);
 
             final GarminEventSample sampleFallAsleep = new GarminEventSample();
@@ -934,27 +906,22 @@ public class FitImporter {
             sampleFallAsleep.setEvent(74); // sleep
             sampleFallAsleep.setEventType(0); // sleep start
             sampleFallAsleep.setData(-1L); // in actual samples they're a garmin epoch, this way we can identify them
-            sampleFallAsleep.setDevice(device);
-            sampleFallAsleep.setUser(user);
 
             final GarminEventSample sampleWakeUp = new GarminEventSample();
             sampleWakeUp.setTimestamp(wakeTimeMillis);
             sampleWakeUp.setEvent(74); // sleep
             sampleWakeUp.setEventType(1); // sleep end
             sampleWakeUp.setData(-1L); // in actual samples they're a garmin epoch, this way we can identify them
-            sampleWakeUp.setDevice(device);
-            sampleWakeUp.setUser(user);
 
-            sampleProvider.addSample(sampleFallAsleep);
-            sampleProvider.addSample(sampleWakeUp);
+            persistAbstractSamples(List.of(sampleFallAsleep, sampleWakeUp), sampleProvider);
         } catch (final Exception e) {
             GB.toast(context, "Error faking event samples", Toast.LENGTH_LONG, GB.ERROR, e);
         }
     }
 
-    private <T extends AbstractTimeSample> void persistAbstractSamples(final List<T> samples,
-                                                                       final AbstractTimeSampleProvider<T> sampleProvider) {
-        sampleProvider.persistForDevice(context, gbDevice, samples);
+    private <T> void persistAbstractSamples(@NonNull final List<T> samples,
+                                            @NonNull final PersistanceProvider<T> sampleProvider) {
+        sampleProvider.persistSamples(samples, context);
     }
 
     public static String getFilePath(final FitFileId fileId) {
