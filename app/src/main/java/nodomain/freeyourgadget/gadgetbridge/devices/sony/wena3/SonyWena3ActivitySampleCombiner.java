@@ -52,7 +52,7 @@ public class SonyWena3ActivitySampleCombiner {
                 alteredSamples.add(activitySample);
             }
         }
-        activitySampleProvider.addGBActivitySamples(alteredSamples.toArray(new Wena3ActivitySample[alteredSamples.size()]));
+        activitySampleProvider.addGBActivitySamples(alteredSamples);
     }
 
     public void overlayHeartRateStartingAt(Date startDate, SonyWena3HeartRateSampleProvider heartRateSampleProvider) {
@@ -73,6 +73,6 @@ public class SonyWena3ActivitySampleCombiner {
                 alteredSamples.add(activitySample);
             }
         }
-        activitySampleProvider.addGBActivitySamples(alteredSamples.toArray(new Wena3ActivitySample[alteredSamples.size()]));
+        activitySampleProvider.addGBActivitySamples(alteredSamples);
     }
 }

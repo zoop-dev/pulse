@@ -77,7 +77,7 @@ public class HuaweiDictionarySyncSkinTemperature implements  HuaweiDictionarySyn
         }
         try (DBHandler db = GBApplication.acquireDB()) {
             final DaoSession session = db.getDaoSession();
-            new HuaweiTemperatureSampleProvider(gbDevice, session).persistForDevice(context, gbDevice, temperatureSamples);
+            new HuaweiTemperatureSampleProvider(gbDevice, session).persistSamples(temperatureSamples, context);
         } catch (Exception e) {
             LOG.error("Cannot save skin temperature samples, continue");
         }

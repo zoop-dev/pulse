@@ -60,7 +60,7 @@ public class StepsPacketParser extends OneBytePerSamplePacketParser {
                 i++;
                 currentSampleDate = timestampOfSampleAtIndex(i);
             }
-            sampleProvider.addGBActivitySamples(samples.toArray(new Wena3ActivitySample[samples.size()]));
+            sampleProvider.addGBActivitySamples(samples);
 
             SonyWena3ActivitySampleCombiner combiner = new SonyWena3ActivitySampleCombiner(sampleProvider);
 

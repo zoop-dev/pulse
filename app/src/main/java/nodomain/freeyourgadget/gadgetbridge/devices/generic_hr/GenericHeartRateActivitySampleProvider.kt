@@ -68,7 +68,7 @@ open class GenericHeartRateActivitySampleProvider(device: GBDevice, session: Dao
         throw UnsupportedOperationException("Read-only sample provider")
     }
 
-    override fun addGBActivitySamples(activitySamples: Array<GenericActivitySample>) {
+    override fun addGBActivitySamples(activitySamples: List<GenericActivitySample>) {
         throw UnsupportedOperationException("Read-only sample provider")
     }
 

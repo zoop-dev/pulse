@@ -177,7 +177,7 @@ class GenericHeartRateSupport : AbstractBTLESingleDeviceSupport(LOG) {
                     }
 
                     val rrIntervalSampleProvider = HeartRrIntervalSampleProvider(this.device, db.getDaoSession())
-                    rrIntervalSampleProvider.persistForDevice(context, device, rrIntervalSampleList)
+                    rrIntervalSampleProvider.persistSamples(rrIntervalSampleList, context)
                 }
             }
 

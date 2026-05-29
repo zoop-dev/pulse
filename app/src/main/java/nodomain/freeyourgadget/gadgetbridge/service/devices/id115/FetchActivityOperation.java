@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -146,7 +147,7 @@ public class FetchActivityOperation extends AbstractID115Operation {
             }
 
             ID115SampleProvider provider = new ID115SampleProvider(getDevice(), dbHandler.getDaoSession());
-            provider.addGBActivitySamples(sampleArray);
+            provider.addGBActivitySamples(Arrays.asList(sampleArray));
         } catch (Exception ex) {
             GB.toast(getContext(), "Error saving activity data: " + ex.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, ex);
         }

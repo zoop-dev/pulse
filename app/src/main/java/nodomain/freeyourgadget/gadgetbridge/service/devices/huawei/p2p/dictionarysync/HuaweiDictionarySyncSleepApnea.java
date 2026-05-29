@@ -80,7 +80,7 @@ public class HuaweiDictionarySyncSleepApnea implements  HuaweiDictionarySyncInte
         }
         try (DBHandler db = GBApplication.acquireDB()) {
             final DaoSession session = db.getDaoSession();
-            new HuaweiSleepApneaSampleProvider(gbDevice, session).persistForDevice(context, gbDevice, sleepApneaSamples);
+            new HuaweiSleepApneaSampleProvider(gbDevice, session).persistSamples(sleepApneaSamples, context);
         } catch (Exception e) {
             LOG.error("Cannot save sleep apnea samples, continue");
         }

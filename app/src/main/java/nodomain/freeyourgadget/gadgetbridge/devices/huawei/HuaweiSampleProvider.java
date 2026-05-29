@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huawei;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.jetbrains.annotations.UnknownNullability;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -239,7 +240,7 @@ public class HuaweiSampleProvider extends AbstractSampleProvider<HuaweiActivityS
     }
 
     @Override
-    public void addGBActivitySamples(HuaweiActivitySample[] activitySamples) {
+    public void addGBActivitySamples(@NonNull List<HuaweiActivitySample> activitySamples) {
         List<HuaweiActivitySample> newSamples = new ArrayList<>();
         for (HuaweiActivitySample sample : activitySamples) {
             HuaweiActivitySample start = copySample(sample);

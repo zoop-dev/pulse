@@ -191,7 +191,7 @@ public class DailyDetailsParser extends XiaomiActivityParser {
                 sample.setUser(user);
                 sample.setProvider(sampleProvider);
             }
-            sampleProvider.addGBActivitySamples(samples.toArray(new XiaomiActivitySample[0]));
+            sampleProvider.addGBActivitySamples(samples);
 
             return true;
         } catch (final Exception e) {

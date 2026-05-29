@@ -220,7 +220,7 @@ public class ActivitySampleHandler extends AbstractResponseHandler {
                 sample.setDeviceId(deviceId);
                 sample.setUserId(userId);
             }
-            provider.addGBActivitySamples(activitySamples.toArray(new WithingsSteelHRActivitySample[0]));
+            provider.addGBActivitySamples(activitySamples);
         } catch (Exception ex) {
             logger.warn("Error saving activity data: " + ex.getLocalizedMessage());
         }

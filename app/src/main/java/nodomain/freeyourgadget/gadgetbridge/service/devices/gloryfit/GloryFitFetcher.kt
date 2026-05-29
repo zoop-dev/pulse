@@ -210,7 +210,7 @@ class GloryFitFetcher(val mSupport: GloryFitSupport) {
                     val session = handler.getDaoSession()
                     val sampleProvider = GenericSleepStageSampleProvider(mSupport.device, session)
 
-                    sampleProvider.persistForDevice(mSupport.context, mSupport.device, samples)
+                    sampleProvider.persistSamples(samples, mSupport.context)
                 }
             } catch (e: Exception) {
                 GB.toast(mSupport.context, "Error saving sleep session samples", Toast.LENGTH_LONG, GB.ERROR, e)
@@ -254,10 +254,9 @@ class GloryFitFetcher(val mSupport: GloryFitSupport) {
                         val session = handler.getDaoSession()
                         val sampleProvider = GloryFitStepsSampleProvider(mSupport.device, session)
 
-                        sampleProvider.persistForDevice(
-                            mSupport.context,
-                            mSupport.device,
-                            Collections.singletonList(sample)
+                        sampleProvider.persistSamples(
+                            Collections.singletonList(sample),
+                            mSupport.context
                         )
                     }
                 } catch (e: Exception) {
@@ -306,7 +305,7 @@ class GloryFitFetcher(val mSupport: GloryFitSupport) {
                         val session = handler.getDaoSession()
                         val sampleProvider = GenericHeartRateSampleProvider(mSupport.device, session)
 
-                        sampleProvider.persistForDevice(mSupport.context, mSupport.device, samples)
+                        sampleProvider.persistSamples(samples, mSupport.context)
                     }
                 } catch (e: Exception) {
                     GB.toast(mSupport.context, "Error saving hr samples", Toast.LENGTH_LONG, GB.ERROR, e)
@@ -369,7 +368,7 @@ class GloryFitFetcher(val mSupport: GloryFitSupport) {
                         val session = handler.getDaoSession()
                         val sampleProvider = GenericSpo2SampleProvider(mSupport.device, session)
 
-                        sampleProvider.persistForDevice(mSupport.context, mSupport.device, samples)
+                        sampleProvider.persistSamples(samples, mSupport.context)
                     }
                 } catch (e: Exception) {
                     GB.toast(mSupport.context, "Error saving SpO2 samples", Toast.LENGTH_LONG, GB.ERROR, e)
