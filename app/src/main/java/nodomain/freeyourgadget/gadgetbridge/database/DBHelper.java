@@ -1,6 +1,6 @@
-/*  Copyright (C) 2015-2024 Andreas Shimokawa, Carsten Pfeiffer, Damien
+/*  Copyright (C) 2015-2026 Andreas Shimokawa, Carsten Pfeiffer, Damien
     Gaignon, Daniel Dakhno, Daniele Gobbetti, Felix Konstantin Maurer, JohnnySun,
-    José Rebelo, Petr Vaněk
+    José Rebelo, Petr Vaněk, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -122,10 +122,10 @@ public class DBHelper {
      * be created in the database.
      * <p>
      * Note: so far there is only ever a single user; there is no multi-user support yet
-     * @return the User entity
+     * @return the {@link User} entity
      */
     @NonNull
-    public static User getUser(DaoSession session) {
+    public static User getUser(@NonNull final DaoSession session) {
         ActivityUser prefsUser = new ActivityUser();
         UserDao userDao = session.getUserDao();
         User user;
@@ -287,11 +287,12 @@ public class DBHelper {
     }
 
     /**
-     * Finds the corresponding Device entity for the given GBDevice.
-     * @return the corresponding Device entity, or null if none
+     * Finds the corresponding {@link Device} entity for the given {@link GBDevice}.
+     * @return the corresponding {@link Device} entity, or {@code null} if none
+     * @see #getDevice(GBDevice, DaoSession)
      */
     @Nullable
-    public static Device findDevice(GBDevice gbDevice, DaoSession session) {
+    public static Device findDevice(@NonNull final GBDevice gbDevice, @NonNull final DaoSession session) {
         DeviceDao deviceDao = session.getDeviceDao();
         Query<Device> query = deviceDao.queryBuilder().where(DeviceDao.Properties.Identifier.eq(gbDevice.getAddress())).build();
         List<Device> devices = query.list();
@@ -338,13 +339,15 @@ public class DBHelper {
     }
 
     /**
-     * Looks up in the database the Device entity corresponding to the GBDevice. If a device
+     * Looks up in the database the {@link Device} entity corresponding to the {@link GBDevice}. If a device
      * exists already, it will be updated with the current preferences values. If no device exists
      * yet, it will be created in the database.
      *
-     * @return the device entity corresponding to the given GBDevice
+     * @return the device entity corresponding to the given {@link GBDevice}
+     * @see #findDevice(GBDevice, DaoSession)
      */
-    public static Device getDevice(GBDevice gbDevice, DaoSession session) {
+    @NonNull
+    public static Device getDevice(@NonNull final GBDevice gbDevice, @NonNull final DaoSession session) {
         Device device = findDevice(gbDevice, session);
         if (device == null) {
             device = createDevice(gbDevice, session);
