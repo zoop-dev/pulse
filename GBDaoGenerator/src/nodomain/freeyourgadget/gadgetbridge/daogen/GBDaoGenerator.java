@@ -194,6 +194,9 @@ public class GBDaoGenerator {
         addMoyoungSleepStageSample(schema, user, device);
         addMoyoungStressSample(schema, user, device);
         addGloryFitStepsSample(schema, user, device);
+        addKeephealthActivitySample(schema, user, device);
+        addKeephealthBloodPressureSample(schema, user, device);
+        addKeephealthTemperatureSample(schema, user, device);
 
         addHuaweiActivitySample(schema, user, device);
         addHuaweiStressSample(schema, user, device);
@@ -1314,6 +1317,32 @@ public class GBDaoGenerator {
         sleepStageSample.addIntProperty("walkingEnd").notNull();
         sleepStageSample.addIntProperty("walkingSteps").notNull();
         return sleepStageSample;
+    }
+
+    private static Entity addKeephealthActivitySample(Schema schema, Entity user, Entity device) {
+        Entity activitySample = addEntity(schema, "KeephealthActivitySample");
+        activitySample.implementsSerializable();
+        addCommonActivitySampleProperties("AbstractActivitySample", activitySample, user, device);
+        activitySample.addIntProperty(SAMPLE_STEPS).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        activitySample.addIntProperty(SAMPLE_RAW_KIND).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        activitySample.addIntProperty("distanceCm").notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        activitySample.addIntProperty("activeCalories").notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        addHeartRateProperties(activitySample);
+        return activitySample;
+    }
+
+    private static Entity addKeephealthBloodPressureSample(Schema schema, Entity user, Entity device) {
+        Entity bpSample = addEntity(schema, "KeephealthBloodPressureSample");
+        addCommonTimeSampleProperties("AbstractBloodPressureSample", bpSample, user, device);
+        addBloodPressureProperies(bpSample);
+        return bpSample;
+    }
+
+    private static Entity addKeephealthTemperatureSample(Schema schema, Entity user, Entity device) {
+        Entity sample = addEntity(schema, "KeephealthTemperatureSample");
+        addCommonTimeSampleProperties("AbstractTemperatureSample", sample, user, device);
+        sample.addFloatProperty(SAMPLE_TEMPERATURE).notNull().codeBeforeGetter(OVERRIDE);
+        return sample;
     }
 
     private static void addCommonActivitySampleProperties(String superClass, Entity activitySample, Entity user, Entity device) {

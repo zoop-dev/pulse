@@ -328,6 +328,8 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_HYDRATION_DND = "pref_hydration_dnd";
     public static final String PREF_HYDRATION_DND_START = "pref_hydration_dnd_start";
     public static final String PREF_HYDRATION_DND_END = "pref_hydration_dnd_end";
+    public static final String PREF_HYDRATION_REMINDER_START = "pref_hydration_reminder_start";
+    public static final String PREF_HYDRATION_REMINDER_END = "pref_hydration_reminder_end";
     public static final String PREF_AMPM_ENABLED = "pref_ampm_enabled";
 
     public static final String PREF_SONYSWR12_LOW_VIBRATION = "vibration_preference";
