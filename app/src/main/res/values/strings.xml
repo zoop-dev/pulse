@@ -1436,6 +1436,7 @@
     <string name="activity_db_management_empty_DB">Empty Database</string>
     <string name="activity_db_management_exportimport_label">Export and Import</string>
     <string name="activity_db_management_empty_db_warning">Warning! By pushing this button you will wipe your database and start from scratch.</string>
+    <string name="persisting_samples_failed">Error saving samples: %1$s</string>
     <string name="Cancel">Cancel</string>
     <string name="Delete">Delete</string>
     <string name="delete_device_and_retain_files">Keep Files</string>
