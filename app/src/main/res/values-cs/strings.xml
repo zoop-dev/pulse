@@ -4521,4 +4521,5 @@
     <string name="pref_summary_third_party_app_device_alarms">Povolit jiným nainstalovaným aplikacím třetích stran nastavovat budíky zařízení skrze intenty.</string>
     <string name="nothing_prefs_spatial_audio_title">Prostorový zvuk</string>
     <string name="nothing_prefs_spatial_audio_summary">Pohlcující poslechový zážitek, díky kterému budete mít pocit, že jste součástí hudby, filmu nebo hry.</string>
+    <string name="persisting_samples_failed">Chyba při ukládání vzorků: %1$s</string>
 </resources>
