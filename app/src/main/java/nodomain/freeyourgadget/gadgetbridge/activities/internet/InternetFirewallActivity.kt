@@ -76,7 +76,7 @@ class InternetFirewallActivity : AbstractGBActivity() {
                 val qb = db.daoSession.internetFirewallRuleDao.queryBuilder()
                 if (device != null) {
                     // device-specific rules
-                    val deviceFromDb = DBHelper.getDevice(device, db.daoSession)
+                    val deviceFromDb = DBHelper.getDevice(device!!, db.daoSession)
                     qb.where(InternetFirewallRuleDao.Properties.DeviceId.eq(deviceFromDb.id))
                 } else {
                     // global rules
@@ -198,7 +198,7 @@ class InternetFirewallActivity : AbstractGBActivity() {
                 rule.domain = domain
                 rule.action = action
                 if (device != null) {
-                    val deviceFromDb = DBHelper.getDevice(device, db.daoSession)
+                    val deviceFromDb = DBHelper.getDevice(device!!, db.daoSession)
                     rule.deviceId = deviceFromDb.id
                 }
                 db.daoSession.internetFirewallRuleDao.insert(rule)
