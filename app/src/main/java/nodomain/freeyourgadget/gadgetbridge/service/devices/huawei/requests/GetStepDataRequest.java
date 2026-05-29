@@ -121,7 +121,7 @@ public class GetStepDataRequest extends Request {
                 }
             }
 
-            sampleProvider.addGBActivitySamples(samples.toArray(new HuaweiActivitySample[0]));
+            sampleProvider.addGBActivitySamples(samples);
         } catch (Exception e) {
             LOG.error("Failed to add step data to database", e);
         }

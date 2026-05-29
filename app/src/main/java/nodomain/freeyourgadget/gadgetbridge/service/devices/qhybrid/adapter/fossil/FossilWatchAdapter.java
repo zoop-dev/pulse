@@ -633,7 +633,7 @@ public class FossilWatchAdapter extends WatchAdapter {
                         LOG.debug("Activity samples parsed successfully: {}", Arrays.stream(samples).toList());
                     }
 
-                    provider.addGBActivitySamples(samples);
+                    provider.addGBActivitySamples(Arrays.asList(samples));
 
                     if (saveRawActivityFiles) {
                         writeFile("activity_qhybrid", String.valueOf(System.currentTimeMillis()), fileData);

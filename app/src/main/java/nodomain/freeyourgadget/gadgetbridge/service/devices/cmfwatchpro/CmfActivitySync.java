@@ -179,7 +179,7 @@ public class CmfActivitySync {
             }
 
             LOG.debug("Will persist {} activity samples", samples.size());
-            sampleProvider.addGBActivitySamples(samples.toArray(new CmfActivitySample[0]));
+            sampleProvider.addGBActivitySamples(samples);
         } catch (final Exception e) {
             GB.toast(getContext(), "Error saving activity samples", Toast.LENGTH_LONG, GB.ERROR, e);
         }

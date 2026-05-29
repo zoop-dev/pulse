@@ -119,7 +119,7 @@ public class FetchActivityOperation extends AbstractRepeatingFetchOperation {
 
                 timestamp.add(Calendar.MINUTE, 1);
             }
-            sampleProvider.addGBActivitySamples(samples.toArray(new MiBandActivitySample[0]));
+            sampleProvider.addGBActivitySamples(samples);
 
             timestamp.add(Calendar.MINUTE, -1);
 

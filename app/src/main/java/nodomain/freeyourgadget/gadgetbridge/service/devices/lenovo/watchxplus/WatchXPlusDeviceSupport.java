@@ -1638,7 +1638,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     overlayList.add(new WatchXPlusHealthActivityOverlay(sample.getTimestamp(), sample.getTimestamp()+300, sample.getRawKind(), sample.getDeviceId(), sample.getUserId(), sample.getRawWatchXPlusHealthData()));
                 }
                 overlayDao.insertOrReplaceInTx(overlayList);
-                provider.addGBActivitySamples(samples.toArray(new WatchXPlusActivitySample[0]));
+                provider.addGBActivitySamples(samples);
 
                 handleEndOfDataChunks(chunkNo, type);
             } else if (DataType.HEART_RATE.equals(type)) {
@@ -1658,7 +1658,7 @@ public class WatchXPlusDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     sample.setRawKind(ActivityKind.ACTIVITY.getCode());
                     samples.add(sample);
                 }
-                provider.addGBActivitySamples(samples.toArray(new WatchXPlusActivitySample[0]));
+                provider.addGBActivitySamples(samples);
 
                 handleEndOfDataChunks(chunkNo, type);
             } else {

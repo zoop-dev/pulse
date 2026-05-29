@@ -90,7 +90,7 @@ public interface SampleProvider<T extends AbstractActivitySample> {
      * timestamp will be overwritten.
      * @param activitySamples the samples to add
      */
-    void addGBActivitySamples(T[] activitySamples);
+    void addGBActivitySamples(@NonNull List<T> activitySamples);
 
     /**
      * Factory method to creates an empty sample of the correct type for this sample provider

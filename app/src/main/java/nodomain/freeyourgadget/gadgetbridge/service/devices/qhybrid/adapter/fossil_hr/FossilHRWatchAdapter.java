@@ -80,6 +80,7 @@ import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -1284,7 +1285,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                             for (int i = 0; i < entries.size(); i++) {
                                 samples[i] = entries.get(i).toDAOActivitySample(userId, deviceId);
                             }
-                            provider.addGBActivitySamples(samples);
+                            provider.addGBActivitySamples(Arrays.asList(samples));
                             // SpO2, should be empty for an unsupported device
                             ArrayList<HybridHRSpo2Sample> spo2Samples = parser.getSpo2Samples();
                             HybridHRSpo2SampleProvider spo2Provider = new HybridHRSpo2SampleProvider(getDeviceSupport().getDevice(), dbHandler.getDaoSession());

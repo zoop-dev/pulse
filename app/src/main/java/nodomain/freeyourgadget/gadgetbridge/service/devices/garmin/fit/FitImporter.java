@@ -887,7 +887,7 @@ public class FitImporter {
                 sample.setUser(user);
             }
 
-            sampleProvider.addGBActivitySamples(activitySamples.toArray(new GarminActivitySample[0]));
+            sampleProvider.addGBActivitySamples(activitySamples);
         } catch (final Exception e) {
             GB.toast(context, "Error saving activity samples", Toast.LENGTH_LONG, GB.ERROR, e);
         }

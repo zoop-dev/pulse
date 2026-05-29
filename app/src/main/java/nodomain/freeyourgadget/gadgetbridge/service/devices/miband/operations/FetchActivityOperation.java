@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.UUID;
@@ -389,7 +390,7 @@ public class FetchActivityOperation extends AbstractMiBand1Operation {
                     minutes++;
                     timestampInSeconds += 60;
                 }
-                provider.addGBActivitySamples(samples);
+                provider.addGBActivitySamples(Arrays.asList(samples));
             } finally {
                 activityStruct.bufferFlushed(minutes);
             }

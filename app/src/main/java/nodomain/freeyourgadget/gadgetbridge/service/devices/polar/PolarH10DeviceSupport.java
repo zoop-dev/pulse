@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -296,7 +297,7 @@ public class PolarH10DeviceSupport extends AbstractBTLESingleDeviceSupport {
             final Long userId = DBHelper.getUser(db.getDaoSession()).getId();
             final Long deviceId = DBHelper.getDevice(getDevice(), db.getDaoSession()).getId();
             final PolarH10ActivitySample sample = new PolarH10ActivitySample((int) (info.getTimestamp() / 1000), deviceId, userId, info.getHeartRate());
-            polarSampleProvider.addGBActivitySamples(new PolarH10ActivitySample[]{sample});
+            polarSampleProvider.addGBActivitySamples(Collections.singletonList(sample));
 
             final ArrayList<@NotNull Integer> rrIntervals = info.getRrIntervals();
             if (!rrIntervals.isEmpty()) {

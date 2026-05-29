@@ -1881,7 +1881,7 @@ public class HuaweiSupportProvider {
                 samples.add(activitySample);
             }
 
-            sampleProvider.addGBActivitySamples(samples.toArray(new HuaweiActivitySample[0]));
+            sampleProvider.addGBActivitySamples(samples);
         } catch (Exception e) {
             LOG.error("Failed to add sleep activity to database", e);
         }
