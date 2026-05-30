@@ -2,6 +2,7 @@ package nodomain.freeyourgadget.gadgetbridge.database;
 
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
@@ -124,7 +125,7 @@ public class SampleProviderTest extends TestBase {
 
         MiBandActivitySample s3 = createSample(sampleProvider, MiBandSampleProvider.TYPE_DEEP_SLEEP, 1200, 10, 62, 4030, user, device);
         MiBandActivitySample s4 = createSample(sampleProvider, MiBandSampleProvider.TYPE_LIGHT_SLEEP, 2000, 10, 60, 4030, user, device);
-        sampleProvider.addGBActivitySamples(new MiBandActivitySample[] { s3, s4 });
+        sampleProvider.addGBActivitySamples(Arrays.asList(s3, s4));
 
         // first checks for irrelevant timestamps => no samples
         List<MiBandActivitySample> samples = sampleProvider.getAllActivitySamples(0, 0);
@@ -192,7 +193,7 @@ public class SampleProviderTest extends TestBase {
         s3.setOtherTimestamp(200);
         HuaweiActivitySample s4 = createSample(sampleProvider, MiBandSampleProvider.TYPE_LIGHT_SLEEP, 200, 10, 60, 4030, user, device);
         s4.setOtherTimestamp(220);
-        sampleProvider.addGBActivitySamples(new HuaweiActivitySample[] { s3, s4 });
+        sampleProvider.addGBActivitySamples(Arrays.asList(s3, s4));
 
         List<HuaweiActivitySample> samples = sampleProvider.getAllActivitySamples(0, 1);
         assertEquals(1, samples.size()); // It generates a sample for every 60 seconds that is requested
