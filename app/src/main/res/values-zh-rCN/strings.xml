@@ -4515,4 +4515,5 @@
     <string name="pref_summary_third_party_app_device_alarms">允许其他已安装的第三方应用通过意图设置闹铃。</string>
     <string name="nothing_prefs_spatial_audio_title">空间音频</string>
     <string name="nothing_prefs_spatial_audio_summary">让你感到你是音乐、电影或游戏一部分的沉浸式聆听体验。</string>
+    <string name="persisting_samples_failed">保存示例出错：%1$s</string>
 </resources>
