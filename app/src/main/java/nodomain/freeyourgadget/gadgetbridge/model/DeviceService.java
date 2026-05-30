@@ -1,8 +1,8 @@
-/*  Copyright (C) 2015-2024 Andreas Shimokawa, Arjan Schrijver, Carsten
+/*  Copyright (C) 2015-2026 Andreas Shimokawa, Arjan Schrijver, Carsten
     Pfeiffer, Daniel Dakhno, Daniele Gobbetti, Davis Mosenkovs, Frank Slezak,
     Gabriele Monaco, Gordon Williams, ivanovlev, JohnnySun, José Rebelo, Julien
     Pivotto, Kasha, mvn23, Petr Vaněk, Sebastian Kranz, Steffen Liebergeld,
-    Taavi Eomäe
+    Taavi Eomäe, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -84,6 +84,10 @@ public interface DeviceService extends EventHandler {
     String ACTION_CAMERA_STATUS_CHANGE = PREFIX + ".action.camera_status_change";
     String ACTION_REQUEST_MUSIC_LIST = PREFIX + ".action.request_music_list";
     String ACTION_REQUEST_MUSIC_OPERATION = PREFIX + ".action.request_music_operation";
+    String EXTRA_REQUEST_MUSIC_OPERATION = "operation";
+    String EXTRA_REQUEST_MUSIC_PLAY_LIST_INDEX = "playlistIndex";
+    String EXTRA_REQUEST_MUSIC_PLAY_LIST_NAME = "playlistName";
+    String EXTRA_REQUEST_MUSIC_MUSIC_IDS = "musicIds";
 
     String ACTION_SLEEP_AS_ANDROID = ".action.sleep_as_android";
     String EXTRA_SLEEP_AS_ANDROID_ACTION = "sleepasandroid_action";

@@ -1256,10 +1256,10 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 deviceSupport.onMusicListReq();
                 break;
             case ACTION_REQUEST_MUSIC_OPERATION:
-                int operation = intentCopy.getIntExtra("operation", -1);
-                int playlistIndex = intentCopy.getIntExtra("playlistIndex", -1);
-                String playlistName = intentCopy.getStringExtra("playlistName");
-                ArrayList<Integer> musics = (ArrayList<Integer>) intentCopy.getSerializableExtra("musicIds");
+                int operation = intentCopy.getIntExtra(EXTRA_REQUEST_MUSIC_OPERATION, -1);
+                int playlistIndex = intentCopy.getIntExtra(EXTRA_REQUEST_MUSIC_PLAY_LIST_INDEX, -1);
+                String playlistName = intentCopy.getStringExtra(EXTRA_REQUEST_MUSIC_PLAY_LIST_NAME);
+                ArrayList<Integer> musics = (ArrayList<Integer>) intentCopy.getSerializableExtra(EXTRA_REQUEST_MUSIC_MUSIC_IDS);
                 deviceSupport.onMusicOperation(operation, playlistIndex, playlistName, musics);
                 break;
         }
