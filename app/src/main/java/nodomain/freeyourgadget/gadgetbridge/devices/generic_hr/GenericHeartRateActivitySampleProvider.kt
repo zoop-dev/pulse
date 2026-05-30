@@ -16,11 +16,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.generic_hr
 
+import nodomain.freeyourgadget.gadgetbridge.database.DBHelper
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericHeartRateSampleProvider
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericActivitySample
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericHeartRateSample
+import nodomain.freeyourgadget.gadgetbridge.entities.GenericHeartRateSampleDao
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind
 
@@ -89,7 +91,18 @@ open class GenericHeartRateActivitySampleProvider(device: GBDevice, session: Dao
     }
 
     override fun getFirstActivitySample(after: Int): GenericActivitySample? {
-        return getFirstActivitySample()?.takeIf { it.timestamp > after }
+        val afterMillis = after.toLong() * 1000
+        val device = DBHelper.findDevice(heartRateProvider.device, heartRateProvider.session) ?: return null
+        val samples = heartRateProvider.sampleDao.queryBuilder()
+            .where(
+                GenericHeartRateSampleDao.Properties.Timestamp.gt(afterMillis),
+                GenericHeartRateSampleDao.Properties.DeviceId.eq(device.id)
+            )
+            .orderAsc(GenericHeartRateSampleDao.Properties.Timestamp)
+            .limit(1)
+            .build()
+            .list()
+        return samples.firstOrNull()?.let { toGenericActivitySample(it) }
     }
 
     private fun toGenericActivitySample(hrSample: GenericHeartRateSample): GenericActivitySample {
