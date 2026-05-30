@@ -46,21 +46,17 @@ internal object WeightSyncer : AbstractTimeSampleSyncer<WeightSample, WeightReco
         metadata: Metadata,
         deviceName: String
     ): WeightRecord? {
-        val weightInKg = sample.getWeightKg()
+        val weightInKg = sample.getWeightKg().toDouble()
 
-        if (weightInKg <= 0) {
-            logger.debug(
-                "Skipping Weight sample for device '{}' due to invalid weight: {}kg (must be > 0).",
-                deviceName,
-                weightInKg
-            )
+        if (weightInKg !in 0.0..1000.0 || !weightInKg.isFinite()) {
+            logger.skipOutOfRange(deviceName, "Weight", weightInKg, "0..1000 kg")
             return null
         }
 
         return WeightRecord(
             time = Instant.ofEpochMilli(sample.timestamp),
             zoneOffset = offset,
-            weight = Mass.kilograms(weightInKg.toDouble()),
+            weight = Mass.kilograms(weightInKg),
             metadata = metadata
         )
     }

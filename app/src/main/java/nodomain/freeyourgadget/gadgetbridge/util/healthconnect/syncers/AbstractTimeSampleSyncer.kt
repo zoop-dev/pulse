@@ -49,7 +49,7 @@ internal abstract class AbstractTimeSampleSyncer<TSample : TimeSample, TRecord :
         daoSession: DaoSession
     ): TimeSampleProvider<out TSample>?
 
-    protected abstract fun convertSample(
+    internal abstract fun convertSample(
         sample: TSample,
         offset: ZoneOffset,
         metadata: Metadata,

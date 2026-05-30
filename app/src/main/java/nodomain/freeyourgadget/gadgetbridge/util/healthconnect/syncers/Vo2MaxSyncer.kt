@@ -45,15 +45,16 @@ internal object Vo2MaxSyncer : AbstractTimeSampleSyncer<Vo2MaxSample, Vo2MaxReco
         metadata: Metadata,
         deviceName: String
     ): Vo2MaxRecord? {
-        if (sample.value <= 0) {
-            logger.trace("Skipping VO2Max sample for device '$deviceName' due to invalid value: ${sample.value}.")
+        val value = sample.value.toDouble()
+        if (value !in 0.0..100.0 || !value.isFinite()) {
+            logger.skipOutOfRange(deviceName, "VO2Max", value, "0..100 ml/kg/min")
             return null
         }
 
         return Vo2MaxRecord(
             time = Instant.ofEpochMilli(sample.timestamp),
             zoneOffset = offset,
-            vo2MillilitersPerMinuteKilogram = sample.value.toDouble(),
+            vo2MillilitersPerMinuteKilogram = value,
             measurementMethod = Vo2MaxRecord.MEASUREMENT_METHOD_OTHER,
             metadata = metadata
         )

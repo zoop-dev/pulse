@@ -45,7 +45,8 @@ internal object RestingHeartRateSyncer : AbstractTimeSampleSyncer<HeartRateSampl
         metadata: Metadata,
         deviceName: String
     ): RestingHeartRateRecord? {
-        if (sample.heartRate !in 20..250) {
+        if (sample.heartRate !in 0..300) {
+            logger.skipOutOfRange(deviceName, "RestingHeartRate", sample.heartRate, "0..300 bpm")
             return null
         }
 
