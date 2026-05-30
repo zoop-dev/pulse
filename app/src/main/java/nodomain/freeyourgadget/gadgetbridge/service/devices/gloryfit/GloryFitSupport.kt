@@ -790,7 +790,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         builder.queue()
     }
 
-    override fun onSetMusicState(stateSpec: MusicStateSpec?) {
+    override fun onSetMusicState(stateSpec: MusicStateSpec) {
         if (!mMediaManager!!.onSetMusicState(stateSpec)) {
             return
         }
@@ -831,7 +831,7 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
         builder.queue()
     }
 
-    override fun onSetMusicInfo(musicSpec: MusicSpec?) {
+    override fun onSetMusicInfo(musicSpec: MusicSpec) {
         if (!mMediaManager!!.onSetMusicInfo(musicSpec)) {
             return
         }
