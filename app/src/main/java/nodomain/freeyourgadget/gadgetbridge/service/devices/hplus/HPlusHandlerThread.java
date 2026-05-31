@@ -427,7 +427,7 @@ class HPlusHandlerThread extends GBDeviceIoThread {
 
         prevRealTimeRecord = record;
 
-        getDevice().setBatteryLevel(record.battery);
+        getDevice().setBatteryLevel(record.battery, 0);
 
         try (DBHandler dbHandler = GBApplication.acquireDB()) {
             HPlusHealthSampleProvider provider = new HPlusHealthSampleProvider(getDevice(), dbHandler.getDaoSession());

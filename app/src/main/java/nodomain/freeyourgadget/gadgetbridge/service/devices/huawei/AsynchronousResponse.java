@@ -719,7 +719,7 @@ public class AsynchronousResponse {
 
             if (resp.multi_level == null) {
                 byte batteryLevel = resp.level;
-                this.support.getDevice().setBatteryLevel(batteryLevel);
+                this.support.getDevice().setBatteryLevel(batteryLevel, 0);
 
                 GBDeviceEventBatteryInfo batteryInfo = new GBDeviceEventBatteryInfo();
                 batteryInfo.state = BatteryState.BATTERY_NORMAL;

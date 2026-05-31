@@ -194,8 +194,8 @@ public class VescDeviceSupport extends VescBaseDeviceSupport {
         fullnessPercent = Math.max(fullnessPercent, 0);
         fullnessPercent = Math.min(fullnessPercent, 100);
 
-        getDevice().setBatteryLevel(fullnessPercent);
-        getDevice().setBatteryVoltage(voltage);
+        getDevice().setBatteryLevel(fullnessPercent, 0);
+        getDevice().setBatteryVoltage(voltage, 0);
         getDevice().sendDeviceUpdateIntent(getContext());
     }
 

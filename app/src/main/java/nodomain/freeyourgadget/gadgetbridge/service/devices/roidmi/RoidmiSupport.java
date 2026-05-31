@@ -58,7 +58,7 @@ public class RoidmiSupport extends AbstractHeadphoneSerialDeviceSupportV2<Roidmi
         }
 
         if (mDeviceProtocol.supportsBatteryVoltage()) {
-            if (getDevice().getBatteryVoltage() == -1) {
+            if (getDevice().getBatteryVoltage(0) == -1) {
                 infoMissing = true;
 
                 builder.write(mDeviceProtocol.encodeGetVoltage());

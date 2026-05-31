@@ -240,7 +240,7 @@ public class MarstekB2500DeviceSupport extends AbstractBTLESingleDeviceSupport {
         devicePrefsEdit.apply();
         devicePrefsEdit.commit();
 
-        getDevice().setBatteryLevel(battery_pct);
+        getDevice().setBatteryLevel(battery_pct, 0);
         getDevice().sendDeviceUpdateIntent(getContext());
 
         Intent intent = new Intent(SolarEquipmentStatusActivity.ACTION_SEND_SOLAR_EQUIPMENT_STATUS)

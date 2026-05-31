@@ -57,8 +57,8 @@ public class ConfigurationGetRequest extends FileEncryptedLookupAndGetRequest im
             }else if(item instanceof ConfigurationPutRequest.TimezoneOffsetConfigItem) {
                 device.addDeviceInfo(new GenericItem(QHybridSupport.ITEM_TIMEZONE_OFFSET, String.valueOf(((ConfigurationPutRequest.TimezoneOffsetConfigItem) item).getValue())));
             }else if(item instanceof ConfigurationPutRequest.BatteryConfigItem){
-                device.setBatteryLevel((short) ((ConfigurationPutRequest.BatteryConfigItem) item).getBatteryPercentage());
-                device.setBatteryVoltage(((ConfigurationPutRequest.BatteryConfigItem) item).getBatteryVoltage() / 1000f);
+                device.setBatteryLevel((short) ((ConfigurationPutRequest.BatteryConfigItem) item).getBatteryPercentage(), 0);
+                device.setBatteryVoltage(((ConfigurationPutRequest.BatteryConfigItem) item).getBatteryVoltage() / 1000f, 0);
 
                 GBDeviceEventBatteryInfo batteryInfo = new GBDeviceEventBatteryInfo();
                 batteryInfo.level = (short) ((ConfigurationPutRequest.BatteryConfigItem) item).getBatteryPercentage();

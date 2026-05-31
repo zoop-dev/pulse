@@ -178,7 +178,7 @@ public class ControlActivity extends AbstractGBActivity implements JoystickView.
     }
 
     private void setBatteryLabel() {
-        String level = device.getBatteryLevel() > 0 ? String.format("%1s%%", device.getBatteryLevel()) : device.getName();
+        String level = device.getBatteryLevel(0) > 0 ? String.format("%1s%%", device.getBatteryLevel(0)) : device.getName();
         batteryPercentage.setText(level);
     }
 

@@ -160,10 +160,10 @@ public class Widget extends AppWidgetProvider {
         views.setViewVisibility(R.id.todaywidget_battery_icon, View.GONE);
         String status = String.format("%1s", deviceForWidget.getStateString(context));
         if (deviceForWidget.isConnected()) {
-            if (deviceForWidget.getBatteryLevel() > 1) {
+            if (deviceForWidget.getBatteryLevel(0) > 1) {
                 views.setViewVisibility(R.id.todaywidget_battery_icon, View.VISIBLE);
 
-                status = String.format("%1s%%", deviceForWidget.getBatteryLevel());
+                status = String.format("%1s%%", deviceForWidget.getBatteryLevel(0));
             }
         }
 
