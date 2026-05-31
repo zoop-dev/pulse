@@ -48,20 +48,21 @@ public class MoyoungWorkoutSummaryParser implements ActivitySummaryParser {
 
         final ActivitySummaryData summaryData = new ActivitySummaryData();
 
-        int protocolVersion = 0;
+        final int protocolVersion;
         if (rawSummaryData.length % 24 == 0) {
             protocolVersion = 1;
         } else if (rawSummaryData.length % 26 == 0) {
             protocolVersion = 2;
-        }
-        if (protocolVersion == 0) {
-            LOG.error("Invalid raw data");
+        } else if (rawSummaryData.length % 30 == 0) {
+            protocolVersion = 3;
+        } else {
+            LOG.error("Unknown protocol version");
             return summary;
         }
 
         byte num = 0;
         byte avgHR = 0;
-        if (protocolVersion == 2) {
+        if (protocolVersion == 2 || protocolVersion == 3) {
             buffer.get();  // skip packet subtype
             num = buffer.get();
         }
@@ -70,8 +71,10 @@ public class MoyoungWorkoutSummaryParser implements ActivitySummaryParser {
         int validTime = buffer.getShort();
         if (protocolVersion == 1) {
             num = buffer.get(); // == i
-        } else {
+        } else if (protocolVersion == 2) {
             avgHR = buffer.get();
+        } else {
+            buffer.get(); // unknown (always 0x00)
         }
         byte type = buffer.get();
         int steps = buffer.getInt();
@@ -79,15 +82,20 @@ public class MoyoungWorkoutSummaryParser implements ActivitySummaryParser {
         int calories;
         if (protocolVersion == 1) {
             calories = buffer.getShort();
-        } else {
+        } else if (protocolVersion == 2) {
             calories = buffer.getInt();
+        } else {
+            calories = buffer.getShort();
+            avgHR = buffer.get();
+            buffer.get(); // 0?
+            // todo last 4 bytes?
         }
 
         summaryData.add(ActivitySummaryEntries.ACTIVE_SECONDS, validTime, ActivitySummaryEntries.UNIT_SECONDS);
         summaryData.add(ActivitySummaryEntries.STEPS, steps, ActivitySummaryEntries.UNIT_STEPS);
         summaryData.add(ActivitySummaryEntries.DISTANCE_METERS, distance, ActivitySummaryEntries.UNIT_METERS);
         summaryData.add(ActivitySummaryEntries.CALORIES_BURNT, calories, ActivitySummaryEntries.UNIT_KCAL);
-        if (protocolVersion == 2) {
+        if (avgHR > 0) {
             summaryData.add(ActivitySummaryEntries.HR_AVG, avgHR, ActivitySummaryEntries.UNIT_BPM);
         }
 

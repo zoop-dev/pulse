@@ -1339,26 +1339,33 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     public void handleTrainingData(byte[] data) {
-        int protocolVersion = 0;
-        int trainingBytesLength = 24;
+        final int protocolVersion;
+        final int trainingBytesLength;
         if (data.length % 24 == 0) {
             protocolVersion = 1;
+            trainingBytesLength = 24;
         } else if (data.length % 26 == 0) {
             protocolVersion = 2;
             trainingBytesLength = 26;
-        }
-        if (protocolVersion == 0) {
-            LOG.error("Invalid training data received");
+        } else if (data.length % 30 == 0) {
+            protocolVersion = 3;
+            trainingBytesLength = 30;
+        } else {
+            LOG.error("Invalid training data received of length {}", data.length);
             return;
         }
 
         for (int i = 0; i < data.length / trainingBytesLength; i++) {
             if (protocolVersion == 1 && ArrayUtils.isAllZeros(data, trainingBytesLength * i, trainingBytesLength)) {
-                LOG.info("Skipping empty workout details packet");
+                LOG.info("Skipping empty workout details packet v1");
                 continue;
             }
             if (protocolVersion == 2 && ArrayUtils.isAllZeros(data, 2, trainingBytesLength - 2)) {
-                LOG.info("Skipping empty workout details packet");
+                LOG.info("Skipping empty workout details packet v2");
+                continue;
+            }
+            if (protocolVersion == 3 && ArrayUtils.isAllZeros(data, trainingBytesLength * i + 2, 24)) {
+                LOG.info("Skipping empty workout details packet v3");
                 continue;
             }
 
@@ -1366,7 +1373,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
             buffer.order(ByteOrder.LITTLE_ENDIAN);
             byte num = 0;
             byte avgHR = 0;
-            if (protocolVersion == 2) {
+            if (protocolVersion == 2 || protocolVersion == 3) {
                 buffer.get();  // skip packet subtype
                 num = buffer.get();
             }
@@ -1375,8 +1382,10 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
             int validTime = buffer.getShort();
             if (protocolVersion == 1) {
                 num = buffer.get(); // == i
-            } else {
+            } else if (protocolVersion == 2) {
                 avgHR = buffer.get();
+            } else {
+                buffer.get(); // unknown (always 0x00)
             }
             byte type = buffer.get();
             int steps = buffer.getInt();
@@ -1384,8 +1393,13 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
             int calories;
             if (protocolVersion == 1) {
                 calories = buffer.getShort();
-            } else {
+            } else if (protocolVersion == 2) {
                 calories = buffer.getInt();
+            } else {
+                calories = buffer.getShort();
+                avgHR = buffer.get();
+                buffer.get(); // 0?
+                // todo last 4 bytes?
             }
             LOG.info("Training data: start={} end={} totalTimeWithoutPause={} num={} type={} steps={} avgHR={} distance={} calories={}", startTime, endTime, validTime, num, type, steps, avgHR, distance, calories);
 
@@ -1415,8 +1429,8 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     summary.setDevice(device);
                     summary.setUser(user);
 
-                    ActivityKind gbType = provider.normalizeType(type);
-                    summary.setName(gbType.name());
+                    ActivityKind gbType = protocolVersion < 3 ? provider.normalizeType(type) : provider.normalizeTypeV3(type);
+                    summary.setName(gbType.getLabel(getContext()));
                     summary.setActivityKind(gbType.getCode());
 
                     summary.setStartTime(startTime);

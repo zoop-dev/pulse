@@ -116,6 +116,15 @@ public class MoyoungActivitySampleProvider extends AbstractSampleProvider<Moyoun
             return MoyoungConstants.WORKOUT_TYPES_TO_ACTIVITY_KIND.getOrDefault((byte) rawType, ActivityKind.ACTIVITY);
     }
 
+    // FIXME we should actually persist the raw kinds...
+    public ActivityKind normalizeTypeV3(int rawType) {
+        return switch (rawType) {
+            case 13 -> ActivityKind.WALKING; // gps on foot?
+            case 14 -> ActivityKind.WALKING;
+            default -> ActivityKind.UNKNOWN;
+        };
+    }
+
     @Override
     public int toRawActivityKind(ActivityKind activityKind) {
         if (activityKind == ActivityKind.NOT_MEASURED)
