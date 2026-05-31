@@ -43,11 +43,13 @@ import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.Activity
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryTableBuilder;
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummaryValue;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
+import nodomain.freeyourgadget.gadgetbridge.entities.GenericMetricSample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
+import nodomain.freeyourgadget.gadgetbridge.model.MetricSample;
 import nodomain.freeyourgadget.gadgetbridge.model.workout.Workout;
 import nodomain.freeyourgadget.gadgetbridge.model.workout.WorkoutChart;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.AntGadget;
@@ -116,6 +118,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
     private Number ebikeBatteryEnd = null;
     @Nullable
     private FitWorkout workout = null;
+    private final List<GenericMetricSample> genericMetricSamples = new ArrayList<>();
 
     public GarminWorkoutParser(final Context context) {
         this.context = context;
@@ -124,6 +127,11 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
     @Nullable
     public Long getSessionStartTime() {
         return (session != null) ? session.getStartTime() : null;
+    }
+
+    @NonNull
+    public List<GenericMetricSample> getGenericMetricSamples(){
+        return genericMetricSamples;
     }
 
     @Override
@@ -740,7 +748,14 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
                 summaryData.add(TRAINING_EFFECT_AEROBIC, physiologicalMetrics.getAerobicEffect(), UNIT_NONE, true);
             }
             if (physiologicalMetrics.getMetMax() != null) {
-                summaryData.add(MAXIMUM_OXYGEN_UPTAKE, physiologicalMetrics.getMetMax().floatValue() * 3.5f, UNIT_ML_KG_MIN);
+                float vo2Max = physiologicalMetrics.getMetMax().floatValue() * 3.5f;
+                if (vo2Max > 0.0f) {
+                    summaryData.add(MAXIMUM_OXYGEN_UPTAKE, vo2Max, UNIT_ML_KG_MIN);
+                    final GenericMetricSample sample = new GenericMetricSample();
+                    sample.setTimestamp(physiologicalMetrics.computedTimestamp * 1000L);
+                    sample.setMetric(MetricSample.Metric.GENERIC_MAXIMUM_OXYGEN_UPTAKE, vo2Max);
+                    genericMetricSamples.add(sample);
+                }
             }
             if (physiologicalMetrics.getRecoveryTime() != null) {
                 summaryData.add(RECOVERY_TIME, physiologicalMetrics.getRecoveryTime() * 60, UNIT_SECONDS);

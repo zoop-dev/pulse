@@ -238,4 +238,8 @@ public class GBPrefs extends Prefs {
     public boolean experimentalSettings() {
         return getBoolean("experimental_settings", false);
     }
+
+    public boolean experimentalMetrics() {
+        return getBoolean("experimental_metrics", false);
+    }
 }
