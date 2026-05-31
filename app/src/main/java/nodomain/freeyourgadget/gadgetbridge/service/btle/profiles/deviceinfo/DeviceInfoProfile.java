@@ -23,8 +23,13 @@ import android.content.Intent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdateDeviceInfo;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
@@ -176,5 +181,36 @@ public class DeviceInfoProfile<T extends AbstractBTLESingleDeviceSupport> extend
         final Intent intent = new Intent(ACTION_DEVICE_INFO);
         intent.putExtra(EXTRA_DEVICE_INFO, deviceInfo); // TODO: broadcast a clone of the info
         return intent;
+    }
+
+    public static List<GBDeviceEvent> toDeviceEvents(final DeviceInfo deviceInfo) {
+        final GBDeviceEventVersionInfo versionCmd = new GBDeviceEventVersionInfo();
+        final List<GBDeviceEvent> events = new ArrayList<>(1);
+        events.add(versionCmd);
+
+        if (deviceInfo.getHardwareRevision() != null) {
+            versionCmd.hwVersion = deviceInfo.getHardwareRevision();
+        }
+
+        if (deviceInfo.getFirmwareRevision() != null) {
+            versionCmd.fwVersion = deviceInfo.getFirmwareRevision();
+            versionCmd.fwVersion2 = deviceInfo.getSoftwareRevision();
+        } else if (deviceInfo.getSoftwareRevision() != null) {
+            versionCmd.fwVersion = deviceInfo.getSoftwareRevision();
+        }
+
+        if (deviceInfo.getManufacturerName() != null) {
+            events.add(new GBDeviceEventUpdateDeviceInfo("MANUFACTURER: ", deviceInfo.getManufacturerName()));
+        }
+
+        if (deviceInfo.getModelNumber() != null) {
+            events.add(new GBDeviceEventUpdateDeviceInfo("MODEL: ", deviceInfo.getModelNumber()));
+        }
+
+        if (deviceInfo.getSerialNumber() != null) {
+            events.add(new GBDeviceEventUpdateDeviceInfo("SERIAL: ", deviceInfo.getSerialNumber()));
+        }
+
+        return events;
     }
 }

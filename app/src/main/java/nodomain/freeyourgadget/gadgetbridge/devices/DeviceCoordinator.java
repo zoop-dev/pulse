@@ -158,6 +158,7 @@ public interface DeviceCoordinator {
         PV_EQUIPMENT,
         GLUCOSE_METER,
         BLOOD_PRESSURE_METER,
+        BATTERY_MONITOR,
     }
 
     /**

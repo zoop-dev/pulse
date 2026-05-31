@@ -589,7 +589,7 @@ public class BleNamesResolver {
         mServices.put("16187f00-0000-1000-8000-00807f9b34fb", "(Propr: Xiaomi Wear Service - Mi Smart Watch 4C/Redmi Band)");
         mServices.put("1314f000-1000-9000-7000-301291e21220", "(Propr: Xiaomi Wear Service - Mi Watch/Mi Watch Color/Mi Watch Color Sport)");
         mServices.put("7495fe00-a7f3-424b-92dd-4a006a3aef56", "(Propr: Xiaomi Wear Service - Mi Watch CN)");
-        mServices.put("0000fff0-0000-1000-8000-00805f9b34fb", "(Propr: Nothing CMF Command");
+        mServices.put("0000fff0-0000-1000-8000-00805f9b34fb", "(Propr: Custom Service)");
         mServices.put("02f00000-0000-0000-0000-00000000ffe0", "(Propr: Nothing CMF Data");
         mServices.put("02f00000-0000-0000-0000-00000000fe00", "(Propr: Nothing CMF Firmware");
         mServices.put("77d4e67c-2fe2-2334-0d35-9ccd078f529c", "(Propr: Nothing CMF Shell");
