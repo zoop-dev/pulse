@@ -36,6 +36,7 @@ import java.util.Objects;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
+import nodomain.freeyourgadget.gadgetbridge.service.DeviceCommunicationService;
 import nodomain.freeyourgadget.gadgetbridge.util.CompressionUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
@@ -107,7 +108,11 @@ public class GenericWeatherReceiver extends BroadcastReceiver {
             intent.replaceExtras((Bundle)null);
 
             Weather.setWeatherSpec(weathers);
-            GBApplication.deviceService().onSendWeather();
+
+            // #6186 - Avoid starting the DeviceCommunicationService if it is not yet running
+            if (DeviceCommunicationService.isRunning(context)) {
+                GBApplication.deviceService().onSendWeather();
+            }
         } catch (final Exception e) {
             GB.toast("Gadgetbridge received broken or incompatible weather data", Toast.LENGTH_SHORT, GB.ERROR, e);
         }
