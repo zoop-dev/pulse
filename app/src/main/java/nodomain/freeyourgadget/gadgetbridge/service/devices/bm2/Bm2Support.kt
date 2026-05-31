@@ -61,6 +61,7 @@ class Bm2Support : AbstractBTLESingleDeviceSupport(LOG) {
 
     override fun initializeDevice(builder: TransactionBuilder): TransactionBuilder {
         builder.setDeviceState(GBDevice.State.INITIALIZING)
+        deviceInfoProfile.requestDeviceInfo(builder)
         builder.notify(UUID_CHARACTERISTIC_BM2, true)
         builder.setDeviceState(GBDevice.State.INITIALIZED)
         return builder
