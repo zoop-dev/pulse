@@ -454,7 +454,7 @@ public class IGPSportDeviceSupport extends AbstractBTLESingleDeviceSupport {
     public void handleFactoryData(byte[] data) throws InvalidProtocolBufferException {
         Factory.factory_msg factoryMsg = Factory.factory_msg.parseFrom(data);
         if (factoryMsg.hasBattaryMsg()) {
-            gbDevice.setBatteryLevel(factoryMsg.getBattaryMsg().getPowerPercent());
+            gbDevice.setBatteryLevel(factoryMsg.getBattaryMsg().getPowerPercent(), 0);
         }
         if (factoryMsg.getFactorySnMsgList().size() > 0) {
             // save serial to volatile address now, need to find way to use it as identifier in database

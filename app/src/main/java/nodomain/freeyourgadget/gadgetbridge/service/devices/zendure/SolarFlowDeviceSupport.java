@@ -275,7 +275,7 @@ public class SolarFlowDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 int electricLevel = properties.getInt("electricLevel");
                 if (electricLevel != this.electricLevel) {
                     this.electricLevel = electricLevel;
-                    getDevice().setBatteryLevel(electricLevel); // update event will be sent when firmware gets read
+                    getDevice().setBatteryLevel(electricLevel, 0); // update event will be sent when firmware gets read
                 }
             }
             if (properties.has("MASTER")) {

@@ -67,7 +67,7 @@ public class GetBatteryLevelRequest extends Request {
 
         if (response.multi_level == null) {
             byte batteryLevel = response.level;
-            getDevice().setBatteryLevel(batteryLevel);
+            getDevice().setBatteryLevel(batteryLevel, 0);
 
             GBDeviceEventBatteryInfo batteryInfo = new GBDeviceEventBatteryInfo();
             batteryInfo.state = BatteryState.BATTERY_NORMAL;

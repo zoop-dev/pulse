@@ -781,10 +781,10 @@ public class QHybridSupport extends QHybridBaseSupport {
             }
             case "00002a19-0000-1000-8000-00805f9b34fb": {
                 short level = value[0];
-                gbDevice.setBatteryLevel(level);
+                gbDevice.setBatteryLevel(level, 0);
 
                 GBDeviceEventBatteryInfo batteryInfo = new GBDeviceEventBatteryInfo();
-                batteryInfo.level = gbDevice.getBatteryLevel();
+                batteryInfo.level = gbDevice.getBatteryLevel(0);
                 batteryInfo.state = BatteryState.BATTERY_NORMAL;
                 handleGBDeviceEvent(batteryInfo);
                 break;
