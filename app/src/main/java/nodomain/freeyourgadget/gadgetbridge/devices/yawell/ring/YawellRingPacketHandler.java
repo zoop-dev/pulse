@@ -1,4 +1,4 @@
-/*  Copyright (C) 2024 Arjan Schrijver
+/*  Copyright (C) 2024-2026 Arjan Schrijver, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -15,6 +15,8 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.yawell.ring;
+
+import static nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils.formatIso8601;
 
 import android.content.Context;
 import android.content.Intent;
@@ -53,8 +55,6 @@ import nodomain.freeyourgadget.gadgetbridge.entities.ColmiSpo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiStressSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.ColmiTemperatureSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
-import nodomain.freeyourgadget.gadgetbridge.entities.User;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
@@ -63,8 +63,12 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.yawell.ring.YawellRi
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
-public class YawellRingPacketHandler {
+public final class YawellRingPacketHandler {
     private static final Logger LOG = LoggerFactory.getLogger(YawellRingPacketHandler.class);
+
+    private YawellRingPacketHandler() {
+        throw new UnsupportedOperationException("only static members");
+    }
 
     public static void hrIntervalSettings(YawellRingDeviceSupport support, byte[] value) {
         if (value[1] == YawellRingConstants.PREF_WRITE) return;  // ignore empty response when writing setting
@@ -132,7 +136,9 @@ public class YawellRingPacketHandler {
         LOG.info("Received goals preferences: {} steps, {} calories, {}m distance, {}min sport, {}min sleep", steps, calories, distance, sport, sleep);
     }
 
-    public static void liveHeartRate(GBDevice device, Context context, byte[] value) {
+    public static void liveHeartRate(@NonNull final GBDevice device,
+                                     @NonNull final Context context,
+                                     @NonNull final byte[] value) {
         int errorCode = value[2];
         int hrResponse = value[3] & 0xff;
         switch (errorCode) {
@@ -155,14 +161,10 @@ public class YawellRingPacketHandler {
             try (DBHandler db = GBApplication.acquireDB()) {
                 // Build sample object and save in database
                 ColmiHeartRateSampleProvider sampleProvider = new ColmiHeartRateSampleProvider(device, db.getDaoSession());
-                Long userId = DBHelper.getUser(db.getDaoSession()).getId();
-                Long deviceId = DBHelper.getDevice(device, db.getDaoSession()).getId();
                 ColmiHeartRateSample gbSample = new ColmiHeartRateSample();
-                gbSample.setDeviceId(deviceId);
-                gbSample.setUserId(userId);
                 gbSample.setTimestamp(Calendar.getInstance().getTimeInMillis());
                 gbSample.setHeartRate(hrResponse);
-                sampleProvider.addSample(gbSample);
+                sampleProvider.persistSamples(gbSample, context);
                 // Send local intent with sample for listeners like the heart rate dialog
                 Intent liveIntent = new Intent(DeviceService.ACTION_REALTIME_SAMPLES);
                 liveIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
@@ -175,7 +177,10 @@ public class YawellRingPacketHandler {
         }
     }
 
-    public static void realtimeHeartRate(GBDevice device, Context context, YawellRingLiveActivityContext hrmContext, byte[] value) {
+    public static void realtimeHeartRate(@NonNull final GBDevice device,
+                                         @NonNull final Context context,
+                                         @NonNull final YawellRingLiveActivityContext hrmContext,
+                                         @NonNull final byte[] value) {
         int hrResponse = value[1] & 0xff;
         LOG.info("Received realtime heart rate response: {} bpm", hrResponse);
 
@@ -192,25 +197,18 @@ public class YawellRingPacketHandler {
         if (hrResponse > 0) {
             // Build sample object, send intent and save in database
             try (DBHandler db = GBApplication.acquireDB()) {
-                Long userId = DBHelper.getUser(db.getDaoSession()).getId();
-                Long deviceId = DBHelper.getDevice(device, db.getDaoSession()).getId();
-                
                 // Build heart rate sample object and save in database
                 ColmiHeartRateSampleProvider heartRateSampleProvider = new ColmiHeartRateSampleProvider(device, db.getDaoSession());
                 ColmiHeartRateSample heartRateSample = heartRateSampleProvider.createSample();
-                heartRateSample.setDeviceId(deviceId);
-                heartRateSample.setUserId(userId);
                 heartRateSample.setTimestamp(calendar.getTimeInMillis());
                 heartRateSample.setHeartRate(hrResponse);
+                heartRateSampleProvider.persistSamples(heartRateSample, context);
 
                 // Send local intent with sample for listeners like the live activity tab
                 Intent intent = new Intent(DeviceService.ACTION_REALTIME_SAMPLES)
                         .putExtra(GBDevice.EXTRA_DEVICE, device)
                         .putExtra(DeviceService.EXTRA_REALTIME_SAMPLE, heartRateSample);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-
-                // Save heart rate sample to the database
-                heartRateSampleProvider.addSample(heartRateSample);
             } catch (Exception e) {
                 LOG.error("Error acquiring database for recording heart rate samples", e);
             }
@@ -248,7 +246,9 @@ public class YawellRingPacketHandler {
     }
 
     @NonNull
-    public static Runnable liveActivityPulse(GBDevice device, Context context, YawellRingLiveActivityContext liveActivityContext) {
+    public static Runnable liveActivityPulse(@NonNull final GBDevice device,
+                                             @NonNull final Context context,
+                                             @NonNull final YawellRingLiveActivityContext liveActivityContext) {
         return () -> {
             Calendar calendar = Calendar.getInstance();
             int sampleTimestamp = (int) (calendar.getTimeInMillis() / 1000);
@@ -286,7 +286,9 @@ public class YawellRingPacketHandler {
         };
     }
 
-    public static void historicalActivity(GBDevice device, Context context, byte[] value) {
+    public static void historicalActivity(@NonNull final GBDevice device,
+                                          @NonNull final Context context,
+                                          @NonNull final byte[] value) {
         if ((value[1] & 0xff) == 0xff) {
             device.unsetBusyTask();
             device.sendDeviceUpdateIntent(context);
@@ -309,22 +311,17 @@ public class YawellRingPacketHandler {
             int calories = BLETypeConversions.toUint16(value[7], value[8]);
             int steps = BLETypeConversions.toUint16(value[9], value[10]);
             int distance = BLETypeConversions.toUint16(value[11], value[12]);
-            LOG.info("Received activity sample: {} - {} calories, {} steps, {} distance", sampleCal.getTime(), calories, steps, distance);
+            LOG.info("Received activity sample: {} - {} calories, {} steps, {} distance", formatIso8601(sampleCal), calories, steps, distance);
             // Build sample object and save in database
             try (DBHandler db = GBApplication.acquireDB()) {
                 ColmiActivitySampleProvider sampleProvider = new ColmiActivitySampleProvider(device, db.getDaoSession());
-                Long userId = DBHelper.getUser(db.getDaoSession()).getId();
-                Long deviceId = DBHelper.getDevice(device, db.getDaoSession()).getId();
                 ColmiActivitySample gbSample = sampleProvider.createActivitySample();
-                gbSample.setProvider(sampleProvider);
-                gbSample.setDeviceId(deviceId);
-                gbSample.setUserId(userId);
                 gbSample.setRawKind(ActivityKind.ACTIVITY.getCode());
                 gbSample.setTimestamp((int) (sampleCal.getTimeInMillis() / 1000));
                 gbSample.setCalories(calories);
                 gbSample.setSteps(steps);
                 gbSample.setDistance(distance);
-                sampleProvider.addGBActivitySample(gbSample);
+                sampleProvider.persistSamples(gbSample, context);
             } catch (Exception e) {
                 LOG.error("Error acquiring database for recording activity samples", e);
             }
@@ -338,8 +335,10 @@ public class YawellRingPacketHandler {
         }
     }
 
-    public static void historicalStress(GBDevice device, Context context, byte[] value) {
-        ArrayList<ColmiStressSample> stressSamples = new ArrayList<>();
+    public static void historicalStress(@NonNull final GBDevice device,
+                                        @NonNull final Context context,
+                                        @NonNull final byte[] value) {
+        final ArrayList<ColmiStressSample> stressSamples = new ArrayList<>();
         int stressPacketNr = value[1] & 0xff;
         if (stressPacketNr == 0xff) {
             device.unsetBusyTask();
@@ -359,30 +358,24 @@ public class YawellRingPacketHandler {
                 minutesInPreviousPackets += (stressPacketNr - 2) * 13 * 30;  // 13 values per packet
             }
             for (int i = startValue; i < value.length - 1; i++) {
-                if (value[i] != 0x00) {
+                final int stress = value[i] & 0xFF;
+                if (stress != 0x00) {
                     // Determine time of day
                     int minuteOfDay = minutesInPreviousPackets + (i - startValue) * 30;
                     sampleCal.set(Calendar.HOUR_OF_DAY, minuteOfDay / 60);
                     sampleCal.set(Calendar.MINUTE, minuteOfDay % 60);
-                    LOG.info("Stress level is {} at {}", value[i] & 0xff, sampleCal.getTime());
+                    LOG.info("Stress level is {} at {}", stress, formatIso8601(sampleCal));
                     // Build sample object and save in database
                     ColmiStressSample gbSample = new ColmiStressSample();
                     gbSample.setTimestamp(sampleCal.getTimeInMillis());
-                    gbSample.setStress(value[i] & 0xff);
+                    gbSample.setStress(stress);
                     stressSamples.add(gbSample);
                 }
             }
             if (!stressSamples.isEmpty()) {
                 try (DBHandler db = GBApplication.acquireDB()) {
                     ColmiStressSampleProvider sampleProvider = new ColmiStressSampleProvider(device, db.getDaoSession());
-                    Long userId = DBHelper.getUser(db.getDaoSession()).getId();
-                    Long deviceId = DBHelper.getDevice(device, db.getDaoSession()).getId();
-                    for (final ColmiStressSample sample : stressSamples) {
-                        sample.setDeviceId(deviceId);
-                        sample.setUserId(userId);
-                    }
-                    LOG.info("Will persist {} stress samples", stressSamples.size());
-                    sampleProvider.addSamples(stressSamples);
+                    sampleProvider.persistSamples(stressSamples, context);
                 } catch (Exception e) {
                     LOG.error("Error acquiring database for recording stress samples", e);
                 }
@@ -394,7 +387,9 @@ public class YawellRingPacketHandler {
         }
     }
 
-    public static void historicalSpo2(GBDevice device, byte[] value) {
+    public static void historicalSpo2(@NonNull final GBDevice device,
+                                      @NonNull final Context context,
+                                      @NonNull final byte[] value) {
         ArrayList<ColmiSpo2Sample> spo2Samples = new ArrayList<>();
         int length = BLETypeConversions.toUint16(value[2], value[3]);
         int index = 6; // start of data (day nr, followed by values)
@@ -428,21 +423,16 @@ public class YawellRingPacketHandler {
         if (!spo2Samples.isEmpty()) {
             try (DBHandler db = GBApplication.acquireDB()) {
                 ColmiSpo2SampleProvider sampleProvider = new ColmiSpo2SampleProvider(device, db.getDaoSession());
-                Long userId = DBHelper.getUser(db.getDaoSession()).getId();
-                Long deviceId = DBHelper.getDevice(device, db.getDaoSession()).getId();
-                for (final ColmiSpo2Sample sample : spo2Samples) {
-                    sample.setDeviceId(deviceId);
-                    sample.setUserId(userId);
-                }
-                LOG.info("Will persist {} SpO2 samples", spo2Samples.size());
-                sampleProvider.addSamples(spo2Samples);
+                sampleProvider.persistSamples(spo2Samples, context);
             } catch (Exception e) {
                 LOG.error("Error acquiring database for recording SpO2 samples", e);
             }
         }
     }
 
-    public static void historicalSleep(GBDevice gbDevice, Context context, byte[] value) {
+    public static void historicalSleep(@NonNull final GBDevice gbDevice,
+                                       @NonNull final Context context,
+                                       @NonNull final byte[] value) {
         int packetLength = BLETypeConversions.toUint16(value[2], value[3]);
         if (packetLength < 2) {
             LOG.info("Received empty sleep data packet: {}", StringUtils.bytesToHex(value));
@@ -484,7 +474,7 @@ public class YawellRingPacketHandler {
                 sessionEnd.set(Calendar.MINUTE, sleepEnd);
                 sessionEnd.set(Calendar.SECOND, 0);
                 sessionEnd.set(Calendar.MILLISECOND, 0);
-                LOG.info("Sleep session starts at {} and ends at {}", sessionStart.getTime(), sessionEnd.getTime());
+                LOG.info("Sleep session starts at {} and ends at {}", formatIso8601(sessionStart), formatIso8601(sessionEnd));
                 // Build sample object to persist
                 final ColmiSleepSessionSample sessionSample = new ColmiSleepSessionSample();
                 sessionSample.setTimestamp(sessionStart.getTimeInMillis());
@@ -499,14 +489,14 @@ public class YawellRingPacketHandler {
                     sample.setDuration(value[index + 1]);
                     sample.setStage(value[index]);
                     if (sleepMinutes > 0) {
-                        LOG.info("Sleep stage type={} starts at {} and lasts for {} minutes", value[index], sleepStage.getTime(), sleepMinutes);
+                        LOG.info("Sleep stage type={} starts at {} and lasts for {} minutes", value[index], formatIso8601(sleepStage.getTime()), sleepMinutes);
                         if (sleepStage.getTimeInMillis() + sleepMinutes * 60 * 1000 > sessionEnd.getTimeInMillis()) {
                             LOG.warn("Warning: sleep stage exceeds end of sleep session, received data may be corrupt");
                         }
                         stageSamples.add(sample);
                         sleepStage.add(Calendar.MINUTE, sleepMinutes);
                     } else {
-                        LOG.info("Ignoring sleep stage type={} starts at {} and lasts for {} minutes", value[index], sleepStage.getTime(), sleepMinutes);
+                        LOG.info("Ignoring sleep stage type={} starts at {} and lasts for {} minutes", value[index], formatIso8601(sleepStage.getTime()), sleepMinutes);
                     }
                     // Prepare for next sample
                     index += 2;
@@ -515,35 +505,18 @@ public class YawellRingPacketHandler {
                 try (DBHandler handler = GBApplication.acquireDB()) {
                     final DaoSession session = handler.getDaoSession();
 
-                    final Device device = DBHelper.getDevice(gbDevice, session);
-                    final User user = DBHelper.getUser(session);
-
                     final ColmiSleepSessionSampleProvider sampleProvider = new ColmiSleepSessionSampleProvider(gbDevice, session);
 
-                    sessionSample.setDevice(device);
-                    sessionSample.setUser(user);
-
                     LOG.debug("Will persist 1 sleep session sample from {} to {}", sessionSample.getTimestamp(), sessionSample.getWakeupTime());
-                    sampleProvider.addSample(sessionSample);
+                    sampleProvider.persistSamples(sessionSample, context);
                 } catch (final Exception e) {
                     GB.toast(context, "Error saving sleep session sample", Toast.LENGTH_LONG, GB.ERROR, e);
                 }
                 // Persist sleep stages
                 try (DBHandler handler = GBApplication.acquireDB()) {
                     final DaoSession session = handler.getDaoSession();
-
-                    final Device device = DBHelper.getDevice(gbDevice, session);
-                    final User user = DBHelper.getUser(session);
-
                     final ColmiSleepStageSampleProvider sampleProvider = new ColmiSleepStageSampleProvider(gbDevice, session);
-
-                    for (final ColmiSleepStageSample sample : stageSamples) {
-                        sample.setDevice(device);
-                        sample.setUser(user);
-                    }
-
-                    LOG.debug("Will persist {} sleep stage samples", stageSamples.size());
-                    sampleProvider.addSamples(stageSamples);
+                    sampleProvider.persistSamples(stageSamples, context);
                 } catch (final Exception e) {
                     GB.toast(context, "Error saving sleep stage samples", Toast.LENGTH_LONG, GB.ERROR, e);
                 }
@@ -551,7 +524,10 @@ public class YawellRingPacketHandler {
         }
     }
 
-    public static void historicalHRV(GBDevice device, Context context, byte[] value, int daysAgo) {
+    public static void historicalHRV(@NonNull final GBDevice device,
+                                     @NonNull final Context context,
+                                     @NonNull final byte[] value,
+                                     final int daysAgo) {
         LOG.info("Received HRV history sync packet: {}", StringUtils.bytesToHex(value));
         int hrvPacketNr = value[1] & 0xff;
         if (hrvPacketNr == 0xff) {
@@ -577,29 +553,32 @@ public class YawellRingPacketHandler {
                 minutesInPreviousPackets = 12 * 30;  // packet 1
                 minutesInPreviousPackets += (hrvPacketNr - 2) * 13 * 30;
             }
+
+            final List<ColmiHrvValueSample> samples = new ArrayList<>(value.length);
             for (int i = startValue; i < value.length - 1; i++) {
-                if (value[i] != 0x00) {
+                final int hrv = value[i] & 0xff;
+                if (hrv != 0x00) {
                     // Determine time of day
                     int minuteOfDay = minutesInPreviousPackets + (i - startValue) * 30;
                     sampleCal.set(Calendar.HOUR_OF_DAY, minuteOfDay / 60);
                     sampleCal.set(Calendar.MINUTE, minuteOfDay % 60);
-                    LOG.info("Value {} is {} ms, time of day is {}", i, value[i] & 0xff, sampleCal.getTime());
+                    LOG.info("Value {} is {} ms, time of day is {}", i, hrv, formatIso8601(sampleCal));
                     // Build sample object and save in database
-                    try (DBHandler db = GBApplication.acquireDB()) {
-                        ColmiHrvValueSampleProvider sampleProvider = new ColmiHrvValueSampleProvider(device, db.getDaoSession());
-                        Long userId = DBHelper.getUser(db.getDaoSession()).getId();
-                        Long deviceId = DBHelper.getDevice(device, db.getDaoSession()).getId();
-                        ColmiHrvValueSample gbSample = new ColmiHrvValueSample();
-                        gbSample.setDeviceId(deviceId);
-                        gbSample.setUserId(userId);
-                        gbSample.setTimestamp(sampleCal.getTimeInMillis());
-                        gbSample.setValue(value[i] & 0xff);
-                        sampleProvider.addSample(gbSample);
-                    } catch (Exception e) {
-                        LOG.error("Error acquiring database for recording HRV samples", e);
-                    }
+                    ColmiHrvValueSample gbSample = new ColmiHrvValueSample();
+                    gbSample.setTimestamp(sampleCal.getTimeInMillis());
+                    gbSample.setValue(hrv);
+                    samples.add(gbSample);
                 }
             }
+
+            // Save samples in database
+            try (DBHandler db = GBApplication.acquireDB()) {
+                ColmiHrvValueSampleProvider sampleProvider = new ColmiHrvValueSampleProvider(device, db.getDaoSession());
+                sampleProvider.persistSamples(samples, context);
+            } catch (Exception e) {
+                LOG.error("Error acquiring database for recording HRV samples", e);
+            }
+
             if (hrvPacketNr == 4) {
                 device.unsetBusyTask();
                 device.sendDeviceUpdateIntent(context);
@@ -607,8 +586,10 @@ public class YawellRingPacketHandler {
         }
     }
 
-    public static void historicalTemperature(GBDevice device, byte[] value) {
-        ArrayList<ColmiTemperatureSample> temperatureSamples = new ArrayList<>();
+    public static void historicalTemperature(@NonNull final GBDevice device,
+                                             @NonNull final Context context,
+                                             @NonNull final byte[] value) {
+        final ArrayList<ColmiTemperatureSample> temperatureSamples = new ArrayList<>();
         int length = BLETypeConversions.toUint16(value[2], value[3]);
         if (length < 50) {
             LOG.info("Received temperature data packet with length {} while expecting 50. Will not try to parse it.", length);
@@ -633,18 +614,20 @@ public class YawellRingPacketHandler {
                 float temp_30 = value[index] & 0xff;
                 index++;
                 if (temp_00 > 0) {
+                    temp_00 = (temp_00 / 10) + 20;
                     LOG.info("Received temperature data from {} days ago at {}:00: {} °C", days_ago, hour, temp_00);
                     ColmiTemperatureSample temperatureSample = new ColmiTemperatureSample();
                     temperatureSample.setTimestamp(syncingDay.getTimeInMillis());
-                    temperatureSample.setTemperature((temp_00 / 10) + 20);
+                    temperatureSample.setTemperature(temp_00);
                     temperatureSamples.add(temperatureSample);
                 }
                 syncingDay.set(Calendar.MINUTE, 30);
                 if (temp_30 > 0) {
+                    temp_30 = (temp_30 / 10) + 20;
                     LOG.info("Received temperature data from {} days ago at {}:30: {} °C", days_ago, hour, temp_30);
                     ColmiTemperatureSample temperatureSample = new ColmiTemperatureSample();
                     temperatureSample.setTimestamp(syncingDay.getTimeInMillis());
-                    temperatureSample.setTemperature((temp_30 / 10) + 20);
+                    temperatureSample.setTemperature(temp_30);
                     temperatureSamples.add(temperatureSample);
                 }
                 if (index - 6 >= length) {
@@ -655,14 +638,7 @@ public class YawellRingPacketHandler {
         if (!temperatureSamples.isEmpty()) {
             try (DBHandler db = GBApplication.acquireDB()) {
                 ColmiTemperatureSampleProvider sampleProvider = new ColmiTemperatureSampleProvider(device, db.getDaoSession());
-                Long userId = DBHelper.getUser(db.getDaoSession()).getId();
-                Long deviceId = DBHelper.getDevice(device, db.getDaoSession()).getId();
-                for (final ColmiTemperatureSample sample : temperatureSamples) {
-                    sample.setDeviceId(deviceId);
-                    sample.setUserId(userId);
-                }
-                LOG.info("Will persist {} temperature samples", temperatureSamples.size());
-                sampleProvider.addSamples(temperatureSamples);
+                sampleProvider.persistSamples(temperatureSamples, context);
             } catch (Exception e) {
                 LOG.error("Error acquiring database for recording temperature samples", e);
             }

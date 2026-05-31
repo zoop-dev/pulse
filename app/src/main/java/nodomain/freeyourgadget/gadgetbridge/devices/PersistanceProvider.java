@@ -21,6 +21,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.Collections;
 import java.util.List;
 
 public interface PersistanceProvider<T> {
@@ -31,4 +32,9 @@ public interface PersistanceProvider<T> {
     /// @param context optional context for displaying error messages
     /// @return {@code false} if at least one sample couldn't be persisted.
     boolean persistSamples(@NonNull List<T> samples, @Nullable Context context);
+
+    /// @see #persistSamples(List, Context) 
+    default boolean persistSamples(@NonNull T sample, @Nullable Context context) {
+        return persistSamples(Collections.singletonList(sample), context);
+    }
 }
