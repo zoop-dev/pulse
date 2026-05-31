@@ -94,6 +94,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.GpxActivityTrackProvider;
 import nodomain.freeyourgadget.gadgetbridge.model.HeartRateSample;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvValueSample;
+import nodomain.freeyourgadget.gadgetbridge.model.MetricSample;
 import nodomain.freeyourgadget.gadgetbridge.model.PaiSample;
 import nodomain.freeyourgadget.gadgetbridge.model.RespiratoryRateSample;
 import nodomain.freeyourgadget.gadgetbridge.model.RestingMetabolicRateSample;
@@ -1207,5 +1208,16 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     @Override
     public boolean supportsConnectionPriority() {
         return true;
+    }
+
+    @Override
+    public GenericMetricSampleProvider getMetricsSampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session) {
+        return new GenericMetricSampleProvider(device, session);
+    }
+
+    @Override
+    @NonNull
+    public Set<MetricSample.Metric> supportsMetrics(@NonNull GBDevice device) {
+        return GenericMetricSampleProvider.getSupportedMetrics(device);
     }
 }

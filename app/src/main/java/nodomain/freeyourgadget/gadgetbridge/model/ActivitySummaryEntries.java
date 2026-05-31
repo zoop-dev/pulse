@@ -215,6 +215,7 @@ public class ActivitySummaryEntries {
     public static final String UNIT_CM = "cm";
     public static final String UNIT_UNIX_EPOCH_SECONDS = "unix_epoch_seconds";
     public static final String UNIT_KCAL = "calories_unit";
+    public static final String UNIT_KCAL_PER_DAY = "unit_kcal_per_day";
     public static final String UNIT_ML = "ml";
     public static final String UNIT_LAPS = "laps_unit";
     public static final String UNIT_KILOMETERS = "km";

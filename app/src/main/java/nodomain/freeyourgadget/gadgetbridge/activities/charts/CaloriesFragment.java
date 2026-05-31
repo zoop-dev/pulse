@@ -1,4 +1,23 @@
+/*  Copyright (C) 2025-2026 trentsuzuki, Thomas Kuehne
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities.charts;
+
+import static nodomain.freeyourgadget.gadgetbridge.devices.GenericMetricSampleProvider.getLatestMetricSample;
+import static nodomain.freeyourgadget.gadgetbridge.model.MetricSample.Metric.GENERIC_RESTING_METABOLIC_RATE;
 
 import android.app.Activity;
 
@@ -19,6 +38,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityAmount;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityAmounts;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
+import nodomain.freeyourgadget.gadgetbridge.model.MetricSample;
 import nodomain.freeyourgadget.gadgetbridge.model.RestingMetabolicRateSample;
 import nodomain.freeyourgadget.gadgetbridge.util.LimitedQueue;
 
@@ -47,8 +67,14 @@ abstract class CaloriesFragment<T extends ChartsData> extends AbstractChartFragm
     }
 
     protected List<CaloriesFragment.CaloriesDay> getMyCaloriesDaysData(DBHandler db, Calendar day, GBDevice device) {
-        RestingMetabolicRateSample metabolicRate = getRestingMetabolicRate(db, device);
-        int restingCalories = metabolicRate.getRestingMetabolicRate();
+        int restingCalories;
+        if (GBApplication.getPrefs().experimentalMetrics() && supportsMetrics(GENERIC_RESTING_METABOLIC_RATE)) {
+            MetricSample sample = getLatestMetricSample(db, device, GENERIC_RESTING_METABOLIC_RATE);
+            restingCalories = (sample == null) ? 0 : (int) sample.getMetricScore();
+        } else {
+            RestingMetabolicRateSample metabolicRate = getRestingMetabolicRate(db, device);
+            restingCalories = metabolicRate.getRestingMetabolicRate();
+        }
 
         day = (Calendar) day.clone(); // do not modify the caller's argument
         day.add(Calendar.DATE, -TOTAL_DAYS + 1);

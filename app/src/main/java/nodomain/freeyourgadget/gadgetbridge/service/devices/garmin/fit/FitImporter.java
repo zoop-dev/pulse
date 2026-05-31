@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit;
 
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.MAXIMUM_OXYGEN_UPTAKE;
+
 import android.content.Context;
 import android.widget.Toast;
 
@@ -90,6 +92,7 @@ import nodomain.freeyourgadget.gadgetbridge.export.AutoGpxExporter;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
 import nodomain.freeyourgadget.gadgetbridge.model.FitActivityTrackProvider;
@@ -432,7 +435,7 @@ public class FitImporter {
                 final double endurance = (rawEndurance == null) ? Double.NaN : rawEndurance.doubleValue();
                 if (endurance > 0.0) {
                     final GenericMetricSample sample = new GenericMetricSample();
-                    sample.setTimestamp(ts);
+                    sample.setTimestamp(ts * 1000L);
                     sample.setMetric(MetricSample.Metric.GARMIN_HILL_ENDURANCE, endurance, level);
                     genericMetricSamples.add(sample);
                 }
@@ -441,7 +444,7 @@ public class FitImporter {
                 final double score = (rawScore == null) ? Double.NaN : rawScore.doubleValue();
                 if (score > 0.0) {
                     final GenericMetricSample sample = new GenericMetricSample();
-                    sample.setTimestamp(ts);
+                    sample.setTimestamp(ts * 1000L);
                     sample.setMetric(MetricSample.Metric.GARMIN_HILL_SCORE, score, level);
                     genericMetricSamples.add(sample);
                 }
@@ -450,7 +453,7 @@ public class FitImporter {
                 final double strength = (rawStrength == null) ? Double.NaN : rawStrength.doubleValue();
                 if (strength > 0.0) {
                     final GenericMetricSample sample = new GenericMetricSample();
-                    sample.setTimestamp(ts);
+                    sample.setTimestamp(ts * 1000L);
                     sample.setMetric(MetricSample.Metric.GARMIN_HILL_STRENGTH, strength, level);
                     genericMetricSamples.add(sample);
                 }
@@ -463,7 +466,7 @@ public class FitImporter {
 
                 if ((level != null && level > 0) || (readiness != null && readiness > 0)) {
                     final GenericMetricSample sample = new GenericMetricSample();
-                    sample.setTimestamp(ts);
+                    sample.setTimestamp(ts * 1000L);
                     sample.setMetric(MetricSample.Metric.GARMIN_TRAINING_READINESS, readiness, level);
                     genericMetricSamples.add(sample);
                 }
@@ -476,7 +479,7 @@ public class FitImporter {
 
                 if ((level != null && level > 0) || (score != null && score > 0)) {
                     final GenericMetricSample sample = new GenericMetricSample();
-                    sample.setTimestamp(ts);
+                    sample.setTimestamp(ts * 1000L);
                     sample.setMetric(MetricSample.Metric.GARMIN_ENDURANCE_SCORE, score, level);
                     genericMetricSamples.add(sample);
                 }
@@ -488,7 +491,7 @@ public class FitImporter {
                     final Long hr = (rawHr == null) ? null : rawHr.longValue();
 
                     final GenericMetricSample sample = new GenericMetricSample();
-                    sample.setTimestamp(ts);
+                    sample.setTimestamp(ts * 1000L);
                     sample.setMetric(MetricSample.Metric.GARMIN_FUNCTIONAL_THRESHOLD_POWER, ftp, hr);
                     genericMetricSamples.add(sample);
                 }
@@ -500,7 +503,7 @@ public class FitImporter {
                     final Long hr = (rawHr == null) ? null : rawHr.longValue();
 
                     final GenericMetricSample sample = new GenericMetricSample();
-                    sample.setTimestamp(ts);
+                    sample.setTimestamp(ts * 1000L);
                     sample.setMetric(MetricSample.Metric.GARMIN_RUNNING_LACTATE_THRESHOLD_POWER, ltp, hr);
                     genericMetricSamples.add(sample);
                 }
@@ -513,7 +516,7 @@ public class FitImporter {
 
                 if ((vo2Max != null && vo2Max > 0) || (maxMetCategory != null && maxMetCategory > 0)) {
                     final GenericMetricSample sample = new GenericMetricSample();
-                    sample.setTimestamp(ts);
+                    sample.setTimestamp(ts * 1000L);
                     sample.setMetric(MetricSample.Metric.GARMIN_MET_MAX_VO2, vo2Max, maxMetCategory);
                     genericMetricSamples.add(sample);
                 }
@@ -619,7 +622,7 @@ public class FitImporter {
             final long deviceId = DBHelper.getDevice(gbDevice, session).getId();
             final long userId = DBHelper.getUser(session).getId();
             persistAbstractSamples(batterySamples, new BatteryLevelProvider(gbDevice, session));
-            persistGenericMetrics(session, deviceId, userId);
+            persistMetricSamples(session);
         } catch (final Exception e) {
             GB.toast(context, "Error saving generic samples", Toast.LENGTH_LONG, GB.ERROR, e);
         }
@@ -630,14 +633,35 @@ public class FitImporter {
         }
     }
 
-    private void persistGenericMetrics(final DaoSession session, final long deviceId, final long userId) {
-        if (!genericMetricSamples.isEmpty()) {
-            genericMetricSamples.forEach(sample -> {
-                sample.setUserId(userId);
-                sample.setDeviceId(deviceId);
-            });
-            session.getGenericMetricSampleDao().insertOrReplaceInTx(genericMetricSamples);
+    private void persistMetricSamples(@NonNull final DaoSession session) {
+        // During the transition phase some samples are persisted twice:
+        // 1) to the old individual tables (see importFile)
+        // 2) to the new generic metrics table (here)
+        // this enables thorough testing without risking data loss.
+
+        for (final GenericTrainingLoadAcuteSample legacy : trainingLoadAcuteSamples) {
+            GenericMetricSample metric = new GenericMetricSample();
+            metric.setTimestamp(legacy.getTimestamp());
+            metric.setMetric(MetricSample.Metric.GENERIC_TRAINING_LOAD_ACUTE, legacy.getValue());
+            genericMetricSamples.add(metric);
         }
+
+        for (final GenericTrainingLoadChronicSample legacy : trainingLoadChronicSamples) {
+            final GenericMetricSample metric = new GenericMetricSample();
+            metric.setTimestamp(legacy.getTimestamp());
+            metric.setMetric(MetricSample.Metric.GENERIC_TRAINING_LOAD_CHRONIC, legacy.getValue());
+            genericMetricSamples.add(metric);
+        }
+
+        for (final GarminRestingMetabolicRateSample legacy : restingMetabolicRateSamples) {
+            final GenericMetricSample metric = new GenericMetricSample();
+            metric.setTimestamp(legacy.getTimestamp());
+            metric.setMetric(MetricSample.Metric.GENERIC_RESTING_METABOLIC_RATE, legacy.getRestingMetabolicRate());
+            genericMetricSamples.add(metric);
+        }
+
+        final GenericMetricSampleProvider provider = new GenericMetricSampleProvider(gbDevice, session);
+        persistAbstractSamples(genericMetricSamples, provider);
     }
 
     private void persistWorkout(final File file, final DaoSession session, boolean isReprocessing, FitFile fitFile) {
@@ -681,6 +705,8 @@ public class FitImporter {
         }
 
         workoutParser.updateSummary(summary);
+        final GenericMetricSampleProvider provider = new GenericMetricSampleProvider(gbDevice, session);
+        persistAbstractSamples(workoutParser.getGenericMetricSamples(), provider);
 
         summary.setRawDetailsPath(file.getAbsolutePath());
 

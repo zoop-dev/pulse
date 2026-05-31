@@ -64,6 +64,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.HeartRateSample;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvSummarySample;
 import nodomain.freeyourgadget.gadgetbridge.model.HrvValueSample;
+import nodomain.freeyourgadget.gadgetbridge.model.MetricSample;
 import nodomain.freeyourgadget.gadgetbridge.model.PaiSample;
 import nodomain.freeyourgadget.gadgetbridge.model.RespiratoryRateSample;
 import nodomain.freeyourgadget.gadgetbridge.model.RestingMetabolicRateSample;
@@ -418,14 +419,18 @@ public interface DeviceCoordinator {
 
     /**
      * Returns the sample provider for training acute load values, for the device being supported.
+     * @deprecated see {@link #getMetricsSampleProvider(GBDevice, DaoSession)} and {@link MetricSample.Metric#GENERIC_TRAINING_LOAD_ACUTE}
      */
+    @Deprecated
     @Nullable
     TimeSampleProvider<? extends GenericTrainingLoadAcuteSample> getTrainingAcuteLoadSampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
 
     /**
      * Returns the sample provider for training chronic load values, for the device being supported.
+     * @deprecated see {@link #getMetricsSampleProvider(GBDevice, DaoSession)} and {@link MetricSample.Metric#GENERIC_TRAINING_LOAD_CHRONIC}
      */
+    @Deprecated
     @Nullable
     TimeSampleProvider<? extends GenericTrainingLoadChronicSample> getTrainingChronicLoadSampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
@@ -504,6 +509,8 @@ public interface DeviceCoordinator {
     @Nullable
     TimeSampleProvider<? extends WeightSample> getWeightSampleProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
+    /// @deprecated see {@link #getMetricsSampleProvider(GBDevice, DaoSession)} and {@link MetricSample.Metric#GENERIC_RESTING_METABOLIC_RATE}
+    @Deprecated
     @Nullable
     TimeSampleProvider<? extends RestingMetabolicRateSample> getRestingMetabolicRateProvider(@NonNull final GBDevice device, @NonNull final DaoSession session);
 
@@ -876,7 +883,7 @@ public interface DeviceCoordinator {
     /**
      * Indicates which device specific settings the device supports (not per device type or family, but unique per device).
      *
-     * @deprecated use getDeviceSpecificSettings
+     * @deprecated use {@link #getDeviceSpecificSettings(GBDevice)}
      */
     @Deprecated
     @Nullable
@@ -1002,4 +1009,14 @@ public interface DeviceCoordinator {
      * @return
      */
     boolean supportsConnectionPriority();
+
+    /// @see MetricSample
+    /// @see #getMetricsSampleProvider(GBDevice, DaoSession)
+    @NonNull
+    Set<MetricSample.Metric> supportsMetrics(@NonNull GBDevice device);
+
+    /// @see MetricSample
+    /// @see #supportsMetrics(GBDevice)
+    @Nullable
+    GenericMetricSampleProvider getMetricsSampleProvider(@NonNull GBDevice device, @NonNull DaoSession session);
 }
