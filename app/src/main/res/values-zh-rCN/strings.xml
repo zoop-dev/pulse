@@ -4516,4 +4516,7 @@
     <string name="nothing_prefs_spatial_audio_title">空间音频</string>
     <string name="nothing_prefs_spatial_audio_summary">让你感到你是音乐、电影或游戏一部分的沉浸式聆听体验。</string>
     <string name="persisting_samples_failed">保存示例出错：%1$s</string>
+    <string name="pref_experimental_metrics_title">常规测量</string>
+    <string name="pref_experimental_metrics_summary">启用常规测量的实验性 UI 逻辑。当前只和 Garmin 设备记录的训练量和卡路里相关。</string>
+    <string name="unit_kcal_per_day">卡路里/天</string>
 </resources>
