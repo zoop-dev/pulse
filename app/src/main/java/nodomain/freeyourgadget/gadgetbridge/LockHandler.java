@@ -18,6 +18,8 @@ package nodomain.freeyourgadget.gadgetbridge;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import androidx.annotation.NonNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,12 +67,14 @@ public class LockHandler implements DBHandler {
         lock.unlock();
     }
 
+    @NonNull
     @Override
     public DaoSession getDaoSession() {
         ensureNotClosed();
         return session;
     }
 
+    @NonNull
     @Override
     public SQLiteDatabase getDatabase() {
         ensureNotClosed();

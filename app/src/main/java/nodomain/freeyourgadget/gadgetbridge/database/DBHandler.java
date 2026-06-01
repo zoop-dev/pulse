@@ -1,5 +1,5 @@
-/*  Copyright (C) 2015-2024 Andreas Shimokawa, Carsten Pfeiffer, Daniele
-    Gobbetti, JohnnySun
+/*  Copyright (C) 2015-2026 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+    Gobbetti, JohnnySun, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -19,16 +19,17 @@ package nodomain.freeyourgadget.gadgetbridge.database;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import androidx.annotation.NonNull;
+
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 
 /**
  * Provides low-level access to the database.
  */
 public interface DBHandler extends AutoCloseable {
-    @Override
-    void close() throws Exception;
-
+    @NonNull
     SQLiteDatabase getDatabase();
 
+    @NonNull
     DaoSession getDaoSession();
 }
