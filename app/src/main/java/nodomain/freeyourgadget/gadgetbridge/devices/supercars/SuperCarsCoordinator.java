@@ -78,17 +78,18 @@ public class SuperCarsCoordinator extends AbstractBLEDeviceCoordinator {
 
     private static final class ControlDeviceCardAction implements DeviceCardAction {
         @Override
-        public int getIcon(GBDevice device) {
+        public int getIcon(@NonNull GBDevice device) {
             return R.drawable.ic_steering_wheel;
         }
 
+        @NonNull
         @Override
-        public String getDescription(final GBDevice device, final Context context) {
+        public String getDescription(@NonNull final GBDevice device, @NonNull final Context context) {
             return context.getString(R.string.remote_control);
         }
 
         @Override
-        public void onClick(final GBDevice device, final Context context) {
+        public void onClick(@NonNull final GBDevice device, @NonNull final Context context) {
             final Intent startIntent = new Intent(context, ControlActivity.class);
             startIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
             context.startActivity(startIntent);

@@ -95,17 +95,18 @@ public class ThermalPrinterCoordinator extends AbstractBLEDeviceCoordinator {
     private static final class ControlDeviceCardAction implements DeviceCardAction {
 
         @Override
-        public int getIcon(GBDevice device) {
+        public int getIcon(@NonNull GBDevice device) {
             return R.drawable.ic_file_upload;
         }
 
+        @NonNull
         @Override
-        public String getDescription(final GBDevice device, final Context context) {
+        public String getDescription(@NonNull final GBDevice device, @NonNull final Context context) {
             return context.getString(R.string.activity_print_image_print_button);
         }
 
         @Override
-        public void onClick(final GBDevice device, final Context context) {
+        public void onClick(@NonNull final GBDevice device, @NonNull final Context context) {
 
             final Intent startIntent = new Intent(context, SendToPrinterActivity.class);
             startIntent.putExtra(GBDevice.EXTRA_DEVICE, device);

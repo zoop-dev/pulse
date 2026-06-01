@@ -256,7 +256,7 @@ abstract class GloryFitCoordinator : AbstractBLEDeviceCoordinator() {
                     return R.drawable.ic_camera_remote
                 }
 
-                override fun getDescription(device: GBDevice, context: Context): String? {
+                override fun getDescription(device: GBDevice, context: Context): String {
                     return context.getString(R.string.open_camera)
                 }
 

@@ -20,6 +20,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices.ultrahuman;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -57,17 +58,18 @@ public class UltrahumanDeviceCardAction implements DeviceCardAction {
     }
 
     @Override
-    public int getIcon(GBDevice device) {
+    public int getIcon(@NonNull GBDevice device) {
         return Icon;
     }
 
+    @NonNull
     @Override
-    public String getDescription(GBDevice device, Context context) {
+    public String getDescription(@NonNull GBDevice device, @NonNull Context context) {
         return context.getString(Description);
     }
 
     @Override
-    public void onClick(GBDevice device, Context context) {
+    public void onClick(@NonNull GBDevice device, @NonNull Context context) {
         if (Question == 0) {
             sendIntent(device, context);
         } else {
@@ -99,7 +101,7 @@ public class UltrahumanDeviceCardAction implements DeviceCardAction {
     }
 
     @Override
-    public boolean isVisible(final GBDevice device) {
+    public boolean isVisible(@NonNull final GBDevice device) {
         // device.isInitialized() also treats State.SCANNED as initialized but that isn't
         // appropriate for this device type
         final GBDevice.State state = device.getState();

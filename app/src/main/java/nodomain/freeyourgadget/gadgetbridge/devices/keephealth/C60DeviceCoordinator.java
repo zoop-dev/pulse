@@ -114,17 +114,18 @@ public class C60DeviceCoordinator extends AbstractDeviceCoordinator  {
 
         DeviceCardAction action = new DeviceCardAction() {
             @Override
-            public int getIcon(GBDevice device) {
+            public int getIcon(@NonNull GBDevice device) {
                 return R.drawable.ic_camera_remote;
             }
 
+            @NonNull
             @Override
-            public String getDescription(GBDevice device, Context context) {
+            public String getDescription(@NonNull GBDevice device, @NonNull Context context) {
                 return context.getString(R.string.open_camera);
             }
 
             @Override
-            public void onClick(GBDevice device, Context context) {
+            public void onClick(@NonNull GBDevice device, @NonNull Context context) {
                 Intent cameraIntent = new Intent(context, CameraActivity.class);
                 cameraIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 cameraIntent.putExtra(

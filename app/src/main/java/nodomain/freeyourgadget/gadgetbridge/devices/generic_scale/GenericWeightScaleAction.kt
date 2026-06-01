@@ -24,21 +24,21 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.weightScale.WeightScaleProfile
 
 class GenericWeightScaleAction : DeviceCardAction {
-    override fun getIcon(device: GBDevice?): Int {
+    override fun getIcon(device: GBDevice): Int {
         return R.drawable.ic_balance
     }
 
     override fun getDescription(
-        device: GBDevice?, context: Context?
-    ): String? {
-        return context?.getString(R.string.weight_scale_show_measurement)
+        device: GBDevice, context: Context
+    ): String {
+        return context.getString(R.string.weight_scale_show_measurement)
     }
 
     override fun onClick(
-        device: GBDevice?, context: Context?
+        device: GBDevice, context: Context
     ) {
         val intent = Intent(context, GenericWeightScaleMeasurementActivity::class.java)
-        intent.putExtra(WeightScaleProfile.EXTRA_ADDRESS, device?.address)
-        context?.startActivity(intent)
+        intent.putExtra(WeightScaleProfile.EXTRA_ADDRESS, device.address)
+        context.startActivity(intent)
     }
 }

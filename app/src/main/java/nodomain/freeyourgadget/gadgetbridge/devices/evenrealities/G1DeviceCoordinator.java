@@ -180,17 +180,18 @@ public class G1DeviceCoordinator extends AbstractBLEDeviceCoordinator {
     public List<DeviceCardAction> getCustomActions() {
         return Collections.singletonList(new DeviceCardAction() {
             @Override
-            public int getIcon(GBDevice device) {
+            public int getIcon(@NonNull GBDevice device) {
                 return R.drawable.ic_dnd;
             }
 
+            @NonNull
             @Override
-            public String getDescription(final GBDevice device, final Context context) {
+            public String getDescription(@NonNull final GBDevice device, @NonNull final Context context) {
                 return context.getString(R.string.silent_mode);
             }
 
             @Override
-            public void onClick(final GBDevice device, final Context context) {
+            public void onClick(@NonNull final GBDevice device, @NonNull final Context context) {
                 final Intent intent = new Intent(G1Constants.INTENT_TOGGLE_SILENT_MODE);
                 intent.putExtra(GBDevice.EXTRA_DEVICE, device);
                 intent.setPackage(context.getPackageName());
