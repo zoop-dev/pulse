@@ -4522,4 +4522,7 @@
     <string name="nothing_prefs_spatial_audio_title">Prostorový zvuk</string>
     <string name="nothing_prefs_spatial_audio_summary">Pohlcující poslechový zážitek, díky kterému budete mít pocit, že jste součástí hudby, filmu nebo hry.</string>
     <string name="persisting_samples_failed">Chyba při ukládání vzorků: %1$s</string>
+    <string name="pref_experimental_metrics_title">Obecná měření</string>
+    <string name="pref_experimental_metrics_summary">Povolit experimentální logiku rozhraní pro obecná měření. V současné době platné pouze pro tréninkovou zátěž a kalorie zaznamenané zařízeními Garmin.</string>
+    <string name="unit_kcal_per_day">kcal/den</string>
 </resources>
