@@ -75,7 +75,7 @@ public class ZeppOsFwInstallHandler implements InstallHandler {
     }
 
     @Override
-    public void validateInstallation(InstallActivity installActivity, GBDevice device) {
+    public void validateInstallation(@NonNull InstallActivity installActivity, @NonNull GBDevice device) {
         if (device.isBusy()) {
             installActivity.setInfoText(device.getBusyTask());
             installActivity.setInstallEnabled(false);
@@ -132,7 +132,7 @@ public class ZeppOsFwInstallHandler implements InstallHandler {
     }
 
     @Override
-    public void onStartInstall(final GBDevice device) {
+    public void onStartInstall(@NonNull final GBDevice device) {
         final boolean shouldCache = mHelper.getFirmwareType().isApp() || mHelper.getFirmwareType().isWatchface();
         if (shouldCache) {
             saveToCache(device);

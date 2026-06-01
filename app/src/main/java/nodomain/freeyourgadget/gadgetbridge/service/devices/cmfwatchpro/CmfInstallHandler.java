@@ -52,7 +52,7 @@ public class CmfInstallHandler implements InstallHandler {
     }
 
     @Override
-    public void validateInstallation(final InstallActivity installActivity, final GBDevice device) {
+    public void validateInstallation(@NonNull final InstallActivity installActivity, @NonNull final GBDevice device) {
         if (device.isBusy()) {
             installActivity.setInfoText(device.getBusyTask());
             installActivity.setInstallEnabled(false);
@@ -94,7 +94,7 @@ public class CmfInstallHandler implements InstallHandler {
     }
 
     @Override
-    public void onStartInstall(final GBDevice device) {
+    public void onStartInstall(@NonNull final GBDevice device) {
         helper.unsetFwBytes(); // free up memory
     }
 }

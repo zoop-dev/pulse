@@ -110,7 +110,7 @@ public class HuaweiInstallHandler implements InstallHandler {
 
 
     @Override
-    public void validateInstallation(InstallActivity installActivity, GBDevice device) {
+    public void validateInstallation(@NonNull InstallActivity installActivity, @NonNull GBDevice device) {
         final HuaweiState huaweiDeviceState = HuaweiDeviceStateManager.get(device);
 
         if (helper.isFirmware) {
@@ -304,7 +304,7 @@ public class HuaweiInstallHandler implements InstallHandler {
     }
 
     @Override
-    public void onStartInstall(GBDevice device) {
+    public void onStartInstall(@NonNull GBDevice device) {
         helper.unsetFwBytes();
     }
 }

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2024 Andreas Shimokawa, Carsten Pfeiffer
+/*  Copyright (C) 2015-2026 Andreas Shimokawa, Carsten Pfeiffer, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -48,10 +48,10 @@ public interface InstallHandler {
      * @param installActivity the activity to interact with
      * @param device          the device to which the element shall be installed
      */
-    void validateInstallation(InstallActivity installActivity, GBDevice device);
+    void validateInstallation(@NonNull InstallActivity installActivity, @NonNull GBDevice device);
 
     /**
      * Allows device specific code to be executed just before the installation starts
      */
-    void onStartInstall(GBDevice device);
+    void onStartInstall(@NonNull GBDevice device);
 }

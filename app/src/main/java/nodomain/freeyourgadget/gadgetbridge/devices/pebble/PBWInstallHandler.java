@@ -46,7 +46,6 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.GenericItem;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
-import nodomain.freeyourgadget.gadgetbridge.devices.pebble.PebbleHardware;
 import nodomain.freeyourgadget.gadgetbridge.util.PebbleUtils;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
 
@@ -63,7 +62,7 @@ public class PBWInstallHandler implements InstallHandler {
     }
 
     @Override
-    public void validateInstallation(InstallActivity installActivity, GBDevice device) {
+    public void validateInstallation(@NonNull InstallActivity installActivity, @NonNull GBDevice device) {
         if (device.isBusy()) {
             installActivity.setInfoText(device.getBusyTask());
             installActivity.setInstallEnabled(false);
@@ -162,7 +161,7 @@ public class PBWInstallHandler implements InstallHandler {
     }
 
     @Override
-    public void onStartInstall(GBDevice device) {
+    public void onStartInstall(@NonNull GBDevice device) {
         if (mPBWReader.isFirmware() || mPBWReader.isLanguage()) {
             return;
         }

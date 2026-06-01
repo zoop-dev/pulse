@@ -80,7 +80,7 @@ public abstract class AbstractMiBandFWInstallHandler implements InstallHandler {
     }
 
     @Override
-    public void validateInstallation(InstallActivity installActivity, GBDevice device) {
+    public void validateInstallation(@NonNull InstallActivity installActivity, @NonNull GBDevice device) {
         if (device.isBusy()) {
             installActivity.setInfoText(device.getBusyTask());
             installActivity.setInstallEnabled(false);
@@ -147,7 +147,7 @@ public abstract class AbstractMiBandFWInstallHandler implements InstallHandler {
     protected abstract boolean isSupportedDeviceType(GBDevice device);
 
     @Override
-    public void onStartInstall(GBDevice device) {
+    public void onStartInstall(@NonNull GBDevice device) {
 
     }
 

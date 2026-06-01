@@ -19,6 +19,8 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huami.miband2;
 import android.content.Context;
 import android.net.Uri;
 
+import androidx.annotation.NonNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +44,7 @@ public class MiBand2FWInstallHandler extends AbstractMiBandFWInstallHandler {
     }
 
     @Override
-    public void validateInstallation(InstallActivity installActivity, GBDevice device) {
+    public void validateInstallation(@NonNull InstallActivity installActivity, @NonNull GBDevice device) {
         super.validateInstallation(installActivity, device);
         maybeAddFw53Hint(installActivity, device);
         maybeAddFontHint(installActivity);

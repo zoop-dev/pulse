@@ -68,7 +68,7 @@ public class FossilHRInstallHandler implements InstallHandler {
     }
 
     @Override
-    public void validateInstallation(InstallActivity installActivity, GBDevice device) {
+    public void validateInstallation(@NonNull InstallActivity installActivity, @NonNull GBDevice device) {
         if (device.isBusy()) {
             installActivity.setInfoText(device.getBusyTask());
             installActivity.setInstallEnabled(false);
@@ -106,7 +106,7 @@ public class FossilHRInstallHandler implements InstallHandler {
     }
 
     @Override
-    public void onStartInstall(GBDevice device) {
+    public void onStartInstall(@NonNull GBDevice device) {
         DeviceCoordinator mCoordinator = device.getDeviceCoordinator();
         LocalBroadcastManager manager = LocalBroadcastManager.getInstance(mContext);
         manager.sendBroadcast(new Intent(GB.ACTION_SET_PROGRESS_BAR).putExtra(GB.PROGRESS_BAR_INDETERMINATE, true));

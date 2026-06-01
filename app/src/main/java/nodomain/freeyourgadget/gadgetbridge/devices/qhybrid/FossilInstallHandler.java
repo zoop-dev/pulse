@@ -82,7 +82,7 @@ public class FossilInstallHandler implements InstallHandler {
     }
 
     @Override
-    public void validateInstallation(InstallActivity installActivity, GBDevice device) {
+    public void validateInstallation(@NonNull InstallActivity installActivity, @NonNull GBDevice device) {
         if (device.isBusy()) {
             installActivity.setInfoText(device.getBusyTask());
             installActivity.setInstallEnabled(false);
@@ -105,7 +105,7 @@ public class FossilInstallHandler implements InstallHandler {
 
 
     @Override
-    public void onStartInstall(GBDevice device) {
+    public void onStartInstall(@NonNull GBDevice device) {
     }
 
     @NonNull
