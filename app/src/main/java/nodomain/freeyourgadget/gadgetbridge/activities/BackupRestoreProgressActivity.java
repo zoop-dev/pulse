@@ -92,7 +92,7 @@ public class BackupRestoreProgressActivity extends AbstractGBActivity {
 
         final ZipBackupCallback zipBackupCallback = new ZipBackupCallback() {
             @Override
-            public void onProgress(final int progress, final String message) {
+            public void onProgress(final int progress, final @Nullable String message) {
                 mHandler.post(() -> {
                     backupRestoreProgressBar.setIndeterminate(progress == 0);
                     backupRestoreProgressBar.setProgress(progress);
@@ -102,7 +102,7 @@ public class BackupRestoreProgressActivity extends AbstractGBActivity {
             }
 
             @Override
-            public void onSuccess(final String warnings) {
+            public void onSuccess(final @Nullable String warnings) {
                 mHandler.post(() -> {
                     jobFinished = true;
                     backupRestoreHint.setVisibility(View.GONE);

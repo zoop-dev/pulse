@@ -19,9 +19,9 @@ package nodomain.freeyourgadget.gadgetbridge.util.backup;
 import androidx.annotation.Nullable;
 
 public interface ZipBackupCallback {
-    void onProgress(final int progress, final String message);
+    void onProgress(final int progress, @Nullable final String message);
 
-    void onSuccess(final String warnings);
+    void onSuccess(@Nullable final String warnings);
 
     void onFailure(@Nullable final String errorMessage);
 }
