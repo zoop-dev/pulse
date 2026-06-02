@@ -1,9 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.adapter;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
-import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBFragment;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.StressDailyFragment;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.StressPeriodFragment;
 

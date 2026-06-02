@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 
-import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBFragment;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.SleepDailyFragment;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.SleepPeriodFragment;
 
