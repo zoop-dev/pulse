@@ -1057,14 +1057,14 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 String key = iter.next();
                 Object value = extra.get(key);
 
-                if (value instanceof Boolean) {
-                    in.putExtra(key, (Boolean) value);
-                } else if (value instanceof Integer) {
-                    in.putExtra(key, (Integer) value);
-                } else if (value instanceof Long) {
-                    in.putExtra(key, (Long) value);
-                } else if (value instanceof Double) {
-                    in.putExtra(key, (Double) value);
+                if (value instanceof Boolean boolExtra) {
+                    in.putExtra(key, boolExtra);
+                } else if (value instanceof Integer integerExtra) {
+                    in.putExtra(key, integerExtra);
+                } else if (value instanceof Long longExtra) {
+                    in.putExtra(key, longExtra);
+                } else if (value instanceof Double doubleExtra) {
+                    in.putExtra(key, doubleExtra);
                 } else {
                     in.putExtra(key, value.toString());
                 }
