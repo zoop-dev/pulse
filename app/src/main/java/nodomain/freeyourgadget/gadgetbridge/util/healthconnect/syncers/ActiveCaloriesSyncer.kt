@@ -56,7 +56,7 @@ internal object ActiveCaloriesSyncer : AbstractActivitySampleSyncer<ActiveCalori
             endTs,
             offset,
             Energy.calories(caloriesInMinute.toDouble()),
-            metadata
+            clientRecordMetadata(metadata, "calories", endTs.epochSecond, caloriesInMinute.toLong())
         )
     }
 }

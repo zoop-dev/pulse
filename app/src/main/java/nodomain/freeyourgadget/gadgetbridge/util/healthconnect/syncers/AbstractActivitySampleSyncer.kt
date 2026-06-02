@@ -24,6 +24,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample
 import nodomain.freeyourgadget.gadgetbridge.util.healthconnect.HealthConnectUtils
 import org.slf4j.Logger
+import java.time.Duration
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZoneOffset
@@ -33,6 +34,23 @@ import kotlin.reflect.KClass
 internal abstract class AbstractActivitySampleSyncer<TRecord : Record> : ActivitySampleSyncer {
     protected abstract val logger: Logger
     protected abstract val recordClass: KClass<TRecord>
+
+    // Re-emit samples this far before the slice start. The ACTIVITY cursor is shared across
+    // steps/calories/distance and advances to the furthest delivered; when step or distance detail
+    // trails the calorie summary, those minutes would be clipped and lost. The per-minute
+    // clientRecordId makes the re-emitted overlap an upsert. Heart rate is a series keyed on its
+    // start time, does not extend this base, and keeps strict boundaries.
+    protected open val lateSampleLookback: Duration = Duration.ofHours(1)
+
+    internal fun isWithinSlice(
+        endTs: Instant,
+        startTs: Instant,
+        sliceStartBoundary: Instant,
+        sliceEndBoundary: Instant
+    ): Boolean {
+        val effectiveStart = sliceStartBoundary.minus(lateSampleLookback)
+        return !endTs.isBefore(effectiveStart) && !startTs.isAfter(sliceEndBoundary)
+    }
 
     internal abstract fun convertSample(
         sample: ActivitySample,
@@ -76,7 +94,7 @@ internal abstract class AbstractActivitySampleSyncer<TRecord : Record> : Activit
             val endTs = Instant.ofEpochSecond(currentSample.timestamp.toLong())
             val startTs = endTs.minus(1, ChronoUnit.MINUTES)
 
-            if (endTs.isBefore(sliceStartBoundary) || startTs.isAfter(sliceEndBoundary)) {
+            if (!isWithinSlice(endTs, startTs, sliceStartBoundary, sliceEndBoundary)) {
                 logger.trace(
                     "Skipping {} for device '{}' for sample at {} (interval {} to {}) as its interval is outside the slice {} - {}.",
                     recordTypeName,

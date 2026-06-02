@@ -55,7 +55,7 @@ internal object StepsSyncer : AbstractActivitySampleSyncer<StepsRecord>() {
             endTs,
             offset,
             stepsInMinute,
-            metadata
+            clientRecordMetadata(metadata, "steps", endTs.epochSecond, stepsInMinute)
         )
     }
 }

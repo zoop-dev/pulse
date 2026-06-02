@@ -56,7 +56,7 @@ internal object DistanceSyncer : AbstractActivitySampleSyncer<DistanceRecord>() 
             endTime = endTs,
             endZoneOffset = offset,
             distance = Length.meters(distanceCm / 100.0),
-            metadata = metadata
+            metadata = clientRecordMetadata(metadata, "distance", endTs.epochSecond, distanceCm.toLong())
         )
     }
 }
