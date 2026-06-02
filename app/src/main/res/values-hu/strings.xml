@@ -4363,4 +4363,7 @@
     <string name="nothing_prefs_spatial_audio_title">Térbeli hangzás</string>
     <string name="nothing_prefs_spatial_audio_summary">Egy magával ragadó zenehallgatási élmény, amelytől úgy fogja érezni, mintha a zene, a film vagy a játék része lenne.</string>
     <string name="persisting_samples_failed">Hiba tortént a minták mentésekor: %1$s</string>
+    <string name="pref_experimental_metrics_title">Általános metrikák</string>
+    <string name="pref_experimental_metrics_summary">Engedélyezze a kísérleti felhasználói felület logikáját az általános metrikákhoz. Jelenleg ez csak a Garmin eszközökkel rögzített edzésterhelésre és kalóriákra vonatkozik.</string>
+    <string name="unit_kcal_per_day">kcal/nap</string>
 </resources>
