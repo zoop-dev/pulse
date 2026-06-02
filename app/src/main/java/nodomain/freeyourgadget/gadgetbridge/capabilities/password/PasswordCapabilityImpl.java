@@ -24,7 +24,6 @@ import android.text.Spanned;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
-import androidx.annotation.NonNull;
 import androidx.preference.EditTextPreference;
 
 import java.util.ArrayList;

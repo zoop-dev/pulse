@@ -23,7 +23,6 @@ import static nodomain.freeyourgadget.gadgetbridge.activities.loyaltycards.Loyal
 import static nodomain.freeyourgadget.gadgetbridge.activities.loyaltycards.LoyaltyCardsSettingsConst.LOYALTY_CARDS_SYNC_STARRED;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.widget.Toast;
 
 import org.slf4j.Logger;
