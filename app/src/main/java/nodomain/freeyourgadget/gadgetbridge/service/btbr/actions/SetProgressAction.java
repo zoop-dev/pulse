@@ -28,7 +28,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.PlainAction;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class SetProgressAction extends PlainAction {
