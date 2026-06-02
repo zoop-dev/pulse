@@ -16,8 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.btle.actions;
 
-import androidx.annotation.NonNull;
-
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
 
