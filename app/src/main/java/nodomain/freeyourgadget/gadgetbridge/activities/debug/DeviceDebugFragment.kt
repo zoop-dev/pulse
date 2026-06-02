@@ -30,10 +30,14 @@ class DeviceDebugFragment : AbstractDebugFragment() {
         gbDevice = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             arguments?.getParcelable(GBDevice.EXTRA_DEVICE, GBDevice::class.java)!!
         } else {
-            arguments?.getParcelable<GBDevice>(GBDevice.EXTRA_DEVICE)!!
+            arguments?.getParcelable(GBDevice.EXTRA_DEVICE)!!
         }
 
         preferenceScreen?.title = gbDevice.aliasOrName
+
+        findPreference<Preference>(PREF_DEBUG_DEVICE_ID)?.summary = GBApplication.acquireDbReadOnly().use { dbHandler ->
+            DBHelper.findDevice(gbDevice, dbHandler.daoSession)?.id?.toString() ?: "<null>"
+        }
 
         findPreference<Preference>(PREF_DEBUG_DEVICE_NAME)?.summary = gbDevice.name ?: "<null>"
         if (gbDevice.alias.isNullOrEmpty()) {
@@ -130,6 +134,7 @@ class DeviceDebugFragment : AbstractDebugFragment() {
                     @Suppress("UNCHECKED_CAST")
                     editorNew.putStringSet(key, value as Set<String>)
                 }
+
                 else -> {
                     LOG.error("Unexpected preference type {}", value?.javaClass)
                     GB.toast("Failed to copy settings", Toast.LENGTH_LONG, GB.ERROR)
@@ -204,6 +209,7 @@ class DeviceDebugFragment : AbstractDebugFragment() {
     companion object {
         private val LOG: Logger = LoggerFactory.getLogger(DeviceDebugFragment::class.java)
 
+        private const val PREF_DEBUG_DEVICE_ID = "pref_debug_device_id"
         private const val PREF_DEBUG_DEVICE_NAME = "pref_debug_device_name"
         private const val PREF_DEBUG_DEVICE_ALIAS = "pref_debug_device_alias"
         private const val PREF_DEBUG_DEVICE_MAC_ADDRESS = "pref_debug_device_mac_address"

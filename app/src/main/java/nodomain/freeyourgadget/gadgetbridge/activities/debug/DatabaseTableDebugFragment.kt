@@ -3,8 +3,10 @@ package nodomain.freeyourgadget.gadgetbridge.activities.debug
 import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
 import android.os.Bundle
 import android.widget.TextView
@@ -38,6 +40,7 @@ import java.util.Locale
 @Suppress("unused")
 class DatabaseTableDebugFragment : AbstractDebugFragment() {
     private var pendingExportData: Triple<String, Date, Date>? = null
+    private var pendingImportTableName: String? = null
 
     private val saveFileLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -53,6 +56,16 @@ class DatabaseTableDebugFragment : AbstractDebugFragment() {
         pendingExportData = null
     }
 
+    private val openFileLauncher = registerForActivityResult(
+        ActivityResultContracts.OpenDocument()
+    ) { uri: Uri? ->
+        val tableName = pendingImportTableName
+        pendingImportTableName = null
+        if (uri != null && tableName != null) {
+            importTableFromUri(tableName, uri)
+        }
+    }
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.debug_preferences_database_table, rootKey)
 
@@ -63,6 +76,8 @@ class DatabaseTableDebugFragment : AbstractDebugFragment() {
         loadTableCount(tableName)
 
         onClick(PREF_DEBUG_EXPORT_TABLE) { startTableExport(tableName) }
+
+        onClick(PREF_DEBUG_IMPORT_TABLE) { startTableImport(tableName) }
 
         onClick(PREF_DEBUG_CLEAR_TABLE) { clearTable(tableName) }
 
@@ -107,7 +122,8 @@ class DatabaseTableDebugFragment : AbstractDebugFragment() {
 
                 cursor.use {
                     it.moveToNext()
-                    findPreference<Preference>(PREF_DEBUG_DATABASE_COUNT)?.summary = it.getInt(it.getColumnIndexOrThrow("count")).toString()
+                    findPreference<Preference>(PREF_DEBUG_DATABASE_COUNT)?.summary =
+                        it.getInt(it.getColumnIndexOrThrow("count")).toString()
                 }
             }
         } catch (e: Exception) {
@@ -400,7 +416,8 @@ class DatabaseTableDebugFragment : AbstractDebugFragment() {
                             val value = when (it.getType(index)) {
                                 android.database.Cursor.FIELD_TYPE_BLOB ->
                                     "<blob:${it.getBlob(index).joinToString("") { b -> "%02x".format(b) }}>"
-                                else -> it.getString(index) ?: ""
+
+                                else -> it.getString(index) ?: NULL_FIELD_CSV_VALUE
                             }
                             escapeValueForCsv(value)
                         } else {
@@ -441,6 +458,173 @@ class DatabaseTableDebugFragment : AbstractDebugFragment() {
         } else {
             value
         }
+    }
+
+    private fun startTableImport(tableName: String) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Import into $tableName")
+            .setMessage("Import a CSV file into $tableName? Existing rows with the same primary key will be replaced.")
+            .setPositiveButton(R.string.file_import) { _, _ ->
+                pendingImportTableName = tableName
+                openFileLauncher.launch(arrayOf("text/csv", "text/plain", "*/*"))
+            }
+            .setNegativeButton(R.string.Cancel, null)
+            .show()
+    }
+
+    private fun importTableFromUri(tableName: String, uri: Uri) {
+        try {
+            val inputStream = requireContext().contentResolver.openInputStream(uri)
+                ?: throw Exception("Failed to open file")
+
+            val lines = inputStream.use { stream ->
+                stream.bufferedReader(StandardCharsets.UTF_8).readLines()
+            }
+
+            if (lines.isEmpty()) {
+                GB.toast("File is empty", Toast.LENGTH_LONG, GB.WARN)
+                return
+            }
+
+            val headers = parseCsvLine(lines[0])
+            if (headers.isEmpty()) {
+                GB.toast("File has no headers", Toast.LENGTH_LONG, GB.ERROR)
+                return
+            }
+
+            // Validate that all headers exist as columns in the table
+            val tableColumns = getTableColumns(tableName)
+            val unknownHeaders = headers.filter { it !in tableColumns }
+            if (!unknownHeaders.isEmpty()) {
+                GB.toast("File contains unknown columns", Toast.LENGTH_LONG, GB.ERROR)
+                return
+            }
+
+            var rowsImported = 0
+            var rowsFailed = 0
+
+            GBApplication.acquireDB().use { db ->
+                db.database.beginTransaction()
+                try {
+                    linesLoop@ for (i in 1 until lines.size) {
+                        val line = lines[i]
+                        if (line.isBlank()) continue
+
+                        val values = parseCsvLine(line)
+                        if (values.size != headers.size) {
+                            rowsFailed++
+                            continue
+                        }
+
+                        val contentValues = ContentValues()
+                        for (j in headers.indices) {
+                            if (headers[j] in tableColumns) {
+                                val value = values[j]
+                                when {
+                                    value == NULL_FIELD_CSV_VALUE -> contentValues.putNull(headers[j])
+                                    value.startsWith("<blob:") && value.endsWith(">") -> {
+                                        val blob = parseBlobHex(value)
+                                        if (blob == null) {
+                                            rowsFailed++
+                                            continue@linesLoop
+                                        }
+                                        contentValues.put(headers[j], blob)
+                                    }
+
+                                    else -> contentValues.put(headers[j], value)
+                                }
+                            }
+                        }
+
+                        val result = db.database.insertWithOnConflict(
+                            tableName,
+                            null,
+                            contentValues,
+                            SQLiteDatabase.CONFLICT_REPLACE
+                        )
+                        if (result == -1L) {
+                            rowsFailed++
+                        } else {
+                            rowsImported++
+                        }
+                    }
+                    db.database.setTransactionSuccessful()
+                } finally {
+                    db.database.endTransaction()
+                }
+            }
+
+            loadTableCount(tableName)
+
+            val message = if (rowsFailed == 0) {
+                "Imported $rowsImported rows"
+            } else {
+                "Imported $rowsImported rows, $rowsFailed failed"
+            }
+            GB.toast(message, Toast.LENGTH_LONG, GB.INFO)
+        } catch (e: Exception) {
+            LOG.error("Failed to import table", e)
+            GB.toast("Import failed: ${e.localizedMessage}", Toast.LENGTH_LONG, GB.ERROR)
+        }
+    }
+
+    private fun getTableColumns(tableName: String): Set<String> {
+        GBApplication.acquireDB().use { db ->
+            val cursor = db.database.rawQuery("PRAGMA table_info($tableName)", null)
+            val columns = mutableSetOf<String>()
+            cursor.use {
+                while (it.moveToNext()) {
+                    columns.add(it.getString(it.getColumnIndexOrThrow("name")))
+                }
+            }
+            return columns
+        }
+    }
+
+    private fun parseBlobHex(value: String): ByteArray? {
+        val hex = value.removePrefix("<blob:").removeSuffix(">")
+        if (hex.length % 2 != 0) return null
+        return try {
+            ByteArray(hex.length / 2) { i -> hex.substring(i * 2, i * 2 + 2).toInt(16).toByte() }
+        } catch (e: NumberFormatException) {
+            LOG.error("Failed to parse blob from {}", value, e)
+            null
+        }
+    }
+
+    private fun parseCsvLine(line: String): List<String> {
+        val fields = mutableListOf<String>()
+        val sb = StringBuilder()
+        var inQuotes = false
+        var i = 0
+
+        while (i < line.length) {
+            val c = line[i]
+            when {
+                inQuotes && c == '"' && i + 1 < line.length && line[i + 1] == '"' -> {
+                    sb.append('"')
+                    i += 2
+                }
+
+                c == '"' -> {
+                    inQuotes = !inQuotes
+                    i++
+                }
+
+                c == ',' && !inQuotes -> {
+                    fields.add(sb.toString())
+                    sb.clear()
+                    i++
+                }
+
+                else -> {
+                    sb.append(c)
+                    i++
+                }
+            }
+        }
+        fields.add(sb.toString())
+        return fields
     }
 
     private fun clearTable(tableName: String) {
@@ -488,8 +672,11 @@ class DatabaseTableDebugFragment : AbstractDebugFragment() {
     companion object {
         private val LOG = LoggerFactory.getLogger(DatabaseTableDebugFragment::class.java)
 
+        private const val NULL_FIELD_CSV_VALUE = "<null>"
+
         private const val PREF_DEBUG_DATABASE_COUNT = "pref_debug_database_count"
         private const val PREF_DEBUG_EXPORT_TABLE = "pref_debug_export_table"
+        private const val PREF_DEBUG_IMPORT_TABLE = "pref_debug_import_table"
         private const val PREF_HEADER_DANGEROUS_ACTIONS = "pref_header_dangerous_actions"
         private const val PREF_DEBUG_CLEAR_TABLE = "pref_debug_clear_table"
         private const val PREF_DEBUG_DROP_TABLE = "pref_debug_drop_table"

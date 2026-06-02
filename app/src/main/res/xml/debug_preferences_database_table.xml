@@ -16,6 +16,12 @@
         android:persistent="false"
         android:title="@string/file_export" />
 
+    <Preference
+        android:icon="@drawable/ic_download"
+        android:key="pref_debug_import_table"
+        android:persistent="false"
+        android:title="@string/file_import" />
+
     <PreferenceCategory
         android:key="pref_header_dangerous_actions"
         android:title="@string/dangerous_actions">

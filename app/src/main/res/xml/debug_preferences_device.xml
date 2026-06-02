@@ -9,6 +9,12 @@
         app:iconSpaceReserved="false" />
 
     <Preference
+        android:key="pref_debug_device_id"
+        android:persistent="false"
+        android:title="@string/prefs_device_id"
+        app:iconSpaceReserved="false" />
+
+    <Preference
         android:key="pref_debug_device_alias"
         android:persistent="false"
         android:title="@string/prefs_device_alias"
