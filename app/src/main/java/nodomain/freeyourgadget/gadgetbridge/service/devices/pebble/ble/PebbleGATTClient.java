@@ -249,7 +249,7 @@ class PebbleGATTClient extends BluetoothGattCallback implements PairingCallback 
         if (mBluetoothGatt != null) {
             this.close();
         }
-        mBluetoothGatt = btDevice.connectGatt(mContext, false, this);
+        mBluetoothGatt = btDevice.connectGatt(mContext, false, this, BluetoothDevice.TRANSPORT_LE);
     }
 
     private void subscribeToConnectivity(BluetoothGatt gatt) {
