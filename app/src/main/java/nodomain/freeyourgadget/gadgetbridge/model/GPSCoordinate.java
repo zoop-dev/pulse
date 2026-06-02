@@ -22,8 +22,6 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-import androidx.annotation.NonNull;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Comparator;

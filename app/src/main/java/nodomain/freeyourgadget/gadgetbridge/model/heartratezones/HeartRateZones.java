@@ -19,7 +19,6 @@ package nodomain.freeyourgadget.gadgetbridge.model.heartratezones;
 import android.content.Context;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 
 public abstract class HeartRateZones {
 
