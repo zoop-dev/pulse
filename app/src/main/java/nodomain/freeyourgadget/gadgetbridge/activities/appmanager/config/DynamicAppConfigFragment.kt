@@ -24,7 +24,6 @@ import android.os.Bundle
 import android.text.InputType
 import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.preference.DialogPreference
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceScreen
