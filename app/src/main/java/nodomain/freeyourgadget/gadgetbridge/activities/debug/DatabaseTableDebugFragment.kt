@@ -147,7 +147,9 @@ class DatabaseTableDebugFragment : AbstractDebugFragment() {
                 cursor.use {
                     while (it.moveToNext()) {
                         if (it.getColumnIndex("sql") >= 0) {
-                            sqlQueries.add(formatSql(it.getString(it.getColumnIndexOrThrow("sql")).trim()) + ";")
+                            it.getString(it.getColumnIndexOrThrow("sql"))?.let { rawSql ->
+                                sqlQueries.add(formatSql(rawSql.trim()) + ";")
+                            }
                         }
                     }
                 }
