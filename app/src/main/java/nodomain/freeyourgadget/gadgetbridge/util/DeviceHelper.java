@@ -28,7 +28,6 @@ package nodomain.freeyourgadget.gadgetbridge.util;
 
 import android.Manifest;
 import android.bluetooth.BluetoothDevice;
-import android.content.Context;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -45,7 +44,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 

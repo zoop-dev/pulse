@@ -17,7 +17,6 @@
 package nodomain.freeyourgadget.gadgetbridge.util.language.impl;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import nodomain.freeyourgadget.gadgetbridge.util.language.SimpleTransliterator;
 

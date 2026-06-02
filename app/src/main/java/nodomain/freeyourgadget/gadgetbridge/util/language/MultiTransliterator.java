@@ -16,9 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.util.language;
 
-import java.text.Normalizer;
 import java.util.List;
-import java.util.Map;
 
 public class MultiTransliterator implements Transliterator {
     private final List<Transliterator> transliterators;

@@ -18,9 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.util.language.impl;
 
 import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
-import java.util.HashMap;
 
-import nodomain.freeyourgadget.gadgetbridge.util.language.SimpleTransliterator;
 import nodomain.freeyourgadget.gadgetbridge.util.language.Transliterator;
 
 public class FlattenToAsciiTransliterator implements Transliterator {

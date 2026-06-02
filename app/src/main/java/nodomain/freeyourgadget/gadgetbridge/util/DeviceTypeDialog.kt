@@ -4,9 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.text.Editable
-import android.text.InputFilter
 import android.text.InputType
-import android.text.Spanned
 import android.text.TextWatcher
 import android.widget.AdapterView
 import android.widget.ArrayAdapter

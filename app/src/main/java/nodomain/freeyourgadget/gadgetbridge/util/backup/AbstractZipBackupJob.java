@@ -17,7 +17,6 @@
 package nodomain.freeyourgadget.gadgetbridge.util.backup;
 
 import android.content.Context;
-import android.os.Handler;
 
 import androidx.annotation.StringRes;
 import androidx.annotation.WorkerThread;
