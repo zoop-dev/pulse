@@ -497,6 +497,11 @@ class HealthConnectUtils {
         private const val INITIAL_DELAY_MS = 1000L
         private const val HC_SYNC_TAG = "[HC_SYNC]"
 
+        // Floor the sync-start at 2015 (Gadgetbridge predates it). A bogus near-epoch sample
+        // timestamp otherwise resolves the start to ~1970 and triggers a full historical resync.
+        private const val MIN_VALID_SAMPLE_SECONDS = 1420070400L // 2015-01-01T00:00:00Z
+        private const val MIN_VALID_SAMPLE_MILLIS = MIN_VALID_SAMPLE_SECONDS * 1000
+
         private fun getSyncTimestampRange(
             context: Context,
             gbDevice: GBDevice,
@@ -683,10 +688,10 @@ class HealthConnectUtils {
         ): Instant? {
             return when (val provider = getProviderForDataType(deviceCoordinator, device, db, dataType)) {
                 is TimeSampleProvider<*> -> {
-                    provider.firstSample?.timestamp?.takeIf { it > 0 }?.let { Instant.ofEpochMilli(it) }
+                    provider.firstSample?.timestamp?.takeIf { it > MIN_VALID_SAMPLE_MILLIS }?.let { Instant.ofEpochMilli(it) }
                 }
                 is SampleProvider<*> -> { // For ActivitySample based providers
-                    provider.getFirstActivitySample(0)?.timestamp?.takeIf { it > 0 }?.let { Instant.ofEpochSecond(it.toLong()) }
+                    provider.getFirstActivitySample(MIN_VALID_SAMPLE_SECONDS.toInt())?.timestamp?.takeIf { it > MIN_VALID_SAMPLE_SECONDS }?.let { Instant.ofEpochSecond(it.toLong()) }
                 }
                 is BaseActivitySummaryDao -> {
                     val deviceEntity = DBHelper.getDevice(device, db.daoSession) ?: return null
