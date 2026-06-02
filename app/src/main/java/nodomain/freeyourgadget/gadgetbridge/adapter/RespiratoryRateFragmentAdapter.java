@@ -3,7 +3,6 @@ package nodomain.freeyourgadget.gadgetbridge.adapter;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBFragment;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.RespiratoryRateDailyFragment;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.RespiratoryRatePeriodFragment;
 
