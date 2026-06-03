@@ -1504,7 +1504,7 @@
 \nНАСТАВИТЕ НА СОПСТВЕНУ ОДГОВОРНОСТ!</string>
     <string name="miband_firmware_suggest_whitelist">Уколико ипак желите да наставите и све ради како треба након тога, молим, јавите програмерима ГеџетБрвна да одобре на списку издање драма %s.</string>
     <string name="fw_upgrade_notice_amazfitcor2">Уградићете драм %s на свој Амејзфит Кор 2. \n \nМолим, уградите датотеку .fw, и након тога датотеку .res. Ваш сат ће се препокренути након уградње датотеке .fw. \n \nПримедба: Не мора да уградите датотеку .res уколико је иста као претходно уграђена. \n \nНАСТАВИТЕ НА СОПСТВЕНУ ОДГОВОРНОСТ! \n \nПОТПУНО ЈЕ НЕПРОВЕРЕН ПОСТУПАК, НАЈВЕРОВАТНИЈЕ ТРЕБА ДА УГРАДИТЕ ДРАМ BEATS_W АКО ЛИ ЈЕ ИМЕ УРЕЂАЈА „Amazfit Band 2“</string>
-    <string name="open_fw_installer_info_text">Уграђивач драма/сучеља/програма/датотеке омогућава отпремање/уградњу подржаних датотека (драма, сучеља, програма, ГПС-а, извора, словолика…) на уређај. Можете погледати опширније на викију: https://codeberg.org/Freeyourgadget/Gadgetbridge/wiki/Firmware-Update</string>
+    <string name="open_fw_installer_info_text">Уграђивач фирвера/сучеља/програма/датотеке омогућава отпремање/уградњу подржаних датотека (драма, сучеља, програма, ГПС-а, извора, словолика…) на уређај. Можете погледати опширније на страници: https://gadgetbridge.org/internals/features/installer/</string>
     <string name="pref_summary_enable_outgoing_call">Онемогућавање овога ће такође зауставити трешњу Пебла 2/ЛЕ при одлазним позивима</string>
     <string name="fw_upgrade_notice_amazfitcor">Уградићете драм %s на свој Амејзфит Кор.
 \n
@@ -2719,4 +2719,8 @@
     <string name="battery_status_new">Ново</string>
     <string name="battery_status_ok">У реду</string>
     <string name="battery_status_unknown">Непознато</string>
+    <string name="pref_experimental_metrics_title">Општа мерења</string>
+    <string name="pref_experimental_metrics_summary">Омогући опитно корисничко сучеље за општа мерења. Тренутно се односи једино на учитавање вежбања и уписа калорија на уређајима Гармина.</string>
+    <string name="diving_surface_interval">Међувреме површи</string>
+    <string name="prefs_device_id">Лични број уређаја</string>
 </resources>
