@@ -243,7 +243,7 @@ public class GenericMetricSampleProvider extends AbstractTimeSampleProvider<Gene
         if (samples.isEmpty()) {
             return null;
         }
-        final GenericMetricSample sample = samples.getFirst();
+        final GenericMetricSample sample = samples.get(0);
         return sample;
     }
 
@@ -268,7 +268,7 @@ public class GenericMetricSampleProvider extends AbstractTimeSampleProvider<Gene
         if (samples.isEmpty()) {
             return null;
         }
-        final GenericMetricSample sample = samples.getFirst();
+        final GenericMetricSample sample = samples.get(0);
         return sample;
     }
 
@@ -294,7 +294,7 @@ public class GenericMetricSampleProvider extends AbstractTimeSampleProvider<Gene
         if (samples.isEmpty()) {
             return null;
         }
-        final GenericMetricSample sample = samples.getFirst();
+        final GenericMetricSample sample = samples.get(0);
         return sample;
     }
 }
