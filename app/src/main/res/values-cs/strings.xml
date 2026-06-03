@@ -4525,4 +4525,5 @@
     <string name="pref_experimental_metrics_title">Obecná měření</string>
     <string name="pref_experimental_metrics_summary">Povolit experimentální logiku rozhraní pro obecná měření. V současné době platné pouze pro tréninkovou zátěž a kalorie zaznamenané zařízeními Garmin.</string>
     <string name="unit_kcal_per_day">kcal/den</string>
+    <string name="prefs_device_id">ID zařízení</string>
 </resources>
