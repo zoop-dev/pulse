@@ -74,6 +74,7 @@ public class CasioGBD200DeviceCoordinator extends CasioGBX100DeviceCoordinator {
     @Override
     public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
         return new int[]{
+                R.xml.devicesettings_connection_force_legacy_gatt,
                 R.xml.devicesettings_find_phone,
                 R.xml.devicesettings_wearlocation,
                 R.xml.devicesettings_timeformat,
