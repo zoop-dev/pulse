@@ -615,7 +615,11 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
 
     @Override
     public int getBlePhyMask() {
-        return BluetoothDevice.PHY_LE_CODED_MASK;
+        // this is specified as a recommendation ("prefer to use ...") by Google
+        // however some roms - e.g. MIUI - treat it as law ("must only use ...") (#6230)
+        // -> by default prefer more reliable physical layers (PHYs) over high throughput 2M
+
+        return BluetoothDevice.PHY_LE_1M_MASK | BluetoothDevice.PHY_LE_CODED_MASK;
     }
 
     @Override

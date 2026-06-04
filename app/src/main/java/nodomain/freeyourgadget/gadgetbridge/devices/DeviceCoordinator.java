@@ -717,7 +717,8 @@ public interface DeviceCoordinator {
     /**
      * Returns the preferred BLE PHY mask for GATT connections, as passed to
      * {@link android.bluetooth.BluetoothDevice#connectGatt}. Defaults to
-     * {@link android.bluetooth.BluetoothDevice#PHY_LE_CODED_MASK}
+     * {@link android.bluetooth.BluetoothDevice#PHY_LE_1M_MASK} and
+     * {@link android.bluetooth.BluetoothDevice#PHY_LE_CODED_MASK}.
      */
     int getBlePhyMask();
 
@@ -733,7 +734,7 @@ public interface DeviceCoordinator {
     boolean isExperimental();
 
     /**
-     * Indicates whether the device has some kind of calender we can sync to.
+     * Indicates whether the device has some kind of calendar we can sync to.
      * Also used for generated sunrise/sunset events
      */
     boolean supportsCalendarEvents(@NonNull final GBDevice device);
@@ -834,7 +835,7 @@ public interface DeviceCoordinator {
     int getContactsSlotCount(@NonNull final GBDevice device);
 
     /**
-     * Indicates whether the device has an led which supports custom colors
+     * Indicates whether the device has an LED which supports custom colors
      */
     boolean supportsLedColor(@NonNull final GBDevice device);
 
@@ -851,7 +852,7 @@ public interface DeviceCoordinator {
     int[] getColorPresets();
 
     /**
-     * Indicates whether the device supports unicode emojis.
+     * Indicates whether the device supports Unicode emojis.
      */
     boolean supportsUnicodeEmojis(@NonNull final GBDevice device);
 
