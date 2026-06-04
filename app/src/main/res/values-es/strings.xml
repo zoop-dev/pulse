@@ -361,8 +361,8 @@
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Los datos antiguos han sido borrados.</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">El borrado de la Base de datos antiguos ha fallado.</string>
     <string name="dbmanagementactivity_overwrite">Sobrescribir</string>
-    <string name="Cancel">Cancelar</string>
-    <string name="Delete">Eliminar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="delete">Eliminar</string>
     <!--Strings related to Vibration Activity-->
     <string name="title_activity_vibration">Vibración</string>
     <!--Strings related to Pebble Pairing Activity-->

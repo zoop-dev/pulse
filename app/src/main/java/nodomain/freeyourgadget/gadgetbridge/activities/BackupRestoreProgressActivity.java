@@ -242,7 +242,7 @@ public class BackupRestoreProgressActivity extends AbstractGBActivity {
                         }).start();
                     }
                 })
-                .setNegativeButton(R.string.Cancel, (dialog, which) -> {
+                .setNegativeButton(R.string.cancel, (dialog, which) -> {
                 });
 
         if ("import".equals(action)) {

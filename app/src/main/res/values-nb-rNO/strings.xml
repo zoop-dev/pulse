@@ -362,8 +362,8 @@
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Aktivitetsdata slettet.</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">Sletting av gammel aktivitetsdatabase mislyktes.</string>
     <string name="dbmanagementactivity_overwrite">Overskriv</string>
-    <string name="Cancel">Avbryt</string>
-    <string name="Delete">Slett</string>
+    <string name="cancel">Avbryt</string>
+    <string name="delete">Slett</string>
     <string name="title_activity_vibration">Vibrasjon</string>
     <string name="title_activity_pebble_pairing">Pebble-paring</string>
     <string name="pebble_pairing_hint">En paringsdialog vil dukke opp på Android-enheten din. Hvis ikke, se i varselslinjen og godta paringsforespørselen. Godta den også på Pebble etterpå.</string>

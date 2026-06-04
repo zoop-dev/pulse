@@ -85,7 +85,7 @@ class DatabaseDebugFragment : AbstractDebugFragment() {
             .setIcon(R.drawable.ic_warning)
             .setTitle(R.string.dbmanagementactivity_delete_activity_data_title)
             .setMessage(R.string.dbmanagementactivity_really_delete_entire_db)
-            .setPositiveButton(R.string.Delete) { _, _ ->
+            .setPositiveButton(R.string.delete) { _, _ ->
                 if (GBDatabaseManager.deleteActivityDatabase(requireContext())) {
                     GB.toast(
                         requireContext(),
@@ -104,7 +104,7 @@ class DatabaseDebugFragment : AbstractDebugFragment() {
                     )
                 }
             }
-            .setNegativeButton(R.string.Cancel) { _, _ -> }
+            .setNegativeButton(R.string.cancel) { _, _ -> }
             .show()
     }
 
@@ -114,7 +114,7 @@ class DatabaseDebugFragment : AbstractDebugFragment() {
             .setTitle(R.string.dbmanagementactivity_delete_old_activity_db)
             .setIcon(R.drawable.ic_warning)
             .setMessage(R.string.dbmanagementactivity_delete_old_activitydb_confirmation)
-            .setPositiveButton(R.string.Delete) { _, _ ->
+            .setPositiveButton(R.string.delete) { _, _ ->
                 if (GBDatabaseManager.deleteOldActivityDatabase(requireContext())) {
                     GB.toast(
                         requireContext(),
@@ -134,7 +134,7 @@ class DatabaseDebugFragment : AbstractDebugFragment() {
                 if (!hasOldActivityDatabase()) {
                     findPreference<Preference>(PREF_DEBUG_DELETE_OLD_DATABASE)!!.isVisible = false
                 }
-            }.setNegativeButton(R.string.Cancel) { _, _ -> }.show()
+            }.setNegativeButton(R.string.cancel) { _, _ -> }.show()
     }
 
     // TODO ability to run raw sql from the UI

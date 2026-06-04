@@ -529,7 +529,7 @@
     <string name="heartrate_bpm_115">115 نبضة في الدقيقة</string>
     <string name="heartrate_bpm_110">110 نبضة في الدقيقة</string>
     <string name="spo2_off">ايقاف</string>
-    <string name="Cancel">إلغاء</string>
+    <string name="cancel">إلغاء</string>
     <string name="pref_summary_third_party_app_device_settings">اسمح لتطبيقات الطرف الثالث المثبتة الأخرى بضبط إعدادات الجهاز من خلال النوايا.</string>
     <string name="pref_summary_low_latency_fw_update">قد يساعد هذا على الأجهزة التي يفشل فيها تثبيت البرامج الثابتة.</string>
     <string name="miband_prefs_hr_sleep_detection">استخدام أجهزة الاستشعار لمعدلات القلب لتحسين كشف النوم</string>
@@ -767,7 +767,7 @@
     <string name="dutch">الهولندية</string>
     <string name="turkish">التركية</string>
     <string name="activity_prefs_goal_fat_burn_time_minutes">الهدف اليومي: وقت حرق الدهون في دقائق</string>
-    <string name="Delete">حذف</string>
+    <string name="delete">حذف</string>
     <string name="set">تعيين</string>
     <string name="off">ايقاف</string>
     <string name="activity_type_running">الجري</string>

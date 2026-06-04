@@ -52,7 +52,7 @@ class WorkoutEditor(private val context: Context) {
                 workout.summary.update()
                 callback.onWorkoutUpdated()
             }
-            .setNegativeButton(R.string.Cancel, null)
+            .setNegativeButton(R.string.cancel, null)
             .show()
     }
 
@@ -131,7 +131,7 @@ class WorkoutEditor(private val context: Context) {
                     workout.summary.update()
                     callback.onWorkoutUpdated()
                 }
-                .setNegativeButton(R.string.Cancel) { dialog2, which2 -> }
+                .setNegativeButton(R.string.cancel) { dialog2, which2 -> }
                 .show()
             dialog!!.dismiss()
         }

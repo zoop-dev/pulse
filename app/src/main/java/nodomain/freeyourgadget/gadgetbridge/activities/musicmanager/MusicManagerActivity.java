@@ -437,7 +437,7 @@ public class MusicManagerActivity extends AbstractGBActivity {
         list.add(music.getId());
 
         new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.Delete)
+                .setTitle(R.string.delete)
                 .setMessage(this.getString(R.string.music_delete_confirm_description, music.getTitle()))
                 .setIcon(R.drawable.ic_warning)
                 .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
@@ -449,7 +449,7 @@ public class MusicManagerActivity extends AbstractGBActivity {
 
     private void deleteMusicMultipleConfirm(final ArrayList<Integer> list) {
         new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.Delete)
+                .setTitle(R.string.delete)
                 .setMessage(this.getString(R.string.music_delete_multiple_confirm_description, list.size()))
                 .setIcon(R.drawable.ic_warning)
                 .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
@@ -539,7 +539,7 @@ public class MusicManagerActivity extends AbstractGBActivity {
         if(playlist.getId() == 0)
             return;
         new MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.Delete)
+                .setTitle(R.string.delete)
                 .setMessage(this.getString(R.string.music_delete_confirm_description, playlist.getName()))
                 .setIcon(R.drawable.ic_warning)
                 .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {

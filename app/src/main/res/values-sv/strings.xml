@@ -498,7 +498,7 @@
     <string name="alarm_tue_short">Tis</string>
     <string name="alarm_wed_short">Ons</string>
     <string name="DEVINFO_HR_VER">"HR: "</string>
-    <string name="Cancel">Avbryt</string>
+    <string name="cancel">Avbryt</string>
     <string name="watchface_dialog_widget_type">Typ</string>
     <string name="prefs_galaxy_buds_experimental">Experimentiell</string>
     <string name="prefs_active_noise_cancelling_level_low">Låg</string>
@@ -510,7 +510,7 @@
     <string name="watchface_widget_type_calories">Kalorier</string>
     <string name="prefs_right">Höger</string>
     <string name="pref_navigation_app_osmand">OsmAnd(+)</string>
-    <string name="Delete">Radera</string>
+    <string name="delete">Radera</string>
     <string name="ukrainian">Ukrainska</string>
     <string name="arabic">Arabiska</string>
     <string name="vietnamese">Vietnamesiska</string>

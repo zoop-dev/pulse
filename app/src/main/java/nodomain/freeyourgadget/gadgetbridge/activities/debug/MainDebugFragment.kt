@@ -117,7 +117,7 @@ class MainDebugFragment : AbstractDebugFragment() {
             .setTitle(R.string.warning)
             .setMessage(R.string.share_log_warning)
             .setPositiveButton(R.string.ok) { _, _ -> shareLog() }
-            .setNegativeButton(R.string.Cancel) { _, _ -> }
+            .setNegativeButton(R.string.cancel) { _, _ -> }
             .show()
     }
 

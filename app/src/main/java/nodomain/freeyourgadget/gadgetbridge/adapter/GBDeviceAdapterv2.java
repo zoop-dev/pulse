@@ -636,7 +636,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
 
                                                                  }
                                                              })
-                                                             .setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+                                                             .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                                                  @Override
                                                                  public void onClick(DialogInterface dialog, int which) {
                                                                      // do nothing
@@ -787,7 +787,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                                 }
                             }
                         });
-                builder.setNegativeButton(context.getResources().getString(R.string.Cancel), new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(context.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -997,9 +997,9 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                 .setCancelable(true)
                 .setTitle(context.getString(R.string.controlcenter_delete_device_name, device.getAliasOrName()))
                 .setMessage(R.string.controlcenter_delete_device_dialogmessage)
-                .setPositiveButton(R.string.Delete,
+                .setPositiveButton(R.string.delete,
                         (dialog, which) -> removeDevice(device, true))
-                .setNegativeButton(R.string.Cancel, (dialog, which) -> {});
+                .setNegativeButton(R.string.cancel, (dialog, which) -> {});
 
         if (deviceHasFiles(device)) {
             builder.setNeutralButton(R.string.delete_device_and_retain_files,
@@ -1159,7 +1159,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                         }
                     }
                 })
-                .setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }
@@ -1226,7 +1226,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                         }
                     }
                 })
-                .setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // do nothing

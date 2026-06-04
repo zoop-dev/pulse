@@ -212,7 +212,7 @@
     <string name="updatefirmwareoperation_firmware_not_sent">펌웨어가 전송되지 않았습니다.</string>
     <string name="charts_legend_heartrate">심박수</string>
     <string name="live_activity_heart_rate">심박수</string>
-    <string name="Delete">삭제</string>
+    <string name="delete">삭제</string>
     <!--Strings related to Vibration Activity-->
     <!--Strings related to Pebble Pairing Activity-->
     <string name="action_donate">기부</string>
@@ -389,7 +389,7 @@
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">오래된 활동 데이터가 삭제되었습니다.</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">오래된 활동 데이터베이스 삭제에 실패했습니다.</string>
     <string name="dbmanagementactivity_overwrite">덮어쓰기</string>
-    <string name="Cancel">취소</string>
+    <string name="cancel">취소</string>
     <string name="title_activity_vibration">진동</string>
     <string name="title_activity_pebble_pairing">Pebble 페어링</string>
     <string name="pebble_pairing_hint">안드로이드 기기에 페어링 대화상자가 나타납니다. 나타나지 않으면 알림 창에서 페어링 요청을 수락하세요. 그 다음 Pebble에서도 수락하세요.</string>

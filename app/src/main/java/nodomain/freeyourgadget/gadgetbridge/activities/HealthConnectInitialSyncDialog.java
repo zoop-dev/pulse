@@ -104,7 +104,7 @@ public class HealthConnectInitialSyncDialog extends MaterialDialogFragment {
                 .setPositiveButton(R.string.ok, (dialog, id) -> {
                     handleSyncPeriodSelection();
                 })
-                .setNegativeButton(R.string.Cancel, (dialog, id) -> dismiss());
+                .setNegativeButton(R.string.cancel, (dialog, id) -> dismiss());
 
         return builder.create();
     }

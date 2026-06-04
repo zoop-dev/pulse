@@ -240,7 +240,7 @@ public class AAWirelessSettingsCustomizer implements DeviceSpecificSettingsCusto
                     }));
                 }
 
-                items.add(new RunnableListIconItem(context.getString(R.string.Delete), R.drawable.ic_delete, () -> {
+                items.add(new RunnableListIconItem(context.getString(R.string.delete), R.drawable.ic_delete, () -> {
                     final Intent intent = new Intent(AAWirelessPrefs.ACTION_PHONE_DELETE);
                     intent.putExtra(AAWirelessPrefs.EXTRA_PHONE_MAC, phoneMac);
                     intent.setPackage(BuildConfig.APPLICATION_ID);

@@ -44,7 +44,7 @@ class WidgetsDebugFragment : AbstractDebugFragment() {
                 val items: MutableList<RunnableListIconItem?> = ArrayList(4)
 
                 items.add(
-                    RunnableListIconItem(getString(R.string.Delete), R.drawable.ic_delete_forever) {
+                    RunnableListIconItem(getString(R.string.delete), R.drawable.ic_delete_forever) {
                         appWidgetHost.deleteAppWidgetId(appWidgetID)
                         reloadWidgets()
                     }

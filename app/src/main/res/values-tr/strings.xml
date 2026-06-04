@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="Cancel">İptal</string>
+    <string name="cancel">İptal</string>
     <string name="DEVINFO_HR_VER">"Kalp ritmi: "</string>
-    <string name="Delete">Sil</string>
+    <string name="delete">Sil</string>
     <string name="FetchActivityOperation_about_to_transfer_since">%1$s tarihinden itibaren verileri aktarmak üzere</string>
     <string name="StringUtils_sender">(%1$s)</string>
     <string name="_pebble_watch_mute">Sessiz</string>

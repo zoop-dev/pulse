@@ -751,7 +751,7 @@ public abstract class AbstractAppManagerFragment extends Fragment {
 
     private void deleteAppConfirm(final GBDeviceApp selectedApp, final boolean deleteFromCache) {
         new MaterialAlertDialogBuilder(getContext())
-                .setTitle(R.string.Delete)
+                .setTitle(R.string.delete)
                 .setMessage(requireContext().getString(R.string.contact_delete_confirm_description, selectedApp.getName()))
                 .setIcon(R.drawable.ic_warning)
                 .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {

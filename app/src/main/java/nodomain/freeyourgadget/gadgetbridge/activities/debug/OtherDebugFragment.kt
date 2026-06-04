@@ -106,7 +106,7 @@ class OtherDebugFragment : AbstractDebugFragment() {
                         GBApplication.deviceService(it).onReset(GBDeviceProtocol.RESET_FLAGS_FACTORY_RESET)
                     }
                 }
-                .setNegativeButton(R.string.Cancel) { _, _ -> }
+                .setNegativeButton(R.string.cancel) { _, _ -> }
                 .show()
         }
     }

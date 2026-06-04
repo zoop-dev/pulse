@@ -335,8 +335,8 @@
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">נתוני פעילות ישנים נמחקו.</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">מחיקת מסד נתוני הפעילות הישן נכשל.</string>
     <string name="dbmanagementactivity_overwrite">שכתוב</string>
-    <string name="Cancel">ביטול</string>
-    <string name="Delete">מחיקה</string>
+    <string name="cancel">ביטול</string>
+    <string name="delete">מחיקה</string>
     <!--Strings related to Vibration Activity-->
     <string name="title_activity_vibration">רטט</string>
     <!--Strings related to Pebble Pairing Activity-->

@@ -356,8 +356,8 @@
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Устаревшие данные активности удалены.</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">Удалить устаревшие данные по вашей активности не получилось.</string>
     <string name="dbmanagementactivity_overwrite">Перезаписать</string>
-    <string name="Cancel">Отмена</string>
-    <string name="Delete">Удалить</string>
+    <string name="cancel">Отмена</string>
+    <string name="delete">Удалить</string>
     <!--Strings related to Vibration Activity-->
     <string name="title_activity_vibration">Вибрация</string>
     <!--Strings related to Pebble Pairing Activity-->

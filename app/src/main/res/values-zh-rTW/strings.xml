@@ -408,8 +408,8 @@
     <string name="dbmanagementactivity_database_successfully_deleted">資料已刪除。</string>
     <string name="activity_DB_test_export_button">立即執行自動匯出</string>
     <string name="activity_DB_test_export_message">正在匯出資料庫…</string>
-    <string name="Cancel">取消</string>
-    <string name="Delete">刪除</string>
+    <string name="cancel">取消</string>
+    <string name="delete">刪除</string>
     <string name="discovery_yes_pair">配對</string>
     <string name="activity_type_exercise">運動</string>
     <string name="kind_gps_cep">GPS 誤差校正</string>

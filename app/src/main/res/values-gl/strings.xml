@@ -373,8 +373,8 @@
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Datos antigos de actividade borrados.</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">Fallou o borrado da base de datos de actividades antigas.</string>
     <string name="dbmanagementactivity_overwrite">Sobreescribir</string>
-    <string name="Cancel">Cancelar</string>
-    <string name="Delete">Borrar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="delete">Borrar</string>
     <string name="title_activity_vibration">Vibración</string>
     <string name="title_activity_pebble_pairing">Emparellando co Pebble</string>
     <string name="pref_title_setup_bt_pairing">Activar o emparellamento Bluetooth</string>

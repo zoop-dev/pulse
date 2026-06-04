@@ -259,8 +259,8 @@
     <string name="dbmanagementactivity_overwrite_database_confirmation">Czy naprawdę nadpisać bieżące dane? Wszystkie Twoje dane dotyczące aktywności (jeśli istnieją), urządzenia i preferencje zostaną nadpisane.</string>
     <string name="dbmanagementactivity_error_importing_db">Błąd importu bazy: %1$s</string>
     <string name="dbmanagementactivity_overwrite">Nadpisz</string>
-    <string name="Cancel">Anuluj</string>
-    <string name="Delete">Usuń</string>
+    <string name="cancel">Anuluj</string>
+    <string name="delete">Usuń</string>
     <!--Strings related to Vibration Activity-->
     <string name="title_activity_vibration">Wibracje</string>
     <!--Strings related to Pebble Pairing Activity-->

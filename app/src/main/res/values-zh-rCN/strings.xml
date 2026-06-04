@@ -393,8 +393,8 @@
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">已删除旧的活动数据。</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">旧的活动数据库删除失败。</string>
     <string name="dbmanagementactivity_overwrite">覆盖</string>
-    <string name="Cancel">取消</string>
-    <string name="Delete">删除</string>
+    <string name="cancel">取消</string>
+    <string name="delete">删除</string>
     <string name="title_activity_vibration">振动</string>
     <string name="title_activity_pebble_pairing">Pebble 配对中</string>
     <string name="pebble_pairing_hint">您的 Android 设备上将会弹出一个配对对话框。如果没有出现, 请查看通知栏并接受配对请求。之后也请在 Pebble 上接受配对要求。</string>

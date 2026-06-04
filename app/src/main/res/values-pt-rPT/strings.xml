@@ -1048,8 +1048,8 @@
     <string name="activity_db_management_empty_DB">Esvaziar base de dados</string>
     <string name="activity_db_management_exportimport_label">Exportar e importar</string>
     <string name="activity_db_management_empty_db_warning">Atenção! Ao pressionar este botão, vai apagar a sua base de dados e iniciar do zero.</string>
-    <string name="Cancel">Cancelar</string>
-    <string name="Delete">Apagar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="delete">Apagar</string>
     <string name="ok">OK</string>
     <string name="dismiss">Dispensar</string>
     <string name="set">Definir</string>

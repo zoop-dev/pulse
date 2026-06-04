@@ -408,8 +408,8 @@
     <string name="pebble_pairing_hint">A pairing dialog will pop up on your Android device. If not, look in the notification drawer and accept the pairing request. Also accept it on your Pebble afterwards.</string>
     <string name="title_activity_pebble_pairing">Pebble pairing</string>
     <string name="title_activity_vibration">Vibration</string>
-    <string name="Delete">Delete</string>
-    <string name="Cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
     <string name="dbmanagementactivity_overwrite">Overwrite</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">Old Activity database deletion failed.</string>
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Old activity data deleted.</string>

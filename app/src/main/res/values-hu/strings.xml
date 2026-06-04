@@ -361,8 +361,8 @@
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Régi tevékenységadatok törölve.</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">Nem sikerült a régi tevékenység-adatbázis törlése.</string>
     <string name="dbmanagementactivity_overwrite">Felülírás</string>
-    <string name="Cancel">Mégse</string>
-    <string name="Delete">Törlés</string>
+    <string name="cancel">Mégse</string>
+    <string name="delete">Törlés</string>
     <!--Strings related to Vibration Activity-->
     <string name="title_activity_vibration">Rezgés</string>
     <!--Strings related to Pebble Pairing Activity-->

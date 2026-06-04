@@ -251,7 +251,7 @@ class DatabaseTableDebugFragment : AbstractDebugFragment() {
             .setNegativeButton(R.string.share) { _, _ ->
                 exportTableAndShare(tableName, startDate, endDate)
             }
-            .setNeutralButton(R.string.Cancel, null)
+            .setNeutralButton(R.string.cancel, null)
             .show()
     }
 
@@ -470,7 +470,7 @@ class DatabaseTableDebugFragment : AbstractDebugFragment() {
                 pendingImportTableName = tableName
                 openFileLauncher.launch(arrayOf("text/csv", "text/plain", "*/*"))
             }
-            .setNegativeButton(R.string.Cancel, null)
+            .setNegativeButton(R.string.cancel, null)
             .show()
     }
 
@@ -635,7 +635,7 @@ class DatabaseTableDebugFragment : AbstractDebugFragment() {
             .setIcon(R.drawable.ic_warning)
             .setTitle("Clear $tableName")
             .setMessage("Clear $tableName? All data in this table will be deleted.")
-            .setPositiveButton(R.string.Delete) { _, _ ->
+            .setPositiveButton(R.string.delete) { _, _ ->
                 try {
                     GBApplication.acquireDB().use { db ->
                         db.database.execSQL("DELETE FROM $tableName;")
@@ -646,7 +646,7 @@ class DatabaseTableDebugFragment : AbstractDebugFragment() {
                     GB.toast("Failed to clear table", Toast.LENGTH_LONG, GB.ERROR, e)
                 }
             }
-            .setNegativeButton(R.string.Cancel) { _, _ -> }
+            .setNegativeButton(R.string.cancel) { _, _ -> }
             .show()
     }
 
@@ -656,7 +656,7 @@ class DatabaseTableDebugFragment : AbstractDebugFragment() {
             .setIcon(R.drawable.ic_warning)
             .setTitle("Drop $tableName")
             .setMessage("Drop $tableName? All data in this table will be lost, and the table must be re-created manually.")
-            .setPositiveButton(R.string.Delete) { _, _ ->
+            .setPositiveButton(R.string.delete) { _, _ ->
                 try {
                     GBApplication.acquireDB().use { db ->
                         db.database.execSQL("DROP TABLE IF EXISTS $tableName;")
@@ -666,7 +666,7 @@ class DatabaseTableDebugFragment : AbstractDebugFragment() {
                     GB.toast("Failed to drop table", Toast.LENGTH_LONG, GB.ERROR, e)
                 }
             }
-            .setNegativeButton(R.string.Cancel) { _, _ -> }
+            .setNegativeButton(R.string.cancel) { _, _ -> }
             .show()
 
     }

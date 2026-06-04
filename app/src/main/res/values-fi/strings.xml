@@ -302,7 +302,7 @@
     <string name="pref_title_middle_button_function_double">Keskimmäinen nappi tupla</string>
     <string name="devicestatus_connecting">Laite yhdistyy</string>
     <string name="devicestatus_connected">Laite on yhdistetty</string>
-    <string name="Delete">Poista</string>
+    <string name="delete">Poista</string>
     <string name="pref_message_privacy_mode_off">Näytä sisältö</string>
     <string name="pref_title_weather_location">Sään sijainti (LineageOS:n sään tarjoajaa varten)</string>
     <string name="pref_header_development">Kehittäjäasetukset</string>
@@ -379,7 +379,7 @@
     <string name="weekstepschart_steps_a_month">Askeleet kuukaudessa</string>
     <string name="pref_chart_heartrate_color_orange">Oranssi</string>
     <string name="pref_chart_heartrate_color_red">Punainen</string>
-    <string name="Cancel">Peruuta</string>
+    <string name="cancel">Peruuta</string>
     <string name="ok">OK</string>
     <string name="activity_prefs_gender">Sukupuoli</string>
     <string name="pref_header_charts">Taulukoiden asetukset</string>

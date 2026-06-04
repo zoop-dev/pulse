@@ -370,8 +370,8 @@
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">古いアクティビティ データを削除しました。</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">古いアクティビティ データベースの削除に失敗しました。</string>
     <string name="dbmanagementactivity_overwrite">上書き</string>
-    <string name="Cancel">キャンセル</string>
-    <string name="Delete">削除</string>
+    <string name="cancel">キャンセル</string>
+    <string name="delete">削除</string>
     <!--Strings related to Vibration Activity-->
     <string name="title_activity_vibration">振動</string>
     <!--Strings related to Pebble Pairing Activity-->

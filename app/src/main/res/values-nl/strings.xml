@@ -421,8 +421,8 @@
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Oude activiteitsgegevens verwijderd.</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">Oude activiteitsdatabase verwijderen mislukt.</string>
     <string name="dbmanagementactivity_overwrite">Overschrijven</string>
-    <string name="Cancel">Annuleren</string>
-    <string name="Delete">Verwijder</string>
+    <string name="cancel">Annuleren</string>
+    <string name="delete">Verwijder</string>
     <string name="title_activity_vibration">Vibratie</string>
     <string name="title_activity_pebble_pairing">Pebble koppelen</string>
     <string name="pebble_pairing_hint">Er zal een koppelingsdialoogvenster verschijnen op uw Android-apparaat. Als dat niet gebeurt, kijk dan tussen uw meldingen en accepteer het koppelingsverzoek. Accepteer het daarna ook op uw Pebble.</string>

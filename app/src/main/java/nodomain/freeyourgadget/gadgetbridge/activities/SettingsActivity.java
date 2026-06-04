@@ -519,7 +519,7 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
                                 editor.putString("opentracks_packagename", fitnessAppEditText.getText().toString());
                                 editor.apply();
                             })
-                            .setNegativeButton(R.string.Cancel, (dialog, which) -> {})
+                            .setNegativeButton(R.string.cancel, (dialog, which) -> {})
                             .show();
                     return false;
                 });

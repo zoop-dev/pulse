@@ -75,7 +75,7 @@ class CompanionDebugFragment : AbstractDebugFragment() {
                         .setIcon(device.icon)
                         .setTitle("Unpair companion device")
                         .setMessage("Unpair ${device.name} (${device.address}) from companion device?")
-                        .setNeutralButton(R.string.Cancel) { _, _ -> }
+                        .setNeutralButton(R.string.cancel) { _, _ -> }
                         .setPositiveButton(R.string.ok) { _, _ -> unpairCompanion(device) }
                         .show()
                 }
@@ -93,7 +93,7 @@ class CompanionDebugFragment : AbstractDebugFragment() {
                         .setIcon(device.icon)
                         .setTitle("Pair as companion")
                         .setMessage("Pair ${device.name} (${device.address}) as companion device?")
-                        .setNeutralButton(R.string.Cancel) { _, _ -> }
+                        .setNeutralButton(R.string.cancel) { _, _ -> }
                         .setPositiveButton(R.string.ok) { _, _ -> pairAsCompanion(device) }
                         .show()
                 }

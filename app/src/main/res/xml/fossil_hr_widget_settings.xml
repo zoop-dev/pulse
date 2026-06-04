@@ -9,14 +9,14 @@
         <ListPreference
             android:dialogTitle="@string/watchface_dialog_widget_type"
             android:key="pref_hybridhr_widget_type"
-            android:negativeButtonText="@string/Cancel"
+            android:negativeButtonText="@string/cancel"
             android:persistent="false"
             android:title="@string/watchface_dialog_widget_type"
             app:iconSpaceReserved="false" />
         <ListPreference
             android:dialogTitle="@string/watchface_dialog_widget_color"
             android:key="pref_hybridhr_widget_color"
-            android:negativeButtonText="@string/Cancel"
+            android:negativeButtonText="@string/cancel"
             android:persistent="false"
             android:title="@string/watchface_dialog_widget_color"
             app:iconSpaceReserved="false" />
@@ -25,7 +25,7 @@
             android:entries="@array/pref_hybridhr_widgetbackgrounds_items"
             android:entryValues="@array/pref_hybridhr_widgetbackgrounds_values"
             android:key="pref_hybridhr_widget_background"
-            android:negativeButtonText="@string/Cancel"
+            android:negativeButtonText="@string/cancel"
             android:persistent="false"
             android:title="@string/watchface_dialog_widget_background"
             app:iconSpaceReserved="false" />
@@ -50,7 +50,7 @@
         <ListPreference
             android:dialogTitle="@string/watchface_dialog_widget_presets"
             android:key="pref_hybridhr_widget_pos_preset"
-            android:negativeButtonText="@string/Cancel"
+            android:negativeButtonText="@string/cancel"
             android:persistent="false"
             android:title="@string/watchface_dialog_widget_presets"
             app:iconSpaceReserved="false"
@@ -64,7 +64,7 @@
         <ListPreference
             android:dialogTitle="@string/watchface_dialog_widget_timezone"
             android:key="pref_hybridhr_widget_timezone"
-            android:negativeButtonText="@string/Cancel"
+            android:negativeButtonText="@string/cancel"
             android:persistent="false"
             android:title="@string/watchface_dialog_widget_timezone"
             app:iconSpaceReserved="false" />

@@ -203,7 +203,7 @@ public class SonyHeadphonesSettingsCustomizer implements DeviceSpecificSettingsC
                                 ancOptimizerProgressDialog.setMessage(context.getString(R.string.sony_anc_optimizer_status_starting));
                                 ancOptimizerProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                                 ancOptimizerProgressDialog.setProgress(0);
-                                ancOptimizerProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(R.string.Cancel), (dialog1, which) -> {
+                                ancOptimizerProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(R.string.cancel), (dialog1, which) -> {
                                     dialog1.dismiss();
                                     ancOptimizerProgressDialog = null;
                                     handler.notifyPreferenceChanged(PREF_SONY_NOISE_OPTIMIZER_CANCEL);

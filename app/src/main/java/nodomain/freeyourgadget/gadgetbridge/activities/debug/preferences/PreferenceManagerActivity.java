@@ -191,7 +191,7 @@ public class PreferenceManagerActivity extends AbstractGBActivity implements Men
                     .setIcon(R.drawable.ic_warning)
                     .setTitle(R.string.debugactivity_confirm_remove_device_preferences_title)
                     .setMessage(R.string.debugactivity_confirm_remove_device_preferences)
-                    .setNegativeButton(R.string.Cancel, (dialog, which) -> {
+                    .setNegativeButton(R.string.cancel, (dialog, which) -> {
                         dialog.dismiss();
                     })
                     .setPositiveButton(R.string.ok, (dialog, which) -> {

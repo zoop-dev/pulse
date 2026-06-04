@@ -377,8 +377,8 @@
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Os dados de atividades antigos foram apagados.</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">Não foi possível apagar a atividade antiga da base de dados.</string>
     <string name="dbmanagementactivity_overwrite">Escrever por cima</string>
-    <string name="Cancel">Cancelar</string>
-    <string name="Delete">Apagar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="delete">Apagar</string>
     <!--Strings related to Vibration Activity-->
     <string name="title_activity_vibration">Vibração</string>
     <!--Strings related to Pebble Pairing Activity-->

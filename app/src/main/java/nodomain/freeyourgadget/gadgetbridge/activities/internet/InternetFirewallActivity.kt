@@ -155,11 +155,11 @@ class InternetFirewallActivity : AbstractGBActivity() {
                     saveRuleToDatabase(domain, action)
                 }
                 loadRules()
-            }.setNegativeButton(R.string.Cancel, null)
+            }.setNegativeButton(R.string.cancel, null)
 
         // Add delete button if editing
         if (isEditing) {
-            dialogBuilder.setNeutralButton(R.string.Delete) { _, _ ->
+            dialogBuilder.setNeutralButton(R.string.delete) { _, _ ->
                 deleteRuleFromDatabase(existingRule)
                 loadRules()
             }

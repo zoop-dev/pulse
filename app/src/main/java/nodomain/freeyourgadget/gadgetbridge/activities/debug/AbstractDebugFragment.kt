@@ -40,7 +40,7 @@ abstract class AbstractDebugFragment : AbstractPreferenceFragment() {
                 .setItems(deviceNames) { _, which ->
                     function(selectedDevices[which])
                 }
-                .setNegativeButton(R.string.Cancel, null)
+                .setNegativeButton(R.string.cancel, null)
                 .show()
         } else {
             function(selectedDevices[0])

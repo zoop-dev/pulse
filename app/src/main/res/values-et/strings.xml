@@ -658,8 +658,8 @@
     <string name="menuitem_worldclock">Maailma kellaaeg</string>
     <string name="off">Väljas</string>
     <string name="on">Sees</string>
-    <string name="Delete">Kustuta</string>
-    <string name="Cancel">Tühista</string>
+    <string name="delete">Kustuta</string>
+    <string name="cancel">Tühista</string>
     <string name="activity_type_unknown">Teadmata tegevus</string>
     <string name="activity_type_not_worn">Seadet ei kantud</string>
     <string name="activity_DB_import_button">Impordi andmeid</string>

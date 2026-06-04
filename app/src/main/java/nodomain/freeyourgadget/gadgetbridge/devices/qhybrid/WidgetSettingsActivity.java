@@ -120,8 +120,8 @@ public class WidgetSettingsActivity extends AbstractGBActivity {
         if(element == null) {
             dialogBuilder
                     .setTitle("create element")
-                    .setNegativeButton("cancel", null)
-                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(this.getBaseContext().getString(R.string.cancel), null)
+                    .setPositiveButton(this.getBaseContext().getString(R.string.ok), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if(((RadioButton)((AlertDialog)dialog).findViewById(R.id.qhybrid_widget_elements_type_text)).isChecked()){
@@ -143,7 +143,7 @@ public class WidgetSettingsActivity extends AbstractGBActivity {
         }else{
             dialogBuilder
                     .setTitle("edit element")
-                    .setNegativeButton("delete", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(this.getBaseContext().getString(R.string.delete), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             WidgetSettingsActivity.this.subject.getElements().remove(element);
@@ -151,7 +151,7 @@ public class WidgetSettingsActivity extends AbstractGBActivity {
                             refreshElementsList();
                         }
                     })
-                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    .setPositiveButton(this.getBaseContext().getString(R.string.ok), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             element.setId(((EditText)((AlertDialog)dialog).findViewById(R.id.qhybrid_widget_element_id)).getText().toString());

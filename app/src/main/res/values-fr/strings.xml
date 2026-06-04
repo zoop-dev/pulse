@@ -371,8 +371,8 @@
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Les anciennes données d\'activité ont été effacées.</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">Échec de la destruction de l\'ancienne base de données.</string>
     <string name="dbmanagementactivity_overwrite">Écraser</string>
-    <string name="Cancel">Annuler</string>
-    <string name="Delete">Supprimer</string>
+    <string name="cancel">Annuler</string>
+    <string name="delete">Supprimer</string>
     <!--Strings related to Vibration Activity-->
     <string name="title_activity_vibration">Vibration</string>
     <!--Strings related to Pebble Pairing Activity-->

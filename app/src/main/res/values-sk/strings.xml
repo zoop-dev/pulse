@@ -414,8 +414,8 @@
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Pôvodná databáza bola vymazaná.</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">Mazanie pôvodnej databázy zlyhalo.</string>
     <string name="dbmanagementactivity_overwrite">Pprepísať</string>
-    <string name="Cancel">Zrušiť</string>
-    <string name="Delete">Odstrániť</string>
+    <string name="cancel">Zrušiť</string>
+    <string name="delete">Odstrániť</string>
     <string name="title_activity_vibration">Vibrácie</string>
     <string name="title_activity_pebble_pairing">Párovánie Pebble</string>
     <string name="pebble_pairing_hint">Dialóg párovania by sa mal objaviť na vašom zariadení s Androidom. Ak sa tak nestane, skontrolujte panel upozornení a potvrďte párovanie. Potom potvrďte párovanie na Pebble</string>

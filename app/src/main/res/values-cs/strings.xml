@@ -337,8 +337,8 @@
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Původní databáze byla vymazána.</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">Mazání původní databáze selhalo.</string>
     <string name="dbmanagementactivity_overwrite">Přepsat</string>
-    <string name="Cancel">Zrušit</string>
-    <string name="Delete">Odstranit</string>
+    <string name="cancel">Zrušit</string>
+    <string name="delete">Odstranit</string>
     <!--Strings related to Vibration Activity-->
     <string name="title_activity_vibration">Vibrace</string>
     <!--Strings related to Pebble Pairing Activity-->

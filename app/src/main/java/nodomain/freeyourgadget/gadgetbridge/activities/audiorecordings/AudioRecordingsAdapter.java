@@ -131,7 +131,7 @@ public class AudioRecordingsAdapter extends RecyclerView.Adapter<AudioRecordings
                                 AudioRecordingsRepository.insertOrReplace(null, recording);
                                 notifyItemChanged(position);
                             })
-                            .setNegativeButton(R.string.Cancel, (dialog, which) -> {
+                            .setNegativeButton(R.string.cancel, (dialog, which) -> {
                                 // do nothing
                             })
                             .show();
@@ -150,7 +150,7 @@ public class AudioRecordingsAdapter extends RecyclerView.Adapter<AudioRecordings
 
                 if (itemId == R.id.audio_recording_item_menu_delete) {
                     new MaterialAlertDialogBuilder(mContext)
-                            .setTitle(R.string.Delete)
+                            .setTitle(R.string.delete)
                             .setMessage(mContext.getString(R.string.music_delete_confirm_description, name))
                             .setIcon(R.drawable.ic_warning)
                             .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {

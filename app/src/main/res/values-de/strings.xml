@@ -372,8 +372,8 @@
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Alte Aktivitätsdaten gelöscht.</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">Löschen der alten Aktivitätsdatenbank fehlgeschlagen.</string>
     <string name="dbmanagementactivity_overwrite">Überschreiben</string>
-    <string name="Cancel">Abbrechen</string>
-    <string name="Delete">Löschen</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="delete">Löschen</string>
     <!--Strings related to Vibration Activity-->
     <string name="title_activity_vibration">Vibration</string>
     <!--Strings related to Pebble Pairing Activity-->

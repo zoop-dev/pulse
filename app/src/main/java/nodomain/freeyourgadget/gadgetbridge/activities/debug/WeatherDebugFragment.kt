@@ -138,7 +138,7 @@ class WeatherDebugFragment : AbstractDebugFragment() {
         // Delete
         items.add(
             RunnableListIconItem(
-                requireContext().getString(R.string.Delete),
+                requireContext().getString(R.string.delete),
                 R.drawable.ic_delete
             ) {
                 val newList = Weather.getWeatherSpecs().toMutableList()

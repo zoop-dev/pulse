@@ -1050,8 +1050,8 @@
     <string name="dbmanagementactivity_db_deletion_failed">Нисам успео да избришем хранилиште података.</string>
     <string name="activity_DB_import_button">Увези податке</string>
     <string name="activity_DB_ExportButton">Извези податке</string>
-    <string name="Delete">Избриши</string>
-    <string name="Cancel">Откажи</string>
+    <string name="delete">Избриши</string>
+    <string name="cancel">Откажи</string>
     <string name="ok">У реду</string>
     <string name="pref_screen_vibration_patterns_summary">Подесите обрасце трешње за различита обавештења</string>
     <string name="spo2_perc_80">80%</string>

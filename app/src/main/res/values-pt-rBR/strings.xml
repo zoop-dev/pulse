@@ -329,8 +329,8 @@
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Os dados de atividades antigos foram excluídos.</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">Falha na exclusão do banco de dados da atividades antigo.</string>
     <string name="dbmanagementactivity_overwrite">Sobrepor</string>
-    <string name="Cancel">Cancelar</string>
-    <string name="Delete">Excluir</string>
+    <string name="cancel">Cancelar</string>
+    <string name="delete">Excluir</string>
     <!--Strings related to Vibration Activity-->
     <string name="title_activity_vibration">Vibração</string>
     <!--Strings related to Pebble Pairing Activity-->

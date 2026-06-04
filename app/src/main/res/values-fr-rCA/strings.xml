@@ -358,8 +358,8 @@
     <string name="pref_title_setup_bt_pairing">Activer le jumelage Bluetooth</string>
     <string name="pebble_pairing_hint">Une fenêtre de jumelage va s’afficher sur votre téléphone. Si cela ne se produit pas, regardez dans vos notifications et acceptez-la. Acceptez ensuite la demande de jumelage sur votre Pebble.</string>
     <string name="title_activity_pebble_pairing">Jumelage avec une Pebble</string>
-    <string name="Delete">Supprimer</string>
-    <string name="Cancel">Annuler</string>
+    <string name="delete">Supprimer</string>
+    <string name="cancel">Annuler</string>
     <string name="dbmanagementactivity_overwrite">Écraser</string>
     <string name="dbmanagementactivity_old_activity_db_deletion_failed">Échec de la destruction de l\'ancienne base de données.</string>
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Les anciennes données d\'activité ont été effacées.</string>

@@ -391,7 +391,7 @@
     <string name="device_fw">Versi perangkat tegar: %1$s</string>
     <string name="updatefirmwareoperation_firmware_not_sent">Firmware belum dikirim</string>
     <string name="activity_db_management_autoexport_scheduled_yes">Ekspor otomatis telah dijadwalkan (sebelumnya) untuk %1$s</string>
-    <string name="Delete">Hapus</string>
+    <string name="delete">Hapus</string>
     <string name="pref_title_setup_bt_pairing">Aktifkan penyandingan Bluetooth</string>
     <string name="pref_summary_setup_bt_pairing">Nonaktifkan ini jika Anda mengalami masalah menghubung</string>
     <string name="miband2_prefs_timeformat">Mi2: Format waktu</string>
@@ -676,7 +676,7 @@
     <string name="pref_title_charts_range">Jangka Bagan</string>
     <string name="pref_chart_sleep_lines_limit">Berapa garis sesi tidur untuk ditampilkan sebelum menggulirnya</string>
     <string name="pref_summary_pebble_health_store_raw">Menyimpan data dengan adanya, meningkatkan penggunaan basis data untuk memperbolehkan interpretasi nanti.</string>
-    <string name="Cancel">Batalkan</string>
+    <string name="cancel">Batalkan</string>
     <string name="ok">Oke</string>
     <string name="activity_data_management_directory_content_title">Ekspor/Impor konten direktori</string>
     <string name="activity_type_walking">Berjalan</string>

@@ -40,6 +40,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.qhybrid.requests.misfit.PlayNotificationRequest;
 
 public class TimePicker extends MaterialAlertDialogBuilder {
@@ -139,8 +140,8 @@ public class TimePicker extends MaterialAlertDialogBuilder {
 
 
 
-        setNegativeButton("cancel", null);
-        setPositiveButton("ok", new DialogInterface.OnClickListener() {
+        setNegativeButton(getContext().getString(R.string.cancel), null);
+        setPositiveButton(getContext().getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if(finishListener == null) return;

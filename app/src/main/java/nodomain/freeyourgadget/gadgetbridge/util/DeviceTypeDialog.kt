@@ -128,7 +128,7 @@ class DeviceTypeDialog(
                     DeviceType.entries[selectedTestDeviceKey.toInt()]
                 )
             }
-            .setNegativeButton(R.string.Cancel) { _, _ -> }
+            .setNegativeButton(R.string.cancel) { _, _ -> }
             .create()
 
         // Validate and update OK button state

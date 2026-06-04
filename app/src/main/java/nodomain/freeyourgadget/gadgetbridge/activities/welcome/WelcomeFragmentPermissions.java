@@ -75,7 +75,7 @@ public class WelcomeFragmentPermissions extends Fragment {
                                 .apply();
                         requireActivity().finish();
                     })
-                    .setNegativeButton(R.string.Cancel, (dialog, which) -> {
+                    .setNegativeButton(R.string.cancel, (dialog, which) -> {
                         // do nothing
                     })
                     .show();

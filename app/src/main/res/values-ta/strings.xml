@@ -518,7 +518,7 @@
     <string name="dbmanagementactivity_error_importing_shared">விருப்பத்தை இறக்குமதி செய்வதில் பிழை: %1$s</string>
     <string name="activity_db_management_autoexport_scheduled_no">ஆட்டோ எக்ச்போர்ட் திட்டமிடப்படவில்லை.</string>
     <string name="activity_DB_delete_legacy_button">பழைய டி.பி நீக்கு</string>
-    <string name="Cancel">ரத்துசெய்</string>
+    <string name="cancel">ரத்துசெய்</string>
     <string name="start">தொடங்கு</string>
     <string name="set">கணம்</string>
     <string name="pref_summary_setup_bt_pairing">இணைப்பதில் சிக்கல் இருந்தால் இதை செயலிழக்கச் செய்யுங்கள்</string>
@@ -660,7 +660,7 @@
     <string name="activity_DB_import_button">தரவை இறக்குமதி செய்யுங்கள்</string>
     <string name="activity_DB_test_export_button">ஆட்டோ எக்ச்போர்ட்டை இப்போது இயக்கவும்</string>
     <string name="activity_DB_test_export_message">தரவுத்தளத்தை ஏற்றுமதி செய்யுங்கள்…</string>
-    <string name="Delete">நீக்கு</string>
+    <string name="delete">நீக்கு</string>
     <string name="activity_data_management_directory_content_title">அடைவு உள்ளடக்கத்தை ஏற்றுமதி/இறக்குமதி செய்யுங்கள்</string>
     <string name="title_activity_vibration">அதிர்வு</string>
     <string name="title_activity_pebble_pairing">கூழாங்கல் இணைத்தல்</string>

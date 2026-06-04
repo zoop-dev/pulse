@@ -190,7 +190,7 @@
 
     <string-array name="sensors_bp_cal">
         <item name="0">@string/prefs_sensors_button_bp_calibration</item>
-        <item name="1">@string/Cancel</item>
+        <item name="1">@string/cancel</item>
     </string-array>
     <string-array name="sensors_bp_cal_values">
         <item>0</item>

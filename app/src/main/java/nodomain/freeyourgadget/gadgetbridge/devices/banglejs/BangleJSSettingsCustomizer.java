@@ -95,7 +95,7 @@ public class BangleJSSettingsCustomizer implements DeviceSpecificSettingsCustomi
                             activityFullSyncDialog.setMessage(context.getString(R.string.sony_anc_optimizer_status_starting));
                             activityFullSyncDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                             activityFullSyncDialog.setProgress(0);
-                            activityFullSyncDialog.setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(R.string.Cancel), (dialog1, which) -> {
+                            activityFullSyncDialog.setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(R.string.cancel), (dialog1, which) -> {
                                 dialog1.dismiss();
                                 activityFullSyncDialog = null;
                                 handler.notifyPreferenceChanged(PREF_BANGLEJS_ACTIVITY_FULL_SYNC_STOP);

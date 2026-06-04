@@ -60,7 +60,7 @@ class HealthConnectDebugFragment : AbstractDebugFragment() {
                     }
                     reloadSyncStates()
                 }
-                .setNegativeButton(R.string.Cancel) { _, _ -> }
+                .setNegativeButton(R.string.cancel) { _, _ -> }
                 .show()
         }
 

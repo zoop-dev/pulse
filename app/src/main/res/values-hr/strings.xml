@@ -36,7 +36,7 @@
     <string name="appmananger_app_delete">Izbriši</string>
     <string name="dbmanagementactivity_old_activity_db_successfully_deleted">Stari podaci o aktivnostima su izbrisani.</string>
     <string name="activity_DB_delete_legacy_button">Izbriši stari DB</string>
-    <string name="Delete">Izbriši</string>
+    <string name="delete">Izbriši</string>
     <string name="debugactivity_really_factoryreset_title">Jeste li sigurni da želite vratiti na tvorničke postavke\?</string>
     <string name="controlcenter_calibrate_device">Kalibriraj uređaj</string>
     <string name="controlcenter_snackbar_requested_screenshot">Izrada snimke zaslona uređaja</string>
@@ -898,7 +898,7 @@
     <string name="activity_DB_empty_button">Prazna baza podataka</string>
     <string name="activity_db_management_empty_DB">Prazna baza podataka</string>
     <string name="activity_db_management_empty_db_warning">Upozorenje! Pritiskom na ovaj gumb izbrisat ćete svoju bazu podataka i početi ispočetka.</string>
-    <string name="Cancel">Odustani</string>
+    <string name="cancel">Odustani</string>
     <string name="ok">U redu</string>
     <string name="title_activity_pebble_pairing">Pebble uparivanje</string>
     <string name="pebble_pairing_hint">Na vašem Android uređaju pojavit će se dijaloški okvir za uparivanje. Ako ne, pogledajte u ladicu s obavijestima i prihvatite zahtjev za uparivanje. Prihvatite to i na svom Pebbleu nakon toga.</string>

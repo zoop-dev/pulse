@@ -223,8 +223,8 @@
     <string name="add_widget">Додати віджет</string>
     <string name="device_hw">Версія апаратного забезпечення: %1$s</string>
     <string name="device_fw">Версія мікропрограми: %1$s</string>
-    <string name="Cancel">Скасувати</string>
-    <string name="Delete">Видалити</string>
+    <string name="cancel">Скасувати</string>
+    <string name="delete">Видалити</string>
     <!--Strings related to Vibration Activity-->
     <string name="title_activity_vibration">Вібрація</string>
     <!--Strings related to Pebble Pairing Activity-->
