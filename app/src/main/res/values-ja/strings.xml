@@ -534,8 +534,8 @@
     <string name="minutes_5">5 分</string>
     <string name="minutes_10">10 分</string>
     <string name="minutes_30">30 分</string>
-    <string name="lack_of_step">歩数不足: %1$d</string>
-    <string name="overstep">歩数過剰: %1$d</string>
+    <string name="lack_of_step">歩数不足: %1$s</string>
+    <string name="overstep">歩数過剰: %1$s</string>
     <string name="live_activity_max_heart_rate">現在 / 最大心拍数: %1$d / %2$d</string>
     <string name="you_slept">%1$s から %2$s の間、眠っていました</string>
     <string name="you_did_not_sleep">睡眠しませんでした</string>

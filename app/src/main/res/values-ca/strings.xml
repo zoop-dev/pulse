@@ -582,8 +582,8 @@
     <string name="language_and_region_prefs">Configuració de llengua i regió</string>
     <string name="lack_of_sleep">Manca de son: %1$s</string>
     <string name="overslept">Son de més: %1$s</string>
-    <string name="lack_of_step">Manca de passes: %1$d</string>
-    <string name="overstep">Passes de més: %1$d</string>
+    <string name="lack_of_step">Manca de passes: %1$s</string>
+    <string name="overstep">Passes de més: %1$s</string>
     <string name="no_data">No hi ha dades</string>
     <string name="live_activity_max_heart_rate">Ritme cardíac actual / màxim: %1$d / %2$d</string>
     <string name="title_activity_notification_filter">Filtre de notificacions</string>

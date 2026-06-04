@@ -546,8 +546,8 @@
     <string name="minutes_5">5 minuten</string>
     <string name="minutes_10">10 minuten</string>
     <string name="minutes_30">30 minuten</string>
-    <string name="lack_of_step">Tekort aan stappen: %1$d</string>
-    <string name="overstep">Overschrijding aantal stappen: %1$d</string>
+    <string name="lack_of_step">Tekort aan stappen: %1$s</string>
+    <string name="overstep">Overschrijding aantal stappen: %1$s</string>
     <string name="live_activity_max_heart_rate">Huidige / Max hartslag: %1$d / %2$d</string>
     <string name="mi3_prefs_night_mode">Nacht modus</string>
     <string name="mi3_prefs_night_mode_summary">Verlaag \'s nachts automatisch de scherm helderheid</string>

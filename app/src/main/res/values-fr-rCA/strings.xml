@@ -78,8 +78,8 @@
     <string name="watch9_time_minutes">Minutes :</string>
     <string name="activity_db_management_empty_db_warning">Attention! En cliquant sur ce bouton, vous supprimerez toutes vos données et recommencerez à zéro.</string>
     <string name="live_activity_max_heart_rate">Mesure cardiaque actuelle / maximum : %1$d / %2$d</string>
-    <string name="overstep">Trop d\'activité : %1$d</string>
-    <string name="lack_of_step">Manque d\'activité : %1$d</string>
+    <string name="overstep">Trop d\'activité : %1$s</string>
+    <string name="lack_of_step">Manque d\'activité : %1$s</string>
     <string name="overslept">Excès de sommeil : %1$s</string>
     <string name="lack_of_sleep">Manque de sommeil : %1$s</string>
     <string name="zetime_activity_tracking_summary">Activer le suivi des activités : comptera vos pas, etc.</string>

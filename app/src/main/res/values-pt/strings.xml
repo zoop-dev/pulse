@@ -811,8 +811,8 @@
     <string name="title_activity_notification_filter">Filtro de notificação</string>
     <string name="live_activity_max_heart_rate">Frequência cardíaca atual / máx: %1$d / %2$d</string>
     <string name="no_data">Nenhuns dados</string>
-    <string name="overstep">Passos excedentes: %1$d</string>
-    <string name="lack_of_step">Carência de passos: %1$d</string>
+    <string name="overstep">Passos excedentes: %1$s</string>
+    <string name="lack_of_step">Carência de passos: %1$s</string>
     <string name="overslept">Dormiu demais: %1$s</string>
     <string name="lack_of_sleep">Carência de sono: %1$s</string>
     <string name="language_and_region_prefs">Configurações de idioma e região</string>

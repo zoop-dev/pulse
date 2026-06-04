@@ -536,8 +536,8 @@
     <string name="minutes_5">5 minutes</string>
     <string name="minutes_10">10 minutes</string>
     <string name="minutes_30">30 minutes</string>
-    <string name="lack_of_step">Manque d\'activité : %1$d</string>
-    <string name="overstep">Trop d\'activité : %1$d</string>
+    <string name="lack_of_step">Manque d\'activité : %1$s</string>
+    <string name="overstep">Trop d\'activité : %1$s</string>
     <string name="live_activity_max_heart_rate">Fréquence cardiaque actuelle / maximum : %1$d / %2$d</string>
     <string name="you_slept">%1$s – %2$s</string>
     <string name="you_did_not_sleep">Vous n\'avez pas dormi</string>

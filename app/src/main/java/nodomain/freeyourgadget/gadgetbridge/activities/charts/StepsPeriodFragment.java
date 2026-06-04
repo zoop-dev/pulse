@@ -20,6 +20,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -188,10 +189,10 @@ public class StepsPeriodFragment extends StepsFragment<StepsPeriodFragment.Steps
             stepsChart.setRenderer(new AngledLabelsChartRenderer(stepsChart, stepsChart.getAnimator(), stepsChart.getViewPortHandler()));
         }
         stepsChart.setData(barData);
-        stepsAvg.setText(String.format(String.valueOf(stepsData.stepsDailyAvg)));
+        stepsAvg.setText(NumberFormat.getInstance().format(stepsData.stepsDailyAvg));
         final WorkoutValueFormatter valueFormatter = new WorkoutValueFormatter();
         distanceAvg.setText(valueFormatter.formatValue(stepsData.distanceDailyAvg, "km"));
-        stepsTotal.setText(String.format(String.valueOf(stepsData.totalSteps)));
+        stepsTotal.setText(NumberFormat.getInstance().format(stepsData.totalSteps));
         distanceTotal.setText(valueFormatter.formatValue(stepsData.totalDistance, "km"));
 
         mBalanceView.setText(stepsData.getBalanceMessage(getContext(), STEPS_GOAL));
@@ -250,9 +251,9 @@ public class StepsPeriodFragment extends StepsFragment<StepsPeriodFragment.Steps
 
             final long totalBalance = totalSteps - ((long) targetValue * days.size());
             if (totalBalance > 0) {
-                return context.getString(R.string.overstep, Math.abs(totalBalance));
+                return context.getString(R.string.overstep, NumberFormat.getInstance().format(Math.abs(totalBalance)));
             } else {
-                return context.getString(R.string.lack_of_step, Math.abs(totalBalance));
+                return context.getString(R.string.lack_of_step, NumberFormat.getInstance().format(Math.abs(totalBalance)));
 
             }
         }

@@ -21,6 +21,8 @@ import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
 
+import java.text.NumberFormat;
+
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.DashboardFragment;
@@ -68,7 +70,7 @@ public class DashboardCaloriesTotalSegmentedWidget extends AbstractGaugeWidget {
         int activeCalories = dashboardData.getActiveCaloriesTotal();
         int restingCalories = dashboardData.getRestingCaloriesTotal();
         int totalCalories = activeCalories + restingCalories;
-        setText(String.valueOf(totalCalories));
+        setText(NumberFormat.getInstance().format(totalCalories));
         final int[] colors;
         final float[] segments;
         if (totalCalories != 0) {

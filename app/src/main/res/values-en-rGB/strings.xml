@@ -500,8 +500,8 @@
     <string name="debugactivity_really_factoryreset_title">Really factory reset\?</string>
     <string name="live_activity_max_heart_rate">Current / Max heart rate: %1$d / %2$d</string>
     <string name="no_data">No data</string>
-    <string name="overstep">Overstep: %1$d</string>
-    <string name="lack_of_step">Lack of steps: %1$d</string>
+    <string name="overstep">Overstep: %1$s</string>
+    <string name="lack_of_step">Lack of steps: %1$s</string>
     <string name="overslept">Overslept: %1$s</string>
     <string name="lack_of_sleep">Lack of sleep: %1$s</string>
     <string name="language_and_region_prefs">Language and region settings</string>

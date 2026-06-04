@@ -764,7 +764,7 @@
     <string name="blood_pressure">Крвни притисак</string>
     <string name="getting_heart_rate">Мерење</string>
     <string name="seconds_8">8 секунди</string>
-    <string name="overstep">Прекорачење: %1$d</string>
+    <string name="overstep">Прекорачење: %1$s</string>
     <string name="pref_enable_unsupported_settings_title">Омогући неподржане поставке</string>
     <string name="pref_title_third_party_app_device_settings">Омогући програмима трећих страна да мењају поставке</string>
     <string name="abstract_chart_fragment_kind_light_sleep">Дремање</string>
@@ -871,7 +871,7 @@
     <string name="heart_rate">Откуцаји срца</string>
     <string name="liveactivity_live_activity">Дејства уживо</string>
     <string name="weeksteps_today_steps_description">Корака данас, циљ: %1$s</string>
-    <string name="lack_of_step">Недостатак корака: %1$d</string>
+    <string name="lack_of_step">Недостатак корака: %1$s</string>
     <string name="pref_summary_third_party_app_device_settings">Омогући осталим уграђеним програмима трећих страна да мењају поставке уређаја.</string>
     <string name="mi2_prefs_do_not_disturb">Не узнемиравај</string>
     <string name="prefs_screen_timeout">Време укључености заслона</string>

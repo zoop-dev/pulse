@@ -1027,7 +1027,7 @@
     <string name="watchface_setting_wrist_flick_move_relative">Mișcarea acelor în raport cu timpul</string>
     <string name="watchface_setting_wrist_flick_hour">Ac oră (de la -360 la 360)</string>
     <string name="weeksteps_today_steps_description">Pași astăzi, obiectiv: %1$s</string>
-    <string name="overstep">Depășire: %1$d</string>
+    <string name="overstep">Depășire: %1$s</string>
     <string name="app_install_info">Ești pe cale să instalezi următoarea aplicație:
 \n
 \n%1$s
@@ -1128,7 +1128,7 @@
 \nNotă: Nu trebuie să instalezi .res dacă este exact același cu cel instalat anterior.
 \n
 \nACȚIONEZI PE PROPRIU RISC!</string>
-    <string name="lack_of_step">Lipsa pașilor: %1$d</string>
+    <string name="lack_of_step">Lipsa pașilor: %1$s</string>
     <string name="fw_upgrade_notice_amazfitbip3pro">Ești pe cale să instalezi firmware-ul %s pe Amazfit Bip 3 Pro.
 \n
 \nAsigură-te că instalezi fișierul .fw, iar după aceea fișierul .res. Ceasul se va reporni după instalarea fișierului .fw.

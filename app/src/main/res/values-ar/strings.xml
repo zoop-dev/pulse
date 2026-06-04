@@ -1746,7 +1746,7 @@
     <string name="miband_fwinstaller_compatible_version">نسخة متوافقة</string>
     <string name="miband_fwinstaller_untested_version">نسخة غير مختبرة!</string>
     <string name="pbwinstallhandler_app_item">%1$s (%2$s)</string>
-    <string name="overstep">تجاوز: %1$d</string>
+    <string name="overstep">تجاوز: %1$s</string>
     <string name="weeksteps_today_steps_description">خطوات اليوم ، الهدف: %1$s</string>
     <string name="miband2_prefs_dateformat">تنسيق التاريخ</string>
     <string name="mi2_dnd_automatic">تلقائي (كشف النوم)</string>
@@ -2039,7 +2039,7 @@
     <string name="activity_prefs_discovery_pairing">خيارات الاكتشاف والاقتران</string>
     <string name="minutes_10">10 دقائق</string>
     <string name="activity_type_jump_roping">القفز على الحبل</string>
-    <string name="lack_of_step">الافتقار إلى الخطوات: %1$d</string>
+    <string name="lack_of_step">الافتقار إلى الخطوات: %1$s</string>
     <string name="device_fw">إصدار البرنامج الثابت: %1$s</string>
     <string name="activity_type_outdoor_cycling">ركوب الدراجات في الهواء الطلق</string>
     <string name="activity_type_elliptical">بيضاوي الشكل</string>

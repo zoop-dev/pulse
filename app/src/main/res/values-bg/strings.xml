@@ -458,8 +458,8 @@
     <string name="minutes_30">30 минути</string>
     <string name="liveactivity_live_activity">Активност в реално време</string>
     <string name="weeksteps_today_steps_description">Крачки днес, цел: %1$s</string>
-    <string name="lack_of_step">Недостиг на крачки: %1$d</string>
-    <string name="overstep">Крачки в повече: %1$d</string>
+    <string name="lack_of_step">Недостиг на крачки: %1$s</string>
+    <string name="overstep">Крачки в повече: %1$s</string>
     <string name="pref_summary_dont_ack_transfers">Ако данните за активност не са потвърени от устройството, те няма да се изчистят. Полезно е, когато GB се използва заедно с други приложения.</string>
     <string name="pref_summary_keep_data_on_device">Данните за активност ще се пазят на Mi Band дори след синхронизация. Полезно е, когато GB се използва заедно с други приложения.</string>
     <string name="weeksleepchart_sleep_a_week">Седмичен сън</string>

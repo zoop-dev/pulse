@@ -489,7 +489,7 @@
     <string name="pref_rtl_max_line_length_summary">Збільшувати або зменшувати кількість символів у рядках, на які розділяється текст, написаний «справа наліво»</string>
     <string name="lack_of_sleep">Недосипання: %1$s</string>
     <string name="overslept">Пересипання: %1$s</string>
-    <string name="lack_of_step">Недостатня кількість кроків: %1$d</string>
+    <string name="lack_of_step">Недостатня кількість кроків: %1$s</string>
     <string name="live_activity_max_heart_rate">Поточний / найвищий пульс: %1$d / %2$d</string>
     <string name="debugactivity_really_factoryreset">Скидання налаштувань призведе до видалення всіх даних із підʼєднаного пристрою (якщо це підтримується). Пристрої Xiaomi/Huami також змінять свою Bluetooth MAC-адресу, тому вони зʼявляться як нові пристрої для Gadgetbridge.</string>
     <string name="prefs_disconnect_notification">Сповіщення про відʼєднання</string>
@@ -632,7 +632,7 @@
     <string name="pref_title_contextual_arabic">Контекстна арабська</string>
     <string name="pref_summary_contextual_arabic">Увімкніть для підтримки контекстної арабської мови</string>
     <string name="preferences_rtl_settings">Підтримка тексту справа наліво</string>
-    <string name="overstep">Надлишкова кількість кроків: %1$d</string>
+    <string name="overstep">Надлишкова кількість кроків: %1$s</string>
     <string name="appwidget_setting_alarm">Будильник установлено на %1$02d:%2$02d</string>
     <string name="edittext_notification_filter_words_hint">Укажіть необхідні слова, кожне з нового рядка</string>
     <string name="toast_notification_filter_saved_successfully">Фільтр сповіщень збережено</string>

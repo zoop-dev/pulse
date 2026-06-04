@@ -501,7 +501,7 @@
     <string name="minutes_10">10 நிமிடங்கள்</string>
     <string name="minutes_45">45 நிமிடங்கள்</string>
     <string name="weeksteps_today_steps_description">இன்று படிகள், இலக்கு: %1$s</string>
-    <string name="lack_of_step">படிகளின் பற்றாக்குறை: %1$d</string>
+    <string name="lack_of_step">படிகளின் பற்றாக்குறை: %1$s</string>
     <string name="live_activity_current_steps_per_minute">தற்போதைய படிகள்/நிமிடம்</string>
     <string name="you_slept">%1$s - %2$s</string>
     <string name="you_did_not_sleep">நீங்கள் தூங்கவில்லை</string>
@@ -2497,7 +2497,7 @@
     <string name="minutes_120">120 நிமிடங்கள்</string>
     <string name="minutes_255">255 நிமிடங்கள்</string>
     <string name="liveactivity_live_activity">நேரடி செயல்பாடு</string>
-    <string name="overstep">ஓவர்ச்டெப்: %1$d</string>
+    <string name="overstep">ஓவர்ச்டெப்: %1$s</string>
     <string name="stress_average">சராசரி</string>
     <string name="pref_huami_truncate_fetch_operation_timestamps_summary">ஃபெட்ச் ஆபரேசன் நேர முத்திரைகளை நிமிடங்களுக்கு துண்டிக்கவும். மிகக் குறுகிய உடற்பயிற்சிகளைப் பெறும்போது சிக்கல்களை எதிர்கொண்டால், நேர முத்திரைகளை நொடிகளில் வைத்திருக்க இந்த அமைப்பை முடக்கு.</string>
     <string name="pref_title_dont_ack_transfer">செயல்பாட்டு தரவு பரிமாற்றத்தை ACK வேண்டாம்</string>

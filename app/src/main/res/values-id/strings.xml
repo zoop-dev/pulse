@@ -1616,7 +1616,7 @@
     <string name="seconds_25">25 detik</string>
     <string name="seconds_30">30 detik</string>
     <string name="minutes_1">1 menit</string>
-    <string name="lack_of_step">Kekuarangan langkah: %1$d</string>
+    <string name="lack_of_step">Kekuarangan langkah: %1$s</string>
     <string name="pref_title_low_latency_fw_update">Gunakan mode latensi rendah untuk flash perangkat tegar</string>
     <string name="pref_summary_low_latency_fw_update">Ini mungkin membantu pada perangkat di mana flash perangkat tegar gagal.</string>
     <string name="live_activity_steps_history">Riwayat langkah</string>
@@ -1839,7 +1839,7 @@
     <string name="user_feedback_miband_activity_data_transfer">Akan mentransfer data %1$s dimulai dari %2$s</string>
     <string name="reminder_no_free_slots_description">Perangkat ini tidak memiliki tempat kosong untuk pengingat (jumlah tempat: %1$s)</string>
     <string name="prefs_heartrate_alert_experimental_description">Getar gelang ketika detak jantung melebihi ambang, tanpa aktivitas fisik apa pun yang ada dalam 10 menit terakhir. Fitur ini eksperimental, dan tidak dicoba secara lebih dalam.</string>
-    <string name="overstep">Terlalu banyak langkah: %1$d</string>
+    <string name="overstep">Terlalu banyak langkah: %1$s</string>
     <string name="average">Rata-rata: %1$s</string>
     <string name="error_background_service_reason_truncated">Pemulaian layanan latar belakang gagal karena…</string>
     <string name="pref_check_permission_status_summary">Periksa dan tanya untuk izin yang belum ada bahkan ketika mereka belum dibutuhkan secara langsung. Hanya nonaktifkan ini jika perangkat Anda sebenarnya mendukung fitur apa pun. Tidak memberikan izin mungkin akan mengalami masalah!</string>

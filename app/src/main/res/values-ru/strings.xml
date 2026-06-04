@@ -275,8 +275,8 @@
     <string name="distance">Расстояние</string>
     <string name="liveactivity_live_activity">Текущая активность</string>
     <string name="weeksteps_today_steps_description">Шагов сегодня, цель: %1$s</string>
-    <string name="lack_of_step">Не хватает: %1$d шагов</string>
-    <string name="overstep">Пройдено на %1$d шагов больше</string>
+    <string name="lack_of_step">Не хватает: %1$s шагов</string>
+    <string name="overstep">Пройдено на %1$s шагов больше</string>
     <string name="pref_title_dont_ack_transfer">Не подтверждать передачу данных об активности</string>
     <string name="pref_summary_dont_ack_transfers">Если данные об активности не будут переданы на устройство, оно не будет очищено. Полезно, если GB используется с другими приложениями.</string>
     <string name="pref_summary_keep_data_on_device">Сохранять данные об активности на устройстве даже после синхронизации. Полезно, если GB используется совместно с другими приложениями. Это может привести к тому, что на часах закончится место и/или они перестанут синхронизироваться должным образом.</string>

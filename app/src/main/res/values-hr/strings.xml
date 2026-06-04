@@ -799,7 +799,7 @@
     <string name="minutes_10">10 minuta</string>
     <string name="liveactivity_live_activity">Aktivnost uživo</string>
     <string name="weeksteps_today_steps_description">Koraci danas, cilj: %1$s</string>
-    <string name="lack_of_step">Nedostatak koraka: %1$d</string>
+    <string name="lack_of_step">Nedostatak koraka: %1$s</string>
     <string name="average">Prosjek: %1$s</string>
     <string name="pref_title_dont_ack_transfer">Ne dozvoli ACK prijenos podataka aktivnosti</string>
     <string name="pref_summary_dont_ack_transfers">Ako nije ACK na bend, podaci o aktivnostima se ne brišu. Korisno ako se GB koristi zajedno s drugim aplikacijama.</string>
@@ -1225,7 +1225,7 @@
     <string name="activity_type_swimming_openwater">Plivanje (otvorena voda)</string>
     <string name="abstract_chart_fragment_kind_not_worn">Nije nošeno</string>
     <string name="abstract_chart_fragment_kind_activity">Aktivnost</string>
-    <string name="overstep">Prekorak: %1$d</string>
+    <string name="overstep">Prekorak: %1$s</string>
     <string name="minutes_30">30 minuta</string>
     <string name="seconds_20">20 sekundi</string>
     <string name="seconds_30">30 sekundi</string>

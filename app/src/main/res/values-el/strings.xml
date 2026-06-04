@@ -557,8 +557,8 @@
     <string name="notif_battery_low_extended">%1$s χαμηλή μπαταρία: %2$s</string>
     <string name="lack_of_sleep">Έλλειψη ύπνου: %1$s</string>
     <string name="overslept">Παραπάνω ύπνος: %1$s</string>
-    <string name="lack_of_step">Λιγότερα βήματα: %1$d</string>
-    <string name="overstep">Περισσότερα βήματα: %1$d</string>
+    <string name="lack_of_step">Λιγότερα βήματα: %1$s</string>
+    <string name="overstep">Περισσότερα βήματα: %1$s</string>
     <string name="live_activity_max_heart_rate">Τωρινοί / Μέγιστοι παλμοί: %1$d / %2$d</string>
     <string name="activity_prefs_charts">Ρυθμίσεις γραφήματος</string>
     <string name="pref_title_contextual_arabic">Συμφραζόμενα Αραβικά</string>

@@ -638,8 +638,8 @@
     <string name="pref_summary_low_latency_fw_update">See võib aidata seadmetega, millega püsivara paigaldamine ebaõnnestub.</string>
     <string name="pref_title_low_latency_fw_update">Kasuta madala latentsiga režiimi püsivara paigaldamiseks</string>
     <string name="pref_title_dont_ack_transfer">Ära ACK-i aktiivsusinfo sünkroonimist</string>
-    <string name="overstep">Samme üle: %1$d</string>
-    <string name="lack_of_step">Puudujäävaid samme: %1$d</string>
+    <string name="overstep">Samme üle: %1$s</string>
+    <string name="lack_of_step">Puudujäävaid samme: %1$s</string>
     <string name="weeksteps_today_steps_description">Tänaseid samme, sihtmärk: %1$s</string>
     <string name="liveactivity_live_activity">Tegevus reaalajas</string>
     <string name="weeksleepchart_today_sleep_description">Tänaöine magamine, eesmärk: %1$s</string>
