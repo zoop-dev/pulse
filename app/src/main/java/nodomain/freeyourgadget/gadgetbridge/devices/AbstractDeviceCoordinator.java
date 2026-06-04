@@ -614,6 +614,11 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
+    public int getBlePhyMask() {
+        return BluetoothDevice.PHY_LE_CODED_MASK;
+    }
+
+    @Override
     public boolean suggestUnbindBeforePair() {
         return true;
     }

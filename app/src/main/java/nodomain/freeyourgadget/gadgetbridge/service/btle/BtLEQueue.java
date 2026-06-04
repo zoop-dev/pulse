@@ -354,7 +354,7 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
         if (GBApplication.isRunningOreoOrLater() && !connectionForceLegacyGatt) {
             mBluetoothGatt = remoteDevice.connectGatt(mContext, false,
                     internalGattCallback, BluetoothDevice.TRANSPORT_LE,
-                    BluetoothDevice.PHY_LE_CODED_MASK, mReceiverHandler);
+                    mGbDevice.getDeviceCoordinator().getBlePhyMask(), mReceiverHandler);
         } else {
             mBluetoothGatt = remoteDevice.connectGatt(mContext, false,
                     internalGattCallback, BluetoothDevice.TRANSPORT_LE);

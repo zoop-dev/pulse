@@ -19,6 +19,7 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.casio.gbx100;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothDevice;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,17 +32,13 @@ import java.util.regex.Pattern;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
-import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.casio.Casio2C2DDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.entities.CasioGBX100ActivitySampleDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
-import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.casio.gbx100.CasioGBX100DeviceSupport;
 
@@ -77,12 +74,8 @@ public class CasioGBX100DeviceCoordinator extends Casio2C2DDeviceCoordinator {
     }
 
     @Override
-    public GBDevice createDevice(final GBDeviceCandidate candidate, final DeviceType deviceType) {
-        final GBDevice device = super.createDevice(candidate, deviceType);
-        GBApplication.getDevicePrefs(device).getPreferences().edit()
-                .putBoolean(DeviceSettingsPreferenceConst.PREF_CONNECTION_FORCE_LEGACY_GATT, true)
-                .apply();
-        return device;
+    public int getBlePhyMask() {
+        return BluetoothDevice.PHY_LE_1M_MASK;
     }
 
     @Override
@@ -130,7 +123,6 @@ public class CasioGBX100DeviceCoordinator extends Casio2C2DDeviceCoordinator {
     @Override
     public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
         return new int[]{
-                R.xml.devicesettings_connection_force_legacy_gatt,
                 R.xml.devicesettings_find_phone,
                 R.xml.devicesettings_wearlocation,
                 R.xml.devicesettings_timeformat,

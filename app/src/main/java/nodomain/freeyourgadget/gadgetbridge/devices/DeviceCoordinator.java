@@ -715,6 +715,13 @@ public interface DeviceCoordinator {
     int getBondingStyle();
 
     /**
+     * Returns the preferred BLE PHY mask for GATT connections, as passed to
+     * {@link android.bluetooth.BluetoothDevice#connectGatt}. Defaults to
+     * {@link android.bluetooth.BluetoothDevice#PHY_LE_CODED_MASK}
+     */
+    int getBlePhyMask();
+
+    /**
      * Whether it is recommended to unbind the device before pairing due to compatibility issues. Returns false
      * if the device is known to pair without issues even when already bound in Android bluetooth settings.
      */
