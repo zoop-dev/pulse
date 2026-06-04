@@ -204,8 +204,8 @@
     <string name="minutes_10">10 分鐘</string>
     <string name="minutes_30">30 分鐘</string>
     <string name="weeksteps_today_steps_description">今日步數，目標：%1$s</string>
-    <string name="lack_of_step">步數不足：%1$d</string>
-    <string name="overstep">步數過剩：%1$d</string>
+    <string name="lack_of_step">步數不足：%1$s</string>
+    <string name="overstep">步數過剩：%1$s</string>
     <string name="average">平均：%1$s</string>
     <string name="abstract_chart_fragment_kind_activity">活動</string>
     <string name="abstract_chart_fragment_kind_not_worn">未佩戴</string>

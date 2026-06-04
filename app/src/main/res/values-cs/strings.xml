@@ -526,8 +526,8 @@
     <string name="minutes_5">5 minut</string>
     <string name="minutes_10">10 minut</string>
     <string name="minutes_30">30 minut</string>
-    <string name="lack_of_step">Příliš málo kroků: %1$d</string>
-    <string name="overstep">Kroků nad plán: %1$d</string>
+    <string name="lack_of_step">Příliš málo kroků: %1$s</string>
+    <string name="overstep">Kroků nad plán: %1$s</string>
     <string name="live_activity_max_heart_rate">Aktuální / Maximální tepová frekvence: %1$d / %2$d</string>
     <string name="you_slept">%1$s – %2$s</string>
     <string name="you_did_not_sleep">Bez spánku</string>

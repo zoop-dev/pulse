@@ -129,8 +129,8 @@
     <string name="pref_summary_dont_ack_transfers">यदि बैंड पर सुनिश्चित न हो, तो गतिविधि डेटा साफ़ नहीं किया जाता है। उपयोगी अगर GB अन्य एप्लिकेशन के साथ प्रयोग किया जाए।</string>
     <string name="pref_title_dont_ack_transfer">गतिविधि डेटा स्थानांतरण सुनिश्चित न करें</string>
     <string name="average">औसत: %1$s</string>
-    <string name="overstep">अधिक कदम: %1$d</string>
-    <string name="lack_of_step">चरणों की कमी: %1$d</string>
+    <string name="overstep">अधिक कदम: %1$s</string>
+    <string name="lack_of_step">चरणों की कमी: %1$s</string>
     <string name="weeksteps_today_steps_description">आज के कदम, लक्ष्य: %1$s</string>
     <string name="live_activity_max_heart_rate">वर्तमान / अधिकतम हृदय गति: %1$d / %2$d</string>
     <string name="live_activity_start_your_activity">अपनी गतिविधि शुरू करें</string>

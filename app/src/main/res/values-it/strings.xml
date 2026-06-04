@@ -578,8 +578,8 @@
     <string name="pref_summary_contextual_arabic">Abilita questo per supportare l\'arabo contestuale</string>
     <string name="share_log_warning">Tieni presente che i file di log di Gadgetbridge possono contenere molte informazioni personali, inclusi, a titolo esemplificativo, dati sulla salute, identificatori univoci (come l\'indirizzo MAC del dispositivo), preferenze musicali, ecc. Modifica il file per rimuovere queste informazioni prima di inviare il file in una segnalazione di errore visibile pubblicamente.</string>
     <string name="overslept">Sonno extra: %1$s</string>
-    <string name="lack_of_step">Passi mancanti: %1$d</string>
-    <string name="overstep">Passi eccedenti: %1$d</string>
+    <string name="lack_of_step">Passi mancanti: %1$s</string>
+    <string name="overstep">Passi eccedenti: %1$s</string>
     <string name="debugactivity_really_factoryreset_title">Vuoi veramente ripristinare le impostazioni di fabbrica\?</string>
     <string name="debugactivity_really_factoryreset">Effettuare il ripristino delle impostazioni di fabbrica cancellerà tutti i dati presenti sul dispositivo connesso (se supportato). I dispositivi Xiaomi/Huami cambiano anche MAC Address Bluetooth, e in modo risultano dispositivi nuovi per Gadgetbrige.</string>
     <string name="title_activity_notification_filter">Filtro Notifiche</string>

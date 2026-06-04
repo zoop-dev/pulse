@@ -20,6 +20,8 @@ import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
 
+import java.text.NumberFormat;
+
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.DashboardFragment;
@@ -64,7 +66,7 @@ public class DashboardCaloriesActiveGoalWidget extends AbstractGaugeWidget {
 
     @Override
     protected void draw(final DashboardFragment.DashboardData dashboardData) {
-        setText(String.valueOf(dashboardData.getActiveCaloriesTotal()));
+        setText(NumberFormat.getInstance().format(dashboardData.getActiveCaloriesTotal()));
         final int colorCalories = ContextCompat.getColor(GBApplication.getContext(), R.color.calories_color);
         drawSimpleGauge(
                 colorCalories,

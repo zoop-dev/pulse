@@ -418,7 +418,7 @@
     <string name="minutes_5">5 minut</string>
     <string name="minutes_10">10 minut</string>
     <string name="minutes_30">30 minut</string>
-    <string name="lack_of_step">Pozostało kroków: %1$d</string>
+    <string name="lack_of_step">Pozostało kroków: %1$s</string>
     <string name="pref_title_low_latency_fw_update">Użyj trybu o niskiej latencji przy aktualizacji firmware</string>
     <string name="live_activity_max_heart_rate">Aktualny / Maks. tętno: %1$d / %2$d</string>
     <string name="you_slept">%1$s – %2$s</string>
@@ -526,7 +526,7 @@
     <string name="debugactivity_really_factoryreset_title">Przywrócić do ustawień fabrycznych\?</string>
     <string name="debugactivity_really_factoryreset">Powrót do ustawień fabrycznych spowoduje usunięcie wszystkich danych z podłączonego urządzenia (jeśli jest obsługiwane). Urządzenia Xiaomi/Huami zmienią również adres MAC Bluetooth, więc pojawią się dla Gadgetbridge jako nowe urządzenia.</string>
     <string name="overslept">Nadmiar snu: %1$s</string>
-    <string name="overstep">Przekroczenie: %1$d</string>
+    <string name="overstep">Przekroczenie: %1$s</string>
     <string name="you_did_not_sleep">Nie spałeś(-aś)</string>
     <string name="mi2_prefs_button_press_broadcast">Wiadomość do rozgłoszenia</string>
     <string name="mi2_prefs_button_press_broadcast_summary">Wiadomość rozgłoszeniowa wysłana ze zdarzeniem. Parametr „button_id” jest dodawany do każdej wiadomości automatycznie.</string>

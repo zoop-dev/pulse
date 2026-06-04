@@ -568,8 +568,8 @@
     <string name="language_and_region_prefs">Configurações de idioma e região</string>
     <string name="lack_of_sleep">Carência de sono: %1$s</string>
     <string name="overslept">Dormiu demais: %1$s</string>
-    <string name="lack_of_step">Carência de passos: %1$d</string>
-    <string name="overstep">Passos excedentes: %1$d</string>
+    <string name="lack_of_step">Carência de passos: %1$s</string>
+    <string name="overstep">Passos excedentes: %1$s</string>
     <string name="no_data">Nenhum dado</string>
     <string name="live_activity_max_heart_rate">Frequência cardíaca atual/máx.: %1$d / %2$d</string>
     <string name="debugactivity_really_factoryreset">Restaurar as configurações de fábrica vai excluir todos os dados do dispositivo conectado (se houver suporte). Dispositivos Xiami/Huami também mudam o endereço MAC do Bluetooth, então eles aparecem como novos dispositivos no Gadgetbridge.</string>

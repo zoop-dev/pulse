@@ -15,6 +15,8 @@ import androidx.annotation.ColorInt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.NumberFormat;
+
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 
@@ -359,14 +361,14 @@ public class GaugeDrawer {
         textPaint.setTextSize(textPixels);
         textPaint.setTextAlign(Paint.Align.CENTER);
         int yPos = (int) ((float) height / 2 - ((textPaint.descent() + textPaint.ascent()) / 2)) ;
-        canvas.drawText(String.valueOf(value), width / 2f, yPos, textPaint);
+        canvas.drawText(NumberFormat.getInstance().format(value), width / 2f, yPos, textPaint);
         Paint textLowerPaint = new Paint();
         textLowerPaint.setColor(SUB_TEXT_COLOR);
         textLowerPaint.setTextAlign(Paint.Align.CENTER);
         float textLowerPixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, width * 0.025f, context.getResources().getDisplayMetrics());
         textLowerPaint.setTextSize(textLowerPixels);
         int yPosLowerText = (int) ((float) height / 2 - textPaint.ascent()) ;
-        canvas.drawText(String.valueOf(maxValue), width / 2f, yPosLowerText, textLowerPaint);
+        canvas.drawText(NumberFormat.getInstance().format(maxValue), width / 2f, yPosLowerText, textLowerPaint);
 
         return bitmap;
     }

@@ -24,6 +24,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -127,7 +128,7 @@ public class StepsDailyFragment extends StepsFragment<StepsDailyFragment.StepsDa
                 getContext()
         ));
 
-        steps.setText(String.format(String.valueOf(stepsData.todayStepsDay.steps)));
+        steps.setText(NumberFormat.getInstance().format(stepsData.todayStepsDay.steps));
 
         final WorkoutValueFormatter valueFormatter = new WorkoutValueFormatter();
         distance.setText(valueFormatter.formatValue(stepsData.todayStepsDay.distance, "km"));

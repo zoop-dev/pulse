@@ -502,8 +502,8 @@
     <string name="minutes_5">5 分钟</string>
     <string name="minutes_10">10 分钟</string>
     <string name="minutes_30">30 分钟</string>
-    <string name="lack_of_step">缺少步数：%1$d</string>
-    <string name="overstep">超过步数：%1$d</string>
+    <string name="lack_of_step">缺少步数：%1$s</string>
+    <string name="overstep">超过步数：%1$s</string>
     <string name="live_activity_max_heart_rate">当前／最大心率：%1$d / %2$d</string>
     <string name="you_slept">%1$s – %2$s</string>
     <string name="you_did_not_sleep">您没有睡觉</string>

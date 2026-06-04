@@ -532,8 +532,8 @@
     <string name="minutes_5">5 Minuten</string>
     <string name="minutes_10">10 Minuten</string>
     <string name="minutes_30">30 Minuten</string>
-    <string name="lack_of_step">Zu wenig Schritte: %1$d</string>
-    <string name="overstep">Schritte über Ziel: %1$d</string>
+    <string name="lack_of_step">Zu wenig Schritte: %1$s</string>
+    <string name="overstep">Schritte über Ziel: %1$s</string>
     <string name="live_activity_max_heart_rate">Aktueller / Maximaler Puls: %1$d / %2$d</string>
     <string name="mi3_prefs_band_screen_unlock">Smartwatch-Bildschirm entsperren</string>
     <string name="mi3_prefs_band_screen_unlock_summary">Nach oben wischen, um den Geräte-Bildschirm zu entsperren</string>

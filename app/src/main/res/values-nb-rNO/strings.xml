@@ -529,8 +529,8 @@
     <string name="notif_battery_low_extended">%1$s batteri lavt: %2$s</string>
     <string name="lack_of_sleep">Mangel på søvn: %1$s</string>
     <string name="overslept">Oversovet: %1$s</string>
-    <string name="lack_of_step">Mangler trinn: %1$d</string>
-    <string name="overstep">Overskritt: %1$d</string>
+    <string name="lack_of_step">Mangler trinn: %1$s</string>
+    <string name="overstep">Overskritt: %1$s</string>
     <string name="live_activity_max_heart_rate">Nåværende / Maks hjertefrekvens: %1$d / %2$d</string>
     <string name="activity_prefs_charts">Diagraminnstillinger</string>
     <string name="pref_title_contextual_arabic">Kontekstuell arabisk</string>
