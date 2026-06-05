@@ -25,8 +25,10 @@ import java.time.Instant
 import java.time.ZoneId
 
 // Deterministic clientRecordId so re-emitting an overlapping window upserts instead of duplicating.
-// version is the clientRecordVersion; HC keeps the highest on conflict, so a later, more complete
-// value wins.
+// version is the clientRecordVersion; HC keeps the highest on conflict (newVersion >= existing
+// overwrites). Callers pass the sync run's wall-clock so a later run always outranks the value it
+// previously wrote for a minute. It must never be the metric value: a downward correction would
+// then carry a lower version and be silently ignored, freezing the minute at its stale maximum.
 internal fun clientRecordMetadata(
     base: Metadata,
     type: String,

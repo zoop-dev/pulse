@@ -1,6 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.util.healthconnect.syncers
 
 import androidx.health.connect.client.records.StepsRecord
+import androidx.health.connect.client.records.metadata.Device
 import androidx.health.connect.client.records.metadata.Metadata
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample
 import org.junit.Assert.*
@@ -20,7 +21,7 @@ class ActivitySampleSliceBoundaryTest {
     private object IdempotentSyncer : AbstractActivitySampleSyncer<StepsRecord>() {
         override val logger: Logger = LoggerFactory.getLogger("test")
         override val recordClass: KClass<StepsRecord> = StepsRecord::class
-        override fun convertSample(sample: ActivitySample, offset: ZoneOffset, metadata: Metadata, deviceName: String): StepsRecord? = null
+        override fun convertSample(sample: ActivitySample, offset: ZoneOffset, metadata: Metadata, deviceName: String, version: Long): StepsRecord? = null
     }
 
     // Syncer that opts out of the lookback (mirrors a non-idempotent record type).
@@ -28,7 +29,7 @@ class ActivitySampleSliceBoundaryTest {
         override val logger: Logger = LoggerFactory.getLogger("test")
         override val recordClass: KClass<StepsRecord> = StepsRecord::class
         override val lateSampleLookback = java.time.Duration.ZERO
-        override fun convertSample(sample: ActivitySample, offset: ZoneOffset, metadata: Metadata, deviceName: String): StepsRecord? = null
+        override fun convertSample(sample: ActivitySample, offset: ZoneOffset, metadata: Metadata, deviceName: String, version: Long): StepsRecord? = null
     }
 
     private fun within(syncer: AbstractActivitySampleSyncer<*>, endTs: Instant): Boolean =
@@ -72,4 +73,27 @@ class ActivitySampleSliceBoundaryTest {
         val straddle = sliceEnd.plusSeconds(30)
         assertTrue(within(IdempotentSyncer, straddle))
     }
+
+    // The clientRecordVersion must carry the supplied version verbatim (the sync run's wall-clock),
+    // never the metric value: HC keeps the highest version on a clientRecordId collision, so a value
+    // revised downward would be silently ignored if the value doubled as the version.
+    @Test
+    fun clientRecordVersion_carriesSuppliedVersion_notMetricValue() {
+        val base = Metadata.autoRecorded(Device(Device.TYPE_WATCH, "Acme", "Band"))
+        val version = 1_700_000_500_000L
+        val meta = clientRecordMetadata(base, "steps", endEpoch, version)
+        assertEquals(version, meta.clientRecordVersion)
+    }
+
+    // The dedup key (clientRecordId) is fixed by type + device + timestamp and must not vary with the
+    // version, so a re-emit of the same minute collides and upserts instead of duplicating.
+    @Test
+    fun clientRecordId_independentOfVersion() {
+        val base = Metadata.autoRecorded(Device(Device.TYPE_WATCH, "Acme", "Band"))
+        val low = clientRecordMetadata(base, "steps", endEpoch, 1L)
+        val high = clientRecordMetadata(base, "steps", endEpoch, 999L)
+        assertEquals(low.clientRecordId, high.clientRecordId)
+    }
+
+    private val endEpoch = sliceStart.epochSecond
 }

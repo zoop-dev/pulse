@@ -56,7 +56,8 @@ internal abstract class AbstractActivitySampleSyncer<TRecord : Record> : Activit
         sample: ActivitySample,
         offset: ZoneOffset,
         metadata: Metadata,
-        deviceName: String
+        deviceName: String,
+        version: Long
     ): TRecord?
 
     override suspend fun sync(
@@ -87,6 +88,13 @@ internal abstract class AbstractActivitySampleSyncer<TRecord : Record> : Activit
 
         logger.info("Processing ${relevantSamples.size} samples for steps for device '$deviceName' for slice $sliceStartBoundary to $sliceEndBoundary.")
 
+        // clientRecordVersion: every record in this slice shares the run's wall-clock so a later
+        // sync always outranks the value it previously wrote for a minute. HC keeps the highest
+        // version on a clientRecordId collision, so the freshest (most complete) re-read wins even
+        // when a value is revised downward. Must not be the metric value itself: a downward
+        // correction would then carry a lower version and be silently ignored.
+        val recordVersion = System.currentTimeMillis()
+
         val recordsToInsert = mutableListOf<Record>()
         var skippedCount = 0
         var latestSyncedTimestamp: Instant? = null
@@ -108,7 +116,7 @@ internal abstract class AbstractActivitySampleSyncer<TRecord : Record> : Activit
                 return@forEach
             }
 
-            val record = convertSample(sample = currentSample, offset.rules.getOffset(endTs), metadata, deviceName)
+            val record = convertSample(sample = currentSample, offset.rules.getOffset(endTs), metadata, deviceName, recordVersion)
             if (record == null) {
                 skippedCount++
                 return@forEach
