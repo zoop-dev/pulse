@@ -207,7 +207,27 @@ internal object TemperatureSyncer : HealthConnectSyncer {
 
         LOG.info("Successfully inserted TemperatureRecord(s) (Body/Skin) for '$deviceName' for slice $sliceStartBoundary to $sliceEndBoundary.")
         LOG.info("Temperature sync completed for device '$deviceName' for slice $sliceStartBoundary to $sliceEndBoundary. Total synced: $totalRecordsSynced")
-        return SyncerStatistics(recordsSynced = totalRecordsSynced, recordsSkipped = totalRecordsSkipped, recordType = "Temperature")
+        return buildStatistics(recordsToInsert, totalRecordsSkipped)
+    }
+
+    // Builds the slice result, including latestRecordTimestamp. The orchestrator only advances the
+    // persisted sync cursor from that field; omitting it freezes the cursor and re-inserts the whole
+    // span every run. Body records are point-in-time, skin records are intervals, so the cursor takes
+    // the furthest forward edge of either kind.
+    internal fun buildStatistics(insertedRecords: List<Record>, recordsSkipped: Int): SyncerStatistics {
+        val latest = insertedRecords.mapNotNull {
+            when (it) {
+                is BodyTemperatureRecord -> it.time
+                is SkinTemperatureRecord -> it.endTime
+                else -> null
+            }
+        }.maxOrNull()
+        return SyncerStatistics(
+            recordsSynced = insertedRecords.size,
+            recordsSkipped = recordsSkipped,
+            recordType = "Temperature",
+            latestRecordTimestamp = latest
+        )
     }
 
     // Helper class to manage dynamic baseline calculation per device
