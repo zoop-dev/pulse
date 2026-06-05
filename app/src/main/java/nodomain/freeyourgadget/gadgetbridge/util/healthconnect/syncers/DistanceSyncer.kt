@@ -35,7 +35,8 @@ internal object DistanceSyncer : AbstractActivitySampleSyncer<DistanceRecord>() 
         sample: ActivitySample,
         offset: ZoneOffset,
         metadata: Metadata,
-        deviceName: String
+        deviceName: String,
+        version: Long
     ): DistanceRecord? {
         val distanceCm = sample.distanceCm
         if (distanceCm <= 0 || distanceCm == ActivitySample.NOT_MEASURED) {
@@ -56,7 +57,7 @@ internal object DistanceSyncer : AbstractActivitySampleSyncer<DistanceRecord>() 
             endTime = endTs,
             endZoneOffset = offset,
             distance = Length.meters(distanceCm / 100.0),
-            metadata = clientRecordMetadata(metadata, "distance", endTs.epochSecond, distanceCm.toLong())
+            metadata = clientRecordMetadata(metadata, "distance", endTs.epochSecond, version)
         )
     }
 }
