@@ -101,7 +101,8 @@ object ZeppOsWeatherHandlerV5 {
         return HourlyWeather(
             metadata = createMetadata(weatherSpec),
             hours = weatherSpec.hourly
-                .filter { it.timestamp != 0 }
+                .filter { it.timestamp != 0 && it.timestamp >= weatherSpec.timestamp}
+                .take(72)
                 .map {
                     HourlyWeatherHour(
                         forecastStart = toOffsetDateTime(Date(it.timestamp * 1000L)),
@@ -149,7 +150,7 @@ object ZeppOsWeatherHandlerV5 {
     private fun createDailyWeather(weatherSpec: WeatherSpec): DailyWeather {
         return DailyWeather(
             metadata = createMetadata(weatherSpec),
-            days = (listOf(weatherSpec.todayAsDaily()) + weatherSpec.forecasts).mapIndexed { i, day ->
+            days = (listOf(weatherSpec.todayAsDaily()) + weatherSpec.forecasts).take(10).mapIndexed { i, day ->
                 val dayTimestamp = weatherSpec.timestamp * 1000L + i * 86400_000L
                 val calendar = GregorianCalendar()
                 calendar.setTime(Date(dayTimestamp))
