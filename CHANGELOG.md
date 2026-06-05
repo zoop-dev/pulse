@@ -28,6 +28,7 @@
 * Pebble: Add support for installing dual slot firmware
 * Pebble: Add support for pull to refresh for pebble health data
 * Pebble: Fix Pebble [Core 2 Duo / Time 2 / 2 Round] BLE pairing
+* Pebble: pass dev_settings to rebble store url, do enable pbw downloads in browser
 * Prevent crash on devices without GPS
 * Recognize Thunderbird for Android as email and ignore its summary notifications
 * Sony WF-1000XM5: Enable further capabilities

@@ -726,7 +726,7 @@ public abstract class AbstractAppManagerFragment extends Fragment {
             return true;
         } else if (itemId == R.id.appmanager_app_openinstore) {
             boolean appStoreAllowed = GBApplication.getPrefs().getBoolean("pref_key_internethelper_allow_pebble_appstore", false);
-            final String url = "https://apps.rebble.io/en_US/search/" + ((selectedApp.getType() == GBDeviceApp.Type.WATCHFACE) ? "watchfaces" : "watchapps") + "/1/?native=true&query=" +  Uri.encode(selectedApp.getUUID().toString());
+            final String url = "https://apps.rebble.io/en_US/search/" + ((selectedApp.getType() == GBDeviceApp.Type.WATCHFACE) ? "watchfaces" : "watchapps") + "/1/?native=true&dev_settings=true&query=" +  Uri.encode(selectedApp.getUUID().toString());
             if (GBApplication.hasDirectInternetAccess() || (appStoreAllowed && InternetHelperSingleton.INSTANCE.ensureInternetHelperBound())) {
                 final Intent startIntent = new Intent(getContext().getApplicationContext(), RebbleAppStoreActivity.class);
                 startIntent.putExtra(DeviceService.EXTRA_URI, url);
