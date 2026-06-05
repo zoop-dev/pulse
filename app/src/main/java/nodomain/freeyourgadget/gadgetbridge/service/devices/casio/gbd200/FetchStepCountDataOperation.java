@@ -135,7 +135,7 @@ public class FetchStepCountDataOperation extends AbstractBTLEOperation<CasioGBD2
             try {
                 TransactionBuilder builder = performInitialized("finished");
                 builder.setCallback(null);
-                builder.wait(0);
+                builder.sleep(0);
                 builder.queue();
             } catch (IOException ex) {
                 LOG.error("Error resetting Gatt callback", ex);

@@ -32,7 +32,7 @@ import java.util.function.Predicate;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.FunctionAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetProgressAction;
-import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.WaitAction;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SleepAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.WriteAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.actions.SetDeviceBusyAction;
@@ -72,9 +72,15 @@ public class TransactionBuilder {
      * @see Thread#sleep(long)
      */
     @NonNull
-    public TransactionBuilder wait(@IntRange(from = 0L) int millis) {
-        WaitAction action = new WaitAction(millis);
+    public TransactionBuilder sleep(@IntRange(from = 0L) int millis) {
+        SleepAction action = new SleepAction(millis);
         return add(action);
+    }
+
+    /// @deprecated use {@link #sleep(int)} instead
+    @Deprecated
+    public TransactionBuilder wait(@IntRange(from = 0L) int millis) {
+        return sleep(millis);
     }
 
     /// Causes the {@link BtBRQueue} to execute the {@link Predicate} and expect no {@link SocketCallback} result.

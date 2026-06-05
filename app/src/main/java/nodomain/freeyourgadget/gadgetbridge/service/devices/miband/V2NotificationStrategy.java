@@ -52,14 +52,14 @@ public class V2NotificationStrategy<T extends AbstractBTLESingleDeviceSupport> i
                 int on = onOffSequence[j];
                 on = Math.min(500, on); // longer than 500ms is not possible
                 builder.write(alert, new byte[]{GattCharacteristic.MILD_ALERT}); //MILD_ALERT lights up GREEN leds, HIGH_ALERT lights up RED leds
-//                builder.wait(on);
+//                builder.sleep(on);
 //                builder.write(alert, new byte[]{GattCharacteristic.HIGH_ALERT});
-                builder.wait(on);
+                builder.sleep(on);
                 builder.write(alert, new byte[]{GattCharacteristic.NO_ALERT});
 
                 if (++j < onOffSequence.length) {
                     int off = Math.max(onOffSequence[j], 25); // wait at least 25ms
-                    builder.wait(off);
+                    builder.sleep(off);
                 }
 
                 if (extraAction != null) {

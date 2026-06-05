@@ -50,7 +50,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceBusyAc
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetDeviceStateAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetPreferredPhyAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SetProgressAction;
-import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.WaitAction;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.SleepAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.actions.WriteAction;
 
 public class TransactionBuilder {
@@ -275,9 +275,15 @@ public class TransactionBuilder {
      * @see Thread#sleep(long)
      */
     @NonNull
-    public TransactionBuilder wait(@IntRange(from = 0L) int millis) {
-        WaitAction action = new WaitAction(millis);
+    public TransactionBuilder sleep(@IntRange(from = 0L) int millis) {
+        SleepAction action = new SleepAction(millis);
         return add(action);
+    }
+
+    /// @deprecated use {@link #sleep(int)} instead
+    @Deprecated
+    public TransactionBuilder wait(@IntRange(from = 0L) int millis) {
+        return sleep(millis);
     }
 
     /// Causes the {@link BtLEQueue} to execute the {@link Predicate} and expect no {@link GattCallback} result.

@@ -87,12 +87,12 @@ public class V1NotificationStrategy implements NotificationStrategy {
                 int on = onOffSequence[j];
                 on = Math.min(500, on); // longer than 500ms is not possible
                 builder.write(controlPoint, startVibrate);
-                builder.wait(on);
+                builder.sleep(on);
                 builder.write(controlPoint, stopVibrate);
 
                 if (++j < onOffSequence.length) {
                     int off = Math.max(onOffSequence[j], 25); // wait at least 25ms
-                    builder.wait(off);
+                    builder.sleep(off);
                 }
 
                 if (extraAction != null) {
@@ -112,10 +112,10 @@ public class V1NotificationStrategy implements NotificationStrategy {
 //        int vDuration = Math.min(500, vibrateDuration); // longer than 500ms is not possible
 //        for (int i = 0; i < vibrateTimes; i++) {
 //            builder.write(controlPoint, startVibrate);
-//            builder.wait(vDuration);
+//            builder.sleep(vDuration);
 //            builder.write(controlPoint, stopVibrate);
 //            if (pause > 0) {
-//                builder.wait(pause);
+//                builder.sleep(pause);
 //            }
 //        }
 //

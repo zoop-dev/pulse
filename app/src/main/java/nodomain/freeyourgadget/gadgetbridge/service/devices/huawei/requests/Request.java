@@ -348,9 +348,9 @@ public class Request {
 
     private void builderWait(int millis) {
         if (!this.supportProvider.isBLE())
-            this.builderBr.wait(millis);
+            this.builderBr.sleep(millis);
         else
-            this.builderLe.wait(millis);
+            this.builderLe.sleep(millis);
     }
 
     private void performConnected() {

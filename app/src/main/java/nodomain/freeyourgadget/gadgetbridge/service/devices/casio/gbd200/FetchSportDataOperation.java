@@ -421,7 +421,7 @@ public class FetchSportDataOperation extends AbstractBTLEOperation<CasioGBD200De
             try {
                 TransactionBuilder b = performInitialized("finished");
                 b.setCallback(null);
-                b.wait(0);
+                b.sleep(0);
                 b.queue();
             } catch (IOException ex) {
                 LOG.error("Error resetting Gatt callback", ex);

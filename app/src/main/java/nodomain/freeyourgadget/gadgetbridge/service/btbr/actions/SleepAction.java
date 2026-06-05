@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2024 Carsten Pfeiffer
+/*  Copyright (C) 2022-2024 Damien Gaignon
 
     This file is part of Gadgetbridge.
 
@@ -14,35 +14,30 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.service.btle.actions;
+package nodomain.freeyourgadget.gadgetbridge.service.btbr.actions;
 
-import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothSocket;
 
 /**
- * An action that will cause the queue to {@link Thread#sleep(long) sleep} for the specified time.
+ * An action that will cause the queue to sleep for the specified time.
  * Note that this is usually a bad idea, since it will not be able to process messages
  * during that time. It is also likely to cause race conditions.
  */
-public class WaitAction extends PlainAction {
+public class SleepAction extends PlainAction {
 
     private final int mMillis;
 
-    public WaitAction(int millis) {
+    public SleepAction(int millis) {
         mMillis = millis;
     }
 
     @Override
-    public boolean run(BluetoothGatt gatt) {
+    public boolean run(BluetoothSocket socket) {
         try {
             Thread.sleep(mMillis);
             return true;
         } catch (InterruptedException e) {
             return false;
         }
-    }
-
-    @Override
-    public String toString() {
-        return getCreationTime() + " " + getClass().getSimpleName() + " " + mMillis + " ms";
     }
 }

@@ -54,7 +54,7 @@ public abstract class MultiFetchRequest extends Request {
             throw new IllegalStateException("Device is busy");
         }
         builder.setBusyTask(getOperationName());
-        builder.wait(1000); // Wait a bit (after previous operation), or device sometimes won't respond
+        builder.sleep(1000); // Wait a bit (after previous operation), or device sometimes won't respond
     }
 
     @Override

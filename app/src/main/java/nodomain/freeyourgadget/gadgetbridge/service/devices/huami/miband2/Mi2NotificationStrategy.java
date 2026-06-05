@@ -52,7 +52,7 @@ public class Mi2NotificationStrategy extends V2NotificationStrategy<HuamiSupport
         // Don't wait during an incoming call, otherwise we'll not be able to stop the call notification
         if (simpleNotification == null || simpleNotification.getAlertCategory() != AlertCategory.IncomingCall) {
             waitDuration = Math.max(waitDuration, 4000);
-            builder.wait(waitDuration);
+            builder.sleep(waitDuration);
         }
 
         if (extraAction != null) {

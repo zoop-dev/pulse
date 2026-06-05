@@ -74,7 +74,7 @@ public class GetConfigurationOperation extends AbstractBTLEOperation<Casio2C2DSu
         if (getDevice() != null) {
             try {
                 TransactionBuilder builder = performInitialized("finished operation");
-                builder.wait(0);
+                builder.sleep(0);
                 builder.setCallback(null); // unset ourselves from being the queue's gatt callback
                 builder.queue();
             } catch (IOException ex) {

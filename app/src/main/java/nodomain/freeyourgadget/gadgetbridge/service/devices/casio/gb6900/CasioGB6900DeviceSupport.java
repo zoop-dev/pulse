@@ -209,7 +209,7 @@ public class CasioGB6900DeviceSupport extends CasioSupport {
         BluetoothGattService llService = mBtGatt.getService(CasioConstants.LINK_LOSS_SERVICE);
         BluetoothGattCharacteristic charact = llService.getCharacteristic(CasioConstants.ALERT_LEVEL_CHARACTERISTIC_UUID);
         builder.writeLegacy(charact, value);
-        builder.wait(mCasioSleepTime);
+        builder.sleep(mCasioSleepTime);
     }
 
     private void addCharacteristics() {
@@ -223,7 +223,7 @@ public class CasioGB6900DeviceSupport extends CasioSupport {
     public boolean enableNotifications(TransactionBuilder builder, boolean enable) {
         for(BluetoothGattCharacteristic charact : mCasioCharacteristics) {
             builder.notify(charact, enable);
-            builder.wait(mCasioSleepTime);
+            builder.sleep(mCasioSleepTime);
         }
         return true;
     }

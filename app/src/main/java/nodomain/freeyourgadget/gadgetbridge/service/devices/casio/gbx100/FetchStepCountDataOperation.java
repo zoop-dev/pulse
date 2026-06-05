@@ -110,7 +110,7 @@ public class FetchStepCountDataOperation  extends AbstractBTLEOperation<CasioGBX
             try {
                 TransactionBuilder builder = performInitialized("finished operation");
                 builder.setCallback(null); // unset ourselves from being the queue's gatt callback
-                builder.wait(0);
+                builder.sleep(0);
                 builder.queue();
             } catch (IOException ex) {
                 LOG.error("Error resetting Gatt callback", ex);

@@ -573,7 +573,7 @@ public class ZeTimeDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
             byte[] message = encodeCalendarEvent(body, calendarEvent.getBeginSeconds(), opcode);
             sendMsgToWatch(builder, message);
-            builder.wait(300); // Urgh, seems it is a general problem when sending data too fast
+            builder.sleep(300); // Urgh, seems it is a general problem when sending data too fast
 
             if (eventCount++ == 16) { // limit this to 16 for now
                 break;

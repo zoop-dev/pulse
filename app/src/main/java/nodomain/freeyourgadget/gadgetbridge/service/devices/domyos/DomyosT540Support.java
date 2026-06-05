@@ -168,7 +168,7 @@ public class DomyosT540Support extends AbstractBTLESingleDeviceSupport {
 
     void writeChunked(TransactionBuilder builder, byte[] data) {
         builder.writeChunkedData(getCharacteristic(UUUD_CHARACTERISTICS_WRITE), data, 20)
-                .wait(100);
+                .sleep(100);
     }
 
     private byte getChecksum(byte[] command) {
@@ -246,7 +246,7 @@ public class DomyosT540Support extends AbstractBTLESingleDeviceSupport {
                         start_time = (int) (System.currentTimeMillis() / 1000);
                     }
                 }
-                builder.wait(200);
+                builder.sleep(200);
                 writeChunked(builder, COMMAND_REQUEST_DATA);
 
                 int time = (int) (System.currentTimeMillis() / 1000);

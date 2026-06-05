@@ -215,23 +215,23 @@ public class FitProDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
         builder.write(writeCharacteristic, craftData(CMD_GROUP_GENERAL, FitProConstants.CMD_INIT1, (byte) 0x2));
         setTime(builder);
-        builder.wait(200);
+        builder.sleep(200);
         builder.write(writeCharacteristic, craftData(CMD_GROUP_REQUEST_DATA, FitProConstants.CMD_INIT1));
-        builder.wait(200);
+        builder.sleep(200);
         builder.write(writeCharacteristic, craftData(CMD_GROUP_REQUEST_DATA, FitProConstants.CMD_INIT2));
-        builder.wait(200);
+        builder.sleep(200);
         setLanguage(builder);
-        builder.wait(200);
+        builder.sleep(200);
         builder.write(writeCharacteristic, craftData(CMD_GROUP_GENERAL, FitProConstants.CMD_INIT3, VALUE_ON));
-        builder.wait(200);
+        builder.sleep(200);
         builder.write(writeCharacteristic, craftData(CMD_GROUP_REQUEST_DATA, VALUE_ON));
-        builder.wait(200);
+        builder.sleep(200);
         builder.write(writeCharacteristic, craftData(CMD_GROUP_REQUEST_DATA, (byte) 0xf));
-        builder.wait(200);
+        builder.sleep(200);
         builder.write(writeCharacteristic, craftData(CMD_GROUP_REQUEST_DATA, CMD_GET_HW_INFO));
-        builder.wait(200);
+        builder.sleep(200);
         builder.write(writeCharacteristic, craftData(CMD_GROUP_BAND_INFO, CMD_RX_BAND_INFO));
-        builder.wait(200);
+        builder.sleep(200);
 
         builder.setDeviceState(GBDevice.State.INITIALIZED);
         return builder;

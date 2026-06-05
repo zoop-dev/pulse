@@ -90,7 +90,7 @@ public class ATCBLEOEPLDeviceSupport extends AbstractBTLESingleDeviceSupport {
         getDevice().setFirmwareVersion2("N/A");
         builder.requestMtu(512);
         builder.notify(UUID_CHARACTERISTIC_MAIN, true);
-        builder.wait(300);
+        builder.sleep(300);
         builder.write(UUID_CHARACTERISTIC_MAIN, COMMAND_GET_CONFIGURATION);
         return builder;
     }

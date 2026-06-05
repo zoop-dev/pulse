@@ -241,47 +241,47 @@ public class C60DeviceSupport extends AbstractBTLESingleDeviceSupport {
         getDevice().setFirmwareVersion2("N/A");
 
         int wait = 100;
-        builder.wait(wait);
+        builder.sleep(wait);
         getDeviceData(builder);
-        builder.wait(wait);
+        builder.sleep(wait);
         getBatteryData(builder);
-        builder.wait(wait);
+        builder.sleep(wait);
         setTime(builder);
-        builder.wait(wait);
+        builder.sleep(wait);
         getDeviceState(builder);
-        builder.wait(wait);
+        builder.sleep(wait);
         getDndState(builder);
-        builder.wait(wait);
+        builder.sleep(wait);
         getInactivityState(builder);
-        builder.wait(wait);
+        builder.sleep(wait);
         getTargetData(builder);
-        builder.wait(wait);
+        builder.sleep(wait);
         getHydration(builder);
-        builder.wait(wait);
+        builder.sleep(wait);
 //        getSteps(builder);
-//        builder.wait(wait);
+//        builder.sleep(wait);
 //        getHeartrate(builder);
-//        builder.wait(wait);
+//        builder.sleep(wait);
 //        getBodytemp(builder);
-//        builder.wait(wait);
+//        builder.sleep(wait);
 //        setDeviceState(builder);
-//        builder.wait(wait);
+//        builder.sleep(wait);
 //        setUserInfo(builder);
-//        builder.wait(wait);
+//        builder.sleep(wait);
 //        getTargetData(builder);
-//        builder.wait(wait);
+//        builder.sleep(wait);
 //        getNotice(builder);
-//        builder.wait(wait);
+//        builder.sleep(wait);
 //        getOxygen(builder);
-//        builder.wait(wait);
+//        builder.sleep(wait);
 //        getHrSampling(builder);
-//        builder.wait(wait);
+//        builder.sleep(wait);
 //        getAlarm(builder);
-//        builder.wait(wait);
+//        builder.sleep(wait);
 //        getStepsHistory(builder);
-//        builder.wait(500);
+//        builder.sleep(500);
 //        getHeartrateHistory(builder);
-//        builder.wait(500);
+//        builder.sleep(500);
 
         builder.setDeviceState(GBDevice.State.INITIALIZED);
 
@@ -711,7 +711,7 @@ public class C60DeviceSupport extends AbstractBTLESingleDeviceSupport {
         BluetoothGattCharacteristic characteristic = getCharacteristic(C60Constants.CHARACTERISTIC_WRITE);
         builder.writeChunkedData(characteristic, data, CHUNK_SIZE);
         if (wait > 0) {
-            builder.wait(wait);
+            builder.sleep(wait);
         }
     }
 

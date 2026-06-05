@@ -262,7 +262,7 @@ public class SetConfigurationOperation extends AbstractBTLEOperation<Casio2C2DSu
             try {
                 TransactionBuilder builder = performInitialized("finished operation");
                 builder.setCallback(null); // unset ourselves from being the queue's gatt callback
-                builder.wait(0);
+                builder.sleep(0);
                 builder.queue();
             } catch (IOException ex) {
                 LOG.info("Error resetting Gatt callback: " + ex.getMessage());

@@ -711,7 +711,7 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
 
                 msg[0] = HPlusConstants.CMD_SET_INCOMING_CALL_NUMBER;
 
-                builder.wait(200);
+                builder.sleep(200);
                 builder.write(ctrlCharacteristic, msg);
             }
 

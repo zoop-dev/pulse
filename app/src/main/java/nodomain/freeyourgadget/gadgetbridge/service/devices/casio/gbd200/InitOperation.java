@@ -407,7 +407,7 @@ public class InitOperation extends AbstractBTLEOperation<CasioGBD200DeviceSuppor
                     try {
                         TransactionBuilder b = createTransactionBuilder("init_done");
                         b.setCallback(null);
-                        b.wait(0);
+                        b.sleep(0);
                         b.queueImmediately();
                     } catch (Exception e) {
                         LOG.error("Failed to release GATT callback after init: {}", e.getMessage());

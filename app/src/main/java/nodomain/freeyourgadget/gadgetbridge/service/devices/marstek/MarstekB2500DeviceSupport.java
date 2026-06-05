@@ -118,7 +118,7 @@ public class MarstekB2500DeviceSupport extends AbstractBTLESingleDeviceSupport {
         getDevice().setFirmwareVersion2("N/A");
         builder.requestMtu(512);
         builder.notify(UUID_CHARACTERISTIC_MAIN, true);
-        builder.wait(3500);
+        builder.sleep(3500);
         builder.write(UUID_CHARACTERISTIC_MAIN, COMMAND_GET_INFOS1);
         return builder;
     }
@@ -133,7 +133,7 @@ public class MarstekB2500DeviceSupport extends AbstractBTLESingleDeviceSupport {
         BluetoothGattCharacteristic characteristic = getCharacteristic(UUID_CHARACTERISTIC_MAIN);
         if (characteristic != null && contents != null) {
             builder.write(characteristic, contents);
-            builder.wait(750);
+            builder.sleep(750);
             builder.queue();
         }
     }
