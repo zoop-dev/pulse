@@ -1,4 +1,4 @@
-/*  Copyright (C) 2025 Thomas Kuehne
+/*  Copyright (C) 2026 Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -83,7 +83,7 @@ public abstract class AbstractBTLEDeviceSupport extends AbstractDeviceSupport
     abstract BtLEQueue getQueue(int deviceIdx);
 
     @Nullable
-    abstract BluetoothGattCharacteristic getCharacteristic(UUID uuid, int deviceIdx);
+    abstract BluetoothGattCharacteristic getCharacteristic(@Nullable UUID uuid, int deviceIdx);
 
     abstract int getMTU(int deviceIdx);
 

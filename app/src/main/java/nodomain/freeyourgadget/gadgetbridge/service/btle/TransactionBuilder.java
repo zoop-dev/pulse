@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2025 Andreas Böhler, Andreas Shimokawa, Carsten
+/*  Copyright (C) 2015-2026 Andreas Böhler, Andreas Shimokawa, Carsten
     Pfeiffer, Damien Gaignon, Daniel Dakhno, Daniele Gobbetti, Frank Ertl,
     José Rebelo, Johannes Krude, Thomas Kuehne
 
@@ -23,15 +23,15 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.os.Build;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.StringRes;
 import androidx.annotation.VisibleForTesting;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -71,6 +71,7 @@ public class TransactionBuilder {
     /// Invokes a read operation on a given characteristic. The result will be made
     /// available asynchronously through
     /// {@link GattCallback#onCharacteristicRead(BluetoothGatt, BluetoothGattCharacteristic, byte[], int)}
+    ///
     /// @see #read(UUID)
     @NonNull
     public TransactionBuilder read(@Nullable BluetoothGattCharacteristic characteristic) {
@@ -85,8 +86,10 @@ public class TransactionBuilder {
     /// Invokes a read operation on a given characteristic. The result will be made
     /// available asynchronously through
     /// {@link GattCallback#onCharacteristicRead(BluetoothGatt, BluetoothGattCharacteristic, byte[], int)}
+    ///
     /// @see #read(BluetoothGattCharacteristic)
-    public TransactionBuilder read(UUID characteristic) {
+    @NonNull
+    public TransactionBuilder read(@Nullable UUID characteristic) {
         BluetoothGattCharacteristic bgc = mDeviceSupport.getCharacteristic(characteristic, mDeviceIdx);
         if (bgc == null) {
             LOG.warn("Unable to read non-existing characteristic: {}", characteristic);
@@ -102,11 +105,12 @@ public class TransactionBuilder {
     /// uses {@link BluetoothGattCharacteristic#getValue()} and</li>
     /// <li>no {@link BluetoothGatt#beginReliableWrite()} was used.</li>
     /// </ol>
+    ///
     /// @see #write(UUID, byte...)
     /// @see #write(BluetoothGattCharacteristic, byte...)
     /// @see #writeChunkedData(BluetoothGattCharacteristic, byte[], int)
     @NonNull
-    public TransactionBuilder writeLegacy(@Nullable BluetoothGattCharacteristic characteristic, byte... data) {
+    public TransactionBuilder writeLegacy(@Nullable BluetoothGattCharacteristic characteristic, @NonNull byte... data) {
         if (characteristic == null) {
             LOG.warn("Unable to write characteristic: null");
             return this;
@@ -126,11 +130,12 @@ public class TransactionBuilder {
     /// Invokes a write operation on a given characteristic
     /// The result status will be made available asynchronously through
     /// {@link GattCallback#onCharacteristicWrite(BluetoothGatt, BluetoothGattCharacteristic, int)}
+    ///
     /// @see #write(UUID, byte...)
     /// @see #writeChunkedData(BluetoothGattCharacteristic, byte[], int)
     /// @see #writeLegacy(BluetoothGattCharacteristic, byte...)
     @NonNull
-    public TransactionBuilder write(@Nullable BluetoothGattCharacteristic characteristic, byte... data) {
+    public TransactionBuilder write(@Nullable BluetoothGattCharacteristic characteristic, @NonNull byte... data) {
         if (characteristic == null) {
             LOG.warn("Unable to write characteristic: null");
             return this;
@@ -150,11 +155,12 @@ public class TransactionBuilder {
     /// Invokes a write operation on a given characteristic
     /// The result status will be made available asynchronously through
     /// {@link GattCallback#onCharacteristicWrite(BluetoothGatt, BluetoothGattCharacteristic, int)}
+    ///
     /// @see #write(BluetoothGattCharacteristic, byte...)
     /// @see #writeChunkedData(BluetoothGattCharacteristic, byte[], int)
     /// @see #writeLegacy(BluetoothGattCharacteristic, byte...)
     @NonNull
-    public TransactionBuilder write(UUID characteristic, byte... data) {
+    public TransactionBuilder write(@Nullable UUID characteristic, @NonNull byte... data) {
         BluetoothGattCharacteristic bgc = mDeviceSupport.getCharacteristic(characteristic, mDeviceIdx);
         if (bgc == null) {
             LOG.warn("unable to write to non-existing characteristic: {}", characteristic);
@@ -166,6 +172,7 @@ public class TransactionBuilder {
     /// Invokes one or more write operations on a given characteristic
     /// The result status will be made available asynchronously through
     /// {@link GattCallback#onCharacteristicWrite(BluetoothGatt, BluetoothGattCharacteristic, int)}
+    ///
     /// @param requestedChunkLength will be automatically reduced if required for this connection
     /// @see #write(BluetoothGattCharacteristic, byte...)
     /// @see #write(UUID, byte...)
@@ -184,7 +191,9 @@ public class TransactionBuilder {
 
         for (int start = 0; start < data.length; start += chunkSize) {
             int end = start + chunkSize;
-            if (end > data.length) end = data.length;
+            if (end > data.length) {
+                end = data.length;
+            }
             WriteAction action = new WriteAction(characteristic, Arrays.copyOfRange(data, start, end));
             add(action);
         }
@@ -202,18 +211,22 @@ public class TransactionBuilder {
     /// Calls {@link BluetoothGatt#requestMtu(int)}. Results are returned asynchronously through
     /// {@link GattCallback#onMtuChanged(BluetoothGatt, int, int)}
     @NonNull
-    public TransactionBuilder requestMtu(@IntRange(from = 23L, to = 517L) int mtu){
-        return add(
-                new RequestMtuAction(mtu)
-        );
+    public TransactionBuilder requestMtu(@IntRange(from = 23L, to = 517L) int mtu) {
+        RequestMtuAction action = new RequestMtuAction(mtu);
+        return add(action);
     }
 
     /// Calls {@link BluetoothGatt#requestConnectionPriority(int)}.
+    ///
+    /// @param connectionPriority Request a specific connection priority. Must be one of
+    ///   {@link BluetoothGatt#CONNECTION_PRIORITY_BALANCED},
+    ///   {@link BluetoothGatt#CONNECTION_PRIORITY_HIGH},
+    ///   {@link BluetoothGatt#CONNECTION_PRIORITY_LOW_POWER},
+    ///   or {@link BluetoothGatt#CONNECTION_PRIORITY_DCK}.
     @NonNull
-    public TransactionBuilder requestConnectionPriority(int priority){
-        return add(
-                new RequestConnectionPriorityAction(priority)
-        );
+    public TransactionBuilder requestConnectionPriority(@IntRange(from = 0L, to = 3L) int connectionPriority) {
+        RequestConnectionPriorityAction action = new RequestConnectionPriorityAction(connectionPriority);
+        return add(action);
     }
 
     /// @see BondAction
@@ -226,8 +239,10 @@ public class TransactionBuilder {
     /// Enables or disables notifications for a given {@link BluetoothGattCharacteristic}.
     /// The result will be made available asynchronously through
     /// {@link GattCallback#onDescriptorWrite(BluetoothGatt, BluetoothGattDescriptor, int)}.
+    ///
+    /// @see BluetoothGatt#writeDescriptor(BluetoothGattDescriptor, byte[])
     @NonNull
-    public TransactionBuilder notify(BluetoothGattCharacteristic characteristic, boolean enable) {
+    public TransactionBuilder notify(@Nullable BluetoothGattCharacteristic characteristic, boolean enable) {
         if (characteristic == null) {
             LOG.warn("Unable to notify characteristic: null");
             return this;
@@ -239,8 +254,10 @@ public class TransactionBuilder {
     /// Enables or disables notifications for a given {@link BluetoothGattCharacteristic}.
     /// The result will be made available asynchronously through the
     /// {@link GattCallback#onDescriptorWrite(BluetoothGatt, BluetoothGattDescriptor, int)}.
+    ///
+    /// @see BluetoothGatt#writeDescriptor(BluetoothGattDescriptor, byte[])
     @NonNull
-    public TransactionBuilder notify(UUID characteristic, boolean enable) {
+    public TransactionBuilder notify(@Nullable UUID characteristic, boolean enable) {
         BluetoothGattCharacteristic chara = mDeviceSupport.getCharacteristic(characteristic, mDeviceIdx);
         if (chara == null) {
             LOG.warn("unable to enable/disable notifications for non-existing characteristic: {}", characteristic);
@@ -253,6 +270,7 @@ public class TransactionBuilder {
      * Causes the queue to sleep for the specified time.
      * Note that this is usually a bad idea, since it will not be able to process messages
      * during that time. It is also likely to cause race conditions.
+     *
      * @param millis the number of milliseconds to sleep
      * @see Thread#sleep(long)
      */
@@ -268,7 +286,7 @@ public class TransactionBuilder {
     /// @see #run(Runnable)
     @NonNull
     public TransactionBuilder run(@NonNull Predicate<? super BluetoothGatt> predicate) {
-        BtLEAction action = new FunctionAction(predicate);
+        FunctionAction action = new FunctionAction(predicate);
         return add(action);
     }
 
@@ -278,7 +296,7 @@ public class TransactionBuilder {
     /// @see #run(Predicate)
     @NonNull
     public TransactionBuilder run(@NonNull Runnable runnable) {
-        BtLEAction action = new FunctionAction(runnable);
+        FunctionAction action = new FunctionAction(runnable);
         return add(action);
     }
 
@@ -290,52 +308,57 @@ public class TransactionBuilder {
 
     /// Sets the device's state and sends {@link GBDevice#ACTION_DEVICE_CHANGED} intent
     @NonNull
-    public TransactionBuilder setDeviceState(GBDevice.State state) {
-        BtLEAction action = new SetDeviceStateAction(mDeviceSupport.getDevice(), state, mDeviceSupport.getContext());
+    public TransactionBuilder setDeviceState(@NonNull GBDevice.State state) {
+        SetDeviceStateAction action = new SetDeviceStateAction(mDeviceSupport.getDevice(), state, mDeviceSupport.getContext());
         return add(action);
     }
 
     /// updates the progress bar
+    ///
     /// @see SetProgressAction#SetProgressAction
     @NonNull
     public TransactionBuilder setProgress(@StringRes int textRes, boolean ongoing, int percentage) {
-        BtLEAction action = new SetProgressAction(textRes, ongoing, percentage, mDeviceSupport.getContext());
+        SetProgressAction action = new SetProgressAction(textRes, ongoing, percentage, mDeviceSupport.getContext());
         return add(action);
     }
 
-    /**
-     * Read the current transmitter PHY and receiver PHY of the connection.
-     * @see ReadPhyAction
-     */
+    /// Read the current transmitter PHY and receiver PHY of the connection.
+    /// Results are returned asynchronously through
+    /// {@link GattCallback#onPhyRead(BluetoothGatt, int, int, int)}
+    ///
+    /// @see BluetoothGatt#readPhy()
     @RequiresApi(api = Build.VERSION_CODES.O)
     @NonNull
     public TransactionBuilder readPhy() {
-        BtLEAction action = new ReadPhyAction();
+        ReadPhyAction action = new ReadPhyAction();
         return add(action);
     }
 
-    /**
-     * Set the preferred PHY of the connection.
-     * @see SetPreferredPhyAction
-     */
+    /// Set the preferred PHY of the connection.
+    /// Results are returned asynchronously through
+    /// {@link GattCallback#onPhyUpdate(BluetoothGatt, int, int, int)}
+    ///
+    /// @see BluetoothGatt#setPreferredPhy(int, int, int)
     @RequiresApi(api = Build.VERSION_CODES.O)
     @NonNull
     public TransactionBuilder setPreferredPhy(int txPhy, int rxPhy, int phyOptions) {
-        BtLEAction action = new SetPreferredPhyAction(txPhy, rxPhy, phyOptions);
+        SetPreferredPhyAction action = new SetPreferredPhyAction(txPhy, rxPhy, phyOptions);
         return add(action);
     }
 
     /// Set the device as busy or not ({@code taskName = 0}).
+    ///
     /// @see SetDeviceBusyAction#SetDeviceBusyAction
     @NonNull
     public TransactionBuilder setBusyTask(@StringRes final int taskName) {
-        BtLEAction action = new SetDeviceBusyAction(mDeviceSupport.getDevice(), taskName, mDeviceSupport.getContext());
+        SetDeviceBusyAction action = new SetDeviceBusyAction(mDeviceSupport.getDevice(), taskName, mDeviceSupport.getContext());
         return add(action);
     }
 
     /**
      * Sets a GattCallback instance that will be called when the transaction is executed,
-     * resulting in GattCallback events.
+     * resulting in GattCallback events. Only required if the callback is different from the
+     * {@link AbstractBTLEDeviceSupport} instance.
      *
      * @param callback the callback to set, may be null
      */
@@ -343,13 +366,13 @@ public class TransactionBuilder {
         mTransaction.setCallback(callback);
     }
 
-    public
     @Nullable
-    GattCallback getGattCallback() {
+    public GattCallback getGattCallback() {
         return mTransaction.getGattCallback();
     }
 
     /// To be used as the final step to execute the transaction by the queue.
+    ///
     /// @see #queueConnected()
     /// @see #queueImmediately()
     public void queue() {
@@ -381,7 +404,7 @@ public class TransactionBuilder {
     /// In contrast to {@code performInitialized(...)}, no initialization sequence is performed
     /// with the device, only the actions of the given builder are executed.
     ///
-    /// @throws IOException if unable to connect to the device
+    /// @throws IOException           if unable to connect to the device
     /// @throws IllegalStateException if this builder has already been queued
     /// @see AbstractBTLESingleDeviceSupport#performInitialized(String)
     /// @see AbstractBTLEMultiDeviceSupport#performInitialized(String, int)
@@ -399,7 +422,8 @@ public class TransactionBuilder {
     /// Performs the actions as soon as possible,
     /// that is, before any other queued transactions, but after the actions
     /// of the currently executing transaction.
-    /// @throws IOException if the device isn't connected
+    ///
+    /// @throws IOException           if the device isn't connected
     /// @throws IllegalStateException if this builder has already been queued
     /// @see #queue()
     /// @see #queueConnected()

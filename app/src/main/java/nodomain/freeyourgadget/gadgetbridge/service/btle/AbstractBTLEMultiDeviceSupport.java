@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2025 Andreas Böhler, Arjan Schrijver, Carsten Pfeiffer,
+/*  Copyright (C) 2015-2026 Andreas Böhler, Arjan Schrijver, Carsten Pfeiffer,
     Daniel Dakhno, Daniele Gobbetti, Johannes Krude, JohnnySun, José Rebelo,
     Thomas Kuehne
 
@@ -245,7 +245,8 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
      *
      * @return the same builder as passed as the argument
      */
-    protected TransactionBuilder initializeDevice(TransactionBuilder builder, int deviceIdx) {
+    @NonNull
+    protected TransactionBuilder initializeDevice(@NonNull TransactionBuilder builder, int deviceIdx) {
         return builder;
     }
 
@@ -267,7 +268,8 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
         }
     }
 
-    public TransactionBuilder createTransactionBuilder(String taskName, int deviceIdx) {
+    @NonNull
+    public TransactionBuilder createTransactionBuilder(@NonNull String taskName, int deviceIdx) {
         return new TransactionBuilder(taskName + "_" + deviceIdx, this, deviceIdx);
     }
 
@@ -290,7 +292,8 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
      * @see TransactionBuilder#queueConnected()
      * @see #initializeDevice(TransactionBuilder, int)
      */
-    public TransactionBuilder performInitialized(String taskName, int deviceIdx)
+    @NonNull
+    public TransactionBuilder performInitialized(@NonNull String taskName, int deviceIdx)
             throws IOException {
         if (devices[deviceIdx] == null) {
             throw new IllegalArgumentException(
@@ -347,7 +350,7 @@ public abstract class AbstractBTLEMultiDeviceSupport extends AbstractBTLEDeviceS
      */
     @Override
     @Nullable
-    public BluetoothGattCharacteristic getCharacteristic(UUID uuid, int deviceIdx) {
+    public BluetoothGattCharacteristic getCharacteristic(@Nullable UUID uuid, int deviceIdx) {
         validateDeviceIndex(deviceIdx);
 
         synchronized (characteristicsMonitor) {

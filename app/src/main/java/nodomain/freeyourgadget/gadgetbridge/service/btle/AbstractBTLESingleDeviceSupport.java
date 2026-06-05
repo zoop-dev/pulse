@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2025 Andreas Böhler, Arjan Schrijver, Carsten Pfeiffer,
+/*  Copyright (C) 2015-2026 Andreas Böhler, Arjan Schrijver, Carsten Pfeiffer,
     Daniel Dakhno, Daniele Gobbetti, Johannes Krude, JohnnySun, José Rebelo,
     Thomas Kuehne
 
@@ -138,7 +138,8 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
      *
      * @return the same builder as passed as the argument
      */
-    protected TransactionBuilder initializeDevice(TransactionBuilder builder) {
+    @NonNull
+    protected TransactionBuilder initializeDevice(@NonNull TransactionBuilder builder) {
         return builder;
     }
 
@@ -159,7 +160,8 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
         }
     }
 
-    public TransactionBuilder createTransactionBuilder(String taskName) {
+    @NonNull
+    public TransactionBuilder createTransactionBuilder(@NonNull String taskName) {
         return new TransactionBuilder(taskName, this, 0);
     }
 
@@ -185,7 +187,8 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
      * @see TransactionBuilder#queueConnected()
      * @see #initializeDevice(TransactionBuilder)
      */
-    public TransactionBuilder performInitialized(String taskName) throws IOException {
+    @NonNull
+    public TransactionBuilder performInitialized(@NonNull String taskName) throws IOException {
         if (!isConnected()) {
             logger.debug("Connecting to device for {}", taskName);
             if (!connect()) {
@@ -259,7 +262,7 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
      * @see #addSupportedService(UUID)
      */
     @Nullable
-    public BluetoothGattCharacteristic getCharacteristic(UUID uuid) {
+    public BluetoothGattCharacteristic getCharacteristic(@Nullable UUID uuid) {
         synchronized (characteristicsMonitor) {
             if (mAvailableCharacteristics == null) {
                 return null;
@@ -270,7 +273,7 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
 
     @Nullable
     @Override
-    BluetoothGattCharacteristic getCharacteristic(UUID uuid, int deviceIdx){
+    BluetoothGattCharacteristic getCharacteristic(@Nullable UUID uuid, int deviceIdx){
         if(deviceIdx != 0){
             throw new IllegalArgumentException("deviceIdx is " + deviceIdx);
         }
