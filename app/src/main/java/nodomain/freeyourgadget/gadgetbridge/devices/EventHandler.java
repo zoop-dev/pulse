@@ -23,6 +23,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -141,7 +142,7 @@ public interface EventHandler {
      */
     void onReadConfiguration(String config);
 
-    void onTestNewFunction();
+    void onTestNewFunction(@Nullable Bundle options);
 
     void onSendWeather();
 

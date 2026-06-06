@@ -1,4 +1,4 @@
-/*  Copyright (C) 2023-2024 Andreas Böhler, foxstidious, Johannes Krude
+/*  Copyright (C) 2023-2026 Andreas Böhler, foxstidious, Johannes Krude
 
     This file is part of Gadgetbridge.
 
@@ -19,6 +19,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.casio.gbx100;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
 
@@ -76,6 +77,8 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_HEIGHT_CM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_STEPS_GOAL;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivityUser.PREF_USER_WEIGHT_KG;
+
+import androidx.annotation.Nullable;
 
 public class CasioGBX100DeviceSupport extends Casio2C2DSupport implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final Logger LOG = LoggerFactory.getLogger(CasioGBX100DeviceSupport.class);
@@ -633,7 +636,7 @@ public class CasioGBX100DeviceSupport extends Casio2C2DSupport implements Shared
     }
 
     @Override
-    public void onTestNewFunction() {
+    public void onTestNewFunction(@Nullable Bundle options) {
         byte[] data = new byte[2];
         data[0] = (byte)0x2e;
         data[1] = (byte)0x03;

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2025 José Rebelo
+/*  Copyright (C) 2025-2026 José Rebelo
 
     This file is part of Gadgetbridge.
 
@@ -27,6 +27,7 @@ import android.util.SparseArray;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.apache.commons.lang3.RandomUtils;
 import org.slf4j.Logger;
@@ -446,8 +447,8 @@ public class ZeppOsBtbrSupport extends AbstractBTBRDeviceSupport implements Zepp
     }
 
     @Override
-    public void onTestNewFunction() {
-        zeppOsSupport.onTestNewFunction();
+    public void onTestNewFunction(@Nullable Bundle options) {
+        zeppOsSupport.onTestNewFunction(options);
     }
 
     @Override

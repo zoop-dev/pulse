@@ -1,4 +1,4 @@
-/*  Copyright (C) 2019-2024 Arjan Schrijver, Damien Gaignon, Sophanimus
+/*  Copyright (C) 2019-2026 Arjan Schrijver, Damien Gaignon, Sophanimus
 
     This file is part of Gadgetbridge.
 
@@ -53,7 +53,10 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.jyou;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.os.Bundle;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -334,7 +337,7 @@ public class BFH16DeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onTestNewFunction() {
+    public void onTestNewFunction(@Nullable Bundle options) {
 
         showNotification((byte)0xFF, "", "");
 

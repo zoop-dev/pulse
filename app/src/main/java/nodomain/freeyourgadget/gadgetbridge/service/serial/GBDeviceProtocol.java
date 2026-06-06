@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2024 Andreas Shimokawa, Carsten Pfeiffer, José Rebelo,
+/*  Copyright (C) 2015-2026 Andreas Shimokawa, Carsten Pfeiffer, José Rebelo,
     Julien Pivotto, Steffen Liebergeld
 
     This file is part of Gadgetbridge.
@@ -18,6 +18,7 @@
 package nodomain.freeyourgadget.gadgetbridge.service.serial;
 
 import android.location.Location;
+import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
@@ -164,7 +165,7 @@ public abstract class GBDeviceProtocol {
     }
 
     @Nullable
-    public byte[] encodeTestNewFunction() { return null; }
+    public byte[] encodeTestNewFunction(@Nullable Bundle options) { return null; }
 
     @Nullable
     public GBDeviceEvent[] decodeResponse(byte[] responseData) {

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2022-2024 José Rebelo, octospacc
+/*  Copyright (C) 2022-2026 José Rebelo, octospacc, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -16,11 +16,17 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.externalevents;
 
+import static nodomain.freeyourgadget.gadgetbridge.model.DeviceService.EXTRA_OPTIONS;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,9 +48,11 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.database.PeriodicDbExporter;
+import nodomain.freeyourgadget.gadgetbridge.devices.DeviceManager;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
@@ -56,7 +64,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.backup.PeriodicZipExporter;
 public class IntentApiReceiver extends BroadcastReceiver {
     private static final Logger LOG = LoggerFactory.getLogger(IntentApiReceiver.class);
 
-    private static final String msgDebugNotAllowed = "Intent API Allow Debug Commands not allowed";
+    private static final String msgDebugNotAllowed = "Intent API Allow Debug Commands not allowed: {}";
 
     public static final String COMMAND_ACTIVITY_SYNC = "nodomain.freeyourgadget.gadgetbridge.command.ACTIVITY_SYNC";
     @Deprecated
@@ -70,6 +78,10 @@ public class IntentApiReceiver extends BroadcastReceiver {
     public static final String COMMAND_DEBUG_SET_DEVICE_TYPE = "nodomain.freeyourgadget.gadgetbridge.command.DEBUG_SET_DEVICE_TYPE";
     public static final String COMMAND_DEBUG_TEST_NEW_FUNCTION = "nodomain.freeyourgadget.gadgetbridge.command.DEBUG_TEST_NEW_FUNCTION";
     public static final String COMMAND_DEBUG_HEAP_DUMP = "nodomain.freeyourgadget.gadgetbridge.command.DEBUG_HEAP_DUMP";
+
+    public static final String INTENT_API_ALLOW_DEBUG_COMMANDS = "intent_api_allow_debug_commands";
+
+    public static final String EXTRA_ADDRESS = "address";
 
     private static final String MAC_ADDR_PATTERN = "^([0-9A-F]{2}:){5}[0-9A-F]{2}$";
 
@@ -136,8 +148,8 @@ public class IntentApiReceiver extends BroadcastReceiver {
                 break;
 
             case COMMAND_DEBUG_SEND_NOTIFICATION:
-                if (!prefs.getBoolean("intent_api_allow_debug_commands", false)) {
-                    LOG.warn(msgDebugNotAllowed);
+                if (!prefs.getBoolean(INTENT_API_ALLOW_DEBUG_COMMANDS, false)) {
+                    LOG.warn(msgDebugNotAllowed, COMMAND_DEBUG_SEND_NOTIFICATION);
                     return;
                 }
                 LOG.info("Triggering Debug Send notification message");
@@ -187,8 +199,8 @@ public class IntentApiReceiver extends BroadcastReceiver {
                 break;
 
             case COMMAND_DEBUG_INCOMING_CALL:
-                if (!prefs.getBoolean("intent_api_allow_debug_commands", false)) {
-                    LOG.warn(msgDebugNotAllowed);
+                if (!prefs.getBoolean(INTENT_API_ALLOW_DEBUG_COMMANDS, false)) {
+                    LOG.warn(msgDebugNotAllowed, COMMAND_DEBUG_INCOMING_CALL);
                     return;
                 }
                 LOG.info("Triggering Debug Incoming Call");
@@ -202,8 +214,8 @@ public class IntentApiReceiver extends BroadcastReceiver {
                 break;
 
             case COMMAND_DEBUG_END_CALL:
-                if (!prefs.getBoolean("intent_api_allow_debug_commands", false)) {
-                    LOG.warn(msgDebugNotAllowed);
+                if (!prefs.getBoolean(INTENT_API_ALLOW_DEBUG_COMMANDS, false)) {
+                    LOG.warn(msgDebugNotAllowed, COMMAND_DEBUG_END_CALL);
                     return;
                 }
                 LOG.info("Triggering Debug End Call");
@@ -213,28 +225,27 @@ public class IntentApiReceiver extends BroadcastReceiver {
                 break;
 
             case COMMAND_DEBUG_SET_DEVICE_ADDRESS:
-                if (!prefs.getBoolean("intent_api_allow_debug_commands", false)) {
-                    LOG.warn(msgDebugNotAllowed);
+                if (!prefs.getBoolean(INTENT_API_ALLOW_DEBUG_COMMANDS, false)) {
+                    LOG.warn(msgDebugNotAllowed, COMMAND_DEBUG_SET_DEVICE_ADDRESS);
                     return;
                 }
                 setDeviceAddress(intent);
                 break;
 
             case COMMAND_DEBUG_SET_DEVICE_TYPE:
-                if (!prefs.getBoolean("intent_api_allow_debug_commands", false)) {
-                    LOG.warn(msgDebugNotAllowed);
+                if (!prefs.getBoolean(INTENT_API_ALLOW_DEBUG_COMMANDS, false)) {
+                    LOG.warn(msgDebugNotAllowed, COMMAND_DEBUG_SET_DEVICE_TYPE);
                     return;
                 }
                 setDeviceType(intent);
                 break;
 
             case COMMAND_DEBUG_TEST_NEW_FUNCTION:
-                if (!prefs.getBoolean("intent_api_allow_debug_commands", false)) {
-                    LOG.warn(msgDebugNotAllowed);
-                    return;
+                if (!prefs.getBoolean(INTENT_API_ALLOW_DEBUG_COMMANDS, false)) {
+                    LOG.warn(msgDebugNotAllowed, COMMAND_DEBUG_TEST_NEW_FUNCTION);
+                    break;
                 }
-                LOG.info("Triggering Debug Test New Function");
-                GBApplication.deviceService().onTestNewFunction();
+                onTestNewFunction(intent);
                 break;
 
             case COMMAND_DEBUG_HEAP_DUMP:
@@ -256,6 +267,82 @@ public class IntentApiReceiver extends BroadcastReceiver {
             default:
                 LOG.warn("Got unknown intent API action: {}", intent.getAction());
         }
+    }
+
+    private void onTestNewFunction(@NonNull Intent intent) {
+        final String address = intent.getStringExtra(EXTRA_ADDRESS);
+
+        Bundle options = intent.getBundleExtra(EXTRA_OPTIONS);
+        if(options == null){
+            options = constructSyntheticOptions(intent.getExtras());
+        }
+
+        DeviceService deviceService = GBApplication.deviceService();
+
+        if (address != null && !address.isEmpty()) {
+            GBApplication application = GBApplication.app();
+            DeviceManager deviceManager = application.getDeviceManager();
+            GBDevice device = deviceManager.getDeviceByAddress(address);
+            if (device == null) {
+                if (validAddress(address)) {
+                    LOG.warn("onTestNewFunction: device with address '{}' not found", address);
+                }
+                return;
+            }
+            deviceService = deviceService.forDevice(device);
+            LOG.info("Triggering onTestNewFunction for {} using {} options",
+                    address, (options == null) ? "no" : options.size());
+        } else {
+            LOG.info("Triggering onTestNewFunction without device using {} options",
+                    (options == null) ? "no" : options.size());
+        }
+
+        deviceService.onTestNewFunction(options);
+    }
+
+    /// Construct synthetic options Bundle by copying values for all options_xxx keys to xxx.
+    /// Only supports types that can be specified via `adb shell am broadcast ...`
+    private Bundle constructSyntheticOptions(Bundle extras) {
+        if (extras == null) {
+            return null;
+        }
+
+        final String prefix = "options_";
+
+        Bundle options = null;
+        for (String key : extras.keySet()) {
+            if (key != null && key.length() > prefix.length() && key.startsWith(prefix)) {
+                if (options == null) {
+                    options = new Bundle();
+                }
+                String option = key.substring(prefix.length());
+                Object extra = extras.get(key);
+                if (extra == null) {
+                    options.putSerializable(option, null);
+                } else if (extra instanceof String value) {
+                    options.putString(option, value);
+                } else if (extra instanceof Boolean value) {
+                    options.putBoolean(option, value);
+                } else if (extra instanceof Integer value) {
+                    options.putInt(option, value);
+                } else if (extra instanceof Long value) {
+                    options.putLong(option, value);
+                } else if (extra instanceof Float value) {
+                    options.putFloat(option, value);
+                } else if (extra instanceof float[] value) {
+                    options.putFloatArray(option, value);
+                } else if (extra instanceof int[] value) {
+                    options.putIntArray(option, value);
+                } else if (extra instanceof long[] value) {
+                    options.putLongArray(option, value);
+                } else if (extra instanceof Uri value) {
+                    options.putParcelable(option, value);
+                } else  {
+                    LOG.warn("unhandled extra {} {} {}", option, extra, extra.getClass());
+                }
+            }
+        }
+        return options;
     }
 
     public IntentFilter buildFilter() {
@@ -351,7 +438,7 @@ public class IntentApiReceiver extends BroadcastReceiver {
     }
 
     private void setDeviceType(final Intent intent) {
-        final String address = intent.getStringExtra("address");
+        final String address = intent.getStringExtra(EXTRA_ADDRESS);
         if (!validAddress(address)) {
             return;
         }

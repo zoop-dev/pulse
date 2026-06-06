@@ -1,4 +1,4 @@
-/*  Copyright (C) 2021-2024 narektor, Petr Vaněk
+/*  Copyright (C) 2021-2026 narektor, Petr Vaněk
 
     This file is part of Gadgetbridge.
 
@@ -20,6 +20,9 @@ import static nodomain.freeyourgadget.gadgetbridge.util.CheckSums.crc16_ccitt;
 import static nodomain.freeyourgadget.gadgetbridge.util.GB.hexdump;
 
 import android.content.SharedPreferences;
+import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -332,7 +335,7 @@ public class GalaxyBudsProtocol extends GBDeviceProtocol {
     }
 
     @Override
-    public byte[] encodeTestNewFunction() {
+    public byte[] encodeTestNewFunction(@Nullable Bundle options) {
         //return encodeMessage(get_debug_build_info);
         return null;
     }

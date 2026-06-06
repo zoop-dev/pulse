@@ -1,4 +1,4 @@
-/*  Copyright (C) 2024 Andreas Shimokawa
+/*  Copyright (C) 2024-2026 Andreas Shimokawa
 
     This file is part of Gadgetbridge.
 
@@ -25,7 +25,9 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.slf4j.Logger;
@@ -99,7 +101,7 @@ public class MarstekB2500DeviceSupport extends AbstractBTLESingleDeviceSupport {
 
 
     @Override
-    public void onTestNewFunction() {
+    public void onTestNewFunction(@Nullable Bundle options) {
         sendCommand("get infos 1", COMMAND_GET_INFOS1);
         sendCommand("get infos 2", COMMAND_GET_INFOS2);
     }

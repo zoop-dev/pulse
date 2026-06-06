@@ -1,4 +1,4 @@
-/*  Copyright (C) 2021-2024 José Rebelo
+/*  Copyright (C) 2021-2026 José Rebelo
 
     This file is part of Gadgetbridge.
 
@@ -17,6 +17,9 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones;
 
 import android.content.SharedPreferences;
+import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -300,7 +303,7 @@ public class SonyHeadphonesProtocol extends GBDeviceProtocol {
     }
 
     @Override
-    public byte[] encodeTestNewFunction() {
+    public byte[] encodeTestNewFunction(@Nullable Bundle options) {
         //return Request.fromHex(MessageType.COMMAND_1, "c40100").encode(sequenceNumber);
 
         return null;
