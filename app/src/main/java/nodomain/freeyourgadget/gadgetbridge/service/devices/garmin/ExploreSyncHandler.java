@@ -744,7 +744,7 @@ class ExploreSyncHandler {
                 }
                 final GarminActivitySampleProvider provider
                         = new GarminActivitySampleProvider(deviceSupport.getDevice(), daoSession);
-                provider.addGBActivitySamples(samples.toArray(new GarminActivitySample[0]));
+                provider.addGBActivitySamples(samples);
                 LOG.debug("ExploreSync line {}: persisted {} activity samples",
                         uuidHex, samples.size());
             }

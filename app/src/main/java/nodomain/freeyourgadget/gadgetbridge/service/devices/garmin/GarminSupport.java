@@ -544,11 +544,13 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         // otherwise we might get incomplete monitor files
         sendOutgoingMessage("fetch recorded data", fileTransferHandler.initiateDownload());
 
-        // Re-arm the ExploreSync historical catalog walk so any activities
-        // recorded since the initial connect get picked up. Watches that
-        // don't support the service reject our StartSyncRequest and the
-        // handler tears the session down on its own.
-        protocolBufferHandler.getExploreSyncHandler().startSession();
+        if (getCoordinator().supports(getDevice(), GarminCapability.EXPLORE_SYNC)) {
+            // Re-arm the ExploreSync historical catalog walk so any activities
+            // recorded since the initial connect get picked up. Watches that
+            // don't support the service reject our StartSyncRequest and the
+            // handler tears the session down on its own.
+            protocolBufferHandler.getExploreSyncHandler().startSession();
+        }
 
         //TODO: ask the watch to initiate the sync? Something like:
         //        sendOutgoingMessage("set sync ready", new SystemEventMessage(SystemEventMessage.GarminSystemEventType.SYNC_READY, 0));
