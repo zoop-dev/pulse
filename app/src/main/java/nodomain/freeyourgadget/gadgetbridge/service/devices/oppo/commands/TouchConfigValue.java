@@ -25,6 +25,7 @@ public enum TouchConfigValue {
     VOICE_ASSISTANT_REALME(0x04),
     PREVIOUS(0x05),
     NEXT(0x06),
+    NOISE_CONTROL(0x08),
     GAME_MODE(0x11),
     VOLUME_UP(0x0B),
     VOLUME_DOWN(0x0C),

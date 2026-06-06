@@ -4520,6 +4520,7 @@
         <item>@string/pref_title_touch_voice_assistant</item>
         <item>@string/pref_title_touch_voice_assistant</item>
         <item>@string/prefs_game_mode</item>
+        <item>@string/prefs_noise_control</item>
     </string-array>
 
     <string-array name="oppo_touch_tap_values">
@@ -4533,6 +4534,7 @@
         <item>voice_assistant</item>
         <item>voice_assistant_realme</item>
         <item>game_mode</item>
+        <item>noise_control</item>
     </string-array>
 
     <string-array name="cmf_buds_touch_tap_names">

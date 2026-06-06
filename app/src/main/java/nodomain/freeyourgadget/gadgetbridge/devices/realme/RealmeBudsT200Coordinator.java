@@ -72,7 +72,8 @@ public class RealmeBudsT200Coordinator extends OppoHeadphonesCoordinator {
                     TouchConfigValue.VOLUME_UP,
                     TouchConfigValue.VOLUME_DOWN,
                     TouchConfigValue.VOICE_ASSISTANT_REALME,
-                    TouchConfigValue.GAME_MODE
+                    TouchConfigValue.GAME_MODE,
+                    TouchConfigValue.NOISE_CONTROL
             );
             put(Pair.create(TouchConfigSide.LEFT, TouchConfigType.TAP_2), options);
             put(Pair.create(TouchConfigSide.LEFT, TouchConfigType.TAP_3), options);
