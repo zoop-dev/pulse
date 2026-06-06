@@ -3205,6 +3205,7 @@
     <string name="devicetype_oppo_enco_buds2" translatable="false">Oppo Enco Buds2</string>
     <string name="devicetype_realme_buds_t110" translatable="false">Realme Buds T110</string>
     <string name="devicetype_realme_buds_t100" translatable="false">Realme Buds T100</string>
+    <string name="devicetype_realme_buds_t200" translatable="false">Realme Buds T200</string>
     <string name="devicetype_realme_buds_t300" translatable="false">Realme Buds T300</string>
     <string name="devicetype_realme_buds_air_5_pro" translatable="false">Realme Buds Air 5 Pro</string>
     <string name="devicetype_galaxybuds" translatable="false">Galaxy Buds</string>

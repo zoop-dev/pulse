@@ -400,6 +400,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.QHybridCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.realme.RealmeBudsAir5ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.realme.RealmeBudsT100Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.realme.RealmeBudsT110Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.realme.RealmeBudsT200Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.realme.RealmeBudsT300Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.redmibuds.RedmiBuds3ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.redmibuds.RedmiBuds4ActiveCoordinator;
@@ -914,6 +915,7 @@ public enum DeviceType {
     Y66(Y66Coordinator.class),
     REALME_BUDS_T110(RealmeBudsT110Coordinator.class),
     REALME_BUDS_T100(RealmeBudsT100Coordinator.class),
+    REALME_BUDS_T200(RealmeBudsT200Coordinator.class),
     REALME_BUDS_T300(RealmeBudsT300Coordinator.class),
     REALME_BUDS_AIR_5_PRO(RealmeBudsAir5ProCoordinator.class),
     SOFLOW_SO6(SoFlowCoordinator.class),
