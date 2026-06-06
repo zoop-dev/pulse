@@ -20,6 +20,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.model;
 
+import androidx.annotation.Nullable;
+
 import nodomain.freeyourgadget.gadgetbridge.devices.EventHandler;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceCommunicationService;
@@ -164,6 +166,7 @@ public interface DeviceService extends EventHandler {
 
     String EXTRA_REALTIME_SAMPLE = "realtime_sample";
     String EXTRA_TIMESTAMP = "timestamp";
+
     /**
      * Use EXTRA_REALTIME_SAMPLE instead
      */
@@ -198,9 +201,13 @@ public interface DeviceService extends EventHandler {
     /**
      * Requests information from the {@link DeviceCommunicationService} about the connection state,
      * firmware info, etc.
-     * <p/>
+     * <p>
      * Note that this will not need a connection to the device -- only the cached information
      * from the service will be reported.
+     * </p>
      */
     void requestDeviceInfo();
+
+    @Nullable
+    GBDevice getDevice();
 }

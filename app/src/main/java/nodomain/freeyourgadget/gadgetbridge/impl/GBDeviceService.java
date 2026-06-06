@@ -98,6 +98,8 @@ public class GBDeviceService implements DeviceService {
         return new GBDeviceService(mContext, device);
     }
 
+    @Nullable
+    @Override
     public GBDevice getDevice() {
         return mDevice;
     }

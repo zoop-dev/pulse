@@ -23,10 +23,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,10 +36,10 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -67,8 +68,9 @@ public class IntentApiReceiver extends BroadcastReceiver {
     private static final String msgDebugNotAllowed = "Intent API Allow Debug Commands not allowed: {}";
 
     public static final String COMMAND_ACTIVITY_SYNC = "nodomain.freeyourgadget.gadgetbridge.command.ACTIVITY_SYNC";
+    /// @deprecated use {@link #COMMAND_TRIGGER_DATABASE_EXPORT} instead
     @Deprecated
-    public static final String COMMAND_TRIGGER_EXPORT = "nodomain.freeyourgadget.gadgetbridge.command.TRIGGER_EXPORT";
+    private static final String COMMAND_TRIGGER_EXPORT = "nodomain.freeyourgadget.gadgetbridge.command.TRIGGER_EXPORT";
     public static final String COMMAND_TRIGGER_DATABASE_EXPORT = "nodomain.freeyourgadget.gadgetbridge.command.TRIGGER_DATABASE_EXPORT";
     public static final String COMMAND_TRIGGER_ZIP_EXPORT = "nodomain.freeyourgadget.gadgetbridge.command.TRIGGER_ZIP_EXPORT";
     public static final String COMMAND_DEBUG_SEND_NOTIFICATION = "nodomain.freeyourgadget.gadgetbridge.command.DEBUG_SEND_NOTIFICATION";
@@ -81,7 +83,10 @@ public class IntentApiReceiver extends BroadcastReceiver {
 
     public static final String INTENT_API_ALLOW_DEBUG_COMMANDS = "intent_api_allow_debug_commands";
 
-    public static final String EXTRA_ADDRESS = "address";
+    /// @deprecated use {@link #EXTRA_DEVICE} instead
+    @Deprecated
+    private static final String EXTRA_ADDRESS = "address";
+    public static final String EXTRA_DEVICE = "device";
 
     private static final String MAC_ADDR_PATTERN = "^([0-9A-F]{2}:){5}[0-9A-F]{2}$";
 
@@ -95,7 +100,7 @@ public class IntentApiReceiver extends BroadcastReceiver {
         final Prefs prefs = GBApplication.getPrefs();
 
         switch (intent.getAction()) {
-            case COMMAND_ACTIVITY_SYNC:
+            case COMMAND_ACTIVITY_SYNC: {
                 if (!prefs.getBoolean("intent_api_allow_activity_sync", false)) {
                     LOG.warn("Intent API activity sync trigger not allowed");
                     return;
@@ -114,11 +119,16 @@ public class IntentApiReceiver extends BroadcastReceiver {
                     dataTypes = RecordedDataTypes.TYPE_SYNC;
                 }
 
-                LOG.info("Triggering activity sync for data types {}", String.format("0x%08x", dataTypes));
-
-                GBApplication.deviceService().onFetchRecordedData(dataTypes);
+                DeviceService deviceService = getDeviceService(intent);
+                if (deviceService != null) {
+                    GBDevice device = deviceService.getDevice();
+                    LOG.info("Triggering activity sync for data types {} from {}",
+                            String.format("0x%08x", dataTypes),
+                            (device != null) ? device.getAliasOrName() : "all devices");
+                    deviceService.onFetchRecordedData(dataTypes);
+                }
                 break;
-
+            }
             case COMMAND_TRIGGER_EXPORT:
                 LOG.warn(
                         "The action {} is deprecated, please use {}",
@@ -147,12 +157,11 @@ public class IntentApiReceiver extends BroadcastReceiver {
                 PeriodicZipExporter.INSTANCE.executeNow();
                 break;
 
-            case COMMAND_DEBUG_SEND_NOTIFICATION:
+            case COMMAND_DEBUG_SEND_NOTIFICATION: {
                 if (!prefs.getBoolean(INTENT_API_ALLOW_DEBUG_COMMANDS, false)) {
                     LOG.warn(msgDebugNotAllowed, COMMAND_DEBUG_SEND_NOTIFICATION);
                     return;
                 }
-                LOG.info("Triggering Debug Send notification message");
                 NotificationSpec notificationSpec = new NotificationSpec();
                 notificationSpec.sender = intent.getStringExtra("sender");
                 if (notificationSpec.sender == null) {
@@ -195,35 +204,53 @@ public class IntentApiReceiver extends BroadcastReceiver {
                     replyAction.type = NotificationSpec.Action.TYPE_SYNTECTIC_REPLY_PHONENR;
                     notificationSpec.attachedActions.add(replyAction);
                 }
-                GBApplication.deviceService().onNotification(notificationSpec);
-                break;
 
-            case COMMAND_DEBUG_INCOMING_CALL:
+                DeviceService deviceService = getDeviceService(intent);
+                if (deviceService != null) {
+                    GBDevice device = deviceService.getDevice();
+                    LOG.info("Triggering Debug Send notification message to {}",
+                            (device != null) ? device.getAliasOrName() : "all devices");
+                    deviceService.onNotification(notificationSpec);
+                }
+                break;
+            }
+            case COMMAND_DEBUG_INCOMING_CALL: {
                 if (!prefs.getBoolean(INTENT_API_ALLOW_DEBUG_COMMANDS, false)) {
                     LOG.warn(msgDebugNotAllowed, COMMAND_DEBUG_INCOMING_CALL);
                     return;
                 }
-                LOG.info("Triggering Debug Incoming Call");
                 CallSpec callSpec = new CallSpec();
                 callSpec.command = CallSpec.CALL_INCOMING;
                 callSpec.number = intent.getStringExtra("caller");
                 if (callSpec.number == null) {
                     callSpec.number = "DEBUG_INCOMING_CALL";
                 }
-                GBApplication.deviceService().onSetCallState(callSpec);
+                DeviceService deviceService = getDeviceService(intent);
+                if (deviceService != null) {
+                    GBDevice device = deviceService.getDevice();
+                    LOG.info("Triggering Debug Incoming Call to {}",
+                            (device != null) ? device.getAliasOrName() : "all devices");
+                    deviceService.onSetCallState(callSpec);
+                }
                 break;
-
-            case COMMAND_DEBUG_END_CALL:
+            }
+            case COMMAND_DEBUG_END_CALL: {
                 if (!prefs.getBoolean(INTENT_API_ALLOW_DEBUG_COMMANDS, false)) {
                     LOG.warn(msgDebugNotAllowed, COMMAND_DEBUG_END_CALL);
                     return;
                 }
-                LOG.info("Triggering Debug End Call");
                 CallSpec callSpecEnd = new CallSpec();
                 callSpecEnd.command = CallSpec.CALL_END;
-                GBApplication.deviceService().onSetCallState(callSpecEnd);
-                break;
 
+                DeviceService deviceService = getDeviceService(intent);
+                if (deviceService != null) {
+                    GBDevice device = deviceService.getDevice();
+                    LOG.info("Triggering Debug End Call to {}",
+                            (device != null) ? device.getAliasOrName() : "all devices");
+                    deviceService.onSetCallState(callSpecEnd);
+                }
+                break;
+            }
             case COMMAND_DEBUG_SET_DEVICE_ADDRESS:
                 if (!prefs.getBoolean(INTENT_API_ALLOW_DEBUG_COMMANDS, false)) {
                     LOG.warn(msgDebugNotAllowed, COMMAND_DEBUG_SET_DEVICE_ADDRESS);
@@ -270,47 +297,31 @@ public class IntentApiReceiver extends BroadcastReceiver {
     }
 
     private void onTestNewFunction(@NonNull Intent intent) {
-        final String address = intent.getStringExtra(EXTRA_ADDRESS);
-
         Bundle options = intent.getBundleExtra(EXTRA_OPTIONS);
-        if(options == null){
-            options = constructSyntheticOptions(intent.getExtras());
+        if (options == null) {
+            options = constructSyntheticOptions(intent.getExtras(), "options_");
         }
 
-        DeviceService deviceService = GBApplication.deviceService();
-
-        if (address != null && !address.isEmpty()) {
-            GBApplication application = GBApplication.app();
-            DeviceManager deviceManager = application.getDeviceManager();
-            GBDevice device = deviceManager.getDeviceByAddress(address);
-            if (device == null) {
-                if (validAddress(address)) {
-                    LOG.warn("onTestNewFunction: device with address '{}' not found", address);
-                }
-                return;
-            }
-            deviceService = deviceService.forDevice(device);
+        final DeviceService deviceService = getDeviceService(intent);
+        if (deviceService != null) {
+            final GBDevice device = deviceService.getDevice();
             LOG.info("Triggering onTestNewFunction for {} using {} options",
-                    address, (options == null) ? "no" : options.size());
-        } else {
-            LOG.info("Triggering onTestNewFunction without device using {} options",
+                    (device != null) ? device.getAliasOrName() : "all devices",
                     (options == null) ? "no" : options.size());
+            deviceService.onTestNewFunction(options);
         }
-
-        deviceService.onTestNewFunction(options);
     }
 
-    /// Construct synthetic options Bundle by copying values for all options_xxx keys to xxx.
+    /// Construct synthetic options Bundle by copying values for all prefixXXX keys to XXX.
     /// Only supports types that can be specified via `adb shell am broadcast ...`
-    private Bundle constructSyntheticOptions(Bundle extras) {
+    @Nullable
+    public static Bundle constructSyntheticOptions(final Bundle extras, @NonNull final String prefix) {
         if (extras == null) {
             return null;
         }
 
-        final String prefix = "options_";
-
         Bundle options = null;
-        for (String key : extras.keySet()) {
+        for (final String key : extras.keySet()) {
             if (key != null && key.length() > prefix.length() && key.startsWith(prefix)) {
                 if (options == null) {
                     options = new Bundle();
@@ -335,7 +346,7 @@ public class IntentApiReceiver extends BroadcastReceiver {
                     options.putIntArray(option, value);
                 } else if (extra instanceof long[] value) {
                     options.putLongArray(option, value);
-                } else if (extra instanceof Uri value) {
+                } else if (extra instanceof Parcelable value) {
                     options.putParcelable(option, value);
                 } else  {
                     LOG.warn("unhandled extra {} {} {}", option, extra, extra.getClass());
@@ -345,6 +356,7 @@ public class IntentApiReceiver extends BroadcastReceiver {
         return options;
     }
 
+    @NonNull
     public IntentFilter buildFilter() {
         final IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(COMMAND_ACTIVITY_SYNC);
@@ -361,7 +373,7 @@ public class IntentApiReceiver extends BroadcastReceiver {
         return intentFilter;
     }
 
-    private void setDeviceAddress(final Intent intent) {
+    private void setDeviceAddress(@NonNull final Intent intent) {
         final String oldAddress = intent.getStringExtra("oldAddress");
         if (!validAddress(oldAddress)) {
             return;
@@ -401,21 +413,24 @@ public class IntentApiReceiver extends BroadcastReceiver {
         final Map<String, ?> allSettings = settingsOld.getAll();
         LOG.debug("Copying {} preferences to new device", allSettings.size());
         for (final Map.Entry<String, ?> e : allSettings.entrySet()) {
-            if (e.getValue().getClass().equals(Boolean.class)) {
-                editorNew.putBoolean(e.getKey(), (Boolean) e.getValue());
-            } else if (e.getValue().getClass().equals(Float.class)) {
-                editorNew.putFloat(e.getKey(), (Float) e.getValue());
-            } else if (e.getValue().getClass().equals(Integer.class)) {
-                editorNew.putInt(e.getKey(), (Integer) e.getValue());
-            } else if (e.getValue().getClass().equals(Long.class)) {
-                editorNew.putLong(e.getKey(), (Long) e.getValue());
-            } else if (e.getValue().getClass().equals(String.class)) {
-                editorNew.putString(e.getKey(), (String) e.getValue());
-            } else if (e.getValue().getClass().equals(HashSet.class)) {
+            final String key = e.getKey();
+            final Object raw = e.getValue();
+            if (raw instanceof Boolean value) {
+                editorNew.putBoolean(key, value);
+            } else if (raw instanceof Float value) {
+                editorNew.putFloat(key, value);
+            } else if (raw instanceof Integer value) {
+                editorNew.putInt(key, value);
+            } else if (raw instanceof Long value) {
+                editorNew.putLong(key, value);
+            } else if (raw instanceof String value) {
+                editorNew.putString(key, value);
+            } else if (raw instanceof Set<?> value) {
                 //noinspection unchecked
-                editorNew.putStringSet(e.getKey(), (HashSet<String>) e.getValue());
+                editorNew.putStringSet(key, (Set<String>) value);
             } else {
-                LOG.error("Unexpected preference type {}", e.getValue().getClass());
+                LOG.error("Unexpected preference type {} for key {}",
+                        (raw == null) ? "<null>" : raw.getClass(), key);
                 return;
             }
         }
@@ -437,8 +452,16 @@ public class IntentApiReceiver extends BroadcastReceiver {
         GBApplication.quit();
     }
 
-    private void setDeviceType(final Intent intent) {
-        final String address = intent.getStringExtra(EXTRA_ADDRESS);
+    private static void setDeviceType(@NonNull final Intent intent) {
+        String address = intent.getStringExtra(EXTRA_DEVICE);
+        if (address == null) {
+            // legacy extra name for device address
+            address = intent.getStringExtra(EXTRA_ADDRESS);
+            if (address != null) {
+                LOG.warn("extra '{}' is deprecated, please use '{}' instead",
+                        EXTRA_ADDRESS, EXTRA_DEVICE);
+            }
+        }
         if (!validAddress(address)) {
             return;
         }
@@ -477,7 +500,7 @@ public class IntentApiReceiver extends BroadcastReceiver {
     /**
      * @noinspection BooleanMethodIsAlwaysInverted
      */
-    private boolean validAddress(final String address) {
+    private static boolean validAddress(@Nullable final String address) {
         if (address == null) {
             return false;
         }
@@ -488,5 +511,34 @@ public class IntentApiReceiver extends BroadcastReceiver {
         }
 
         return true;
+    }
+
+    @Nullable
+    public static DeviceService getDeviceService(@NonNull final Intent intent) {
+        final DeviceService globalService = GBApplication.deviceService();
+        String address = intent.getStringExtra(EXTRA_DEVICE);
+        if (address == null) {
+            // legacy extra name for device address
+            address = intent.getStringExtra(EXTRA_ADDRESS);
+            if (address != null) {
+                LOG.warn("extra '{}' is deprecated, please use '{}' instead",
+                        EXTRA_ADDRESS, EXTRA_DEVICE);
+            }
+        }
+        if (address == null || address.length() < 1) {
+            return globalService;
+        }
+
+        final GBApplication application = GBApplication.app();
+        final DeviceManager deviceManager = application.getDeviceManager();
+        final GBDevice device = deviceManager.getDeviceByAddress(address);
+        if (device == null) {
+            if (validAddress(address)) {
+                LOG.warn("device with address '{}' not found", address);
+            }
+            return null;
+        }
+        final DeviceService deviceService = globalService.forDevice(device);
+        return deviceService;
     }
 }
