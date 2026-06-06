@@ -1,4 +1,4 @@
-/*  Copyright (C) 2021-2024 Arjan Schrijver, Damien Gaignon, Petr Vaněk
+/*  Copyright (C) 2021-2026 Arjan Schrijver, Damien Gaignon, Petr Vaněk
 
     This file is part of Gadgetbridge.
 
@@ -93,7 +93,10 @@ import static nodomain.freeyourgadget.gadgetbridge.devices.laxasfit.LaxasFitCons
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
@@ -495,7 +498,7 @@ public class LaxasFitDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onTestNewFunction() {
+    public void onTestNewFunction(@Nullable Bundle options) {
         LOG.debug("Hello LaxasFit Test function");
     }
 

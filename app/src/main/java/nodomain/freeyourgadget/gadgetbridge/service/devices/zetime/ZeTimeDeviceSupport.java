@@ -1,4 +1,4 @@
-/*  Copyright (C) 2018-2024 Andreas Shimokawa, Arjan Schrijver, Carsten
+/*  Copyright (C) 2018-2026 Andreas Shimokawa, Arjan Schrijver, Carsten
     Pfeiffer, chklump, Damien Gaignon, José Rebelo, Maxim Baz, Petr Vaněk,
     Sebastian Kranz
 
@@ -21,6 +21,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.zetime;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.widget.Toast;
 
 import org.slf4j.Logger;
@@ -74,6 +75,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarManager;
 
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_SYNC_CALENDAR;
 
+import androidx.annotation.Nullable;
 
 public class ZeTimeDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(ZeTimeDeviceSupport.class);
@@ -461,7 +463,7 @@ public class ZeTimeDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onTestNewFunction() {
+    public void onTestNewFunction(@Nullable Bundle options) {
 //        byte[] strength = {
 //                ZeTimeConstants.CMD_PREAMBLE,
 //                ZeTimeConstants.CMD_SHOCK_STRENGTH,

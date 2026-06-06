@@ -1,4 +1,4 @@
-/*  Copyright (C) 2022-2024 Andreas Shimokawa
+/*  Copyright (C) 2022-2026 Andreas Shimokawa
 
     This file is part of Gadgetbridge.
 
@@ -19,7 +19,10 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.soflow;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -218,7 +221,7 @@ public class SoFlowSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onTestNewFunction() {
+    public void onTestNewFunction(@Nullable Bundle options) {
         TransactionBuilder builder;
         try {
             builder = performInitialized("request unknown");

@@ -1150,7 +1150,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 deviceSupport.onAppReorder(uuids);
                 break;
             }
-            case ACTION_INSTALL:
+            case ACTION_INSTALL: {
                 Uri uri = intentCopy.getParcelableExtra(EXTRA_URI);
                 Bundle options = Objects.requireNonNullElse(intentCopy.getBundleExtra(EXTRA_OPTIONS), Bundle.EMPTY);
                 if (uri != null) {
@@ -1160,6 +1160,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                     LOG.error("Got null uri for app to install");
                 }
                 break;
+            }
             case ACTION_SET_ALARMS:
                 ArrayList<? extends Alarm> alarms = (ArrayList<? extends Alarm>) intentCopy.getSerializableExtra(EXTRA_ALARMS);
                 deviceSupport.onSetAlarms(alarms);
@@ -1211,7 +1212,8 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 break;
             }
             case ACTION_TEST_NEW_FUNCTION: {
-                deviceSupport.onTestNewFunction();
+                Bundle options = intentCopy.getBundleExtra(EXTRA_OPTIONS);
+                deviceSupport.onTestNewFunction(options);
                 break;
             }
             case ACTION_SEND_WEATHER: {

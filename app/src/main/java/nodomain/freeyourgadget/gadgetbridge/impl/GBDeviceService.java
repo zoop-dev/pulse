@@ -32,6 +32,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -515,8 +516,9 @@ public class GBDeviceService implements DeviceService {
     }
 
     @Override
-    public void onTestNewFunction() {
+    public void onTestNewFunction(@Nullable Bundle options) {
         Intent intent = createIntent().setAction(ACTION_TEST_NEW_FUNCTION);
+        intent.putExtra(EXTRA_OPTIONS, options);
         invokeService(intent);
     }
 

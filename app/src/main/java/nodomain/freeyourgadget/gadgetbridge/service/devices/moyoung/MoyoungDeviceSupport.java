@@ -1,4 +1,4 @@
-/*  Copyright (C) 2019 krzys_h
+/*  Copyright (C) 2019-2026 krzys_h
 
     This file is part of Gadgetbridge.
 
@@ -21,11 +21,13 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.os.Bundle;
 import android.os.Handler;
 import android.text.format.DateFormat;
 import android.util.Pair;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.slf4j.Logger;
@@ -1986,7 +1988,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onTestNewFunction() {
+    public void onTestNewFunction(@Nullable Bundle options) {
         try {
             new QuerySettingsOperation(this).perform();
         } catch (IOException e) {
