@@ -1,4 +1,4 @@
-/*  Copyright (C) 2024 Damien Gaignon, Martin.JM
+/*  Copyright (C) 2024-2026 Damien Gaignon, Martin.JM
 
     This file is part of Gadgetbridge.
 
@@ -23,6 +23,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -208,7 +209,7 @@ public class HuaweiBRSupport extends AbstractBTBRDeviceSupport {
     }
 
     @Override
-    public void onTestNewFunction() {
+    public void onTestNewFunction(@Nullable Bundle options) {
         supportProvider.onTestNewFunction();
     }
 

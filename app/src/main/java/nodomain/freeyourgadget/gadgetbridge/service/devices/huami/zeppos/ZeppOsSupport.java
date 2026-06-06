@@ -1,4 +1,4 @@
-/*  Copyright (C) 2022-2024 Daniel Dakhno, José Rebelo, Oleg Vasilev
+/*  Copyright (C) 2022-2026 Daniel Dakhno, José Rebelo, Oleg Vasilev
 
     This file is part of Gadgetbridge.
 
@@ -319,7 +319,7 @@ public class ZeppOsSupport extends AbstractDeviceSupport
     }
 
     @Override
-    public void onTestNewFunction() {
+    public void onTestNewFunction(@Nullable Bundle options) {
         //final ZeppOsTransactionBuilder builder = createZeppOsTransactionBuilder("test new function");
         //configService.requestConfig(
         //        builder,

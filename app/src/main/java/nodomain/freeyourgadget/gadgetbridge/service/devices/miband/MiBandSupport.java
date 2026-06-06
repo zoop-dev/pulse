@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2024 Andreas Shimokawa, Arjan Schrijver, atkyritsis,
+/*  Copyright (C) 2015-2026 Andreas Shimokawa, Arjan Schrijver, atkyritsis,
     Carsten Pfeiffer, Christian Fischer, Daniele Gobbetti, Dmitry Markin,
     freezed-or-frozen, JohnnySun, José Rebelo, Julien Pivotto, Kasha, Sebastian
     Kranz, Sergey Trofimov, Steffen Liebergeld, Toby Murray
@@ -1170,7 +1170,7 @@ public class MiBandSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onTestNewFunction() {
+    public void onTestNewFunction(@Nullable Bundle options) {
         try {
             TransactionBuilder builder = performInitialized("Toggle sensor reading");
             if (isReadingSensorData) {

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2018-2024 Andreas Shimokawa, Arjan Schrijver, beardhatcode,
+/*  Copyright (C) 2018-2026 Andreas Shimokawa, Arjan Schrijver, beardhatcode,
     Carsten Pfeiffer, Damien Gaignon, Daniel Dakhno, Daniele Gobbetti, Dmitry
     Markin, José Rebelo, musover, Nathan Philipp Bo Seddig, NekoBox, Petr
     Vaněk, Robbert Gurdeep Singh, Sebastian Kranz, Taavi Eomäe, Toby Murray,
@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import net.e175.klaus.solarpositioning.DeltaT;
@@ -2788,7 +2789,7 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
     }
 
     @Override
-    public void onTestNewFunction() {
+    public void onTestNewFunction(@Nullable Bundle options) {
         try {
             final TransactionBuilder builder = performInitialized("test request");
             writeToConfiguration(builder, HuamiService.COMMAND_REQUEST_WORKOUT_ACTIVITY_TYPES);

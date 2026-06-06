@@ -1,4 +1,4 @@
-/*  Copyright (C) 2023-2024 Andreas Shimokawa, José Rebelo
+/*  Copyright (C) 2023-2026 Andreas Shimokawa, José Rebelo
 
     This file is part of Gadgetbridge.
 
@@ -24,8 +24,10 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 
+import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -469,7 +471,7 @@ public class PixooProtocol extends GBDeviceProtocol {
     }
 
     @Override
-    public byte[] encodeTestNewFunction() {
+    public byte[] encodeTestNewFunction(@Nullable Bundle options) {
         //return encodeAudioModeCommand(1); // works
         //return encodeEffectModeCommand(5); // does nothing
         //return encodeClockModeCommand(0, true, true, false, true, 127, 127, 127); // works r,g,b up to 127

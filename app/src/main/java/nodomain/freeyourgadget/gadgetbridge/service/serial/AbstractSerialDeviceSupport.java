@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2024 Andreas Shimokawa, Carsten Pfeiffer, José Rebelo,
+/*  Copyright (C) 2015-2026 Andreas Shimokawa, Carsten Pfeiffer, José Rebelo,
     Julien Pivotto, Steffen Liebergeld
 
     This file is part of Gadgetbridge.
@@ -18,6 +18,9 @@
 package nodomain.freeyourgadget.gadgetbridge.service.serial;
 
 import android.location.Location;
+import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -282,8 +285,8 @@ public abstract class AbstractSerialDeviceSupport extends AbstractDeviceSupport 
     }
 
     @Override
-    public void onTestNewFunction() {
-        byte[] bytes = gbDeviceProtocol.encodeTestNewFunction();
+    public void onTestNewFunction(@Nullable Bundle options) {
+        byte[] bytes = gbDeviceProtocol.encodeTestNewFunction(options);
         sendToDevice(bytes);
     }
 

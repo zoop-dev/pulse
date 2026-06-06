@@ -1,4 +1,4 @@
-/*  Copyright (C) 2019-2024 Albert, Andreas Shimokawa, Arjan Schrijver, Damien
+/*  Copyright (C) 2019-2026 Albert, Andreas Shimokawa, Arjan Schrijver, Damien
     Gaignon, Gabriele Monaco, Ganblejs, gfwilliams, glemco, Gordon Williams,
     halemmerich, illis, José Rebelo, Lukas, LukasEdl, Marc Nause, Martin Boonk,
     rarder44, Richard de Boer, Simon Sievert
@@ -55,6 +55,7 @@ import android.os.Handler;
 import android.util.Base64;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.text.HtmlCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -2335,7 +2336,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onTestNewFunction() {
+    public void onTestNewFunction(@Nullable Bundle options) {
         try {
             final JSONObject json = new JSONObject();
             //json.put("t", "http");

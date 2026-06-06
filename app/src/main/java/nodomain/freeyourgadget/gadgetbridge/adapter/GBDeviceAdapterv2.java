@@ -1,4 +1,4 @@
-/*  Copyright (C) 2016-2024 Andreas Shimokawa, Arjan Schrijver, Carsten
+/*  Copyright (C) 2016-2026 Andreas Shimokawa, Arjan Schrijver, Carsten
     Pfeiffer, Damien Gaignon, Daniel Dakhno, Daniele Gobbetti, Davis Mosenkovs,
     fparri, José Rebelo, mamucho, maxirnilian, mkusnierz, Petr Vaněk, Taavi
     Eomäe
@@ -948,7 +948,7 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                     return true;
                 } else if (itemId == R.id.controlcenter_device_submenu_test_new_function) {
                     if (device.isInitialized()) {
-                        GBApplication.deviceService(device).onTestNewFunction();
+                        GBApplication.deviceService(device).onTestNewFunction(null);
                         showTransientSnackbar(R.string.controlcenter_test_new_function);
                     }
                     return true;

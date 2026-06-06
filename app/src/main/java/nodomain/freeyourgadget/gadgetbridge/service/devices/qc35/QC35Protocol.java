@@ -1,4 +1,4 @@
-/*  Copyright (C) 2021-2024 Daniel Dakhno
+/*  Copyright (C) 2021-2026 Daniel Dakhno
 
     This file is part of Gadgetbridge.
 
@@ -17,6 +17,9 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.qc35;
 
 import android.content.SharedPreferences;
+import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,7 +72,7 @@ public class QC35Protocol extends GBDeviceProtocol {
     }
 
     @Override
-    public byte[] encodeTestNewFunction() {
+    public byte[] encodeTestNewFunction(@Nullable Bundle options) {
         return new byte[]{0x02, 0x02, 0x01, 0x00};
     }
 

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2021-2024 Arjan Schrijver, Daniele Gobbetti, Petr Vaněk
+/*  Copyright (C) 2021-2026 Arjan Schrijver, Daniele Gobbetti, Petr Vaněk
 
     This file is part of Gadgetbridge.
 
@@ -17,6 +17,7 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.nothing;
 
 import android.content.SharedPreferences;
+import android.os.Bundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +48,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
 import static nodomain.freeyourgadget.gadgetbridge.util.CheckSums.getCRC16ansi;
 import static nodomain.freeyourgadget.gadgetbridge.util.GB.hexdump;
 
+import androidx.annotation.Nullable;
+
 public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(Ear1Support.class);
     private static final int MAX_MTU = 512;
@@ -60,7 +63,7 @@ public class Ear1Support extends AbstractHeadphoneBTBRDeviceSupport {
     }
 
     @Override
-    public void onTestNewFunction() {
+    public void onTestNewFunction(@Nullable Bundle options) {
         //getDeviceIOThread().write(((NothingProtocol) getDeviceProtocol()).encodeBatteryStatusReq());
     }
 

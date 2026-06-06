@@ -25,9 +25,11 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.util.SparseArray;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import org.slf4j.Logger;
@@ -408,7 +410,7 @@ public class MisfitWatchAdapter extends WatchAdapter {
     }
 
     @Override
-    public void onTestNewFunction() {
+    public void onTestNewFunction(@Nullable Bundle options) {
 
     }
 

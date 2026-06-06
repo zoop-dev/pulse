@@ -1,4 +1,4 @@
-/*  Copyright (C) 2016-2024 Alberto, Andreas Shimokawa, Arjan Schrijver,
+/*  Copyright (C) 2016-2026 Alberto, Andreas Shimokawa, Arjan Schrijver,
     Carsten Pfeiffer, Damien Gaignon, ivanovlev, João Paulo Barraca, Lesur
     Frederic, Pavel Motyrev, Quallenauge, Sebastian Kranz
 
@@ -24,7 +24,10 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.hplus;
 
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
+import android.os.Bundle;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
@@ -595,7 +598,7 @@ public class HPlusSupport extends AbstractBTLESingleDeviceSupport {
     }
 
     @Override
-    public void onTestNewFunction() {
+    public void onTestNewFunction(@Nullable Bundle options) {
         LOG.info("Test New Function");
     }
 

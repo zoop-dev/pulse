@@ -1,4 +1,4 @@
-/*  Copyright (C) 2022-2024 Daniel Dakhno
+/*  Copyright (C) 2022-2026 Daniel Dakhno
 
     This file is part of Gadgetbridge.
 
@@ -22,8 +22,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import org.slf4j.Logger;
@@ -227,7 +229,7 @@ public class FlipperZeroSupport extends FlipperZeroBaseSupport{
     }
 
     @Override
-    public void onTestNewFunction() {
+    public void onTestNewFunction(@Nullable Bundle options) {
         try {
             openApp("Infrared");
         } catch (IOException e) {
@@ -253,6 +255,6 @@ public class FlipperZeroSupport extends FlipperZeroBaseSupport{
 
     @Override
     public void onFetchRecordedData(int dataTypes) {
-        onTestNewFunction();
+        onTestNewFunction(null);
     }
 }

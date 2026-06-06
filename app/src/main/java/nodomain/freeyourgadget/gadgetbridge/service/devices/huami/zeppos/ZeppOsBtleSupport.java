@@ -1,4 +1,4 @@
-/*  Copyright (C) 2025 José Rebelo
+/*  Copyright (C) 2025-2026 José Rebelo
 
     This file is part of Gadgetbridge.
 
@@ -25,6 +25,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -203,8 +204,8 @@ public class ZeppOsBtleSupport extends AbstractBTLESingleDeviceSupport implement
     }
 
     @Override
-    public void onTestNewFunction() {
-        zeppOsSupport.onTestNewFunction();
+    public void onTestNewFunction(@Nullable Bundle options) {
+        zeppOsSupport.onTestNewFunction(options);
     }
 
     @Override

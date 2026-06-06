@@ -26,6 +26,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -612,7 +613,7 @@ public abstract class AbstractDeviceSupport implements DeviceSupport {
      * in the Debug menu.
      */
     @Override
-    public void onTestNewFunction() {
+    public void onTestNewFunction(@Nullable Bundle options) {
 
     }
 

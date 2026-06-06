@@ -1,4 +1,4 @@
-/*  Copyright (C) 2023-2024 Andreas Shimokawa, José Rebelo, Yoran Vulker
+/*  Copyright (C) 2023-2026 Andreas Shimokawa, José Rebelo, Yoran Vulker
 
     This file is part of Gadgetbridge.
 
@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -238,7 +239,7 @@ public class XiaomiSupport extends AbstractDeviceSupport {
     }
 
     @Override
-    public void onTestNewFunction() {
+    public void onTestNewFunction(@Nullable Bundle options) {
         //sendCommand("test new function", 2, 29);
     }
 

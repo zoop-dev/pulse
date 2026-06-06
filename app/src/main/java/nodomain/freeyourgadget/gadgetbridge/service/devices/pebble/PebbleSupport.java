@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2024 Andreas Shimokawa, Arjan Schrijver, Carsten
+/*  Copyright (C) 2015-2026 Andreas Shimokawa, Arjan Schrijver, Carsten
     Pfeiffer, Daniele Gobbetti, Kasha, Sebastian Kranz, Steffen Liebergeld,
     Taavi Eomäe
 
@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.util.Pair;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import org.json.JSONArray;
@@ -255,9 +256,9 @@ public class PebbleSupport extends AbstractSerialDeviceSupport {
     }
 
     @Override
-    public void onTestNewFunction() {
+    public void onTestNewFunction(@Nullable Bundle options) {
         if (reconnect()) {
-            super.onTestNewFunction();
+            super.onTestNewFunction(options);
         }
     }
 
