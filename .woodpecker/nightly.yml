@@ -68,14 +68,7 @@ steps:
       - mkdir pages
       - cd pages
       - pwd
-      - git clone --depth 2 https://codeberg.org/Freeyourgadget/pages.git
-      - cd pages
-      - git config user.name "CODEBERG CI"
-      - git config user.email "noreply@nodomain.nodomain"
-        # reset and remove, later force push, to keep repo size small
-      - git reset --soft HEAD~1
-      - git status
-        #- rm -f fdroid/repo/*apk
+      - mkdir pages
 
   update-fdroid-data:
     image: codeberg.org/freeyourgadget/android-fdroid-tools:36.0.0-androguard-4.1.2-java-21
@@ -104,24 +97,10 @@ steps:
         from_secret: keypass
 
   push-pages-update-repo:
-    image: codeberg.org/freeyourgadget/android-fdroid-tools:36.0.0-androguard-4.1.2-java-21
+    image: codeberg.org/git-pages/git-pages-cli:1.9.0
     commands:
       - if [ -f .do_not_build ]; then return 0; fi
-      - cd ../pages/pages/
-      - git add -A
-      - git status
-      - git diff
-      - ls -lsR fdroid/repo
-      - git commit -m "autodeploy, $${DRONE_COMMIT_MESSAGE}"
-      - git remote remove origin
-      - git remote add origin https://"$${COMMIT_TOKEN}"@codeberg.org/Freeyourgadget/pages.git
-        # force push as we removed all data
-      - git push -f origin master
-      - cd ../../
-      - pwd
-      - ls -la
-      - ./repoconfig/fdroid-repo-config/repoconfig/hyperlink.sh https://freeyourgadget.codeberg.page/fdroid/repo/
-        # bump
+      - git-pages-cli https://freeyourgadget.codeberg.page --token "$${COMMIT_TOKEN}" ../pages/pages/
     environment:
       COMMIT_TOKEN:
         from_secret: commit_token
