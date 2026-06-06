@@ -1993,7 +1993,7 @@
     <string name="reminder_delete_confirm_title">刪除提醒</string>
     <string name="firmware_update_progress">上傳進行中\n%1$d%% 以 %2$.2fkbps 的速度上傳 (平均 %3$.2fkbps)\n第 %4$d 部份，共 %5$d 部份</string>
     <string name="pref_summary_overwrite_settings_on_connection">連接到音響時，覆蓋其上的所有設置。</string>
-    <string name="application_name_banglejs_main">Please initialize the addon first by opening it from the Extensions Menu &gt; GPT for Docs, Sheets and Slides &gt; Start</string>
+    <string name="application_name_banglejs_main">Bangle.js Gadgetbridge</string>
     <string name="title_activity_controlcenter_banglejs_main">Bangle.js Gadgetbridge</string>
     <string name="gadgetbridge_running_main_nightly">先行版 GB 執行中</string>
     <string name="application_name_main_nopebble">Gadgetbridge（先行版，無 Pebble 提供者)</string>
