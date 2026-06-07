@@ -66,21 +66,21 @@ public class DefaultWorkoutCharts {
         final ActivityKind.CycleUnit cycleUnit = ActivityKind.getCycleUnit(activityKind);
         final List<WorkoutChart> charts = new LinkedList<>();
         final TimestampTranslation tsTranslation = new TimestampTranslation();
-        final int initalCapacity = activityPoints.size();
-        final List<Entry> heartRateDataPoints = new ArrayList<>(initalCapacity);
-        final List<Entry> speedDataPoints = new ArrayList<>(initalCapacity);
-        final List<Entry> cadenceDataPoints = new ArrayList<>(initalCapacity);
-        final List<Entry> elevationDataPoints = new ArrayList<>(initalCapacity);
-        final List<Entry> powerDataPoints = new ArrayList<>(initalCapacity);
-        final List<Entry> respiratoryRatePoints = new ArrayList<>(initalCapacity);
-        final List<Entry> temperatureDataPoints = new ArrayList<>(initalCapacity);
-        final List<Entry> depthDataPoints = new ArrayList<>(initalCapacity);
-        final List<Entry> distancePoints = new ArrayList<>(initalCapacity);
-        final List<Entry> staminaPoints = new ArrayList<>(initalCapacity);
-        final List<Entry> bodyEnergyPoints = new ArrayList<>(initalCapacity);
-        final List<Entry> stepLengthPoints = new ArrayList<>(initalCapacity);
-        final List<Entry> n2LoadPoints = new ArrayList<>(initalCapacity);
-        final List<Entry> cnsToxicityPoints = new ArrayList<>(initalCapacity);
+        final int initialCapacity = activityPoints.size();
+        final List<Entry> heartRateDataPoints = new ArrayList<>(initialCapacity);
+        final List<Entry> speedDataPoints = new ArrayList<>(initialCapacity);
+        final List<Entry> cadenceDataPoints = new ArrayList<>(initialCapacity);
+        final List<Entry> elevationDataPoints = new ArrayList<>(initialCapacity);
+        final List<Entry> powerDataPoints = new ArrayList<>(initialCapacity);
+        final List<Entry> respiratoryRatePoints = new ArrayList<>(initialCapacity);
+        final List<Entry> temperatureDataPoints = new ArrayList<>(initialCapacity);
+        final List<Entry> depthDataPoints = new ArrayList<>(initialCapacity);
+        final List<Entry> distancePoints = new ArrayList<>(initialCapacity);
+        final List<Entry> staminaPoints = new ArrayList<>(initialCapacity);
+        final List<Entry> bodyEnergyPoints = new ArrayList<>(initialCapacity);
+        final List<Entry> stepLengthPoints = new ArrayList<>(initialCapacity);
+        final List<Entry> n2LoadPoints = new ArrayList<>(initialCapacity);
+        final List<Entry> cnsToxicityPoints = new ArrayList<>(initialCapacity);
 
         // some activities / devices provide all points with zero values
         boolean hasSpeedValues = false;

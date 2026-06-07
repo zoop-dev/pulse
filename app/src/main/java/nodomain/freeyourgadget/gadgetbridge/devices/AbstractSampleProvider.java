@@ -61,7 +61,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
  * access to the device specific samples. There are both read and write operations.
  * @param <T> the sample type
  */
-public abstract class AbstractSampleProvider<T extends AbstractActivitySample> implements SampleProvider<T>, PersistanceProvider<T> {
+public abstract class AbstractSampleProvider<T extends AbstractActivitySample> implements SampleProvider<T>, PersistenceProvider<T> {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractSampleProvider.class);
 
     private static final WhereCondition[] NO_CONDITIONS = new WhereCondition[0];

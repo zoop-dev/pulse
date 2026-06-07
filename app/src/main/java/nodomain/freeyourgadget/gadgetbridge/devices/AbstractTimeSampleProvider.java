@@ -49,7 +49,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
  *
  * @param <T> the sample type
  */
-public abstract class AbstractTimeSampleProvider<T extends AbstractTimeSample> implements TimeSampleProvider<T>, PersistanceProvider<T> {
+public abstract class AbstractTimeSampleProvider<T extends AbstractTimeSample> implements TimeSampleProvider<T>, PersistenceProvider<T> {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractTimeSampleProvider.class);
 
     private final DaoSession mSession;

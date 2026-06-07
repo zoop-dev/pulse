@@ -126,11 +126,11 @@ public class GB {
                     NotificationManager.IMPORTANCE_LOW);
             notificationManager.createNotificationChannel(channelGeneral);
 
-            NotificationChannel channelConnwectionStatus = new NotificationChannel(
+            NotificationChannel channelConnectionStatus = new NotificationChannel(
                     NOTIFICATION_CHANNEL_ID_CONNECTION_STATUS,
                     context.getString(R.string.notification_channel_connection_status_name),
                     NotificationManager.IMPORTANCE_LOW);
-            notificationManager.createNotificationChannel(channelConnwectionStatus);
+            notificationManager.createNotificationChannel(channelConnectionStatus);
 
             NotificationChannel channelScanService = new NotificationChannel(
                     NOTIFICATION_CHANNEL_ID_SCAN_SERVICE,
@@ -267,13 +267,13 @@ public class GB {
         }else{
             StringBuilder contentText = new StringBuilder();
             boolean isConnected = true;
-            boolean anyDeviceSupportesActivityDataFetching = false;
+            boolean anyDeviceSupportsActivityDataFetching = false;
             for(GBDevice device : devices){
                 if(!device.isInitialized()){
                     isConnected = false;
                 }
 
-                anyDeviceSupportesActivityDataFetching |= device.getDeviceCoordinator().supportsDataFetching(device);
+                anyDeviceSupportsActivityDataFetching |= device.getDeviceCoordinator().supportsDataFetching(device);
 
                 String deviceName = device.getAliasOrName();
                 String text = device.getStateString(context);
@@ -299,7 +299,7 @@ public class GB {
                 builder.setColor(ContextCompat.getColor(context, R.color.accent));
             }
 
-            if (anyDeviceSupportesActivityDataFetching) {
+            if (anyDeviceSupportsActivityDataFetching) {
                 Intent deviceCommunicationServiceIntent = new Intent(context, DeviceCommunicationService.class);
                 deviceCommunicationServiceIntent.setPackage(BuildConfig.APPLICATION_ID);
                 deviceCommunicationServiceIntent.setAction(DeviceService.ACTION_FETCH_RECORDED_DATA);

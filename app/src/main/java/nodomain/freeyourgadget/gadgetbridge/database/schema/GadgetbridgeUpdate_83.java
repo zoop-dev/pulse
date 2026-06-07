@@ -40,7 +40,7 @@ public class GadgetbridgeUpdate_83 implements DBUpdateScript {
                     "PRIMARY KEY (\""+HuaweiWorkoutPaceSampleDao.Properties.WorkoutId.columnName+"\" ,\""+ HuaweiWorkoutPaceSampleDao.Properties.PaceIndex.columnName +"\" ,\""+ HuaweiWorkoutPaceSampleDao.Properties.Distance.columnName +"\", \""+ HuaweiWorkoutPaceSampleDao.Properties.Type.columnName +"\") ON CONFLICT REPLACE) WITHOUT ROWID;";
             db.execSQL(CREATE_TABLE);
 
-            String MIGATE_DATA = "INSERT INTO " + HuaweiWorkoutPaceSampleDao.TABLENAME
+            String MIGRATE_DATA = "INSERT INTO " + HuaweiWorkoutPaceSampleDao.TABLENAME
                     + " (" +HuaweiWorkoutPaceSampleDao.Properties.WorkoutId.columnName+ ","
                     + HuaweiWorkoutPaceSampleDao.Properties.PaceIndex.columnName + ","
                     + HuaweiWorkoutPaceSampleDao.Properties.Distance.columnName+ ","
@@ -50,7 +50,7 @@ public class GadgetbridgeUpdate_83 implements DBUpdateScript {
                     + HuaweiWorkoutPaceSampleDao.Properties.Correction.columnName + ") "
                     + " SELECT WORKOUT_ID, -1, DISTANCE, TYPE, PACE, 0, CORRECTION  FROM " +HuaweiWorkoutPaceSampleDao.TABLENAME + "_temp;";
 
-            db.execSQL(MIGATE_DATA);
+            db.execSQL(MIGRATE_DATA);
 
             String DROP_TEMP_TABLE = "drop table if exists " +HuaweiWorkoutPaceSampleDao.TABLENAME + "_temp;";
             db.execSQL(DROP_TEMP_TABLE);

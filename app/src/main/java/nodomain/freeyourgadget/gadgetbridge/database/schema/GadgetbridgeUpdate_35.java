@@ -35,13 +35,13 @@ public class GadgetbridgeUpdate_35 implements DBUpdateScript {
                     "PRIMARY KEY (\"TIMESTAMP\" ,\"DEVICE_ID\" ,\"BATTERY_INDEX\" ) ON CONFLICT REPLACE) WITHOUT ROWID;";
             db.execSQL(CREATE_TABLE);
 
-            String MIGATE_DATA = "insert into " + BatteryLevelDao.TABLENAME
+            String MIGRATE_DATA = "insert into " + BatteryLevelDao.TABLENAME
                     + " (" + BatteryLevelDao.Properties.Timestamp.columnName + ","
                     + BatteryLevelDao.Properties.DeviceId.columnName + ","
                     + BatteryLevelDao.Properties.BatteryIndex.columnName + ","
                     + BatteryLevelDao.Properties.Level.columnName + ") "
                     + " select Timestamp, Device_ID, 0, Level from battery_levels_temp;";
-            db.execSQL(MIGATE_DATA);
+            db.execSQL(MIGRATE_DATA);
 
             String DROP_TEMP_TABLE = "drop table if exists battery_levels_temp";
             db.execSQL(DROP_TEMP_TABLE);

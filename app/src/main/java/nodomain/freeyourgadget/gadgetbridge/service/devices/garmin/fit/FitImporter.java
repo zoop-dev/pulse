@@ -61,7 +61,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.GarminSpo2SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GarminStressSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericTrainingLoadAcuteSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.GenericTrainingLoadChronicSampleProvider;
-import nodomain.freeyourgadget.gadgetbridge.devices.PersistanceProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.PersistenceProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminActivitySampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminEventSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminWorkoutParser;
@@ -947,7 +947,7 @@ public class FitImporter {
     }
 
     private <T> void persistAbstractSamples(@NonNull final List<T> samples,
-                                            @NonNull final PersistanceProvider<T> sampleProvider) {
+                                            @NonNull final PersistenceProvider<T> sampleProvider) {
         sampleProvider.persistSamples(samples, context);
     }
 

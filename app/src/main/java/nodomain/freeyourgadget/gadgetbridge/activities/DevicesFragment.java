@@ -143,7 +143,7 @@ public class DevicesFragment extends Fragment {
             }
         });
 
-        showFabIfNeccessary();
+        showFabIfNecessary();
 
         /* uncomment to enable fixed-swipe to reveal more actions
 
@@ -197,7 +197,7 @@ public class DevicesFragment extends Fragment {
         startActivity(new Intent(getActivity(), DiscoveryActivityV2.class));
     }
 
-    private void showFabIfNeccessary() {
+    private void showFabIfNecessary() {
         if (GBApplication.getPrefs().getBoolean("display_add_device_fab", true)) {
             fab.show();
         } else {

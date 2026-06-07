@@ -782,7 +782,7 @@ public class GBDaoGenerator {
         activitySample.addIntProperty(SAMPLE_HEART_RATE).notNull().codeBeforeGetterAndSetter(OVERRIDE);
     }
 
-    private static void addBloodPressureProperies(Entity activitySample) {
+    private static void addBloodPressureProperties(Entity activitySample) {
         activitySample.addIntProperty(SAMPLE_BLOOD_PRESSURE_SYSTOLIC).codeBeforeGetter(OVERRIDE).notNull();
         activitySample.addIntProperty(SAMPLE_BLOOD_PRESSURE_DIASTOLIC).codeBeforeGetter(OVERRIDE).notNull();
     }
@@ -1288,7 +1288,7 @@ public class GBDaoGenerator {
     private static Entity addMoyoungBloodPressureSample(Schema schema, Entity user, Entity device) {
         Entity bpSample = addEntity(schema, "MoyoungBloodPressureSample");
         addCommonTimeSampleProperties("AbstractBloodPressureSample", bpSample, user, device);
-        addBloodPressureProperies(bpSample);
+        addBloodPressureProperties(bpSample);
         return bpSample;
     }
 
@@ -1334,7 +1334,7 @@ public class GBDaoGenerator {
     private static Entity addKeephealthBloodPressureSample(Schema schema, Entity user, Entity device) {
         Entity bpSample = addEntity(schema, "KeephealthBloodPressureSample");
         addCommonTimeSampleProperties("AbstractBloodPressureSample", bpSample, user, device);
-        addBloodPressureProperies(bpSample);
+        addBloodPressureProperties(bpSample);
         return bpSample;
     }
 
@@ -1528,27 +1528,27 @@ public class GBDaoGenerator {
     }
 
     private static void addNotificationFilterEntry(Schema schema, Entity notificationFilterEntity) {
-        Entity notificatonFilterEntry = addEntity(schema, "NotificationFilterEntry");
-        notificatonFilterEntry.addIdProperty().autoincrement();
-        Property notificationFilterId = notificatonFilterEntry.addLongProperty("notificationFilterId").notNull().getProperty();
-        notificatonFilterEntry.addStringProperty("notificationFilterContent").notNull();
-        notificatonFilterEntry.addToOne(notificationFilterEntity, notificationFilterId);
+        Entity notificationFilterEntry = addEntity(schema, "NotificationFilterEntry");
+        notificationFilterEntry.addIdProperty().autoincrement();
+        Property notificationFilterId = notificationFilterEntry.addLongProperty("notificationFilterId").notNull().getProperty();
+        notificationFilterEntry.addStringProperty("notificationFilterContent").notNull();
+        notificationFilterEntry.addToOne(notificationFilterEntity, notificationFilterId);
     }
 
     private static Entity addNotificationFilters(Schema schema) {
-        Entity notificatonFilter = addEntity(schema, "NotificationFilter");
-        Property appIdentifier = notificatonFilter.addStringProperty("appIdentifier").notNull().getProperty();
+        Entity notificationFilter = addEntity(schema, "NotificationFilter");
+        Property appIdentifier = notificationFilter.addStringProperty("appIdentifier").notNull().getProperty();
 
-        notificatonFilter.addIdProperty().autoincrement();
+        notificationFilter.addIdProperty().autoincrement();
 
         Index indexUnique = new Index();
         indexUnique.addProperty(appIdentifier);
         indexUnique.makeUnique();
-        notificatonFilter.addIndex(indexUnique);
+        notificationFilter.addIndex(indexUnique);
 
-        Property notificationFilterMode = notificatonFilter.addIntProperty("notificationFilterMode").notNull().getProperty();
-        Property notificationFilterSubMode = notificatonFilter.addIntProperty("notificationFilterSubMode").notNull().getProperty();
-        return notificatonFilter;
+        Property notificationFilterMode = notificationFilter.addIntProperty("notificationFilterMode").notNull().getProperty();
+        Property notificationFilterSubMode = notificationFilter.addIntProperty("notificationFilterSubMode").notNull().getProperty();
+        return notificationFilter;
     }
 
     private static void addPebbleAppstoreIdEntry(Schema schema) {
@@ -2319,7 +2319,7 @@ public class GBDaoGenerator {
     private static Entity addGenericBloodPressureSample(Schema schema, Entity user, Entity device) {
         Entity bloodPressureSample = addEntity(schema, "GenericBloodPressureSample");
         addCommonTimeSampleProperties("AbstractBloodPressureSample", bloodPressureSample, user, device);
-        addBloodPressureProperies(bloodPressureSample);
+        addBloodPressureProperties(bloodPressureSample);
         bloodPressureSample.addIntProperty("userIndex");
         bloodPressureSample.addIntProperty("meanArterialPressure");
         bloodPressureSample.addIntProperty("pulseRate");

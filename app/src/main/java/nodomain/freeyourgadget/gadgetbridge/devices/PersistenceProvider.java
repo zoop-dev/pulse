@@ -24,7 +24,7 @@ import androidx.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
-public interface PersistanceProvider<T> {
+public interface PersistenceProvider<T> {
     /// Set the relevant metadata for all samples like device ID, user ID, etc. and then
     /// stores them all in the database. Existing samples with identical primary key
     /// already stored in the database will be replaced.

@@ -29,7 +29,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 class BaseActivitySummaryProvider(val device: GBDevice, val session: DaoSession) :
-    PersistanceProvider<BaseActivitySummary> {
+    PersistenceProvider<BaseActivitySummary> {
     override fun persistSamples(
         samples: List<BaseActivitySummary>, context: Context?
     ): Boolean {

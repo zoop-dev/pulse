@@ -56,7 +56,7 @@
     <uses-permission android:name="nz.eloque.foss_wallet.READ_CARDS"/>
     <uses-permission android:name="nz.eloque.foss_wallet.dev.READ_CARDS"/>
 
-    <!-- Make sure we don't get the INTERNET permission even when a depencency requires it -->
+    <!-- Make sure we don't get the INTERNET permission even when a dependency requires it -->
     <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
 
     <!-- Internet Helper -->

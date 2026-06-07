@@ -23,7 +23,7 @@ public enum Command {
     EnableNewIncomingAlertNotification(0),
     EnableUnreadCategoryStatusNotification(1),
     DisableNewIncomingAlertNotification(2),
-    DisbleUnreadCategoryStatusNotification(3),
+    DisableUnreadCategoryStatusNotification(3),
     NotifyNewIncomingAlertImmediately(4),
     NotifyUnreadCategoryStatusImmediately(5),;
     // 6-255 reserved for future use

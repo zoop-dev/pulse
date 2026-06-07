@@ -39,7 +39,7 @@ public class MessageBuilderTest {
     }
 
     @Test
-    public void testUnresolveableMessage() {
+    public void testUnresolvableMessage() {
         // arrange
         byte[] data = GB.hexStringToByteArray("143fbcce");
         when(messageFactoryMock.createMessageFromRawData(data)).thenReturn(null);

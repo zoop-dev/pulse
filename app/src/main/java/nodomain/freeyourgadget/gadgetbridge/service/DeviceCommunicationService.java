@@ -272,7 +272,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
     private AlarmClockReceiver mAlarmClockReceiver = null;
     private SilentModeReceiver mSilentModeReceiver = null;
     private GBAutoFetchReceiver mGBAutoFetchReceiver = null;
-    private AutoConnectIntervalReceiver mAutoConnectInvervalReceiver = null;
+    private AutoConnectIntervalReceiver mAutoConnectIntervalReceiver = null;
 
     private VolumeChangeReceiver mVolumeChangeReceiver = null;
     private HrvCacheInvalidationReceiver mHrvCacheInvalidationReceiver = null;
@@ -532,8 +532,8 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         mBlueToothConnectReceiver = new BluetoothConnectReceiver(this);
         ContextCompat.registerReceiver(this, mBlueToothConnectReceiver, new IntentFilter(BluetoothDevice.ACTION_ACL_CONNECTED), ContextCompat.RECEIVER_EXPORTED);
 
-        mAutoConnectInvervalReceiver= new AutoConnectIntervalReceiver(this);
-        ContextCompat.registerReceiver(this, mAutoConnectInvervalReceiver, new IntentFilter("GB_RECONNECT"), ContextCompat.RECEIVER_EXPORTED);
+        mAutoConnectIntervalReceiver = new AutoConnectIntervalReceiver(this);
+        ContextCompat.registerReceiver(this, mAutoConnectIntervalReceiver, new IntentFilter("GB_RECONNECT"), ContextCompat.RECEIVER_EXPORTED);
 
         IntentFilter bluetoothCommandFilter = new IntentFilter();
         bluetoothCommandFilter.addAction(API_LEGACY_COMMAND_BLUETOOTH_CONNECT);
@@ -1629,9 +1629,9 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         unregisterReceiver(mBlueToothConnectReceiver);
         mBlueToothConnectReceiver = null;
 
-        unregisterReceiver(mAutoConnectInvervalReceiver);
-        mAutoConnectInvervalReceiver.destroy();
-        mAutoConnectInvervalReceiver = null;
+        unregisterReceiver(mAutoConnectIntervalReceiver);
+        mAutoConnectIntervalReceiver.destroy();
+        mAutoConnectIntervalReceiver = null;
 
         for(GBDevice device : getGBDevices()){
             try {

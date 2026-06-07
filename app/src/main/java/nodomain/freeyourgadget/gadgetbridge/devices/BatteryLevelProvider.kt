@@ -29,7 +29,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 class BatteryLevelProvider(val device: GBDevice, val session: DaoSession) :
-    PersistanceProvider<BatteryLevel> {
+    PersistenceProvider<BatteryLevel> {
 
     override fun persistSamples(
         samples: List<BatteryLevel>, context: Context?

@@ -102,7 +102,7 @@ public class EntitiesTest extends TestBase {
         ActivityDescriptionDao descDao = daoSession.getActivityDescriptionDao();
         assertEquals(0, descDao.count());
 
-        List<ActivityDescription> list = DBHelper.findActivityDecriptions(user, 10, 100, daoSession);
+        List<ActivityDescription> list = DBHelper.findActivityDescriptions(user, 10, 100, daoSession);
         assertTrue(list.isEmpty());
 
         ActivityDescription desc = DBHelper.createActivityDescription(user, 10, 100, daoSession);
@@ -119,59 +119,59 @@ public class EntitiesTest extends TestBase {
         t1.setDescription("Table tennis training for Olympia");
         tagList.add(t1);
 
-        list = DBHelper.findActivityDecriptions(user, 10, 100, daoSession);
+        list = DBHelper.findActivityDescriptions(user, 10, 100, daoSession);
         assertEquals(1, list.size());
         ActivityDescription desc1 = list.get(0);
         assertEquals(desc, desc1);
         assertEquals(1, desc1.getTagList().size());
 
         // check for partial range overlaps
-        list = DBHelper.findActivityDecriptions(user, 20, 80, daoSession);
+        list = DBHelper.findActivityDescriptions(user, 20, 80, daoSession);
         assertEquals(1, list.size());
 
-        list = DBHelper.findActivityDecriptions(user, 5, 120, daoSession);
+        list = DBHelper.findActivityDescriptions(user, 5, 120, daoSession);
         assertEquals(1, list.size());
 
-        list = DBHelper.findActivityDecriptions(user, 20, 120, daoSession);
+        list = DBHelper.findActivityDescriptions(user, 20, 120, daoSession);
         assertEquals(1, list.size());
 
-        list = DBHelper.findActivityDecriptions(user, 5, 80, daoSession);
+        list = DBHelper.findActivityDescriptions(user, 5, 80, daoSession);
         assertEquals(1, list.size());
 
         // Now with a second, adjacent ActivityDescription
         ActivityDescription desc2 = DBHelper.createActivityDescription(user, 101, 200, daoSession);
 
-        list = DBHelper.findActivityDecriptions(user, 10, 100, daoSession);
+        list = DBHelper.findActivityDescriptions(user, 10, 100, daoSession);
         assertEquals(1, list.size());
 
-        list = DBHelper.findActivityDecriptions(user, 20, 80, daoSession);
+        list = DBHelper.findActivityDescriptions(user, 20, 80, daoSession);
         assertEquals(1, list.size());
 
-        list = DBHelper.findActivityDecriptions(user, 5, 120, daoSession);
+        list = DBHelper.findActivityDescriptions(user, 5, 120, daoSession);
         assertEquals(2, list.size());
 
-        list = DBHelper.findActivityDecriptions(user, 20, 120, daoSession);
+        list = DBHelper.findActivityDescriptions(user, 20, 120, daoSession);
         assertEquals(2, list.size());
 
-        list = DBHelper.findActivityDecriptions(user, 5, 80, daoSession);
+        list = DBHelper.findActivityDescriptions(user, 5, 80, daoSession);
         assertEquals(1, list.size());
 
         // Now with a third, partially overlapping ActivityDescription
         ActivityDescription desc3 = DBHelper.createActivityDescription(user, 5, 15, daoSession);
 
-        list = DBHelper.findActivityDecriptions(user, 10, 100, daoSession);
+        list = DBHelper.findActivityDescriptions(user, 10, 100, daoSession);
         assertEquals(2, list.size());
 
-        list = DBHelper.findActivityDecriptions(user, 20, 80, daoSession);
+        list = DBHelper.findActivityDescriptions(user, 20, 80, daoSession);
         assertEquals(1, list.size());
 
-        list = DBHelper.findActivityDecriptions(user, 5, 120, daoSession);
+        list = DBHelper.findActivityDescriptions(user, 5, 120, daoSession);
         assertEquals(3, list.size());
 
-        list = DBHelper.findActivityDecriptions(user, 20, 120, daoSession);
+        list = DBHelper.findActivityDescriptions(user, 20, 120, daoSession);
         assertEquals(2, list.size());
 
-        list = DBHelper.findActivityDecriptions(user, 5, 80, daoSession);
+        list = DBHelper.findActivityDescriptions(user, 5, 80, daoSession);
         assertEquals(2, list.size());
     }
 

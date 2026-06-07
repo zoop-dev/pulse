@@ -92,9 +92,9 @@ public class OsmandEventReceiver {
         @Override
         public void onVoiceRouterNotify(OnVoiceNavigationParams params) {
             List<String> played = params.getPlayed();
-            for (String instuction : played) {
-                navigationInfoSpec.instruction = instuction;
-                LOG.debug("instruction: {}", instuction);
+            for (String instruction : played) {
+                navigationInfoSpec.instruction = instruction;
+                LOG.debug("instruction: {}", instruction);
                 // only first one for now
                 break;
             }

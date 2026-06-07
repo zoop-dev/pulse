@@ -158,7 +158,7 @@ public class CMWeatherReceiver extends BroadcastReceiver implements CMWeatherMan
             }
             weatherSpec.setWindDirection((int) weatherInfo.getWindDirection());
 
-            weatherSpec.setCurrentConditionCode(WeatherMapper.mapToOpenWeatherMapCondition(CMtoYahooCondintion(weatherInfo.getConditionCode())));
+            weatherSpec.setCurrentConditionCode(WeatherMapper.mapToOpenWeatherMapCondition(CMtoYahooCondition(weatherInfo.getConditionCode())));
             weatherSpec.setCurrentCondition(WeatherMapper.getConditionString(mContext, weatherSpec.getCurrentConditionCode()));
             weatherSpec.setCurrentHumidity((int) weatherInfo.getHumidity());
 
@@ -174,7 +174,7 @@ public class CMWeatherReceiver extends BroadcastReceiver implements CMWeatherMan
                     gbForecast.setMaxTemp((int) cmForecast.getHigh() + 273);
                     gbForecast.setMinTemp((int) cmForecast.getLow() + 273);
                 }
-                gbForecast.setConditionCode(WeatherMapper.mapToOpenWeatherMapCondition(CMtoYahooCondintion(cmForecast.getConditionCode())));
+                gbForecast.setConditionCode(WeatherMapper.mapToOpenWeatherMapCondition(CMtoYahooCondition(cmForecast.getConditionCode())));
                 weatherSpec.getForecasts().add(gbForecast);
             }
             ArrayList<WeatherSpec> weatherSpecs = new ArrayList<>(Collections.singletonList(weatherSpec));
@@ -189,7 +189,7 @@ public class CMWeatherReceiver extends BroadcastReceiver implements CMWeatherMan
      * @param cmCondition
      * @return
      */
-    private int CMtoYahooCondintion(int cmCondition) {
+    private int CMtoYahooCondition(int cmCondition) {
         int yahooCondition;
         if (cmCondition <= SHOWERS) {
             yahooCondition = cmCondition;

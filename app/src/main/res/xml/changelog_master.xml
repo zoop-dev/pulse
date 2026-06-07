@@ -136,7 +136,7 @@
         <change>Huawei/Honor: Fix workout processing for some devices</change>
         <change>Mi Band 9 Active: Fix activity fetching</change>
         <change>Pebble: Fix app configuration when internet helper is available but disallowed</change>
-        <change>Pebble: Fix crash when returning from exernal website from browser application</change>
+        <change>Pebble: Fix crash when returning from external website from browser application</change>
         <change>Pebble: Fix sending config to watchfaces</change>
         <change>Sony WF-1000XM4: Enable speak-to-chat support</change>
         <change>Webview: Do not check firewall when direct internet access is available</change>
@@ -274,7 +274,7 @@
         <change>Coospo HW807: Fix device discovery</change>
         <change>Even Realities G1: Fix support for some BLE names</change>
         <change>Even Realities G1: Improve connection reliability</change>
-        <change>Even Realities G1: Support non-latin charaters in notifications</change>
+        <change>Even Realities G1: Support non-latin characters in notifications</change>
         <change>Garmin: Add debug support to fetch DEVICE_XML</change>
         <change>Garmin: Add respiratory rate chart</change>
         <change>Garmin: Add temperature / diving depth charts</change>
@@ -309,7 +309,7 @@
         <change>Pebble: Support multiple weather location with system weather app (on fw 4.x)</change>
         <change>Pebble: Support night icons on TrekVolle and TimeStyle</change>
         <change>Pebble 2/2 Duo: Fix random crashes on disconnect</change>
-        <change>Pebble 2 Duo: Support getting inital battery level</change>
+        <change>Pebble 2 Duo: Support getting initial battery level</change>
         <change>Pebble: support night weather icons in TrekVolle watch face</change>
         <change>Sony Wena 3: Enable body energy</change>
         <change>Withings Steel HR: Improve initialization reliability</change>
@@ -423,7 +423,7 @@
         <change>Charts: Add additional sleep chart with sleep stages</change>
         <change>Charts: Add sleep charts overlays (hr, spo2, temperature, respiratory rate)</change>
         <change>Charts: Add training load</change>
-        <change>Charts: Compute time weighted avarage for heart rate</change>
+        <change>Charts: Compute time weighted average for heart rate</change>
         <change>Charts: Fix crash if database fetch fails</change>
         <change>Charts: Improve values text contrast</change>
         <change>Charts: Rework blood oxygen chart</change>
@@ -607,7 +607,7 @@
         <change>Charts: Restore steps balance on weekly and monthly charts</change>
         <change>Colmi R09: Add preference to toggle temperature measurements</change>
         <change>Colmi R09: Fix temperature data parsing</change>
-        <change>Colmi R0x: Add support for realtime heart rate meassurements and live activity tracking</change>
+        <change>Colmi R0x: Add support for realtime heart rate measurements and live activity tracking</change>
         <change>Garmin: Add basic fit file viewer</change>
         <change>Garmin: Add custom notification actions</change>
         <change>Garmin: Allow fake OAuth</change>
@@ -958,7 +958,7 @@
         <change>Bangle.js: Set filename on save file dialogs</change>
         <change>Bangle.js: Improve communication stability</change>
         <change>Bangle.js: Sync activity tracks</change>
-        <change>Bangle.js: remove unwanted charaters from calendar events</change>
+        <change>Bangle.js: remove unwanted characters from calendar events</change>
         <change>Femometer Vinca II: Add temperature charts</change>
         <change>Fossil/Skagen Hybrids: Remove activity fetching toasts and add finished signal</change>
         <change>Fossil/Skagen Hybrids: Use steps instead of calories for activity intensity</change>
@@ -1197,7 +1197,7 @@
         <change>Bangle.js: Send last received activity timestamp on connect (to allow sync of activity samples)</change>
         <change>Bangle.js: Allow connecting HW keyboard without closing app loader</change>
         <change>Bangle.js: Bump flavor target SDK version to 31</change>
-        <change>Bangle.js: Fix convertion of emoji/unicode to bitmap without width/height</change>
+        <change>Bangle.js: Fix conversion of emoji/unicode to bitmap without width/height</change>
         <change>Bangle.js: Fix location listener not being cleaned up when waiting for reconnect</change>
         <change>Bangle.js: Fix memory leak from HTTP requests</change>
         <change>Bangle.js: Fix orientation changes closing app loader</change>
@@ -1346,7 +1346,7 @@
         <change>Huami: Implement proper find device</change>
         <change>Huami: Change default find band vibration pattern</change>
         <change>Flipper Zero: added duration to Intent API</change>
-        <change>Flipper Zero: fixed crash due to unregistered boradcast receiver</change>
+        <change>Flipper Zero: fixed crash due to unregistered broadcast receiver</change>
         <change>Flipper Zero: fetch firmware version from flipper</change>
         <change>Fossil Hybrid HR: Correctly initialize watchface after reset or crash</change>
         <change>Fossil Hybrid HR: Set OpenTracks track category and icon to workout type selected on watch</change>

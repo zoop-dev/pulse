@@ -471,7 +471,7 @@ public class DBHelper {
     }
 
     @NonNull
-    public static List<ActivityDescription> findActivityDecriptions(@NonNull User user, int tsFrom, int tsTo, @NonNull DaoSession session) {
+    public static List<ActivityDescription> findActivityDescriptions(@NonNull User user, int tsFrom, int tsTo, @NonNull DaoSession session) {
         Property tsFromProperty = ActivityDescriptionDao.Properties.TimestampFrom;
         Property tsToProperty = ActivityDescriptionDao.Properties.TimestampTo;
         Property userIdProperty = ActivityDescriptionDao.Properties.UserId;

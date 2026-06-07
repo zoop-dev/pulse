@@ -20,8 +20,8 @@ import java.util.HashMap;
 
 import nodomain.freeyourgadget.gadgetbridge.util.language.SimpleTransliterator;
 
-public class UkranianTransliterator extends SimpleTransliterator {
-    public UkranianTransliterator() {
+public class UkrainianTransliterator extends SimpleTransliterator {
+    public UkrainianTransliterator() {
         super(new HashMap<Character, String>() {{
             put('ґ', "gh"); put('є', "je"); put('і', "i"); put('ї', "ji"); put('Ґ', "GH"); put('Є', "JE"); put('І', "I"); put('Ї', "JI");
         }});
