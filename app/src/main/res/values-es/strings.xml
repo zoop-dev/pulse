@@ -4368,4 +4368,8 @@
     <string name="media_source_audio_card">Tarjeta de audio</string>
     <string name="media_source_aux">AUX</string>
     <string name="sinilink_prompt_tone">Tono de aviso</string>
+    <string name="pref_experimental_metrics_title">Métricas genéricas</string>
+    <string name="pref_experimental_metrics_summary">Activa la lógica experimental de la interfaz para las métricas genéricas. Actualmente solo es relevante para la carga de entrenamiento y las calorías registradas por dispositivos Garmin.</string>
+    <string name="prefs_device_id">ID del dispositivo</string>
+    <string name="unit_kcal_per_day">kcal/día</string>
 </resources>
