@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.test.TestBase;
 
-public class AbstractDeviceCoordinatorTest extends TestBase {
+public class BluetoothNameTest extends TestBase {
     @Test
     public void deviceMatchingByNameTest() {
         final Map<String, DeviceType> bluetoothNameToExpectedType = new HashMap<>() {{
@@ -201,6 +201,7 @@ public class AbstractDeviceCoordinatorTest extends TestBase {
             put("OV-Touch2.6_LE", DeviceType.OVTOUCH26); // #5628
             put("BPW4500", DeviceType.BRAUN_BPW4500); // #5886
             put("MATSON Monitor", DeviceType.BM2_BATTERY_MONITOR); // #6212
+            put("Xiaomi Smart Band 10 Pro AB01", DeviceType.MIBAND10PRO); // #6248
         }};
 
         for (Map.Entry<String, DeviceType> e : bluetoothNameToExpectedType.entrySet()) {
