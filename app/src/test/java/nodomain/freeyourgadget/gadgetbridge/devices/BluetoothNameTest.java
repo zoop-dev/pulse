@@ -159,7 +159,10 @@ public class BluetoothNameTest extends TestBase {
             put("Q11", DeviceType.LAXASFIT_Q11); // #5774
             put("Xiaomi Watch S1 Pro CF1B", DeviceType.XIAOMI_WATCH_S1_PRO); // #3450
             put("Ear (2)", DeviceType.NOTHING_EAR2); // #3450
+            put("realme Buds T100", DeviceType.REALME_BUDS_T100); // #6258
             put("realme Buds T110", DeviceType.REALME_BUDS_T110);
+            put("realme Buds T200", DeviceType.REALME_BUDS_T200); // #6258
+            put("realme Buds T300", DeviceType.REALME_BUDS_T300); // #6258
             put("Redmi Smart Band 2 604D", DeviceType.REDMISMARTBAND2); // #3274
             put("vívosmart 5", DeviceType.GARMIN_VIVOSMART_5); // #3269
             put("Instinct Crossover", DeviceType.GARMIN_INSTINCT_CROSSOVER); // #3252
