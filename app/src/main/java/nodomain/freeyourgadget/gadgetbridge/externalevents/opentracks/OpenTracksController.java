@@ -32,12 +32,14 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.export.ActivityTrackExporter;
 import nodomain.freeyourgadget.gadgetbridge.export.GPXExporter;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -161,9 +163,20 @@ public class OpenTracksController extends Activity {
     }
 
     private static void saveToGpx(ActivityTrack activityTrack) {
-        if (activityTrack == null || activityTrack.getSegments().isEmpty()) {
+        if (activityTrack == null || activityTrack.getSegments() == null || activityTrack.getSegments().isEmpty()) {
             LOG.debug("No GPS track points to save — skipping GPX export");
             return;
+        } else {
+            boolean trackpointsFound = false;
+            for (List<ActivityPoint> segment : activityTrack.getSegments()) {
+                if (!segment.isEmpty()) {
+                    trackpointsFound = true;
+                }
+            }
+            if (!trackpointsFound) {
+                LOG.debug("No GPS track points to save — skipping GPX export");
+                return;
+            }
         }
 
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());

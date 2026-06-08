@@ -95,6 +95,9 @@ public class OpenTracksContentObserver extends ContentObserver {
         if (uri == null) {
             return; // nothing can be done without an uri
         }
+        if (mContext == null) {
+            return; // change received after finishing
+        }
         if (tracksUri.toString().startsWith(uri.toString())) {
             final List<Track> tracks = Track.readTracks(mContext.getContentResolver(), tracksUri, protocolVersion);
             if (!tracks.isEmpty()) {
