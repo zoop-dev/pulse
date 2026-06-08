@@ -17,6 +17,7 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.realme;
 
 import android.util.Pair;
+import androidx.annotation.NonNull;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -59,6 +60,11 @@ public class RealmeBudsT200Coordinator extends OppoHeadphonesCoordinator {
     @Override
     public int getDefaultIconResource() {
         return R.drawable.ic_realme_buds_t300;
+    }
+
+    @Override
+    public boolean supportsFindDevice(@NonNull GBDevice device) {
+        return true;
     }
 
     @Override
