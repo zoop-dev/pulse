@@ -394,7 +394,7 @@
     <string name="discovery_pair_question">Válassza ki a párosítást az eszköz párosításához. Ha ez nem sikerül, próbálja meg újra párosítás nélkül.</string>
     <string name="discovery_yes_pair">Párosítás</string>
     <string name="discovery_dont_pair">Ne párosítsa</string>
-    <string name="action_donate">Adományozás</string>
+    <string name="action_donate">Adakozás</string>
     <string name="controlcenter_connect">Kapcsolódás…</string>
     <string name="pref_title_weather">Időjárás</string>
     <string name="pref_auto_fetch">Tevékenységadatok automatikus lekérdezése</string>
