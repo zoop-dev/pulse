@@ -68,7 +68,8 @@ steps:
       - mkdir pages
       - cd pages
       - pwd
-      - mkdir pages
+      - git clone --depth=1 https://codeberg.org/Freeyourgadget/pages.git
+      - rm -rf pages/.git
 
   update-fdroid-data:
     image: codeberg.org/freeyourgadget/android-fdroid-tools:36.0.0-androguard-4.1.2-java-21
