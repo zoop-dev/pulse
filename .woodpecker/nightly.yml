@@ -103,7 +103,7 @@ steps:
       # We can't use the git-pages-cli docker image as it does not contain sh and we can't check if we built or not
       - curl -fsSL https://codeberg.org/git-pages/git-pages-cli/releases/download/v1.9.0/git-pages-cli.linux-amd64 -o ../git-pages-cli
       - chmod +x ../git-pages-cli
-      - ../git-pages-cli https://freeyourgadget.codeberg.page --token "$${COMMIT_TOKEN}" ../pages/pages/
+      - ../git-pages-cli https://freeyourgadget.codeberg.page --token "$${COMMIT_TOKEN}" --upload-dir ../pages/pages/
     environment:
       COMMIT_TOKEN:
         from_secret: commit_token
