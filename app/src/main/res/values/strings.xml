@@ -2705,6 +2705,8 @@
     <string name="distance_total">Distance Total</string>
     <string name="activeSeconds">Active</string>
     <string name="calories_consumed">Calories consumed</string>
+    <string name="consumed_electrical_energy">Consumed energy</string>
+    <string name="electrical_current">Current</string>
     <string name="mountain_bike_grit_score">Grit score</string>
     <string name="mountain_bike_flow_score">Flow score</string>
     <string name="caloriesBurnt">Calories</string>
@@ -2896,6 +2898,8 @@
     <string name="unit_millimeter">mm</string>
     <string name="unit_watt">Watt</string>
     <string name="unit_joule">Joule</string>
+    <string name="unit_ampere">A</string>
+    <string name="unit_ampere_hour">Ah</string>
     <string name="unit_kilojoule">kJ</string>
     <string name="training_load">Training Load</string>
     <string name="standing_count">Standing count</string>
@@ -4650,6 +4654,7 @@
     <string name="auth_settings">Authentication settings</string>
     <string name="devicetype_shokz_openswim_pro" translatable="false">Shokz OpenSwim Pro</string>
     <string name="devicetype_battery_monitor" translatable="false">Battery Monitor</string>
+    <string name="devicetype_victron_smartshunt" translatable="false">Victron SmartShunt</string>
     <string name="devicetype_sinilink" translatable="false">Sinilink</string>
     <string name="devicetype_onetouch" translatable="false">OneTouch Glucose Meter</string>
     <string name="equalizer_preset_standard">Standard</string>
