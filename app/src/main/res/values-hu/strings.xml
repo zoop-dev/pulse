@@ -4367,4 +4367,8 @@
     <string name="pref_experimental_metrics_summary">Engedélyezze a kísérleti felhasználói felület logikáját az általános metrikákhoz. Jelenleg ez csak a Garmin eszközökkel rögzített edzésterhelésre és kalóriákra vonatkozik.</string>
     <string name="unit_kcal_per_day">kcal/nap</string>
     <string name="prefs_device_id">Eszközazonosító</string>
+    <string name="consumed_electrical_energy">Felhasznált villamosenergia</string>
+    <string name="electrical_current">Áram</string>
+    <string name="unit_ampere">A</string>
+    <string name="unit_ampere_hour">Ah</string>
 </resources>
