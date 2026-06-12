@@ -157,7 +157,7 @@ public final class DeviceSettingsUtils {
     }
 
     /**
-     * Hides the the prefToHide preference if none of the preferences in the preferences list are
+     * Hides the prefToHide preference if none of the preferences in the preferences list are
      * visible.
      */
     public static void hidePrefIfNoneVisible(final DeviceSpecificSettingsHandler handler,

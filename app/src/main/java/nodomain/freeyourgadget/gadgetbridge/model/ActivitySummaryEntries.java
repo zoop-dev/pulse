@@ -272,7 +272,7 @@ public class ActivitySummaryEntries {
     public static final String UNIT_LITER = "unit_liter";
     /// UNIX epoc seconds to be formated in local time without showing date
     public static final String UNIT_EPOC_TIME = "unit_epoc_time";
-    /// display time including milli seconds if any
+    /// display time including milliseconds if any
     public static final String UNIT_SECONDS_SPORT = "unit_sports_seconds";
     public static final String UNIT_FOOT = "ft";
     public static final String UNIT_FOOT_PER_HOUR = "foot_per_hour";

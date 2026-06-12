@@ -25,7 +25,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.AlarmDao;
 public class GadgetbridgeUpdate_24 implements DBUpdateScript {
     @Override
     public void upgradeSchema(SQLiteDatabase db) {
-        // Probably it isbetter to hardcode then using constants since constants could change after refactoring and potentially break migration
+        // Probably it is better to hardcode then using constants since constants could change after refactoring and potentially break migration
         db.execSQL("UPDATE DEVICE SET Type=170 where (Type=80 and Manufacturer like 'Fossil%')");
     }
 

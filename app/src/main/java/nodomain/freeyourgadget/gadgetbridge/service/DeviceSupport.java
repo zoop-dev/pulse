@@ -109,7 +109,7 @@ public interface DeviceSupport extends EventHandler {
 
     /**
      * Returns true if a connection attempt shall be made automatically whenever
-     * needed (e.g. when a notification shall be sent to the device while not connected.
+     * needed (e.g. when a notification shall be sent to the device while not connected).
      */
     boolean useAutoConnect();
 

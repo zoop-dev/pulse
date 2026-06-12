@@ -610,7 +610,7 @@ public class PreferenceMigrator55 extends AbstractPreferenceMigrator {
         }
 
         if (oldVersion < 19) {
-            //remove old ble scanning prefences, now unsupported
+            //remove old ble scanning preferences, now unsupported
             editor.remove("disable_new_ble_scanning");
         }
 

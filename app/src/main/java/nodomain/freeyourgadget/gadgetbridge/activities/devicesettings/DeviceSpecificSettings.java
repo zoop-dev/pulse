@@ -36,7 +36,7 @@ import java.util.Objects;
  * <p>
  * This class contains 2 types of screens:
  * - Root screens - the ones that are displayed in the first page of the device settings activity. These can be
- * normal preference screens / preferences, or dummy root screens (see {@link DeviceSpecificSettingsScreen}.
+ * normal preference screens / preferences, or dummy root screens (see {@link DeviceSpecificSettingsScreen}).
  * - Sub-screens - a screen that is opened when one of the {@link DeviceSpecificSettingsScreen} is clicked.
  * <p>
  * There can be an arbitrary number of nested sub-screens, as long as they are all mapped by key in the

@@ -108,7 +108,7 @@ public class EmojiConverter {
     }
 
     public static synchronized EmojiManager getEmojiManager(final Context context) {
-        // Do a lazy initialisation not to slowdown the startup and when it is needed
+        // Do a lazy initialisation not to slow down the startup and when it is needed
         if (emojiManagerInstance == null) {
             emojiManagerInstance = EmojiManager.Companion.create(context, new GsonDeserializer());
         }

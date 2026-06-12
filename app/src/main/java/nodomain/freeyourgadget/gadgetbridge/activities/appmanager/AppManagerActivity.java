@@ -110,7 +110,7 @@ public class AppManagerActivity extends AbstractGBActivity {
             fab.setVisibility(View.GONE);
         }
 
-        // Set up the ViewPager with the sections adapter.
+        // Set up the ViewPager with the section's adapter.
         ViewPager2 viewPager = findViewById(R.id.appmanager_pager);
         if (viewPager != null) {
             viewPager.setAdapter(new SectionsStateAdapter(this));

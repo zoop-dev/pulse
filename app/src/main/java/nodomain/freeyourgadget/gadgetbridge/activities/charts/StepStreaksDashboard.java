@@ -80,8 +80,8 @@ public class StepStreaksDashboard extends MaterialDialogFragment {
 
     }
 
-    //Calculates some stats for longest streak (daily steps goal being reached for subsequent days
-    //without interruption (day with steps less then goal)
+    //Calculates some stats for longest streak (daily steps goal being reached for subsequent days)
+    //without interruption (day with steps less than goal)
     //Possible improvements/nice to haves:
     //- cache values until new activity fetch is performed
     //- read the goals from the USER_ATTRIBUTES table. But, this would also require to be able
@@ -212,7 +212,7 @@ public class StepStreaksDashboard extends MaterialDialogFragment {
             total.setVisibility(View.VISIBLE);
             days_total_label.setText(R.string.steps_streaks_achievement_rate);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                //labels here have diferent meaning, so we must also add proper hint
+                //labels here have different meaning, so we must also add proper hint
                 days_total_label.setTooltipText(getString(R.string.steps_streaks_total_days_hint_totals));
                 days_total.setTooltipText(getString(R.string.steps_streaks_total_days_hint_totals));
                 date_total_label.setTooltipText(getString(R.string.steps_streaks_total_steps_hint_totals));

@@ -96,7 +96,7 @@ public class GBMusicControlReceiver extends BroadcastReceiver {
         final long eventTime = SystemClock.uptimeMillis();
 
         if (prefs.getBoolean("pref_deprecated_media_control", false)) {
-            // Deprecated path - mb_intents works for some players and not others, and vice-versa
+            // Deprecated path - mb_intents works for some players and not others, and vice versa
 
             if (prefs.getBoolean("mb_intents", false)) {
                 String audioPlayer = getAudioPlayer(context);

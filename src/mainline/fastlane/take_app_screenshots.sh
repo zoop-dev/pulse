@@ -70,7 +70,7 @@ DEBUG="${DEBUG:-0}"
 # Prefix output directory with current file path
 OUTPUT_DIR="$(dirname $(realpath -s $0))/${OUTPUT_DIR}"
 
-# Append semicolon for seperating new commands
+# Append semicolon for separating new commands
 if [ -n "${REVERT_COMMANDS}" ]; then
     REVERT_COMMANDS+=";" 
 fi
@@ -139,7 +139,7 @@ check_deps() {
 # for the specified device, serving as a safeguard.
 # (e.g. "adb -s DEVICE_SERIAL shell echo Hello!")
 #
-# If deivce count is not equal to 1, exit and tell the reason to stderr.
+# If device count is not equal to 1, exit and tell the reason to stderr.
 get_adb_command() {
     adb_path=$(locate_adb)
     device_list="$("${adb_path}" devices | sed -n "s/^\([0-9a-zA-Z]*\)\s*device$/\1/p")"
@@ -201,7 +201,7 @@ set_system_theme() {
         }'
         original_theme="$(${adb_prefix} shell settings get secure theme_customization_overlay_packages | tr -d "[:space:]" | tr "\"" "\\\"")"
         echo "${original_theme}"
-        # TODO: Reverting the colors currently doesn't work beause of the characters getting escaped somehow in ADB
+        # TODO: Reverting the colors currently doesn't work because of the characters getting escaped somehow in ADB
         # REVERT_COMMANDS+="${adb_prefix} shell settings put secure theme_customization_overlay_packages ""'"${original_theme}"'"
         ${adb_prefix} shell settings put secure theme_customization_overlay_packages "'"$(echo "${theme_properties}" | tr -d "[:space:]" | tr "\"" "\\\"")"'"
     fi
@@ -244,7 +244,7 @@ set_status_bar() {
     ${adb_prefix} shell am broadcast -a com.android.systemui.demo --es command battery \
         --es level 100 --es plugged false --es powersave false 1>/dev/null
 
-    # Explictly disable status icons
+    # Explicitly disable status icons
     ${adb_prefix} shell am broadcast -a com.android.systemui.demo --es command status \
         --es volume hide \
         --es bluetooth hide \
@@ -430,7 +430,7 @@ dump_screen_layout() {
     # "uiautomator" service prints a XML document, but it also prints a 
     # "UI hierchary dumped to..." message in the end, so we strip this
     # message from the string to make it a valid XML text.
-    char_count=$(echo "UI hierchary dumped to: /dev/tty" | wc -c)
+    char_count=$(echo "UI hierarchy dumped to: /dev/tty" | wc -c)
     xml_document="$(${adb_prefix} exec-out uiautomator dump /dev/tty | head -c -${char_count})"
 
     # XPath to list UI nodes listed in the current screen (we specifically

@@ -26,7 +26,7 @@ public class GadgetbridgeUpdate_131 implements DBUpdateScript {
 
     private static void fixTimeStampOfGenericMetricSample(SQLiteDatabase db) {
         // GenericMetricSamples were originally stored with epoc seconds instead
-        // of the usual epoc milli seconds
+        // of the usual epoc milliseconds
         // epoc 31536000000 ms = epoc 31536000 s = year 1971
         String statement = String.format("UPDATE %1$s SET %2$s = %2$s * 1000 WHERE %2$s < 31536000000",
                 GenericMetricSampleDao.TABLENAME,
@@ -35,7 +35,7 @@ public class GadgetbridgeUpdate_131 implements DBUpdateScript {
     }
 
     private static void copyTrainingLoadAcute(SQLiteDatabase db) {
-        // one-off copy existing data so that vizualizations
+        // one-off copy existing data so that visualizations
         // and migration can be tested before removing old code paths
         final String sql;
         sql = "INSERT OR IGNORE INTO GENERIC_METRIC_SAMPLE(TIMESTAMP, DEVICE_ID, USER_ID, METRIC_TYPE ,METRIC_SCORE, METRIC_EXTRA) "
@@ -45,7 +45,7 @@ public class GadgetbridgeUpdate_131 implements DBUpdateScript {
     }
 
     private static void copyTrainingLoadChronic(SQLiteDatabase db) {
-        // one-off copy existing data so that vizualizations
+        // one-off copy existing data so that visualizations
         // and migration can be tested before removing old code paths
         final String sql;
         sql = "INSERT OR IGNORE INTO GENERIC_METRIC_SAMPLE(TIMESTAMP, DEVICE_ID, USER_ID, METRIC_TYPE ,METRIC_SCORE, METRIC_EXTRA) "
@@ -55,7 +55,7 @@ public class GadgetbridgeUpdate_131 implements DBUpdateScript {
     }
 
     private static void copyRestingMetabolicRate(SQLiteDatabase db) {
-        // one-off copy existing data so that vizualizations
+        // one-off copy existing data so that visualizations
         // and migration can be tested before removing old code paths
         final String sql;
         sql = "INSERT OR IGNORE INTO GENERIC_METRIC_SAMPLE(TIMESTAMP, DEVICE_ID, USER_ID, METRIC_TYPE ,METRIC_SCORE, METRIC_EXTRA) "

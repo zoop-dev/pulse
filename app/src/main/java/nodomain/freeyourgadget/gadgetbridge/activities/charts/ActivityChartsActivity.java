@@ -179,7 +179,7 @@ public class ActivityChartsActivity extends AbstractGBActivity implements Charts
         swipeLayout.setOnRefreshListener(this::fetchRecordedData);
         enableSwipeRefresh(true);
 
-        // Set up the ViewPager with the sections adapter.
+        // Set up the ViewPager with the section's adapter.
         final ViewPager2 viewPager = findViewById(R.id.charts_pager);
         TabLayout tabLayout = findViewById(R.id.charts_pagerTabStrip);
 
@@ -425,7 +425,7 @@ public class ActivityChartsActivity extends AbstractGBActivity implements Charts
     }
 
     /**
-     * A dummy fragment to avoid a crash when we get a unknown tab position (eg. broken
+     * A dummy fragment to avoid a crash when we get an unknown tab position (e.g. broken
      * preference migration).
      */
     public static class UnknownFragment extends AbstractGBFragment {

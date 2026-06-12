@@ -82,7 +82,7 @@ public class SampleProviderTest extends TestBase {
         samples = sampleProvider.getActivitySamples(1, -1);
         assertEquals(0, samples.size());
 
-        // Now high res data
+        // Now high-res data
         samples = sampleProvider.getAllActivitySamplesHighRes(0, 0);
         assertTrue(samples.isEmpty());
 
@@ -147,7 +147,7 @@ public class SampleProviderTest extends TestBase {
         samples = sampleProvider.getActivitySamples(1, -1);
         assertEquals(0, samples.size());
 
-        // Now high res data
+        // Now high-res data
         samples = sampleProvider.getAllActivitySamplesHighRes(0, 0);
         assertTrue(samples.isEmpty());
 
@@ -215,6 +215,6 @@ public class SampleProviderTest extends TestBase {
         assertEquals(2, samples.size()); // First three are combined
 
         samples = sampleProvider.getAllActivitySamplesHighRes(100, 200);
-        assertEquals(4, samples.size()); // No combining takes place for the high res
+        assertEquals(4, samples.size()); // No combining takes place for the high-res
     }
 }

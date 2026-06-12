@@ -232,7 +232,7 @@ public class WorkoutValueFormatter {
             }
         }
 
-        if (unit.equals(UNIT_SECONDS) && !show_raw_data && showUnit) { //rather then plain seconds, show formatted duration
+        if (unit.equals(UNIT_SECONDS) && !show_raw_data && showUnit) { //rather than plain seconds, show formatted duration
             return DateTimeUtils.formatDurationHoursMinutes((long) value, TimeUnit.SECONDS);
         }else if (unit.equals(UNIT_SECONDS_SPORT) && !show_raw_data && showUnit) {
                 return DateTimeUtils.formatSportsDuration(Math.round(1000L * (double) value), TimeUnit.MILLISECONDS);

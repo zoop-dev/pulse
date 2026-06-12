@@ -210,7 +210,7 @@ public class NotificationListener extends NotificationListenerService {
                     StatusBarNotification[] sbns = NotificationListener.this.getActiveNotifications();
                     Long ts = mNotificationHandleLookup.lookup(handle);
                     if (ts == null) {
-                        LOG.info("could not lookup handle for open action");
+                        LOG.info("could not look up handle for open action");
                         break;
                     }
 
@@ -231,7 +231,7 @@ public class NotificationListener extends NotificationListenerService {
                 case ACTION_MUTE:
                     String packageName = mPackageLookup.lookup(handle);
                     if (packageName == null) {
-                        LOG.info("could not lookup handle for mute action");
+                        LOG.info("could not look up handle for mute action");
                         break;
                     }
                     LOG.info("going to mute {}", packageName);
@@ -245,7 +245,7 @@ public class NotificationListener extends NotificationListenerService {
                     StatusBarNotification[] sbns = NotificationListener.this.getActiveNotifications();
                     Long ts = mNotificationHandleLookup.lookup(handle);
                     if (ts == null) {
-                        LOG.info("could not lookup handle for dismiss action");
+                        LOG.info("could not look up handle for dismiss action");
                         break;
                     }
                     for (StatusBarNotification sbn : sbns) {
@@ -737,7 +737,7 @@ public class NotificationListener extends NotificationListenerService {
         }
 
         if (app.equals("com.microsoft.teams")) {
-            // #5525 - microsoft teams spams notifications with slightly increasing timestamps
+            // #5525 - Microsoft Teams spams notifications with slightly increasing timestamps
             // we use a different key for the burst prevention to prevent suppressing notifications
             final String burstPreventionKey = "call:" + app;
             final Long notificationBurstPreventionValue = notificationBurstPrevention.get(burstPreventionKey);
@@ -745,7 +745,7 @@ public class NotificationListener extends NotificationListenerService {
             if (notificationBurstPreventionValue != null) {
                 long diff = curTime - notificationBurstPreventionValue;
                 if (diff < TimeUnit.SECONDS.toNanos(1)) {
-                    LOG.info("Ignoring burst call notification from microsoft teams, last one was {} ms ago", TimeUnit.NANOSECONDS.toMillis(diff));
+                    LOG.info("Ignoring burst call notification from Microsoft Teams, last one was {} ms ago", TimeUnit.NANOSECONDS.toMillis(diff));
                     return;
                 }
             }

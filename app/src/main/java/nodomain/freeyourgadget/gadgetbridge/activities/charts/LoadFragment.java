@@ -217,7 +217,7 @@ public class LoadFragment extends AbstractChartFragment<LoadFragment.LoadsData> 
             }
         });
 
-        // Daily load chart chart.
+        // Daily load chart.
         BarDataSet set = new BarDataSet(dailyLoadEntries, "Load");
         set.setDrawValues(true);
         set.setColors(LOAD_COLOR);

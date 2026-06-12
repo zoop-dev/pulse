@@ -39,7 +39,7 @@ public final class ActivitySummaryUtils {
 
         ActivityTrack activityTrack = activityTrackProvider.getActivityTrack(summary);
         if (activityTrack == null) {
-            // Attempt to fallback to existing gpx file
+            // Attempt to fall back to existing gpx file
             if (!(activityTrackProvider instanceof GpxActivityTrackProvider)) {
                 activityTrack = new GpxActivityTrackProvider().getActivityTrack(summary);
             }

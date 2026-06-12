@@ -868,7 +868,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
 
     /**
      * @param text original text
-     * @return 'text' or a new String without non supported chars like emoticons, etc.
+     * @return 'text' or a new String without non-supported chars like emoticons, etc.
      */
     private String sanitizeNotifText(String text, GBDevice device) throws DeviceNotFoundException {
         if (text == null || text.length() == 0)
@@ -968,7 +968,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                         || (notificationSpec.type == NotificationType.GENERIC_SMS && notificationSpec.phoneNumber != null)) {
                     // NOTE: maybe not where it belongs
                     // I would rather like to save that as an array in SharedPreferences
-                    // this would work but I dont know how to do the same in the Settings Activity's xml
+                    // this would work but I don't know how to do the same in the Settings Activity's xXML
                     ArrayList<String> replies = new ArrayList<>();
                     for (int i = 1; i <= 16; i++) {
                         String reply = devicePrefs.getString("canned_reply_" + i, null);

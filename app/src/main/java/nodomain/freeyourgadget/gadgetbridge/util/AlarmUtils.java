@@ -88,7 +88,7 @@ public class AlarmUtils {
 
     /**
      * Creates  a Calendar object representing the time of the given alarm (not taking the
-     * day/date into account.
+     * day/date into account).
      * @param alarm
      * @return
      */

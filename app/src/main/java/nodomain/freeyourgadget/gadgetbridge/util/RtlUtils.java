@@ -374,8 +374,8 @@ public class RtlUtils {
     }
 
     /**
-     * This function return the contextual state of a given character, depend of the previous
-     * character state and the next charachter.
+     * This function return the contextual state of a given character, depending on the previous
+     * character state and the next character.
      * @param prevState - previous character state or isolated if none
      * @param curChar - the current character
      * @param nextChar - the next character or null if none
@@ -404,7 +404,7 @@ public class RtlUtils {
     }
 
     /**
-     * this function convert given string to it's contextual form
+     * this function convert given string to its contextual form
      * @param s - the given string
      * @return the contextual form of the string
      */
@@ -490,7 +490,7 @@ public class RtlUtils {
     /**
      * The function get a string and fix the rtl words.
      * since simple reverse puts the beginning of the text at the end, the text should have been from bottom to top.
-     * To avoid that, we save the text in lines (line max size can be change in the settings)
+     * To avoid that, we save the text in lines (line max size can be changed in the settings)
      * @param oldString - the string to fix.
      * @return a fix string.
      */

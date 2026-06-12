@@ -173,7 +173,7 @@ public class SleepAsAndroidSender {
     /**
      * Same as {@link #pauseTracking(long)} but pausing and resuming is controlled by a toggle
      *
-     * @param suspended true if the tracking should be paused, false if should be resumed
+     * @param suspended true if the tracking should be paused, false if it should be resumed
      */
     public void pauseTracking(boolean suspended) {
         if (!isDeviceDefault() || !trackingOngoing) return;
@@ -316,7 +316,7 @@ public class SleepAsAndroidSender {
      * On heart rate changed
      *
      * @param hr        the heart rate
-     * @param sendDelay the send delay in ms. If 0 the data will be send right away. Anything bigger will gather all the data then send it all after the specified interval
+     * @param sendDelay the send delay in ms. If 0 the data will be sent right away. Anything bigger will gather all the data then send it all after the specified interval
      */
     public void onHrChanged(float hr, long sendDelay) {
         if (!isDeviceDefault() || !isFeatureEnabled(SleepAsAndroidFeature.HEART_RATE) || !hasFeature(SleepAsAndroidFeature.HEART_RATE) || !trackingOngoing)

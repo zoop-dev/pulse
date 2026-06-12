@@ -172,7 +172,7 @@ public class CaloriesPeriodFragment extends CaloriesFragment<CaloriesPeriodFragm
         caloriesChart.getAxisLeft().setAxisMaximum((float) Math.max(set.getYMax() * 1.1, CALORIES_GOAL));
 
         BarData barData = new BarData(set);
-        barData.setValueTextColor(TEXT_COLOR); //prevent tearing other graph elements with the black text. Another approach would be to hide the values cmpletely with data.setDrawValues(false);
+        barData.setValueTextColor(TEXT_COLOR); //prevent tearing other graph elements with the black text. Another approach would be to hide the values completely with data.setDrawValues(false);
         barData.setValueTextSize(10f);
         if (TOTAL_DAYS > 7) {
             caloriesChart.setRenderer(new AngledLabelsChartRenderer(caloriesChart, caloriesChart.getAnimator(), caloriesChart.getViewPortHandler()));

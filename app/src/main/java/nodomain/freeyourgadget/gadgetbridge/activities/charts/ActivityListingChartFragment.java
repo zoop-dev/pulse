@@ -152,7 +152,7 @@ public class ActivityListingChartFragment extends AbstractActivityChartFragment<
         if (mcd.getStepSessions().size() == 0) {
             getChartsHost().enableSwipeRefresh(true); //enable pull to refresh, might be needed
         } else {
-            getChartsHost().enableSwipeRefresh(false); //disable pull to refresh as it collides with swipable view
+            getChartsHost().enableSwipeRefresh(false); //disable pull to refresh as it collides with swipeable view
         }
 
         Date activityDate = new Date(tsDateTo * 1000L);
