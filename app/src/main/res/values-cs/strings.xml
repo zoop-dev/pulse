@@ -4526,4 +4526,8 @@
     <string name="pref_experimental_metrics_summary">Povolit experimentální logiku rozhraní pro obecná měření. V současné době platné pouze pro tréninkovou zátěž a kalorie zaznamenané zařízeními Garmin.</string>
     <string name="unit_kcal_per_day">kcal/den</string>
     <string name="prefs_device_id">ID zařízení</string>
+    <string name="consumed_electrical_energy">Spotřebovaná energie</string>
+    <string name="electrical_current">Proud</string>
+    <string name="unit_ampere">A</string>
+    <string name="unit_ampere_hour">Ah</string>
 </resources>
