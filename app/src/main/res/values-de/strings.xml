@@ -4377,4 +4377,8 @@
     <string name="nothing_prefs_spatial_audio_title">Räumlicher Klang</string>
     <string name="sony_button_function_nc_ambient_switch_ambient_sound">Umgebungsgeräusche umschalten</string>
     <string name="sony_button_function_nc_ambient_alexa_assistant">Alexa</string>
+    <string name="pref_experimental_metrics_title">Generische Metriken</string>
+    <string name="pref_experimental_metrics_summary">Experimentelle UI-Logik für generische Metriken aktivieren. Derzeit nur relevant für Training Last und Kalorien, die von Garmin Geräten aufgezeichnet wurden.</string>
+    <string name="diving_cns_toxicity">ZNS-Toxizität (Zentralnervensystem-Toxizität)</string>
+    <string name="prefs_device_id">Geräte ID</string>
 </resources>
