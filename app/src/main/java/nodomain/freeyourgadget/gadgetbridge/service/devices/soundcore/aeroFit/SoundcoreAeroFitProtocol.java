@@ -105,7 +105,7 @@ public class SoundcoreAeroFitProtocol extends SoundcoreProtocolImplV1 {
                 return encodeBooleanCommand(CMD_SET_GAMING_MODE, gamingMode);
             case PREF_SOUNDCORE_AUTO_POWER_OFF:
                 int duration = Integer.parseInt(prefs.getString(PREF_SOUNDCORE_AUTO_POWER_OFF, "3"));
-                return encodeAutoPowerOff(duration, (byte) 0x03);
+                return encodeAutoPowerOff(CMD_SET_AUTO_POWER_OFF, duration, (byte) 0x03);
             default:
                 LOG.debug("Unsupported CONFIG: " + config);
         }

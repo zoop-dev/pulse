@@ -2,13 +2,11 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.soundcore.protocol.
 
 import android.content.SharedPreferences;
 
-import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.soundcore.AbstractSoundcoreProtocol;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.soundcore.SoundcorePacket;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public abstract class SoundcoreProtocolImplV1 extends AbstractSoundcoreProtocol {
@@ -30,22 +28,6 @@ public abstract class SoundcoreProtocolImplV1 extends AbstractSoundcoreProtocol 
         super(device);
     }
 
-    protected SoundcorePacket decodePacket(final byte[] responseData) {
-        return SoundcorePacket.decode(ByteBuffer.wrap(responseData));
-    }
-
-    protected byte[] encodeRequest(final short command) {
-        return new SoundcorePacket(command).encode();
-    }
-
-    protected byte[] encodeCommand(final short command, final byte[] payload) {
-        return new SoundcorePacket(command, payload).encode();
-    }
-
-    protected byte[] encodeBooleanCommand(final short command, final boolean enabled) {
-        return encodeCommand(command, new byte[]{encodeBoolean(enabled)});
-    }
-
     public byte[] encodeDeviceInfoRequest() {
         return encodeRequest(CMD_GET_DEVICE_INFO);
     }
@@ -63,19 +45,7 @@ public abstract class SoundcoreProtocolImplV1 extends AbstractSoundcoreProtocol 
         return encodeCommand(CMD_ENABLE_PAIRING_MODE, new byte[]{0x00, (byte) 0x90});
     }
 
-    protected byte[] encodeAutoPowerOff(final int duration, final byte disabledDuration) {
-        final byte[] payload;
-
-        if (duration > 0) {
-            payload = new byte[]{0x01, (byte) (duration - 1)};
-        } else {
-            payload = new byte[]{0x00, disabledDuration};
-        }
-
-        return encodeCommand(CMD_SET_AUTO_POWER_OFF, payload);
-    }
-
-    protected byte[] encodeControlFunctionMessage(final boolean right, final byte action, final byte function) {
+    protected byte[] encodeControlFunction(final boolean right, final byte action, final byte function) {
         return encodeCommand(CMD_SET_CONTROL_FUNCTION, new byte[]{encodeBoolean(right), action, function});
     }
 

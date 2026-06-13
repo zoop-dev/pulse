@@ -98,50 +98,50 @@ public class SoundcoreLibertyProtocol extends SoundcoreProtocolImplV1 {
 
             // Control
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_SINGLE_TAP_DISABLED:
-                return encodeControlTouchLockMessage(TapAction.SINGLE_TAP, prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_SINGLE_TAP_DISABLED, false));
+                return encodeControlTouchLock(TapAction.SINGLE_TAP, prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_SINGLE_TAP_DISABLED, false));
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_DOUBLE_TAP_DISABLED:
-                return encodeControlTouchLockMessage(TapAction.DOUBLE_TAP, prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_DOUBLE_TAP_DISABLED, false));
+                return encodeControlTouchLock(TapAction.DOUBLE_TAP, prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_DOUBLE_TAP_DISABLED, false));
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_TRIPLE_TAP_DISABLED:
-                return encodeControlTouchLockMessage(TapAction.TRIPLE_TAP, prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_TRIPLE_TAP_DISABLED, false));
+                return encodeControlTouchLock(TapAction.TRIPLE_TAP, prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_TRIPLE_TAP_DISABLED, false));
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_LONG_PRESS_DISABLED:
-                return encodeControlTouchLockMessage(TapAction.LONG_PRESS, prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_LONG_PRESS_DISABLED, false));
+                return encodeControlTouchLock(TapAction.LONG_PRESS, prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_LONG_PRESS_DISABLED, false));
 
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_SINGLE_TAP_ACTION_LEFT:
                 pref_string = prefs.getString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_SINGLE_TAP_ACTION_LEFT, "");
-                return encodeControlFunctionMessage(TapAction.SINGLE_TAP, false, TapFunction.valueOf(pref_string));
+                return encodeControlFunction(TapAction.SINGLE_TAP, false, TapFunction.valueOf(pref_string));
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_SINGLE_TAP_ACTION_RIGHT:
                 pref_string = prefs.getString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_SINGLE_TAP_ACTION_RIGHT, "");
-                return encodeControlFunctionMessage(TapAction.SINGLE_TAP, true, TapFunction.valueOf(pref_string));
+                return encodeControlFunction(TapAction.SINGLE_TAP, true, TapFunction.valueOf(pref_string));
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_DOUBLE_TAP_ACTION_LEFT:
                 pref_string = prefs.getString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_DOUBLE_TAP_ACTION_LEFT, "");
-                return encodeControlFunctionMessage(TapAction.DOUBLE_TAP, false, TapFunction.valueOf(pref_string));
+                return encodeControlFunction(TapAction.DOUBLE_TAP, false, TapFunction.valueOf(pref_string));
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_DOUBLE_TAP_ACTION_RIGHT:
                 pref_string = prefs.getString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_DOUBLE_TAP_ACTION_RIGHT, "");
-                return encodeControlFunctionMessage(TapAction.DOUBLE_TAP, true, TapFunction.valueOf(pref_string));
+                return encodeControlFunction(TapAction.DOUBLE_TAP, true, TapFunction.valueOf(pref_string));
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_TRIPLE_TAP_ACTION_LEFT:
                 pref_string = prefs.getString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_TRIPLE_TAP_ACTION_LEFT, "");
-                return encodeControlFunctionMessage(TapAction.TRIPLE_TAP, false, TapFunction.valueOf(pref_string));
+                return encodeControlFunction(TapAction.TRIPLE_TAP, false, TapFunction.valueOf(pref_string));
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_TRIPLE_TAP_ACTION_RIGHT:
                 pref_string = prefs.getString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_TRIPLE_TAP_ACTION_RIGHT, "");
-                return encodeControlFunctionMessage(TapAction.TRIPLE_TAP, true, TapFunction.valueOf(pref_string));
+                return encodeControlFunction(TapAction.TRIPLE_TAP, true, TapFunction.valueOf(pref_string));
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_LONG_PRESS_ACTION_LEFT:
                 pref_string = prefs.getString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_LONG_PRESS_ACTION_LEFT, "");
-                return encodeControlFunctionMessage(TapAction.LONG_PRESS, false, TapFunction.valueOf(pref_string));
+                return encodeControlFunction(TapAction.LONG_PRESS, false, TapFunction.valueOf(pref_string));
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_LONG_PRESS_ACTION_RIGHT:
                 pref_string = prefs.getString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_LONG_PRESS_ACTION_RIGHT, "");
-                return encodeControlFunctionMessage(TapAction.LONG_PRESS, true, TapFunction.valueOf(pref_string));
+                return encodeControlFunction(TapAction.LONG_PRESS, true, TapFunction.valueOf(pref_string));
 
             case DeviceSettingsPreferenceConst.PREF_SONY_AMBIENT_SOUND_CONTROL_BUTTON_MODE:
                 AmbientSoundControlButtonMode modes = AmbientSoundControlButtonMode.fromPreferences(prefs.getPreferences());
                 switch (modes) {
                     case NC_AS_OFF:
-                        return encodeControlAmbientModeMessage(true, true, true);
+                        return encodeControlAmbientMode(true, true, true);
                     case NC_AS:
-                        return encodeControlAmbientModeMessage(true, true, false);
+                        return encodeControlAmbientMode(true, true, false);
                     case NC_OFF:
-                        return encodeControlAmbientModeMessage(true, false, true);
+                        return encodeControlAmbientMode(true, false, true);
                     case AS_OFF:
-                        return encodeControlAmbientModeMessage(false, true, true);
+                        return encodeControlAmbientMode(false, true, true);
                 }
 
             // Miscellaneous Settings
@@ -179,7 +179,7 @@ public class SoundcoreLibertyProtocol extends SoundcoreProtocolImplV1 {
      * @param disabled If the action should be enabled or disabled
      * @return
      */
-    private byte[] encodeControlTouchLockMessage(TapAction action, boolean disabled) {
+    private byte[] encodeControlTouchLock(TapAction action, boolean disabled) {
         boolean enabled = !disabled;
         byte enabled_byte;
         byte[] payload;
@@ -207,7 +207,7 @@ public class SoundcoreLibertyProtocol extends SoundcoreProtocolImplV1 {
      * @param function The byte that encodes the triggered function (eg play/pause)
      * @return The encoded message
      */
-    private byte[] encodeControlFunctionMessage(TapAction action, boolean right, TapFunction function) {
+    private byte[] encodeControlFunction(TapAction action, boolean right, TapFunction function) {
         byte function_byte;
         switch (action) {
             case SINGLE_TAP:
@@ -224,14 +224,14 @@ public class SoundcoreLibertyProtocol extends SoundcoreProtocolImplV1 {
                 LOG.error("Invalid Tap action");
                 return null;
         }
-        return encodeControlFunctionMessage(right, action.getCode(), function_byte);
+        return encodeControlFunction(right, action.getCode(), function_byte);
     }
 
     /**
      * Encodes between which Audio Modes a tap should switch, if it is set to switch the Audio Mode.
      * Zb ANC -> -> Transparency -> Normal -> ANC -> ....
      */
-    private byte[] encodeControlAmbientModeMessage(boolean anc, boolean transparency, boolean normal) {
+    private byte[] encodeControlAmbientMode(boolean anc, boolean transparency, boolean normal) {
         // Original app does not allow only one true flag. Unsure if Earbuds accept this state.
         byte ambientModes = (byte) (4 * (normal?1:0) + 2 * (transparency?1:0) + (anc?1:0));
         return encodeCommand(CMD_SET_AMBIENT_SOUND_CONTROL_BUTTON_MODE, new byte[] {ambientModes});

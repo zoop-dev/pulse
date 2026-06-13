@@ -33,8 +33,8 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePref
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.soundcore.AbstractSoundcoreProtocol;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.soundcore.SoundcorePacket;
-import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.*;
@@ -43,7 +43,7 @@ import static nodomain.freeyourgadget.gadgetbridge.service.devices.soundcore.pro
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.soundcore.protocol.impl.v1.SoundcoreProtocolImplV1.CMD_NOTIFY_CHARGING_INFO;
 import static nodomain.freeyourgadget.gadgetbridge.service.devices.soundcore.protocol.impl.v1.SoundcoreProtocolImplV1.CMD_SET_AUTO_POWER_OFF;
 
-public class SoundcoreMotion300Protocol extends GBDeviceProtocol {
+public class SoundcoreMotion300Protocol extends AbstractSoundcoreProtocol {
     private static final Logger LOG = LoggerFactory.getLogger(SoundcoreMotion300Protocol.class);
 
     // Some of these commands are not used right now, they serve as documentation
@@ -97,8 +97,7 @@ public class SoundcoreMotion300Protocol extends GBDeviceProtocol {
 
     @Override
     public GBDeviceEvent[] decodeResponse(byte[] data) {
-        ByteBuffer buf = ByteBuffer.wrap(data);
-        SoundcorePacket packet = SoundcorePacket.decode(buf);
+        final SoundcorePacket packet = decodePacket(data);
 
         if (packet == null)
             return null;
@@ -262,17 +261,17 @@ public class SoundcoreMotion300Protocol extends GBDeviceProtocol {
 
         switch (config) {
             case PREF_SOUNDCORE_VOICE_PROMPTS:
-                return encodeSetBoolean(prefs, PREF_SOUNDCORE_VOICE_PROMPTS, CMD_SET_VOICE_PROMPTS);
+                return encodeBooleanPreference(prefs, PREF_SOUNDCORE_VOICE_PROMPTS, CMD_SET_VOICE_PROMPTS);
             case PREF_SOUNDCORE_BUTTON_BRIGHTNESS:
-                return encodeSetByte(prefs, PREF_SOUNDCORE_BUTTON_BRIGHTNESS, CMD_SET_BUTTON_BRIGHTNESS);
+                return encodeBytePreference(prefs, PREF_SOUNDCORE_BUTTON_BRIGHTNESS, CMD_SET_BUTTON_BRIGHTNESS);
             case PREF_SOUNDCORE_AUTO_POWER_OFF:
-                return encodeSetAutoPowerOff(prefs);
+                return encodeAutoPowerOffPreference(prefs);
             case PREF_SOUNDCORE_LDAC_MODE:
-                return encodeSetBoolean(prefs, PREF_SOUNDCORE_LDAC_MODE, CMD_SET_LDAC_MODE);
+                return encodeBooleanPreference(prefs, PREF_SOUNDCORE_LDAC_MODE, CMD_SET_LDAC_MODE);
             case PREF_SOUNDCORE_ADAPTIVE_DIRECTION:
-                return encodeSetBoolean(prefs, PREF_SOUNDCORE_ADAPTIVE_DIRECTION, CMD_SET_ADAPTIVE_DIRECTION);
+                return encodeBooleanPreference(prefs, PREF_SOUNDCORE_ADAPTIVE_DIRECTION, CMD_SET_ADAPTIVE_DIRECTION);
             case PREF_SOUNDCORE_EQUALIZER_PRESET:
-                return encodeSetByte(prefs, PREF_SOUNDCORE_EQUALIZER_PRESET, CMD_SET_EQUALIZER_PRESET);
+                return encodeBytePreference(prefs, PREF_SOUNDCORE_EQUALIZER_PRESET, CMD_SET_EQUALIZER_PRESET);
             case PREF_SOUNDCORE_EQUALIZER_DIRECTION:
                 return encodeRequest(CMD_GET_EQUALIZER);
             case PREF_SOUNDCORE_EQUALIZER_BAND1_FREQ:
@@ -293,17 +292,13 @@ public class SoundcoreMotion300Protocol extends GBDeviceProtocol {
             case PREF_SOUNDCORE_EQUALIZER_BAND8_VALUE:
             case PREF_SOUNDCORE_EQUALIZER_BAND9_FREQ:
             case PREF_SOUNDCORE_EQUALIZER_BAND9_VALUE:
-                return encodeSetEqualizerCustom(prefs);
+                return encodeCustomEqualizer(prefs);
         }
 
         return super.encodeSendConfiguration(config);
     }
 
-    private byte[] encodeRequest(short cmd) {
-        return new SoundcorePacket(cmd).encode();
-    }
-
-    public byte[] encodeGetDeviceInfo() {
+    public byte[] encodeDeviceInfoRequest() {
         return encodeRequest(CMD_GET_DEVICE_INFO);
     }
 
@@ -312,33 +307,22 @@ public class SoundcoreMotion300Protocol extends GBDeviceProtocol {
         return encodeRequest(CMD_POWER_OFF);
     }
 
-    private byte[] encodeSetBoolean(Prefs prefs, String pref, short cmd) {
+    private byte[] encodeBooleanPreference(Prefs prefs, String pref, short cmd) {
         boolean enabled = prefs.getBoolean(pref, true);
-        byte[] payload = new byte[] { enabled ? (byte)0x01 : (byte)0x00 };
-
-        return new SoundcorePacket(cmd, payload).encode();
+        return encodeBooleanCommand(cmd, enabled);
     }
 
-    private byte[] encodeSetByte(Prefs prefs, String pref, short cmd) {
+    private byte[] encodeBytePreference(Prefs prefs, String pref, short cmd) {
         byte value = (byte)Integer.parseInt(prefs.getString(pref, "0"));
-        byte[] payload = new byte[] { value };
-
-        return new SoundcorePacket(cmd, payload).encode();
+        return encodeByteCommand(cmd, value);
     }
 
-    private byte[] encodeSetAutoPowerOff(Prefs prefs) {
-        byte duration = (byte)Integer.parseInt(prefs.getString(PREF_SOUNDCORE_AUTO_POWER_OFF, "2"));
-        byte[] payload;
-
-        if (duration > 0)
-            payload = new byte[] { (byte)0x01, (byte)(duration - 1) };
-        else
-            payload = new byte[] { (byte)0x00, (byte)0x00 };
-
-        return new SoundcorePacket(CMD_SET_AUTO_POWER_OFF, payload).encode();
+    private byte[] encodeAutoPowerOffPreference(Prefs prefs) {
+        final int duration = Integer.parseInt(prefs.getString(PREF_SOUNDCORE_AUTO_POWER_OFF, "2"));
+        return encodeAutoPowerOff(CMD_SET_AUTO_POWER_OFF, duration, (byte)0x00);
     }
 
-    private byte[] encodeSetEqualizerCustom(Prefs prefs) {
+    private byte[] encodeCustomEqualizer(Prefs prefs) {
         ByteBuffer buf = ByteBuffer.allocate(21);
         int eqDirection = Integer.parseInt(prefs.getString(PREF_SOUNDCORE_EQUALIZER_DIRECTION, "0"));
         byte[] equalizer = equalizerFromPrefs(prefs);
@@ -349,7 +333,7 @@ public class SoundcoreMotion300Protocol extends GBDeviceProtocol {
         buf.put((byte)0xff);
         buf.put(equalizer);
 
-        return new SoundcorePacket(CMD_SET_EQUALIZER_CUSTOM, buf.array()).encode();
+        return encodeCommand(CMD_SET_EQUALIZER_CUSTOM, buf.array());
     }
 
     private Map<String, Object> equalizerToPrefs(byte[] equalizer) {

@@ -41,7 +41,7 @@ public class SoundcoreMotion300DeviceSupport extends AbstractHeadphoneSerialDevi
         // Device requires a little delay to respond to commands
         handler.postDelayed(() -> {
             final TransactionBuilder builderDelayed = createTransactionBuilder("initialize delayed");
-            builderDelayed.write(mDeviceProtocol.encodeGetDeviceInfo());
+            builderDelayed.write(mDeviceProtocol.encodeDeviceInfoRequest());
             builderDelayed.queue();
         }, 500);
 

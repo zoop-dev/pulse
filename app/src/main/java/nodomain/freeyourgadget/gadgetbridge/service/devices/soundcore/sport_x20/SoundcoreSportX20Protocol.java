@@ -84,28 +84,28 @@ public class SoundcoreSportX20Protocol extends SoundcoreLibertyProtocol {
 
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_SINGLE_TAP_ACTION_LEFT:
                 prefString = prefs.getString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_SINGLE_TAP_ACTION_LEFT, "PLAYPAUSE");
-                return encodeControlFunctionMessage(TapAction.SINGLE_TAP, false, TapFunction.valueOf(prefString));
+                return encodeControlFunction(TapAction.SINGLE_TAP, false, TapFunction.valueOf(prefString));
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_SINGLE_TAP_ACTION_RIGHT:
                 prefString = prefs.getString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_SINGLE_TAP_ACTION_RIGHT, "PLAYPAUSE");
-                return encodeControlFunctionMessage(TapAction.SINGLE_TAP, true, TapFunction.valueOf(prefString));
+                return encodeControlFunction(TapAction.SINGLE_TAP, true, TapFunction.valueOf(prefString));
 
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_DOUBLE_TAP_ACTION_LEFT:
                 prefString = prefs.getString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_DOUBLE_TAP_ACTION_LEFT, "MEDIA_PREV");
-                return encodeControlFunctionMessage(TapAction.DOUBLE_TAP, false, TapFunction.valueOf(prefString));
+                return encodeControlFunction(TapAction.DOUBLE_TAP, false, TapFunction.valueOf(prefString));
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_DOUBLE_TAP_ACTION_RIGHT:
                 prefString = prefs.getString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_DOUBLE_TAP_ACTION_RIGHT, "MEDIA_NEXT");
-                return encodeControlFunctionMessage(TapAction.DOUBLE_TAP, true, TapFunction.valueOf(prefString));
+                return encodeControlFunction(TapAction.DOUBLE_TAP, true, TapFunction.valueOf(prefString));
 
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_LONG_PRESS_ACTION_LEFT:
                 prefString = prefs.getString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_LONG_PRESS_ACTION_LEFT, "AMBIENT_SOUND_CONTROL");
-                return encodeControlFunctionMessage(TapAction.LONG_PRESS, false, TapFunction.valueOf(prefString));
+                return encodeControlFunction(TapAction.LONG_PRESS, false, TapFunction.valueOf(prefString));
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_LONG_PRESS_ACTION_RIGHT:
                 prefString = prefs.getString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_LONG_PRESS_ACTION_RIGHT, "AMBIENT_SOUND_CONTROL");
-                return encodeControlFunctionMessage(TapAction.LONG_PRESS, true, TapFunction.valueOf(prefString));
+                return encodeControlFunction(TapAction.LONG_PRESS, true, TapFunction.valueOf(prefString));
 
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_AUTO_POWER_OFF:
                 final int duration = Integer.parseInt(prefs.getString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_AUTO_POWER_OFF, "3"));
-                return encodeAutoPowerOff(duration);
+                return encodeAutoPowerOff(CMD_SET_AUTO_POWER_OFF, duration, (byte) 0x03);
 
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_TOUCH_TONE:
                 final boolean pressAlert = prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_TOUCH_TONE, false);
@@ -134,7 +134,7 @@ public class SoundcoreSportX20Protocol extends SoundcoreLibertyProtocol {
         }
     }
 
-    private byte[] encodeControlFunctionMessage(final TapAction action, final boolean right, final TapFunction function) {
+    private byte[] encodeControlFunction(final TapAction action, final boolean right, final TapFunction function) {
         final byte functionByte;
         switch (action) {
             case SINGLE_TAP:
@@ -150,18 +150,7 @@ public class SoundcoreSportX20Protocol extends SoundcoreLibertyProtocol {
                 return null;
         }
 
-        return encodeControlFunctionMessage(right, action.getCode(), functionByte);
-    }
-
-    /**
-     * 0: No Auto Power off
-     * 1: Auto Power off 10 min
-     * 2: Auto Power off 20 min
-     * 3: Auto Power off 30 min
-     * 4: Auto Power off 60 min
-     */
-    private byte[] encodeAutoPowerOff(final int duration) {
-        return encodeAutoPowerOff(duration, (byte) 0x03);
+        return encodeControlFunction(right, action.getCode(), functionByte);
     }
 
     private byte[] encodeEqualizer() {
