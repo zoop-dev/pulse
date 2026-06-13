@@ -35,8 +35,8 @@ public abstract class SoundcoreProtocolImplV1 extends AbstractSoundcoreProtocol 
     @Override
     public byte[] encodeFindDevice(final boolean start) {
         return encodeCommand(CMD_SET_FIND_DEVICE, new byte[]{
-                encodeBoolean(start),
-                encodeBoolean(start),
+                encodeBoolean(start), // left
+                encodeBoolean(start), // right
                 0x00
         });
     }
