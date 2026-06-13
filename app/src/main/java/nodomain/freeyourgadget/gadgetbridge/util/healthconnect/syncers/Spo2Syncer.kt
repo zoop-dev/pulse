@@ -48,8 +48,9 @@ internal object Spo2Syncer : AbstractTimeSampleSyncer<Spo2Sample, OxygenSaturati
     ): OxygenSaturationRecord? {
         val spo2AsDouble = sample.spo2.toDouble()
 
-        if (spo2AsDouble !in 0.0..100.0 || !spo2AsDouble.isFinite()) {
-            logger.skipOutOfRange(deviceName, "SpO2", spo2AsDouble, "0..100 %")
+        // 0 means "not measured" in GB (charts filter getSpo2() > 0); exclude it.
+        if (spo2AsDouble !in 1.0..100.0 || !spo2AsDouble.isFinite()) {
+            logger.skipOutOfRange(deviceName, "SpO2", spo2AsDouble, "1..100 %")
             return null
         }
 

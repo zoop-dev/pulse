@@ -158,7 +158,12 @@ class SyncerRangeValidationTest {
 
     @Test
     fun spo2_lowerBoundary_accepted() {
-        assertNotNull(Spo2Syncer.convertSample(spo2Sample(0), offset, metadata, device))
+        assertNotNull(Spo2Syncer.convertSample(spo2Sample(1), offset, metadata, device))
+    }
+
+    @Test
+    fun spo2_zero_dropped() {
+        assertNull(Spo2Syncer.convertSample(spo2Sample(0), offset, metadata, device))
     }
 
     @Test
@@ -197,6 +202,11 @@ class SyncerRangeValidationTest {
     @Test
     fun restingHr_aboveUpper_dropped() {
         assertNull(RestingHeartRateSyncer.convertSample(hrSample(301), offset, metadata, device))
+    }
+
+    @Test
+    fun restingHr_sentinel255_dropped() {
+        assertNull(RestingHeartRateSyncer.convertSample(hrSample(255), offset, metadata, device))
     }
 
     @Test
