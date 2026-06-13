@@ -38,12 +38,15 @@ import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.*;
+import static nodomain.freeyourgadget.gadgetbridge.service.devices.soundcore.protocol.impl.v1.SoundcoreProtocolImplV1.CMD_GET_DEVICE_INFO;
+import static nodomain.freeyourgadget.gadgetbridge.service.devices.soundcore.protocol.impl.v1.SoundcoreProtocolImplV1.CMD_NOTIFY_BATTERY_INFO;
+import static nodomain.freeyourgadget.gadgetbridge.service.devices.soundcore.protocol.impl.v1.SoundcoreProtocolImplV1.CMD_NOTIFY_CHARGING_INFO;
+import static nodomain.freeyourgadget.gadgetbridge.service.devices.soundcore.protocol.impl.v1.SoundcoreProtocolImplV1.CMD_SET_AUTO_POWER_OFF;
 
 public class SoundcoreMotion300Protocol extends GBDeviceProtocol {
     private static final Logger LOG = LoggerFactory.getLogger(SoundcoreMotion300Protocol.class);
 
     // Some of these commands are not used right now, they serve as documentation
-    private static final short CMD_GET_DEVICE_INFO = (short)0x0101;
     private static final short CMD_GET_LDAC_MODE = (short)0x7f01;
     private static final short CMD_GET_BUTTON_BRIGHTNESS = (short)0x9310;
     private static final short CMD_GET_EQUALIZER = (short)0x8902;
@@ -51,14 +54,11 @@ public class SoundcoreMotion300Protocol extends GBDeviceProtocol {
 
     private static final short CMD_SET_VOICE_PROMPTS = (short)0x9001;
     private static final short CMD_SET_BUTTON_BRIGHTNESS = (short)0x9210;
-    private static final short CMD_SET_AUTO_POWER_OFF = (short)0x8601;
     private static final short CMD_SET_LDAC_MODE = (short)0xff01;
     private static final short CMD_SET_ADAPTIVE_DIRECTION = (short)0x8a02;
     private static final short CMD_SET_EQUALIZER_PRESET = (short)0x8b02;
     private static final short CMD_SET_EQUALIZER_CUSTOM = (short)0x8d02;
 
-    private static final short CMD_NOTIFY_BATTERY_INFO = (short)0x0301;
-    private static final short CMD_NOTIFY_CHARGING_INFO = (short)0x0401;
     private static final short CMD_NOTIFY_VOLUME_INFO = (short)0x0901;
     private static final short CMD_NOTIFY_PLAYBACK_INFO = (short)0x2101;
     private static final short CMD_NOTIFY_BASS_MODE = (short)0x8e02;

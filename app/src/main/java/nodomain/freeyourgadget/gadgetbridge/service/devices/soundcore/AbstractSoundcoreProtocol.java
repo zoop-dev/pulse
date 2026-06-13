@@ -38,8 +38,4 @@ public abstract class AbstractSoundcoreProtocol extends GBDeviceProtocol {
         else return 0x00;
     }
 
-    public byte[] encodeDeviceInfoRequest() {
-        return new SoundcorePacket((short) 0x0101).encode();
-    }
-
 }

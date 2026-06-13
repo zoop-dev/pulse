@@ -2,7 +2,6 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.soundcore.sport_x20
 
 import android.content.SharedPreferences;
 
-import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +14,8 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class SoundcoreSportX20Protocol extends SoundcoreLibertyProtocol {
     private static final short CMD_SET_EQUALIZER = (short) 0x8703;
+    private static final short CMD_SET_3D_SURROUND = (short) 0x8602;
+
     private static final int CUSTOM_PRESET_ID = 0xfe;
     private static final int EQ_BANDS = 8;
 
@@ -53,11 +54,10 @@ public class SoundcoreSportX20Protocol extends SoundcoreLibertyProtocol {
 
     @Override
     public GBDeviceEvent[] decodeResponse(final byte[] responseData) {
-        final ByteBuffer buf = ByteBuffer.wrap(responseData);
-        final SoundcorePacket packet = SoundcorePacket.decode(buf);
+        final SoundcorePacket packet = decodePacket(responseData);
 
-        if (packet != null && packet.getCommand() == (short) 0x0106) {
-            decodeAncAudioMode(packet.getPayload());
+        if (packet != null && packet.getCommand() == CMD_NOTIFY_AUDIO_MODE) {
+            decodeAdvancedAudioMode(packet.getPayload());
             return new GBDeviceEvent[0];
         }
 
@@ -80,7 +80,7 @@ public class SoundcoreSportX20Protocol extends SoundcoreLibertyProtocol {
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_TRANSPARENCY_VOCAL_MODE:
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_ADAPTIVE_NOISE_CANCELLING:
             case DeviceSettingsPreferenceConst.PREF_SONY_AMBIENT_SOUND_LEVEL:
-                return encodeAncAudioMode();
+                return encodeAdvancedAudioMode(false);
 
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_SINGLE_TAP_ACTION_LEFT:
                 prefString = prefs.getString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_CONTROL_SINGLE_TAP_ACTION_LEFT, "PLAYPAUSE");
@@ -109,11 +109,11 @@ public class SoundcoreSportX20Protocol extends SoundcoreLibertyProtocol {
 
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_TOUCH_TONE:
                 final boolean pressAlert = prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_TOUCH_TONE, false);
-                return new SoundcorePacket((short) 0x8301, new byte[]{encodeBoolean(pressAlert)}).encode();
+                return encodeBooleanCommand(CMD_SET_TOUCH_TONE, pressAlert);
 
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_3D_SURROUND:
                 final boolean surround3d = prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_3D_SURROUND, false);
-                return new SoundcorePacket((short) 0x8602, new byte[]{encodeBoolean(surround3d)}).encode();
+                return encodeBooleanCommand(CMD_SET_3D_SURROUND, surround3d);
 
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_EQUALIZER_PRESET:
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_EQUALIZER_BAND1_VALUE:
@@ -127,19 +127,11 @@ public class SoundcoreSportX20Protocol extends SoundcoreLibertyProtocol {
                 return encodeEqualizer();
 
             case DeviceSettingsPreferenceConst.PREF_SOUNDCORE_ENABLE_PAIRING_MODE:
-                return new SoundcorePacket((short) 0x850b, new byte[]{0x00, (byte) 0x90}).encode();
+                return encodePairingMode();
 
             default:
                 return super.encodeSendConfiguration(config);
         }
-    }
-
-    @Override
-    public byte[] encodeFindDevice(final boolean start) {
-        final boolean findLeft = start;
-        final boolean findRight = start;
-        final byte[] payload = new byte[]{encodeBoolean(findLeft), encodeBoolean(findRight), 0x00};
-        return new SoundcorePacket((short) 0x8910, payload).encode();
     }
 
     private byte[] encodeControlFunctionMessage(final TapAction action, final boolean right, final TapFunction function) {
@@ -158,8 +150,7 @@ public class SoundcoreSportX20Protocol extends SoundcoreLibertyProtocol {
                 return null;
         }
 
-        final byte[] payload = new byte[]{encodeBoolean(right), action.getCode(), functionByte};
-        return new SoundcorePacket((short) 0x8104, payload).encode();
+        return encodeControlFunctionMessage(right, action.getCode(), functionByte);
     }
 
     /**
@@ -170,83 +161,7 @@ public class SoundcoreSportX20Protocol extends SoundcoreLibertyProtocol {
      * 4: Auto Power off 60 min
      */
     private byte[] encodeAutoPowerOff(final int duration) {
-        final byte[] payload;
-
-        if (duration > 0) {
-            payload = new byte[]{(byte) 0x01, (byte) (duration - 1)};
-        } else {
-            payload = new byte[]{(byte) 0x00, (byte) 0x03};
-        }
-
-        return new SoundcorePacket((short) 0x8601, payload).encode();
-    }
-
-    private void decodeAncAudioMode(final byte[] payload) {
-        if (payload.length < 5) {
-            return;
-        }
-
-        final SharedPreferences prefs = getDevicePrefs().getPreferences();
-        final SharedPreferences.Editor editor = prefs.edit();
-
-        String ambientSoundMode = "off";
-        if (payload[0] == 0x00) {
-            ambientSoundMode = "noise_cancelling";
-        } else if (payload[0] == 0x01) {
-            ambientSoundMode = "ambient_sound";
-        } else if (payload[0] == 0x02) {
-            ambientSoundMode = "off";
-        }
-
-        int ancStrength = ((payload[1] & 0x30) >> 4) - 1;
-
-        final boolean vocalMode = (payload[2] == 0x01);
-        final boolean adaptiveAnc = (payload[3] == 0x01);
-        final boolean windNoiseReduction = (payload[4] == 0x01);
-
-        editor.putString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_AMBIENT_SOUND_CONTROL, ambientSoundMode);
-        editor.putInt(DeviceSettingsPreferenceConst.PREF_SONY_AMBIENT_SOUND_LEVEL, ancStrength);
-        editor.putBoolean(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_TRANSPARENCY_VOCAL_MODE, vocalMode);
-        editor.putBoolean(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_ADAPTIVE_NOISE_CANCELLING, adaptiveAnc);
-        editor.putBoolean(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_WIND_NOISE_REDUCTION, windNoiseReduction);
-        editor.apply();
-    }
-
-    private byte[] encodeAncAudioMode() {
-        final Prefs prefs = getDevicePrefs();
-
-        final String ambientMode = prefs.getString(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_AMBIENT_SOUND_CONTROL, "off");
-        final int ancStrengthValue = prefs.getInt(DeviceSettingsPreferenceConst.PREF_SONY_AMBIENT_SOUND_LEVEL, 0);
-        final boolean vocalMode = prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_TRANSPARENCY_VOCAL_MODE, false);
-        final boolean adaptive = prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_ADAPTIVE_NOISE_CANCELLING, true);
-        final boolean windReduction = prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SOUNDCORE_WIND_NOISE_REDUCTION, false);
-
-        if (ancStrengthValue < 0 || ancStrengthValue > 2) {
-            return null;
-        }
-        final byte ancStrengthByte = (byte) ((ancStrengthValue + 1) << 4);
-
-        final byte ambientModeByte;
-        switch (ambientMode) {
-            case "noise_cancelling":
-                ambientModeByte = 0x00;
-                break;
-            case "ambient_sound":
-                ambientModeByte = 0x01;
-                break;
-            case "off":
-                ambientModeByte = 0x02;
-                break;
-            default:
-                return null;
-        }
-
-        final byte adaptiveByte = encodeBoolean(adaptive);
-        final byte vocalModeByte = encodeBoolean(vocalMode);
-        final byte windReductionByte = encodeBoolean(windReduction);
-
-        final byte[] payload = new byte[]{ambientModeByte, ancStrengthByte, vocalModeByte, adaptiveByte, windReductionByte};
-        return new SoundcorePacket((short) 0x8106, payload).encode();
+        return encodeAutoPowerOff(duration, (byte) 0x03);
     }
 
     private byte[] encodeEqualizer() {
@@ -256,7 +171,7 @@ public class SoundcoreSportX20Protocol extends SoundcoreLibertyProtocol {
         if (preset != CUSTOM_PRESET_ID) {
             final byte[] presetPayload = EQ_PRESET_PAYLOADS.get(preset);
             if (presetPayload != null) {
-                return new SoundcorePacket(CMD_SET_EQUALIZER, presetPayload).encode();
+                return encodeCommand(CMD_SET_EQUALIZER, presetPayload);
             }
         }
 
@@ -276,7 +191,7 @@ public class SoundcoreSportX20Protocol extends SoundcoreLibertyProtocol {
             bandsToHex(tailBands)
         );
 
-        return new SoundcorePacket(CMD_SET_EQUALIZER, payload).encode();
+        return encodeCommand(CMD_SET_EQUALIZER, payload);
     }
 
     private void decodeEqualizer(final byte[] payload) {
