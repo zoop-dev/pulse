@@ -49,6 +49,15 @@ public abstract class SoundcoreProtocolImplV1 extends AbstractSoundcoreProtocol 
         return encodeCommand(CMD_SET_CONTROL_FUNCTION, new byte[]{encodeBoolean(right), action, function});
     }
 
+    /**
+     * Encodes the following settings to a payload to set the audio-mode on the headphones:
+     * PREF_SOUNDCORE_AMBIENT_SOUND_CONTROL If ANC, Transparent or neither should be active
+     * PREF_SOUNDCORE_ADAPTIVE_NOISE_CANCELLING If the strenght of the ANC should be set manual or adaptively according to ambient noise
+     * PREF_SONY_AMBIENT_SOUND_LEVEL How strong the ANC should be in manual mode
+     * PREF_SOUNDCORE_TRANSPARENCY_VOCAL_MODE If the Transparency should focus on vocals or should be fully transparent
+     * PREF_SOUNDCORE_WIND_NOISE_REDUCTION If Transparency or ANC should reduce Wind Noise
+     * @return The payload
+    */
     protected byte[] encodeAdvancedAudioMode(final boolean appendStateByte) {
         final Prefs prefs = getDevicePrefs();
         final Byte ambientSoundMode = encodeAmbientSoundMode(prefs.getString(
