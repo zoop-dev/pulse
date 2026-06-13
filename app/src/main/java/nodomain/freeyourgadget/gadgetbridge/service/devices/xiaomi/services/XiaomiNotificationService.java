@@ -92,9 +92,7 @@ public class XiaomiNotificationService extends AbstractXiaomiService implements 
 
     @Override
     public void initialize() {
-        mPackages.clear();
-        mNotificationPackageName.clear();
-        mNotificationKey.clear();
+        // We intentionally do not clear the queues, so that we don't lose track if the device briefly loses connection
 
         getSupport().sendCommand("get screen on on notifications", COMMAND_TYPE, CMD_SCREEN_ON_ON_NOTIFICATIONS_GET);
         requestCannedMessages();
