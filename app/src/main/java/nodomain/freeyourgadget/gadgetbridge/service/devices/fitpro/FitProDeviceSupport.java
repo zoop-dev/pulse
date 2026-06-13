@@ -122,6 +122,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSett
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventCameraRemote;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventFindPhone;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventMusicControl;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo;
@@ -789,7 +790,10 @@ public class FitProDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
      */
     public void handleCamera(byte command) {
-        GB.toast(getContext(), "Camera buttons are detected but not further handled.", Toast.LENGTH_SHORT, GB.INFO);
+        LOG.debug("Got camera button: {}", String.format("0x%02x", command));
+        final GBDeviceEventCameraRemote cameraEvent = new GBDeviceEventCameraRemote();
+        cameraEvent.event = GBDeviceEventCameraRemote.Event.TAKE_PICTURE;
+        evaluateGBDeviceEvent(cameraEvent);
     }
 
     public void handleFindPhone() {
