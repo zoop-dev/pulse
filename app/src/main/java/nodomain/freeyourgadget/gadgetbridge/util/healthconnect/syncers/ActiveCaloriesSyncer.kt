@@ -35,7 +35,8 @@ internal object ActiveCaloriesSyncer : AbstractActivitySampleSyncer<ActiveCalori
         sample: ActivitySample,
         offset: ZoneOffset,
         metadata: Metadata,
-        deviceName: String
+        deviceName: String,
+        version: Long
     ): ActiveCaloriesBurnedRecord? {
         val caloriesInMinute = sample.activeCalories
         if (caloriesInMinute <= 0) {
@@ -56,7 +57,7 @@ internal object ActiveCaloriesSyncer : AbstractActivitySampleSyncer<ActiveCalori
             endTs,
             offset,
             Energy.calories(caloriesInMinute.toDouble()),
-            metadata
+            clientRecordMetadata(metadata, "calories", endTs.epochSecond, version)
         )
     }
 }
