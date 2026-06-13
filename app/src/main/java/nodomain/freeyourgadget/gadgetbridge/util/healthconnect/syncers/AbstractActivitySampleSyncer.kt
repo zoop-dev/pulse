@@ -24,6 +24,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample
 import nodomain.freeyourgadget.gadgetbridge.util.healthconnect.HealthConnectUtils
 import org.slf4j.Logger
+import java.time.Duration
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZoneOffset
@@ -34,11 +35,29 @@ internal abstract class AbstractActivitySampleSyncer<TRecord : Record> : Activit
     protected abstract val logger: Logger
     protected abstract val recordClass: KClass<TRecord>
 
+    // Re-emit samples this far before the slice start. The ACTIVITY cursor is shared across
+    // steps/calories/distance and advances to the furthest delivered; when step or distance detail
+    // trails the calorie summary, those minutes would be clipped and lost. The per-minute
+    // clientRecordId makes the re-emitted overlap an upsert. Heart rate is a series keyed on its
+    // start time, does not extend this base, and keeps strict boundaries.
+    protected open val lateSampleLookback: Duration = Duration.ofHours(1)
+
+    internal fun isWithinSlice(
+        endTs: Instant,
+        startTs: Instant,
+        sliceStartBoundary: Instant,
+        sliceEndBoundary: Instant
+    ): Boolean {
+        val effectiveStart = sliceStartBoundary.minus(lateSampleLookback)
+        return !endTs.isBefore(effectiveStart) && !startTs.isAfter(sliceEndBoundary)
+    }
+
     internal abstract fun convertSample(
         sample: ActivitySample,
         offset: ZoneOffset,
         metadata: Metadata,
-        deviceName: String
+        deviceName: String,
+        version: Long
     ): TRecord?
 
     override suspend fun sync(
@@ -69,6 +88,13 @@ internal abstract class AbstractActivitySampleSyncer<TRecord : Record> : Activit
 
         logger.info("Processing ${relevantSamples.size} samples for steps for device '$deviceName' for slice $sliceStartBoundary to $sliceEndBoundary.")
 
+        // clientRecordVersion: every record in this slice shares the run's wall-clock so a later
+        // sync always outranks the value it previously wrote for a minute. HC keeps the highest
+        // version on a clientRecordId collision, so the freshest (most complete) re-read wins even
+        // when a value is revised downward. Must not be the metric value itself: a downward
+        // correction would then carry a lower version and be silently ignored.
+        val recordVersion = System.currentTimeMillis()
+
         val recordsToInsert = mutableListOf<Record>()
         var skippedCount = 0
         var latestSyncedTimestamp: Instant? = null
@@ -76,7 +102,7 @@ internal abstract class AbstractActivitySampleSyncer<TRecord : Record> : Activit
             val endTs = Instant.ofEpochSecond(currentSample.timestamp.toLong())
             val startTs = endTs.minus(1, ChronoUnit.MINUTES)
 
-            if (endTs.isBefore(sliceStartBoundary) || startTs.isAfter(sliceEndBoundary)) {
+            if (!isWithinSlice(endTs, startTs, sliceStartBoundary, sliceEndBoundary)) {
                 logger.trace(
                     "Skipping {} for device '{}' for sample at {} (interval {} to {}) as its interval is outside the slice {} - {}.",
                     recordTypeName,
@@ -90,7 +116,7 @@ internal abstract class AbstractActivitySampleSyncer<TRecord : Record> : Activit
                 return@forEach
             }
 
-            val record = convertSample(sample = currentSample, offset.rules.getOffset(endTs), metadata, deviceName)
+            val record = convertSample(sample = currentSample, offset.rules.getOffset(endTs), metadata, deviceName, recordVersion)
             if (record == null) {
                 skippedCount++
                 return@forEach

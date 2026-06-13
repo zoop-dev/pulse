@@ -50,6 +50,7 @@ import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import java.util.*
 import java.util.function.BiConsumer
 import kotlin.math.pow
@@ -410,6 +411,7 @@ class HealthConnectUtils {
                         val sliceTotalSynced = sliceStats.sumOf { it.recordsSynced }
 
                         val latestRecordTs = sliceStats.mapNotNull { it.latestRecordTimestamp }.maxOrNull()
+
                         if (latestRecordTs != null && latestRecordTs.isAfter(timestampToPersistForThisDataType)) {
                             timestampToPersistForThisDataType = latestRecordTs
                         } else if (sliceTotalSynced == 0) {

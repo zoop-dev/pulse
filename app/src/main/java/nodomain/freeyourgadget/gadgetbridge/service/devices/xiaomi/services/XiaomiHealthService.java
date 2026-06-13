@@ -869,11 +869,18 @@ public class XiaomiHealthService extends AbstractXiaomiService {
             }
             fileIds.add(fileId);
         }
+        if (subtype == CMD_ACTIVITY_FETCH_TODAY) {
+            activityFetcher.setAwaitingPastResponse(true);
+        }
+
         activityFetcher.fetch(fileIds);
 
         if (subtype == CMD_ACTIVITY_FETCH_TODAY) {
             LOG.debug("Fetch recorded data from the past");
             fetchRecordedDataPast();
+        } else if (subtype == CMD_ACTIVITY_FETCH_PAST) {
+            activityFetcher.setAwaitingPastResponse(false);
+            activityFetcher.resumeFetching();
         }
     }
 

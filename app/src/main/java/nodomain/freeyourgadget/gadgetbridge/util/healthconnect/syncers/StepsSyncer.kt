@@ -34,7 +34,8 @@ internal object StepsSyncer : AbstractActivitySampleSyncer<StepsRecord>() {
         sample: ActivitySample,
         offset: ZoneOffset,
         metadata: Metadata,
-        deviceName: String
+        deviceName: String,
+        version: Long
     ): StepsRecord? {
         val stepsInMinute = sample.steps.toLong()
         // <= 0 means "no steps in that minute" - common, drop silently.
@@ -55,7 +56,7 @@ internal object StepsSyncer : AbstractActivitySampleSyncer<StepsRecord>() {
             endTs,
             offset,
             stepsInMinute,
-            metadata
+            clientRecordMetadata(metadata, "steps", endTs.epochSecond, version)
         )
     }
 }

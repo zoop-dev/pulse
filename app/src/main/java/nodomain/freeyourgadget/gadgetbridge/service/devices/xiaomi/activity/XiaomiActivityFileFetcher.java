@@ -34,6 +34,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -52,6 +53,8 @@ public class XiaomiActivityFileFetcher {
     private final Queue<XiaomiActivityFileId> mFetchQueue = new PriorityQueue<>();
     private ByteArrayOutputStream mBuffer = new ByteArrayOutputStream();
     private boolean isFetching = false;
+    private volatile boolean awaitingPastResponse = false;
+    private final AtomicBoolean queueHeld = new AtomicBoolean(false);
 
     private final Handler timeoutHandler = new Handler(Looper.getMainLooper());
 
@@ -61,6 +64,8 @@ public class XiaomiActivityFileFetcher {
 
     public void dispose() {
         clearTimeout();
+        awaitingPastResponse = false;
+        queueHeld.set(false);
     }
 
     private void clearTimeout() {
@@ -71,6 +76,7 @@ public class XiaomiActivityFileFetcher {
         // #4305 - Set the timeout in case the watch does not send the file
         this.timeoutHandler.postDelayed(() -> {
             LOG.warn("Timed out waiting for activity file with {} bytes in the buffer", mBuffer.size());
+            awaitingPastResponse = false;
             triggerNextFetch();
         }, 5000L);
     }
@@ -157,6 +163,30 @@ public class XiaomiActivityFileFetcher {
         triggerNextFetch();
     }
 
+    public void setAwaitingPastResponse(final boolean awaiting) {
+        this.awaitingPastResponse = awaiting;
+    }
+
+    public boolean isFetching() {
+        return isFetching;
+    }
+
+    public void signalComplete() {
+        LOG.debug("Nothing more to fetch");
+        isFetching = false;
+        queueHeld.set(false);
+        mHealthService.getSupport().getDevice().unsetBusyTask();
+        GB.signalActivityDataFinish(mHealthService.getSupport().getDevice());
+        GB.updateTransferNotification(null, "", false, 100, mHealthService.getSupport().getContext());
+        mHealthService.getSupport().getDevice().sendDeviceUpdateIntent(mHealthService.getSupport().getContext());
+    }
+
+    public void resumeFetching() {
+        if (queueHeld.compareAndSet(true, false)) {
+            triggerNextFetch();
+        }
+    }
+
     public void fetch(final List<XiaomiActivityFileId> fileIds) {
         // #4305 - ensure unique files
         for (final XiaomiActivityFileId fileId : fileIds) {
@@ -186,12 +216,12 @@ public class XiaomiActivityFileFetcher {
         final XiaomiActivityFileId fileId = mFetchQueue.poll();
 
         if (fileId == null) {
-            LOG.debug("Nothing more to fetch");
-            isFetching = false;
-            mHealthService.getSupport().getDevice().unsetBusyTask();
-            GB.signalActivityDataFinish(mHealthService.getSupport().getDevice());
-            GB.updateTransferNotification(null, "", false, 100, mHealthService.getSupport().getContext());
-            mHealthService.getSupport().getDevice().sendDeviceUpdateIntent(mHealthService.getSupport().getContext());
+            if (awaitingPastResponse) {
+                LOG.debug("Queue empty but awaiting past fetch response, holding signal");
+                queueHeld.set(true);
+                return;
+            }
+            signalComplete();
             return;
         }
 
