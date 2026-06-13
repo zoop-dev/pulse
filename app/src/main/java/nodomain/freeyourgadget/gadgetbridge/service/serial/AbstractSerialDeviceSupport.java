@@ -44,7 +44,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
 
 /**
  * An abstract base class for devices speaking a serial protocol, like via
- * an rfcomm bluetooth socket or a TCP socket.
+ * a rfcomm bluetooth socket or a TCP socket.
  * <p/>
  * This class uses two helper classes to deal with that:
  * - GBDeviceIoThread, which creates and maintains the actual socket connection and implements the transport layer

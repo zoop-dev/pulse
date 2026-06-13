@@ -171,7 +171,7 @@ public class BLETypeConversions {
             );
 
             if (value.length > 7) {
-                /* when we get a timezone offset via BLE, we cannot know which timeszone this is (only its offset), so
+                /* when we get a timezone offset via BLE, we cannot know which timezone this is (only its offset), so
                    set to UTC which does not use DST to prevent bugs when setting the raw offset below */
                 TimeZone timeZone = TimeZone.getTimeZone("UTC");
                 timeZone.setRawOffset(value[7] * 15 * 60 * 1000);

@@ -41,7 +41,7 @@ public interface InstallHandler {
     /**
      * Checks whether the installation of the 'element' on the device is possible
      * and configures the InstallActivity accordingly (sets helpful texts,
-     * enables/disables the "Install" button, etc.
+     * enables/disables the "Install" button, etc.)
      * <p/>
      * Note: may only be called if #isValid previously returned true.
      *

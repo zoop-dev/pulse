@@ -370,8 +370,8 @@ class WeatherSpec() : Parcelable {
         var co: Float = -1f // Carbon Monoxide, mg/m^3
         var no2: Float = -1f // Nitrogen Dioxide, ug/m^3
         var o3: Float = -1f // Ozone, ug/m^3
-        var pm10: Float = -1f // Particulate Matter, 10 microns or less in diameter, ug/m^3
-        var pm25: Float = -1f // Particulate Matter, 2.5 microns or less in diameter, ug/m^3
+        var pm10: Float = -1f // Particulate Matter, 10 microns or fewer in diameter, ug/m^3
+        var pm25: Float = -1f // Particulate Matter, 2.5 microns or fewer in diameter, ug/m^3
         var so2: Float = -1f // Sulphur Dioxide, ug/m^3
 
         // Air Quality Index values per pollutant

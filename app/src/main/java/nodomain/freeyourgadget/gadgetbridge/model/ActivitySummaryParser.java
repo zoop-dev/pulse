@@ -35,7 +35,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.workout.Workout;
 
 public interface ActivitySummaryParser {
     /**
-     * Re-parse an existing {@link BaseActivitySummary}, updating it from the existing binary data.
+     * Reparse an existing {@link BaseActivitySummary}, updating it from the existing binary data.
      *
      * @param summary    the existing {@link BaseActivitySummary}. It's not guaranteed that it
      *                   contains any raw binary data.

@@ -109,7 +109,7 @@ public class ExternalPebbleJSActivity extends AbstractGBActivity {
         }
 
         Objects.requireNonNull(currentDevice, "Must provide a device when invoking this activity");
-        Objects.requireNonNull(currentUUID, "Must provide a uuid when invoking this activity");
+        Objects.requireNonNull(currentUUID, "Must provide an uuid when invoking this activity");
 
         GBApplication.deviceService(currentDevice).onAppStart(currentUUID, true);
 
@@ -128,7 +128,7 @@ public class ExternalPebbleJSActivity extends AbstractGBActivity {
         webSettings.setJavaScriptEnabled(true);
         //needed to access the DOM
         webSettings.setDomStorageEnabled(true);
-        //needed for localstorage
+        //needed for local storage
         webSettings.setDatabaseEnabled(true);
         //allow local js files access
         webSettings.setAllowContentAccess(true);

@@ -31,7 +31,7 @@ import java.util.Objects;
 
 public class ArmenianTransliterator implements Transliterator {
     // Transliteration map ordered by priority
-    // Armenian has some rules regarding reading of 'ո' in the middle of the word it reads as english O
+    // Armenian has some rules regarding reading of 'ո' in the middle of the word it reads as English O
     // But if word starts with it's read as sound of 'vo'
     // Or if it has 'ւ' symbol after it, then we should read it as 'u' (as double o in booze)
     private static final Map<String, String> transliterateMap = new LinkedHashMap<String, String>() {

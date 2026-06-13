@@ -178,7 +178,7 @@ public abstract class AbstractActivityChartFragment<D extends ChartsData> extend
 
     protected List<? extends ActivitySample> getAllSamplesHighRes(DBHandler db, GBDevice device, int tsFrom, int tsTo) {
         SampleProvider<? extends ActivitySample> provider = getProvider(db, device);
-        // Only retrieve if the provider signals it has high res data, otherwise it is useless
+        // Only retrieve if the provider signals it has high-res data, otherwise it is useless
         if (provider.hasHighResData())
             return provider.getAllActivitySamplesHighRes(tsFrom, tsTo);
         return null;
@@ -190,14 +190,14 @@ public abstract class AbstractActivityChartFragment<D extends ChartsData> extend
     }
 
     public DefaultChartsData<LineData> refresh(GBDevice gbDevice, List<? extends ActivitySample> samples) {
-        // If there is no high res samples, all the samples are high res samples
+        // If there is no high-res samples, all the samples are high-res samples
         return refresh(gbDevice, samples, samples);
     }
 
     public DefaultChartsData<LineData> refresh(GBDevice gbDevice, List<? extends ActivitySample> samples, List<? extends ActivitySample> highResSamples) {
         TimestampTranslation tsTranslation = new TimestampTranslation();
         LOG.info("{}: number of samples: {}", getTitle(), samples.size());
-        LOG.info("{}: number of high res samples: {}", getTitle(), highResSamples.size());
+        LOG.info("{}: number of high-res samples: {}", getTitle(), highResSamples.size());
         LineData lineData;
 
         if (samples.isEmpty()) {
@@ -393,7 +393,7 @@ public abstract class AbstractActivityChartFragment<D extends ChartsData> extend
     protected abstract List<? extends ActivitySample> getSamples(DBHandler db, GBDevice device, int tsFrom, int tsTo);
 
     /**
-     * Implement this to supply high resolution data
+     * Implement this to supply high-resolution data
      */
     protected List<? extends ActivitySample> getSamplesHighRes(DBHandler db, GBDevice device, int tsFrom, int tsTo) {
         throw new NotImplementedException("High resolution samples have not been implemented for this chart.");

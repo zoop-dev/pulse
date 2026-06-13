@@ -90,7 +90,7 @@ public interface MetricSample extends TimeSample {
         /// @see FitHillScore#getLevel()
         GARMIN_HILL_STRENGTH(5, UNIT_NONE),
         /// This is a metabolic equivalent (MET) version of {@link #GENERIC_MAXIMUM_OXYGEN_UPTAKE}.
-        /// Estimated using 24/7 monitoring instead of high resolution activity recordings.
+        /// Estimated using 24/7 monitoring instead of high-resolution activity recordings.
         ///
         /// @see FitMaxMetData#getVo2Max()
         /// @see FitMaxMetData#getMaxMetCategory()

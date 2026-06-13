@@ -137,7 +137,7 @@ class DatabaseDebugFragment : AbstractDebugFragment() {
             }.setNegativeButton(R.string.cancel) { _, _ -> }.show()
     }
 
-    // TODO ability to run raw sql from the UI
+    // TODO ability to run raw SQL from the UI
     private fun runSql() {
         try {
             GBApplication.acquireDB().use { db ->

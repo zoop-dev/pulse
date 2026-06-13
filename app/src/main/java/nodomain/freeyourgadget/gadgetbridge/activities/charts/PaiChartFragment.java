@@ -312,7 +312,7 @@ public class PaiChartFragment extends AbstractChartFragment<PaiChartFragment.Pai
         set.setValueFormatter(getRoundFormatter());
 
         BarData barData = new BarData(set);
-        barData.setValueTextColor(TEXT_COLOR); //prevent tearing other graph elements with the black text. Another approach would be to hide the values cmpletely with data.setDrawValues(false);
+        barData.setValueTextColor(TEXT_COLOR); //prevent tearing other graph elements with the black text. Another approach would be to hide the values completely with data.setDrawValues(false);
         barData.setValueTextSize(10f);
 
         barChart.getAxisLeft().setAxisMaximum(Math.max(maxPai, getPaiTarget()) + 20);

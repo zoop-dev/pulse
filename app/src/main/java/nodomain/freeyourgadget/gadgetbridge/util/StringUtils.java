@@ -49,7 +49,7 @@ public class StringUtils {
 
     /**
      * Truncate a string to a certain maximum number of bytes, assuming UTF-8 encoding.
-     * Does not include the null terminator. Due to multi-byte characters, it's possible
+     * Does not include the null terminator. Due to multibyte characters, it's possible
      * that the resulting array is smaller than len, but never larger.
      */
     public static byte[] truncateToBytes(final String s, final int len) {

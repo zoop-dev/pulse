@@ -56,7 +56,7 @@ class FileInstallerActivity : AppCompatActivity() {
 
         currentUri = intent.data ?: intent.getParcelableExtra(Intent.EXTRA_STREAM)
 
-        // Setup the RecyclerView
+        // Set up the RecyclerView
         deviceAdapter = DeviceInstallAdapter { selectedDevice ->
             launchInstallActivity(selectedDevice, handlers[selectedDevice], currentUri)
         }

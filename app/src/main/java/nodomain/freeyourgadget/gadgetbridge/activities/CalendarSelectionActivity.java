@@ -172,7 +172,7 @@ public class CalendarSelectionActivity extends AbstractGBActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             CalendarManager.CalendarEntry item = getItem(position);
-            // Invert the checkbox on click before checking it's state below.
+            // Invert the checkbox on click before checking its state below.
             CheckBox selected = (CheckBox) view.findViewById(R.id.item_checkbox);
             selected.toggle();
 
@@ -221,7 +221,7 @@ public class CalendarSelectionActivity extends AbstractGBActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             int color = getItem(position);
-            // Invert the checkbox on click before checking it's state below.
+            // Invert the checkbox on click before checking its state below.
             CheckBox selected = (CheckBox) view.findViewById(R.id.item_event_color);
             selected.toggle();
             if (selected.isChecked()) {

@@ -270,7 +270,7 @@ public class BodyEnergyFragment extends AbstractChartFragment<BodyEnergyFragment
     }
 
     /**
-     * Build an binned average body energy curve with an arbitrary bin size.
+     * Build a binned average body energy curve with an arbitrary bin size.
      *
      * @param historicDays list of samples maps (timestamp -> energy)
      * @param binSizeMinutes width of a bin in minutes (must divide 24 hours evenly)

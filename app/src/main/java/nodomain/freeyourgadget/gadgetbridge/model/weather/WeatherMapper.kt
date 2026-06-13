@@ -340,10 +340,10 @@ object WeatherMapper {
         2 = cloudy - cloud
         3 = overcast - two clouds
         4 = showers - cloud with rain
-        5 = snow showers - showflake
+        5 = snow showers - snowflake
         6 = fog - multiple lines showing "fog"
 
-        9 = thunder showers - lightning
+        9 = thundershowers - lightning
 
         14 = sleet - cloud with dots under
 

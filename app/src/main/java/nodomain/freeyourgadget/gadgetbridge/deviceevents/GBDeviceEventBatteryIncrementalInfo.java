@@ -13,7 +13,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 
 /** This event is basically the same as GBDeviceEventBatteryInfo, but it will only update the fields
  * that are explicitly set. This can be used when the caller that is sending the event doesn't have
- * all of the battery state available to make the call. For example the device has a sent an event
+ * all of the battery state available to make the call. For example the device has sent an event
  * that indicates the device has started charging, but does not send the current level. If that
  * caller tries to fetch the current state and resend it, there is a race condition that may cause a
  * concurrent update to be dropped.

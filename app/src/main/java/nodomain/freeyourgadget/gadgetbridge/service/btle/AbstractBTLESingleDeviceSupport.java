@@ -167,7 +167,7 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
 
     @Override
     public boolean isConnected(){
-        // in a multi-threaded environment the queue knows
+        // in a multithreaded environment the queue knows
         // best about the up-to-date connection status
         return (mQueue != null) && mQueue.isConnected();
     }

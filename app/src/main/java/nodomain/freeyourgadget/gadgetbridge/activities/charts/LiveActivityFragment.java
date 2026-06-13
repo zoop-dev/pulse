@@ -379,7 +379,7 @@ public class LiveActivityFragment extends AbstractActivityChartFragment<ChartsDa
             GBApplication.deviceService(getChartsHost().getDevice()).onEnableRealtimeSteps(enable);
             GBApplication.deviceService(getChartsHost().getDevice()).onEnableRealtimeHeartRateMeasurement(enable);
         } catch (IllegalStateException e) {
-            LOG.error("IllegalStateException catched, setting realtime tracking globally to {}", enable);
+            LOG.error("IllegalStateException caught, setting realtime tracking globally to {}", enable);
             GBApplication.deviceService().onEnableRealtimeSteps(enable);
             GBApplication.deviceService().onEnableRealtimeHeartRateMeasurement(enable);
         }

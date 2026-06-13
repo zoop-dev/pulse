@@ -104,7 +104,7 @@ public class HealthThermometerProfile <T extends AbstractBTLESingleDeviceSupport
     private void handleTemperatureMeasurement(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] raw) {
         /*
          * This metadata contains as bits:
-         * the unit (celsius (0) or fahrenheit (1)) (bit 7 (last bit))
+         * the unit (Celsius (0) or Fahrenheit (1)) (bit 7 (last bit))
          * if a timestamp is present (1) or not present (0) (bit 6)
          * if a temperature type is present (1) or not present (0) (bit 5)
          */

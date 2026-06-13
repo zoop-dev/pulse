@@ -22,7 +22,7 @@ public interface BTLEOperation {
     void perform() throws IOException;
 
     /**
-     * Returns a human readable name of this operation, to be used e.g. in log output.
+     * Returns a human-readable name of this operation, to be used e.g. in log output.
      */
     String getName();
 }

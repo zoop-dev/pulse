@@ -68,7 +68,7 @@ public abstract class AbstractBleProfile<T extends AbstractBTLESingleDeviceSuppo
     }
 
     /**
-     * All notifications should be sent through this methods to make them testable.
+     * All notifications should be sent through this method to make them testable.
      * @param intent the intent to broadcast
      */
     protected void notify(Intent intent) {

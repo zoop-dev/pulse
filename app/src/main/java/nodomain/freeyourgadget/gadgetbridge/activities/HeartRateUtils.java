@@ -25,7 +25,7 @@ public class HeartRateUtils {
     public static final int MIN_HEART_RATE_VALUE = 10;
 
     /**
-     * The maxiumum gap between two hr measurements in which
+     * The maximum gap between two hr measurements in which
      * we interpolate between the measurements. Otherwise, two
      * distinct measurements will be shown.
      *

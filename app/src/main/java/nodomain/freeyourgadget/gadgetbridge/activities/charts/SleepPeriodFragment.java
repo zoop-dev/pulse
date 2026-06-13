@@ -323,7 +323,7 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
         set.setValueFormatter(getBarValueFormatter());
 
         BarData barData = new BarData(set);
-        barData.setValueTextColor(Color.GRAY); //prevent tearing other graph elements with the black text. Another approach would be to hide the values cmpletely with data.setDrawValues(false);
+        barData.setValueTextColor(Color.GRAY); //prevent tearing other graph elements with the black text. Another approach would be to hide the values completely with data.setDrawValues(false);
         barData.setValueTextSize(10f);
 
         barChart.getAxisLeft().setAxisMaximum(Math.max(set.getYMax(), mTargetValue) + 60);

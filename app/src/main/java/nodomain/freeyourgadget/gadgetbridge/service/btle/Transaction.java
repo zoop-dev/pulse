@@ -70,7 +70,7 @@ public class Transaction extends AbstractTransaction {
 
     /**
      * Returns whether the gatt callback should be modified for this transaction (either set, or
-     * unset if {@code getGattCallback} is null.
+     * unset if {@code getGattCallback} is null).
      */
     public boolean isModifyGattCallback() {
         return modifyGattCallback;
