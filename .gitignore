@@ -28,6 +28,33 @@ proguard/
 # Log Files
 *.log
 
+# reduce exposure risk for Local Secrets
+*.cer
+*.crt
+*.env
+*.jks
+*.key
+*.keystore
+*.p12
+*.pem
+*.pfx
+*.secret
+*.token
+.env
+.env.*
+config.json
+credentials.json
+google-services.json
+id_ed25519
+id_rsa
+key.properties
+kubeconfig
+local.properties
+local.settings.json
+private/
+secrets.json
+secrets/
+
 .idea/*
 !.idea/icon.svg
 !.idea/dictionaries
