@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2024 Carsten Pfeiffer
+/*  Copyright (C) 2015-2026 Carsten Pfeiffer
 
     This file is part of Gadgetbridge.
 
@@ -18,6 +18,8 @@ package nodomain.freeyourgadget.gadgetbridge.service.btle.actions;
 
 import android.bluetooth.BluetoothGatt;
 
+import androidx.annotation.NonNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +31,7 @@ public abstract class AbortTransactionAction extends PlainAction {
     private static final Logger LOG = LoggerFactory.getLogger(AbortTransactionAction.class);
 
     @Override
-    public boolean run(BluetoothGatt gatt) {
+    public boolean run(@NonNull BluetoothGatt gatt) {
         if (shouldAbort()) {
             LOG.info("Aborting transaction because abort criteria met.");
             return false;
@@ -39,6 +41,7 @@ public abstract class AbortTransactionAction extends PlainAction {
 
     protected abstract boolean shouldAbort();
 
+    @NonNull
     @Override
     public String toString() {
         return getCreationTime() + " " + getClass().getSimpleName() + " abort=" + shouldAbort();

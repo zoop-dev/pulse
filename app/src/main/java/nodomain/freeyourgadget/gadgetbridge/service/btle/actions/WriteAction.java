@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2025 Andreas Shimokawa, Carsten Pfeiffer, Daniele
+/*  Copyright (C) 2015-2026 Andreas Shimokawa, Carsten Pfeiffer, Daniele
     Gobbetti, José Rebelo, Uwe Hermann, Thomas Kuehne
 
     This file is part of Gadgetbridge.
@@ -22,6 +22,8 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothStatusCodes;
 
+import androidx.annotation.NonNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,18 +44,18 @@ public class WriteAction extends BtLEAction {
     private final byte[] value;
     private final boolean legacyCompat;
 
-    public WriteAction(BluetoothGattCharacteristic characteristic, byte[] value) {
+    public WriteAction(@NonNull BluetoothGattCharacteristic characteristic, @NonNull byte[] value) {
         this(characteristic, value, false);
     }
 
-    public WriteAction(BluetoothGattCharacteristic characteristic, byte[] value, boolean legacyCompat) {
+    public WriteAction(@NonNull BluetoothGattCharacteristic characteristic, @NonNull byte[] value, boolean legacyCompat) {
         super(characteristic);
         this.value = value;
         this.legacyCompat = legacyCompat;
     }
 
     @Override
-    public boolean run(BluetoothGatt gatt) {
+    public boolean run(@NonNull BluetoothGatt gatt) {
         BluetoothGattCharacteristic characteristic = getCharacteristic();
         int properties = characteristic.getProperties();
         //TODO: expectsResult should return false if PROPERTY_WRITE_NO_RESPONSE is true, but this leads to timing issues
@@ -74,7 +76,7 @@ public class WriteAction extends BtLEAction {
     }
 
     @SuppressLint("MissingPermission")
-    private static boolean writeCharacteristicImp(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, byte[] value, boolean legacyCompat) {
+    private static boolean writeCharacteristicImp(@NonNull BluetoothGatt gatt, @NonNull BluetoothGattCharacteristic characteristic, @NonNull byte[] value, boolean legacyCompat) {
         if (GBApplication.isRunningTiramisuOrLater() && !legacyCompat) {
             // use API introduced in SDK level 33 to catch exceptions and more specific errors
             try {
@@ -109,6 +111,7 @@ public class WriteAction extends BtLEAction {
         return true;
     }
 
+    @NonNull
     @Override
     public String toString() {
         BluetoothGattCharacteristic characteristic = getCharacteristic();

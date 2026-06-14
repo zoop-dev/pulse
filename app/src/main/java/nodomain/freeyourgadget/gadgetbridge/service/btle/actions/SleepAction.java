@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2024 Carsten Pfeiffer
+/*  Copyright (C) 2015-2026 Carsten Pfeiffer
 
     This file is part of Gadgetbridge.
 
@@ -18,6 +18,9 @@ package nodomain.freeyourgadget.gadgetbridge.service.btle.actions;
 
 import android.bluetooth.BluetoothGatt;
 
+import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
+
 /**
  * An action that will cause the queue to {@link Thread#sleep(long) sleep} for the specified time.
  * Note that this is usually a bad idea, since it will not be able to process messages
@@ -25,22 +28,23 @@ import android.bluetooth.BluetoothGatt;
  */
 public class SleepAction extends PlainAction {
 
-    private final int mMillis;
+    private final long mMillis;
 
-    public SleepAction(int millis) {
+    public SleepAction(@IntRange(from = 0L) final long millis) {
         mMillis = millis;
     }
 
     @Override
-    public boolean run(BluetoothGatt gatt) {
+    public boolean run(@NonNull final BluetoothGatt gatt) {
         try {
             Thread.sleep(mMillis);
             return true;
-        } catch (InterruptedException e) {
+        } catch (final InterruptedException e) {
             return false;
         }
     }
 
+    @NonNull
     @Override
     public String toString() {
         return getCreationTime() + " " + getClass().getSimpleName() + " " + mMillis + " ms";

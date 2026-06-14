@@ -1,4 +1,4 @@
-/*  Copyright (C) 2016-2025 Andreas Shimokawa, Carsten Pfeiffer, Thomas Kuehne
+/*  Copyright (C) 2016-2026 Andreas Shimokawa, Carsten Pfeiffer, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -19,16 +19,19 @@ package nodomain.freeyourgadget.gadgetbridge.service.btle.actions;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 public abstract class ConditionalWriteAction extends WriteAction {
     private boolean actualGenerated;
     private byte[] actual;
 
-    public ConditionalWriteAction(BluetoothGattCharacteristic characteristic) {
+    public ConditionalWriteAction(@NonNull BluetoothGattCharacteristic characteristic) {
         super(characteristic, null);
     }
 
     @Override
-    public boolean run(BluetoothGatt gatt) {
+    public boolean run(@NonNull BluetoothGatt gatt) {
         byte[] value = getValue();
         if (value != null) {
             return super.run(gatt);
@@ -47,12 +50,14 @@ public abstract class ConditionalWriteAction extends WriteAction {
 
     /**
      * Checks the condition whether the write shall happen or not.
-     * Returns the actual value to be written or null in case nothing shall be written.
-     * <p/>
-     * Note that returning null will not cause {@link #run()} to return false, in other words,
+     * Returns the actual value to be written or {@code null} in case nothing shall be written.
+     * <p>
+     * Note that returning {@code null} will not cause {@link #run(BluetoothGatt)} to return {@code false}, in other words,
      * the rest of the queue will still be executed.
+     * </p>
      *
-     * @return the value to be written or null to not write anything
+     * @return the value to be written or {@code null} to not write anything
      */
+    @Nullable
     protected abstract byte[] checkCondition();
 }

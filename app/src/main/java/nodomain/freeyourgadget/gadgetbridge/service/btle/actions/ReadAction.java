@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2024 Carsten Pfeiffer, Daniele Gobbetti
+/*  Copyright (C) 2015-2026 Carsten Pfeiffer, Daniele Gobbetti
 
     This file is part of Gadgetbridge.
 
@@ -20,6 +20,8 @@ import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 
+import androidx.annotation.NonNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,13 +36,13 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCallback;
 public class ReadAction extends BtLEAction {
     private static final Logger LOG = LoggerFactory.getLogger(ReadAction.class);
 
-    public ReadAction(BluetoothGattCharacteristic characteristic) {
+    public ReadAction(@NonNull BluetoothGattCharacteristic characteristic) {
         super(characteristic);
     }
 
     @SuppressLint("MissingPermission")
     @Override
-    public boolean run(BluetoothGatt gatt) {
+    public boolean run(@NonNull BluetoothGatt gatt) {
         int properties = getCharacteristic().getProperties();
         if ((properties & BluetoothGattCharacteristic.PROPERTY_READ) > 0) {
             return gatt.readCharacteristic(getCharacteristic());
@@ -54,6 +56,7 @@ public class ReadAction extends BtLEAction {
         return true;
     }
 
+    @NonNull
     @Override
     public String toString() {
         BluetoothGattCharacteristic characteristic = getCharacteristic();
