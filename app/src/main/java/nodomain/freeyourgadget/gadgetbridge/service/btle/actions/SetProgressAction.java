@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2025 Andreas Shimokawa, Carsten Pfeiffer, José Rebelo, Thomas Kuehne
+/*  Copyright (C) 2015-2026 Andreas Shimokawa, Carsten Pfeiffer, José Rebelo, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -20,6 +20,7 @@ import android.bluetooth.BluetoothGatt;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -40,15 +41,15 @@ public class SetProgressAction extends PlainAction {
      * @param percentage Current percentage indicating how far along the action has progressed
      * @param context Context in which to create the notification
      */
-    public SetProgressAction(@StringRes int textRes, boolean ongoing, int percentage, Context context) {
-        this.text = context.getString(textRes);;
+    public SetProgressAction(@StringRes int textRes, boolean ongoing, int percentage, @NonNull Context context) {
+        this.text = context.getString(textRes);
         this.ongoing = ongoing;
         this.percentage = percentage;
         this.context = context;
     }
 
     @Override
-    public boolean run(BluetoothGatt gatt) {
+    public boolean run(@NonNull BluetoothGatt gatt) {
         GB.updateInstallNotification(this.text, this.ongoing, this.percentage, this.context);
 
         final LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(context);
@@ -63,6 +64,7 @@ public class SetProgressAction extends PlainAction {
         return true;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return getCreationTime() + " " + getClass().getSimpleName() + ": " + text + "; " + percentage + "%";

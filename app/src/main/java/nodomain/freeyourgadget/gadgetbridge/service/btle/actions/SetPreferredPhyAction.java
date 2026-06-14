@@ -1,4 +1,4 @@
-/*  Copyright (C) 2025 Thomas Kuehne
+/*  Copyright (C) 2025-2026 Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -21,6 +21,7 @@ import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothGatt;
 import android.os.Build;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import org.slf4j.Logger;
@@ -41,7 +42,7 @@ public class SetPreferredPhyAction extends BtLEAction {
     private final int mRxPhy;
     private final int mPhyOptions;
 
-    public SetPreferredPhyAction(int txPhy, int rxPhy, int phyOptions) {
+    public SetPreferredPhyAction(final int txPhy, final int rxPhy, final int phyOptions) {
         super(null);
         mTxPhy = txPhy;
         mRxPhy = rxPhy;
@@ -57,7 +58,7 @@ public class SetPreferredPhyAction extends BtLEAction {
 
     @SuppressLint("MissingPermission")
     @Override
-    public boolean run(BluetoothGatt gatt) {
+    public boolean run(@NonNull final BluetoothGatt gatt) {
         try {
             gatt.setPreferredPhy(mTxPhy, mRxPhy, mPhyOptions);
             return true;
@@ -68,6 +69,7 @@ public class SetPreferredPhyAction extends BtLEAction {
         }
     }
 
+    @NonNull
     @Override
     public String toString() {
         return getCreationTime() + " " + getClass().getSimpleName() + " tx=" + mTxPhy

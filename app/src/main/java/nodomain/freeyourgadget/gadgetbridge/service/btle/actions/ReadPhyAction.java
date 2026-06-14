@@ -1,4 +1,4 @@
-/*  Copyright (C) 2025 Thomas Kuehne
+/*  Copyright (C) 2025-2026 Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -21,6 +21,7 @@ import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothGatt;
 import android.os.Build;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import org.slf4j.Logger;
@@ -47,7 +48,7 @@ public class ReadPhyAction extends BtLEAction {
 
     @SuppressLint("MissingPermission")
     @Override
-    public boolean run(BluetoothGatt gatt) {
+    public boolean run(@NonNull BluetoothGatt gatt) {
         try {
             gatt.readPhy();
             return true;
@@ -57,6 +58,7 @@ public class ReadPhyAction extends BtLEAction {
         }
     }
 
+    @NonNull
     @Override
     public String toString() {
         return getCreationTime() + " " + getClass().getSimpleName();

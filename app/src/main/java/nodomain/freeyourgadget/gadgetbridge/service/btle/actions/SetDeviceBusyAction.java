@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2025 Carsten Pfeiffer, Thomas Kuehne
+/*  Copyright (C) 2015-2026 Carsten Pfeiffer, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -45,7 +45,7 @@ public class SetDeviceBusyAction extends PlainAction {
     }
 
     @Override
-    public boolean run(BluetoothGatt gatt) {
+    public boolean run(@NonNull BluetoothGatt gatt) {
         if (busyTask == 0) {
             device.unsetBusyTask();
         } else {
@@ -56,6 +56,7 @@ public class SetDeviceBusyAction extends PlainAction {
         return true;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return getCreationTime() + " " + getClass().getName() + " "

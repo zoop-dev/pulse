@@ -1,4 +1,4 @@
-/*  Copyright (C) 2023-2025 Johannes Krude, Thomas Kuehne
+/*  Copyright (C) 2023-2026 Johannes Krude, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -50,7 +50,7 @@ public class FunctionAction extends BtLEAction {
     }
 
     @Override
-    public boolean run(BluetoothGatt gatt) {
+    public boolean run(@NonNull BluetoothGatt gatt) {
         try {
             final boolean success;
             if (mRunnable != null) {

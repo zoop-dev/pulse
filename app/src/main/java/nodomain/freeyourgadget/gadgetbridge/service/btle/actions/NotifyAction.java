@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2024 Alicia Hormann, Carsten Pfeiffer, Daniele Gobbetti
+/*  Copyright (C) 2015-2026 Alicia Hormann, Carsten Pfeiffer, Daniele Gobbetti
 
     This file is part of Gadgetbridge.
 
@@ -32,6 +32,8 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCallback;
 
 import static nodomain.freeyourgadget.gadgetbridge.service.btle.GattDescriptor.UUID_DESCRIPTOR_GATT_CLIENT_CHARACTERISTIC_CONFIGURATION;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresPermission;
 
 /**
@@ -43,16 +45,19 @@ public class NotifyAction extends BtLEAction {
 
     private static final Logger LOG = LoggerFactory.getLogger(NotifyAction.class);
     private final boolean enableFlag;
-    private boolean hasWrittenDescriptor = false;
+    private boolean hasWrittenDescriptor;
 
-    public NotifyAction(BluetoothGattCharacteristic characteristic, boolean enable) {
+    public NotifyAction(@NonNull BluetoothGattCharacteristic characteristic, boolean enable) {
         super(characteristic);
         enableFlag = enable;
+        hasWrittenDescriptor = false;
     }
 
     /// shared write implementation that can be used without a BtLEAction
     @SuppressLint("MissingPermission")
-    public static boolean writeDescriptor(final BluetoothGatt gatt, final BluetoothGattDescriptor descriptor, final byte[] value) {
+    public static boolean writeDescriptor(@Nullable final BluetoothGatt gatt,
+                                          @Nullable final BluetoothGattDescriptor descriptor,
+                                          @NonNull final byte[] value) {
         if (gatt == null) {
             LOG.error("gatt == null");
             return false;
@@ -96,7 +101,7 @@ public class NotifyAction extends BtLEAction {
 
     @Override
     @RequiresPermission("android.permission.BLUETOOTH_CONNECT")
-    public boolean run(BluetoothGatt gatt) {
+    public boolean run(@NonNull BluetoothGatt gatt) {
         // register gatt's callback to receive notifications
         boolean result = gatt.setCharacteristicNotification(getCharacteristic(), enableFlag);
 
@@ -137,6 +142,7 @@ public class NotifyAction extends BtLEAction {
         return hasWrittenDescriptor;
     }
 
+    @NonNull
     @Override
     public String toString() {
         BluetoothGattCharacteristic characteristic = getCharacteristic();

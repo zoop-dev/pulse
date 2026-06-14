@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015-2024 Carsten Pfeiffer
+/*  Copyright (C) 2015-2026 Carsten Pfeiffer
 
     This file is part of Gadgetbridge.
 
@@ -15,6 +15,8 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.btle.actions;
+
+import androidx.annotation.NonNull;
 
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCharacteristic;
@@ -34,6 +36,7 @@ public abstract class PlainAction extends BtLEAction {
         return false;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return getCreationTime() + " " + getClass().getSimpleName();
