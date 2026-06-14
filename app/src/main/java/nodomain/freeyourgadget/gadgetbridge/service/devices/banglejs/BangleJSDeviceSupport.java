@@ -141,6 +141,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDevic
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEQueue;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.util.BundleUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.EmojiConverter;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -1053,22 +1054,16 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
         if (json.has("extra")) {
             JSONObject extra = json.getJSONObject("extra");
             Iterator<String> iter = extra.keys();
+            Bundle extras = new Bundle();
             while (iter.hasNext()) {
                 String key = iter.next();
                 Object value = extra.get(key);
 
-                if (value instanceof Boolean boolExtra) {
-                    in.putExtra(key, boolExtra);
-                } else if (value instanceof Integer integerExtra) {
-                    in.putExtra(key, integerExtra);
-                } else if (value instanceof Long longExtra) {
-                    in.putExtra(key, longExtra);
-                } else if (value instanceof Double doubleExtra) {
-                    in.putExtra(key, doubleExtra);
-                } else {
+                if (!BundleUtils.addToBundle(extras, key, value)) {
                     in.putExtra(key, value.toString());
                 }
             }
+            in.putExtras(extras);
         }
         LOG.info("Executing intent:\n\t" + String.valueOf(in) + "\n\tTargeting: " + target);
         //GB.toast(getContext(), String.valueOf(in), Toast.LENGTH_LONG, GB.INFO);

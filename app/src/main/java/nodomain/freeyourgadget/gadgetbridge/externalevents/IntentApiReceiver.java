@@ -58,6 +58,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.DeviceType;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationType;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
+import nodomain.freeyourgadget.gadgetbridge.util.BundleUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 import nodomain.freeyourgadget.gadgetbridge.util.backup.PeriodicZipExporter;
@@ -328,27 +329,7 @@ public class IntentApiReceiver extends BroadcastReceiver {
                 }
                 String option = key.substring(prefix.length());
                 Object extra = extras.get(key);
-                if (extra == null) {
-                    options.putSerializable(option, null);
-                } else if (extra instanceof String value) {
-                    options.putString(option, value);
-                } else if (extra instanceof Boolean value) {
-                    options.putBoolean(option, value);
-                } else if (extra instanceof Integer value) {
-                    options.putInt(option, value);
-                } else if (extra instanceof Long value) {
-                    options.putLong(option, value);
-                } else if (extra instanceof Float value) {
-                    options.putFloat(option, value);
-                } else if (extra instanceof float[] value) {
-                    options.putFloatArray(option, value);
-                } else if (extra instanceof int[] value) {
-                    options.putIntArray(option, value);
-                } else if (extra instanceof long[] value) {
-                    options.putLongArray(option, value);
-                } else if (extra instanceof Parcelable value) {
-                    options.putParcelable(option, value);
-                } else  {
+                if (!BundleUtils.addToBundle(options, key, extra)) {
                     LOG.warn("unhandled extra {} {} {}", option, extra, extra.getClass());
                 }
             }
