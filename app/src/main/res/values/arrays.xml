@@ -4171,6 +4171,18 @@
         <item>8</item>
     </string-array>
 
+    <string-array name="earfun_free_pro_3_audio_codec_names">
+        <item>@string/pref_title_stable_connection</item>
+        <item>aptX</item>
+        <item>aptX Adaptive</item>
+    </string-array>
+
+    <string-array name="earfun_free_pro_3_audio_codec_values">
+        <item>0</item>
+        <item>1</item>
+        <item>3</item>
+    </string-array>
+
     <string-array name="earfun_advanced_audio_mode_names">
         <item>Google Fast Pair</item>
         <item>LE Audio</item>
@@ -4236,6 +4248,38 @@
     </string-array>
 
     <string-array name="earfun_air_pro_4_tap_action_values">
+        <item>16</item>
+        <item>2</item>
+        <item>3</item>
+        <item>5</item>
+        <item>4</item>
+        <item>1</item>
+        <item>7</item>
+        <item>6</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>13</item>
+    </string-array>
+
+    <string-array name="earfun_free_pro_3_tap_action_names">
+        <item>@string/none</item>
+        <item>@string/pref_media_volumeup</item>
+        <item>@string/pref_media_volumedown</item>
+        <item>@string/pref_media_next</item>
+        <item>@string/pref_media_previous</item>
+        <item>@string/pref_media_playpause</item>
+        <item>@string/prefs_game_mode</item>
+        <item>@string/pref_title_touch_voice_assistant</item>
+        <item>@string/earfun_tap_action_noise_control_all_modes</item>
+        <item>@string/earfun_tap_action_noise_control_normal_wind</item>
+        <item>@string/earfun_tap_action_noise_control_normal_ambient</item>
+        <item>@string/earfun_tap_action_noise_control_wind_ambient</item>
+        <item>@string/earfun_tap_action_redial</item>
+    </string-array>
+
+    <string-array name="earfun_free_pro_3_tap_action_values">
         <item>16</item>
         <item>2</item>
         <item>3</item>

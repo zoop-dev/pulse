@@ -2281,6 +2281,7 @@
     <string name="devicetype_bandw_pseries" translatable="false">Bowers and Wilkins P series</string>
     <string name="devicetype_earfun_air_s" translatable="false">EarFun Air S</string>
     <string name="devicetype_earfun_air_pro_4" translatable="false">EarFun Air Pro 4</string>
+    <string name="devicetype_earfun_free_pro_3" translatable="false">EarFun Free Pro 3</string>
     <string name="devicetype_atc_ble_oepl" translatable="false">ATC_BLE_OEPL</string>
     <string name="devicetype_igpsport_bsc200" translatable="false">iGPSPORT BSC200</string>
     <string name="devicetype_igpsport_bsc200s" translatable="false">iGPSPORT BSC200S</string>

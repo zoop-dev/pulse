@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceScreen
+        android:icon="@drawable/ic_touch"
+        android:key="pref_screen_earfun_touch_options"
+        android:persistent="false"
+        android:title="@string/prefs_galaxy_touch_options">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_hearing"
+            android:key="pref_earfun_touch_mode"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/prefs_touch_lock_buds2" />
+
+        <PreferenceCategory android:title="@string/single_tap">
+            <ListPreference
+                android:defaultValue="16"
+                android:dependency="pref_earfun_touch_mode"
+                android:entries="@array/earfun_free_pro_3_tap_action_names"
+                android:entryValues="@array/earfun_free_pro_3_tap_action_values"
+                android:icon="@drawable/ic_filter_1"
+                android:key="pref_earfun_single_tap_left_action"
+                app:useSimpleSummaryProvider="true"
+                android:title="@string/prefs_left" />
+            <ListPreference
+                android:defaultValue="16"
+                android:dependency="pref_earfun_touch_mode"
+                android:entries="@array/earfun_free_pro_3_tap_action_names"
+                android:entryValues="@array/earfun_free_pro_3_tap_action_values"
+                android:key="pref_earfun_single_tap_right_action"
+                app:useSimpleSummaryProvider="true"
+                android:title="@string/prefs_right" />
+        </PreferenceCategory>
+
+        <PreferenceCategory android:title="@string/double_tap">
+            <ListPreference
+                android:defaultValue="16"
+                android:dependency="pref_earfun_touch_mode"
+                android:entries="@array/earfun_free_pro_3_tap_action_names"
+                android:entryValues="@array/earfun_free_pro_3_tap_action_values"
+                android:icon="@drawable/ic_filter_2"
+                android:key="pref_earfun_double_tap_left_action"
+                app:useSimpleSummaryProvider="true"
+                android:title="@string/prefs_left" />
+            <ListPreference
+                android:defaultValue="16"
+                android:dependency="pref_earfun_touch_mode"
+                android:entries="@array/earfun_free_pro_3_tap_action_names"
+                android:entryValues="@array/earfun_free_pro_3_tap_action_values"
+                android:key="pref_earfun_double_tap_right_action"
+                app:useSimpleSummaryProvider="true"
+                android:title="@string/prefs_right" />
+        </PreferenceCategory>
+
+        <PreferenceCategory android:title="@string/triple_tap">
+            <ListPreference
+                android:defaultValue="16"
+                android:dependency="pref_earfun_touch_mode"
+                android:entries="@array/earfun_free_pro_3_tap_action_names"
+                android:entryValues="@array/earfun_free_pro_3_tap_action_values"
+                android:icon="@drawable/ic_filter_3"
+                android:key="pref_earfun_tripple_tap_left_action"
+                app:useSimpleSummaryProvider="true"
+                android:title="@string/prefs_left" />
+            <ListPreference
+                android:defaultValue="16"
+                android:dependency="pref_earfun_touch_mode"
+                android:entries="@array/earfun_free_pro_3_tap_action_names"
+                android:entryValues="@array/earfun_free_pro_3_tap_action_values"
+                android:key="pref_earfun_tripple_tap_right_action"
+                app:useSimpleSummaryProvider="true"
+                android:title="@string/prefs_right" />
+        </PreferenceCategory>
+
+        <PreferenceCategory android:title="@string/long_press">
+            <ListPreference
+                android:defaultValue="16"
+                android:dependency="pref_earfun_touch_mode"
+                android:entries="@array/earfun_free_pro_3_tap_action_names"
+                android:entryValues="@array/earfun_free_pro_3_tap_action_values"
+                android:icon="@drawable/ic_touch"
+                android:key="pref_earfun_long_tap_left_action"
+                app:useSimpleSummaryProvider="true"
+                android:title="@string/prefs_left" />
+            <ListPreference
+                android:defaultValue="16"
+                android:dependency="pref_earfun_touch_mode"
+                android:entries="@array/earfun_free_pro_3_tap_action_names"
+                android:entryValues="@array/earfun_free_pro_3_tap_action_values"
+                android:key="pref_earfun_long_tap_right_action"
+                app:useSimpleSummaryProvider="true"
+                android:title="@string/prefs_right" />
+        </PreferenceCategory>
+
+    </PreferenceScreen>
+
+</androidx.preference.PreferenceScreen>

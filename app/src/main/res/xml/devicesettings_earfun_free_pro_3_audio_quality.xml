@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_videogame"
+        android:key="pref_earfun_game_mode"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/earfun_low_latency_mode_hint"
+        android:title="@string/earfun_low_latency_mode" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_bluetooth_searching"
+        android:key="pref_earfun_connect_two_devices"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/earfun_connect_two_devices_hint"
+        android:title="@string/earfun_connect_two_devices" />
+
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/earfun_free_pro_3_audio_codec_names"
+        android:entryValues="@array/earfun_free_pro_3_audio_codec_values"
+        android:icon="@drawable/ic_equalizer"
+        android:key="pref_earfun_audio_codec"
+        app:useSimpleSummaryProvider="true"
+        android:title="@string/audio_codec" />
+    <Preference
+        android:key="pref_earfun_audio_codec_hint"
+        android:selectable="false"
+        android:summary="@string/earfun_audio_codec_hint" />
+
+</androidx.preference.PreferenceScreen>
