@@ -179,7 +179,7 @@ public class SampleProviderTest extends TestBase {
 
         MiBandActivitySample zero = createSample(sampleProvider, MiBandSampleProvider.TYPE_ACTIVITY, 0, 10, 70, 1000, user, device);
         MiBandActivitySample valid = createSample(sampleProvider, MiBandSampleProvider.TYPE_ACTIVITY, 100, 20, 80, 1030, user, device);
-        sampleProvider.addGBActivitySamples(new MiBandActivitySample[] { zero, valid });
+        sampleProvider.addGBActivitySamples(List.of(zero, valid));
 
         // oldest row overall is the timestamp 0 row
         assertEquals(0, sampleProvider.getFirstActivitySample().getTimestamp());
