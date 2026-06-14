@@ -116,6 +116,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.CalendarSyncState;
 import nodomain.freeyourgadget.gadgetbridge.entities.CalendarSyncStateDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.CalendarReceiver;
+import nodomain.freeyourgadget.gadgetbridge.externalevents.IntentApiReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.gps.GBLocationProviderType;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.gps.GBLocationService;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.sleepasandroid.SleepAsAndroidAction;
@@ -293,12 +294,23 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
                           Action: com.banglejs.uart.tx
                           Cat: None
                           Extra: line:Terminal.println(%avariable)
+                          Extra: device:00:1A:2B:3C:4D:5E  - optional, MAC address of target gadget
                           Target: Broadcast Receiver
 
                           Variable: Number, Configure on Import, NOT structured, Value set, Nothing Exported, NOT Same as value
                          */
-                        Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()));
-                        if (!devicePrefs.getBoolean(PREF_DEVICE_INTENTS, false)) return;
+                        final String address = intent.getStringExtra(IntentApiReceiver.EXTRA_DEVICE);
+                        if (address != null && address.compareToIgnoreCase(gbDevice.getAddress()) != 0) {
+                            LOG.debug("ignoring intent {} for {} because this is {}",
+                                    BANGLE_ACTION_UART_TX, address, gbDevice.getAddress());
+                            return;
+                        }
+                        final Prefs devicePrefs = new Prefs(GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()));
+                        if (!devicePrefs.getBoolean(PREF_DEVICE_INTENTS, false)) {
+                            LOG.debug("ignoring intent {} for {} because device preference {} is not true",
+                                    BANGLE_ACTION_UART_TX, address, PREF_DEVICE_INTENTS);
+                            return;
+                        }
                         String data = intent.getStringExtra("line");
                         if (data==null) {
                             GB.toast(getContext(), "UART TX Intent, but no 'line' supplied", Toast.LENGTH_LONG, GB.ERROR);
@@ -395,7 +407,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             boolean hasUnicode = false;
             //String rawString = "";
             for (int i=0;i<s.length();i++) {
-                int ch = (int)s.charAt(i); // unicode, so 0..65535 (usually)
+                int ch = (int)s.charAt(i); // Unicode, so 0..65535 (usually)
                 int nextCh = (int)(i+1<s.length() ? s.charAt(i+1) : 0); // 0..65535
                 //rawString = rawString+ch+",";
                 if (ch>255) hasUnicode = true;
@@ -419,7 +431,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
                     json.append("\\u").append(Integer.toHexString((ch & 65535) | 65536).substring(1));
                 else json.append(s.charAt(i));
             }
-            // if it was less characters to send base64, do that!
+            // if it was fewer characters to send base64, do that!
             if (!hasUnicode && (json.length() > 5+(s.length()*4/3))) {
                 byte[] bytes = s.getBytes(StandardCharsets.ISO_8859_1);
                 return "atob(\""+Base64.encodeToString(bytes, Base64.DEFAULT).replaceAll("\n","")+"\")";
@@ -658,7 +670,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
                 long batchSize = extras.getLong("SIZE", 12L);
                 sleepAsAndroidSender.setBatchSize(batchSize);
                 break;
-            // Received when the app sends a notificaation
+            // Received when the app sends a notification
             case SleepAsAndroidAction.SHOW_NOTIFICATION:
                 NotificationSpec notificationSpec = new NotificationSpec();
                 notificationSpec.title = extras.getString("TITLE");
@@ -1076,7 +1088,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             case "broadcastreceiver":
                 getContext().sendBroadcast(in);
                 break;
-            case "activity": // See wakeActivity.java if you want to start activities from under the keyguard/lock sceen.
+            case "activity": // See wakeActivity.java if you want to start activities from under the keyguard/lock screen.
                 getContext().startActivity(in);
                 break;
             case "service": // Should this be implemented differently, e.g. workManager?
@@ -1367,7 +1379,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             else if (ch =='】') ch=']';
             else if (ch=='‘' || ch=='’' || ch=='‛' || ch=='′' || ch=='ʹ') ch='\'';
             else if (ch=='“' || ch=='”' || ch =='„' || ch=='‟' || ch=='″') ch='"';
-            else if (ch == 0xFEFF) continue; // nonbreaking space - ignore
+            else if (ch == 0xFEFF) continue; // non-breaking space - ignore
             boolean isCharEmoji = isCharCodeEmoji(ch);
             if (isCharEmoji) {
                 if (!wordIsAllEmoji) {
@@ -1502,7 +1514,7 @@ public class BangleJSDeviceSupport extends AbstractBTLESingleDeviceSupport {
             for (String message : cannedMessagesSpec.cannedMessages) {
                 JSONObject jsonMessage = new JSONObject();
                 jsonMessages.put(jsonMessage);
-                // Render unicode (emojis etc.) as an image for BangleJS to display
+                // Render Unicode (emojis etc.) as an image for BangleJS to display
                 String unicodeRenderedAsImage = renderUnicodeAsImage(message);
                 // If the initial and rendered messages are not the same, include the rendered message as "disp(lay)" text so unicode is rendered on device
                 if (!unicodeRenderedAsImage.equals(message)) {
