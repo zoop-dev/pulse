@@ -70,7 +70,9 @@ public class FieldDefinitionLanguage extends FieldDefinition {
         malaysian(34),
         vietnamese(35),
         burmese(36),
-        mongolian(37)
+        mongolian(37),
+        estonian(38),
+        lithuanian(39),
         ;
 
         private final int id;

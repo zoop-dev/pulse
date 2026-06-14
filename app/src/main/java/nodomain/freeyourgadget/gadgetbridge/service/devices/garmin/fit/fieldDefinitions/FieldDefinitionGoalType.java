@@ -39,7 +39,9 @@ public class FieldDefinitionGoalType extends FieldDefinition {
         frequency(3),
         steps(4),
         ascent(5),
-        active_minutes(6)
+        active_minutes(6),
+        hydration(7),
+        weight(8),
         ;
 
         private final int id;
