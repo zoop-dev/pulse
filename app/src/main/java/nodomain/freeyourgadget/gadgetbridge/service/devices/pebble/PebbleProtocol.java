@@ -417,6 +417,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
     private static final UUID UUID_MARIOTIME = UUID.fromString("43caa750-2896-4f46-94dc-1adbd4bc1ff3");
     private static final UUID UUID_HELTHIFY = UUID.fromString("7ee97b2c-95e8-4720-b94e-70fccd905d98");
     private static final UUID UUID_TREKVOLLE = UUID.fromString("2da02267-7a19-4e49-9ed1-439d25db14e4");
+    private static final UUID UUID_TREKV3_REWORKED = UUID.fromString("fb9b2ec0-586b-4d3a-8a4d-89c24e80d971");
     private static final UUID UUID_SQUARE = UUID.fromString("cb332373-4ee5-4c5c-8912-4f62af2d756c");
     private static final UUID UUID_ZALEWSZCZAK_CROWEX = UUID.fromString("a88b3151-2426-43c6-b1d0-9b288b3ec47e");
     private static final UUID UUID_ZALEWSZCZAK_FANCY = UUID.fromString("014e17bf-5878-4781-8be1-8ef998cee1ba");
@@ -449,6 +450,7 @@ public class PebbleProtocol extends GBDeviceProtocol {
             mAppMessageHandlers.put(UUID_MARIOTIME, new AppMessageHandlerMarioTime(UUID_MARIOTIME, PebbleProtocol.this));
             mAppMessageHandlers.put(UUID_HELTHIFY, new AppMessageHandlerHealthify(UUID_HELTHIFY, PebbleProtocol.this));
             mAppMessageHandlers.put(UUID_TREKVOLLE, new AppMessageHandlerTrekVolle(UUID_TREKVOLLE, PebbleProtocol.this));
+            mAppMessageHandlers.put(UUID_TREKV3_REWORKED, new AppMessageHandlerTrekV3Reworked(UUID_TREKV3_REWORKED, PebbleProtocol.this));
             mAppMessageHandlers.put(UUID_SQUARE, new AppMessageHandlerSquare(UUID_SQUARE, PebbleProtocol.this));
             mAppMessageHandlers.put(UUID_ZALEWSZCZAK_CROWEX, new AppMessageHandlerZalewszczak(UUID_ZALEWSZCZAK_CROWEX, PebbleProtocol.this));
             mAppMessageHandlers.put(UUID_ZALEWSZCZAK_FANCY, new AppMessageHandlerZalewszczak(UUID_ZALEWSZCZAK_FANCY, PebbleProtocol.this));
