@@ -1,4 +1,4 @@
-/*  Copyright (C) 2023-2025 Andreas Böhler, Thomas Kuehne
+/*  Copyright (C) 2023-2026 Andreas Böhler, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -22,6 +22,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -70,7 +71,7 @@ public class BondAction extends PlainAction implements BondingInterface {
     }
 
     @Override
-    public boolean run(BluetoothGatt gatt) {
+    public boolean run(@NonNull BluetoothGatt gatt) {
         BluetoothDevice device = gatt.getDevice();
         mCandidate = new GBDeviceCandidate(device, GBDevice.RSSI_UNKNOWN, null, null);
         BondingUtil.tryBondThenComplete(this, device);

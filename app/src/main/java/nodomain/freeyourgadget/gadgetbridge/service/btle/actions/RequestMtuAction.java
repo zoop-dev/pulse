@@ -1,4 +1,4 @@
-/*  Copyright (C) 2019-2024 Andreas Shimokawa, Daniel Dakhno
+/*  Copyright (C) 2019-2026 Andreas Shimokawa, Daniel Dakhno
 
     This file is part of Gadgetbridge.
 
@@ -19,6 +19,9 @@ package nodomain.freeyourgadget.gadgetbridge.service.btle.actions;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothGatt;
 
+import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
+
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEAction;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCallback;
 
@@ -27,7 +30,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.GattCallback;
 public class RequestMtuAction extends BtLEAction {
     private final int mtu;
 
-    public RequestMtuAction(int mtu) {
+    public RequestMtuAction(@IntRange(from = 23L, to = 517L) final int mtu) {
         super(null);
         this.mtu = mtu;
     }
@@ -40,10 +43,11 @@ public class RequestMtuAction extends BtLEAction {
 
     @SuppressLint("MissingPermission")
     @Override
-    public boolean run(BluetoothGatt gatt) {
-        return gatt.requestMtu(this.mtu);
+    public boolean run(@NonNull final BluetoothGatt gatt) {
+        return gatt.requestMtu(mtu);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return getCreationTime() + " " + getClass().getSimpleName() + " mtu=" + mtu;

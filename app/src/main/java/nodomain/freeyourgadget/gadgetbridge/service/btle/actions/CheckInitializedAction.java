@@ -1,4 +1,4 @@
-/*  Copyright (C) 2016-2024 Carsten Pfeiffer
+/*  Copyright (C) 2016-2026 Carsten Pfeiffer
 
     This file is part of Gadgetbridge.
 
@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.btle.actions;
 
+import androidx.annotation.NonNull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,9 +31,10 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 public class CheckInitializedAction extends AbortTransactionAction {
     private static final Logger LOG = LoggerFactory.getLogger(CheckInitializedAction.class);
 
+    @NonNull
     private final GBDevice device;
 
-    public CheckInitializedAction(GBDevice gbDevice) {
+    public CheckInitializedAction(@NonNull GBDevice gbDevice) {
         device = gbDevice;
     }
 
@@ -39,7 +42,7 @@ public class CheckInitializedAction extends AbortTransactionAction {
     protected boolean shouldAbort() {
         boolean abort = device.isInitialized();
         if (abort) {
-            LOG.info("Aborting device initialization, because already initialized: " + device);
+            LOG.info("Aborting device initialization, because already initialized: {}", device);
         }
         return abort;
     }

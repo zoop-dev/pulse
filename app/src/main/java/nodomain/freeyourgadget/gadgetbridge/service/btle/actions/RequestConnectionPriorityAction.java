@@ -1,4 +1,4 @@
-/*  Copyright (C) 2023-2024 José Rebelo
+/*  Copyright (C) 2023-2026 José Rebelo
 
     This file is part of Gadgetbridge.
 
@@ -19,6 +19,8 @@ package nodomain.freeyourgadget.gadgetbridge.service.btle.actions;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothGatt;
 
+import androidx.annotation.NonNull;
+
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BleNamesResolver;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BtLEAction;
 
@@ -38,10 +40,11 @@ public class RequestConnectionPriorityAction extends BtLEAction {
 
     @Override
     @SuppressLint("MissingPermission")
-    public boolean run(final BluetoothGatt gatt) {
+    public boolean run(@NonNull final BluetoothGatt gatt) {
         return gatt.requestConnectionPriority(priority);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return getCreationTime() + " " + getClass().getSimpleName() + " " +
