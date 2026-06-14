@@ -133,7 +133,7 @@ open class DefaultChartsProvider : DeviceChartsProvider {
             "activitylist" -> ActivityListingChartFragment()
             "sleep" -> SleepCollectionFragment.newInstance(allowSwipe)
             "heartrate" -> HeartRateCollectionFragment.newInstance(allowSwipe)
-            "hrvstatus" -> HRVStatusFragment()
+            "hrvstatus" -> HrvStatusCollectionFragment.newInstance(allowSwipe)
             "bodyenergy" -> BodyEnergyCollectionFragment.newInstance(allowSwipe)
             "vo2max" -> VO2MaxFragment()
             "load" -> LoadFragment()

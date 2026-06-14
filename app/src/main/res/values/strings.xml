@@ -1842,11 +1842,16 @@
     <string name="hrv_status_low">Low</string>
     <string name="hrv_status_poor">Poor</string>
     <string name="hrv_status_last_night">Last night</string>
+    <string name="hrv_status_last_night_legend">Last night (ms)</string>
     <string name="hrv_status_last_night_highest_5">Last night 5-min max avg</string>
+    <string name="hrv_status_nightly_avg">Nightly average</string>
+    <string name="hrv_status_nightly_avg_legend">Nightly average (ms)</string>
+    <string name="hrv_status_highest_nightly_avg">Highest nightly avg</string>
     <string name="hrv_status_seven_days_avg_long">7-day average</string>
     <string name="hrv_status_unit">%1$d ms</string>
     <string name="hrv_status_baseline">%1$d – %2$d ms</string>
     <string name="hrv_status_baseline_label">Baseline</string>
+    <string name="hrv_status_daily_range_legend">Daily range</string>
     <string name="training_acute_load">Acute Load</string>
     <string name="training_chronic_load">Chronic Load</string>
     <string name="this_week_total">This week total</string>
