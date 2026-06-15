@@ -35,130 +35,241 @@ private val LOG = LoggerFactory.getLogger("SleepSyncer")
 
 private const val IN_PROGRESS_THRESHOLD_HOURS = 6L
 
-internal object SleepSyncer : ContextualActivitySampleSyncer {
+// Persisted identity of a sleep session, decoupled from the GreenDAO entity (which stores epoch
+// seconds). SleepAnalysis is stateless and re-segments as samples arrive, so a night's start can
+// move earlier across syncs. We pin a clientRecordId on first sight and reuse it for any later
+// detection that overlaps in time, so the single Health Connect record grows in place instead of
+// spawning a new id (the old behaviour, which orphaned the night and left junk fragments).
+internal data class SleepSessionRow(
+    val clientRecordId: String,
+    val startTime: Instant,
+    val endTime: Instant,
+    val finalized: Boolean
+)
 
-    override suspend fun sync(
+internal data class DetectedSleepSession(
+    val start: Instant,
+    val end: Instant
+)
+
+internal data class PlannedSleepRecord(
+    val detectedIndex: Int,
+    val clientRecordId: String,
+    val start: Instant,
+    val end: Instant
+)
+
+internal data class SleepSyncPlan(
+    val planned: List<PlannedSleepRecord>,
+    val rows: List<SleepSessionRow>,
+    val cursor: Instant?
+)
+
+internal data class SleepSyncResult(
+    val statistics: SyncerStatistics,
+    val rows: List<SleepSessionRow>
+)
+
+internal object SleepSyncer {
+
+    /**
+     * Pure decision core: matches freshly detected sessions against the persisted registry by
+     * temporal overlap, freezing the clientRecordId on the matched (or newly minted) row, and
+     * derives the sync cursor. No HC / DB / Android dependencies, so it is unit-testable.
+     *
+     * Cursor contract: the cursor is the latest END of a *completed* session processed this pass,
+     * or null if none completed. Sessions are sequential and non-overlapping and the in-progress
+     * one is always the most recent, so max(completed.end) <= any open session's start. Returning
+     * that (or null to hold) feeds the orchestrator's forward-only advance without ever stranding
+     * an open session: its earlier samples stay inside the 24h look-back window on the next run.
+     */
+    internal fun planSleepSessions(
+        existingRows: List<SleepSessionRow>,
+        detected: List<DetectedSleepSession>,
+        now: Instant,
+        thresholdHours: Long,
+        mintId: (Instant) -> String
+    ): SleepSyncPlan {
+        val cutoff = now.minus(thresholdHours, ChronoUnit.HOURS)
+        val rows = existingRows.toMutableList()
+        val used = HashSet<Int>()
+        val planned = ArrayList<PlannedSleepRecord>(detected.size)
+
+        for ((i, d) in detected.withIndex()) {
+            var matchIdx = -1
+            for (idx in rows.indices) {
+                if (idx in used) continue
+                val r = rows[idx]
+                // Inclusive overlap: d.start <= r.end && d.end >= r.start. SleepAnalysis splits
+                // sessions only across a wake gap > 1h, so distinct sessions are never exactly
+                // adjacent; inclusive overlap therefore won't merge them, and it still matches a
+                // single-sample fragment sitting exactly on the grown session's start edge (which
+                // strict overlap would miss, re-orphaning the night).
+                if (!d.start.isAfter(r.endTime) && !d.end.isBefore(r.startTime)) {
+                    matchIdx = idx
+                    break
+                }
+            }
+
+            val id: String
+            val start: Instant
+            val end: Instant
+            if (matchIdx >= 0) {
+                val r = rows[matchIdx]
+                start = if (d.start.isBefore(r.startTime)) d.start else r.startTime
+                end = if (d.end.isAfter(r.endTime)) d.end else r.endTime
+                val finalized = r.finalized || !end.isAfter(cutoff)
+                rows[matchIdx] = SleepSessionRow(r.clientRecordId, start, end, finalized)
+                used.add(matchIdx)
+                id = r.clientRecordId
+            } else {
+                id = mintId(d.start)
+                start = d.start
+                end = d.end
+                val finalized = !end.isAfter(cutoff)
+                rows.add(SleepSessionRow(id, start, end, finalized))
+                used.add(rows.size - 1)
+            }
+            planned.add(PlannedSleepRecord(i, id, start, end))
+        }
+
+        var cursor: Instant? = null
+        for (idx in used) {
+            val r = rows[idx]
+            if (r.finalized && (cursor == null || r.endTime.isAfter(cursor))) {
+                cursor = r.endTime
+            }
+        }
+
+        return SleepSyncPlan(planned, rows, cursor)
+    }
+
+    /** Drops any row whose end is at or before the prune horizon (cursor - look-back): it can no
+     *  longer fall inside any future scan window, so it can never be re-detected, grown, or
+     *  finalized again and its frozen id is dead weight. This covers stale OPEN rows too (e.g. an
+     *  in-progress session whose samples were deleted, which would otherwise never be pruned). A
+     *  genuinely in-progress session is safe: its end is within the 6h threshold of now, while the
+     *  horizon is cursor - 24h <= now - 24h, so a live session's end is always after the horizon. */
+    internal fun pruneSleepRows(rows: List<SleepSessionRow>, pruneBefore: Instant): List<SleepSessionRow> {
+        return rows.filter { it.endTime.isAfter(pruneBefore) }
+    }
+
+    suspend fun sync(
         healthConnectClient: HealthConnectClient,
         gbDevice: GBDevice,
         metadata: Metadata,
         offset: ZoneId,
-        sliceStartBoundary: Instant,
-        sliceEndBoundary: Instant,
         grantedPermissions: Set<String>,
         deviceSamples: List<ActivitySample>,
-        context: Context
-    ): SyncerStatistics {
+        context: Context,
+        existingRows: List<SleepSessionRow>,
+        now: Instant
+    ): SleepSyncResult {
 
         val deviceName = gbDevice.aliasOrName
 
-
         if (HealthPermission.getWritePermission(SleepSessionRecord::class) !in grantedPermissions) {
             LOG.info("Skipping Sleep sync for device '$deviceName'; SleepSessionRecord permission not granted.")
-            return SyncerStatistics(recordType = "Sleep")
+            return SleepSyncResult(SyncerStatistics(recordType = "Sleep"), existingRows)
+        }
+
+        val device = metadata.device
+        if (device == null) {
+            LOG.warn("Skipping Sleep sync for device '$deviceName'; no Health Connect device metadata.")
+            return SleepSyncResult(SyncerStatistics(recordType = "Sleep"), existingRows)
         }
 
         if (deviceSamples.isEmpty()) {
-            LOG.info("No device samples provided for sleep analysis for device '$deviceName' for slice $sliceStartBoundary to $sliceEndBoundary.")
-            return SyncerStatistics(recordType = "Sleep")
+            LOG.info("No device samples provided for sleep analysis for device '$deviceName'.")
+            return SleepSyncResult(SyncerStatistics(recordType = "Sleep"), existingRows)
         }
 
         val sortedDeviceSamples = deviceSamples.sortedBy { it.timestamp }
-
-        val sleepAnalysis = SleepAnalysis()
-        val allIdentifiedSessions = sleepAnalysis.calculateSleepSessions(sortedDeviceSamples)
+        val allIdentifiedSessions = SleepAnalysis().calculateSleepSessions(sortedDeviceSamples)
 
         if (allIdentifiedSessions.isEmpty()) {
-            LOG.info("No sleep sessions identified by SleepAnalysis for device '$deviceName' for slice $sliceStartBoundary to $sliceEndBoundary.")
-            return SyncerStatistics(recordType = "Sleep")
+            LOG.info("No sleep sessions identified by SleepAnalysis for device '$deviceName'.")
+            return SleepSyncResult(SyncerStatistics(recordType = "Sleep"), existingRows)
         }
 
-        LOG.info("SleepAnalysis identified ${allIdentifiedSessions.size} sleep sessions for device '$deviceName'. Filtering by slice: $sliceStartBoundary to $sliceEndBoundary.")
+        // Build a record candidate (stage list + its true span) per identified session. No slice
+        // ownership filter: a session is no longer tied to the slice its start falls in. Dedup is
+        // now provided by the frozen clientRecordId, so re-discovery across the look-back overlap
+        // upserts the same record instead of duplicating.
+        val candidates = allIdentifiedSessions.mapNotNull { buildCandidate(it, sortedDeviceSamples, deviceName) }
+        val skippedCount = allIdentifiedSessions.size - candidates.size
+        if (skippedCount > 0) {
+            LOG.info("Skipped $skippedCount sleep session(s) for device '$deviceName' (no samples, no valid stages, or invalid timings).")
+        }
 
-        // Convert all sessions to records, filtering out invalid ones
-        val sleepSessionRecordList = allIdentifiedSessions.mapNotNull { analysisSession ->
-            sleepSessionToRecord(
-                analysisSession = analysisSession,
-                sortedDeviceSamples = sortedDeviceSamples,
-                sliceStartBoundary = sliceStartBoundary,
-                sliceEndBoundary = sliceEndBoundary,
-                offset = offset,
-                metadata = metadata,
-                context = context,
-                deviceName = deviceName
+        if (candidates.isEmpty()) {
+            LOG.info("No valid sleep sessions to sync for device '$deviceName'.")
+            return SleepSyncResult(SyncerStatistics(recordType = "Sleep", recordsSkipped = skippedCount), existingRows)
+        }
+
+        val mintId: (Instant) -> String = { start ->
+            val startHourEpoch = start.epochSecond / 3600 * 3600
+            "gb-sleep-${device.manufacturer ?: "unknown"}-${device.model ?: "unknown"}-$startHourEpoch"
+        }
+
+        val plan = planSleepSessions(
+            existingRows = existingRows,
+            detected = candidates.map { it.detected },
+            now = now,
+            thresholdHours = IN_PROGRESS_THRESHOLD_HOURS,
+            mintId = mintId
+        )
+
+        // clientRecordVersion is the sync run's wall clock so a later run always outranks the value
+        // it previously wrote for this id (HC keeps the highest version on conflict), letting a
+        // grown session overwrite the partial record it replaces.
+        val version = now.epochSecond
+
+        val records = plan.planned.map { p ->
+            val candidate = candidates[p.detectedIndex]
+            LOG.info("Prepared SleepSessionRecord for device '$deviceName' (Session: ${p.start} to ${p.end}, id=${p.clientRecordId}). Stages: ${candidate.stages.size}")
+            SleepSessionRecord(
+                startTime = p.start,
+                startZoneOffset = offset.rules.getOffset(p.start),
+                endTime = p.end,
+                endZoneOffset = offset.rules.getOffset(p.end),
+                title = context.getString(nodomain.freeyourgadget.gadgetbridge.R.string.health_connect_sleep_session_title, deviceName),
+                notes = context.getString(nodomain.freeyourgadget.gadgetbridge.R.string.health_connect_sleep_session_notes, deviceName),
+                stages = candidate.stages,
+                metadata = Metadata.autoRecorded(
+                    clientRecordId = p.clientRecordId,
+                    clientRecordVersion = version,
+                    device = device
+                )
             )
         }
 
-        val skippedCount = allIdentifiedSessions.size - sleepSessionRecordList.size
+        LOG.info("Attempting to insert ${records.size} SleepSessionRecord(s) for device '$deviceName'.")
+        HealthConnectUtils.insertRecords(records, healthConnectClient)
+        LOG.info("Successfully inserted SleepSessionRecord(s) for device '$deviceName'.")
 
-        if (skippedCount > 0) {
-            LOG.info("Skipped $skippedCount sleep session(s) for device '$deviceName' (outside slice, no samples, no valid stages, or invalid timings).")
-        }
-
-        LOG.info("Finished processing ${sleepSessionRecordList.size} valid sleep session(s) for device '$deviceName' for slice $sliceStartBoundary to $sliceEndBoundary.")
-
-        if (sleepSessionRecordList.isEmpty()) {
-            LOG.info("No valid SleepSessionRecord(s) created for device '$deviceName' for slice $sliceStartBoundary to $sliceEndBoundary.")
-            return SyncerStatistics(recordType = "Sleep", recordsSkipped = skippedCount)
-        }
-
-        LOG.info("Attempting to insert ${sleepSessionRecordList.size} SleepSessionRecord(s) for device '$deviceName' for slice $sliceStartBoundary to $sliceEndBoundary.")
-        HealthConnectUtils.insertRecords(sleepSessionRecordList, healthConnectClient)
-        LOG.info("Successfully inserted SleepSessionRecord(s) for device '$deviceName' for slice $sliceStartBoundary to $sliceEndBoundary.")
-
-        val now = Instant.now()
-        var latestTs: Instant? = null
-        for (record in sleepSessionRecordList) {
-            val sessionEnd = record.endTime
-            val sessionStart = record.startTime
-            val effectiveTs = if (sessionEnd.isAfter(now.minus(IN_PROGRESS_THRESHOLD_HOURS, ChronoUnit.HOURS))) {
-                LOG.info("Sleep session ending at $sessionEnd may still be in progress — holding cursor at $sessionStart for re-processing.")
-                sessionStart.minusSeconds(1)
-            } else {
-                sessionEnd
-            }
-            if (latestTs == null || effectiveTs.isAfter(latestTs)) {
-                latestTs = effectiveTs
-            }
-        }
-        return SyncerStatistics(recordsSynced = sleepSessionRecordList.size, recordsSkipped = skippedCount, recordType = "Sleep", latestRecordTimestamp = latestTs)
+        val stats = SyncerStatistics(
+            recordsSynced = records.size,
+            recordsSkipped = skippedCount,
+            recordType = "Sleep",
+            latestRecordTimestamp = plan.cursor
+        )
+        return SleepSyncResult(stats, plan.rows)
     }
 
-    /**
-     * Converts a sleep analysis session to a SleepSessionRecord.
-     * Returns null if the session is invalid or should be skipped (e.g., outside slice, no valid stages).
-     */
-    private fun sleepSessionToRecord(
+    private data class SleepCandidate(
+        val detected: DetectedSleepSession,
+        val stages: List<SleepSessionRecord.Stage>
+    )
+
+    private fun buildCandidate(
         analysisSession: SleepAnalysis.SleepSession,
         sortedDeviceSamples: List<ActivitySample>,
-        sliceStartBoundary: Instant,
-        sliceEndBoundary: Instant,
-        offset: ZoneId,
-        metadata: Metadata,
-        context: Context,
         deviceName: String
-    ): SleepSessionRecord? {
-        // Get session boundaries from SleepAnalysis (timestamps of first and last sample in the session)
+    ): SleepCandidate? {
         val sessionBoundaryStart = analysisSession.sleepStart.toInstant()
         val sessionBoundaryEndInclusive = analysisSession.sleepEnd.toInstant()
 
-        // Only process this session if its START falls within the current slice [sliceStart, sliceEnd).
-        // The look-back query ensures full session data is available even for sessions starting near the
-        // previous slice boundary. The look-forward query ensures full session data for sessions starting
-        // near the current slice end. This ownership rule prevents duplicate records when the same session
-        // is discovered across multiple slices due to the look-back overlap.
-        if (sessionBoundaryStart.isBefore(sliceStartBoundary) || !sessionBoundaryStart.isBefore(sliceEndBoundary)) {
-            LOG.debug(
-                "Skipping sleep session (identified by SleepAnalysis) for device '{}' (Timeframe: {} to {}) as its start does not fall within current slice [{} to {}).",
-                deviceName,
-                sessionBoundaryStart,
-                sessionBoundaryEndInclusive,
-                sliceStartBoundary,
-                sliceEndBoundary
-            )
-            return null
-        }
-
-        // Filter the original (sorted) device samples that fall within this specific session's timeframe
         val samplesForThisSession = sortedDeviceSamples.filter {
             val sampleEpochSeconds = it.timestamp.toLong()
             sampleEpochSeconds >= (analysisSession.sleepStart.time / 1000L) &&
@@ -175,16 +286,10 @@ internal object SleepSyncer : ContextualActivitySampleSyncer {
             return null
         }
 
-        val nominalSessionStart = samplesForThisSession.first().timestamp.toLong().let { Instant.ofEpochSecond(it) }
-        val nominalSessionEnd = samplesForThisSession.last().timestamp.toLong().let { Instant.ofEpochSecond(it) }
-
-        LOG.info("Processing sleep session (identified by SleepAnalysis) for device '$deviceName' (Nominal sample range: $nominalSessionStart to $nominalSessionEnd) as it overlaps with slice $sliceStartBoundary to $sliceEndBoundary.")
-
-        // Build sleep stages from samples
         val stages = buildSleepStages(samplesForThisSession, deviceName)
 
         if (stages.isEmpty()) {
-            LOG.warn("No valid sleep stages derived for session (Nominal range: $nominalSessionStart to $nominalSessionEnd, identified by SleepAnalysis) for device '$deviceName'. Skipping this session.")
+            LOG.warn("No valid sleep stages derived for session ({} to {}, identified by SleepAnalysis) for device '$deviceName'. Skipping this session.", sessionBoundaryStart, sessionBoundaryEndInclusive)
             return null
         }
 
@@ -196,27 +301,7 @@ internal object SleepSyncer : ContextualActivitySampleSyncer {
             return null
         }
 
-        LOG.info("Prepared SleepSessionRecord for device '$deviceName' (Session: $recordFinalStartTime to $recordFinalEndTime). Stages: ${stages.size}")
-
-        val startHourEpoch = recordFinalStartTime.epochSecond / 3600 * 3600
-        val clientRecordId = "gb-sleep-${metadata.device?.manufacturer ?: "unknown"}-${metadata.device?.model ?: "unknown"}-$startHourEpoch"
-        val sessionMetadata = Metadata.autoRecorded(
-            clientRecordId = clientRecordId,
-            clientRecordVersion = stages.size.toLong(),
-            device = metadata.device!!
-        )
-        LOG.info("Sleep session clientRecordId=$clientRecordId, clientRecordVersion=${stages.size}")
-
-        return SleepSessionRecord(
-            startTime = recordFinalStartTime,
-            startZoneOffset = offset.rules.getOffset(recordFinalStartTime),
-            endTime = recordFinalEndTime,
-            endZoneOffset = offset.rules.getOffset(recordFinalEndTime),
-            title = context.getString(nodomain.freeyourgadget.gadgetbridge.R.string.health_connect_sleep_session_title, deviceName),
-            notes = context.getString(nodomain.freeyourgadget.gadgetbridge.R.string.health_connect_sleep_session_notes, deviceName),
-            stages = stages,
-            metadata = sessionMetadata
-        )
+        return SleepCandidate(DetectedSleepSession(recordFinalStartTime, recordFinalEndTime), stages)
     }
 
     /**

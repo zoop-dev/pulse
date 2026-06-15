@@ -79,7 +79,7 @@ public class GBDaoGenerator {
             outputDir.mkdirs();
         }
 
-        final Schema schema = new Schema(133, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(134, MAIN_PACKAGE + ".entities");
 
         final List<Entity> sampleProvidersToGenerate = new LinkedList<>();
 
@@ -89,6 +89,7 @@ public class GBDaoGenerator {
         Entity deviceAttributes = addDeviceAttributes(schema);
         Entity device = addDevice(schema, deviceAttributes);
         addHealthConnectSyncState(schema, device);
+        addHealthConnectSleepSession(schema, device);
         addInternetFirewallRule(schema, device);
 
         // yeah deep shit, has to be here (after device) for db upgrade and column order
@@ -1422,6 +1423,22 @@ public class GBDaoGenerator {
         healthConnectSyncState.addStringProperty("dataType").primaryKey().notNull();
         healthConnectSyncState.addToOne(device, deviceId);
         healthConnectSyncState.addLongProperty("lastSyncTimestamp").notNull();
+    }
+
+    private static void addHealthConnectSleepSession(Schema schema, Entity device) {
+        Entity healthConnectSleepSession = addEntity(schema, "HealthConnectSleepSession");
+        healthConnectSleepSession.addIdProperty().autoincrement();
+        Property deviceId = healthConnectSleepSession.addLongProperty("deviceId").notNull().getProperty();
+        Property clientRecordId = healthConnectSleepSession.addStringProperty("clientRecordId").notNull().getProperty();
+        healthConnectSleepSession.addLongProperty("startTime").notNull();
+        healthConnectSleepSession.addLongProperty("endTime").notNull();
+        healthConnectSleepSession.addBooleanProperty("finalized").notNull();
+        healthConnectSleepSession.addToOne(device, deviceId);
+        Index indexUnique = new Index();
+        indexUnique.addProperty(deviceId);
+        indexUnique.addProperty(clientRecordId);
+        indexUnique.makeUnique();
+        healthConnectSleepSession.addIndex(indexUnique);
     }
 
     private static void addInternetFirewallRule(Schema schema, Entity device) {
