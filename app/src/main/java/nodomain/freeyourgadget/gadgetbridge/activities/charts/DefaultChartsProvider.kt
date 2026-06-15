@@ -8,6 +8,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.charts.ActivityChartsActi
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.entries.ActivitySummarySimpleEntry
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler
+import nodomain.freeyourgadget.gadgetbridge.devices.GenericMetricSampleProvider
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import java.util.Locale
 
@@ -42,6 +43,9 @@ open class DefaultChartsProvider : DeviceChartsProvider {
         }
         if (coordinator.supportsTrainingLoad(device)) {
             supportedCharts.add("load")
+        }
+        if (GenericMetricSampleProvider.supportsMetrics(device).isNotEmpty()) {
+            supportedCharts.add("genericmetrics")
         }
         if (coordinator.supportsHeartRateMeasurement(device)) {
             supportedCharts.add("heartrate")
@@ -119,6 +123,7 @@ open class DefaultChartsProvider : DeviceChartsProvider {
             "calories" -> context.getString(R.string.calories)
             "respiratoryrate" -> context.getString(R.string.respiratoryrate)
             "load" -> context.getString(R.string.pref_header_training_load)
+            "genericmetrics" -> context.getString(R.string.generic_metrics)
             else -> String.format(Locale.getDefault(), "Unknown %s", chartName)
         }
     }
@@ -137,6 +142,7 @@ open class DefaultChartsProvider : DeviceChartsProvider {
             "bodyenergy" -> BodyEnergyCollectionFragment.newInstance(allowSwipe)
             "vo2max" -> VO2MaxFragment()
             "load" -> LoadFragment()
+            "genericmetrics" -> GenericMetricCollectionFragment.newInstance(allowSwipe)
             "stress" -> StressCollectionFragment.newInstance(allowSwipe)
             "pai" -> PaiChartFragment()
             "stepsweek" -> StepsCollectionFragment.newInstance(allowSwipe)

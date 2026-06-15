@@ -24,7 +24,9 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitEnduranceScore;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitFunctionalMetrics;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitHillScore;
@@ -76,39 +78,39 @@ public interface MetricSample extends TimeSample {
         UNKNOWN(0, UNIT_NONE),
         /// @see FitEnduranceScore#getEnduranceScore()
         /// @see FitEnduranceScore#getLevel()
-        GARMIN_ENDURANCE_SCORE(1, UNIT_NONE),
+        GARMIN_ENDURANCE_SCORE(1, UNIT_NONE, R.string.metric_garmin_endurance_score),
         /// @see FitFunctionalMetrics#getFunctionalThresholdPower()
         /// @see FitFunctionalMetrics#getCyclingLactaceThresholdHr()
-        GARMIN_FUNCTIONAL_THRESHOLD_POWER(2, UNIT_WATT),
+        GARMIN_FUNCTIONAL_THRESHOLD_POWER(2, UNIT_WATT, R.string.metric_garmin_functional_threshold_power),
         /// @see FitHillScore#getHillEndurance()
         /// @see FitHillScore#getLevel()
-        GARMIN_HILL_ENDURANCE(3, UNIT_NONE),
+        GARMIN_HILL_ENDURANCE(3, UNIT_NONE, R.string.metric_garmin_hill_endurance),
         /// @see FitHillScore#getHillScore()
         /// @see FitHillScore#getLevel()
-        GARMIN_HILL_SCORE(4, UNIT_NONE),
+        GARMIN_HILL_SCORE(4, UNIT_NONE, R.string.metric_garmin_hill_score),
         /// @see FitHillScore#getHillStrength()
         /// @see FitHillScore#getLevel()
-        GARMIN_HILL_STRENGTH(5, UNIT_NONE),
+        GARMIN_HILL_STRENGTH(5, UNIT_NONE, R.string.metric_garmin_hill_strength),
         /// This is a metabolic equivalent (MET) version of {@link #GENERIC_MAXIMUM_OXYGEN_UPTAKE}.
         /// Estimated using 24/7 monitoring instead of high-resolution activity recordings.
         ///
         /// @see FitMaxMetData#getVo2Max()
         /// @see FitMaxMetData#getMaxMetCategory()
-        GARMIN_MET_MAX_VO2(6, UNIT_ML_KG_MIN),
+        GARMIN_MET_MAX_VO2(6, UNIT_ML_KG_MIN, R.string.metric_garmin_met_max_vo2),
         /// @see FitFunctionalMetrics#getRunningLactateThresholdPower()
         /// @see FitFunctionalMetrics#getRunningLactateThresholdHr()
-        GARMIN_RUNNING_LACTATE_THRESHOLD_POWER(7, UNIT_WATT),
+        GARMIN_RUNNING_LACTATE_THRESHOLD_POWER(7, UNIT_WATT, R.string.metric_garmin_running_lactate_threshold_power),
         /// @see FitTrainingReadiness#getTrainingReadiness()
         /// @see FitTrainingReadiness#getLevel()
-        GARMIN_TRAINING_READINESS(8, UNIT_NONE),
+        GARMIN_TRAINING_READINESS(8, UNIT_NONE, R.string.metric_garmin_training_readiness),
         /// @see FitTrainingLoad#getTrainingLoadAcute
-        GENERIC_TRAINING_LOAD_ACUTE(9, UNIT_NONE),
+        GENERIC_TRAINING_LOAD_ACUTE(9, UNIT_NONE, R.string.training_acute_load),
         /// @see FitTrainingLoad#getTrainingLoadChronic()
-        GENERIC_TRAINING_LOAD_CHRONIC(10, UNIT_NONE),
+        GENERIC_TRAINING_LOAD_CHRONIC(10, UNIT_NONE, R.string.training_chronic_load),
         /// @see FitMonitoringInfo#getRestingMetabolicRate()
-        GENERIC_RESTING_METABOLIC_RATE(11, UNIT_KCAL_PER_DAY),
+        GENERIC_RESTING_METABOLIC_RATE(11, UNIT_KCAL_PER_DAY, R.string.metric_generic_resting_metabolic_rate),
         /// @see FitPhysiologicalMetrics#getMetMax()
-        GENERIC_MAXIMUM_OXYGEN_UPTAKE(12, UNIT_ML_KG_MIN),
+        GENERIC_MAXIMUM_OXYGEN_UPTAKE(12, UNIT_ML_KG_MIN, R.string.maximumOxygenUptake),
         /// Composite 0-100 sleep-quality score (Watson 2015 + Ohayon 2017).
         /// metricScore: 0-100. metricExtra: total sleep duration seconds.
         GENERIC_SLEEP_SCORE(13, UNIT_NONE),
@@ -135,9 +137,17 @@ public interface MetricSample extends TimeSample {
         @NonNull
         public final String uomKey;
 
+        @StringRes
+        public final int labelResId;
+
         Metric(int dbId, @NonNull String uomKey) {
+            this(dbId, uomKey, 0);
+        }
+
+        Metric(int dbId, @NonNull String uomKey, @StringRes int labelResId) {
             this.dbId = dbId;
             this.uomKey = uomKey;
+            this.labelResId = labelResId;
         }
 
         @Nullable
