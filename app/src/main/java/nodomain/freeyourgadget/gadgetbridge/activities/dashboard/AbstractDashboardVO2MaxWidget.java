@@ -11,6 +11,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Locale;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -90,7 +91,7 @@ public abstract class AbstractDashboardVO2MaxWidget extends AbstractGaugeWidget 
         final ActivityUser activityUser = new ActivityUser();
         final int age = activityUser.getAgeAt(LocalDate.ofInstant(Instant.ofEpochSecond(dashboardData.timeTo), ZoneId.systemDefault()));
         float vo2MaxValue = VO2MaxRanges.INSTANCE.calculateVO2MaxPercentile(vo2MaxData.value != -1 ? vo2MaxData.value : 0, age, activityUser.getGender());
-        setText(String.valueOf(vo2MaxData.value != -1 ? Math.round(vo2MaxData.value) : "-"));
+        setText(vo2MaxData.value != -1 ? String.format(Locale.getDefault(), "%.1f", vo2MaxData.value) : "-");
         drawSegmentedGauge(
                 colors,
                 segments,
