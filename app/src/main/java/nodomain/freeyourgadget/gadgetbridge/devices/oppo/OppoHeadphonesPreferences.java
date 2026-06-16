@@ -26,7 +26,7 @@ public class OppoHeadphonesPreferences {
 
     public static final String LDAC = "pref_soundcore_ldac_mode";
     public static final String MULTIPOINT = "oppo_multipoint";
-    public static final String GAME_MODE= "oppo_game_mode";
+    public static final String GAME_MODE = "oppo_game_mode";
 
     public static String getTouchKey(final TouchConfigSide side, final TouchConfigType type) {
         return String.format(

@@ -41,7 +41,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.OppoCo
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigSide;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigValue;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.PrefType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.MiscConfigType;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
@@ -165,7 +165,19 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
                 LOG.debug("Got find device ack, status={}", payload[0]);
                 break;
             }
-            case PREF_ACK: {
+            case MISC_CONFIG_RET:
+                if (payload[0] != 0) {
+                    LOG.warn("Unknown config ret {}", payload[0]);
+                    break;
+                }
+                if (payload.length < 2) {
+                    LOG.error("Unexpected pref ret payload size {}", payload.length);
+                    break;
+                }
+
+                events.add(parseMiscConfig(payload));
+                break;
+            case MISC_CONFIG_ACK: {
                 LOG.debug("Got config ack, status={}", payload[0]);
                 break;
             }
@@ -289,6 +301,54 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
         return events;
     }
 
+    private static GBDeviceEvent parseMiscConfig(final byte[] payload) {
+        final GBDeviceEventUpdatePreferences eventUpdatePreferences = new GBDeviceEventUpdatePreferences();
+        for (int i = 2; i < payload.length; i += 2) {
+            if (i + 1 >= payload.length) {
+                LOG.warn("Truncated pref ret pair at index {}", i);
+                break;
+            }
+
+            final int code = payload[i] & 0xff;
+            final int value = payload[i + 1] & 0xff;
+
+            final MiscConfigType type = MiscConfigType.fromCode(code);
+            if (type == null) {
+                LOG.warn("Unknown misc config code {}", code);
+                continue;
+            }
+            
+            final boolean isEnabled = (value == 1);
+            switch (type) {
+                case LDAC:
+                    LOG.debug("Got misc config for LDAC = {}", isEnabled);
+                    eventUpdatePreferences.withPreference(
+                        OppoHeadphonesPreferences.LDAC,
+                        isEnabled
+                    );
+                    break;
+                case MULTIPOINT:
+                    LOG.debug("Got misc config for MULTIPOINT = {}", isEnabled);
+                    eventUpdatePreferences.withPreference(
+                        OppoHeadphonesPreferences.MULTIPOINT,
+                        isEnabled
+                    );
+                    break;
+                case GAME_MODE:
+                    LOG.debug("Got misc config for GAME_MODE = {}", isEnabled);
+                    eventUpdatePreferences.withPreference(
+                        OppoHeadphonesPreferences.GAME_MODE,
+                        isEnabled
+                    );
+                    break;
+                default:
+                    LOG.warn("Unknown misc config code {}", code);
+                    break;
+            }
+        }
+        return eventUpdatePreferences; 
+    }
+
     private static GBDeviceEvent parseTouchConfig(final byte[] payload) {
         final GBDeviceEventUpdatePreferences eventUpdatePreferences = new GBDeviceEventUpdatePreferences();
 
@@ -395,28 +455,37 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
         final byte[] payload = new byte[] {
             (byte) (enable ? 0x01 : 0x00)
         };
-        return encodePrefSet(PrefType.LDAC, payload);
+        return encodeMiscConfigSet(MiscConfigType.LDAC, payload);
     }
 
     public byte[] encodeGameModeSet(final boolean enable) {
         final byte[] payload = new byte[] {
             (byte) (enable ? 0x01 : 0x00)
         };
-        return encodePrefSet(PrefType.GAME_MODE, payload);
+        return encodeMiscConfigSet(MiscConfigType.GAME_MODE, payload);
     }
 
     public byte[] encodeMultipointSet(final boolean enable) {
         final byte[] payload = new byte[] {
             (byte) (enable ? 0x01 : 0x00)
         };
-        return encodePrefSet(PrefType.MULTIPOINT, payload);
+        return encodeMiscConfigSet(MiscConfigType.MULTIPOINT, payload);
     }
 
-    private byte[] encodePrefSet(final PrefType type, final byte[] value) {
+    private byte[] encodeMiscConfigSet(final MiscConfigType type, final byte[] value) {
         final byte[] payload = new byte[1 + value.length];
         payload[0] = (byte) type.getCode();
         System.arraycopy(value, 0, payload, 1, value.length);
-        return encodeMessage(OppoCommand.PREF_SET, payload);
+        return encodeMessage(OppoCommand.MISC_CONFIG_SET, payload);
+    }
+
+    public byte[] encodeMiscConfigReq() {
+        return encodeMessage(OppoCommand.MISC_CONFIG_REQ, new byte[]{
+            (byte) 0x03,
+            (byte) MiscConfigType.LDAC.getCode(),
+            (byte) MiscConfigType.MULTIPOINT.getCode(),
+            (byte) MiscConfigType.GAME_MODE.getCode()
+        });
     }
 
     private byte[] encodeMessage(final OppoCommand command, final byte[] payload) {

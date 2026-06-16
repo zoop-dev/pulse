@@ -18,7 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands;
 
 import androidx.annotation.Nullable;
 
-public enum PrefType {
+public enum MiscConfigType {
     LDAC(0x18),
     GAME_MODE(0x06),
     MULTIPOINT(0x11),
@@ -27,7 +27,7 @@ public enum PrefType {
 
     private final int code;
 
-    PrefType(final int code) {
+    MiscConfigType(final int code) {
         this.code = code;
     }
 
@@ -36,8 +36,8 @@ public enum PrefType {
     }
 
     @Nullable
-    public static PrefType fromCode(final int code) {
-        for (final PrefType param : PrefType.values()) {
+    public static MiscConfigType fromCode(final int code) {
+        for (final MiscConfigType param : MiscConfigType.values()) {
             if (param.code == code) {
                 return param;
             }

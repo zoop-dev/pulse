@@ -30,8 +30,10 @@ public enum OppoCommand {
     TOUCH_CONFIG_ACK(0x8401),
     FIND_DEVICE_REQ(0x0400),
     FIND_DEVICE_ACK(0x8400),
-    PREF_SET(0x0403),
-    PREF_ACK(0x8403),
+    MISC_CONFIG_SET(0x0403),
+    MISC_CONFIG_REQ(0x010d),
+    MISC_CONFIG_ACK(0x8403),
+    MISC_CONFIG_RET(0x810d),
     ;
 
     private final short code;
