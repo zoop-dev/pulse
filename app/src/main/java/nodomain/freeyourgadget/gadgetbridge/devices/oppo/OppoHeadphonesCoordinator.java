@@ -78,15 +78,18 @@ public abstract class OppoHeadphonesCoordinator extends AbstractBLClassicDeviceC
 
         settings.addRootScreen(DeviceSpecificSettingsScreen.DEVELOPER);
         if (this.supportsLdac(device)) {
-            settings.addSubScreen(DeviceSpecificSettingsScreen.DEVELOPER, R.xml.devicesettings_ldac_toggle);
+            settings.addRootScreen(DeviceSpecificSettingsScreen.AUDIO);
+            settings.addSubScreen(DeviceSpecificSettingsScreen.AUDIO, R.xml.devicesettings_ldac_toggle);
         }
 
-        if (this.supportsMultipoint(device)) {
-            settings.addSubScreen(DeviceSpecificSettingsScreen.DEVELOPER, R.xml.devicesettings_oppo_headphones_multipoint);
-        }
-
-        if (this.supportsGameMode(device)) {
-            settings.addSubScreen(DeviceSpecificSettingsScreen.DEVELOPER, R.xml.devicesettings_oppo_headphones_game_mode);
+        if (this.supportsMultipoint(device) || this.supportsGameMode(device)) {
+            settings.addRootScreen(DeviceSpecificSettingsScreen.CONNECTION);
+            if (this.supportsMultipoint(device)) {
+                settings.addSubScreen(DeviceSpecificSettingsScreen.CONNECTION, R.xml.devicesettings_oppo_headphones_multipoint);
+            }
+            if (this.supportsGameMode(device)) {
+                settings.addSubScreen(DeviceSpecificSettingsScreen.CONNECTION, R.xml.devicesettings_oppo_headphones_game_mode);
+            }
         }
 
         return settings;
