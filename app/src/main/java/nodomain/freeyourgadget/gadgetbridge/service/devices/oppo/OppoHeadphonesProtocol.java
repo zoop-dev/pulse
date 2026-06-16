@@ -158,73 +158,15 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
                     LOG.warn("Unexpected firmware ret {}", payload[0]);
                     break;
                 }
-
-                final String fwString;
-                if (payload[payload.length - 1] == 0) {
-                    fwString = new String(ArrayUtils.subarray(payload, 2, payload.length - 1)).strip();
-                } else {
-                    fwString = new String(ArrayUtils.subarray(payload, 2, payload.length)).strip();
-                }
-                final String[] parts = fwString.split(",");
-                if (parts.length % 3 != 0) {
-                    LOG.warn("Fw parts length {} from '{}' is not divisible by 3", parts.length, fwString);
-
-                    // We need to persist something, otherwise Gb misbehaves
-                    final GBDeviceEventVersionInfo eventVersionInfo = new GBDeviceEventVersionInfo();
-                    eventVersionInfo.fwVersion = fwString;
-                    eventVersionInfo.hwVersion = GBApplication.getContext().getString(R.string.n_a);
-                    events.add(eventVersionInfo);
-
-                    break;
-                }
-                final String[] fwVersionParts = new String[3];
-                for (int i = 0; i < parts.length; i += 3) {
-                    final String versionPart = parts[i];
-                    final String versionType = parts[i + 1];
-                    final String version = parts[i + 2];
-                    if (!"2".equals(versionType)) {
-                        continue; // not fw
-                    }
-
-                    switch (versionPart) {
-                        case "1":
-                            fwVersionParts[0] = version;
-                            break;
-                        case "2":
-                            fwVersionParts[1] = version;
-                            break;
-                        case "3":
-                            fwVersionParts[2] = version;
-                            break;
-                        default:
-                            LOG.warn("Unknown firmware version part {}", versionPart);
-                    }
-                }
-
-                final List<String> nonNullParts = new ArrayList<>(fwVersionParts.length);
-                for (int i = 0; i < fwVersionParts.length; i++) {
-                    if (fwVersionParts[i] == null) {
-                        continue;
-                    }
-                    nonNullParts.add(fwVersionParts[i]);
-                    if (fwVersionParts[i].contains(".")) {
-                        // Realme devices have the version already with the dots, repeated multiple times
-                        break;
-                    }
-                }
-                final String fwVersion = String.join(".", nonNullParts);
-
-                final GBDeviceEventVersionInfo eventVersionInfo = new GBDeviceEventVersionInfo();
-                eventVersionInfo.fwVersion = fwVersion;
-                eventVersionInfo.hwVersion = GBApplication.getContext().getString(R.string.n_a);
-                events.add(eventVersionInfo);
-
-                LOG.debug("Got fw version: {}", fwVersion);
-
+                events.addAll(parseFirmware(payload));
                 break;
             }
             case FIND_DEVICE_ACK: {
                 LOG.debug("Got find device ack, status={}", payload[0]);
+                break;
+            }
+            case PREF_ACK: {
+                LOG.debug("Got config ack, status={}", payload[0]);
                 break;
             }
             case TOUCH_CONFIG_RET: {
@@ -237,39 +179,7 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
                     break;
                 }
 
-                final GBDeviceEventUpdatePreferences eventUpdatePreferences = new GBDeviceEventUpdatePreferences();
-
-                for (int i = 2; i < payload.length; i += 4) {
-                    final int sideCode = payload[i] & 0xff;
-                    final int typeCode = BLETypeConversions.toUint16(payload, i + 1);
-                    final int valueCode = payload[i + 3] & 0xff;
-                    final TouchConfigSide side = TouchConfigSide.fromCode(sideCode);
-                    final TouchConfigType type = TouchConfigType.fromCode(typeCode);
-                    final TouchConfigValue value = TouchConfigValue.fromCode(valueCode);
-
-                    if (side == null) {
-                        LOG.warn("Unknown touch side code {}", sideCode);
-                        continue;
-                    }
-                    if (type == null) {
-                        LOG.warn("Unknown touch type code {}", typeCode);
-                        continue;
-                    }
-                    if (value == null) {
-                        LOG.warn("Unknown touch value code {}", valueCode);
-                        continue;
-                    }
-
-                    LOG.debug("Got touch config for {} {} = {}", side, type, value);
-
-                    eventUpdatePreferences.withPreference(
-                            OppoHeadphonesPreferences.getTouchKey(side, type),
-                            value.name().toLowerCase(Locale.ROOT)
-                    );
-                }
-
-                events.add(eventUpdatePreferences);
-
+                events.add(parseTouchConfig(payload));
                 break;
             }
             case TOUCH_CONFIG_ACK: {
@@ -312,6 +222,107 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
         return events;
     }
 
+    private static List<GBDeviceEvent> parseFirmware(final byte[] payload) {
+        final List<GBDeviceEvent> events = new ArrayList<>();
+
+        final String fwString;
+        if (payload[payload.length - 1] == 0) {
+            fwString = new String(ArrayUtils.subarray(payload, 2, payload.length - 1)).strip();
+        } else {
+            fwString = new String(ArrayUtils.subarray(payload, 2, payload.length)).strip();
+        }
+        final String[] parts = fwString.split(",");
+        if (parts.length % 3 != 0) {
+            LOG.warn("Fw parts length {} from '{}' is not divisible by 3", parts.length, fwString);
+
+            // We need to persist something, otherwise Gb misbehaves
+            final GBDeviceEventVersionInfo eventVersionInfo = new GBDeviceEventVersionInfo();
+            eventVersionInfo.fwVersion = fwString;
+            eventVersionInfo.hwVersion = GBApplication.getContext().getString(R.string.n_a);
+            events.add(eventVersionInfo);
+
+            return events;
+        }
+        final String[] fwVersionParts = new String[3];
+        for (int i = 0; i < parts.length; i += 3) {
+            final String versionPart = parts[i];
+            final String versionType = parts[i + 1];
+            final String version = parts[i + 2];
+            if (!"2".equals(versionType)) {
+                continue; // not fw
+            }
+
+            switch (versionPart) {
+                case "1":
+                    fwVersionParts[0] = version;
+                    break;
+                case "2":
+                    fwVersionParts[1] = version;
+                    break;
+                case "3":
+                    fwVersionParts[2] = version;
+                    break;
+                default:
+                    LOG.warn("Unknown firmware version part {}", versionPart);
+            }
+        }
+
+        final List<String> nonNullParts = new ArrayList<>(fwVersionParts.length);
+        for (int i = 0; i < fwVersionParts.length; i++) {
+            if (fwVersionParts[i] == null) {
+                continue;
+            }
+            nonNullParts.add(fwVersionParts[i]);
+            if (fwVersionParts[i].contains(".")) {
+                // Realme devices have the version already with the dots, repeated multiple times
+                break;
+            }
+        }
+        final String fwVersion = String.join(".", nonNullParts);
+
+        final GBDeviceEventVersionInfo eventVersionInfo = new GBDeviceEventVersionInfo();
+        eventVersionInfo.fwVersion = fwVersion;
+        eventVersionInfo.hwVersion = GBApplication.getContext().getString(R.string.n_a);
+        events.add(eventVersionInfo);
+
+        LOG.debug("Got fw version: {}", fwVersion);
+        return events;
+    }
+
+    private static GBDeviceEvent parseTouchConfig(final byte[] payload) {
+        final GBDeviceEventUpdatePreferences eventUpdatePreferences = new GBDeviceEventUpdatePreferences();
+
+        for (int i = 2; i < payload.length; i += 4) {
+            final int sideCode = payload[i] & 0xff;
+            final int typeCode = BLETypeConversions.toUint16(payload, i + 1);
+            final int valueCode = payload[i + 3] & 0xff;
+            final TouchConfigSide side = TouchConfigSide.fromCode(sideCode);
+            final TouchConfigType type = TouchConfigType.fromCode(typeCode);
+            final TouchConfigValue value = TouchConfigValue.fromCode(valueCode);
+
+            if (side == null) {
+                LOG.warn("Unknown touch side code {}", sideCode);
+                continue;
+            }
+            if (type == null) {
+                LOG.warn("Unknown touch type code {}", typeCode);
+                continue;
+            }
+            if (value == null) {
+                LOG.warn("Unknown touch value code {}", valueCode);
+                continue;
+            }
+
+            LOG.debug("Got touch config for {} {} = {}", side, type, value);
+
+            eventUpdatePreferences.withPreference(
+                    OppoHeadphonesPreferences.getTouchKey(side, type),
+                    value.name().toLowerCase(Locale.ROOT)
+            );
+        }
+        return eventUpdatePreferences; 
+    }
+
     @Override
     public byte[] encodeFirmwareVersionReq() {
         return encodeMessage(OppoCommand.FIRMWARE_GET, new byte[0]);
@@ -339,14 +350,7 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
             final TouchConfigValue value = TouchConfigValue.valueOf(valueCode.toUpperCase(Locale.ROOT));
 
             LOG.debug("Sending {} {} = {}", side, type, value);
-
-            final ByteBuffer buf = ByteBuffer.allocate(5).order(ByteOrder.LITTLE_ENDIAN);
-            buf.put((byte) 0x01);
-            buf.put((byte) side.getCode());
-            buf.putShort((short) type.getCode());
-            buf.put((byte) value.getCode());
-
-            return encodeMessage(OppoCommand.TOUCH_CONFIG_SET, buf.array());
+            return encodeTouchConfigSet(side, type, value);
         }
 
         if (config.equals(OppoHeadphonesPreferences.LDAC)) {
@@ -374,7 +378,16 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
         return encodeMessage(OppoCommand.BATTERY_REQ, new byte[0]);
     }
 
-    public byte[] encodeConfigurationReq() {
+    private byte[] encodeTouchConfigSet(final TouchConfigSide side, final TouchConfigType type, final TouchConfigValue value) {
+        final ByteBuffer buf = ByteBuffer.allocate(5).order(ByteOrder.LITTLE_ENDIAN);
+        buf.put((byte) 0x01);
+        buf.put((byte) side.getCode());
+        buf.putShort((short) type.getCode());
+        buf.put((byte) value.getCode());
+        return encodeMessage(OppoCommand.TOUCH_CONFIG_SET, buf.array());
+    }
+
+    public byte[] encodeTouchConfigReq() {
         return encodeMessage(OppoCommand.TOUCH_CONFIG_REQ, new byte[]{0x02, 0x03, 0x01});
     }
 
@@ -399,7 +412,7 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
         return encodePrefSet(PrefType.MULTIPOINT, payload);
     }
 
-    public byte[] encodePrefSet(final PrefType type, final byte[] value) {
+    private byte[] encodePrefSet(final PrefType type, final byte[] value) {
         final byte[] payload = new byte[1 + value.length];
         payload[0] = (byte) type.getCode();
         System.arraycopy(value, 0, payload, 1, value.length);
