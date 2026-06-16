@@ -76,12 +76,25 @@ public abstract class OppoHeadphonesCoordinator extends AbstractBLClassicDeviceC
         settings.addRootScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS);
         settings.addSubScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS, R.xml.devicesettings_headphones);
 
+        settings.addRootScreen(DeviceSpecificSettingsScreen.DEVELOPER);
+        if (this.supportsLdac(device)) {
+            settings.addSubScreen(DeviceSpecificSettingsScreen.DEVELOPER, R.xml.devicesettings_ldac_toggle);
+        }
+
+        if (this.supportsMultipoint(device)) {
+            settings.addSubScreen(DeviceSpecificSettingsScreen.DEVELOPER, R.xml.devicesettings_oppo_headphones_multipoint);
+        }
+
+        if (this.supportsGameMode(device)) {
+            settings.addSubScreen(DeviceSpecificSettingsScreen.DEVELOPER, R.xml.devicesettings_oppo_headphones_game_mode);
+        }
+
         return settings;
     }
 
     @Override
     public DeviceSpecificSettingsCustomizer getDeviceSpecificSettingsCustomizer(final GBDevice device) {
-        return new OppoHeadphonesSettingsCustomizer(getTouchOptions());
+        return new OppoHeadphonesSettingsCustomizer(getTouchOptions(), supportsLdac(device), supportsMultipoint(device), supportsGameMode(device));
     }
 
     protected abstract Map<Pair<TouchConfigSide, TouchConfigType>, List<TouchConfigValue>> getTouchOptions();
@@ -89,5 +102,17 @@ public abstract class OppoHeadphonesCoordinator extends AbstractBLClassicDeviceC
     @Override
     public final DeviceKind getDeviceKind(@NonNull GBDevice device) {
         return DeviceKind.EARBUDS;
+    }
+
+    public boolean supportsLdac(@NonNull GBDevice device) {
+        return false;
+    }
+
+    public boolean supportsMultipoint(@NonNull GBDevice device) {
+        return false;
+    }
+
+    public boolean supportsGameMode(@NonNull GBDevice device) {
+        return false;
     }
 }

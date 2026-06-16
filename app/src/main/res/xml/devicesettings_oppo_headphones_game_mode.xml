@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:key="oppo_game_mode"
+        android:title="@string/prefs_game_mode"
+        android:icon="@drawable/ic_videogame"
+        android:defaultValue="false"
+        android:layout="@layout/preference_checkbox" />
+</androidx.preference.PreferenceScreen>

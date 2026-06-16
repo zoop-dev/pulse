@@ -41,6 +41,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.OppoCo
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigSide;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigValue;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.PrefType;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
@@ -262,7 +263,7 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
                     LOG.debug("Got touch config for {} {} = {}", side, type, value);
 
                     eventUpdatePreferences.withPreference(
-                            OppoHeadphonesPreferences.getKey(side, type),
+                            OppoHeadphonesPreferences.getTouchKey(side, type),
                             value.name().toLowerCase(Locale.ROOT)
                     );
                 }
@@ -325,11 +326,11 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
     public byte[] encodeSendConfiguration(final String config) {
         final DevicePrefs prefs = getDevicePrefs();
 
-        if (config.startsWith("oppo_touch__")) {
+        if (config.startsWith(OppoHeadphonesPreferences.TOUCH_PREFIX)) {
             final String[] parts = config.split("__");
             final TouchConfigSide side = TouchConfigSide.valueOf(parts[1].toUpperCase(Locale.ROOT));
             final TouchConfigType type = TouchConfigType.valueOf(parts[2].toUpperCase(Locale.ROOT));
-            final String valueCode = prefs.getString(OppoHeadphonesPreferences.getKey(side, type), null);
+            final String valueCode = prefs.getString(OppoHeadphonesPreferences.getTouchKey(side, type), null);
             if (valueCode == null) {
                 LOG.warn("Failed to get touch option value for {}/{}", side, type);
                 return super.encodeSendConfiguration(config);
@@ -348,6 +349,24 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
             return encodeMessage(OppoCommand.TOUCH_CONFIG_SET, buf.array());
         }
 
+        if (config.equals(OppoHeadphonesPreferences.LDAC)) {
+            final boolean value = prefs.getBoolean(OppoHeadphonesPreferences.LDAC, false);
+            LOG.debug("Sending ldac = {}", value);
+            return encodeLdacSet(value);
+        }
+
+        if (config.equals(OppoHeadphonesPreferences.MULTIPOINT)) {
+            final boolean value = prefs.getBoolean(OppoHeadphonesPreferences.MULTIPOINT, false);
+            LOG.debug("Sending multipoint = {}", value);
+            return encodeMultipointSet(value);
+        }
+
+        if (config.equals(OppoHeadphonesPreferences.GAME_MODE)) {
+            final boolean value = prefs.getBoolean(OppoHeadphonesPreferences.GAME_MODE, false);
+            LOG.debug("Sending game mode = {}", value);
+            return encodeGameModeSet(value);
+        }
+
         return super.encodeSendConfiguration(config);
     }
 
@@ -357,6 +376,34 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
 
     public byte[] encodeConfigurationReq() {
         return encodeMessage(OppoCommand.TOUCH_CONFIG_REQ, new byte[]{0x02, 0x03, 0x01});
+    }
+
+    public byte[] encodeLdacSet(final boolean enable) {
+        final byte[] payload = new byte[] {
+            (byte) (enable ? 0x01 : 0x00)
+        };
+        return encodePrefSet(PrefType.LDAC, payload);
+    }
+
+    public byte[] encodeGameModeSet(final boolean enable) {
+        final byte[] payload = new byte[] {
+            (byte) (enable ? 0x01 : 0x00)
+        };
+        return encodePrefSet(PrefType.GAME_MODE, payload);
+    }
+
+    public byte[] encodeMultipointSet(final boolean enable) {
+        final byte[] payload = new byte[] {
+            (byte) (enable ? 0x01 : 0x00)
+        };
+        return encodePrefSet(PrefType.MULTIPOINT, payload);
+    }
+
+    public byte[] encodePrefSet(final PrefType type, final byte[] value) {
+        final byte[] payload = new byte[1 + value.length];
+        payload[0] = (byte) type.getCode();
+        System.arraycopy(value, 0, payload, 1, value.length);
+        return encodeMessage(OppoCommand.PREF_SET, payload);
     }
 
     private byte[] encodeMessage(final OppoCommand command, final byte[] payload) {

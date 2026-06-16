@@ -18,37 +18,28 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands;
 
 import androidx.annotation.Nullable;
 
-public enum OppoCommand {
-    BATTERY_REQ(0x0106),
-    BATTERY_RET(0x8106),
-    DEVICE_INFO(0x0204),
-    FIRMWARE_GET(0x0105),
-    FIRMWARE_RET(0x8105),
-    TOUCH_CONFIG_REQ(0x0108),
-    TOUCH_CONFIG_SET(0x0401),
-    TOUCH_CONFIG_RET(0x8108),
-    TOUCH_CONFIG_ACK(0x8401),
-    FIND_DEVICE_REQ(0x0400),
-    FIND_DEVICE_ACK(0x8400),
-    PREF_SET(0x0403),
-    PREF_ACK(0x8403),
+public enum PrefType {
+    LDAC(0x18),
+    GAME_MODE(0x06),
+    MULTIPOINT(0x11),
+    FIND_PHONE(0x26),
     ;
 
-    private final short code;
+    private final int code;
 
-    OppoCommand(final int code) {
-        this.code = (short) code;
+    PrefType(final int code) {
+        this.code = code;
     }
 
-    public short getCode() {
+    public int getCode() {
         return code;
     }
 
     @Nullable
-    public static OppoCommand fromCode(final short code) {
-        for (final OppoCommand cmd : OppoCommand.values()) {
-            if (cmd.code == code) {
-                return cmd;
+    public static PrefType fromCode(final int code) {
+        for (final PrefType param : PrefType.values()) {
+            if (param.code == code) {
+                return param;
             }
         }
 
