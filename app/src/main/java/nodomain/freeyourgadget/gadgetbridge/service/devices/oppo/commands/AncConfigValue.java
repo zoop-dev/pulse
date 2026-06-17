@@ -16,6 +16,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands;
 
+import java.lang.Iterable;
+import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.Set;
+
 import androidx.annotation.Nullable;
 
 public enum AncConfigValue {
@@ -51,6 +56,17 @@ public enum AncConfigValue {
         return prefId;
     }
 
+    public static EnumSet<AncConfigValue> fromMask(int mask) {
+        EnumSet<AncConfigValue> modes = EnumSet.noneOf(AncConfigValue.class);
+        for (AncConfigValue mode : AncConfigValue.values()) {
+            if ((mask & mode.getCode()) == mode.getCode()) {
+                modes.add(mode);
+            }
+        }
+        
+        return modes;
+    }
+
     @Nullable
     public static AncConfigValue fromPrefId(final String prefId) {
         for (final AncConfigValue param : AncConfigValue.values()) {
@@ -60,5 +76,24 @@ public enum AncConfigValue {
         }
 
         return null;
+    }
+
+    public static Set<String> toPrefIds(Iterable<AncConfigValue> modes) {
+        Set<String> prefIds = new HashSet<>();
+        for (AncConfigValue mode : modes) {
+            prefIds.add(mode.getPrefId());
+        }
+        return prefIds;
+    }
+
+    public static EnumSet<AncConfigValue> fromPrefIds(Iterable<String> prefIds) {
+        EnumSet<AncConfigValue> modes = EnumSet.noneOf(AncConfigValue.class);
+        for (String prefId : prefIds) {
+            AncConfigValue mode = fromPrefId(prefId);
+            if (mode != null) {
+                modes.add(mode);
+            }
+        }
+        return modes;
     }
 }

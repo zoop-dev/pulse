@@ -93,6 +93,7 @@ public class OppoHeadphonesSettingsCustomizer implements DeviceSpecificSettingsC
         this.addPreferenceHandler(handler, OppoHeadphonesPreferences.MULTIPOINT, supportsMultipoint);
         this.addPreferenceHandler(handler, OppoHeadphonesPreferences.GAME_MODE, supportsGameMode);
         this.addPreferenceHandler(handler, OppoHeadphonesPreferences.ANC_SELECTOR, supportsAnc);
+        this.addPreferenceHandler(handler, OppoHeadphonesPreferences.ANC_TOUCH_CYCLE_MODES, supportsAnc);
 
         for (final Map.Entry<Pair<TouchConfigSide, TouchConfigType>, List<TouchConfigValue>> e : touchOptions.entrySet()) {
             final TouchConfigSide side = e.getKey().first;

@@ -26,6 +26,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.EnumSet;
+import java.util.Set;
+import java.util.HashSet;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -42,6 +45,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchC
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigValue;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.MiscConfigType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.AncConfigType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.AncConfigValue;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
@@ -344,16 +348,16 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
     private static GBDeviceEvent parseMiscConfig(final byte[] payload) {
         final GBDeviceEventUpdatePreferences eventUpdatePreferences = new GBDeviceEventUpdatePreferences();
         for (int i = 2; i + 1 < payload.length; i += 2) {
-            final int code = payload[i] & 0xff;
-            final int value = payload[i + 1] & 0xff;
+            final int typeCode = payload[i] & 0xff;
+            final int valueCode = payload[i + 1] & 0xff;
 
-            final MiscConfigType type = MiscConfigType.fromCode(code);
+            final MiscConfigType type = MiscConfigType.fromCode(typeCode);
             if (type == null) {
-                LOG.warn("Unknown misc config code {}", code);
+                LOG.warn("Unknown misc config type code {}", typeCode);
                 continue;
             }
             
-            final boolean isEnabled = (value == 1);
+            final boolean isEnabled = (valueCode == 1);
             switch (type) {
                 case LDAC:
                     LOG.debug("Got misc config for LDAC = {}", isEnabled);
@@ -377,7 +381,7 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
                     );
                     break;
                 default:
-                    LOG.warn("Unknown misc config code {}", code);
+                    LOG.warn("Unknown misc config type code {}", typeCode);
                     break;
             }
         }
@@ -421,22 +425,39 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
     private static GBDeviceEvent parseAncConfig(final byte[] payload) {
         final GBDeviceEventUpdatePreferences event = new GBDeviceEventUpdatePreferences();
 
-        for (int i = 2; i + 1 < payload.length; i += 2) {
-            final int code = payload[i] & 0xff;
-            final int value = payload[i + 1] & 0xff;
+        final int typeCode = payload[1] & 0xff;
+        final int valueCode = payload[3] & 0xff;
 
-            switch (code) {
-                case 0x01:
-                    final AncConfigValue mode = AncConfigValue.fromCode(value);
-                    if (mode != null) {
-                        event.withPreference(OppoHeadphonesPreferences.ANC_SELECTOR, mode.getPrefId());
-                    } else {
-                        LOG.warn("Unknown ANC mode {}", value);
-                    }
-                    break;
-                default:
-                    LOG.debug("Unknown code {}", code);
-                    break;
+        final AncConfigType type = AncConfigType.fromCode(typeCode);
+        if (type == null) {
+            LOG.warn("Unknown anc type code {}", typeCode);
+            return event;
+        }
+
+        switch (type) {
+            case MODE: {
+                final AncConfigValue mode = AncConfigValue.fromCode(valueCode);
+                if (mode != null) {
+                    LOG.debug("Got anc config for {} = {}", type, mode);
+                    event.withPreference(OppoHeadphonesPreferences.ANC_SELECTOR, mode.getPrefId());
+                } else {
+                    LOG.warn("Unknown anc mode code {}", valueCode);
+                }
+                break;
+            }
+            case TOUCH_CYCLE_MODES: {
+                final EnumSet<AncConfigValue> modes = AncConfigValue.fromMask(valueCode);
+                if (!modes.isEmpty()) {
+                    final Set<String> prefIds = AncConfigValue.toPrefIds(modes);
+
+                    LOG.debug("Got anc config for {} = {}", type, prefIds);
+                    event.withPreference(OppoHeadphonesPreferences.ANC_TOUCH_CYCLE_MODES, prefIds);
+                }
+                break;
+            }
+            default: {
+                LOG.debug("Unknown anc type code {}", typeCode);
+                break;
             }
         }
         return event;
@@ -498,7 +519,19 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
                 mode = AncConfigValue.OFF;
             } 
             LOG.debug("Sending ANC mode = {}", mode);
-            return encodeAncConfigSet(mode);
+            return encodeAncModeSet(mode);
+        }
+
+        if (config.equals(OppoHeadphonesPreferences.ANC_TOUCH_CYCLE_MODES)) {
+            final Set<String> prefIds = prefs.getStringSet(OppoHeadphonesPreferences.ANC_TOUCH_CYCLE_MODES, Collections.emptySet());
+            final EnumSet<AncConfigValue> modes = AncConfigValue.fromPrefIds(prefIds);
+            if (modes.size() < 2) {
+                LOG.warn("ANC cycle must contain at least 2 modes. Current selection: {}", modes);
+                return super.encodeSendConfiguration(config);
+            }
+
+            LOG.debug("Sending ANC touch cycle modes = {}", modes);
+            return encodeAncTouchCycleModesSet(modes);
         }
 
         return super.encodeSendConfiguration(config);
@@ -563,18 +596,31 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
         return encodeMessage(OppoCommand.MISC_CONFIG_REQ, payload);
     }
 
-    public byte[] encodeAncConfigSet(final AncConfigValue mode) {
+    public byte[] encodeAncModeSet(final AncConfigValue mode) {
         final byte[] payload = new byte[] {
-            (byte) 0x01,
+            (byte) AncConfigType.MODE.getCode(),
             (byte) 0x01,
             (byte) mode.getCode()
         };
         return encodeMessage(OppoCommand.ANC_CONFIG_SET, payload);
     }
 
-    public byte[] encodeAncConfigReq() {
+    public byte[] encodeAncTouchCycleModesSet(final EnumSet<AncConfigValue> modes) {
+        int mask = 0;
+        for (AncConfigValue mode : modes) {
+            mask |= mode.getCode();
+        }
         final byte[] payload = new byte[] {
+            (byte) AncConfigType.TOUCH_CYCLE_MODES.getCode(),
             (byte) 0x01,
+            (byte) mask 
+        };
+        return encodeMessage(OppoCommand.ANC_CONFIG_SET, payload);
+    }
+
+    public byte[] encodeAncConfigReq(final AncConfigType type) {
+        final byte[] payload = new byte[] {
+            (byte) type.getCode(),
             (byte) 0x01,
         };
         return encodeMessage(OppoCommand.ANC_CONFIG_REQ, payload);

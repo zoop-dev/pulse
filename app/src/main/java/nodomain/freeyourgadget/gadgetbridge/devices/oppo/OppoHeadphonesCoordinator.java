@@ -83,6 +83,7 @@ public abstract class OppoHeadphonesCoordinator extends AbstractBLClassicDeviceC
             }
             if (this.supportsAnc(device)) {
                 settings.addSubScreen(DeviceSpecificSettingsScreen.AUDIO, R.xml.devicesettings_onemore_noise_control_selector);
+                settings.addSubScreen(DeviceSpecificSettingsScreen.TOUCH_OPTIONS, R.xml.devicesettings_oppo_headphones_touch_options_anc);
             }
         }
 

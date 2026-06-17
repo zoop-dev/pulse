@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:key="oppo_touch_header_anc"
+        android:title="@string/prefs_active_noise_cancelling"
+        app:iconSpaceReserved="false">
+        <MultiSelectListPreference
+            android:key="oppo_touch_anc_cycle_modes"
+            android:title="@string/prefs_noise_modes_to_cycle"
+            android:icon="@drawable/ic_sync"
+            android:entries="@array/onemore_noise_control_modes"
+            android:entryValues="@array/onemore_noise_control_values"
+            android:defaultValue="@array/onemore_noise_control_values" />
+    </PreferenceCategory>
+</androidx.preference.PreferenceScreen>

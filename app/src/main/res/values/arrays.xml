@@ -4520,7 +4520,7 @@
         <item>@string/pref_title_touch_voice_assistant</item>
         <item>@string/pref_title_touch_voice_assistant</item>
         <item>@string/prefs_game_mode</item>
-        <item>@string/prefs_noise_control</item>
+        <item>@string/moondrop_touch_action_anc_mode</item>
     </string-array>
 
     <string-array name="oppo_touch_tap_values">

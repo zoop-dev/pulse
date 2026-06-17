@@ -30,6 +30,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractHeadphoneSerialDeviceSupportV2;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.MiscConfigType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.AncConfigType;
 import nodomain.freeyourgadget.gadgetbridge.devices.oppo.OppoHeadphonesCoordinator;
 
 public class OppoHeadphonesSupport extends AbstractHeadphoneSerialDeviceSupportV2<OppoHeadphonesProtocol> {
@@ -91,7 +92,8 @@ public class OppoHeadphonesSupport extends AbstractHeadphoneSerialDeviceSupportV
         }
         builder.write(mDeviceProtocol.encodeTouchConfigReq());
         if (coordinator.supportsAnc(getDevice())) {
-            builder.write(mDeviceProtocol.encodeAncConfigReq());
+            builder.write(mDeviceProtocol.encodeAncConfigReq(AncConfigType.MODE));
+            builder.write(mDeviceProtocol.encodeAncConfigReq(AncConfigType.TOUCH_CYCLE_MODES));
         }
 
         builder.write(mDeviceProtocol.encodeBatteryReq());
