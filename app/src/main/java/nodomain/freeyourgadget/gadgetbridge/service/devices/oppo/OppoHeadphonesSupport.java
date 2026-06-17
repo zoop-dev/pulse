@@ -72,6 +72,7 @@ public class OppoHeadphonesSupport extends AbstractHeadphoneSerialDeviceSupportV
         builder.write(mDeviceProtocol.encodeFirmwareVersionReq());
         builder.write(mDeviceProtocol.encodeMiscConfigReq());
         builder.write(mDeviceProtocol.encodeTouchConfigReq());
+        builder.write(mDeviceProtocol.encodeAncConfigReq());
         builder.write(mDeviceProtocol.encodeBatteryReq());
         builder.setDeviceState(GBDevice.State.INITIALIZED);
         scheduleBatteryRequestRetry();

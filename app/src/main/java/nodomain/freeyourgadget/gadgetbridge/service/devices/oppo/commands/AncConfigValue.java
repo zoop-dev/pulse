@@ -18,43 +18,44 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands;
 
 import androidx.annotation.Nullable;
 
-public enum OppoCommand {
-    BATTERY_REQ(0x0106),
-    BATTERY_RET(0x8106),
-    DEVICE_INFO(0x0204),
-    FIRMWARE_GET(0x0105),
-    FIRMWARE_RET(0x8105),
-    TOUCH_CONFIG_REQ(0x0108),
-    TOUCH_CONFIG_SET(0x0401),
-    TOUCH_CONFIG_RET(0x8108),
-    TOUCH_CONFIG_ACK(0x8401),
-    FIND_DEVICE_REQ(0x0400),
-    FIND_DEVICE_ACK(0x8400),
-    MISC_CONFIG_SET(0x0403),
-    MISC_CONFIG_REQ(0x010d),
-    MISC_CONFIG_ACK(0x8403),
-    MISC_CONFIG_RET(0x810d),
-    ANC_CONFIG_SET(0x0404),
-    ANC_CONFIG_REQ(0x010c),
-    ANC_CONFIG_ACK(0x8404),
-    ANC_CONFIG_RET(0x810c),
+public enum AncConfigValue {
+    OFF(0x01, "0"),
+    TRANSPARENCY(0x02, "2"),
+    ON(0x08, "1");
     ;
 
-    private final short code;
+    private final int code;
+    private final String prefId;
 
-    OppoCommand(final int code) {
-        this.code = (short) code;
+    AncConfigValue(final int code, final String prefId) {
+        this.code = code;
+        this.prefId = prefId;
     }
 
-    public short getCode() {
+    public int getCode() {
         return code;
     }
 
     @Nullable
-    public static OppoCommand fromCode(final short code) {
-        for (final OppoCommand cmd : OppoCommand.values()) {
-            if (cmd.code == code) {
-                return cmd;
+    public static AncConfigValue fromCode(final int code) {
+        for (final AncConfigValue param : AncConfigValue.values()) {
+            if (param.code == code) {
+                return param;
+            }
+        }
+
+        return null;
+    }
+
+    public String getPrefId() {
+        return prefId;
+    }
+
+    @Nullable
+    public static AncConfigValue fromPrefId(final String prefId) {
+        for (final AncConfigValue param : AncConfigValue.values()) {
+            if (prefId.equals(param.prefId)) {
+                return param;
             }
         }
 

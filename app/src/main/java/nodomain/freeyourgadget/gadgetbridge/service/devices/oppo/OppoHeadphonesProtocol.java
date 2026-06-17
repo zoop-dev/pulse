@@ -42,6 +42,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchC
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigValue;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.MiscConfigType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.AncConfigValue;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
@@ -170,7 +171,7 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
                     LOG.warn("Unknown config ret {}", payload[0]);
                     break;
                 }
-                if (payload.length < 2) {
+                if (payload.length < 3) {
                     LOG.error("Unexpected pref ret payload size {}", payload.length);
                     break;
                 }
@@ -198,6 +199,13 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
                 LOG.debug("Got config ack, status={}", payload[0]);
                 break;
             }
+            case ANC_CONFIG_RET:
+                if (payload.length < 3) {
+                    break;
+                }
+
+                events.add(parseAncConfig(payload));
+                break;
             default:
                 LOG.warn("Unhandled command {}", command);
         }
@@ -303,12 +311,7 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
 
     private static GBDeviceEvent parseMiscConfig(final byte[] payload) {
         final GBDeviceEventUpdatePreferences eventUpdatePreferences = new GBDeviceEventUpdatePreferences();
-        for (int i = 2; i < payload.length; i += 2) {
-            if (i + 1 >= payload.length) {
-                LOG.warn("Truncated pref ret pair at index {}", i);
-                break;
-            }
-
+        for (int i = 2; i + 1 < payload.length; i += 2) {
             final int code = payload[i] & 0xff;
             final int value = payload[i + 1] & 0xff;
 
@@ -383,6 +386,30 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
         return eventUpdatePreferences; 
     }
 
+    private static GBDeviceEvent parseAncConfig(final byte[] payload) {
+        final GBDeviceEventUpdatePreferences event = new GBDeviceEventUpdatePreferences();
+
+        for (int i = 2; i + 1 < payload.length; i += 2) {
+            final int code = payload[i] & 0xff;
+            final int value = payload[i + 1] & 0xff;
+
+            switch (code) {
+                case 0x01:
+                    final AncConfigValue mode = AncConfigValue.fromCode(value);
+                    if (mode != null) {
+                        event.withPreference(OppoHeadphonesPreferences.ANC_SELECTOR, mode.getPrefId());
+                    } else {
+                        LOG.warn("Unknown ANC mode {}", value);
+                    }
+                    break;
+                default:
+                    LOG.debug("Unknown code {}", code);
+                    break;
+            }
+        }
+        return event;
+    }
+
     @Override
     public byte[] encodeFirmwareVersionReq() {
         return encodeMessage(OppoCommand.FIRMWARE_GET, new byte[0]);
@@ -429,6 +456,17 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
             final boolean value = prefs.getBoolean(OppoHeadphonesPreferences.GAME_MODE, false);
             LOG.debug("Sending game mode = {}", value);
             return encodeGameModeSet(value);
+        }
+
+        if (config.equals(OppoHeadphonesPreferences.ANC_SELECTOR)) {
+            final String prefId = prefs.getString(OppoHeadphonesPreferences.ANC_SELECTOR, "0");
+            AncConfigValue mode = AncConfigValue.fromPrefId(prefId);
+            if (mode == null) {
+                LOG.debug("Unknown ANC prefId = \"{}\"", prefId);
+                mode = AncConfigValue.OFF;
+            } 
+            LOG.debug("Sending ANC mode = {}", mode);
+            return encodeAncConfigSet(mode);
         }
 
         return super.encodeSendConfiguration(config);
@@ -486,6 +524,23 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
             (byte) MiscConfigType.MULTIPOINT.getCode(),
             (byte) MiscConfigType.GAME_MODE.getCode()
         });
+    }
+
+    public byte[] encodeAncConfigSet(final AncConfigValue mode) {
+        final byte[] payload = new byte[] {
+            (byte) 0x01,
+            (byte) 0x01,
+            (byte) mode.getCode()
+        };
+        return encodeMessage(OppoCommand.ANC_CONFIG_SET, payload);
+    }
+
+    public byte[] encodeAncConfigReq() {
+        final byte[] payload = new byte[] {
+            (byte) 0x01,
+            (byte) 0x01,
+        };
+        return encodeMessage(OppoCommand.ANC_CONFIG_REQ, payload);
     }
 
     private byte[] encodeMessage(final OppoCommand command, final byte[] payload) {

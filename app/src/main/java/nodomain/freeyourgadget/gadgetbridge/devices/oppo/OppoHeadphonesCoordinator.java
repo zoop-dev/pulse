@@ -76,10 +76,14 @@ public abstract class OppoHeadphonesCoordinator extends AbstractBLClassicDeviceC
         settings.addRootScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS);
         settings.addSubScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS, R.xml.devicesettings_headphones);
 
-        settings.addRootScreen(DeviceSpecificSettingsScreen.DEVELOPER);
-        if (this.supportsLdac(device)) {
+        if (this.supportsLdac(device) || this.supportsAnc(device)) {
             settings.addRootScreen(DeviceSpecificSettingsScreen.AUDIO);
-            settings.addSubScreen(DeviceSpecificSettingsScreen.AUDIO, R.xml.devicesettings_ldac_toggle);
+            if (this.supportsLdac(device)) {
+                settings.addSubScreen(DeviceSpecificSettingsScreen.AUDIO, R.xml.devicesettings_ldac_toggle);
+            }
+            if (this.supportsAnc(device)) {
+                settings.addSubScreen(DeviceSpecificSettingsScreen.AUDIO, R.xml.devicesettings_onemore_noise_control_selector);
+            }
         }
 
         if (this.supportsMultipoint(device) || this.supportsGameMode(device)) {
@@ -97,7 +101,13 @@ public abstract class OppoHeadphonesCoordinator extends AbstractBLClassicDeviceC
 
     @Override
     public DeviceSpecificSettingsCustomizer getDeviceSpecificSettingsCustomizer(final GBDevice device) {
-        return new OppoHeadphonesSettingsCustomizer(getTouchOptions(), supportsLdac(device), supportsMultipoint(device), supportsGameMode(device));
+        return new OppoHeadphonesSettingsCustomizer(
+            getTouchOptions(),
+            supportsLdac(device),
+            supportsMultipoint(device),
+            supportsGameMode(device),
+            supportsAnc(device)
+        );
     }
 
     protected abstract Map<Pair<TouchConfigSide, TouchConfigType>, List<TouchConfigValue>> getTouchOptions();
@@ -116,6 +126,10 @@ public abstract class OppoHeadphonesCoordinator extends AbstractBLClassicDeviceC
     }
 
     public boolean supportsGameMode(@NonNull GBDevice device) {
+        return false;
+    }
+
+    public boolean supportsAnc(@NonNull GBDevice device) {
         return false;
     }
 }
