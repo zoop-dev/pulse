@@ -917,7 +917,7 @@
     <string name="sonyswr12_settings_stamina_summary">Енергоощадний режим вимикає періодичне автоматичне вимірювання пульсу, подовжуючи час роботи</string>
     <string name="sonyswr12_settings_alarm_interval_summary">Інтервал розумного будильника – це проміжок часу перед установленим будильником. Упродовж цього проміжку пристрій намагатиметься виявити найлегшу фазу сну для пробудження користувача</string>
     <string name="prefs_key_vibration">Вібрація клавіш</string>
-    <string name="activity_error_no_app_for_png">Щоби поділитися цим знімком екрана, установіть застосунок із підтримкою файлів зображень.</string>
+    <string name="activity_error_no_app_for_png">Щоби поділитися цим знімком екрана, установіть застосунок, що підтримує файли зображень.</string>
     <string name="prefs_fake_ring_duration">Безперервний несправжній дзвінок</string>
     <string name="prefs_autoremove_message">Автоматично видаляти SMS-сповіщення</string>
     <string name="fossil_hr_commute_processing">Обробка запиту…</string>
@@ -3291,7 +3291,7 @@
     <string name="devicetype_generic_thermal_printer">Термопринтер</string>
     <string name="devicetype_generic_headphones">Навушники</string>
     <string name="devicetype_generic_heart_rate_sensor">Датник пульсу</string>
-    <string name="menuitem_heart_rate_push">Передача пульсу</string>
+    <string name="menuitem_heart_rate_push">Надсилання пульсу</string>
     <string name="menuitem_bluetooth_scale_assistant">Помічник Bluetooth-ваг</string>
     <string name="menuitem_water_time">Час пиття води</string>
     <string name="menuitem_zepp_flow">Zepp Flow</string>
@@ -3402,7 +3402,7 @@
     <string name="pref_title_garmin_default_reply_suffix">Використовувати попередньо визначений суфікс відповіді</string>
     <string name="pref_dashboard_widget_today_upside_down_title">Північ внизу</string>
     <string name="pref_dashboard_widget_today_upside_down_summary">У 24-годинному режимі намалюйте північ внизу, полудень угорі графіка</string>
-    <string name="sleepasandroid_settings">Спи як Android</string>
+    <string name="sleepasandroid_settings">Sleep As Android</string>
     <string name="pref_sleepasandroid_enable_summary">Увімкнути інтеграцію Sleep As Android</string>
     <string name="pref_sleepasandroid_device_title">Пристрій постачальника</string>
     <string name="pref_sleepasandroid_device_summary">Виберіть пристрій як постачальника даних для Android у режимі сну</string>
@@ -4166,4 +4166,7 @@
     <string name="kind_waypoints">Маршрутні точки</string>
     <string name="kind_segments">Відрізки</string>
     <string name="waypoint_count">Маршрутних точок: %d</string>
+    <string name="task_installing_route">Завантаження маршруту</string>
+    <string name="route_upload_completed">Завантаження маршруту завершено</string>
+    <string name="route_upload_failed">Не вдалося завантажити маршрут</string>
 </resources>
