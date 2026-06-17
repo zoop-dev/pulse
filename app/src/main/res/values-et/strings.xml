@@ -564,7 +564,7 @@
     <string name="pref_summary_setup_bt_pairing">Lülita see välja, kui ilmnevad probleemid paaritamisega</string>
     <string name="pref_title_setup_bt_pairing">Lülita Bluetooth\'i paaritamine sisse</string>
     <string name="title_activity_pebble_pairing">Pebble paaritamine</string>
-    <string name="ok">OK</string>
+    <string name="ok">Sobib</string>
     <string name="activity_db_management_exportimport_label">Eksport ja import</string>
     <string name="activity_db_management_empty_DB">Tühjenda andmebaas</string>
     <string name="mi2_prefs_inactivity_warnings_threshold">Inaktiivsuse maksimaalne kestvus (minutites)</string>
@@ -1191,4 +1191,24 @@
     <string name="activity_filter_date_from">Alates</string>
     <string name="activity_filter_date_to">Kuni</string>
     <string name="km">km</string>
+    <string name="dnd_all_day">Kogu päev</string>
+    <string name="dateformat_day_month">Päev, kuu</string>
+    <string name="dateformat_month_day">Kuu, päev</string>
+    <string name="delete_device_and_retain_files">Säilita failid</string>
+    <string name="save">Salvesta</string>
+    <string name="done">Valmis</string>
+    <string name="dismiss">Loobu</string>
+    <string name="notifications_dismiss_all">Loobu kõigist</string>
+    <string name="start">Käivita</string>
+    <string name="stop">Lõpeta</string>
+    <string name="status">Olek</string>
+    <string name="set">Seadista</string>
+    <string name="dbmanagementactivity_export_finished">Kustutamine lõppes</string>
+    <string name="activity_DB_delete_legacy_button">Kustuta vana andmebaas</string>
+    <string name="activity_DB_test_export_message">Ekspordin andmebaasi…</string>
+    <string name="smart">Nutikas</string>
+    <string name="hr_measurement_continuous">Jätkuv</string>
+    <string name="normal">Tavaline</string>
+    <string name="sensitive">Tundlik</string>
+    <string name="enhanced">Tõhustatud</string>
 </resources>
