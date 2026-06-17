@@ -240,6 +240,10 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
             }
 
             final int batteryLevel = payload[i + 1] & 0x7f;
+            if (batteryIndex == 2 && batteryLevel == 0) {
+                continue;
+            }
+
             final BatteryState batteryState = (payload[i + 1] & 0x80) != 0 ? BatteryState.BATTERY_CHARGING : BatteryState.BATTERY_NORMAL;
 
             LOG.debug("Got battery {}: {}%, {}", batteryIndex, batteryLevel, batteryState);
@@ -248,6 +252,22 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
             eventBatteryInfo.batteryIndex = batteryIndex;
             eventBatteryInfo.level = batteryLevel;
             eventBatteryInfo.state = batteryState;
+            events.add(eventBatteryInfo);
+        }
+
+        List<Integer> processedBatteries = events.stream()
+            .map(event -> ((GBDeviceEventBatteryInfo) event).batteryIndex)
+            .toList();
+
+        for (int i = 0; i < 2; i++) {
+            if (processedBatteries.contains(i)) {
+                continue;
+            }
+            
+            final GBDeviceEventBatteryInfo eventBatteryInfo = new GBDeviceEventBatteryInfo();
+            eventBatteryInfo.batteryIndex = i;
+            eventBatteryInfo.level = -1;
+            eventBatteryInfo.state = BatteryState.UNKNOWN;
             events.add(eventBatteryInfo);
         }
 
