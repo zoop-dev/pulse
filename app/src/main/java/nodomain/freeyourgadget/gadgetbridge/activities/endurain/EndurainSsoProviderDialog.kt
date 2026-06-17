@@ -22,8 +22,8 @@ import nodomain.freeyourgadget.gadgetbridge.R
 
 class EndurainSsoProviderDialog(
     private val context: Context,
-    private val providers: List<IdentityProvider>,
-    private val onProviderSelected: (IdentityProvider) -> Unit
+    private val providers: List<EndurainIdentityProvider>,
+    private val onProviderSelected: (EndurainIdentityProvider) -> Unit
 ) {
 
     fun show() {

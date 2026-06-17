@@ -175,7 +175,7 @@ class EndurainSetupBottomSheet : BottomSheetDialogFragment() {
         }.show()
     }
 
-    private fun launchSsoLogin(provider: IdentityProvider) {
+    private fun launchSsoLogin(provider: EndurainIdentityProvider) {
         val ssoUrl = vm.generateSsoUrl(provider.slug)
 
         LOG.info("Launching secure browser for SSO URL: $ssoUrl")

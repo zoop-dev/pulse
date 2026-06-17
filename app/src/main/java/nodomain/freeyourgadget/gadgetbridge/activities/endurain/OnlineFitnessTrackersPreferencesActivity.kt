@@ -40,8 +40,8 @@ class OnlineFitnessTrackersPreferencesActivity : AbstractSettingsActivityV2() {
             setPreferencesFromResource(R.xml.online_fitness_trackers_preferences, rootKey)
 
             updateNetworkWarning()
-            wireLoginPreference()
-            wireLogoutPreference()
+            wireLoginPreferences()
+            wireLogoutPreferences()
             updateStatus()
             updateLogoutPreferenceVisibility()
             setupLoginResultListener()
@@ -50,8 +50,8 @@ class OnlineFitnessTrackersPreferencesActivity : AbstractSettingsActivityV2() {
             val vm: EndurainSetupViewModel by viewModels()
             val server = GBApplication.getPrefs().preferences.getString("endurain_server", null)
             if (server != null) {
-                if (vm.tokenManager.isAccessTokenExpired()) {
-                    vm.tokenManager.performTokenRefresh(server) {
+                if (vm.endurainTokenManager.isAccessTokenExpired()) {
+                    vm.endurainTokenManager.performTokenRefresh(server) {
                         activity?.runOnUiThread {
                             updateStatus()
                             updateLogoutPreferenceVisibility()
@@ -77,6 +77,16 @@ class OnlineFitnessTrackersPreferencesActivity : AbstractSettingsActivityV2() {
                     updateLogoutPreferenceVisibility()
                 }
             }
+            parentFragmentManager.setFragmentResultListener(
+                "wanderer_login_result",
+                this
+            ) { _, bundle ->
+                val success = bundle.getBoolean("success", false)
+                if (success) {
+                    updateStatus()
+                    updateLogoutPreferenceVisibility()
+                }
+            }
         }
 
         override fun onResume() {
@@ -90,54 +100,79 @@ class OnlineFitnessTrackersPreferencesActivity : AbstractSettingsActivityV2() {
                 !GBApplication.hasInternetAccess()
         }
 
-        private fun wireLoginPreference() {
-            findPreference<Preference>("pref_key_log_in")?.setOnPreferenceClickListener {
+        private fun wireLoginPreferences() {
+            findPreference<Preference>("pref_key_endurain_log_in")?.setOnPreferenceClickListener {
                 EndurainSetupBottomSheet()
                     .show(parentFragmentManager, "endurain_setup")
                 true
             }
-        }
-
-        private fun wireLogoutPreference() {
-            findPreference<Preference>("pref_key_log_out")?.setOnPreferenceClickListener {
-                performLogout()
+            findPreference<Preference>("pref_key_wanderer_log_in")?.setOnPreferenceClickListener {
+                WandererSetupBottomSheet()
+                    .show(parentFragmentManager, "wanderer_setup")
                 true
             }
         }
 
-        private fun performLogout() {
-            vm.logout { success ->
-                activity?.runOnUiThread {
-                    if (success) {
-                        GB.toast(getString(R.string.endurain_logged_out_successfully), Toast.LENGTH_SHORT, GB.INFO)
-                        updateStatus()
-                        updateLogoutPreferenceVisibility()
-                    } else {
-                        GB.toast(getString(R.string.endurain_logout_failed), Toast.LENGTH_SHORT, GB.WARN)
+        private fun wireLogoutPreferences() {
+            findPreference<Preference>("pref_key_endurain_log_out")?.setOnPreferenceClickListener {
+                vm.logout { success ->
+                    activity?.runOnUiThread {
+                        if (success) {
+                            GB.toast(getString(R.string.endurain_logged_out_successfully), Toast.LENGTH_SHORT, GB.INFO)
+                            updateStatus()
+                            updateLogoutPreferenceVisibility()
+                        } else {
+                            GB.toast(getString(R.string.endurain_logout_failed), Toast.LENGTH_SHORT, GB.WARN)
+                        }
                     }
                 }
+                true
+            }
+            findPreference<Preference>("pref_key_wanderer_log_out")?.setOnPreferenceClickListener {
+                WandererTokenManager(requireContext()).clearTokens()
+                activity?.runOnUiThread {
+                    GB.toast(getString(R.string.endurain_logged_out_successfully), Toast.LENGTH_SHORT, GB.INFO)
+                    updateStatus()
+                    updateLogoutPreferenceVisibility()
+                }
+
+                true
             }
         }
 
         private fun updateLogoutPreferenceVisibility() {
-            findPreference<Preference>("pref_key_log_out")?.isVisible = vm.tokenManager.isLoggedIn()
-            findPreference<Preference>("pref_key_log_in")?.isVisible = !vm.tokenManager.isLoggedIn()
+            findPreference<Preference>("pref_key_endurain_log_out")?.isVisible = vm.endurainTokenManager.isLoggedIn()
+            findPreference<Preference>("pref_key_endurain_log_in")?.isVisible = !vm.endurainTokenManager.isLoggedIn()
+            findPreference<Preference>("pref_key_wanderer_log_out")?.isVisible = WandererTokenManager(requireContext()).isLoggedIn()
+            findPreference<Preference>("pref_key_wanderer_log_in")?.isVisible = !WandererTokenManager(requireContext()).isLoggedIn()
         }
 
         private fun updateStatus() {
-            val statusPref = findPreference<Preference>("pref_key_status")
-            val server = GBApplication.getPrefs().preferences.getString("endurain_server", null)
-            val tokenExpiresAt = DateTimeUtils.parseTimeStamp(vm.tokenManager.getRefreshTokenExpiresAt())
+            val endurainStatusPref = findPreference<Preference>("pref_key_endurain_status")
+            val endurainServer = GBApplication.getPrefs().preferences.getString("endurain_server", null)
+            val endurainTokenExpiresAt = DateTimeUtils.parseTimeStamp(vm.endurainTokenManager.getRefreshTokenExpiresAt())
+            val wandererStatusPref = findPreference<Preference>("pref_key_wanderer_status")
+            val wandererServer = GBApplication.getPrefs().preferences.getString("wanderer_server", null)
+            val wandererAPITokenAvailable = WandererTokenManager(requireContext()).isLoggedIn()
 
+            // Update Endurain preferences
             var summaryText = getString(R.string.endurain_not_logged_in_integration_disabled)
-            if (vm.tokenManager.isLoggedIn() && server != null) {
+            if (vm.endurainTokenManager.isLoggedIn() && endurainServer != null) {
                 summaryText =
-                    getString(R.string.endurain_logged_in_refresh_token, server, tokenExpiresAt)
+                    getString(R.string.endurain_logged_in_refresh_token, endurainServer, endurainTokenExpiresAt)
             }
-            if (vm.serverVersion != null) {
-                summaryText += getString(R.string.endurain_server_version, vm.serverVersion)
+            if (vm.endurainServerVersion != null) {
+                summaryText += getString(R.string.endurain_server_version, vm.endurainServerVersion)
             }
-            statusPref?.summary = summaryText
+            endurainStatusPref?.summary = summaryText
+
+            // Update Wanderer preferences
+            summaryText = getString(R.string.endurain_not_logged_in_integration_disabled)
+            if (wandererAPITokenAvailable) {
+                summaryText =
+                    getString(R.string.wanderer_logged_in).format(wandererServer)
+            }
+            wandererStatusPref?.summary = summaryText
         }
     }
 }

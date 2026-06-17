@@ -40,14 +40,14 @@ class EndurainSetupViewModel(application: Application) : AndroidViewModel(applic
         SSO_PROVIDERS
     }
 
-    val tokenManager = EndurainTokenManager(application)
+    val endurainTokenManager = EndurainTokenManager(application)
     var step = Step.SERVER
     var server = ""
     var localLoginEnabled = false
     var ssoEnabled = false
     var pendingMfaUsername: String? = null
-    var availableProviders: List<IdentityProvider> = emptyList()
-    var serverVersion: String? = null
+    var availableProviders: List<EndurainIdentityProvider> = emptyList()
+    var endurainServerVersion: String? = null
 
     /**
      * Fetch server version
@@ -58,8 +58,8 @@ class EndurainSetupViewModel(application: Application) : AndroidViewModel(applic
     ) {
         Thread {
             try {
-                apiClient = EndurainApiClient(serverUrl, tokenManager)
-                serverVersion = apiClient.fetchVersion()
+                apiClient = EndurainApiClient(serverUrl, endurainTokenManager)
+                endurainServerVersion = apiClient.fetchVersion()
                 callback(true)
             } catch (e: Exception) {
                 LOG.error("Fetching server version error", e)
@@ -119,7 +119,7 @@ class EndurainSetupViewModel(application: Application) : AndroidViewModel(applic
     fun fetchSsoProviders(callback: (Boolean) -> Unit) {
         Thread {
             try {
-                apiClient = EndurainApiClient(server, tokenManager)
+                apiClient = EndurainApiClient(server, endurainTokenManager)
                 val providers = apiClient.getIdentityProviders()
 
                 if (providers != null && providers.isNotEmpty()) {
@@ -183,14 +183,14 @@ class EndurainSetupViewModel(application: Application) : AndroidViewModel(applic
                 prefs.edit { remove("code_verifier") }
 
                 if (!::apiClient.isInitialized) {
-                    apiClient = EndurainApiClient(server, tokenManager)
+                    apiClient = EndurainApiClient(server, endurainTokenManager)
                 }
 
                 val response = apiClient.exchangeOAuthSession(sessionId, verifier)
 
                 if (response?.access_token != null) {
                     LOG.info("SSO login successful")
-                    tokenManager.saveTokens(
+                    endurainTokenManager.saveTokens(
                         response.access_token,
                         response.refresh_token!!,
                         response.expires_in!!,
@@ -219,7 +219,7 @@ class EndurainSetupViewModel(application: Application) : AndroidViewModel(applic
     ) {
         Thread {
             try {
-                apiClient = EndurainApiClient(serverUrl, tokenManager)
+                apiClient = EndurainApiClient(serverUrl, endurainTokenManager)
                 val response = apiClient.login(username, password)
 
                 when {
@@ -235,7 +235,7 @@ class EndurainSetupViewModel(application: Application) : AndroidViewModel(applic
                     }
                     response.access_token != null -> {
                         LOG.info("Login successful")
-                        tokenManager.saveTokens(
+                        endurainTokenManager.saveTokens(
                             response.access_token,
                             response.refresh_token!!,
                             response.expires_in!!,
@@ -274,7 +274,7 @@ class EndurainSetupViewModel(application: Application) : AndroidViewModel(applic
 
                 if (response?.access_token != null) {
                     LOG.info("MFA verification successful")
-                    tokenManager.saveTokens(
+                    endurainTokenManager.saveTokens(
                         response.access_token,
                         response.refresh_token!!,
                         response.expires_in!!,
@@ -302,12 +302,12 @@ class EndurainSetupViewModel(application: Application) : AndroidViewModel(applic
                 if (::apiClient.isInitialized) {
                     apiClient.logout()
                 } else {
-                    tokenManager.clearTokens()
+                    endurainTokenManager.clearTokens()
                 }
                 callback(true)
             } catch (e: Exception) {
                 LOG.error("Logout error", e)
-                tokenManager.clearTokens() // Clear tokens anyway
+                endurainTokenManager.clearTokens() // Clear tokens anyway
                 callback(true)
             }
         }.start()

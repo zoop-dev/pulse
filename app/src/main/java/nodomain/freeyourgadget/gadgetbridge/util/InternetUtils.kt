@@ -154,13 +154,14 @@ class InternetUtils {
             uri: Uri,
             file: File,
             requestHeaders: Map<String, String> = emptyMap(),
+            method: String = "POST",
             allowInsecure: Boolean = false,
-            onComplete: (success: Boolean, response: String?) -> Unit
+            onComplete: (success: Boolean, statusCode: Int?, response: String?) -> Unit
         ) {
             try {
                 if (!file.exists() || !file.canRead()) {
                     LOG.error("File does not exist or cannot be read: ${file.path}")
-                    onComplete(false, null)
+                    onComplete(false, null, null)
                     return
                 }
 
@@ -179,7 +180,7 @@ class InternetUtils {
                 val response = if (GBApplication.hasDirectInternetAccess()) {
                     directBinaryRequest(
                         uri = uri,
-                        method = "POST",
+                        method = method,
                         requestHeaders = headers,
                         body = multipartBodyBytes,
                         allowInsecure = allowInsecure
@@ -187,7 +188,7 @@ class InternetUtils {
                 } else {
                     InternetHelperSingleton.send(
                         uri,
-                        HttpRequest.Method.POST,
+                        HttpRequest.Method.valueOf(method),
                         headers,
                         multipartBodyBytes,
                         allowInsecure
@@ -195,10 +196,10 @@ class InternetUtils {
                 }
 
                 val responseText = response?.data?.bufferedReader()?.use { it.readText() }
-                onComplete(response != null, responseText)
+                onComplete(response != null, response?.statusCode, responseText)
             } catch (e: Exception) {
                 LOG.error("Uploading $uri failed: ", e)
-                onComplete(false, null)
+                onComplete(false, null, null)
             }
         }
 

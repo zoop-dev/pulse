@@ -61,6 +61,8 @@ import nodomain.freeyourgadget.gadgetbridge.activities.ActivitySummariesChartFra
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.DurationXLabelFormatter
 import nodomain.freeyourgadget.gadgetbridge.activities.endurain.EndurainApiClient
 import nodomain.freeyourgadget.gadgetbridge.activities.endurain.EndurainSetupViewModel
+import nodomain.freeyourgadget.gadgetbridge.activities.endurain.WandererApiClient
+import nodomain.freeyourgadget.gadgetbridge.activities.endurain.WandererTokenManager
 import nodomain.freeyourgadget.gadgetbridge.activities.fit.FitViewerActivity
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.ChartDataRepository
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.DefaultWorkoutCharts
@@ -551,6 +553,11 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
                 true
             }
 
+            R.id.activity_action_upload_to_wanderer -> {
+                uploadToWanderer()
+                true
+            }
+
             R.id.activity_action_dev_inspect_file -> {
                 val intent = Intent(requireContext(), FitViewerActivity::class.java).apply {
                     putExtra(FitViewerActivity.EXTRA_PATH, File(workout.summary.rawDetailsPath).absolutePath)
@@ -638,7 +645,8 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
 
         val endurainVm: EndurainSetupViewModel by viewModels()
         val server = GBApplication.getPrefs().preferences.getString("endurain_server", null)
-        overflowMenu?.findItem(R.id.activity_action_upload_to_endurain)?.isVisible = hasGpx && server != null && endurainVm.tokenManager.isLoggedIn()
+        overflowMenu?.findItem(R.id.activity_action_upload_to_endurain)?.isVisible = hasGpx && server != null && endurainVm.endurainTokenManager.isLoggedIn()
+        overflowMenu?.findItem(R.id.activity_action_upload_to_wanderer)?.isVisible = hasGpx && server != null && WandererTokenManager(requireContext()).isLoggedIn()
     }
 
     private fun takeSharedScreenshot() {
@@ -765,8 +773,8 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         try {
             val endurainVm: EndurainSetupViewModel by viewModels()
             val serverUrl = GBApplication.getPrefs().preferences.getString("endurain_server", null)
-            val apiClient = EndurainApiClient(serverUrl!!, endurainVm.tokenManager)
-            endurainVm.tokenManager.performTokenRefresh(serverUrl) {
+            val apiClient = EndurainApiClient(serverUrl!!, endurainVm.endurainTokenManager)
+            endurainVm.endurainTokenManager.performTokenRefresh(serverUrl) {
                 LOG.info("Uploading workout '{}' (type {}) to Endurain", workoutName, activityKind)
                 apiClient.uploadActivity(activityFile) { newId ->
                     if (newId != null) {
@@ -792,6 +800,57 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         } catch (e: Exception) {
             GB.toast(
                 getString(R.string.endurain_unable_to_upload_gpx_file_toast, e.localizedMessage),
+                Toast.LENGTH_LONG,
+                GB.ERROR,
+                e
+            )
+        }
+    }
+
+    private fun uploadToWanderer() {
+        val workout = currentWorkout ?: return
+        val workoutName = currentWorkout!!.summary.name
+        val activityKind = ActivityKind.fromCode(currentWorkout!!.summary.activityKind)
+        val activityTrackProvider = gbDevice.deviceCoordinator.getActivityTrackProvider(gbDevice, requireContext())
+
+        val activityFile = if (workout.summary.rawDetailsPath?.endsWith(".fit") == true) {
+            FileUtils.tryFixPath(workout.summary.rawDetailsPath)
+        } else {
+            ActivitySummaryUtils.getShareableGpxFile(activityTrackProvider, workout.summary)
+        }
+
+        if (activityFile == null) {
+            GB.toast(getString(R.string.no_activity_track_in_activity_toast), Toast.LENGTH_LONG, GB.INFO)
+            return
+        }
+
+        try {
+            val serverUrl = GBApplication.getPrefs().preferences.getString("wanderer_server", null)
+            val apiClient = WandererApiClient(serverUrl!!, WandererTokenManager(requireContext()))
+            apiClient.uploadActivity(activityFile) { newId, message ->
+                if (newId != null && message == null) {
+                    LOG.info("Uploaded GPX to Wanderer, ID $newId")
+                    // TODO: Update activity type on the server
+                    //apiClient.editActivity(newId, activityKind, workoutName)
+                }
+                activity?.runOnUiThread {
+                    if (newId != null && message == null)
+                        GB.toast(
+                            getString(R.string.wanderer_toast_successfully_uploaded),
+                            Toast.LENGTH_LONG,
+                            GB.INFO
+                        )
+                    else
+                        GB.toast(
+                            getString(R.string.wanderer_toast_upload_error, message),
+                            Toast.LENGTH_LONG,
+                            GB.INFO
+                        )
+                }
+            }
+        } catch (e: Exception) {
+            GB.toast(
+                getString(R.string.wanderer_unable_to_upload_gpx_file_toast, e.localizedMessage),
                 Toast.LENGTH_LONG,
                 GB.ERROR,
                 e

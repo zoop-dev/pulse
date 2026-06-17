@@ -26,13 +26,13 @@ import org.json.JSONObject
 import org.slf4j.LoggerFactory
 import java.io.File
 
-enum class AuthType {
+enum class EndurainAuthType {
     NONE,
     AUTH_TOKEN,
     REFRESH_TOKEN
 }
 
-data class LoginResponse(
+data class EndurainLoginResponse(
     val session_id: String? = null,
     val access_token: String? = null,
     val refresh_token: String? = null,
@@ -44,16 +44,16 @@ data class LoginResponse(
     val detail: String? = null
 )
 
-data class MfaVerifyRequest(
+data class EndurainMfaVerifyRequest(
     val username: String,
     val mfa_code: String
 )
 
-data class TokenExchangeRequest(
+data class EndurainTokenExchangeRequest(
     val code_verifier: String
 )
 
-data class IdentityProvider(
+data class EndurainIdentityProvider(
     val id: String,
     val name: String,
     val slug: String
@@ -69,16 +69,16 @@ class EndurainApiClient(
     /**
      * Build headers with authentication tokens
      */
-    private fun buildHeaders(auth: AuthType): MutableMap<String, String> {
+    private fun buildHeaders(auth: EndurainAuthType): MutableMap<String, String> {
         val headers = mutableMapOf("X-Client-Type" to "mobile")
 
         when (auth) {
-            AuthType.AUTH_TOKEN -> {
+            EndurainAuthType.AUTH_TOKEN -> {
                 tokenManager.getAccessToken()?.let { token ->
                     headers["Authorization"] = "Bearer $token"
                 }
             }
-            AuthType.REFRESH_TOKEN -> {
+            EndurainAuthType.REFRESH_TOKEN -> {
                 tokenManager.getRefreshToken()?.let { token ->
                     headers["Authorization"] = "Bearer $token"
                 }
@@ -92,14 +92,14 @@ class EndurainApiClient(
     /**
      * Username/Password Login
      */
-    fun login(username: String, password: String): LoginResponse? {
+    fun login(username: String, password: String): EndurainLoginResponse? {
         try {
             val uri = "$baseUrl/api/v1/auth/login".toUri()
 
             // Form-encoded body
             val body = "username=${Uri.encode(username)}&password=${Uri.encode(password)}"
 
-            val headers = buildHeaders(AuthType.NONE)
+            val headers = buildHeaders(EndurainAuthType.NONE)
             headers["Content-Type"] = "application/x-www-form-urlencoded"
 
             val responseText = InternetUtils.doStringRequest(
@@ -110,7 +110,7 @@ class EndurainApiClient(
             )
 
             return if (responseText != null) {
-                gson.fromJson(responseText, LoginResponse::class.java)
+                gson.fromJson(responseText, EndurainLoginResponse::class.java)
             } else {
                 LOG.error("Login failed: empty response")
                 null
@@ -124,14 +124,14 @@ class EndurainApiClient(
     /**
      * MFA Verification
      */
-    fun verifyMfa(username: String, mfaCode: String): LoginResponse? {
+    fun verifyMfa(username: String, mfaCode: String): EndurainLoginResponse? {
         try {
             val uri = "$baseUrl/api/v1/auth/mfa/verify".toUri()
 
-            val request = MfaVerifyRequest(username, mfaCode)
+            val request = EndurainMfaVerifyRequest(username, mfaCode)
             val body = gson.toJson(request)
 
-            val headers = buildHeaders(AuthType.NONE)
+            val headers = buildHeaders(EndurainAuthType.NONE)
             headers["Content-Type"] = "application/json"
 
             val responseText = InternetUtils.doStringRequest(
@@ -142,7 +142,7 @@ class EndurainApiClient(
             )
 
             return if (responseText != null) {
-                gson.fromJson(responseText, LoginResponse::class.java)
+                gson.fromJson(responseText, EndurainLoginResponse::class.java)
             } else {
                 LOG.error("MFA verification failed: empty response")
                 null
@@ -156,11 +156,11 @@ class EndurainApiClient(
     /**
      * Token Refresh
      */
-    fun refreshToken(): LoginResponse? {
+    fun refreshToken(): EndurainLoginResponse? {
         try {
             val uri = "$baseUrl/api/v1/auth/refresh".toUri()
 
-            val headers = buildHeaders(AuthType.REFRESH_TOKEN)
+            val headers = buildHeaders(EndurainAuthType.REFRESH_TOKEN)
             headers["Content-Type"] = "application/json"
 
             val responseText = InternetUtils.doStringRequest(
@@ -171,7 +171,7 @@ class EndurainApiClient(
             )
 
             return if (responseText != null) {
-                gson.fromJson(responseText, LoginResponse::class.java)
+                gson.fromJson(responseText, EndurainLoginResponse::class.java)
             } else {
                 LOG.error("Token refresh failed: empty response")
                 null
@@ -189,7 +189,7 @@ class EndurainApiClient(
         try {
             val uri = "$baseUrl/api/v1/auth/logout".toUri()
 
-            val headers = buildHeaders(AuthType.AUTH_TOKEN)
+            val headers = buildHeaders(EndurainAuthType.AUTH_TOKEN)
             headers["Content-Type"] = "application/json"
 
             InternetUtils.doStringRequest(
@@ -210,11 +210,11 @@ class EndurainApiClient(
     /**
      * Get list of available identity providers
      */
-    fun getIdentityProviders(): List<IdentityProvider>? {
+    fun getIdentityProviders(): List<EndurainIdentityProvider>? {
         try {
             val uri = "$baseUrl/api/v1/public/idp".toUri()
 
-            val headers = buildHeaders(AuthType.NONE)
+            val headers = buildHeaders(EndurainAuthType.NONE)
             headers["Content-Type"] = "application/json"
 
             val responseText = InternetUtils.doStringRequest(
@@ -223,7 +223,7 @@ class EndurainApiClient(
             )
 
             return if (responseText != null) {
-                val type = object : com.google.gson.reflect.TypeToken<List<IdentityProvider>>() {}.type
+                val type = object : com.google.gson.reflect.TypeToken<List<EndurainIdentityProvider>>() {}.type
                 gson.fromJson(responseText, type)
             } else {
                 LOG.error("Failed to fetch identity providers")
@@ -238,14 +238,14 @@ class EndurainApiClient(
     /**
      * Exchange OAuth session for tokens (PKCE flow)
      */
-    fun exchangeOAuthSession(sessionId: String, codeVerifier: String): LoginResponse? {
+    fun exchangeOAuthSession(sessionId: String, codeVerifier: String): EndurainLoginResponse? {
         try {
             val uri = "$baseUrl/api/v1/public/idp/session/$sessionId/tokens".toUri()
 
-            val request = TokenExchangeRequest(codeVerifier)
+            val request = EndurainTokenExchangeRequest(codeVerifier)
             val body = gson.toJson(request)
 
-            val headers = buildHeaders(AuthType.NONE)
+            val headers = buildHeaders(EndurainAuthType.NONE)
             headers["Content-Type"] = "application/json"
 
             val responseText = InternetUtils.doStringRequest(
@@ -258,7 +258,7 @@ class EndurainApiClient(
             LOG.debug("OAuth token result: $responseText")
 
             return if (responseText != null) {
-                gson.fromJson(responseText, LoginResponse::class.java)
+                gson.fromJson(responseText, EndurainLoginResponse::class.java)
             } else {
                 LOG.error("OAuth token exchange failed: empty response")
                 null
@@ -280,7 +280,7 @@ class EndurainApiClient(
         try {
             val uri = "$baseUrl$endpoint".toUri()
 
-            val headers = buildHeaders(AuthType.AUTH_TOKEN)
+            val headers = buildHeaders(EndurainAuthType.AUTH_TOKEN)
             headers["Content-Type"] = "application/json"
 
             return InternetUtils.doStringRequest(
@@ -302,14 +302,15 @@ class EndurainApiClient(
         Thread {
             try {
                 val uri = "$baseUrl/api/v1/activities/create/upload".toUri()
-                val headers = buildHeaders(AuthType.AUTH_TOKEN)
+                val headers = buildHeaders(EndurainAuthType.AUTH_TOKEN)
 
                 InternetUtils.uploadBinaryFile(
                     uri = uri,
                     file = file,
                     requestHeaders = headers
-                ) { success, responseText ->
+                ) { success, statusCode, responseText ->
                     if (success && responseText != null) {
+                        LOG.debug("Response $statusCode from Endurain: $responseText")
                         val jsonArray = JSONArray(responseText)
                         val firstObject = jsonArray.getJSONObject(0)
                         val id = firstObject.getInt("id")
@@ -332,7 +333,7 @@ class EndurainApiClient(
     fun editActivity(id: Int, activityKind: ActivityKind, name: String): Boolean {
         try {
             val uri = "$baseUrl/api/v1/activities/edit".toUri()
-            val headers = buildHeaders(AuthType.AUTH_TOKEN)
+            val headers = buildHeaders(EndurainAuthType.AUTH_TOKEN)
             headers["Content-Type"] = "application/json"
 
             var activityType = 10  // Generic workout
@@ -367,7 +368,7 @@ class EndurainApiClient(
         try {
             val uri = "$baseUrl/api/v1/about".toUri()
 
-            val headers = buildHeaders(AuthType.NONE)
+            val headers = buildHeaders(EndurainAuthType.NONE)
 
             val result = InternetUtils.doJsonRequest(
                 uri = uri,

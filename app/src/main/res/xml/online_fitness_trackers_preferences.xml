@@ -10,18 +10,36 @@
         android:title="Endurain">
         <Preference
             android:icon="@drawable/ic_info"
-            android:key="pref_key_status"
+            android:key="pref_key_endurain_status"
             android:title="@string/pref_info_endurain_status_title"
             android:summary="Logged in on endurain.example.com" />
         <Preference
             android:icon="@drawable/ic_language"
-            android:key="pref_key_log_in"
+            android:key="pref_key_endurain_log_in"
             android:title="@string/pref_endurain_log_in_title"
             android:summary="@string/pref_endurain_log_in_summary" />
         <Preference
             android:icon="@drawable/ic_language"
-            android:key="pref_key_log_out"
+            android:key="pref_key_endurain_log_out"
             android:title="@string/pref_endurain_log_out_title"
+            android:summary="@string/pref_endurain_log_out_summary" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Wanderer">
+        <Preference
+            android:icon="@drawable/ic_info"
+            android:key="pref_key_wanderer_status"
+            android:title="@string/pref_wanderer_status_title"
+            android:summary="Logged in on wanderer.example.com" />
+        <Preference
+            android:icon="@drawable/ic_language"
+            android:key="pref_key_wanderer_log_in"
+            android:title="@string/pref_wanderer_enter_api_token_title"
+            android:summary="@string/pref_wanderer_enter_api_token_summary" />
+        <Preference
+            android:icon="@drawable/ic_language"
+            android:key="pref_key_wanderer_log_out"
+            android:title="@string/pref_wanderer_log_out_title"
             android:summary="@string/pref_endurain_log_out_summary" />
     </PreferenceCategory>
 </PreferenceScreen>

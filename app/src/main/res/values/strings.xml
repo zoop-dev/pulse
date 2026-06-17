@@ -4983,4 +4983,14 @@
     <string name="endurain_setup_mfa_code">MFA code</string>
     <string name="endurain_setup_next">Next</string>
     <string name="activity_detail_upload_to_endurain">Upload to Endurain</string>
+    <string name="wanderer_logged_in">Logged in to %s</string>
+    <string name="wanderer_setup_api_token_error">API token should start with wanderer_key_</string>
+    <string name="wanderer_setup_missing_information">Please fill both fields</string>
+    <string name="wanderer_toast_successfully_uploaded">Successfully uploaded to Wanderer</string>
+    <string name="wanderer_toast_upload_error">Wanderer upload error: %1$s</string>
+    <string name="wanderer_unable_to_upload_gpx_file_toast">Unable to upload GPX file to Wanderer: %1$s</string>
+    <string name="pref_wanderer_status_title">Wanderer status</string>
+    <string name="pref_wanderer_enter_api_token_title">Enter Wanderer API token</string>
+    <string name="pref_wanderer_enter_api_token_summary">Tap here to enter the Wanderer server and API token</string>
+    <string name="pref_wanderer_log_out_title">Log out of Wanderer</string>
 </resources>

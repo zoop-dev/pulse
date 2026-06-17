@@ -20,12 +20,14 @@
         android:id="@+id/server_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/endurain_setup_server">
+        android:hint="@string/endurain_setup_server"
+        app:placeholderText="https://endurain.example.com">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/server_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:placeholderText="https://endurain.example.com"
             android:inputType="textUri" />
     </com.google.android.material.textfield.TextInputLayout>
 
