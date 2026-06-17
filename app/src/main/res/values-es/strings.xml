@@ -4372,4 +4372,8 @@
     <string name="pref_experimental_metrics_summary">Activa la lógica experimental de la interfaz para las métricas genéricas. Actualmente solo es relevante para la carga de entrenamiento y las calorías registradas por dispositivos Garmin.</string>
     <string name="prefs_device_id">ID del dispositivo</string>
     <string name="unit_kcal_per_day">kcal/día</string>
+    <string name="consumed_electrical_energy">Energía consumida</string>
+    <string name="electrical_current">Corriente</string>
+    <string name="unit_ampere">A</string>
+    <string name="unit_ampere_hour">Ah</string>
 </resources>
