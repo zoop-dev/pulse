@@ -22,11 +22,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
+import java.util.List;
+import java.util.ArrayList;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractHeadphoneSerialDeviceSupportV2;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.MiscConfigType;
+import nodomain.freeyourgadget.gadgetbridge.devices.oppo.OppoHeadphonesCoordinator;
 
 public class OppoHeadphonesSupport extends AbstractHeadphoneSerialDeviceSupportV2<OppoHeadphonesProtocol> {
     private static final Logger LOG = LoggerFactory.getLogger(OppoHeadphonesSupport.class);
@@ -70,9 +74,26 @@ public class OppoHeadphonesSupport extends AbstractHeadphoneSerialDeviceSupportV
     @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
         builder.write(mDeviceProtocol.encodeFirmwareVersionReq());
-        builder.write(mDeviceProtocol.encodeMiscConfigReq());
+
+        final OppoHeadphonesCoordinator coordinator = (OppoHeadphonesCoordinator) getDevice().getDeviceCoordinator();
+        final List<MiscConfigType> supportedMiscConfigs = new ArrayList<>();
+        if (coordinator.supportsLdac(getDevice())) {
+            supportedMiscConfigs.add(MiscConfigType.LDAC);
+        }
+        if (coordinator.supportsMultipoint(getDevice())) {
+            supportedMiscConfigs.add(MiscConfigType.MULTIPOINT);
+        }
+        if (coordinator.supportsGameMode(getDevice())) {
+            supportedMiscConfigs.add(MiscConfigType.GAME_MODE);
+        }
+        if (!supportedMiscConfigs.isEmpty()) {
+            builder.write(mDeviceProtocol.encodeMiscConfigReq(supportedMiscConfigs));
+        }
         builder.write(mDeviceProtocol.encodeTouchConfigReq());
-        builder.write(mDeviceProtocol.encodeAncConfigReq());
+        if (coordinator.supportsAnc(getDevice())) {
+            builder.write(mDeviceProtocol.encodeAncConfigReq());
+        }
+
         builder.write(mDeviceProtocol.encodeBatteryReq());
         builder.setDeviceState(GBDevice.State.INITIALIZED);
         scheduleBatteryRequestRetry();
