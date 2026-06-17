@@ -3215,6 +3215,7 @@
     <string name="devicetype_realme_buds_t200" translatable="false">Realme Buds T200</string>
     <string name="devicetype_realme_buds_t300" translatable="false">Realme Buds T300</string>
     <string name="devicetype_realme_buds_air_5_pro" translatable="false">Realme Buds Air 5 Pro</string>
+    <string name="devicetype_realme_buds_air_6_pro" translatable="false">Realme Buds Air 6 Pro</string>
     <string name="devicetype_galaxybuds" translatable="false">Galaxy Buds</string>
     <string name="devicetype_galaxybuds_live" translatable="false">Galaxy Buds Live</string>
     <string name="devicetype_galaxybuds_pro" translatable="false">Galaxy Buds Pro</string>

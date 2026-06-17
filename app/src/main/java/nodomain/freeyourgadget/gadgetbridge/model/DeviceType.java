@@ -399,6 +399,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.polar.PolarH9DeviceCoordinat
 import nodomain.freeyourgadget.gadgetbridge.devices.qc35.QC35Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.qhybrid.QHybridCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.realme.RealmeBudsAir5ProCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.realme.RealmeBudsAir6ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.realme.RealmeBudsT100Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.realme.RealmeBudsT110Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.realme.RealmeBudsT200Coordinator;
@@ -922,6 +923,7 @@ public enum DeviceType {
     REALME_BUDS_T200(RealmeBudsT200Coordinator.class),
     REALME_BUDS_T300(RealmeBudsT300Coordinator.class),
     REALME_BUDS_AIR_5_PRO(RealmeBudsAir5ProCoordinator.class),
+    REALME_BUDS_AIR_6_PRO(RealmeBudsAir6ProCoordinator.class),
     SOFLOW_SO6(SoFlowCoordinator.class),
     WITHINGS_STEEL_HR(WithingsSteelHRDeviceCoordinator.class),
     SONY_WENA_3(SonyWena3Coordinator.class),
