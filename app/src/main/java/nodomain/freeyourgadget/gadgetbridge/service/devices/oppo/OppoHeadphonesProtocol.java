@@ -166,29 +166,30 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
                 LOG.debug("Got find device ack, status={}", payload[0]);
                 break;
             }
-            case MISC_CONFIG_RET:
+            case MISC_CONFIG_RET: {
                 if (payload[0] != 0) {
-                    LOG.warn("Unknown config ret {}", payload[0]);
+                    LOG.warn("Unknown misc config ret {}", payload[0]);
                     break;
                 }
                 if (payload.length < 3) {
-                    LOG.error("Unexpected pref ret payload size {}", payload.length);
+                    LOG.warn("Unexpected misc config ret payload size {}", payload.length);
                     break;
                 }
 
                 events.add(parseMiscConfig(payload));
                 break;
+            }
             case MISC_CONFIG_ACK: {
-                LOG.debug("Got config ack, status={}", payload[0]);
+                LOG.debug("Got misc config ack, status={}", payload[0]);
                 break;
             }
             case TOUCH_CONFIG_RET: {
                 if (payload[0] != 0) {
-                    LOG.warn("Unknown config ret {}", payload[0]);
+                    LOG.warn("Unknown touch config ret {}", payload[0]);
                     break;
                 }
                 if ((payload.length - 2) % 4 != 0) {
-                    LOG.warn("Unexpected config ret payload size {}", payload.length);
+                    LOG.warn("Unexpected touch config ret payload size {}", payload.length);
                     break;
                 }
 
@@ -196,18 +197,29 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
                 break;
             }
             case TOUCH_CONFIG_ACK: {
-                LOG.debug("Got config ack, status={}", payload[0]);
+                LOG.debug("Got touch config ack, status={}", payload[0]);
                 break;
             }
-            case ANC_CONFIG_RET:
+            case ANC_CONFIG_RET: {
+                if (payload[0] != 0) {
+                    LOG.warn("Unknown anc config ret {}", payload[0]);
+                    break;
+                }
                 if (payload.length < 3) {
+                    LOG.warn("Unexpected anc config ret payload size {}", payload.length);
                     break;
                 }
 
                 events.add(parseAncConfig(payload));
                 break;
-            default:
+            }
+            case ANC_CONFIG_ACK: {
+                LOG.debug("Got anc config ack, status={}", payload[0]);
+                break;
+            }
+            default: {
                 LOG.warn("Unhandled command {}", command);
+            }
         }
 
         return events;
