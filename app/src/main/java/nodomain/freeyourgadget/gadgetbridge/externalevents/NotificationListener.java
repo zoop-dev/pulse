@@ -1129,13 +1129,14 @@ public class NotificationListener extends NotificationListenerService {
 
     private void logNotification(StatusBarNotification sbn, boolean posted) {
         LOG.debug(
-                "Notification {} {}: packageName={}, when={}, priority={}, category={}",
+                "Notification {} {}: packageName={}, when={}, priority={}, category={}, flags={}",
                 sbn.getId(),
                 posted ? "posted" : "removed",
                 sbn.getPackageName(),
                 sbn.getNotification().when,
                 sbn.getNotification().priority,
-                sbn.getNotification().category
+                sbn.getNotification().category,
+                sbn.getNotification().flags
         );
     }
 
