@@ -517,13 +517,18 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
         return encodeMessage(OppoCommand.MISC_CONFIG_SET, payload);
     }
 
-    public byte[] encodeMiscConfigReq() {
-        return encodeMessage(OppoCommand.MISC_CONFIG_REQ, new byte[]{
-            (byte) 0x03,
-            (byte) MiscConfigType.LDAC.getCode(),
-            (byte) MiscConfigType.MULTIPOINT.getCode(),
-            (byte) MiscConfigType.GAME_MODE.getCode()
-        });
+    public byte[] encodeMiscConfigReq(List<MiscConfigType> types) {
+        if (types == null || types.isEmpty()) {
+            return encodeMessage(OppoCommand.MISC_CONFIG_REQ, new byte[]{0x00});
+        }
+
+        byte[] payload = new byte[1 + types.size()];
+        payload[0] = (byte) types.size();
+
+        for (int i = 0; i < types.size(); i++) {
+            payload[i + 1] = (byte) types.get(i).getCode();
+        }
+        return encodeMessage(OppoCommand.MISC_CONFIG_REQ, payload);
     }
 
     public byte[] encodeAncConfigSet(final AncConfigValue mode) {
