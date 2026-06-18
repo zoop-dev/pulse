@@ -606,10 +606,7 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
     }
 
     public byte[] encodeAncTouchCycleModesSet(final EnumSet<AncConfigValue> modes) {
-        int mask = 0;
-        for (AncConfigValue mode : modes) {
-            mask |= mode.getCode();
-        }
+        final int mask = AncConfigValue.toMask(modes);
         final byte[] payload = new byte[] {
             (byte) AncConfigType.TOUCH_CYCLE_MODES.getCode(),
             (byte) 0x01,

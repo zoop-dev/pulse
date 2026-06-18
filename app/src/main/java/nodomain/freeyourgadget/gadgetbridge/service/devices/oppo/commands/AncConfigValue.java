@@ -56,17 +56,6 @@ public enum AncConfigValue {
         return prefId;
     }
 
-    public static EnumSet<AncConfigValue> fromMask(int mask) {
-        EnumSet<AncConfigValue> modes = EnumSet.noneOf(AncConfigValue.class);
-        for (AncConfigValue mode : AncConfigValue.values()) {
-            if ((mask & mode.getCode()) == mode.getCode()) {
-                modes.add(mode);
-            }
-        }
-        
-        return modes;
-    }
-
     @Nullable
     public static AncConfigValue fromPrefId(final String prefId) {
         for (final AncConfigValue param : AncConfigValue.values()) {
@@ -76,6 +65,25 @@ public enum AncConfigValue {
         }
 
         return null;
+    }
+
+    public static int toMask(Iterable<AncConfigValue> modes) {
+        int mask = 0;
+        for (AncConfigValue mode : modes) {
+            mask |= mode.getCode();
+        }
+        return mask;
+    }
+
+    public static EnumSet<AncConfigValue> fromMask(int mask) {
+        EnumSet<AncConfigValue> modes = EnumSet.noneOf(AncConfigValue.class);
+        for (AncConfigValue mode : AncConfigValue.values()) {
+            if ((mask & mode.getCode()) == mode.getCode()) {
+                modes.add(mode);
+            }
+        }
+
+        return modes;
     }
 
     public static Set<String> toPrefIds(Iterable<AncConfigValue> modes) {
