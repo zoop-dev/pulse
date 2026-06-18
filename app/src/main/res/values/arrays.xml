@@ -4563,6 +4563,50 @@
         <item>anc_mode__anc_off</item>
         <item>anc_mode__transparency_off</item>
     </string-array>
+    
+    <string-array name="soundbrenner_time_sig_entries">
+        <item>4/4</item>
+        <item>2/4</item>
+        <item>3/4</item>
+        <item>5/4</item>
+        <item>6/4</item>
+        <item>3/8</item>
+        <item>4/8</item>
+        <item>5/8</item>
+        <item>6/8</item>
+        <item>9/8</item>
+        <item>12/8</item>
+        <item>2/2</item>
+    </string-array>
+
+    <string-array name="soundbrenner_time_sig_values">
+        <item>4/4</item>
+        <item>2/4</item>
+        <item>3/4</item>
+        <item>5/4</item>
+        <item>6/4</item>
+        <item>3/8</item>
+        <item>4/8</item>
+        <item>5/8</item>
+        <item>6/8</item>
+        <item>9/8</item>
+        <item>12/8</item>
+        <item>2/2</item>
+    </string-array>
+
+    <string-array name="soundbrenner_subdivision_entries">
+        <item>Quarter notes</item>
+        <item>Eighth notes</item>
+        <item>Triplets</item>
+        <item>Sixteenth notes</item>
+    </string-array>
+
+    <string-array name="soundbrenner_subdivision_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
 
     <string-array name="soundcore_anc_mode_names">
         <item>@string/prefs_active_noise_cancelling_transport</item>

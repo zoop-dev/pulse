@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Device-specific settings screen for the Soundbrenner Core.
+    Registered in SoundbrennerCoordinator.getSupportedDeviceSpecificSettings().
+
+    Key names are defined in SoundbrennerConstants – no hard-coded strings here.
+
+    Note on preference storage:
+      SeekBarPreference (BPM, beat accents) calls putInt internally → read with getInt().
+      ListPreference (time signature, subdivision) stores String → read with getString().
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- ===================================================================
+         Control buttons (Start/Stop)
+    =================================================================== -->
+    <PreferenceCategory android:title="@string/soundbrenner_category_control">
+
+        <Preference
+            android:key="soundbrenner_metronome_toggle"
+            android:title="@string/soundbrenner_pref_metronome_toggle_title"
+            android:summary="@string/soundbrenner_pref_metronome_toggle_summary"
+            android:icon="@drawable/ic_play" />
+
+    </PreferenceCategory>
+
+
+    <!-- ===================================================================
+         Tempo
+    =================================================================== -->
+    <PreferenceCategory android:title="@string/soundbrenner_category_tempo">
+
+        <!--
+            BPM: 20-300, default 100.
+            Key: SoundbrennerConstants.PREF_BPM = "soundbrenner_bpm"
+        -->
+        <SeekBarPreference
+            android:key="soundbrenner_bpm"
+            android:title="@string/soundbrenner_pref_bpm_title"
+            android:summary="@string/soundbrenner_pref_bpm_summary"
+            android:defaultValue="100"
+            app:min="20"
+            android:max="300"
+            app:showSeekBarValue="true" />
+
+    </PreferenceCategory>
+
+    <!-- ===================================================================
+         Time signature
+    =================================================================== -->
+    <PreferenceCategory android:title="@string/soundbrenner_category_time_signature">
+
+        <!--
+            Time signature selector.
+            Key: SoundbrennerConstants.PREF_TIME_SIGNATURE = "soundbrenner_time_signature"
+            Entries defined in res/values/arrays.xml (soundbrenner_time_sig_entries / _values).
+        -->
+        <ListPreference
+            android:key="soundbrenner_time_signature"
+            android:title="@string/soundbrenner_pref_time_sig_title"
+            android:summary="%s"
+            android:defaultValue="4/4"
+            android:entries="@array/soundbrenner_time_sig_entries"
+            android:entryValues="@array/soundbrenner_time_sig_values" />
+
+    </PreferenceCategory>
+
+    <!-- ===================================================================
+         Subdivision
+    =================================================================== -->
+    <PreferenceCategory android:title="@string/soundbrenner_category_subdivision">
+
+        <!--
+            Subdivision steps: 1=quarter, 2=eighth, 3=triplet, 4=sixteenth.
+            Key: SoundbrennerConstants.PREF_SUBDIVISION = "soundbrenner_subdivision"
+            Entries defined in res/values/arrays.xml.
+        -->
+        <ListPreference
+            android:key="soundbrenner_subdivision"
+            android:title="@string/soundbrenner_pref_subdivision_title"
+            android:summary="%s"
+            android:defaultValue="1"
+            android:entries="@array/soundbrenner_subdivision_entries"
+            android:entryValues="@array/soundbrenner_subdivision_values" />
+
+    </PreferenceCategory>
+
+    <!-- ===================================================================
+         Beat accent strengths (beats 1-8)
+         Visibility of beats 2-8 is controlled dynamically by
+         SoundbrennerSettingsCustomizer based on the selected numerator.
+    =================================================================== -->
+    <PreferenceCategory android:title="@string/soundbrenner_category_accents">
+
+        <!-- Beat 1 – always visible -->
+        <SeekBarPreference
+            android:key="soundbrenner_beat_accent_1"
+            android:title="@string/soundbrenner_pref_beat_1_title"
+            android:defaultValue="3"
+            app:min="0"
+            android:max="3" />
+
+        <!-- Beats 2-8: shown/hidden by SoundbrennerSettingsCustomizer -->
+        <SeekBarPreference
+            android:key="soundbrenner_beat_accent_2"
+            android:title="@string/soundbrenner_pref_beat_2_title"
+            android:defaultValue="1"
+            app:min="0"
+            android:max="3" />
+
+        <SeekBarPreference
+            android:key="soundbrenner_beat_accent_3"
+            android:title="@string/soundbrenner_pref_beat_3_title"
+            android:defaultValue="1"
+            app:min="0"
+            android:max="3" />
+
+        <SeekBarPreference
+            android:key="soundbrenner_beat_accent_4"
+            android:title="@string/soundbrenner_pref_beat_4_title"
+            android:defaultValue="1"
+            app:min="0"
+            android:max="3" />
+
+        <SeekBarPreference
+            android:key="soundbrenner_beat_accent_5"
+            android:title="@string/soundbrenner_pref_beat_5_title"
+            android:defaultValue="1"
+            app:min="0"
+            android:max="3" />
+
+        <SeekBarPreference
+            android:key="soundbrenner_beat_accent_6"
+            android:title="@string/soundbrenner_pref_beat_6_title"
+            android:defaultValue="1"
+            app:min="0"
+            android:max="3" />
+
+        <SeekBarPreference
+            android:key="soundbrenner_beat_accent_7"
+            android:title="@string/soundbrenner_pref_beat_7_title"
+            android:defaultValue="1"
+            app:min="0"
+            android:max="3" />
+
+        <SeekBarPreference
+            android:key="soundbrenner_beat_accent_8"
+            android:title="@string/soundbrenner_pref_beat_8_title"
+            android:defaultValue="1"
+            app:min="0"
+            android:max="3" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

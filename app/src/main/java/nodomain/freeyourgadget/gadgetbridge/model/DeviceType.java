@@ -440,6 +440,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.coordinators
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.coordinators.SonyWISP600NCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.wena3.SonyWena3Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.sonyswr12.SonySWR12DeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.soundbrenner.SoundbrennerCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.soundcore.aerofit.SoundcoreAeroFit2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.soundcore.liberty3_pro.SoundcoreLiberty3ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.soundcore.liberty4_nc.SoundcoreLiberty4NCCoordinator;
@@ -838,6 +839,7 @@ public enum DeviceType {
     VICTRON_SMARTSHUNT(VictronSmartShuntCoordinator.class),
     SINILINK(SinilinkCoordinator.class),
     ONETOUCH(OneTouchCoordinator.class),
+    SOUNDBRENNER_CORE(SoundbrennerCoordinator.class),
     SOUNDCORE_LIBERTY3_PRO(SoundcoreLiberty3ProCoordinator.class),
     SOUNDCORE_LIBERTY4_NC(SoundcoreLiberty4NCCoordinator.class),
     SOUNDCORE_MOTION300(SoundcoreMotion300Coordinator.class),
