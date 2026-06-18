@@ -45,9 +45,10 @@ internal object RestingHeartRateSyncer : AbstractTimeSampleSyncer<HeartRateSampl
         metadata: Metadata,
         deviceName: String
     ): RestingHeartRateRecord? {
-        // HC enforces 0..300 bpm; exclude 255, the bad-measurement sentinel GB uses for HR values.
-        if (sample.heartRate !in 0..300 || sample.heartRate == 255) {
-            logger.skipOutOfRange(deviceName, "RestingHeartRate", sample.heartRate, "0..300 bpm (255 excluded)")
+        // HC enforces 1..300 bpm (the platform RestingHeartRateRecord rejects 0, unlike the
+        // androidx client); also exclude 255, the bad-measurement sentinel GB uses for HR values.
+        if (sample.heartRate !in 1..300 || sample.heartRate == 255) {
+            logger.skipOutOfRange(deviceName, "RestingHeartRate", sample.heartRate, "1..300 bpm (255 excluded)")
             return null
         }
 

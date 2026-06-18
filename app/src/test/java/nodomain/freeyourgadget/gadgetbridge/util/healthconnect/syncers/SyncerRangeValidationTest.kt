@@ -191,7 +191,12 @@ class SyncerRangeValidationTest {
 
     @Test
     fun restingHr_lowerBoundary_accepted() {
-        assertNotNull(RestingHeartRateSyncer.convertSample(hrSample(0), offset, metadata, device))
+        assertNotNull(RestingHeartRateSyncer.convertSample(hrSample(1), offset, metadata, device))
+    }
+
+    @Test
+    fun restingHr_zero_dropped() {
+        assertNull(RestingHeartRateSyncer.convertSample(hrSample(0), offset, metadata, device))
     }
 
     @Test

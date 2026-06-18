@@ -35,6 +35,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -43,6 +44,11 @@ import nodomain.freeyourgadget.gadgetbridge.util.healthconnect.HealthConnectSync
 
 public class NewDataReceiver extends BroadcastReceiver {
     private static final String HEALTH_CONNECT_SYNC_WORKER_TAG = "HealthConnectSyncWorker";
+    // Debounce window: a fetch can emit several ACTION_NEW_DATA broadcasts in quick succession
+    // (multi-phase or chatty drivers fire mid-fetch), and a sync that runs against a half-fetched
+    // database can miss or duplicate records. Delay the sync and restart the timer on every new
+    // broadcast (REPLACE), so a single sync runs once the fetch has settled.
+    private static final long DEBOUNCE_SECONDS = 10;
     private final Logger LOG = LoggerFactory.getLogger(NewDataReceiver.class);
     private Context context;
     private boolean registered = false;
@@ -91,12 +97,12 @@ public class NewDataReceiver extends BroadcastReceiver {
                 return;
             }
 
-            // For device-specific syncs, use a device-specific work name and APPEND policy
-            // This ensures each device's HC sync is queued and executed sequentially
+            // Per-device unique work name so each device debounces independently.
             String workName = HEALTH_CONNECT_SYNC_WORKER_TAG + "_" + deviceAddress;
 
             OneTimeWorkRequest syncRequest = new OneTimeWorkRequest.Builder(HealthConnectSyncWorker.class)
                 .addTag(HEALTH_CONNECT_SYNC_WORKER_TAG)
+                .setInitialDelay(DEBOUNCE_SECONDS, TimeUnit.SECONDS)
                 .setInputData(
                     new Data.Builder()
                         .putString(HealthConnectSyncWorker.INPUT_DEVICE_ADDRESS, deviceAddress)
@@ -106,10 +112,11 @@ public class NewDataReceiver extends BroadcastReceiver {
 
             LOG.debug("Scheduling HC sync for device: {} with work name: {}", deviceAddress, workName);
 
-            // Use APPEND so multiple syncs for the same device queue up
+            // REPLACE so a burst of broadcasts during one fetch cancels the pending (delayed) sync
+            // and re-arms it; the sync runs once, DEBOUNCE_SECONDS after the last broadcast.
             WorkManager.getInstance(context).enqueueUniqueWork(
                 workName,
-                ExistingWorkPolicy.APPEND,
+                ExistingWorkPolicy.REPLACE,
                 syncRequest
             );
         }
