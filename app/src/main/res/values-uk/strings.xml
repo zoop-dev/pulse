@@ -565,7 +565,7 @@
     <string name="pref_disable_new_ble_scanning">Вимкнути нові виявлення через BLE</string>
     <string name="pref_summary_disable_new_ble_scanning">Увімкніть, якщо ваш пристрій не знаходиться під час виявлення</string>
     <string name="alarm_snooze">Відкласти</string>
-    <string name="discovery_connected_devices_hint">Зробіть ваш пристрій доступним для виявлення. Підключені пристрої, імовірно, не будуть знайдені. Увімкніть місцеперебування (наприклад, GPS). Вимкніть Privacy Guard для Gadgetbridge, оскільки це може призвести до збоїв і перезавантаження телефону. Якщо за кілька хвилин жодного пристрою не буде знайдено, повторіть спробу після перезавантаження мобільного пристрою.</string>
+    <string name="discovery_connected_devices_hint">Зробіть ваш пристрій доступним для виявлення. Підключені пристрої, імовірно, не будуть знайдені. Увімкніть місцеперебування (наприклад, GPS). Вимкніть Privacy Guard для Gadgetbridge, оскільки це може призвести до збоїв і перезавантаження телефона. Якщо за кілька хвилин жодного пристрою не буде знайдено, повторіть спробу після перезавантаження мобільного пристрою.</string>
     <string name="pref_title_low_latency_fw_update">Використовувати режим низької затримки для встановлення мікропрограми</string>
     <string name="mi2_prefs_goal_notification_summary">Браслет вібруватиме у разі досягнення щоденної мети з кількості кроків</string>
     <string name="mi2_prefs_display_items_summary">Оберіть елементи, що показуватимуться на екрані браслета</string>
@@ -629,7 +629,7 @@
     <string name="mi3_prefs_band_screen_unlock_summary">Гортайте вгору, щоби розблокувати екран браслета</string>
     <string name="mi3_prefs_night_mode_summary">Автоматично знижувати яскравість екрана браслета вночі</string>
     <string name="share_log_warning">Зверніть увагу, що файли журналів Gadgetbridge можуть містити багато особистої інформації, зокрема дані про здоровʼя, унікальні ідентифікатори (як-от MAC-адреса пристрою), музичні вподобання тощо. Рекомендується відредагувати файл, видаливши ці дані перед його надсиланням у публічний доступ.</string>
-    <string name="pref_title_contextual_arabic">Контекстна арабська</string>
+    <string name="pref_title_contextual_arabic">Контекстна арабська мова</string>
     <string name="pref_summary_contextual_arabic">Увімкніть для підтримки контекстної арабської мови</string>
     <string name="preferences_rtl_settings">Підтримка тексту справа наліво</string>
     <string name="overstep">Надлишкова кількість кроків: %1$s</string>
@@ -637,8 +637,8 @@
     <string name="edittext_notification_filter_words_hint">Укажіть необхідні слова, кожне з нового рядка</string>
     <string name="toast_notification_filter_saved_successfully">Фільтр сповіщень збережено</string>
     <string name="filter_mode_none">Не фільтрувати</string>
-    <string name="filter_mode_whitelist">Показувати, коли слова виявлено</string>
-    <string name="filter_mode_blacklist">Не показувати, коли слова виявлено</string>
+    <string name="filter_mode_whitelist">Показувати, якщо слова виявлено</string>
+    <string name="filter_mode_blacklist">Приховувати, якщо слова виявлено</string>
     <string name="filter_submode_at_least_one">Принаймні одне зі слів</string>
     <string name="filter_submode_all">Усі слова</string>
     <string name="mode_configuration">Налаштування режиму</string>
@@ -690,7 +690,7 @@
     <string name="qhybrid_vibration_strength">сила вібрації:</string>
     <string name="qhybrid_goal_in_steps">Мета в кроках</string>
     <string name="qhybrid_time_shift">Зміщення часу</string>
-    <string name="qhybrid_second_timezone_offset_relative_to_utc">Зміщення другого часового пояса щодо UTC</string>
+    <string name="qhybrid_second_timezone_offset_relative_to_utc">Зміщення другого часового пояса за UTC</string>
     <string name="qhybrid_overwrite_buttons">перезапис кнопок</string>
     <string name="qhybrid_use_activity_hand_as_notification_counter">Використовувати стрілку діяльності як лічильник сповіщень</string>
     <string name="qhybrid_prompt_million_steps">Установіть кількість кроків до мільйона, щоб активувати це.</string>
@@ -953,14 +953,14 @@
     <string name="menuitem_temperature">Температура</string>
     <string name="menuitem_widgets">Віджети</string>
     <string name="menuitem_events">Події</string>
-    <string name="menuitem_pomodoro">Відстежувач Помодоро</string>
+    <string name="menuitem_pomodoro">Таймер «Помодоро»</string>
     <string name="menuitem_sleep">Сон</string>
     <string name="menuitem_goal">Мета діяльності</string>
     <string name="menuitem_stopwatch">Секундомір</string>
     <string name="menuitem_dnd">Не турбувати</string>
     <string name="menuitem_alexa">Alexa</string>
     <string name="menuitem_takephoto">Керування камерою</string>
-    <string name="menuitem_mutephone">Вимкнути звук телефону</string>
+    <string name="menuitem_mutephone">Вимкнути звук телефона</string>
     <string name="menuitem_findphone">Знайти телефон</string>
     <string name="menuitem_spo2">SpO2</string>
     <string name="activity_type_strength_training">Силове тренування</string>
@@ -1050,7 +1050,7 @@
     <string name="gpx_receiver_overwrite_some_files">Деякі файли вже наявні. Перезаписати?</string>
     <string name="gpx_receiver_files_received">Отримано GPX-файлів:</string>
     <string name="gpx_receiver_activity_title">GPX-приймач Gadgetbridge</string>
-    <string name="menuitem_barometer">Барометричний альтиметр</string>
+    <string name="menuitem_barometer">Барометр</string>
     <string name="notification_channel_low_battery_name">Акумулятор розряджено</string>
     <string name="notification_channel_transfer_name">Передавання даних</string>
     <string name="kind_agps_bundle">Дані AGPS</string>
@@ -1142,8 +1142,8 @@
     <string name="pref_message_privacy_mode_off">Показувати весь вміст</string>
     <string name="pref_message_privacy_mode_complete">Приховувати весь вміст</string>
     <string name="pref_applications_settings">Список застосунків</string>
-    <string name="toast_app_must_not_be_selected">Застосунок не має бути вибираним для налаштування</string>
-    <string name="toast_app_must_be_selected">Застосунок має бути вибраним для налаштування</string>
+    <string name="toast_app_must_not_be_selected">Щоби виконати налаштування, застосунок не має бути вибраним</string>
+    <string name="toast_app_must_be_selected">Щоби виконати налаштуваннч, застосунок має бути вибраним</string>
     <string name="prefs_equalizer_preset">Заготовки еквалайзера</string>
     <string name="pref_title_equalizer_bass_boost">Підсилення басів</string>
     <string name="pref_title_equalizer_soft">Мʼякий</string>
@@ -1481,8 +1481,8 @@
     <string name="notification_channel_gps">Відстеження GPS</string>
     <string name="notification_gps_title">Gadgetbridge GPS</string>
     <string name="notification_gps_text">Надсилання GPS-місцеперебування на %1$d пристроїв</string>
-    <string name="permission_notification_listener">%1$s потребує доступу до сповіщень, щоб показувати їх на годиннику, коли екран вашого телефону вимкнено.\n\nНатисніть «%2$s», потім – «%1$s» та ввімкніть «Дозволити доступ до сповіщень», після чого натисніть «Назад», щоб повернутися до %1$s.</string>
-    <string name="permission_notification_policy_access">%1$s потребує доступу налаштувань режиму «Не турбувати», щоб дотримуватися їх на годиннику, коли екран вашого телефону вимкнено.\n\nНатисніть «%2$s», потім – «%1$s» та ввімкніть «Дозволити режим \"Не турбувати\"», після чого натисніть «Назад», щоб повернутися до %1$s.</string>
+    <string name="permission_notification_listener">%1$s потребує доступу до сповіщень, щоб показувати їх на годиннику, коли екран вашого телефона вимкнено.\n\nНатисніть «%2$s», потім – «%1$s» та ввімкніть «Дозволити доступ до сповіщень», після чого натисніть «Назад», щоб повернутися до %1$s.</string>
+    <string name="permission_notification_policy_access">%1$s потребує доступу налаштувань режиму «Не турбувати», щоб дотримуватися їх на годиннику, коли екран вашого телефона вимкнено.\n\nНатисніть «%2$s», потім – «%1$s» та ввімкніть «Дозволити режим \"Не турбувати\"», після чого натисніть «Назад», щоб повернутися до %1$s.</string>
     <string name="pref_device_action_phone_gps_location_listener_stop">Зупинка відстеження GPS-розташування</string>
     <string name="portuguese_br">Португальська (Бразилія)</string>
     <string name="quick_alarm">Швидкий будильник</string>
@@ -1490,7 +1490,7 @@
     <string name="quick_alarm_description">Будильник із віджета</string>
     <string name="pref_title_banglejs_webview_url">URL-адреса завантажувача застосунків</string>
     <string name="pref_summary_banglejs_webview_url">Якщо ви хочете використовувати власний завантажувач застосунків, укажіть тут URL-адресу «https://…/android.html». В іншому випадку залиште порожнім для «https://banglejs.com/apps»</string>
-    <string name="permission_location">%1$s потребує доступу до місцеперебування у фоновому режимі, щоб підтримувати з\'єднання з годинником, навіть коли екран вашого телефону вимкнено.\n\nНа наступному екрані виберіть «%2$s», після чого натисніть «Назад», щоб повернутися до %1$s.</string>
+    <string name="permission_location">%1$s потребує доступу до місцеперебування у фоновому режимі, щоб підтримувати з\'єднання з годинником, навіть коли екран вашого телефона вимкнено.\n\nНа наступному екрані виберіть «%2$s», після чого натисніть «Назад», щоб повернутися до %1$s.</string>
     <string name="info_no_devices_connected">Немає підʼєднаних пристроїв</string>
     <string name="info_connected_count">Підʼєднано пристроїв: %d</string>
     <string name="bengali">Бенгальська</string>
@@ -1825,7 +1825,7 @@
     <string name="georgian">Грузинська</string>
     <string name="pref_title_lock_unlock">Забл./Розбл.</string>
     <string name="pref_camera_remote_title">Віддалене керування камерою</string>
-    <string name="pref_camera_remote_summary">Дозволити годиннику керувати камерою телефону</string>
+    <string name="pref_camera_remote_summary">Дозволити годиннику керувати камерою телефона</string>
     <string name="pref_workout_keep_screen_on_title">Лишати екран увімкненим під час тренувань</string>
     <string name="pref_workout_keep_screen_on_summary">Екран залишатиметься ввімкненим під час тренувань, а його яскравість регулюватиметься для безперервного показу даних у реальному часі</string>
     <string name="status">Стан</string>
@@ -1864,7 +1864,7 @@
     <string name="pref_display_caller_title">Показати контактну інформацію</string>
     <string name="pref_pair_bluetooth_calls_help_summary">Щоб приймати виклики через Bluetooth, потрібно сполучити телефон із другим екземпляром годинника.</string>
     <string name="pref_pair_bluetooth_calls_summary">Натисніть тут, щоби розпочати сполучення</string>
-    <string name="pref_pair_bluetooth_calls_help_2">2. Перейдіть до налаштувань Bluetooth вашого телефону та сполучіть його з новим пристроєм, який з’явиться (його назва буде схожою на назву вашого годинника, але із суфіксом, наприклад, «Amazfit GTR 4 – AFC8»).</string>
+    <string name="pref_pair_bluetooth_calls_help_2">2. Перейдіть до налаштувань Bluetooth вашого телефона та сполучіть його з новим пристроєм, який з’явиться (його назва буде схожою на назву вашого годинника, але із суфіксом, наприклад, «Amazfit GTR 4 – AFC8»).</string>
     <string name="pref_pair_bluetooth_calls_help_warning">ПОПЕРЕДЖЕННЯ: Якщо ввімкнути виклики через Bluetooth без сполучення з другим екземпляром, сповіщення про виклики можуть працювати неналежним чином.</string>
     <string name="pref_pair_bluetooth_calls_help_3">3. Увімкніть налаштування «Bluetooth-виклики» нижче.</string>
     <string name="pref_title_notification_cache_while_disconnected">Кешувати, коли поза зоною досяжності</string>
@@ -1888,7 +1888,7 @@
     <string name="menuitem_vo2_max">Макс. VO₂</string>
     <string name="menuitem_recommendation">Рекомендації</string>
     <string name="zepp_os_watchface_rush">Квапливість</string>
-    <string name="zepp_os_watchface_minimalist">Мінімалістичність</string>
+    <string name="zepp_os_watchface_minimalist">Мінімалізм</string>
     <string name="zepp_os_watchface_vibrant">Яскравість</string>
     <string name="zepp_os_watchface_rotating_earth">Обертання Землі</string>
     <string name="zepp_os_watchface_superposition">накладання</string>
@@ -1950,9 +1950,9 @@
     <string name="stress_relaxed">Розслаблений</string>
     <string name="stress_high">Високий</string>
     <string name="watchface_widget_type_uv_index">УФ-індекс</string>
-    <string name="pref_summary_banglejs_phone_gps_enbale">Використовувати GPS-дані телефону для заміни GPS-даних пристрою Bangle</string>
+    <string name="pref_summary_banglejs_phone_gps_enbale">Використовувати GPS-дані телефона для заміни GPS-даних пристрою Bangle</string>
     <string name="action_changelog">Журнал змін</string>
-    <string name="pref_title_banglejs_phone_gps_enbale">Використовувати GPS-дані телефону</string>
+    <string name="pref_title_banglejs_phone_gps_enbale">Використовувати GPS-дані телефона</string>
     <string name="pref_title_banglejs_phone_gps_network_only">Використовувати лише мережу для визначення місцеперебування</string>
     <string name="title">Заголовок</string>
     <string name="pref_summary_banglejs_phone_gps_update_interval">Інтервал часу, через який оновлюватиметься GPS-позиція, у мілісекундах</string>
@@ -2609,7 +2609,7 @@
     <string name="activity_type_transition">Перехід</string>
     <string name="activity_type_fitness_equipment">Вправи зі спорядженням для фітнесу</string>
     <string name="activity_type_cardio">Кардіо</string>
-    <string name="menuitem_stress_segmented">Напруження (за періодами)</string>
+    <string name="menuitem_stress_segmented">Напруження (за проміжками)</string>
     <string name="zepp_os_watchface_deep_space">Далекий космос</string>
     <string name="hrv_status_last_night">Минула ніч</string>
     <string name="activity_type_motorcycling">Мотоциклізм</string>
@@ -2650,10 +2650,10 @@
     <string name="activity_type_hang_gliding">Дельтапланеризм</string>
     <string name="menuitem_map">Мапа</string>
     <string name="menuitem_calculator">Калькулятор</string>
-    <string name="menuitem_running_calculator">Запуск калькулятора</string>
+    <string name="menuitem_running_calculator">Калькулятор для бігу</string>
     <string name="menuitem_real_time_heart_rate">Пульс у реальному часі</string>
-    <string name="menuitem_calories_segmented">Калорії (за періодами)</string>
-    <string name="menuitem_stress_breakdown">Напруження (за рівнями)</string>
+    <string name="menuitem_calories_segmented">Калорії (за проміжками)</string>
+    <string name="menuitem_stress_breakdown">Напруження (докладне)</string>
     <string name="zepp_os_watchface_rhythm">Ритм</string>
     <string name="zepp_os_watchface_digital_wraith">Цифрова примара</string>
     <string name="weather_condition_thunderstorm_with_light_drizzle">гроза з невеликою мрякою</string>
@@ -3292,7 +3292,7 @@
     <string name="devicetype_generic_headphones">Навушники</string>
     <string name="devicetype_generic_heart_rate_sensor">Датник пульсу</string>
     <string name="menuitem_heart_rate_push">Надсилання пульсу</string>
-    <string name="menuitem_bluetooth_scale_assistant">Помічник Bluetooth-ваг</string>
+    <string name="menuitem_bluetooth_scale_assistant">Помічник для Bluetooth-ваг</string>
     <string name="menuitem_water_time">Час пиття води</string>
     <string name="menuitem_zepp_flow">Zepp Flow</string>
     <string name="zepp_os_sun_moon_utc_title">Надсилати час сонця та місяця за UTC</string>
@@ -3812,7 +3812,7 @@
     <string name="weight_scale_unknown">\???.??? ??</string>
     <string name="record_data">Зберегти</string>
     <string name="soundcore_auto_power_off_title">Автоматичне вимкнення живлення</string>
-    <string name="soundcore_auto_power_off_summary">Після відключення від телефону пристрій вимкнеться після закінчення заданого часу очікування</string>
+    <string name="soundcore_auto_power_off_summary">Після відключення від телефона пристрій вимкнеться після закінчення заданого часу очікування</string>
     <string name="soundcore_battery_low_tone_title">Сигнал низького заряду батареї</string>
     <string name="soundcore_battery_low_tone_summary">Прослуховувати звуковий сигнал, коли рівень заряду батареї нижче 20% та 10%</string>
     <string name="soundcore_gaming_mode_title">Ігровий Режим</string>
@@ -4121,7 +4121,7 @@
     <string name="min_ground_contact_time">Мінімальний час контакту з землею</string>
     <string name="min_vertical_ratio">Мінімальне вертикальне співвідношення</string>
     <string name="info_no_devices_to_sync">Підключені пристрої не підтримують синхронізацію даних</string>
-    <string name="sleep_restless_moments">Неспокійні моменти</string>
+    <string name="sleep_restless_moments">Періоди неспокою</string>
     <string name="sports_activity_quick_filter_distant_past">Далеке минуле (всі тренування)</string>
     <string name="activity_type_stop_watch">Секундомір</string>
     <string name="permission_not_granted_calendar">Дозвіл на доступ до календаря не надано</string>
@@ -4133,7 +4133,7 @@
     <string name="menuitem_audio_control">Керування аудіо</string>
     <string name="menuitem_diary">Щоденник</string>
     <string name="menuitem_calorie_intake_record">Журнал споживання калорій</string>
-    <string name="menuitem_zepp_os_ask_anything_chat_bot">Запитай що завгодно</string>
+    <string name="menuitem_zepp_os_ask_anything_chat_bot">Запитати будь-що</string>
     <string name="menuitem_text_size">Розмір тексту</string>
     <string name="menuitem_sos_flashlight">SOS-ліхтарик</string>
     <string name="activity_type_street_running">Біг вулицею</string>
