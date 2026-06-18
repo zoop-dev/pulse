@@ -4526,4 +4526,5 @@
     <string name="prefs_device_id">Идентификатор устройства</string>
     <string name="persisting_samples_failed">Ошибка при сохранении образцов: %1$s</string>
     <string name="unit_kcal_per_day">ккал/день</string>
+    <string name="select_at_least_option">Пожалуйста выберите минимум %1$d варианта</string>
 </resources>
