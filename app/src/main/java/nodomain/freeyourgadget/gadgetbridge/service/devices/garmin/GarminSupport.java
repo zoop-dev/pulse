@@ -544,14 +544,6 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         // otherwise we might get incomplete monitor files
         sendOutgoingMessage("fetch recorded data", fileTransferHandler.initiateDownload());
 
-        if (getCoordinator().supports(getDevice(), GarminCapability.EXPLORE_SYNC)) {
-            // Re-arm the ExploreSync historical catalog walk so any activities
-            // recorded since the initial connect get picked up. Watches that
-            // don't support the service reject our StartSyncRequest and the
-            // handler tears the session down on its own.
-            protocolBufferHandler.getExploreSyncHandler().startSession();
-        }
-
         //TODO: ask the watch to initiate the sync? Something like:
         //        sendOutgoingMessage("set sync ready", new SystemEventMessage(SystemEventMessage.GarminSystemEventType.SYNC_READY, 0));
         //        sendOutgoingMessage("set foreground", new SystemEventMessage(SystemEventMessage.GarminSystemEventType.HOST_DID_ENTER_FOREGROUND, 0));
@@ -956,7 +948,16 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                 }
                 isBusyFetching = false;
 
+                // FIXME: This should probably only happen after exploresync also finishes
                 sendOutgoingMessage("set sync complete", new SystemEventMessage(SystemEventMessage.GarminSystemEventType.SYNC_COMPLETE, 0));
+
+                if (getCoordinator().supports(getDevice(), GarminCapability.EXPLORE_SYNC)) {
+                    // Re-arm the ExploreSync historical catalog walk so any activities
+                    // recorded since the initial connect get picked up. Watches that
+                    // don't support the service reject our StartSyncRequest and the
+                    // handler tears the session down on its own.
+                    protocolBufferHandler.getExploreSyncHandler().startSession();
+                }
 
                 return;
             }

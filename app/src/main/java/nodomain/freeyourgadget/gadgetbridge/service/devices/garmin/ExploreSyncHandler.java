@@ -648,7 +648,7 @@ class ExploreSyncHandler {
              * timestamp, plus per-point HR samples for indoor activities.
              */
             private void flush() throws Exception {
-                if (points.isEmpty()) {
+                if (points.isEmpty() || alreadyImported(points.get(0).getTime().getTime() / 1000L)) {
                     // Upfront skip-check matched in absorb().
                     LOG.info("Historical line {}: skipped (already imported)", uuidHex);
                     return;
