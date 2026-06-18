@@ -48,10 +48,10 @@ public class OppoHeadphonesSettingsCustomizer implements DeviceSpecificSettingsC
     public static final Creator<OppoHeadphonesSettingsCustomizer> CREATOR = new Creator<OppoHeadphonesSettingsCustomizer>() {
         @Override
         public OppoHeadphonesSettingsCustomizer createFromParcel(final Parcel in) {
-            final boolean supportsLdac = in.readByte() != 0;
-            final boolean supportsMultipoint = in.readByte() != 0;
-            final boolean supportsGameMode = in.readByte() != 0;
-            final boolean supportsAnc = in.readByte() != 0;
+            final boolean supportsLdac = in.readByte() == 1;
+            final boolean supportsMultipoint = in.readByte() == 1;
+            final boolean supportsGameMode = in.readByte() == 1;
+            final boolean supportsAnc = in.readByte() == 1;
 
             final Map<Pair<TouchConfigSide, TouchConfigType>, List<TouchConfigValue>> touchOptions = new LinkedHashMap<>();
             final int numOptions = in.readInt();
@@ -175,6 +175,7 @@ public class OppoHeadphonesSettingsCustomizer implements DeviceSpecificSettingsC
         dest.writeByte((byte) (supportsLdac ? 1 : 0));
         dest.writeByte((byte) (supportsMultipoint ? 1 : 0));
         dest.writeByte((byte) (supportsGameMode ? 1 : 0));
+        dest.writeByte((byte) (supportsAnc ? 1 : 0));
 
         dest.writeInt(touchOptions.size());
         for (final Map.Entry<Pair<TouchConfigSide, TouchConfigType>, List<TouchConfigValue>> e : touchOptions.entrySet()) {
