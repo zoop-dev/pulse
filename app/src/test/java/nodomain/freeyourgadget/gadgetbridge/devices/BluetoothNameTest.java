@@ -55,6 +55,7 @@ public class BluetoothNameTest extends TestBase {
             put("LE_WF-C710N", null);
             put("Polar H10 96C0B12D", DeviceType.POLARH10);
             put("Forerunner 165 Music", DeviceType.GARMIN_FORERUNNER_165_MUSIC);
+            put("Forerunner 170", DeviceType.GARMIN_FORERUNNER_170); // #6276
             put("R60", DeviceType.BLACKVIEW_R60);
             put("eTrex SE", DeviceType.GARMIN_ETREX_SE);
             put("GPSMAP H1", DeviceType.GARMIN_GPSMAP_H1); // #6122
