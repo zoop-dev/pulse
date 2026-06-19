@@ -1224,7 +1224,7 @@ public class NotificationListener extends NotificationListenerService {
         return false;
     }
 
-    private boolean shouldIgnoreOngoing(StatusBarNotification sbn, NotificationType type) {
+    private boolean shouldSendOngoing(StatusBarNotification sbn, NotificationType type) {
         if (isFitnessApp(sbn)) {
             return true;
         }
@@ -1235,18 +1235,13 @@ public class NotificationListener extends NotificationListenerService {
     }
 
     private boolean isFitnessApp(StatusBarNotification sbn) {
-        String source = sbn.getPackageName();
-        if (source.equals("de.dennisguse.opentracks")
+        final String source = sbn.getPackageName();
+        return source.equals("de.dennisguse.opentracks")
                 || source.equals("de.dennisguse.opentracks.debug")
                 || source.equals("de.dennisguse.opentracks.nightly")
                 || source.equals("de.dennisguse.opentracks.playstore")
                 || source.equals("de.tadris.fitness")
-                || source.equals("de.tadris.fitness.debug")
-        ) {
-            return true;
-        }
-
-        return false;
+                || source.equals("de.tadris.fitness.debug");
     }
 
     private boolean isWorkProfile(StatusBarNotification sbn) {
@@ -1344,13 +1339,12 @@ public class NotificationListener extends NotificationListenerService {
             return true;
         }
 
-        if (shouldIgnoreOngoing(sbn, type)) {
-            LOG.trace("Ignoring notification, ongoing");
+        if (shouldSendOngoing(sbn, type)) {
+            LOG.trace("Not ignoring ongoing notification");
             return false;
         }
 
-        return (notification.flags & Notification.FLAG_ONGOING_EVENT) == Notification.FLAG_ONGOING_EVENT;
-
+        return (notification.flags & (Notification.FLAG_ONGOING_EVENT | Notification.FLAG_FOREGROUND_SERVICE)) != 0;
     }
 
     private static class NotificationAction {
