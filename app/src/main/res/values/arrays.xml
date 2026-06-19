@@ -4563,7 +4563,7 @@
         <item>anc_mode__anc_off</item>
         <item>anc_mode__transparency_off</item>
     </string-array>
-    
+
     <string-array name="soundbrenner_time_sig_entries">
         <item>4/4</item>
         <item>2/4</item>
@@ -4595,10 +4595,10 @@
     </string-array>
 
     <string-array name="soundbrenner_subdivision_entries">
-        <item>Quarter notes</item>
-        <item>Eighth notes</item>
-        <item>Triplets</item>
-        <item>Sixteenth notes</item>
+        <item>@string/soundbrenner_pref_subdivision_quarter</item>
+        <item>@string/soundbrenner_pref_subdivision_eighth</item>
+        <item>@string/soundbrenner_pref_subdivision_triplet</item>
+        <item>@string/soundbrenner_pref_subdivision_sixteenth</item>
     </string-array>
 
     <string-array name="soundbrenner_subdivision_values">

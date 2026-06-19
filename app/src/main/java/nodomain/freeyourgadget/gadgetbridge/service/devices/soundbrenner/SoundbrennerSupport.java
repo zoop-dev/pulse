@@ -15,6 +15,7 @@ import java.nio.ByteOrder;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.devices.soundbrenner.SoundbrennerConstants;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
@@ -157,23 +158,6 @@ public class SoundbrennerSupport extends AbstractBTLESingleDeviceSupport {
        // UI button toggle
          if ((SoundbrennerConstants.PREF_METRONOME_RUNNING + "_toggle").equals(key)) {
              toggleMetronome();
-             return;
-         }
-         // Device-card Start/Stop buttons
-         if ((SoundbrennerConstants.PREF_METRONOME_RUNNING + "_start").equals(key)) {
-             try {
-                 startMetronome();
-             } catch (IOException e) {
-                 LOG.error("Failed to start metronome", e);
-             }
-             return;
-         }
-         if ((SoundbrennerConstants.PREF_METRONOME_RUNNING + "_stop").equals(key)) {
-             try {
-                 stopMetronome();
-             } catch (IOException e) {
-                 LOG.error("Failed to stop metronome", e);
-             }
              return;
          }
 
@@ -505,11 +489,17 @@ public class SoundbrennerSupport extends AbstractBTLESingleDeviceSupport {
         }
     }
 
-    /** Persist the running flag so it survives reconnects. */
+    /**
+     * Persist the running flag so it survives reconnects. Goes through
+     * GBDeviceEventUpdatePreferences (instead of writing SharedPreferences
+     * directly) so that other listeners relying on this event are notified.
+     */
     private void persistMetronomeRunning(boolean running) {
-        GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress())
-                .edit()
-                .putBoolean(SoundbrennerConstants.PREF_METRONOME_RUNNING, running)
-                .apply();
+        GBDeviceEventUpdatePreferences eventUpdatePreferences = new GBDeviceEventUpdatePreferences();
+        eventUpdatePreferences.withPreference(
+                SoundbrennerConstants.PREF_METRONOME_RUNNING,
+                running
+        );
+        evaluateGBDeviceEvent(eventUpdatePreferences);
     }
 }

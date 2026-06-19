@@ -3540,8 +3540,6 @@
     <string name="soundbrenner_category_control">Control</string>
     <string name="soundbrenner_pref_metronome_toggle_title">Start/Stop</string>
     <string name="soundbrenner_pref_metronome_toggle_summary">Start or stop metronome</string>
-    <string name="soundbrenner_action_start">Start</string>
-    <string name="soundbrenner_action_stop">Stop</string>
     <string name="soundbrenner_category_tempo">Tempo</string>
     <string name="soundbrenner_category_time_signature">Time Signature</string>
     <string name="soundbrenner_category_subdivision">Subdivision</string>
@@ -3566,6 +3564,10 @@
     <string name="soundbrenner_pref_beat_14_title">Beat 14 Accent</string>
     <string name="soundbrenner_pref_beat_15_title">Beat 15 Accent</string>
     <string name="soundbrenner_pref_beat_16_title">Beat 16 Accent</string>
+    <string name="soundbrenner_pref_subdivision_quarter">Quarter notes</string>
+    <string name="soundbrenner_pref_subdivision_eighth">Eighth notes</string>
+    <string name="soundbrenner_pref_subdivision_sixteenth">Sixteenth notes</string>
+    <string name="soundbrenner_pref_subdivision_triplet">Triplets</string>
     <string name="soundcore_voice_prompts">Voice Prompts</string>
     <string name="soundcore_button_brightness">Button Brightness</string>
     <string name="soundcore_button_brightness_low">Low</string>

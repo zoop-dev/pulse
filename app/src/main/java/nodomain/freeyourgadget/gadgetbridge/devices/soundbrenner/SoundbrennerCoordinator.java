@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import android.content.Context;
 
 import java.util.regex.Pattern;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -69,26 +69,32 @@ public class SoundbrennerCoordinator extends AbstractBLEDeviceCoordinator {
     public DeviceSpecificSettingsCustomizer getDeviceSpecificSettingsCustomizer(@NonNull final GBDevice device) {
         return new SoundbrennerSettingsCustomizer();
     }
+
     // -------------------------------------------------------------------------
-    // Start/Stop buttons in gadget card
+    // Start/Stop button in gadget card
     // -------------------------------------------------------------------------
+    //
+    // The running state is mirrored into the device-specific SharedPreferences
+    // by SoundbrennerSupport (see persistMetronomeRunning()), so a single
+    // action can read it and flip its icon/label accordingly instead of
+    // exposing two separate Start/Stop buttons.
 
     @Override
     public List<DeviceCardAction> getCustomActions() {
-        return Arrays.asList(
-
-            // START
+        return Collections.singletonList(
             new DeviceCardAction() {
                 @Override
                 public int getIcon(@NonNull final GBDevice device) {
-                    return R.drawable.ic_play;
+                    return isMetronomeRunning(device) ? R.drawable.ic_stop : R.drawable.ic_play;
                 }
 
                 @NonNull
                 @Override
                 public String getDescription(@NonNull final GBDevice device,
                                              @NonNull final Context context) {
-                    return context.getString(R.string.soundbrenner_action_start);
+                    return isMetronomeRunning(device)
+                            ? context.getString(R.string.stop)
+                            : context.getString(R.string.start);
                 }
 
                 @Override
@@ -96,30 +102,13 @@ public class SoundbrennerCoordinator extends AbstractBLEDeviceCoordinator {
                                     @NonNull final Context context) {
                     GBApplication.deviceService(device)
                             .onSendConfiguration(
-                                    SoundbrennerConstants.PREF_METRONOME_RUNNING + "_start");
-                }
-            },
-
-            // STOP
-            new DeviceCardAction() {
-                @Override
-                public int getIcon(@NonNull final GBDevice device) {
-                    return R.drawable.ic_stop;
+                                    SoundbrennerConstants.PREF_METRONOME_RUNNING + "_toggle");
                 }
 
-                @NonNull
-                @Override
-                public String getDescription(@NonNull final GBDevice device,
-                                             @NonNull final Context context) {
-                    return context.getString(R.string.soundbrenner_action_stop);
-                }
-
-                @Override
-                public void onClick(@NonNull final GBDevice device,
-                                    @NonNull final Context context) {
-                    GBApplication.deviceService(device)
-                            .onSendConfiguration(
-                                    SoundbrennerConstants.PREF_METRONOME_RUNNING + "_stop");
+                private boolean isMetronomeRunning(@NonNull final GBDevice device) {
+                    return GBApplication
+                            .getDeviceSpecificSharedPrefs(device.getAddress())
+                            .getBoolean(SoundbrennerConstants.PREF_METRONOME_RUNNING, false);
                 }
             }
         );
