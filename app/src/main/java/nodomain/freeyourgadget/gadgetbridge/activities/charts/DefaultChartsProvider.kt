@@ -143,11 +143,7 @@ open class DefaultChartsProvider : DeviceChartsProvider {
             "speedzones" -> SpeedZonesFragment()
             "livestats" -> LiveActivityFragment()
             "spo2" -> Spo2CollectionFragment.newInstance(allowSwipe)
-            "temperature" -> {
-                if (device.deviceCoordinator.supportsContinuousTemperature(device))
-                    TemperatureDailyFragment() else TemperatureChartFragment()
-            }
-
+            "temperature" -> TemperatureCollectionFragment.newInstance(allowSwipe)
             "bloodpressure" -> BloodPressureCollectionFragment.newInstance(allowSwipe)
             "cycling" -> CyclingChartFragment()
             "weight" -> WeightChartFragment()

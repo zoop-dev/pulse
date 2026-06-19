@@ -23,6 +23,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.LegendEntry;
@@ -44,7 +46,6 @@ import java.util.Locale;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.HeartRateUtils;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider;
@@ -101,7 +102,7 @@ public class TemperatureDailyFragment extends AbstractChartFragment<TemperatureD
     protected void init() {
         CHART_TEXT_COLOR = GBApplication.getSecondaryTextColor(requireContext());
         DESCRIPTION_COLOR = LEGEND_TEXT_COLOR = GBApplication.getTextColor(requireContext());
-        TEMPERATURE_COLOR = GBApplication.getSecondaryTextColor(requireContext());
+        TEMPERATURE_COLOR = ContextCompat.getColor(requireContext(), R.color.chart_temperature);
     }
 
     @Override
@@ -139,21 +140,25 @@ public class TemperatureDailyFragment extends AbstractChartFragment<TemperatureD
         x.setAxisMinimum(0f);
         x.setAxisMaximum(86400f);
 
+        final boolean isMetric = temperatureUnit == TemperatureUnit.CELSIUS;
+        final float defaultAxisMinimum = isMetric ? 30f : celsiusToFahrenheit(30f);
+        final float defaultAxisMaximum = isMetric ? 45f : celsiusToFahrenheit(45f);
+
         YAxis y = tempLineChart.getAxisLeft();
         y.setDrawGridLines(false);
         y.setDrawTopYLabelEntry(true);
         y.setTextColor(CHART_TEXT_COLOR);
         y.setEnabled(true);
-        y.setAxisMaximum(HeartRateUtils.getInstance().getMaxHeartRate());
-        y.setAxisMinimum(HeartRateUtils.getInstance().getMinHeartRate());
+        y.setAxisMaximum(defaultAxisMaximum);
+        y.setAxisMinimum(defaultAxisMinimum);
 
         YAxis yAxisRight = tempLineChart.getAxisRight();
         yAxisRight.setDrawGridLines(false);
         yAxisRight.setDrawLabels(true);
         yAxisRight.setDrawTopYLabelEntry(true);
         yAxisRight.setTextColor(CHART_TEXT_COLOR);
-        yAxisRight.setAxisMaximum(HeartRateUtils.getInstance().getMaxHeartRate());
-        yAxisRight.setAxisMinimum(HeartRateUtils.getInstance().getMinHeartRate());
+        yAxisRight.setAxisMaximum(defaultAxisMaximum);
+        yAxisRight.setAxisMinimum(defaultAxisMinimum);
 
         refresh();
     }

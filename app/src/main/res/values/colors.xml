@@ -80,6 +80,8 @@
     <color name="calories_color" type="color">#fa4502</color>
     <color name="calories_resting_color" type="color">#1f49f2</color>
     <color name="respiratory_rate_color" type="color">#163ede</color>
+    <color name="chart_temperature" type="color">#ff8f00</color>
+    <color name="chart_temperature_average" type="color">#00acc1</color>
     <color name="spo2_color" type="color">#aad93832</color>
     <color name="spo2_avg_color_light" type="color">#630b0d</color>
     <color name="spo2_avg_color_dark" type="color">#ff9393</color>
