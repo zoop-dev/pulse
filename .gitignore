@@ -27,6 +27,7 @@ proguard/
 
 # Log Files
 *.log
+*.log.last
 
 # reduce exposure risk for Local Secrets
 *.cer
