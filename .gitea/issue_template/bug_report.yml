@@ -25,6 +25,7 @@ body:
         - F-Droid
         - Gadgetbridge Nightly F-Droid repository
         - Bangle.js Gadgetbridge from the Play Store
+        - Codeberg Release
         - I built it myself from source code
         - I previously used Gadgetbridge from other sources and then updated to F-Droid version
     validations:
