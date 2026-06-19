@@ -7,7 +7,7 @@
         android:title="@string/warning_network_required_title"
         android:summary="@string/warning_network_required_summary" />
     <PreferenceCategory
-        android:title="Endurain">
+        android:title="@string/pref_category_endurain">
         <Preference
             android:icon="@drawable/ic_info"
             android:key="pref_key_endurain_status"
@@ -25,7 +25,7 @@
             android:summary="@string/pref_endurain_log_out_summary" />
     </PreferenceCategory>
     <PreferenceCategory
-        android:title="Wanderer">
+        android:title="@string/pref_category_wanderer">
         <Preference
             android:icon="@drawable/ic_info"
             android:key="pref_key_wanderer_status"

@@ -4963,7 +4963,7 @@
     <string name="prefs_online_fitness_trackers_title">Online fitness trackers</string>
     <string name="prefs_online_fitness_trackers_summary">Configure how to reach and use online fitness trackers</string>
     <string name="warning_network_required_title">Network required</string>
-    <string name="warning_network_required_summary">This integration requires network connectivity. Please install and enable the internet helper add-on app.</string>
+    <string name="warning_network_required_summary">These integrations requires network connectivity. Please install and enable the internet helper add-on app.</string>
     <string name="pref_info_endurain_status_title">Endurain status</string>
     <string name="pref_endurain_log_in_title">Log in to Endurain</string>
     <string name="pref_endurain_log_in_summary">Tap here to enter the Endurain server and log in</string>
@@ -4975,7 +4975,7 @@
     <string name="unable_to_share_gpx_track_toast">Unable to share GPX track: %1$s</string>
     <string name="endurain_successfully_uploaded_toast">Successfully uploaded to Endurain</string>
     <string name="endurain_error_while_uploading_toast">Error while uploading to Endurain</string>
-    <string name="endurain_unable_to_upload_gpx_file_toast">Unable to upload GPX file to Endurain: %1$s</string>
+    <string name="endurain_unable_to_upload_gpx_file_toast">Unable to upload activity file to Endurain: %1$s</string>
     <string name="endurain_setup_title">Endurain setup</string>
     <string name="endurain_setup_server">Endurain server</string>
     <string name="endurain_setup_login_type_local">Local</string>
@@ -4993,4 +4993,7 @@
     <string name="pref_wanderer_enter_api_token_title">Enter Wanderer API token</string>
     <string name="pref_wanderer_enter_api_token_summary">Tap here to enter the Wanderer server and API token</string>
     <string name="pref_wanderer_log_out_title">Log out of Wanderer</string>
+    <string name="pref_category_endurain" translatable="false">Endurain</string>
+    <string name="pref_category_wanderer" translatable="false">Wanderer</string>
+    <string name="activity_detail_upload_to_wanderer">Upload GPX to Wanderer</string>
 </resources>

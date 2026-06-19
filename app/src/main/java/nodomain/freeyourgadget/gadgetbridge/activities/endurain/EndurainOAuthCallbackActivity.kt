@@ -20,6 +20,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBActivity
 import org.slf4j.LoggerFactory
@@ -65,7 +66,7 @@ class EndurainOAuthCallbackActivity : AbstractGBActivity() {
             val resultIntent = Intent("nodomain.freeyourgadget.gadgetbridge.ENDURAIN_SSO_CALLBACK")
             resultIntent.putExtra("session_id", sessionId)
             resultIntent.putExtra("success", true)
-            sendBroadcast(resultIntent)
+            LocalBroadcastManager.getInstance(this).sendBroadcast(resultIntent)
 
             Toast.makeText(this,
                 getString(R.string.endurain_oauth_completing_login), Toast.LENGTH_SHORT).show()
@@ -76,7 +77,7 @@ class EndurainOAuthCallbackActivity : AbstractGBActivity() {
             // Broadcast failure
             val resultIntent = Intent("nodomain.freeyourgadget.gadgetbridge.ENDURAIN_SSO_CALLBACK")
             resultIntent.putExtra("success", false)
-            sendBroadcast(resultIntent)
+            LocalBroadcastManager.getInstance(this).sendBroadcast(resultIntent)
         }
 
         finish()

@@ -59,7 +59,7 @@
             <item
                 android:id="@+id/activity_action_upload_to_wanderer"
                 android:icon="@drawable/ic_file_upload"
-                android:title="Upload GPX to Wanderer"
+                android:title="@string/activity_detail_upload_to_wanderer"
                 app:showAsAction="never" />
 
             <item

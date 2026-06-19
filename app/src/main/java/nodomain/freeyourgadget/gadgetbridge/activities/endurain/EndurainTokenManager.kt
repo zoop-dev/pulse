@@ -44,8 +44,7 @@ class EndurainTokenManager(context: Context) {
             putString("access_token", accessToken)
                 .putString("refresh_token", refreshToken)
                 .putInt("access_token_expires_at", accessTokenExpiryTs)
-                .putInt("refresh_token_expires_at", refreshTokenExpiryTs
-                )
+                .putInt("refresh_token_expires_at", refreshTokenExpiryTs)
         }
     }
 
