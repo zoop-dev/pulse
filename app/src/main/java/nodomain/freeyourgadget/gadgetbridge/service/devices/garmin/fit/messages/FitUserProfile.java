@@ -197,6 +197,16 @@ public class FitUserProfile extends RecordData {
     }
 
     @Nullable
+    public Integer getModerateActivity() {
+        return getFieldByNumber(53, Integer.class);
+    }
+
+    @Nullable
+    public Integer getVigorousActivity() {
+        return getFieldByNumber(54, Integer.class);
+    }
+
+    @Nullable
     public Integer getGenderX() {
         return getFieldByNumber(62, Integer.class);
     }
@@ -366,6 +376,16 @@ public class FitUserProfile extends RecordData {
 
         public Builder setDiveCount(final Long value) {
             setFieldByNumber(49, value);
+            return this;
+        }
+
+        public Builder setModerateActivity(final Integer value) {
+            setFieldByNumber(53, value);
+            return this;
+        }
+
+        public Builder setVigorousActivity(final Integer value) {
+            setFieldByNumber(54, value);
             return this;
         }
 

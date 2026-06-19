@@ -55,6 +55,11 @@ public class FitSport extends RecordData {
     }
 
     @Nullable
+    public Integer getColor() {
+        return getFieldByNumber(10, Integer.class);
+    }
+
+    @Nullable
     public Integer getPopularityRouting() {
         return getFieldByNumber(15, Integer.class);
     }
@@ -109,6 +114,11 @@ public class FitSport extends RecordData {
 
         public Builder setName(final String value) {
             setFieldByNumber(3, value);
+            return this;
+        }
+
+        public Builder setColor(final Integer value) {
+            setFieldByNumber(10, value);
             return this;
         }
 

@@ -29,39 +29,24 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  *
  * @noinspection unused
  */
-public class FitPersonalRecord extends RecordData {
-    public FitPersonalRecord(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitFiles extends RecordData {
+    public FitFiles(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
-        if (nativeNumber != 114) {
-            throw new IllegalArgumentException("FitPersonalRecord expects native messages of " + 114 + ", got " + nativeNumber);
+        if (nativeNumber != 138) {
+            throw new IllegalArgumentException("FitFiles expects native messages of " + 138 + ", got " + nativeNumber);
         }
     }
 
     @Nullable
-    public Integer getMetric() {
-        return getFieldByNumber(0, Integer.class);
+    public String getDirectory() {
+        return getFieldByNumber(1, String.class);
     }
 
     @Nullable
-    public Integer getSport() {
-        return getFieldByNumber(1, Integer.class);
-    }
-
-    @Nullable
-    public Double getDistance() {
-        return getFieldByNumber(2, Double.class);
-    }
-
-    @Nullable
-    public Long getRecord() {
-        return getFieldByNumber(5, Long.class);
-    }
-
-    @Nullable
-    public Long getTimestamp() {
-        return getFieldByNumber(253, Long.class);
+    public String getFile() {
+        return getFieldByNumber(2, String.class);
     }
 
     @Nullable
@@ -74,31 +59,16 @@ public class FitPersonalRecord extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(114);
+            super(138);
         }
 
-        public Builder setMetric(final Integer value) {
-            setFieldByNumber(0, value);
-            return this;
-        }
-
-        public Builder setSport(final Integer value) {
+        public Builder setDirectory(final String value) {
             setFieldByNumber(1, value);
             return this;
         }
 
-        public Builder setDistance(final Double value) {
+        public Builder setFile(final String value) {
             setFieldByNumber(2, value);
-            return this;
-        }
-
-        public Builder setRecord(final Long value) {
-            setFieldByNumber(5, value);
-            return this;
-        }
-
-        public Builder setTimestamp(final Long value) {
-            setFieldByNumber(253, value);
             return this;
         }
 
@@ -108,13 +78,13 @@ public class FitPersonalRecord extends RecordData {
         }
 
         @Override
-        public FitPersonalRecord build() {
-            return (FitPersonalRecord) super.build();
+        public FitFiles build() {
+            return (FitFiles) super.build();
         }
 
         @Override
-        public FitPersonalRecord build(final int localMessageType) {
-            return (FitPersonalRecord) super.build(localMessageType);
+        public FitFiles build(final int localMessageType) {
+            return (FitFiles) super.build(localMessageType);
         }
     }
 }

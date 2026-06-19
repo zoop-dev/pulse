@@ -1,4 +1,4 @@
-/*  Copyright (C) 2025 Freeyourgadget
+/*  Copyright (C) 2026 Freeyourgadget
 
     This file is part of Gadgetbridge.
 
@@ -29,49 +29,39 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  *
  * @noinspection unused
  */
-public class FitDeviceUsed extends RecordData {
-    public FitDeviceUsed(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitRacePredictions extends RecordData {
+    public FitRacePredictions(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
-        if (nativeNumber != 22) {
-            throw new IllegalArgumentException("FitDeviceUsed expects native messages of " + 22 + ", got " + nativeNumber);
+        if (nativeNumber != 339) {
+            throw new IllegalArgumentException("FitRacePredictions expects native messages of " + 339 + ", got " + nativeNumber);
         }
     }
 
     @Nullable
-    public Integer getSpeed() {
-        return getFieldByNumber(0, Integer.class);
+    public Long getLocalTimestamp() {
+        return getFieldByNumber(0, Long.class);
     }
 
     @Nullable
-    public Integer getDistance() {
+    public Integer getTime5k() {
         return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
-    public Integer getCadence() {
+    public Integer getTime10k() {
         return getFieldByNumber(2, Integer.class);
     }
 
     @Nullable
-    public Integer getElevation() {
+    public Integer getTimeHalfMarathon() {
         return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
-    public Integer getHeartRate() {
+    public Integer getTimeFullMarathon() {
         return getFieldByNumber(4, Integer.class);
-    }
-
-    @Nullable
-    public Integer getCalorie() {
-        return getFieldByNumber(5, Integer.class);
-    }
-
-    @Nullable
-    public Integer getPower() {
-        return getFieldByNumber(6, Integer.class);
     }
 
     @Nullable
@@ -84,41 +74,31 @@ public class FitDeviceUsed extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(22);
+            super(339);
         }
 
-        public Builder setSpeed(final Integer value) {
+        public Builder setLocalTimestamp(final Long value) {
             setFieldByNumber(0, value);
             return this;
         }
 
-        public Builder setDistance(final Integer value) {
+        public Builder setTime5k(final Integer value) {
             setFieldByNumber(1, value);
             return this;
         }
 
-        public Builder setCadence(final Integer value) {
+        public Builder setTime10k(final Integer value) {
             setFieldByNumber(2, value);
             return this;
         }
 
-        public Builder setElevation(final Integer value) {
+        public Builder setTimeHalfMarathon(final Integer value) {
             setFieldByNumber(3, value);
             return this;
         }
 
-        public Builder setHeartRate(final Integer value) {
+        public Builder setTimeFullMarathon(final Integer value) {
             setFieldByNumber(4, value);
-            return this;
-        }
-
-        public Builder setCalorie(final Integer value) {
-            setFieldByNumber(5, value);
-            return this;
-        }
-
-        public Builder setPower(final Integer value) {
-            setFieldByNumber(6, value);
             return this;
         }
 
@@ -128,13 +108,13 @@ public class FitDeviceUsed extends RecordData {
         }
 
         @Override
-        public FitDeviceUsed build() {
-            return (FitDeviceUsed) super.build();
+        public FitRacePredictions build() {
+            return (FitRacePredictions) super.build();
         }
 
         @Override
-        public FitDeviceUsed build(final int localMessageType) {
-            return (FitDeviceUsed) super.build(localMessageType);
+        public FitRacePredictions build(final int localMessageType) {
+            return (FitRacePredictions) super.build(localMessageType);
         }
     }
 }

@@ -193,6 +193,16 @@ public class FitMonitoring extends RecordData {
     }
 
     @Nullable
+    public Integer getModerateActivity() {
+        return getFieldByNumber(37, Integer.class);
+    }
+
+    @Nullable
+    public Integer getVigorousActivity() {
+        return getFieldByNumber(38, Integer.class);
+    }
+
+    @Nullable
     public Long getTimestamp() {
         return getFieldByNumber(253, Long.class);
     }
@@ -352,6 +362,16 @@ public class FitMonitoring extends RecordData {
 
         public Builder setTotalDescent(final Double value) {
             setFieldByNumber(36, value);
+            return this;
+        }
+
+        public Builder setModerateActivity(final Integer value) {
+            setFieldByNumber(37, value);
+            return this;
+        }
+
+        public Builder setVigorousActivity(final Integer value) {
+            setFieldByNumber(38, value);
             return this;
         }
 

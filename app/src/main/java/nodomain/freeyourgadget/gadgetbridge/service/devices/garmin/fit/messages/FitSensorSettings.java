@@ -75,6 +75,11 @@ public class FitSensorSettings extends RecordData {
     }
 
     @Nullable
+    public Integer getFirmwareVersion() {
+        return getFieldByNumber(34, Integer.class);
+    }
+
+    @Nullable
     public Integer getUseForSpeed() {
         return getFieldByNumber(45, Integer.class);
     }
@@ -82,6 +87,11 @@ public class FitSensorSettings extends RecordData {
     @Nullable
     public Integer getUseForDistance() {
         return getFieldByNumber(46, Integer.class);
+    }
+
+    @Nullable
+    public Integer getBluetoothAddress() {
+        return getFieldByNumber(50, Integer.class);
     }
 
     @Nullable
@@ -147,6 +157,11 @@ public class FitSensorSettings extends RecordData {
             return this;
         }
 
+        public Builder setFirmwareVersion(final Integer value) {
+            setFieldByNumber(34, value);
+            return this;
+        }
+
         public Builder setUseForSpeed(final Integer value) {
             setFieldByNumber(45, value);
             return this;
@@ -154,6 +169,11 @@ public class FitSensorSettings extends RecordData {
 
         public Builder setUseForDistance(final Integer value) {
             setFieldByNumber(46, value);
+            return this;
+        }
+
+        public Builder setBluetoothAddress(final Integer value) {
+            setFieldByNumber(50, value);
             return this;
         }
 

@@ -29,34 +29,19 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  *
  * @noinspection unused
  */
-public class FitPersonalRecord extends RecordData {
-    public FitPersonalRecord(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitMonitorAltitude extends RecordData {
+    public FitMonitorAltitude(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
-        if (nativeNumber != 114) {
-            throw new IllegalArgumentException("FitPersonalRecord expects native messages of " + 114 + ", got " + nativeNumber);
+        if (nativeNumber != 279) {
+            throw new IllegalArgumentException("FitMonitorAltitude expects native messages of " + 279 + ", got " + nativeNumber);
         }
     }
 
     @Nullable
-    public Integer getMetric() {
-        return getFieldByNumber(0, Integer.class);
-    }
-
-    @Nullable
-    public Integer getSport() {
-        return getFieldByNumber(1, Integer.class);
-    }
-
-    @Nullable
-    public Double getDistance() {
-        return getFieldByNumber(2, Double.class);
-    }
-
-    @Nullable
-    public Long getRecord() {
-        return getFieldByNumber(5, Long.class);
+    public Double getAltitude() {
+        return getFieldByNumber(0, Double.class);
     }
 
     @Nullable
@@ -64,36 +49,16 @@ public class FitPersonalRecord extends RecordData {
         return getFieldByNumber(253, Long.class);
     }
 
-    @Nullable
-    public Integer getMessageIndex() {
-        return getFieldByNumber(254, Integer.class);
-    }
-
     /**
      * @noinspection unused
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(114);
+            super(279);
         }
 
-        public Builder setMetric(final Integer value) {
+        public Builder setAltitude(final Double value) {
             setFieldByNumber(0, value);
-            return this;
-        }
-
-        public Builder setSport(final Integer value) {
-            setFieldByNumber(1, value);
-            return this;
-        }
-
-        public Builder setDistance(final Double value) {
-            setFieldByNumber(2, value);
-            return this;
-        }
-
-        public Builder setRecord(final Long value) {
-            setFieldByNumber(5, value);
             return this;
         }
 
@@ -102,19 +67,14 @@ public class FitPersonalRecord extends RecordData {
             return this;
         }
 
-        public Builder setMessageIndex(final Integer value) {
-            setFieldByNumber(254, value);
-            return this;
+        @Override
+        public FitMonitorAltitude build() {
+            return (FitMonitorAltitude) super.build();
         }
 
         @Override
-        public FitPersonalRecord build() {
-            return (FitPersonalRecord) super.build();
-        }
-
-        @Override
-        public FitPersonalRecord build(final int localMessageType) {
-            return (FitPersonalRecord) super.build(localMessageType);
+        public FitMonitorAltitude build(final int localMessageType) {
+            return (FitMonitorAltitude) super.build(localMessageType);
         }
     }
 }

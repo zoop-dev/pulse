@@ -177,22 +177,22 @@ public class FitLap extends RecordData {
 
     @Nullable
     public Double getNecLat() {
-        return getFieldByNumber(25, Double.class);
-    }
-
-    @Nullable
-    public Double getNecLong() {
-        return getFieldByNumber(26, Double.class);
-    }
-
-    @Nullable
-    public Double getSwcLat() {
         return getFieldByNumber(27, Double.class);
     }
 
     @Nullable
-    public Double getSwcLong() {
+    public Double getNecLong() {
         return getFieldByNumber(28, Double.class);
+    }
+
+    @Nullable
+    public Double getSwcLat() {
+        return getFieldByNumber(29, Double.class);
+    }
+
+    @Nullable
+    public Double getSwcLong() {
+        return getFieldByNumber(30, Double.class);
     }
 
     @Nullable
@@ -661,6 +661,11 @@ public class FitLap extends RecordData {
     }
 
     @Nullable
+    public Integer getCalories() {
+        return getFieldByNumber(155, Integer.class);
+    }
+
+    @Nullable
     public Float getTotalFractionalAscent() {
         return getFieldByNumber(156, Float.class);
     }
@@ -874,22 +879,22 @@ public class FitLap extends RecordData {
         }
 
         public Builder setNecLat(final Double value) {
-            setFieldByNumber(25, value);
-            return this;
-        }
-
-        public Builder setNecLong(final Double value) {
-            setFieldByNumber(26, value);
-            return this;
-        }
-
-        public Builder setSwcLat(final Double value) {
             setFieldByNumber(27, value);
             return this;
         }
 
-        public Builder setSwcLong(final Double value) {
+        public Builder setNecLong(final Double value) {
             setFieldByNumber(28, value);
+            return this;
+        }
+
+        public Builder setSwcLat(final Double value) {
+            setFieldByNumber(29, value);
+            return this;
+        }
+
+        public Builder setSwcLong(final Double value) {
+            setFieldByNumber(30, value);
             return this;
         }
 
@@ -1355,6 +1360,11 @@ public class FitLap extends RecordData {
 
         public Builder setAvgFlow(final Float value) {
             setFieldByNumber(154, value);
+            return this;
+        }
+
+        public Builder setCalories(final Integer value) {
+            setFieldByNumber(155, value);
             return this;
         }
 

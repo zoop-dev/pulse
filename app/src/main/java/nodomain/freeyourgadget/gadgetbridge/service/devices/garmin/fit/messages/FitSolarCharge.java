@@ -1,4 +1,4 @@
-/*  Copyright (C) 2025 Freeyourgadget
+/*  Copyright (C) 2026 Freeyourgadget
 
     This file is part of Gadgetbridge.
 
@@ -29,49 +29,29 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHea
  *
  * @noinspection unused
  */
-public class FitDeviceUsed extends RecordData {
-    public FitDeviceUsed(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
+public class FitSolarCharge extends RecordData {
+    public FitSolarCharge(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
 
         final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
-        if (nativeNumber != 22) {
-            throw new IllegalArgumentException("FitDeviceUsed expects native messages of " + 22 + ", got " + nativeNumber);
+        if (nativeNumber != 318) {
+            throw new IllegalArgumentException("FitSolarCharge expects native messages of " + 318 + ", got " + nativeNumber);
         }
     }
 
     @Nullable
-    public Integer getSpeed() {
+    public Integer getPercent() {
         return getFieldByNumber(0, Integer.class);
     }
 
     @Nullable
-    public Integer getDistance() {
+    public Integer getStatus() {
         return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
-    public Integer getCadence() {
-        return getFieldByNumber(2, Integer.class);
-    }
-
-    @Nullable
-    public Integer getElevation() {
-        return getFieldByNumber(3, Integer.class);
-    }
-
-    @Nullable
-    public Integer getHeartRate() {
-        return getFieldByNumber(4, Integer.class);
-    }
-
-    @Nullable
-    public Integer getCalorie() {
-        return getFieldByNumber(5, Integer.class);
-    }
-
-    @Nullable
-    public Integer getPower() {
-        return getFieldByNumber(6, Integer.class);
+    public Long getGain() {
+        return getFieldByNumber(3, Long.class);
     }
 
     @Nullable
@@ -84,41 +64,21 @@ public class FitDeviceUsed extends RecordData {
      */
     public static class Builder extends FitRecordDataBuilder {
         public Builder() {
-            super(22);
+            super(318);
         }
 
-        public Builder setSpeed(final Integer value) {
+        public Builder setPercent(final Integer value) {
             setFieldByNumber(0, value);
             return this;
         }
 
-        public Builder setDistance(final Integer value) {
+        public Builder setStatus(final Integer value) {
             setFieldByNumber(1, value);
             return this;
         }
 
-        public Builder setCadence(final Integer value) {
-            setFieldByNumber(2, value);
-            return this;
-        }
-
-        public Builder setElevation(final Integer value) {
+        public Builder setGain(final Long value) {
             setFieldByNumber(3, value);
-            return this;
-        }
-
-        public Builder setHeartRate(final Integer value) {
-            setFieldByNumber(4, value);
-            return this;
-        }
-
-        public Builder setCalorie(final Integer value) {
-            setFieldByNumber(5, value);
-            return this;
-        }
-
-        public Builder setPower(final Integer value) {
-            setFieldByNumber(6, value);
             return this;
         }
 
@@ -128,13 +88,13 @@ public class FitDeviceUsed extends RecordData {
         }
 
         @Override
-        public FitDeviceUsed build() {
-            return (FitDeviceUsed) super.build();
+        public FitSolarCharge build() {
+            return (FitSolarCharge) super.build();
         }
 
         @Override
-        public FitDeviceUsed build(final int localMessageType) {
-            return (FitDeviceUsed) super.build(localMessageType);
+        public FitSolarCharge build(final int localMessageType) {
+            return (FitSolarCharge) super.build(localMessageType);
         }
     }
 }
