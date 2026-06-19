@@ -168,7 +168,7 @@ public class BodyEnergyFragment extends AbstractChartFragment<BodyEnergyFragment
         lineDataSet.setCircleColor(getResources().getColor(R.color.body_energy_level_color));
         lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         lineDataSet.setDrawValues(false);
-        lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        lineDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         lineDataSet.setDrawFilled(true);
         lineDataSet.setFillAlpha(70);
         lineDataSet.setFillColor(getResources().getColor(R.color.body_energy_level_color));

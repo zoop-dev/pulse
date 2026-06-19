@@ -143,7 +143,7 @@ public class RespiratoryRateDailyFragment extends RespiratoryRateFragment<Respir
         lineDataSet.setCircleColor(ContextCompat.getColor(requireContext(), R.color.respiratory_rate_color));
         lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         lineDataSet.setDrawValues(false);
-        lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        lineDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
 
         lineDataSets.add(lineDataSet);
         final LineData lineData = new LineData(lineDataSets);
@@ -160,7 +160,7 @@ public class RespiratoryRateDailyFragment extends RespiratoryRateFragment<Respir
         lineDataSet.setCircleColor(ContextCompat.getColor(requireContext(), R.color.respiratory_rate_color));
         lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         lineDataSet.setDrawValues(false);
-        lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        lineDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
 
         return lineDataSet;
     }

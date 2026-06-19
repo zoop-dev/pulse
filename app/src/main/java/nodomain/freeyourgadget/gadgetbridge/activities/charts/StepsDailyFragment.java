@@ -169,7 +169,7 @@ public class StepsDailyFragment extends StepsFragment<StepsDailyFragment.StepsDa
         lineDataSet.setCircleColor(getResources().getColor(R.color.steps_color));
         lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         lineDataSet.setDrawValues(false);
-        lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        lineDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         lineDataSet.setDrawFilled(true);
         lineDataSet.setFillAlpha(60);
         lineDataSet.setFillColor(getResources().getColor(R.color.steps_color ));
