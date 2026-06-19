@@ -26,10 +26,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.core.net.toUri
 import androidx.fragment.app.viewModels
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
@@ -107,11 +107,9 @@ class EndurainSetupBottomSheet : BottomSheetDialogFragment() {
         serverInput.setText(prefs.getString("endurain_server", ""))
 
         // Register broadcast receiver for SSO callbacks
-        ContextCompat.registerReceiver(
-            requireContext(),
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(
             ssoCallbackReceiver,
-            IntentFilter("nodomain.freeyourgadget.gadgetbridge.ENDURAIN_SSO_CALLBACK"),
-            ContextCompat.RECEIVER_EXPORTED
+            IntentFilter("nodomain.freeyourgadget.gadgetbridge.ENDURAIN_SSO_CALLBACK")
         )
 
         next.setOnClickListener {
