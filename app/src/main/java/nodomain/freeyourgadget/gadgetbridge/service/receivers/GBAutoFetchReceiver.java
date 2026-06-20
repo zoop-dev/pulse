@@ -20,40 +20,62 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Date;
+import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
+import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
 
 public class GBAutoFetchReceiver extends BroadcastReceiver {
     private static final Logger LOG = LoggerFactory.getLogger(GBAutoFetchReceiver.class);
 
-    private Date lastSync = new Date();
+    private static final String PREF_AUTO_FETCH_LAST_TIME = "auto_fetch_last_time";
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
-        if (!GBApplication.getPrefs().getBoolean(GBPrefs.PREF_AUTO_FETCH_ENABLED, false)) {
+        LOG.info("Trigger auto fetch by {}", intent.getAction());
+
+        final GBPrefs prefs = GBApplication.getPrefs();
+        if (!prefs.getBoolean(GBPrefs.PREF_AUTO_FETCH_ENABLED, false)) {
             return;
         }
+
         synchronized (this) {
-            final Date now = new Date();
-            final long timeSinceLast = now.getTime() - lastSync.getTime();
-            if (timeSinceLast < 2500L) {
-                // #4165 - prevent multiple syncs in very quick succession
-                LOG.warn("Throttling auto fetch by {}, last one was {}ms ago", intent.getAction(), timeSinceLast);
-                return;
-            }
-            final Date nextSync = DateUtils.addMinutes(lastSync, GBApplication.getPrefs().getInt("auto_fetch_interval_limit", 0));
-            if (nextSync.before(now)) {
-                LOG.info("Trigger auto fetch by {}", intent.getAction());
-                GBApplication.deviceService().onFetchRecordedData(RecordedDataTypes.TYPE_SYNC);
-                lastSync = now;
+            final long now = new Date().getTime();
+            final int fetchIntervalMinutes = prefs.getInt(GBPrefs.PREF_AUTO_FETCH_INTERVAL_LIMIT, 0);
+            final long fetchIntervalMillis = fetchIntervalMinutes * 60 * 1000L;
+
+            final List<GBDevice> devices = GBApplication.app().getDeviceManager().getSelectedDevices();
+
+            for (GBDevice device : devices) {
+                if (!device.isInitialized()) {
+                    LOG.trace("Not auto-fetching from {}, not initialized", device);
+                    continue;
+                }
+
+                final DevicePrefs devicePrefs = GBApplication.getDevicePrefs(device);
+                final long lastSync = devicePrefs.getLong(PREF_AUTO_FETCH_LAST_TIME, 0);
+
+                final long timeSinceLast = now - lastSync;
+                if (timeSinceLast < fetchIntervalMillis) {
+                    // #4165 - prevent multiple syncs in very quick succession
+                    LOG.warn("Not auto-fetching from {}, last fetch was {}ms ago", device, timeSinceLast);
+                    continue;
+                }
+
+                LOG.debug("Auto-fetching from {}", device);
+                GBApplication.deviceService(device).onFetchRecordedData(RecordedDataTypes.TYPE_SYNC);
+
+                devicePrefs.getPreferences().edit()
+                        .putLong(PREF_AUTO_FETCH_LAST_TIME, now)
+                        .apply();
             }
         }
     }
