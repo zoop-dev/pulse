@@ -30,6 +30,7 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.HashSet;
 
+import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
@@ -47,6 +48,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchC
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.MiscConfigType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.AncConfigType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.AncConfigValue;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.DeviceInfoType;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
@@ -143,19 +145,11 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
                 events.addAll(parseBattery(payload));
                 break;
             }
-            case DEVICE_INFO: {
-                switch (payload[0]) {
-                    case 1: // battery
-                        events.addAll(parseBattery(payload));
-                        break;
-                    case 2: // status
-                        LOG.debug("Got status");
-                        // TODO handle
-                        break;
-                    default:
-                        LOG.warn("Unknown device info {}", payload[0]);
-                }
-
+            case DEVICE_INFO_ACK:
+                LOG.debug("Got device info ack, return={}", StringUtils.bytesToHex(payload));
+                break;
+            case DEVICE_INFO_RET: {
+                events.addAll(parseDeviceInfo(payload));
                 break;
             }
             case FIRMWARE_RET: {
@@ -342,6 +336,34 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
         events.add(eventVersionInfo);
 
         LOG.debug("Got fw version: {}", fwVersion);
+        return events;
+    }
+
+
+    private static List<GBDeviceEvent> parseDeviceInfo(final byte[] payload) {
+        final List<GBDeviceEvent> events = new ArrayList<>();
+        final int typeCode = payload[0] & 0xff;
+        final DeviceInfoType type = DeviceInfoType.fromCode(typeCode);
+        if (type == null) {
+            LOG.warn("Unknown device info {}", payload[0]);
+            return events;
+        }
+
+        switch (type) {
+            case BATTERY: {
+                events.addAll(parseBattery(payload));
+                break;
+            }
+            case STATUS: {
+                LOG.debug("Got status");
+                // TODO handle
+                break;
+            }
+            default: {
+                LOG.warn("Unknown device info {}", payload[0]);
+                break;
+            }
+        }
         return events;
     }
 
@@ -621,6 +643,15 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
             (byte) 0x01,
         };
         return encodeMessage(OppoCommand.ANC_CONFIG_REQ, payload);
+    }
+
+    public byte[] encodeDeviceInfoSet() {
+        final byte[] payload = new byte[] {
+            (byte) 0x09,
+            (byte) DeviceInfoType.BATTERY.getCode(),
+            (byte) DeviceInfoType.GAME_MODE.getCode(),
+        };
+        return encodeMessage(OppoCommand.DEVICE_INFO_SET, payload);
     }
 
     private byte[] encodeMessage(final OppoCommand command, final byte[] payload) {

@@ -74,6 +74,7 @@ public class OppoHeadphonesSupport extends AbstractHeadphoneSerialDeviceSupportV
 
     @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
+        builder.write(mDeviceProtocol.encodeDeviceInfoSet());
         builder.write(mDeviceProtocol.encodeFirmwareVersionReq());
 
         final OppoHeadphonesCoordinator coordinator = (OppoHeadphonesCoordinator) getDevice().getDeviceCoordinator();
