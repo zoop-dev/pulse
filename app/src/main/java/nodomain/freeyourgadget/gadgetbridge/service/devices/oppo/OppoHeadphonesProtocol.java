@@ -30,6 +30,8 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.HashSet;
 
+import androidx.annotation.NonNull;
+
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -48,7 +50,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchC
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.MiscConfigType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.AncConfigType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.AncConfigValue;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.DeviceInfoType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.SubscriptionType;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
@@ -145,11 +147,11 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
                 events.addAll(parseBattery(payload));
                 break;
             }
-            case DEVICE_INFO_ACK:
-                LOG.debug("Got device info ack, return={}", StringUtils.bytesToHex(payload));
+            case SUBSCRIPTION_ACK:
+                LOG.debug("Got subscription ack, return={}", StringUtils.bytesToHex(payload));
                 break;
-            case DEVICE_INFO_RET: {
-                events.addAll(parseDeviceInfo(payload));
+            case SUBSCRIPTION_RET: {
+                events.addAll(parseSubscription(payload));
                 break;
             }
             case FIRMWARE_RET: {
@@ -340,12 +342,12 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
     }
 
 
-    private static List<GBDeviceEvent> parseDeviceInfo(final byte[] payload) {
+    private static List<GBDeviceEvent> parseSubscription(final byte[] payload) {
         final List<GBDeviceEvent> events = new ArrayList<>();
         final int typeCode = payload[0] & 0xff;
-        final DeviceInfoType type = DeviceInfoType.fromCode(typeCode);
+        final SubscriptionType type = SubscriptionType.fromCode(typeCode);
         if (type == null) {
-            LOG.warn("Unknown device info {}", String.format(Locale.ROOT, "0x%02x", typeCode));
+            LOG.warn("Unknown subcription type {}", String.format(Locale.ROOT, "0x%02x", typeCode));
             return events;
         }
 
@@ -385,7 +387,7 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
                 break;
             }
             default: {
-                LOG.warn("Unhandled device info type {}", type);
+                LOG.warn("Unhandled subscription type {}", type);
                 break;
             }
         }
@@ -671,14 +673,20 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
         return encodeMessage(OppoCommand.ANC_CONFIG_REQ, payload);
     }
 
-    public byte[] encodeDeviceInfoSet() {
-        final byte[] payload = new byte[] {
-            (byte) 0x09,
-            (byte) DeviceInfoType.BATTERY.getCode(),
-            (byte) DeviceInfoType.ANC_SELECTOR.getCode(),
-            (byte) DeviceInfoType.GAME_MODE.getCode(),
-        };
-        return encodeMessage(OppoCommand.DEVICE_INFO_SET, payload);
+    public byte[] encodeSubscriptionSet(@NonNull final EnumSet<SubscriptionType> subscriptions) {
+        if (subscriptions.isEmpty()) {
+            throw new IllegalArgumentException("Subscription list cannot be empty");
+        }
+
+        byte[] payload = new byte[1 + subscriptions.size()];
+        payload[0] = (byte) 0x09;
+
+        int i = 1;
+        for (SubscriptionType type : subscriptions) {
+            payload[i++] = (byte) type.getCode();
+        }
+
+        return encodeMessage(OppoCommand.SUBSCRIPTION_SET, payload);
     }
 
     private byte[] encodeMessage(final OppoCommand command, final byte[] payload) {

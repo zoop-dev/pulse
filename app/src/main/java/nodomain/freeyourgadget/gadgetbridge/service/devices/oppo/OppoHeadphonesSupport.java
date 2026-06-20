@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import java.util.UUID;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.EnumSet;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
@@ -31,6 +32,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.AbstractHeadphoneSerialDeviceSupportV2;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.MiscConfigType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.AncConfigType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.SubscriptionType;
 import nodomain.freeyourgadget.gadgetbridge.devices.oppo.OppoHeadphonesCoordinator;
 
 public class OppoHeadphonesSupport extends AbstractHeadphoneSerialDeviceSupportV2<OppoHeadphonesProtocol> {
@@ -74,29 +76,36 @@ public class OppoHeadphonesSupport extends AbstractHeadphoneSerialDeviceSupportV
 
     @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
-        builder.write(mDeviceProtocol.encodeDeviceInfoSet());
-        builder.write(mDeviceProtocol.encodeFirmwareVersionReq());
 
         final OppoHeadphonesCoordinator coordinator = (OppoHeadphonesCoordinator) getDevice().getDeviceCoordinator();
         final List<MiscConfigType> supportedMiscConfigs = new ArrayList<>();
+        final EnumSet<SubscriptionType> supportedSubscriptions = EnumSet.of(SubscriptionType.BATTERY);
         if (coordinator.supportsLdac(getDevice())) {
             supportedMiscConfigs.add(MiscConfigType.LDAC);
         }
+
         if (coordinator.supportsMultipoint(getDevice())) {
             supportedMiscConfigs.add(MiscConfigType.MULTIPOINT);
         }
+
         if (coordinator.supportsGameMode(getDevice())) {
             supportedMiscConfigs.add(MiscConfigType.GAME_MODE);
+            supportedSubscriptions.add(SubscriptionType.GAME_MODE);
         }
-        if (!supportedMiscConfigs.isEmpty()) {
-            builder.write(mDeviceProtocol.encodeMiscConfigReq(supportedMiscConfigs));
-        }
-        builder.write(mDeviceProtocol.encodeTouchConfigReq());
+
         if (coordinator.supportsAnc(getDevice())) {
             builder.write(mDeviceProtocol.encodeAncConfigReq(AncConfigType.MODE));
             builder.write(mDeviceProtocol.encodeAncConfigReq(AncConfigType.TOUCH_CYCLE_MODES));
+            supportedSubscriptions.add(SubscriptionType.ANC_SELECTOR);
         }
 
+        if (!supportedMiscConfigs.isEmpty()) {
+            builder.write(mDeviceProtocol.encodeMiscConfigReq(supportedMiscConfigs));
+        }
+
+        builder.write(mDeviceProtocol.encodeSubscriptionSet(supportedSubscriptions));
+        builder.write(mDeviceProtocol.encodeTouchConfigReq());
+        builder.write(mDeviceProtocol.encodeFirmwareVersionReq());
         builder.write(mDeviceProtocol.encodeBatteryReq());
         builder.setDeviceState(GBDevice.State.INITIALIZED);
         scheduleBatteryRequestRetry();

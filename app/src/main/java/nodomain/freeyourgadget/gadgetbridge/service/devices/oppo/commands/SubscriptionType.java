@@ -18,7 +18,7 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands;
 
 import androidx.annotation.Nullable;
 
-public enum DeviceInfoType {
+public enum SubscriptionType {
     BATTERY(0x01),
     STATUS(0x02),
     ANC_SELECTOR(0x03),
@@ -27,7 +27,7 @@ public enum DeviceInfoType {
 
     private final int code;
 
-    DeviceInfoType(final int code) {
+    SubscriptionType(final int code) {
         this.code = code;
     }
 
@@ -36,8 +36,8 @@ public enum DeviceInfoType {
     }
 
     @Nullable
-    public static DeviceInfoType fromCode(final int code) {
-        for (final DeviceInfoType param : DeviceInfoType.values()) {
+    public static SubscriptionType fromCode(final int code) {
+        for (final SubscriptionType param : SubscriptionType.values()) {
             if (param.code == code) {
                 return param;
             }
