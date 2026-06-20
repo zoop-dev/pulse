@@ -877,7 +877,7 @@
     <string name="companiondevice_pairing">Сполучення зі супутнім пристроєм</string>
     <string name="require_location_provider">Місцеперебування має бути ввімкнено</string>
     <string name="error_version_check_extreme_caution">УВАГА: Помилка під час перевірки інформації про версію! Вам не варто продовжувати! Виявлено версію «%s»</string>
-    <string name="permission_granting_mandatory">Усі ці дозволи є необхідними, а їхня відсутність може призвести до неналежної роботи</string>
+    <string name="permission_granting_mandatory">Ці дозволи обов\'язкові. Їхня відсутність може призвести до неналежної роботи</string>
     <string name="about_links">Посилання</string>
     <string name="about_additional_contributions">Щиро дякуємо всім невказаним учасникам за їхній внесок до коду, переклади, підтримку, ідеї, заохочення, повідомлення про помилки та фінансову допомогу… ✊</string>
     <string name="about_additional_device_support">Підтримка додаткових пристроїв</string>
@@ -1481,8 +1481,8 @@
     <string name="notification_channel_gps">Відстеження GPS</string>
     <string name="notification_gps_title">Gadgetbridge GPS</string>
     <string name="notification_gps_text">Надсилання GPS-місцеперебування на %1$d пристроїв</string>
-    <string name="permission_notification_listener">%1$s потребує доступу до сповіщень, щоб показувати їх на годиннику, коли екран вашого телефона вимкнено.\n\nНатисніть «%2$s», потім – «%1$s» та ввімкніть «Дозволити доступ до сповіщень», після чого натисніть «Назад», щоб повернутися до %1$s.</string>
-    <string name="permission_notification_policy_access">%1$s потребує доступу налаштувань режиму «Не турбувати», щоб дотримуватися їх на годиннику, коли екран вашого телефона вимкнено.\n\nНатисніть «%2$s», потім – «%1$s» та ввімкніть «Дозволити режим \"Не турбувати\"», після чого натисніть «Назад», щоб повернутися до %1$s.</string>
+    <string name="permission_notification_listener">%1$s потребує доступу до сповіщень, щоби показувати їх на годиннику, коли екран вашого телефона вимкнено.\n\nНатисніть «%2$s», потім – «%1$s» та ввімкніть «Дозволити доступ до сповіщень». Після цього натисніть «Назад», щоби повернутися до %1$s.</string>
+    <string name="permission_notification_policy_access">%1$s потребує доступу до режиму «Не турбувати», щоб дотримуватися його на годиннику, коли екран вашого телефона вимкнено.\n\nНатисніть «%2$s», потім – «%1$s» та ввімкніть «Дозволити режим \"Не турбувати\"». Після цього натисніть «Назад», щоби повернутися до %1$s.</string>
     <string name="pref_device_action_phone_gps_location_listener_stop">Зупинка відстеження GPS-розташування</string>
     <string name="portuguese_br">Португальська (Бразилія)</string>
     <string name="quick_alarm">Швидкий будильник</string>
@@ -1490,7 +1490,7 @@
     <string name="quick_alarm_description">Будильник із віджета</string>
     <string name="pref_title_banglejs_webview_url">URL-адреса завантажувача застосунків</string>
     <string name="pref_summary_banglejs_webview_url">Якщо ви хочете використовувати власний завантажувач застосунків, укажіть тут URL-адресу «https://…/android.html». В іншому випадку залиште порожнім для «https://banglejs.com/apps»</string>
-    <string name="permission_location">%1$s потребує доступу до місцеперебування у фоновому режимі, щоб підтримувати з\'єднання з годинником, навіть коли екран вашого телефона вимкнено.\n\nНа наступному екрані виберіть «%2$s», після чого натисніть «Назад», щоб повернутися до %1$s.</string>
+    <string name="permission_location">%1$s потребує доступу до місцеперебування у фоновому режимі, щоби підтримувати з\'єднання з годинником, навіть коли екран вашого телефона вимкнено.\n\nНа наступному екрані виберіть «%2$s», після чого натисніть «Назад», щоби повернутися до %1$s.</string>
     <string name="info_no_devices_connected">Немає підʼєднаних пристроїв</string>
     <string name="info_connected_count">Підʼєднано пристроїв: %d</string>
     <string name="bengali">Бенгальська</string>
@@ -2003,7 +2003,7 @@
     <string name="activity_prefs_goals">Цілі</string>
     <string name="error_no_bluetooth_scan">Для належної роботи виявлення потрібно надати й увімкнути доступ до виявлення через Bluetooth</string>
     <string name="error_no_bluetooth_connect">Для належної роботи виявлення потрібно надати й увімкнути доступ до зʼєднання через Bluetooth</string>
-    <string name="permission_request">%1$s дозволяє надсилати повідомлення та інші дані з Android на ваш пристрій. Для цього потрібен дозвіл на доступ до цих даних, без якого застосунок може працювати неналежним чином.\n\nЗараз з\'явиться кілька спливних вікон Android із запитом на ці дозволи.\n\nНатисніть «%2$s», щоб продовжити.</string>
+    <string name="permission_request">%1$s дозволяє надсилати повідомлення та інші дані з Android на ваш пристрій. Для цього потрібен дозвіл на доступ до них, інакше застосунок може працювати неналежним чином.\n\nЗараз з\'являться кілька спливних вікон Android із запитом на ці дозволи.\n\nНатисніть «%2$s», щоби продовжити.</string>
     <string name="withings_bt_calibration_next">Наступне</string>
     <string name="activity_type_surfing">Серфінг</string>
     <string name="activity_type_squash">Сквош</string>
