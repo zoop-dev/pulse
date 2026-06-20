@@ -164,6 +164,7 @@ public class BluetoothNameTest extends TestBase {
             put("realme Buds T110", DeviceType.REALME_BUDS_T110);
             put("realme Buds T200", DeviceType.REALME_BUDS_T200); // #6258
             put("realme Buds T300", DeviceType.REALME_BUDS_T300); // #6258
+            put("realme Buds Air6 Pro", DeviceType.REALME_BUDS_AIR_6_PRO);
             put("Redmi Smart Band 2 604D", DeviceType.REDMISMARTBAND2); // #3274
             put("vívosmart 5", DeviceType.GARMIN_VIVOSMART_5); // #3269
             put("Instinct Crossover", DeviceType.GARMIN_INSTINCT_CROSSOVER); // #3252

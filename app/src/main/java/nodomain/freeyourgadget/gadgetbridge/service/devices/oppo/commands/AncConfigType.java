@@ -18,45 +18,26 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands;
 
 import androidx.annotation.Nullable;
 
-public enum OppoCommand {
-    BATTERY_REQ(0x0106),
-    BATTERY_RET(0x8106),
-    SUBSCRIPTION_SET(0x0205),
-    SUBSCRIPTION_ACK(0x8205),
-    SUBSCRIPTION_RET(0x0204),
-    FIRMWARE_GET(0x0105),
-    FIRMWARE_RET(0x8105),
-    TOUCH_CONFIG_REQ(0x0108),
-    TOUCH_CONFIG_SET(0x0401),
-    TOUCH_CONFIG_RET(0x8108),
-    TOUCH_CONFIG_ACK(0x8401),
-    FIND_DEVICE_REQ(0x0400),
-    FIND_DEVICE_ACK(0x8400),
-    MISC_CONFIG_SET(0x0403),
-    MISC_CONFIG_REQ(0x010d),
-    MISC_CONFIG_ACK(0x8403),
-    MISC_CONFIG_RET(0x810d),
-    ANC_CONFIG_SET(0x0404),
-    ANC_CONFIG_REQ(0x010c),
-    ANC_CONFIG_ACK(0x8404),
-    ANC_CONFIG_RET(0x810c),
+public enum AncConfigType {
+    MODE(0x01),
+    TOUCH_CYCLE_MODES(0x02),
     ;
 
-    private final short code;
+    private final int code;
 
-    OppoCommand(final int code) {
-        this.code = (short) code;
+    AncConfigType(final int code) {
+        this.code = code;
     }
 
-    public short getCode() {
+    public int getCode() {
         return code;
     }
 
     @Nullable
-    public static OppoCommand fromCode(final short code) {
-        for (final OppoCommand cmd : OppoCommand.values()) {
-            if (cmd.code == code) {
-                return cmd;
+    public static AncConfigType fromCode(final int code) {
+        for (final AncConfigType param : AncConfigType.values()) {
+            if (param.code == code) {
+                return param;
             }
         }
 

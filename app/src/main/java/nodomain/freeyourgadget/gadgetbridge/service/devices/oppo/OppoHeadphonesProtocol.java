@@ -26,7 +26,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.EnumSet;
+import java.util.Set;
+import java.util.HashSet;
 
+import androidx.annotation.NonNull;
+
+import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
@@ -41,6 +47,10 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.OppoCo
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigSide;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigValue;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.MiscConfigType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.AncConfigType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.AncConfigValue;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.SubscriptionType;
 import nodomain.freeyourgadget.gadgetbridge.service.serial.GBDeviceProtocol;
 import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 
@@ -137,19 +147,11 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
                 events.addAll(parseBattery(payload));
                 break;
             }
-            case DEVICE_INFO: {
-                switch (payload[0]) {
-                    case 1: // battery
-                        events.addAll(parseBattery(payload));
-                        break;
-                    case 2: // status
-                        LOG.debug("Got status");
-                        // TODO handle
-                        break;
-                    default:
-                        LOG.warn("Unknown device info {}", payload[0]);
-                }
-
+            case SUBSCRIPTION_ACK:
+                LOG.debug("Got subscription ack, return={}", StringUtils.bytesToHex(payload));
+                break;
+            case SUBSCRIPTION_RET: {
+                events.addAll(parseSubscription(payload));
                 break;
             }
             case FIRMWARE_RET: {
@@ -157,126 +159,67 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
                     LOG.warn("Unexpected firmware ret {}", payload[0]);
                     break;
                 }
-
-                final String fwString;
-                if (payload[payload.length - 1] == 0) {
-                    fwString = new String(ArrayUtils.subarray(payload, 2, payload.length - 1)).strip();
-                } else {
-                    fwString = new String(ArrayUtils.subarray(payload, 2, payload.length)).strip();
-                }
-                final String[] parts = fwString.split(",");
-                if (parts.length % 3 != 0) {
-                    LOG.warn("Fw parts length {} from '{}' is not divisible by 3", parts.length, fwString);
-
-                    // We need to persist something, otherwise Gb misbehaves
-                    final GBDeviceEventVersionInfo eventVersionInfo = new GBDeviceEventVersionInfo();
-                    eventVersionInfo.fwVersion = fwString;
-                    eventVersionInfo.hwVersion = GBApplication.getContext().getString(R.string.n_a);
-                    events.add(eventVersionInfo);
-
-                    break;
-                }
-                final String[] fwVersionParts = new String[3];
-                for (int i = 0; i < parts.length; i += 3) {
-                    final String versionPart = parts[i];
-                    final String versionType = parts[i + 1];
-                    final String version = parts[i + 2];
-                    if (!"2".equals(versionType)) {
-                        continue; // not fw
-                    }
-
-                    switch (versionPart) {
-                        case "1":
-                            fwVersionParts[0] = version;
-                            break;
-                        case "2":
-                            fwVersionParts[1] = version;
-                            break;
-                        case "3":
-                            fwVersionParts[2] = version;
-                            break;
-                        default:
-                            LOG.warn("Unknown firmware version part {}", versionPart);
-                    }
-                }
-
-                final List<String> nonNullParts = new ArrayList<>(fwVersionParts.length);
-                for (int i = 0; i < fwVersionParts.length; i++) {
-                    if (fwVersionParts[i] == null) {
-                        continue;
-                    }
-                    nonNullParts.add(fwVersionParts[i]);
-                    if (fwVersionParts[i].contains(".")) {
-                        // Realme devices have the version already with the dots, repeated multiple times
-                        break;
-                    }
-                }
-                final String fwVersion = String.join(".", nonNullParts);
-
-                final GBDeviceEventVersionInfo eventVersionInfo = new GBDeviceEventVersionInfo();
-                eventVersionInfo.fwVersion = fwVersion;
-                eventVersionInfo.hwVersion = GBApplication.getContext().getString(R.string.n_a);
-                events.add(eventVersionInfo);
-
-                LOG.debug("Got fw version: {}", fwVersion);
-
+                events.addAll(parseFirmware(payload));
                 break;
             }
             case FIND_DEVICE_ACK: {
                 LOG.debug("Got find device ack, status={}", payload[0]);
                 break;
             }
+            case MISC_CONFIG_RET: {
+                if (payload[0] != 0) {
+                    LOG.warn("Unknown misc config ret {}", payload[0]);
+                    break;
+                }
+                if (payload.length < 3) {
+                    LOG.warn("Unexpected misc config ret payload size {}", payload.length);
+                    break;
+                }
+
+                events.add(parseMiscConfig(payload));
+                break;
+            }
+            case MISC_CONFIG_ACK: {
+                LOG.debug("Got misc config ack, status={}", payload[0]);
+                break;
+            }
             case TOUCH_CONFIG_RET: {
                 if (payload[0] != 0) {
-                    LOG.warn("Unknown config ret {}", payload[0]);
+                    LOG.warn("Unknown touch config ret {}", payload[0]);
                     break;
                 }
                 if ((payload.length - 2) % 4 != 0) {
-                    LOG.warn("Unexpected config ret payload size {}", payload.length);
+                    LOG.warn("Unexpected touch config ret payload size {}", payload.length);
                     break;
                 }
 
-                final GBDeviceEventUpdatePreferences eventUpdatePreferences = new GBDeviceEventUpdatePreferences();
-
-                for (int i = 2; i < payload.length; i += 4) {
-                    final int sideCode = payload[i] & 0xff;
-                    final int typeCode = BLETypeConversions.toUint16(payload, i + 1);
-                    final int valueCode = payload[i + 3] & 0xff;
-                    final TouchConfigSide side = TouchConfigSide.fromCode(sideCode);
-                    final TouchConfigType type = TouchConfigType.fromCode(typeCode);
-                    final TouchConfigValue value = TouchConfigValue.fromCode(valueCode);
-
-                    if (side == null) {
-                        LOG.warn("Unknown touch side code {}", sideCode);
-                        continue;
-                    }
-                    if (type == null) {
-                        LOG.warn("Unknown touch type code {}", typeCode);
-                        continue;
-                    }
-                    if (value == null) {
-                        LOG.warn("Unknown touch value code {}", valueCode);
-                        continue;
-                    }
-
-                    LOG.debug("Got touch config for {} {} = {}", side, type, value);
-
-                    eventUpdatePreferences.withPreference(
-                            OppoHeadphonesPreferences.getKey(side, type),
-                            value.name().toLowerCase(Locale.ROOT)
-                    );
-                }
-
-                events.add(eventUpdatePreferences);
-
+                events.add(parseTouchConfig(payload));
                 break;
             }
             case TOUCH_CONFIG_ACK: {
-                LOG.debug("Got config ack, status={}", payload[0]);
+                LOG.debug("Got touch config ack, status={}", payload[0]);
                 break;
             }
-            default:
+            case ANC_CONFIG_RET: {
+                if (payload[0] != 0) {
+                    LOG.warn("Unknown anc config ret {}", payload[0]);
+                    break;
+                }
+                if (payload.length < 3) {
+                    LOG.warn("Unexpected anc config ret payload size {}", payload.length);
+                    break;
+                }
+
+                events.add(parseAncConfig(payload));
+                break;
+            }
+            case ANC_CONFIG_ACK: {
+                LOG.debug("Got anc config ack, status={}", payload[0]);
+                break;
+            }
+            default: {
                 LOG.warn("Unhandled command {}", command);
+            }
         }
 
         return events;
@@ -297,6 +240,10 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
             }
 
             final int batteryLevel = payload[i + 1] & 0x7f;
+            if (batteryIndex == 2 && batteryLevel == 0) {
+                continue;
+            }
+
             final BatteryState batteryState = (payload[i + 1] & 0x80) != 0 ? BatteryState.BATTERY_CHARGING : BatteryState.BATTERY_NORMAL;
 
             LOG.debug("Got battery {}: {}%, {}", batteryIndex, batteryLevel, batteryState);
@@ -308,7 +255,262 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
             events.add(eventBatteryInfo);
         }
 
+        List<Integer> processedBatteries = events.stream()
+            .map(event -> ((GBDeviceEventBatteryInfo) event).batteryIndex)
+            .toList();
+
+        for (int i = 0; i < 3; i++) {
+            if (processedBatteries.contains(i)) {
+                continue;
+            }
+            
+            final GBDeviceEventBatteryInfo eventBatteryInfo = new GBDeviceEventBatteryInfo();
+            eventBatteryInfo.batteryIndex = i;
+            eventBatteryInfo.level = -1;
+            eventBatteryInfo.state = BatteryState.UNKNOWN;
+            events.add(eventBatteryInfo);
+        }
+
         return events;
+    }
+
+    private static List<GBDeviceEvent> parseFirmware(final byte[] payload) {
+        final List<GBDeviceEvent> events = new ArrayList<>();
+
+        final String fwString;
+        if (payload[payload.length - 1] == 0) {
+            fwString = new String(ArrayUtils.subarray(payload, 2, payload.length - 1)).strip();
+        } else {
+            fwString = new String(ArrayUtils.subarray(payload, 2, payload.length)).strip();
+        }
+        final String[] parts = fwString.split(",");
+        if (parts.length % 3 != 0) {
+            LOG.warn("Fw parts length {} from '{}' is not divisible by 3", parts.length, fwString);
+
+            // We need to persist something, otherwise Gb misbehaves
+            final GBDeviceEventVersionInfo eventVersionInfo = new GBDeviceEventVersionInfo();
+            eventVersionInfo.fwVersion = fwString;
+            eventVersionInfo.hwVersion = GBApplication.getContext().getString(R.string.n_a);
+            events.add(eventVersionInfo);
+
+            return events;
+        }
+        final String[] fwVersionParts = new String[3];
+        for (int i = 0; i < parts.length; i += 3) {
+            final String versionPart = parts[i];
+            final String versionType = parts[i + 1];
+            final String version = parts[i + 2];
+            if (!"2".equals(versionType)) {
+                continue; // not fw
+            }
+
+            switch (versionPart) {
+                case "1":
+                    fwVersionParts[0] = version;
+                    break;
+                case "2":
+                    fwVersionParts[1] = version;
+                    break;
+                case "3":
+                    fwVersionParts[2] = version;
+                    break;
+                default:
+                    LOG.warn("Unknown firmware version part {}", versionPart);
+            }
+        }
+
+        final List<String> nonNullParts = new ArrayList<>(fwVersionParts.length);
+        for (int i = 0; i < fwVersionParts.length; i++) {
+            if (fwVersionParts[i] == null) {
+                continue;
+            }
+            nonNullParts.add(fwVersionParts[i]);
+            if (fwVersionParts[i].contains(".")) {
+                // Realme devices have the version already with the dots, repeated multiple times
+                break;
+            }
+        }
+        final String fwVersion = String.join(".", nonNullParts);
+
+        final GBDeviceEventVersionInfo eventVersionInfo = new GBDeviceEventVersionInfo();
+        eventVersionInfo.fwVersion = fwVersion;
+        eventVersionInfo.hwVersion = GBApplication.getContext().getString(R.string.n_a);
+        events.add(eventVersionInfo);
+
+        LOG.debug("Got fw version: {}", fwVersion);
+        return events;
+    }
+
+
+    private static List<GBDeviceEvent> parseSubscription(final byte[] payload) {
+        final List<GBDeviceEvent> events = new ArrayList<>();
+        final int typeCode = payload[0] & 0xff;
+        final SubscriptionType type = SubscriptionType.fromCode(typeCode);
+        if (type == null) {
+            LOG.warn("Unknown subcription type {}", String.format(Locale.ROOT, "0x%02x", typeCode));
+            return events;
+        }
+
+        final GBDeviceEventUpdatePreferences eventUpdatePreferences = new GBDeviceEventUpdatePreferences();
+        switch (type) {
+            case BATTERY: {
+                events.addAll(parseBattery(payload));
+                break;
+            }
+            case STATUS: {
+                LOG.debug("Got status");
+                // TODO handle
+                break;
+            }
+            case ANC_SELECTOR: {
+                final int valueCode = payload[2] & 0xFF;
+                final AncConfigValue mode = AncConfigValue.fromCode(valueCode);
+                if (mode == null) {
+                    LOG.warn("Unknown anc mode code {}", valueCode);
+                }
+                LOG.debug("Got anc config for MODE = {}", mode);
+                eventUpdatePreferences.withPreference(
+                    OppoHeadphonesPreferences.ANC_SELECTOR,
+                    mode.getPrefId()
+                );
+                events.add(eventUpdatePreferences);
+                break;
+            }
+            case GAME_MODE: {
+                final boolean isEnabled = ((payload[1] & 0xFF) == 0x01);
+                LOG.debug("Got misc config for GAME_MODE = {}", isEnabled);
+                eventUpdatePreferences.withPreference(
+                    OppoHeadphonesPreferences.GAME_MODE,
+                    isEnabled
+                );
+                events.add(eventUpdatePreferences);
+                break;
+            }
+            default: {
+                LOG.warn("Unhandled subscription type {}", type);
+                break;
+            }
+        }
+        return events;
+    }
+
+    private static GBDeviceEvent parseMiscConfig(final byte[] payload) {
+        final GBDeviceEventUpdatePreferences eventUpdatePreferences = new GBDeviceEventUpdatePreferences();
+        for (int i = 2; i + 1 < payload.length; i += 2) {
+            final int typeCode = payload[i] & 0xff;
+            final int valueCode = payload[i + 1] & 0xff;
+
+            final MiscConfigType type = MiscConfigType.fromCode(typeCode);
+            if (type == null) {
+                LOG.warn("Unknown misc config type code {}", typeCode);
+                continue;
+            }
+
+            final boolean isEnabled = (valueCode == 1);
+            switch (type) {
+                case LDAC:
+                    LOG.debug("Got misc config for LDAC = {}", isEnabled);
+                    eventUpdatePreferences.withPreference(
+                        OppoHeadphonesPreferences.LDAC,
+                        isEnabled
+                    );
+                    break;
+                case MULTIPOINT:
+                    LOG.debug("Got misc config for MULTIPOINT = {}", isEnabled);
+                    eventUpdatePreferences.withPreference(
+                        OppoHeadphonesPreferences.MULTIPOINT,
+                        isEnabled
+                    );
+                    break;
+                case GAME_MODE:
+                    LOG.debug("Got misc config for GAME_MODE = {}", isEnabled);
+                    eventUpdatePreferences.withPreference(
+                        OppoHeadphonesPreferences.GAME_MODE,
+                        isEnabled
+                    );
+                    break;
+                default:
+                    LOG.warn("Unknown misc config type code {}", typeCode);
+                    break;
+            }
+        }
+        return eventUpdatePreferences; 
+    }
+
+    private static GBDeviceEvent parseTouchConfig(final byte[] payload) {
+        final GBDeviceEventUpdatePreferences eventUpdatePreferences = new GBDeviceEventUpdatePreferences();
+
+        for (int i = 2; i < payload.length; i += 4) {
+            final int sideCode = payload[i] & 0xff;
+            final int typeCode = BLETypeConversions.toUint16(payload, i + 1);
+            final int valueCode = payload[i + 3] & 0xff;
+            final TouchConfigSide side = TouchConfigSide.fromCode(sideCode);
+            final TouchConfigType type = TouchConfigType.fromCode(typeCode);
+            final TouchConfigValue value = TouchConfigValue.fromCode(valueCode);
+
+            if (side == null) {
+                LOG.warn("Unknown touch side code {}", sideCode);
+                continue;
+            }
+            if (type == null) {
+                LOG.warn("Unknown touch type code {}", typeCode);
+                continue;
+            }
+            if (value == null) {
+                LOG.warn("Unknown touch value code {}", valueCode);
+                continue;
+            }
+
+            LOG.debug("Got touch config for {} {} = {}", side, type, value);
+
+            eventUpdatePreferences.withPreference(
+                    OppoHeadphonesPreferences.getTouchKey(side, type),
+                    value.name().toLowerCase(Locale.ROOT)
+            );
+        }
+        return eventUpdatePreferences; 
+    }
+
+    private static GBDeviceEvent parseAncConfig(final byte[] payload) {
+        final GBDeviceEventUpdatePreferences event = new GBDeviceEventUpdatePreferences();
+
+        final int typeCode = payload[1] & 0xff;
+        final int valueCode = payload[3] & 0xff;
+
+        final AncConfigType type = AncConfigType.fromCode(typeCode);
+        if (type == null) {
+            LOG.warn("Unknown anc type code {}", typeCode);
+            return event;
+        }
+
+        switch (type) {
+            case MODE: {
+                final AncConfigValue mode = AncConfigValue.fromCode(valueCode);
+                if (mode == null) {
+                    LOG.warn("Unknown anc mode code {}", valueCode);
+                    break;
+                }
+
+                LOG.debug("Got anc config for {} = {}", type, mode);
+                event.withPreference(OppoHeadphonesPreferences.ANC_SELECTOR, mode.getPrefId());
+                break;
+            }
+            case TOUCH_CYCLE_MODES: {
+                final EnumSet<AncConfigValue> modes = AncConfigValue.fromMask(valueCode);
+                if (!modes.isEmpty()) {
+                    final Set<String> prefIds = AncConfigValue.toPrefIds(modes);
+
+                    LOG.debug("Got anc config for {} = {}", type, prefIds);
+                    event.withPreference(OppoHeadphonesPreferences.ANC_TOUCH_CYCLE_MODES, prefIds);
+                }
+                break;
+            }
+            default: {
+                LOG.debug("Unknown anc type code {}", typeCode);
+                break;
+            }
+        }
+        return event;
     }
 
     @Override
@@ -325,11 +527,11 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
     public byte[] encodeSendConfiguration(final String config) {
         final DevicePrefs prefs = getDevicePrefs();
 
-        if (config.startsWith("oppo_touch__")) {
+        if (config.startsWith(OppoHeadphonesPreferences.TOUCH_PREFIX)) {
             final String[] parts = config.split("__");
             final TouchConfigSide side = TouchConfigSide.valueOf(parts[1].toUpperCase(Locale.ROOT));
             final TouchConfigType type = TouchConfigType.valueOf(parts[2].toUpperCase(Locale.ROOT));
-            final String valueCode = prefs.getString(OppoHeadphonesPreferences.getKey(side, type), null);
+            final String valueCode = prefs.getString(OppoHeadphonesPreferences.getTouchKey(side, type), null);
             if (valueCode == null) {
                 LOG.warn("Failed to get touch option value for {}/{}", side, type);
                 return super.encodeSendConfiguration(config);
@@ -338,14 +540,48 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
             final TouchConfigValue value = TouchConfigValue.valueOf(valueCode.toUpperCase(Locale.ROOT));
 
             LOG.debug("Sending {} {} = {}", side, type, value);
+            return encodeTouchConfigSet(side, type, value);
+        }
 
-            final ByteBuffer buf = ByteBuffer.allocate(5).order(ByteOrder.LITTLE_ENDIAN);
-            buf.put((byte) 0x01);
-            buf.put((byte) side.getCode());
-            buf.putShort((short) type.getCode());
-            buf.put((byte) value.getCode());
+        if (config.equals(OppoHeadphonesPreferences.LDAC)) {
+            final boolean value = prefs.getBoolean(OppoHeadphonesPreferences.LDAC, false);
+            LOG.debug("Sending ldac = {}", value);
+            return encodeLdacSet(value);
+        }
 
-            return encodeMessage(OppoCommand.TOUCH_CONFIG_SET, buf.array());
+        if (config.equals(OppoHeadphonesPreferences.MULTIPOINT)) {
+            final boolean value = prefs.getBoolean(OppoHeadphonesPreferences.MULTIPOINT, false);
+            LOG.debug("Sending multipoint = {}", value);
+            return encodeMultipointSet(value);
+        }
+
+        if (config.equals(OppoHeadphonesPreferences.GAME_MODE)) {
+            final boolean value = prefs.getBoolean(OppoHeadphonesPreferences.GAME_MODE, false);
+            LOG.debug("Sending game mode = {}", value);
+            return encodeGameModeSet(value);
+        }
+
+        if (config.equals(OppoHeadphonesPreferences.ANC_SELECTOR)) {
+            final String prefId = prefs.getString(OppoHeadphonesPreferences.ANC_SELECTOR, "0");
+            AncConfigValue mode = AncConfigValue.fromPrefId(prefId);
+            if (mode == null) {
+                LOG.debug("Unknown ANC prefId = \"{}\"", prefId);
+                mode = AncConfigValue.OFF;
+            } 
+            LOG.debug("Sending ANC mode = {}", mode);
+            return encodeAncModeSet(mode);
+        }
+
+        if (config.equals(OppoHeadphonesPreferences.ANC_TOUCH_CYCLE_MODES)) {
+            final Set<String> prefIds = prefs.getStringSet(OppoHeadphonesPreferences.ANC_TOUCH_CYCLE_MODES, Collections.emptySet());
+            final EnumSet<AncConfigValue> modes = AncConfigValue.fromPrefIds(prefIds);
+            if (modes.size() < 2) {
+                LOG.warn("ANC cycle must contain at least 2 modes. Current selection: {}", modes);
+                return super.encodeSendConfiguration(config);
+            }
+
+            LOG.debug("Sending ANC touch cycle modes = {}", modes);
+            return encodeAncTouchCycleModesSet(modes);
         }
 
         return super.encodeSendConfiguration(config);
@@ -355,8 +591,102 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
         return encodeMessage(OppoCommand.BATTERY_REQ, new byte[0]);
     }
 
-    public byte[] encodeConfigurationReq() {
+    private byte[] encodeTouchConfigSet(final TouchConfigSide side, final TouchConfigType type, final TouchConfigValue value) {
+        final ByteBuffer buf = ByteBuffer.allocate(5).order(ByteOrder.LITTLE_ENDIAN);
+        buf.put((byte) 0x01);
+        buf.put((byte) side.getCode());
+        buf.putShort((short) type.getCode());
+        buf.put((byte) value.getCode());
+        return encodeMessage(OppoCommand.TOUCH_CONFIG_SET, buf.array());
+    }
+
+    public byte[] encodeTouchConfigReq() {
         return encodeMessage(OppoCommand.TOUCH_CONFIG_REQ, new byte[]{0x02, 0x03, 0x01});
+    }
+
+    public byte[] encodeLdacSet(final boolean enable) {
+        final byte[] payload = new byte[] {
+            (byte) (enable ? 0x01 : 0x00)
+        };
+        return encodeMiscConfigSet(MiscConfigType.LDAC, payload);
+    }
+
+    public byte[] encodeGameModeSet(final boolean enable) {
+        final byte[] payload = new byte[] {
+            (byte) (enable ? 0x01 : 0x00)
+        };
+        return encodeMiscConfigSet(MiscConfigType.GAME_MODE, payload);
+    }
+
+    public byte[] encodeMultipointSet(final boolean enable) {
+        final byte[] payload = new byte[] {
+            (byte) (enable ? 0x01 : 0x00)
+        };
+        return encodeMiscConfigSet(MiscConfigType.MULTIPOINT, payload);
+    }
+
+    private byte[] encodeMiscConfigSet(final MiscConfigType type, final byte[] value) {
+        final byte[] payload = new byte[1 + value.length];
+        payload[0] = (byte) type.getCode();
+        System.arraycopy(value, 0, payload, 1, value.length);
+        return encodeMessage(OppoCommand.MISC_CONFIG_SET, payload);
+    }
+
+    public byte[] encodeMiscConfigReq(List<MiscConfigType> types) {
+        if (types == null || types.isEmpty()) {
+            return encodeMessage(OppoCommand.MISC_CONFIG_REQ, new byte[]{0x00});
+        }
+
+        byte[] payload = new byte[1 + types.size()];
+        payload[0] = (byte) types.size();
+
+        for (int i = 0; i < types.size(); i++) {
+            payload[i + 1] = (byte) types.get(i).getCode();
+        }
+        return encodeMessage(OppoCommand.MISC_CONFIG_REQ, payload);
+    }
+
+    public byte[] encodeAncModeSet(final AncConfigValue mode) {
+        final byte[] payload = new byte[] {
+            (byte) AncConfigType.MODE.getCode(),
+            (byte) 0x01,
+            (byte) mode.getCode()
+        };
+        return encodeMessage(OppoCommand.ANC_CONFIG_SET, payload);
+    }
+
+    public byte[] encodeAncTouchCycleModesSet(final EnumSet<AncConfigValue> modes) {
+        final int mask = AncConfigValue.toMask(modes);
+        final byte[] payload = new byte[] {
+            (byte) AncConfigType.TOUCH_CYCLE_MODES.getCode(),
+            (byte) 0x01,
+            (byte) mask 
+        };
+        return encodeMessage(OppoCommand.ANC_CONFIG_SET, payload);
+    }
+
+    public byte[] encodeAncConfigReq(final AncConfigType type) {
+        final byte[] payload = new byte[] {
+            (byte) type.getCode(),
+            (byte) 0x01,
+        };
+        return encodeMessage(OppoCommand.ANC_CONFIG_REQ, payload);
+    }
+
+    public byte[] encodeSubscriptionSet(@NonNull final EnumSet<SubscriptionType> subscriptions) {
+        if (subscriptions.isEmpty()) {
+            throw new IllegalArgumentException("Subscription list cannot be empty");
+        }
+
+        byte[] payload = new byte[1 + subscriptions.size()];
+        payload[0] = (byte) 0x09;
+
+        int i = 1;
+        for (SubscriptionType type : subscriptions) {
+            payload[i++] = (byte) type.getCode();
+        }
+
+        return encodeMessage(OppoCommand.SUBSCRIPTION_SET, payload);
     }
 
     private byte[] encodeMessage(final OppoCommand command, final byte[] payload) {

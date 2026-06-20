@@ -76,12 +76,39 @@ public abstract class OppoHeadphonesCoordinator extends AbstractBLClassicDeviceC
         settings.addRootScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS);
         settings.addSubScreen(DeviceSpecificSettingsScreen.CALLS_AND_NOTIFICATIONS, R.xml.devicesettings_headphones);
 
+        if (this.supportsLdac(device) || this.supportsAnc(device)) {
+            settings.addRootScreen(DeviceSpecificSettingsScreen.AUDIO);
+            if (this.supportsLdac(device)) {
+                settings.addSubScreen(DeviceSpecificSettingsScreen.AUDIO, R.xml.devicesettings_ldac_toggle);
+            }
+            if (this.supportsAnc(device)) {
+                settings.addSubScreen(DeviceSpecificSettingsScreen.AUDIO, R.xml.devicesettings_onemore_noise_control_selector);
+                settings.addSubScreen(DeviceSpecificSettingsScreen.TOUCH_OPTIONS, R.xml.devicesettings_oppo_headphones_touch_options_anc);
+            }
+        }
+
+        if (this.supportsMultipoint(device) || this.supportsGameMode(device)) {
+            settings.addRootScreen(DeviceSpecificSettingsScreen.CONNECTION);
+            if (this.supportsMultipoint(device)) {
+                settings.addSubScreen(DeviceSpecificSettingsScreen.CONNECTION, R.xml.devicesettings_oppo_headphones_multipoint);
+            }
+            if (this.supportsGameMode(device)) {
+                settings.addSubScreen(DeviceSpecificSettingsScreen.CONNECTION, R.xml.devicesettings_oppo_headphones_game_mode);
+            }
+        }
+
         return settings;
     }
 
     @Override
     public DeviceSpecificSettingsCustomizer getDeviceSpecificSettingsCustomizer(final GBDevice device) {
-        return new OppoHeadphonesSettingsCustomizer(getTouchOptions());
+        return new OppoHeadphonesSettingsCustomizer(
+            getTouchOptions(),
+            supportsLdac(device),
+            supportsMultipoint(device),
+            supportsGameMode(device),
+            supportsAnc(device)
+        );
     }
 
     protected abstract Map<Pair<TouchConfigSide, TouchConfigType>, List<TouchConfigValue>> getTouchOptions();
@@ -89,5 +116,21 @@ public abstract class OppoHeadphonesCoordinator extends AbstractBLClassicDeviceC
     @Override
     public final DeviceKind getDeviceKind(@NonNull GBDevice device) {
         return DeviceKind.EARBUDS;
+    }
+
+    public boolean supportsLdac(@NonNull GBDevice device) {
+        return false;
+    }
+
+    public boolean supportsMultipoint(@NonNull GBDevice device) {
+        return false;
+    }
+
+    public boolean supportsGameMode(@NonNull GBDevice device) {
+        return false;
+    }
+
+    public boolean supportsAnc(@NonNull GBDevice device) {
+        return false;
     }
 }

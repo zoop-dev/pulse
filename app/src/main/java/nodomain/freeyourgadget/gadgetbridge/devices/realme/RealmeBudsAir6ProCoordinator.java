@@ -33,10 +33,10 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchC
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigValue;
 
-public class RealmeBudsT200Coordinator extends OppoHeadphonesCoordinator {
+public class RealmeBudsAir6ProCoordinator extends OppoHeadphonesCoordinator {
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("realme Buds T200", Pattern.LITERAL);
+        return Pattern.compile("realme Buds Air6 Pro", Pattern.LITERAL);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class RealmeBudsT200Coordinator extends OppoHeadphonesCoordinator {
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_realme_buds_t200;
+        return R.string.devicetype_realme_buds_air_6_pro;
     }
 
     @Override

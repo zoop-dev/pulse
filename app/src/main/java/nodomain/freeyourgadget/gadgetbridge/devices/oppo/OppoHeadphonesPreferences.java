@@ -22,10 +22,19 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchC
 import nodomain.freeyourgadget.gadgetbridge.service.devices.oppo.commands.TouchConfigType;
 
 public class OppoHeadphonesPreferences {
-    public static String getKey(final TouchConfigSide side, final TouchConfigType type) {
+    public static final String TOUCH_PREFIX = "oppo_touch__";
+
+    public static final String LDAC = "pref_soundcore_ldac_mode";
+    public static final String MULTIPOINT = "oppo_multipoint";
+    public static final String GAME_MODE = "oppo_game_mode";
+    public static final String ANC_SELECTOR = "noise_control_selector";
+    public static final String ANC_TOUCH_CYCLE_MODES = "oppo_touch_anc_cycle_modes";
+
+    public static String getTouchKey(final TouchConfigSide side, final TouchConfigType type) {
         return String.format(
                 Locale.ROOT,
-                "oppo_touch__%s__%s",
+                "%s%s__%s",
+                TOUCH_PREFIX,
                 side.name().toLowerCase(Locale.ROOT),
                 type.name().toLowerCase(Locale.ROOT)
         );
