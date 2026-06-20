@@ -186,6 +186,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.vivosport.Gar
 import nodomain.freeyourgadget.gadgetbridge.devices.generic_headphones.GenericHeadphonesCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.generic_hr.GenericHeartRateCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.generic_scale.GenericWeightScaleCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.BlackviewR3MaxCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.D3Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.DotnP66DCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.HaylouWatch2ProCoordinator;
@@ -909,6 +910,7 @@ public enum DeviceType {
     OPPO_ENCO_AIR2(OppoEncoAir2Coordinator.class),
     OPPO_ENCO_BUDS2(OppoEncoBuds2Coordinator.class),
     OUKITEL_BT103(OukitelBT103Coordinator.class),
+    BLACKVIEW_R3MAX(BlackviewR3MaxCoordinator.class),
     DOTN_P66D(DotnP66DCoordinator.class),
     QECNATO_S10(QecnatoS10Coordinator.class),
     R1(R1Coordinator.class),

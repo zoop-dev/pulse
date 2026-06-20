@@ -45,6 +45,7 @@ public class BluetoothNameTest extends TestBase {
             put("Y6(ID-28A8)", DeviceType.Y6); // #3949
             put("Y66(ID-AB01)", DeviceType.Y66);
             put("D3(ID-417F)", DeviceType.D3);
+            put("R3Max(ID-FC45)", DeviceType.BLACKVIEW_R3MAX); // matrix
             put("S10", DeviceType.QECNATO_S10);
             put("S52", DeviceType.S52);
             put("ZL02D", DeviceType.ZL02D);
