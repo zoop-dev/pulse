@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 import java.nio.file.Files
 
 plugins {
@@ -87,6 +89,12 @@ java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)
 }
 
+kotlin {
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_17
+    }
+}
+
 android {
     compileOptions {
         coreLibraryDesugaringEnabled = true
@@ -94,13 +102,13 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17
-    }
-
     namespace = 'nodomain.freeyourgadget.gadgetbridge'
-    compileSdk = 36
-    buildToolsVersion = '36.0.0'
+    compileSdk {
+        version = release(36) {
+            it.minorApiLevel = 1
+        }
+    }
+    buildToolsVersion = '36.1.0'
 
     defaultConfig {
         applicationId "nodomain.freeyourgadget.gadgetbridge"
