@@ -345,10 +345,11 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
         final int typeCode = payload[0] & 0xff;
         final DeviceInfoType type = DeviceInfoType.fromCode(typeCode);
         if (type == null) {
-            LOG.warn("Unknown device info {}", payload[0]);
+            LOG.warn("Unknown device info {}", String.format(Locale.ROOT, "0x%02x", typeCode));
             return events;
         }
 
+        final GBDeviceEventUpdatePreferences eventUpdatePreferences = new GBDeviceEventUpdatePreferences();
         switch (type) {
             case BATTERY: {
                 events.addAll(parseBattery(payload));
@@ -359,8 +360,18 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
                 // TODO handle
                 break;
             }
+            case GAME_MODE: {
+                final boolean isEnabled = ((payload[1] & 0xFF) == 0x01);
+                LOG.debug("Got misc config for GAME_MODE = {}", isEnabled);
+                eventUpdatePreferences.withPreference(
+                    OppoHeadphonesPreferences.GAME_MODE,
+                    isEnabled
+                );
+                events.add(eventUpdatePreferences);
+                break;
+            }
             default: {
-                LOG.warn("Unknown device info {}", payload[0]);
+                LOG.warn("Unhandled device info type {}", type);
                 break;
             }
         }
