@@ -360,6 +360,20 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
                 // TODO handle
                 break;
             }
+            case ANC_SELECTOR: {
+                final int valueCode = payload[2] & 0xFF;
+                final AncConfigValue mode = AncConfigValue.fromCode(valueCode);
+                if (mode == null) {
+                    LOG.warn("Unknown anc mode code {}", valueCode);
+                }
+                LOG.debug("Got anc config for MODE = {}", mode);
+                eventUpdatePreferences.withPreference(
+                    OppoHeadphonesPreferences.ANC_SELECTOR,
+                    mode.getPrefId()
+                );
+                events.add(eventUpdatePreferences);
+                break;
+            }
             case GAME_MODE: {
                 final boolean isEnabled = ((payload[1] & 0xFF) == 0x01);
                 LOG.debug("Got misc config for GAME_MODE = {}", isEnabled);
@@ -389,7 +403,7 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
                 LOG.warn("Unknown misc config type code {}", typeCode);
                 continue;
             }
-            
+
             final boolean isEnabled = (valueCode == 1);
             switch (type) {
                 case LDAC:
@@ -470,12 +484,13 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
         switch (type) {
             case MODE: {
                 final AncConfigValue mode = AncConfigValue.fromCode(valueCode);
-                if (mode != null) {
-                    LOG.debug("Got anc config for {} = {}", type, mode);
-                    event.withPreference(OppoHeadphonesPreferences.ANC_SELECTOR, mode.getPrefId());
-                } else {
+                if (mode == null) {
                     LOG.warn("Unknown anc mode code {}", valueCode);
+                    break;
                 }
+
+                LOG.debug("Got anc config for {} = {}", type, mode);
+                event.withPreference(OppoHeadphonesPreferences.ANC_SELECTOR, mode.getPrefId());
                 break;
             }
             case TOUCH_CYCLE_MODES: {
@@ -660,6 +675,7 @@ public class OppoHeadphonesProtocol extends GBDeviceProtocol {
         final byte[] payload = new byte[] {
             (byte) 0x09,
             (byte) DeviceInfoType.BATTERY.getCode(),
+            (byte) DeviceInfoType.ANC_SELECTOR.getCode(),
             (byte) DeviceInfoType.GAME_MODE.getCode(),
         };
         return encodeMessage(OppoCommand.DEVICE_INFO_SET, payload);
