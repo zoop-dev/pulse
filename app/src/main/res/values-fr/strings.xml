@@ -4353,7 +4353,7 @@
     <string name="prefs_device_id">ID de l\'appareil</string>
     <string name="persisting_samples_failed">Erreur d\'enregistrement des échantillons : %1$s</string>
     <string name="activity_type_adventure_race">Course d\'aventure</string>
-    <string name="training_chronic_load"></string>
+    <string name="training_chronic_load"/>
     <string name="task_installing_route">Installation de l\'itinéraire</string>
     <string name="route_upload_completed">Téléversement de l\'itinéraire terminé</string>
     <string name="route_upload_failed">Échec de téléversement de l\'itinéraire</string>
