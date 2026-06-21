@@ -100,6 +100,7 @@ public enum ZeppOsActivityType {
     ModernDance(0xb9, ActivityKind.MODERN_DANCE),
     MuayThai(0x65, ActivityKind.MUAY_THAI),
     OutdoorCycling(0x04, ActivityKind.OUTDOOR_CYCLING),
+    OutdoorCycling6324(0x0a, ActivityKind.OUTDOOR_CYCLING),
     OutdoorHiking(0x0f, ActivityKind.HIKING),
     OutdoorRunning(0x01, ActivityKind.OUTDOOR_RUNNING),
     OutdoorSwimming(0x07, ActivityKind.SWIMMING_OPENWATER),
