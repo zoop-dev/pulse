@@ -57,7 +57,7 @@ message FileListRequest {
 message FileListResponse {
   optional uint32 unk1 = 1; // 0
   optional uint32 unk2 = 2; // 2 on venu 4
-  optional uint32 next_page_id = 3; // 33737, incrementiong
+  optional uint32 next_page_id = 3; // 33737, incrementing
   repeated File file = 4;
   optional uint32 unk6 = 6; // 1 on venu 4
 }

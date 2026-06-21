@@ -676,21 +676,27 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     private void sendOutgoingMessage(final String taskName, final GFDIMessage message) {
         if (message == null)
             return;
-        if (message.getOutgoingMessage() != null)
-            LOG.debug("OUTGOING message {}: {}", message, GB.hexdump(message.getOutgoingMessage()));
+        byte[] out = message.getOutgoingMessage();
+        if (out != null && LOG.isDebugEnabled())
+            LOG.debug("OUTGOING message {}: {}", message, GB.hexdump(out));
         if (communicator == null) {
-            LOG.error("communicator is null");
+            LOG.error("outgoing communicator is null");
             return;
         }
-        communicator.sendMessage(taskName, message.getOutgoingMessage());
+        communicator.sendMessage(taskName, out);
     }
 
     private void sendAck(final String taskName, final GFDIMessage message) {
         if (message == null)
             return;
-        if (message.getAckBytestream() != null)
-            LOG.debug("OUTGOING ACK {}: {}", message, GB.hexdump(message.getAckBytestream()));
-        communicator.sendMessage(taskName, message.getAckBytestream());
+        byte[] ack = message.getAckBytestream();
+        if (ack != null  && LOG.isDebugEnabled())
+            LOG.debug("OUTGOING ACK {}: {}", message, GB.hexdump(ack));
+        if (communicator == null) {
+            LOG.error("ack communicator is null");
+            return;
+        }
+        communicator.sendMessage(taskName, ack);
     }
 
     private void sendWeatherConditions(WeatherSpec weather) {
