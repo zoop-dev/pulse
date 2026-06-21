@@ -23,7 +23,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -41,16 +40,22 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import de.greenrobot.dao.query.QueryBuilder;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBAccess;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
+import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.AbstractActivitySample;
+import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
+import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao;
+import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySession;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
 import nodomain.freeyourgadget.gadgetbridge.util.DateTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.FormatUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.dialogs.MaterialDialogFragment;
@@ -117,7 +122,7 @@ public class ActivityListingDashboard extends MaterialDialogFragment {
         if (!activity_list_debug_extra_time_range_value) {
             battery_status_time_span_seekbar.setMax(3);
         }
-        final TextView battery_status_time_span_text = (TextView) getView().findViewById(R.id.battery_status_time_span_text);
+        final TextView battery_status_time_span_text = getView().findViewById(R.id.battery_status_time_span_text);
 
         battery_status_time_span_seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -175,32 +180,25 @@ public class ActivityListingDashboard extends MaterialDialogFragment {
 
             }
         });
-        battery_status_date_to_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Calendar currentDate = Calendar.getInstance();
-                currentDate.setTimeInMillis(timeTo * 1000L);
+        battery_status_date_to_layout.setOnClickListener(v -> {
+            final Calendar currentDate = Calendar.getInstance();
+            currentDate.setTimeInMillis(timeTo * 1000L);
 
-                new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            new DatePickerDialog(requireContext(), (view1, year, monthOfYear, dayOfMonth) -> {
+                Calendar date = Calendar.getInstance();
+                date.set(year, monthOfYear, dayOfMonth);
+                int time1 = (int) (date.getTimeInMillis() / 1000);
+                Calendar day1 = Calendar.getInstance();
+                day1.setTimeInMillis(time1 * 1000L);
+                day1.set(Calendar.HOUR_OF_DAY, 23);
+                day1.set(Calendar.MINUTE, 59);
+                day1.set(Calendar.SECOND, 59);
+                timeTo = (int) (day1.getTimeInMillis() / 1000);
 
-                        Calendar date = Calendar.getInstance();
-                        date.set(year, monthOfYear, dayOfMonth);
-                        int time = (int) (date.getTimeInMillis() / 1000);
-                        Calendar day = Calendar.getInstance();
-                        day.setTimeInMillis(time * 1000L);
-                        day.set(Calendar.HOUR_OF_DAY, 23);
-                        day.set(Calendar.MINUTE, 59);
-                        day.set(Calendar.SECOND, 59);
-                        timeTo = (int) (day.getTimeInMillis() / 1000);
-
-                        battery_status_date_to_text.setText(DateTimeUtils.formatDate(new Date(timeTo * 1000L)));
-                        battery_status_time_span_seekbar.setProgress(0);
-                        battery_status_time_span_seekbar.setProgress(1);
-                    }
-                }, currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DATE)).show();
-            }
+                battery_status_date_to_text.setText(DateTimeUtils.formatDate(new Date(timeTo * 1000L)));
+                battery_status_time_span_seekbar.setProgress(0);
+                battery_status_time_span_seekbar.setProgress(1);
+            }, currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DATE)).show();
         });
         battery_status_time_span_seekbar.setProgress(2);
     }
@@ -213,12 +211,13 @@ public class ActivityListingDashboard extends MaterialDialogFragment {
 
         List<ActivitySession> stepSessions;
         List<? extends ActivitySample> activitySamples = getAllSamples(db, gbDevice, timeFrom, timeTo);
+        final List<BaseActivitySummary> workouts = getAllWorkouts(db, gbDevice, timeFrom, timeTo);
         StepAnalysis stepAnalysis = new StepAnalysis();
 
         boolean isEmptySummary = false;
         if (activitySamples != null) {
-            stepSessions = stepAnalysis.calculateStepSessions(activitySamples);
-            if (stepSessions.size() == 0) {
+            stepSessions = stepAnalysis.calculateStepSessions(activitySamples, workouts);
+            if (stepSessions.isEmpty()) {
                 isEmptySummary = true;
             }
             stepSessionsSummary = stepAnalysis.calculateSummary(stepSessions, isEmptySummary);
@@ -234,6 +233,22 @@ public class ActivityListingDashboard extends MaterialDialogFragment {
     protected List<? extends ActivitySample> getAllSamples(DBHandler db, GBDevice device, int tsFrom, int tsTo) {
         SampleProvider<? extends ActivitySample> provider = getProvider(db, device);
         return provider.getAllActivitySamples(tsFrom, tsTo);
+    }
+
+    protected List<BaseActivitySummary> getAllWorkouts(DBHandler db, GBDevice device, int tsFrom, int tsTo) {
+        BaseActivitySummaryDao summaryDao = db.getDaoSession().getBaseActivitySummaryDao();
+        Device dbDevice = DBHelper.findDevice(device, db.getDaoSession());
+        QueryBuilder<BaseActivitySummary> qb = summaryDao.queryBuilder();
+        qb.where(BaseActivitySummaryDao.Properties.DeviceId.eq(dbDevice.getId()));
+        qb.where(BaseActivitySummaryDao.Properties.StartTime.gt(new Date(tsFrom * 1000L)));
+        qb.where(BaseActivitySummaryDao.Properties.EndTime.lt(new Date(tsTo * 1000L)));
+        qb.orderAsc(BaseActivitySummaryDao.Properties.StartTime);
+        final List<BaseActivitySummary> summaries = qb.build().list();
+        final ActivitySummaryParser summaryParser = device.getDeviceCoordinator().getActivitySummaryParser(device, getContext());
+        for (BaseActivitySummary summary : summaries) {
+            summaryParser.parseBinaryData(summary, false);
+        }
+        return summaries;
     }
 
     void indicate_progress(boolean inProgress) {

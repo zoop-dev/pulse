@@ -44,7 +44,9 @@ import java.util.concurrent.TimeUnit;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.workouts.WorkoutDetailsActivity;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
+import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySession;
@@ -71,6 +73,15 @@ public class ActivityListingChartFragment extends AbstractActivityChartFragment<
 
         stepListAdapter.setOnItemClickListener(position -> {
             ActivitySession item = stepListAdapter.getItem(position);
+            if (item.getSessionType() == ActivitySession.SESSION_WORKOUT) {
+                final Intent intent = WorkoutDetailsActivity.Companion.createSingleWorkoutIntent(
+                        requireContext(),
+                        item.getWorkoutSummaryId(),
+                        getChartsHost().getDevice()
+                );
+                startActivity(intent);
+                return;
+            }
             if (item.getSessionType() != ActivitySession.SESSION_SUMMARY) {
                 int tsFrom = (int) (item.getStartTime().getTime() / 1000);
                 int tsTo = (int) (item.getEndTime().getTime() / 1000);
@@ -82,12 +93,7 @@ public class ActivityListingChartFragment extends AbstractActivityChartFragment<
         FloatingActionButton fab;
         fab = rootView.findViewById(R.id.fab);
         fab.setVisibility(View.VISIBLE);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDashboard(tsDateTo, getChartsHost().getDevice());
-            }
-        });
+        fab.setOnClickListener(v -> showDashboard(tsDateTo, getChartsHost().getDevice()));
 
         refresh();
         return rootView;
@@ -125,8 +131,9 @@ public class ActivityListingChartFragment extends AbstractActivityChartFragment<
         boolean isEmptySummary = false;
 
         if (activitySamples != null) {
-            stepSessions = stepAnalysis.calculateStepSessions(activitySamples);
-            if (stepSessions.size() == 0) {
+            final List<BaseActivitySummary> workouts = getAllWorkouts(db, device);
+            stepSessions = stepAnalysis.calculateStepSessions(activitySamples, workouts);
+            if (stepSessions.isEmpty()) {
                 isEmptySummary = true;
             }
             ActivitySession stepSessionsSummary = stepAnalysis.calculateSummary(stepSessions, isEmptySummary);
@@ -149,7 +156,7 @@ public class ActivityListingChartFragment extends AbstractActivityChartFragment<
         }
 
         //noinspection RedundantIfStatement
-        if (mcd.getStepSessions().size() == 0) {
+        if (mcd.getStepSessions().isEmpty()) {
             getChartsHost().enableSwipeRefresh(true); //enable pull to refresh, might be needed
         } else {
             getChartsHost().enableSwipeRefresh(false); //disable pull to refresh as it collides with swipeable view
@@ -197,7 +204,6 @@ public class ActivityListingChartFragment extends AbstractActivityChartFragment<
         String durationLabel = DateTimeUtils.formatDurationHoursMinutes(ongoingSession.getEndTime().getTime() - ongoingSession.getStartTime().getTime(), TimeUnit.MILLISECONDS);
         String hrLabel = String.valueOf(ongoingSession.getHeartRateAverage());
         String activityName = ongoingSession.getActivityKind().getLabel(requireContext());
-        int icon = ongoingSession.getActivityKind().getIcon();
 
         String text = String.format("%s:\u00A0%s, %s:\u00A0%s, %s:\u00A0%s, %s:\u00A0%s", activityName, durationLabel, getString(R.string.heart_rate), hrLabel, getString(R.string.steps), stepLabel, getString(R.string.distance), distanceLabel);
         final Snackbar snackbar = Snackbar.make(getView(), text, 1000 * 8);
@@ -205,13 +211,7 @@ public class ActivityListingChartFragment extends AbstractActivityChartFragment<
         View snackbarView = snackbar.getView();
         snackbarView.setBackgroundColor(requireContext().getResources().getColor(R.color.accent));
         snackbar.setActionTextColor(Color.WHITE);
-        snackbar.setAction(getString(R.string.dialog_hide).toUpperCase(), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        snackbar.dismiss();
-                    }
-                }
-        );
+        snackbar.setAction(getString(R.string.dialog_hide).toUpperCase(), view -> snackbar.dismiss());
         snackbar.show();
     }
 

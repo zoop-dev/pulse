@@ -107,7 +107,7 @@ public class ActivityListItem {
             hrLayout.setVisibility(View.GONE);
         }
 
-        if (intensity >= 0) {
+        if (intensity >= 1f) {
             final DecimalFormat df = new DecimalFormat("###");
             intensityLabel.setText(df.format(intensity));
             intensityLayout.setVisibility(View.VISIBLE);

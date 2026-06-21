@@ -10,11 +10,10 @@
         android:id="@+id/stepsDateView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textStyle="bold" />
-
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="15dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/itemListView"
@@ -38,7 +37,5 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="9dp"
         app:srcCompat="@drawable/ic_insights" />
-
-
 
 </RelativeLayout>

@@ -18,6 +18,10 @@ package nodomain.freeyourgadget.gadgetbridge.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
+import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
+import nodomain.freeyourgadget.gadgetbridge.util.Accumulator;
 
 // ActivitySession holds activities detected by the steps/hr/intensity
 // and is used in the Activity List
@@ -27,6 +31,7 @@ public class ActivitySession implements Serializable {
     public static int SESSION_SUMMARY = 2;
     public static int SESSION_ONGOING = 3;
     public static int SESSION_EMPTY = 4;
+    public static int SESSION_WORKOUT = 5;
 
     private final Date startTime;
     private final Date endTime;
@@ -39,6 +44,7 @@ public class ActivitySession implements Serializable {
     // it is identified by SESSION_SUMMARY
     private int sessionCount = 0;
     private int sessionType = SESSION_NORMAL;
+    private long workoutSummaryId = -1;
     private boolean isEmptySummary = false; // in case there is no activity on that day
     private int totalDaySteps;
 
@@ -55,6 +61,45 @@ public class ActivitySession implements Serializable {
         this.activityKind = activityKind;
     }
 
+    public ActivitySession(final BaseActivitySummary summary, final List<ActivitySample> samples) {
+        this.startTime = summary.getStartTime();
+        this.endTime = summary.getEndTime();
+        final String summaryDataJson = summary.getSummaryData();
+
+        final Accumulator accSteps = new Accumulator();
+        final Accumulator accDistance = new Accumulator();
+        final Accumulator accHeartRate = new Accumulator();
+        if (samples != null) {
+            for (ActivitySample s : samples) {
+                if (s.getSteps() > 0) {
+                    accSteps.add(s.getSteps());
+                }
+                if (s.getDistanceCm() > 0) {
+                    accDistance.add(s.getDistanceCm());
+                }
+                if (s.getHeartRate() > 0) {
+                    accHeartRate.add(s.getHeartRate());
+                }
+            }
+        }
+
+        if (summaryDataJson != null) {
+            final ActivitySummaryData summaryData = ActivitySummaryData.fromJson(summaryDataJson);
+            this.activeSteps = summaryData.getNumber(ActivitySummaryEntries.STEPS, accSteps.getSum()).intValue();
+            this.heartRateAverage = summaryData.getNumber(ActivitySummaryEntries.HR_AVG, accHeartRate.getAverage()).intValue();
+            this.distance = summaryData.getNumber(ActivitySummaryEntries.DISTANCE_METERS, accDistance.getSum() * 0.01f).floatValue();
+        } else {
+            this.activeSteps = (int) Math.round(accSteps.getSum());
+            this.heartRateAverage = (int) Math.round(accHeartRate.getAverage());
+            this.distance = (int) Math.round(accDistance.getSum() * 0.01f);
+        }
+        this.intensity = 0;
+        this.sessionType = SESSION_WORKOUT;
+        this.workoutSummaryId = summary.getId();
+
+        this.activityKind = ActivityKind.fromCode(summary.getActivityKind());
+    }
+
     public ActivitySession(){
         this.startTime = null;
         this.endTime = null;
@@ -63,7 +108,7 @@ public class ActivitySession implements Serializable {
         this.intensity = 0;
         this.distance = 0;
         this.activityKind = ActivityKind.UNKNOWN;
-    };
+    }
 
     public Date getStartTime() {
         return startTime;
@@ -123,5 +168,9 @@ public class ActivitySession implements Serializable {
 
     public void setTotalDaySteps(int totalDaySteps) {
         this.totalDaySteps = totalDaySteps;
+    }
+
+    public long getWorkoutSummaryId() {
+        return workoutSummaryId;
     }
 }

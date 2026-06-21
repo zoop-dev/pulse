@@ -38,16 +38,10 @@ public class RangeMap<K extends Comparable<K>, V> {
     }
 
     public RangeMap(final Mode mode) {
-        switch (mode) {
-            case LOWER_BOUND:
-                comparator = (k1, k2) -> k1.compareTo(k2);
-                break;
-            case UPPER_BOUND:
-                comparator = (k1, k2) -> k2.compareTo(k1);
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown mode " + mode);
-        }
+        comparator = switch (mode) {
+            case LOWER_BOUND -> Comparable::compareTo;
+            case UPPER_BOUND -> Comparator.reverseOrder();
+        };
     }
 
     public void put(final K key, final V value) {
@@ -82,6 +76,5 @@ public class RangeMap<K extends Comparable<K>, V> {
     public enum Mode {
         LOWER_BOUND,
         UPPER_BOUND,
-        ;
     }
 }

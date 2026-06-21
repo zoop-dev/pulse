@@ -207,19 +207,15 @@ public class DashboardUtils {
     }
 
     public static long getActiveMinutes(GBDevice gbDevice, DBHandler db, DashboardFragment.DashboardData dashboardData) {
-        ActivitySession stepSessionsSummary = new ActivitySession();
-        List<ActivitySession> stepSessions;
         List<? extends ActivitySample> activitySamples = getAllSamples(db, gbDevice, dashboardData);
         StepAnalysis stepAnalysis = new StepAnalysis();
 
         boolean isEmptySummary = false;
-        if (activitySamples != null) {
-            stepSessions = stepAnalysis.calculateStepSessions(activitySamples);
-            if (stepSessions.isEmpty()) {
-                isEmptySummary = true;
-            }
-            stepSessionsSummary = stepAnalysis.calculateSummary(stepSessions, isEmptySummary);
+        final List<ActivitySession> stepSessions = stepAnalysis.calculateStepSessions(activitySamples, Collections.emptyList());
+        if (stepSessions.isEmpty()) {
+            isEmptySummary = true;
         }
+        final ActivitySession stepSessionsSummary = stepAnalysis.calculateSummary(stepSessions, isEmptySummary);
         long duration = stepSessionsSummary.getEndTime().getTime() - stepSessionsSummary.getStartTime().getTime();
         return duration / 1000 / 60;
     }
