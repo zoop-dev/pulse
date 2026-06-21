@@ -4516,8 +4516,8 @@
     <string name="nothing_prefs_spatial_audio_title">空间音频</string>
     <string name="nothing_prefs_spatial_audio_summary">让你感到你是音乐、电影或游戏一部分的沉浸式聆听体验。</string>
     <string name="persisting_samples_failed">保存示例出错：%1$s</string>
-    <string name="pref_experimental_metrics_title">常规测量</string>
-    <string name="pref_experimental_metrics_summary">启用常规测量的实验性 UI 逻辑。当前只和 Garmin 设备记录的训练量和卡路里相关。</string>
+    <string name="pref_experimental_metrics_title">常规公制计算</string>
+    <string name="pref_experimental_metrics_summary">如有常规公制示例，请使用这些计算训练负荷和卡路里消耗量等。</string>
     <string name="unit_kcal_per_day">卡路里/天</string>
     <string name="prefs_device_id">设备 ID</string>
     <string name="consumed_electrical_energy">消耗的能量</string>
@@ -4616,4 +4616,18 @@
     <string name="pref_wanderer_enter_api_token_summary">轻触此处输入 Wanderer 服务器和 API 令牌</string>
     <string name="pref_wanderer_log_out_title">退出 Wanderer 登录</string>
     <string name="activity_detail_upload_to_wanderer">上传 GPX 到 Wanderer</string>
+    <string name="generic_metrics">其他</string>
+    <string name="generic_metric_select_metric">公制</string>
+    <string name="generic_metric_samples">示例</string>
+    <string name="generic_metric_chart_label_with_unit">%1$s (%2$s)</string>
+    <string name="metric_garmin_endurance_score">耐力分</string>
+    <string name="metric_garmin_functional_threshold_power">功能阈值功率</string>
+    <string name="metric_garmin_hill_endurance">山地耐力赛</string>
+    <string name="metric_garmin_hill_score">山地分</string>
+    <string name="metric_garmin_hill_strength">山地强度</string>
+    <string name="metric_garmin_met_max_vo2">MET 最大摄氧量</string>
+    <string name="metric_garmin_running_lactate_threshold_power">跑步乳酸阈值功率</string>
+    <string name="metric_garmin_training_readiness">训练准备度</string>
+    <string name="metric_generic_resting_metabolic_rate">静息代谢率</string>
+    <string name="select_at_least_option">请至少选 %1$d 个选项</string>
 </resources>
