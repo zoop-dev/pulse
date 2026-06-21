@@ -772,7 +772,7 @@ public class GarminRealtimeSettingsFragment extends AbstractPreferenceFragment {
                 //
                 // Main menu
                 case 20: // Garmin Pay
-                    return 0;
+                    return R.drawable.ic_credit_card;
                 case 21: // Text Responses
                     return R.drawable.ic_reply;
                 case 4: // Clocks
@@ -832,6 +832,15 @@ public class GarminRealtimeSettingsFragment extends AbstractPreferenceFragment {
                 // Sortable screens (glances, apps, etc)
                 case 33:
                     return R.drawable.ic_add_gray;
+                case 35: // inReach tracking
+                    return R.drawable.ic_share_location;
+                case 36: // inReach remote
+                    return R.drawable.ic_settings_remote;
+                case 37: // sound settings
+                    return R.drawable.ic_notifications_active;
+                default:
+                    LOG.info("no icon mapping found for: {}", entry.getIcon());
+                    return 0;
             }
         }
 
