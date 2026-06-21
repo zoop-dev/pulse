@@ -868,16 +868,16 @@
     <string name="error_retrieving_devices_database">Помилка отримання пристроїв із бази даних</string>
     <string name="error_setting_alias">Помилка встановлення псевдоніма:</string>
     <string name="error_exporting_device_preferences">Помилка експортування специфічних налаштувань пристрою</string>
-    <string name="pref_check_permission_status_summary">Перевіряти та запитувати дозволи, яких бракує, навіть якщо вони зараз не потрібні. Вимкніть це лише, якщо ваш пристрій дійсно не підтримує жодну з цих функцій. Брак дозволу може спричинити проблеми!</string>
+    <string name="pref_check_permission_status_summary">Перевіряти та запитувати дозволи, яких бракує, навіть якщо в них немає негайної потреби. Вимкніть, лише якщо ваш пристрій дійсно не підтримує жодної із цих функцій. Брак дозволів може призвести до збоїв!</string>
     <string name="pref_check_permission_status">Перевіряти стан дозволів</string>
     <string name="error_background_service_reason">Не вдалося запустити фонову службу – натисніть, щоби переглянути. \n\nПомилка:</string>
     <string name="device_is_currently_bonded">УЖЕ ПОВʼЯЗАНО</string>
     <string name="error_background_service_reason_truncated">Не вдалося запустити фонову службу, оскільки…</string>
-    <string name="error_background_service">Не вдалось запустити фонову службу</string>
-    <string name="companiondevice_pairing">Сполучення зі супутнім пристроєм</string>
+    <string name="error_background_service">Не вдалося запустити фонову службу</string>
+    <string name="companiondevice_pairing">Сполучення із супутнім пристроєм</string>
     <string name="require_location_provider">Місцеперебування має бути ввімкнено</string>
     <string name="error_version_check_extreme_caution">УВАГА: Помилка під час перевірки інформації про версію! Вам не варто продовжувати! Виявлено версію «%s»</string>
-    <string name="permission_granting_mandatory">Ці дозволи обов\'язкові. Їхня відсутність може призвести до неналежної роботи</string>
+    <string name="permission_granting_mandatory">Усі ці дозволи є обов\'язковими. Їхня відсутність може призвести до неналежної роботи</string>
     <string name="about_links">Посилання</string>
     <string name="about_additional_contributions">Щиро дякуємо всім невказаним учасникам за їхній внесок до коду, переклади, підтримку, ідеї, заохочення, повідомлення про помилки та фінансову допомогу… ✊</string>
     <string name="about_additional_device_support">Підтримка додаткових пристроїв</string>
@@ -1481,8 +1481,8 @@
     <string name="notification_channel_gps">Відстеження GPS</string>
     <string name="notification_gps_title">Gadgetbridge GPS</string>
     <string name="notification_gps_text">Надсилання GPS-місцеперебування на %1$d пристроїв</string>
-    <string name="permission_notification_listener">%1$s потребує доступу до сповіщень, щоби показувати їх на годиннику, коли екран вашого телефона вимкнено.\n\nНатисніть «%2$s», потім – «%1$s» та ввімкніть «Дозволити доступ до сповіщень». Після цього натисніть «Назад», щоби повернутися до %1$s.</string>
-    <string name="permission_notification_policy_access">%1$s потребує доступу до режиму «Не турбувати», щоб дотримуватися його на годиннику, коли екран вашого телефона вимкнено.\n\nНатисніть «%2$s», потім – «%1$s» та ввімкніть «Дозволити режим \"Не турбувати\"». Після цього натисніть «Назад», щоби повернутися до %1$s.</string>
+    <string name="permission_notification_listener">%1$s потребує доступу до сповіщень, щоби показувати їх на годиннику, коли екран телефона вимкнено.\n\nНатисніть «%2$s», потім – «%1$s» і ввімкніть «Дозволити доступ до сповіщень». Після цього натисніть «Назад», щоби повернутися до %1$s.</string>
+    <string name="permission_notification_policy_access">%1$s потребує доступу до режиму «Не турбувати», щоби дотримуватися його на годиннику, коли екран телефона вимкнено.\n\nНатисніть «%2$s», потім – «%1$s» і ввімкніть «Дозволити режим \"Не турбувати\"». Після цього натисніть «Назад», щоби повернутися до %1$s.</string>
     <string name="pref_device_action_phone_gps_location_listener_stop">Зупинка відстеження GPS-розташування</string>
     <string name="portuguese_br">Португальська (Бразилія)</string>
     <string name="quick_alarm">Швидкий будильник</string>
@@ -1490,7 +1490,7 @@
     <string name="quick_alarm_description">Будильник із віджета</string>
     <string name="pref_title_banglejs_webview_url">URL-адреса завантажувача застосунків</string>
     <string name="pref_summary_banglejs_webview_url">Якщо ви хочете використовувати власний завантажувач застосунків, укажіть тут URL-адресу «https://…/android.html». В іншому випадку залиште порожнім для «https://banglejs.com/apps»</string>
-    <string name="permission_location">%1$s потребує доступу до місцеперебування у фоновому режимі, щоби підтримувати з\'єднання з годинником, навіть коли екран вашого телефона вимкнено.\n\nНа наступному екрані виберіть «%2$s», після чого натисніть «Назад», щоби повернутися до %1$s.</string>
+    <string name="permission_location">%1$s потребує доступу до місцеперебування у фоновому режимі, щоби підтримувати з\'єднання з годинником, навіть коли екран телефона вимкнено.\n\nНа наступному екрані виберіть «%2$s», після чого натисніть «Назад», щоби повернутися до %1$s.</string>
     <string name="info_no_devices_connected">Немає підʼєднаних пристроїв</string>
     <string name="info_connected_count">Підʼєднано пристроїв: %d</string>
     <string name="bengali">Бенгальська</string>
@@ -1585,7 +1585,7 @@
     <string name="prefs_hourly_chime_summary">Годинник подаватиме звуковий сигнал раз на годину</string>
     <string name="step_streaks_achievements_sharing_title">Досягнення кількості кроків</string>
     <string name="step_streaks_achievements_sharing_message">Мої щоденні досягнення кількості кроків!</string>
-    <string name="permission_display_over_other_apps">%1$s потребує дозволу на показ поверх інших застосунків, щоб годинники Bangle.js могли запускати дії за допомогою Intents, коли %1$s працює у фоновому режимі.\n\nЦе можна використовувати для запуску музичного програвача, відтворення пісень і багатьох інших функцій.\n\nНатисніть «%2$s», потім – «%1$s» та ввімкніть «Дозволити показ поверх інших застосунків», після чого натисніть «Назад», щоб повернутися до %1$s.\n\nЩоб %1$s більше не запитував дозволів, перейдіть у «Налаштування» та вимкніть «Перевіряти стан дозволів».\n\nПереконайтеся, що ви надали %1$s усі дозволи, необхідні для належної роботи.</string>
+    <string name="permission_display_over_other_apps">%1$s потребує дозволу на показ поверх інших застосунків, щоби годинники Bangle.js могли запускати дії за допомогою Intents, коли %1$s працює у фоновому режимі.\n\nЦе дає змогу, наприклад, запустити музичний застосунок і ввімкнути пісню, а також виконувати безліч інших завдань.\n\nНатисніть «%2$s», потім – «%1$s» і ввімкніть «Дозволити показ поверх інших застосунків», після чого натисніть «Назад», щоби повернутися до %1$s.\n\nЩоби %1$s більше не запитував дозволів, перейдіть у «Налаштування» та вимкніть «Перевіряти стан дозволів».\n\nПереконайтеся, що ви надали %1$s усі дозволи, необхідні для його належної роботи.</string>
     <string name="pref_summary_canned_replies">Відповідайте з годинника, використовуючи заздалегідь підготовлені повідомлень</string>
     <string name="pref_title_screen_on_on_notifications">Вмикати екран під час отримання сповіщень</string>
     <string name="pref_summary_screen_on_on_notifications">Вмикати екран пристрою після надходження сповіщення</string>
@@ -2003,7 +2003,7 @@
     <string name="activity_prefs_goals">Цілі</string>
     <string name="error_no_bluetooth_scan">Для належної роботи виявлення потрібно надати й увімкнути доступ до виявлення через Bluetooth</string>
     <string name="error_no_bluetooth_connect">Для належної роботи виявлення потрібно надати й увімкнути доступ до зʼєднання через Bluetooth</string>
-    <string name="permission_request">%1$s дозволяє надсилати повідомлення та інші дані з Android на ваш пристрій. Для цього потрібен дозвіл на доступ до них, інакше застосунок може працювати неналежним чином.\n\nЗараз з\'являться кілька спливних вікон Android із запитом на ці дозволи.\n\nНатисніть «%2$s», щоби продовжити.</string>
+    <string name="permission_request">%1$s дає змогу надсилати повідомлення та інші дані з Android на пристрій. Для цього потрібен дозвіл на доступ до цих даних, інакше застосунок може працювати неналежним чином.\n\nЗараз з\'явиться кілька спливних вікон Android із запитом на ці дозволи.\n\nНатисніть «%2$s», щоби продовжити.</string>
     <string name="withings_bt_calibration_next">Наступне</string>
     <string name="activity_type_surfing">Серфінг</string>
     <string name="activity_type_squash">Сквош</string>
@@ -2769,7 +2769,7 @@
     <string name="fmtPaceTypeAverage">Тип темпу %d (середній)</string>
     <string name="fmtPaceAverage">Темп (середній)</string>
     <string name="paceCorrection">Коригування</string>
-    <string name="pref_crash_notification_summary">У разі збою застосунку, показувати сповіщення про помилку</string>
+    <string name="pref_crash_notification_summary">У разі збою застосунку показувати сповіщення з описом помилки</string>
     <string name="maxJumpRate">Найвища частота стрибків</string>
     <string name="totalJumps">Усього стрибків</string>
     <string name="fmtPacePace">Темп %d темп</string>
@@ -2790,7 +2790,7 @@
     <string name="poolLength">Довжина басейну</string>
     <string name="unit_repetitions">повт.</string>
     <string name="workoutSets">Набори</string>
-    <string name="pref_crash_notification_title">Сповіщати в разі збою</string>
+    <string name="pref_crash_notification_title">Сповіщати про збої</string>
     <string name="metabolic_rate">Темп метаболізму</string>
     <string name="max_respiration_rate">Макс. частота дихання</string>
     <string name="hrv_sdrr">HRV SDRR</string>
@@ -3747,7 +3747,7 @@
     <string name="pref_header_training_load">Тренувальний навантаження</string>
     <string name="track_name_required">Назва треку не може бути порожньою</string>
     <string name="notifications_app_icon_uploading_limit_reached">Досягнуто ліміту для завантаження значків програм.</string>
-    <string name="pref_check_permission_show_list">Показати статус дозволів</string>
+    <string name="pref_check_permission_show_list">Переглянути стан дозволів</string>
     <string name="first_start_permissions_do_not_ask_again">Більше не питати</string>
     <string name="first_start_permissions_do_not_ask_warning_summary">Відмова від надання дозволу може спричинити проблеми. Ви можете знову відкрити цей екран з екрана налаштувань.</string>
     <string name="manual_measurements">Ручні вимірювання</string>
@@ -4169,4 +4169,6 @@
     <string name="task_installing_route">Завантаження маршруту</string>
     <string name="route_upload_completed">Завантаження маршруту завершено</string>
     <string name="route_upload_failed">Не вдалося завантажити маршрут</string>
+    <string name="pref_log_level_trace_title">Докладне журналювання</string>
+    <string name="pref_log_level_trace_summary">Підвищити рівень журналювання до TRACE</string>
 </resources>
