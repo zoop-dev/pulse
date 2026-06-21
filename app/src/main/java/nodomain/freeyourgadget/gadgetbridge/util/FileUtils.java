@@ -1,6 +1,6 @@
-/*  Copyright (C) 2015-2024 Andreas Shimokawa, Arjan Schrijver, Carsten
+/*  Copyright (C) 2015-2026 Andreas Shimokawa, Arjan Schrijver, Carsten
     Pfeiffer, Daniele Gobbetti, Felix Konstantin Maurer, JohnnySun, José Rebelo,
-    Petr Vaněk, Taavi Eomäe
+    Petr Vaněk, Taavi Eomäe, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -18,6 +18,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.util;
 
+import static nodomain.freeyourgadget.gadgetbridge.util.gpx.GpxParser.GPX_START;
+import static nodomain.freeyourgadget.gadgetbridge.util.gpx.GpxParser.XML_HEADER;
+
 import android.content.ContentResolver;
 import android.content.Context;
 import android.net.Uri;
@@ -33,6 +36,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -46,6 +50,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -53,6 +58,8 @@ import java.util.Objects;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.GBEnvironment;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
 
 public class FileUtils {
     private static final Logger LOG = LoggerFactory.getLogger(FileUtils.class);
@@ -464,6 +471,38 @@ public class FileUtils {
             }
         }
 
+        return null;
+    }
+
+    public static void writeToFile(@NonNull final byte[] bytes, @NonNull final File destFile) throws IOException {
+        if (GBApplication.isRunningOreoOrLater()) {
+            Files.write(destFile.toPath(), bytes);
+        } else {
+            try(ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes)) {
+                copyStreamToFile(inputStream, destFile);
+            }
+        }
+    }
+
+    /// apply simple heuristic to identify payload content based on file signature
+    @Nullable
+    public static String guessFileExtension(@NonNull byte[] data) {
+        for (byte[] header : XML_HEADER) {
+            if (ArrayUtils.equals(data, header, 0)) {
+                return "xml";
+            }
+        }
+        for (byte[] header : GPX_START) {
+            if (ArrayUtils.equals(data, header, 0)) {
+                return "gpx";
+            }
+        }
+        if (ArrayUtils.equals(data, new byte[]{0x50, 0x4B, 0x03, 0x04}, 0)) {
+            return "zip";
+        }
+        if (data.length > 13 && BLETypeConversions.toUint32(data, 8) == FitFile.Header.MAGIC) {
+            return "fit";
+        }
         return null;
     }
 }

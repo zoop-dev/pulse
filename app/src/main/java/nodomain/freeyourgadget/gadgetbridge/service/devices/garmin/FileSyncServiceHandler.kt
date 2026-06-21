@@ -22,19 +22,21 @@ class FileSyncServiceHandler(val deviceSupport: GarminSupport) {
 
     private fun handleNewFileNotification(newFileNotification: GdiFileSyncService.NewFileNotification): GdiFileSyncService.FileSyncService? {
         LOG.debug("Got new file notification: {}", newFileNotification)
-        if (!newFileNotification.file.hasType() || !newFileNotification.file.type.hasName()) {
-            LOG.warn("New file has no type name")
-            return null
-        }
-        val fetchUnknownFiles = deviceSupport.devicePrefs.fetchUnknownFiles
-        val typeName = newFileNotification.file.type.name
-        val type = FileType.FILETYPE.findByTypeName(typeName)
-        if (type == null || !(type.pull || fetchUnknownFiles)) {
-            LOG.warn("Ignoring file type: {}", typeName)
-            return null
-        }
+        for(file in newFileNotification.fileList){
+            if (!file.hasType() || !file.type.hasName()) {
+                LOG.warn("New file has no type name: {}", file)
+                continue
+            }
+            val fetchUnknownFiles = deviceSupport.devicePrefs.fetchUnknownFiles
+            val typeName = file.type.name
+            val type = FileType.FILETYPE.findByTypeName(typeName)
+            if (type == null || !(type.pull || fetchUnknownFiles)) {
+                LOG.warn("Ignoring file type: {}", file)
+                continue
+            }
 
-        deviceSupport.addFileToDownloadList(newFileNotification.file)
+            deviceSupport.addFileToDownloadList(file)
+        }
         return null
     }
 

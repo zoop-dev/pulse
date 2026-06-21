@@ -117,6 +117,7 @@ public class FileType {
         GOLF_SCORECARD(255, 246), // Garmin vívoactive 5 - #4522
         ULF_LOGS(255, 247, false, "ULFLogs"),
         KPI(255, 248, false, "KPI"), // Garmin Instinct Solar Tactical Edition - #5803
+        BACKUP_PRIMARY(Integer.MIN_VALUE, Integer.MIN_VALUE, true, "BACKUP_PRIMARY"), // unknown type and subtype
         ;
 
         private final int type;
