@@ -91,6 +91,12 @@ public class GBPrefs extends Prefs {
     public static final String AUTO_EXPORT_GPX_ALL_DEVICES = "gpx_auto_export_all_devices";
     public static final String AUTO_EXPORT_GPX_SELECTED_DEVICES = "gpx_auto_export_selected_devices";
 
+    // FIT export
+    public static final String AUTO_EXPORT_FIT_ENABLED = "fit_auto_export_enabled";
+    public static final String AUTO_EXPORT_FIT_DIRECTORY = "fit_auto_export_directory";
+    public static final String AUTO_EXPORT_FIT_ALL_DEVICES = "fit_auto_export_all_devices";
+    public static final String AUTO_EXPORT_FIT_SELECTED_DEVICES = "fit_auto_export_selected_devices";
+
     // Intent API
     public static final String INTENT_API_BROADCAST_EXPORT_DB = "intent_api_broadcast_export";
     public static final String INTENT_API_BROADCAST_EXPORT_ZIP = "intent_api_broadcast_zip_export";

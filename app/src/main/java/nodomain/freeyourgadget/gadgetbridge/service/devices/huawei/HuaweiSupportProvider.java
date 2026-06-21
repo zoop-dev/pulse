@@ -100,6 +100,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStageSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiSleepStatsSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiStressSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.HuaweiWorkoutSummarySample;
+import nodomain.freeyourgadget.gadgetbridge.export.AutoFitExporter;
 import nodomain.freeyourgadget.gadgetbridge.export.AutoGpxExporter;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.gps.GBLocationProviderType;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.gps.GBLocationService;
@@ -2999,6 +3000,7 @@ public class HuaweiSupportProvider {
                         }
 
                         AutoGpxExporter.doExport(getContext(), getDevice(), null, track);
+                        AutoFitExporter.doExport(getContext(), getDevice(), null, track);
 
                         new HuaweiWorkoutGbParser(getDevice(), getContext()).parseWorkout(databaseId);
 

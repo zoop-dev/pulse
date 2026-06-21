@@ -168,6 +168,15 @@ android {
             java.srcDirs += "build/generated/sources/gbdao"
             res.srcDirs += "build/generated/res/changelog"
         }
+        test {
+            // The optional FIT round-trip corpus (FitExporterReadmeRoundTripTest) is read
+            // by filesystem path, not the classpath, and is not committed. Exclude it from
+            // the test resources so Gradle does not copy tens of thousands of files into
+            // the unit-test runtime on every build.
+            resources {
+                exclude "FIT-test-files-main/**"
+            }
+        }
     }
 
     buildTypes {

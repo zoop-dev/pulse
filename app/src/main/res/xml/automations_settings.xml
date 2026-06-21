@@ -28,6 +28,14 @@
                 android:targetPackage="@string/applicationId" />
         </Preference>
 
+        <Preference
+            android:icon="@drawable/ic_activity_unknown_small"
+            android:title="@string/pref_header_auto_export_fit">
+            <intent
+                android:targetClass="nodomain.freeyourgadget.gadgetbridge.activities.automations.AutoExportFitSettingsActivity"
+                android:targetPackage="@string/applicationId" />
+        </Preference>
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_header_auto_fetch">

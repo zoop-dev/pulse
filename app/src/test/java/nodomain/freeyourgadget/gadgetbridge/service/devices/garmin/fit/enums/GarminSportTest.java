@@ -1,5 +1,3 @@
-package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums;
-
 /*  Copyright (C) 2024-2026 José Rebelo, Thomas Kuehne
 
     This file is part of Gadgetbridge.
@@ -16,6 +14,9 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums;
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
+package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import android.util.Pair;
@@ -57,5 +58,30 @@ public class GarminSportTest extends TestBase {
                 assertTrue(sport.name() + " has no fallback", fallback.isPresent());
             }
         }
+    }
+
+    @Test
+    public void outdoorAliasesFallBackToGenericSport() {
+        // Xiaomi-specific OUTDOOR_* kinds had no GarminSport entry, causing exports to fall
+        // back to GENERIC (sport=0) — third-party importers showed these as unrecognised
+        // "workout" sessions. They now resolve onto the matching street sub-variant
+        // (running/walking/cycling sport with subtype=2 STREET), which keeps the FIT sport
+        // code recognised instead of generic. OUTDOOR_RUNNING has no direct entry and is
+        // aliased to STREET_RUNNING (STREET_RUN 1/2); OUTDOOR_WALKING / OUTDOOR_CYCLING map
+        // directly to STREET_WALKING (11/2) / STREET_CYCLING (2/2).
+        final Optional<GarminSport> run = GarminSport.fromActivityKind(ActivityKind.OUTDOOR_RUNNING);
+        assertTrue("OUTDOOR_RUNNING should map", run.isPresent());
+        assertEquals(1, run.get().getType());
+        assertEquals(2, run.get().getSubtype());
+
+        final Optional<GarminSport> walk = GarminSport.fromActivityKind(ActivityKind.OUTDOOR_WALKING);
+        assertTrue("OUTDOOR_WALKING should map", walk.isPresent());
+        assertEquals(11, walk.get().getType());
+        assertEquals(2, walk.get().getSubtype());
+
+        final Optional<GarminSport> bike = GarminSport.fromActivityKind(ActivityKind.OUTDOOR_CYCLING);
+        assertTrue("OUTDOOR_CYCLING should map", bike.isPresent());
+        assertEquals(2, bike.get().getType());
+        assertEquals(2, bike.get().getSubtype());
     }
 }

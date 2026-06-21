@@ -664,6 +664,11 @@
     <string name="pref_auto_export_gpx_all_devices_summary">Export GPX tracks from all devices</string>
     <string name="pref_auto_export_gpx_selected_devices">Selected devices</string>
     <string name="pref_auto_export_gpx_selected_devices_summary">Choose which devices to export GPX tracks from</string>
+    <!-- FIT Auto export -->
+    <string name="pref_header_auto_export_fit">Auto export FIT tracks</string>
+    <string name="pref_auto_export_fit_summary">Automatically export FIT files when syncing activity tracks</string>
+    <string name="pref_auto_export_fit_all_devices_summary">Export FIT tracks from all devices</string>
+    <string name="pref_auto_export_fit_selected_devices_summary">Choose which devices to export FIT tracks from</string>
     <!-- Auto fetch activity preferences -->
     <string name="pref_header_auto_fetch">Auto fetch</string>
     <string name="pref_auto_fetch">Auto fetch activity data</string>
@@ -1661,6 +1666,8 @@
     <string name="activity_type_other">Other</string>
     <string name="activity_type_trekking">Trekking</string>
     <string name="activity_type_trail_run">Trail run</string>
+    <string name="activity_type_trail_hike">Trail hike</string>
+    <string name="activity_type_mma_hiit">MMA HIIT</string>
     <string name="activity_type_wrestling">Wrestling</string>
     <string name="activity_type_unknown">Unknown activity</string>
     <string name="activity_type_navigate">Navigate</string>
@@ -2962,6 +2969,8 @@
     <string name="ground_contact_time_balance">Ground Contact Time Balance</string>
     <string name="running_step_speed_loss">Step Speed Loss</string>
     <string name="running_step_speed_loss_percentage">Step Speed Loss %</string>
+    <string name="stance_time_percent">Stance Time %</string>
+    <string name="performance_condition">Performance Condition</string>
     <string name="workout_repetitions">Repetitions</string>
     <string name="workout_revolutions">Revolutions</string>
     <string name="workout_swings">Swings</string>
@@ -3003,6 +3012,8 @@
     <string name="activity_detail_duration_label">Duration</string>
     <string name="activity_detail_show_gps_label">Show GPS Track</string>
     <string name="activity_detail_share_gps_label">Share GPS Track</string>
+    <string name="activity_detail_export_fit">Share FIT File</string>
+    <string name="activity_detail_export_fit_failed">Failed to export FIT file</string>
     <string name="activity_detail_inspect_file">Inspect file</string>
     <string name="activity_detail_share_raw_summary">Share Raw Summary</string>
     <string name="activity_detail_share_raw_details">Share Raw Details</string>

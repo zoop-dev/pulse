@@ -34,6 +34,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
+import nodomain.freeyourgadget.gadgetbridge.export.AutoFitExporter;
 import nodomain.freeyourgadget.gadgetbridge.export.AutoGpxExporter;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
@@ -204,8 +205,10 @@ class BangleJSActivityTrack {
             }
 
             if (hasGPXReading /*|| hasHRMReading*/) {
+                // GPX needs at least one GPS-valid point; FIT can be emitted regardless.
                 AutoGpxExporter.doExport(context, device, summary, track);
             }
+            AutoFitExporter.doExport(context, device, summary, track);
 
             //summary.setSummaryData(null); // remove json before saving to database,
 

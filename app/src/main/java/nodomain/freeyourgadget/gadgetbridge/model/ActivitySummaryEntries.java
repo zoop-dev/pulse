@@ -178,10 +178,18 @@ public class ActivitySummaryEntries {
     public static final String SWOLF_MIN = "swolfMin";
     public static final String SWIM_AVG_CADENCE = "swim_avg_cadence";
 
+    // Dietary intake kcal (food eaten), NOT energy expenditure. Sourced from Garmin FIT
+    // session.calories_consumed. Distinct from the three "expended" counters below.
     public static final String CALORIES_CONSUMED = "calories_consumed";
+    // Active kcal expended by the workout, excluding basal metabolic rate. The headline
+    // number shown on the watch workout card on Xiaomi devices.
     public static final String CALORIES_BURNT = "active_calories";
+    // Active + resting kcal over the workout window (CALORIES_BURNT + CALORIES_RESTING).
+    // Not emitted by every device or workout type.
     public static final String CALORIES_TOTAL = "caloriesBurnt";
+    // Basal metabolic kcal accrued during the workout window (CALORIES_TOTAL - CALORIES_BURNT).
     public static final String CALORIES_RESTING = "restingCalories";
+
     public static final String TRAINING_EFFECT_AEROBIC = "aerobicTrainingEffect";
     public static final String TRAINING_EFFECT_ANAEROBIC = "anaerobicTrainingEffect";
     public static final String TRAINING_EFFECT_TOTAL = "training_effect_total";
@@ -189,6 +197,7 @@ public class ActivitySummaryEntries {
     public static final String MAXIMUM_OXYGEN_UPTAKE = "maximumOxygenUptake";
     public static final String RECOVERY_TIME = "recoveryTime";
     public static final String RECOVERY_HR = "recoveryHr";
+    public static final String DISTANCE_METERS_CALIBRATED = "workout_distance_meters_calibrated";
     public static final String FLUID_CONSUMED = "fluid_consumed";
     public static final String ESTIMATED_SWEAT_LOSS = "estimatedSweatLoss";
     public static final String LACTATE_THRESHOLD_HR = "lactateThresholdHeartRate";

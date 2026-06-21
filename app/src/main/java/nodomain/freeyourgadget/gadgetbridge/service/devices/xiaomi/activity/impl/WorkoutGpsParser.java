@@ -36,6 +36,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
+import nodomain.freeyourgadget.gadgetbridge.export.AutoFitExporter;
 import nodomain.freeyourgadget.gadgetbridge.export.AutoGpxExporter;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
@@ -155,6 +156,7 @@ public class WorkoutGpsParser extends XiaomiActivityParser {
         }
 
         AutoGpxExporter.doExport(context, gbDevice, summary, activityTrack);
+        AutoFitExporter.doExport(context, gbDevice, summary, activityTrack);
 
         return true;
     }

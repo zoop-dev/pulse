@@ -51,6 +51,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.CmfWorkoutGpsSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
+import nodomain.freeyourgadget.gadgetbridge.export.AutoFitExporter;
 import nodomain.freeyourgadget.gadgetbridge.export.AutoGpxExporter;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
@@ -502,9 +503,10 @@ public class CmfActivitySync {
                 .anyMatch(p -> p.getLocation() != null);
 
         if (hasGps) {
-            // Save the gpx file
+            // GPX needs at least one GPS-valid point; FIT can be emitted regardless.
             AutoGpxExporter.doExport(getContext(), getDevice(), summary, activityTrack);
         }
+        AutoFitExporter.doExport(getContext(), getDevice(), summary, activityTrack);
     }
 
     private Context getContext() {

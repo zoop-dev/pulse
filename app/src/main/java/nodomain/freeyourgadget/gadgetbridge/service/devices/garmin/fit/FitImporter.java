@@ -88,6 +88,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.GenericMetricSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericTrainingLoadAcuteSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericTrainingLoadChronicSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
+import nodomain.freeyourgadget.gadgetbridge.export.AutoFitExporter;
 import nodomain.freeyourgadget.gadgetbridge.export.AutoGpxExporter;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
@@ -717,12 +718,13 @@ public class FitImporter {
             GB.toast(context, "Error saving workout", Toast.LENGTH_LONG, GB.ERROR, e);
         }
 
-        // Export to gpx
-        if (AutoGpxExporter.isExportEnabled(gbDevice)) {
+        // Export to gpx / fit
+        if (AutoGpxExporter.isExportEnabled(gbDevice) || AutoFitExporter.isExportEnabled(gbDevice)) {
             final FitActivityTrackProvider activityTrackProvider = new FitActivityTrackProvider();
             final ActivityTrack activityTrack = activityTrackProvider.getActivityTrack(summary, fitFile);
             if (activityTrack != null) {
                 AutoGpxExporter.doExport(context, gbDevice, summary, activityTrack);
+                AutoFitExporter.doExport(context, gbDevice, summary, activityTrack);
             }
         }
     }

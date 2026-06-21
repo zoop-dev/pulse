@@ -1028,6 +1028,13 @@ public class FitRecord extends RecordData {
         builder.setStepLength(getStepLength());
         builder.setTemperature(getTemperature());
 
+        builder.setVerticalOscillation(getOscillation());
+        builder.setStanceTimePercent(getStanceTimePercent());
+        builder.setStanceTime(getStanceTime());
+        builder.setVerticalRatio(getVerticalRatio());
+        builder.setStanceTimeBalance(getStanceTimeBalance());
+        builder.setPerformanceCondition(getPerformanceCondition());
+
         final Double enhancedAltitude = getEnhancedAltitude();
         if (enhancedAltitude == null) {
             builder.setAltitude(getAltitude());

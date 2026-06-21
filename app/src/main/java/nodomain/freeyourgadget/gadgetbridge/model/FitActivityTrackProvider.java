@@ -31,7 +31,10 @@ import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.exception.FitParseException;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitLap;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitLength;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitRecord;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitSet;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitSplit;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 
 public class FitActivityTrackProvider implements ActivityTrackProvider {
@@ -99,6 +102,58 @@ public class FitActivityTrackProvider implements ActivityTrackProvider {
                 nextLapStart = (lapStarts.hasNext() ? lapStarts.next() : Long.MAX_VALUE);
             }
             activityTrack.addTrackPoint(record.toActivityPoint());
+        }
+
+        // Per-length / per-split / per-set metadata — kept on the track so the
+        // exporter can re-emit them on round-trip. Garmin Connect, Strava and
+        // Endurain all surface these in their detail views.
+        for (final var rd : fitFile.getRecords()) {
+            if (rd instanceof FitLength len) {
+                final Long startTime = len.getStartTime();
+                if (startTime == null) continue;
+                final Double elapsedSec = len.getTotalElapsedTime();
+                final Double timerSec = len.getTotalTimerTime();
+                activityTrack.addLength(new ActivityTrack.LengthInfo(
+                        startTime,
+                        elapsedSec != null ? elapsedSec : 0.0,
+                        timerSec != null ? timerSec : 0.0,
+                        len.getTotalStrokes(),
+                        len.getAvgSpeed(),
+                        len.getSwimStroke(),
+                        len.getLengthType(),
+                        len.getAvgSwimmingCadence()));
+            } else if (rd instanceof FitSplit sp) {
+                final Long startTime = sp.getStartTime();
+                if (startTime == null) continue;
+                activityTrack.addSplit(new ActivityTrack.SplitInfo(
+                        startTime,
+                        sp.getEndTime(),
+                        sp.getSplitType(),
+                        sp.getTotalElapsedTime(),
+                        sp.getTotalTimerTime(),
+                        sp.getTotalDistance(),
+                        sp.getAvgSpeed(),
+                        sp.getMaxSpeed(),
+                        sp.getTotalAscent(),
+                        sp.getTotalDescent(),
+                        sp.getTotalCalories(),
+                        sp.getStartElevation(),
+                        sp.getStartPositionLat(),
+                        sp.getStartPositionLong(),
+                        sp.getEndPositionLat(),
+                        sp.getEndPositionLong()));
+            } else if (rd instanceof FitSet set) {
+                final Long startTime = set.getStartTime();
+                if (startTime == null) continue;
+                activityTrack.addSet(new ActivityTrack.SetInfo(
+                        startTime,
+                        set.getDuration(),
+                        set.getRepetitions(),
+                        set.getWeight(),
+                        set.getSetType(),
+                        set.getWeightDisplayUnit(),
+                        set.getMessageIndex()));
+            }
         }
 
         return activityTrack;

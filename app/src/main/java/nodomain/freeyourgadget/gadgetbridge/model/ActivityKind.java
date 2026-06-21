@@ -296,6 +296,8 @@ public enum ActivityKind {
     TREKKING(0x040000f1, R.string.activity_type_trekking, R.drawable.ic_activity_hiking),
     TRAIL_RUN(0x040000f2, R.string.activity_type_trail_run, R.drawable.ic_activity_trail_run),
     UPPER_BODY(0x040000f3, R.string.activity_type_upper_body),
+    TRAIL_HIKE(0x040000f4, R.string.activity_type_trail_hike, R.drawable.ic_activity_hiking),
+    MMA_HIIT(0x040000f5, R.string.activity_type_mma_hiit, R.drawable.ic_activity_mma),
     LOWER_BODY(0x040000ff, R.string.activity_type_lower_body),
     BARBELL(0x04000100, R.string.activity_type_barbell, R.drawable.ic_activity_barbell),
     TRIATHLON(0x04000101, R.string.activity_type_triathlon),

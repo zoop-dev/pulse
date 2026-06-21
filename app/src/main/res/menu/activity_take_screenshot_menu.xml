@@ -63,6 +63,12 @@
                 app:showAsAction="never" />
 
             <item
+                android:id="@+id/activity_action_share_fit"
+                android:icon="@drawable/ic_share"
+                android:title="@string/activity_detail_export_fit"
+                app:showAsAction="never" />
+
+            <item
                 android:id="@+id/activity_action_dev_tools"
                 android:icon="@drawable/ic_developer_mode"
                 android:title="@string/dev_tools"

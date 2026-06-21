@@ -42,7 +42,11 @@ public class BaseTypeShort implements BaseTypeInterface {
             invalidate(byteBuffer);
             return;
         }
-        int i = (int) ((((Number) o).intValue() + offset) * scale);
+        // Use doubleValue() rather than intValue() so that fractional inputs (Float/Double
+        // physical values like 2.5 m/s on a scale=1000 field) survive the multiply by
+        // scale instead of being truncated to 2 first. For Integer/Long inputs the result
+        // is identical.
+        int i = (int) ((((Number) o).doubleValue() + offset) * scale);
         if (i < min || i > max) {
             invalidate(byteBuffer);
             return;

@@ -44,7 +44,9 @@ public class BaseTypeByte implements BaseTypeInterface {
             invalidate(byteBuffer);
             return;
         }
-        int i = (int) ((((Number) o).intValue() + offset) * scale);
+        // Use doubleValue() rather than intValue() so fractional Float/Double inputs are
+        // not truncated before the scale multiplication. Integer-typed inputs unchanged.
+        int i = (int) ((((Number) o).doubleValue() + offset) * scale);
         if (i < min || i > max) {
             invalidate(byteBuffer);
             return;

@@ -37,6 +37,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
+import nodomain.freeyourgadget.gadgetbridge.export.AutoFitExporter;
 import nodomain.freeyourgadget.gadgetbridge.export.AutoGpxExporter;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
@@ -112,6 +113,7 @@ public class FetchSportsDetailsOperation extends AbstractFetchOperation {
         try {
             final ActivityTrack track = detailsParser.parse(buffer.toByteArray());
             AutoGpxExporter.doExport(getContext(), getDevice(), summary, track);
+            AutoFitExporter.doExport(getContext(), getDevice(), summary, track);
         } catch (final Exception e) {
             GB.toast(getContext(), "Error saving activity details: " + e.getLocalizedMessage(), Toast.LENGTH_LONG, GB.ERROR, e);
             // #4549 - we do not return false here, since this might cause the same activity to be fetched over and over again

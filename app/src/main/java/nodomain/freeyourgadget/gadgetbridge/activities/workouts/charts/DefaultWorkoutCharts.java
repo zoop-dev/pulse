@@ -22,6 +22,7 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KMPH;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS_PER_SECOND;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MILLISECONDS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_100_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_KM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MM;
@@ -81,6 +82,12 @@ public class DefaultWorkoutCharts {
         final List<Entry> stepLengthPoints = new ArrayList<>(initialCapacity);
         final List<Entry> n2LoadPoints = new ArrayList<>(initialCapacity);
         final List<Entry> cnsToxicityPoints = new ArrayList<>(initialCapacity);
+        final List<Entry> verticalOscillationPoints = new ArrayList<>(initialCapacity);
+        final List<Entry> stanceTimePercentPoints = new ArrayList<>(initialCapacity);
+        final List<Entry> stanceTimePoints = new ArrayList<>(initialCapacity);
+        final List<Entry> verticalRatioPoints = new ArrayList<>(initialCapacity);
+        final List<Entry> stanceTimeBalancePoints = new ArrayList<>(initialCapacity);
+        final List<Entry> performanceConditionPoints = new ArrayList<>(initialCapacity);
 
         // some activities / devices provide all points with zero values
         boolean hasSpeedValues = false;
@@ -96,6 +103,12 @@ public class DefaultWorkoutCharts {
         boolean hasStepLengthValues = false;
         boolean hasN2LoadValues = false;
         boolean hasCnsToxicityValues = false;
+        boolean hasVerticalOscillationValues = false;
+        boolean hasStanceTimePercentValues = false;
+        boolean hasStanceTimeValues = false;
+        boolean hasVerticalRatioValues = false;
+        boolean hasStanceTimeBalanceValues = false;
+        boolean hasPerformanceConditionValues = false;
 
         final Accumulator cadenceAccumulator = new Accumulator();
         final Accumulator temperatureAccumulator = new Accumulator();
@@ -200,6 +213,45 @@ public class DefaultWorkoutCharts {
                 n2LoadPoints.add(new Entry(tsShorten, n2Load));
                 hasN2LoadValues = hasN2LoadValues || (n2Load > 0.0f);
             }
+
+            // Running dynamics
+            final float verticalOscillation = point.getVerticalOscillation();
+            if (!Float.isNaN(verticalOscillation)) {
+                verticalOscillationPoints.add(new Entry(tsShorten, verticalOscillation));
+                hasVerticalOscillationValues = hasVerticalOscillationValues || (verticalOscillation > 0.0f);
+            }
+
+            final float stanceTimePercent = point.getStanceTimePercent();
+            if (!Float.isNaN(stanceTimePercent)) {
+                stanceTimePercentPoints.add(new Entry(tsShorten, stanceTimePercent));
+                hasStanceTimePercentValues = hasStanceTimePercentValues || (stanceTimePercent > 0.0f);
+            }
+
+            final float stanceTime = point.getStanceTime();
+            if (!Float.isNaN(stanceTime)) {
+                stanceTimePoints.add(new Entry(tsShorten, stanceTime));
+                hasStanceTimeValues = hasStanceTimeValues || (stanceTime > 0.0f);
+            }
+
+            final float verticalRatio = point.getVerticalRatio();
+            if (!Float.isNaN(verticalRatio)) {
+                verticalRatioPoints.add(new Entry(tsShorten, verticalRatio));
+                hasVerticalRatioValues = hasVerticalRatioValues || (verticalRatio > 0.0f);
+            }
+
+            final float stanceTimeBalance = point.getStanceTimeBalance();
+            if (!Float.isNaN(stanceTimeBalance)) {
+                stanceTimeBalancePoints.add(new Entry(tsShorten, stanceTimeBalance));
+                hasStanceTimeBalanceValues = hasStanceTimeBalanceValues || (stanceTimeBalance > 0.0f);
+            }
+
+            final int performanceCondition = point.getPerformanceCondition();
+            if (performanceCondition > Integer.MIN_VALUE) {
+                // Integer.MIN_VALUE is the no-data sentinel; any other value is a valid
+                // reading, including negative ones (performance condition can be < 0).
+                performanceConditionPoints.add(new Entry(tsShorten, performanceCondition));
+                hasPerformanceConditionValues = true;
+            }
         }
 
         if (!heartRateDataPoints.isEmpty()) {
@@ -256,6 +308,30 @@ public class DefaultWorkoutCharts {
 
         if (hasN2LoadValues && !n2LoadPoints.isEmpty()) {
             charts.add(createN2LoadChart(context, n2LoadPoints));
+        }
+
+        if (hasVerticalOscillationValues && !verticalOscillationPoints.isEmpty()) {
+            charts.add(createVerticalOscillationChart(context, verticalOscillationPoints));
+        }
+
+        if (hasStanceTimePercentValues && !stanceTimePercentPoints.isEmpty()) {
+            charts.add(createStanceTimePercentChart(context, stanceTimePercentPoints));
+        }
+
+        if (hasStanceTimeValues && !stanceTimePoints.isEmpty()) {
+            charts.add(createStanceTimeChart(context, stanceTimePoints));
+        }
+
+        if (hasVerticalRatioValues && !verticalRatioPoints.isEmpty()) {
+            charts.add(createVerticalRatioChart(context, verticalRatioPoints));
+        }
+
+        if (hasStanceTimeBalanceValues && !stanceTimeBalancePoints.isEmpty()) {
+            charts.add(createStanceTimeBalanceChart(context, stanceTimeBalancePoints));
+        }
+
+        if (hasPerformanceConditionValues && !performanceConditionPoints.isEmpty()) {
+            charts.add(createPerformanceConditionChart(context, performanceConditionPoints));
         }
 
         return charts;
@@ -570,6 +646,126 @@ public class DefaultWorkoutCharts {
                 new LineData(dataset),
                 valueFormatter,
                 getUnitString(context, UNIT_PERCENTAGE)
+        );
+    }
+
+    private static WorkoutChart createVerticalOscillationChart(final Context context,
+                                                               final List<Entry> verticalOscillationPoints) {
+        final String label = String.format("%s(%s)", context.getString(R.string.vertical_oscillation), getUnitString(context, UNIT_MM));
+        final LineDataSet dataset = createLineDataSet(context, verticalOscillationPoints, label, ContextCompat.getColor(context, R.color.chart_line_stride));
+        final ValueFormatter valueFormatter = new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.valueOf((int) value);
+            }
+        };
+        return new WorkoutChart(
+                "chart_vertical_oscillation",
+                context.getString(R.string.vertical_oscillation),
+                ActivitySummaryEntries.GROUP_RUNNING_FORM,
+                new LineData(dataset),
+                valueFormatter,
+                getUnitString(context, UNIT_MM)
+        );
+    }
+
+    private static WorkoutChart createStanceTimePercentChart(final Context context,
+                                                             final List<Entry> stanceTimePercentPoints) {
+        final String label = String.format("%s(%s)", context.getString(R.string.stance_time_percent), getUnitString(context, UNIT_PERCENTAGE));
+        final LineDataSet dataset = createLineDataSet(context, stanceTimePercentPoints, label, ContextCompat.getColor(context, R.color.chart_line_swolf));
+        final ValueFormatter valueFormatter = new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.format(java.util.Locale.ROOT, "%.1f", value);
+            }
+        };
+        return new WorkoutChart(
+                "chart_stance_time_percent",
+                context.getString(R.string.stance_time_percent),
+                ActivitySummaryEntries.GROUP_RUNNING_FORM,
+                new LineData(dataset),
+                valueFormatter,
+                getUnitString(context, UNIT_PERCENTAGE)
+        );
+    }
+
+    private static WorkoutChart createStanceTimeChart(final Context context,
+                                                      final List<Entry> stanceTimePoints) {
+        final String label = String.format("%s(%s)", context.getString(R.string.ground_contact_time), getUnitString(context, UNIT_MILLISECONDS));
+        final LineDataSet dataset = createLineDataSet(context, stanceTimePoints, label, ContextCompat.getColor(context, R.color.chart_line_step_length));
+        final ValueFormatter valueFormatter = new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.valueOf((int) value);
+            }
+        };
+        return new WorkoutChart(
+                "chart_stance_time",
+                context.getString(R.string.ground_contact_time),
+                ActivitySummaryEntries.GROUP_RUNNING_FORM,
+                new LineData(dataset),
+                valueFormatter,
+                getUnitString(context, UNIT_MILLISECONDS)
+        );
+    }
+
+    private static WorkoutChart createVerticalRatioChart(final Context context,
+                                                         final List<Entry> verticalRatioPoints) {
+        final String label = String.format("%s(%s)", context.getString(R.string.vertical_ratio), getUnitString(context, UNIT_PERCENTAGE));
+        final LineDataSet dataset = createLineDataSet(context, verticalRatioPoints, label, ContextCompat.getColor(context, R.color.chart_line_stamina));
+        final ValueFormatter valueFormatter = new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.format(java.util.Locale.ROOT, "%.1f", value);
+            }
+        };
+        return new WorkoutChart(
+                "chart_vertical_ratio",
+                context.getString(R.string.vertical_ratio),
+                ActivitySummaryEntries.GROUP_RUNNING_FORM,
+                new LineData(dataset),
+                valueFormatter,
+                getUnitString(context, UNIT_PERCENTAGE)
+        );
+    }
+
+    private static WorkoutChart createStanceTimeBalanceChart(final Context context,
+                                                             final List<Entry> stanceTimeBalancePoints) {
+        final String label = String.format("%s(%s)", context.getString(R.string.ground_contact_time_balance), getUnitString(context, UNIT_PERCENTAGE));
+        final LineDataSet dataset = createLineDataSet(context, stanceTimeBalancePoints, label, ContextCompat.getColor(context, R.color.chart_line_body_energy));
+        final ValueFormatter valueFormatter = new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.format(java.util.Locale.ROOT, "%.1f", value);
+            }
+        };
+        return new WorkoutChart(
+                "chart_stance_time_balance",
+                context.getString(R.string.ground_contact_time_balance),
+                ActivitySummaryEntries.GROUP_RUNNING_FORM,
+                new LineData(dataset),
+                valueFormatter,
+                getUnitString(context, UNIT_PERCENTAGE)
+        );
+    }
+
+    private static WorkoutChart createPerformanceConditionChart(final Context context,
+                                                                final List<Entry> performanceConditionPoints) {
+        final String label = context.getString(R.string.performance_condition);
+        final LineDataSet dataset = createLineDataSet(context, performanceConditionPoints, label, ContextCompat.getColor(context, R.color.chart_line_elevation));
+        final ValueFormatter valueFormatter = new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.valueOf((int) value);
+            }
+        };
+        return new WorkoutChart(
+                "chart_performance_condition",
+                context.getString(R.string.performance_condition),
+                ActivitySummaryEntries.GROUP_RUNNING_FORM,
+                new LineData(dataset),
+                valueFormatter,
+                ""
         );
     }
 
