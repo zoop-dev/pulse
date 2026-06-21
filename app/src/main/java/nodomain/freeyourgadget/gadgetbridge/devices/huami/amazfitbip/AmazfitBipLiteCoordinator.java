@@ -68,6 +68,9 @@ public class AmazfitBipLiteCoordinator extends AmazfitBipCoordinator {
         health.add(R.xml.devicesettings_heartrate_sleep);
         health.add(R.xml.devicesettings_inactivity_dnd);
         health.add(R.xml.devicesettings_goal_notification);
+        final List<Integer> workout = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.WORKOUT);
+        workout.add(R.xml.devicesettings_workout_start_on_phone);
+        workout.add(R.xml.devicesettings_workout_send_gps_to_band);
         final List<Integer> notifications = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.NOTIFICATIONS);
         notifications.add(R.xml.devicesettings_custom_emoji_font);
         notifications.add(R.xml.devicesettings_vibrationpatterns);
