@@ -34,7 +34,7 @@ public class FileType {
         return fileType;
     }
 
-    public enum FILETYPE { //TODO: add specialized method to parse each file type to the enum?
+    public enum FILETYPE {
         // virtual/undocumented
         DIRECTORY(0, 0), // root directory is hardcoded: fileIndex = 0x0000 / 0
         UNKNOWN_1_0(1, 0), // venu 3, fileIndex=4096
@@ -44,7 +44,7 @@ public class FileType {
         DEVICE_1(128, 1), // just "-"
         SETTINGS(128, 2),
         SPORTS(128, 3),
-        ACTIVITY(128, 4),
+        ACTIVITY(128, 4, true),
         WORKOUTS(128, 5),
         COURSES(128, 6),
         SCHEDULES(128, 7),
@@ -60,27 +60,29 @@ public class FileType {
         GLUCOSE(128, 21),
         TRACKING_RECORDS(128, 22),
         TRACKING_EVENTS(128, 23),
+
         VECTOR(128, 25),
         MONITOR_DAILY(128, 28),
         RECORDS(128, 29),
         ALERT(128, 30),
         UNKNOWN_31(128, 31), // sent by HRM Pro Plus
-        MONITOR(128, 32),
+        MONITOR(128, 32, true),
         MLT_SPORT(128, 33),
         SEGMENTS(128, 34),
-        SEGMENT_LIST(128, 35),
+        SEGMENT_LIST(128, 35, true),
         GOLF(128, 36),
         CLUBS(128, 37),
-        SCORE(128, 38),
+        SCORE(128, 38, true),
         ADJUSTMENTS(128, 39),
         HMD(128, 40),
-        CHANGELOG(128, 41),
-        METRICS(128, 44),
+        CHANGELOG(128, 41, true),
+
+        METRICS(128, 44, true),
         BAT_SWING(128, 45),
         ROSTER(128, 46),
         DIVE_PLAN(128, 47),
         HSA_DATA(128, 48),
-        SLEEP(128, 49),
+        SLEEP(128, 49, true),
         SOFTWARE(128, 50),
         CHALLENGE_RESULT(128, 51),
         USER_BEHAVIOR_LOG(128, 52),
@@ -89,7 +91,7 @@ public class FileType {
         CHRONO_SCORECARD(128, 55),
         PACE_BANDS(128, 56),
         SPORTS_BACKUP(128, 57), // Garmin Edge 530 - #5265, Garmin Edge 830
-        DEVICE_58(128, 58), // just "Device" in Fenix 7s
+        DEVICE_58(128, 58, true), // just "Device" in Fenix 7s
         MUSCLE_MAP(128, 59),
         RUNNING_TRACK(128, 60),
         ECG(128, 61),
@@ -97,32 +99,44 @@ public class FileType {
         POWER_GUIDANCE(128, 63),
         CALENDAR(128, 65),
         HRV_STATUS(128, 68),
-        HSA(128, 70),
-        COM_ACT(128, 71),
+        HSA(128, 70, true),
+        COM_ACT(128, 71, true),
         FBT_BACKUP(128, 72),
-        SKIN_TEMP(128, 73),
+        SKIN_TEMP(128, 73, true),
         FBT_PTD_BACKUP(128, 74),
         SCHEDULE(128, 77),
-        SLP_DISR(128, 79),
-        AREA_COURSES(128, 82), // #5824
+        SLP_DISR(128, 79, true),
+        AREA_COURSES(128, 82, true), // #5824
         GEAR(128, 87), // #5824
 
         // Other files
         DOWNLOAD_COURSE(255, 4),
         PRG(255, 17),
-        ERROR_SHUTDOWN_REPORTS(255, 245),
-        IQ_ERROR_REPORTS(255, 244),
+        ERROR_SHUTDOWN_REPORTS(255, 245, true, "ErrorShutdownReports"),
+        IQ_ERROR_REPORTS(255, 244, true, "IQErrorReports"),
         GOLF_SCORECARD(255, 246), // Garmin vívoactive 5 - #4522
-        ULF_LOGS(255, 247),
-        KPI(255, 248), // Garmin Instinct Solar Tactical Edition - #5803
+        ULF_LOGS(255, 247, false, "ULFLogs"),
+        KPI(255, 248, false, "KPI"), // Garmin Instinct Solar Tactical Edition - #5803
         ;
 
         private final int type;
         private final int subtype;
+        public final boolean pull;
+        public final String typeName;
 
         FILETYPE(final int type, final int subtype) {
+            this(type, subtype, false);
+        }
+
+        FILETYPE(final int type, final int subtype, boolean pull) {
+            this(type, subtype, pull, type==128 ? "FIT_TYPE_" + subtype : null);
+        }
+
+        FILETYPE(final int type, final int subtype, boolean pull, final String typeName) {
             this.type = type;
             this.subtype = subtype;
+            this.typeName = typeName;
+            this.pull = pull;
         }
 
         @Nullable
@@ -131,6 +145,19 @@ public class FileType {
                     FILETYPE.values()) {
                 if (ft.type == dataType && ft.subtype == subType)
                     return ft;
+            }
+            return null;
+        }
+
+        @Nullable
+        public static FILETYPE findByTypeName(String name) {
+            if(name == null || name.length() < 1){
+                return null;
+            }
+            for(FILETYPE type : values()){
+                if(type.typeName != null && name.contentEquals(type.typeName)){
+                    return type;
+                }
             }
             return null;
         }
