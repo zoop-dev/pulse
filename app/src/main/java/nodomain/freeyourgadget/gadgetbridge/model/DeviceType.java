@@ -137,6 +137,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.Ga
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner945Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner955Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner965Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.forerunner.GarminForerunner970Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.instinct.GarminInstinct2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.instinct.GarminInstinct2SCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches.instinct.GarminInstinct2SSolarCoordinator;
@@ -744,6 +745,7 @@ public enum DeviceType {
     GARMIN_FORERUNNER_945(GarminForerunner945Coordinator.class),
     GARMIN_FORERUNNER_955(GarminForerunner955Coordinator.class),
     GARMIN_FORERUNNER_965(GarminForerunner965Coordinator.class),
+    GARMIN_FORERUNNER_970(GarminForerunner970Coordinator.class),
     GARMIN_QUATIX_8(GarminQuatix8Coordinator.class),
     GARMIN_TACTIX_7(GarminTactix7Coordinator.class),
     GARMIN_TACTIX_8(GarminTactix8Coordinator.class),

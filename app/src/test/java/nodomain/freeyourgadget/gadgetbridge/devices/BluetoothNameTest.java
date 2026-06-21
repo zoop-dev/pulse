@@ -148,6 +148,7 @@ public class BluetoothNameTest extends TestBase {
             put("Amazfit Bip 3", DeviceType.AMAZFITBIP3); // #3627
             put("Xiaomi Band 8 Active 0C09", DeviceType.MIBAND8ACTIVE); // #3614
             put("UAT-4261", DeviceType.GARMIN_VENU_3S); // #3602
+            put("Forerunner 970", DeviceType.GARMIN_FORERUNNER_970); // #6320
             put("Redmi Watch 3 892C", DeviceType.REDMIWATCH3); // #3581
             put("Redmi Buds 5 Pro", DeviceType.REDMIBUDS5PRO); // #3566
             put("Redmi Watch 2 C21E", DeviceType.REDMIWATCH2); // #3543
