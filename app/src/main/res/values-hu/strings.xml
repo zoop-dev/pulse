@@ -4363,8 +4363,8 @@
     <string name="nothing_prefs_spatial_audio_title">Térbeli hangzás</string>
     <string name="nothing_prefs_spatial_audio_summary">Egy magával ragadó zenehallgatási élmény, amelytől úgy fogja érezni, mintha a zene, a film vagy a játék része lenne.</string>
     <string name="persisting_samples_failed">Hiba tortént a minták mentésekor: %1$s</string>
-    <string name="pref_experimental_metrics_title">Általános metrikák</string>
-    <string name="pref_experimental_metrics_summary">Engedélyezze a kísérleti felhasználói felület logikáját az általános metrikákhoz. Jelenleg ez csak a Garmin eszközökkel rögzített edzésterhelésre és kalóriákra vonatkozik.</string>
+    <string name="pref_experimental_metrics_title">Általános metrikaszámítások</string>
+    <string name="pref_experimental_metrics_summary">Általános metrikaminták használata olyan számításokhoz, mint az edzésterhelés és a kalória, amennyiben rendelkezésre állnak.</string>
     <string name="unit_kcal_per_day">kcal/nap</string>
     <string name="prefs_device_id">Eszközazonosító</string>
     <string name="consumed_electrical_energy">Felhasznált villamosenergia</string>
@@ -4463,4 +4463,18 @@
     <string name="pref_wanderer_enter_api_token_summary">Koppintson ide a Wanderer kiszolgáló és az API-token megadásához</string>
     <string name="pref_wanderer_log_out_title">Kijelentkezés a Wandererből</string>
     <string name="activity_detail_upload_to_wanderer">GPX feltöltése a Wandererbe</string>
+    <string name="generic_metrics">Egyéb</string>
+    <string name="generic_metric_select_metric">Metrika</string>
+    <string name="generic_metric_samples">Minták</string>
+    <string name="generic_metric_chart_label_with_unit">%1$s (%2$s)</string>
+    <string name="metric_garmin_endurance_score">Állóképességi pontszám</string>
+    <string name="metric_garmin_functional_threshold_power">Funkcionális küszöbteljesítmény</string>
+    <string name="metric_garmin_hill_endurance">Hegyi állóképesség</string>
+    <string name="metric_garmin_hill_score">Hegyi pontszám</string>
+    <string name="metric_garmin_hill_strength">Hegyi erő</string>
+    <string name="metric_garmin_met_max_vo2">MET Max VO₂</string>
+    <string name="metric_garmin_running_lactate_threshold_power">Futási laktátküszöb-teljesítmény</string>
+    <string name="metric_garmin_training_readiness">Edzési felkészültség</string>
+    <string name="metric_generic_resting_metabolic_rate">Nyugalmi anyagcsere-érték</string>
+    <string name="select_at_least_option">Válasszon ki legalább %1$d lehetőséget</string>
 </resources>
