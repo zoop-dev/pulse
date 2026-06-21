@@ -60,27 +60,6 @@ public class FileTransferHandler implements MessageHandler {
     private final Upload upload;
     private int maxPacketSize = 375;
 
-    private static final Set<FileType.FILETYPE> FILE_TYPES_TO_PROCESS = new HashSet<>() {{
-        add(FileType.FILETYPE.DIRECTORY);
-        add(FileType.FILETYPE.ACTIVITY);
-        add(FileType.FILETYPE.MONITOR);
-        add(FileType.FILETYPE.METRICS);
-        add(FileType.FILETYPE.CHANGELOG);
-        add(FileType.FILETYPE.HRV_STATUS);
-        add(FileType.FILETYPE.SLEEP);
-        add(FileType.FILETYPE.SKIN_TEMP);
-        // #5824 - We need to sync some files we don't handle, to prevent the watches
-        // from starting to have issues / run out of memory
-        add(FileType.FILETYPE.DEVICE_58);
-        add(FileType.FILETYPE.SLP_DISR);
-        add(FileType.FILETYPE.ERROR_SHUTDOWN_REPORTS);
-        add(FileType.FILETYPE.SCORE);
-        add(FileType.FILETYPE.HSA);
-        add(FileType.FILETYPE.COM_ACT);
-        add(FileType.FILETYPE.AREA_COURSES);
-        add(FileType.FILETYPE.SEGMENT_LIST);
-    }};
-
     public FileTransferHandler(GarminSupport deviceSupport) {
         this.deviceSupport = deviceSupport;
         this.download = new Download();
@@ -254,12 +233,13 @@ public CreateFileMessage initiateUpload(byte[] fileAsByteArray, FileType.FILETYP
                 final Date fileDate = wireTimestamp == 0 ? null
                         : new Date(GarminTimeUtils.garminTimestampToJavaMillis(wireTimestamp));
                 final DirectoryEntry directoryEntry = new DirectoryEntry(fileIndex, filetype, fileNumber, specificFlags, fileFlags, fileSize, fileDate);
-                if (directoryEntry.filetype == null) {
+                final FileType.FILETYPE fileType = directoryEntry.getFiletype();
+                if (filetype == null) {
                     // discard unsupported files
                     LOG.warn("Unsupported directory entry of type {}/{}: {}", fileDataType, fileSubType, directoryEntry);
                     continue;
                 }
-                if (!FILE_TYPES_TO_PROCESS.contains(directoryEntry.filetype) && !fetchUnknownFiles) {
+                if (fileType != FileType.FILETYPE.DIRECTORY && !filetype.pull && !fetchUnknownFiles) {
                     LOG.debug("Skipping directory entry: {}", directoryEntry);
                     continue;
                 }
