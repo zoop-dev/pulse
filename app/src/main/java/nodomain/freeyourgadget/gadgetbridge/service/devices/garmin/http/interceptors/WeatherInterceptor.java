@@ -44,7 +44,7 @@ public class WeatherInterceptor implements HttpInterceptor {
 
     @Override
     public boolean supports(@NonNull final GarminHttpRequest request) {
-        return "api.gcs.garmin.com".equals(request.getDomain()) &&
+        return ("api.gcs.garmin.com".equals(request.getDomain()) || "cache.dciwx.com".equals(request.getDomain())) &&
                 request.getPath().startsWith("/weather/");
     }
 
@@ -135,6 +135,17 @@ public class WeatherInterceptor implements HttpInterceptor {
             //    weatherData = new WeatherAltimeterCalibration();
             //    break;
             //}
+            case "/weather/pointWinds": {
+                final int lat = getQueryNum(query, "lat", 0);
+                final int lon = getQueryNum(query, "lon", 0);
+                final String rspFmt = getQueryString(query, "rspFmt", "json");
+                if (!"json".equals(rspFmt)) {
+                    LOG.error("Unknown response format {} for pointWinds", rspFmt);
+                    return null;
+                }
+                weatherData = new PointWindsResponse(weatherSpec, lat, lon);
+                break;
+            }
             default:
                 LOG.warn("Unknown weather path {}", path);
                 return null;
@@ -336,6 +347,56 @@ public class WeatherInterceptor implements HttpInterceptor {
         }
     }
 
+    public static class PointWindsResponse {
+        public final CcPointWinds CcPointWinds;
+
+        public PointWindsResponse(final WeatherSpec weatherSpec,
+                                  final float lat,
+                                  final float lon) {
+            CcPointWinds = new CcPointWinds();
+            CcPointWinds.i = weatherSpec.getTimestamp();
+            CcPointWinds.lat = lat;
+            CcPointWinds.lon = lon;
+            CcPointWinds.W = new ArrayList<>();
+            if (!weatherSpec.getHourly().isEmpty()) {
+                final int t0 = weatherSpec.getHourly().get(0).getTimestamp();
+                for (int i = 0; i < Math.min(4, weatherSpec.getHourly().size()); i++) {
+                    final WeatherSpec.Hourly hourly = Objects.requireNonNull(weatherSpec.getHourly().get(i));
+                    CcPointWinds.W.add(new PointWind(
+                            hourly.getTimestamp() - t0,
+                            hourly.getWindSpeed() / 1.852f,
+                            hourly.getWindDirection(),
+                            (hourly.getWindSpeed() / 1.852f) *  1.47f
+                    ));
+                }
+            }
+        }
+    }
+
+    public static class CcPointWinds {
+        public int i;
+        public float lat;
+        public float lon;
+        public List<PointWind> W;
+    }
+
+    public static class PointWind {
+        public int t;
+        public float s;
+        public int d;
+        public float g;
+
+        public PointWind(final int timestampOffsetSeconds,
+                         final float speedKnots,
+                         final int directionDegrees,
+                         final float gustsKnots) {
+            this.t = timestampOffsetSeconds;
+            this.s = speedKnots;
+            this.d = directionDegrees;
+            this.g = gustsKnots;
+        }
+    }
+
     public static String getWindDirection(int degrees) {
         degrees = (degrees % 360 + 360) % 360;
 
@@ -416,6 +477,7 @@ public class WeatherInterceptor implements HttpInterceptor {
         // 47 48 foggy (dashes?)
         // 49 50 51 unk
 
+        //noinspection EnhancedSwitchMigration
         switch (openWeatherMapCondition) {
         //Group 2xx: Thunderstorm
             case 210:  //light thunderstorm::  //11d
