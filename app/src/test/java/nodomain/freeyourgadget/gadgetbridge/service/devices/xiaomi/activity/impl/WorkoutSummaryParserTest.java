@@ -43,6 +43,15 @@ public class WorkoutSummaryParserTest {
                     + "AAAAAAAAoA8AAAAAAAAAAAAAAACUEQAAaAADAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAA"
                     + "AAAAAAAAAAAAAAAAAAAAAAAAAADyuEua";
 
+    /** Treadmill v9, 21 Jun 2026 — 192 cal, 135 avg HR, 28 training load, +15 vitality. */
+    private static final String TREADMILL_V9_21JUN =
+            "WCA4aggJjQD//H+QDiBYIDhqhyY4aigGAACgCgAAwAByAQAAlAUAAJAMAAC0AIelZDMz8z8C"
+                    + "AAAAIAAAAAAAcAAAAPwCAAB0AQAAOgEAAOgAKAYAAAAAAAABAwAAAFgCAAAsAYgTAABK"
+                    + "AQAAAADIQQAAoAoAABwAAQAAAAAAAA8AAAAAAAAAAAAAAAAAAwAAh6VkA1B6ALQAhdLG"
+                    + "QAisHEFYIDhqhyY4agAAAAAoBgAAKAYAAAAAAAAAAAAAwAAAAKAKAACQDAAAQwIAAHIB"
+                    + "AAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAHAAAAD8AgAAdAEAADoBAAAA"
+                    + "AAIBMzPzPwAAAAAAAAAADwAcACAAAAAAAAAAAAAAAAAAAAAAAaiMNkSR";
+
     /** Rowing v7, 20 Apr 2026 — 0.4 anaerobic effect, 71 max stroke rate. */
     private static final String ROWING_V7_20APR =
             "+l3maQgHtQD/v/N4//pd5mnwZ+Zp9QkAANYAjqRcmplZQAAAFwAAAAAAoQIAAGoFAACwAAA"
@@ -94,6 +103,22 @@ public class WorkoutSummaryParserTest {
         assertEquals(4500d, num(data, ActivitySummaryEntries.DISTANCE_METERS_CALIBRATED), 0.001);
         assertEquals(104d, num(data, ActivitySummaryEntries.WORKOUT_LOAD), 0.001);
         assertEquals(12d, num(data, ActivitySummaryEntries.VITALITY_GAIN), 0.001);
+    }
+
+    @Test
+    public void treadmillV9_extractsHrStepsRecoveryLoadVitality() {
+        final ActivitySummaryData data = parse(TREADMILL_V9_21JUN);
+
+        // All values verified against the on-watch UI for this workout.
+        assertEquals(192d, num(data, ActivitySummaryEntries.CALORIES_BURNT), 0.001);
+        assertEquals(2720d, num(data, ActivitySummaryEntries.DISTANCE_METERS), 0.001);
+        assertEquals(3216d, num(data, ActivitySummaryEntries.STEPS), 0.001);
+        assertEquals(135d, num(data, ActivitySummaryEntries.HR_AVG), 0.001);
+        assertEquals(180d, num(data, ActivitySummaryEntries.CADENCE_MAX), 0.001);
+        assertEquals(1.9d, num(data, ActivitySummaryEntries.TRAINING_EFFECT_AEROBIC), 0.01);
+        assertEquals(32d, num(data, ActivitySummaryEntries.RECOVERY_TIME), 0.001);
+        assertEquals(28d, num(data, ActivitySummaryEntries.WORKOUT_LOAD), 0.001);
+        assertEquals(15d, num(data, ActivitySummaryEntries.VITALITY_GAIN), 0.001);
     }
 
     @Test

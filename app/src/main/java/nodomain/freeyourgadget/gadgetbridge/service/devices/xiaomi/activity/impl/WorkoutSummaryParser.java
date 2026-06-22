@@ -859,6 +859,9 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
             case 5:
                 headerSize = 4;
                 break;
+            case 9:
+                headerSize = 6;
+                break;
             case 10:
                 headerSize = 8;
                 break;
@@ -894,20 +897,34 @@ public class WorkoutSummaryParser extends XiaomiActivityParser implements Activi
         builder.addByte(HR_MAX, UNIT_BPM);
         builder.addByte(HR_MIN, UNIT_BPM);
         builder.addFloat(TRAINING_EFFECT_AEROBIC, UNIT_NONE);
-        if (version >= 10) {
+        if (version == 9) {
+            builder.addUnknown(4); // reserved (4 bytes)
+        } else {
+            if (version >= 10) {
+                builder.addUnknown(1);
+            }
+            builder.addByte(MAXIMUM_OXYGEN_UPTAKE, UNIT_ML_KG_MIN);
+            if (version >= 10) {
+                builder.addByte(ActivitySummaryEntries.V02MAX_LEVEL, UNIT_NONE);
+            }
             builder.addUnknown(1);
         }
-        builder.addByte(MAXIMUM_OXYGEN_UPTAKE, UNIT_ML_KG_MIN);
-        if (version >= 10) {
-            builder.addByte(ActivitySummaryEntries.V02MAX_LEVEL, UNIT_NONE);
-        }
-        builder.addUnknown(1);
         builder.addShort(RECOVERY_TIME, UNIT_HOURS);
         builder.addInt(HR_ZONE_EXTREME, UNIT_SECONDS);
         builder.addInt(HR_ZONE_ANAEROBIC, UNIT_SECONDS);
         builder.addInt(HR_ZONE_AEROBIC, UNIT_SECONDS);
         builder.addInt(HR_ZONE_FAT_BURN, UNIT_SECONDS);
         builder.addInt(HR_ZONE_WARM_UP, UNIT_SECONDS);
+        if (version == 9) {
+            // v9 treadmill tail anchored to a captured workout's on-watch UI:
+            //   recovery (h): 32, training load: 28, vitality: +15.
+            // (avg cadence and avg pace are derived from steps/distance over the
+            //  active time, not stored separately in v9.)
+            builder.addUnknown(39); // reserved (39 bytes)
+            builder.addShort(WORKOUT_LOAD, UNIT_NONE); // training load
+            builder.addUnknown(7); // reserved (7 bytes)
+            builder.addByte(VITALITY_GAIN, UNIT_NONE); // vitality
+        }
         if (version >= 11) {
             // Trailing zone verified across four captured v11 treadmill workouts:
             //   distance goal:    4000 / 4000 / 2500 / 3000 m  (matches user-set goals)
