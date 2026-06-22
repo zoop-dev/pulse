@@ -4630,4 +4630,14 @@
     <string name="metric_garmin_training_readiness">训练准备度</string>
     <string name="metric_generic_resting_metabolic_rate">静息代谢率</string>
     <string name="select_at_least_option">请至少选 %1$d 个选项</string>
+    <string name="pref_header_auto_export_fit">自动导出 FIT 轨迹</string>
+    <string name="pref_auto_export_fit_summary">同步活动轨迹时自动导出 FIT 文件</string>
+    <string name="pref_auto_export_fit_all_devices_summary">导出所有设备的 FIT 轨迹</string>
+    <string name="pref_auto_export_fit_selected_devices_summary">选择从哪些设备导出 FIT 轨迹</string>
+    <string name="activity_detail_export_fit_failed">导出到 FIT 文件失败</string>
+    <string name="activity_type_mma_hiit">MMA HIIT</string>
+    <string name="stance_time_percent">站立时间 %</string>
+    <string name="performance_condition">性能状况</string>
+    <string name="activity_detail_export_fit">分享 FIT 文件</string>
+    <string name="activity_type_trail_hike">路线徒步</string>
 </resources>
