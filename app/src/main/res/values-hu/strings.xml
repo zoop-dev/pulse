@@ -92,8 +92,8 @@
     <string name="pref_header_development">Fejlesztői beállítások</string>
     <string name="pref_title_development_miaddr">Mi Band cím</string>
     <string name="pref_title_pebble_settings">Pebble beállítások</string>
-    <string name="pref_header_activitytrackers">Tevékenységmérők</string>
-    <string name="pref_title_pebble_activitytracker">Előnyben részesített tevékenységmérő</string>
+    <string name="pref_header_activitytrackers">Tevékenységkövetők</string>
+    <string name="pref_title_pebble_activitytracker">Előnyben részesített tevékenységkövető</string>
     <string name="pref_title_pebble_sync_health">Pebble Health szinkronizálása</string>
     <string name="pref_title_pebble_sync_misfit">Misfit szinkronizálása</string>
     <string name="pref_title_pebble_sync_morpheuz">Morpheuz szinkronizálása</string>
@@ -660,7 +660,7 @@
     <string name="about_activity_title_banglejs_nightly">A Bangle.js Gadgetbridge (korai hozzáférésű kiadás) névjegye</string>
     <string name="sony_automatic_power_off_3_hour">3 óra</string>
     <string name="yesterdays_activity">Tegnapi tevékenység</string>
-    <string name="zetime_activity_tracking">Tevékenységmérés</string>
+    <string name="zetime_activity_tracking">Tevékenységkövetés</string>
     <string name="sony_equalizer_band_16000">16k</string>
     <string name="activity_filter_to_placeholder">ma</string>
     <string name="changelog_full_title">Változáslista</string>
@@ -1133,7 +1133,7 @@
     <string name="save_configuration">Beállítás mentése</string>
     <string name="watchface_widget_type_active_mins">Aktív percek</string>
     <string name="pref_canned_message">Üzenet</string>
-    <string name="menuitem_pomodoro">Pomodoro Tracker</string>
+    <string name="menuitem_pomodoro">Pomodoro-követő</string>
     <string name="watchface_dialog_widget_preset_top">Felső</string>
     <string name="pref_message_privacy_mode_complete">Az összes tartalom elrejtése</string>
     <string name="zepp_os_watchface_minimalist">Minimalist</string>
@@ -1423,7 +1423,7 @@
     <string name="pref_gps_mode_preset">GPS mód</string>
     <string name="pref_agps_expiry_reminder_time">AGPS lejárati emlékeztető ideje</string>
     <string name="pref_camera_remote_title">Kamera távvezérlés</string>
-    <string name="pref_workout_start_on_phone_summary">Fitneszalkalmazás nyomon követés elindítása/leállítása a telefonon, amikor a GPS-edzés elindul a karkötőn</string>
+    <string name="pref_workout_start_on_phone_summary">Fitneszalkalmazás-követés indítása/leállítása az eszközön, amikor GPS-edzés indul a karkötőn</string>
     <string name="pref_workout_detection_categories_summary">Automatikusan felismerhető edzéskategóriák</string>
     <string name="pref_workout_detection_time_summary">Az edzés percek számának folyamatban kell lennie, mielőtt észlelné</string>
     <string name="pref_sleep_mode_sleep_screen_summary">Jelenítse meg az alvó képernyőt, amikor alvó üzemmódban felébreszti a képernyőt, hogy csökkentse a zavaró tényezőket</string>
@@ -1469,7 +1469,7 @@
     <string name="prefs_notifications_and_calls_continious_ring">Értesítés telefoncsörgés közben</string>
     <string name="preferences_makibes_hr3_settings">Makibes HR3 beállítások</string>
     <string name="pref_title_notifications_and_calls_repeat_on_call">Ismételt hívásértesítés</string>
-    <string name="zetime_activity_tracking_summary">Ha bekapcsolja a tevékenységkövetést, számolni fogja a lépéseit, és így tovább.</string>
+    <string name="zetime_activity_tracking_summary">Ha bekapcsolja az tevékenységkövetést, számolni fogja a lépéseit, és így tovább.</string>
     <string name="pref_morning_updates_categories_summary">Minden reggel megjelenő kategóriák listája</string>
     <string name="pref_workout_detection_enabled_summary">Engedélyezze az edzés automatikus észlelését</string>
     <string name="pref_workout_detection_title">Edzésérzékelés</string>
@@ -1483,7 +1483,7 @@
     <string name="offline_voice_response_during_screen_lighting">Válaszoljon a képernyő megvilágítása közben</string>
     <string name="pref_morning_updates_title">Reggeli frissítések</string>
     <string name="pref_morning_updates_summary">Frissítések megjelenítése minden reggel</string>
-    <string name="pref_workout_start_on_phone_title">Fitnesz alkalmazás nyomon követés</string>
+    <string name="pref_workout_start_on_phone_title">Fitneszalkalmazás-követés</string>
     <string name="pref_workout_send_gps_summary">Edzés közben küldje el a jelenlegi GPS-pozíciót a karkötőnek</string>
     <string name="pref_workout_keep_screen_on_summary">A képernyő bekapcsolva marad az edzés alatt, és a fényerőt a rendszer úgy állítja be, hogy folyamatosan megjelenítse a valós idejű edzésadatokat</string>
     <string name="pref_workout_detection_summary">Az edzés automatikus felismerése</string>
@@ -1679,7 +1679,7 @@
     <string name="charts_legend_spo2_average">Átlagos véroxigénszint</string>
     <string name="active_time">Aktív idő</string>
     <string name="standing_time">Állásidő</string>
-    <string name="controlcenter_start_activity_tracks">Az Ön tevékenységeinek nyomon követése</string>
+    <string name="controlcenter_start_activity_tracks">Saját tevékenységkövetések</string>
     <string name="activity_type_not_worn">Nem viselt eszköz</string>
     <string name="activity_type_dynamic_cycle">Dinamikus ciklus</string>
     <string name="activity_type_stair_stepper">Lépcsős lépegető</string>
@@ -1790,7 +1790,7 @@
     <string name="menuitem_dnd">DND</string>
     <string name="zepp_os_watchface_rush">Rush</string>
     <string name="activity_type_icehockey">Jéghoki</string>
-    <string name="notification_channel_gps">GPS nyomkövetés</string>
+    <string name="notification_channel_gps">GPS-nyomonkövetés</string>
     <string name="menuitem_voice_memos">Hangjegyzetek</string>
     <string name="menuitem_sun_moon">Nap és Hold</string>
     <string name="menuitem_female_health">Női egészség</string>
@@ -2445,7 +2445,7 @@
     <string name="menuitem_map">Térkép</string>
     <string name="menuitem_heart_rate_push">Pulzusszám emelése</string>
     <string name="prefs_noise_control">Zajszűrés</string>
-    <string name="pref_device_action_fitness_app_control_toggle">Fitneszalkalmazás-követés bekapcsolása</string>
+    <string name="pref_device_action_fitness_app_control_toggle">Fitneszalkalmazás-követés átváltása</string>
     <string name="prefs_wena3_home_icon_name_energy">Testenergia</string>
     <string name="pref_test_features_title">Funkciók</string>
     <string name="activity_type_luge">Szánkózás</string>
@@ -2978,7 +2978,7 @@
     <string name="music_add_to_playlist">Hozzáadás a lejátszási listához</string>
     <string name="music_new_playlist">Új lejátszási lista</string>
     <string name="music_error">Hiba történt</string>
-    <string name="first_start_open_source_text">A Gadgetbridge egy nyílt forráskódú alkalmazás. Egy közösség által fejlesztve a közösség számára.\n\nBárki hozzájárulhat kóddal, dokumentációval, teszteléssel és adományokkal.\n\nA Gadgetbridge nem tartalmaz hirdetéseket és nem végez követést. Az adatokat helyben, az Android-eszközén tárolja, így adatvédelmi szempontból 100%-ban biztonságos.\n\nLátogasson el a weboldalunkra a további információkért, dokumentációkért és a kommunikációs csatornáink hivatkozásaiért.</string>
+    <string name="first_start_open_source_text">A Gadgetbridge egy nyílt forráskódú alkalmazás, amelyet a közösség fejleszt a közösség számára.\n\nBárki hozzájárulhat a fejlesztéshez kóddal, dokumentációval, teszteléssel vagy adományokkal.\n\nA Gadgetbridge nem tartalmaz hirdetéseket és nem követi Önt. Az adatokat helyben, az Android-eszközén tárolja, így 100%-ban adatvédelem-barát.\n\nLátogasson el weboldalunkra a további információkért, dokumentációkért és a kommunikációs csatornáink eléréséhez.</string>
     <string name="permission_bluetooth_scan_summary">Új Bluetooth-eszközök beolvasása</string>
     <string name="permission_read_call_log_title">Híváslista olvasása</string>
     <string name="permission_read_call_log_summary">Hívásnapló továbbítása a kütyükre</string>
@@ -3645,8 +3645,8 @@
     <string name="activity_type_mountain_bike">Hegyikerékpár</string>
     <string name="activity_type_overlanding">Terepjáró utazás</string>
     <string name="activity_type_road_bike">Országúti kerékpár</string>
-    <string name="activity_type_track_me">Nyomvonal-követés</string>
-    <string name="activity_type_track_run">Nyomvonal-futás</string>
+    <string name="activity_type_track_me">Követés</string>
+    <string name="activity_type_track_run">Pályafutás</string>
     <string name="activity_type_trolling_motor">Vontatómotor</string>
     <string name="activity_type_ultra_run">Ultrafutás</string>
     <string name="activity_type_virtual_run">Virtuális futás</string>
@@ -4147,7 +4147,7 @@
     <string name="recoveryHr">Megnyugvási pulzusszám</string>
     <string name="ratingOfPerceivedExertion">Érzékelt erőfeszítés</string>
     <string name="pref_header_auto_export_gpx">GPX-nyomvonalak automatikus exportálása</string>
-    <string name="pref_auto_export_gpx_summary">Automatikusan exportálja a GPX-fájlokat az aktivitási nyomvanalak szinkronizálásakor</string>
+    <string name="pref_auto_export_gpx_summary">GPX-fájlok automatikus exportálása a tevékenységkövetések szinkronizálásakor</string>
     <string name="pref_export_directory">Exportálási könyvtár</string>
     <string name="pref_auto_export_gpx_all_devices_summary">GPX-nyomvonalak exportálása minden eszközről</string>
     <string name="pref_auto_export_gpx_selected_devices">Kiválasztott eszközök</string>
@@ -4439,9 +4439,9 @@
     <string name="pref_endurain_log_out_title">Kijelentkezés az Endurainből</string>
     <string name="pref_endurain_log_out_summary">Koppintson ide a kijelentkezéshez, ez letiltja az integrációt</string>
     <string name="no_gpx_track_in_activity_toast">Nincs GPX-nyomvonal ebben a tevékenységben</string>
-    <string name="no_activity_track_in_activity_toast">Nincs tevékenységnyomvonal ebben a tevékenységben</string>
+    <string name="no_activity_track_in_activity_toast">Nincs tevékenységkövetés ebben a tevékenységben</string>
     <string name="unable_to_display_gpx_track_toast">Nem sikerült megjeleníteni a GPX-nyomvonalat: %1$s</string>
-    <string name="unable_to_share_gpx_track_toast">Nem sikerül megosztani a GPX-nyomvonalat: %1$s</string>
+    <string name="unable_to_share_gpx_track_toast">Nem sikerült megosztani a GPX-nyomvonalat: %1$s</string>
     <string name="endurain_successfully_uploaded_toast">Sikeresen feltöltve az Endurainbe</string>
     <string name="endurain_error_while_uploading_toast">Hiba történt az Endurainbe történő feltöltéskor</string>
     <string name="endurain_unable_to_upload_gpx_file_toast">Nem sikerült feltölteni a tevékenységfájlt az Endurainbe: %1$s</string>
@@ -4477,4 +4477,8 @@
     <string name="metric_garmin_training_readiness">Edzési felkészültség</string>
     <string name="metric_generic_resting_metabolic_rate">Nyugalmi anyagcsere-érték</string>
     <string name="select_at_least_option">Válasszon ki legalább %1$d lehetőséget</string>
+    <string name="pref_header_auto_export_fit">FIT-követések automatikus exportálása</string>
+    <string name="pref_auto_export_fit_summary">FIT-fájlok automatikus exportálása a tevékenységkövetések szinkronizálásakor</string>
+    <string name="pref_auto_export_fit_all_devices_summary">FIT-követések exportálása minden eszközről</string>
+    <string name="pref_auto_export_fit_selected_devices_summary">Válassza ki, hogy mely eszközökről történjen a FIT-követések exportálása</string>
 </resources>
