@@ -2442,7 +2442,7 @@
     <string name="wearmode_pebble">Pebble (boucle de chaussure)</string>
     <string name="wearmode_band">Bracelet (poignet)</string>
     <string name="alarm_smart_wakeup_interval_default">5 minutes</string>
-    <string name="prefs_heartrate_alert_active_high_threshold">Seuil d\'alerte de fréquence cardiaque élevée pendant une période d\'activité intense</string>
+    <string name="prefs_heartrate_alert_active_high_threshold">Seuil d\'alerte de fréquence cardiaque en période d\'activité intense</string>
     <string name="updatefirmwareoperation_updateproblem_low_battery">La batterie de l\'appareil est trop faible</string>
     <string name="hydration_dnd_summary">Désactiver les alertes d\'hydratation durant un moment</string>
     <string name="silent_mode_vibrate_silent">Vibreur / Silencieux</string>
@@ -4344,7 +4344,7 @@
     <string name="internet_helper_pref_pebble_background_js_summary">Permettre aux applications et cadrans Pebble d\'accéder à Internet</string>
     <string name="internet_helper_pref_pebble_app_config_title">Pages de configuration des applications Pebble</string>
     <string name="notification_pebble_js_service_title">Service JavaScript Pebble</string>
-    <string name="pref_experimental_metrics_title">Mesures génériques</string>
+    <string name="pref_experimental_metrics_title">Calculs métriques génériques</string>
     <string name="pref_experimental_metrics_summary">Activer une interface utilisateur expérimentale pour les mesures génériques. Ne s\'applique actuellement qu\'à la charge d\'entraînement et aux calories enregistrées par les appareils Garmin.</string>
     <string name="diving_cns_toxicity">Toxicité pour le SNC</string>
     <string name="diving_nitrogen_load">Charge en azote</string>
@@ -4377,4 +4377,29 @@
     <string name="work_info_status_enqueued">En file d\'attente</string>
     <string name="huawei_send_gps_and_time_summary">Envoyer le GPS et l\'heure à l\'appareil pour la météo et la recherche d\'étoiles. La position doit être activée dans les réglages</string>
     <string name="health_connect_update_required">Une mise à jour du fournisseur Santé Connect est requise</string>
+    <string name="pref_header_auto_export_fit">Exporter automatiquement les traces FIT</string>
+    <string name="pref_auto_export_fit_summary">Exporter automatiquement les fichiers FIT lors de la synchronisation de l\'activité</string>
+    <string name="pref_auto_export_fit_all_devices_summary">Exporter les traces FIT de tous les appareils</string>
+    <string name="pref_auto_export_fit_selected_devices_summary">Choisir de quels appareils exporter les traces FIT</string>
+    <string name="wanderer_setup_missing_information">Merci de renseigner les deux champs</string>
+    <string name="required">Requis</string>
+    <string name="endurain_sso_login_failed">Échec de connexion SSO</string>
+    <string name="endurain_no_sso_providers_available">Aucun fournisseur SSO n\'a été trouvé</string>
+    <string name="endurain_login_successful">Connexion réussie</string>
+    <string name="endurain_login_failed">Échec de connexion</string>
+    <string name="endurain_oauth_completing_login">Connexion en cours…</string>
+    <string name="endurain_not_logged_in_integration_disabled">Non connecté, intégration désactivée</string>
+    <string name="endurain_logged_out_successfully">Déconnexion réussie</string>
+    <string name="warning_network_required_title">Un réseau est nécessaire</string>
+    <string name="pref_endurain_log_in_title">Se connecter à Endurain</string>
+    <string name="pref_endurain_log_in_summary">Touchez ici pour vous connecter au serveur Endurain</string>
+    <string name="pref_endurain_log_out_title">Déconnexion d\'Endurain</string>
+    <string name="pref_endurain_log_out_summary">Touchez ici pour vous déconnecter, ce qui désactivera l\'intégration</string>
+    <string name="no_gpx_track_in_activity_toast">Pas de trace GPX dans cette activité</string>
+    <string name="endurain_setup_server">Serveur Endurain</string>
+    <string name="endurain_setup_login_type_local">Local</string>
+    <string name="endurain_setup_login_type_sso">SSO</string>
+    <string name="wanderer_unable_to_upload_gpx_file_toast">Échec de l\'envoi du fichier GPX à Wanderer : %1$s</string>
+    <string name="pref_wanderer_status_title">Statut Wanderer</string>
+    <string name="activity_detail_upload_to_wanderer">Envoyer GPX à Wanderer</string>
 </resources>
