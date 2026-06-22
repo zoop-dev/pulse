@@ -130,6 +130,11 @@ public class WorkoutDetailsParserTest {
             final ByteBuffer hdrBuf = ByteBuffer.wrap(hdr).order(ByteOrder.LITTLE_ENDIAN);
             hdrBuf.putInt(nrPosition, seg.records.length);
             hdrBuf.putInt(tsPosition, seg.startTs);
+            if (version == 4) {
+                // Rowing v4 segment header: offset 8 = phase, offset 9-12 = strokes.
+                hdrBuf.put(8, (byte) seg.phase);
+                hdrBuf.putInt(9, seg.strokes);
+            }
             buf.put(hdr);
 
             // records
@@ -186,10 +191,18 @@ public class WorkoutDetailsParserTest {
     private static class Segment {
         final int startTs;
         final int[][] records;
+        final int phase;   // rowing v4 only: 0x81 active / 0x82 rest
+        final int strokes; // rowing v4 only: per-segment strokes
 
         Segment(final int startTs, final int[][] records) {
+            this(startTs, records, 0, 0);
+        }
+
+        Segment(final int startTs, final int[][] records, final int phase, final int strokes) {
             this.startTs = startTs;
             this.records = records;
+            this.phase = phase;
+            this.strokes = strokes;
         }
     }
 
@@ -367,6 +380,57 @@ public class WorkoutDetailsParserTest {
         assertEquals((startTs + 1) * 1000L, points.get(1).getTime().getTime());
         assertEquals(160, points.get(1).getHeartRate());
         assertEquals(172, points.get(1).getCadence());
+
+        // Non-rowing layouts have no confirmed interval phases → one segment, no markers.
+        assertEquals(1, track.getSegments().size());
+        assertNull(records(makeFileId(5), bytes).get(0).segmentIntensity);
+    }
+
+    /** Rowing v4 multi-segment → one ActivityTrack segment per interval, with the
+     *  active/rest intensity and per-segment strokes carried through to SegmentInfo
+     *  so the FIT exporter can emit a lap per interval. */
+    @Test
+    public void testGetActivityTrackV4MultiSegmentLaps() {
+        final int ts1 = 1700005000;
+        final int ts2 = ts1 + 350;
+        final int ts3 = ts2 + 400;
+
+        final byte[] bytes = buildBytes(4,
+                new Segment(ts1, new int[][]{
+                        {140, 0, 32},
+                        {142, 0, 33},
+                }, 0x81, 48),   // active, 48 strokes
+                new Segment(ts2, new int[][]{
+                        {110, 0, 0},
+                        {108, 0, 0},
+                }, 0x82, 0),    // rest, no strokes
+                new Segment(ts3, new int[][]{
+                        {150, 0, 36},
+                        {152, 0, 37},
+                        {154, 0, 38},
+                }, 0x81, 79));  // active, 79 strokes
+
+        final ActivityTrack track = new WorkoutDetailsParser().getActivityTrack(makeFileId(4), bytes);
+        assertNotNull(track);
+
+        // One segment per interval; points partitioned by interval.
+        assertEquals(3, track.getSegments().size());
+        assertEquals(2, track.getSegments().get(0).size());
+        assertEquals(2, track.getSegments().get(1).size());
+        assertEquals(3, track.getSegments().get(2).size());
+
+        final List<ActivityTrack.SegmentInfo> infos = track.getSegmentInfos();
+        assertEquals(3, infos.size());
+        assertEquals(ActivityTrack.SegmentIntensity.ACTIVE, infos.get(0).getIntensity());
+        assertEquals(ActivityTrack.SegmentIntensity.REST, infos.get(1).getIntensity());
+        assertEquals(ActivityTrack.SegmentIntensity.ACTIVE, infos.get(2).getIntensity());
+        assertEquals(Integer.valueOf(48), infos.get(0).getStrokes());
+        assertNull(infos.get(1).getStrokes()); // 0 strokes → not encoded
+        assertEquals(Integer.valueOf(79), infos.get(2).getStrokes());
+    }
+
+    private static List<WorkoutDetailRecord> records(final XiaomiActivityFileId id, final byte[] bytes) {
+        return WorkoutDetailsParser.parseBytes(id, bytes);
     }
 
     @Test

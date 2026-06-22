@@ -52,6 +52,16 @@ public class WorkoutDetailsParser extends XiaomiActivityParser {
         public Integer spo2;
         public Integer cadence;
         public Integer speedRaw;
+        /** True on the first record of each interval/segment, for layouts whose phase
+         *  semantics are confirmed (currently rowing v4 only). Drives
+         *  {@link ActivityTrack} segment boundaries → one FIT lap per interval. */
+        public boolean segmentStart;
+        /** Intensity of the segment this record opens. Only meaningful when
+         *  {@link #segmentStart} is set; null otherwise. */
+        public ActivityTrack.SegmentIntensity segmentIntensity;
+        /** Per-segment strokes parsed directly from the segment header (rowing v4).
+         *  Only set on a {@link #segmentStart} record; null when not encoded. */
+        public Integer segmentStrokes;
     }
 
     @Override
@@ -73,7 +83,21 @@ public class WorkoutDetailsParser extends XiaomiActivityParser {
             return null;
         }
         final ActivityTrack track = new ActivityTrack();
+        boolean firstSegment = true;
         for (final WorkoutDetailRecord r : records) {
+            if (r.segmentStart) {
+                // Parsers that expose confirmed interval phases (rowing v4) mark the first
+                // record of each segment. The first marked segment sets the metadata of the
+                // implicit initial segment; later ones open new segments → one FIT lap each.
+                final ActivityTrack.SegmentInfo info = new ActivityTrack.SegmentInfo(
+                        r.segmentIntensity, null, r.segmentStrokes);
+                if (firstSegment) {
+                    track.setCurrentSegmentInfo(info);
+                } else {
+                    track.startNewSegment(info);
+                }
+                firstSegment = false;
+            }
             final ActivityPoint.Builder builder = new ActivityPoint.Builder(new Date(r.ts * 1000L));
             applyMetrics(builder, fileId.getVersion(), r);
             // No GPS location for non-GPS activities — map will not render, charts still work
@@ -349,6 +373,23 @@ public class WorkoutDetailsParser extends XiaomiActivityParser {
             }
             LOG.debug("Segment: {} records starting at ts={}", nr, ts);
 
+            // Per-segment interval metadata — only for layouts with confirmed phase semantics.
+            // Rowing v4: header offset 8 = phase (0x81 active / 0x82 rest), offset 9-12 = strokes.
+            // Stamped onto the first record of the segment so getActivityTrack can open one
+            // ActivityTrack segment (→ FIT lap) per interval.
+            final boolean segmentedLayout = layoutCode == 4;
+            ActivityTrack.SegmentIntensity segmentIntensity = null;
+            Integer segmentStrokes = null;
+            if (segmentedLayout) {
+                final byte phase = segHdr.get(8);
+                segmentIntensity = phase == (byte) 0x81 ? ActivityTrack.SegmentIntensity.ACTIVE
+                        : phase == (byte) 0x82 ? ActivityTrack.SegmentIntensity.REST
+                        : ActivityTrack.SegmentIntensity.UNKNOWN;
+                final int strokes = segHdr.getInt(9);
+                segmentStrokes = strokes > 0 ? strokes : null;
+            }
+            boolean firstInSegment = true;
+
             final int segmentEnd = buf.position() + nr * recordSize;
             if (segmentEnd > buf.limit()) {
                 LOG.warn("Segment claims {} records but only {} bytes remain, clamping",
@@ -358,6 +399,12 @@ public class WorkoutDetailsParser extends XiaomiActivityParser {
             while (buf.position() < Math.min(segmentEnd, buf.limit())) {
                 final WorkoutDetailRecord r = new WorkoutDetailRecord();
                 r.ts = ts;
+                if (segmentedLayout && firstInSegment) {
+                    r.segmentStart = true;
+                    r.segmentIntensity = segmentIntensity;
+                    r.segmentStrokes = segmentStrokes;
+                }
+                firstInSegment = false;
 
                 switch (layoutCode) {
                     case 2:
