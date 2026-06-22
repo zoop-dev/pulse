@@ -4481,4 +4481,10 @@
     <string name="pref_auto_export_fit_summary">FIT-fájlok automatikus exportálása a tevékenységkövetések szinkronizálásakor</string>
     <string name="pref_auto_export_fit_all_devices_summary">FIT-követések exportálása minden eszközről</string>
     <string name="pref_auto_export_fit_selected_devices_summary">Válassza ki, hogy mely eszközökről történjen a FIT-követések exportálása</string>
+    <string name="activity_type_trail_hike">Tereptúra</string>
+    <string name="activity_type_mma_hiit">MMA HIIT</string>
+    <string name="stance_time_percent">Támaszidő %</string>
+    <string name="performance_condition">Teljesítményállapot</string>
+    <string name="activity_detail_export_fit">FIT-fájl megosztása</string>
+    <string name="activity_detail_export_fit_failed">Nem sikerült exportálni a FIT-fájlt</string>
 </resources>
