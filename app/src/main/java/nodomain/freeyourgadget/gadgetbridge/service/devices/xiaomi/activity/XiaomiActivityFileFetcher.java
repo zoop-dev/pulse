@@ -167,18 +167,17 @@ public class XiaomiActivityFileFetcher {
         this.awaitingPastResponse = awaiting;
     }
 
-    public boolean isFetching() {
-        return isFetching;
-    }
-
     public void signalComplete() {
         LOG.debug("Nothing more to fetch");
+        final boolean wasFetching = isFetching;
         isFetching = false;
         queueHeld.set(false);
-        mHealthService.getSupport().getDevice().unsetBusyTask();
-        GB.signalActivityDataFinish(mHealthService.getSupport().getDevice());
-        GB.updateTransferNotification(null, "", false, 100, mHealthService.getSupport().getContext());
-        mHealthService.getSupport().getDevice().sendDeviceUpdateIntent(mHealthService.getSupport().getContext());
+        if (wasFetching) {
+            mHealthService.getSupport().getDevice().unsetBusyTask();
+            GB.signalActivityDataFinish(mHealthService.getSupport().getDevice());
+            GB.updateTransferNotification(null, "", false, 100, mHealthService.getSupport().getContext());
+            mHealthService.getSupport().getDevice().sendDeviceUpdateIntent(mHealthService.getSupport().getContext());
+        }
     }
 
     public void resumeFetching() {
