@@ -1301,11 +1301,7 @@
     <string name="descentDistance">Відстань спуску</string>
     <string name="activity_type_hiking">Пішохідний туризм</string>
     <string name="activity_type_climbing">Альпінізм</string>
-    <string name="distance_format_kilometers">###.# км</string>
-    <string name="distance_format_miles">###.# миль</string>
     <string name="pref_button_action_disabled">Вимкнено</string>
-    <string name="distance_format_meters">### м</string>
-    <string name="distance_format_feet">### футів</string>
     <string name="pref_media_next">Наступна доріжка</string>
     <string name="pref_media_previous">Попередня доріжка</string>
     <string name="pref_device_action_broadcast">Надіслати Broadcast</string>

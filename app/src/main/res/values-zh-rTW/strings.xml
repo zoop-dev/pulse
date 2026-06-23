@@ -1724,9 +1724,6 @@
     <string name="pref_device_action_fitness_app_control_start">健身應用程式追蹤開始</string>
     <string name="pref_device_action_fitness_app_control_stop">健身應用程式追蹤停止</string>
     <string name="pref_device_action_fitness_app_control_toggle">切換健身應用程式追蹤</string>
-    <string name="distance_format_kilometers">###.#公里</string>
-    <string name="distance_format_miles">###.#米</string>
-    <string name="distance_format_feet">###ft</string>
     <string name="huawei_alarm_smart_description">請勿取消勾選智能喚醒選項。</string>
     <string name="fossil_hr_button_config_info">某些按鈕無法配置，因為它們的功能是硬編碼在手錶的固件中。
 \n
@@ -2546,7 +2543,6 @@
     <string name="pref_device_action_dnd_off">請勿打擾 - 關閉</string>
     <string name="pref_device_action_dnd_priority">請勿打擾 - 僅限優先</string>
     <string name="pref_device_action_dnd_alarms">請勿打擾 - 僅限警報</string>
-    <string name="distance_format_meters">###公尺</string>
     <string name="huawei_trusleep_summary">即時監測您的睡眠品質。</string>
     <string name="pref_activity_recognition_mode_ask">問</string>
     <string name="pref_summary_opentracks_packagename">用於在外部健身應用程式中啟動/停止 GPS 路徑錄製。</string>

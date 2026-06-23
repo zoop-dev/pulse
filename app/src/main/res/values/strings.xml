@@ -3721,14 +3721,6 @@
     <string name="pref_device_action_dnd_priority">Do not disturb - Priority only</string>
     <string name="pref_device_action_dnd_alarms">Do not disturb - Alarms only</string>
     <string name="pref_device_action_dnd_on">Do not disturb - On</string>
-    <!-- Translators: the ### indicate number of digits, keep intact -->
-    <string name="distance_format_meters">###m</string>
-    <!-- Translators: the ### indicate number of digits, keep intact -->
-    <string name="distance_format_kilometers">###.#km</string>
-    <!-- Translators: the ### indicate number of digits, keep intact -->
-    <string name="distance_format_miles">###.#mi</string>
-    <!-- Translators: the ### indicate number of digits, keep intact -->
-    <string name="distance_format_feet">###ft</string>
 
     <string name="idasen_control_button_mid">MID</string>
     <string name="idasen_control_button_sit">SIT</string>

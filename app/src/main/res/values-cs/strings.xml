@@ -1394,13 +1394,9 @@
     <string name="pref_device_action_broadcast">Odeslat vysílání (broadcast)</string>
     <string name="pref_button_action_disabled">Deaktivováno</string>
     <string name="pref_media_previous">Předchozí skladba</string>
-    <string name="distance_format_kilometers">###.#km</string>
     <string name="pref_media_next">Další skladba</string>
-    <string name="distance_format_miles">###.#mi</string>
-    <string name="distance_format_feet">###st</string>
     <string name="pref_media_play">Přehrávání médií</string>
     <string name="pref_media_forward">Přeskočit vpřed</string>
-    <string name="distance_format_meters">###m</string>
     <string name="pref_media_volumeup">Zvýšit hlasitost</string>
     <string name="pref_media_volumedown">Snížit hlasitost</string>
     <string name="prefs_activity_recognition">Nastavení rozpoznávání aktivit</string>

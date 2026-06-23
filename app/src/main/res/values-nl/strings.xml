@@ -1400,13 +1400,9 @@
     <string name="pref_media_volumedown">Volume omlaag</string>
     <string name="pref_media_rewind">Spring achteruit</string>
     <string name="pref_device_action_broadcast">Stuur Broadcast</string>
-    <string name="distance_format_meters">###m</string>
-    <string name="distance_format_miles">###.#mi</string>
-    <string name="distance_format_feet">###ft</string>
     <string name="pref_media_pause">Media pauzeren</string>
     <string name="pref_media_forward">Spring vooruit</string>
     <string name="about_hash">Commit %s</string>
-    <string name="distance_format_kilometers">###.#km</string>
     <string name="pref_activity_recognize_rowing">herken roeien</string>
     <string name="pref_activity_recognition_mode_none">geen</string>
     <string name="menuitem_menu">Menu</string>

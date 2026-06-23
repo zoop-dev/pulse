@@ -31,32 +31,31 @@ public class FormatUtils {
      * ft (feet) or mi (miles). These string units can be translated, so the resulting text might
      * be different in each language.
      * The number is also localizes through DecimalFormatSymbols based on current locale.
-     *
-     * @param distance
      */
-    public static String getFormattedDistanceLabel(double distance) {
-        double distanceMeters = distance;
+    public static String getFormattedDistanceLabel(double distanceMeters) {
         double distanceFeet = distanceMeters * 3.28084f;
-        double distanceFormatted = 0;
+        double distanceFormatted = distanceMeters;
 
-        String unit = GBApplication.getContext().getString(R.string.distance_format_meters);
-        distanceFormatted = distanceMeters;
+        String formatString = "###";
+        String unit = GBApplication.getContext().getString(R.string.meters);
         if (distanceMeters > 2000) {
             distanceFormatted = distanceMeters / 1000;
-            unit = GBApplication.getContext().getString(R.string.distance_format_kilometers);
+            formatString = "###.#";
+            unit = GBApplication.getContext().getString(R.string.km);
         }
         final DistanceUnit distanceUnit = GBApplication.getPrefs().getDistanceUnit();
         if (distanceUnit == DistanceUnit.IMPERIAL) {
-            unit = GBApplication.getContext().getString(R.string.distance_format_feet);
+            unit = GBApplication.getContext().getString(R.string.ft);
             distanceFormatted = distanceFeet;
             if (distanceFeet > 6000) {
                 distanceFormatted = distanceFeet * 0.0001893939f;
-                unit = GBApplication.getContext().getString(R.string.distance_format_miles);
+                formatString = "###.#";
+                unit = GBApplication.getContext().getString(R.string.mi);
             }
         }
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols(GBApplication.getLanguage());
-        DecimalFormat df = new DecimalFormat(unit, symbols);
+        final DecimalFormatSymbols symbols = new DecimalFormatSymbols(GBApplication.getLanguage());
+        final DecimalFormat df = new DecimalFormat(formatString, symbols);
 
-        return df.format(distanceFormatted);
+        return df.format(distanceFormatted) + unit;
     }
 }

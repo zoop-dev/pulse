@@ -1434,10 +1434,6 @@
     <string name="pref_media_forward">Przejdź do przodu</string>
     <string name="pref_media_rewind">Przejdź do tyłu</string>
     <string name="pref_device_action_broadcast">Wyślij transmisję</string>
-    <string name="distance_format_meters">###m</string>
-    <string name="distance_format_kilometers">###.#km</string>
-    <string name="distance_format_miles">###.#mi</string>
-    <string name="distance_format_feet">###ft</string>
     <string name="prefs_activity_recognition">Ustawienia rozpoznawania aktywności</string>
     <string name="pref_activity_recognize_biking">rozpoznaj jazdę na rowerze</string>
     <string name="pref_activity_recognize_walking">rozpoznaj chodzenie</string>

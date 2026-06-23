@@ -1365,7 +1365,6 @@
     <string name="qhybrid_summary_on_device_confirmation">Confirmações de emparelhamento no dispositivo podem tornar-se irritantes. Desactivar pode causar perda de funcionalidade.</string>
     <string name="pref_media_previous">Faixa Anterior</string>
     <string name="pref_media_volumeup">Aumentar Volume</string>
-    <string name="distance_format_miles">###.#mi</string>
     <string name="pref_activity_recognize_running">reconhecer corrida</string>
     <string name="pref_activity_recognition_mode_ask">perguntar</string>
     <string name="pref_activity_recognition_mode_auto">automático</string>
@@ -1399,7 +1398,6 @@
     <string name="pref_button_action_disabled">Desactivado</string>
     <string name="pref_media_next">Faixa Seguinte</string>
     <string name="pref_media_rewind">Saltar para trás</string>
-    <string name="distance_format_feet">###ft</string>
     <string name="minSpeed">Mínimo</string>
     <string name="maxHR">Frequência cardíaca máxima</string>
     <string name="maxStride">Distância de passo máx</string>
@@ -1414,8 +1412,6 @@
     <string name="watchface_dialog_widget_timeout_show_circle">Mostrar círculo ao exceder o tempo limite</string>
     <string name="pref_media_forward">Saltar para a frente</string>
     <string name="pref_device_action_broadcast">Enviar transmissão</string>
-    <string name="distance_format_meters">###m</string>
-    <string name="distance_format_kilometers">###.#km</string>
     <string name="pref_header_sony_equalizer_bands">Bandas</string>
     <string name="battery_case">Caixa com bateria</string>
     <string name="activity_type_hiking">Caminhada longa</string>

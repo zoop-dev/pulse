@@ -3232,10 +3232,6 @@
     <string name="pref_media_playpause">Alternar reprodução</string>
     <string name="pref_media_next">Próxima faixa</string>
     <string name="pref_media_previous">Faixa anterior</string>
-    <string name="distance_format_meters">###m</string>
-    <string name="distance_format_kilometers">###.#km</string>
-    <string name="distance_format_miles">###.#mi</string>
-    <string name="distance_format_feet">###pés</string>
     <string name="huawei_alarm_smart_description">Não desmarque a caixa de seleção “Despertar inteligente”.</string>
     <string name="huawei_alarm_event_description">Não marque a caixa de seleção “Despertar inteligente”.</string>
     <string name="huawei_trusleep_summary">Monitore a qualidade do seu sono em tempo real.</string>

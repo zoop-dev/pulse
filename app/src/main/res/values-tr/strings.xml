@@ -1414,13 +1414,10 @@
     <string name="ascentDistance">Yokuş yukarı mesafe</string>
     <string name="activity_type_hiking">Doğa Yürüyüşü</string>
     <string name="activity_type_climbing">Tırmanma</string>
-    <string name="distance_format_meters">###m</string>
-    <string name="distance_format_miles">###.#mil</string>
     <string name="pref_activity_recognize_running">koşmayı tanı</string>
     <string name="pref_activity_recognize_rowing">kürek çekmeyi tanı</string>
     <string name="prefs_activity_recognition">Etkinlik tanıma ayarları</string>
     <string name="pref_activity_recognize_walking">yürümeyi tanı</string>
-    <string name="distance_format_kilometers">###.#km</string>
     <string name="pref_activity_recognize_biking">bisiklet sürmeyi tanı</string>
     <string name="pref_activity_recognition_mode_auto">otomatik</string>
     <string name="fossil_hr_button_config_info">Bazı düğmeler, işlevleri saatin ürün yazılımında kodlanmış olduğundan yapılandırılamaz.
@@ -1431,7 +1428,6 @@
     <string name="menuitem_menu">Menü</string>
     <string name="about_hash">Kayıt %s</string>
     <string name="pref_device_action_broadcast">Yayın Gönder</string>
-    <string name="distance_format_feet">###ft</string>
     <string name="sony_speak_to_chat_sensitivity">Ses Algılama Hassasiyeti</string>
     <string name="discovery_bluetooth_le_scan">Bluetooth LE taraması:</string>
     <string name="discovery_bluetooth_scan">Bluetooth taraması:</string>

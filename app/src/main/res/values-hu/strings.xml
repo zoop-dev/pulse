@@ -900,7 +900,6 @@
     <string name="pref_header_calendar">Naptár</string>
     <string name="minutes_km">perc/km</string>
     <string name="sony_anc_optimize_title">Optimalizálás</string>
-    <string name="distance_format_kilometers">###.# km</string>
     <string name="pref_title_equalizer_clear">Tiszta</string>
     <string name="sony_anc_optimizer_status_analyzing">Analizálás…</string>
     <string name="pref_chart_heartrate_color_orange">Narancssárga</string>
@@ -984,7 +983,6 @@
     <string name="fossil_hr_new_action_cancel">mégse</string>
     <string name="pref_title_equalizer_soft">Lágy</string>
     <string name="watchface_widget_type_steps">Lépések</string>
-    <string name="distance_format_meters">### m</string>
     <string name="qhybrid_calibration_clockwise">Óramutató járásával megegyezően</string>
     <string name="sony_sound_position_off">Ki</string>
     <string name="watchface_widget_type_date">Dátum</string>
@@ -3064,8 +3062,6 @@
     <string name="soundcore_equalizer_band4">4. sáv</string>
     <string name="long_press">Hosszú nyomás</string>
     <string name="pref_device_action_fitness_app_control_start">Fitneszalkalmazás-követés indítása</string>
-    <string name="distance_format_miles">###.#mi</string>
-    <string name="distance_format_feet">###ft</string>
     <string name="pref_force_dnd_support">Ne zavarjanak mód támogatásának kényszerítése</string>
     <string name="voice_service_class_summary">Teljes körű szolgáltatási útvonal hangparancsok kezeléséhez</string>
     <string name="drag_handle">húzófogantyú</string>

@@ -1320,8 +1320,6 @@
     <string name="pref_media_forward">Saltar adelante</string>
     <string name="pref_media_rewind">Saltar atrás</string>
     <string name="pref_device_action_broadcast">Enviar transmisión</string>
-    <string name="distance_format_meters">### m</string>
-    <string name="distance_format_miles">###.# mi</string>
     <string name="discover_unsupported_devices">Detectar dispositivos no compatibles</string>
     <string name="about_hash">Revisión %s</string>
     <string name="sony_speak_to_chat_focus_on_voice">Centrarse en la voz</string>
@@ -1329,7 +1327,6 @@
     <string name="sony_speak_to_chat_timeout_short">Corta (15 s)</string>
     <string name="sony_speak_to_chat_sensitivity_low">Baja</string>
     <string name="sony_speak_to_chat_timeout">Tiempo de espera</string>
-    <string name="distance_format_feet">### ft</string>
     <string name="sony_speak_to_chat">Hablar para chatear</string>
     <string name="sony_speak_to_chat_sensitivity">Sensibilidad de detección de voz</string>
     <string name="sony_speak_to_chat_sensitivity_auto">Automática</string>
@@ -1337,7 +1334,6 @@
     <string name="sony_connect_two_devices">Conectar con 2 dispositivos simultáneamente</string>
     <string name="sony_speak_to_chat_timeout_long">Larga (1 min)</string>
     <string name="sony_pause_when_taken_off">Pausar cuando se quitan los auriculares</string>
-    <string name="distance_format_kilometers">###.# km</string>
     <string name="discovery_bluetooth_le_scan">Escaneo Bluetooth LE:</string>
     <string name="device_unsupported">NO ADMITIDO</string>
     <string name="discovery_bluetooth_scan">Escaneo Bluetooth:</string>

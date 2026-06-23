@@ -2087,13 +2087,10 @@
     <string name="pref_media_pause">停止</string>
     <string name="watchface_dialog_widget_timezone_duration">時計を表示する時間 (秒)</string>
     <string name="pref_media_next">次の曲</string>
-    <string name="distance_format_meters">###m</string>
-    <string name="distance_format_miles">###.#mi</string>
     <string name="sony_button_mode_left">ボタンの機能 (左)</string>
     <string name="pref_screen_brightness">画面の明るさ</string>
     <string name="pref_media_play">再生</string>
     <string name="pref_device_action_dnd_off">サイレント モード - オフ</string>
-    <string name="distance_format_kilometers">###.#km</string>
     <string name="pref_title_opentracks_packagename">OpenTracks のパッケージ名</string>
     <string name="pref_screen_auto_brightness_title">明るさの自動調節</string>
     <string name="sony_quick_access_triple_tap">Quick Access (トリプルタップ)</string>
@@ -2109,7 +2106,6 @@
     <string name="pref_device_action_dnd_priority">サイレント モード - 重要度の高い通知のみ</string>
     <string name="pref_device_action_dnd_alarms">サイレント モード - アラームのみ</string>
     <string name="pref_device_action_dnd_on">サイレント モード - オン</string>
-    <string name="distance_format_feet">###ft</string>
     <string name="pref_activity_recognize_running">ランニングの検出</string>
     <string name="pref_activity_recognition_mode_ask">確認する</string>
     <string name="menuitem_menu">メニュー</string>

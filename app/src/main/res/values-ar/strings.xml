@@ -1277,7 +1277,6 @@
     <string name="watchface_dialog_widget_timezone">المنطقة الزمنية</string>
     <string name="watchface_dialog_widget_timezone_duration">مدة رؤية الساعة (بالثواني)</string>
     <string name="pref_device_action_phone_gps_location_listener_stop">ايقاف مستمع موقع GPS</string>
-    <string name="distance_format_meters">### م</string>
     <string name="steps_streaks_streak_days">خط
 \nأيام</string>
     <string name="steps_streaks_average_steps">متوسط
@@ -1383,7 +1382,6 @@
     <string name="pref_media_pause">إيقاف الوسائط مؤقتا</string>
     <string name="pref_media_playpause">تبديل التشغيل</string>
     <string name="pref_media_previous">المسار السابق</string>
-    <string name="distance_format_kilometers">###.#km</string>
     <string name="pref_title_opentracks_packagename">اسم حزمة OpenTracks</string>
     <string name="supercars_lights_blinking_label">وامض</string>
     <string name="qhybrid_goal_in_steps">الهدف في الخطوات</string>
@@ -1400,7 +1398,6 @@
     <string name="prefs_button_single_press_action_selection_title">إجراء الحدث 1</string>
     <string name="pref_title_equalizer_dynamic">ديناميكي</string>
     <string name="pref_device_action_broadcast">إرسال البث</string>
-    <string name="distance_format_miles">###.#mi</string>
     <string name="sony_equalizer_preset_manual">يدوي</string>
     <string name="pref_header_sony_equalizer_preset_custom_2">إعداد مسبق مخصص 2</string>
     <string name="sony_speak_to_chat_sensitivity_auto">تلقائي</string>
@@ -2006,7 +2003,6 @@
     <string name="prefs_ambient_sound_during_call_title">الصوت المحيطي أثناء المكالمة</string>
     <string name="prefs_ambient_settings_title">خيارات الصوت المحيطي</string>
     <string name="prefs_active_noise_cancelling_level">مستوى إلغاء الضوضاء النشط</string>
-    <string name="distance_format_feet">###ft</string>
     <string name="controlcenter_toggle_details">تبديل التفاصيل</string>
     <string name="wifi_hotspot_status">حالة نقطة اتصال Wi-Fi</string>
     <string name="ftp_server">خادم بروتوكول نقل الملفات</string>

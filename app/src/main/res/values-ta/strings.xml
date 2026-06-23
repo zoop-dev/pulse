@@ -215,7 +215,6 @@
     <string name="pref_device_action_fitness_app_control_stop">உடற்பயிற்சி பயன்பாட்டு கண்காணிப்பு நிறுத்தம்</string>
     <string name="pref_device_action_fitness_app_control_toggle">உடற்பயிற்சி பயன்பாட்டு கண்காணிப்பை மாற்றவும்</string>
     <string name="pref_device_action_fitness_app_control_start">உடற்பயிற்சி பயன்பாட்டு கண்காணிப்பு தொடங்குகிறது</string>
-    <string name="distance_format_miles">###.#மி</string>
     <string name="idasen_pref_sit_height">SIT நிலை உயரம் (சென்டிமீட்டரில்)</string>
     <string name="idasen_pref_stand_height">நிலை உயரம் (சென்டிமீட்டரில்)</string>
     <string name="idasen_pref_value_warning">மதிப்பு 62 - 126 செமீ இடையே இருக்க வேண்டும்</string>
@@ -951,8 +950,6 @@
     <string name="soundcore_equalizer_direction_lying">பொய்</string>
     <string name="soundcore_equalizer_band8">பேண்ட் 8</string>
     <string name="pref_screen_auto_brightness_title">ஆட்டோ ஒளி</string>
-    <string name="distance_format_meters">### மீ</string>
-    <string name="distance_format_kilometers">###.#கி.மீ</string>
     <string name="idasen_control_button_mid">நடுப்பகுதி</string>
     <string name="idasen_control_button_stand">நிற்க</string>
     <string name="steps_streaks_since_date">%s என்பதால்</string>
@@ -3090,7 +3087,6 @@
     <string name="watchface_widget_type_steps">படிகள்</string>
     <string name="prefs_seamless_connection_switch_summary">இணை சாதனங்களுக்கு இடையில் மொட்டுகளை தானாக மாற்றுகிறது</string>
     <string name="qhybrid_title_on_device_confirmation">சாதனத்தில் இணைத்தல் உறுதிப்படுத்தலை இயக்கவும்</string>
-    <string name="distance_format_feet">### அடி</string>
     <string name="huawei_alarm_smart_description">அறிவுள்ள வேக்அப் தேர்வுப்பெட்டியைத் தேர்வுசெய்ய வேண்டாம்.</string>
     <string name="pref_activity_full_sync_trigger_summary">அனைத்து செயல்பாட்டு தரவுகளின் முழு ஒத்திசைவைத் தூண்டவும்</string>
     <string name="prefs_wena3_vibration_step_up">மேலே செல்லுங்கள்</string>

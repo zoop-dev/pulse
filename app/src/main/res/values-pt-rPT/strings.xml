@@ -2158,10 +2158,6 @@
     <string name="pref_media_forward">Saltar para a frente</string>
     <string name="pref_media_rewind">Saltar para trás</string>
     <string name="pref_device_action_broadcast">Enviar transmissão</string>
-    <string name="distance_format_meters">###m</string>
-    <string name="distance_format_kilometers">###.#km</string>
-    <string name="distance_format_miles">###.#mi</string>
-    <string name="distance_format_feet">###ft</string>
     <string name="prefs_activity_recognition">Definições de reconhecimento de atividade</string>
     <string name="pref_activity_recognize_running">reconhecer corrida</string>
     <string name="pref_activity_recognize_biking">reconhecer ciclismo</string>

@@ -1396,16 +1396,12 @@
     <string name="pref_media_pause">Pause Média</string>
     <string name="pref_media_playpause">Changer l\'état de lecture</string>
     <string name="pref_media_volumedown">Volume moins</string>
-    <string name="distance_format_miles">###.#mi</string>
     <string name="pref_media_previous">Piste précédente</string>
     <string name="pref_media_volumeup">Volume plus</string>
     <string name="pref_media_next">Piste suivante</string>
     <string name="pref_media_rewind">Piste précédente</string>
     <string name="pref_device_action_broadcast">Envoyer un message Broadcast</string>
-    <string name="distance_format_meters">###m</string>
     <string name="pref_media_forward">Avance rapide</string>
-    <string name="distance_format_kilometers">###.#km</string>
-    <string name="distance_format_feet">###ft</string>
     <string name="about_hash">Commit %s</string>
     <string name="menuitem_menu">Menu</string>
     <string name="fossil_hr_button_config_info">Certains boutons ne peuvent pas être configurés car leurs fonctions sont encodées en dur dans le micro-logiciel de l\'appareil.

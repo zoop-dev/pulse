@@ -2863,10 +2863,6 @@
     <string name="pref_device_action_dnd_priority">방해 금지 - 우선순위만</string>
     <string name="pref_device_action_dnd_alarms">방해 금지 - 알람만</string>
     <string name="pref_device_action_dnd_on">방해 금지 - 켜기</string>
-    <string name="distance_format_meters">###m</string>
-    <string name="distance_format_kilometers">###.#km</string>
-    <string name="distance_format_miles">###.#mi</string>
-    <string name="distance_format_feet">###ft</string>
     <string name="idasen_control_button_mid">중간</string>
     <string name="idasen_control_button_sit">앉기</string>
     <string name="idasen_control_button_stand">서기</string>

@@ -1309,7 +1309,6 @@
     <string name="pref_media_volumedown">Volum ned</string>
     <string name="pref_media_forward">Hopp fremover</string>
     <string name="pref_media_rewind">Hopp bakover</string>
-    <string name="distance_format_feet">###ft</string>
     <string name="pref_activity_recognize_running">gjenkjenn løping</string>
     <string name="pref_activity_recognize_biking">gjenkjenn sykling</string>
     <string name="pref_activity_recognize_walking">gjenkjenn gange</string>
@@ -1324,11 +1323,8 @@
     <string name="sony_speak_to_chat_sensitivity_low">Lav</string>
     <string name="sony_speak_to_chat">Snakk-til-chat</string>
     <string name="pref_activity_recognition_mode_auto">auto</string>
-    <string name="distance_format_meters">###m</string>
     <string name="pref_button_action_disabled">Deaktivert</string>
     <string name="pref_media_previous">Forrige spor</string>
-    <string name="distance_format_miles">###.#mi</string>
-    <string name="distance_format_kilometers">###.#km</string>
     <string name="prefs_activity_recognition">Aktivitetsgjenkjenning-innstillinger</string>
     <string name="pref_activity_recognition_mode_ask">spør</string>
     <string name="fossil_hr_button_config_info">Noen knapper kan ikke konfigureres fordi funksjonene deres er hardkodet i klokkens fastvare.\n\nAdvarsel: Langt trykk på den øvre knappen når et urvis fra den offisielle Fossil-appen er installert vil også bytte mellom å vise/skjule widgets.</string>
