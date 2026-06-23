@@ -130,11 +130,8 @@ public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeri
         Prefs prefs = GBApplication.getPrefs();
         CHART_TEXT_COLOR = GBApplication.getSecondaryTextColor(requireContext());
         DESCRIPTION_COLOR = LEGEND_TEXT_COLOR = TEXT_COLOR = GBApplication.getTextColor(requireContext());
-        if (prefs.getBoolean("chart_heartrate_color", false)) {
-            HEARTRATE_COLOR = ContextCompat.getColor(requireContext(), R.color.chart_heartrate_alternative);
-        } else {
-            HEARTRATE_COLOR = ContextCompat.getColor(requireContext(), R.color.chart_heartrate);
-        }
+        // Pulse: on-brand HR red.
+        HEARTRATE_COLOR = ContextCompat.getColor(requireContext(), R.color.pulse_ring_hr);
         HEARTRATE_MIN_COLOR = ContextCompat.getColor(requireContext(), R.color.chart_heartrate_minimum);
         HEARTRATE_MAX_COLOR = ContextCompat.getColor(requireContext(), R.color.chart_heartrate_maximum);
         HEARTRATE_RESTING_COLOR = ContextCompat.getColor(requireContext(), R.color.chart_heartrate_resting);
@@ -245,7 +242,7 @@ public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeri
         if (GBApplication.getPrefs().getBoolean("charts_show_average", true)) {
             LegendEntry hrAverageEntry = new LegendEntry();
             hrAverageEntry.label = getString(R.string.hr_average);
-            hrAverageEntry.formColor = TOTAL_DAYS != 1 ? HEARTRATE_COLOR : Color.RED;
+            hrAverageEntry.formColor = TOTAL_DAYS != 1 ? HEARTRATE_COLOR : ContextCompat.getColor(requireContext(), R.color.pulse_neon_cyan);
             legendEntries.add(hrAverageEntry);
         }
 
@@ -395,7 +392,7 @@ public class HeartRatePeriodFragment extends AbstractChartFragment<HeartRatePeri
             final LimitLine averageLine = new LimitLine(data.average);
             averageLine.setLineWidth(1.5f);
             averageLine.enableDashedLine(15f, 10f, 0f);
-            averageLine.setLineColor(Color.RED);
+            averageLine.setLineColor(ContextCompat.getColor(requireContext(), R.color.pulse_neon_cyan));
             hrLineChart.getAxisLeft().addLimitLine(averageLine);
         }
 

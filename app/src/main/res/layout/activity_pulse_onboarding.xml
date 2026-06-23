@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pulse: first-run welcome screen. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pulse_bg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="28dp"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginTop="48dp"
+            android:src="@drawable/ic_notification"
+            app:tint="?attr/pulseAccent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/pulse_onboard_title"
+            android:fontFamily="@font/unbounded"
+            android:textColor="@color/pulse_text"
+            android:textSize="30sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/pulse_onboard_tagline"
+            android:textColor="@color/pulse_text_dim"
+            android:textSize="15sp"
+            android:lineSpacingMultiplier="1.2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="40dp">
+
+            <LinearLayout style="@style/PulseOnboardRow">
+                <ImageView style="@style/PulseOnboardIcon" android:src="@drawable/ic_shield" app:tint="?attr/pulseAccent" />
+                <LinearLayout style="@style/PulseOnboardText">
+                    <TextView style="@style/PulseOnboardHead" android:text="@string/pulse_onboard_p1_title" />
+                    <TextView style="@style/PulseOnboardBody" android:text="@string/pulse_onboard_p1_body" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout style="@style/PulseOnboardRow">
+                <ImageView style="@style/PulseOnboardIcon" android:src="@drawable/ic_dashboard" app:tint="?attr/pulseAccent" />
+                <LinearLayout style="@style/PulseOnboardText">
+                    <TextView style="@style/PulseOnboardHead" android:text="@string/pulse_onboard_p2_title" />
+                    <TextView style="@style/PulseOnboardBody" android:text="@string/pulse_onboard_p2_body" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout style="@style/PulseOnboardRow">
+                <ImageView style="@style/PulseOnboardIcon" android:src="@drawable/ic_paint" app:tint="?attr/pulseAccent" />
+                <LinearLayout style="@style/PulseOnboardText">
+                    <TextView style="@style/PulseOnboardHead" android:text="@string/pulse_onboard_p3_title" />
+                    <TextView style="@style/PulseOnboardBody" android:text="@string/pulse_onboard_p3_body" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/onboard_connect"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/pulse_pill"
+            android:text="@string/pulse_onboard_connect"
+            android:textColor="@color/pulse_text"
+            android:textAllCaps="false"
+            android:fontFamily="@font/satoshi_medium"
+            android:textSize="15sp"
+            android:stateListAnimator="@null" />
+
+        <Button
+            android:id="@+id/onboard_start"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/pulse_pill_primary"
+            android:text="@string/pulse_onboard_start"
+            android:textColor="@color/pulse_bg"
+            android:textAllCaps="false"
+            android:fontFamily="@font/satoshi_bold"
+            android:textSize="15sp"
+            android:stateListAnimator="@null" />
+    </LinearLayout>
+</ScrollView>

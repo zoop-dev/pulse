@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pulse: animated "Week in Review". Top-level blocks are stagger-animated in code. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pulse_bg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/week_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp">
+            <TextView
+                android:id="@+id/week_range"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/pulse_text_dim"
+                android:textSize="14sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pulse_week_title"
+                android:fontFamily="@font/unbounded"
+                android:textColor="@color/pulse_text"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+        <!-- hero steps -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="20dp">
+            <TextView
+                android:id="@+id/week_steps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/unbounded"
+                android:textColor="?attr/pulseAccent"
+                android:textSize="64sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pulse_week_steps_label"
+                android:textColor="@color/pulse_text_dim"
+                android:textSize="15sp" />
+            <TextView
+                android:id="@+id/week_delta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/pulse_mint"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- challenge -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/pulse_widget_bg"
+            android:padding="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pulse_week_challenge"
+                android:textAllCaps="true"
+                android:textColor="?attr/pulseAccent"
+                android:textSize="12sp"
+                android:letterSpacing="0.08"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/week_challenge_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/unbounded"
+                android:textColor="@color/pulse_text"
+                android:textSize="20sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="14dp"
+                android:orientation="horizontal"
+                android:background="@drawable/pulse_bar_track">
+                <View
+                    android:id="@+id/week_challenge_fill"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:background="@drawable/pulse_bar_fill"
+                    android:backgroundTint="?attr/pulseAccent" />
+                <View
+                    android:id="@+id/week_challenge_gap"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/week_challenge_caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/pulse_text_dim"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- stats grid -->
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:columnCount="2">
+
+            <LinearLayout style="@style/PulseStatCell" android:background="@drawable/pulse_widget_bg">
+                <TextView android:id="@+id/week_distance" style="@style/PulseStatValue" android:textColor="@color/pulse_neon_cyan" />
+                <TextView style="@style/PulseStatLabel" android:text="@string/distance" />
+            </LinearLayout>
+            <LinearLayout style="@style/PulseStatCell" android:background="@drawable/pulse_widget_bg">
+                <TextView android:id="@+id/week_calories" style="@style/PulseStatValue" android:textColor="@color/pulse_ring_cal" />
+                <TextView style="@style/PulseStatLabel" android:text="@string/calories" />
+            </LinearLayout>
+            <LinearLayout style="@style/PulseStatCell" android:background="@drawable/pulse_widget_bg">
+                <TextView android:id="@+id/week_avgday" style="@style/PulseStatValue" android:textColor="@color/pulse_mint" />
+                <TextView style="@style/PulseStatLabel" android:text="@string/pulse_week_avg_day" />
+            </LinearLayout>
+            <LinearLayout style="@style/PulseStatCell" android:background="@drawable/pulse_widget_bg">
+                <TextView android:id="@+id/week_sleep" style="@style/PulseStatValue" android:textColor="@color/pulse_purple" />
+                <TextView style="@style/PulseStatLabel" android:text="@string/menuitem_sleep" />
+            </LinearLayout>
+            <LinearLayout style="@style/PulseStatCell" android:background="@drawable/pulse_widget_bg">
+                <TextView android:id="@+id/week_activedays" style="@style/PulseStatValue" android:textColor="?attr/pulseAccent" />
+                <TextView style="@style/PulseStatLabel" android:text="@string/pulse_week_active_days" />
+            </LinearLayout>
+            <LinearLayout style="@style/PulseStatCell" android:background="@drawable/pulse_widget_bg">
+                <TextView android:id="@+id/week_bestday" style="@style/PulseStatValue" android:textColor="@color/pulse_text" />
+                <TextView style="@style/PulseStatLabel" android:text="@string/pulse_week_best_day" />
+            </LinearLayout>
+        </GridLayout>
+
+        <!-- personal records -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pulse_week_records"
+            android:textAllCaps="true"
+            android:textColor="?attr/pulseAccent"
+            android:textSize="12sp"
+            android:letterSpacing="0.08"
+            android:textStyle="bold"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="10dp" />
+        <LinearLayout
+            android:id="@+id/week_prs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </LinearLayout>
+</ScrollView>

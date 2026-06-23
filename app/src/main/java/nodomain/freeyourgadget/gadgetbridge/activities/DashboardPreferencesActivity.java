@@ -18,20 +18,12 @@ package nodomain.freeyourgadget.gadgetbridge.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.preference.MultiSelectListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
 public class DashboardPreferencesActivity extends AbstractSettingsActivityV2 {
     @Override
@@ -49,45 +41,22 @@ public class DashboardPreferencesActivity extends AbstractSettingsActivityV2 {
         public void onCreatePreferences(final Bundle savedInstanceState, final String rootKey) {
             setPreferencesFromResource(R.xml.dashboard_preferences, rootKey);
 
-            setInputTypeFor("dashboard_widget_today_hr_interval", InputType.TYPE_CLASS_NUMBER);
-
-            final MultiSelectListPreference dashboardDevices = findPreference("dashboard_devices_multiselect");
-            if (dashboardDevices != null) {
-                List<GBDevice> devices = GBApplication.app().getDeviceManager().getDevices();
-                List<String> deviceMACs = new ArrayList<>();
-                List<String> deviceNames = new ArrayList<>();
-                for (GBDevice dev : devices) {
-                    deviceMACs.add(dev.getAddress());
-                    deviceNames.add(dev.getAliasOrName());
-                }
-                dashboardDevices.setEntryValues(deviceMACs.toArray(new String[0]));
-                dashboardDevices.setEntries(deviceNames.toArray(new String[0]));
+            // Open the drag-and-drop layout editor (same as the Today edit pencil).
+            final Preference editLayout = findPreference("pref_dashboard_edit_layout");
+            if (editLayout != null) {
+                editLayout.setOnPreferenceClickListener(preference -> {
+                    startActivity(new Intent(requireContext(), PulseDashboardEditActivity.class));
+                    return true;
+                });
             }
-            List<String> dashboardPrefs = Arrays.asList(
-                    "dashboard_cards_enabled",
-                    "pref_dashboard_widgets_order",
-                    "dashboard_widget_today_24h",
-                    "dashboard_widget_today_24h_upside_down",
-                    "dashboard_widget_today_show_yesterday",
-                    "dashboard_widget_today_dim_yesterday",
-                    "dashboard_widget_today_time_indicator",
-                    "dashboard_widget_today_2columns",
-                    "dashboard_widget_today_legend",
-                    "dashboard_widget_today_hr_interval",
-                    "dashboard_widget_goals_2columns",
-                    "dashboard_widget_goals_legend",
-                    "dashboard_devices_all",
-                    "dashboard_devices_multiselect"
-            );
-            Preference pref;
-            for (String dashboardPref : dashboardPrefs) {
-                pref = findPreference(dashboardPref);
-                if (pref != null) {
-                    pref.setOnPreferenceChangeListener((preference, autoExportEnabled) -> {
-                        sendDashboardConfigChangedIntent();
-                        return true;
-                    });
-                }
+
+            // Hero ring metric — re-render the dashboard when changed.
+            final Preference ringMetric = findPreference("pulse_ring_metric");
+            if (ringMetric != null) {
+                ringMetric.setOnPreferenceChangeListener((preference, newVal) -> {
+                    sendDashboardConfigChangedIntent();
+                    return true;
+                });
             }
         }
 

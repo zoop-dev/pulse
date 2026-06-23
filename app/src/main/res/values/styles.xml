@@ -54,12 +54,23 @@
         <item name="textColorSecondary">@color/secondarytext</item>
         <item name="textColorTertiary">@color/tertiarytext_dark</item>
 
+        <!-- Pulse: Satoshi as the app-wide body font (matches zachy.cc) -->
+        <item name="android:fontFamily">@font/satoshi</item>
+        <item name="fontFamily">@font/satoshi</item>
+
         <item name="colorPrimary">@color/primarydark_dark</item>
         <item name="colorPrimaryDark">@color/primarydark_dark</item>
 
         <item name="colorOnPrimary">@android:color/white</item>
         <item name="colorPrimaryContainer">@color/accent</item>
         <item name="colorOnPrimaryContainer">@android:color/white</item>
+
+        <!-- Pulse: Fitbit-style near-black surfaces + globally rounded cards -->
+        <item name="android:colorBackground">@color/pulse_bg</item>
+        <item name="android:windowBackground">@color/pulse_bg</item>
+        <item name="colorSurface">@color/pulse_card</item>
+        <item name="colorSurfaceVariant">@color/pulse_card_alt</item>
+        <item name="materialCardViewStyle">@style/Pulse.CardView</item>
 
         <item name="elevationOverlayEnabled">false</item>
 
@@ -71,7 +82,7 @@
 
         <item name="drawer_header_color">?attr/colorPrimaryDark</item>
         <item name="drawer_title_color">@android:color/white</item>
-        <item name="cardview_background_color">@color/cardview_dark_background</item>
+        <item name="cardview_background_color">@color/pulse_card</item>
         <item name="actionmenu_icon_color">@android:color/white</item>
         <item name="chart_deep_sleep">@color/chart_deep_sleep_dark</item>
         <item name="chart_light_sleep">@color/chart_light_sleep_dark</item>
@@ -90,7 +101,10 @@
         <item name="deviceIconLight">#1f7fdb</item>
         <item name="deviceIconDark">#4dabf5</item>
 
-        <item name="android:navigationBarColor">?attr/colorSurface</item>
+        <!-- Pulse: near-black system bars everywhere -->
+        <item name="android:statusBarColor">@color/pulse_bg</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
+        <item name="android:navigationBarColor">@color/pulse_bg</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
     </style>
 
@@ -182,7 +196,9 @@
     <!-- action bar styles -->
     <style name="GadgetbridgeTheme.RedActionBar" parent="Widget.Material3.ActionBar.Solid">
         <item name="titleTextStyle">@style/GadgetbridgeTheme.ActionBarTitleStyle</item>
-        <item name="background">@color/primarydark_dark</item>
+        <!-- Pulse: near-black action bar across all screens -->
+        <item name="background">@color/pulse_bg</item>
+        <item name="elevation">0dp</item>
     </style>
     <style name="GadgetbridgeThemeDynamic.ActionBar" parent="Widget.Material3.ActionBar.Solid">
         <item name="background">?attr/colorSurface</item>
@@ -243,5 +259,83 @@
         <item name="android:layout_marginBottom">2dp</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_rowWeight">1</item>
+    </style>
+
+    <!-- Pulse: Fitbit-style rounded card -->
+    <style name="Pulse.CardView" parent="Widget.Material3.CardView.Filled">
+        <item name="cardCornerRadius">22dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardBackgroundColor">@color/pulse_card</item>
+        <item name="contentPadding">4dp</item>
+        <item name="android:layout_margin">6dp</item>
+    </style>
+
+    <style name="Pulse.NavIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">#332BB8FF</item>
+    </style>
+
+    <!-- Pulse: accent overlays applied via AbstractGBActivity.init (theme.applyStyle). -->
+    <style name="PulseAccentBlue"><item name="pulseAccent">@color/accent_blue</item></style>
+    <style name="PulseAccentViolet"><item name="pulseAccent">@color/accent_violet</item></style>
+    <style name="PulseAccentCoral"><item name="pulseAccent">@color/accent_coral</item></style>
+    <style name="PulseAccentMint"><item name="pulseAccent">@color/accent_mint</item></style>
+    <style name="PulseAccentPink"><item name="pulseAccent">@color/accent_pink</item></style>
+
+    <!-- Pulse: onboarding feature-row styles -->
+    <style name="PulseOnboardRow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginBottom">22dp</item>
+    </style>
+    <style name="PulseOnboardIcon">
+        <item name="android:layout_width">26dp</item>
+        <item name="android:layout_height">26dp</item>
+    </style>
+    <style name="PulseOnboardText">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_marginStart">16dp</item>
+    </style>
+    <style name="PulseOnboardHead">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/pulse_text</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/satoshi_medium</item>
+    </style>
+    <style name="PulseOnboardBody">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/pulse_text_dim</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:lineSpacingMultiplier">1.1</item>
+    </style>
+
+    <!-- Pulse: reusable stat-cell styles (rounded card with Unbounded value + dim label). -->
+    <style name="PulseStatCell">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:layout_margin">6dp</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">18dp</item>
+    </style>
+    <style name="PulseStatValue">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/unbounded</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+    <style name="PulseStatLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:textColor">@color/pulse_text_dim</item>
+        <item name="android:textSize">12sp</item>
     </style>
 </resources>

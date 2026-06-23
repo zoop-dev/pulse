@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pulse_bg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Streak headline -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🔥"
+                android:textSize="40sp"
+                android:layout_marginEnd="12dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/streak_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:fontFamily="@font/unbounded"
+                    android:textColor="?attr/pulseAccent"
+                    android:textSize="40sp"
+                    android:includeFontPadding="false" />
+
+                <TextView
+                    android:id="@+id/streak_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pulse_streak_days"
+                    android:textColor="@color/pulse_text_dim"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Goal metric selector -->
+        <LinearLayout
+            android:id="@+id/streak_metric_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/pulse_widget_bg"
+            android:padding="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="20dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/pulse_streak_goal_label"
+                android:textColor="@color/pulse_text_dim"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/streak_metric_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/pulse_neon_cyan"
+                android:textStyle="bold"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <!-- Month navigation -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="14dp">
+
+            <TextView
+                android:id="@+id/streak_prev"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:gravity="center"
+                android:text="‹"
+                android:textColor="?attr/pulseAccent"
+                android:textSize="26sp"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/streak_month"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:fontFamily="@font/unbounded"
+                android:textColor="@color/pulse_text"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/streak_next"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:gravity="center"
+                android:text="›"
+                android:textColor="?attr/pulseAccent"
+                android:textSize="26sp"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+        <!-- Weekday header -->
+        <LinearLayout
+            android:id="@+id/streak_weekdays"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp" />
+
+        <!-- Calendar grid (built in code) -->
+        <GridLayout
+            android:id="@+id/streak_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="7" />
+
+        <!-- Legend -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="24dp">
+
+            <View
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:background="@drawable/pulse_streak_hit"
+                android:layout_marginEnd="6dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pulse_streak_legend_hit"
+                android:textColor="@color/pulse_text_dim"
+                android:textSize="13sp"
+                android:layout_marginEnd="20dp" />
+
+            <View
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:background="@drawable/pulse_streak_today"
+                android:layout_marginEnd="6dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pulse_streak_legend_today"
+                android:textColor="@color/pulse_text_dim"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- Lifetime totals -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pulse_lifetime"
+            android:textAllCaps="true"
+            android:textColor="?attr/pulseAccent"
+            android:textSize="12sp"
+            android:letterSpacing="0.08"
+            android:textStyle="bold"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:id="@+id/life_days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/pulse_text_dim"
+            android:textSize="13sp"
+            android:layout_marginBottom="14dp" />
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2">
+
+            <LinearLayout
+                style="@style/GridTile"
+                android:background="@drawable/pulse_widget_bg"
+                android:layout_margin="6dp"
+                android:gravity="start|center_vertical">
+                <TextView
+                    android:id="@+id/life_steps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="—"
+                    android:fontFamily="@font/unbounded"
+                    android:textColor="?attr/pulseAccent"
+                    android:textSize="22sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/steps"
+                    android:textColor="@color/pulse_text_dim"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/GridTile"
+                android:background="@drawable/pulse_widget_bg"
+                android:layout_margin="6dp"
+                android:gravity="start|center_vertical">
+                <TextView
+                    android:id="@+id/life_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="—"
+                    android:fontFamily="@font/unbounded"
+                    android:textColor="@color/pulse_neon_cyan"
+                    android:textSize="22sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/distance"
+                    android:textColor="@color/pulse_text_dim"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/GridTile"
+                android:background="@drawable/pulse_widget_bg"
+                android:layout_margin="6dp"
+                android:gravity="start|center_vertical">
+                <TextView
+                    android:id="@+id/life_calories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="—"
+                    android:fontFamily="@font/unbounded"
+                    android:textColor="@color/pulse_ring_cal"
+                    android:textSize="22sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/calories"
+                    android:textColor="@color/pulse_text_dim"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/GridTile"
+                android:background="@drawable/pulse_widget_bg"
+                android:layout_margin="6dp"
+                android:gravity="start|center_vertical">
+                <TextView
+                    android:id="@+id/life_sleep"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="—"
+                    android:fontFamily="@font/unbounded"
+                    android:textColor="@color/pulse_purple"
+                    android:textSize="22sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/menuitem_sleep"
+                    android:textColor="@color/pulse_text_dim"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </GridLayout>
+
+        <!-- Achievements -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pulse_achievements"
+            android:textAllCaps="true"
+            android:textColor="?attr/pulseAccent"
+            android:textSize="12sp"
+            android:letterSpacing="0.08"
+            android:textStyle="bold"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="10dp" />
+
+        <GridLayout
+            android:id="@+id/achievements_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2" />
+    </LinearLayout>
+</ScrollView>

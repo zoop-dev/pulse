@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/pulse_bg"
     tools:context=".activities.dashboard.DashboardCalendarActivity">
 
     <LinearLayout
@@ -30,8 +31,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/calendar_month"
-                android:textStyle="bold"
-                android:textSize="25sp"
+                android:fontFamily="@font/unbounded"
+                android:textColor="@color/pulse_text"
+                android:textSize="22sp"
                 android:layout_centerInParent="true" />
             <Button
                 android:id="@+id/arrow_right"
@@ -55,8 +57,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:textSize="20sp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/unbounded"
+            android:textColor="@color/pulse_text"
+            android:textSize="16sp"
             android:text="@string/dashboard_calendar_month_goals_reached_title" />
 
         <ImageView
@@ -71,7 +78,12 @@
             android:id="@+id/dashboard_calendar_month_goals_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp" />
+            android:textColor="@color/pulse_text_dim"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="16dp" />
 
     </LinearLayout>
 

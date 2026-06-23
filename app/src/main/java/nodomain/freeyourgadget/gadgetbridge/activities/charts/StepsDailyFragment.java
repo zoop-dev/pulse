@@ -115,7 +115,7 @@ public class StepsDailyFragment extends StepsFragment<StepsDailyFragment.StepsDa
         stepsGauge.setImageBitmap(GaugeDrawer.drawCircleGauge(
                 width,
                 width / 15,
-                getResources().getColor(R.color.steps_color),
+                nodomain.freeyourgadget.gadgetbridge.GBApplication.getAccentColor(requireContext()),
                 (int) stepsData.todayStepsDay.steps,
                 STEPS_GOAL,
                 getContext()
@@ -136,7 +136,7 @@ public class StepsDailyFragment extends StepsFragment<StepsDailyFragment.StepsDa
             lineEntries.add(new Entry(tsTranslation.shorten(sample.getTimestamp()), sum));
         }
 
-        final int stepsColor = getResources().getColor(R.color.steps_color);
+        final int stepsColor = nodomain.freeyourgadget.gadgetbridge.GBApplication.getAccentColor(requireContext());
         DailyCumulativeLineChartHelper.setCumulativeData(
                 stepsChart,
                 lineEntries,

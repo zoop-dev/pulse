@@ -121,25 +121,26 @@ public class StepsPeriodFragment extends StepsFragment<StepsPeriodFragment.Steps
         xAxisBottom.setDrawGridLines(false);
         xAxisBottom.setEnabled(true);
         xAxisBottom.setDrawLimitLinesBehindData(true);
-        xAxisBottom.setTextColor(CHART_TEXT_COLOR);
+        xAxisBottom.setTextColor(getResources().getColor(R.color.pulse_text_dim));
+        xAxisBottom.setDrawAxisLine(false);
 
         final YAxis yAxisLeft = stepsChart.getAxisLeft();
         yAxisLeft.setDrawGridLines(true);
+        yAxisLeft.setGridColor(getResources().getColor(R.color.pulse_card_alt));
+        yAxisLeft.setGridLineWidth(1f);
+        yAxisLeft.setDrawAxisLine(false);
         yAxisLeft.setDrawTopYLabelEntry(true);
         yAxisLeft.setEnabled(true);
-        yAxisLeft.setTextColor(CHART_TEXT_COLOR);
+        yAxisLeft.setTextColor(getResources().getColor(R.color.pulse_text_dim));
         yAxisLeft.setAxisMinimum(0f);
         final LimitLine goalLine = new LimitLine(STEPS_GOAL);
-        goalLine.setLineColor(getResources().getColor(R.color.steps_color));
+        goalLine.setLineColor(getResources().getColor(R.color.pulse_neon_cyan));
         goalLine.setLineWidth(1.5f);
         goalLine.enableDashedLine(15f, 10f, 0f);
         yAxisLeft.addLimitLine(goalLine);
 
         final YAxis yAxisRight = stepsChart.getAxisRight();
-        yAxisRight.setEnabled(true);
-        yAxisRight.setDrawLabels(false);
-        yAxisRight.setDrawGridLines(false);
-        yAxisRight.setDrawAxisLine(true);
+        yAxisRight.setEnabled(false);
     }
 
     @Override
@@ -177,7 +178,7 @@ public class StepsPeriodFragment extends StepsFragment<StepsPeriodFragment.Steps
         }
         BarDataSet set = new BarDataSet(entries, "Steps");
         set.setDrawValues(true);
-        set.setColors(getResources().getColor(R.color.steps_color));
+        set.setColors(nodomain.freeyourgadget.gadgetbridge.GBApplication.getAccentColor(requireContext()));
         final XAxis x = stepsChart.getXAxis();
         x.setValueFormatter(getStepsChartDayValueFormatter(stepsData));
         stepsChart.getAxisLeft().setAxisMaximum(Math.max(set.getYMax(), STEPS_GOAL) + 2000);

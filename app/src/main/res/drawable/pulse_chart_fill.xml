@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pulse: neon area fill under chart lines (fades to transparent) -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <gradient
+        android:angle="90"
+        android:startColor="#002BB8FF"
+        android:endColor="#662BB8FF" />
+</shape>
