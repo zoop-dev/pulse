@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  Pulse: hardened from upstream. INTERNET is enabled (for weather), so we lock the
+  network policy down: no cleartext (HTTPS only) and system CAs only — user-installed
+  CA certs are NOT trusted, which blocks the common user-CA MITM vector.
+-->
 <network-security-config>
-    <base-config cleartextTrafficPermitted="true">
+    <base-config cleartextTrafficPermitted="false">
         <trust-anchors>
             <certificates src="system" />
-            <certificates src="user" />
         </trust-anchors>
     </base-config>
+    <!-- Pulse's only outbound endpoint: weather. HTTPS + system trust only. -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">api.open-meteo.com</domain>
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </domain-config>
 </network-security-config>
