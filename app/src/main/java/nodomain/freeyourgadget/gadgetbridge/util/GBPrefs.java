@@ -96,7 +96,7 @@ public class GBPrefs extends Prefs {
     public static final String INTENT_API_BROADCAST_EXPORT_ZIP = "intent_api_broadcast_zip_export";
 
     public static final String RECONNECT_SCAN_KEY = "prefs_general_key_auto_reconnect_scan";
-    public static final boolean RECONNECT_SCAN_DEFAULT = false;
+    public static final boolean RECONNECT_SCAN_DEFAULT = true; // Pulse: scan to reconnect after a drop
 
     public static final String USER_NAME = "mi_user_alias";
     public static final String USER_NAME_DEFAULT = "gadgetbridge-user";
@@ -202,29 +202,29 @@ public class GBPrefs extends Prefs {
 
     public TemperatureUnit getTemperatureUnit() {
         try {
-            return TemperatureUnit.valueOf(getString(SettingsActivity.PREF_UNIT_TEMPERATURE, "celsius").toUpperCase(Locale.ROOT));
+            return TemperatureUnit.valueOf(getString(SettingsActivity.PREF_UNIT_TEMPERATURE, "fahrenheit").toUpperCase(Locale.ROOT));
         } catch (final Exception e) {
             LOG.error("Error reading temperature unit preference", e);
         }
-        return TemperatureUnit.CELSIUS;
+        return TemperatureUnit.FAHRENHEIT;
     }
 
     public WeightUnit getWeightUnit() {
         try {
-            return WeightUnit.valueOf(getString(SettingsActivity.PREF_UNIT_WEIGHT, "kilogram").toUpperCase(Locale.ROOT));
+            return WeightUnit.valueOf(getString(SettingsActivity.PREF_UNIT_WEIGHT, "pound").toUpperCase(Locale.ROOT));
         } catch (final Exception e) {
             LOG.error("Error reading weight unit preference", e);
         }
-        return WeightUnit.KILOGRAM;
+        return WeightUnit.POUND;
     }
 
     public DistanceUnit getDistanceUnit() {
         try {
-            return DistanceUnit.valueOf(getString(SettingsActivity.PREF_UNIT_DISTANCE, "metric").toUpperCase(Locale.ROOT));
+            return DistanceUnit.valueOf(getString(SettingsActivity.PREF_UNIT_DISTANCE, "imperial").toUpperCase(Locale.ROOT));
         } catch (final Exception e) {
             LOG.error("Error reading distance unit preference", e);
         }
-        return DistanceUnit.METRIC;
+        return DistanceUnit.IMPERIAL;
     }
 
     public boolean syncTime() {

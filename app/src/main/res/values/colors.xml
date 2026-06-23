@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary_light" type="color">#ff3d00</color>
-    <color name="primarydark_light" type="color">#dd2c00</color>
+    <color name="primary_light" type="color">#1F8BFF</color>
+    <color name="primarydark_light" type="color">#0A6CFF</color>
 
-    <color name="primary_dark" type="color">#ff3d00</color>
-    <color name="primarydark_dark" type="color">#dd2c00</color>
+    <color name="primary_dark" type="color">#1F8BFF</color>
+    <color name="primarydark_dark" type="color">#0A6CFF</color>
 
-    <color name="accent" type="color">#0091ea</color>
+    <color name="accent" type="color">#2E9BFF</color>
 
     <color name="primarytext_light" type="color">#000000</color>
-    <color name="primarytext_dark" type="color">#ffffff</color>
+    <color name="primarytext_dark" type="color">#ECEBE6</color>
 
     <color name="secondarytext" type="color">#ff808080</color>
     <color name="tertiarytext_light" type="color">#ffd0d0d0</color>
@@ -74,12 +74,12 @@
     <color name="vo2max_value_good_color" type="color">#04c79c</color>
     <color name="vo2max_value_excellent_color" type="color">#02a8e6</color>
     <color name="vo2max_value_superior_color" type="color">#824be3</color>
-    <color name="body_energy_level_color" type="color">#5ac234</color>
+    <color name="body_energy_level_color" type="color">#4AD6A0</color>
     <color name="body_energy_lost_color" type="color">#ff6c43</color>
     <color name="steps_color" type="color">#00c9bf</color>
     <color name="calories_color" type="color">#fa4502</color>
     <color name="calories_resting_color" type="color">#1f49f2</color>
-    <color name="respiratory_rate_color" type="color">#163ede</color>
+    <color name="respiratory_rate_color" type="color">#7A5CFF</color>
     <color name="chart_temperature" type="color">#ff8f00</color>
     <color name="chart_temperature_average" type="color">#00acc1</color>
     <color name="spo2_color" type="color">#aad93832</color>
@@ -123,6 +123,27 @@
     <color name="map_track_default" type="color">#fc5203</color>
 
     <color name="transparent">#00000000</color>
+
+    <!-- Pulse: zachy.cc aesthetic — near-black blue surfaces + neon-blue/cyan -->
+    <!-- Pulse light-mode palette (dark variants live in values-night/colors.xml) -->
+    <color name="pulse_bg">#F4F5F7</color>
+    <color name="pulse_card">#FFFFFF</color>
+    <color name="pulse_card_alt">#E4E7EC</color>
+    <color name="pulse_neon">#1488D6</color>
+    <color name="pulse_neon_cyan">#0E9DC4</color>
+    <color name="pulse_ring_steps">#0E9DC4</color>
+    <color name="pulse_ring_hr">#E5484D</color>
+    <color name="pulse_ring_cal">#E07B1F</color>
+    <color name="pulse_purple">#6A40E0</color>
+    <color name="pulse_mint">#1FA877</color>
+    <color name="pulse_text">#16181D</color>
+    <color name="pulse_text_dim">#6B6F78</color>
+    <!-- Pulse accent choices (light-mode values; dark variants in values-night) -->
+    <color name="accent_blue">#1488D6</color>
+    <color name="accent_violet">#6A40E0</color>
+    <color name="accent_coral">#E5484D</color>
+    <color name="accent_mint">#1FA877</color>
+    <color name="accent_pink">#D6248C</color>
 
     <drawable name="selected">@color/accent</drawable>
 

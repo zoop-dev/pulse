@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pulse: device + battery chip shown in the toolbar -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar_device_chip"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="@drawable/pulse_pill"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="6dp"
+    android:clickable="true"
+    android:focusable="true">
+
+    <View
+        android:id="@+id/toolbar_device_dot"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/pulse_status_dot" />
+
+    <TextView
+        android:id="@+id/toolbar_device_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="@color/pulse_text"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/toolbar_device_battery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/pulse_neon_cyan"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

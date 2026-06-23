@@ -22,7 +22,21 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <ProgressBar
+        android:id="@+id/pulse_sync_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="12dp"
+        android:layout_marginHorizontal="12dp"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/pulse_sync_progress"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/appbarlayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <nodomain.freeyourgadget.gadgetbridge.activities.views.PulseRefreshLayout
         android:id="@+id/dashboard_swipe_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -33,7 +47,7 @@
             android:id="@+id/dashboard_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </nodomain.freeyourgadget.gadgetbridge.activities.views.PulseRefreshLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav_bar"
@@ -41,6 +55,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
+        android:background="@color/pulse_card"
+        app:elevation="0dp"
+        app:itemIconTint="@color/pulse_nav_item"
+        app:itemTextColor="@color/pulse_nav_item"
+        app:itemActiveIndicatorStyle="@style/Pulse.NavIndicator"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 

@@ -5460,6 +5460,38 @@
         <item>@string/menuitem_calories_segmented</item>
     </string-array>
 
+    <!-- Pulse: accent color choices -->
+    <string-array name="pulse_accent_entries">
+        <item>Neon Blue</item>
+        <item>Violet</item>
+        <item>Coral</item>
+        <item>Mint</item>
+        <item>Pink</item>
+    </string-array>
+    <string-array name="pulse_accent_values">
+        <item>blue</item>
+        <item>violet</item>
+        <item>coral</item>
+        <item>mint</item>
+        <item>pink</item>
+    </string-array>
+
+    <!-- Pulse: hero ring metric options (mirror DashboardFragment.RING_METRICS) -->
+    <string-array name="pulse_ring_metric_entries">
+        <item>@string/steps</item>
+        <item>@string/pulse_active_label</item>
+        <item>@string/menuitem_sleep</item>
+        <item>@string/calories</item>
+        <item>@string/distance</item>
+    </string-array>
+    <string-array name="pulse_ring_metric_values">
+        <item>steps</item>
+        <item>activetime</item>
+        <item>sleep</item>
+        <item>calories</item>
+        <item>distance</item>
+    </string-array>
+
     <string-array name="pref_dashboard_widgets_order_values">
         <item>today</item>
         <item>goals</item>

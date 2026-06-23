@@ -208,9 +208,7 @@ public class GB {
                     .setShowWhen(false)
                     .setOngoing(true);
 
-            if (!GBApplication.isRunningTwelveOrLater()) {
-                builder.setColor(ContextCompat.getColor(context, R.color.accent));
-            }
+            builder.setColor(ContextCompat.getColor(context, R.color.pulse_neon));
         } else if(devices.size() == 1) {
             GBDevice device = devices.get(0);
             String deviceName = device.getAliasOrName();
@@ -227,9 +225,7 @@ public class GB {
                     .setShowWhen(false)
                     .setOngoing(true);
 
-            if (!GBApplication.isRunningTwelveOrLater()) {
-                builder.setColor(ContextCompat.getColor(context, R.color.accent));
-            }
+            builder.setColor(ContextCompat.getColor(context, R.color.pulse_neon));
 
             Intent deviceCommunicationServiceIntent = new Intent(context, DeviceCommunicationService.class);
             deviceCommunicationServiceIntent.setPackage(BuildConfig.APPLICATION_ID);
@@ -295,9 +291,7 @@ public class GB {
                     .setShowWhen(false)
                     .setOngoing(true);
 
-            if (!GBApplication.isRunningTwelveOrLater()) {
-                builder.setColor(ContextCompat.getColor(context, R.color.accent));
-            }
+            builder.setColor(ContextCompat.getColor(context, R.color.pulse_neon));
 
             if (anyDeviceSupportsActivityDataFetching) {
                 Intent deviceCommunicationServiceIntent = new Intent(context, DeviceCommunicationService.class);
@@ -354,9 +348,7 @@ public class GB {
                 .setShowWhen(false)
                 .setOngoing(true);
 
-        if (!GBApplication.isRunningTwelveOrLater()) {
-            builder.setColor(ContextCompat.getColor(context, R.color.accent));
-        }
+        builder.setColor(ContextCompat.getColor(context, R.color.pulse_neon));
 
         // A small bug: When "Reconnect only to connected devices" is disabled, the intent will be added even when there are no devices in GB
         // Not sure whether it is worth the complexity to fix this

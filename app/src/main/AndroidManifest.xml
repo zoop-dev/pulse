@@ -56,8 +56,8 @@
     <uses-permission android:name="nz.eloque.foss_wallet.READ_CARDS"/>
     <uses-permission android:name="nz.eloque.foss_wallet.dev.READ_CARDS"/>
 
-    <!-- Make sure we don't get the INTERNET permission even when a dependency requires it -->
-    <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
+    <!-- Pulse: re-enable INTERNET (removed upstream) so we can fetch weather from Open-Meteo -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- Internet Helper -->
     <uses-permission android:name="nodomain.freeyourgadget.internethelper.INTERNET"/>
@@ -164,7 +164,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:requestLegacyExternalStorage="true"
-        android:theme="@style/GadgetbridgeTheme"
+        android:theme="@style/GadgetbridgeThemeDark"
         tools:replace="android:label">
         <receiver
             android:name=".externalevents.sleepasandroid.SleepAsAndroidReceiver"
@@ -198,6 +198,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.DevicesActivity"
+            android:label="@string/bottom_nav_devices"
+            android:parentActivityName=".activities.ControlCenterv2" />
+        <activity
+            android:name=".activities.PulseWeatherActivity"
+            android:label="@string/pulse_weather_title"
+            android:parentActivityName=".activities.ControlCenterv2" />
+        <activity
+            android:name=".activities.PulseDashboardEditActivity"
+            android:label="@string/pulse_customize_today"
+            android:parentActivityName=".activities.ControlCenterv2" />
+        <activity
+            android:name=".activities.PulseGoalsActivity"
+            android:label="@string/activity_prefs_goals"
+            android:parentActivityName=".activities.SettingsActivity" />
         <activity
             android:name=".activities.welcome.WelcomeActivity"
             android:label="@string/first_start_welcome_title"
@@ -677,6 +693,15 @@
         </receiver>
 
         <receiver
+            android:name=".util.PulseWeeklyRecapReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="nodomain.freeyourgadget.gadgetbridge.PULSE_WEEKLY_RECAP" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
             android:name=".externalevents.AutoStartReceiver"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED"
             android:exported="false">
@@ -908,19 +933,6 @@
         </provider>
 
         <receiver
-            android:name=".SleepAlarmWidget"
-            android:label="@string/appwidget_sleep_alarm_widget_label"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="nodomain.freeyourgadget.gadgetbridge.SLEEP_ALARM_WIDGET_CLICK" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/sleep_alarm_widget_info" />
-        </receiver>
-        <receiver
             android:name=".Widget"
             android:label="@string/widget_listing_label"
             android:exported="false">
@@ -936,11 +948,49 @@
                 android:resource="@xml/widget_info" />
         </receiver>
 
+        <service
+            android:name=".PulseStepsTile"
+            android:exported="true"
+            android:icon="@drawable/ic_steps"
+            android:label="@string/pulse_qs_tile_label"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".WidgetSteps"
+            android:label="@string/pulse_widget_steps_description"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_steps_info" />
+        </receiver>
+
         <activity
             android:name=".activities.WidgetAlarmsActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
+
+        <activity android:name=".activities.PulseStreakActivity"
+            android:exported="false" />
+
+        <activity android:name=".activities.PulseWorkoutsActivity"
+            android:exported="false" />
+
+        <activity android:name=".activities.PulseWeekActivity"
+            android:exported="false" />
+
+        <activity android:name=".activities.PulseSleepActivity"
+            android:exported="false" />
+
+        <activity android:name=".activities.PulseOnboardingActivity"
+            android:exported="false" />
 
         <activity android:name=".activities.WidgetConfigurationActivity"
             android:exported="false">
@@ -949,12 +999,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.SleepAlarmWidgetConfigurationActivity"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
-            </intent-filter>
-        </activity>
 
         <activity
             android:name=".activities.ExternalPebbleJSActivity"

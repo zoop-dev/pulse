@@ -113,6 +113,20 @@ public abstract class AbstractGBActivity extends AppCompatActivity implements GB
                 activity.setTheme(R.style.GadgetbridgeTheme);
             }
         }
+        // Pulse: overlay the user's chosen accent onto whichever theme was selected.
+        if (activity instanceof android.content.Context) {
+            final String accent = GBApplication.getPrefs().getString("pulse_accent", "blue");
+            final int overlay;
+            switch (accent) {
+                case "violet": overlay = R.style.PulseAccentViolet; break;
+                case "coral":  overlay = R.style.PulseAccentCoral; break;
+                case "mint":   overlay = R.style.PulseAccentMint; break;
+                case "pink":   overlay = R.style.PulseAccentPink; break;
+                default:       overlay = R.style.PulseAccentBlue; break;
+            }
+            ((android.content.Context) activity).getTheme().applyStyle(overlay, true);
+        }
+
         activity.setLanguage(GBApplication.getLanguage(), false);
     }
 

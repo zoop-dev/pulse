@@ -1,190 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Pulse: About screen -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/pulse_bg"
+    android:fillViewport="true">
 
-    <ImageView
-        android:id="@+id/no_items_bg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:alpha="0.1"
-        android:contentDescription="@string/icon_placeholder"
-        app:tint="?attr/textColorPrimary"
-        app:srcCompat="@drawable/gadgetbridge_img" />
-
-    <ScrollView
-        android:id="@+id/about_background"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="@dimen/about_margin"
-        android:paddingRight="@dimen/about_margin"
-        tools:context="nodomain.freeyourgadget.gadgetbridge.activities.AboutActivity">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingHorizontal="28dp"
+        android:paddingTop="36dp"
+        android:paddingBottom="36dp">
 
-        <LinearLayout
+        <ImageView
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:background="@drawable/pulse_avatar_ring"
+            android:padding="14dp"
+            app:srcCompat="@drawable/ic_launcher_foreground"
+            android:contentDescription="@string/app_name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/app_name"
+            android:textColor="@color/pulse_text"
+            android:textStyle="bold"
+            android:fontFamily="@font/unbounded"
+            android:textSize="34sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pulse_drawer_subtitle"
+            android:textColor="@color/pulse_neon_cyan"
+            android:textStyle="bold"
+            android:letterSpacing="0.06"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/about_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/pulse_text_dim"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/about_hash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/pulse_text_dim"
+            android:textSize="12sp" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="@string/pulse_about_blurb"
+            android:textColor="@color/pulse_text"
+            android:lineSpacingExtra="3dp"
+            android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/about_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@color/accent" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="@string/about_links"
+            android:textColor="?attr/pulseAccent"
+            android:textStyle="bold"
+            android:textSize="14sp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/about_margin"
-                android:paddingRight="@dimen/about_margin">
+        <TextView
+            android:id="@+id/links1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/homepage_url"
+            android:textColor="@color/pulse_text_dim"
+            android:textColorLink="?attr/pulseAccent"
+            android:textSize="13sp" />
 
-                <TextView
-                    android:id="@+id/about_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/about_description" />
+        <TextView
+            android:id="@+id/links2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/codeberg_url"
+            android:textColor="@color/pulse_text_dim"
+            android:textColorLink="?attr/pulseAccent"
+            android:textSize="13sp" />
 
-                <TextView
-                    android:id="@+id/about_version"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/links3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fdroid_url"
+            android:textColor="@color/pulse_text_dim"
+            android:textColorLink="?attr/pulseAccent"
+            android:textSize="13sp" />
 
-                <TextView
-                    android:id="@+id/about_hash"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/showLicenses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="@string/open_source_licenses"
+            android:textColor="?attr/pulseAccent"
+            app:strokeColor="@color/pulse_card_alt"
+            style="@style/Widget.Material3.Button.OutlinedButton" />
 
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/links_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/about_links"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@color/accent" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/about_margin"
-                android:paddingRight="@dimen/about_margin">
-
-                <TextView
-                    android:id="@+id/links1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/homepage_url" />
-
-                <TextView
-                    android:id="@+id/links2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/codeberg_url" />
-
-                <TextView
-                    android:id="@+id/links3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fdroid_url" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingTop="5dp">
-
-                <Button
-                    android:id="@+id/showLicenses"
-                    android:layout_width="wrap_content"
-                    android:textAlignment="center"
-                    android:layout_height="wrap_content"
-                    android:text="@string/open_source_licenses" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/contrib_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/about_contributors"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@color/accent" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/about_margin"
-                android:paddingRight="@dimen/about_margin">
-
-                <TextView
-                    android:id="@+id/contrib_core_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/about_core_team_title"
-                    android:textColor="@color/accent" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/about_margin"
-                    android:paddingRight="@dimen/about_margin">
-
-                    <TextView
-                        android:id="@+id/contrib_core_members"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/about_core_team_members" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingStart="@dimen/about_margin"
-                android:paddingEnd="@dimen/about_margin">
-
-                <TextView
-                    android:id="@+id/contrib_add_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/about_additional_device_support"
-                    android:textColor="@color/accent" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/about_margin"
-                    android:paddingRight="@dimen/about_margin">
-
-                    <TextView
-                        android:id="@+id/contrib_add_members"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/about_additional_contributors" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/contrib_add_title2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/about_additional_contributions"
-                    android:textColor="@color/accent" />
-
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-</RelativeLayout>
+    </LinearLayout>
+</ScrollView>

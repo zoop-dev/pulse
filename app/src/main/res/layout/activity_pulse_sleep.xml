@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pulse: sleep insights — score, last-night stage breakdown, 7-night trend.
+     Stage bar / legend / week bars are built in code. -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pulse_bg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:id="@+id/sleep_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pulse_sleep_title"
+            android:fontFamily="@font/unbounded"
+            android:textColor="@color/pulse_text"
+            android:textSize="30sp"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/sleep_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:gravity="center"
+            android:text="@string/pulse_sleep_no_data"
+            android:textColor="@color/pulse_text_dim"
+            android:textSize="15sp"
+            android:visibility="gone" />
+
+        <!-- score -->
+        <LinearLayout
+            android:id="@+id/sleep_score_block"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="8dp">
+            <TextView
+                android:id="@+id/sleep_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/unbounded"
+                android:textColor="?attr/pulseAccent"
+                android:textSize="64sp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pulse_sleep_score"
+                    android:textColor="@color/pulse_text_dim"
+                    android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/sleep_score_word"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/unbounded"
+                    android:textColor="@color/pulse_mint"
+                    android:textSize="15sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- last night -->
+        <LinearLayout
+            android:id="@+id/sleep_lastnight_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/pulse_widget_bg"
+            android:padding="20dp"
+            android:layout_marginTop="12dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pulse_sleep_last_night"
+                android:textAllCaps="true"
+                android:textColor="?attr/pulseAccent"
+                android:textSize="12sp"
+                android:letterSpacing="0.08"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/sleep_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/unbounded"
+                android:textColor="@color/pulse_text"
+                android:textSize="28sp" />
+            <TextView
+                android:id="@+id/sleep_times"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/pulse_text_dim"
+                android:textSize="14sp" />
+
+            <!-- hypnogram: the night's stage timeline -->
+            <LinearLayout
+                android:id="@+id/sleep_hypnogram"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginTop="18dp"
+                android:orientation="horizontal" />
+
+            <!-- stage proportions summary -->
+            <LinearLayout
+                android:id="@+id/sleep_stage_bar"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal" />
+            <LinearLayout
+                android:id="@+id/sleep_stage_legend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="12dp" />
+        </LinearLayout>
+
+        <!-- insight -->
+        <TextView
+            android:id="@+id/sleep_insight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/pulse_text"
+            android:textSize="15sp"
+            android:lineSpacingMultiplier="1.15" />
+
+        <!-- 7-night trend -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="12dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/pulse_sleep_7night"
+                android:textAllCaps="true"
+                android:textColor="?attr/pulseAccent"
+                android:textSize="12sp"
+                android:letterSpacing="0.08"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/sleep_avg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/pulse_text_dim"
+                android:textSize="13sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/sleep_week_bars"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:orientation="horizontal"
+            android:gravity="bottom" />
+    </LinearLayout>
+</ScrollView>

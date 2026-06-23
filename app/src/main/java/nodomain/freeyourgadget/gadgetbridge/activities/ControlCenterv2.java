@@ -26,13 +26,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import nodomain.freeyourgadget.gadgetbridge.activities.views.PulseRefreshLayout;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
@@ -91,8 +96,10 @@ public class ControlCenterv2 extends AppCompatActivity
     private boolean isThemeInvalid = false;
     private ViewPager2 viewPager;
     private FragmentStateAdapter pagerAdapter;
-    private SwipeRefreshLayout swipeLayout;
+    private PulseRefreshLayout swipeLayout;
+    private ProgressBar syncBar;
     private AlertDialog clDialog;
+    private boolean weatherSentForConnection = false;
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -115,8 +122,19 @@ public class ControlCenterv2 extends AppCompatActivity
                 case GBDevice.ACTION_DEVICE_CHANGED:
                     GBDevice dev = intent.getParcelableExtra(GBDevice.EXTRA_DEVICE);
                     if (dev != null && !dev.isBusy()) {
-                        swipeLayout.setRefreshing(false);
+                        stopSyncUi();
                     }
+                    // Pulse: push weather as soon as the watch finishes connecting (once per connection)
+                    if (dev != null && dev.isInitialized()) {
+                        if (!weatherSentForConnection) {
+                            weatherSentForConnection = true;
+                            GBApplication.deviceService().onSendWeather();
+                            nodomain.freeyourgadget.gadgetbridge.util.PulseWeather.maybeFetch(ControlCenterv2.this);
+                        }
+                    } else {
+                        weatherSentForConnection = false;
+                    }
+                    updateToolbarDevice();
                     break;
             }
         }
@@ -147,7 +165,15 @@ public class ControlCenterv2 extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Pulse: (re)arm the Sunday-evening weekly recap notification.
+        nodomain.freeyourgadget.gadgetbridge.util.PulseWeeklyRecapReceiver.schedule(this);
+
         GBPrefs prefs = GBApplication.getPrefs();
+
+        // Pulse: first-run welcome.
+        if (!prefs.getBoolean(PulseOnboardingActivity.PREF_ONBOARDED, false)) {
+            startActivity(new Intent(this, PulseOnboardingActivity.class));
+        }
 
         // Determine availability of device with activity tracking functionality
         boolean activityTrackerAvailable = false;
@@ -187,17 +213,22 @@ public class ControlCenterv2 extends AppCompatActivity
 
         // Initialize bottom navigation
         BottomNavigationView navigationView = findViewById(R.id.bottom_nav_bar);
-        if (activityTrackerAvailable && prefs.getBoolean("display_bottom_navigation_bar", true)) {
+        // Pulse: the 4-tab Google-Health style nav is always available
+        if (prefs.getBoolean("display_bottom_navigation_bar", true)) {
             navigationView.setVisibility(View.VISIBLE);
         } else {
             navigationView.setVisibility(View.GONE);
         }
         navigationView.setOnItemSelectedListener(menuItem -> {
             final int itemId = menuItem.getItemId();
-            if (itemId == R.id.bottom_nav_dashboard) {
+            if (itemId == R.id.bottom_nav_today) {
                 viewPager.setCurrentItem(0, true);
-            } else if (itemId == R.id.bottom_nav_devices) {
+            } else if (itemId == R.id.bottom_nav_fitness) {
                 viewPager.setCurrentItem(1, true);
+            } else if (itemId == R.id.bottom_nav_sleep) {
+                viewPager.setCurrentItem(2, true);
+            } else if (itemId == R.id.bottom_nav_health) {
+                viewPager.setCurrentItem(3, true);
             }
             return true;
         });
@@ -205,6 +236,24 @@ public class ControlCenterv2 extends AppCompatActivity
         // Initialize actionbar
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        // Pulse: styled device chip in the toolbar instead of a plain title
+        toolbar.setTitle("");
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+        final View deviceChip = getLayoutInflater().inflate(R.layout.toolbar_device_chip, toolbar, false);
+        deviceChip.setOnClickListener(v -> startActivity(new Intent(this, DevicesActivity.class)));
+        // Pulse: long-press the chip → watch battery history.
+        deviceChip.setOnLongClickListener(v -> {
+            final GBDevice dev = pulseFirstDevice();
+            if (dev != null) {
+                final Intent i = new Intent(this, BatteryInfoActivity.class);
+                i.putExtra(GBDevice.EXTRA_DEVICE, dev);
+                startActivity(i);
+            }
+            return true;
+        });
+        toolbar.addView(deviceChip);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.controlcenter_navigation_drawer_open, R.string.controlcenter_navigation_drawer_close);
@@ -217,18 +266,21 @@ public class ControlCenterv2 extends AppCompatActivity
             @ColorInt int toolbarBackground = typedValue.data;
             toolbar.setBackgroundColor(toolbarBackground);
         } else {
-            toolbar.setBackgroundColor(getResources().getColor(R.color.primarydark_light));
-            toolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+            // Pulse: flat near-black app bar to match the dark theme
+            toolbar.setBackgroundColor(getResources().getColor(R.color.pulse_bg));
+            toolbar.setTitleTextColor(getResources().getColor(R.color.pulse_text));
         }
+        // Pulse: blend the status bar into the near-black background
+        getWindow().setStatusBarColor(getResources().getColor(R.color.pulse_bg));
+        updateToolbarDevice();
 
         // Configure ViewPager2 with fragment adapter and default fragment
         viewPager = findViewById(R.id.dashboard_viewpager);
         pagerAdapter = new MainFragmentsPagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
-        if (!prefs.getBoolean("dashboard_as_default_view", true) || !activityTrackerAvailable) {
-            viewPager.setCurrentItem(1, false);
-            navigationView.getMenu().getItem(1).setChecked(true);
-        }
+        // Pulse: preload all 4 tabs so switching is instant (stats warm off the UI thread now)
+        viewPager.setOffscreenPageLimit(3);
+        // Always land on the Today tab
 
         // Sync ViewPager changes with BottomNavigationView
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -264,6 +316,11 @@ public class ControlCenterv2 extends AppCompatActivity
 
         // Set pull-down-to-refresh action
         swipeLayout = findViewById(R.id.dashboard_swipe_layout);
+        syncBar = findViewById(R.id.pulse_sync_bar);
+        swipeLayout.setSyncBar(syncBar);
+        // Pulse: hide the default circular spinner — content follows the finger + a thick top bar
+        swipeLayout.setColorSchemeColors(Color.TRANSPARENT);
+        swipeLayout.setProgressBackgroundColorSchemeColor(Color.TRANSPARENT);
         swipeLayout.setEnabled(prefs.refreshOnSwipe());
         swipeLayout.setOnRefreshListener(() -> {
             if (prefs.refreshOnSwipe()) {
@@ -272,9 +329,10 @@ public class ControlCenterv2 extends AppCompatActivity
                 if (!anyConnected) {
                     // No devices are connected at all
                     GB.toast(getString(R.string.info_no_devices_connected), Toast.LENGTH_LONG, GB.WARN);
-                    swipeLayout.setRefreshing(false);
+                    stopSyncUi();
                     return;
                 }
+                startSyncUi();
                 // Fetch activity for all connected devices
                 GBApplication.deviceService().onFetchRecordedData(RecordedDataTypes.TYPE_SYNC);
 
@@ -282,11 +340,11 @@ public class ControlCenterv2 extends AppCompatActivity
                 final boolean anySupported = devices1.stream().filter(GBDevice::isInitialized)
                         .anyMatch(dev -> dev.getDeviceCoordinator().supportsDataFetching(dev));
                 if (!anySupported) {
-                    swipeLayout.setRefreshing(false);
+                    stopSyncUi();
                     GB.toast(getString(R.string.info_no_devices_to_sync), Toast.LENGTH_LONG, GB.WARN);
                 }
             } else {
-                swipeLayout.setRefreshing(false);
+                stopSyncUi();
             }
         });
 
@@ -337,6 +395,8 @@ public class ControlCenterv2 extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         handleShortcut(getIntent());
+        // Pulse: keep the watch's weather fresh (Open-Meteo, throttled)
+        nodomain.freeyourgadget.gadgetbridge.util.PulseWeather.maybeFetch(this);
         if (isLanguageInvalid || isThemeInvalid) {
             isLanguageInvalid = false;
             isThemeInvalid = false;
@@ -350,6 +410,17 @@ public class ControlCenterv2 extends AppCompatActivity
         super.onDestroy();
     }
 
+    /** Pulse: the device to scope device-specific screens to (first connected, else first known). */
+    private GBDevice pulseFirstDevice() {
+        final List<GBDevice> devices = GBApplication.app().getDeviceManager().getDevices();
+        for (final GBDevice d : devices) {
+            if (d.isInitialized()) {
+                return d;
+            }
+        }
+        return devices.isEmpty() ? null : devices.get(0);
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -359,6 +430,40 @@ public class ControlCenterv2 extends AppCompatActivity
         if (itemId == R.id.action_settings) {
             final Intent settingsIntent = new Intent(this, SettingsActivity.class);
             startActivityForResult(settingsIntent, MENU_REFRESH_CODE);
+            return false;
+        } else if (itemId == R.id.pulse_weather) {
+            startActivity(new Intent(this, PulseWeatherActivity.class));
+            return false;
+        } else if (itemId == R.id.pulse_workouts) {
+            startActivity(new Intent(this, PulseWorkoutsActivity.class));
+            return false;
+        } else if (itemId == R.id.pulse_week) {
+            startActivity(new Intent(this, PulseWeekActivity.class));
+            return false;
+        } else if (itemId == R.id.pulse_vo2max) {
+            final GBDevice dev = pulseFirstDevice();
+            if (dev != null) {
+                final Intent i = new Intent(this, nodomain.freeyourgadget.gadgetbridge.activities.charts.ActivityChartsActivity.class);
+                i.putExtra(GBDevice.EXTRA_DEVICE, dev);
+                i.putExtra(nodomain.freeyourgadget.gadgetbridge.activities.charts.ActivityChartsActivity.EXTRA_SINGLE_FRAGMENT_NAME, "vo2max");
+                startActivity(i);
+            }
+            return false;
+        } else if (itemId == R.id.pulse_alarms) {
+            final GBDevice dev = pulseFirstDevice();
+            if (dev != null) {
+                final Intent i = new Intent(this, ConfigureAlarms.class);
+                i.putExtra(GBDevice.EXTRA_DEVICE, dev);
+                startActivity(i);
+            }
+            return false;
+        } else if (itemId == R.id.pulse_calendar) {
+            final GBDevice dev = pulseFirstDevice();
+            if (dev != null) {
+                final Intent i = new Intent(this, CalendarSelectionActivity.class);
+                i.putExtra(GBDevice.EXTRA_DEVICE, dev);
+                startActivity(i);
+            }
             return false;
         } else if (itemId == R.id.action_debug) {
             final Intent debugIntent = new Intent(this, DebugActivityV2.class);
@@ -402,6 +507,42 @@ public class ControlCenterv2 extends AppCompatActivity
     }
 
 
+    /** Pulse: content drops and the thick top bar fills while syncing (no spinner). */
+    private void startSyncUi() {
+        if (swipeLayout != null) {
+            swipeLayout.onSyncStarted();
+        }
+    }
+
+    private void stopSyncUi() {
+        if (swipeLayout != null) {
+            swipeLayout.setRefreshing(false);
+            swipeLayout.onSyncFinished();
+        }
+    }
+
+    /** Pulse: update the styled device + battery chip in the toolbar. */
+    private void updateToolbarDevice() {
+        final TextView name = findViewById(R.id.toolbar_device_name);
+        final TextView battery = findViewById(R.id.toolbar_device_battery);
+        final View dot = findViewById(R.id.toolbar_device_dot);
+        if (name == null) {
+            return;
+        }
+        final List<GBDevice> devices = GBApplication.app().getDeviceManager().getDevices();
+        if (devices.isEmpty()) {
+            name.setText(R.string.app_name);
+            battery.setText("");
+            if (dot != null) dot.setAlpha(0.3f);
+            return;
+        }
+        final GBDevice dev = devices.get(0);
+        name.setText(dev.getAliasOrName());
+        if (dot != null) dot.setAlpha(dev.isInitialized() ? 1f : 0.3f);
+        final int batt = dev.getBatteryLevel();
+        battery.setText((batt >= 0 && batt <= 100) ? batt + "%" : "");
+    }
+
     private void launchWelcomeActivity() {
         startActivity(new Intent(this, WelcomeActivity.class));
     }
@@ -437,16 +578,17 @@ public class ControlCenterv2 extends AppCompatActivity
 
         @Override
         public Fragment createFragment(int position) {
-            if (position == 0) {
-                return new DashboardFragment();
-            } else {
-                return new DevicesFragment();
+            switch (position) {
+                case 1:  return DashboardFragment.newInstance("fitness");
+                case 2:  return DashboardFragment.newInstance("sleep");
+                case 3:  return DashboardFragment.newInstance("health");
+                default: return DashboardFragment.newInstance("today");
             }
         }
 
         @Override
         public int getItemCount() {
-            return 2;
+            return 4;
         }
     }
 }

@@ -327,6 +327,25 @@ public abstract class AbstractChartFragment<D extends ChartsData> extends Abstra
 //        chart.setPinchZoom(true);
 
         chart.setDrawGridBackground(false);
+
+        // Pulse: consistent dark chart chrome (dim labels, hairline gridlines,
+        // no axis lines, no right-axis labels) across every line/bar chart.
+        // Fragments that customise their axes afterwards still win.
+        final int pulseGrid = androidx.core.content.ContextCompat.getColor(requireContext(), R.color.pulse_card_alt);
+        final int pulseDim = androidx.core.content.ContextCompat.getColor(requireContext(), R.color.pulse_text_dim);
+        final com.github.mikephil.charting.components.XAxis xAxis = chart.getXAxis();
+        xAxis.setTextColor(pulseDim);
+        xAxis.setDrawAxisLine(false);
+        xAxis.setDrawGridLines(false);
+        final com.github.mikephil.charting.components.YAxis leftAxis = chart.getAxisLeft();
+        leftAxis.setTextColor(pulseDim);
+        leftAxis.setDrawAxisLine(false);
+        leftAxis.setGridColor(pulseGrid);
+        leftAxis.setGridLineWidth(1f);
+        final com.github.mikephil.charting.components.YAxis rightAxis = chart.getAxisRight();
+        rightAxis.setTextColor(pulseDim);
+        rightAxis.setDrawAxisLine(false);
+        rightAxis.setDrawGridLines(false);
     }
 
     /**

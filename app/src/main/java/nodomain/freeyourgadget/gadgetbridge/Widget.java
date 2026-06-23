@@ -109,70 +109,162 @@ public class Widget extends AppWidgetProvider {
         );
         views.setOnClickPendingIntent(R.id.todaywidget_header_icon, startMainPIntent);
 
-        //alarms popup menu
-        Intent startAlarmListIntent = new Intent(context, WidgetAlarmsActivity.class);
-        startAlarmListIntent.setPackage(BuildConfig.APPLICATION_ID);
-        startAlarmListIntent.putExtra(GBDevice.EXTRA_DEVICE, deviceForWidget);
-        PendingIntent startAlarmListPIntent = PendingIntent.getActivity(
-                context,
-                appWidgetId,
-                startAlarmListIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
-        );
-        views.setOnClickPendingIntent(R.id.todaywidget_header_alarm_icon, startAlarmListPIntent);
-
-        //charts
+        //charts (tap the widget body to open charts)
         Intent startChartsIntent = new Intent(context, ActivityChartsActivity.class);
         startChartsIntent.setPackage(BuildConfig.APPLICATION_ID);
         startChartsIntent.putExtra(GBDevice.EXTRA_DEVICE, deviceForWidget);
         PendingIntent startChartsPIntent = PendingIntent.getActivity(
-                context,
-                appWidgetId,
-                startChartsIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE
-        );
+                context, appWidgetId, startChartsIntent,
+                PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
         views.setOnClickPendingIntent(R.id.todaywidget_bottom_layout, startChartsPIntent);
 
-        DailyTotals dailyTotals = getSteps(deviceForWidget);
-        int steps = (int) dailyTotals.getSteps();
-        int sleep = (int) dailyTotals.getSleep();
-        int distanceCm = (int) dailyTotals.getDistance();
-        ActivityUser activityUser = new ActivityUser();
-        int stepGoal = activityUser.getStepsGoal();
-        int sleepGoalMinutes = activityUser.getSleepDurationGoal();
-        int distanceGoal = activityUser.getDistanceGoalMeters() * 100;
-        int stepLength = activityUser.getStepLengthCm();
-        double distanceMeters = (distanceCm > 0 ? distanceCm : steps * stepLength) * 0.01;
-        String distanceFormatted = FormatUtils.getFormattedDistanceLabel(distanceMeters);
-
-        if (sleep < 1) {
-            views.setViewVisibility(R.id.todaywidget_sleep_layout, View.GONE);
-        } else {
-            views.setViewVisibility(R.id.todaywidget_sleep_layout, View.VISIBLE);
-        }
-
-        views.setTextViewText(R.id.todaywidget_steps, String.format("%1s", steps));
-        views.setTextViewText(R.id.todaywidget_sleep, String.format("%1s", getHM(sleep)));
-        views.setTextViewText(R.id.todaywidget_distance, distanceFormatted);
-        views.setProgressBar(R.id.todaywidget_steps_progress, stepGoal, steps, false);
-        views.setProgressBar(R.id.todaywidget_sleep_progress, sleepGoalMinutes, sleep, false);
-        views.setProgressBar(R.id.todaywidget_distance_progress, distanceGoal, steps * stepLength, false);
+        // Header: device name + battery
         views.setViewVisibility(R.id.todaywidget_battery_icon, View.GONE);
-        String status = String.format("%1s", deviceForWidget.getStateString(context));
-        if (deviceForWidget.isConnected()) {
-            if (deviceForWidget.getBatteryLevel(0) > 1) {
-                views.setViewVisibility(R.id.todaywidget_battery_icon, View.VISIBLE);
+        String status = deviceForWidget.getStateString(context);
+        if (deviceForWidget.isConnected() && deviceForWidget.getBatteryLevel(0) > 1) {
+            views.setViewVisibility(R.id.todaywidget_battery_icon, View.VISIBLE);
+            status = deviceForWidget.getBatteryLevel(0) + "%";
+        }
+        views.setTextViewText(R.id.todaywidget_device_status, status);
+        views.setTextViewText(R.id.todaywidget_device_name,
+                deviceForWidget.getAlias() != null ? deviceForWidget.getAlias() : deviceForWidget.getName());
 
-                status = String.format("%1s%%", deviceForWidget.getBatteryLevel(0));
+        // Configurable stat slots
+        final DailyTotals dailyTotals = getSteps(deviceForWidget);
+        final ActivityUser activityUser = new ActivityUser();
+        final String[] metrics = getWidgetMetrics(appWidgetId);
+        final int[] slotIds = {R.id.pulse_w0, R.id.pulse_w1, R.id.pulse_w2};
+        final int[] iconIds = {R.id.pulse_w0_icon, R.id.pulse_w1_icon, R.id.pulse_w2_icon};
+        final int[] valueIds = {R.id.pulse_w0_value, R.id.pulse_w1_value, R.id.pulse_w2_value};
+        final int[] labelIds = {R.id.pulse_w0_label, R.id.pulse_w1_label, R.id.pulse_w2_label};
+        final int[] progIds = {R.id.pulse_w0_prog, R.id.pulse_w1_prog, R.id.pulse_w2_prog};
+        for (int i = 0; i < 3; i++) {
+            if (i < metrics.length && !metrics[i].trim().isEmpty()) {
+                fillSlot(context, views, iconIds[i], valueIds[i], labelIds[i], progIds[i],
+                        metrics[i].trim(), deviceForWidget, dailyTotals, activityUser);
+                views.setViewVisibility(slotIds[i], View.VISIBLE);
+            } else {
+                views.setViewVisibility(slotIds[i], View.GONE);
             }
         }
 
-        String deviceName = deviceForWidget.getAlias() != null ? deviceForWidget.getAlias() : deviceForWidget.getName();
-        views.setTextViewText(R.id.todaywidget_device_status, status);
-        views.setTextViewText(R.id.todaywidget_device_name, deviceName);
+        // Pulse: top-right refresh icon re-reads + redraws this widget.
+        final Intent refreshIntent = new Intent(context, Widget.class)
+                .setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE)
+                .putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[]{appWidgetId});
+        final android.app.PendingIntent refreshPi = android.app.PendingIntent.getBroadcast(
+                context, appWidgetId, refreshIntent,
+                android.app.PendingIntent.FLAG_UPDATE_CURRENT | android.app.PendingIntent.FLAG_IMMUTABLE);
+        views.setOnClickPendingIntent(R.id.todaywidget_refresh, refreshPi);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
+    }
+
+    public static String[] getWidgetMetrics(final int appWidgetId) {
+        return GBApplication.getPrefs()
+                .getString("pulse_widget_metrics_" + appWidgetId, "steps,distance,sleep")
+                .split(",");
+    }
+
+    private void fillSlot(final Context context, final RemoteViews views,
+                          final int iconId, final int valueId, final int labelId, final int progId,
+                          final String metric, final GBDevice device,
+                          final DailyTotals totals, final ActivityUser user) {
+        final int iconRes;
+        final String label;
+        final String value;
+        int max = 0;
+        int progress = 0;
+        switch (metric) {
+            case "distance": {
+                // getDistance() is in cm; fall back to steps * stride when no GPS distance
+                long cm = totals.getDistance();
+                if (cm <= 0 && totals.getSteps() > 0) {
+                    cm = totals.getSteps() * user.getStepLengthCm();
+                }
+                final double m = cm * 0.01;
+                iconRes = R.drawable.ic_map;
+                label = context.getString(R.string.distance);
+                value = FormatUtils.getFormattedDistanceLabel(m);
+                max = user.getDistanceGoalMeters();
+                progress = (int) m;
+                break;
+            }
+            case "calories": {
+                // DailyTotals stores raw calories; dashboard shows kcal (÷1000)
+                final int cal = (int) (totals.getActiveCalories() / 1000);
+                iconRes = R.drawable.ic_calories;
+                label = context.getString(R.string.calories);
+                value = String.valueOf(cal);
+                max = user.getCaloriesBurntGoal();
+                progress = cal;
+                break;
+            }
+            case "sleep": {
+                final int sl = (int) totals.getSleep();
+                iconRes = R.drawable.ic_nights_stay;
+                label = context.getString(R.string.menuitem_sleep);
+                value = sl > 0 ? getHM(sl) : context.getString(R.string.pulse_no_sleep);
+                max = user.getSleepDurationGoal();
+                progress = sl;
+                break;
+            }
+            case "heartrate": {
+                final int hr = latestHeartRate(device);
+                iconRes = R.drawable.ic_heartrate;
+                label = context.getString(R.string.menuitem_hr);
+                value = hr > 0 ? String.valueOf(hr) : "-";
+                break;
+            }
+            case "bodybattery": {
+                final int be = latestBodyEnergy(device);
+                iconRes = R.drawable.ic_battery_full;
+                label = context.getString(R.string.body_energy);
+                value = be >= 0 ? String.valueOf(be) : "-";
+                max = 100;
+                progress = Math.max(be, 0);
+                break;
+            }
+            default: { // steps
+                final int steps = (int) totals.getSteps();
+                iconRes = R.drawable.ic_steps;
+                label = context.getString(R.string.steps);
+                value = String.valueOf(steps);
+                max = user.getStepsGoal();
+                progress = steps;
+                break;
+            }
+        }
+        views.setInt(iconId, "setBackgroundResource", iconRes);
+        views.setTextViewText(valueId, value);
+        views.setTextViewText(labelId, label);
+        if (max > 0) {
+            views.setViewVisibility(progId, View.VISIBLE);
+            views.setProgressBar(progId, max, progress, false);
+        } else {
+            views.setViewVisibility(progId, View.INVISIBLE);
+        }
+    }
+
+    private int latestHeartRate(final GBDevice device) {
+        try (nodomain.freeyourgadget.gadgetbridge.database.DBHandler db = GBApplication.acquireDbReadOnly()) {
+            final nodomain.freeyourgadget.gadgetbridge.model.HeartRateSample s =
+                    device.getDeviceCoordinator().getHeartRateRestingSampleProvider(device, db.getDaoSession()).getLatestSample();
+            return s != null ? s.getHeartRate() : -1;
+        } catch (final Exception e) {
+            return -1;
+        }
+    }
+
+    private int latestBodyEnergy(final GBDevice device) {
+        try (nodomain.freeyourgadget.gadgetbridge.database.DBHandler db = GBApplication.acquireDbReadOnly()) {
+            final nodomain.freeyourgadget.gadgetbridge.model.BodyEnergySample s =
+                    device.getDeviceCoordinator().getBodyEnergySampleProvider(device, db.getDaoSession()).getLatestSample();
+            return s != null ? s.getEnergy() : -1;
+        } catch (final Exception e) {
+            return -1;
+        }
     }
 
     public void refreshData(int appWidgetId) {

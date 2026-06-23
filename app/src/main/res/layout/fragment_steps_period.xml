@@ -18,7 +18,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="20sp"
+                android:textSize="22sp"
+                android:fontFamily="@font/unbounded"
+                android:letterSpacing="0.01"
                 android:textColor="?attr/textColorPrimary"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="10dp"
@@ -50,35 +52,38 @@
         </LinearLayout>
 
         <GridLayout
-            android:background="@color/gauge_line_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:columnCount="2"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginTop="15dp"
             >
             <LinearLayout
                 style="@style/GridTile"
-                android:layout_marginEnd="1dp"
-                android:layout_marginTop="2dp"
+                android:background="@drawable/pulse_widget_bg"
+                android:layout_margin="6dp"
                 >
                 <TextView
                     android:id="@+id/steps_avg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textColor="?attr/textColorPrimary"
-                    android:textSize="20sp" />
+                    android:fontFamily="@font/unbounded"
+                    android:textColor="?attr/pulseAccent"
+                    android:textSize="22sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/steps_avg"
+                    android:textColor="@color/pulse_text_dim"
                     android:textSize="12sp" />
             </LinearLayout>
             <LinearLayout
                 style="@style/GridTile"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="2dp"
+                android:background="@drawable/pulse_widget_bg"
+                android:layout_margin="6dp"
                 >
 
                 <TextView
@@ -86,47 +91,55 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textColor="?attr/textColorPrimary"
-                    android:textSize="20sp" />
+                    android:fontFamily="@font/unbounded"
+                    android:textColor="?attr/pulseAccent"
+                    android:textSize="22sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/steps_total"
+                    android:textColor="@color/pulse_text_dim"
                     android:textSize="12sp" />
             </LinearLayout>
             <LinearLayout
                 style="@style/GridTile"
-                android:layout_marginEnd="1dp"
+                android:background="@drawable/pulse_widget_bg"
+                android:layout_margin="6dp"
                 >
                 <TextView
                     android:id="@+id/distance_avg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textColor="?attr/textColorPrimary"
-                    android:textSize="20sp" />
+                    android:fontFamily="@font/unbounded"
+                    android:textColor="@color/pulse_neon_cyan"
+                    android:textSize="22sp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/distance_avg"
+                    android:textColor="@color/pulse_text_dim"
                     android:textSize="12sp" />
             </LinearLayout>
             <LinearLayout
                 style="@style/GridTile"
-                android:layout_marginStart="1dp"
+                android:background="@drawable/pulse_widget_bg"
+                android:layout_margin="6dp"
                 >
                 <TextView
                     android:id="@+id/distance_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textColor="?attr/textColorPrimary"
-                    android:textSize="20sp" />
+                    android:fontFamily="@font/unbounded"
+                    android:textColor="@color/pulse_neon_cyan"
+                    android:textSize="22sp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/distance_total"
+                    android:textColor="@color/pulse_text_dim"
                     android:textSize="12sp" />
             </LinearLayout>
         </GridLayout>

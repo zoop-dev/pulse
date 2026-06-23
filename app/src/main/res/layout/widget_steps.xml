@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pulse: compact single-stat steps widget (RemoteViews — uses @color, not ?attr). -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_steps_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/pulse_widget_bg"
+    android:padding="14dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/widget_steps_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:fontFamily="@font/unbounded"
+            android:textColor="@color/pulse_neon"
+            android:textSize="30sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/steps"
+            android:textAllCaps="true"
+            android:letterSpacing="0.08"
+            android:textColor="@color/pulse_text_dim"
+            android:textSize="11sp" />
+
+        <ProgressBar
+            android:id="@+id/widget_steps_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_marginTop="8dp"
+            android:max="100"
+            android:progress="0"
+            android:progressTint="@color/pulse_neon"
+            android:progressBackgroundTint="@color/pulse_card_alt" />
+
+        <TextView
+            android:id="@+id/widget_steps_goal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/pulse_text_dim"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/widget_steps_refresh"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_gravity="top|end"
+        android:src="@drawable/ic_refresh"
+        android:tint="@color/pulse_text_dim"
+        android:contentDescription="@string/icon_placeholder" />
+</FrameLayout>

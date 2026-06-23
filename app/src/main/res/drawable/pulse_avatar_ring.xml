@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pulse: avatar circle with neon ring -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/pulse_card_alt" />
+    <stroke
+        android:width="2dp"
+        android:color="@color/pulse_neon_cyan" />
+</shape>

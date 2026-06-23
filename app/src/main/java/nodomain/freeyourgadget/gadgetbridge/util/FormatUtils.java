@@ -49,7 +49,8 @@ public class FormatUtils {
         if (distanceUnit == DistanceUnit.IMPERIAL) {
             unit = GBApplication.getContext().getString(R.string.distance_format_feet);
             distanceFormatted = distanceFeet;
-            if (distanceFeet > 6000) {
+            // switch to miles once past ~0.1 mi so walked distances read consistently as miles
+            if (distanceFeet > 500) {
                 distanceFormatted = distanceFeet * 0.0001893939f;
                 unit = GBApplication.getContext().getString(R.string.distance_format_miles);
             }

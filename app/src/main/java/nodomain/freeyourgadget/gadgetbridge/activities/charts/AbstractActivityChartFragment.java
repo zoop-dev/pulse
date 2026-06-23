@@ -111,11 +111,8 @@ public abstract class AbstractActivityChartFragment<D extends ChartsData> extend
         BACKGROUND_COLOR = GBApplication.getBackgroundColor(getContext());
         LEGEND_TEXT_COLOR = DESCRIPTION_COLOR = GBApplication.getTextColor(getContext());
         CHART_TEXT_COLOR = GBApplication.getSecondaryTextColor(getContext());
-        if (prefs.getBoolean("chart_heartrate_color", false)) {
-            HEARTRATE_COLOR = ContextCompat.getColor(getContext(), R.color.chart_heartrate_alternative);
-        } else {
-            HEARTRATE_COLOR = ContextCompat.getColor(getContext(), R.color.chart_heartrate);
-        }
+        // Pulse: heart rate uses the on-brand Pulse HR red everywhere.
+        HEARTRATE_COLOR = ContextCompat.getColor(getContext(), R.color.pulse_ring_hr);
         HEARTRATE_FILL_COLOR = ContextCompat.getColor(getContext(), R.color.chart_heartrate_fill);
 
         getContext().getTheme().resolveAttribute(R.attr.chart_activity, runningColor, true);
@@ -130,6 +127,13 @@ public abstract class AbstractActivityChartFragment<D extends ChartsData> extend
         AK_AWAKE_SLEEP_COLOR = runningColor.data;
         getContext().getTheme().resolveAttribute(R.attr.chart_not_worn, runningColor, true);
         AK_NOT_WORN_COLOR = runningColor.data;
+
+        // Pulse: recolor activity/sleep stages to the Pulse palette (kept distinct).
+        AK_ACTIVITY_COLOR = ContextCompat.getColor(getContext(), R.color.pulse_mint);
+        AK_DEEP_SLEEP_COLOR = ContextCompat.getColor(getContext(), R.color.pulse_purple);
+        AK_LIGHT_SLEEP_COLOR = ContextCompat.getColor(getContext(), R.color.pulse_neon_cyan);
+        AK_REM_SLEEP_COLOR = ContextCompat.getColor(getContext(), R.color.pulse_neon);
+        AK_AWAKE_SLEEP_COLOR = ContextCompat.getColor(getContext(), R.color.pulse_ring_cal);
 
         HEARTRATE_LABEL = getContext().getString(R.string.charts_legend_heartrate);
         HEARTRATE_AVERAGE_LABEL = getContext().getString(R.string.charts_legend_heartrate_average);

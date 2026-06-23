@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pulse: off-screen layout rendered to a bitmap for the "share today" card. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/pulse_bg"
+    android:padding="36dp">
+
+    <!-- Header: wordmark + date -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:src="@drawable/ic_notification"
+            app:tint="?attr/pulseAccent" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:text="@string/pulse_wordmark"
+            android:fontFamily="@font/unbounded"
+            android:textColor="@color/pulse_text"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/share_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/pulse_text_dim"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <!-- Hero steps -->
+    <TextView
+        android:id="@+id/share_steps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/unbounded"
+        android:textColor="?attr/pulseAccent"
+        android:textSize="72sp" />
+
+    <TextView
+        android:id="@+id/share_steps_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:textColor="@color/pulse_text_dim"
+        android:textSize="16sp" />
+
+    <!-- Stats grid -->
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_margin="6dp"
+            android:orientation="vertical"
+            android:background="@drawable/pulse_widget_bg"
+            android:padding="18dp">
+            <TextView
+                android:id="@+id/share_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/unbounded"
+                android:textColor="@color/pulse_neon_cyan"
+                android:textSize="26sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/distance"
+                android:textColor="@color/pulse_text_dim"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_margin="6dp"
+            android:orientation="vertical"
+            android:background="@drawable/pulse_widget_bg"
+            android:padding="18dp">
+            <TextView
+                android:id="@+id/share_calories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/unbounded"
+                android:textColor="@color/pulse_ring_cal"
+                android:textSize="26sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/calories"
+                android:textColor="@color/pulse_text_dim"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_margin="6dp"
+            android:orientation="vertical"
+            android:background="@drawable/pulse_widget_bg"
+            android:padding="18dp">
+            <TextView
+                android:id="@+id/share_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/unbounded"
+                android:textColor="@color/pulse_mint"
+                android:textSize="26sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_list_summary_active_time"
+                android:textColor="@color/pulse_text_dim"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_margin="6dp"
+            android:orientation="vertical"
+            android:background="@drawable/pulse_widget_bg"
+            android:padding="18dp">
+            <TextView
+                android:id="@+id/share_sleep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/unbounded"
+                android:textColor="@color/pulse_purple"
+                android:textSize="26sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/menuitem_sleep"
+                android:textColor="@color/pulse_text_dim"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </GridLayout>
+
+    <!-- Footer: streak + brand -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/share_streak"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/pulse_text"
+            android:textSize="17sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pulse_share_brand"
+            android:textColor="?attr/pulseAccent"
+            android:textSize="15sp" />
+    </LinearLayout>
+</LinearLayout>

@@ -44,9 +44,9 @@ public class StepsDailyFragment extends StepsFragment<StepsDailyFragment.StepsDa
 
     private TextView mDateView;
     private ImageView stepsGauge;
+    // Pulse: steps-streaks trophy removed (replaced by the Pulse streak calendar + achievements)
     private TextView steps;
     private TextView distance;
-    ImageView stepsStreaksButton;
     private LineChart stepsChart;
 
     protected int STEPS_GOAL;
@@ -73,16 +73,6 @@ public class StepsDailyFragment extends StepsFragment<StepsDailyFragment.StepsDa
 
         STEPS_GOAL = GBApplication.getPrefs().getInt(ActivityUser.PREF_USER_STEPS_GOAL, ActivityUser.defaultUserStepsGoal);
         refresh();
-
-        stepsStreaksButton = rootView.findViewById(R.id.steps_streaks_button);
-        stepsStreaksButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                StepStreaksDashboard stepStreaksDashboard = StepStreaksDashboard.newInstance(STEPS_GOAL, getChartsHost().getDevice());
-                stepStreaksDashboard.show(fm, "steps_streaks_dashboard");
-            }
-        });
 
         return rootView;
     }
@@ -122,7 +112,7 @@ public class StepsDailyFragment extends StepsFragment<StepsDailyFragment.StepsDa
         stepsGauge.setImageBitmap(GaugeDrawer.drawCircleGauge(
                 width,
                 width / 15,
-                getResources().getColor(R.color.steps_color),
+                nodomain.freeyourgadget.gadgetbridge.GBApplication.getAccentColor(requireContext()),
                 (int) stepsData.todayStepsDay.steps,
                 STEPS_GOAL,
                 getContext()
@@ -137,7 +127,7 @@ public class StepsDailyFragment extends StepsFragment<StepsDailyFragment.StepsDa
         final List<LegendEntry> legendEntries = new ArrayList<>(1);
         final LegendEntry stepsEntry = new LegendEntry();
         stepsEntry.label = getString(R.string.steps);
-        stepsEntry.formColor = getResources().getColor(R.color.steps_color);
+        stepsEntry.formColor = nodomain.freeyourgadget.gadgetbridge.GBApplication.getAccentColor(requireContext());
         legendEntries.add(stepsEntry);
         stepsChart.getLegend().setTextColor(TEXT_COLOR);
         stepsChart.getLegend().setCustom(legendEntries);
@@ -160,22 +150,27 @@ public class StepsDailyFragment extends StepsFragment<StepsDailyFragment.StepsDa
             stepsChart.getAxisLeft().resetAxisMaximum();
         }
 
+        final int neon = nodomain.freeyourgadget.gadgetbridge.GBApplication.getAccentColor(requireContext());
         final LineDataSet lineDataSet = new LineDataSet(lineEntries, getString(R.string.steps));
-        lineDataSet.setColor(getResources().getColor(R.color.steps_color));
+        lineDataSet.setColor(neon);
         lineDataSet.setDrawCircles(false);
-        lineDataSet.setLineWidth(2f);
-        lineDataSet.setFillAlpha(255);
-        lineDataSet.setDrawCircles(false);
-        lineDataSet.setCircleColor(getResources().getColor(R.color.steps_color));
+        lineDataSet.setLineWidth(2.5f);
+        lineDataSet.setCircleColor(neon);
         lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         lineDataSet.setDrawValues(false);
         lineDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         lineDataSet.setDrawFilled(true);
-        lineDataSet.setFillAlpha(60);
-        lineDataSet.setFillColor(getResources().getColor(R.color.steps_color ));
+        final android.graphics.drawable.Drawable fill =
+                androidx.core.content.ContextCompat.getDrawable(requireContext(), R.drawable.pulse_chart_fill);
+        if (fill != null) {
+            lineDataSet.setFillDrawable(fill);
+        } else {
+            lineDataSet.setFillAlpha(60);
+            lineDataSet.setFillColor(neon);
+        }
 
         final LimitLine goalLine = new LimitLine(STEPS_GOAL);
-        goalLine.setLineColor(getResources().getColor(R.color.steps_color));
+        goalLine.setLineColor(getResources().getColor(R.color.pulse_neon_cyan));
         goalLine.setLineWidth(1.5f);
         goalLine.enableDashedLine(15f, 10f, 0f);
         stepsChart.getAxisLeft().removeAllLimitLines();
@@ -206,23 +201,25 @@ public class StepsDailyFragment extends StepsFragment<StepsDailyFragment.StepsDa
         xAxisBottom.setDrawGridLines(false);
         xAxisBottom.setEnabled(true);
         xAxisBottom.setDrawLimitLinesBehindData(true);
-        xAxisBottom.setTextColor(CHART_TEXT_COLOR);
+        xAxisBottom.setTextColor(getResources().getColor(R.color.pulse_text_dim));
+        xAxisBottom.setDrawAxisLine(false);
         xAxisBottom.setAxisMinimum(0f);
         xAxisBottom.setAxisMaximum(86400f);
         //xAxisBottom.setLabelCount(7, true);
 
+        final int gridColor = getResources().getColor(R.color.pulse_card_alt);
         final YAxis yAxisLeft = stepsChart.getAxisLeft();
         yAxisLeft.setDrawGridLines(true);
+        yAxisLeft.setGridColor(gridColor);
+        yAxisLeft.setGridLineWidth(1f);
+        yAxisLeft.setDrawAxisLine(false);
         yAxisLeft.setAxisMinimum(0);
         yAxisLeft.setDrawTopYLabelEntry(true);
         yAxisLeft.setEnabled(true);
-        yAxisLeft.setTextColor(CHART_TEXT_COLOR);
+        yAxisLeft.setTextColor(getResources().getColor(R.color.pulse_text_dim));
 
         final YAxis yAxisRight = stepsChart.getAxisRight();
-        yAxisRight.setEnabled(true);
-        yAxisRight.setDrawLabels(false);
-        yAxisRight.setDrawGridLines(false);
-        yAxisRight.setDrawAxisLine(true);
+        yAxisRight.setEnabled(false);
     }
 
     protected static class StepsData extends ChartsData {

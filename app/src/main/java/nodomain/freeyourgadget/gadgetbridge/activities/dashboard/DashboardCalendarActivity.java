@@ -37,6 +37,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
+import androidx.core.content.ContextCompat;
 import androidx.gridlayout.widget.GridLayout;
 
 import org.slf4j.Logger;
@@ -65,12 +66,18 @@ public class DashboardCalendarActivity extends AbstractGBActivity {
     private final ConcurrentHashMap<Calendar, TextView> dayCells = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<Integer, Integer> dayColors = new ConcurrentHashMap<>();
 
-    @ColorInt private int color_unknown = Color.argb(50, 128, 128, 128);
-    @ColorInt private int color_0_25 = Color.argb(128, 255, 0, 0); // Red
-    @ColorInt private int color_25_50 = Color.argb(128, 255, 128, 0); // Orange
-    @ColorInt private int color_50_75 = Color.argb(128, 255, 255, 0); // Yellow
-    @ColorInt private int color_75_100 = Color.argb(128, 0, 128, 0); // Dark green
-    @ColorInt private int color_100 = Color.argb(128, 0, 255, 0); // Green
+    // Pulse: a single neon-accent ramp instead of the red→green rainbow (deeper = more goal reached)
+    @ColorInt private int color_unknown = Color.argb(36, 128, 128, 128);
+    @ColorInt private int color_0_25;
+    @ColorInt private int color_25_50;
+    @ColorInt private int color_50_75;
+    @ColorInt private int color_75_100;
+    @ColorInt private int color_100;
+    @ColorInt private int accent;
+
+    @ColorInt private static int withAlpha(@ColorInt int color, int alpha) {
+        return Color.argb(alpha, Color.red(color), Color.green(color), Color.blue(color));
+    }
 
     private boolean showAllDevices;
     private Set<String> showDeviceList;
@@ -88,6 +95,12 @@ public class DashboardCalendarActivity extends AbstractGBActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_calendar);
+        accent = GBApplication.getAccentColor(this);
+        color_0_25 = withAlpha(accent, 50);
+        color_25_50 = withAlpha(accent, 95);
+        color_50_75 = withAlpha(accent, 145);
+        color_75_100 = withAlpha(accent, 200);
+        color_100 = accent;
         monthTextView = findViewById(R.id.calendar_month);
         calendarGrid = findViewById(R.id.dashboard_calendar_grid);
         monthGoalsChart = findViewById(R.id.dashboard_calendar_month_goals_chart);
@@ -105,11 +118,13 @@ public class DashboardCalendarActivity extends AbstractGBActivity {
         showDeviceList = prefs.getStringSet("dashboard_devices_multiselect", new HashSet<>());
 
         arrowLeft = findViewById(R.id.arrow_left);
+        arrowRight = findViewById(R.id.arrow_right);
+        stylePulseArrow(arrowLeft);
+        stylePulseArrow(arrowRight);
         arrowLeft.setOnClickListener(v -> {
             cal.add(Calendar.MONTH, -1);
             draw();
         });
-        arrowRight = findViewById(R.id.arrow_right);
         arrowRight.setOnClickListener(v -> {
             Calendar today = GregorianCalendar.getInstance();
             if (!DateTimeUtils.isSameMonth(today, cal)) {
@@ -186,6 +201,22 @@ public class DashboardCalendarActivity extends AbstractGBActivity {
         displayColorsAsync();
     }
 
+    private void stylePulseArrow(TextView arrow) {
+        float density = getResources().getDisplayMetrics().density;
+        GradientDrawable bg = new GradientDrawable();
+        bg.setShape(GradientDrawable.OVAL);
+        bg.setColor(ContextCompat.getColor(this, R.color.pulse_card));
+        int size = (int) (44 * density);
+        arrow.setWidth(size);
+        arrow.setHeight(size);
+        arrow.setBackground(bg);
+        arrow.setTextColor(accent);
+        arrow.setAllCaps(false);
+        if (arrow instanceof android.widget.Button) {
+            ((android.widget.Button) arrow).setStateListAnimator(null);
+        }
+    }
+
     private TextView prepareGridElement(int cellSize) {
         GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams(
                 GridLayout.spec(GridLayout.UNDEFINED, GridLayout.FILL,1f),
@@ -204,12 +235,17 @@ public class DashboardCalendarActivity extends AbstractGBActivity {
     private void createWeekdayCell(String day, int cellSize) {
         TextView text = prepareGridElement(cellSize);
         text.setText(day);
+        text.setTextColor(ContextCompat.getColor(this, R.color.pulse_text_dim));
+        text.setTextSize(12);
         calendarGrid.addView(text);
     }
 
     private void createDateCell(Calendar day, int cellSize, boolean clickable) {
         TextView text = prepareGridElement(cellSize);
         text.setText(String.valueOf(day.get(Calendar.DAY_OF_MONTH)));
+        text.setTextColor(ContextCompat.getColor(this,
+                clickable ? R.color.pulse_text : R.color.pulse_text_dim));
+        if (!clickable) text.setAlpha(0.4f);
         if (clickable) {
             // Save textview for later coloring
             dayCells.put((Calendar) day.clone(), text);
@@ -279,7 +315,7 @@ public class DashboardCalendarActivity extends AbstractGBActivity {
                     GradientDrawable borderDrawable = new GradientDrawable();
                     borderDrawable.setShape(GradientDrawable.OVAL);
                     borderDrawable.setColor(Color.TRANSPARENT);
-                    borderDrawable.setStroke(5, GBApplication.getTextColor(getApplicationContext()));
+                    borderDrawable.setStroke(6, accent);
                     LayerDrawable layerDrawable = new LayerDrawable(new Drawable[]{backgroundDrawable, borderDrawable});
                     text.setBackground(layerDrawable);
                 } else {

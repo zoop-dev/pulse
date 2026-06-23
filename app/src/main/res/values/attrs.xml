@@ -24,4 +24,6 @@
     <attr name="deviceIconOnPrimary" format="color" />
     <attr name="deviceIconLight" format="color" />
     <attr name="deviceIconDark" format="color" />
+    <!-- Pulse: user-selectable accent, applied as a theme overlay in AbstractGBActivity.init -->
+    <attr name="pulseAccent" format="color" />
 </resources>

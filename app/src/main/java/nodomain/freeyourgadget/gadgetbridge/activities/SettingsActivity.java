@@ -22,26 +22,17 @@ package nodomain.freeyourgadget.gadgetbridge.activities;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.text.InputType;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
@@ -54,21 +45,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
-import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.Logging;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.automations.AutomationsSettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.ChartsPreferencesActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.discovery.DiscoveryPairingPreferenceActivity;
-import nodomain.freeyourgadget.gadgetbridge.activities.endurain.OnlineFitnessTrackersPreferencesActivity;
-import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsSettingsActivity;
-import nodomain.freeyourgadget.gadgetbridge.activities.preferences.HealthConnectPreferencesActivity;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.TimeChangeReceiver;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -93,18 +76,10 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
             open(AboutUserPreferencesActivity.class, result);
         } else if (result.getResourceFile() == R.xml.charts_preferences) {
             open(ChartsPreferencesActivity.class, result);
-        } else if (result.getResourceFile() == R.xml.sleepasandroid_preferences) {
-            open(SleepAsAndroidPreferencesActivity.class, result);
         } else if (result.getResourceFile() == R.xml.discovery_pairing_preferences) {
             open(DiscoveryPairingPreferenceActivity.class, result);
         } else if (result.getResourceFile() == R.xml.notifications_preferences) {
             open(NotificationManagementActivity.class, result);
-        } else if (result.getResourceFile() == R.xml.map_settings) {
-            open(MapsSettingsActivity.class, result);
-        } else if (result.getResourceFile() == R.xml.automations_settings) {
-            open(AutomationsSettingsActivity.class, result);
-        } else if (result.getResourceFile() == R.xml.internethelper_preferences) {
-            open(InternetHelperPreferencesActivity.class, result);
         } else {
             super.onSearchResultClicked(result);
         }
@@ -113,9 +88,6 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
     public static class SettingsFragment extends AbstractPreferenceFragment {
         private static final Logger LOG = LoggerFactory.getLogger(SettingsActivity.class);
 
-        private EditText fitnessAppEditText = null;
-        private int fitnessAppSelectionListSpinnerFirstRun = 0;
-
         @Override
         public void onCreatePreferences(final Bundle savedInstanceState, final String rootKey) {
             setPreferencesFromResource(R.xml.preferences, rootKey);
@@ -123,15 +95,9 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
             index(R.xml.dashboard_preferences, R.string.bottom_nav_dashboard);
             index(R.xml.about_user, R.string.activity_prefs_about_you);
             index(R.xml.charts_preferences, R.string.activity_prefs_charts);
-            index(R.xml.sleepasandroid_preferences, R.string.sleepasandroid_settings);
             index(R.xml.discovery_pairing_preferences, R.string.activity_prefs_discovery_pairing);
             index(R.xml.notifications_preferences, R.string.pref_header_notifications);
-            index(R.xml.map_settings, R.string.maps_settings);
-            index(R.xml.automations_settings, R.string.pref_header_automations);
-            if (!GBApplication.hasDirectInternetAccess())
-                index(R.xml.internethelper_preferences, R.string.prefs_internet_helper_title);
 
-            setInputTypeFor("rtl_max_line_length", InputType.TYPE_CLASS_NUMBER);
             setInputTypeFor("location_latitude", InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED | InputType.TYPE_NUMBER_FLAG_DECIMAL);
             setInputTypeFor("location_longitude", InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED  | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
@@ -141,6 +107,14 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
                 pref.setOnPreferenceClickListener(preference -> {
                     Intent enableIntent = new Intent(requireContext(), AboutUserPreferencesActivity.class);
                     startActivity(enableIntent);
+                    return true;
+                });
+            }
+
+            pref = findPreference("pref_pulse_goals");
+            if (pref != null) {
+                pref.setOnPreferenceClickListener(preference -> {
+                    startActivity(new Intent(requireContext(), PulseGoalsActivity.class));
                     return true;
                 });
             }
@@ -313,112 +287,18 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
                 });
             }
 
-            pref = findPreference("weather_city");
+            pref = findPreference("pref_pulse_weather");
             if (pref != null) {
-                pref.setOnPreferenceChangeListener((preference, newVal) -> {
-                    // reset city id and force a new lookup
-                    GBApplication.getPrefs().getPreferences().edit().putString("weather_cityid", null).apply();
-                    Intent intent = new Intent("GB_UPDATE_WEATHER");
-                    intent.setPackage(BuildConfig.APPLICATION_ID);
-                    requireContext().sendBroadcast(intent);
+                pref.setOnPreferenceClickListener(preference -> {
+                    startActivity(new Intent(requireContext(), PulseWeatherActivity.class));
                     return true;
                 });
-            }
-
-            final ListPreference audioPlayer = findPreference("audio_player");
-            if (audioPlayer != null) {
-                // Get all receivers of Media Buttons
-                Intent mediaButtonIntent = new Intent(Intent.ACTION_MEDIA_BUTTON);
-
-                PackageManager pm = requireContext().getPackageManager();
-                List<ResolveInfo> mediaReceivers = pm.queryBroadcastReceivers(mediaButtonIntent,
-                        PackageManager.GET_INTENT_FILTERS | PackageManager.GET_RESOLVED_FILTER);
-
-                CharSequence[] newEntries = new CharSequence[mediaReceivers.size() + 1];
-                CharSequence[] newValues = new CharSequence[mediaReceivers.size() + 1];
-                newEntries[0] = getString(R.string.pref_default);
-                newValues[0] = "default";
-
-                int i = 1;
-                Set<String> existingNames = new HashSet<>();
-                for (ResolveInfo resolveInfo : mediaReceivers) {
-                    newEntries[i] = resolveInfo.activityInfo.loadLabel(pm) + " (" + resolveInfo.activityInfo.packageName + ")";
-                    if (existingNames.contains(newEntries[i].toString().trim())) {
-                        newEntries[i] = resolveInfo.activityInfo.loadLabel(pm) + " (" + resolveInfo.activityInfo.name + ")";
-                    } else {
-                        existingNames.add(newEntries[i].toString().trim());
-                    }
-                    newValues[i] = resolveInfo.activityInfo.packageName;
-                    i++;
-                }
-
-                audioPlayer.setEntries(newEntries);
-                audioPlayer.setEntryValues(newValues);
-                audioPlayer.setDefaultValue(newValues[0]);
             }
 
             pref = findPreference("pref_category_dashboard");
             if (pref != null) {
                 pref.setOnPreferenceClickListener(preference -> {
                     Intent enableIntent = new Intent(requireContext(), DashboardPreferencesActivity.class);
-                    startActivity(enableIntent);
-                    return true;
-                });
-            }
-
-            pref = findPreference("pref_category_maps");
-            if (pref != null) {
-                pref.setOnPreferenceClickListener(preference -> {
-                    Intent enableIntent = new Intent(requireContext(), MapsSettingsActivity.class);
-                    startActivity(enableIntent);
-                    return true;
-                });
-            }
-
-            pref = findPreference("pref_screen_automations");
-            if (pref != null) {
-                pref.setOnPreferenceClickListener(preference -> {
-                    Intent enableIntent = new Intent(requireContext(), AutomationsSettingsActivity.class);
-                    startActivity(enableIntent);
-                    return true;
-                });
-            }
-
-            pref = findPreference("pref_category_sleepasandroid");
-            if (pref != null) {
-                pref.setOnPreferenceClickListener(preference -> {
-                    Intent enableIntent = new Intent(requireContext(), SleepAsAndroidPreferencesActivity.class);
-                    startActivity(enableIntent);
-                    return true;
-                });
-            }
-
-            pref = findPreference("pref_category_internethelper");
-            if (pref != null) {
-                if (GBApplication.hasDirectInternetAccess()) {
-                    pref.setVisible(false);
-                } else {
-                    pref.setOnPreferenceClickListener(preference -> {
-                        Intent enableIntent = new Intent(requireContext(), InternetHelperPreferencesActivity.class);
-                        startActivity(enableIntent);
-                        return true;
-                    });
-                }
-            }
-
-            pref = findPreference("pref_category_healthconnect");
-            if (pref != null) {
-                pref.setOnPreferenceClickListener(preference -> {
-                    Intent enableIntent = new Intent(requireContext(), HealthConnectPreferencesActivity.class);
-                    startActivity(enableIntent);
-                    return true;
-                });
-            }
-
-            pref = findPreference("pref_category_online_fitness_trackers");
-            if (pref != null) {
-                pref.setOnPreferenceClickListener(preference -> {
-                    Intent enableIntent = new Intent(requireContext(), OnlineFitnessTrackersPreferencesActivity.class);
                     startActivity(enableIntent);
                     return true;
                 });
@@ -480,6 +360,16 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
                 });
             }
 
+            pref = findPreference("pulse_accent");
+            if (pref != null) {
+                pref.setOnPreferenceChangeListener((preference, newVal) -> {
+                    // Re-apply the accent overlay across the app and refresh this screen.
+                    sendThemeChangeIntent();
+                    requireActivity().recreate();
+                    return true;
+                });
+            }
+
             pref = findPreference("pref_discovery_pairing");
             if (pref != null) {
                 pref.setOnPreferenceClickListener(preference -> {
@@ -487,70 +377,6 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
                     startActivity(enableIntent);
                     return true;
                 });
-            }
-
-            //fitness app (OpenTracks) package name selection for OpenTracks observer
-            pref = findPreference("pref_key_opentracks_packagename");
-            if (pref != null) {
-                pref.setOnPreferenceClickListener(preference -> {
-                    final LinearLayout outerLayout = new LinearLayout(requireContext());
-                    outerLayout.setOrientation(LinearLayout.VERTICAL);
-                    final LinearLayout innerLayout = new LinearLayout(requireContext());
-                    innerLayout.setOrientation(LinearLayout.HORIZONTAL);
-                    innerLayout.setPadding(20, 0, 20, 0);
-                    final Spinner selectionListSpinner = new Spinner(requireContext());
-                    String[] appListArray = getResources().getStringArray(R.array.fitness_tracking_apps_package_names);
-                    ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(requireContext(),
-                            android.R.layout.simple_spinner_dropdown_item, appListArray);
-                    selectionListSpinner.setAdapter(spinnerArrayAdapter);
-                    fitnessAppSelectionListSpinnerFirstRun = 0;
-                    addListenerOnSpinnerDeviceSelection(selectionListSpinner);
-                    Prefs prefs1 = GBApplication.getPrefs();
-                    String packageName = prefs1.getString("opentracks_packagename", "de.dennisguse.opentracks");
-                    // Set the spinner to the selected package name by default
-                    for (int i = 0; i < appListArray.length; i++) {
-                        if (appListArray[i].equals(packageName)) {
-                            selectionListSpinner.setSelection(i);
-                            break;
-                        }
-                    }
-                    fitnessAppEditText = new EditText(requireContext());
-                    fitnessAppEditText.setText(packageName);
-                    innerLayout.addView(fitnessAppEditText);
-                    outerLayout.addView(selectionListSpinner);
-                    outerLayout.addView(innerLayout);
-
-                    new MaterialAlertDialogBuilder(requireContext())
-                            .setCancelable(true)
-                            .setTitle(R.string.pref_title_opentracks_packagename)
-                            .setView(outerLayout)
-                            .setPositiveButton(R.string.ok, (dialog, which) -> {
-                                SharedPreferences.Editor editor = GBApplication.getPrefs().getPreferences().edit();
-                                editor.putString("opentracks_packagename", fitnessAppEditText.getText().toString());
-                                editor.apply();
-                            })
-                            .setNegativeButton(R.string.cancel, (dialog, which) -> {})
-                            .show();
-                    return false;
-                });
-            }
-        }
-
-        private void addListenerOnSpinnerDeviceSelection(Spinner spinner) {
-            spinner.setOnItemSelectedListener(new CustomOnDeviceSelectedListener());
-        }
-
-        public class CustomOnDeviceSelectedListener implements AdapterView.OnItemSelectedListener {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                if (++fitnessAppSelectionListSpinnerFirstRun > 1) { //this prevents the setText to be set when spinner just is being initialized
-                    fitnessAppEditText.setText(parent.getItemAtPosition(pos).toString());
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
             }
         }
 
@@ -577,6 +403,8 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
          * Signal running activities that the theme has changed
          */
         private void sendThemeChangeIntent() {
+            // Pulse: re-apply day/night so the palette flips immediately on theme change.
+            GBApplication.applyPulseNightMode();
             Intent intent = new Intent();
             intent.setAction(GBApplication.ACTION_THEME_CHANGE);
             LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent);

@@ -1,54 +1,340 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<!-- Pulse: Google-Health "Today" home, dark + neon-blue -->
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/pulse_bg"
     tools:context=".activities.DashboardFragment">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/arrow_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="0dp"
-            android:text="\u003C"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_alignParentLeft="true" />
-        <TextView
-            android:id="@+id/dashboard_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/activity_summary_today"
-            android:textStyle="bold"
-            android:textSize="25sp"
-            android:layout_centerInParent="true"/>
-        <Button
-            android:id="@+id/arrow_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="0dp"
-            android:text="\u003E"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_alignParentRight="true" />
-    </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <androidx.gridlayout.widget.GridLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header: device chip + greeting + big title -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/dashboard_gridlayout"
-            app:columnCount="2" />
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="18dp"
+            android:paddingBottom="12dp">
+
+            <!-- Device + battery chip (tap = open Devices) -->
+            <LinearLayout
+                android:id="@+id/pulse_device_chip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/pulse_pill"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp"
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <View
+                    android:id="@+id/pulse_device_dot"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/pulse_status_dot" />
+
+                <TextView
+                    android:id="@+id/pulse_device_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pulse_no_device"
+                    android:textColor="@color/pulse_text"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/pulse_device_battery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textColor="@color/pulse_neon_cyan"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/dashboard_greeting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pulse_greeting"
+                android:textColor="@color/pulse_text_dim"
+                android:textSize="15sp"
+                android:letterSpacing="0.02" />
+
+            <TextView
+                android:id="@+id/dashboard_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_summary_today"
+                android:textColor="@color/pulse_text"
+                android:textStyle="bold"
+                android:fontFamily="@font/unbounded"
+                android:textSize="30sp"
+                android:letterSpacing="-0.02" />
+        </LinearLayout>
+
+        <!-- Hero row: big steps ring + stacked stat cards -->
+        <LinearLayout
+            android:id="@+id/pulse_hero_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="18dp"
+            android:baselineAligned="false">
+
+            <FrameLayout
+                android:layout_width="158dp"
+                android:layout_height="158dp"
+                android:layout_gravity="center_vertical">
+
+                <nodomain.freeyourgadget.gadgetbridge.activities.views.PulseRingView
+                    android:id="@+id/pulse_ring"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/pulse_ring_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/steps"
+                        android:textColor="@color/pulse_text_dim"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.08" />
+
+                    <TextView
+                        android:id="@+id/pulse_ring_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/pulse_text"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/unbounded"
+                        android:textSize="36sp"
+                        android:includeFontPadding="false" />
+
+                    <TextView
+                        android:id="@+id/pulse_ring_goal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pulse_of_goal"
+                        android:textColor="@color/pulse_ring_steps"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/pulse_stat_column"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingStart="14dp">
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Pulse: inline sleep detail (Sleep tab only; built in code) -->
+        <LinearLayout
+            android:id="@+id/pulse_sleep_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="4dp"
+            android:visibility="gone" />
+
+        <!-- Action pills -->
+        <LinearLayout
+            android:id="@+id/pulse_pills"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="18dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="6dp">
+
+            <LinearLayout
+                android:id="@+id/pulse_btn_log"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="@drawable/pulse_pill"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_calories"
+                    app:tint="@color/pulse_ring_cal" />
+
+                <TextView
+                    android:id="@+id/pulse_streak_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    android:text="0"
+                    android:textColor="@color/pulse_text"
+                    android:textStyle="bold"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/pulse_btn_start"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:background="@drawable/pulse_pill_primary"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_refresh"
+                    app:tint="@android:color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    android:text="@string/pulse_start"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/pulse_btn_edit"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/pulse_pill"
+                android:padding="16dp"
+                android:src="@drawable/ic_edit"
+                android:clickable="true"
+                android:focusable="true"
+                app:tint="@color/pulse_text_dim" />
+        </LinearLayout>
+
+        <!-- Content sheet: detail cards + day nav -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/pulse_content_sheet"
+            android:paddingTop="14dp"
+            android:minHeight="220dp">
+
+            <!-- Day navigation strip -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="4dp">
+
+                <Button
+                    android:id="@+id/arrow_left"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="0dp"
+                    android:text="‹"
+                    android:textColor="@color/pulse_text_dim"
+                    android:textStyle="bold"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/pulse_details_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/pulse_details"
+                    android:textColor="@color/pulse_text"
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/arrow_right"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="0dp"
+                    android:text="›"
+                    android:textColor="@color/pulse_text_dim"
+                    android:textStyle="bold"
+                    android:textSize="22sp" />
+            </LinearLayout>
+
+            <androidx.gridlayout.widget.GridLayout
+                android:id="@+id/dashboard_gridlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="6dp"
+                android:paddingBottom="24dp"
+                app:columnCount="2" />
+        </LinearLayout>
+    </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+
+    <!-- Loading overlay: shown until stats are warmed, so nothing pops in -->
+    <LinearLayout
+        android:id="@+id/pulse_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/pulse_bg"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:indeterminateTint="?attr/pulseAccent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="@string/pulse_loading"
+            android:textColor="@color/pulse_text_dim"
+            android:fontFamily="@font/satoshi"
+            android:textSize="14sp" />
+    </LinearLayout>
+</FrameLayout>

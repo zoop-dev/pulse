@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pulse: bottom-nav icon/label tint — neon when selected, dim otherwise -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/pulse_neon" android:state_checked="true" />
+    <item android:color="@color/pulse_text_dim" />
+</selector>
