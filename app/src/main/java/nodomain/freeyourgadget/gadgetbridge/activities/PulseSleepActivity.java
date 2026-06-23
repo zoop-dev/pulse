@@ -313,12 +313,18 @@ public class PulseSleepActivity extends AbstractGBActivity {
             col.setGravity(Gravity.CENTER | Gravity.BOTTOM);
             col.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f));
 
+            // Thick rounded pills, matching the Health page mini charts (empty = a clean dot)
+            final int barW = dp(14);
+            final long v = d.week[i];
+            final android.graphics.drawable.GradientDrawable pill = new android.graphics.drawable.GradientDrawable();
+            pill.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
+            pill.setCornerRadius(barW / 2f);
+            pill.setColor(ContextCompat.getColor(this, R.color.pulse_purple));
             final View bar = new View(this);
-            bar.setBackgroundResource(R.drawable.pulse_bar_fill);
-            bar.setBackgroundTintList(android.content.res.ColorStateList.valueOf(
-                    ContextCompat.getColor(this, R.color.pulse_purple)));
-            final int h = (int) (dp(96) * d.week[i] / (double) max);
-            final LinearLayout.LayoutParams blp = new LinearLayout.LayoutParams(dp(20), Math.max(dp(3), h));
+            bar.setBackground(pill);
+            bar.setAlpha(v > 0 ? 0.9f : 0.25f);
+            final int h = v > 0 ? Math.max(barW, (int) (dp(96) * v / (double) max)) : barW;
+            final LinearLayout.LayoutParams blp = new LinearLayout.LayoutParams(barW, h);
             blp.gravity = Gravity.CENTER_HORIZONTAL;
             col.addView(bar, blp);
 
