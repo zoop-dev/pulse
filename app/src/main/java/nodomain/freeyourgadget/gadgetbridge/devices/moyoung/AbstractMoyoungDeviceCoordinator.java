@@ -37,6 +37,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpec
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.HeartRateCapability;
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.MoyoungBloodPressureSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.MoyoungSpo2SampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.MoyoungStressSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider;
@@ -64,6 +65,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.MoyoungStressSampleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
+import nodomain.freeyourgadget.gadgetbridge.model.BloodPressureSample;
 import nodomain.freeyourgadget.gadgetbridge.model.Spo2Sample;
 import nodomain.freeyourgadget.gadgetbridge.model.StressSample;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
@@ -124,6 +126,11 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
     @Override
     public TimeSampleProvider<? extends Spo2Sample> getSpo2SampleProvider(GBDevice device, DaoSession session) {
         return new MoyoungSpo2SampleProvider(device, session);
+    }
+
+    @Override
+    public TimeSampleProvider<? extends BloodPressureSample> getBloodPressureSampleProvider(final GBDevice device, final DaoSession session) {
+        return new MoyoungBloodPressureSampleProvider(device, session);
     }
 
     @Override

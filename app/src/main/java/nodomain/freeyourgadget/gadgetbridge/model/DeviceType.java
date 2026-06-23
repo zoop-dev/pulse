@@ -378,6 +378,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.R50ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.RainbuvvyT97Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ViranC29Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.ZL02DCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.P22B1Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.no1f1.No1F1Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.nothing.CmfBuds2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.nothing.CmfBuds2aCoordinator;
@@ -634,6 +635,7 @@ public enum DeviceType {
     Q8(Q8Coordinator.class),
     SG2(SG2Coordinator.class),
     NO1F1(No1F1Coordinator.class),
+    P22B1(P22B1Coordinator.class),
     TECLASTH30(TeclastH30Coordinator.class),
     Y5(Y5Coordinator.class),
     XWATCH(XWatchCoordinator.class),

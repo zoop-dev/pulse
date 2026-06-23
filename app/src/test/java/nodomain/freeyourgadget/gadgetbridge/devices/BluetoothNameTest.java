@@ -89,6 +89,7 @@ public class BluetoothNameTest extends TestBase {
             put("fenix 6X Sapphire", DeviceType.GARMIN_FENIX_6X_SAPPHIRE); // #5496
             put("fenix 6S Pro Solar", DeviceType.GARMIN_FENIX_6S_PRO_SOLAR); // #5568
             put("R50Pro", DeviceType.R50PRO);
+            put("P22B1", DeviceType.P22B1);
             put("SBM67", DeviceType.SILVERCREST_SBM_67);
             put("BPM Smart", DeviceType.SANITAS_SBM_67);
             put("Sinilink-APP", DeviceType.SINILINK); // #6040
