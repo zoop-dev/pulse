@@ -2,12 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="@string/bottom_nav_dashboard"
-        android:id="@+id/bottom_nav_dashboard"
-        android:icon="@drawable/ic_dashboard"/>
+        android:title="@string/pulse_tab_today"
+        android:id="@+id/bottom_nav_today"
+        android:icon="@drawable/ic_wb_sunny" />
     <item
-        android:title="@string/bottom_nav_devices"
-        android:id="@+id/bottom_nav_devices"
-        android:icon="@drawable/ic_devices_other"/>
+        android:title="@string/pulse_tab_fitness"
+        android:id="@+id/bottom_nav_fitness"
+        android:icon="@drawable/ic_activity_exercise" />
+    <item
+        android:title="@string/pulse_tab_sleep"
+        android:id="@+id/bottom_nav_sleep"
+        android:icon="@drawable/ic_nights_stay" />
+    <item
+        android:title="@string/pulse_tab_health"
+        android:id="@+id/bottom_nav_health"
+        android:icon="@drawable/ic_health" />
 
 </menu>

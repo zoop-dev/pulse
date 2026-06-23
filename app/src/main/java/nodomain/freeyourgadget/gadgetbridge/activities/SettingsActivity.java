@@ -20,25 +20,19 @@
 package nodomain.freeyourgadget.gadgetbridge.activities;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
@@ -51,40 +45,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
-import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.Logging;
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.activities.automations.AutomationsSettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.ChartsPreferencesActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.discovery.DiscoveryPairingPreferenceActivity;
-import nodomain.freeyourgadget.gadgetbridge.activities.endurain.OnlineFitnessTrackersPreferencesActivity;
-import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsSettingsActivity;
-import nodomain.freeyourgadget.gadgetbridge.activities.preferences.HealthConnectPreferencesActivity;
-import nodomain.freeyourgadget.gadgetbridge.activities.quicksettings.QuickSettingsPreferencesActivity;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.TimeChangeReceiver;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.comaps.CoMapsNavigationReceiverFactory;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.opentracks.OpenTracksController;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
-import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
-import nodomain.freeyourgadget.gadgetbridge.util.NotificationUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
-import nodomain.freeyourgadget.gadgetbridge.util.preferences.SubtitleListPreference;
 
-public class SettingsActivity extends AbstractSettingsActivityV2 implements ActivityCompat.OnRequestPermissionsResultCallback {
+public class SettingsActivity extends AbstractSettingsActivityV2 {
     public static final String PREF_LANGUAGE = "language";
     public static final String PREF_UNIT_WEIGHT = "unit_weight";
     public static final String PREF_UNIT_TEMPERATURE = "unit_temperature";
     public static final String PREF_UNIT_DISTANCE = "unit_distance";
-
-    public static final int COMAPS_PERMISSION_REQUEST_CODE = 1;
 
     @Override
     protected PreferenceFragmentCompat newFragment() {
@@ -99,36 +76,12 @@ public class SettingsActivity extends AbstractSettingsActivityV2 implements Acti
             open(AboutUserPreferencesActivity.class, result);
         } else if (result.getResourceFile() == R.xml.charts_preferences) {
             open(ChartsPreferencesActivity.class, result);
-        } else if (result.getResourceFile() == R.xml.sleepasandroid_preferences) {
-            open(SleepAsAndroidPreferencesActivity.class, result);
         } else if (result.getResourceFile() == R.xml.discovery_pairing_preferences) {
             open(DiscoveryPairingPreferenceActivity.class, result);
         } else if (result.getResourceFile() == R.xml.notifications_preferences) {
             open(NotificationManagementActivity.class, result);
-        } else if (result.getResourceFile() == R.xml.map_settings) {
-            open(MapsSettingsActivity.class, result);
-        } else if (result.getResourceFile() == R.xml.automations_settings) {
-            open(AutomationsSettingsActivity.class, result);
-        } else if (result.getResourceFile() == R.xml.internethelper_preferences) {
-            open(InternetHelperPreferencesActivity.class, result);
         } else {
             super.onSearchResultClicked(result);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode != COMAPS_PERMISSION_REQUEST_CODE) {
-            return;
-        }
-
-        if (Arrays.stream(grantResults).anyMatch(it -> it == PackageManager.PERMISSION_GRANTED)) {
-            GBApplication.getPrefs().getPreferences()
-                    .edit()
-                    .putBoolean(GBPrefs.NAVIGATION_APP_COMAPS, true)
-                    .apply();
         }
     }
 
@@ -142,15 +95,9 @@ public class SettingsActivity extends AbstractSettingsActivityV2 implements Acti
             index(R.xml.dashboard_preferences, R.string.bottom_nav_dashboard);
             index(R.xml.about_user, R.string.activity_prefs_about_you);
             index(R.xml.charts_preferences, R.string.activity_prefs_charts);
-            index(R.xml.sleepasandroid_preferences, R.string.sleepasandroid_settings);
             index(R.xml.discovery_pairing_preferences, R.string.activity_prefs_discovery_pairing);
             index(R.xml.notifications_preferences, R.string.pref_header_notifications);
-            index(R.xml.map_settings, R.string.maps_settings);
-            index(R.xml.automations_settings, R.string.pref_header_automations);
-            if (!GBApplication.hasDirectInternetAccess())
-                index(R.xml.internethelper_preferences, R.string.prefs_internet_helper_title);
 
-            setInputTypeFor("rtl_max_line_length", InputType.TYPE_CLASS_NUMBER);
             setInputTypeFor("location_latitude", InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED | InputType.TYPE_NUMBER_FLAG_DECIMAL);
             setInputTypeFor("location_longitude", InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED  | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
@@ -160,6 +107,14 @@ public class SettingsActivity extends AbstractSettingsActivityV2 implements Acti
                 pref.setOnPreferenceClickListener(preference -> {
                     Intent enableIntent = new Intent(requireContext(), AboutUserPreferencesActivity.class);
                     startActivity(enableIntent);
+                    return true;
+                });
+            }
+
+            pref = findPreference("pref_pulse_goals");
+            if (pref != null) {
+                pref.setOnPreferenceClickListener(preference -> {
+                    startActivity(new Intent(requireContext(), PulseGoalsActivity.class));
                     return true;
                 });
             }
@@ -332,150 +287,18 @@ public class SettingsActivity extends AbstractSettingsActivityV2 implements Acti
                 });
             }
 
-            pref = findPreference("use_updated_location_if_available");
+            pref = findPreference("pref_pulse_weather");
             if (pref != null) {
-                pref.setOnPreferenceChangeListener((preference, newVal) -> {
-                    if (Boolean.TRUE.equals(newVal) &&
-                            ActivityCompat.checkSelfPermission(requireContext().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        new MaterialAlertDialogBuilder(requireContext())
-                                .setTitle(R.string.warning)
-                                .setMessage(R.string.location_permission_required)
-                                .setIcon(R.drawable.ic_warning)
-                                .setPositiveButton(android.R.string.ok, (dialog, whichButton) -> {
-                                    Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                    intent.setData(Uri.fromParts("package", requireContext().getPackageName(), null));
-                                    // highlight the permissions entry on supported devices
-                                    final Bundle fragmentArgs = new Bundle();
-                                    fragmentArgs.putString(":settings:fragment_args_key", "permission_settings");
-                                    intent.putExtra(":settings:show_fragment_args", fragmentArgs);
-                                    startActivity(intent);
-                                })
-                                .setNegativeButton(android.R.string.cancel, null)
-                                .show();
-                    }
+                pref.setOnPreferenceClickListener(preference -> {
+                    startActivity(new Intent(requireContext(), PulseWeatherActivity.class));
                     return true;
                 });
-            }
-
-            pref = findPreference("weather_city");
-            if (pref != null) {
-                pref.setOnPreferenceChangeListener((preference, newVal) -> {
-                    // reset city id and force a new lookup
-                    GBApplication.getPrefs().getPreferences().edit().putString("weather_cityid", null).apply();
-                    Intent intent = new Intent("GB_UPDATE_WEATHER");
-                    intent.setPackage(BuildConfig.APPLICATION_ID);
-                    requireContext().sendBroadcast(intent);
-                    return true;
-                });
-            }
-
-            final ListPreference audioPlayer = findPreference("audio_player");
-            if (audioPlayer != null) {
-                // Get all receivers of Media Buttons
-                Intent mediaButtonIntent = new Intent(Intent.ACTION_MEDIA_BUTTON);
-
-                PackageManager pm = requireContext().getPackageManager();
-                List<ResolveInfo> mediaReceivers = pm.queryBroadcastReceivers(mediaButtonIntent,
-                        PackageManager.GET_INTENT_FILTERS | PackageManager.GET_RESOLVED_FILTER);
-
-                CharSequence[] newEntries = new CharSequence[mediaReceivers.size() + 1];
-                CharSequence[] newValues = new CharSequence[mediaReceivers.size() + 1];
-                newEntries[0] = getString(R.string.pref_default);
-                newValues[0] = "default";
-
-                int i = 1;
-                Set<String> existingNames = new HashSet<>();
-                for (ResolveInfo resolveInfo : mediaReceivers) {
-                    newEntries[i] = resolveInfo.activityInfo.loadLabel(pm) + " (" + resolveInfo.activityInfo.packageName + ")";
-                    if (existingNames.contains(newEntries[i].toString().trim())) {
-                        newEntries[i] = resolveInfo.activityInfo.loadLabel(pm) + " (" + resolveInfo.activityInfo.name + ")";
-                    } else {
-                        existingNames.add(newEntries[i].toString().trim());
-                    }
-                    newValues[i] = resolveInfo.activityInfo.packageName;
-                    i++;
-                }
-
-                audioPlayer.setEntries(newEntries);
-                audioPlayer.setEntryValues(newValues);
-                audioPlayer.setDefaultValue(newValues[0]);
             }
 
             pref = findPreference("pref_category_dashboard");
             if (pref != null) {
                 pref.setOnPreferenceClickListener(preference -> {
                     Intent enableIntent = new Intent(requireContext(), DashboardPreferencesActivity.class);
-                    startActivity(enableIntent);
-                    return true;
-                });
-            }
-
-            pref = findPreference("pref_category_maps");
-            if (pref != null) {
-                pref.setOnPreferenceClickListener(preference -> {
-                    Intent enableIntent = new Intent(requireContext(), MapsSettingsActivity.class);
-                    startActivity(enableIntent);
-                    return true;
-                });
-            }
-
-            pref = findPreference("pref_screen_automations");
-            if (pref != null) {
-                pref.setOnPreferenceClickListener(preference -> {
-                    Intent enableIntent = new Intent(requireContext(), AutomationsSettingsActivity.class);
-                    startActivity(enableIntent);
-                    return true;
-                });
-            }
-
-            pref = findPreference("pref_screen_quick_settings");
-            if (pref != null) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    pref.setOnPreferenceClickListener(preference -> {
-                        Intent enableIntent = new Intent(requireContext(), QuickSettingsPreferencesActivity.class);
-                        startActivity(enableIntent);
-                        return true;
-                    });
-                } else {
-                    pref.setVisible(false);
-                }
-            }
-
-            pref = findPreference("pref_category_sleepasandroid");
-            if (pref != null) {
-                pref.setOnPreferenceClickListener(preference -> {
-                    Intent enableIntent = new Intent(requireContext(), SleepAsAndroidPreferencesActivity.class);
-                    startActivity(enableIntent);
-                    return true;
-                });
-            }
-
-            pref = findPreference("pref_category_internethelper");
-            if (pref != null) {
-                if (GBApplication.hasDirectInternetAccess()) {
-                    pref.setVisible(false);
-                } else {
-                    pref.setOnPreferenceClickListener(preference -> {
-                        Intent enableIntent = new Intent(requireContext(), InternetHelperPreferencesActivity.class);
-                        startActivity(enableIntent);
-                        return true;
-                    });
-                }
-            }
-
-            pref = findPreference("pref_category_healthconnect");
-            if (pref != null) {
-                pref.setOnPreferenceClickListener(preference -> {
-                    Intent enableIntent = new Intent(requireContext(), HealthConnectPreferencesActivity.class);
-                    startActivity(enableIntent);
-                    return true;
-                });
-            }
-
-            pref = findPreference("pref_category_online_fitness_trackers");
-            if (pref != null) {
-                pref.setOnPreferenceClickListener(preference -> {
-                    Intent enableIntent = new Intent(requireContext(), OnlineFitnessTrackersPreferencesActivity.class);
                     startActivity(enableIntent);
                     return true;
                 });
@@ -537,72 +360,22 @@ public class SettingsActivity extends AbstractSettingsActivityV2 implements Acti
                 });
             }
 
+            pref = findPreference("pulse_accent");
+            if (pref != null) {
+                pref.setOnPreferenceChangeListener((preference, newVal) -> {
+                    // Re-apply the accent overlay across the app and refresh this screen.
+                    sendThemeChangeIntent();
+                    requireActivity().recreate();
+                    return true;
+                });
+            }
+
             pref = findPreference("pref_discovery_pairing");
             if (pref != null) {
                 pref.setOnPreferenceClickListener(preference -> {
                     Intent enableIntent = new Intent(requireContext(), DiscoveryPairingPreferenceActivity.class);
                     startActivity(enableIntent);
                     return true;
-                });
-            }
-
-            //fitness app (OpenTracks) package name selection for OpenTracks observer
-            final SubtitleListPreference opentracksPref = findPreference("opentracks_packagename");
-            if (opentracksPref != null) {
-                final List<String> installedPackages = OpenTracksController.findInstalledPackages();
-                if (installedPackages.isEmpty()) {
-                    opentracksPref.setUnavailable(getString(R.string.pref_summary_opentracks_packagename_not_installed));
-                } else {
-                    opentracksPref.setUnavailable(null);
-                    final CharSequence[] entries = new CharSequence[installedPackages.size()];
-                    final CharSequence[] entryValues = new CharSequence[installedPackages.size()];
-                    for (int i = 0; i < installedPackages.size(); i++) {
-                        final String packageName = installedPackages.get(i);
-                        final String label = NotificationUtils.getApplicationLabel(requireContext(), packageName);
-                        entries[i] = label != null ? label : packageName;
-                        entryValues[i] = packageName;
-                    }
-                    opentracksPref.setEntries(entries);
-                    opentracksPref.setEntryValues(entryValues);
-                    opentracksPref.setEntrySubtitles(entryValues);
-                }
-            }
-
-            pref = findPreference(GBPrefs.NAVIGATION_APP_COMAPS);
-            if (pref != null) {
-                pref.setOnPreferenceChangeListener((preference, newValue) ->  {
-                    if (!(boolean) newValue) {
-                        return true;
-                    }
-
-                    Activity activity = requireActivity();
-                    List<String> allPermissions = CoMapsNavigationReceiverFactory.discoverInstalledVersions(activity.getPackageManager());
-                    List<String> neededPermissions = allPermissions.stream()
-                            .map(app -> app + CoMapsNavigationReceiverFactory.PERMISSION_SUFFIX)
-                            .filter(it -> activity.checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED)
-                            .toList();
-
-                    if (neededPermissions.isEmpty()) {
-                        return true;
-                    }
-
-                    ActivityCompat.requestPermissions(activity, neededPermissions.toArray(String[]::new), COMAPS_PERMISSION_REQUEST_CODE);
-
-                    if (neededPermissions.stream().anyMatch(activity::shouldShowRequestPermissionRationale)) {
-                        new MaterialAlertDialogBuilder(activity)
-                                .setMessage(activity.getString(R.string.permission_navigation_comaps, activity.getString(R.string.app_name), activity.getString(android.R.string.ok)))
-                                .setPositiveButton(android.R.string.ok, (d, w) -> {
-                                    Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                    intent.setData(Uri.fromParts("package", activity.getPackageName(), null));
-                                    activity.startActivity(intent);
-                                })
-                                .setNegativeButton(android.R.string.cancel, null)
-                                .show();
-                    }
-
-                    // In the niche case where the user happens to have several versions of CoMaps
-                    // installed, and only grants permission to one, we still enable the option
-                    return neededPermissions.size() < allPermissions.size();
                 });
             }
         }
@@ -630,6 +403,8 @@ public class SettingsActivity extends AbstractSettingsActivityV2 implements Acti
          * Signal running activities that the theme has changed
          */
         private void sendThemeChangeIntent() {
+            // Pulse: re-apply day/night so the palette flips immediately on theme change.
+            GBApplication.applyPulseNightMode();
             Intent intent = new Intent();
             intent.setAction(GBApplication.ACTION_THEME_CHANGE);
             LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent);

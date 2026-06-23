@@ -47,7 +47,7 @@ public abstract class AbstractDashboardWidget extends Fragment {
     protected @ColorInt int color_unknown = Color.argb(25, 128, 128, 128);
     protected @ColorInt int color_not_worn = Color.BLACK;
     protected @ColorInt int color_worn = Color.rgb(128, 128, 128);
-    protected @ColorInt int color_activity = Color.GREEN;
+    protected @ColorInt int color_activity = Color.rgb(0x2B, 0xB8, 0xFF); // Pulse neon blue
     protected @ColorInt int color_exercise = Color.rgb(255, 128, 0);
     protected @ColorInt int color_deep_sleep = Color.rgb(0, 84, 163);
     protected @ColorInt int color_light_sleep = Color.rgb(7, 158, 243);

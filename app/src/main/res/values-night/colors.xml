@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pulse: dark-mode palette (the original Pulse look). values/colors.xml holds the
+     light-mode variants; AppCompat night mode (driven by the theme pref) picks between them. -->
+<resources>
+    <color name="pulse_bg">#07070A</color>
+    <color name="pulse_card">#0E0E16</color>
+    <color name="pulse_card_alt">#17171F</color>
+    <color name="pulse_neon">#2BB8FF</color>
+    <color name="pulse_neon_cyan">#2BD8FF</color>
+    <color name="pulse_ring_steps">#2BD8FF</color>
+    <color name="pulse_ring_hr">#FF6B6B</color>
+    <color name="pulse_ring_cal">#FF9A4A</color>
+    <color name="pulse_purple">#7A5CFF</color>
+    <color name="pulse_mint">#4AD6A0</color>
+    <color name="pulse_text">#ECEBE6</color>
+    <color name="pulse_text_dim">#8A8A93</color>
+    <!-- Pulse accent choices (dark-mode, vibrant) -->
+    <color name="accent_blue">#2BB8FF</color>
+    <color name="accent_violet">#8C6BFF</color>
+    <color name="accent_coral">#FF6B6B</color>
+    <color name="accent_mint">#4AD6A0</color>
+    <color name="accent_pink">#FF63C0</color>
+</resources>

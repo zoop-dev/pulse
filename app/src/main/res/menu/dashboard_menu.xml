@@ -10,6 +10,12 @@
         app:iconTint="?attr/actionmenu_icon_color"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/pulse_share_today"
+        android:icon="@drawable/ic_share"
+        android:title="@string/pulse_share_today"
+        app:iconTint="?attr/actionmenu_icon_color"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/dashboard_settings"
         android:icon="@drawable/ic_settings"
         android:title="@string/dashboard_settings"

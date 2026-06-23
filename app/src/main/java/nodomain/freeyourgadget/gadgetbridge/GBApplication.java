@@ -231,6 +231,10 @@ public class GBApplication extends Application {
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         prefs = new GBPrefs(sharedPrefs);
 
+        // Pulse: drive AppCompat day/night from the theme pref so the pulse_* palette
+        // (values/ light vs values-night/ dark) flips with the user's choice.
+        applyPulseNightMode();
+
         final boolean environmentSetup = GBEnvironment.isEnvironmentSetup();
 
         // We need to set up the environment before initializing logging, so that the logging
@@ -662,7 +666,8 @@ public class GBApplication extends Application {
     }
 
     public static boolean isDarkThemeEnabled() {
-        String selectedTheme = prefs.getString("pref_key_theme", context.getString(R.string.pref_theme_value_system));
+        // Pulse: default to the dark (Fitbit-style) theme unless the user picks otherwise
+        String selectedTheme = prefs.getString("pref_key_theme", context.getString(R.string.pref_theme_value_dark));
         Resources resources = context.getResources();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
@@ -675,6 +680,32 @@ public class GBApplication extends Application {
 
     public static boolean isAmoledBlackEnabled() {
         return prefs.getBoolean("pref_key_theme_amoled_black", false);
+    }
+
+    /** Pulse: the user's chosen accent, resolved from the active theme overlay
+     *  (falls back to the default neon if the theme hasn't applied the overlay). */
+    public static int getAccentColor(Context ctx) {
+        final TypedValue tv = new TypedValue();
+        if (ctx.getTheme().resolveAttribute(R.attr.pulseAccent, tv, true) && tv.data != 0) {
+            return tv.data;
+        }
+        return ctx.getResources().getColor(R.color.pulse_neon);
+    }
+
+    /** Pulse: map the theme pref to an AppCompat night mode so the day/night
+     *  color resources (and the whole app) follow the user's choice. */
+    public static void applyPulseNightMode() {
+        final String sel = prefs.getString("pref_key_theme", context.getString(R.string.pref_theme_value_dark));
+        final int mode;
+        if (sel.equals(context.getString(R.string.pref_theme_value_system))
+                || sel.equals(context.getString(R.string.pref_theme_value_dynamic))) {
+            mode = androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+        } else if (sel.equals(context.getString(R.string.pref_theme_value_dark))) {
+            mode = androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES;
+        } else {
+            mode = androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO;
+        }
+        androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(mode);
     }
 
     public static boolean areDynamicColorsEnabled() {

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/pulse_tab_health">
+
+        <SwitchPreferenceCompat
+            android:key="pulse_weather_auto"
+            android:defaultValue="true"
+            android:title="@string/pulse_weather_use_location"
+            android:summary="@string/pulse_weather_use_location_summary" />
+
+        <EditTextPreference
+            android:key="pulse_weather_city"
+            android:title="@string/pulse_weather_city"
+            android:summary="@string/pulse_weather_city_summary" />
+
+        <Preference
+            android:key="pulse_weather_refresh"
+            android:title="@string/pulse_weather_refresh"
+            android:summary="@string/pulse_weather_refresh_summary" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

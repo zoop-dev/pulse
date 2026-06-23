@@ -31,4 +31,7 @@
         <!-- Whether to offer an extra "Custom…" entry that lets the user type a free-text value. -->
         <attr name="allowCustomValue" format="boolean" />
     </declare-styleable>
+
+    <!-- Pulse: user-selectable accent, applied as a theme overlay in AbstractGBActivity.init -->
+    <attr name="pulseAccent" format="color" />
 </resources>

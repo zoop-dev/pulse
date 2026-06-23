@@ -160,8 +160,9 @@ android {
             getIsDefault().set(true)
             // the default build product flavor
             dimension "device_type"
-            //applicationIdSuffix ""
-            //versionNameSuffix ""
+            // Pulse: our own application id (reverse of zachy.cc)
+            applicationId "cc.zachy.pulse"
+            versionNameSuffix "-pulse"
         }
 
         banglejs {
