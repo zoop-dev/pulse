@@ -314,7 +314,7 @@ public class PulseSleepActivity extends AbstractGBActivity {
             col.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f));
 
             // Thick rounded pills, matching the Health page mini charts (empty = a clean dot)
-            final int barW = dp(14);
+            final int barW = dp(32);
             final long v = d.week[i];
             final android.graphics.drawable.GradientDrawable pill = new android.graphics.drawable.GradientDrawable();
             pill.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
