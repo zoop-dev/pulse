@@ -41,11 +41,13 @@ public class GarminHttpRequest {
         this.webRequest = webRequest;
         this.method = webRequest.getMethod().name();
         this.uri = Uri.parse(webRequest.getUrl());
-        final JsonElement garminHeaders = GarminJson.decode(webRequest.getHeaders().toByteArray());
         this.headers = new LinkedHashMap<>();
-        if (garminHeaders instanceof JsonObject jsonObject) {
-            for (String key : jsonObject.keySet()) {
-                headers.put(key, jsonObject.get(key).getAsString());
+        if (!webRequest.getHeaders().isEmpty()) {
+            final JsonElement garminHeaders = GarminJson.decode(webRequest.getHeaders().toByteArray());
+            if (garminHeaders instanceof JsonObject jsonObject) {
+                for (String key : jsonObject.keySet()) {
+                    headers.put(key, jsonObject.get(key).getAsString());
+                }
             }
         }
     }
