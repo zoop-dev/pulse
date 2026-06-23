@@ -2,29 +2,68 @@
 
 #### Next release (WIP)
 
+* Add activity upload to Endurain / Wanderer
 * Initial support for Anker Soundcore Sport X20
+* Initial support for Blackview R3Max
+* Initial support for EarFun Free Pro 3
+* Initial support for Garmin Forerunner 170 / Forerunner 970
 * Initial support for Garmin GPSMAP H1
 * Initial support for Huawei Watch Fit 5 / 5 Pro
 * Initial support for iGPSPORT bike computers (BiNavi Air, BSC200, BSC200S, BSC300, iGS630, iGS630S, iGS800)
+* Initial support for Keep Health devices
+* Initial support for Matson MA98415 (BM2 battery monitors)
 * Initial support for Moondrop Space Travel 2 Ultra
+* Initial support for P22B1 (Moyoung / Da Fit)
+* Initial support for Realme Buds Air 6 Pro, Buds T200
 * Initial support for Redmi Buds 6
 * Initial support for Redmi Watch Move
 * Initial support for Sinilink audio amplifiers
+* Initial support for Soundbreener Core
+* Initial support for Victron SmartShunt
 * Initial support for Xplora XMOVE
+* Initial support for Yell Smart Watch GT3 (FitPro)
+* Experimental support for Xiaomi Smart Band 10 Pro
+* Add device-agnostic FIT activity export
 * Add setting to enable TRACE log level
+* Amazfit Balance: Fix code for outdoor cycling
+* Amazfit Bip Lite: Add workout GPS settings
 * Amazfit Bip S: Attempt to fix reboot on notification without subject or body
+* Bangle.jS: Add optional device target filter for com.banglejs.uart.tx intent
+* Bangle.js: Add support for different data types in intent extras
 * Casio GBD-200: Improved support
+* Casio: Improved connection stability
+* Charts: Add charts for generic sample
+* Charts: Add weekly/monthly temperature charts
+* Charts: Fix steps overshooting values
+* Charts: Improve HRV chart
+* Charts: Show VO2 max to decimal place
+* CMF Buds 2 Plus: Add spatial mode
+* CMF Buds 2 Plus: Enable touch configuration
 * CMF Buds 2a: Add touch options
+* CMF Buds: Enable low latency on more devices
+* CMF Buds: Enable spatial audio for more models
+* CMF Buds: Enable ultra bass for more devices
+* CMF Buds: Update equalizer presets
+* Colmi V76: Fix workout parsing
+* FitPro: Add camera
+* Fix connection attempts while bluetooth is off for some devices
 * Fix drawer being drawn behind status bar
 * Fix file type when sharing
 * Garmin: Fix empty caller when unknown
+* Garmin: Fix http request without headers
+* Garmin: Fix unknown transfer notification
 * Garmin: Show toast on waypoint upload complete
+* Garmin: Sync activity tracks for some GPS devices
 * Garmin: Sync and archive some unknown files (should prevent Instinct series reboots)
 * GPX: Fix parsing of timestamps without timezone
+* Health Connect: Fix data being skipped under some situations
+* Health Connect: Fix some crashes during sync
 * Huami: Avoid infinite loop when fetching very short activity
 * Huawei: Allow encryption to be enabled / disabled
+* Include workouts in activity list
 * Intent API: Add Alarm Intent API
 * Maps: Reduce memory usage
+* OpenTracks: Fix extra empty activity track and rare crash
 * Pebble: Add support for installing dual slot firmware
 * Pebble: Add support for pull to refresh for pebble health data
 * Pebble: Fix Pebble [Core 2 Duo / Time 2 / 2 Round] BLE pairing
@@ -32,9 +71,12 @@
 * Prevent crash on devices without GPS
 * Recognize Thunderbird for Android as email and ignore its summary notifications
 * Sony WF-1000XM5: Enable further capabilities
+* Track auto-fetch times per device
 * Xiaomi-protobuf: Fix alarm notifications
+* Xiaomi-protobuf: Fix notification dismissal after reconnection
 * Xiaomi-protobuf: Fix swapped min and max temperatures
 * Xiaomi-protobuf: Fix watchface management
+* Zepp OS: Weather stability improvements
 
 #### 0.91.1
 
