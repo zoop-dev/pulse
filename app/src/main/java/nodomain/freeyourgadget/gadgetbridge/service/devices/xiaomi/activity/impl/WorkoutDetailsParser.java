@@ -118,6 +118,12 @@ public class WorkoutDetailsParser extends XiaomiActivityParser {
             if (speedMps > 0f && speedMps < 20f) {
                 builder.setSpeed(speedMps);
             }
+        } else if (version == 5 && r.speedRaw != null && r.speedRaw > 0) {
+            // Treadmill v5 stores belt speed directly in 0.1 km/h units → m/s = raw / 36.
+            final float speedMps = r.speedRaw / 36f;
+            if (speedMps > 0f && speedMps < 20f) {
+                builder.setSpeed(speedMps);
+            }
         }
     }
 
@@ -161,6 +167,10 @@ public class WorkoutDetailsParser extends XiaomiActivityParser {
         if (r.cadence != null && r.cadence > 0) p.setCadence(r.cadence);
         if (version == 6 && r.speedRaw != null && r.speedRaw > 0) {
             final float speedMps = 256000f / r.speedRaw;
+            if (speedMps > 0f && speedMps < 20f) p.setSpeed(speedMps);
+        } else if (version == 5 && r.speedRaw != null && r.speedRaw > 0) {
+            // Treadmill v5 stores belt speed directly in 0.1 km/h units → m/s = raw / 36.
+            final float speedMps = r.speedRaw / 36f;
             if (speedMps > 0f && speedMps < 20f) p.setSpeed(speedMps);
         }
     }
@@ -286,6 +296,21 @@ public class WorkoutDetailsParser extends XiaomiActivityParser {
                     tsPosition = 8;
                     nrPosition = 4;
                     layoutCode = 105; // synthetic: v5-walking record shape
+                } else if (bytes.length >= 13
+                        && bytes[8] == (byte) 0xEC && bytes[9] == (byte) 0xCC && bytes[10] == (byte) 0x80
+                        && bytes[11] == (byte) 0x28 && bytes[12] == (byte) 0x06) {
+                    // SPORTS_TREADMILL v5: signature EC CC 80 28 06.
+                    //   115-byte segment header: int32 start ts at offset 2; byte 0x7f at offset 6
+                    //     (same 0x7f-only "phase" byte seen in the v6 treadmill header; remainder is zero).
+                    //   No record-count field in the header → single-segment fallback below.
+                    //   8-byte records — layout decoded in case 205. Validated against the paired
+                    //   treadmill summary: mean HR matched HR_AVG and the top speed matched PACE_MAX.
+                    expectedSignature = new byte[]{(byte) 0xEC, (byte) 0xCC, (byte) 0x80, (byte) 0x28, (byte) 0x06};
+                    segmentHeaderSize = 115;
+                    recordSize = 8;
+                    tsPosition = 2;
+                    nrPosition = 0;
+                    layoutCode = 205; // synthetic: treadmill-v5 record shape
                 } else {
                     LOG.warn("Unknown v5 DETAILS signature: {}",
                             GB.hexdump(bytes, 8, Math.min(5, bytes.length - 8)));
@@ -368,7 +393,7 @@ public class WorkoutDetailsParser extends XiaomiActivityParser {
             // v3 FREESTYLE: the nr field in the segment header is unreliable (observed value 17 vs
             // ~4433 actual records). Treat the file as single-segment and consume all remaining
             // record bytes instead.
-            if (layoutCode == 103) {
+            if (layoutCode == 103 || layoutCode == 205) {
                 nr = buf.remaining() / recordSize;
             }
             LOG.debug("Segment: {} records starting at ts={}", nr, ts);
@@ -484,6 +509,15 @@ public class WorkoutDetailsParser extends XiaomiActivityParser {
                         buf.getShort();// pace
                         break;
                     }
+                    case 205:
+                        // SPORTS_TREADMILL v5: 8-byte record.
+                        buf.get();                       // reserved (1 byte)
+                        r.hr = buf.get() & 0xFF;
+                        buf.get();                       // reserved (1 byte)
+                        // Belt speed shown on the treadmill display, in units of 0.1 km/h.
+                        r.speedRaw = buf.get() & 0xFF;
+                        buf.getInt();                    // reserved (4 bytes)
+                        break;
                     case 108:
                         // SPORTS_OUTDOOR_WALKING_V2 v8: 21-byte record. Same prefix as v5 + 8 trailing bytes.
                     {

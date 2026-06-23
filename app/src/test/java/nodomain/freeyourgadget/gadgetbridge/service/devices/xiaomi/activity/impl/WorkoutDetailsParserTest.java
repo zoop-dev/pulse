@@ -669,4 +669,90 @@ public class WorkoutDetailsParserTest {
         // Appended point has HR but no location (GPS fix loss).
         assertNull(merged.get(1).getLocation());
     }
+
+    // ---- treadmill v5 (signature EC CC 80 28 06) ----
+
+    /**
+     * Build a treadmill-v5 DETAILS payload. Distinct signature on the same version 5 as the
+     * cycling layout, so it needs its own builder. Single segment, no record-count field in
+     * the 115-byte header (parser falls back to consuming the whole buffer); start ts lives at
+     * header offset 2. Each record is 8 bytes: [reserved][hr][reserved][speed][4×reserved],
+     * where speed is in units of 0.1 km/h.
+     *
+     * @param records each element is {hr, speed01kmh}
+     */
+    private static byte[] buildTreadmillV5Bytes(final int startTs, final int[][] records) {
+        final byte[] signature = {(byte) 0xEC, (byte) 0xCC, (byte) 0x80, (byte) 0x28, (byte) 0x06};
+        final int segmentHeaderSize = 115;
+        final int recordSize = 8;
+
+        final int dataSize = 7 + 1 + signature.length + segmentHeaderSize
+                + records.length * recordSize + 4;
+        final ByteBuffer buf = ByteBuffer.allocate(dataSize).order(ByteOrder.LITTLE_ENDIAN);
+
+        buf.put(new byte[7]);      // fileId placeholder
+        buf.put((byte) 0);         // padding
+        buf.put(signature);
+
+        final byte[] hdr = new byte[segmentHeaderSize];
+        ByteBuffer.wrap(hdr).order(ByteOrder.LITTLE_ENDIAN).putInt(2, startTs);
+        buf.put(hdr);
+
+        for (final int[] rec : records) {
+            buf.put((byte) 0);          // reserved
+            buf.put((byte) rec[0]);     // hr
+            buf.put((byte) 0);          // reserved
+            buf.put((byte) rec[1]);     // speed (0.1 km/h)
+            buf.putInt(0);              // reserved
+        }
+
+        final byte[] arr = buf.array();
+        buf.putInt(CheckSums.getCRC32(arr, 0, arr.length - 4));
+        return buf.array();
+    }
+
+    @Test
+    public void testV5TreadmillSingleSegment() {
+        final int startTs = 1782063192;
+        final byte[] bytes = buildTreadmillV5Bytes(startTs, new int[][]{
+                {100, 50}, // 5.0 km/h
+                {135, 78}, // 7.8 km/h
+                {165, 94}, // 9.4 km/h
+        });
+
+        final List<WorkoutDetailRecord> records =
+                WorkoutDetailsParser.parseBytes(makeFileId(5), bytes);
+
+        assertNotNull(records);
+        assertEquals(3, records.size());
+        assertEquals(100, records.get(0).hr);
+        assertEquals(135, records.get(1).hr);
+        assertEquals(165, records.get(2).hr);
+        // speed stored raw in 0.1 km/h units
+        assertEquals(Integer.valueOf(50), records.get(0).speedRaw);
+        assertEquals(Integer.valueOf(94), records.get(2).speedRaw);
+        // timestamps increment per second from the segment start
+        assertEquals(startTs, records.get(0).ts);
+        assertEquals(startTs + 2, records.get(2).ts);
+    }
+
+    @Test
+    public void testGetActivityTrackV5Treadmill() {
+        final int startTs = 1782063192;
+        final byte[] bytes = buildTreadmillV5Bytes(startTs, new int[][]{
+                {120, 0},  // speed 0 → no speed set
+                {140, 90}, // 9.0 km/h → 2.5 m/s
+        });
+
+        final ActivityTrack track =
+                new WorkoutDetailsParser().getActivityTrack(makeFileId(5), bytes);
+
+        assertNotNull(track);
+        final List<ActivityPoint> points = track.getAllPoints();
+        assertEquals(2, points.size());
+        assertEquals(120, points.get(0).getHeartRate());
+        assertEquals(140, points.get(1).getHeartRate());
+        // speed: raw 90 (0.1 km/h) / 36 = 2.5 m/s
+        assertEquals(2.5f, points.get(1).getSpeed(), 0.001f);
+    }
 }
