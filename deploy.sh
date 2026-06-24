@@ -6,8 +6,9 @@ set -e
 cd "$(dirname "$0")"
 
 MSG="${1:-deploy}"
-BASE=79ad5a6                       # upstream gadgetbridge commit our fork sits on
 OUT=pulse-vs-gadgetbridge.diff
+# wherever our fork currently branches off upstream (tracks syncs automatically)
+BASE=$(git merge-base HEAD upstream/master 2>/dev/null || echo 79ad5a6)
 
 if [ -z "$SKIP_BUILD" ]; then
     echo "building…"
