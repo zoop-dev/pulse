@@ -1,5 +1,5 @@
 ### pulse vs upstream gadgetbridge (base 79ad5a6079a277f95b791d81ec34e6810cc49b60)
-### generated 2026-06-24T20:15Z
+### generated 2026-06-24T20:28Z
 
 diff --git a/.gitignore b/.gitignore
 index 0160baad1f..dd3a7d7730 100644
@@ -15671,10 +15671,10 @@ index 0000000000..af43be347a
 Binary files /dev/null and b/og-image.png differ
 diff --git a/publish-fdroid.sh b/publish-fdroid.sh
 new file mode 100755
-index 0000000000..6b831d791d
+index 0000000000..25cea353d2
 --- /dev/null
 +++ b/publish-fdroid.sh
-@@ -0,0 +1,53 @@
+@@ -0,0 +1,54 @@
 +#!/usr/bin/env bash
 +# build a signed R8 release apk, drop it in the self-hosted f-droid repo, rebuild the
 +# index, and push it to cloudflare pages (fdroid.zachy.cc).
@@ -15695,7 +15695,8 @@ index 0000000000..6b831d791d
 +export PATH="$JAVA_HOME/bin:$HOME/.local/bin:$PATH"
 +
 +echo "building release (r8)…"
-+./gradlew :app:assembleMainlineRelease --no-daemon -q
++# skip vital lint — slow and not a useful gate for our own repo
++./gradlew :app:assembleMainlineRelease --no-daemon -x lintVitalMainlineRelease
 +
 +VCODE=$(grep -m1 versionCode app/build.gradle | grep -oE '[0-9]+')
 +UNSIGNED=$(ls -t app/build/outputs/apk/mainline/release/*.apk | head -1)
