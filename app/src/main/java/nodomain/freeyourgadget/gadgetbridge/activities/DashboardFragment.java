@@ -880,7 +880,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         switch (metric) {
             case "distance": {
                 final float meters = dashboardData.getDistanceTotal();
-                iconRes = R.drawable.ic_map; chipRes = R.drawable.pulse_chip_steps; tint = nodomain.freeyourgadget.gadgetbridge.GBApplication.getAccentColor(ctx);
+                iconRes = R.drawable.ic_ms_distance; chipRes = R.drawable.pulse_chip_steps; tint = nodomain.freeyourgadget.gadgetbridge.GBApplication.getAccentColor(ctx);
                 label = getString(R.string.distance);
                 value = nodomain.freeyourgadget.gadgetbridge.util.FormatUtils.getFormattedDistanceLabel(meters);
                 factor = dashboardData.getDistanceGoalFactor();
@@ -889,7 +889,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             }
             case "activetime": {
                 final long mins = dashboardData.getActiveMinutesTotal();
-                iconRes = R.drawable.ic_activity_exercise; chipRes = R.drawable.pulse_chip_sleep; tint = ContextCompat.getColor(ctx, R.color.pulse_mint);
+                iconRes = R.drawable.ic_ms_active; chipRes = R.drawable.pulse_chip_sleep; tint = ContextCompat.getColor(ctx, R.color.pulse_mint);
                 label = getString(R.string.activity_list_summary_active_time);
                 value = mins >= 60 ? String.format(loc, "%dh %dm", mins / 60, mins % 60) : String.format(loc, "%dm", mins);
                 factor = dashboardData.getActiveMinutesGoalFactor();
@@ -898,7 +898,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             }
             case "calories": {
                 final int cal = dashboardData.getActiveCaloriesTotal();
-                iconRes = R.drawable.ic_calories; chipRes = R.drawable.pulse_chip_hr; tint = ContextCompat.getColor(ctx, R.color.pulse_ring_hr);
+                iconRes = R.drawable.ic_ms_calories; chipRes = R.drawable.pulse_chip_hr; tint = ContextCompat.getColor(ctx, R.color.pulse_ring_hr);
                 label = getString(R.string.calories);
                 value = cal > 0 ? nf.format(cal) : getString(R.string.stats_empty_value);
                 factor = dashboardData.getActiveCaloriesGoalFactor();
@@ -909,7 +909,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
                 // Garmin only surfaces weekly intensity minutes; Pulse shows TODAY's count (with the week for context).
                 final Integer today = extraMetrics.get("intensity_today");
                 final Integer week = extraMetrics.get("intensity");
-                iconRes = R.drawable.ic_activity_exercise; chipRes = R.drawable.pulse_chip_sleep; tint = ContextCompat.getColor(ctx, R.color.pulse_neon_cyan);
+                iconRes = R.drawable.ic_ms_intensity; chipRes = R.drawable.pulse_chip_sleep; tint = ContextCompat.getColor(ctx, R.color.pulse_neon_cyan);
                 label = week != null
                         ? getString(R.string.pulse_intensity_week, week)
                         : getString(R.string.pulse_intensity);
@@ -922,7 +922,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             }
             case "sleep": {
                 final long mins = dashboardData.getSleepMinutesTotal();
-                iconRes = R.drawable.ic_nights_stay; chipRes = R.drawable.pulse_chip_sleep; tint = ContextCompat.getColor(ctx, R.color.pulse_purple);
+                iconRes = R.drawable.ic_ms_sleep; chipRes = R.drawable.pulse_chip_sleep; tint = ContextCompat.getColor(ctx, R.color.pulse_purple);
                 label = getString(R.string.menuitem_sleep);
                 value = mins > 0 ? String.format(loc, "%dh %dm", mins / 60, mins % 60) : getString(R.string.stats_empty_value);
                 factor = dashboardData.getSleepMinutesGoalFactor();
@@ -931,7 +931,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             }
             case "heartrate": {
                 final Integer v = extraMetrics.get("heartrate");
-                iconRes = R.drawable.ic_heartrate; chipRes = R.drawable.pulse_chip_hr; tint = ContextCompat.getColor(ctx, R.color.pulse_ring_hr);
+                iconRes = R.drawable.ic_ms_hr; chipRes = R.drawable.pulse_chip_hr; tint = ContextCompat.getColor(ctx, R.color.pulse_ring_hr);
                 label = getString(R.string.menuitem_hr);
                 value = v != null ? String.valueOf(v) : getString(R.string.stats_empty_value);
                 // bar fills across a typical 40–200 bpm range
@@ -941,7 +941,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             }
             case "bodybattery": {
                 final Integer v = extraMetrics.get("bodybattery");
-                iconRes = R.drawable.ic_battery_full; chipRes = R.drawable.pulse_chip_sleep; tint = ContextCompat.getColor(ctx, R.color.pulse_mint);
+                iconRes = R.drawable.ic_ms_bodybattery; chipRes = R.drawable.pulse_chip_sleep; tint = ContextCompat.getColor(ctx, R.color.pulse_mint);
                 label = getString(R.string.body_energy);
                 value = v != null ? String.valueOf(v) : getString(R.string.stats_empty_value);
                 factor = v != null ? v / 100f : 0f;
@@ -950,7 +950,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             }
             case "stress": {
                 final Integer v = extraMetrics.get("stress");
-                iconRes = R.drawable.ic_heartrate; chipRes = R.drawable.pulse_chip_hr; tint = ContextCompat.getColor(ctx, R.color.pulse_ring_cal);
+                iconRes = R.drawable.ic_ms_stress; chipRes = R.drawable.pulse_chip_hr; tint = ContextCompat.getColor(ctx, R.color.pulse_ring_cal);
                 label = getString(R.string.menuitem_stress);
                 value = v != null ? String.valueOf(v) : getString(R.string.stats_empty_value);
                 factor = v != null ? v / 100f : 0f;
@@ -959,7 +959,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             }
             case "spo2": {
                 final Integer v = extraMetrics.get("spo2");
-                iconRes = R.drawable.ic_heart; chipRes = R.drawable.pulse_chip_steps; tint = ContextCompat.getColor(ctx, R.color.pulse_neon_cyan);
+                iconRes = R.drawable.ic_ms_spo2; chipRes = R.drawable.pulse_chip_steps; tint = ContextCompat.getColor(ctx, R.color.pulse_neon_cyan);
                 label = getString(R.string.pref_header_spo2);
                 value = v != null ? v + "%" : getString(R.string.stats_empty_value);
                 factor = v != null ? v / 100f : 0f;
@@ -968,7 +968,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             }
             case "hrv": {
                 final Integer v = extraMetrics.get("hrv");
-                iconRes = R.drawable.ic_heartrate; chipRes = R.drawable.pulse_chip_steps; tint = nodomain.freeyourgadget.gadgetbridge.GBApplication.getAccentColor(ctx);
+                iconRes = R.drawable.ic_ms_hrv; chipRes = R.drawable.pulse_chip_steps; tint = nodomain.freeyourgadget.gadgetbridge.GBApplication.getAccentColor(ctx);
                 label = getString(R.string.hrv);
                 value = v != null ? v + " ms" : getString(R.string.stats_empty_value);
                 // bar fills across a typical 0–120 ms range
@@ -978,7 +978,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             }
             case "respiration": {
                 final Integer v = extraMetrics.get("respiration");
-                iconRes = R.drawable.ic_heart; chipRes = R.drawable.pulse_chip_sleep; tint = ContextCompat.getColor(ctx, R.color.pulse_purple);
+                iconRes = R.drawable.ic_ms_respiration; chipRes = R.drawable.pulse_chip_sleep; tint = ContextCompat.getColor(ctx, R.color.pulse_purple);
                 label = getString(R.string.respiratoryrate);
                 value = v != null ? String.valueOf(v) : getString(R.string.stats_empty_value);
                 // bar fills across a typical 6–30 breaths/min range
@@ -988,7 +988,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             }
             default: { // steps
                 final int steps = dashboardData.getStepsTotal();
-                iconRes = R.drawable.ic_steps; chipRes = R.drawable.pulse_chip_steps; tint = ContextCompat.getColor(ctx, R.color.pulse_ring_steps);
+                iconRes = R.drawable.ic_ms_steps; chipRes = R.drawable.pulse_chip_steps; tint = ContextCompat.getColor(ctx, R.color.pulse_ring_steps);
                 label = getString(R.string.steps);
                 value = nf.format(steps);
                 factor = dashboardData.getStepsGoalFactor();
