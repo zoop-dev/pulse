@@ -158,7 +158,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
     // Widgets shown per tab (Garmin Vívosmart 5 graceful "no data" for unsupported)
     // All Pulse-native metrics available to surface as cards.
     static final String[] ALL_METRICS = {
-            "steps", "distance", "activetime", "calories", "sleep",
+            "steps", "distance", "activetime", "calories", "intensity", "sleep",
             "heartrate", "bodybattery", "stress", "spo2", "hrv", "respiration"
     };
     private static final String DEFAULT_TODAY_METRICS = String.join(",", ALL_METRICS);
@@ -652,6 +652,36 @@ public class DashboardFragment extends Fragment implements MenuProvider {
                 final nodomain.freeyourgadget.gadgetbridge.model.RespiratoryRateSample x = c.getRespiratoryRateSampleProvider(dev, s).getLatestSample();
                 if (x != null) extraMetrics.put("respiration", Math.round(x.getRespiratoryRate()));
             } catch (final Exception ignored) { }
+            try {
+                // Intensity minutes: weekly total (Mon→now) plus today's, where vigorous counts double.
+                final nodomain.freeyourgadget.gadgetbridge.devices.GarminIntensityMinutesSampleProvider imp =
+                        new nodomain.freeyourgadget.gadgetbridge.devices.GarminIntensityMinutesSampleProvider(dev, s);
+                final Calendar weekStart = GregorianCalendar.getInstance();
+                weekStart.set(Calendar.HOUR_OF_DAY, 0);
+                weekStart.set(Calendar.MINUTE, 0);
+                weekStart.set(Calendar.SECOND, 0);
+                weekStart.set(Calendar.MILLISECOND, 0);
+                while (weekStart.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
+                    weekStart.add(Calendar.DAY_OF_MONTH, -1);
+                }
+                final Calendar todayStart = GregorianCalendar.getInstance();
+                todayStart.set(Calendar.HOUR_OF_DAY, 0);
+                todayStart.set(Calendar.MINUTE, 0);
+                todayStart.set(Calendar.SECOND, 0);
+                todayStart.set(Calendar.MILLISECOND, 0);
+                final long todayMs = todayStart.getTimeInMillis();
+                int week = 0, today = 0;
+                for (final nodomain.freeyourgadget.gadgetbridge.entities.GarminIntensityMinutesSample im
+                        : imp.getAllSamples(weekStart.getTimeInMillis(), System.currentTimeMillis())) {
+                    final int mod = im.getModerate() != null ? im.getModerate() : 0;
+                    final int vig = im.getVigorous() != null ? im.getVigorous() : 0;
+                    final int v = mod + vig * 2;
+                    week += v;
+                    if (im.getTimestamp() >= todayMs) today += v;
+                }
+                extraMetrics.put("intensity", week);
+                extraMetrics.put("intensity_today", today);
+            } catch (final Exception ignored) { }
         } catch (final Exception e) {
             LOG.warn("Pulse: extra metrics query failed", e);
         }
@@ -826,6 +856,20 @@ public class DashboardFragment extends Fragment implements MenuProvider {
                 value = cal > 0 ? nf.format(cal) : getString(R.string.stats_empty_value);
                 factor = dashboardData.getActiveCaloriesGoalFactor();
                 chartTab = "calories"; titleRes = R.string.active_calories; chartMode = "ACTIVE_CALORIES_GOAL";
+                break;
+            }
+            case "intensity": {
+                // Garmin only surfaces weekly intensity minutes; Pulse shows TODAY's count (with the week for context).
+                final Integer today = extraMetrics.get("intensity_today");
+                final Integer week = extraMetrics.get("intensity");
+                iconRes = R.drawable.ic_activity_exercise; chipRes = R.drawable.pulse_chip_sleep; tint = ContextCompat.getColor(ctx, R.color.pulse_neon_cyan);
+                label = week != null
+                        ? getString(R.string.pulse_intensity_week, week)
+                        : getString(R.string.pulse_intensity);
+                value = today != null ? String.valueOf(today) : getString(R.string.stats_empty_value);
+                // ~150/week → a rough daily target of about 21 minutes
+                factor = today != null ? today / 21.4f : 0f;
+                chartTab = "activity"; titleRes = R.string.garmin_intensity_minutes; chartMode = "";
                 break;
             }
             case "sleep": {
