@@ -32,14 +32,7 @@ import androidx.core.content.ContextCompat;
 
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.LegendEntry;
-import com.github.mikephil.charting.components.LimitLine;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import org.apache.commons.lang3.EnumUtils;
 import org.slf4j.Logger;
@@ -137,6 +130,7 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
         if (!supportsActiveCalories()) {
             caloriesActiveWrapper.setVisibility(View.GONE);
             caloriesActiveGoalWrapper.setVisibility(View.GONE);
+            caloriesChart.setVisibility(View.GONE);
         }
 
         if (gaugeViewMode == null) {
@@ -197,6 +191,7 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
         String formattedDate = new SimpleDateFormat("E, MMM dd").format(date);
         dateView.setText(formattedDate);
         List<? extends ActivitySample> samples = getActivitySamples(db, device, startTs, endTs);
+        final ActiveCaloriesDailyData activeCaloriesData = createActiveCaloriesDailyData(samples, startTs);
         final Integer restingMetabolicRate;
         if (metricMetabolicResting) {
             MetricSample sample = getLatestMetricSample(db, device, GENERIC_RESTING_METABOLIC_RATE);
@@ -206,10 +201,10 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
             restingMetabolicRate = (sample == null) ? null : sample.getRestingMetabolicRate();
         }
         if (restingMetabolicRate == null) {
-            return new CaloriesData(0, 0, 0, 0, samples, startTs);
+            return new CaloriesData(0, 0, 0, 0, activeCaloriesData.entries, startTs);
         }
         int totalBurnt;
-        int activeBurnt = 0;
+        int activeBurnt = activeCaloriesData.activeCalories;
         boolean sameDay = calendar.get(Calendar.DAY_OF_YEAR) == day.get(Calendar.DAY_OF_YEAR) &&
                 calendar.get(Calendar.YEAR) == day.get(Calendar.YEAR);
         double passedDayProportion = 1;
@@ -218,17 +213,9 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
         }
         int restingBurnt = (int) (restingMetabolicRate * passedDayProportion);
 
-        for (int i = 0; i <= samples.size() - 1; i++) {
-            ActivitySample sample = samples.get(i);
-            if (sample.getActiveCalories() > 0) {
-                activeBurnt += sample.getActiveCalories();
-            }
-        }
-        // Convert calories to kcal
-        activeBurnt = activeBurnt / 1000;
         totalBurnt = restingBurnt + activeBurnt;
 
-        return new CaloriesData(totalBurnt, activeBurnt, restingBurnt, restingMetabolicRate, samples, startTs);
+        return new CaloriesData(totalBurnt, activeBurnt, restingBurnt, restingMetabolicRate, activeCaloriesData.entries, startTs);
     }
 
     @Override
@@ -290,55 +277,29 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
     }
 
     private void updateCaloriesChart(final CaloriesData data) {
-        caloriesChart.setData(null);
-
         final int caloriesColor = ContextCompat.getColor(requireContext(), R.color.calories_color);
-        final List<LegendEntry> legendEntries = new ArrayList<>(1);
-        final LegendEntry activeCaloriesEntry = new LegendEntry();
-        activeCaloriesEntry.label = getString(R.string.active_calories);
-        activeCaloriesEntry.formColor = caloriesColor;
-        legendEntries.add(activeCaloriesEntry);
-        caloriesChart.getLegend().setTextColor(GBApplication.getTextColor(requireContext()));
-        caloriesChart.getLegend().setCustom(legendEntries);
+        final float yAxisMaximum = Math.max(
+                Math.max(DailyCumulativeLineChartHelper.maxY(data.activeCaloriesEntries), ACTIVE_CALORIES_GOAL),
+                1f
+        ) * 1.1f;
 
-        final TimestampTranslation tsTranslation = new TimestampTranslation();
-        final List<Entry> lineEntries = createCumulativeActiveCaloriesEntries(data.samples, tsTranslation, data.startTs);
-        caloriesChart.getXAxis().setValueFormatter(new SampleXLabelFormatter(tsTranslation, "HH:mm"));
-
-        final LineDataSet lineDataSet = new LineDataSet(lineEntries, getString(R.string.active_calories));
-        lineDataSet.setColor(caloriesColor);
-        lineDataSet.setDrawCircles(false);
-        lineDataSet.setLineWidth(2f);
-        lineDataSet.setFillAlpha(255);
-        lineDataSet.setCircleColor(caloriesColor);
-        lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-        lineDataSet.setDrawValues(false);
-        lineDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
-        lineDataSet.setDrawFilled(true);
-        lineDataSet.setFillAlpha(60);
-        lineDataSet.setFillColor(caloriesColor);
-
-        final YAxis yAxisLeft = caloriesChart.getAxisLeft();
-        yAxisLeft.removeAllLimitLines();
-        final LimitLine goalLine = new LimitLine(ACTIVE_CALORIES_GOAL);
-        goalLine.setLineColor(caloriesColor);
-        goalLine.setLineWidth(1.5f);
-        goalLine.enableDashedLine(15f, 10f, 0f);
-        yAxisLeft.addLimitLine(goalLine);
-        yAxisLeft.setAxisMaximum(Math.max(Math.max(lineDataSet.getYMax(), ACTIVE_CALORIES_GOAL), 1f) * 1.1f);
-
-        final List<ILineDataSet> lineDataSets = new ArrayList<>();
-        lineDataSets.add(lineDataSet);
-        caloriesChart.setData(new LineData(lineDataSets));
+        DailyCumulativeLineChartHelper.setCumulativeData(
+                caloriesChart,
+                data.activeCaloriesEntries,
+                DailyCumulativeLineChartHelper.timeValueFormatter(data.startTs, "HH:mm"),
+                getString(R.string.active_calories),
+                caloriesColor,
+                GBApplication.getTextColor(requireContext()),
+                ACTIVE_CALORIES_GOAL,
+                yAxisMaximum
+        );
     }
 
-    static List<Entry> createCumulativeActiveCaloriesEntries(
+    static ActiveCaloriesDailyData createActiveCaloriesDailyData(
             final List<? extends ActivitySample> samples,
-            final TimestampTranslation tsTranslation,
             final int startTs
     ) {
         final List<Entry> lineEntries = new ArrayList<>();
-        tsTranslation.shorten(startTs);
         lineEntries.add(new Entry(0f, 0f));
 
         int activeCalories = 0;
@@ -346,9 +307,9 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
             if (sample.getActiveCalories() > 0) {
                 activeCalories += sample.getActiveCalories();
             }
-            lineEntries.add(new Entry(tsTranslation.shorten(sample.getTimestamp()), activeCalories / 1000));
+            lineEntries.add(new Entry(sample.getTimestamp() - startTs, activeCalories / 1000));
         }
-        return lineEntries;
+        return new ActiveCaloriesDailyData(activeCalories / 1000, lineEntries);
     }
 
     @Override
@@ -360,31 +321,20 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
     protected void setupLegend(Chart<?> chart) {}
 
     private void setupCaloriesChart() {
-        caloriesChart.getDescription().setEnabled(false);
-        caloriesChart.setDoubleTapToZoomEnabled(false);
+        DailyCumulativeLineChartHelper.setup(
+                caloriesChart,
+                GBApplication.getSecondaryTextColor(requireContext())
+        );
+    }
 
-        final XAxis xAxisBottom = caloriesChart.getXAxis();
-        xAxisBottom.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxisBottom.setDrawLabels(true);
-        xAxisBottom.setDrawGridLines(false);
-        xAxisBottom.setEnabled(true);
-        xAxisBottom.setDrawLimitLinesBehindData(true);
-        xAxisBottom.setTextColor(GBApplication.getSecondaryTextColor(requireContext()));
-        xAxisBottom.setAxisMinimum(0f);
-        xAxisBottom.setAxisMaximum(86400f);
+    protected static class ActiveCaloriesDailyData {
+        public int activeCalories;
+        public List<Entry> entries;
 
-        final YAxis yAxisLeft = caloriesChart.getAxisLeft();
-        yAxisLeft.setDrawGridLines(true);
-        yAxisLeft.setAxisMinimum(0);
-        yAxisLeft.setDrawTopYLabelEntry(true);
-        yAxisLeft.setEnabled(true);
-        yAxisLeft.setTextColor(GBApplication.getSecondaryTextColor(requireContext()));
-
-        final YAxis yAxisRight = caloriesChart.getAxisRight();
-        yAxisRight.setEnabled(true);
-        yAxisRight.setDrawLabels(false);
-        yAxisRight.setDrawGridLines(false);
-        yAxisRight.setDrawAxisLine(true);
+        protected ActiveCaloriesDailyData(final int activeCalories, final List<Entry> entries) {
+            this.activeCalories = activeCalories;
+            this.entries = entries;
+        }
     }
 
     protected static class CaloriesData extends ChartsData {
@@ -392,7 +342,7 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
         public int restingBurnt;
         public int totalBurnt;
         public int restingMetabolicRate;
-        public List<? extends ActivitySample> samples;
+        public List<Entry> activeCaloriesEntries;
         public int startTs;
 
         protected CaloriesData(
@@ -400,14 +350,14 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
                 int activeBurnt,
                 int restingBurnt,
                 final int restingMetabolicRate,
-                final List<? extends ActivitySample> samples,
+                final List<Entry> activeCaloriesEntries,
                 final int startTs
         ) {
             this.totalBurnt = totalBurnt;
             this.activeBurnt = activeBurnt;
             this.restingBurnt = restingBurnt;
             this.restingMetabolicRate = restingMetabolicRate;
-            this.samples = samples;
+            this.activeCaloriesEntries = activeCaloriesEntries;
             this.startTs = startTs;
         }
     }

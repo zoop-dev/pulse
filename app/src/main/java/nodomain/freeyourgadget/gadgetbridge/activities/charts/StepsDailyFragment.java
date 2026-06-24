@@ -12,14 +12,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.LegendEntry;
-import com.github.mikephil.charting.components.LimitLine;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -133,15 +126,6 @@ public class StepsDailyFragment extends StepsFragment<StepsDailyFragment.StepsDa
         final WorkoutValueFormatter valueFormatter = new WorkoutValueFormatter();
         distance.setText(valueFormatter.formatValue(stepsData.todayStepsDay.distance, "km"));
 
-        // Chart
-        final List<LegendEntry> legendEntries = new ArrayList<>(1);
-        final LegendEntry stepsEntry = new LegendEntry();
-        stepsEntry.label = getString(R.string.steps);
-        stepsEntry.formColor = getResources().getColor(R.color.steps_color);
-        legendEntries.add(stepsEntry);
-        stepsChart.getLegend().setTextColor(TEXT_COLOR);
-        stepsChart.getLegend().setCustom(legendEntries);
-
         final List<Entry> lineEntries = new ArrayList<>();
         final TimestampTranslation tsTranslation = new TimestampTranslation();
         int sum = 0;
@@ -152,40 +136,17 @@ public class StepsDailyFragment extends StepsFragment<StepsDailyFragment.StepsDa
             lineEntries.add(new Entry(tsTranslation.shorten(sample.getTimestamp()), sum));
         }
 
-        stepsChart.getXAxis().setValueFormatter(new SampleXLabelFormatter(tsTranslation, "HH:mm"));
-
-        if (sum < STEPS_GOAL) {
-            stepsChart.getAxisLeft().setAxisMaximum(STEPS_GOAL);
-        } else {
-            stepsChart.getAxisLeft().resetAxisMaximum();
-        }
-
-        final LineDataSet lineDataSet = new LineDataSet(lineEntries, getString(R.string.steps));
-        lineDataSet.setColor(getResources().getColor(R.color.steps_color));
-        lineDataSet.setDrawCircles(false);
-        lineDataSet.setLineWidth(2f);
-        lineDataSet.setFillAlpha(255);
-        lineDataSet.setDrawCircles(false);
-        lineDataSet.setCircleColor(getResources().getColor(R.color.steps_color));
-        lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-        lineDataSet.setDrawValues(false);
-        lineDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
-        lineDataSet.setDrawFilled(true);
-        lineDataSet.setFillAlpha(60);
-        lineDataSet.setFillColor(getResources().getColor(R.color.steps_color ));
-
-        final LimitLine goalLine = new LimitLine(STEPS_GOAL);
-        goalLine.setLineColor(getResources().getColor(R.color.steps_color));
-        goalLine.setLineWidth(1.5f);
-        goalLine.enableDashedLine(15f, 10f, 0f);
-        stepsChart.getAxisLeft().removeAllLimitLines();
-        stepsChart.getAxisLeft().addLimitLine(goalLine);
-        stepsChart.getAxisLeft().setAxisMaximum(Math.max(lineDataSet.getYMax(), STEPS_GOAL) + 2000);
-
-        final List<ILineDataSet> lineDataSets = new ArrayList<>();
-        lineDataSets.add(lineDataSet);
-        final LineData lineData = new LineData(lineDataSets);
-        stepsChart.setData(lineData);
+        final int stepsColor = getResources().getColor(R.color.steps_color);
+        DailyCumulativeLineChartHelper.setCumulativeData(
+                stepsChart,
+                lineEntries,
+                new SampleXLabelFormatter(tsTranslation, "HH:mm"),
+                getString(R.string.steps),
+                stepsColor,
+                TEXT_COLOR,
+                STEPS_GOAL,
+                Math.max(DailyCumulativeLineChartHelper.maxY(lineEntries), STEPS_GOAL) + 2000
+        );
     }
 
     @Override
@@ -197,32 +158,7 @@ public class StepsDailyFragment extends StepsFragment<StepsDailyFragment.StepsDa
     protected void setupLegend(Chart<?> chart) {}
 
     private void setupStepsChart() {
-        stepsChart.getDescription().setEnabled(false);
-        stepsChart.setDoubleTapToZoomEnabled(false);
-
-        final XAxis xAxisBottom = stepsChart.getXAxis();
-        xAxisBottom.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxisBottom.setDrawLabels(true);
-        xAxisBottom.setDrawGridLines(false);
-        xAxisBottom.setEnabled(true);
-        xAxisBottom.setDrawLimitLinesBehindData(true);
-        xAxisBottom.setTextColor(CHART_TEXT_COLOR);
-        xAxisBottom.setAxisMinimum(0f);
-        xAxisBottom.setAxisMaximum(86400f);
-        //xAxisBottom.setLabelCount(7, true);
-
-        final YAxis yAxisLeft = stepsChart.getAxisLeft();
-        yAxisLeft.setDrawGridLines(true);
-        yAxisLeft.setAxisMinimum(0);
-        yAxisLeft.setDrawTopYLabelEntry(true);
-        yAxisLeft.setEnabled(true);
-        yAxisLeft.setTextColor(CHART_TEXT_COLOR);
-
-        final YAxis yAxisRight = stepsChart.getAxisRight();
-        yAxisRight.setEnabled(true);
-        yAxisRight.setDrawLabels(false);
-        yAxisRight.setDrawGridLines(false);
-        yAxisRight.setDrawAxisLine(true);
+        DailyCumulativeLineChartHelper.setup(stepsChart, CHART_TEXT_COLOR);
     }
 
     protected static class StepsData extends ChartsData {

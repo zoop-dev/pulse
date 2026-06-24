@@ -19,22 +19,18 @@ public class CaloriesDailyFragmentTest {
 
     @Test
     public void createsZeroEntryForEmptyDay() {
-        final TimestampTranslation tsTranslation = new TimestampTranslation();
-
-        final List<Entry> entries = CaloriesDailyFragment.createCumulativeActiveCaloriesEntries(
+        final CaloriesDailyFragment.ActiveCaloriesDailyData data = CaloriesDailyFragment.createActiveCaloriesDailyData(
                 Collections.emptyList(),
-                tsTranslation,
                 START_TS
         );
 
-        assertEquals(1, entries.size());
-        assertEntry(entries.get(0), 0f, 0f);
-        assertEquals(START_TS, tsTranslation.toOriginalValue(0));
+        assertEquals(0, data.activeCalories);
+        assertEquals(1, data.entries.size());
+        assertEntry(data.entries.get(0), 0f, 0f);
     }
 
     @Test
     public void accumulatesPositiveActiveCaloriesFromDayStart() {
-        final TimestampTranslation tsTranslation = new TimestampTranslation();
         final List<ActivitySample> samples = Arrays.asList(
                 sample(START_TS + 60, 1200),
                 sample(START_TS + 120, 0),
@@ -42,12 +38,13 @@ public class CaloriesDailyFragmentTest {
                 sample(START_TS + 240, 1800)
         );
 
-        final List<Entry> entries = CaloriesDailyFragment.createCumulativeActiveCaloriesEntries(
+        final CaloriesDailyFragment.ActiveCaloriesDailyData data = CaloriesDailyFragment.createActiveCaloriesDailyData(
                 samples,
-                tsTranslation,
                 START_TS
         );
 
+        assertEquals(3, data.activeCalories);
+        final List<Entry> entries = data.entries;
         assertEquals(5, entries.size());
         assertEntry(entries.get(0), 0f, 0f);
         assertEntry(entries.get(1), 60f, 1f);
