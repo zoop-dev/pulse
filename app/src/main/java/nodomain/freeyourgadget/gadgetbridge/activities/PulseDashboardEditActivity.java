@@ -64,6 +64,14 @@ public class PulseDashboardEditActivity extends AbstractGBActivity {
         }
         getWindow().setStatusBarColor(getResources().getColor(R.color.pulse_bg));
 
+        // Expanded layout toggle: stack the hero (no swiping) vs the swipeable carousel
+        final com.google.android.material.materialswitch.MaterialSwitch expandedSwitch =
+                findViewById(R.id.pulse_expanded_switch);
+        expandedSwitch.setChecked(GBApplication.getPrefs().getBoolean("pulse_today_expanded", false));
+        expandedSwitch.setOnCheckedChangeListener((b, checked) ->
+                GBApplication.getPrefs().getPreferences().edit()
+                        .putBoolean("pulse_today_expanded", checked).apply());
+
         // Load saved order (enabled, in order), then append any disabled metrics
         final String saved = GBApplication.getPrefs().getString("pulse_today_metrics",
                 String.join(",", DashboardFragment.ALL_METRICS));
@@ -84,6 +92,7 @@ public class PulseDashboardEditActivity extends AbstractGBActivity {
         final Adapter adapter = new Adapter();
         list.setAdapter(adapter);
 
+        final float liftZ = getResources().getDisplayMetrics().density * 8f;
         touchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
                 ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
             @Override
@@ -98,6 +107,27 @@ public class PulseDashboardEditActivity extends AbstractGBActivity {
 
             @Override
             public void onSwiped(@NonNull final RecyclerView.ViewHolder vh, final int direction) {
+            }
+
+            @Override
+            public boolean isLongPressDragEnabled() {
+                // Long-press anywhere on a row to start dragging (the handle still works too).
+                return true;
+            }
+
+            @Override
+            public void onSelectedChanged(final RecyclerView.ViewHolder vh, final int actionState) {
+                super.onSelectedChanged(vh, actionState);
+                if (actionState == ItemTouchHelper.ACTION_STATE_DRAG && vh != null) {
+                    vh.itemView.animate().translationZ(liftZ).scaleX(1.03f).scaleY(1.03f)
+                            .setDuration(140).start();
+                }
+            }
+
+            @Override
+            public void clearView(@NonNull final RecyclerView rv, @NonNull final RecyclerView.ViewHolder vh) {
+                super.clearView(rv, vh);
+                vh.itemView.animate().translationZ(0f).scaleX(1f).scaleY(1f).setDuration(140).start();
             }
         });
         touchHelper.attachToRecyclerView(list);
