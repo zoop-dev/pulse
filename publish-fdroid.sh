@@ -42,11 +42,27 @@ echo "staging (repo under /repo + landing page)…"
 PUB=$(mktemp -d)
 mkdir -p "$PUB/repo"
 cp -r fdroid/repo/. "$PUB/repo/"
-python3 - "$FINGERPRINT" "$PUB" <<'PY' 2>/dev/null || true
-import sys, qrcode
-qrcode.make(f"fdroidrepos://fdroid.zachy.cc/repo?fingerprint={sys.argv[1]}").save(f"{sys.argv[2]}/qr.png")
+python3 - "$FINGERPRINT" "$PUB" <<'PY'
+import sys, json
+fp, pub = sys.argv[1], sys.argv[2]
+try:
+    import qrcode
+    qrcode.make(f"fdroidrepos://fdroid.zachy.cc/repo?fingerprint={fp}").save(f"{pub}/qr.png")
+except Exception:
+    pass
+d = json.load(open("fdroid/repo/index-v2.json"))
+pkgs = d["packages"]
+apps = []
+for p in pkgs.values():
+    name = p["metadata"]["name"]["en-US"]
+    ver = max(p["versions"].values(), key=lambda v: v["manifest"]["versionCode"])["manifest"]["versionName"]
+    apps.append(f"{name} {ver}")
+html = open("fdroid/landing.html").read()
+html = (html.replace("__FP__", fp)
+            .replace("__APPCOUNT__", str(len(pkgs)))
+            .replace("__APPS__", ", ".join(sorted(apps))))
+open(f"{pub}/index.html", "w").write(html)
 PY
-sed "s/__FP__/$FINGERPRINT/g" fdroid/landing.html > "$PUB/index.html"
 
 echo "deploying to cloudflare pages…"
 npx wrangler pages deploy "$PUB" --project-name pulse-fdroid --commit-dirty=true
