@@ -4691,6 +4691,7 @@
     <string name="devicetype_y6" translatable="false">Y6</string>
     <string name="devicetype_y66" translatable="false">Y66</string>
     <string name="devicetype_d3" translatable="false">D3</string>
+    <string name="devicetype_s52" translatable="false">S52</string>
     <string name="devicetype_kieslect_calling_smartwatch_kr_pro" translatable="false">Kieslect Calling Smartwatch Kr Pro</string>
     <string name="devicetype_r1" translatable="false">R1</string>
     <string name="devicetype_haylou_watch_2_pro" translatable="false">Haylou Watch 2 Pro</string>
