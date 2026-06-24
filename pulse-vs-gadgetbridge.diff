@@ -1,5 +1,5 @@
 ### pulse vs upstream gadgetbridge (base 79ad5a6079a277f95b791d81ec34e6810cc49b60)
-### generated 2026-06-24T17:10Z
+### generated 2026-06-24T17:15Z
 
 diff --git a/.gitignore b/.gitignore
 index 0160baad1f..d43245bc74 100644
@@ -15460,6 +15460,22 @@ index 0000000000..d1a53657b3
 +Intensity minutes with a daily view. Material Symbols icons. Springy motion and
 +fade-through transitions. Skeleton loaders. Customisable share card. Plus the
 +distance-format crash fix from upstream.
+diff --git a/fdroid/metadata/cc.zachy.pulse/en-US/images/phoneScreenshots/1.png b/fdroid/metadata/cc.zachy.pulse/en-US/images/phoneScreenshots/1.png
+new file mode 100644
+index 0000000000..d1f4d4d608
+Binary files /dev/null and b/fdroid/metadata/cc.zachy.pulse/en-US/images/phoneScreenshots/1.png differ
+diff --git a/fdroid/metadata/cc.zachy.pulse/en-US/images/phoneScreenshots/2.png b/fdroid/metadata/cc.zachy.pulse/en-US/images/phoneScreenshots/2.png
+new file mode 100644
+index 0000000000..972b50feb8
+Binary files /dev/null and b/fdroid/metadata/cc.zachy.pulse/en-US/images/phoneScreenshots/2.png differ
+diff --git a/fdroid/metadata/cc.zachy.pulse/en-US/images/phoneScreenshots/3.png b/fdroid/metadata/cc.zachy.pulse/en-US/images/phoneScreenshots/3.png
+new file mode 100644
+index 0000000000..fe0fc8f65b
+Binary files /dev/null and b/fdroid/metadata/cc.zachy.pulse/en-US/images/phoneScreenshots/3.png differ
+diff --git a/fdroid/metadata/cc.zachy.pulse/en-US/images/phoneScreenshots/4.png b/fdroid/metadata/cc.zachy.pulse/en-US/images/phoneScreenshots/4.png
+new file mode 100644
+index 0000000000..0e25cdac9b
+Binary files /dev/null and b/fdroid/metadata/cc.zachy.pulse/en-US/images/phoneScreenshots/4.png differ
 diff --git a/gradle.properties b/gradle.properties
 index eba4c6ea00..c94b3aaf12 100644
 --- a/gradle.properties
