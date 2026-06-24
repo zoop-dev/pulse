@@ -11,6 +11,7 @@
 * Initial support for Huawei Watch Fit 5 / 5 Pro
 * Initial support for iGPSPORT bike computers (BiNavi Air, BSC200, BSC200S, BSC300, iGS630, iGS630S, iGS800)
 * Initial support for Keep Health devices
+* Initial support for Kieslect Calling Smartwatch Kr Pro
 * Initial support for Matson MA98415 (BM2 battery monitors)
 * Initial support for Moondrop Space Travel 2 Ultra
 * Initial support for P22B1 (Moyoung / Da Fit)

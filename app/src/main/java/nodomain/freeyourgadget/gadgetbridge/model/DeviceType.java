@@ -193,6 +193,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.D3Coordinat
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.DotnP66DCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.HaylouWatch2ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.ImikiFrame2Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.KieslectCallingSmartwatchKrProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.OukitelBT103Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.R1Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.QecnatoS10Coordinator;
@@ -920,6 +921,7 @@ public enum DeviceType {
     QECNATO_S10(QecnatoS10Coordinator.class),
     R1(R1Coordinator.class),
     IMIKI_FRAME_2(ImikiFrame2Coordinator.class),
+    KIESLECT_CALLING_SMARTWATCH_KR_PRO(KieslectCallingSmartwatchKrProCoordinator.class),
     HAYLOU_WATCH_2_PRO(HaylouWatch2ProCoordinator.class),
     S52(S52Coordinator.class),
     D3(D3Coordinator.class),
