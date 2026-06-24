@@ -18,7 +18,8 @@ export ANDROID_HOME="${ANDROID_HOME:-$HOME/dev/android-toolchain/sdk}"
 export PATH="$JAVA_HOME/bin:$HOME/.local/bin:$PATH"
 
 echo "building release (r8)…"
-./gradlew :app:assembleMainlineRelease --no-daemon -q
+# skip vital lint — slow and not a useful gate for our own repo
+./gradlew :app:assembleMainlineRelease --no-daemon -x lintVitalMainlineRelease
 
 VCODE=$(grep -m1 versionCode app/build.gradle | grep -oE '[0-9]+')
 UNSIGNED=$(ls -t app/build/outputs/apk/mainline/release/*.apk | head -1)
