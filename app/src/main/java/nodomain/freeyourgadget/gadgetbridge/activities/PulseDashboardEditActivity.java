@@ -181,6 +181,7 @@ public class PulseDashboardEditActivity extends AbstractGBActivity {
             case "spo2":        return getString(R.string.pref_header_spo2);
             case "hrv":         return getString(R.string.hrv);
             case "respiration": return getString(R.string.respiratoryrate);
+            case "intensity":   return getString(R.string.pulse_intensity);
             default:            return getString(R.string.steps);
         }
     }
