@@ -1,5 +1,5 @@
 ### pulse vs upstream gadgetbridge (base 79ad5a6079a277f95b791d81ec34e6810cc49b60)
-### generated 2026-06-24T15:29Z
+### generated 2026-06-24T16:48Z
 
 diff --git a/README.md b/README.md
 index 76cf11b42c..19bfa6cc92 100644
@@ -1297,7 +1297,7 @@ index dcef446caf..84f8cefa33 100644
      }
  }
 diff --git a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java
-index baf984680c..6e14190925 100644
+index baf984680c..dd9fea2d8e 100644
 --- a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java
 +++ b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java
 @@ -30,6 +30,8 @@ import android.view.MenuInflater;
@@ -1687,7 +1687,7 @@ index baf984680c..6e14190925 100644
      private void fullRefresh() {
          gridLayout.removeAllViews();
          widgetMap.clear();
-@@ -234,116 +530,1843 @@ public class DashboardFragment extends Fragment implements MenuProvider {
+@@ -234,116 +530,1853 @@ public class DashboardFragment extends Fragment implements MenuProvider {
      }
  
      private void refresh() {
@@ -1703,7 +1703,6 @@ index baf984680c..6e14190925 100644
          reloadPreferences();
 -        draw();
 +
-+        // First load uses the full overlay; later reloads show inline skeletons so cards never blank.
 +        if (!hasLoadedOnce && loadingOverlay != null) {
 +            loadingOverlay.setVisibility(View.VISIBLE);
 +        } else if (hasLoadedOnce) {
@@ -2509,6 +2508,7 @@ index baf984680c..6e14190925 100644
 +    private void renderSleepDetail() {
 +        final Context ctx = requireContext();
 +        final float scale = getResources().getDisplayMetrics().density;
++        stopChildAnimations(sleepDetailContainer);
 +        sleepDetailContainer.removeAllViews();
 +
 +        final com.google.android.material.card.MaterialCardView card = new com.google.android.material.card.MaterialCardView(ctx);
@@ -2896,7 +2896,7 @@ index baf984680c..6e14190925 100644
 +    /** Big like before (36sp), only shrinking when the text would otherwise hit the ring. */
 +    private void setRingValue(final String value) {
 +        final float density = getResources().getDisplayMetrics().density;
-+        final float maxWidth = 118f * density;
++        final float maxWidth = 92f * density;
 +        float sp = 36f;
 +        ringValue.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, sp);
 +        while (sp > 18f && ringValue.getPaint().measureText(value) > maxWidth) {
@@ -3309,14 +3309,14 @@ index baf984680c..6e14190925 100644
 +                container.addView(page, new android.widget.FrameLayout.LayoutParams(
 +                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 +            }
-+
+ 
+-                createWidget(widget, cardsEnabled, columnSpan);
 +            @Override
 +            public int getItemCount() {
 +                return pages.size();
 +            }
 +        });
- 
--                createWidget(widget, cardsEnabled, columnSpan);
++
 +        if (carouselPage >= pages.size()) carouselPage = 0;
 +        todayCarousel.setCurrentItem(carouselPage, false);
 +
@@ -3350,20 +3350,27 @@ index baf984680c..6e14190925 100644
 +            dot.setLayoutParams(lp);
 +        }
 +    }
++
++    // clear child anims before removeAllViews, else a leftover shimmer bleeds onto the new views
++    private void stopChildAnimations(final ViewGroup g) {
++        if (g == null) return;
++        for (int i = 0; i < g.getChildCount(); i++) {
++            g.getChildAt(i).clearAnimation();
++        }
++    }
  
 -                widgetMap.put(widgetName, widget);
-+    /** A shimmering placeholder block shown while data warms. */
 +    private View skeletonBlock(final Context ctx, final float scale, final int heightDp, final int topDp) {
 +        final View v = new View(ctx);
 +        final android.graphics.drawable.GradientDrawable g = new android.graphics.drawable.GradientDrawable();
 +        g.setCornerRadius(dp(20, scale));
-+        g.setColor(ContextCompat.getColor(ctx, R.color.pulse_card));
++        g.setColor(ContextCompat.getColor(ctx, R.color.pulse_card_alt));
 +        v.setBackground(g);
 +        final LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
 +                ViewGroup.LayoutParams.MATCH_PARENT, dp(heightDp, scale));
 +        lp.topMargin = dp(topDp, scale);
 +        v.setLayoutParams(lp);
-+        final android.view.animation.AlphaAnimation anim = new android.view.animation.AlphaAnimation(0.35f, 0.85f);
++        final android.view.animation.AlphaAnimation anim = new android.view.animation.AlphaAnimation(0.45f, 1f);
 +        anim.setDuration(750);
 +        anim.setRepeatMode(android.view.animation.Animation.REVERSE);
 +        anim.setRepeatCount(android.view.animation.Animation.INFINITE);
@@ -3375,6 +3382,7 @@ index baf984680c..6e14190925 100644
 +        if (todayExtra == null) return;
 +        final Context ctx = requireContext();
 +        final float scale = getResources().getDisplayMetrics().density;
++        stopChildAnimations(todayExtra);
 +        todayExtra.removeAllViews();
 +        todayExtra.addView(skeletonBlock(ctx, scale, 84, 0));
 +        todayExtra.addView(skeletonBlock(ctx, scale, 150, 12));
@@ -3385,6 +3393,7 @@ index baf984680c..6e14190925 100644
 +        final Context ctx = requireContext();
 +        final float scale = getResources().getDisplayMetrics().density;
 +        sleepDetailContainer.setVisibility(View.VISIBLE);
++        stopChildAnimations(sleepDetailContainer);
 +        sleepDetailContainer.removeAllViews();
 +        sleepDetailContainer.addView(skeletonBlock(ctx, scale, 200, 0));
 +    }
@@ -3395,6 +3404,7 @@ index baf984680c..6e14190925 100644
 +        final Context ctx = requireContext();
 +        final float scale = ctx.getResources().getDisplayMetrics().density;
 +        final java.text.NumberFormat nf = java.text.NumberFormat.getIntegerInstance();
++        stopChildAnimations(todayExtra);
 +        todayExtra.removeAllViews();
 +
 +        // This week
@@ -3619,7 +3629,7 @@ index baf984680c..6e14190925 100644
      }
  
      private void createWidget(AbstractDashboardWidget widgetObj, boolean cardsEnabled, int columnSpan) {
-@@ -366,10 +2389,13 @@ public class DashboardFragment extends Fragment implements MenuProvider {
+@@ -366,10 +2399,13 @@ public class DashboardFragment extends Fragment implements MenuProvider {
  
          if (cardsEnabled) {
              MaterialCardView card = new MaterialCardView(requireActivity());

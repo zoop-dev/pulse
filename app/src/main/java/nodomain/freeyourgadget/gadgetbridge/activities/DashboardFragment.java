@@ -541,7 +541,6 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         dashboardData.clear();
         reloadPreferences();
 
-        // First load uses the full overlay; later reloads show inline skeletons so cards never blank.
         if (!hasLoadedOnce && loadingOverlay != null) {
             loadingOverlay.setVisibility(View.VISIBLE);
         } else if (hasLoadedOnce) {
@@ -1336,6 +1335,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
     private void renderSleepDetail() {
         final Context ctx = requireContext();
         final float scale = getResources().getDisplayMetrics().density;
+        stopChildAnimations(sleepDetailContainer);
         sleepDetailContainer.removeAllViews();
 
         final com.google.android.material.card.MaterialCardView card = new com.google.android.material.card.MaterialCardView(ctx);
@@ -1723,7 +1723,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
     /** Big like before (36sp), only shrinking when the text would otherwise hit the ring. */
     private void setRingValue(final String value) {
         final float density = getResources().getDisplayMetrics().density;
-        final float maxWidth = 118f * density;
+        final float maxWidth = 92f * density;
         float sp = 36f;
         ringValue.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, sp);
         while (sp > 18f && ringValue.getPaint().measureText(value) > maxWidth) {
@@ -2104,18 +2104,25 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         }
     }
 
-    /** A shimmering placeholder block shown while data warms. */
+    // clear child anims before removeAllViews, else a leftover shimmer bleeds onto the new views
+    private void stopChildAnimations(final ViewGroup g) {
+        if (g == null) return;
+        for (int i = 0; i < g.getChildCount(); i++) {
+            g.getChildAt(i).clearAnimation();
+        }
+    }
+
     private View skeletonBlock(final Context ctx, final float scale, final int heightDp, final int topDp) {
         final View v = new View(ctx);
         final android.graphics.drawable.GradientDrawable g = new android.graphics.drawable.GradientDrawable();
         g.setCornerRadius(dp(20, scale));
-        g.setColor(ContextCompat.getColor(ctx, R.color.pulse_card));
+        g.setColor(ContextCompat.getColor(ctx, R.color.pulse_card_alt));
         v.setBackground(g);
         final LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, dp(heightDp, scale));
         lp.topMargin = dp(topDp, scale);
         v.setLayoutParams(lp);
-        final android.view.animation.AlphaAnimation anim = new android.view.animation.AlphaAnimation(0.35f, 0.85f);
+        final android.view.animation.AlphaAnimation anim = new android.view.animation.AlphaAnimation(0.45f, 1f);
         anim.setDuration(750);
         anim.setRepeatMode(android.view.animation.Animation.REVERSE);
         anim.setRepeatCount(android.view.animation.Animation.INFINITE);
@@ -2127,6 +2134,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         if (todayExtra == null) return;
         final Context ctx = requireContext();
         final float scale = getResources().getDisplayMetrics().density;
+        stopChildAnimations(todayExtra);
         todayExtra.removeAllViews();
         todayExtra.addView(skeletonBlock(ctx, scale, 84, 0));
         todayExtra.addView(skeletonBlock(ctx, scale, 150, 12));
@@ -2137,6 +2145,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         final Context ctx = requireContext();
         final float scale = getResources().getDisplayMetrics().density;
         sleepDetailContainer.setVisibility(View.VISIBLE);
+        stopChildAnimations(sleepDetailContainer);
         sleepDetailContainer.removeAllViews();
         sleepDetailContainer.addView(skeletonBlock(ctx, scale, 200, 0));
     }
@@ -2147,6 +2156,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         final Context ctx = requireContext();
         final float scale = ctx.getResources().getDisplayMetrics().density;
         final java.text.NumberFormat nf = java.text.NumberFormat.getIntegerInstance();
+        stopChildAnimations(todayExtra);
         todayExtra.removeAllViews();
 
         // This week
