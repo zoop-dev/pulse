@@ -72,13 +72,14 @@
             android:background="@drawable/pulse_widget_bg"
             android:padding="18dp">
             <TextView
-                android:id="@+id/share_distance"
+                android:id="@+id/share_val0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/unbounded"
                 android:textColor="@color/pulse_neon_cyan"
                 android:textSize="26sp" />
             <TextView
+                android:id="@+id/share_label0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/distance"
@@ -95,13 +96,14 @@
             android:background="@drawable/pulse_widget_bg"
             android:padding="18dp">
             <TextView
-                android:id="@+id/share_calories"
+                android:id="@+id/share_val1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/unbounded"
                 android:textColor="@color/pulse_ring_cal"
                 android:textSize="26sp" />
             <TextView
+                android:id="@+id/share_label1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/calories"
@@ -118,13 +120,14 @@
             android:background="@drawable/pulse_widget_bg"
             android:padding="18dp">
             <TextView
-                android:id="@+id/share_active"
+                android:id="@+id/share_val2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/unbounded"
                 android:textColor="@color/pulse_mint"
                 android:textSize="26sp" />
             <TextView
+                android:id="@+id/share_label2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/activity_list_summary_active_time"
@@ -141,13 +144,14 @@
             android:background="@drawable/pulse_widget_bg"
             android:padding="18dp">
             <TextView
-                android:id="@+id/share_sleep"
+                android:id="@+id/share_val3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/unbounded"
                 android:textColor="@color/pulse_purple"
                 android:textSize="26sp" />
             <TextView
+                android:id="@+id/share_label3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/menuitem_sleep"
