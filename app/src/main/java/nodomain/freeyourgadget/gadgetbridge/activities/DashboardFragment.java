@@ -45,6 +45,8 @@ import androidx.fragment.app.FragmentContainerView;
 import androidx.core.content.ContextCompat;
 import androidx.gridlayout.widget.GridLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.card.MaterialCardView;
 
@@ -91,6 +93,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardTodayW
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardVO2MaxCyclingWidget;
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardVO2MaxAnyWidget;
 import nodomain.freeyourgadget.gadgetbridge.activities.dashboard.DashboardVO2MaxRunningWidget;
+import nodomain.freeyourgadget.gadgetbridge.activities.workouts.WorkoutDetailsActivity;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.util.CachedValue;
@@ -113,6 +116,18 @@ public class DashboardFragment extends Fragment implements MenuProvider {
     private TextView ringValue;
     private TextView ringGoal;
     private LinearLayout statColumn;
+    // Today-only carousel (ring page + tile pages) and the stacked cards beneath the pills
+    private ViewPager2 todayCarousel;
+    private LinearLayout carouselDots;
+    private LinearLayout todayExtra;
+    private LinearLayout todayExpanded;
+    private View contentSheet;
+    private int carouselPage = 0;
+    // This-week roll-up + recent workouts, warmed off the UI thread for the Today extras
+    private volatile long weekSteps, weekDistCm;
+    private volatile int weekActiveDays;
+    private final List<WorkoutRow> recentWorkouts = new ArrayList<>();
+    private GBDevice workoutDevice;
     private TextView deviceName;
     private TextView deviceBattery;
     private View deviceDot;
@@ -228,6 +243,11 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         ringValue = dashboardView.findViewById(R.id.pulse_ring_value);
         ringGoal = dashboardView.findViewById(R.id.pulse_ring_goal);
         statColumn = dashboardView.findViewById(R.id.pulse_stat_column);
+        todayCarousel = dashboardView.findViewById(R.id.pulse_today_carousel);
+        carouselDots = dashboardView.findViewById(R.id.pulse_carousel_dots);
+        todayExtra = dashboardView.findViewById(R.id.pulse_today_extra);
+        todayExpanded = dashboardView.findViewById(R.id.pulse_today_expanded);
+        contentSheet = dashboardView.findViewById(R.id.pulse_content_sheet);
         deviceName = dashboardView.findViewById(R.id.pulse_device_name);
         deviceBattery = dashboardView.findViewById(R.id.pulse_device_battery);
         deviceDot = dashboardView.findViewById(R.id.pulse_device_dot);
@@ -246,9 +266,23 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         deviceChip.setVisibility(View.GONE);
         final View greeting = dashboardView.findViewById(R.id.dashboard_greeting);
 
-        if (!hasHero) {
+        if (isToday) {
+            // Today: the ring + tiles live in the swipeable carousel, extras below the pills.
             heroRow.setVisibility(View.GONE);
-        } else if (!isToday) {
+            contentSheet.setVisibility(View.GONE);
+            dashboardView.findViewById(R.id.pulse_carousel_host).setVisibility(View.VISIBLE);
+            carouselDots.setVisibility(View.VISIBLE);
+            todayExtra.setVisibility(View.VISIBLE);
+            todayCarousel.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                @Override
+                public void onPageSelected(final int position) {
+                    carouselPage = position;
+                    updateCarouselDots();
+                }
+            });
+        } else if (!hasHero) {
+            heroRow.setVisibility(View.GONE);
+        } else {
             // Sleep/Fitness: keep the ring, drop the Today-only stat cards, center the ring
             statColumn.setVisibility(View.GONE);
             heroRow.setGravity(android.view.Gravity.CENTER);
@@ -265,16 +299,8 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         deviceChip.setOnClickListener(v ->
                 startActivity(new Intent(requireActivity(), DevicesActivity.class)));
 
-        // Tap the goal under the steps ring to set a custom daily step goal
-        if (isToday) {
-            ringGoal.setOnClickListener(v -> showStepGoalDialog());
-            pulseRing.setOnClickListener(v -> openChart("stepsweek", R.string.steps, ""));
-            pulseRing.setOnLongClickListener(v -> {
-                showRingMetricDialog();
-                return true;
-            });
-        } else if ("sleep".equals(section)) {
-            // Tap the sleep ring → Pulse sleep insights.
+        // Today wires its ring inside the carousel (the ring is rebuilt there). Sleep ring → insights.
+        if ("sleep".equals(section)) {
             pulseRing.setOnClickListener(v ->
                     startActivity(new Intent(requireContext(), PulseSleepActivity.class)));
         }
@@ -510,7 +536,85 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             warmHealthHistory();
         } else if ("sleep".equals(section)) {
             warmSleepDetail();
+        } else if ("today".equals(section)) {
+            warmTodayExtra();
         }
+    }
+
+    /** This-week roll-up + the latest few workouts, for the Today extra cards. */
+    private void warmTodayExtra() {
+        weekSteps = 0;
+        weekDistCm = 0;
+        weekActiveDays = 0;
+        synchronized (recentWorkouts) {
+            recentWorkouts.clear();
+        }
+        final List<GBDevice> devices = GBApplication.app().getDeviceManager().getDevices();
+        workoutDevice = devices.isEmpty() ? null : devices.get(0);
+
+        try (nodomain.freeyourgadget.gadgetbridge.database.DBHandler db = GBApplication.acquireDB()) {
+            // Steps / distance / active days since Monday.
+            final Calendar weekStart = GregorianCalendar.getInstance();
+            weekStart.set(Calendar.HOUR_OF_DAY, 12);
+            weekStart.set(Calendar.MINUTE, 0);
+            weekStart.set(Calendar.SECOND, 0);
+            while (weekStart.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
+                weekStart.add(Calendar.DAY_OF_MONTH, -1);
+            }
+            final int stride = new ActivityUser().getStepLengthCm();
+            final Calendar cur = (Calendar) weekStart.clone();
+            final Calendar today = GregorianCalendar.getInstance();
+            while (!cur.after(today)) {
+                long daySteps = 0, dayDistCm = 0;
+                for (final GBDevice dev : devices) {
+                    final DailyTotals dt = DailyTotals.getDailyTotalsForDevice(dev, (Calendar) cur.clone(), db);
+                    daySteps += dt.getSteps();
+                    long distCm = dt.getDistance();
+                    if (distCm <= 0 && dt.getSteps() > 0) distCm = dt.getSteps() * (long) stride;
+                    dayDistCm += distCm;
+                }
+                weekSteps += daySteps;
+                weekDistCm += dayDistCm;
+                if (daySteps > 0) weekActiveDays++;
+                cur.add(Calendar.DAY_OF_MONTH, 1);
+            }
+
+            // Most recent workouts.
+            final List<nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary> summaries =
+                    db.getDaoSession().getBaseActivitySummaryDao().queryBuilder()
+                            .orderDesc(nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao.Properties.StartTime)
+                            .limit(3)
+                            .list();
+            final java.text.DateFormat dfmt = java.text.DateFormat.getDateInstance(java.text.DateFormat.MEDIUM);
+            synchronized (recentWorkouts) {
+                for (final nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary s : summaries) {
+                    final ActivityKind kind = ActivityKind.fromCode(s.getActivityKind());
+                    final WorkoutRow row = new WorkoutRow();
+                    row.id = s.getId();
+                    row.icon = kind.getIcon();
+                    final String name = s.getName();
+                    row.title = name != null && !name.trim().isEmpty() ? name : kind.getLabel(requireContext());
+                    final java.util.Date start = s.getStartTime();
+                    final java.util.Date end = s.getEndTime();
+                    String sub = start != null ? dfmt.format(start) : "";
+                    if (start != null && end != null) {
+                        final long secs = (end.getTime() - start.getTime()) / 1000L;
+                        final long h = secs / 3600, m = (secs % 3600) / 60;
+                        sub += " · " + (h > 0 ? h + "h " + m + "m" : m + "m");
+                    }
+                    row.subtitle = sub;
+                    recentWorkouts.add(row);
+                }
+            }
+        } catch (final Exception e) {
+            LOG.warn("Pulse: today extra warm failed", e);
+        }
+    }
+
+    private static final class WorkoutRow {
+        long id;
+        int icon;
+        String title, subtitle;
     }
 
     /** Pulse: latest values for the richer Garmin metrics (HR, Body Battery, stress, SpO2, …). */
@@ -617,10 +721,14 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             return;
         }
 
-        // On Today the first 3 metrics are shown as hero cards, so the grid starts after them.
-        final int start = "today".equals(section) ? Math.min(HERO_CARD_COUNT, metrics.length) : 0;
-        for (int i = start; i < metrics.length; i++) {
-            addPulseStatCard(metrics[i]);
+        // Today shows everything in the carousel; the area below the pills holds the extra cards.
+        if ("today".equals(section)) {
+            renderTodayExtra();
+            return;
+        }
+
+        for (final String metric : metrics) {
+            addPulseStatCard(metric);
         }
     }
 
@@ -1514,10 +1622,18 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         ringGoal.setText(goal);
     }
 
-    /** Sets the big ring value, shrinking the font for word placeholders like "No sleep". */
+    /** Sets the big ring value, shrinking the font so long values (e.g. "8h 7m") don't clip the ring. */
     private void setRingValue(final String value) {
         final boolean numeric = !value.isEmpty() && Character.isDigit(value.charAt(0));
-        ringValue.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, numeric ? 36f : 24f);
+        final float sp;
+        if (!numeric) {
+            sp = 24f;                                   // word placeholders like "No sleep"
+        } else if (value.contains(" ") || value.length() >= 6) {
+            sp = 28f;                                   // "8h 7m", "12,345", "12.3mi"
+        } else {
+            sp = 36f;                                   // "8,234", "128"
+        }
+        ringValue.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, sp);
         ringValue.setText(value);
     }
 
@@ -1680,25 +1796,325 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             return;
         }
 
-        // Today: a configurable hero ring + the first 3 enabled metrics as hero cards
+        // Today: a configurable hero ring + the rest of the metrics as tiles (carousel or stacked)
+        buildTodayHero();
         renderRing(GBApplication.getPrefs().getString("pulse_ring_metric", "steps"));
-
-        if (statColumn != null) {
-            statColumn.removeAllViews();
-            final String[] metrics = pulseMetrics();
-            final int heroCount = Math.min(HERO_CARD_COUNT, metrics.length);
-            for (int i = 0; i < heroCount; i++) {
-                addHeroCard(statColumn, metrics[i], i > 0);
-            }
-        }
 
         checkGoalReached();
     }
 
-    private static final int HERO_CARD_COUNT = 3;
+    private static final int TILES_PER_PAGE = 4;
 
-    /** Compact hero card (icon + label + value), tap opens the chart. */
-    private void addHeroCard(final LinearLayout col, final String metric, final boolean topMargin) {
+    /** Build the Today carousel: page 0 = ring + 2 tiles, later pages = 2x2 tile grids. */
+    /** Today hero: a swipeable carousel, or — when expanded — the ring + every tile stacked. */
+    private void buildTodayHero() {
+        if (todayCarousel == null) return;
+        final Context ctx = requireContext();
+        final float scale = ctx.getResources().getDisplayMetrics().density;
+        final String ringMetric = GBApplication.getPrefs().getString("pulse_ring_metric", "steps");
+        final boolean expanded = GBApplication.getPrefs().getBoolean("pulse_today_expanded", false);
+
+        final List<String> tiles = new ArrayList<>();
+        for (final String m : pulseMetrics()) {
+            if (!m.equals(ringMetric)) tiles.add(m);
+        }
+
+        final View host = requireView().findViewById(R.id.pulse_carousel_host);
+        if (expanded) {
+            host.setVisibility(View.GONE);
+            carouselDots.setVisibility(View.GONE);
+            todayExpanded.setVisibility(View.VISIBLE);
+            buildExpandedHero(ctx, scale, ringMetric, tiles);
+        } else {
+            todayExpanded.setVisibility(View.GONE);
+            host.setVisibility(View.VISIBLE);
+            buildCarousel(ctx, scale, ringMetric, tiles);
+        }
+    }
+
+    /** The ring with its centred value overlay; assigns the ring fields and wires its taps. */
+    private View buildRingView(final Context ctx, final float scale, final String ringMetric) {
+        final android.widget.FrameLayout ringFrame = new android.widget.FrameLayout(ctx);
+        final PulseRingView ring = new PulseRingView(ctx);
+        ringFrame.addView(ring, new android.widget.FrameLayout.LayoutParams(dp(158, scale), dp(158, scale)));
+
+        final LinearLayout ringText = new LinearLayout(ctx);
+        ringText.setOrientation(LinearLayout.VERTICAL);
+        ringText.setGravity(android.view.Gravity.CENTER);
+        final TextView rl = new TextView(ctx);
+        rl.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_text_dim));
+        rl.setTextSize(13);
+        rl.setGravity(android.view.Gravity.CENTER_HORIZONTAL);
+        rl.setTypeface(rl.getTypeface(), android.graphics.Typeface.BOLD);
+        rl.setLetterSpacing(0.08f);
+        final TextView rv = new TextView(ctx);
+        rv.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_text));
+        rv.setGravity(android.view.Gravity.CENTER_HORIZONTAL);
+        rv.setTypeface(androidx.core.content.res.ResourcesCompat.getFont(ctx, R.font.unbounded));
+        rv.setTextSize(36);
+        rv.setIncludeFontPadding(false);
+        final TextView rg = new TextView(ctx);
+        rg.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_ring_steps));
+        rg.setTextSize(13);
+        rg.setGravity(android.view.Gravity.CENTER_HORIZONTAL);
+        rg.setTypeface(rg.getTypeface(), android.graphics.Typeface.BOLD);
+        ringText.addView(rl);
+        ringText.addView(rv);
+        ringText.addView(rg);
+        final android.widget.FrameLayout.LayoutParams rtlp = new android.widget.FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        rtlp.gravity = android.view.Gravity.CENTER;
+        ringFrame.addView(ringText, rtlp);
+
+        pulseRing = ring;
+        ringLabel = rl;
+        ringValue = rv;
+        ringGoal = rg;
+        final MetricSpec ringSpec = resolveMetric(ringMetric);
+        ring.setOnClickListener(v -> openChart(ringSpec.chartTab, ringSpec.titleRes, ringSpec.chartMode));
+        ring.setOnLongClickListener(v -> { showRingMetricDialog(); return true; });
+        rg.setOnClickListener(v -> showStepGoalDialog());
+        return ringFrame;
+    }
+
+    /** Stacked layout: the ring up top, then every tile full-width under it (no swiping). */
+    private void buildExpandedHero(final Context ctx, final float scale, final String ringMetric, final List<String> tiles) {
+        todayExpanded.removeAllViews();
+        final LinearLayout.LayoutParams ringLp = new LinearLayout.LayoutParams(dp(158, scale), dp(158, scale));
+        ringLp.gravity = android.view.Gravity.CENTER_HORIZONTAL;
+        ringLp.bottomMargin = dp(6, scale);
+        todayExpanded.addView(buildRingView(ctx, scale, ringMetric), ringLp);
+        for (final String metric : tiles) {
+            final MaterialCardView tile = buildHeroTile(metric);
+            final LinearLayout.LayoutParams tlp = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            tlp.topMargin = dp(8, scale);
+            todayExpanded.addView(tile, tlp);
+        }
+    }
+
+    private void buildCarousel(final Context ctx, final float scale, final String ringMetric, final List<String> tiles) {
+        final List<View> pages = new ArrayList<>();
+
+        // Page 0: the hero ring on the left, up to two tiles stacked on the right.
+        final LinearLayout page0 = new LinearLayout(ctx);
+        page0.setOrientation(LinearLayout.HORIZONTAL);
+        page0.setGravity(android.view.Gravity.CENTER_VERTICAL);
+        page0.setPadding(dp(18, scale), 0, dp(18, scale), 0);
+        page0.addView(buildRingView(ctx, scale, ringMetric), new LinearLayout.LayoutParams(dp(158, scale), dp(158, scale)));
+
+        final LinearLayout rightCol = new LinearLayout(ctx);
+        rightCol.setOrientation(LinearLayout.VERTICAL);
+        final LinearLayout.LayoutParams rclp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+        rclp.setMarginStart(dp(14, scale));
+        int idx = 0;
+        for (; idx < tiles.size() && idx < 2; idx++) {
+            final MaterialCardView tile = buildHeroTile(tiles.get(idx));
+            final LinearLayout.LayoutParams tlp = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            if (idx > 0) tlp.topMargin = dp(10, scale);
+            rightCol.addView(tile, tlp);
+        }
+        page0.addView(rightCol, rclp);
+        pages.add(page0);
+
+        // Remaining tiles: full-width 2x2 grids.
+        while (idx < tiles.size()) {
+            final GridLayout grid = new GridLayout(ctx);
+            grid.setColumnCount(2);
+            grid.setPadding(dp(13, scale), 0, dp(13, scale), 0);
+            for (int placed = 0; placed < TILES_PER_PAGE && idx < tiles.size(); placed++, idx++) {
+                final MaterialCardView tile = buildHeroTile(tiles.get(idx));
+                final GridLayout.LayoutParams glp = new GridLayout.LayoutParams(
+                        GridLayout.spec(GridLayout.UNDEFINED),                          // natural row height
+                        GridLayout.spec(GridLayout.UNDEFINED, GridLayout.FILL, 1f));    // equal column widths
+                glp.width = 0;
+                glp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                glp.setMargins(dp(5, scale), dp(5, scale), dp(5, scale), dp(5, scale));
+                grid.addView(tile, glp);
+            }
+            pages.add(grid);
+        }
+
+        todayCarousel.setOffscreenPageLimit(Math.max(1, pages.size()));
+        todayCarousel.setAdapter(new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+            @NonNull
+            @Override
+            public RecyclerView.ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
+                final android.widget.FrameLayout holder = new android.widget.FrameLayout(parent.getContext());
+                holder.setLayoutParams(new RecyclerView.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                return new RecyclerView.ViewHolder(holder) { };
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
+                final View page = pages.get(position);
+                if (page.getParent() instanceof ViewGroup) {
+                    ((ViewGroup) page.getParent()).removeView(page);
+                }
+                final android.widget.FrameLayout container = (android.widget.FrameLayout) holder.itemView;
+                container.removeAllViews();
+                container.addView(page, new android.widget.FrameLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            }
+
+            @Override
+            public int getItemCount() {
+                return pages.size();
+            }
+        });
+
+        if (carouselPage >= pages.size()) carouselPage = 0;
+        todayCarousel.setCurrentItem(carouselPage, false);
+
+        carouselDots.removeAllViews();
+        for (int i = 0; i < pages.size(); i++) {
+            final View dot = new View(ctx);
+            final LinearLayout.LayoutParams dlp = new LinearLayout.LayoutParams(dp(6, scale), dp(6, scale));
+            dlp.setMargins(dp(3, scale), 0, dp(3, scale), 0);
+            carouselDots.addView(dot, dlp);
+        }
+        carouselDots.setVisibility(pages.size() > 1 ? View.VISIBLE : View.GONE);
+        updateCarouselDots();
+    }
+
+    /** Google-style switchy dots: a wide accent pill for the current page, small dim circles for the rest. */
+    private void updateCarouselDots() {
+        if (carouselDots == null || !isAdded()) return;
+        final float scale = getResources().getDisplayMetrics().density;
+        final int active = GBApplication.getAccentColor(requireContext());
+        final int inactive = ContextCompat.getColor(requireContext(), R.color.pulse_card_alt);
+        for (int i = 0; i < carouselDots.getChildCount(); i++) {
+            final View dot = carouselDots.getChildAt(i);
+            final boolean on = i == carouselPage;
+            final android.graphics.drawable.GradientDrawable g = new android.graphics.drawable.GradientDrawable();
+            g.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
+            g.setCornerRadius(dp(3, scale));
+            g.setColor(on ? active : inactive);
+            dot.setBackground(g);
+            final ViewGroup.LayoutParams lp = dot.getLayoutParams();
+            lp.width = on ? dp(20, scale) : dp(6, scale);
+            dot.setLayoutParams(lp);
+        }
+    }
+
+    /** Today's stacked cards below the pills: a week roll-up and the latest workouts. */
+    private void renderTodayExtra() {
+        if (todayExtra == null) return;
+        final Context ctx = requireContext();
+        final float scale = ctx.getResources().getDisplayMetrics().density;
+        final java.text.NumberFormat nf = java.text.NumberFormat.getIntegerInstance();
+        todayExtra.removeAllViews();
+
+        // This week
+        final LinearLayout week = new LinearLayout(ctx);
+        week.setOrientation(LinearLayout.VERTICAL);
+        week.setBackgroundResource(R.drawable.pulse_widget_bg);
+        week.setPadding(dp(18, scale), dp(16, scale), dp(18, scale), dp(16, scale));
+        week.setClickable(true);
+        week.setOnClickListener(v -> startActivity(new Intent(requireContext(), PulseWeekActivity.class)));
+        final TextView wTitle = new TextView(ctx);
+        wTitle.setText(R.string.pulse_this_week);
+        wTitle.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_text_dim));
+        wTitle.setTextSize(13);
+        wTitle.setTypeface(wTitle.getTypeface(), android.graphics.Typeface.BOLD);
+        wTitle.setLetterSpacing(0.06f);
+        final TextView wValue = new TextView(ctx);
+        wValue.setText(getString(R.string.pulse_week_steps_value, nf.format(weekSteps)));
+        wValue.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_text));
+        wValue.setTypeface(androidx.core.content.res.ResourcesCompat.getFont(ctx, R.font.unbounded));
+        wValue.setTextSize(26);
+        wValue.setPadding(0, dp(4, scale), 0, 0);
+        final TextView wSub = new TextView(ctx);
+        final String dist = nodomain.freeyourgadget.gadgetbridge.util.FormatUtils.getFormattedDistanceLabel(weekDistCm / 100f);
+        wSub.setText(getString(R.string.pulse_week_sub, dist, weekActiveDays));
+        wSub.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_text_dim));
+        wSub.setTextSize(13);
+        wSub.setPadding(0, dp(2, scale), 0, 0);
+        week.addView(wTitle);
+        week.addView(wValue);
+        week.addView(wSub);
+        final LinearLayout.LayoutParams wlp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        todayExtra.addView(week, wlp);
+
+        // Recent workouts (skip the card entirely when there are none)
+        final List<WorkoutRow> rows;
+        synchronized (recentWorkouts) {
+            rows = new ArrayList<>(recentWorkouts);
+        }
+        if (rows.isEmpty()) return;
+
+        final LinearLayout wo = new LinearLayout(ctx);
+        wo.setOrientation(LinearLayout.VERTICAL);
+        wo.setBackgroundResource(R.drawable.pulse_widget_bg);
+        wo.setPadding(dp(18, scale), dp(16, scale), dp(18, scale), dp(8, scale));
+        final LinearLayout.LayoutParams wolp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        wolp.topMargin = dp(12, scale);
+        final TextView woTitle = new TextView(ctx);
+        woTitle.setText(R.string.pulse_recent_workouts);
+        woTitle.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_text_dim));
+        woTitle.setTextSize(13);
+        woTitle.setTypeface(woTitle.getTypeface(), android.graphics.Typeface.BOLD);
+        woTitle.setLetterSpacing(0.06f);
+        woTitle.setPadding(0, 0, 0, dp(8, scale));
+        wo.addView(woTitle);
+        for (final WorkoutRow row : rows) {
+            wo.addView(buildWorkoutRow(ctx, scale, row));
+        }
+        final TextView seeAll = new TextView(ctx);
+        seeAll.setText(R.string.pulse_see_all);
+        seeAll.setTextColor(GBApplication.getAccentColor(ctx));
+        seeAll.setTextSize(14);
+        seeAll.setTypeface(seeAll.getTypeface(), android.graphics.Typeface.BOLD);
+        seeAll.setPadding(0, dp(8, scale), 0, dp(8, scale));
+        seeAll.setClickable(true);
+        seeAll.setOnClickListener(v -> startActivity(new Intent(requireContext(), PulseWorkoutsActivity.class)));
+        wo.addView(seeAll);
+        todayExtra.addView(wo, wolp);
+    }
+
+    private View buildWorkoutRow(final Context ctx, final float scale, final WorkoutRow row) {
+        final LinearLayout r = new LinearLayout(ctx);
+        r.setOrientation(LinearLayout.HORIZONTAL);
+        r.setGravity(android.view.Gravity.CENTER_VERTICAL);
+        r.setPadding(0, dp(8, scale), 0, dp(8, scale));
+        final ImageView icon = new ImageView(ctx);
+        icon.setImageResource(row.icon);
+        icon.setColorFilter(GBApplication.getAccentColor(ctx));
+        r.addView(icon, new LinearLayout.LayoutParams(dp(28, scale), dp(28, scale)));
+        final LinearLayout tcol = new LinearLayout(ctx);
+        tcol.setOrientation(LinearLayout.VERTICAL);
+        final LinearLayout.LayoutParams tlp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+        tlp.setMarginStart(dp(14, scale));
+        final TextView title = new TextView(ctx);
+        title.setText(row.title);
+        title.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_text));
+        title.setTextSize(15);
+        final TextView sub = new TextView(ctx);
+        sub.setText(row.subtitle);
+        sub.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_text_dim));
+        sub.setTextSize(12);
+        tcol.addView(title);
+        tcol.addView(sub);
+        r.addView(tcol, tlp);
+        if (workoutDevice != null) {
+            r.setClickable(true);
+            r.setOnClickListener(v -> {
+                final Intent intent = new Intent(requireContext(), WorkoutDetailsActivity.class);
+                intent.putExtra(GBDevice.EXTRA_DEVICE, workoutDevice);
+                intent.putExtra("position", 0);
+                intent.putExtra("itemsFilter", new ArrayList<>(java.util.Collections.singletonList(row.id)));
+                startActivity(intent);
+            });
+        }
+        return r;
+    }
+
+    /** Compact hero tile (icon + label + value) with a proportional fill; tap opens the chart. */
+    private MaterialCardView buildHeroTile(final String metric) {
         final Context ctx = requireContext();
         final float scale = ctx.getResources().getDisplayMetrics().density;
         final MetricSpec spc = resolveMetric(metric);
@@ -1711,10 +2127,6 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         card.setRadius(dp(20, scale));
         card.setCardElevation(0);
         card.setCardBackgroundColor(tinted ? withAlpha(spc.tint, 0.16f) : ContextCompat.getColor(ctx, R.color.pulse_card));
-        final LinearLayout.LayoutParams clp = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        if (topMargin) clp.topMargin = dp(10, scale);
-        card.setLayoutParams(clp);
         card.setClickable(true);
         card.setRippleColorResource(R.color.pulse_card_alt);
         card.setOnClickListener(v -> {
@@ -1791,7 +2203,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
 
         card.addView(frame, new android.widget.FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, tileH));
-        col.addView(card);
+        return card;
     }
 
     private void createWidget(AbstractDashboardWidget widgetObj, boolean cardsEnabled, int columnSpan) {

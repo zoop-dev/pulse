@@ -89,6 +89,38 @@
                 android:letterSpacing="-0.02" />
         </LinearLayout>
 
+        <!-- Today only: swipeable carousel (ring page + tile pages) + dot indicator.
+             Wrapped so its horizontal swipes don't fight the outer tab pager. -->
+        <nodomain.freeyourgadget.gadgetbridge.activities.views.NestedScrollableHost
+            android:id="@+id/pulse_carousel_host"
+            android:layout_width="match_parent"
+            android:layout_height="188dp"
+            android:visibility="gone">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/pulse_today_carousel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </nodomain.freeyourgadget.gadgetbridge.activities.views.NestedScrollableHost>
+
+        <LinearLayout
+            android:id="@+id/pulse_carousel_dots"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:visibility="gone" />
+
+        <!-- Today only: expanded (no-swipe) hero — ring + every tile stacked, built in code -->
+        <LinearLayout
+            android:id="@+id/pulse_today_expanded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="18dp"
+            android:visibility="gone" />
+
         <!-- Hero row: big steps ring + stacked stat cards -->
         <LinearLayout
             android:id="@+id/pulse_hero_row"
@@ -250,8 +282,20 @@
                 app:tint="@color/pulse_text_dim" />
         </LinearLayout>
 
-        <!-- Content sheet: detail cards + day nav -->
+        <!-- Today only: stacked extra cards (This week, Recent workouts), built in code -->
         <LinearLayout
+            android:id="@+id/pulse_today_extra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="24dp"
+            android:visibility="gone" />
+
+        <!-- Content sheet: detail cards + day nav (hidden on Today) -->
+        <LinearLayout
+            android:id="@+id/pulse_content_sheet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"

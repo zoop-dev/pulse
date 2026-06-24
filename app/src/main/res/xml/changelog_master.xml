@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Pulse changelog. Newest release on top. -->
 <changelog>
+    <release version="1.4" versioncode="252">
+        <change>Today is now a swipeable carousel — the ring rides along, then full pages of metric tiles with a Google-style page indicator</change>
+        <change>Prefer it all on one screen? Turn on Expanded layout in the customize editor to stack every card with no swiping</change>
+        <change>New on Today: a "This week" summary and your most recent workouts, right under the buttons</change>
+        <change>Smoother drag-and-drop in the customize editor — long-press a row and it lifts as you move it</change>
+    </release>
     <release version="1.3" versioncode="251">
         <change>Light mode — pick Light, Dark or System in Settings → Appearance</change>
         <change>Accent colours — make Pulse yours: Neon Blue, Violet, Coral, Mint or Pink</change>

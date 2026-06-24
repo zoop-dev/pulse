@@ -5070,7 +5070,7 @@
     <string name="pulse_start">Sync</string>
     <string name="pulse_customize_today">Customize Today</string>
     <string name="pulse_ring_metric_title">Hero ring metric</string>
-    <string name="pulse_edit_hint">Drag to reorder. The top 3 enabled stats become your hero cards; the rest fill the grid. Toggle to hide.</string>
+    <string name="pulse_edit_hint">Drag to reorder, toggle to hide. Enabled stats become tiles in your Today carousel (the ring metric is set by long-pressing the ring).</string>
     <string name="pulse_streak_title">🔥 %1$d day streak — pick your goal</string>
     <string name="pulse_goal_reached_title">Goal reached! 🎉</string>
     <string name="pulse_goal_reached_text">You hit your %1$s goal today</string>
@@ -5128,6 +5128,14 @@
     <string name="pulse_calendar_title">Calendar</string>
     <string name="pulse_workouts_title">Workouts</string>
     <string name="pulse_workouts_empty">No workouts recorded yet.\nStart one on your watch and sync.</string>
+    <!-- Today extra cards -->
+    <string name="pulse_this_week">THIS WEEK</string>
+    <string name="pulse_week_steps_value">%1$s steps</string>
+    <string name="pulse_week_sub">%1$s · %2$d active days</string>
+    <string name="pulse_recent_workouts">RECENT WORKOUTS</string>
+    <string name="pulse_see_all">See all</string>
+    <string name="pulse_expanded_layout">Expanded layout</string>
+    <string name="pulse_expanded_layout_sub">Show every card stacked, no swiping</string>
     <!-- Week in Review -->
     <string name="pulse_week_title">Your Week</string>
     <string name="pulse_week_steps_label">steps this week</string>
