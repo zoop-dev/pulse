@@ -1,5 +1,5 @@
 ### pulse vs upstream gadgetbridge (base 79ad5a6079a277f95b791d81ec34e6810cc49b60)
-### generated 2026-06-24T11:51Z
+### generated 2026-06-24T12:01Z
 
 diff --git a/README.md b/README.md
 index 76cf11b42c..19bfa6cc92 100644
@@ -1297,7 +1297,7 @@ index dcef446caf..84f8cefa33 100644
      }
  }
 diff --git a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java
-index baf984680c..573a2b3192 100644
+index baf984680c..f470619338 100644
 --- a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java
 +++ b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java
 @@ -30,6 +30,8 @@ import android.view.MenuInflater;
@@ -1340,7 +1340,7 @@ index baf984680c..573a2b3192 100644
  import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
  import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
  import nodomain.freeyourgadget.gadgetbridge.util.CachedValue;
-@@ -96,11 +106,90 @@ public class DashboardFragment extends Fragment implements MenuProvider {
+@@ -96,11 +106,91 @@ public class DashboardFragment extends Fragment implements MenuProvider {
  
      private final Calendar day = GregorianCalendar.getInstance();
      private TextView textViewDate;
@@ -1400,6 +1400,7 @@ index baf984680c..573a2b3192 100644
 +            "heartrate", "bodybattery", "stress", "spo2", "hrv", "respiration"
 +    };
 +    private static final String DEFAULT_TODAY_METRICS = String.join(",", ALL_METRICS);
++    private static final String DEFAULT_SHARE_METRICS = "distance,calories,activetime,sleep";
 +
 +    /** Which metric cards the grid shows. Today is user-customizable; other tabs are curated. */
 +    private String[] pulseMetrics() {
@@ -1431,7 +1432,7 @@ index baf984680c..573a2b3192 100644
  
      private ActivityResultLauncher<Intent> calendarLauncher;
      private final ActivityResultCallback<ActivityResult> calendarCallback = result -> {
-@@ -108,6 +197,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
+@@ -108,6 +198,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
              long timeMillis = result.getData().getLongExtra(DashboardCalendarActivity.EXTRA_TIMESTAMP, 0);
              if (timeMillis != 0) {
                  day.setTimeInMillis(timeMillis);
@@ -1439,7 +1440,7 @@ index baf984680c..573a2b3192 100644
                  fullRefresh();
              }
          }
-@@ -139,9 +229,109 @@ public class DashboardFragment extends Fragment implements MenuProvider {
+@@ -139,9 +230,109 @@ public class DashboardFragment extends Fragment implements MenuProvider {
      @Override
      public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
          super.onCreateView(inflater, container, savedInstanceState);
@@ -1549,7 +1550,7 @@ index baf984680c..573a2b3192 100644
  
          calendarLauncher = registerForActivityResult(
                  new ActivityResultContracts.StartActivityForResult(),
-@@ -157,6 +347,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
+@@ -157,6 +348,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
          final TextView arrowLeft = dashboardView.findViewById(R.id.arrow_left);
          arrowLeft.setOnClickListener(v -> {
              day.add(Calendar.DAY_OF_MONTH, -1);
@@ -1557,7 +1558,7 @@ index baf984680c..573a2b3192 100644
              refresh();
          });
          arrowRight = dashboardView.findViewById(R.id.arrow_right);
-@@ -164,6 +355,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
+@@ -164,6 +356,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
              Calendar today = GregorianCalendar.getInstance();
              if (!DateTimeUtils.isSameDay(today, day)) {
                  day.add(Calendar.DAY_OF_MONTH, 1);
@@ -1565,7 +1566,7 @@ index baf984680c..573a2b3192 100644
                  refresh();
              }
          });
-@@ -180,6 +372,10 @@ public class DashboardFragment extends Fragment implements MenuProvider {
+@@ -180,6 +373,10 @@ public class DashboardFragment extends Fragment implements MenuProvider {
          filterLocal.addAction(ACTION_CONFIG_CHANGE);
          LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mReceiver, filterLocal);
  
@@ -1576,17 +1577,54 @@ index baf984680c..573a2b3192 100644
          return dashboardView;
      }
  
-@@ -223,10 +419,69 @@ public class DashboardFragment extends Fragment implements MenuProvider {
+@@ -223,10 +420,109 @@ public class DashboardFragment extends Fragment implements MenuProvider {
              final Intent intent = new Intent(requireActivity(), DashboardPreferencesActivity.class);
              startActivity(intent);
              return true;
 +        } else if (itemId == R.id.pulse_share_today) {
 +            shareToday();
 +            return true;
++        } else if (itemId == R.id.pulse_share_customize) {
++            showShareMetricsDialog();
++            return true;
          }
          return false;
      }
  
++    /** Pick which 4 stats fill the bottom of the shareable card (steps stays the headline). */
++    private void showShareMetricsDialog() {
++        final java.util.List<String> opts = new java.util.ArrayList<>();
++        for (final String m : ALL_METRICS) {
++            if (!m.equals("steps")) opts.add(m);
++        }
++        final String[] labels = new String[opts.size()];
++        final boolean[] checked = new boolean[opts.size()];
++        final java.util.List<String> current = java.util.Arrays.asList(
++                GBApplication.getPrefs().getString("pulse_share_metrics", DEFAULT_SHARE_METRICS).split(","));
++        for (int i = 0; i < opts.size(); i++) {
++            labels[i] = metricLabel(opts.get(i));
++            checked[i] = current.contains(opts.get(i));
++        }
++        new androidx.appcompat.app.AlertDialog.Builder(requireContext())
++                .setTitle(R.string.pulse_share_customize_title)
++                .setMultiChoiceItems(labels, checked, (d, w, isChecked) -> checked[w] = isChecked)
++                .setPositiveButton(android.R.string.ok, (d, w) -> {
++                    final java.util.List<String> chosen = new java.util.ArrayList<>();
++                    for (int i = 0; i < opts.size(); i++) {
++                        if (checked[i]) chosen.add(opts.get(i));
++                    }
++                    // the card always has 4 cells, so pad with defaults / trim to exactly 4
++                    for (final String m : DEFAULT_SHARE_METRICS.split(",")) {
++                        if (chosen.size() >= 4) break;
++                        if (!chosen.contains(m)) chosen.add(m);
++                    }
++                    GBApplication.getPrefs().getPreferences().edit()
++                            .putString("pulse_share_metrics", String.join(",", chosen.subList(0, 4))).apply();
++                })
++                .setNegativeButton(android.R.string.cancel, null)
++                .show();
++    }
++
 +    /** Render today's stats into a Pulse card image and fire the share sheet. */
 +    private void shareToday() {
 +        final Context ctx = requireContext();
@@ -1597,8 +1635,6 @@ index baf984680c..573a2b3192 100644
 +
 +        final int steps = dashboardData.getStepsTotal();
 +        final int stepsGoal = new ActivityUser().getStepsGoal();
-+        final long activeMin = dashboardData.getActiveMinutesTotal();
-+        final long sleepMin = dashboardData.getSleepMinutesTotal();
 +        final int streak = GBApplication.getPrefs().getInt("pulse_streak_count", 0);
 +
 +        ((TextView) card.findViewById(R.id.share_date)).setText(
@@ -1607,13 +1643,18 @@ index baf984680c..573a2b3192 100644
 +        ((TextView) card.findViewById(R.id.share_steps_goal)).setText(
 +                getString(R.string.pulse_of_goal, nf.format(stepsGoal))
 +                        + " " + getString(R.string.steps).toLowerCase(loc));
-+        ((TextView) card.findViewById(R.id.share_distance)).setText(
-+                nodomain.freeyourgadget.gadgetbridge.util.FormatUtils.getFormattedDistanceLabel(dashboardData.getDistanceTotal()));
-+        ((TextView) card.findViewById(R.id.share_calories)).setText(nf.format(dashboardData.getActiveCaloriesTotal()));
-+        ((TextView) card.findViewById(R.id.share_active)).setText(
-+                activeMin >= 60 ? String.format(loc, "%dh %dm", activeMin / 60, activeMin % 60) : String.format(loc, "%dm", activeMin));
-+        ((TextView) card.findViewById(R.id.share_sleep)).setText(
-+                sleepMin > 0 ? String.format(loc, "%dh %dm", sleepMin / 60, sleepMin % 60) : getString(R.string.pulse_no_sleep));
++        // the four bottom cells are user-customizable (steps stays the headline)
++        final String[] shareMetrics = GBApplication.getPrefs()
++                .getString("pulse_share_metrics", DEFAULT_SHARE_METRICS).split(",");
++        final int[] valIds = {R.id.share_val0, R.id.share_val1, R.id.share_val2, R.id.share_val3};
++        final int[] lblIds = {R.id.share_label0, R.id.share_label1, R.id.share_label2, R.id.share_label3};
++        for (int i = 0; i < 4; i++) {
++            final MetricSpec spc = resolveMetric(i < shareMetrics.length ? shareMetrics[i] : "distance");
++            final TextView val = card.findViewById(valIds[i]);
++            val.setText(spc.value);
++            val.setTextColor(spc.tint);
++            ((TextView) card.findViewById(lblIds[i])).setText(spc.label);
++        }
 +        final TextView streakView = card.findViewById(R.id.share_streak);
 +        streakView.setText(streak > 0 ? getString(R.string.pulse_share_streak_fmt, streak) : "");
 +
@@ -1646,7 +1687,7 @@ index baf984680c..573a2b3192 100644
      private void fullRefresh() {
          gridLayout.removeAllViews();
          widgetMap.clear();
-@@ -234,116 +489,1801 @@ public class DashboardFragment extends Fragment implements MenuProvider {
+@@ -234,116 +530,1802 @@ public class DashboardFragment extends Fragment implements MenuProvider {
      }
  
      private void refresh() {
@@ -1953,6 +1994,7 @@ index baf984680c..573a2b3192 100644
 +            case "spo2":        return getString(R.string.pref_header_spo2);
 +            case "hrv":         return getString(R.string.hrv);
 +            case "respiration": return getString(R.string.respiratoryrate);
++            case "intensity":   return getString(R.string.pulse_intensity);
 +            default:            return getString(R.string.steps);
 +        }
 +    }
@@ -2957,7 +2999,80 @@ index baf984680c..573a2b3192 100644
 +        final int battery = dev.getBatteryLevel();
 +        if (battery >= 0 && battery <= 100) {
 +            deviceBattery.setText(getString(R.string.battery_percentage_str, String.valueOf(battery)));
-+        } else {
+         } else {
+-            textViewDate.setText(DateTimeUtils.formatDate(day.getTime(), DateUtils.FORMAT_SHOW_WEEKDAY));
+-            arrowRight.setAlpha(1);
+-        }
+-
+-        boolean cardsEnabled = prefs.getBoolean("dashboard_cards_enabled", true);
+-
+-        for (String widgetName : widgetsOrder) {
+-            AbstractDashboardWidget widget = widgetMap.get(widgetName);
+-            if (widget == null) {
+-                int columnSpan = 1;
+-                switch (widgetName) {
+-                    case "today":
+-                        widget = DashboardTodayWidget.newInstance(dashboardData);
+-                        columnSpan = prefs.getBoolean("dashboard_widget_today_2columns", true) ? 2 : 1;
+-                        break;
+-                    case "goals":
+-                        widget = DashboardGoalsWidget.newInstance(dashboardData);
+-                        columnSpan = prefs.getBoolean("dashboard_widget_goals_2columns", true) ? 2 : 1;
+-                        break;
+-                    case "steps":
+-                        widget = DashboardStepsWidget.newInstance(dashboardData);
+-                        break;
+-                    case "distance":
+-                        widget = DashboardDistanceWidget.newInstance(dashboardData);
+-                        break;
+-                    case "activetime":
+-                        widget = DashboardActiveTimeWidget.newInstance(dashboardData);
+-                        break;
+-                    case "sleep":
+-                        widget = DashboardSleepWidget.newInstance(dashboardData);
+-                        break;
+-                    case "stress_simple":
+-                        widget = DashboardStressSimpleWidget.newInstance(dashboardData);
+-                        break;
+-                    case "stress_segmented":
+-                        widget = DashboardStressSegmentedWidget.newInstance(dashboardData);
+-                        break;
+-                    case "stress_breakdown":
+-                        widget = DashboardStressBreakdownWidget.newInstance(dashboardData);
+-                        break;
+-                    case "bodyenergy":
+-                        widget = DashboardBodyEnergyWidget.newInstance(dashboardData);
+-                        break;
+-                    case "pai":
+-                        widget = DashboardPaiWidget.newInstance(dashboardData);
+-                        break;
+-                    case "hrv":
+-                        widget = DashboardHrvWidget.newInstance(dashboardData);
+-                        break;
+-                    case "bloodpressure":
+-                        widget = DashboardBloodPressureWidget.newInstance(dashboardData);
+-                        break;
+-                    case "vo2max_running":
+-                        widget = DashboardVO2MaxRunningWidget.newInstance(dashboardData);
+-                        break;
+-                    case "vo2max_cycling":
+-                        widget = DashboardVO2MaxCyclingWidget.newInstance(dashboardData);
+-                        break;
+-                    case "vo2max":
+-                        widget = DashboardVO2MaxAnyWidget.newInstance(dashboardData);
+-                        break;
+-                    case "calories_active":
+-                        widget = DashboardCaloriesActiveGoalWidget.newInstance(dashboardData);
+-                        break;
+-                    case "calories_segmented":
+-                        widget = DashboardCaloriesTotalSegmentedWidget.newInstance(dashboardData);
+-                        break;
+-                    case "sleepscore":
+-                        widget = DashboardSleepScoreWidget.newInstance(dashboardData);
+-                        break;
+-                    default:
+-                        LOG.error("Unknown dashboard widget {}", widgetName);
+-                        continue;
 +            deviceBattery.setText("");
 +        }
 +    }
@@ -3057,80 +3172,7 @@ index baf984680c..573a2b3192 100644
 +            carouselDots.setVisibility(View.GONE);
 +            todayExpanded.setVisibility(View.VISIBLE);
 +            buildExpandedHero(ctx, scale, ringMetric, tiles);
-         } else {
--            textViewDate.setText(DateTimeUtils.formatDate(day.getTime(), DateUtils.FORMAT_SHOW_WEEKDAY));
--            arrowRight.setAlpha(1);
--        }
--
--        boolean cardsEnabled = prefs.getBoolean("dashboard_cards_enabled", true);
--
--        for (String widgetName : widgetsOrder) {
--            AbstractDashboardWidget widget = widgetMap.get(widgetName);
--            if (widget == null) {
--                int columnSpan = 1;
--                switch (widgetName) {
--                    case "today":
--                        widget = DashboardTodayWidget.newInstance(dashboardData);
--                        columnSpan = prefs.getBoolean("dashboard_widget_today_2columns", true) ? 2 : 1;
--                        break;
--                    case "goals":
--                        widget = DashboardGoalsWidget.newInstance(dashboardData);
--                        columnSpan = prefs.getBoolean("dashboard_widget_goals_2columns", true) ? 2 : 1;
--                        break;
--                    case "steps":
--                        widget = DashboardStepsWidget.newInstance(dashboardData);
--                        break;
--                    case "distance":
--                        widget = DashboardDistanceWidget.newInstance(dashboardData);
--                        break;
--                    case "activetime":
--                        widget = DashboardActiveTimeWidget.newInstance(dashboardData);
--                        break;
--                    case "sleep":
--                        widget = DashboardSleepWidget.newInstance(dashboardData);
--                        break;
--                    case "stress_simple":
--                        widget = DashboardStressSimpleWidget.newInstance(dashboardData);
--                        break;
--                    case "stress_segmented":
--                        widget = DashboardStressSegmentedWidget.newInstance(dashboardData);
--                        break;
--                    case "stress_breakdown":
--                        widget = DashboardStressBreakdownWidget.newInstance(dashboardData);
--                        break;
--                    case "bodyenergy":
--                        widget = DashboardBodyEnergyWidget.newInstance(dashboardData);
--                        break;
--                    case "pai":
--                        widget = DashboardPaiWidget.newInstance(dashboardData);
--                        break;
--                    case "hrv":
--                        widget = DashboardHrvWidget.newInstance(dashboardData);
--                        break;
--                    case "bloodpressure":
--                        widget = DashboardBloodPressureWidget.newInstance(dashboardData);
--                        break;
--                    case "vo2max_running":
--                        widget = DashboardVO2MaxRunningWidget.newInstance(dashboardData);
--                        break;
--                    case "vo2max_cycling":
--                        widget = DashboardVO2MaxCyclingWidget.newInstance(dashboardData);
--                        break;
--                    case "vo2max":
--                        widget = DashboardVO2MaxAnyWidget.newInstance(dashboardData);
--                        break;
--                    case "calories_active":
--                        widget = DashboardCaloriesActiveGoalWidget.newInstance(dashboardData);
--                        break;
--                    case "calories_segmented":
--                        widget = DashboardCaloriesTotalSegmentedWidget.newInstance(dashboardData);
--                        break;
--                    case "sleepscore":
--                        widget = DashboardSleepScoreWidget.newInstance(dashboardData);
--                        break;
--                    default:
--                        LOG.error("Unknown dashboard widget {}", widgetName);
--                        continue;
++        } else {
 +            todayExpanded.setVisibility(View.GONE);
 +            host.setVisibility(View.VISIBLE);
 +            buildCarousel(ctx, scale, ringMetric, tiles);
@@ -3272,8 +3314,7 @@ index baf984680c..573a2b3192 100644
 +
 +        if (carouselPage >= pages.size()) carouselPage = 0;
 +        todayCarousel.setCurrentItem(carouselPage, false);
- 
--                createWidget(widget, cardsEnabled, columnSpan);
++
 +        carouselDots.removeAllViews();
 +        for (int i = 0; i < pages.size(); i++) {
 +            final View dot = new View(ctx);
@@ -3312,8 +3353,7 @@ index baf984680c..573a2b3192 100644
 +        final float scale = ctx.getResources().getDisplayMetrics().density;
 +        final java.text.NumberFormat nf = java.text.NumberFormat.getIntegerInstance();
 +        todayExtra.removeAllViews();
- 
--                widgetMap.put(widgetName, widget);
++
 +        // This week
 +        final LinearLayout week = new LinearLayout(ctx);
 +        week.setOrientation(LinearLayout.VERTICAL);
@@ -3353,7 +3393,8 @@ index baf984680c..573a2b3192 100644
 +            rows = new ArrayList<>(recentWorkouts);
 +        }
 +        if (rows.isEmpty()) return;
-+
+ 
+-                createWidget(widget, cardsEnabled, columnSpan);
 +        final LinearLayout wo = new LinearLayout(ctx);
 +        wo.setOrientation(LinearLayout.VERTICAL);
 +        wo.setBackgroundResource(R.drawable.pulse_widget_bg);
@@ -3439,7 +3480,8 @@ index baf984680c..573a2b3192 100644
 +            return false;
 +        });
 +    }
-+
+ 
+-                widgetMap.put(widgetName, widget);
 +    /** Compact hero tile (icon + label + value) with a proportional fill; tap opens the chart. */
 +    private MaterialCardView buildHeroTile(final String metric) {
 +        final Context ctx = requireContext();
@@ -3536,7 +3578,7 @@ index baf984680c..573a2b3192 100644
      }
  
      private void createWidget(AbstractDashboardWidget widgetObj, boolean cardsEnabled, int columnSpan) {
-@@ -366,10 +2306,13 @@ public class DashboardFragment extends Fragment implements MenuProvider {
+@@ -366,10 +2348,13 @@ public class DashboardFragment extends Fragment implements MenuProvider {
  
          if (cardsEnabled) {
              MaterialCardView card = new MaterialCardView(requireActivity());
@@ -11240,10 +11282,10 @@ index 0000000000..aa95ba9e93
 +</LinearLayout>
 diff --git a/app/src/main/res/layout/pulse_share_card.xml b/app/src/main/res/layout/pulse_share_card.xml
 new file mode 100644
-index 0000000000..5be3dc1e49
+index 0000000000..aec26008f4
 --- /dev/null
 +++ b/app/src/main/res/layout/pulse_share_card.xml
-@@ -0,0 +1,181 @@
+@@ -0,0 +1,185 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!-- Pulse: off-screen layout rendered to a bitmap for the "share today" card. -->
 +<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -11318,13 +11360,14 @@ index 0000000000..5be3dc1e49
 +            android:background="@drawable/pulse_widget_bg"
 +            android:padding="18dp">
 +            <TextView
-+                android:id="@+id/share_distance"
++                android:id="@+id/share_val0"
 +                android:layout_width="wrap_content"
 +                android:layout_height="wrap_content"
 +                android:fontFamily="@font/unbounded"
 +                android:textColor="@color/pulse_neon_cyan"
 +                android:textSize="26sp" />
 +            <TextView
++                android:id="@+id/share_label0"
 +                android:layout_width="wrap_content"
 +                android:layout_height="wrap_content"
 +                android:text="@string/distance"
@@ -11341,13 +11384,14 @@ index 0000000000..5be3dc1e49
 +            android:background="@drawable/pulse_widget_bg"
 +            android:padding="18dp">
 +            <TextView
-+                android:id="@+id/share_calories"
++                android:id="@+id/share_val1"
 +                android:layout_width="wrap_content"
 +                android:layout_height="wrap_content"
 +                android:fontFamily="@font/unbounded"
 +                android:textColor="@color/pulse_ring_cal"
 +                android:textSize="26sp" />
 +            <TextView
++                android:id="@+id/share_label1"
 +                android:layout_width="wrap_content"
 +                android:layout_height="wrap_content"
 +                android:text="@string/calories"
@@ -11364,13 +11408,14 @@ index 0000000000..5be3dc1e49
 +            android:background="@drawable/pulse_widget_bg"
 +            android:padding="18dp">
 +            <TextView
-+                android:id="@+id/share_active"
++                android:id="@+id/share_val2"
 +                android:layout_width="wrap_content"
 +                android:layout_height="wrap_content"
 +                android:fontFamily="@font/unbounded"
 +                android:textColor="@color/pulse_mint"
 +                android:textSize="26sp" />
 +            <TextView
++                android:id="@+id/share_label2"
 +                android:layout_width="wrap_content"
 +                android:layout_height="wrap_content"
 +                android:text="@string/activity_list_summary_active_time"
@@ -11387,13 +11432,14 @@ index 0000000000..5be3dc1e49
 +            android:background="@drawable/pulse_widget_bg"
 +            android:padding="18dp">
 +            <TextView
-+                android:id="@+id/share_sleep"
++                android:id="@+id/share_val3"
 +                android:layout_width="wrap_content"
 +                android:layout_height="wrap_content"
 +                android:fontFamily="@font/unbounded"
 +                android:textColor="@color/pulse_purple"
 +                android:textSize="26sp" />
 +            <TextView
++                android:id="@+id/share_label3"
 +                android:layout_width="wrap_content"
 +                android:layout_height="wrap_content"
 +                android:text="@string/menuitem_sleep"
@@ -11978,10 +12024,10 @@ index 7b71f13633..0e5c77be46 100644
 \ No newline at end of file
 +</menu>
 diff --git a/app/src/main/res/menu/dashboard_menu.xml b/app/src/main/res/menu/dashboard_menu.xml
-index 2927899e2d..9e0eea6b55 100644
+index 2927899e2d..c67e2ebd83 100644
 --- a/app/src/main/res/menu/dashboard_menu.xml
 +++ b/app/src/main/res/menu/dashboard_menu.xml
-@@ -9,6 +9,12 @@
+@@ -9,6 +9,16 @@
          android:title="@string/menuitem_calendar"
          app:iconTint="?attr/actionmenu_icon_color"
          app:showAsAction="ifRoom" />
@@ -11991,6 +12037,10 @@ index 2927899e2d..9e0eea6b55 100644
 +        android:title="@string/pulse_share_today"
 +        app:iconTint="?attr/actionmenu_icon_color"
 +        app:showAsAction="ifRoom" />
++    <item
++        android:id="@+id/pulse_share_customize"
++        android:title="@string/pulse_share_customize_title"
++        app:showAsAction="never" />
      <item
          android:id="@+id/dashboard_settings"
          android:icon="@drawable/ic_settings"
@@ -12159,7 +12209,7 @@ index bc4c1e708f..60c36642e8 100644
  </resources>
 \ No newline at end of file
 diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
-index 99919efbdf..aecf9db352 100644
+index 99919efbdf..b0fe0a50c9 100644
 --- a/app/src/main/res/values/strings.xml
 +++ b/app/src/main/res/values/strings.xml
 @@ -235,7 +235,7 @@
@@ -12180,7 +12230,7 @@ index 99919efbdf..aecf9db352 100644
      <string name="widget_set_alarm_after">Set alarm after:</string>
      <string name="widget_5_minutes">5 minutes</string>
      <string name="widget_10_minutes">10 minutes</string>
-@@ -5045,4 +5045,173 @@
+@@ -5045,4 +5045,174 @@
      <string name="pref_category_wanderer" translatable="false">Wanderer</string>
      <string name="activity_detail_upload_to_wanderer">Upload GPX to Wanderer</string>
      <string name="select_at_least_option">Please select at least %1$d option</string>
@@ -12279,6 +12329,7 @@ index 99919efbdf..aecf9db352 100644
 +    <string name="pulse_intensity_week">Intensity · %d/wk</string>
 +    <string name="pulse_intensity_goal_title">Intensity minutes goal (daily)</string>
 +    <string name="pulse_intensity_daily_label">of %d intensity minutes today</string>
++    <string name="pulse_share_customize_title">Customize share card stats</string>
 +    <!-- Week in Review -->
 +    <string name="pulse_week_title">Your Week</string>
 +    <string name="pulse_week_steps_label">steps this week</string>

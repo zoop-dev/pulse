@@ -162,6 +162,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             "heartrate", "bodybattery", "stress", "spo2", "hrv", "respiration"
     };
     private static final String DEFAULT_TODAY_METRICS = String.join(",", ALL_METRICS);
+    private static final String DEFAULT_SHARE_METRICS = "distance,calories,activetime,sleep";
 
     /** Which metric cards the grid shows. Today is user-customizable; other tabs are curated. */
     private String[] pulseMetrics() {
@@ -422,8 +423,45 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         } else if (itemId == R.id.pulse_share_today) {
             shareToday();
             return true;
+        } else if (itemId == R.id.pulse_share_customize) {
+            showShareMetricsDialog();
+            return true;
         }
         return false;
+    }
+
+    /** Pick which 4 stats fill the bottom of the shareable card (steps stays the headline). */
+    private void showShareMetricsDialog() {
+        final java.util.List<String> opts = new java.util.ArrayList<>();
+        for (final String m : ALL_METRICS) {
+            if (!m.equals("steps")) opts.add(m);
+        }
+        final String[] labels = new String[opts.size()];
+        final boolean[] checked = new boolean[opts.size()];
+        final java.util.List<String> current = java.util.Arrays.asList(
+                GBApplication.getPrefs().getString("pulse_share_metrics", DEFAULT_SHARE_METRICS).split(","));
+        for (int i = 0; i < opts.size(); i++) {
+            labels[i] = metricLabel(opts.get(i));
+            checked[i] = current.contains(opts.get(i));
+        }
+        new androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                .setTitle(R.string.pulse_share_customize_title)
+                .setMultiChoiceItems(labels, checked, (d, w, isChecked) -> checked[w] = isChecked)
+                .setPositiveButton(android.R.string.ok, (d, w) -> {
+                    final java.util.List<String> chosen = new java.util.ArrayList<>();
+                    for (int i = 0; i < opts.size(); i++) {
+                        if (checked[i]) chosen.add(opts.get(i));
+                    }
+                    // the card always has 4 cells, so pad with defaults / trim to exactly 4
+                    for (final String m : DEFAULT_SHARE_METRICS.split(",")) {
+                        if (chosen.size() >= 4) break;
+                        if (!chosen.contains(m)) chosen.add(m);
+                    }
+                    GBApplication.getPrefs().getPreferences().edit()
+                            .putString("pulse_share_metrics", String.join(",", chosen.subList(0, 4))).apply();
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
     }
 
     /** Render today's stats into a Pulse card image and fire the share sheet. */
@@ -436,8 +474,6 @@ public class DashboardFragment extends Fragment implements MenuProvider {
 
         final int steps = dashboardData.getStepsTotal();
         final int stepsGoal = new ActivityUser().getStepsGoal();
-        final long activeMin = dashboardData.getActiveMinutesTotal();
-        final long sleepMin = dashboardData.getSleepMinutesTotal();
         final int streak = GBApplication.getPrefs().getInt("pulse_streak_count", 0);
 
         ((TextView) card.findViewById(R.id.share_date)).setText(
@@ -446,13 +482,18 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         ((TextView) card.findViewById(R.id.share_steps_goal)).setText(
                 getString(R.string.pulse_of_goal, nf.format(stepsGoal))
                         + " " + getString(R.string.steps).toLowerCase(loc));
-        ((TextView) card.findViewById(R.id.share_distance)).setText(
-                nodomain.freeyourgadget.gadgetbridge.util.FormatUtils.getFormattedDistanceLabel(dashboardData.getDistanceTotal()));
-        ((TextView) card.findViewById(R.id.share_calories)).setText(nf.format(dashboardData.getActiveCaloriesTotal()));
-        ((TextView) card.findViewById(R.id.share_active)).setText(
-                activeMin >= 60 ? String.format(loc, "%dh %dm", activeMin / 60, activeMin % 60) : String.format(loc, "%dm", activeMin));
-        ((TextView) card.findViewById(R.id.share_sleep)).setText(
-                sleepMin > 0 ? String.format(loc, "%dh %dm", sleepMin / 60, sleepMin % 60) : getString(R.string.pulse_no_sleep));
+        // the four bottom cells are user-customizable (steps stays the headline)
+        final String[] shareMetrics = GBApplication.getPrefs()
+                .getString("pulse_share_metrics", DEFAULT_SHARE_METRICS).split(",");
+        final int[] valIds = {R.id.share_val0, R.id.share_val1, R.id.share_val2, R.id.share_val3};
+        final int[] lblIds = {R.id.share_label0, R.id.share_label1, R.id.share_label2, R.id.share_label3};
+        for (int i = 0; i < 4; i++) {
+            final MetricSpec spc = resolveMetric(i < shareMetrics.length ? shareMetrics[i] : "distance");
+            final TextView val = card.findViewById(valIds[i]);
+            val.setText(spc.value);
+            val.setTextColor(spc.tint);
+            ((TextView) card.findViewById(lblIds[i])).setText(spc.label);
+        }
         final TextView streakView = card.findViewById(R.id.share_streak);
         streakView.setText(streak > 0 ? getString(R.string.pulse_share_streak_fmt, streak) : "");
 
@@ -780,6 +821,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             case "spo2":        return getString(R.string.pref_header_spo2);
             case "hrv":         return getString(R.string.hrv);
             case "respiration": return getString(R.string.respiratoryrate);
+            case "intensity":   return getString(R.string.pulse_intensity);
             default:            return getString(R.string.steps);
         }
     }

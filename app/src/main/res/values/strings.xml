@@ -5140,6 +5140,7 @@
     <string name="pulse_intensity_week">Intensity · %d/wk</string>
     <string name="pulse_intensity_goal_title">Intensity minutes goal (daily)</string>
     <string name="pulse_intensity_daily_label">of %d intensity minutes today</string>
+    <string name="pulse_share_customize_title">Customize share card stats</string>
     <!-- Week in Review -->
     <string name="pulse_week_title">Your Week</string>
     <string name="pulse_week_steps_label">steps this week</string>
