@@ -49,6 +49,7 @@
         <change>Fix connection attempts while bluetooth is off for some devices</change>
         <change>Fix drawer being drawn behind status bar</change>
         <change>Fix file type when sharing</change>
+        <change>Garmin: Fix activity sync getting stuck on some devices</change>
         <change>Garmin: Fix empty caller when unknown</change>
         <change>Garmin: Fix http request without headers</change>
         <change>Garmin: Fix unknown transfer notification</change>

@@ -276,6 +276,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         return new GarminPrefs(GBApplication.getDeviceSpecificSharedPrefs(gbDevice.getAddress()), gbDevice);
     }
 
+    @NonNull
     @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
         builder.setDeviceState(GBDevice.State.INITIALIZING);

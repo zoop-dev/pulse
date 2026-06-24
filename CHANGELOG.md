@@ -50,6 +50,7 @@
 * Fix connection attempts while bluetooth is off for some devices
 * Fix drawer being drawn behind status bar
 * Fix file type when sharing
+* Garmin: Fix activity sync getting stuck on some devices
 * Garmin: Fix empty caller when unknown
 * Garmin: Fix http request without headers
 * Garmin: Fix unknown transfer notification

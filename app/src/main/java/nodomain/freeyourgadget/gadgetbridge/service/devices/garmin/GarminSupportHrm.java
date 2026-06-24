@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig;
@@ -65,6 +66,7 @@ public class GarminSupportHrm extends GarminSupport {
         addSupportedProfile(heartRateProfile);
     }
 
+    @NonNull
     @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
         super.initializeDevice(builder);

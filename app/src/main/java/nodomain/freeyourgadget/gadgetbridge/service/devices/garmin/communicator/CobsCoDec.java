@@ -3,31 +3,16 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.communicator
 import java.nio.ByteBuffer;
 
 public class CobsCoDec {
-    private static final long BUFFER_TIMEOUT = 1500L; // turn this value up while debugging
     private final ByteBuffer byteBuffer = ByteBuffer.allocate(10_000);
-    private long lastUpdate;
     private byte[] cobsDecodedMessage;
 
     /**
      * Accumulates received bytes in a local buffer, clearing it after a timeout, and attempts to
      * parse it.
-     *
-     * @param bytes
      */
     public void receivedBytes(byte[] bytes) {
-        final long now = System.currentTimeMillis();
-        if ((now - lastUpdate) > BUFFER_TIMEOUT) {
-            reset();
-        }
-        lastUpdate = now;
-
         byteBuffer.put(bytes);
         decode();
-    }
-
-    private void reset() {
-        cobsDecodedMessage = null;
-        byteBuffer.clear();
     }
 
     public byte[] retrieveMessage() {
