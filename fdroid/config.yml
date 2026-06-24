@@ -1,9 +1,0 @@
-# fdroidserver config for the self-hosted Pulse repo.
-# Run `fdroid init` once here to generate the signing keystore, then `fdroid update`.
-# Keep keystore.jks + the *pass fields out of git (see .gitignore).
-repo_url: https://fdroid.zachy.cc/repo
-repo_name: Pulse
-repo_description: >-
-  Pulse, a Garmin-only Gadgetbridge fork. Add this repo to get builds and updates.
-repo_icon: icon.png
-archive_older: 3
