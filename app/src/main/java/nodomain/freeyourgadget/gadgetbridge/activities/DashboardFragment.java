@@ -1335,6 +1335,8 @@ public class DashboardFragment extends Fragment implements MenuProvider {
     private void renderSleepDetail() {
         final Context ctx = requireContext();
         final float scale = getResources().getDisplayMetrics().density;
+        androidx.transition.TransitionManager.beginDelayedTransition(
+                sleepDetailContainer, new com.google.android.material.transition.MaterialFadeThrough());
         stopChildAnimations(sleepDetailContainer);
         sleepDetailContainer.removeAllViews();
 
@@ -2156,6 +2158,8 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         final Context ctx = requireContext();
         final float scale = ctx.getResources().getDisplayMetrics().density;
         final java.text.NumberFormat nf = java.text.NumberFormat.getIntegerInstance();
+        androidx.transition.TransitionManager.beginDelayedTransition(
+                todayExtra, new com.google.android.material.transition.MaterialFadeThrough());
         stopChildAnimations(todayExtra);
         todayExtra.removeAllViews();
 
