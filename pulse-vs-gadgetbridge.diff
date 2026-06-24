@@ -1,5 +1,5 @@
 ### pulse vs upstream gadgetbridge (base 79ad5a6079a277f95b791d81ec34e6810cc49b60)
-### generated 2026-06-24T20:12Z
+### generated 2026-06-24T20:15Z
 
 diff --git a/.gitignore b/.gitignore
 index 0160baad1f..dd3a7d7730 100644
@@ -183,7 +183,7 @@ index 76cf11b42c..19bfa6cc92 100644
 +> Pulse is an independent, unofficial fork. It is not affiliated with or endorsed by Gadgetbridge, Garmin, or any wearable vendor.
 +</content>
 diff --git a/app/build.gradle b/app/build.gradle
-index 16b4e36bb2..4f582e10f0 100644
+index 16b4e36bb2..41584903b7 100644
 --- a/app/build.gradle
 +++ b/app/build.gradle
 @@ -120,8 +120,8 @@ android {
@@ -192,8 +192,8 @@ index 16b4e36bb2..4f582e10f0 100644
          // Note: always bump BOTH versionCode and versionName!
 -        versionName "0.91.1"
 -        versionCode 248
-+        versionName "0.94.0"
-+        versionCode 253
++        versionName "0.95.0"
++        versionCode 254
          vectorDrawables.useSupportLibrary = true
          buildConfigField "String", "GIT_HASH_SHORT", "\"${getGitHashShort()}\""
          buildConfigField "boolean", "INTERNET_ACCESS", "false"
@@ -13144,10 +13144,10 @@ index 5e37d6f11f..d9a0709dcc 100644
 -    </PreferenceCategory>
  </PreferenceScreen>
 diff --git a/app/src/main/res/xml/changelog_master.xml b/app/src/main/res/xml/changelog_master.xml
-index 866ba5a37e..fce43865f7 100644
+index 866ba5a37e..7047f72453 100644
 --- a/app/src/main/res/xml/changelog_master.xml
 +++ b/app/src/main/res/xml/changelog_master.xml
-@@ -1,1400 +1,69 @@
+@@ -1,1400 +1,73 @@
  <?xml version="1.0" encoding="utf-8"?>
 +<!-- Pulse changelog. Newest release on top. -->
  <changelog>
@@ -14547,6 +14547,10 @@ index 866ba5a37e..fce43865f7 100644
 -        <change>Prefer big text when scraping gmail notifications</change>
 -        <change>Do not remove newline and whitespace characters from notification content</change>
 -        <change>Debug: Add companion device list to debug activity</change>
++    <release version="1.6" versioncode="254">
++        <change>Today and Sleep no longer replay the ring fill and skeleton every visit — only when there's actually something to load</change>
++        <change>Tidied up some leftover wording</change>
++    </release>
 +    <release version="1.5" versioncode="253">
 +        <change>Back up and restore everything to a single .pulse file (Data management)</change>
 +        <change>First launch now offers to restore from a backup</change>
@@ -15560,7 +15564,7 @@ index 0000000000..3aa83c4778
 +</div></body></html>
 diff --git a/fdroid/metadata/cc.zachy.pulse.yml b/fdroid/metadata/cc.zachy.pulse.yml
 new file mode 100644
-index 0000000000..f770841905
+index 0000000000..bddf7e3f75
 --- /dev/null
 +++ b/fdroid/metadata/cc.zachy.pulse.yml
 @@ -0,0 +1,32 @@
@@ -15594,8 +15598,8 @@ index 0000000000..f770841905
 +    Built on Gadgetbridge's Garmin engine, so your data never leaves the phone
 +    (apart from optional weather).
 +
-+CurrentVersion: 0.94.0-pulse
-+CurrentVersionCode: 253
++CurrentVersion: 0.95.0-pulse
++CurrentVersionCode: 254
 diff --git a/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/252.txt b/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/252.txt
 new file mode 100644
 index 0000000000..d1a53657b3
@@ -15616,6 +15620,14 @@ index 0000000000..2d2cfb7db7
 +on first launch. Intensity minutes get a daily view. Material Symbols icons,
 +Material 3 buttons, springy + fade-through motion, skeleton loaders, and a
 +customisable share card. Includes the upstream distance-format crash fix.
+diff --git a/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/254.txt b/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/254.txt
+new file mode 100644
+index 0000000000..8ab7911df2
+--- /dev/null
++++ b/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/254.txt
+@@ -0,0 +1,2 @@
++Today and Sleep no longer replay the ring fill animation and skeleton loader on
++every visit — only when there's actually new data to load. Minor wording fixes.
 diff --git a/fdroid/metadata/cc.zachy.pulse/en-US/images/featureGraphic.png b/fdroid/metadata/cc.zachy.pulse/en-US/images/featureGraphic.png
 new file mode 100644
 index 0000000000..18f7b34f4a
