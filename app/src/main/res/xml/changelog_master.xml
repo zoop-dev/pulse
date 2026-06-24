@@ -1,5 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="0.92.0" versioncode="249">
+        <change>Add activity upload to Endurain / Wanderer</change>
+        <change>Initial support for Anker Soundcore Sport X20</change>
+        <change>Initial support for Blackview R3Max</change>
+        <change>Initial support for EarFun Free Pro 3</change>
+        <change>Initial support for Garmin Forerunner 170 / Forerunner 970</change>
+        <change>Initial support for Garmin GPSMAP H1</change>
+        <change>Initial support for Huawei Watch Fit 5 / 5 Pro</change>
+        <change>Initial support for iGPSPORT bike computers (BiNavi Air, BSC200, BSC200S, BSC300, iGS630, iGS630S, iGS800)</change>
+        <change>Initial support for Keep Health devices</change>
+        <change>Initial support for Kieslect Calling Smartwatch Kr Pro</change>
+        <change>Initial support for Matson MA98415 (BM2 battery monitors)</change>
+        <change>Initial support for Moondrop Space Travel 2 Ultra</change>
+        <change>Initial support for P22B1 (Moyoung / Da Fit)</change>
+        <change>Initial support for Realme Buds Air 6 Pro, Buds T200</change>
+        <change>Initial support for Redmi Buds 6</change>
+        <change>Initial support for Redmi Watch Move</change>
+        <change>Initial support for Sinilink audio amplifiers</change>
+        <change>Initial support for Soundbreener Core</change>
+        <change>Initial support for Victron SmartShunt</change>
+        <change>Initial support for Xplora XMOVE</change>
+        <change>Initial support for Yell Smart Watch GT3 (FitPro)</change>
+        <change>Experimental support for Xiaomi Smart Band 10 Pro</change>
+        <change>Add device-agnostic FIT activity export</change>
+        <change>Add setting to enable TRACE log level</change>
+        <change>Amazfit Balance: Fix code for outdoor cycling</change>
+        <change>Amazfit Bip Lite: Add workout GPS settings</change>
+        <change>Amazfit Bip S: Attempt to fix reboot on notification without subject or body</change>
+        <change>Bangle.jS: Add optional device target filter for com.banglejs.uart.tx intent</change>
+        <change>Bangle.js: Add support for different data types in intent extras</change>
+        <change>Casio GBD-200: Improved support</change>
+        <change>Casio: Improved connection stability</change>
+        <change>Charts: Add charts for generic sample</change>
+        <change>Charts: Add weekly/monthly temperature charts</change>
+        <change>Charts: Fix steps overshooting values</change>
+        <change>Charts: Improve HRV chart</change>
+        <change>Charts: Show VO2 max to decimal place</change>
+        <change>CMF Buds 2 Plus: Add spatial mode</change>
+        <change>CMF Buds 2 Plus: Enable touch configuration</change>
+        <change>CMF Buds 2a: Add touch options</change>
+        <change>CMF Buds: Enable low latency on more devices</change>
+        <change>CMF Buds: Enable spatial audio for more models</change>
+        <change>CMF Buds: Enable ultra bass for more devices</change>
+        <change>CMF Buds: Update equalizer presets</change>
+        <change>Colmi V76: Fix workout parsing</change>
+        <change>FitPro: Add camera</change>
+        <change>Fix connection attempts while bluetooth is off for some devices</change>
+        <change>Fix drawer being drawn behind status bar</change>
+        <change>Fix file type when sharing</change>
+        <change>Garmin: Fix empty caller when unknown</change>
+        <change>Garmin: Fix http request without headers</change>
+        <change>Garmin: Fix unknown transfer notification</change>
+        <change>Garmin: Show toast on waypoint upload complete</change>
+        <change>Garmin: Sync activity tracks for some GPS devices</change>
+        <change>Garmin: Sync and archive some unknown files (should prevent Instinct series reboots)</change>
+        <change>GPX: Fix parsing of timestamps without timezone</change>
+        <change>Health Connect: Fix data being skipped under some situations</change>
+        <change>Health Connect: Fix some crashes during sync</change>
+        <change>Huami: Avoid infinite loop when fetching very short activity</change>
+        <change>Huawei: Allow encryption to be enabled / disabled</change>
+        <change>Include workouts in activity list</change>
+        <change>Intent API: Add Alarm Intent API</change>
+        <change>Maps: Reduce memory usage</change>
+        <change>OpenTracks: Fix extra empty activity track and rare crash</change>
+        <change>Pebble: Add support for installing dual slot firmware</change>
+        <change>Pebble: Add support for pull to refresh for pebble health data</change>
+        <change>Pebble: Fix Pebble [Core 2 Duo / Time 2 / 2 Round] BLE pairing</change>
+        <change>Pebble: pass dev_settings to rebble store url, do enable pbw downloads in browser</change>
+        <change>Prevent crash on devices without GPS</change>
+        <change>Recognize Thunderbird for Android as email and ignore its summary notifications</change>
+        <change>Sony WF-1000XM5: Enable further capabilities</change>
+        <change>Track auto-fetch times per device</change>
+        <change>Xiaomi-protobuf: Fix alarm notifications</change>
+        <change>Xiaomi-protobuf: Fix notification dismissal after reconnection</change>
+        <change>Xiaomi-protobuf: Fix swapped min and max temperatures</change>
+        <change>Xiaomi-protobuf: Fix watchface management</change>
+        <change>Zepp OS: Weather stability improvements</change>
+    </release>
     <release version="0.91.1" versioncode="248">
         <change>Casio: Fix connection issues after first pairing</change>
         <change>Fix occasional crash when leaving activity list</change>

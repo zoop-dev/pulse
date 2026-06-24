@@ -1,0 +1,10 @@
+• Support for 30 new devices (bike computers, audio amplifiers, battery monitors, and others)
+• Activity upload to Endurain / Wanderer
+• Configurable automatic FIT export
+• Enhanced charts
+• Casio: improved connectivity
+• Pebble: fixed pairing, firmware upload, and other improvements
+• Health Connect: improved stability
+• Various other bug fixes for connection stability, notifications, and UI
+
+Read the full changelog in the project repository.

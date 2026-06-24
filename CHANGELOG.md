@@ -1,6 +1,6 @@
 ### Changelog
 
-#### Next release (WIP)
+#### 0.92.0
 
 * Add activity upload to Endurain / Wanderer
 * Initial support for Anker Soundcore Sport X20
