@@ -49,6 +49,8 @@ public class PulseDashboardEditActivity extends AbstractGBActivity {
     private final List<String> metrics = new ArrayList<>();
     private final Set<String> enabled = new HashSet<>();
     private ItemTouchHelper touchHelper;
+    private String origMetrics = "";
+    private boolean origExpanded;
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -67,7 +69,8 @@ public class PulseDashboardEditActivity extends AbstractGBActivity {
         // Expanded layout toggle: stack the hero (no swiping) vs the swipeable carousel
         final com.google.android.material.materialswitch.MaterialSwitch expandedSwitch =
                 findViewById(R.id.pulse_expanded_switch);
-        expandedSwitch.setChecked(GBApplication.getPrefs().getBoolean("pulse_today_expanded", false));
+        origExpanded = GBApplication.getPrefs().getBoolean("pulse_today_expanded", false);
+        expandedSwitch.setChecked(origExpanded);
         expandedSwitch.setOnCheckedChangeListener((b, checked) ->
                 GBApplication.getPrefs().getPreferences().edit()
                         .putBoolean("pulse_today_expanded", checked).apply());
@@ -75,6 +78,7 @@ public class PulseDashboardEditActivity extends AbstractGBActivity {
         // Load saved order (enabled, in order), then append any disabled metrics
         final String saved = GBApplication.getPrefs().getString("pulse_today_metrics",
                 String.join(",", DashboardFragment.ALL_METRICS));
+        origMetrics = saved;
         for (final String m : saved.split(",")) {
             if (isKnown(m) && !metrics.contains(m)) {
                 metrics.add(m);
@@ -154,10 +158,16 @@ public class PulseDashboardEditActivity extends AbstractGBActivity {
                 sb.append(m);
             }
         }
+        final String newMetrics = sb.toString();
+        final boolean newExpanded = GBApplication.getPrefs().getBoolean("pulse_today_expanded", false);
+        if (newMetrics.equals(origMetrics) && newExpanded == origExpanded) {
+            return;
+        }
         GBApplication.getPrefs().getPreferences().edit()
-                .putString("pulse_today_metrics", sb.toString()).apply();
-        final Intent intent = new Intent(DashboardFragment.ACTION_CONFIG_CHANGE);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+                .putString("pulse_today_metrics", newMetrics).apply();
+        origMetrics = newMetrics;
+        origExpanded = newExpanded;
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(DashboardFragment.ACTION_CONFIG_CHANGE));
     }
 
     @Override
