@@ -1,5 +1,5 @@
 ### pulse vs upstream gadgetbridge (base 79ad5a6079a277f95b791d81ec34e6810cc49b60)
-### generated 2026-06-24T17:57Z
+### generated 2026-06-24T18:12Z
 
 diff --git a/.gitignore b/.gitignore
 index 0160baad1f..dd3a7d7730 100644
@@ -15513,7 +15513,7 @@ index 0000000000..3aa83c4778
 +</div></body></html>
 diff --git a/fdroid/metadata/cc.zachy.pulse.yml b/fdroid/metadata/cc.zachy.pulse.yml
 new file mode 100644
-index 0000000000..06a74f71fa
+index 0000000000..f770841905
 --- /dev/null
 +++ b/fdroid/metadata/cc.zachy.pulse.yml
 @@ -0,0 +1,32 @@
@@ -15547,8 +15547,8 @@ index 0000000000..06a74f71fa
 +    Built on Gadgetbridge's Garmin engine, so your data never leaves the phone
 +    (apart from optional weather).
 +
-+CurrentVersion: 0.93.0-pulse
-+CurrentVersionCode: 252
++CurrentVersion: 0.94.0-pulse
++CurrentVersionCode: 253
 diff --git a/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/252.txt b/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/252.txt
 new file mode 100644
 index 0000000000..d1a53657b3
