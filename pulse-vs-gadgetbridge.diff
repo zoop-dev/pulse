@@ -1,5 +1,5 @@
 ### pulse vs upstream gadgetbridge (base 79ad5a6079a277f95b791d81ec34e6810cc49b60)
-### generated 2026-06-24T11:49Z
+### generated 2026-06-24T11:51Z
 
 diff --git a/README.md b/README.md
 index 76cf11b42c..19bfa6cc92 100644
@@ -14972,14 +14972,14 @@ index eba4c6ea00..c94b3aaf12 100644
 +org.gradle.java.installations.paths=/home/zoop/dev/android-toolchain/jdk17,/home/zoop/dev/android-toolchain/jdk21
 diff --git a/sync-upstream.sh b/sync-upstream.sh
 new file mode 100755
-index 0000000000..81a8d72318
+index 0000000000..6ac6d2f1a4
 --- /dev/null
 +++ b/sync-upstream.sh
-@@ -0,0 +1,31 @@
+@@ -0,0 +1,36 @@
 +#!/usr/bin/env bash
-+# pull in new upstream gadgetbridge commits from codeberg and replay pulse on top.
-+# usage: ./sync-upstream.sh          report + rebase
-+#        ./sync-upstream.sh --check  just report what's new, don't touch anything
++# check codeberg for new upstream gadgetbridge commits, and optionally replay pulse on top.
++# usage: ./sync-upstream.sh           just report what's new (safe, default)
++#        ./sync-upstream.sh --rebase  actually rebase pulse onto upstream/master
 +set -e
 +cd "$(dirname "$0")"
 +
@@ -15001,9 +15001,14 @@ index 0000000000..81a8d72318
 +    'app/src/main/java/nodomain/freeyourgadget/gadgetbridge/service/devices/garmin/**' \
 +    $(git diff --name-only "$BASE"..HEAD | tr '\n' ' ') || true
 +
-+[ "$1" = "--check" ] && exit 0
++if [ "$1" != "--rebase" ]; then
++    echo
++    echo "(report only. run with --rebase to replay pulse onto upstream.)"
++    exit 0
++fi
 +
 +echo
-+echo "rebasing pulse onto upstream/master… (resolve conflicts, then: git rebase --continue)"
++echo "rebasing pulse onto upstream/master… (on conflict: fix files, git add, git rebase --continue;"
++echo " or bail with git rebase --abort)"
 +git rebase upstream/master
-+echo "rebased. now build + deploy:  ./deploy.sh \"sync upstream\""
++echo "rebased. build + deploy when happy:  ./deploy.sh \"sync upstream\""
