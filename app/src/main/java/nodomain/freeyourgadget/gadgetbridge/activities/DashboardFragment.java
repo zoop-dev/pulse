@@ -544,8 +544,12 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         if (!hasLoadedOnce && loadingOverlay != null) {
             loadingOverlay.setVisibility(View.VISIBLE);
         } else if (hasLoadedOnce) {
-            if ("today".equals(section)) showTodayExtraSkeleton();
-            else if ("sleep".equals(section)) showSleepSkeleton();
+            // only skeleton when the cards aren't already there (a real load), not on tab revisits
+            if ("today".equals(section) && todayExtra != null && todayExtra.getChildCount() == 0) {
+                showTodayExtraSkeleton();
+            } else if ("sleep".equals(section) && sleepDetailContainer != null && sleepDetailContainer.getChildCount() == 0) {
+                showSleepSkeleton();
+            }
         }
 
         // Warm the (DB-heavy) stats off the UI thread, then draw on the UI thread.
@@ -1716,10 +1720,22 @@ public class DashboardFragment extends Fragment implements MenuProvider {
     }
 
     private void setRing(final String label, final String value, final String goal, final float factor) {
-        pulseRing.setProgressAnimated(factor);
+        applyRingProgress(factor);
         ringLabel.setText(label);
         setRingValue(value);
         ringGoal.setText(goal);
+    }
+
+    private float lastRingFactor = -1f;
+
+    // animate the fill only when the value actually changed, not on every tab revisit
+    private void applyRingProgress(final float factor) {
+        if (lastRingFactor >= 0f && Math.abs(factor - lastRingFactor) < 0.005f) {
+            pulseRing.setProgress(factor);
+        } else {
+            pulseRing.setProgressAnimated(factor);
+        }
+        lastRingFactor = factor;
     }
 
     /** Big like before (36sp), only shrinking when the text would otherwise hit the ring. */
@@ -1886,7 +1902,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         if ("sleep".equals(section)) {
             final long mins = dashboardData.getSleepMinutesTotal();
             final int goal = new ActivityUser().getSleepDurationGoal();
-            pulseRing.setProgressAnimated(goal > 0 ? (float) mins / goal : 0f);
+            applyRingProgress(goal > 0 ? (float) mins / goal : 0f);
             ringLabel.setText(R.string.menuitem_sleep);
             setRingValue(mins > 0 ? String.format(loc, "%dh %dm", mins / 60, mins % 60) : getString(R.string.pulse_no_sleep));
             ringGoal.setText(getString(R.string.pulse_of_goal, (goal / 60) + "h"));
@@ -1896,7 +1912,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             final long mins = dashboardData.getActiveMinutesTotal();
             final float factor = dashboardData.getActiveMinutesGoalFactor();
             final int goal = new ActivityUser().getActiveTimeGoalMinutes();
-            pulseRing.setProgressAnimated(factor);
+            applyRingProgress(factor);
             ringLabel.setText(R.string.pulse_active_label);
             setRingValue(String.format(loc, "%dm", mins));
             ringGoal.setText(goal > 0 ? getString(R.string.pulse_of_goal, goal + "m") : "");

@@ -177,6 +177,12 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
 
+        debug {
+            // separate package so test installs sit alongside the F-Droid release, never clashing
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
+
         nightly {
             applicationIdSuffix ".nightly"
             versionNameSuffix "-${getGitHashShort}"

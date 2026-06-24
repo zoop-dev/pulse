@@ -1,5 +1,5 @@
 ### pulse vs upstream gadgetbridge (base 79ad5a6079a277f95b791d81ec34e6810cc49b60)
-### generated 2026-06-24T20:04Z
+### generated 2026-06-24T20:12Z
 
 diff --git a/.gitignore b/.gitignore
 index 0160baad1f..dd3a7d7730 100644
@@ -183,7 +183,7 @@ index 76cf11b42c..19bfa6cc92 100644
 +> Pulse is an independent, unofficial fork. It is not affiliated with or endorsed by Gadgetbridge, Garmin, or any wearable vendor.
 +</content>
 diff --git a/app/build.gradle b/app/build.gradle
-index 16b4e36bb2..9f8fa69a3a 100644
+index 16b4e36bb2..4f582e10f0 100644
 --- a/app/build.gradle
 +++ b/app/build.gradle
 @@ -120,8 +120,8 @@ android {
@@ -209,6 +209,19 @@ index 16b4e36bb2..9f8fa69a3a 100644
          }
  
          banglejs {
+@@ -176,6 +177,12 @@ android {
+             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+         }
+ 
++        debug {
++            // separate package so test installs sit alongside the F-Droid release, never clashing
++            applicationIdSuffix ".debug"
++            versionNameSuffix "-debug"
++        }
++
+         nightly {
+             applicationIdSuffix ".nightly"
+             versionNameSuffix "-${getGitHashShort}"
 diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
 index 234d48ff6d..5ca5f6f3bd 100644
 --- a/app/src/main/AndroidManifest.xml
@@ -1317,7 +1330,7 @@ index dcef446caf..84f8cefa33 100644
      }
  }
 diff --git a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java
-index baf984680c..6d0d7214ca 100644
+index baf984680c..e3f543d913 100644
 --- a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java
 +++ b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java
 @@ -30,6 +30,8 @@ import android.view.MenuInflater;
@@ -1707,7 +1720,7 @@ index baf984680c..6d0d7214ca 100644
      private void fullRefresh() {
          gridLayout.removeAllViews();
          widgetMap.clear();
-@@ -234,116 +530,1857 @@ public class DashboardFragment extends Fragment implements MenuProvider {
+@@ -234,116 +530,1873 @@ public class DashboardFragment extends Fragment implements MenuProvider {
      }
  
      private void refresh() {
@@ -1726,8 +1739,12 @@ index baf984680c..6d0d7214ca 100644
 +        if (!hasLoadedOnce && loadingOverlay != null) {
 +            loadingOverlay.setVisibility(View.VISIBLE);
 +        } else if (hasLoadedOnce) {
-+            if ("today".equals(section)) showTodayExtraSkeleton();
-+            else if ("sleep".equals(section)) showSleepSkeleton();
++            // only skeleton when the cards aren't already there (a real load), not on tab revisits
++            if ("today".equals(section) && todayExtra != null && todayExtra.getChildCount() == 0) {
++                showTodayExtraSkeleton();
++            } else if ("sleep".equals(section) && sleepDetailContainer != null && sleepDetailContainer.getChildCount() == 0) {
++                showSleepSkeleton();
++            }
 +        }
 +
 +        // Warm the (DB-heavy) stats off the UI thread, then draw on the UI thread.
@@ -2909,10 +2926,22 @@ index baf984680c..6d0d7214ca 100644
 +    }
 +
 +    private void setRing(final String label, final String value, final String goal, final float factor) {
-+        pulseRing.setProgressAnimated(factor);
++        applyRingProgress(factor);
 +        ringLabel.setText(label);
 +        setRingValue(value);
 +        ringGoal.setText(goal);
++    }
++
++    private float lastRingFactor = -1f;
++
++    // animate the fill only when the value actually changed, not on every tab revisit
++    private void applyRingProgress(final float factor) {
++        if (lastRingFactor >= 0f && Math.abs(factor - lastRingFactor) < 0.005f) {
++            pulseRing.setProgress(factor);
++        } else {
++            pulseRing.setProgressAnimated(factor);
++        }
++        lastRingFactor = factor;
 +    }
 +
 +    /** Big like before (36sp), only shrinking when the text would otherwise hit the ring. */
@@ -3025,106 +3054,6 @@ index baf984680c..6d0d7214ca 100644
 +        final int battery = dev.getBatteryLevel();
 +        if (battery >= 0 && battery <= 100) {
 +            deviceBattery.setText(getString(R.string.battery_percentage_str, String.valueOf(battery)));
-+        } else {
-+            deviceBattery.setText("");
-+        }
-+    }
-+
-+    /**
-+     * Pulse: set a custom daily step goal. The number sets the app-side goal (drives the ring).
-+     * "On watch" opens Garmin's realtime settings, the only path that can change a setting on the
-+     * device itself, when the watch exposes a step-goal entry in its own menus.
-+     */
-+    private void showStepGoalDialog() {
-+        final android.widget.EditText input = new android.widget.EditText(requireContext());
-+        input.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
-+        input.setText(String.valueOf(new ActivityUser().getStepsGoal()));
-+        input.setSelectAllOnFocus(true);
-+
-+        final androidx.appcompat.app.AlertDialog.Builder b = new androidx.appcompat.app.AlertDialog.Builder(requireContext())
-+                .setTitle(R.string.pulse_set_step_goal)
-+                .setMessage(R.string.pulse_step_goal_hint)
-+                .setView(input)
-+                .setPositiveButton(android.R.string.ok, (d, w) -> {
-+                    try {
-+                        final int goal = Integer.parseInt(input.getText().toString().trim());
-+                        if (goal > 0) {
-+                            GBApplication.getPrefs().getPreferences().edit()
-+                                    .putString(ActivityUser.PREF_USER_STEPS_GOAL, String.valueOf(goal)).apply();
-+                            refresh();
-+                        }
-+                    } catch (final NumberFormatException ignored) {
-+                    }
-+                })
-+                .setNegativeButton(android.R.string.cancel, null);
-+
-+        final List<GBDevice> devices = GBApplication.app().getDeviceManager().getDevices();
-+        if (!devices.isEmpty()) {
-+            b.setNeutralButton(R.string.pulse_goal_on_watch, (d, w) -> {
-+                final Intent i = new Intent(requireActivity(),
-+                        nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminRealtimeSettingsActivity.class);
-+                i.putExtra(GBDevice.EXTRA_DEVICE, devices.get(0));
-+                startActivity(i);
-+            });
-+        }
-+        b.show();
-+    }
-+
-+    /** Pulse: fill the hero ring (and Today's stat cards) with section-appropriate data. */
-+    private void updateHero() {
-+        if (pulseRing == null) return;
-+        final java.text.NumberFormat nf = java.text.NumberFormat.getIntegerInstance();
-+        final java.util.Locale loc = java.util.Locale.getDefault();
-+
-+        if ("sleep".equals(section)) {
-+            final long mins = dashboardData.getSleepMinutesTotal();
-+            final int goal = new ActivityUser().getSleepDurationGoal();
-+            pulseRing.setProgressAnimated(goal > 0 ? (float) mins / goal : 0f);
-+            ringLabel.setText(R.string.menuitem_sleep);
-+            setRingValue(mins > 0 ? String.format(loc, "%dh %dm", mins / 60, mins % 60) : getString(R.string.pulse_no_sleep));
-+            ringGoal.setText(getString(R.string.pulse_of_goal, (goal / 60) + "h"));
-+            return;
-+        }
-+        if ("fitness".equals(section)) {
-+            final long mins = dashboardData.getActiveMinutesTotal();
-+            final float factor = dashboardData.getActiveMinutesGoalFactor();
-+            final int goal = new ActivityUser().getActiveTimeGoalMinutes();
-+            pulseRing.setProgressAnimated(factor);
-+            ringLabel.setText(R.string.pulse_active_label);
-+            setRingValue(String.format(loc, "%dm", mins));
-+            ringGoal.setText(goal > 0 ? getString(R.string.pulse_of_goal, goal + "m") : "");
-+            return;
-+        }
-+
-+        // Today: a configurable hero ring + the rest of the metrics as tiles (carousel or stacked)
-+        buildTodayHero();
-+        renderRing(GBApplication.getPrefs().getString("pulse_ring_metric", "steps"));
-+
-+        checkGoalReached();
-+    }
-+
-+    private static final int TILES_PER_PAGE = 4;
-+
-+    /** Build the Today carousel: page 0 = ring + 2 tiles, later pages = 2x2 tile grids. */
-+    /** Today hero: swipeable carousel, or (expanded) the ring + every tile stacked. */
-+    private void buildTodayHero() {
-+        if (todayCarousel == null) return;
-+        final Context ctx = requireContext();
-+        final float scale = ctx.getResources().getDisplayMetrics().density;
-+        final String ringMetric = GBApplication.getPrefs().getString("pulse_ring_metric", "steps");
-+        final boolean expanded = GBApplication.getPrefs().getBoolean("pulse_today_expanded", false);
-+
-+        final List<String> tiles = new ArrayList<>();
-+        for (final String m : pulseMetrics()) {
-+            if (!m.equals(ringMetric)) tiles.add(m);
-+        }
-+
-+        final View host = requireView().findViewById(R.id.pulse_carousel_host);
-+        if (expanded) {
-+            host.setVisibility(View.GONE);
-+            carouselDots.setVisibility(View.GONE);
-+            todayExpanded.setVisibility(View.VISIBLE);
-+            buildExpandedHero(ctx, scale, ringMetric, tiles);
          } else {
 -            textViewDate.setText(DateTimeUtils.formatDate(day.getTime(), DateUtils.FORMAT_SHOW_WEEKDAY));
 -            arrowRight.setAlpha(1);
@@ -3199,6 +3128,106 @@ index baf984680c..6d0d7214ca 100644
 -                    default:
 -                        LOG.error("Unknown dashboard widget {}", widgetName);
 -                        continue;
++            deviceBattery.setText("");
++        }
++    }
++
++    /**
++     * Pulse: set a custom daily step goal. The number sets the app-side goal (drives the ring).
++     * "On watch" opens Garmin's realtime settings, the only path that can change a setting on the
++     * device itself, when the watch exposes a step-goal entry in its own menus.
++     */
++    private void showStepGoalDialog() {
++        final android.widget.EditText input = new android.widget.EditText(requireContext());
++        input.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
++        input.setText(String.valueOf(new ActivityUser().getStepsGoal()));
++        input.setSelectAllOnFocus(true);
++
++        final androidx.appcompat.app.AlertDialog.Builder b = new androidx.appcompat.app.AlertDialog.Builder(requireContext())
++                .setTitle(R.string.pulse_set_step_goal)
++                .setMessage(R.string.pulse_step_goal_hint)
++                .setView(input)
++                .setPositiveButton(android.R.string.ok, (d, w) -> {
++                    try {
++                        final int goal = Integer.parseInt(input.getText().toString().trim());
++                        if (goal > 0) {
++                            GBApplication.getPrefs().getPreferences().edit()
++                                    .putString(ActivityUser.PREF_USER_STEPS_GOAL, String.valueOf(goal)).apply();
++                            refresh();
++                        }
++                    } catch (final NumberFormatException ignored) {
++                    }
++                })
++                .setNegativeButton(android.R.string.cancel, null);
++
++        final List<GBDevice> devices = GBApplication.app().getDeviceManager().getDevices();
++        if (!devices.isEmpty()) {
++            b.setNeutralButton(R.string.pulse_goal_on_watch, (d, w) -> {
++                final Intent i = new Intent(requireActivity(),
++                        nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminRealtimeSettingsActivity.class);
++                i.putExtra(GBDevice.EXTRA_DEVICE, devices.get(0));
++                startActivity(i);
++            });
++        }
++        b.show();
++    }
++
++    /** Pulse: fill the hero ring (and Today's stat cards) with section-appropriate data. */
++    private void updateHero() {
++        if (pulseRing == null) return;
++        final java.text.NumberFormat nf = java.text.NumberFormat.getIntegerInstance();
++        final java.util.Locale loc = java.util.Locale.getDefault();
++
++        if ("sleep".equals(section)) {
++            final long mins = dashboardData.getSleepMinutesTotal();
++            final int goal = new ActivityUser().getSleepDurationGoal();
++            applyRingProgress(goal > 0 ? (float) mins / goal : 0f);
++            ringLabel.setText(R.string.menuitem_sleep);
++            setRingValue(mins > 0 ? String.format(loc, "%dh %dm", mins / 60, mins % 60) : getString(R.string.pulse_no_sleep));
++            ringGoal.setText(getString(R.string.pulse_of_goal, (goal / 60) + "h"));
++            return;
++        }
++        if ("fitness".equals(section)) {
++            final long mins = dashboardData.getActiveMinutesTotal();
++            final float factor = dashboardData.getActiveMinutesGoalFactor();
++            final int goal = new ActivityUser().getActiveTimeGoalMinutes();
++            applyRingProgress(factor);
++            ringLabel.setText(R.string.pulse_active_label);
++            setRingValue(String.format(loc, "%dm", mins));
++            ringGoal.setText(goal > 0 ? getString(R.string.pulse_of_goal, goal + "m") : "");
++            return;
++        }
++
++        // Today: a configurable hero ring + the rest of the metrics as tiles (carousel or stacked)
++        buildTodayHero();
++        renderRing(GBApplication.getPrefs().getString("pulse_ring_metric", "steps"));
++
++        checkGoalReached();
++    }
++
++    private static final int TILES_PER_PAGE = 4;
++
++    /** Build the Today carousel: page 0 = ring + 2 tiles, later pages = 2x2 tile grids. */
++    /** Today hero: swipeable carousel, or (expanded) the ring + every tile stacked. */
++    private void buildTodayHero() {
++        if (todayCarousel == null) return;
++        final Context ctx = requireContext();
++        final float scale = ctx.getResources().getDisplayMetrics().density;
++        final String ringMetric = GBApplication.getPrefs().getString("pulse_ring_metric", "steps");
++        final boolean expanded = GBApplication.getPrefs().getBoolean("pulse_today_expanded", false);
++
++        final List<String> tiles = new ArrayList<>();
++        for (final String m : pulseMetrics()) {
++            if (!m.equals(ringMetric)) tiles.add(m);
++        }
++
++        final View host = requireView().findViewById(R.id.pulse_carousel_host);
++        if (expanded) {
++            host.setVisibility(View.GONE);
++            carouselDots.setVisibility(View.GONE);
++            todayExpanded.setVisibility(View.VISIBLE);
++            buildExpandedHero(ctx, scale, ringMetric, tiles);
++        } else {
 +            todayExpanded.setVisibility(View.GONE);
 +            host.setVisibility(View.VISIBLE);
 +            buildCarousel(ctx, scale, ringMetric, tiles);
@@ -3380,8 +3409,7 @@ index baf984680c..6d0d7214ca 100644
 +            g.getChildAt(i).clearAnimation();
 +        }
 +    }
- 
--                widgetMap.put(widgetName, widget);
++
 +    private View skeletonBlock(final Context ctx, final float scale, final int heightDp, final int topDp) {
 +        final View v = new View(ctx);
 +        final android.graphics.drawable.GradientDrawable g = new android.graphics.drawable.GradientDrawable();
@@ -3470,7 +3498,8 @@ index baf984680c..6d0d7214ca 100644
 +            rows = new ArrayList<>(recentWorkouts);
 +        }
 +        if (rows.isEmpty()) return;
-+
+ 
+-                widgetMap.put(widgetName, widget);
 +        final LinearLayout wo = new LinearLayout(ctx);
 +        wo.setOrientation(LinearLayout.VERTICAL);
 +        wo.setBackgroundResource(R.drawable.pulse_widget_bg);
@@ -3653,7 +3682,7 @@ index baf984680c..6d0d7214ca 100644
      }
  
      private void createWidget(AbstractDashboardWidget widgetObj, boolean cardsEnabled, int columnSpan) {
-@@ -366,10 +2403,13 @@ public class DashboardFragment extends Fragment implements MenuProvider {
+@@ -366,10 +2419,13 @@ public class DashboardFragment extends Fragment implements MenuProvider {
  
          if (cardsEnabled) {
              MaterialCardView card = new MaterialCardView(requireActivity());
