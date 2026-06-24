@@ -400,7 +400,7 @@ public class PulseStreakActivity extends AbstractGBActivity {
             cells[d] = tv;
         }
 
-        // Overlay the recorded streak run (source of truth — device-agnostic, instant).
+        // overlay the recorded streak run (the source of truth, device-agnostic + instant)
         final Set<String> runKeys = streakRunDayKeys();
         if (!runKeys.isEmpty()) {
             final java.text.SimpleDateFormat fmt = new java.text.SimpleDateFormat("yyyy-MM-dd", Locale.US);

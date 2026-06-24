@@ -30,7 +30,7 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.PulseWeather;
 
-/** Pulse: weather settings — location source + manual city + manual refresh. */
+/** Weather settings: location source, manual city, manual refresh. */
 public class PulseWeatherActivity extends AbstractSettingsActivityV2 {
     @Override
     protected PreferenceFragmentCompat newFragment() {

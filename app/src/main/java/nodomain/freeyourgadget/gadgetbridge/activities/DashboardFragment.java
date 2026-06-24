@@ -188,7 +188,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
     private final Map<String, AbstractDashboardWidget> widgetMap = new HashMap<>();
     private DashboardData dashboardData = new DashboardData();
     private boolean isConfigChanged = false;
-    // While true (the default), the dashboard snaps to the real "today" — so it rolls over at midnight.
+    // when true (default), snap to the real today so stats roll over at midnight
     private boolean followingToday = true;
 
     private ActivityResultLauncher<Intent> calendarLauncher;
@@ -372,8 +372,8 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         filterLocal.addAction(ACTION_CONFIG_CHANGE);
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(mReceiver, filterLocal);
 
-        // Pulse: warm stats as soon as the view is created — ViewPager keeps offscreen tabs in
-        // STARTED (not RESUMED), so onResume never fires for them. This makes all 4 tabs preload.
+        // warm stats here, not onResume: ViewPager holds offscreen tabs at STARTED so onResume
+        // never fires for them. doing it here preloads all 4 tabs.
         refresh();
 
         return dashboardView;
@@ -695,7 +695,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
     private void reloadPreferences() {
         Prefs prefs = GBApplication.getPrefs();
         // Pulse: show only the primary device (the one in the toolbar), not an aggregate of every
-        // paired device — otherwise a second watch's data gets mixed into the active one.
+        // paired device, else a second watch's data leaks into the active one.
         final List<GBDevice> devices = GBApplication.app().getDeviceManager().getDevices();
         if (!devices.isEmpty()) {
             dashboardData.showAllDevices = false;
@@ -1792,7 +1792,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
     /**
      * Pulse: set a custom daily step goal. The number sets the app-side goal (drives the ring).
      * "On watch" opens Garmin's realtime settings, the only path that can change a setting on the
-     * device itself — available when the watch exposes a step-goal entry in its own menus.
+     * device itself, when the watch exposes a step-goal entry in its own menus.
      */
     private void showStepGoalDialog() {
         final android.widget.EditText input = new android.widget.EditText(requireContext());
@@ -1865,7 +1865,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
     private static final int TILES_PER_PAGE = 4;
 
     /** Build the Today carousel: page 0 = ring + 2 tiles, later pages = 2x2 tile grids. */
-    /** Today hero: a swipeable carousel, or — when expanded — the ring + every tile stacked. */
+    /** Today hero: swipeable carousel, or (expanded) the ring + every tile stacked. */
     private void buildTodayHero() {
         if (todayCarousel == null) return;
         final Context ctx = requireContext();
