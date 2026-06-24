@@ -5138,6 +5138,7 @@
     <string name="pulse_expanded_layout_sub">Show every card stacked, no swiping</string>
     <string name="pulse_intensity">Intensity</string>
     <string name="pulse_intensity_week">Intensity · %d/wk</string>
+    <string name="pulse_intensity_goal_title">Intensity minutes goal (daily)</string>
     <!-- Week in Review -->
     <string name="pulse_week_title">Your Week</string>
     <string name="pulse_week_steps_label">steps this week</string>

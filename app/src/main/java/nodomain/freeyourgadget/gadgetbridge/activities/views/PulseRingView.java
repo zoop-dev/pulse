@@ -71,9 +71,27 @@ public class PulseRingView extends View {
         dotPaint.setColor(getResources().getColor(R.color.pulse_ring_steps));
     }
 
+    private android.animation.ValueAnimator progressAnimator;
+
     public void setProgress(float factor) {
         this.progress = Math.max(0f, factor);
         invalidate();
+    }
+
+    /** Expressive fill: spring the arc to its target with a little overshoot. */
+    public void setProgressAnimated(final float factor) {
+        final float target = Math.max(0f, factor);
+        if (progressAnimator != null) {
+            progressAnimator.cancel();
+        }
+        progressAnimator = android.animation.ValueAnimator.ofFloat(progress, target);
+        progressAnimator.setDuration(820);
+        progressAnimator.setInterpolator(new android.view.animation.OvershootInterpolator(1.4f));
+        progressAnimator.addUpdateListener(a -> {
+            progress = (float) a.getAnimatedValue();
+            invalidate();
+        });
+        progressAnimator.start();
     }
 
     @Override

@@ -252,7 +252,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         deviceBattery = dashboardView.findViewById(R.id.pulse_device_battery);
         deviceDot = dashboardView.findViewById(R.id.pulse_device_dot);
         ringLabel = dashboardView.findViewById(R.id.pulse_ring_label);
-        streakCount = dashboardView.findViewById(R.id.pulse_streak_count);
+        streakCount = dashboardView.findViewById(R.id.pulse_btn_log);
         loadingOverlay = dashboardView.findViewById(R.id.pulse_loading);
 
         final boolean isToday = "today".equals(section);
@@ -327,6 +327,11 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         // Edit = drag-and-drop customize which metric cards the Today tab shows
         dashboardView.findViewById(R.id.pulse_btn_edit).setOnClickListener(v ->
                 startActivity(new Intent(requireActivity(), PulseDashboardEditActivity.class)));
+
+        // Expressive springy press on the action buttons
+        addPressBounce(dashboardView.findViewById(R.id.pulse_btn_log));
+        addPressBounce(dashboardView.findViewById(R.id.pulse_btn_start));
+        addPressBounce(dashboardView.findViewById(R.id.pulse_btn_edit));
 
         calendarLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -867,8 +872,8 @@ public class DashboardFragment extends Fragment implements MenuProvider {
                         ? getString(R.string.pulse_intensity_week, week)
                         : getString(R.string.pulse_intensity);
                 value = today != null ? String.valueOf(today) : getString(R.string.stats_empty_value);
-                // ~150/week → a rough daily target of about 21 minutes
-                factor = today != null ? today / 21.4f : 0f;
+                final int intensityGoal = parseGoalPref("pulse_intensity_goal", 30);
+                factor = today != null && intensityGoal > 0 ? today / (float) intensityGoal : 0f;
                 chartTab = "activity"; titleRes = R.string.garmin_intensity_minutes; chartMode = "";
                 break;
             }
@@ -1660,7 +1665,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
     }
 
     private void setRing(final String label, final String value, final String goal, final float factor) {
-        pulseRing.setProgress(factor);
+        pulseRing.setProgressAnimated(factor);
         ringLabel.setText(label);
         setRingValue(value);
         ringGoal.setText(goal);
@@ -1751,6 +1756,15 @@ public class DashboardFragment extends Fragment implements MenuProvider {
 
     private static int dp(final int value, final float scale) {
         return (int) (value * scale + 0.5f);
+    }
+
+    /** Read a numeric goal stored as a string pref, falling back to a default. */
+    private static int parseGoalPref(final String key, final int def) {
+        try {
+            return Integer.parseInt(GBApplication.getPrefs().getString(key, String.valueOf(def)).trim());
+        } catch (final NumberFormatException e) {
+            return def;
+        }
     }
 
     /** Pulse: device name + battery + connection dot in the Today header chip. */
@@ -2058,6 +2072,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         week.setPadding(dp(18, scale), dp(16, scale), dp(18, scale), dp(16, scale));
         week.setClickable(true);
         week.setOnClickListener(v -> startActivity(new Intent(requireContext(), PulseWeekActivity.class)));
+        addPressBounce(week);
         final TextView wTitle = new TextView(ctx);
         wTitle.setText(R.string.pulse_this_week);
         wTitle.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_text_dim));
@@ -2157,6 +2172,25 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         return r;
     }
 
+    /** Expressive press feedback: dip on touch-down, spring back with overshoot. */
+    @android.annotation.SuppressLint("ClickableViewAccessibility")
+    private static void addPressBounce(final View v) {
+        v.setOnTouchListener((view, ev) -> {
+            switch (ev.getActionMasked()) {
+                case android.view.MotionEvent.ACTION_DOWN:
+                    view.animate().scaleX(0.96f).scaleY(0.96f).setDuration(120)
+                            .setInterpolator(new android.view.animation.DecelerateInterpolator()).start();
+                    break;
+                case android.view.MotionEvent.ACTION_UP:
+                case android.view.MotionEvent.ACTION_CANCEL:
+                    view.animate().scaleX(1f).scaleY(1f).setDuration(300)
+                            .setInterpolator(new android.view.animation.OvershootInterpolator(3f)).start();
+                    break;
+            }
+            return false;
+        });
+    }
+
     /** Compact hero tile (icon + label + value) with a proportional fill; tap opens the chart. */
     private MaterialCardView buildHeroTile(final String metric) {
         final Context ctx = requireContext();
@@ -2247,6 +2281,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
 
         card.addView(frame, new android.widget.FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, tileH));
+        addPressBounce(card);
         return card;
     }
 
