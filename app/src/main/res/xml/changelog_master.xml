@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Pulse changelog. Newest release on top. -->
 <changelog>
+    <release version="1.5" versioncode="253">
+        <change>Back up and restore everything to a single .pulse file (Data management)</change>
+        <change>First launch now offers to restore from a backup</change>
+        <change>Intensity minutes: a daily tile, with a daily view added to the chart</change>
+        <change>Material Symbols icons throughout, and Material 3 buttons + loading indicator</change>
+        <change>Springy ring fills and fade-through transitions; skeleton loaders while cards load</change>
+        <change>Pick which 4 stats show on the shareable card</change>
+        <change>Pulled in the upstream distance-format crash fix</change>
+    </release>
     <release version="1.4" versioncode="252">
         <change>Today is now a swipeable carousel — the ring rides along, then full pages of metric tiles with a Google-style page indicator</change>
         <change>Prefer it all on one screen? Turn on Expanded layout in the customize editor to stack every card with no swiping</change>

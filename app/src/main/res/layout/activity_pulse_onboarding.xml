@@ -89,13 +89,26 @@
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="24dp"
             android:background="@drawable/pulse_pill_primary"
             android:text="@string/pulse_onboard_start"
             android:textColor="@color/pulse_bg"
             android:textAllCaps="false"
             android:fontFamily="@font/satoshi_bold"
             android:textSize="15sp"
+            android:stateListAnimator="@null" />
+
+        <Button
+            android:id="@+id/onboard_restore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="24dp"
+            android:background="@android:color/transparent"
+            android:text="@string/pulse_onboard_restore"
+            android:textColor="?attr/pulseAccent"
+            android:textAllCaps="false"
+            android:fontFamily="@font/satoshi_medium"
+            android:textSize="14sp"
             android:stateListAnimator="@null" />
     </LinearLayout>
 </ScrollView>

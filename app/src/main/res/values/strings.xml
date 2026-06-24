@@ -4324,9 +4324,9 @@
     <string name="prefs_summary_gatt_client_api_package">Restrict BLE Intent API communication to this package</string>
     <string name="prefs_title_ble_intent_api">BLE Intent API</string>
     <string name="activity_db_management_backup_restore_label">Backup and Restore</string>
-    <string name="activity_db_management_export_to_zip">Export zip</string>
-    <string name="activity_db_management_import_from_zip">Import zip</string>
-    <string name="activity_db_management_backup_restore_explanation">The import/export operations allows you to migrate or backup all Gadgetbridge settings, devices and data to and from a zip file.\n\nImporting a file will remove all existing data, devices, and preferences, completely replacing them with the backup.</string>
+    <string name="activity_db_management_export_to_zip">Back up to .pulse</string>
+    <string name="activity_db_management_import_from_zip">Restore from .pulse</string>
+    <string name="activity_db_management_backup_restore_explanation">Back up everything — settings, devices and data — to a single .pulse file, and restore it on a fresh install.\n\nRestoring replaces all current data, devices and settings with the backup.</string>
     <string name="backup_restore_exporting">Exporting to zip…</string>
     <string name="backup_restore_exporting_preferences">Exporting preferences…</string>
     <string name="backup_restore_exporting_database">Exporting database…</string>
@@ -5061,6 +5061,7 @@
     <string name="pulse_onboard_p3_body">Light or dark, your accent colour, a dashboard you arrange.</string>
     <string name="pulse_onboard_connect">Connect your watch</string>
     <string name="pulse_onboard_start">Get started</string>
+    <string name="pulse_onboard_restore">Restore from a backup</string>
     <string name="pulse_widget_steps_description">Pulse steps</string>
     <string name="pulse_qs_tile_label">Pulse Steps</string>
     <string name="pulse_qs_steps_label">%1$s steps</string>

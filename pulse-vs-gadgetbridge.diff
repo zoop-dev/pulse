@@ -1,5 +1,5 @@
 ### pulse vs upstream gadgetbridge (base 79ad5a6079a277f95b791d81ec34e6810cc49b60)
-### generated 2026-06-24T17:44Z
+### generated 2026-06-24T17:57Z
 
 diff --git a/.gitignore b/.gitignore
 index 0160baad1f..dd3a7d7730 100644
@@ -183,7 +183,7 @@ index 76cf11b42c..19bfa6cc92 100644
 +> Pulse is an independent, unofficial fork. It is not affiliated with or endorsed by Gadgetbridge, Garmin, or any wearable vendor.
 +</content>
 diff --git a/app/build.gradle b/app/build.gradle
-index 16b4e36bb2..92ad52a603 100644
+index 16b4e36bb2..9f8fa69a3a 100644
 --- a/app/build.gradle
 +++ b/app/build.gradle
 @@ -120,8 +120,8 @@ android {
@@ -192,8 +192,8 @@ index 16b4e36bb2..92ad52a603 100644
          // Note: always bump BOTH versionCode and versionName!
 -        versionName "0.91.1"
 -        versionCode 248
-+        versionName "0.93.0"
-+        versionCode 252
++        versionName "0.94.0"
++        versionCode 253
          vectorDrawables.useSupportLibrary = true
          buildConfigField "String", "GIT_HASH_SHORT", "\"${getGitHashShort()}\""
          buildConfigField "boolean", "INTERNET_ACCESS", "false"
@@ -3757,6 +3757,38 @@ index 30366fbc24..84a573b4f3 100644
              }
          }
  
+diff --git a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DataManagementActivity.java b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DataManagementActivity.java
+index 53659e8987..9c7ef14fa0 100644
+--- a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DataManagementActivity.java
++++ b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DataManagementActivity.java
+@@ -63,7 +63,7 @@ public class DataManagementActivity extends AbstractGBActivity {
+         setContentView(R.layout.activity_data_management);
+ 
+         final ActivityResultLauncher<String> backupZipFileChooser = registerForActivityResult(
+-                new ActivityResultContracts.CreateDocument("application/zip"),
++                new ActivityResultContracts.CreateDocument("application/octet-stream"),
+                 uri -> {
+                     LOG.info("Got target backup file: {}", uri);
+                     if (uri != null) {
+@@ -78,7 +78,7 @@ public class DataManagementActivity extends AbstractGBActivity {
+         final Button backupToZipButton = findViewById(R.id.backupToZipButton);
+         backupToZipButton.setOnClickListener(v -> {
+             final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
+-            final String defaultFilename = String.format(Locale.ROOT, "gadgetbridge_%s.zip", sdf.format(new Date()));
++            final String defaultFilename = String.format(Locale.ROOT, "Pulse_%s.pulse", sdf.format(new Date()));
+             backupZipFileChooser.launch(defaultFilename);
+         });
+ 
+@@ -112,7 +112,8 @@ public class DataManagementActivity extends AbstractGBActivity {
+         );
+ 
+         final Button restoreFromZipButton = findViewById(R.id.restoreFromZipButton);
+-        restoreFromZipButton.setOnClickListener(v -> restoreFileChooser.launch(new String[]{"application/zip"}));
++        // accept .pulse (octet-stream) as well as plain zips
++        restoreFromZipButton.setOnClickListener(v -> restoreFileChooser.launch(new String[]{"*/*"}));
+ 
+         TextView dbPath = findViewById(R.id.activity_data_management_path);
+         dbPath.setText(getExternalPath());
 diff --git a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DevicesActivity.java b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DevicesActivity.java
 new file mode 100644
 index 0000000000..6c33b0701a
@@ -4215,10 +4247,10 @@ index 0000000000..bb438d8b2b
 +}
 diff --git a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/PulseOnboardingActivity.java b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/PulseOnboardingActivity.java
 new file mode 100644
-index 0000000000..99e8e78bfb
+index 0000000000..1d89f3cbc2
 --- /dev/null
 +++ b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/PulseOnboardingActivity.java
-@@ -0,0 +1,41 @@
+@@ -0,0 +1,56 @@
 +/*  Copyright (C) 2026 Pulse
 +
 +    This file is part of Pulse, a Garmin-only fork of Gadgetbridge.
@@ -4237,6 +4269,9 @@ index 0000000000..99e8e78bfb
 +import android.content.Intent;
 +import android.os.Bundle;
 +
++import androidx.activity.result.ActivityResultLauncher;
++import androidx.activity.result.contract.ActivityResultContracts;
++
 +import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 +import nodomain.freeyourgadget.gadgetbridge.R;
 +import nodomain.freeyourgadget.gadgetbridge.activities.discovery.DiscoveryActivityV2;
@@ -4244,6 +4279,15 @@ index 0000000000..99e8e78bfb
 +/** Pulse: first-run welcome screen, shown once until "Get started" is tapped. */
 +public class PulseOnboardingActivity extends AbstractGBActivity {
 +    public static final String PREF_ONBOARDED = "pulse_onboarded";
++
++    private final ActivityResultLauncher<String[]> restorePicker = registerForActivityResult(
++            new ActivityResultContracts.OpenDocument(), uri -> {
++                if (uri == null) return;
++                final Intent i = new Intent(this, BackupRestoreProgressActivity.class);
++                i.putExtra(BackupRestoreProgressActivity.EXTRA_URI, uri);
++                i.putExtra(BackupRestoreProgressActivity.EXTRA_ACTION, "import");
++                startActivity(i);
++            });
 +
 +    @Override
 +    protected void onCreate(final Bundle savedInstanceState) {
@@ -4253,6 +4297,9 @@ index 0000000000..99e8e78bfb
 +
 +        findViewById(R.id.onboard_connect).setOnClickListener(v ->
 +                startActivity(new Intent(this, DiscoveryActivityV2.class)));
++
++        findViewById(R.id.onboard_restore).setOnClickListener(v ->
++                restorePicker.launch(new String[]{"*/*"}));
 +
 +        findViewById(R.id.onboard_start).setOnClickListener(v -> {
 +            GBApplication.getPrefs().getPreferences().edit().putBoolean(PREF_ONBOARDED, true).apply();
@@ -9801,10 +9848,10 @@ index 0000000000..45bef27564
 +</LinearLayout>
 diff --git a/app/src/main/res/layout/activity_pulse_onboarding.xml b/app/src/main/res/layout/activity_pulse_onboarding.xml
 new file mode 100644
-index 0000000000..7c7f7c2756
+index 0000000000..13f1e491a0
 --- /dev/null
 +++ b/app/src/main/res/layout/activity_pulse_onboarding.xml
-@@ -0,0 +1,101 @@
+@@ -0,0 +1,114 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!-- Pulse: first-run welcome screen. -->
 +<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -9896,13 +9943,26 @@ index 0000000000..7c7f7c2756
 +            android:layout_width="match_parent"
 +            android:layout_height="52dp"
 +            android:layout_marginTop="10dp"
-+            android:layout_marginBottom="24dp"
 +            android:background="@drawable/pulse_pill_primary"
 +            android:text="@string/pulse_onboard_start"
 +            android:textColor="@color/pulse_bg"
 +            android:textAllCaps="false"
 +            android:fontFamily="@font/satoshi_bold"
 +            android:textSize="15sp"
++            android:stateListAnimator="@null" />
++
++        <Button
++            android:id="@+id/onboard_restore"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:layout_marginTop="6dp"
++            android:layout_marginBottom="24dp"
++            android:background="@android:color/transparent"
++            android:text="@string/pulse_onboard_restore"
++            android:textColor="?attr/pulseAccent"
++            android:textAllCaps="false"
++            android:fontFamily="@font/satoshi_medium"
++            android:textSize="14sp"
 +            android:stateListAnimator="@null" />
 +    </LinearLayout>
 +</ScrollView>
@@ -12598,7 +12658,7 @@ index bc4c1e708f..60c36642e8 100644
  </resources>
 \ No newline at end of file
 diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
-index 99919efbdf..b0fe0a50c9 100644
+index 99919efbdf..3e852ecf60 100644
 --- a/app/src/main/res/values/strings.xml
 +++ b/app/src/main/res/values/strings.xml
 @@ -235,7 +235,7 @@
@@ -12619,7 +12679,20 @@ index 99919efbdf..b0fe0a50c9 100644
      <string name="widget_set_alarm_after">Set alarm after:</string>
      <string name="widget_5_minutes">5 minutes</string>
      <string name="widget_10_minutes">10 minutes</string>
-@@ -5045,4 +5045,174 @@
+@@ -4324,9 +4324,9 @@
+     <string name="prefs_summary_gatt_client_api_package">Restrict BLE Intent API communication to this package</string>
+     <string name="prefs_title_ble_intent_api">BLE Intent API</string>
+     <string name="activity_db_management_backup_restore_label">Backup and Restore</string>
+-    <string name="activity_db_management_export_to_zip">Export zip</string>
+-    <string name="activity_db_management_import_from_zip">Import zip</string>
+-    <string name="activity_db_management_backup_restore_explanation">The import/export operations allows you to migrate or backup all Gadgetbridge settings, devices and data to and from a zip file.\n\nImporting a file will remove all existing data, devices, and preferences, completely replacing them with the backup.</string>
++    <string name="activity_db_management_export_to_zip">Back up to .pulse</string>
++    <string name="activity_db_management_import_from_zip">Restore from .pulse</string>
++    <string name="activity_db_management_backup_restore_explanation">Back up everything — settings, devices and data — to a single .pulse file, and restore it on a fresh install.\n\nRestoring replaces all current data, devices and settings with the backup.</string>
+     <string name="backup_restore_exporting">Exporting to zip…</string>
+     <string name="backup_restore_exporting_preferences">Exporting preferences…</string>
+     <string name="backup_restore_exporting_database">Exporting database…</string>
+@@ -5045,4 +5045,175 @@
      <string name="pref_category_wanderer" translatable="false">Wanderer</string>
      <string name="activity_detail_upload_to_wanderer">Upload GPX to Wanderer</string>
      <string name="select_at_least_option">Please select at least %1$d option</string>
@@ -12639,6 +12712,7 @@ index 99919efbdf..b0fe0a50c9 100644
 +    <string name="pulse_onboard_p3_body">Light or dark, your accent colour, a dashboard you arrange.</string>
 +    <string name="pulse_onboard_connect">Connect your watch</string>
 +    <string name="pulse_onboard_start">Get started</string>
++    <string name="pulse_onboard_restore">Restore from a backup</string>
 +    <string name="pulse_widget_steps_description">Pulse steps</string>
 +    <string name="pulse_qs_tile_label">Pulse Steps</string>
 +    <string name="pulse_qs_steps_label">%1$s steps</string>
@@ -13023,10 +13097,10 @@ index 5e37d6f11f..d9a0709dcc 100644
 -    </PreferenceCategory>
  </PreferenceScreen>
 diff --git a/app/src/main/res/xml/changelog_master.xml b/app/src/main/res/xml/changelog_master.xml
-index 866ba5a37e..7415df200a 100644
+index 866ba5a37e..fce43865f7 100644
 --- a/app/src/main/res/xml/changelog_master.xml
 +++ b/app/src/main/res/xml/changelog_master.xml
-@@ -1,1400 +1,60 @@
+@@ -1,1400 +1,69 @@
  <?xml version="1.0" encoding="utf-8"?>
 +<!-- Pulse changelog. Newest release on top. -->
  <changelog>
@@ -14426,6 +14500,15 @@ index 866ba5a37e..7415df200a 100644
 -        <change>Prefer big text when scraping gmail notifications</change>
 -        <change>Do not remove newline and whitespace characters from notification content</change>
 -        <change>Debug: Add companion device list to debug activity</change>
++    <release version="1.5" versioncode="253">
++        <change>Back up and restore everything to a single .pulse file (Data management)</change>
++        <change>First launch now offers to restore from a backup</change>
++        <change>Intensity minutes: a daily tile, with a daily view added to the chart</change>
++        <change>Material Symbols icons throughout, and Material 3 buttons + loading indicator</change>
++        <change>Springy ring fills and fade-through transitions; skeleton loaders while cards load</change>
++        <change>Pick which 4 stats show on the shareable card</change>
++        <change>Pulled in the upstream distance-format crash fix</change>
++    </release>
 +    <release version="1.4" versioncode="252">
 +        <change>Today is now a swipeable carousel — the ring rides along, then full pages of metric tiles with a Google-style page indicator</change>
 +        <change>Prefer it all on one screen? Turn on Expanded layout in the customize editor to stack every card with no swiping</change>
@@ -15476,6 +15559,16 @@ index 0000000000..d1a53657b3
 +Intensity minutes with a daily view. Material Symbols icons. Springy motion and
 +fade-through transitions. Skeleton loaders. Customisable share card. Plus the
 +distance-format crash fix from upstream.
+diff --git a/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/253.txt b/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/253.txt
+new file mode 100644
+index 0000000000..2d2cfb7db7
+--- /dev/null
++++ b/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/253.txt
+@@ -0,0 +1,4 @@
++Back up and restore everything to a single .pulse file, and restore from a backup
++on first launch. Intensity minutes get a daily view. Material Symbols icons,
++Material 3 buttons, springy + fade-through motion, skeleton loaders, and a
++customisable share card. Includes the upstream distance-format crash fix.
 diff --git a/fdroid/metadata/cc.zachy.pulse/en-US/images/icon.png b/fdroid/metadata/cc.zachy.pulse/en-US/images/icon.png
 new file mode 100644
 index 0000000000..1485e05e42
