@@ -874,7 +874,8 @@ public class DashboardFragment extends Fragment implements MenuProvider {
                 value = today != null ? String.valueOf(today) : getString(R.string.stats_empty_value);
                 final int intensityGoal = parseGoalPref("pulse_intensity_goal", 30);
                 factor = today != null && intensityGoal > 0 ? today / (float) intensityGoal : 0f;
-                chartTab = "activity"; titleRes = R.string.garmin_intensity_minutes; chartMode = "";
+                // PAI chart == Garmin "Intensity Minutes" (daily bars + weekly ring)
+                chartTab = "pai"; titleRes = R.string.garmin_intensity_minutes; chartMode = "";
                 break;
             }
             case "sleep": {
@@ -1837,7 +1838,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         if ("sleep".equals(section)) {
             final long mins = dashboardData.getSleepMinutesTotal();
             final int goal = new ActivityUser().getSleepDurationGoal();
-            pulseRing.setProgress(goal > 0 ? (float) mins / goal : 0f);
+            pulseRing.setProgressAnimated(goal > 0 ? (float) mins / goal : 0f);
             ringLabel.setText(R.string.menuitem_sleep);
             setRingValue(mins > 0 ? String.format(loc, "%dh %dm", mins / 60, mins % 60) : getString(R.string.pulse_no_sleep));
             ringGoal.setText(getString(R.string.pulse_of_goal, (goal / 60) + "h"));
@@ -1847,7 +1848,7 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             final long mins = dashboardData.getActiveMinutesTotal();
             final float factor = dashboardData.getActiveMinutesGoalFactor();
             final int goal = new ActivityUser().getActiveTimeGoalMinutes();
-            pulseRing.setProgress(factor);
+            pulseRing.setProgressAnimated(factor);
             ringLabel.setText(R.string.pulse_active_label);
             setRingValue(String.format(loc, "%dm", mins));
             ringGoal.setText(goal > 0 ? getString(R.string.pulse_of_goal, goal + "m") : "");
