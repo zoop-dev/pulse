@@ -4,18 +4,18 @@
     <item
         android:title="@string/pulse_tab_today"
         android:id="@+id/bottom_nav_today"
-        android:icon="@drawable/ic_wb_sunny" />
+        android:icon="@drawable/ic_ms_today" />
     <item
         android:title="@string/pulse_tab_fitness"
         android:id="@+id/bottom_nav_fitness"
-        android:icon="@drawable/ic_activity_exercise" />
+        android:icon="@drawable/ic_ms_active" />
     <item
         android:title="@string/pulse_tab_sleep"
         android:id="@+id/bottom_nav_sleep"
-        android:icon="@drawable/ic_nights_stay" />
+        android:icon="@drawable/ic_ms_sleep" />
     <item
         android:title="@string/pulse_tab_health"
         android:id="@+id/bottom_nav_health"
-        android:icon="@drawable/ic_health" />
+        android:icon="@drawable/ic_ms_health" />
 
 </menu>
