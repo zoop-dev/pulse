@@ -217,37 +217,44 @@
                 android:id="@+id/pulse_btn_log"
                 style="@style/Widget.Material3.Button.TonalButton.Icon"
                 android:layout_width="0dp"
-                android:layout_height="52dp"
+                android:layout_height="60dp"
                 android:layout_weight="1"
                 android:text="0"
                 android:textColor="@color/pulse_text"
+                android:textSize="17sp"
+                android:fontFamily="@font/clashdisplay_bold"
                 app:backgroundTint="@color/pulse_card"
                 app:icon="@drawable/ic_calories"
                 app:iconGravity="textStart"
+                app:iconSize="22dp"
                 app:iconTint="@color/pulse_ring_cal" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/pulse_btn_start"
                 style="@style/Widget.Material3.Button.Icon"
                 android:layout_width="0dp"
-                android:layout_height="52dp"
+                android:layout_height="60dp"
                 android:layout_weight="1"
                 android:layout_marginStart="10dp"
                 android:text="@string/pulse_start"
                 android:textColor="@android:color/white"
+                android:textSize="17sp"
+                android:fontFamily="@font/clashdisplay_bold"
                 app:backgroundTint="?attr/pulseAccent"
                 app:icon="@drawable/ic_refresh"
                 app:iconGravity="textStart"
+                app:iconSize="22dp"
                 app:iconTint="@android:color/white" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/pulse_btn_edit"
                 style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
-                android:layout_width="52dp"
-                android:layout_height="52dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_marginStart="10dp"
                 app:backgroundTint="@color/pulse_card"
                 app:icon="@drawable/ic_edit"
+                app:iconSize="24dp"
                 app:iconTint="@color/pulse_text_dim" />
         </LinearLayout>
 
