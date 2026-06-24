@@ -1,5 +1,5 @@
 ### pulse vs upstream gadgetbridge (base 79ad5a6079a277f95b791d81ec34e6810cc49b60)
-### generated 2026-06-24T16:48Z
+### generated 2026-06-24T16:53Z
 
 diff --git a/README.md b/README.md
 index 76cf11b42c..19bfa6cc92 100644
@@ -1297,7 +1297,7 @@ index dcef446caf..84f8cefa33 100644
      }
  }
 diff --git a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java
-index baf984680c..dd9fea2d8e 100644
+index baf984680c..6d0d7214ca 100644
 --- a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java
 +++ b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java
 @@ -30,6 +30,8 @@ import android.view.MenuInflater;
@@ -1687,7 +1687,7 @@ index baf984680c..dd9fea2d8e 100644
      private void fullRefresh() {
          gridLayout.removeAllViews();
          widgetMap.clear();
-@@ -234,116 +530,1853 @@ public class DashboardFragment extends Fragment implements MenuProvider {
+@@ -234,116 +530,1857 @@ public class DashboardFragment extends Fragment implements MenuProvider {
      }
  
      private void refresh() {
@@ -2508,6 +2508,8 @@ index baf984680c..dd9fea2d8e 100644
 +    private void renderSleepDetail() {
 +        final Context ctx = requireContext();
 +        final float scale = getResources().getDisplayMetrics().density;
++        androidx.transition.TransitionManager.beginDelayedTransition(
++                sleepDetailContainer, new com.google.android.material.transition.MaterialFadeThrough());
 +        stopChildAnimations(sleepDetailContainer);
 +        sleepDetailContainer.removeAllViews();
 +
@@ -3404,6 +3406,8 @@ index baf984680c..dd9fea2d8e 100644
 +        final Context ctx = requireContext();
 +        final float scale = ctx.getResources().getDisplayMetrics().density;
 +        final java.text.NumberFormat nf = java.text.NumberFormat.getIntegerInstance();
++        androidx.transition.TransitionManager.beginDelayedTransition(
++                todayExtra, new com.google.android.material.transition.MaterialFadeThrough());
 +        stopChildAnimations(todayExtra);
 +        todayExtra.removeAllViews();
 +
@@ -3629,7 +3633,7 @@ index baf984680c..dd9fea2d8e 100644
      }
  
      private void createWidget(AbstractDashboardWidget widgetObj, boolean cardsEnabled, int columnSpan) {
-@@ -366,10 +2399,13 @@ public class DashboardFragment extends Fragment implements MenuProvider {
+@@ -366,10 +2403,13 @@ public class DashboardFragment extends Fragment implements MenuProvider {
  
          if (cardsEnabled) {
              MaterialCardView card = new MaterialCardView(requireActivity());
