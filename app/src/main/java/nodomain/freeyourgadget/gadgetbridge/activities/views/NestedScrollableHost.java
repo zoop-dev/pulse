@@ -12,10 +12,8 @@ import android.widget.FrameLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
 /**
- * Lets a horizontally-scrollable child (here, the Today carousel ViewPager2) live inside the
- * outer tab ViewPager2 without the two fighting over swipes. Ported from Google's official
- * ViewPager2 nested-scrolling sample: the host claims horizontal drags while the child can still
- * scroll that way, and hands them back to the parent at the edges.
+ * Keeps the inner carousel ViewPager2 from fighting the outer tab pager over horizontal swipes.
+ * Based on Google's ViewPager2 nested-scroll sample.
  */
 public class NestedScrollableHost extends FrameLayout {
     private int touchSlop = 0;
@@ -82,10 +80,10 @@ public class NestedScrollableHost extends FrameLayout {
 
             if (scaledDx > touchSlop || scaledDy > touchSlop) {
                 if (isVpHorizontal == (scaledDy > scaledDx)) {
-                    // Swipe is perpendicular to our pager — let the parent handle it.
+                    // perpendicular swipe, let the parent take it
                     getParent().requestDisallowInterceptTouchEvent(false);
                 } else {
-                    // Swipe is along our pager — keep it if the child can still scroll that way.
+                    // same-axis swipe, keep it only while the child can still scroll
                     getParent().requestDisallowInterceptTouchEvent(canChildScroll(orientation, isVpHorizontal ? dx : dy));
                 }
             }
