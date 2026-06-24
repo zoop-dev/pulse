@@ -21,6 +21,45 @@
             android:textColor="?attr/textColorPrimary"
             />
 
+        <LinearLayout
+            android:id="@+id/pai_daily_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/pulse_widget_bg"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginBottom="6dp"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/pai_daily_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/unbounded"
+                android:includeFontPadding="false"
+                android:textColor="?attr/pulseAccent"
+                android:textSize="40sp"
+                android:text="@string/stats_empty_value" />
+
+            <TextView
+                android:id="@+id/pai_daily_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="?attr/textColorSecondary"
+                android:textSize="13sp" />
+
+            <ProgressBar
+                android:id="@+id/pai_daily_bar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginTop="10dp"
+                android:max="100"
+                android:progress="0"
+                android:progressTint="?attr/pulseAccent" />
+        </LinearLayout>
+
         <ImageView
             android:layout_weight="2"
             android:layout_marginTop="15dp"

@@ -80,6 +80,9 @@ public class PaiChartFragment extends AbstractChartFragment<PaiChartFragment.Pai
     protected LinearLayout mTileLow;
     protected LinearLayout mTileModerate;
     protected LinearLayout mTileHigh;
+    protected TextView mDailyValue;
+    protected TextView mDailyLabel;
+    protected android.widget.ProgressBar mDailyBar;
 
     protected int BACKGROUND_COLOR;
     protected int DESCRIPTION_COLOR;
@@ -126,6 +129,9 @@ public class PaiChartFragment extends AbstractChartFragment<PaiChartFragment.Pai
         mTileLow = rootView.findViewById(R.id.pai_tile_low);
         mTileModerate = rootView.findViewById(R.id.pai_tile_moderate);
         mTileHigh = rootView.findViewById(R.id.pai_tile_high);
+        mDailyValue = rootView.findViewById(R.id.pai_daily_value);
+        mDailyLabel = rootView.findViewById(R.id.pai_daily_label);
+        mDailyBar = rootView.findViewById(R.id.pai_daily_bar);
 
         if (!getChartsHost().getDevice().getDeviceCoordinator().supportsPaiTime(getChartsHost().getDevice())) {
             mLineLowTime.setVisibility(View.GONE);
@@ -253,6 +259,17 @@ public class PaiChartFragment extends AbstractChartFragment<PaiChartFragment.Pai
         mLineModerateTime.setText(requireContext().getString(R.string.num_min, pcd.getDayData().minutesModerate));
         mLineHighInc.setText(String.valueOf(pcd.getDayData().paiHigh));
         mLineHighTime.setText(requireContext().getString(R.string.num_min, pcd.getDayData().minutesHigh));
+
+        // garmin only tracks intensity weekly, so surface today's count here too
+        final int todayMin = pcd.getDayData().today;
+        int dailyGoal = 30;
+        try {
+            dailyGoal = Integer.parseInt(GBApplication.getPrefs().getString("pulse_intensity_goal", "30").trim());
+        } catch (final NumberFormatException ignored) { }
+        mDailyValue.setText(String.valueOf(todayMin));
+        mDailyLabel.setText(requireContext().getString(R.string.pulse_intensity_daily_label, dailyGoal));
+        mDailyBar.setMax(Math.max(dailyGoal, Math.max(1, todayMin)));
+        mDailyBar.setProgress(todayMin);
     }
 
     @Override
