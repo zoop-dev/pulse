@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# pull in new upstream gadgetbridge commits from codeberg and replay pulse on top.
-# usage: ./sync-upstream.sh          report + rebase
-#        ./sync-upstream.sh --check  just report what's new, don't touch anything
+# check codeberg for new upstream gadgetbridge commits, and optionally replay pulse on top.
+# usage: ./sync-upstream.sh           just report what's new (safe, default)
+#        ./sync-upstream.sh --rebase  actually rebase pulse onto upstream/master
 set -e
 cd "$(dirname "$0")"
 
@@ -23,9 +23,14 @@ git log --oneline "$BASE"..upstream/master -- \
     'app/src/main/java/nodomain/freeyourgadget/gadgetbridge/service/devices/garmin/**' \
     $(git diff --name-only "$BASE"..HEAD | tr '\n' ' ') || true
 
-[ "$1" = "--check" ] && exit 0
+if [ "$1" != "--rebase" ]; then
+    echo
+    echo "(report only. run with --rebase to replay pulse onto upstream.)"
+    exit 0
+fi
 
 echo
-echo "rebasing pulse onto upstream/master… (resolve conflicts, then: git rebase --continue)"
+echo "rebasing pulse onto upstream/master… (on conflict: fix files, git add, git rebase --continue;"
+echo " or bail with git rebase --abort)"
 git rebase upstream/master
-echo "rebased. now build + deploy:  ./deploy.sh \"sync upstream\""
+echo "rebased. build + deploy when happy:  ./deploy.sh \"sync upstream\""
