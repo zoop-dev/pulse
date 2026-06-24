@@ -40,6 +40,15 @@
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
+            android:icon="@drawable/ic_activity_exercise"
+            android:defaultValue="30"
+            android:inputType="number"
+            android:key="pulse_intensity_goal"
+            android:maxLength="3"
+            android:title="@string/pulse_intensity_goal_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
             android:icon="@drawable/ic_distance"
             android:defaultValue="5000"
             android:inputType="number"

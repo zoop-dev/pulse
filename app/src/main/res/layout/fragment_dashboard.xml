@@ -213,73 +213,42 @@
             android:paddingTop="16dp"
             android:paddingBottom="6dp">
 
-            <LinearLayout
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/pulse_btn_log"
+                style="@style/Widget.Material3.Button.TonalButton.Icon"
                 android:layout_width="0dp"
                 android:layout_height="52dp"
                 android:layout_weight="1"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:background="@drawable/pulse_pill"
-                android:clickable="true"
-                android:focusable="true">
+                android:text="0"
+                android:textColor="@color/pulse_text"
+                app:backgroundTint="@color/pulse_card"
+                app:icon="@drawable/ic_calories"
+                app:iconGravity="textStart"
+                app:iconTint="@color/pulse_ring_cal" />
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_calories"
-                    app:tint="@color/pulse_ring_cal" />
-
-                <TextView
-                    android:id="@+id/pulse_streak_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:text="0"
-                    android:textColor="@color/pulse_text"
-                    android:textStyle="bold"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-            <LinearLayout
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/pulse_btn_start"
+                style="@style/Widget.Material3.Button.Icon"
                 android:layout_width="0dp"
                 android:layout_height="52dp"
                 android:layout_weight="1"
                 android:layout_marginStart="10dp"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:background="@drawable/pulse_pill_primary"
-                android:clickable="true"
-                android:focusable="true">
+                android:text="@string/pulse_start"
+                android:textColor="@android:color/white"
+                app:backgroundTint="?attr/pulseAccent"
+                app:icon="@drawable/ic_refresh"
+                app:iconGravity="textStart"
+                app:iconTint="@android:color/white" />
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_refresh"
-                    app:tint="@android:color/white" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="8dp"
-                    android:text="@string/pulse_start"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-            <ImageView
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/pulse_btn_edit"
+                style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
                 android:layout_width="52dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="10dp"
-                android:background="@drawable/pulse_pill"
-                android:padding="16dp"
-                android:src="@drawable/ic_edit"
-                android:clickable="true"
-                android:focusable="true"
-                app:tint="@color/pulse_text_dim" />
+                app:backgroundTint="@color/pulse_card"
+                app:icon="@drawable/ic_edit"
+                app:iconTint="@color/pulse_text_dim" />
         </LinearLayout>
 
         <!-- Today only: stacked extra cards (This week, Recent workouts), built in code -->
@@ -367,10 +336,11 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <ProgressBar
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:indeterminateTint="?attr/pulseAccent" />
+        <com.google.android.material.loadingindicator.LoadingIndicator
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:indicatorColor="?attr/pulseAccent"
+            app:indicatorSize="48dp" />
 
         <TextView
             android:layout_width="wrap_content"
