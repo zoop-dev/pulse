@@ -37,6 +37,8 @@ public class FormatUtils {
         double distanceFeet = distanceMeters * 3.28084f;
         double distanceFormatted = distanceMeters;
 
+        // Keep the unit separate from the number pattern — translated units can contain characters
+        // that DecimalFormat would treat as format specifiers and crash on (upstream #6331).
         String formatString = "###";
         String unit = GBApplication.getContext().getString(R.string.meters);
         if (distanceMeters > 2000) {
