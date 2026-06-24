@@ -1,11 +1,11 @@
 ### pulse vs upstream gadgetbridge (base 79ad5a6079a277f95b791d81ec34e6810cc49b60)
-### generated 2026-06-24T17:15Z
+### generated 2026-06-24T17:44Z
 
 diff --git a/.gitignore b/.gitignore
-index 0160baad1f..d43245bc74 100644
+index 0160baad1f..dd3a7d7730 100644
 --- a/.gitignore
 +++ b/.gitignore
-@@ -72,3 +72,11 @@ fw.dirs
+@@ -72,3 +72,15 @@ fw.dirs
  app/release/output-metadata.json
  app/.cxx/
  .attach_pid*
@@ -17,6 +17,10 @@ index 0160baad1f..d43245bc74 100644
 +fdroid/archive/
 +fdroid/tmp/
 +fdroid/srclibs/
++fdroid/*.p12
++fdroid/*.jks
++fdroid/config.yml
++fdroid/icon.png
 diff --git a/README.md b/README.md
 index 76cf11b42c..19bfa6cc92 100644
 --- a/README.md
@@ -15397,21 +15401,33 @@ index 0000000000..51a792b01a
 +
 +git push origin main
 +echo "deployed: $(git rev-parse --short HEAD)"
-diff --git a/fdroid/config.yml b/fdroid/config.yml
+diff --git a/fdroid/landing.html b/fdroid/landing.html
 new file mode 100644
-index 0000000000..47c8d58662
+index 0000000000..3aa83c4778
 --- /dev/null
-+++ b/fdroid/config.yml
-@@ -0,0 +1,9 @@
-+# fdroidserver config for the self-hosted Pulse repo.
-+# Run `fdroid init` once here to generate the signing keystore, then `fdroid update`.
-+# Keep keystore.jks + the *pass fields out of git (see .gitignore).
-+repo_url: https://fdroid.zachy.cc/repo
-+repo_name: Pulse
-+repo_description: >-
-+  Pulse, a Garmin-only Gadgetbridge fork. Add this repo to get builds and updates.
-+repo_icon: icon.png
-+archive_older: 3
++++ b/fdroid/landing.html
+@@ -0,0 +1,21 @@
++<!doctype html><html lang=en><head><meta charset=utf-8>
++<meta name=viewport content="width=device-width,initial-scale=1">
++<title>Pulse · F-Droid repo</title>
++<style>
++ body{margin:0;background:#07070a;color:#ecebe6;font-family:system-ui,sans-serif;
++      display:flex;min-height:100vh;align-items:center;justify-content:center;text-align:center}
++ .c{padding:32px;max-width:520px}
++ h1{font-size:56px;margin:.2em 0;letter-spacing:-.02em}
++ .s{color:#8a8a93;font-size:18px;margin-bottom:28px}
++ a.btn{display:inline-block;background:#2bb8ff;color:#04121c;font-weight:700;
++       text-decoration:none;padding:14px 26px;border-radius:999px;font-size:18px}
++ code{display:block;margin-top:22px;color:#2bb8ff;background:#0e0e16;padding:12px 16px;
++      border-radius:12px;word-break:break-all;font-size:15px}
++ img{margin-top:26px;width:200px;border-radius:16px;background:#fff;padding:10px}
++</style></head><body><div class=c>
++ <h1>Pulse</h1>
++ <div class=s>Garmin watch companion · F-Droid repo</div>
++ <a class=btn href="fdroidrepos://fdroid.zachy.cc/repo?fingerprint=__FP__">Add to F-Droid</a>
++ <code>https://fdroid.zachy.cc/repo</code>
++ <img src="qr.png" alt="QR" onerror="this.style.display='none'">
++</div></body></html>
 diff --git a/fdroid/metadata/cc.zachy.pulse.yml b/fdroid/metadata/cc.zachy.pulse.yml
 new file mode 100644
 index 0000000000..06a74f71fa
@@ -15460,6 +15476,10 @@ index 0000000000..d1a53657b3
 +Intensity minutes with a daily view. Material Symbols icons. Springy motion and
 +fade-through transitions. Skeleton loaders. Customisable share card. Plus the
 +distance-format crash fix from upstream.
+diff --git a/fdroid/metadata/cc.zachy.pulse/en-US/images/icon.png b/fdroid/metadata/cc.zachy.pulse/en-US/images/icon.png
+new file mode 100644
+index 0000000000..1485e05e42
+Binary files /dev/null and b/fdroid/metadata/cc.zachy.pulse/en-US/images/icon.png differ
 diff --git a/fdroid/metadata/cc.zachy.pulse/en-US/images/phoneScreenshots/1.png b/fdroid/metadata/cc.zachy.pulse/en-US/images/phoneScreenshots/1.png
 new file mode 100644
 index 0000000000..d1f4d4d608
@@ -15476,6 +15496,10 @@ diff --git a/fdroid/metadata/cc.zachy.pulse/en-US/images/phoneScreenshots/4.png 
 new file mode 100644
 index 0000000000..0e25cdac9b
 Binary files /dev/null and b/fdroid/metadata/cc.zachy.pulse/en-US/images/phoneScreenshots/4.png differ
+diff --git a/fdroid/pulse-icon.png b/fdroid/pulse-icon.png
+new file mode 100644
+index 0000000000..1485e05e42
+Binary files /dev/null and b/fdroid/pulse-icon.png differ
 diff --git a/gradle.properties b/gradle.properties
 index eba4c6ea00..c94b3aaf12 100644
 --- a/gradle.properties
@@ -15491,41 +15515,62 @@ index 0000000000..af43be347a
 Binary files /dev/null and b/og-image.png differ
 diff --git a/publish-fdroid.sh b/publish-fdroid.sh
 new file mode 100755
-index 0000000000..d388c91cde
+index 0000000000..6b831d791d
 --- /dev/null
 +++ b/publish-fdroid.sh
-@@ -0,0 +1,32 @@
+@@ -0,0 +1,53 @@
 +#!/usr/bin/env bash
 +# build a signed R8 release apk, drop it in the self-hosted f-droid repo, rebuild the
 +# index, and push it to cloudflare pages (fdroid.zachy.cc).
 +#
 +# one-time setup before this works:
-+#   - app signing key:   set PULSE_KEYSTORE / PULSE_KS_PASS / PULSE_KEY_ALIAS / PULSE_KEY_PASS
-+#   - repo signing key:  cd fdroid && fdroid init   (generates fdroid/keystore.jks, keep it secret)
-+#   - cloudflare:        a Pages project mapped to fdroid.zachy.cc
++#   - app signing key:   ~/keys/pulse-signing.env (PULSE_KEYSTORE / *_PASS / *_ALIAS)
++#   - repo signing key:  cd fdroid && fdroid init   (creates keystore.p12, kept out of git)
++#   - cloudflare:        a Pages project "pulse-fdroid" mapped to fdroid.zachy.cc
 +set -e
 +cd "$(dirname "$0")"
 +
++# repo signing-key SHA-256 fingerprint, for the one-tap "Add to F-Droid" link
++FINGERPRINT=64E3BF277CC48A270B543B5D8B4087CB3CBA19D350947464776079A52E56C4A3
++
++[ -f "$HOME/keys/pulse-signing.env" ] && . "$HOME/keys/pulse-signing.env"
++export JAVA_HOME="${JAVA_HOME:-$HOME/dev/android-toolchain/jdk17}"
++export ANDROID_HOME="${ANDROID_HOME:-$HOME/dev/android-toolchain/sdk}"
++export PATH="$JAVA_HOME/bin:$HOME/.local/bin:$PATH"
++
 +echo "building release (r8)…"
-+JAVA_HOME="${JAVA_HOME:-$HOME/dev/android-toolchain/jdk17}" \
-+    ./gradlew :app:assembleMainlineRelease --no-daemon -q
++./gradlew :app:assembleMainlineRelease --no-daemon -q
 +
++VCODE=$(grep -m1 versionCode app/build.gradle | grep -oE '[0-9]+')
 +UNSIGNED=$(ls -t app/build/outputs/apk/mainline/release/*.apk | head -1)
-+OUT="fdroid/repo/cc.zachy.pulse_$(grep -m1 versionCode app/build.gradle | grep -oE '[0-9]+').apk"
-+mkdir -p fdroid/repo
++mkdir -p fdroid/repo/icons
 +
-+echo "signing $UNSIGNED…"
-+"$ANDROID_HOME"/build-tools/*/apksigner sign \
-+    --ks "$PULSE_KEYSTORE" --ks-pass env:PULSE_KS_PASS \
++echo "signing…"
++APKSIGNER=$(ls "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -1)
++"$APKSIGNER" sign --ks "$PULSE_KEYSTORE" --ks-pass env:PULSE_KS_PASS \
 +    --ks-key-alias "$PULSE_KEY_ALIAS" --key-pass env:PULSE_KEY_PASS \
-+    --out "$OUT" "$UNSIGNED"
++    --out "fdroid/repo/cc.zachy.pulse_${VCODE}.apk" "$UNSIGNED"
++
++# icon source for both the repo (fdroid/icon.png) and the app listing (fastlane images/)
++cp fdroid/pulse-icon.png fdroid/icon.png
++cp fdroid/pulse-icon.png fdroid/metadata/cc.zachy.pulse/en-US/images/icon.png
 +
 +echo "rebuilding index…"
-+( cd fdroid && fdroid update -c --pretty )
++( cd fdroid && fdroid update -c )
++
++echo "staging (repo under /repo + landing page)…"
++PUB=$(mktemp -d)
++mkdir -p "$PUB/repo"
++cp -r fdroid/repo/. "$PUB/repo/"
++python3 - "$FINGERPRINT" "$PUB" <<'PY' 2>/dev/null || true
++import sys, qrcode
++qrcode.make(f"fdroidrepos://fdroid.zachy.cc/repo?fingerprint={sys.argv[1]}").save(f"{sys.argv[2]}/qr.png")
++PY
++sed "s/__FP__/$FINGERPRINT/g" fdroid/landing.html > "$PUB/index.html"
 +
 +echo "deploying to cloudflare pages…"
-+npx wrangler pages deploy fdroid/repo --project-name pulse-fdroid
-+
++npx wrangler pages deploy "$PUB" --project-name pulse-fdroid --commit-dirty=true
++rm -rf "$PUB"
 +echo "done. repo: https://fdroid.zachy.cc/repo"
 diff --git a/sync-upstream.sh b/sync-upstream.sh
 new file mode 100755
