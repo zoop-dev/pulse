@@ -5,13 +5,13 @@
 
     <item
         android:id="@+id/dashboard_show_calendar"
-        android:icon="@drawable/ic_calendar_from"
+        android:icon="@drawable/ic_ms_calendar"
         android:title="@string/menuitem_calendar"
         app:iconTint="?attr/actionmenu_icon_color"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/pulse_share_today"
-        android:icon="@drawable/ic_share"
+        android:icon="@drawable/ic_ms_share"
         android:title="@string/pulse_share_today"
         app:iconTint="?attr/actionmenu_icon_color"
         app:showAsAction="ifRoom" />
@@ -21,7 +21,7 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/dashboard_settings"
-        android:icon="@drawable/ic_settings"
+        android:icon="@drawable/ic_ms_settings"
         android:title="@string/dashboard_settings"
         app:iconTint="?attr/actionmenu_icon_color"
         app:showAsAction="never" />

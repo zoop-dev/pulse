@@ -610,20 +610,23 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             final int stride = new ActivityUser().getStepLengthCm();
             final Calendar cur = (Calendar) weekStart.clone();
             final Calendar today = GregorianCalendar.getInstance();
-            while (!cur.after(today)) {
-                long daySteps = 0, dayDistCm = 0;
-                for (final GBDevice dev : devices) {
-                    final DailyTotals dt = DailyTotals.getDailyTotalsForDevice(dev, (Calendar) cur.clone(), db);
-                    daySteps += dt.getSteps();
-                    long distCm = dt.getDistance();
-                    if (distCm <= 0 && dt.getSteps() > 0) distCm = dt.getSteps() * (long) stride;
-                    dayDistCm += distCm;
-                }
-                weekSteps += daySteps;
-                weekDistCm += dayDistCm;
-                if (daySteps > 0) weekActiveDays++;
+            // only the primary device, like the rest of the dashboard — two paired watches were doubling it
+            final GBDevice primary = devices.isEmpty() ? null : devices.get(0);
+            long ws = 0, wd = 0;
+            int wa = 0;
+            while (primary != null && !cur.after(today)) {
+                final DailyTotals dt = DailyTotals.getDailyTotalsForDevice(primary, (Calendar) cur.clone(), db);
+                final long daySteps = dt.getSteps();
+                long distCm = dt.getDistance();
+                if (distCm <= 0 && daySteps > 0) distCm = daySteps * (long) stride;
+                ws += daySteps;
+                wd += distCm;
+                if (daySteps > 0) wa++;
                 cur.add(Calendar.DAY_OF_MONTH, 1);
             }
+            weekSteps = ws;
+            weekDistCm = wd;
+            weekActiveDays = wa;
 
             // Most recent workouts.
             final List<nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary> summaries =
@@ -1714,18 +1717,9 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         ringGoal.setText(goal);
     }
 
-    /** Sets the big ring value, shrinking the font so long values (e.g. "8h 7m") don't clip the ring. */
+    /** Set the ring value. Width is bounded to the ring's inner circle and the view autosizes,
+     *  so any length (e.g. "8h 7m" or "No sleep") shrinks to fit instead of clipping. */
     private void setRingValue(final String value) {
-        final boolean numeric = !value.isEmpty() && Character.isDigit(value.charAt(0));
-        final float sp;
-        if (!numeric) {
-            sp = 24f;                                   // word placeholders like "No sleep"
-        } else if (value.contains(" ") || value.length() >= 6) {
-            sp = 28f;                                   // "8h 7m", "12,345", "12.3mi"
-        } else {
-            sp = 36f;                                   // "8,234", "128"
-        }
-        ringValue.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, sp);
         ringValue.setText(value);
     }
 
@@ -1950,17 +1944,20 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         rl.setLetterSpacing(0.08f);
         final TextView rv = new TextView(ctx);
         rv.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_text));
-        rv.setGravity(android.view.Gravity.CENTER_HORIZONTAL);
+        rv.setGravity(android.view.Gravity.CENTER);
         rv.setTypeface(androidx.core.content.res.ResourcesCompat.getFont(ctx, R.font.unbounded));
-        rv.setTextSize(36);
         rv.setIncludeFontPadding(false);
+        rv.setMaxLines(1);
+        // bound to the ring's inner width + autosize so long values never clip
+        androidx.core.widget.TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
+                rv, 13, 38, 1, android.util.TypedValue.COMPLEX_UNIT_SP);
         final TextView rg = new TextView(ctx);
         rg.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_ring_steps));
         rg.setTextSize(13);
         rg.setGravity(android.view.Gravity.CENTER_HORIZONTAL);
         rg.setTypeface(rg.getTypeface(), android.graphics.Typeface.BOLD);
         ringText.addView(rl);
-        ringText.addView(rv);
+        ringText.addView(rv, new LinearLayout.LayoutParams(dp(116, scale), ViewGroup.LayoutParams.WRAP_CONTENT));
         ringText.addView(rg);
         final android.widget.FrameLayout.LayoutParams rtlp = new android.widget.FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

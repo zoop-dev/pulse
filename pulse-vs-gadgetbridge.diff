@@ -1,5 +1,5 @@
 ### pulse vs upstream gadgetbridge (base 79ad5a6079a277f95b791d81ec34e6810cc49b60)
-### generated 2026-06-24T15:07Z
+### generated 2026-06-24T15:16Z
 
 diff --git a/README.md b/README.md
 index 76cf11b42c..19bfa6cc92 100644
@@ -1297,7 +1297,7 @@ index dcef446caf..84f8cefa33 100644
      }
  }
 diff --git a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java
-index baf984680c..b9b9698c02 100644
+index baf984680c..ae32929bdc 100644
 --- a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java
 +++ b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java
 @@ -30,6 +30,8 @@ import android.view.MenuInflater;
@@ -1687,7 +1687,7 @@ index baf984680c..b9b9698c02 100644
      private void fullRefresh() {
          gridLayout.removeAllViews();
          widgetMap.clear();
-@@ -234,116 +530,1802 @@ public class DashboardFragment extends Fragment implements MenuProvider {
+@@ -234,116 +530,1799 @@ public class DashboardFragment extends Fragment implements MenuProvider {
      }
  
      private void refresh() {
@@ -1772,20 +1772,23 @@ index baf984680c..b9b9698c02 100644
 +            final int stride = new ActivityUser().getStepLengthCm();
 +            final Calendar cur = (Calendar) weekStart.clone();
 +            final Calendar today = GregorianCalendar.getInstance();
-+            while (!cur.after(today)) {
-+                long daySteps = 0, dayDistCm = 0;
-+                for (final GBDevice dev : devices) {
-+                    final DailyTotals dt = DailyTotals.getDailyTotalsForDevice(dev, (Calendar) cur.clone(), db);
-+                    daySteps += dt.getSteps();
-+                    long distCm = dt.getDistance();
-+                    if (distCm <= 0 && dt.getSteps() > 0) distCm = dt.getSteps() * (long) stride;
-+                    dayDistCm += distCm;
-+                }
-+                weekSteps += daySteps;
-+                weekDistCm += dayDistCm;
-+                if (daySteps > 0) weekActiveDays++;
++            // only the primary device, like the rest of the dashboard — two paired watches were doubling it
++            final GBDevice primary = devices.isEmpty() ? null : devices.get(0);
++            long ws = 0, wd = 0;
++            int wa = 0;
++            while (primary != null && !cur.after(today)) {
++                final DailyTotals dt = DailyTotals.getDailyTotalsForDevice(primary, (Calendar) cur.clone(), db);
++                final long daySteps = dt.getSteps();
++                long distCm = dt.getDistance();
++                if (distCm <= 0 && daySteps > 0) distCm = daySteps * (long) stride;
++                ws += daySteps;
++                wd += distCm;
++                if (daySteps > 0) wa++;
 +                cur.add(Calendar.DAY_OF_MONTH, 1);
 +            }
++            weekSteps = ws;
++            weekDistCm = wd;
++            weekActiveDays = wa;
 +
 +            // Most recent workouts.
 +            final List<nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary> summaries =
@@ -2887,18 +2890,9 @@ index baf984680c..b9b9698c02 100644
 +        ringGoal.setText(goal);
 +    }
 +
-+    /** Sets the big ring value, shrinking the font so long values (e.g. "8h 7m") don't clip the ring. */
++    /** Set the ring value. Width is bounded to the ring's inner circle and the view autosizes,
++     *  so any length (e.g. "8h 7m" or "No sleep") shrinks to fit instead of clipping. */
 +    private void setRingValue(final String value) {
-+        final boolean numeric = !value.isEmpty() && Character.isDigit(value.charAt(0));
-+        final float sp;
-+        if (!numeric) {
-+            sp = 24f;                                   // word placeholders like "No sleep"
-+        } else if (value.contains(" ") || value.length() >= 6) {
-+            sp = 28f;                                   // "8h 7m", "12,345", "12.3mi"
-+        } else {
-+            sp = 36f;                                   // "8,234", "128"
-+        }
-+        ringValue.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, sp);
 +        ringValue.setText(value);
 +    }
 +
@@ -2999,80 +2993,7 @@ index baf984680c..b9b9698c02 100644
 +        final int battery = dev.getBatteryLevel();
 +        if (battery >= 0 && battery <= 100) {
 +            deviceBattery.setText(getString(R.string.battery_percentage_str, String.valueOf(battery)));
-         } else {
--            textViewDate.setText(DateTimeUtils.formatDate(day.getTime(), DateUtils.FORMAT_SHOW_WEEKDAY));
--            arrowRight.setAlpha(1);
--        }
--
--        boolean cardsEnabled = prefs.getBoolean("dashboard_cards_enabled", true);
--
--        for (String widgetName : widgetsOrder) {
--            AbstractDashboardWidget widget = widgetMap.get(widgetName);
--            if (widget == null) {
--                int columnSpan = 1;
--                switch (widgetName) {
--                    case "today":
--                        widget = DashboardTodayWidget.newInstance(dashboardData);
--                        columnSpan = prefs.getBoolean("dashboard_widget_today_2columns", true) ? 2 : 1;
--                        break;
--                    case "goals":
--                        widget = DashboardGoalsWidget.newInstance(dashboardData);
--                        columnSpan = prefs.getBoolean("dashboard_widget_goals_2columns", true) ? 2 : 1;
--                        break;
--                    case "steps":
--                        widget = DashboardStepsWidget.newInstance(dashboardData);
--                        break;
--                    case "distance":
--                        widget = DashboardDistanceWidget.newInstance(dashboardData);
--                        break;
--                    case "activetime":
--                        widget = DashboardActiveTimeWidget.newInstance(dashboardData);
--                        break;
--                    case "sleep":
--                        widget = DashboardSleepWidget.newInstance(dashboardData);
--                        break;
--                    case "stress_simple":
--                        widget = DashboardStressSimpleWidget.newInstance(dashboardData);
--                        break;
--                    case "stress_segmented":
--                        widget = DashboardStressSegmentedWidget.newInstance(dashboardData);
--                        break;
--                    case "stress_breakdown":
--                        widget = DashboardStressBreakdownWidget.newInstance(dashboardData);
--                        break;
--                    case "bodyenergy":
--                        widget = DashboardBodyEnergyWidget.newInstance(dashboardData);
--                        break;
--                    case "pai":
--                        widget = DashboardPaiWidget.newInstance(dashboardData);
--                        break;
--                    case "hrv":
--                        widget = DashboardHrvWidget.newInstance(dashboardData);
--                        break;
--                    case "bloodpressure":
--                        widget = DashboardBloodPressureWidget.newInstance(dashboardData);
--                        break;
--                    case "vo2max_running":
--                        widget = DashboardVO2MaxRunningWidget.newInstance(dashboardData);
--                        break;
--                    case "vo2max_cycling":
--                        widget = DashboardVO2MaxCyclingWidget.newInstance(dashboardData);
--                        break;
--                    case "vo2max":
--                        widget = DashboardVO2MaxAnyWidget.newInstance(dashboardData);
--                        break;
--                    case "calories_active":
--                        widget = DashboardCaloriesActiveGoalWidget.newInstance(dashboardData);
--                        break;
--                    case "calories_segmented":
--                        widget = DashboardCaloriesTotalSegmentedWidget.newInstance(dashboardData);
--                        break;
--                    case "sleepscore":
--                        widget = DashboardSleepScoreWidget.newInstance(dashboardData);
--                        break;
--                    default:
--                        LOG.error("Unknown dashboard widget {}", widgetName);
--                        continue;
++        } else {
 +            deviceBattery.setText("");
 +        }
 +    }
@@ -3172,7 +3093,80 @@ index baf984680c..b9b9698c02 100644
 +            carouselDots.setVisibility(View.GONE);
 +            todayExpanded.setVisibility(View.VISIBLE);
 +            buildExpandedHero(ctx, scale, ringMetric, tiles);
-+        } else {
+         } else {
+-            textViewDate.setText(DateTimeUtils.formatDate(day.getTime(), DateUtils.FORMAT_SHOW_WEEKDAY));
+-            arrowRight.setAlpha(1);
+-        }
+-
+-        boolean cardsEnabled = prefs.getBoolean("dashboard_cards_enabled", true);
+-
+-        for (String widgetName : widgetsOrder) {
+-            AbstractDashboardWidget widget = widgetMap.get(widgetName);
+-            if (widget == null) {
+-                int columnSpan = 1;
+-                switch (widgetName) {
+-                    case "today":
+-                        widget = DashboardTodayWidget.newInstance(dashboardData);
+-                        columnSpan = prefs.getBoolean("dashboard_widget_today_2columns", true) ? 2 : 1;
+-                        break;
+-                    case "goals":
+-                        widget = DashboardGoalsWidget.newInstance(dashboardData);
+-                        columnSpan = prefs.getBoolean("dashboard_widget_goals_2columns", true) ? 2 : 1;
+-                        break;
+-                    case "steps":
+-                        widget = DashboardStepsWidget.newInstance(dashboardData);
+-                        break;
+-                    case "distance":
+-                        widget = DashboardDistanceWidget.newInstance(dashboardData);
+-                        break;
+-                    case "activetime":
+-                        widget = DashboardActiveTimeWidget.newInstance(dashboardData);
+-                        break;
+-                    case "sleep":
+-                        widget = DashboardSleepWidget.newInstance(dashboardData);
+-                        break;
+-                    case "stress_simple":
+-                        widget = DashboardStressSimpleWidget.newInstance(dashboardData);
+-                        break;
+-                    case "stress_segmented":
+-                        widget = DashboardStressSegmentedWidget.newInstance(dashboardData);
+-                        break;
+-                    case "stress_breakdown":
+-                        widget = DashboardStressBreakdownWidget.newInstance(dashboardData);
+-                        break;
+-                    case "bodyenergy":
+-                        widget = DashboardBodyEnergyWidget.newInstance(dashboardData);
+-                        break;
+-                    case "pai":
+-                        widget = DashboardPaiWidget.newInstance(dashboardData);
+-                        break;
+-                    case "hrv":
+-                        widget = DashboardHrvWidget.newInstance(dashboardData);
+-                        break;
+-                    case "bloodpressure":
+-                        widget = DashboardBloodPressureWidget.newInstance(dashboardData);
+-                        break;
+-                    case "vo2max_running":
+-                        widget = DashboardVO2MaxRunningWidget.newInstance(dashboardData);
+-                        break;
+-                    case "vo2max_cycling":
+-                        widget = DashboardVO2MaxCyclingWidget.newInstance(dashboardData);
+-                        break;
+-                    case "vo2max":
+-                        widget = DashboardVO2MaxAnyWidget.newInstance(dashboardData);
+-                        break;
+-                    case "calories_active":
+-                        widget = DashboardCaloriesActiveGoalWidget.newInstance(dashboardData);
+-                        break;
+-                    case "calories_segmented":
+-                        widget = DashboardCaloriesTotalSegmentedWidget.newInstance(dashboardData);
+-                        break;
+-                    case "sleepscore":
+-                        widget = DashboardSleepScoreWidget.newInstance(dashboardData);
+-                        break;
+-                    default:
+-                        LOG.error("Unknown dashboard widget {}", widgetName);
+-                        continue;
 +            todayExpanded.setVisibility(View.GONE);
 +            host.setVisibility(View.VISIBLE);
 +            buildCarousel(ctx, scale, ringMetric, tiles);
@@ -3196,17 +3190,20 @@ index baf984680c..b9b9698c02 100644
 +        rl.setLetterSpacing(0.08f);
 +        final TextView rv = new TextView(ctx);
 +        rv.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_text));
-+        rv.setGravity(android.view.Gravity.CENTER_HORIZONTAL);
++        rv.setGravity(android.view.Gravity.CENTER);
 +        rv.setTypeface(androidx.core.content.res.ResourcesCompat.getFont(ctx, R.font.unbounded));
-+        rv.setTextSize(36);
 +        rv.setIncludeFontPadding(false);
++        rv.setMaxLines(1);
++        // bound to the ring's inner width + autosize so long values never clip
++        androidx.core.widget.TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
++                rv, 13, 38, 1, android.util.TypedValue.COMPLEX_UNIT_SP);
 +        final TextView rg = new TextView(ctx);
 +        rg.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_ring_steps));
 +        rg.setTextSize(13);
 +        rg.setGravity(android.view.Gravity.CENTER_HORIZONTAL);
 +        rg.setTypeface(rg.getTypeface(), android.graphics.Typeface.BOLD);
 +        ringText.addView(rl);
-+        ringText.addView(rv);
++        ringText.addView(rv, new LinearLayout.LayoutParams(dp(116, scale), ViewGroup.LayoutParams.WRAP_CONTENT));
 +        ringText.addView(rg);
 +        final android.widget.FrameLayout.LayoutParams rtlp = new android.widget.FrameLayout.LayoutParams(
 +                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -3578,7 +3575,7 @@ index baf984680c..b9b9698c02 100644
      }
  
      private void createWidget(AbstractDashboardWidget widgetObj, boolean cardsEnabled, int columnSpan) {
-@@ -366,10 +2348,13 @@ public class DashboardFragment extends Fragment implements MenuProvider {
+@@ -366,10 +2345,13 @@ public class DashboardFragment extends Fragment implements MenuProvider {
  
          if (cardsEnabled) {
              MaterialCardView card = new MaterialCardView(requireActivity());
@@ -8322,6 +8319,22 @@ index 0000000000..1081c493e9
 +      android:fillColor="@android:color/white"
 +      android:pathData="M320,880Q303,880 291.5,868.5Q280,857 280,840L280,200Q280,183 291.5,171.5Q303,160 320,160L400,160L400,120Q400,103 411.5,91.5Q423,80 440,80L520,80Q537,80 548.5,91.5Q560,103 560,120L560,160L640,160Q657,160 668.5,171.5Q680,183 680,200L680,840Q680,857 668.5,868.5Q657,880 640,880L320,880ZM360,400L600,400L600,240L360,240L360,400Z"/>
 +</vector>
+diff --git a/app/src/main/res/drawable/ic_ms_calendar.xml b/app/src/main/res/drawable/ic_ms_calendar.xml
+new file mode 100644
+index 0000000000..21b6477499
+--- /dev/null
++++ b/app/src/main/res/drawable/ic_ms_calendar.xml
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="960"
++    android:viewportHeight="960"
++   >
++  <path
++      android:fillColor="@android:color/white"
++      android:pathData="M200,880Q167,880 143.5,856.5Q120,833 120,800L120,240Q120,207 143.5,183.5Q167,160 200,160L240,160L240,120Q240,103 251.5,91.5Q263,80 280,80Q297,80 308.5,91.5Q320,103 320,120L320,160L640,160L640,120Q640,103 651.5,91.5Q663,80 680,80Q697,80 708.5,91.5Q720,103 720,120L720,160L760,160Q793,160 816.5,183.5Q840,207 840,240L840,800Q840,833 816.5,856.5Q793,880 760,880L200,880ZM200,800L760,800Q760,800 760,800Q760,800 760,800L760,400L200,400L200,800Q200,800 200,800Q200,800 200,800ZM200,320L760,320L760,240Q760,240 760,240Q760,240 760,240L200,240Q200,240 200,240Q200,240 200,240L200,320ZM200,320L200,240Q200,240 200,240Q200,240 200,240L200,240Q200,240 200,240Q200,240 200,240L200,320L200,320ZM480,560Q463,560 451.5,548.5Q440,537 440,520Q440,503 451.5,491.5Q463,480 480,480Q497,480 508.5,491.5Q520,503 520,520Q520,537 508.5,548.5Q497,560 480,560ZM320,560Q303,560 291.5,548.5Q280,537 280,520Q280,503 291.5,491.5Q303,480 320,480Q337,480 348.5,491.5Q360,503 360,520Q360,537 348.5,548.5Q337,560 320,560ZM640,560Q623,560 611.5,548.5Q600,537 600,520Q600,503 611.5,491.5Q623,480 640,480Q657,480 668.5,491.5Q680,503 680,520Q680,537 668.5,548.5Q657,560 640,560ZM480,720Q463,720 451.5,708.5Q440,697 440,680Q440,663 451.5,651.5Q463,640 480,640Q497,640 508.5,651.5Q520,663 520,680Q520,697 508.5,708.5Q497,720 480,720ZM320,720Q303,720 291.5,708.5Q280,697 280,680Q280,663 291.5,651.5Q303,640 320,640Q337,640 348.5,651.5Q360,663 360,680Q360,697 348.5,708.5Q337,720 320,720ZM640,720Q623,720 611.5,708.5Q600,697 600,680Q600,663 611.5,651.5Q623,640 640,640Q657,640 668.5,651.5Q680,663 680,680Q680,697 668.5,708.5Q657,720 640,720Z"/>
++</vector>
 diff --git a/app/src/main/res/drawable/ic_ms_calories.xml b/app/src/main/res/drawable/ic_ms_calories.xml
 new file mode 100644
 index 0000000000..67d0adb784
@@ -8351,6 +8364,38 @@ index 0000000000..88278f0eca
 +  <path
 +      android:fillColor="@android:color/white"
 +      android:pathData="M480,880Q374,880 307,846.5Q240,813 240,760Q240,725 269,699Q298,673 349,658L372,734Q355,739 341,746.5Q327,754 322,760Q335,776 382,788Q429,800 480,800Q531,800 578.5,788Q626,776 639,760Q634,754 620,746.5Q606,739 589,734L612,658Q663,673 691.5,699Q720,725 720,760Q720,813 653,846.5Q586,880 480,880ZM480,613Q498,580 518,552.5Q538,525 557,500Q594,452 616,413.5Q638,375 638,318Q638,252 592,206Q546,160 480,160Q414,160 368,206Q322,252 322,318Q322,375 344,413.5Q366,452 403,500Q422,525 442,552.5Q462,580 480,613ZM480,760Q469,760 460,753.5Q451,747 447,736Q424,665 389,617Q354,569 321,525Q289,481 265.5,434Q242,387 242,318Q242,218 311,149Q380,80 480,80Q580,80 649,149Q718,218 718,318Q718,387 695,434Q672,481 639,525Q607,569 571.5,617Q536,665 513,736Q509,747 500,753.5Q491,760 480,760ZM480,403Q515,403 540,378Q565,353 565,318Q565,283 540,258Q515,233 480,233Q445,233 420,258Q395,283 395,318Q395,353 420,378Q445,403 480,403ZM480,318Q480,318 480,318Q480,318 480,318Q480,318 480,318Q480,318 480,318Q480,318 480,318Q480,318 480,318Q480,318 480,318Q480,318 480,318Q480,318 480,318Q480,318 480,318Q480,318 480,318Q480,318 480,318Z"/>
++</vector>
+diff --git a/app/src/main/res/drawable/ic_ms_edit.xml b/app/src/main/res/drawable/ic_ms_edit.xml
+new file mode 100644
+index 0000000000..f721d91003
+--- /dev/null
++++ b/app/src/main/res/drawable/ic_ms_edit.xml
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="960"
++    android:viewportHeight="960"
++   >
++  <path
++      android:fillColor="@android:color/white"
++      android:pathData="M200,760L257,760L648,369L591,312L200,703L200,760ZM160,840Q143,840 131.5,828.5Q120,817 120,800L120,703Q120,687 126,672.5Q132,658 143,647L648,143Q660,132 674.5,126Q689,120 705,120Q721,120 736,126Q751,132 762,144L817,200Q829,211 834.5,226Q840,241 840,256Q840,272 834.5,286.5Q829,301 817,313L313,817Q302,828 287.5,834Q273,840 257,840L160,840ZM760,256L760,256L704,200L704,200L760,256ZM619,341L591,312L591,312L648,369L648,369L619,341Z"/>
++</vector>
+diff --git a/app/src/main/res/drawable/ic_ms_health.xml b/app/src/main/res/drawable/ic_ms_health.xml
+new file mode 100644
+index 0000000000..a2bd767354
+--- /dev/null
++++ b/app/src/main/res/drawable/ic_ms_health.xml
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="960"
++    android:viewportHeight="960"
++   >
++  <path
++      android:fillColor="@android:color/white"
++      android:pathData="M420,520L420,580Q420,597 431.5,608.5Q443,620 460,620L500,620Q517,620 528.5,608.5Q540,597 540,580L540,520L600,520Q617,520 628.5,508.5Q640,497 640,480L640,440Q640,423 628.5,411.5Q617,400 600,400L540,400L540,340Q540,323 528.5,311.5Q517,300 500,300L460,300Q443,300 431.5,311.5Q420,323 420,340L420,400L360,400Q343,400 331.5,411.5Q320,423 320,440L320,480Q320,497 331.5,508.5Q343,520 360,520L420,520ZM480,876Q473,876 467,875Q461,874 455,872Q320,827 240,705.5Q160,584 160,444L160,255Q160,230 174.5,210Q189,190 212,181L452,91Q466,86 480,86Q494,86 508,91L748,181Q771,190 785.5,210Q800,230 800,255L800,444Q800,584 720,705.5Q640,827 505,872Q499,874 493,875Q487,876 480,876ZM480,796Q584,763 652,664Q720,565 720,444L720,255Q720,255 720,255Q720,255 720,255L480,165Q480,165 480,165Q480,165 480,165L240,255Q240,255 240,255Q240,255 240,255L240,444Q240,565 308,664Q376,763 480,796ZM480,480Q480,480 480,480Q480,480 480,480L480,480Q480,480 480,480Q480,480 480,480L480,480Q480,480 480,480Q480,480 480,480L480,480Q480,480 480,480Q480,480 480,480L480,480Q480,480 480,480Q480,480 480,480Z"/>
 +</vector>
 diff --git a/app/src/main/res/drawable/ic_ms_hr.xml b/app/src/main/res/drawable/ic_ms_hr.xml
 new file mode 100644
@@ -8412,6 +8457,38 @@ index 0000000000..97fceb088d
 +      android:fillColor="@android:color/white"
 +      android:pathData="M480,480Q480,480 480,480Q480,480 480,480L480,480L480,480L480,480Q480,480 480,480Q480,480 480,480L480,480Q480,480 480,480Q480,480 480,480L480,480Q480,480 480,480Q480,480 480,480L480,480L480,480L480,480Q480,480 480,480Q480,480 480,480L480,480L480,480Q480,480 480,480Q480,480 480,480ZM80,320L80,240Q80,207 103.5,183.5Q127,160 160,160L800,160Q833,160 856.5,183.5Q880,207 880,240L880,420Q880,437 868.5,448.5Q857,460 840,460Q823,460 811.5,448.5Q800,437 800,420L800,240Q800,240 800,240Q800,240 800,240L160,240Q160,240 160,240Q160,240 160,240L160,320Q160,337 148.5,348.5Q137,360 120,360Q103,360 91.5,348.5Q80,337 80,320ZM160,800Q127,800 103.5,776.5Q80,753 80,720L80,640Q80,623 91.5,611.5Q103,600 120,600Q137,600 148.5,611.5Q160,623 160,640L160,720Q160,720 160,720Q160,720 160,720L340,720Q357,720 368.5,731.5Q380,743 380,760Q380,777 368.5,788.5Q357,800 340,800L160,800ZM280,680Q269,680 259,674.5Q249,669 244,658L176,520L121,520Q104,520 92.5,508.5Q81,497 81,480Q81,463 92.5,451.5Q104,440 121,440L201,440Q212,440 221.5,446Q231,452 236,462L280,550L404,302Q409,292 419,287Q429,282 440,282Q451,282 461,287Q471,292 476,302L555,461Q534,463 515.5,470Q497,477 481,490L440,410L316,658Q311,669 301,674.5Q291,680 280,680ZM500,920Q475,920 457.5,902.5Q440,885 440,860L440,728Q440,720 441.5,713Q443,706 445,699L493,572Q502,549 522.5,534.5Q543,520 568,520L640,520L640,480Q640,463 651.5,451.5Q663,440 680,440Q697,440 708.5,451.5Q720,463 720,480L720,520L792,520Q817,520 837.5,534.5Q858,549 867,572L915,699Q917,706 918.5,713Q920,720 920,728L920,860Q920,885 902.5,902.5Q885,920 860,920L780,920Q755,920 737.5,902.5Q720,885 720,860L720,840Q720,823 731.5,811.5Q743,800 760,800Q777,800 788.5,811.5Q800,823 800,840L800,840L840,840L840,727L792,600L720,600L720,637L758,676Q769,688 769,704.5Q769,721 758,732Q747,743 730,743Q713,743 702,732L680,710L658,732Q647,743 630.5,743.5Q614,744 602,732Q591,721 591,704Q591,687 602,676L640,637L640,600L568,600L520,727L520,840L560,840L560,840Q560,823 571.5,811.5Q583,800 600,800Q617,800 628.5,811.5Q640,823 640,840L640,860Q640,885 622.5,902.5Q605,920 580,920L500,920ZM680,720L680,720L680,720L680,720L680,720L680,720L680,720L680,720L680,720L680,720L680,720L680,720L680,720L680,720L680,720L680,720L680,720L680,720L680,720L680,720L680,720L680,720L680,720L680,720L680,720ZM602,676L640,637L640,600L640,600L640,637L602,676L602,676ZM758,676L758,676L720,637L720,600L720,600L720,637L758,676Z"/>
 +</vector>
+diff --git a/app/src/main/res/drawable/ic_ms_settings.xml b/app/src/main/res/drawable/ic_ms_settings.xml
+new file mode 100644
+index 0000000000..8f9ae24f82
+--- /dev/null
++++ b/app/src/main/res/drawable/ic_ms_settings.xml
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="960"
++    android:viewportHeight="960"
++   >
++  <path
++      android:fillColor="@android:color/white"
++      android:pathData="M433,880Q406,880 386.5,862Q367,844 363,818L354,752Q341,747 329.5,740Q318,733 307,725L245,751Q220,762 195,753Q170,744 156,721L109,639Q95,616 101,590Q107,564 128,547L181,507Q180,500 180,493.5Q180,487 180,480Q180,473 180,466.5Q180,460 181,453L128,413Q107,396 101,370Q95,344 109,321L156,239Q170,216 195,207Q220,198 245,209L307,235Q318,227 330,220Q342,213 354,208L363,142Q367,116 386.5,98Q406,80 433,80L527,80Q554,80 573.5,98Q593,116 597,142L606,208Q619,213 630.5,220Q642,227 653,235L715,209Q740,198 765,207Q790,216 804,239L851,321Q865,344 859,370Q853,396 832,413L779,453Q780,460 780,466.5Q780,473 780,480Q780,487 780,493.5Q780,500 778,507L831,547Q852,564 858,590Q864,616 850,639L802,721Q788,744 763,753Q738,762 713,751L653,725Q642,733 630,740Q618,747 606,752L597,818Q593,844 573.5,862Q554,880 527,880L433,880ZM440,800L519,800L533,694Q564,686 590.5,670.5Q617,655 639,633L738,674L777,606L691,541Q696,527 698,511.5Q700,496 700,480Q700,464 698,448.5Q696,433 691,419L777,354L738,286L639,328Q617,305 590.5,289.5Q564,274 533,266L520,160L441,160L427,266Q396,274 369.5,289.5Q343,305 321,327L222,286L183,354L269,418Q264,433 262,448Q260,463 260,480Q260,496 262,511Q264,526 269,541L183,606L222,674L321,632Q343,655 369.5,670.5Q396,686 427,694L440,800ZM482,620Q540,620 581,579Q622,538 622,480Q622,422 581,381Q540,340 482,340Q423,340 382.5,381Q342,422 342,480Q342,538 382.5,579Q423,620 482,620ZM480,480L480,480Q480,480 480,480Q480,480 480,480L480,480L480,480L480,480Q480,480 480,480Q480,480 480,480Q480,480 480,480Q480,480 480,480L480,480L480,480L480,480Q480,480 480,480Q480,480 480,480L480,480L480,480L480,480Q480,480 480,480Q480,480 480,480L480,480L480,480L480,480Q480,480 480,480Q480,480 480,480Q480,480 480,480Q480,480 480,480L480,480L480,480L480,480Q480,480 480,480Q480,480 480,480L480,480L480,480Z"/>
++</vector>
+diff --git a/app/src/main/res/drawable/ic_ms_share.xml b/app/src/main/res/drawable/ic_ms_share.xml
+new file mode 100644
+index 0000000000..48cf05d593
+--- /dev/null
++++ b/app/src/main/res/drawable/ic_ms_share.xml
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="960"
++    android:viewportHeight="960"
++   >
++  <path
++      android:fillColor="@android:color/white"
++      android:pathData="M720,880Q670,880 635,845Q600,810 600,760Q600,753 601,745.5Q602,738 604,732L322,568Q305,583 284,591.5Q263,600 240,600Q190,600 155,565Q120,530 120,480Q120,430 155,395Q190,360 240,360Q263,360 284,368.5Q305,377 322,392L604,228Q602,222 601,214.5Q600,207 600,200Q600,150 635,115Q670,80 720,80Q770,80 805,115Q840,150 840,200Q840,250 805,285Q770,320 720,320Q697,320 676,311.5Q655,303 638,288L356,452Q358,458 359,465.5Q360,473 360,480Q360,487 359,494.5Q358,502 356,508L638,672Q655,657 676,648.5Q697,640 720,640Q770,640 805,675Q840,710 840,760Q840,810 805,845Q770,880 720,880ZM720,240Q737,240 748.5,228.5Q760,217 760,200Q760,183 748.5,171.5Q737,160 720,160Q703,160 691.5,171.5Q680,183 680,200Q680,217 691.5,228.5Q703,240 720,240ZM240,520Q257,520 268.5,508.5Q280,497 280,480Q280,463 268.5,451.5Q257,440 240,440Q223,440 211.5,451.5Q200,463 200,480Q200,497 211.5,508.5Q223,520 240,520ZM720,800Q737,800 748.5,788.5Q760,777 760,760Q760,743 748.5,731.5Q737,720 720,720Q703,720 691.5,731.5Q680,743 680,760Q680,777 691.5,788.5Q703,800 720,800ZM720,200Q720,200 720,200Q720,200 720,200Q720,200 720,200Q720,200 720,200Q720,200 720,200Q720,200 720,200Q720,200 720,200Q720,200 720,200ZM240,480Q240,480 240,480Q240,480 240,480Q240,480 240,480Q240,480 240,480Q240,480 240,480Q240,480 240,480Q240,480 240,480Q240,480 240,480ZM720,760Q720,760 720,760Q720,760 720,760Q720,760 720,760Q720,760 720,760Q720,760 720,760Q720,760 720,760Q720,760 720,760Q720,760 720,760Z"/>
++</vector>
 diff --git a/app/src/main/res/drawable/ic_ms_sleep.xml b/app/src/main/res/drawable/ic_ms_sleep.xml
 new file mode 100644
 index 0000000000..0295f38cd7
@@ -8472,6 +8549,38 @@ index 0000000000..30b5b061b1
 +  <path
 +      android:fillColor="@android:color/white"
 +      android:pathData="M434,550L438,582Q439,590 444.5,595Q450,600 458,600L502,600Q510,600 515.5,595Q521,590 522,582L526,550Q534,547 540.5,543Q547,539 552,534L582,547Q589,550 596,548Q603,546 607,539L629,501Q633,494 631.5,487Q630,480 624,475L598,456Q600,448 600,440Q600,432 598,424L624,405Q630,400 631.5,393Q633,386 629,379L607,341Q603,334 596,332Q589,330 582,333L552,346Q547,341 540.5,337Q534,333 526,330L522,298Q521,290 515.5,285Q510,280 502,280L458,280Q450,280 444.5,285Q439,290 438,298L434,330Q426,333 419.5,337Q413,341 408,346L378,333Q371,330 364,332Q357,334 353,341L331,379Q327,386 328.5,393Q330,400 336,405L362,424Q360,432 360,440Q360,448 362,456L336,475Q330,480 328.5,487Q327,494 331,501L353,539Q357,546 364,548Q371,550 378,547L408,534Q413,539 419.5,543Q426,547 434,550ZM480,500Q455,500 437.5,482.5Q420,465 420,440Q420,415 437.5,397.5Q455,380 480,380Q505,380 522.5,397.5Q540,415 540,440Q540,465 522.5,482.5Q505,500 480,500ZM240,708Q183,656 151.5,586.5Q120,517 120,440Q120,290 225,185Q330,80 480,80Q605,80 701.5,153.5Q798,227 827,345L879,550Q884,569 872,584.5Q860,600 840,600L760,600L760,720Q760,753 736.5,776.5Q713,800 680,800L600,800L600,840Q600,857 588.5,868.5Q577,880 560,880L560,880Q543,880 531.5,868.5Q520,857 520,840L520,760Q520,743 531.5,731.5Q543,720 560,720L680,720Q680,720 680,720Q680,720 680,720L680,560Q680,543 691.5,531.5Q703,520 720,520L788,520L750,365Q727,274 652,217Q577,160 480,160Q364,160 282,241Q200,322 200,438Q200,498 224.5,552Q249,606 294,648L320,672L320,840Q320,857 308.5,868.5Q297,880 280,880L280,880Q263,880 251.5,868.5Q240,857 240,840L240,708ZM494,520L494,520L494,520Q494,520 494,520Q494,520 494,520Q494,520 494,520Q494,520 494,520Q494,520 494,520Q494,520 494,520L494,520L494,520Q494,520 494,520Q494,520 494,520L494,520Q494,520 494,520Q494,520 494,520L494,520Q494,520 494,520Q494,520 494,520L494,520L494,520Z"/>
++</vector>
+diff --git a/app/src/main/res/drawable/ic_ms_sync.xml b/app/src/main/res/drawable/ic_ms_sync.xml
+new file mode 100644
+index 0000000000..d50ef82b4b
+--- /dev/null
++++ b/app/src/main/res/drawable/ic_ms_sync.xml
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="960"
++    android:viewportHeight="960"
++   >
++  <path
++      android:fillColor="@android:color/white"
++      android:pathData="M240,482Q240,527 257,569.5Q274,612 310,648L320,658L320,600Q320,583 331.5,571.5Q343,560 360,560Q377,560 388.5,571.5Q400,583 400,600L400,760Q400,777 388.5,788.5Q377,800 360,800L200,800Q183,800 171.5,788.5Q160,777 160,760Q160,743 171.5,731.5Q183,720 200,720L270,720L254,706Q202,660 181,601Q160,542 160,482Q160,388 208,311.5Q256,235 337,194Q351,186 366.5,193Q382,200 387,216Q392,231 386.5,246Q381,261 367,269Q309,301 274.5,357.5Q240,414 240,482ZM720,478Q720,433 703,390.5Q686,348 650,312L640,302L640,360Q640,377 628.5,388.5Q617,400 600,400Q583,400 571.5,388.5Q560,377 560,360L560,200Q560,183 571.5,171.5Q583,160 600,160L760,160Q777,160 788.5,171.5Q800,183 800,200Q800,217 788.5,228.5Q777,240 760,240L690,240L706,254Q755,303 777.5,360.5Q800,418 800,478Q800,572 752,648.5Q704,725 623,766Q609,774 593.5,767Q578,760 573,744Q568,729 573.5,714Q579,699 593,691Q651,659 685.5,602.5Q720,546 720,478Z"/>
++</vector>
+diff --git a/app/src/main/res/drawable/ic_ms_today.xml b/app/src/main/res/drawable/ic_ms_today.xml
+new file mode 100644
+index 0000000000..0e1e366c0a
+--- /dev/null
++++ b/app/src/main/res/drawable/ic_ms_today.xml
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="960"
++    android:viewportHeight="960"
++   >
++  <path
++      android:fillColor="@android:color/white"
++      android:pathData="M480,200Q463,200 451.5,188.5Q440,177 440,160L440,80Q440,63 451.5,51.5Q463,40 480,40Q497,40 508.5,51.5Q520,63 520,80L520,160Q520,177 508.5,188.5Q497,200 480,200ZM678,282Q667,271 667,254.5Q667,238 678,226L734,169Q746,157 762.5,157Q779,157 791,169Q802,180 802,197Q802,214 791,225L734,282Q723,293 706,293Q689,293 678,282ZM800,520Q783,520 771.5,508.5Q760,497 760,480Q760,463 771.5,451.5Q783,440 800,440L880,440Q897,440 908.5,451.5Q920,463 920,480Q920,497 908.5,508.5Q897,520 880,520L800,520ZM480,920Q463,920 451.5,908.5Q440,897 440,880L440,800Q440,783 451.5,771.5Q463,760 480,760Q497,760 508.5,771.5Q520,783 520,800L520,880Q520,897 508.5,908.5Q497,920 480,920ZM226,282L169,226Q157,214 157,197Q157,180 169,169Q180,158 197,158Q214,158 225,169L282,226Q293,237 293,254Q293,271 282,282Q270,293 254,293Q238,293 226,282ZM734,791L678,734Q667,722 667,705.5Q667,689 678,678Q689,667 705.5,667Q722,667 734,678L791,734Q803,745 802.5,762Q802,779 791,791Q779,803 762,803Q745,803 734,791ZM80,520Q63,520 51.5,508.5Q40,497 40,480Q40,463 51.5,451.5Q63,440 80,440L160,440Q177,440 188.5,451.5Q200,463 200,480Q200,497 188.5,508.5Q177,520 160,520L80,520ZM169,791Q158,780 158,763Q158,746 169,735L226,678Q237,667 253.5,667Q270,667 282,678Q294,690 294,706.5Q294,723 282,735L226,791Q214,803 197,803Q180,803 169,791ZM480,720Q380,720 310,650Q240,580 240,480Q240,380 310,310Q380,240 480,240Q580,240 650,310Q720,380 720,480Q720,580 650,650Q580,720 480,720ZM480,640Q546,640 593,593Q640,546 640,480Q640,414 593,367Q546,320 480,320Q414,320 367,367Q320,414 320,480Q320,546 367,593Q414,640 480,640ZM480,480Q480,480 480,480Q480,480 480,480Q480,480 480,480Q480,480 480,480Q480,480 480,480Q480,480 480,480Q480,480 480,480Q480,480 480,480Z"/>
 +</vector>
 diff --git a/app/src/main/res/drawable/ic_notification.xml b/app/src/main/res/drawable/ic_notification.xml
 new file mode 100644
@@ -10587,10 +10696,10 @@ index 0000000000..7a145436b2
 +    </LinearLayout>
 +</ScrollView>
 diff --git a/app/src/main/res/layout/fragment_dashboard.xml b/app/src/main/res/layout/fragment_dashboard.xml
-index 200cb4577d..025cc09add 100644
+index 200cb4577d..2b705872d7 100644
 --- a/app/src/main/res/layout/fragment_dashboard.xml
 +++ b/app/src/main/res/layout/fragment_dashboard.xml
-@@ -1,54 +1,361 @@
+@@ -1,54 +1,365 @@
  <?xml version="1.0" encoding="utf-8"?>
 -<LinearLayout
 +<!-- Pulse: Google-Health "Today" home, dark + neon-blue -->
@@ -10785,14 +10894,18 @@ index 200cb4577d..025cc09add 100644
 -        <androidx.gridlayout.widget.GridLayout
 +                    <TextView
 +                        android:id="@+id/pulse_ring_value"
-+                        android:layout_width="wrap_content"
++                        android:layout_width="116dp"
 +                        android:layout_height="wrap_content"
 +                        android:text="0"
++                        android:gravity="center"
++                        android:maxLines="1"
 +                        android:textColor="@color/pulse_text"
 +                        android:textStyle="bold"
 +                        android:fontFamily="@font/unbounded"
-+                        android:textSize="36sp"
-+                        android:includeFontPadding="false" />
++                        android:includeFontPadding="false"
++                        app:autoSizeTextType="uniform"
++                        app:autoSizeMinTextSize="13sp"
++                        app:autoSizeMaxTextSize="38sp" />
 +
 +                    <TextView
 +                        android:id="@+id/pulse_ring_goal"
@@ -10850,7 +10963,7 @@ index 200cb4577d..025cc09add 100644
 +                android:textSize="17sp"
 +                android:fontFamily="@font/clashdisplay_bold"
 +                app:backgroundTint="@color/pulse_card"
-+                app:icon="@drawable/ic_calories"
++                app:icon="@drawable/ic_ms_calories"
 +                app:iconGravity="textStart"
 +                app:iconSize="22dp"
 +                app:iconTint="@color/pulse_ring_cal" />
@@ -10867,7 +10980,7 @@ index 200cb4577d..025cc09add 100644
 +                android:textSize="17sp"
 +                android:fontFamily="@font/clashdisplay_bold"
 +                app:backgroundTint="?attr/pulseAccent"
-+                app:icon="@drawable/ic_refresh"
++                app:icon="@drawable/ic_ms_sync"
 +                app:iconGravity="textStart"
 +                app:iconSize="22dp"
 +                app:iconTint="@android:color/white" />
@@ -10879,7 +10992,7 @@ index 200cb4577d..025cc09add 100644
 +                android:layout_height="60dp"
 +                android:layout_marginStart="10dp"
 +                app:backgroundTint="@color/pulse_card"
-+                app:icon="@drawable/ic_edit"
++                app:icon="@drawable/ic_ms_edit"
 +                app:iconSize="24dp"
 +                app:iconTint="@color/pulse_text_dim" />
 +        </LinearLayout>
@@ -12172,7 +12285,7 @@ index 0d25323999..22b95724bc 100644
              android:title="@string/action_debug"
              android:icon="@drawable/ic_devices_other" />
 diff --git a/app/src/main/res/menu/bottom_nav_menu.xml b/app/src/main/res/menu/bottom_nav_menu.xml
-index 7b71f13633..0e5c77be46 100644
+index 7b71f13633..bbb0414d82 100644
 --- a/app/src/main/res/menu/bottom_nav_menu.xml
 +++ b/app/src/main/res/menu/bottom_nav_menu.xml
 @@ -2,12 +2,20 @@
@@ -12184,37 +12297,42 @@ index 7b71f13633..0e5c77be46 100644
 -        android:icon="@drawable/ic_dashboard"/>
 +        android:title="@string/pulse_tab_today"
 +        android:id="@+id/bottom_nav_today"
-+        android:icon="@drawable/ic_wb_sunny" />
++        android:icon="@drawable/ic_ms_today" />
      <item
 -        android:title="@string/bottom_nav_devices"
 -        android:id="@+id/bottom_nav_devices"
 -        android:icon="@drawable/ic_devices_other"/>
 +        android:title="@string/pulse_tab_fitness"
 +        android:id="@+id/bottom_nav_fitness"
-+        android:icon="@drawable/ic_activity_exercise" />
++        android:icon="@drawable/ic_ms_active" />
 +    <item
 +        android:title="@string/pulse_tab_sleep"
 +        android:id="@+id/bottom_nav_sleep"
-+        android:icon="@drawable/ic_nights_stay" />
++        android:icon="@drawable/ic_ms_sleep" />
 +    <item
 +        android:title="@string/pulse_tab_health"
 +        android:id="@+id/bottom_nav_health"
-+        android:icon="@drawable/ic_health" />
++        android:icon="@drawable/ic_ms_health" />
  
 -</menu>
 \ No newline at end of file
 +</menu>
 diff --git a/app/src/main/res/menu/dashboard_menu.xml b/app/src/main/res/menu/dashboard_menu.xml
-index 2927899e2d..c67e2ebd83 100644
+index 2927899e2d..510666336f 100644
 --- a/app/src/main/res/menu/dashboard_menu.xml
 +++ b/app/src/main/res/menu/dashboard_menu.xml
-@@ -9,6 +9,16 @@
+@@ -5,13 +5,23 @@
+ 
+     <item
+         android:id="@+id/dashboard_show_calendar"
+-        android:icon="@drawable/ic_calendar_from"
++        android:icon="@drawable/ic_ms_calendar"
          android:title="@string/menuitem_calendar"
          app:iconTint="?attr/actionmenu_icon_color"
          app:showAsAction="ifRoom" />
 +    <item
 +        android:id="@+id/pulse_share_today"
-+        android:icon="@drawable/ic_share"
++        android:icon="@drawable/ic_ms_share"
 +        android:title="@string/pulse_share_today"
 +        app:iconTint="?attr/actionmenu_icon_color"
 +        app:showAsAction="ifRoom" />
@@ -12224,7 +12342,11 @@ index 2927899e2d..c67e2ebd83 100644
 +        app:showAsAction="never" />
      <item
          android:id="@+id/dashboard_settings"
-         android:icon="@drawable/ic_settings"
+-        android:icon="@drawable/ic_settings"
++        android:icon="@drawable/ic_ms_settings"
+         android:title="@string/dashboard_settings"
+         app:iconTint="?attr/actionmenu_icon_color"
+         app:showAsAction="never" />
 diff --git a/app/src/main/res/values-night/colors.xml b/app/src/main/res/values-night/colors.xml
 new file mode 100644
 index 0000000000..c237443f71
@@ -15202,6 +15324,10 @@ index eba4c6ea00..c94b3aaf12 100644
  # FIXME: This optimizes away some classes it should not - see #3853
  android.enableR8.fullMode=false
 +org.gradle.java.installations.paths=/home/zoop/dev/android-toolchain/jdk17,/home/zoop/dev/android-toolchain/jdk21
+diff --git a/og-image.png b/og-image.png
+new file mode 100644
+index 0000000000..af43be347a
+Binary files /dev/null and b/og-image.png differ
 diff --git a/sync-upstream.sh b/sync-upstream.sh
 new file mode 100755
 index 0000000000..6ac6d2f1a4
