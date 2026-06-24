@@ -27,8 +27,7 @@ import androidx.annotation.Nullable;
 import nodomain.freeyourgadget.gadgetbridge.R;
 
 /**
- * Pulse: a single thick progress ring, Google-Health "Today" style.
- * Grey track + neon-blue progress arc with a rounded cap and a dot marker.
+ * Thick progress ring: grey track, neon-blue arc with a rounded cap and a dot marker.
  */
 public class PulseRingView extends View {
     private final Paint trackPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -78,7 +77,7 @@ public class PulseRingView extends View {
         invalidate();
     }
 
-    /** Expressive fill: spring the arc to its target with a little overshoot. */
+    /** spring the arc to its target with a little overshoot */
     public void setProgressAnimated(final float factor) {
         final float target = Math.max(0f, factor);
         if (progressAnimator != null) {

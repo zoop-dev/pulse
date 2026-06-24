@@ -45,8 +45,8 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivityUser;
 import nodomain.freeyourgadget.gadgetbridge.model.DailyTotals;
 import nodomain.freeyourgadget.gadgetbridge.model.SleepScoreSample;
 
-/** Pulse: sleep insights — device sleep score (or a computed fallback), last-night
- *  stage breakdown, a 7-night trend and a one-line takeaway. */
+/** Sleep insights: device sleep score (or a computed fallback), last-night stage
+ *  breakdown, a 7-night trend and a one-line takeaway. */
 public class PulseSleepActivity extends AbstractGBActivity {
 
     @Override

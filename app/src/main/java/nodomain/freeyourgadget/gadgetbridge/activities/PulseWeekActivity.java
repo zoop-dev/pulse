@@ -45,8 +45,8 @@ import nodomain.freeyourgadget.gadgetbridge.model.DailyTotals;
 import nodomain.freeyourgadget.gadgetbridge.util.FormatUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
-/** Pulse: an animated "Week in Review" — weekly stats, an adaptive challenge,
- *  and all-time personal records (flagged when set this week). */
+/** Animated "Week in Review": weekly stats, an adaptive challenge, and all-time
+ *  personal records (flagged when set this week). */
 public class PulseWeekActivity extends AbstractGBActivity {
 
     private final NumberFormat nf = NumberFormat.getIntegerInstance();
