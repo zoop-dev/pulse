@@ -159,7 +159,7 @@
 
                     <TextView
                         android:id="@+id/pulse_ring_value"
-                        android:layout_width="116dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:gravity="center"
@@ -167,10 +167,8 @@
                         android:textColor="@color/pulse_text"
                         android:textStyle="bold"
                         android:fontFamily="@font/unbounded"
-                        android:includeFontPadding="false"
-                        app:autoSizeTextType="uniform"
-                        app:autoSizeMinTextSize="13sp"
-                        app:autoSizeMaxTextSize="38sp" />
+                        android:textSize="36sp"
+                        android:includeFontPadding="false" />
 
                     <TextView
                         android:id="@+id/pulse_ring_goal"

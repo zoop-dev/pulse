@@ -1,5 +1,5 @@
 ### pulse vs upstream gadgetbridge (base 79ad5a6079a277f95b791d81ec34e6810cc49b60)
-### generated 2026-06-24T15:16Z
+### generated 2026-06-24T15:29Z
 
 diff --git a/README.md b/README.md
 index 76cf11b42c..19bfa6cc92 100644
@@ -1297,7 +1297,7 @@ index dcef446caf..84f8cefa33 100644
      }
  }
 diff --git a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java
-index baf984680c..ae32929bdc 100644
+index baf984680c..6e14190925 100644
 --- a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java
 +++ b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/DashboardFragment.java
 @@ -30,6 +30,8 @@ import android.view.MenuInflater;
@@ -1687,7 +1687,7 @@ index baf984680c..ae32929bdc 100644
      private void fullRefresh() {
          gridLayout.removeAllViews();
          widgetMap.clear();
-@@ -234,116 +530,1799 @@ public class DashboardFragment extends Fragment implements MenuProvider {
+@@ -234,116 +530,1843 @@ public class DashboardFragment extends Fragment implements MenuProvider {
      }
  
      private void refresh() {
@@ -1703,9 +1703,12 @@ index baf984680c..ae32929bdc 100644
          reloadPreferences();
 -        draw();
 +
-+        // Show the loading overlay on first load so nothing pops in afterwards.
++        // First load uses the full overlay; later reloads show inline skeletons so cards never blank.
 +        if (!hasLoadedOnce && loadingOverlay != null) {
 +            loadingOverlay.setVisibility(View.VISIBLE);
++        } else if (hasLoadedOnce) {
++            if ("today".equals(section)) showTodayExtraSkeleton();
++            else if ("sleep".equals(section)) showSleepSkeleton();
 +        }
 +
 +        // Warm the (DB-heavy) stats off the UI thread, then draw on the UI thread.
@@ -2890,9 +2893,16 @@ index baf984680c..ae32929bdc 100644
 +        ringGoal.setText(goal);
 +    }
 +
-+    /** Set the ring value. Width is bounded to the ring's inner circle and the view autosizes,
-+     *  so any length (e.g. "8h 7m" or "No sleep") shrinks to fit instead of clipping. */
++    /** Big like before (36sp), only shrinking when the text would otherwise hit the ring. */
 +    private void setRingValue(final String value) {
++        final float density = getResources().getDisplayMetrics().density;
++        final float maxWidth = 118f * density;
++        float sp = 36f;
++        ringValue.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, sp);
++        while (sp > 18f && ringValue.getPaint().measureText(value) > maxWidth) {
++            sp -= 1f;
++            ringValue.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, sp);
++        }
 +        ringValue.setText(value);
 +    }
 +
@@ -3194,16 +3204,13 @@ index baf984680c..ae32929bdc 100644
 +        rv.setTypeface(androidx.core.content.res.ResourcesCompat.getFont(ctx, R.font.unbounded));
 +        rv.setIncludeFontPadding(false);
 +        rv.setMaxLines(1);
-+        // bound to the ring's inner width + autosize so long values never clip
-+        androidx.core.widget.TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
-+                rv, 13, 38, 1, android.util.TypedValue.COMPLEX_UNIT_SP);
 +        final TextView rg = new TextView(ctx);
 +        rg.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_ring_steps));
 +        rg.setTextSize(13);
 +        rg.setGravity(android.view.Gravity.CENTER_HORIZONTAL);
 +        rg.setTypeface(rg.getTypeface(), android.graphics.Typeface.BOLD);
 +        ringText.addView(rl);
-+        ringText.addView(rv, new LinearLayout.LayoutParams(dp(116, scale), ViewGroup.LayoutParams.WRAP_CONTENT));
++        ringText.addView(rv);
 +        ringText.addView(rg);
 +        final android.widget.FrameLayout.LayoutParams rtlp = new android.widget.FrameLayout.LayoutParams(
 +                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -3308,7 +3315,8 @@ index baf984680c..ae32929bdc 100644
 +                return pages.size();
 +            }
 +        });
-+
+ 
+-                createWidget(widget, cardsEnabled, columnSpan);
 +        if (carouselPage >= pages.size()) carouselPage = 0;
 +        todayCarousel.setCurrentItem(carouselPage, false);
 +
@@ -3341,6 +3349,44 @@ index baf984680c..ae32929bdc 100644
 +            lp.width = on ? dp(20, scale) : dp(6, scale);
 +            dot.setLayoutParams(lp);
 +        }
++    }
+ 
+-                widgetMap.put(widgetName, widget);
++    /** A shimmering placeholder block shown while data warms. */
++    private View skeletonBlock(final Context ctx, final float scale, final int heightDp, final int topDp) {
++        final View v = new View(ctx);
++        final android.graphics.drawable.GradientDrawable g = new android.graphics.drawable.GradientDrawable();
++        g.setCornerRadius(dp(20, scale));
++        g.setColor(ContextCompat.getColor(ctx, R.color.pulse_card));
++        v.setBackground(g);
++        final LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
++                ViewGroup.LayoutParams.MATCH_PARENT, dp(heightDp, scale));
++        lp.topMargin = dp(topDp, scale);
++        v.setLayoutParams(lp);
++        final android.view.animation.AlphaAnimation anim = new android.view.animation.AlphaAnimation(0.35f, 0.85f);
++        anim.setDuration(750);
++        anim.setRepeatMode(android.view.animation.Animation.REVERSE);
++        anim.setRepeatCount(android.view.animation.Animation.INFINITE);
++        v.startAnimation(anim);
++        return v;
++    }
++
++    private void showTodayExtraSkeleton() {
++        if (todayExtra == null) return;
++        final Context ctx = requireContext();
++        final float scale = getResources().getDisplayMetrics().density;
++        todayExtra.removeAllViews();
++        todayExtra.addView(skeletonBlock(ctx, scale, 84, 0));
++        todayExtra.addView(skeletonBlock(ctx, scale, 150, 12));
++    }
++
++    private void showSleepSkeleton() {
++        if (sleepDetailContainer == null) return;
++        final Context ctx = requireContext();
++        final float scale = getResources().getDisplayMetrics().density;
++        sleepDetailContainer.setVisibility(View.VISIBLE);
++        sleepDetailContainer.removeAllViews();
++        sleepDetailContainer.addView(skeletonBlock(ctx, scale, 200, 0));
 +    }
 +
 +    /** Today's stacked cards below the pills: a week roll-up and the latest workouts. */
@@ -3390,8 +3436,7 @@ index baf984680c..ae32929bdc 100644
 +            rows = new ArrayList<>(recentWorkouts);
 +        }
 +        if (rows.isEmpty()) return;
- 
--                createWidget(widget, cardsEnabled, columnSpan);
++
 +        final LinearLayout wo = new LinearLayout(ctx);
 +        wo.setOrientation(LinearLayout.VERTICAL);
 +        wo.setBackgroundResource(R.drawable.pulse_widget_bg);
@@ -3477,8 +3522,7 @@ index baf984680c..ae32929bdc 100644
 +            return false;
 +        });
 +    }
- 
--                widgetMap.put(widgetName, widget);
++
 +    /** Compact hero tile (icon + label + value) with a proportional fill; tap opens the chart. */
 +    private MaterialCardView buildHeroTile(final String metric) {
 +        final Context ctx = requireContext();
@@ -3575,7 +3619,7 @@ index baf984680c..ae32929bdc 100644
      }
  
      private void createWidget(AbstractDashboardWidget widgetObj, boolean cardsEnabled, int columnSpan) {
-@@ -366,10 +2345,13 @@ public class DashboardFragment extends Fragment implements MenuProvider {
+@@ -366,10 +2389,13 @@ public class DashboardFragment extends Fragment implements MenuProvider {
  
          if (cardsEnabled) {
              MaterialCardView card = new MaterialCardView(requireActivity());
@@ -3738,10 +3782,10 @@ index 0000000000..6c33b0701a
 +}
 diff --git a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/PulseDashboardEditActivity.java b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/PulseDashboardEditActivity.java
 new file mode 100644
-index 0000000000..1af73dc30e
+index 0000000000..5d4b133314
 --- /dev/null
 +++ b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/activities/PulseDashboardEditActivity.java
-@@ -0,0 +1,235 @@
+@@ -0,0 +1,245 @@
 +/*  Copyright (C) 2026 Pulse
 +
 +    This file is part of Pulse, a Garmin-only fork of Gadgetbridge.
@@ -3793,6 +3837,8 @@ index 0000000000..1af73dc30e
 +    private final List<String> metrics = new ArrayList<>();
 +    private final Set<String> enabled = new HashSet<>();
 +    private ItemTouchHelper touchHelper;
++    private String origMetrics = "";
++    private boolean origExpanded;
 +
 +    @Override
 +    protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -3811,7 +3857,8 @@ index 0000000000..1af73dc30e
 +        // Expanded layout toggle: stack the hero (no swiping) vs the swipeable carousel
 +        final com.google.android.material.materialswitch.MaterialSwitch expandedSwitch =
 +                findViewById(R.id.pulse_expanded_switch);
-+        expandedSwitch.setChecked(GBApplication.getPrefs().getBoolean("pulse_today_expanded", false));
++        origExpanded = GBApplication.getPrefs().getBoolean("pulse_today_expanded", false);
++        expandedSwitch.setChecked(origExpanded);
 +        expandedSwitch.setOnCheckedChangeListener((b, checked) ->
 +                GBApplication.getPrefs().getPreferences().edit()
 +                        .putBoolean("pulse_today_expanded", checked).apply());
@@ -3819,6 +3866,7 @@ index 0000000000..1af73dc30e
 +        // Load saved order (enabled, in order), then append any disabled metrics
 +        final String saved = GBApplication.getPrefs().getString("pulse_today_metrics",
 +                String.join(",", DashboardFragment.ALL_METRICS));
++        origMetrics = saved;
 +        for (final String m : saved.split(",")) {
 +            if (isKnown(m) && !metrics.contains(m)) {
 +                metrics.add(m);
@@ -3898,10 +3946,16 @@ index 0000000000..1af73dc30e
 +                sb.append(m);
 +            }
 +        }
++        final String newMetrics = sb.toString();
++        final boolean newExpanded = GBApplication.getPrefs().getBoolean("pulse_today_expanded", false);
++        if (newMetrics.equals(origMetrics) && newExpanded == origExpanded) {
++            return;
++        }
 +        GBApplication.getPrefs().getPreferences().edit()
-+                .putString("pulse_today_metrics", sb.toString()).apply();
-+        final Intent intent = new Intent(DashboardFragment.ACTION_CONFIG_CHANGE);
-+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
++                .putString("pulse_today_metrics", newMetrics).apply();
++        origMetrics = newMetrics;
++        origExpanded = newExpanded;
++        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(DashboardFragment.ACTION_CONFIG_CHANGE));
 +    }
 +
 +    @Override
@@ -10696,10 +10750,10 @@ index 0000000000..7a145436b2
 +    </LinearLayout>
 +</ScrollView>
 diff --git a/app/src/main/res/layout/fragment_dashboard.xml b/app/src/main/res/layout/fragment_dashboard.xml
-index 200cb4577d..2b705872d7 100644
+index 200cb4577d..d63c69a04d 100644
 --- a/app/src/main/res/layout/fragment_dashboard.xml
 +++ b/app/src/main/res/layout/fragment_dashboard.xml
-@@ -1,54 +1,365 @@
+@@ -1,54 +1,363 @@
  <?xml version="1.0" encoding="utf-8"?>
 -<LinearLayout
 +<!-- Pulse: Google-Health "Today" home, dark + neon-blue -->
@@ -10894,7 +10948,7 @@ index 200cb4577d..2b705872d7 100644
 -        <androidx.gridlayout.widget.GridLayout
 +                    <TextView
 +                        android:id="@+id/pulse_ring_value"
-+                        android:layout_width="116dp"
++                        android:layout_width="wrap_content"
 +                        android:layout_height="wrap_content"
 +                        android:text="0"
 +                        android:gravity="center"
@@ -10902,10 +10956,8 @@ index 200cb4577d..2b705872d7 100644
 +                        android:textColor="@color/pulse_text"
 +                        android:textStyle="bold"
 +                        android:fontFamily="@font/unbounded"
-+                        android:includeFontPadding="false"
-+                        app:autoSizeTextType="uniform"
-+                        app:autoSizeMinTextSize="13sp"
-+                        app:autoSizeMaxTextSize="38sp" />
++                        android:textSize="36sp"
++                        android:includeFontPadding="false" />
 +
 +                    <TextView
 +                        android:id="@+id/pulse_ring_goal"

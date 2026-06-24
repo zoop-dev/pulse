@@ -541,9 +541,12 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         dashboardData.clear();
         reloadPreferences();
 
-        // Show the loading overlay on first load so nothing pops in afterwards.
+        // First load uses the full overlay; later reloads show inline skeletons so cards never blank.
         if (!hasLoadedOnce && loadingOverlay != null) {
             loadingOverlay.setVisibility(View.VISIBLE);
+        } else if (hasLoadedOnce) {
+            if ("today".equals(section)) showTodayExtraSkeleton();
+            else if ("sleep".equals(section)) showSleepSkeleton();
         }
 
         // Warm the (DB-heavy) stats off the UI thread, then draw on the UI thread.
@@ -1717,9 +1720,16 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         ringGoal.setText(goal);
     }
 
-    /** Set the ring value. Width is bounded to the ring's inner circle and the view autosizes,
-     *  so any length (e.g. "8h 7m" or "No sleep") shrinks to fit instead of clipping. */
+    /** Big like before (36sp), only shrinking when the text would otherwise hit the ring. */
     private void setRingValue(final String value) {
+        final float density = getResources().getDisplayMetrics().density;
+        final float maxWidth = 118f * density;
+        float sp = 36f;
+        ringValue.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, sp);
+        while (sp > 18f && ringValue.getPaint().measureText(value) > maxWidth) {
+            sp -= 1f;
+            ringValue.setTextSize(android.util.TypedValue.COMPLEX_UNIT_SP, sp);
+        }
         ringValue.setText(value);
     }
 
@@ -1948,16 +1958,13 @@ public class DashboardFragment extends Fragment implements MenuProvider {
         rv.setTypeface(androidx.core.content.res.ResourcesCompat.getFont(ctx, R.font.unbounded));
         rv.setIncludeFontPadding(false);
         rv.setMaxLines(1);
-        // bound to the ring's inner width + autosize so long values never clip
-        androidx.core.widget.TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
-                rv, 13, 38, 1, android.util.TypedValue.COMPLEX_UNIT_SP);
         final TextView rg = new TextView(ctx);
         rg.setTextColor(ContextCompat.getColor(ctx, R.color.pulse_ring_steps));
         rg.setTextSize(13);
         rg.setGravity(android.view.Gravity.CENTER_HORIZONTAL);
         rg.setTypeface(rg.getTypeface(), android.graphics.Typeface.BOLD);
         ringText.addView(rl);
-        ringText.addView(rv, new LinearLayout.LayoutParams(dp(116, scale), ViewGroup.LayoutParams.WRAP_CONTENT));
+        ringText.addView(rv);
         ringText.addView(rg);
         final android.widget.FrameLayout.LayoutParams rtlp = new android.widget.FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -2095,6 +2102,43 @@ public class DashboardFragment extends Fragment implements MenuProvider {
             lp.width = on ? dp(20, scale) : dp(6, scale);
             dot.setLayoutParams(lp);
         }
+    }
+
+    /** A shimmering placeholder block shown while data warms. */
+    private View skeletonBlock(final Context ctx, final float scale, final int heightDp, final int topDp) {
+        final View v = new View(ctx);
+        final android.graphics.drawable.GradientDrawable g = new android.graphics.drawable.GradientDrawable();
+        g.setCornerRadius(dp(20, scale));
+        g.setColor(ContextCompat.getColor(ctx, R.color.pulse_card));
+        v.setBackground(g);
+        final LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, dp(heightDp, scale));
+        lp.topMargin = dp(topDp, scale);
+        v.setLayoutParams(lp);
+        final android.view.animation.AlphaAnimation anim = new android.view.animation.AlphaAnimation(0.35f, 0.85f);
+        anim.setDuration(750);
+        anim.setRepeatMode(android.view.animation.Animation.REVERSE);
+        anim.setRepeatCount(android.view.animation.Animation.INFINITE);
+        v.startAnimation(anim);
+        return v;
+    }
+
+    private void showTodayExtraSkeleton() {
+        if (todayExtra == null) return;
+        final Context ctx = requireContext();
+        final float scale = getResources().getDisplayMetrics().density;
+        todayExtra.removeAllViews();
+        todayExtra.addView(skeletonBlock(ctx, scale, 84, 0));
+        todayExtra.addView(skeletonBlock(ctx, scale, 150, 12));
+    }
+
+    private void showSleepSkeleton() {
+        if (sleepDetailContainer == null) return;
+        final Context ctx = requireContext();
+        final float scale = getResources().getDisplayMetrics().density;
+        sleepDetailContainer.setVisibility(View.VISIBLE);
+        sleepDetailContainer.removeAllViews();
+        sleepDetailContainer.addView(skeletonBlock(ctx, scale, 200, 0));
     }
 
     /** Today's stacked cards below the pills: a week roll-up and the latest workouts. */
