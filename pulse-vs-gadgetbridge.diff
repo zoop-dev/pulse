@@ -1,5 +1,5 @@
-### pulse vs upstream gadgetbridge (base 79ad5a6)
-### generated 2026-06-24T11:46Z
+### pulse vs upstream gadgetbridge (base 79ad5a6079a277f95b791d81ec34e6810cc49b60)
+### generated 2026-06-24T11:49Z
 
 diff --git a/README.md b/README.md
 index 76cf11b42c..19bfa6cc92 100644
@@ -14914,10 +14914,10 @@ index 82d920d68f..eb0bbfd3e0 100644
      <string translatable="false" name="gadgetbridge_running">@string/gadgetbridge_running_generic</string>
 diff --git a/deploy.sh b/deploy.sh
 new file mode 100755
-index 0000000000..d2e082cd7c
+index 0000000000..51a792b01a
 --- /dev/null
 +++ b/deploy.sh
-@@ -0,0 +1,42 @@
+@@ -0,0 +1,43 @@
 +#!/usr/bin/env bash
 +# pulse deploy: refresh the upstream diff, commit, push to github.
 +# usage: ./deploy.sh "commit message"   (message defaults to "deploy")
@@ -14926,8 +14926,9 @@ index 0000000000..d2e082cd7c
 +cd "$(dirname "$0")"
 +
 +MSG="${1:-deploy}"
-+BASE=79ad5a6                       # upstream gadgetbridge commit our fork sits on
 +OUT=pulse-vs-gadgetbridge.diff
++# wherever our fork currently branches off upstream (tracks syncs automatically)
++BASE=$(git merge-base HEAD upstream/master 2>/dev/null || echo 79ad5a6)
 +
 +if [ -z "$SKIP_BUILD" ]; then
 +    echo "building…"
@@ -14969,3 +14970,40 @@ index eba4c6ea00..c94b3aaf12 100644
  # FIXME: This optimizes away some classes it should not - see #3853
  android.enableR8.fullMode=false
 +org.gradle.java.installations.paths=/home/zoop/dev/android-toolchain/jdk17,/home/zoop/dev/android-toolchain/jdk21
+diff --git a/sync-upstream.sh b/sync-upstream.sh
+new file mode 100755
+index 0000000000..81a8d72318
+--- /dev/null
++++ b/sync-upstream.sh
+@@ -0,0 +1,31 @@
++#!/usr/bin/env bash
++# pull in new upstream gadgetbridge commits from codeberg and replay pulse on top.
++# usage: ./sync-upstream.sh          report + rebase
++#        ./sync-upstream.sh --check  just report what's new, don't touch anything
++set -e
++cd "$(dirname "$0")"
++
++git fetch upstream master
++BASE=$(git merge-base HEAD upstream/master)
++N=$(git rev-list --count "$BASE"..upstream/master)
++
++if [ "$N" -eq 0 ]; then
++    echo "already up to date with upstream."
++    exit 0
++fi
++
++echo "== $N new upstream commits =="
++git log --oneline "$BASE"..upstream/master
++echo
++echo "== of those, ones touching garmin / files we changed =="
++git log --oneline "$BASE"..upstream/master -- \
++    'app/src/main/java/nodomain/freeyourgadget/gadgetbridge/devices/garmin/**' \
++    'app/src/main/java/nodomain/freeyourgadget/gadgetbridge/service/devices/garmin/**' \
++    $(git diff --name-only "$BASE"..HEAD | tr '\n' ' ') || true
++
++[ "$1" = "--check" ] && exit 0
++
++echo
++echo "rebasing pulse onto upstream/master… (resolve conflicts, then: git rebase --continue)"
++git rebase upstream/master
++echo "rebased. now build + deploy:  ./deploy.sh \"sync upstream\""
