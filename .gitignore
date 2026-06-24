@@ -80,3 +80,6 @@ fdroid/repo/
 fdroid/archive/
 fdroid/tmp/
 fdroid/srclibs/
+fdroid/*.p12
+fdroid/*.jks
+fdroid/config.yml
