@@ -16,6 +16,9 @@ package nodomain.freeyourgadget.gadgetbridge.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.discovery.DiscoveryActivityV2;
@@ -23,6 +26,15 @@ import nodomain.freeyourgadget.gadgetbridge.activities.discovery.DiscoveryActivi
 /** Pulse: first-run welcome screen, shown once until "Get started" is tapped. */
 public class PulseOnboardingActivity extends AbstractGBActivity {
     public static final String PREF_ONBOARDED = "pulse_onboarded";
+
+    private final ActivityResultLauncher<String[]> restorePicker = registerForActivityResult(
+            new ActivityResultContracts.OpenDocument(), uri -> {
+                if (uri == null) return;
+                final Intent i = new Intent(this, BackupRestoreProgressActivity.class);
+                i.putExtra(BackupRestoreProgressActivity.EXTRA_URI, uri);
+                i.putExtra(BackupRestoreProgressActivity.EXTRA_ACTION, "import");
+                startActivity(i);
+            });
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -32,6 +44,9 @@ public class PulseOnboardingActivity extends AbstractGBActivity {
 
         findViewById(R.id.onboard_connect).setOnClickListener(v ->
                 startActivity(new Intent(this, DiscoveryActivityV2.class)));
+
+        findViewById(R.id.onboard_restore).setOnClickListener(v ->
+                restorePicker.launch(new String[]{"*/*"}));
 
         findViewById(R.id.onboard_start).setOnClickListener(v -> {
             GBApplication.getPrefs().getPreferences().edit().putBoolean(PREF_ONBOARDED, true).apply();
