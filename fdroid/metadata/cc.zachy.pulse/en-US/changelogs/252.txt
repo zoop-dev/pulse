@@ -1,0 +1,4 @@
+Swipeable Today carousel, expanded mode, week + recent workouts cards.
+Intensity minutes with a daily view. Material Symbols icons. Springy motion and
+fade-through transitions. Skeleton loaders. Customisable share card. Plus the
+distance-format crash fix from upstream.

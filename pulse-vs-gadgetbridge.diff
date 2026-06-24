@@ -1,6 +1,22 @@
 ### pulse vs upstream gadgetbridge (base 79ad5a6079a277f95b791d81ec34e6810cc49b60)
-### generated 2026-06-24T16:53Z
+### generated 2026-06-24T17:10Z
 
+diff --git a/.gitignore b/.gitignore
+index 0160baad1f..d43245bc74 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -72,3 +72,11 @@ fw.dirs
+ app/release/output-metadata.json
+ app/.cxx/
+ .attach_pid*
++
++# fdroid repo signing + generated output
++fdroid/keystore.jks
++fdroid/config.keystore.yml
++fdroid/repo/
++fdroid/archive/
++fdroid/tmp/
++fdroid/srclibs/
 diff --git a/README.md b/README.md
 index 76cf11b42c..19bfa6cc92 100644
 --- a/README.md
@@ -15381,6 +15397,69 @@ index 0000000000..51a792b01a
 +
 +git push origin main
 +echo "deployed: $(git rev-parse --short HEAD)"
+diff --git a/fdroid/config.yml b/fdroid/config.yml
+new file mode 100644
+index 0000000000..47c8d58662
+--- /dev/null
++++ b/fdroid/config.yml
+@@ -0,0 +1,9 @@
++# fdroidserver config for the self-hosted Pulse repo.
++# Run `fdroid init` once here to generate the signing keystore, then `fdroid update`.
++# Keep keystore.jks + the *pass fields out of git (see .gitignore).
++repo_url: https://fdroid.zachy.cc/repo
++repo_name: Pulse
++repo_description: >-
++  Pulse, a Garmin-only Gadgetbridge fork. Add this repo to get builds and updates.
++repo_icon: icon.png
++archive_older: 3
+diff --git a/fdroid/metadata/cc.zachy.pulse.yml b/fdroid/metadata/cc.zachy.pulse.yml
+new file mode 100644
+index 0000000000..06a74f71fa
+--- /dev/null
++++ b/fdroid/metadata/cc.zachy.pulse.yml
+@@ -0,0 +1,32 @@
++# App metadata for the self-hosted Pulse F-Droid repo (binary repo: APKs dropped in repo/,
++# index built by `fdroid update`). No Builds block needed since we publish the APK directly.
++Categories:
++  - Sports & Health
++  - Connectivity
++License: AGPL-3.0-or-later
++AuthorName: zoop
++WebSite: https://zachy.cc
++SourceCode: https://github.com/zoop-dev/pulse
++IssueTracker: https://github.com/zoop-dev/pulse/issues
++
++Name: Pulse
++Summary: Garmin watch companion, all your data stays on the phone
++Description: |-
++    A Garmin-only fork of Gadgetbridge with a new look. It pairs with your Garmin
++    watch over Bluetooth and keeps everything on your phone. No account, no vendor
++    app, no cloud.
++
++    What's in it:
++
++    * Today screen with a steps ring and swipeable metric tiles
++    * Sleep with a score, stages and a 7-night trend
++    * Fitness and Health tabs you can customise
++    * Intensity minutes with a daily view (Garmin only shows weekly)
++    * Workouts, streaks and shareable cards
++    * Light/dark and accent colours
++
++    Built on Gadgetbridge's Garmin engine, so your data never leaves the phone
++    (apart from optional weather).
++
++CurrentVersion: 0.93.0-pulse
++CurrentVersionCode: 252
+diff --git a/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/252.txt b/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/252.txt
+new file mode 100644
+index 0000000000..d1a53657b3
+--- /dev/null
++++ b/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/252.txt
+@@ -0,0 +1,4 @@
++Swipeable Today carousel, expanded mode, week + recent workouts cards.
++Intensity minutes with a daily view. Material Symbols icons. Springy motion and
++fade-through transitions. Skeleton loaders. Customisable share card. Plus the
++distance-format crash fix from upstream.
 diff --git a/gradle.properties b/gradle.properties
 index eba4c6ea00..c94b3aaf12 100644
 --- a/gradle.properties
@@ -15394,6 +15473,44 @@ diff --git a/og-image.png b/og-image.png
 new file mode 100644
 index 0000000000..af43be347a
 Binary files /dev/null and b/og-image.png differ
+diff --git a/publish-fdroid.sh b/publish-fdroid.sh
+new file mode 100755
+index 0000000000..d388c91cde
+--- /dev/null
++++ b/publish-fdroid.sh
+@@ -0,0 +1,32 @@
++#!/usr/bin/env bash
++# build a signed R8 release apk, drop it in the self-hosted f-droid repo, rebuild the
++# index, and push it to cloudflare pages (fdroid.zachy.cc).
++#
++# one-time setup before this works:
++#   - app signing key:   set PULSE_KEYSTORE / PULSE_KS_PASS / PULSE_KEY_ALIAS / PULSE_KEY_PASS
++#   - repo signing key:  cd fdroid && fdroid init   (generates fdroid/keystore.jks, keep it secret)
++#   - cloudflare:        a Pages project mapped to fdroid.zachy.cc
++set -e
++cd "$(dirname "$0")"
++
++echo "building release (r8)…"
++JAVA_HOME="${JAVA_HOME:-$HOME/dev/android-toolchain/jdk17}" \
++    ./gradlew :app:assembleMainlineRelease --no-daemon -q
++
++UNSIGNED=$(ls -t app/build/outputs/apk/mainline/release/*.apk | head -1)
++OUT="fdroid/repo/cc.zachy.pulse_$(grep -m1 versionCode app/build.gradle | grep -oE '[0-9]+').apk"
++mkdir -p fdroid/repo
++
++echo "signing $UNSIGNED…"
++"$ANDROID_HOME"/build-tools/*/apksigner sign \
++    --ks "$PULSE_KEYSTORE" --ks-pass env:PULSE_KS_PASS \
++    --ks-key-alias "$PULSE_KEY_ALIAS" --key-pass env:PULSE_KEY_PASS \
++    --out "$OUT" "$UNSIGNED"
++
++echo "rebuilding index…"
++( cd fdroid && fdroid update -c --pretty )
++
++echo "deploying to cloudflare pages…"
++npx wrangler pages deploy fdroid/repo --project-name pulse-fdroid
++
++echo "done. repo: https://fdroid.zachy.cc/repo"
 diff --git a/sync-upstream.sh b/sync-upstream.sh
 new file mode 100755
 index 0000000000..6ac6d2f1a4
