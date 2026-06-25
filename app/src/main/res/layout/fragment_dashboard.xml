@@ -224,7 +224,7 @@
                 android:text="0"
                 android:textColor="@color/pulse_text"
                 android:textSize="17sp"
-                android:fontFamily="@font/clashdisplay_bold"
+                android:fontFamily="@font/spacegrotesk_bold"
                 app:backgroundTint="@color/pulse_card"
                 app:icon="@drawable/ic_ms_calories"
                 app:iconGravity="textStart"
@@ -241,7 +241,7 @@
                 android:text="@string/pulse_start"
                 android:textColor="@android:color/white"
                 android:textSize="17sp"
-                android:fontFamily="@font/clashdisplay_bold"
+                android:fontFamily="@font/spacegrotesk_bold"
                 app:backgroundTint="?attr/pulseAccent"
                 app:icon="@drawable/ic_ms_sync"
                 app:iconGravity="textStart"
@@ -357,7 +357,7 @@
             android:layout_marginTop="14dp"
             android:text="@string/pulse_loading"
             android:textColor="@color/pulse_text_dim"
-            android:fontFamily="@font/satoshi"
+            android:fontFamily="@font/plus_jakarta"
             android:textSize="14sp" />
     </LinearLayout>
 </FrameLayout>

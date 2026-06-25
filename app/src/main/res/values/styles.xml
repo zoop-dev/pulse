@@ -55,8 +55,8 @@
         <item name="textColorTertiary">@color/tertiarytext_dark</item>
 
         <!-- Pulse: Satoshi as the app-wide body font (matches zachy.cc) -->
-        <item name="android:fontFamily">@font/satoshi</item>
-        <item name="fontFamily">@font/satoshi</item>
+        <item name="android:fontFamily">@font/plus_jakarta</item>
+        <item name="fontFamily">@font/plus_jakarta</item>
 
         <item name="colorPrimary">@color/primarydark_dark</item>
         <item name="colorPrimaryDark">@color/primarydark_dark</item>
@@ -305,7 +305,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/pulse_text</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:fontFamily">@font/satoshi_medium</item>
+        <item name="android:fontFamily">@font/plusjakarta_medium</item>
     </style>
     <style name="PulseOnboardBody">
         <item name="android:layout_width">match_parent</item>
