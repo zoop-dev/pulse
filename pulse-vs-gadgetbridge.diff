@@ -1,5 +1,5 @@
 ### pulse vs upstream gadgetbridge (base 79ad5a6079a277f95b791d81ec34e6810cc49b60)
-### generated 2026-06-25T11:19Z
+### generated 2026-06-25T12:13Z
 
 diff --git a/.gitignore b/.gitignore
 index 0160baad1f..dd3a7d7730 100644
@@ -183,7 +183,7 @@ index 76cf11b42c..19bfa6cc92 100644
 +> Pulse is an independent, unofficial fork. It is not affiliated with or endorsed by Gadgetbridge, Garmin, or any wearable vendor.
 +</content>
 diff --git a/app/build.gradle b/app/build.gradle
-index 16b4e36bb2..79b3f1e4cc 100644
+index 16b4e36bb2..2f01f7bef0 100644
 --- a/app/build.gradle
 +++ b/app/build.gradle
 @@ -120,8 +120,8 @@ android {
@@ -192,8 +192,8 @@ index 16b4e36bb2..79b3f1e4cc 100644
          // Note: always bump BOTH versionCode and versionName!
 -        versionName "0.91.1"
 -        versionCode 248
-+        versionName "0.96.0"
-+        versionCode 255
++        versionName "0.97.0"
++        versionCode 256
          vectorDrawables.useSupportLibrary = true
          buildConfigField "String", "GIT_HASH_SHORT", "\"${getGitHashShort()}\""
          buildConfigField "boolean", "INTERNET_ACCESS", "false"
@@ -385,6 +385,58 @@ index 234d48ff6d..5ca5f6f3bd 100644
  
          <activity
              android:name=".activities.ExternalPebbleJSActivity"
+diff --git a/app/src/main/assets/fossil_hr/openSourceWatchface.bin b/app/src/main/assets/fossil_hr/openSourceWatchface.bin
+deleted file mode 100644
+index 6f444e67a3..0000000000
+Binary files a/app/src/main/assets/fossil_hr/openSourceWatchface.bin and /dev/null differ
+diff --git a/app/src/main/assets/fossil_hr/widget2ndTZ.bin b/app/src/main/assets/fossil_hr/widget2ndTZ.bin
+deleted file mode 100644
+index 4291447f88..0000000000
+Binary files a/app/src/main/assets/fossil_hr/widget2ndTZ.bin and /dev/null differ
+diff --git a/app/src/main/assets/fossil_hr/widgetActiveMins.bin b/app/src/main/assets/fossil_hr/widgetActiveMins.bin
+deleted file mode 100644
+index 8972ee5550..0000000000
+Binary files a/app/src/main/assets/fossil_hr/widgetActiveMins.bin and /dev/null differ
+diff --git a/app/src/main/assets/fossil_hr/widgetBattery.bin b/app/src/main/assets/fossil_hr/widgetBattery.bin
+deleted file mode 100644
+index ccf4540a0b..0000000000
+Binary files a/app/src/main/assets/fossil_hr/widgetBattery.bin and /dev/null differ
+diff --git a/app/src/main/assets/fossil_hr/widgetCalories.bin b/app/src/main/assets/fossil_hr/widgetCalories.bin
+deleted file mode 100644
+index e15ba0449e..0000000000
+Binary files a/app/src/main/assets/fossil_hr/widgetCalories.bin and /dev/null differ
+diff --git a/app/src/main/assets/fossil_hr/widgetChanceOfRain.bin b/app/src/main/assets/fossil_hr/widgetChanceOfRain.bin
+deleted file mode 100644
+index ba16b7b514..0000000000
+Binary files a/app/src/main/assets/fossil_hr/widgetChanceOfRain.bin and /dev/null differ
+diff --git a/app/src/main/assets/fossil_hr/widgetCustom.bin b/app/src/main/assets/fossil_hr/widgetCustom.bin
+deleted file mode 100644
+index b41fb05c03..0000000000
+Binary files a/app/src/main/assets/fossil_hr/widgetCustom.bin and /dev/null differ
+diff --git a/app/src/main/assets/fossil_hr/widgetDate.bin b/app/src/main/assets/fossil_hr/widgetDate.bin
+deleted file mode 100644
+index aeb144002e..0000000000
+Binary files a/app/src/main/assets/fossil_hr/widgetDate.bin and /dev/null differ
+diff --git a/app/src/main/assets/fossil_hr/widgetHR.bin b/app/src/main/assets/fossil_hr/widgetHR.bin
+deleted file mode 100644
+index 2cf4965ac5..0000000000
+Binary files a/app/src/main/assets/fossil_hr/widgetHR.bin and /dev/null differ
+diff --git a/app/src/main/assets/fossil_hr/widgetSpO2.bin b/app/src/main/assets/fossil_hr/widgetSpO2.bin
+deleted file mode 100644
+index 78bb18e2d8..0000000000
+Binary files a/app/src/main/assets/fossil_hr/widgetSpO2.bin and /dev/null differ
+diff --git a/app/src/main/assets/fossil_hr/widgetSteps.bin b/app/src/main/assets/fossil_hr/widgetSteps.bin
+deleted file mode 100644
+index c7ea156719..0000000000
+Binary files a/app/src/main/assets/fossil_hr/widgetSteps.bin and /dev/null differ
+diff --git a/app/src/main/assets/fossil_hr/widgetUV.bin b/app/src/main/assets/fossil_hr/widgetUV.bin
+deleted file mode 100644
+index 0947a8dbd4..0000000000
+Binary files a/app/src/main/assets/fossil_hr/widgetUV.bin and /dev/null differ
+diff --git a/app/src/main/assets/fossil_hr/widgetWeather.bin b/app/src/main/assets/fossil_hr/widgetWeather.bin
+deleted file mode 100644
+index 7cd091379d..0000000000
+Binary files a/app/src/main/assets/fossil_hr/widgetWeather.bin and /dev/null differ
 diff --git a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/GBApplication.java b/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/GBApplication.java
 index 5a51340419..e8d30609d1 100644
 --- a/app/src/main/java/nodomain/freeyourgadget/gadgetbridge/GBApplication.java
@@ -13143,10 +13195,10 @@ index 5e37d6f11f..d9a0709dcc 100644
 -    </PreferenceCategory>
  </PreferenceScreen>
 diff --git a/app/src/main/res/xml/changelog_master.xml b/app/src/main/res/xml/changelog_master.xml
-index 866ba5a37e..3832fb8242 100644
+index 866ba5a37e..ccd0415a56 100644
 --- a/app/src/main/res/xml/changelog_master.xml
 +++ b/app/src/main/res/xml/changelog_master.xml
-@@ -1,1400 +1,76 @@
+@@ -1,1400 +1,79 @@
  <?xml version="1.0" encoding="utf-8"?>
 +<!-- Pulse changelog. Newest release on top. -->
  <changelog>
@@ -14546,6 +14598,9 @@ index 866ba5a37e..3832fb8242 100644
 -        <change>Prefer big text when scraping gmail notifications</change>
 -        <change>Do not remove newline and whitespace characters from notification content</change>
 -        <change>Debug: Add companion device list to debug activity</change>
++    <release version="1.8" versioncode="256">
++        <change>Dropped unused Fossil watch assets</change>
++    </release>
 +    <release version="1.7" versioncode="255">
 +        <change>New typefaces — Plus Jakarta Sans and Space Grotesk</change>
 +    </release>
@@ -15680,7 +15735,7 @@ index 0000000000..6def334556
 +Happy to make any changes needed to fit packaging requirements.
 diff --git a/fdroid/OFFICIAL-fdroiddata.yml b/fdroid/OFFICIAL-fdroiddata.yml
 new file mode 100644
-index 0000000000..bfc96f77e0
+index 0000000000..86df168d1c
 --- /dev/null
 +++ b/fdroid/OFFICIAL-fdroiddata.yml
 @@ -0,0 +1,34 @@
@@ -15707,17 +15762,49 @@ index 0000000000..bfc96f77e0
 +Repo: https://github.com/zoop-dev/pulse.git
 +
 +Builds:
-+  - versionName: 0.96.0
-+    versionCode: 255
-+    commit: 0.96.0
++  - versionName: 0.97.0
++    versionCode: 256
++    commit: 0.97.0
 +    subdir: app
 +    gradle:
 +      - mainline
 +
 +AutoUpdateMode: Version
 +UpdateCheckMode: Tags ^[0-9.]+$
-+CurrentVersion: 0.96.0
-+CurrentVersionCode: 255
++CurrentVersion: 0.97.0
++CurrentVersionCode: 256
+diff --git a/fdroid/cc.zachy.pulse.yml b/fdroid/cc.zachy.pulse.yml
+new file mode 100644
+index 0000000000..28f73475b9
+--- /dev/null
++++ b/fdroid/cc.zachy.pulse.yml
+@@ -0,0 +1,26 @@
++Categories:
++  - Sports & Health
++  - Connectivity
++License: AGPL-3.0-or-later
++AuthorName: zoop
++WebSite: https://zachy.cc
++SourceCode: https://github.com/zoop-dev/pulse
++IssueTracker: https://github.com/zoop-dev/pulse/issues
++
++AutoName: Pulse
++
++RepoType: git
++Repo: https://github.com/zoop-dev/pulse.git
++
++Builds:
++  - versionName: 0.97.0
++    versionCode: 256
++    commit: 0.97.0
++    subdir: app
++    gradle:
++      - mainline
++
++AutoUpdateMode: Version
++UpdateCheckMode: Tags ^[0-9.]+$
++CurrentVersion: 0.97.0
++CurrentVersionCode: 256
 diff --git a/fdroid/landing.html b/fdroid/landing.html
 new file mode 100644
 index 0000000000..4759d66ecd
@@ -15754,7 +15841,7 @@ index 0000000000..4759d66ecd
 +</div></body></html>
 diff --git a/fdroid/metadata/cc.zachy.pulse.yml b/fdroid/metadata/cc.zachy.pulse.yml
 new file mode 100644
-index 0000000000..c129189bbc
+index 0000000000..c54a956e17
 --- /dev/null
 +++ b/fdroid/metadata/cc.zachy.pulse.yml
 @@ -0,0 +1,32 @@
@@ -15788,8 +15875,8 @@ index 0000000000..c129189bbc
 +    Built on Gadgetbridge's Garmin engine, so your data never leaves the phone
 +    (apart from optional weather).
 +
-+CurrentVersion: 0.96.0-pulse
-+CurrentVersionCode: 255
++CurrentVersion: 0.97.0-pulse
++CurrentVersionCode: 256
 diff --git a/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/252.txt b/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/252.txt
 new file mode 100644
 index 0000000000..d1a53657b3
@@ -15825,6 +15912,13 @@ index 0000000000..2faf4c460c
 +++ b/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/255.txt
 @@ -0,0 +1 @@
 +New typefaces — Plus Jakarta Sans and Space Grotesk.
+diff --git a/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/256.txt b/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/256.txt
+new file mode 100644
+index 0000000000..75858a90ae
+--- /dev/null
++++ b/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/256.txt
+@@ -0,0 +1 @@
++Dropped unused Fossil watch assets.
 diff --git a/fdroid/metadata/cc.zachy.pulse/en-US/images/featureGraphic.png b/fdroid/metadata/cc.zachy.pulse/en-US/images/featureGraphic.png
 new file mode 100644
 index 0000000000..18f7b34f4a
@@ -16066,7 +16160,7 @@ index 0000000000..af43be347a
 Binary files /dev/null and b/og-image.png differ
 diff --git a/publish-fdroid.sh b/publish-fdroid.sh
 new file mode 100755
-index 0000000000..62bd94d24c
+index 0000000000..8e744ac48b
 --- /dev/null
 +++ b/publish-fdroid.sh
 @@ -0,0 +1,70 @@
@@ -16093,7 +16187,7 @@ index 0000000000..62bd94d24c
 +# skip vital lint — slow and not a useful gate for our own repo
 +./gradlew :app:assembleMainlineRelease --no-daemon -x lintVitalMainlineRelease
 +
-+VCODE=$(grep -m1 versionCode app/build.gradle | grep -oE '[0-9]+')
++VCODE=$(grep -oE 'versionCode +[0-9]+' app/build.gradle | grep -oE '[0-9]+' | head -1)
 +UNSIGNED=$(ls -t app/build/outputs/apk/mainline/release/*.apk | head -1)
 +mkdir -p fdroid/repo/icons
 +

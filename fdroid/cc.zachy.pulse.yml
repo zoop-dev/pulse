@@ -1,11 +1,3 @@
-# Draft recipe for the OFFICIAL F-Droid repo.
-# This is NOT used by our self-hosted repo. To submit:
-#   1. fork gitlab.com/fdroid/fdroiddata
-#   2. save this as metadata/cc.zachy.pulse.yml in that fork
-#   3. open a merge request (and/or an RFP issue at gitlab.com/fdroid/rfp)
-# F-Droid builds from source at the tagged commit and reads the app listing
-# from fastlane/metadata/android/ in our repo.
-
 Categories:
   - Sports & Health
   - Connectivity
