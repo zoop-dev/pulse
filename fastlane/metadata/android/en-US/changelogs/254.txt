@@ -1,0 +1,2 @@
+Today and Sleep no longer replay the ring fill animation and skeleton loader on
+every visit — only when there's actually new data to load. Minor wording fixes.

@@ -1,5 +1,5 @@
 ### pulse vs upstream gadgetbridge (base 79ad5a6079a277f95b791d81ec34e6810cc49b60)
-### generated 2026-06-25T11:10Z
+### generated 2026-06-25T11:19Z
 
 diff --git a/.gitignore b/.gitignore
 index 0160baad1f..dd3a7d7730 100644
@@ -183,7 +183,7 @@ index 76cf11b42c..19bfa6cc92 100644
 +> Pulse is an independent, unofficial fork. It is not affiliated with or endorsed by Gadgetbridge, Garmin, or any wearable vendor.
 +</content>
 diff --git a/app/build.gradle b/app/build.gradle
-index 16b4e36bb2..41584903b7 100644
+index 16b4e36bb2..79b3f1e4cc 100644
 --- a/app/build.gradle
 +++ b/app/build.gradle
 @@ -120,8 +120,8 @@ android {
@@ -192,8 +192,8 @@ index 16b4e36bb2..41584903b7 100644
          // Note: always bump BOTH versionCode and versionName!
 -        versionName "0.91.1"
 -        versionCode 248
-+        versionName "0.95.0"
-+        versionCode 254
++        versionName "0.96.0"
++        versionCode 255
          vectorDrawables.useSupportLibrary = true
          buildConfigField "String", "GIT_HASH_SHORT", "\"${getGitHashShort()}\""
          buildConfigField "boolean", "INTERNET_ACCESS", "false"
@@ -222,6 +222,17 @@ index 16b4e36bb2..41584903b7 100644
          nightly {
              applicationIdSuffix ".nightly"
              versionNameSuffix "-${getGitHashShort}"
+diff --git a/app/src/debug/res/values/strings.xml b/app/src/debug/res/values/strings.xml
+new file mode 100644
+index 0000000000..74402441e6
+--- /dev/null
++++ b/app/src/debug/res/values/strings.xml
+@@ -0,0 +1,5 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <!-- debug build gets its own provider authority so it installs alongside the release -->
++    <string translatable="false" name="pebble_content_provider">cc.zachy.pulse.debug.provider</string>
++</resources>
 diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
 index 234d48ff6d..5ca5f6f3bd 100644
 --- a/app/src/main/AndroidManifest.xml
@@ -13132,10 +13143,10 @@ index 5e37d6f11f..d9a0709dcc 100644
 -    </PreferenceCategory>
  </PreferenceScreen>
 diff --git a/app/src/main/res/xml/changelog_master.xml b/app/src/main/res/xml/changelog_master.xml
-index 866ba5a37e..7047f72453 100644
+index 866ba5a37e..3832fb8242 100644
 --- a/app/src/main/res/xml/changelog_master.xml
 +++ b/app/src/main/res/xml/changelog_master.xml
-@@ -1,1400 +1,73 @@
+@@ -1,1400 +1,76 @@
  <?xml version="1.0" encoding="utf-8"?>
 +<!-- Pulse changelog. Newest release on top. -->
  <changelog>
@@ -14535,6 +14546,9 @@ index 866ba5a37e..7047f72453 100644
 -        <change>Prefer big text when scraping gmail notifications</change>
 -        <change>Do not remove newline and whitespace characters from notification content</change>
 -        <change>Debug: Add companion device list to debug activity</change>
++    <release version="1.7" versioncode="255">
++        <change>New typefaces — Plus Jakarta Sans and Space Grotesk</change>
++    </release>
 +    <release version="1.6" versioncode="254">
 +        <change>Today and Sleep no longer replay the ring fill and skeleton every visit — only when there's actually something to load</change>
 +        <change>Tidied up some leftover wording</change>
@@ -15523,6 +15537,187 @@ index 0000000000..51a792b01a
 +
 +git push origin main
 +echo "deployed: $(git rev-parse --short HEAD)"
+diff --git a/fastlane/metadata/android/en-US/changelogs/252.txt b/fastlane/metadata/android/en-US/changelogs/252.txt
+new file mode 100644
+index 0000000000..d1a53657b3
+--- /dev/null
++++ b/fastlane/metadata/android/en-US/changelogs/252.txt
+@@ -0,0 +1,4 @@
++Swipeable Today carousel, expanded mode, week + recent workouts cards.
++Intensity minutes with a daily view. Material Symbols icons. Springy motion and
++fade-through transitions. Skeleton loaders. Customisable share card. Plus the
++distance-format crash fix from upstream.
+diff --git a/fastlane/metadata/android/en-US/changelogs/253.txt b/fastlane/metadata/android/en-US/changelogs/253.txt
+new file mode 100644
+index 0000000000..2d2cfb7db7
+--- /dev/null
++++ b/fastlane/metadata/android/en-US/changelogs/253.txt
+@@ -0,0 +1,4 @@
++Back up and restore everything to a single .pulse file, and restore from a backup
++on first launch. Intensity minutes get a daily view. Material Symbols icons,
++Material 3 buttons, springy + fade-through motion, skeleton loaders, and a
++customisable share card. Includes the upstream distance-format crash fix.
+diff --git a/fastlane/metadata/android/en-US/changelogs/254.txt b/fastlane/metadata/android/en-US/changelogs/254.txt
+new file mode 100644
+index 0000000000..8ab7911df2
+--- /dev/null
++++ b/fastlane/metadata/android/en-US/changelogs/254.txt
+@@ -0,0 +1,2 @@
++Today and Sleep no longer replay the ring fill animation and skeleton loader on
++every visit — only when there's actually new data to load. Minor wording fixes.
+diff --git a/fastlane/metadata/android/en-US/changelogs/255.txt b/fastlane/metadata/android/en-US/changelogs/255.txt
+new file mode 100644
+index 0000000000..2faf4c460c
+--- /dev/null
++++ b/fastlane/metadata/android/en-US/changelogs/255.txt
+@@ -0,0 +1 @@
++New typefaces — Plus Jakarta Sans and Space Grotesk.
+diff --git a/fastlane/metadata/android/en-US/full_description.txt b/fastlane/metadata/android/en-US/full_description.txt
+new file mode 100644
+index 0000000000..d2aca00ca0
+--- /dev/null
++++ b/fastlane/metadata/android/en-US/full_description.txt
+@@ -0,0 +1,12 @@
++A Garmin-only fork of Gadgetbridge with a new look. It pairs with your Garmin watch over Bluetooth and keeps everything on your phone. No account, no vendor app, no cloud.
++
++What's in it:
++
++* Today screen with a steps ring and swipeable metric tiles
++* Sleep with a score, stages and a 7-night trend
++* Fitness and Health tabs you can customise
++* Intensity minutes with a daily view (Garmin only shows weekly)
++* Workouts, streaks and shareable cards
++* Light/dark and accent colours
++
++Built on Gadgetbridge's Garmin engine, so your data never leaves the phone (apart from optional weather).
+diff --git a/fastlane/metadata/android/en-US/images/featureGraphic.png b/fastlane/metadata/android/en-US/images/featureGraphic.png
+new file mode 100644
+index 0000000000..18f7b34f4a
+Binary files /dev/null and b/fastlane/metadata/android/en-US/images/featureGraphic.png differ
+diff --git a/fastlane/metadata/android/en-US/images/icon.png b/fastlane/metadata/android/en-US/images/icon.png
+new file mode 100644
+index 0000000000..1485e05e42
+Binary files /dev/null and b/fastlane/metadata/android/en-US/images/icon.png differ
+diff --git a/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png b/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png
+new file mode 100644
+index 0000000000..d1f4d4d608
+Binary files /dev/null and b/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png differ
+diff --git a/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png b/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png
+new file mode 100644
+index 0000000000..972b50feb8
+Binary files /dev/null and b/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png differ
+diff --git a/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png b/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png
+new file mode 100644
+index 0000000000..fe0fc8f65b
+Binary files /dev/null and b/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png differ
+diff --git a/fastlane/metadata/android/en-US/images/phoneScreenshots/4.png b/fastlane/metadata/android/en-US/images/phoneScreenshots/4.png
+new file mode 100644
+index 0000000000..0e25cdac9b
+Binary files /dev/null and b/fastlane/metadata/android/en-US/images/phoneScreenshots/4.png differ
+diff --git a/fastlane/metadata/android/en-US/short_description.txt b/fastlane/metadata/android/en-US/short_description.txt
+new file mode 100644
+index 0000000000..0888dfc6e7
+--- /dev/null
++++ b/fastlane/metadata/android/en-US/short_description.txt
+@@ -0,0 +1 @@
++Garmin watch companion — your data stays on your phone
+\ No newline at end of file
+diff --git a/fastlane/metadata/android/en-US/title.txt b/fastlane/metadata/android/en-US/title.txt
+new file mode 100644
+index 0000000000..fe8f9656df
+--- /dev/null
++++ b/fastlane/metadata/android/en-US/title.txt
+@@ -0,0 +1 @@
++Pulse
+\ No newline at end of file
+diff --git a/fdroid/OFFICIAL-RFP.md b/fdroid/OFFICIAL-RFP.md
+new file mode 100644
+index 0000000000..6def334556
+--- /dev/null
++++ b/fdroid/OFFICIAL-RFP.md
+@@ -0,0 +1,42 @@
++# RFP draft — submit at gitlab.com/fdroid/rfp/-/issues/new
++
++Two ways to go (an MR is faster if you're comfortable with it):
++- **RFP issue** (title below) — ask the F-Droid team to package it.
++- **Merge request** to gitlab.com/fdroid/fdroiddata adding `metadata/cc.zachy.pulse.yml`
++  (use fdroid/OFFICIAL-fdroiddata.yml from this repo). An MR usually moves faster.
++
++---
++
++**Title:** Pulse — Garmin watch companion (Gadgetbridge fork)
++
++**Body:**
++
++- **Name:** Pulse
++- **Package ID:** cc.zachy.pulse
++- **Source:** https://github.com/zoop-dev/pulse
++- **License:** AGPL-3.0-or-later
++- **Categories:** Sports & Health, Connectivity
++
++**What it is**
++
++Pulse is a Garmin-only fork of Gadgetbridge with a redesigned UI. It pairs with a
++Garmin watch over Bluetooth and keeps everything on the phone — no account, no
++vendor app, no cloud (apart from optional weather).
++
++**Why a separate app rather than just Gadgetbridge**
++
++It's a focused reskin: Garmin only, a redesigned Today/Sleep/Fitness/Health layout
++(steps ring carousel, sleep score + trend, a daily intensity-minutes view Garmin
++itself only shows weekly, shareable cards), and a single-file `.pulse` backup format.
++It targets people who only have a Garmin and want a simpler, opinionated UI. It's
++not meant to replace Gadgetbridge upstream, which stays the multi-device project.
++
++**Building**
++
++- Standard Gradle, flavor `mainline`, `subdir: app`.
++- No proprietary dependencies; fonts are OFL (Plus Jakarta Sans, Space Grotesk,
++  Unbounded). Released builds use R8.
++- Tagged releases (e.g. `0.96.0`); recipe drafted at `fdroid/OFFICIAL-fdroiddata.yml`.
++- Fastlane listing/metadata lives in `fastlane/metadata/android/en-US/`.
++
++Happy to make any changes needed to fit packaging requirements.
+diff --git a/fdroid/OFFICIAL-fdroiddata.yml b/fdroid/OFFICIAL-fdroiddata.yml
+new file mode 100644
+index 0000000000..bfc96f77e0
+--- /dev/null
++++ b/fdroid/OFFICIAL-fdroiddata.yml
+@@ -0,0 +1,34 @@
++# Draft recipe for the OFFICIAL F-Droid repo.
++# This is NOT used by our self-hosted repo. To submit:
++#   1. fork gitlab.com/fdroid/fdroiddata
++#   2. save this as metadata/cc.zachy.pulse.yml in that fork
++#   3. open a merge request (and/or an RFP issue at gitlab.com/fdroid/rfp)
++# F-Droid builds from source at the tagged commit and reads the app listing
++# from fastlane/metadata/android/ in our repo.
++
++Categories:
++  - Sports & Health
++  - Connectivity
++License: AGPL-3.0-or-later
++AuthorName: zoop
++WebSite: https://zachy.cc
++SourceCode: https://github.com/zoop-dev/pulse
++IssueTracker: https://github.com/zoop-dev/pulse/issues
++
++AutoName: Pulse
++
++RepoType: git
++Repo: https://github.com/zoop-dev/pulse.git
++
++Builds:
++  - versionName: 0.96.0
++    versionCode: 255
++    commit: 0.96.0
++    subdir: app
++    gradle:
++      - mainline
++
++AutoUpdateMode: Version
++UpdateCheckMode: Tags ^[0-9.]+$
++CurrentVersion: 0.96.0
++CurrentVersionCode: 255
 diff --git a/fdroid/landing.html b/fdroid/landing.html
 new file mode 100644
 index 0000000000..4759d66ecd
@@ -15559,7 +15754,7 @@ index 0000000000..4759d66ecd
 +</div></body></html>
 diff --git a/fdroid/metadata/cc.zachy.pulse.yml b/fdroid/metadata/cc.zachy.pulse.yml
 new file mode 100644
-index 0000000000..bddf7e3f75
+index 0000000000..c129189bbc
 --- /dev/null
 +++ b/fdroid/metadata/cc.zachy.pulse.yml
 @@ -0,0 +1,32 @@
@@ -15593,8 +15788,8 @@ index 0000000000..bddf7e3f75
 +    Built on Gadgetbridge's Garmin engine, so your data never leaves the phone
 +    (apart from optional weather).
 +
-+CurrentVersion: 0.95.0-pulse
-+CurrentVersionCode: 254
++CurrentVersion: 0.96.0-pulse
++CurrentVersionCode: 255
 diff --git a/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/252.txt b/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/252.txt
 new file mode 100644
 index 0000000000..d1a53657b3
@@ -15623,6 +15818,13 @@ index 0000000000..8ab7911df2
 @@ -0,0 +1,2 @@
 +Today and Sleep no longer replay the ring fill animation and skeleton loader on
 +every visit — only when there's actually new data to load. Minor wording fixes.
+diff --git a/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/255.txt b/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/255.txt
+new file mode 100644
+index 0000000000..2faf4c460c
+--- /dev/null
++++ b/fdroid/metadata/cc.zachy.pulse/en-US/changelogs/255.txt
+@@ -0,0 +1 @@
++New typefaces — Plus Jakarta Sans and Space Grotesk.
 diff --git a/fdroid/metadata/cc.zachy.pulse/en-US/images/featureGraphic.png b/fdroid/metadata/cc.zachy.pulse/en-US/images/featureGraphic.png
 new file mode 100644
 index 0000000000..18f7b34f4a
