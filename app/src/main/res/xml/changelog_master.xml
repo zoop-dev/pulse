@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Pulse changelog. Newest release on top. -->
 <changelog>
+    <release version="1.7" versioncode="255">
+        <change>New typefaces — Plus Jakarta Sans and Space Grotesk</change>
+    </release>
     <release version="1.6" versioncode="254">
         <change>Today and Sleep no longer replay the ring fill and skeleton every visit — only when there's actually something to load</change>
         <change>Tidied up some leftover wording</change>

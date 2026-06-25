@@ -1,0 +1,4 @@
+Back up and restore everything to a single .pulse file, and restore from a backup
+on first launch. Intensity minutes get a daily view. Material Symbols icons,
+Material 3 buttons, springy + fade-through motion, skeleton loaders, and a
+customisable share card. Includes the upstream distance-format crash fix.

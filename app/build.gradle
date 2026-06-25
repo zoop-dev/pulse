@@ -120,8 +120,8 @@ android {
         minSdk = 23
 
         // Note: always bump BOTH versionCode and versionName!
-        versionName "0.95.0"
-        versionCode 254
+        versionName "0.96.0"
+        versionCode 255
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "GIT_HASH_SHORT", "\"${getGitHashShort()}\""
         buildConfigField "boolean", "INTERNET_ACCESS", "false"

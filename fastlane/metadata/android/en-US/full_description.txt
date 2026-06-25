@@ -1,0 +1,12 @@
+A Garmin-only fork of Gadgetbridge with a new look. It pairs with your Garmin watch over Bluetooth and keeps everything on your phone. No account, no vendor app, no cloud.
+
+What's in it:
+
+* Today screen with a steps ring and swipeable metric tiles
+* Sleep with a score, stages and a 7-night trend
+* Fitness and Health tabs you can customise
+* Intensity minutes with a daily view (Garmin only shows weekly)
+* Workouts, streaks and shareable cards
+* Light/dark and accent colours
+
+Built on Gadgetbridge's Garmin engine, so your data never leaves the phone (apart from optional weather).

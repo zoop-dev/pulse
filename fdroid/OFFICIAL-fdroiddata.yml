@@ -1,0 +1,34 @@
+# Draft recipe for the OFFICIAL F-Droid repo.
+# This is NOT used by our self-hosted repo. To submit:
+#   1. fork gitlab.com/fdroid/fdroiddata
+#   2. save this as metadata/cc.zachy.pulse.yml in that fork
+#   3. open a merge request (and/or an RFP issue at gitlab.com/fdroid/rfp)
+# F-Droid builds from source at the tagged commit and reads the app listing
+# from fastlane/metadata/android/ in our repo.
+
+Categories:
+  - Sports & Health
+  - Connectivity
+License: AGPL-3.0-or-later
+AuthorName: zoop
+WebSite: https://zachy.cc
+SourceCode: https://github.com/zoop-dev/pulse
+IssueTracker: https://github.com/zoop-dev/pulse/issues
+
+AutoName: Pulse
+
+RepoType: git
+Repo: https://github.com/zoop-dev/pulse.git
+
+Builds:
+  - versionName: 0.96.0
+    versionCode: 255
+    commit: 0.96.0
+    subdir: app
+    gradle:
+      - mainline
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags ^[0-9.]+$
+CurrentVersion: 0.96.0
+CurrentVersionCode: 255
