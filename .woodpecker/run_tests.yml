@@ -1,10 +1,12 @@
 steps:
   tests:
     image: codeberg.org/freeyourgadget/android-fdroid-tools:36.0.0-androguard-4.1.2-java-21
+    environment:
+      GRADLE_OPTS: "-XX:TieredStopAtLevel=1"
     commands:
       - pwd #bump
       # https://github.com/robolectric/robolectric/issues/3202
-      - ./gradlew -XX:TieredStopAtLevel=1 :app:testBangleDebugUnitTest :app:testMainDebugUnitTest
+      - ./gradlew :app:testBangleDebugUnitTest :app:testMainDebugUnitTest
 
 #when:
 #repo: Freeyourgadget/Gadgetbridge
