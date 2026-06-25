@@ -4,6 +4,7 @@ import android.util.Pair;
 
 import junit.framework.TestCase;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import nodomain.freeyourgadget.gadgetbridge.test.TestBase;
@@ -11,6 +12,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class MoyoungDeviceSupportTest extends TestBase {
     @Test
+    @Ignore("Only for manual usage during debugging")
     public void testWorkoutColumnV76() {
         final MoyoungDeviceSupport support = new MoyoungDeviceSupport();
         // #6053
