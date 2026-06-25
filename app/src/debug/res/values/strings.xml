@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- debug build gets its own provider authority so it installs alongside the release -->
+    <string translatable="false" name="pebble_content_provider">cc.zachy.pulse.debug.provider</string>
+</resources>
