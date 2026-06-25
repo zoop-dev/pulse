@@ -55,8 +55,8 @@ public class FitSport extends RecordData {
     }
 
     @Nullable
-    public Integer getColor() {
-        return getFieldByNumber(10, Integer.class);
+    public Number[] getColor() {
+        return getArrayFieldByNumber(10, Number.class);
     }
 
     @Nullable
@@ -117,8 +117,8 @@ public class FitSport extends RecordData {
             return this;
         }
 
-        public Builder setColor(final Integer value) {
-            setFieldByNumber(10, value);
+        public Builder setColor(final Number[] value) {
+            setFieldByNumber(10, (Object[]) value);
             return this;
         }
 

@@ -17,7 +17,7 @@ import java.util.Objects;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes.BaseType;
 
 /**
- * @noinspection ArraysAsListWithZeroOrOneArgument
+ * @noinspection ArraysAsListWithZeroOrOneArgument, DuplicateStringLiteralInspection, WeakerAccess
  */
 public class NativeFITMessage {
     public static final NativeFITMessage FILE_ID = new NativeFITMessage(0, "FILE_ID", Arrays.asList(
@@ -175,7 +175,7 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(16, BaseType.ENUM, "cad_enabled", FieldDefinitionFactory.FIELD.BOOLEAN),
             new FieldDefinitionPrimitive(17, BaseType.ENUM, "spdcad_enabled", FieldDefinitionFactory.FIELD.BOOLEAN),
             new FieldDefinitionPrimitive(18, BaseType.ENUM, "power_enabled", FieldDefinitionFactory.FIELD.BOOLEAN),
-            new FieldDefinitionPrimitive(19, BaseType.UINT8, "crank_length", 2, -100), // mm
+            new FieldDefinitionPrimitive(19, BaseType.UINT8, "crank_length", 2, -110), // mm
             new FieldDefinitionPrimitive(20, BaseType.ENUM, "enabled", FieldDefinitionFactory.FIELD.BOOLEAN),
             new FieldDefinitionPrimitive(21, BaseType.UINT8Z, "bike_spd_ant_id_trans_type"),
             new FieldDefinitionPrimitive(22, BaseType.UINT8Z, "bike_cad_ant_id_trans_type"),
@@ -224,7 +224,7 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "sport"),
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "sub_sport"),
             new FieldDefinitionPrimitive(3, BaseType.STRING, 24, "name"),
-            new FieldDefinitionPrimitive(10, BaseType.UINT8, 3, "color"),
+            new FieldDefinitionPrimitive(10, BaseType.UINT8, 3, "color", FieldDefinitionFactory.FIELD.ARRAY, 1, 0),
             new FieldDefinitionPrimitive(15, BaseType.ENUM, "popularity_routing"),
             new FieldDefinitionPrimitive(17, BaseType.ENUM, "navigation_prompt"),
             new FieldDefinitionPrimitive(18, BaseType.ENUM, "sharp_bend_warnings"),
@@ -259,7 +259,7 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(50, BaseType.ENUM, "workout_target_alerts"),
             new FieldDefinitionPrimitive(51, BaseType.ENUM, "timer_start_auto"),
             new FieldDefinitionPrimitive(52, BaseType.UINT16, "timer_start_speed", 1000, 0), // m/s
-            new FieldDefinitionPrimitive(52, BaseType.ENUM, "segment_alerts"),
+            new FieldDefinitionPrimitive(53, BaseType.ENUM, "segment_alerts"),
             new FieldDefinitionPrimitive(57, BaseType.ENUM, "countdown_start"),
             new FieldDefinitionPrimitive(63, BaseType.ENUM, "climb_pro"),
             new FieldDefinitionPrimitive(67, BaseType.ENUM, "track_consumption"),
@@ -1002,12 +1002,12 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(15, BaseType.SINT16, "temperature_max", 100, 0), // °C
             new FieldDefinitionPrimitive(16, BaseType.UINT16, 8, "activity_time", FieldDefinitionFactory.FIELD.ARRAY, 1, 0), // minutes
             new FieldDefinitionPrimitive(19, BaseType.UINT16, "active_calories"),
-            new FieldDefinitionPrimitive(29, BaseType.UINT16, "duration_min"),
             new FieldDefinitionPrimitive(24, BaseType.BASE_TYPE_BYTE, "current_activity_type_intensity"),
             new FieldDefinitionPrimitive(26, BaseType.UINT16, "timestamp_16"),
             new FieldDefinitionPrimitive(25, BaseType.UINT8, "timestamp_min_8"), // min
             new FieldDefinitionPrimitive(27, BaseType.UINT8, "heart_rate"),
             new FieldDefinitionPrimitive(28, BaseType.UINT8, "intensity", 10, 0),
+            new FieldDefinitionPrimitive(29, BaseType.UINT16, "duration_min"),
             new FieldDefinitionPrimitive(30, BaseType.UINT32, "duration"), // seconds
             new FieldDefinitionPrimitive(31, BaseType.UINT32, "ascent", 1000, 0), // m
             new FieldDefinitionPrimitive(32, BaseType.UINT32, "descent", 1000, 0), // m
@@ -1040,7 +1040,7 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(0, BaseType.ENUM, "routing_mode"),
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "calculation_method"),
             new FieldDefinitionPrimitive(2, BaseType.ENUM, "lock_on_road"),
-            new FieldDefinitionPrimitive(3, BaseType.ENUM, "avoidances"),
+            new FieldDefinitionPrimitive(3, BaseType.UINT16, "avoidances"),
             new FieldDefinitionPrimitive(4, BaseType.ENUM, "route_recalculation"),
             new FieldDefinitionPrimitive(5, BaseType.ENUM, "type"),
             new FieldDefinitionPrimitive(7, BaseType.ENUM, "course_recalculation")
@@ -1171,7 +1171,7 @@ public class NativeFITMessage {
     ));
 
     public static final NativeFITMessage PERSONAL_RECORD = new NativeFITMessage(114, "PERSONAL_RECORD", Arrays.asList(
-            new FieldDefinitionPrimitive(0, BaseType.ENUM, "metric"),
+            new FieldDefinitionPrimitive(0, BaseType.UINT16, "metric"),
             new FieldDefinitionPrimitive(1, BaseType.ENUM, "sport"),
             new FieldDefinitionPrimitive(2, BaseType.UINT32, "distance", 100, 0), // m
             new FieldDefinitionPrimitive(5, BaseType.UINT32, "record"),
@@ -1416,7 +1416,7 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(34, BaseType.UINT16, "firmware_version"),
             new FieldDefinitionPrimitive(45, BaseType.ENUM, "use_for_speed"),
             new FieldDefinitionPrimitive(46, BaseType.ENUM, "use_for_distance"),
-            new FieldDefinitionPrimitive(50, BaseType.UINT8, 6, "bluetooth_address"),
+            new FieldDefinitionPrimitive(50, BaseType.UINT8, 6, "bluetooth_address", FieldDefinitionFactory.FIELD.ARRAY, 1, 0),
             new FieldDefinitionPrimitive(51, BaseType.ENUM, "connection_type"),
             new FieldDefinitionPrimitive(52, BaseType.ENUM, "sensor_type"),
             new FieldDefinitionPrimitive(91, BaseType.STRING, "product_name"),
@@ -2085,8 +2085,8 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(10, BaseType.SINT32, "start_position_long",  FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(11, BaseType.SINT32, "end_position_lat",  FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(12, BaseType.SINT32, "end_position_long",  FieldDefinitionFactory.FIELD.COORDINATE),
-            new FieldDefinitionPrimitive(13, BaseType.UINT32, "start_altitude", 500, 5), // m
-            new FieldDefinitionPrimitive(14, BaseType.UINT32, "end_altitude", 500, 5), // m
+            new FieldDefinitionPrimitive(13, BaseType.UINT32, "start_altitude", 5, 500), // m
+            new FieldDefinitionPrimitive(14, BaseType.UINT32, "end_altitude", 5, 500), // m
             new FieldDefinitionPrimitive(254, BaseType.UINT16, "message_index")
     ));
 
@@ -2157,7 +2157,7 @@ public class NativeFITMessage {
     ));
 
     public static final NativeFITMessage SOLAR_CHARGE = new NativeFITMessage(318, "SOLAR_CHARGE", Arrays.asList(
-            new FieldDefinitionPrimitive(0, BaseType.UINT16, "percent"),
+            new FieldDefinitionPrimitive(0, BaseType.UINT16, "percent", 100, 0),
             new FieldDefinitionPrimitive(1, BaseType.UINT16, "status"),
             new FieldDefinitionPrimitive(3, BaseType.UINT32, "gain"), // ms
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
@@ -2265,8 +2265,10 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(5, BaseType.STRING, "location"),
             new FieldDefinitionPrimitive(6, BaseType.SINT32, "start_point_lat", FieldDefinitionFactory.FIELD.COORDINATE),
             new FieldDefinitionPrimitive(7, BaseType.SINT32, "start_point_long", FieldDefinitionFactory.FIELD.COORDINATE),
-            new FieldDefinitionPrimitive(10, BaseType.UINT32, "distance", 100, 0), // m
-            new FieldDefinitionPrimitive(12, BaseType.UINT32, "target_time", 1000, 0), // s
+            new FieldDefinitionPrimitive(10, BaseType.UINT32, "duration_value"),
+            new FieldDefinitionPrimitive(11, BaseType.ENUM, "duration_units"),
+            new FieldDefinitionPrimitive(12, BaseType.UINT32, "target_value"),
+            new FieldDefinitionPrimitive(13, BaseType.ENUM, "target_units"),
             new FieldDefinitionPrimitive(24, BaseType.STRING, "city"),
             new FieldDefinitionPrimitive(26, BaseType.STRING, "country")
     ));

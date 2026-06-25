@@ -40,8 +40,8 @@ public class FitSolarCharge extends RecordData {
     }
 
     @Nullable
-    public Integer getPercent() {
-        return getFieldByNumber(0, Integer.class);
+    public Float getPercent() {
+        return getFieldByNumber(0, Float.class);
     }
 
     @Nullable
@@ -67,7 +67,7 @@ public class FitSolarCharge extends RecordData {
             super(318);
         }
 
-        public Builder setPercent(final Integer value) {
+        public Builder setPercent(final Float value) {
             setFieldByNumber(0, value);
             return this;
         }

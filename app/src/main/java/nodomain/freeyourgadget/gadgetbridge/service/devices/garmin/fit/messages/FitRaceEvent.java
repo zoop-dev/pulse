@@ -75,13 +75,23 @@ public class FitRaceEvent extends RecordData {
     }
 
     @Nullable
-    public Double getDistance() {
-        return getFieldByNumber(10, Double.class);
+    public Long getDurationValue() {
+        return getFieldByNumber(10, Long.class);
     }
 
     @Nullable
-    public Double getTargetTime() {
-        return getFieldByNumber(12, Double.class);
+    public Integer getDurationUnits() {
+        return getFieldByNumber(11, Integer.class);
+    }
+
+    @Nullable
+    public Long getTargetValue() {
+        return getFieldByNumber(12, Long.class);
+    }
+
+    @Nullable
+    public Integer getTargetUnits() {
+        return getFieldByNumber(13, Integer.class);
     }
 
     @Nullable
@@ -137,13 +147,23 @@ public class FitRaceEvent extends RecordData {
             return this;
         }
 
-        public Builder setDistance(final Double value) {
+        public Builder setDurationValue(final Long value) {
             setFieldByNumber(10, value);
             return this;
         }
 
-        public Builder setTargetTime(final Double value) {
+        public Builder setDurationUnits(final Integer value) {
+            setFieldByNumber(11, value);
+            return this;
+        }
+
+        public Builder setTargetValue(final Long value) {
             setFieldByNumber(12, value);
+            return this;
+        }
+
+        public Builder setTargetUnits(final Integer value) {
+            setFieldByNumber(13, value);
             return this;
         }
 

@@ -90,8 +90,8 @@ public class FitSensorSettings extends RecordData {
     }
 
     @Nullable
-    public Integer getBluetoothAddress() {
-        return getFieldByNumber(50, Integer.class);
+    public Number[] getBluetoothAddress() {
+        return getArrayFieldByNumber(50, Number.class);
     }
 
     @Nullable
@@ -172,8 +172,8 @@ public class FitSensorSettings extends RecordData {
             return this;
         }
 
-        public Builder setBluetoothAddress(final Integer value) {
-            setFieldByNumber(50, value);
+        public Builder setBluetoothAddress(final Number[] value) {
+            setFieldByNumber(50, (Object[]) value);
             return this;
         }
 

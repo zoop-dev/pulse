@@ -128,11 +128,6 @@ public class FitMonitoring extends RecordData {
     }
 
     @Nullable
-    public Integer getDurationMin() {
-        return getFieldByNumber(29, Integer.class);
-    }
-
-    @Nullable
     public Integer getCurrentActivityTypeIntensity() {
         return getFieldByNumber(24, Integer.class);
     }
@@ -155,6 +150,11 @@ public class FitMonitoring extends RecordData {
     @Nullable
     public Float getIntensity() {
         return getFieldByNumber(28, Float.class);
+    }
+
+    @Nullable
+    public Integer getDurationMin() {
+        return getFieldByNumber(29, Integer.class);
     }
 
     @Nullable
@@ -300,11 +300,6 @@ public class FitMonitoring extends RecordData {
             return this;
         }
 
-        public Builder setDurationMin(final Integer value) {
-            setFieldByNumber(29, value);
-            return this;
-        }
-
         public Builder setCurrentActivityTypeIntensity(final Integer value) {
             setFieldByNumber(24, value);
             return this;
@@ -327,6 +322,11 @@ public class FitMonitoring extends RecordData {
 
         public Builder setIntensity(final Float value) {
             setFieldByNumber(28, value);
+            return this;
+        }
+
+        public Builder setDurationMin(final Integer value) {
+            setFieldByNumber(29, value);
             return this;
         }
 
