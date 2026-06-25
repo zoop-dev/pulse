@@ -1,5 +1,5 @@
 ### pulse vs upstream gadgetbridge (base 79ad5a6079a277f95b791d81ec34e6810cc49b60)
-### generated 2026-06-24T20:36Z
+### generated 2026-06-25T11:10Z
 
 diff --git a/.gitignore b/.gitignore
 index 0160baad1f..dd3a7d7730 100644
@@ -9022,55 +9022,43 @@ index a003d8f7e5..fc0c49a15f 100644
 +        android:drawable="@drawable/ic_launcher_foreground"
 +        android:gravity="center" />
  </layer-list>
-diff --git a/app/src/main/res/font/clash_display.xml b/app/src/main/res/font/clash_display.xml
-new file mode 100644
-index 0000000000..466bbc05fe
---- /dev/null
-+++ b/app/src/main/res/font/clash_display.xml
-@@ -0,0 +1,6 @@
-+<?xml version="1.0" encoding="utf-8"?>
-+<!-- Pulse: Clash Display heading family (matches zachy.cc) -->
-+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
-+    <font android:fontStyle="normal" android:fontWeight="600" android:font="@font/clashdisplay_semibold" />
-+    <font android:fontStyle="normal" android:fontWeight="700" android:font="@font/clashdisplay_bold" />
-+</font-family>
-diff --git a/app/src/main/res/font/clashdisplay_bold.ttf b/app/src/main/res/font/clashdisplay_bold.ttf
-new file mode 100644
-index 0000000000..0d23688f71
-Binary files /dev/null and b/app/src/main/res/font/clashdisplay_bold.ttf differ
-diff --git a/app/src/main/res/font/clashdisplay_semibold.ttf b/app/src/main/res/font/clashdisplay_semibold.ttf
-new file mode 100644
-index 0000000000..b9953d9327
-Binary files /dev/null and b/app/src/main/res/font/clashdisplay_semibold.ttf differ
 diff --git a/app/src/main/res/font/josefinsans.ttf b/app/src/main/res/font/josefinsans.ttf
 new file mode 100644
 index 0000000000..4d59aa52b1
 Binary files /dev/null and b/app/src/main/res/font/josefinsans.ttf differ
-diff --git a/app/src/main/res/font/satoshi.xml b/app/src/main/res/font/satoshi.xml
+diff --git a/app/src/main/res/font/plus_jakarta.xml b/app/src/main/res/font/plus_jakarta.xml
 new file mode 100644
-index 0000000000..ad2e09d3fb
+index 0000000000..167807f68d
 --- /dev/null
-+++ b/app/src/main/res/font/satoshi.xml
++++ b/app/src/main/res/font/plus_jakarta.xml
 @@ -0,0 +1,7 @@
 +<?xml version="1.0" encoding="utf-8"?>
-+<!-- Pulse: Satoshi body family (matches zachy.cc) -->
++<!-- Pulse body family: Plus Jakarta Sans (OFL) -->
 +<font-family xmlns:android="http://schemas.android.com/apk/res/android">
-+    <font android:fontStyle="normal" android:fontWeight="400" android:font="@font/satoshi_regular" />
-+    <font android:fontStyle="normal" android:fontWeight="500" android:font="@font/satoshi_medium" />
-+    <font android:fontStyle="normal" android:fontWeight="700" android:font="@font/satoshi_bold" />
++    <font android:fontStyle="normal" android:fontWeight="400" android:font="@font/plusjakarta_regular" />
++    <font android:fontStyle="normal" android:fontWeight="500" android:font="@font/plusjakarta_medium" />
++    <font android:fontStyle="normal" android:fontWeight="700" android:font="@font/plusjakarta_bold" />
 +</font-family>
-diff --git a/app/src/main/res/font/satoshi_bold.ttf b/app/src/main/res/font/satoshi_bold.ttf
+diff --git a/app/src/main/res/font/plusjakarta_bold.ttf b/app/src/main/res/font/plusjakarta_bold.ttf
 new file mode 100644
-index 0000000000..bd98799726
-Binary files /dev/null and b/app/src/main/res/font/satoshi_bold.ttf differ
-diff --git a/app/src/main/res/font/satoshi_medium.ttf b/app/src/main/res/font/satoshi_medium.ttf
+index 0000000000..d87b048525
+Binary files /dev/null and b/app/src/main/res/font/plusjakarta_bold.ttf differ
+diff --git a/app/src/main/res/font/plusjakarta_medium.ttf b/app/src/main/res/font/plusjakarta_medium.ttf
 new file mode 100644
-index 0000000000..2a7d41fa11
-Binary files /dev/null and b/app/src/main/res/font/satoshi_medium.ttf differ
-diff --git a/app/src/main/res/font/satoshi_regular.ttf b/app/src/main/res/font/satoshi_regular.ttf
+index 0000000000..5c0cb6bf6f
+Binary files /dev/null and b/app/src/main/res/font/plusjakarta_medium.ttf differ
+diff --git a/app/src/main/res/font/plusjakarta_regular.ttf b/app/src/main/res/font/plusjakarta_regular.ttf
 new file mode 100644
-index 0000000000..71728c88b0
-Binary files /dev/null and b/app/src/main/res/font/satoshi_regular.ttf differ
+index 0000000000..b2ba0d0785
+Binary files /dev/null and b/app/src/main/res/font/plusjakarta_regular.ttf differ
+diff --git a/app/src/main/res/font/spacegrotesk_bold.ttf b/app/src/main/res/font/spacegrotesk_bold.ttf
+new file mode 100644
+index 0000000000..4286754c43
+Binary files /dev/null and b/app/src/main/res/font/spacegrotesk_bold.ttf differ
+diff --git a/app/src/main/res/font/spacegrotesk_semibold.ttf b/app/src/main/res/font/spacegrotesk_semibold.ttf
+new file mode 100644
+index 0000000000..50084ea904
+Binary files /dev/null and b/app/src/main/res/font/spacegrotesk_semibold.ttf differ
 diff --git a/app/src/main/res/font/unbounded.ttf b/app/src/main/res/font/unbounded.ttf
 new file mode 100644
 index 0000000000..e3c064ddfa
@@ -9503,7 +9491,7 @@ index 06c74fbfaa..cb889a1d31 100644
      </LinearLayout>
  
 diff --git a/app/src/main/res/layout/activity_data_management.xml b/app/src/main/res/layout/activity_data_management.xml
-index d35deb8c71..4d284549ba 100644
+index d35deb8c71..bd92ec5ce7 100644
 --- a/app/src/main/res/layout/activity_data_management.xml
 +++ b/app/src/main/res/layout/activity_data_management.xml
 @@ -1,130 +1,153 @@
@@ -9581,7 +9569,7 @@ index d35deb8c71..4d284549ba 100644
 +                android:text="@string/activity_db_management_export_to_zip"
 +                android:textColor="@color/pulse_bg"
 +                android:textAllCaps="false"
-+                android:fontFamily="@font/satoshi_bold"
++                android:fontFamily="@font/plusjakarta_bold"
 +                android:textSize="15sp"
 +                android:stateListAnimator="@null" />
  
@@ -9610,7 +9598,7 @@ index d35deb8c71..4d284549ba 100644
 +                android:text="@string/activity_db_management_import_from_zip"
 +                android:textColor="@color/pulse_text"
 +                android:textAllCaps="false"
-+                android:fontFamily="@font/satoshi_medium"
++                android:fontFamily="@font/plusjakarta_medium"
 +                android:textSize="15sp"
 +                android:stateListAnimator="@null" />
          </LinearLayout>
@@ -9677,7 +9665,7 @@ index d35deb8c71..4d284549ba 100644
 +                android:text="@string/activity_DB_ExportButton"
 +                android:textColor="@color/pulse_text"
 +                android:textAllCaps="false"
-+                android:fontFamily="@font/satoshi_medium"
++                android:fontFamily="@font/plusjakarta_medium"
 +                android:textSize="15sp"
 +                android:stateListAnimator="@null" />
  
@@ -9706,7 +9694,7 @@ index d35deb8c71..4d284549ba 100644
 +                android:text="@string/activity_DB_import_button"
 +                android:textColor="@color/pulse_text"
 +                android:textAllCaps="false"
-+                android:fontFamily="@font/satoshi_medium"
++                android:fontFamily="@font/plusjakarta_medium"
 +                android:textSize="15sp"
 +                android:stateListAnimator="@null" />
  
@@ -9723,7 +9711,7 @@ index d35deb8c71..4d284549ba 100644
 +                android:text="@string/activity_DB_ShowContentButton"
 +                android:textColor="@color/pulse_text"
 +                android:textAllCaps="false"
-+                android:fontFamily="@font/satoshi_medium"
++                android:fontFamily="@font/plusjakarta_medium"
 +                android:textSize="15sp"
 +                android:stateListAnimator="@null" />
          </LinearLayout>
@@ -9877,7 +9865,7 @@ index 0000000000..45bef27564
 +</LinearLayout>
 diff --git a/app/src/main/res/layout/activity_pulse_onboarding.xml b/app/src/main/res/layout/activity_pulse_onboarding.xml
 new file mode 100644
-index 0000000000..13f1e491a0
+index 0000000000..bd6530b834
 --- /dev/null
 +++ b/app/src/main/res/layout/activity_pulse_onboarding.xml
 @@ -0,0 +1,114 @@
@@ -9963,7 +9951,7 @@ index 0000000000..13f1e491a0
 +            android:text="@string/pulse_onboard_connect"
 +            android:textColor="@color/pulse_text"
 +            android:textAllCaps="false"
-+            android:fontFamily="@font/satoshi_medium"
++            android:fontFamily="@font/plusjakarta_medium"
 +            android:textSize="15sp"
 +            android:stateListAnimator="@null" />
 +
@@ -9976,7 +9964,7 @@ index 0000000000..13f1e491a0
 +            android:text="@string/pulse_onboard_start"
 +            android:textColor="@color/pulse_bg"
 +            android:textAllCaps="false"
-+            android:fontFamily="@font/satoshi_bold"
++            android:fontFamily="@font/plusjakarta_bold"
 +            android:textSize="15sp"
 +            android:stateListAnimator="@null" />
 +
@@ -9990,7 +9978,7 @@ index 0000000000..13f1e491a0
 +            android:text="@string/pulse_onboard_restore"
 +            android:textColor="?attr/pulseAccent"
 +            android:textAllCaps="false"
-+            android:fontFamily="@font/satoshi_medium"
++            android:fontFamily="@font/plusjakarta_medium"
 +            android:textSize="14sp"
 +            android:stateListAnimator="@null" />
 +    </LinearLayout>
@@ -10873,7 +10861,7 @@ index 0000000000..7a145436b2
 +    </LinearLayout>
 +</ScrollView>
 diff --git a/app/src/main/res/layout/fragment_dashboard.xml b/app/src/main/res/layout/fragment_dashboard.xml
-index 200cb4577d..d63c69a04d 100644
+index 200cb4577d..12abddc6bc 100644
 --- a/app/src/main/res/layout/fragment_dashboard.xml
 +++ b/app/src/main/res/layout/fragment_dashboard.xml
 @@ -1,54 +1,363 @@
@@ -11136,7 +11124,7 @@ index 200cb4577d..d63c69a04d 100644
 +                android:text="0"
 +                android:textColor="@color/pulse_text"
 +                android:textSize="17sp"
-+                android:fontFamily="@font/clashdisplay_bold"
++                android:fontFamily="@font/spacegrotesk_bold"
 +                app:backgroundTint="@color/pulse_card"
 +                app:icon="@drawable/ic_ms_calories"
 +                app:iconGravity="textStart"
@@ -11153,7 +11141,7 @@ index 200cb4577d..d63c69a04d 100644
 +                android:text="@string/pulse_start"
 +                android:textColor="@android:color/white"
 +                android:textSize="17sp"
-+                android:fontFamily="@font/clashdisplay_bold"
++                android:fontFamily="@font/spacegrotesk_bold"
 +                app:backgroundTint="?attr/pulseAccent"
 +                app:icon="@drawable/ic_ms_sync"
 +                app:iconGravity="textStart"
@@ -11272,7 +11260,7 @@ index 200cb4577d..d63c69a04d 100644
 +            android:layout_marginTop="14dp"
 +            android:text="@string/pulse_loading"
 +            android:textColor="@color/pulse_text_dim"
-+            android:fontFamily="@font/satoshi"
++            android:fontFamily="@font/plus_jakarta"
 +            android:textSize="14sp" />
 +    </LinearLayout>
 +</FrameLayout>
@@ -12916,7 +12904,7 @@ index 99919efbdf..6c25525066 100644
 +    <string name="pulse_weather_refreshing">Fetching weather…</string>
  </resources>
 diff --git a/app/src/main/res/values/styles.xml b/app/src/main/res/values/styles.xml
-index e3ae68c86a..a7d8cf62de 100644
+index e3ae68c86a..08aecd9b17 100644
 --- a/app/src/main/res/values/styles.xml
 +++ b/app/src/main/res/values/styles.xml
 @@ -54,6 +54,10 @@
@@ -12924,8 +12912,8 @@ index e3ae68c86a..a7d8cf62de 100644
          <item name="textColorTertiary">@color/tertiarytext_dark</item>
  
 +        <!-- Pulse: Satoshi as the app-wide body font (matches zachy.cc) -->
-+        <item name="android:fontFamily">@font/satoshi</item>
-+        <item name="fontFamily">@font/satoshi</item>
++        <item name="android:fontFamily">@font/plus_jakarta</item>
++        <item name="fontFamily">@font/plus_jakarta</item>
 +
          <item name="colorPrimary">@color/primarydark_dark</item>
          <item name="colorPrimaryDark">@color/primarydark_dark</item>
@@ -13025,7 +13013,7 @@ index e3ae68c86a..a7d8cf62de 100644
 +        <item name="android:layout_height">wrap_content</item>
 +        <item name="android:textColor">@color/pulse_text</item>
 +        <item name="android:textSize">16sp</item>
-+        <item name="android:fontFamily">@font/satoshi_medium</item>
++        <item name="android:fontFamily">@font/plusjakarta_medium</item>
 +    </style>
 +    <style name="PulseOnboardBody">
 +        <item name="android:layout_width">match_parent</item>
@@ -15663,6 +15651,204 @@ diff --git a/fdroid/pulse-icon.png b/fdroid/pulse-icon.png
 new file mode 100644
 index 0000000000..1485e05e42
 Binary files /dev/null and b/fdroid/pulse-icon.png differ
+diff --git a/fonts-licenses/PlusJakartaSans-OFL.txt b/fonts-licenses/PlusJakartaSans-OFL.txt
+new file mode 100644
+index 0000000000..ea69b0ca12
+--- /dev/null
++++ b/fonts-licenses/PlusJakartaSans-OFL.txt
+@@ -0,0 +1,93 @@
++Copyright 2020 The Plus Jakarta Sans Project Authors (https://github.com/tokotype/PlusJakartaSans)
++
++This Font Software is licensed under the SIL Open Font License, Version 1.1.
++This license is copied below, and is also available with a FAQ at:
++http://scripts.sil.org/OFL
++
++
++-----------------------------------------------------------
++SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
++-----------------------------------------------------------
++
++PREAMBLE
++The goals of the Open Font License (OFL) are to stimulate worldwide
++development of collaborative font projects, to support the font creation
++efforts of academic and linguistic communities, and to provide a free and
++open framework in which fonts may be shared and improved in partnership
++with others.
++
++The OFL allows the licensed fonts to be used, studied, modified and
++redistributed freely as long as they are not sold by themselves. The
++fonts, including any derivative works, can be bundled, embedded, 
++redistributed and/or sold with any software provided that any reserved
++names are not used by derivative works. The fonts and derivatives,
++however, cannot be released under any other type of license. The
++requirement for fonts to remain under this license does not apply
++to any document created using the fonts or their derivatives.
++
++DEFINITIONS
++"Font Software" refers to the set of files released by the Copyright
++Holder(s) under this license and clearly marked as such. This may
++include source files, build scripts and documentation.
++
++"Reserved Font Name" refers to any names specified as such after the
++copyright statement(s).
++
++"Original Version" refers to the collection of Font Software components as
++distributed by the Copyright Holder(s).
++
++"Modified Version" refers to any derivative made by adding to, deleting,
++or substituting -- in part or in whole -- any of the components of the
++Original Version, by changing formats or by porting the Font Software to a
++new environment.
++
++"Author" refers to any designer, engineer, programmer, technical
++writer or other person who contributed to the Font Software.
++
++PERMISSION & CONDITIONS
++Permission is hereby granted, free of charge, to any person obtaining
++a copy of the Font Software, to use, study, copy, merge, embed, modify,
++redistribute, and sell modified and unmodified copies of the Font
++Software, subject to the following conditions:
++
++1) Neither the Font Software nor any of its individual components,
++in Original or Modified Versions, may be sold by itself.
++
++2) Original or Modified Versions of the Font Software may be bundled,
++redistributed and/or sold with any software, provided that each copy
++contains the above copyright notice and this license. These can be
++included either as stand-alone text files, human-readable headers or
++in the appropriate machine-readable metadata fields within text or
++binary files as long as those fields can be easily viewed by the user.
++
++3) No Modified Version of the Font Software may use the Reserved Font
++Name(s) unless explicit written permission is granted by the corresponding
++Copyright Holder. This restriction only applies to the primary font name as
++presented to the users.
++
++4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font
++Software shall not be used to promote, endorse or advertise any
++Modified Version, except to acknowledge the contribution(s) of the
++Copyright Holder(s) and the Author(s) or with their explicit written
++permission.
++
++5) The Font Software, modified or unmodified, in part or in whole,
++must be distributed entirely under this license, and must not be
++distributed under any other license. The requirement for fonts to
++remain under this license does not apply to any document created
++using the Font Software.
++
++TERMINATION
++This license becomes null and void if any of the above conditions are
++not met.
++
++DISCLAIMER
++THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
++EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
++MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
++OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE
++COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
++INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
++DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
++FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
++OTHER DEALINGS IN THE FONT SOFTWARE.
+diff --git a/fonts-licenses/SpaceGrotesk-OFL.txt b/fonts-licenses/SpaceGrotesk-OFL.txt
+new file mode 100644
+index 0000000000..f831dbc69f
+--- /dev/null
++++ b/fonts-licenses/SpaceGrotesk-OFL.txt
+@@ -0,0 +1,93 @@
++Copyright 2020 The Space Grotesk Project Authors (https://github.com/floriankarsten/space-grotesk)
++
++This Font Software is licensed under the SIL Open Font License, Version 1.1.
++This license is copied below, and is also available with a FAQ at:
++http://scripts.sil.org/OFL
++
++
++-----------------------------------------------------------
++SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
++-----------------------------------------------------------
++
++PREAMBLE
++The goals of the Open Font License (OFL) are to stimulate worldwide
++development of collaborative font projects, to support the font creation
++efforts of academic and linguistic communities, and to provide a free and
++open framework in which fonts may be shared and improved in partnership
++with others.
++
++The OFL allows the licensed fonts to be used, studied, modified and
++redistributed freely as long as they are not sold by themselves. The
++fonts, including any derivative works, can be bundled, embedded, 
++redistributed and/or sold with any software provided that any reserved
++names are not used by derivative works. The fonts and derivatives,
++however, cannot be released under any other type of license. The
++requirement for fonts to remain under this license does not apply
++to any document created using the fonts or their derivatives.
++
++DEFINITIONS
++"Font Software" refers to the set of files released by the Copyright
++Holder(s) under this license and clearly marked as such. This may
++include source files, build scripts and documentation.
++
++"Reserved Font Name" refers to any names specified as such after the
++copyright statement(s).
++
++"Original Version" refers to the collection of Font Software components as
++distributed by the Copyright Holder(s).
++
++"Modified Version" refers to any derivative made by adding to, deleting,
++or substituting -- in part or in whole -- any of the components of the
++Original Version, by changing formats or by porting the Font Software to a
++new environment.
++
++"Author" refers to any designer, engineer, programmer, technical
++writer or other person who contributed to the Font Software.
++
++PERMISSION & CONDITIONS
++Permission is hereby granted, free of charge, to any person obtaining
++a copy of the Font Software, to use, study, copy, merge, embed, modify,
++redistribute, and sell modified and unmodified copies of the Font
++Software, subject to the following conditions:
++
++1) Neither the Font Software nor any of its individual components,
++in Original or Modified Versions, may be sold by itself.
++
++2) Original or Modified Versions of the Font Software may be bundled,
++redistributed and/or sold with any software, provided that each copy
++contains the above copyright notice and this license. These can be
++included either as stand-alone text files, human-readable headers or
++in the appropriate machine-readable metadata fields within text or
++binary files as long as those fields can be easily viewed by the user.
++
++3) No Modified Version of the Font Software may use the Reserved Font
++Name(s) unless explicit written permission is granted by the corresponding
++Copyright Holder. This restriction only applies to the primary font name as
++presented to the users.
++
++4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font
++Software shall not be used to promote, endorse or advertise any
++Modified Version, except to acknowledge the contribution(s) of the
++Copyright Holder(s) and the Author(s) or with their explicit written
++permission.
++
++5) The Font Software, modified or unmodified, in part or in whole,
++must be distributed entirely under this license, and must not be
++distributed under any other license. The requirement for fonts to
++remain under this license does not apply to any document created
++using the Font Software.
++
++TERMINATION
++This license becomes null and void if any of the above conditions are
++not met.
++
++DISCLAIMER
++THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
++EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
++MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
++OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE
++COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
++INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
++DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
++FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
++OTHER DEALINGS IN THE FONT SOFTWARE.
 diff --git a/gradle.properties b/gradle.properties
 index eba4c6ea00..c94b3aaf12 100644
 --- a/gradle.properties

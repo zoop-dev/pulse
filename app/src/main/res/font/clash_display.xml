@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Pulse: Clash Display heading family (matches zachy.cc) -->
-<font-family xmlns:android="http://schemas.android.com/apk/res/android">
-    <font android:fontStyle="normal" android:fontWeight="600" android:font="@font/clashdisplay_semibold" />
-    <font android:fontStyle="normal" android:fontWeight="700" android:font="@font/clashdisplay_bold" />
-</font-family>

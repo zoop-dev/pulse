@@ -80,7 +80,7 @@
             android:text="@string/pulse_onboard_connect"
             android:textColor="@color/pulse_text"
             android:textAllCaps="false"
-            android:fontFamily="@font/satoshi_medium"
+            android:fontFamily="@font/plusjakarta_medium"
             android:textSize="15sp"
             android:stateListAnimator="@null" />
 
@@ -93,7 +93,7 @@
             android:text="@string/pulse_onboard_start"
             android:textColor="@color/pulse_bg"
             android:textAllCaps="false"
-            android:fontFamily="@font/satoshi_bold"
+            android:fontFamily="@font/plusjakarta_bold"
             android:textSize="15sp"
             android:stateListAnimator="@null" />
 
@@ -107,7 +107,7 @@
             android:text="@string/pulse_onboard_restore"
             android:textColor="?attr/pulseAccent"
             android:textAllCaps="false"
-            android:fontFamily="@font/satoshi_medium"
+            android:fontFamily="@font/plusjakarta_medium"
             android:textSize="14sp"
             android:stateListAnimator="@null" />
     </LinearLayout>
