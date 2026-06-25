@@ -21,7 +21,7 @@ echo "building release (r8)…"
 # skip vital lint — slow and not a useful gate for our own repo
 ./gradlew :app:assembleMainlineRelease --no-daemon -x lintVitalMainlineRelease
 
-VCODE=$(grep -m1 versionCode app/build.gradle | grep -oE '[0-9]+')
+VCODE=$(grep -oE 'versionCode +[0-9]+' app/build.gradle | grep -oE '[0-9]+' | head -1)
 UNSIGNED=$(ls -t app/build/outputs/apk/mainline/release/*.apk | head -1)
 mkdir -p fdroid/repo/icons
 
