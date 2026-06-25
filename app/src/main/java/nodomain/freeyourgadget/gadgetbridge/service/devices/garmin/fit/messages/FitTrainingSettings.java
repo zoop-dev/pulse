@@ -161,7 +161,7 @@ public class FitTrainingSettings extends RecordData {
 
     @Nullable
     public Integer getSegmentAlerts() {
-        return getFieldByNumber(52, Integer.class);
+        return getFieldByNumber(53, Integer.class);
     }
 
     @Nullable
@@ -383,7 +383,7 @@ public class FitTrainingSettings extends RecordData {
         }
 
         public Builder setSegmentAlerts(final Integer value) {
-            setFieldByNumber(52, value);
+            setFieldByNumber(53, value);
             return this;
         }
 
