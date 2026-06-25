@@ -28,5 +28,5 @@ Description: |-
     Built on Gadgetbridge's Garmin engine, so your data never leaves the phone
     (apart from optional weather).
 
-CurrentVersion: 0.96.0-pulse
-CurrentVersionCode: 255
+CurrentVersion: 0.97.0-pulse
+CurrentVersionCode: 256
