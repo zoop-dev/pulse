@@ -1,8 +1,8 @@
 # App metadata for the self-hosted Pulse F-Droid repo (binary repo: APKs dropped in repo/,
 # index built by `fdroid update`). No Builds block needed since we publish the APK directly.
 Categories:
-  - Sports & Health
   - Connectivity
+  - Sports & Health
 License: AGPL-3.0-or-later
 AuthorName: zoop
 WebSite: https://zachy.cc
