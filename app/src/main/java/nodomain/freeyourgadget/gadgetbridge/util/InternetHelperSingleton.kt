@@ -34,6 +34,7 @@ import nodomain.freeyourgadget.internethelper.aidl.http.IHttpService
 import org.jsoup.Jsoup
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.io.IOException
 import java.nio.charset.Charset
 import java.util.concurrent.CountDownLatch
 
@@ -150,6 +151,13 @@ object InternetHelperSingleton {
             LOG.error("Error sending request to InternetHelper", e)
             latch.countDown()
             return null
+        } finally {
+            try {
+                pipeRead?.close()
+                pipeWrite?.close()
+            } catch (e: IOException) {
+                LOG.error("Failed to close pipe", e)
+            }
         }
 
         latch.await()
