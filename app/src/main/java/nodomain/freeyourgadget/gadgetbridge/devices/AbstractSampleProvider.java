@@ -418,7 +418,7 @@ public abstract class AbstractSampleProvider<T extends AbstractActivitySample> i
         final int firstTimestamp = ret.get(0).getTimestamp();
         if (firstTimestamp - timestamp_from > 60) {
             // Gap at the start
-            for (int ts = timestamp_from; ts <= firstTimestamp + 60; ts += 60) {
+            for (int ts = firstTimestamp - 60; ts >= timestamp_from; ts -= 60) {
                 ret.add(0, createDummySample(ts));
             }
         }
