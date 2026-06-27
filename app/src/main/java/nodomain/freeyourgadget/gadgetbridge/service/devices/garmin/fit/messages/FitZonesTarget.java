@@ -40,13 +40,13 @@ public class FitZonesTarget extends RecordData {
     }
 
     @Nullable
-    public Integer getFunctionalThresholdPower() {
-        return getFieldByNumber(3, Integer.class);
+    public Integer getMaxHeartRate() {
+        return getFieldByNumber(1, Integer.class);
     }
 
     @Nullable
-    public Integer getMaxHeartRate() {
-        return getFieldByNumber(1, Integer.class);
+    public Integer getFunctionalThresholdPower() {
+        return getFieldByNumber(3, Integer.class);
     }
 
     @Nullable
@@ -82,13 +82,13 @@ public class FitZonesTarget extends RecordData {
             super(7);
         }
 
-        public Builder setFunctionalThresholdPower(final Integer value) {
-            setFieldByNumber(3, value);
+        public Builder setMaxHeartRate(final Integer value) {
+            setFieldByNumber(1, value);
             return this;
         }
 
-        public Builder setMaxHeartRate(final Integer value) {
-            setFieldByNumber(1, value);
+        public Builder setFunctionalThresholdPower(final Integer value) {
+            setFieldByNumber(3, value);
             return this;
         }
 

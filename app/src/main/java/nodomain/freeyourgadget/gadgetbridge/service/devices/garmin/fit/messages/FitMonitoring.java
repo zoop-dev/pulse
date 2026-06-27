@@ -133,13 +133,13 @@ public class FitMonitoring extends RecordData {
     }
 
     @Nullable
-    public Integer getTimestamp16() {
-        return getFieldByNumber(26, Integer.class);
+    public Integer getTimestampMin8() {
+        return getFieldByNumber(25, Integer.class);
     }
 
     @Nullable
-    public Integer getTimestampMin8() {
-        return getFieldByNumber(25, Integer.class);
+    public Integer getTimestamp16() {
+        return getFieldByNumber(26, Integer.class);
     }
 
     @Nullable
@@ -305,13 +305,13 @@ public class FitMonitoring extends RecordData {
             return this;
         }
 
-        public Builder setTimestamp16(final Integer value) {
-            setFieldByNumber(26, value);
+        public Builder setTimestampMin8(final Integer value) {
+            setFieldByNumber(25, value);
             return this;
         }
 
-        public Builder setTimestampMin8(final Integer value) {
-            setFieldByNumber(25, value);
+        public Builder setTimestamp16(final Integer value) {
+            setFieldByNumber(26, value);
             return this;
         }
 

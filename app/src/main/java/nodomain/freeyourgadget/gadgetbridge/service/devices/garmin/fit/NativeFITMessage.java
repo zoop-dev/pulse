@@ -192,8 +192,8 @@ public class NativeFITMessage {
     ));
 
     public static final NativeFITMessage ZONES_TARGET = new NativeFITMessage(7, "ZONES_TARGET", Arrays.asList(
-            new FieldDefinitionPrimitive(3, BaseType.UINT16, "functional_threshold_power"),
             new FieldDefinitionPrimitive(1, BaseType.UINT8, "max_heart_rate"),
+            new FieldDefinitionPrimitive(3, BaseType.UINT16, "functional_threshold_power"),
             new FieldDefinitionPrimitive(2, BaseType.UINT8, "threshold_heart_rate"),
             new FieldDefinitionPrimitive(5, BaseType.ENUM, "hr_calc_type"), //1=percent_max_hr
             new FieldDefinitionPrimitive(7, BaseType.ENUM, "pwr_calc_type"), //1=percent_ftp
@@ -1003,8 +1003,8 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(16, BaseType.UINT16, 8, "activity_time", FieldDefinitionFactory.FIELD.ARRAY, 1, 0), // minutes
             new FieldDefinitionPrimitive(19, BaseType.UINT16, "active_calories"),
             new FieldDefinitionPrimitive(24, BaseType.BASE_TYPE_BYTE, "current_activity_type_intensity"),
-            new FieldDefinitionPrimitive(26, BaseType.UINT16, "timestamp_16"),
             new FieldDefinitionPrimitive(25, BaseType.UINT8, "timestamp_min_8"), // min
+            new FieldDefinitionPrimitive(26, BaseType.UINT16, "timestamp_16"),
             new FieldDefinitionPrimitive(27, BaseType.UINT8, "heart_rate"),
             new FieldDefinitionPrimitive(28, BaseType.UINT8, "intensity", 10, 0),
             new FieldDefinitionPrimitive(29, BaseType.UINT16, "duration_min"),
