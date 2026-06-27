@@ -108,7 +108,7 @@ public class FitFile {
                 if (recordDefinition != null) {
                     if (recordHeader.isDeveloperData())
                         for (RecordData rd : dataRecords) {
-                            if (NativeFITMessage.FIELD_DESCRIPTION.equals(rd.getNativeFITMessage()))
+                            if (NativeFITMessages.FIT_FIELD_DESCRIPTION.equals(rd.getNativeFITMessage()))
                                 recordDefinition.populateDevFields(rd);
                         }
                     recordDefinitionMap.put(recordHeader.getLocalMessageType(), recordDefinition);
