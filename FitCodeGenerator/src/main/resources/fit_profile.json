@@ -95,7 +95,8 @@
           "num": 2,
           "name": "time_offset",
           "baseType": "UINT32",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "seconds"
         },
         "3": {
           "num": 3,
@@ -139,17 +140,20 @@
         "13": {
           "num": 13,
           "name": "backlight_timeout",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "seconds"
         },
         "14": {
           "num": 14,
           "name": "backlight",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "15": {
           "num": 15,
           "name": "contrast",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "21": {
           "num": 21,
@@ -252,12 +256,14 @@
         "58": {
           "num": 58,
           "name": "autosync_min_steps",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "steps"
         },
         "59": {
           "num": 59,
           "name": "autosync_min_time",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "minutes"
         },
         "75": {
           "num": 75,
@@ -338,7 +344,8 @@
         "164": {
           "num": 164,
           "name": "hr_low_alert_limit",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "174": {
           "num": 174,
@@ -348,12 +355,14 @@
         "177": {
           "num": 177,
           "name": "sleep_backlight_brightness",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "178": {
           "num": 178,
           "name": "sleep_backlight_timeout",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "seconds"
         },
         "189": {
           "num": 189,
@@ -395,7 +404,8 @@
         "2": {
           "num": 2,
           "name": "age",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "years"
         },
         "3": {
           "num": 3,
@@ -406,7 +416,8 @@
           "num": 4,
           "name": "weight",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "kg"
         },
         "5": {
           "num": 5,
@@ -429,22 +440,26 @@
         "8": {
           "num": 8,
           "name": "resting_heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "9": {
           "num": 9,
           "name": "default_max_running_heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "10": {
           "num": 10,
           "name": "default_max_biking_heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "11": {
           "num": 11,
           "name": "default_max_heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "12": {
           "num": 12,
@@ -492,7 +507,7 @@
         "23": {
           "num": 23,
           "name": "global_id",
-          "baseType": "BASE_TYPE_BYTE",
+          "baseType": "BYTE",
           "arrayLen": 6
         },
         "24": {
@@ -531,7 +546,8 @@
           "num": 37,
           "name": "lactate_threshold_speed",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "km/h"
         },
         "41": {
           "num": 41,
@@ -622,13 +638,15 @@
           "num": 2,
           "name": "sdm_cal_factor",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "percent"
         },
         "3": {
           "num": 3,
           "name": "odometer",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "4": {
           "num": 4,
@@ -675,7 +693,8 @@
           "num": 3,
           "name": "odometer",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "4": {
           "num": 4,
@@ -701,25 +720,29 @@
           "num": 8,
           "name": "custom_wheelsize",
           "baseType": "UINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m"
         },
         "9": {
           "num": 9,
           "name": "auto_wheelsize",
           "baseType": "UINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m"
         },
         "10": {
           "num": 10,
           "name": "bike_weight",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "kg"
         },
         "11": {
           "num": 11,
           "name": "power_cal_factor",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "percent"
         },
         "12": {
           "num": 12,
@@ -767,7 +790,8 @@
           "name": "crank_length",
           "baseType": "UINT8",
           "scale": 2,
-          "offset": -110
+          "offset": -110,
+          "UOM": "mm"
         },
         "20": {
           "num": 20,
@@ -845,11 +869,6 @@
       "num": 7,
       "name": "ZONES_TARGET",
       "fields": {
-        "3": {
-          "num": 3,
-          "name": "functional_threshold_power",
-          "baseType": "UINT16"
-        },
         "1": {
           "num": 1,
           "name": "max_heart_rate",
@@ -859,6 +878,11 @@
           "num": 2,
           "name": "threshold_heart_rate",
           "baseType": "UINT8"
+        },
+        "3": {
+          "num": 3,
+          "name": "functional_threshold_power",
+          "baseType": "UINT16"
         },
         "5": {
           "num": 5,
@@ -890,7 +914,8 @@
         "1": {
           "num": 1,
           "name": "high_bpm",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "2": {
           "num": 2,
@@ -911,7 +936,8 @@
         "1": {
           "num": 1,
           "name": "high_value",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "2": {
           "num": 2,
@@ -938,13 +964,15 @@
           "num": 2,
           "name": "calories",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "kcal/min"
         },
         "3": {
           "num": 3,
           "name": "fat_calories",
           "baseType": "UINT8",
-          "scale": 10
+          "scale": 10,
+          "UOM": "kcal/min"
         },
         "254": {
           "num": 254,
@@ -1024,7 +1052,8 @@
           "num": 2,
           "name": "virtual_partner_pace",
           "baseType": "UINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "3": {
           "num": 3,
@@ -1035,7 +1064,8 @@
           "num": 4,
           "name": "auto_lap_distance",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "7": {
           "num": 7,
@@ -1046,7 +1076,8 @@
           "num": 8,
           "name": "auto_pause_threshold",
           "baseType": "UINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "12": {
           "num": 12,
@@ -1067,7 +1098,8 @@
           "num": 22,
           "name": "pool_length",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "25": {
           "num": 25,
@@ -1083,18 +1115,21 @@
           "num": 31,
           "name": "target_distance",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "32": {
           "num": 32,
           "name": "target_speed",
           "baseType": "UINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "33": {
           "num": 33,
           "name": "target_time",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "35": {
           "num": 35,
@@ -1124,7 +1159,8 @@
         "42": {
           "num": 42,
           "name": "auto_climb_mode_switch",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "seconds"
         },
         "46": {
           "num": 46,
@@ -1145,7 +1181,8 @@
           "num": 52,
           "name": "timer_start_speed",
           "baseType": "UINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "53": {
           "num": 53,
@@ -1170,7 +1207,8 @@
         "69": {
           "num": 69,
           "name": "bottle_size",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "mL"
         },
         "70": {
           "num": 70,
@@ -1180,7 +1218,8 @@
         "80": {
           "num": 80,
           "name": "minimum_ride_duration",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "seconds"
         },
         "86": {
           "num": 86,
@@ -1241,7 +1280,8 @@
           "num": 153,
           "name": "precise_target_speed",
           "baseType": "UINT32",
-          "scale": 1000000
+          "scale": 1000000,
+          "UOM": "m/s"
         }
       }
     },
@@ -1435,13 +1475,15 @@
           "num": 3,
           "name": "start_latitude",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "4": {
           "num": 4,
           "name": "start_longitude",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "5": {
           "num": 5,
@@ -1462,80 +1504,95 @@
           "num": 8,
           "name": "total_timer_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "9": {
           "num": 9,
           "name": "total_distance",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "10": {
           "num": 10,
           "name": "total_cycles",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "cycles"
         },
         "11": {
           "num": 11,
           "name": "total_calories",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "kcal"
         },
         "13": {
           "num": 13,
           "name": "total_fat_calories",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "kcal"
         },
         "14": {
           "num": 14,
           "name": "avg_speed",
           "baseType": "UINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "15": {
           "num": 15,
           "name": "max_speed",
           "baseType": "UINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "16": {
           "num": 16,
           "name": "average_heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "17": {
           "num": 17,
           "name": "max_heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "18": {
           "num": 18,
           "name": "avg_cadence",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "rpm"
         },
         "19": {
           "num": 19,
           "name": "max_cadence",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "rpm"
         },
         "20": {
           "num": 20,
           "name": "avg_power",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "21": {
           "num": 21,
           "name": "max_power",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "22": {
           "num": 22,
           "name": "total_ascent",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "m"
         },
         "23": {
           "num": 23,
           "name": "total_descent",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "m"
         },
         "24": {
           "num": 24,
@@ -1567,47 +1624,55 @@
           "num": 29,
           "name": "nec_latitude",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "30": {
           "num": 30,
           "name": "nec_longitude",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "31": {
           "num": 31,
           "name": "swc_latitude",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "32": {
           "num": 32,
           "name": "swc_longitude",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "33": {
           "num": 33,
           "name": "num_lengths",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "lengths"
         },
         "34": {
           "num": 34,
           "name": "normalized_power",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "35": {
           "num": 35,
           "name": "training_stress_score",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "tss"
         },
         "36": {
           "num": 36,
           "name": "intensity_factor",
           "baseType": "UINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "if"
         },
         "37": {
           "num": 37,
@@ -1618,13 +1683,15 @@
           "num": 38,
           "name": "end_latitude",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "39": {
           "num": 39,
           "name": "end_longitude",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "41": {
           "num": 41,
@@ -1635,23 +1702,27 @@
           "num": 42,
           "name": "avg_stroke_distance",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "43": {
           "num": 43,
           "name": "swim_stroke",
-          "baseType": "ENUM"
+          "baseType": "ENUM",
+          "UOM": "swim_stroke"
         },
         "44": {
           "num": 44,
           "name": "pool_length",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "45": {
           "num": 45,
           "name": "threshold_power",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "46": {
           "num": 46,
@@ -1661,140 +1732,163 @@
         "47": {
           "num": 47,
           "name": "num_active_lengths",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "lengths"
         },
         "48": {
           "num": 48,
           "name": "total_work",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "Joule"
         },
         "49": {
           "num": 49,
           "name": "avg_altitude",
           "baseType": "UINT16",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "50": {
           "num": 50,
           "name": "max_altitude",
           "baseType": "UINT16",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "51": {
           "num": 51,
           "name": "gps_accuracy",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "m"
         },
         "52": {
           "num": 52,
           "name": "avg_grade",
           "baseType": "SINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "53": {
           "num": 53,
           "name": "avg_pos_grade",
           "baseType": "SINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "54": {
           "num": 54,
           "name": "avg_neg_grade",
           "baseType": "SINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "55": {
           "num": 55,
           "name": "max_pos_grade",
           "baseType": "SINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "56": {
           "num": 56,
           "name": "max_neg_grade",
           "baseType": "SINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "57": {
           "num": 57,
           "name": "avg_temperature",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "degC"
         },
         "58": {
           "num": 58,
           "name": "max_temperature",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "degC"
         },
         "59": {
           "num": 59,
           "name": "total_moving_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "60": {
           "num": 60,
           "name": "avg_pos_vertical_speed",
           "baseType": "SINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "61": {
           "num": 61,
           "name": "avg_neg_vertical_speed",
           "baseType": "SINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "62": {
           "num": 62,
           "name": "max_pos_vertical_speed",
           "baseType": "SINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "63": {
           "num": 63,
           "name": "max_neg_vertical_speed",
           "baseType": "SINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "64": {
           "num": 64,
           "name": "min_heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "65": {
           "num": 65,
           "name": "time_in_hr_zone",
           "baseType": "UINT32",
           "scale": 1000,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "seconds"
         },
         "66": {
           "num": 66,
           "name": "time_in_speed_zone",
           "baseType": "UINT32",
           "scale": 1000,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "seconds"
         },
         "67": {
           "num": 67,
           "name": "time_in_cadence_zone",
           "baseType": "UINT32",
           "scale": 1000,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "seconds"
         },
         "68": {
           "num": 68,
           "name": "time_in_power_zone",
           "baseType": "UINT32",
           "scale": 1000,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "seconds"
         },
         "69": {
           "num": 69,
           "name": "avg_lap_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "70": {
           "num": 70,
@@ -1806,19 +1900,22 @@
           "name": "min_altitude",
           "baseType": "UINT16",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "78": {
           "num": 78,
           "name": "active_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "79": {
           "num": 79,
           "name": "avg_swim_cadence",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "strokes/length"
         },
         "80": {
           "num": 80,
@@ -1844,133 +1941,154 @@
           "num": 85,
           "name": "stroke_count",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "counts"
         },
         "86": {
           "num": 86,
           "name": "zone_count",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "counts"
         },
         "87": {
           "num": 87,
           "name": "max_ball_speed",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m/s"
         },
         "88": {
           "num": 88,
           "name": "avg_ball_speed",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m/s"
         },
         "89": {
           "num": 89,
           "name": "avg_vertical_oscillation",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "mm"
         },
         "90": {
           "num": 90,
           "name": "avg_stance_time_percent",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "91": {
           "num": 91,
           "name": "avg_stance_time",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "ms"
         },
         "92": {
           "num": 92,
           "name": "avg_fractional_cadence",
           "baseType": "UINT8",
-          "scale": 128
+          "scale": 128,
+          "UOM": "rpm"
         },
         "93": {
           "num": 93,
           "name": "max_fractional_cadence",
           "baseType": "UINT8",
-          "scale": 128
+          "scale": 128,
+          "UOM": "rpm"
         },
         "94": {
           "num": 94,
           "name": "total_fractional_cycles",
           "baseType": "UINT8",
-          "scale": 128
+          "scale": 128,
+          "UOM": "cycles"
         },
         "95": {
           "num": 95,
           "name": "avg_total_hemoglobin_conc",
           "baseType": "UINT16",
           "scale": 100,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "g/dL"
         },
         "96": {
           "num": 96,
           "name": "min_total_hemoglobin_conc",
           "baseType": "UINT16",
           "scale": 100,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "g/dL"
         },
         "97": {
           "num": 97,
           "name": "max_total_hemoglobin_conc",
           "baseType": "UINT16",
           "scale": 100,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "g/dL"
         },
         "98": {
           "num": 98,
           "name": "avg_saturated_hemoglobin_percent",
           "baseType": "UINT16",
           "scale": 10,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "percent"
         },
         "99": {
           "num": 99,
           "name": "min_saturated_hemoglobin_percent",
           "baseType": "UINT16",
           "scale": 10,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "percent"
         },
         "100": {
           "num": 100,
           "name": "max_saturated_hemoglobin_percent",
           "baseType": "UINT16",
           "scale": 10,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "percent"
         },
         "101": {
           "num": 101,
           "name": "avg_left_torque_effectiveness",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "102": {
           "num": 102,
           "name": "avg_right_torque_effectiveness",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "103": {
           "num": 103,
           "name": "avg_left_pedal_smoothness",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "104": {
           "num": 104,
           "name": "avg_right_pedal_smoothness",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "105": {
           "num": 105,
           "name": "avg_combined_pedal_smoothness",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "107": {
           "num": 107,
@@ -1997,7 +2115,8 @@
           "num": 112,
           "name": "stand_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "113": {
           "num": 113,
@@ -2007,12 +2126,14 @@
         "114": {
           "num": 114,
           "name": "avg_left_pco",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "mm"
         },
         "115": {
           "num": 115,
           "name": "avg_right_pco",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "mm"
         },
         "116": {
           "num": 116,
@@ -2042,92 +2163,107 @@
           "num": 120,
           "name": "avg_power_position",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "watts"
         },
         "121": {
           "num": 121,
           "name": "max_power_position",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "watts"
         },
         "122": {
           "num": 122,
           "name": "avg_cadence_position",
           "baseType": "UINT8",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "rpm"
         },
         "123": {
           "num": 123,
           "name": "max_cadence_position",
           "baseType": "UINT8",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "rpm"
         },
         "124": {
           "num": 124,
           "name": "enhanced_avg_speed",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "125": {
           "num": 125,
           "name": "enhanced_max_speed",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "126": {
           "num": 126,
           "name": "enhanced_avg_altitude",
           "baseType": "UINT32",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "127": {
           "num": 127,
           "name": "enhanced_min_altitude",
           "baseType": "UINT32",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "128": {
           "num": 128,
           "name": "enhanced_max_altitude",
           "baseType": "UINT32",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "129": {
           "num": 129,
           "name": "avg_lev_motor_power",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "130": {
           "num": 130,
           "name": "max_lev_motor_power",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "131": {
           "num": 131,
           "name": "lev_battery_consumption",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "132": {
           "num": 132,
           "name": "avg_vertical_ratio",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "133": {
           "num": 133,
           "name": "avg_stance_time_balance",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "134": {
           "num": 134,
           "name": "avg_step_length",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "mm"
         },
         "137": {
           "num": 137,
@@ -2139,44 +2275,52 @@
           "num": 139,
           "name": "avg_vam",
           "baseType": "UINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "140": {
           "num": 140,
           "name": "avg_depth",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m"
         },
         "141": {
           "num": 141,
           "name": "max_depth",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m"
         },
         "142": {
           "num": 142,
           "name": "surface_interval",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "143": {
           "num": 143,
           "name": "start_cns",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "144": {
           "num": 144,
           "name": "end_cns",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "145": {
           "num": 145,
           "name": "start_n2",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "percent"
         },
         "146": {
           "num": 146,
           "name": "end_n2",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "percent"
         },
         "147": {
           "num": 147,
@@ -2196,7 +2340,8 @@
         "150": {
           "num": 150,
           "name": "min_temperature",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "degC"
         },
         "151": {
           "num": 151,
@@ -2207,12 +2352,14 @@
           "num": 152,
           "name": "volume",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "kg"
         },
         "155": {
           "num": 155,
           "name": "o2_toxicity",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "OTUs"
         },
         "156": {
           "num": 156,
@@ -2229,28 +2376,33 @@
           "num": 169,
           "name": "enhanced_avg_respiration_rate",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "breaths/min"
         },
         "170": {
           "num": 170,
           "name": "enhanced_max_respiration_rate",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "breaths/min"
         },
         "177": {
           "num": 177,
           "name": "calories_consumed",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "kCal"
         },
         "178": {
           "num": 178,
           "name": "estimated_sweat_loss",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "mL"
         },
         "179": {
           "num": 179,
           "name": "fluid_consumed",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "mL"
         },
         "180": {
           "num": 180,
@@ -2261,12 +2413,14 @@
         "181": {
           "num": 181,
           "name": "total_grit",
-          "baseType": "FLOAT32"
+          "baseType": "FLOAT32",
+          "UOM": "kGrit"
         },
         "182": {
           "num": 182,
           "name": "total_flow",
-          "baseType": "FLOAT32"
+          "baseType": "FLOAT32",
+          "UOM": "flow"
         },
         "183": {
           "num": 183,
@@ -2281,12 +2435,14 @@
         "186": {
           "num": 186,
           "name": "avg_grit",
-          "baseType": "FLOAT32"
+          "baseType": "FLOAT32",
+          "UOM": "kGrit"
         },
         "187": {
           "num": 187,
           "name": "avg_flow",
-          "baseType": "FLOAT32"
+          "baseType": "FLOAT32",
+          "UOM": "flow"
         },
         "188": {
           "num": 188,
@@ -2306,94 +2462,111 @@
         "194": {
           "num": 194,
           "name": "avg_spo2",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "195": {
           "num": 195,
           "name": "avg_stress",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "196": {
           "num": 196,
           "name": "resting_calories",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "kcal"
         },
         "197": {
           "num": 197,
           "name": "hrv_sdrr",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "mS"
         },
         "198": {
           "num": 198,
           "name": "hrv_rmssd",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "mS"
         },
         "199": {
           "num": 199,
           "name": "total_fractional_ascent",
           "baseType": "UINT8",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "200": {
           "num": 200,
           "name": "total_fractional_descent",
           "baseType": "UINT8",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "202": {
           "num": 202,
           "name": "recovery_heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "203": {
           "num": 203,
           "name": "battery_gain",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "204": {
           "num": 204,
           "name": "solar_intensity",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "205": {
           "num": 205,
           "name": "beginning_potential",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "206": {
           "num": 206,
           "name": "ending_potential",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "207": {
           "num": 207,
           "name": "min_stamina",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "208": {
           "num": 208,
           "name": "avg_core_temperature",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "degC"
         },
         "209": {
           "num": 209,
           "name": "min_core_temperature",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "degC"
         },
         "210": {
           "num": 210,
           "name": "max_core_temperature",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "degC"
         },
         "211": {
           "num": 211,
           "name": "grade_adjusted_speed",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "212": {
           "num": 212,
@@ -2414,37 +2587,43 @@
           "num": 220,
           "name": "pack_weight",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "kg"
         },
         "222": {
           "num": 222,
           "name": "step_speed_loss",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "cm/s"
         },
         "223": {
           "num": 223,
           "name": "step_speed_loss_percentage",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "224": {
           "num": 224,
           "name": "avg_force",
           "baseType": "SINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "newton"
         },
         "225": {
           "num": 225,
           "name": "max_force",
           "baseType": "SINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "newton"
         },
         "226": {
           "num": 226,
           "name": "normalized_force",
           "baseType": "SINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "newton"
         },
         "253": {
           "num": 253,
@@ -2483,110 +2662,130 @@
           "num": 3,
           "name": "start_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "4": {
           "num": 4,
           "name": "start_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "5": {
           "num": 5,
           "name": "end_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "6": {
           "num": 6,
           "name": "end_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "7": {
           "num": 7,
           "name": "total_elapsed_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "8": {
           "num": 8,
           "name": "total_timer_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "9": {
           "num": 9,
           "name": "total_distance",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "10": {
           "num": 10,
           "name": "total_cycles",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "cycles"
         },
         "11": {
           "num": 11,
           "name": "total_calories",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "kcal"
         },
         "12": {
           "num": 12,
           "name": "total_fat_calories",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "kcal"
         },
         "13": {
           "num": 13,
           "name": "avg_speed",
           "baseType": "UINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "14": {
           "num": 14,
           "name": "max_speed",
           "baseType": "UINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "15": {
           "num": 15,
           "name": "avg_heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "16": {
           "num": 16,
           "name": "max_heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "17": {
           "num": 17,
           "name": "avg_cadence",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "rpm"
         },
         "18": {
           "num": 18,
           "name": "max_cadence",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "rpm"
         },
         "19": {
           "num": 19,
           "name": "avg_power",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "20": {
           "num": 20,
           "name": "max_power",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "21": {
           "num": 21,
           "name": "total_ascent",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "m"
         },
         "22": {
           "num": 22,
           "name": "total_descent",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "m"
         },
         "23": {
           "num": 23,
@@ -2612,35 +2811,41 @@
           "num": 27,
           "name": "nec_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "28": {
           "num": 28,
           "name": "nec_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "29": {
           "num": 29,
           "name": "swc_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "30": {
           "num": 30,
           "name": "swc_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "32": {
           "num": 32,
           "name": "num_lengths",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "lengths"
         },
         "33": {
           "num": 33,
           "name": "normalized_power",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "34": {
           "num": 34,
@@ -2671,129 +2876,150 @@
         "40": {
           "num": 40,
           "name": "num_active_lengths",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "lengths"
         },
         "41": {
           "num": 41,
           "name": "total_work",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "Joule"
         },
         "42": {
           "num": 42,
           "name": "avg_altitude",
           "baseType": "UINT16",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "43": {
           "num": 43,
           "name": "max_altitude",
           "baseType": "UINT16",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "44": {
           "num": 44,
           "name": "gps_accuracy",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "m"
         },
         "45": {
           "num": 45,
           "name": "avg_grade",
           "baseType": "SINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "46": {
           "num": 46,
           "name": "avg_pos_grade",
           "baseType": "SINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "47": {
           "num": 47,
           "name": "avg_neg_grade",
           "baseType": "SINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "48": {
           "num": 48,
           "name": "max_pos_grade",
           "baseType": "SINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "49": {
           "num": 49,
           "name": "max_neg_grade",
           "baseType": "SINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "50": {
           "num": 50,
           "name": "avg_temperature",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "degC"
         },
         "51": {
           "num": 51,
           "name": "max_temperature",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "degC"
         },
         "52": {
           "num": 52,
           "name": "total_moving_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "53": {
           "num": 53,
           "name": "avg_pos_vertical_speed",
           "baseType": "SINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "54": {
           "num": 54,
           "name": "avg_neg_vertical_speed",
           "baseType": "SINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "55": {
           "num": 55,
           "name": "max_pos_vertical_speed",
           "baseType": "SINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "56": {
           "num": 56,
           "name": "max_neg_vertical_speed",
           "baseType": "SINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "57": {
           "num": 57,
           "name": "time_in_hr_zone",
           "baseType": "UINT32",
           "scale": 1000,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "seconds"
         },
         "58": {
           "num": 58,
           "name": "time_in_speed_zone",
           "baseType": "UINT32",
           "scale": 1000,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "seconds"
         },
         "59": {
           "num": 59,
           "name": "time_in_cadence_zone",
           "baseType": "UINT32",
           "scale": 1000,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "seconds"
         },
         "60": {
           "num": 60,
           "name": "time_in_power_zone",
           "baseType": "UINT32",
           "scale": 1000,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "seconds"
         },
         "61": {
           "num": 61,
@@ -2805,18 +3031,21 @@
           "name": "min_altitude",
           "baseType": "UINT16",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "63": {
           "num": 63,
           "name": "min_heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "70": {
           "num": 70,
           "name": "active_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "71": {
           "num": 71,
@@ -2837,49 +3066,57 @@
           "num": 75,
           "name": "stroke_count",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "counts"
         },
         "76": {
           "num": 76,
           "name": "zone_count",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "counts"
         },
         "77": {
           "num": 77,
           "name": "avg_vertical_oscillation",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "mm"
         },
         "78": {
           "num": 78,
           "name": "avg_stance_time_percent",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "79": {
           "num": 79,
           "name": "avg_stance_time",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "ms"
         },
         "80": {
           "num": 80,
           "name": "avg_fractional_cadence",
           "baseType": "UINT8",
-          "scale": 128
+          "scale": 128,
+          "UOM": "rpm"
         },
         "81": {
           "num": 81,
           "name": "max_fractional_cadence",
           "baseType": "UINT8",
-          "scale": 128
+          "scale": 128,
+          "UOM": "rpm"
         },
         "82": {
           "num": 82,
           "name": "total_fractional_cycles",
           "baseType": "UINT8",
-          "scale": 128
+          "scale": 128,
+          "UOM": "cycles"
         },
         "83": {
           "num": 83,
@@ -2891,78 +3128,90 @@
           "name": "avg_total_hemoglobin_conc",
           "baseType": "UINT16",
           "scale": 100,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "g/dL"
         },
         "85": {
           "num": 85,
           "name": "min_total_hemoglobin_conc",
           "baseType": "UINT16",
           "scale": 100,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "g/dL"
         },
         "86": {
           "num": 86,
           "name": "max_total_hemoglobin_conc",
           "baseType": "UINT16",
           "scale": 100,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "g/dL"
         },
         "87": {
           "num": 87,
           "name": "avg_saturated_hemoglobin_percent",
           "baseType": "UINT16",
           "scale": 10,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "percent"
         },
         "88": {
           "num": 88,
           "name": "min_saturated_hemoglobin_percent",
           "baseType": "UINT16",
           "scale": 10,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "percent"
         },
         "89": {
           "num": 89,
           "name": "max_saturated_hemoglobin_percent",
           "baseType": "UINT16",
           "scale": 10,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "percent"
         },
         "91": {
           "num": 91,
           "name": "avg_left_torque_effectiveness",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "92": {
           "num": 92,
           "name": "avg_right_torque_effectiveness",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "93": {
           "num": 93,
           "name": "avg_left_pedal_smoothness",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "94": {
           "num": 94,
           "name": "avg_right_pedal_smoothness",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "95": {
           "num": 95,
           "name": "avg_combined_pedal_smoothness",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "98": {
           "num": 98,
           "name": "time_standing",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "99": {
           "num": 99,
@@ -2972,12 +3221,14 @@
         "100": {
           "num": 100,
           "name": "avg_left_pco",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "mm"
         },
         "101": {
           "num": 101,
           "name": "avg_right_pco",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "mm"
         },
         "102": {
           "num": 102,
@@ -3007,132 +3258,154 @@
           "num": 106,
           "name": "avg_power_position",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "watts"
         },
         "107": {
           "num": 107,
           "name": "max_power_position",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "watts"
         },
         "108": {
           "num": 108,
           "name": "avg_cadence_position",
           "baseType": "UINT8",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "rpm"
         },
         "109": {
           "num": 109,
           "name": "max_cadence_position",
           "baseType": "UINT8",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "rpm"
         },
         "110": {
           "num": 110,
           "name": "enhanced_avg_speed",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "111": {
           "num": 111,
           "name": "enhanced_max_speed",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "112": {
           "num": 112,
           "name": "enhanced_avg_altitude",
           "baseType": "UINT32",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "113": {
           "num": 113,
           "name": "enhanced_min_altitude",
           "baseType": "UINT32",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "114": {
           "num": 114,
           "name": "enhanced_max_altitude",
           "baseType": "UINT32",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "115": {
           "num": 115,
           "name": "avg_lev_motor_power",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "116": {
           "num": 116,
           "name": "max_lev_motor_power",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "117": {
           "num": 117,
           "name": "lev_battery_consumption",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "118": {
           "num": 118,
           "name": "avg_vertical_ratio",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "119": {
           "num": 119,
           "name": "avg_stance_time_balance",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "120": {
           "num": 120,
           "name": "avg_step_length",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "mm"
         },
         "121": {
           "num": 121,
           "name": "avg_vam",
           "baseType": "UINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "122": {
           "num": 122,
           "name": "avg_depth",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m"
         },
         "123": {
           "num": 123,
           "name": "max_depth",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m"
         },
         "124": {
           "num": 124,
           "name": "min_temperature",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "degC"
         },
         "136": {
           "num": 136,
           "name": "enhanced_avg_respiration_rate",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "breaths/min"
         },
         "137": {
           "num": 137,
           "name": "enhanced_max_respiration_rate",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "breaths/min"
         },
         "145": {
           "num": 145,
           "name": "est_sweat_loss",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "mL"
         },
         "147": {
           "num": 147,
@@ -3147,12 +3420,14 @@
         "149": {
           "num": 149,
           "name": "total_grit",
-          "baseType": "FLOAT32"
+          "baseType": "FLOAT32",
+          "UOM": "kGrit"
         },
         "150": {
           "num": 150,
           "name": "total_flow",
-          "baseType": "FLOAT32"
+          "baseType": "FLOAT32",
+          "UOM": "flow"
         },
         "151": {
           "num": 151,
@@ -3167,88 +3442,103 @@
         "153": {
           "num": 153,
           "name": "avg_grit",
-          "baseType": "FLOAT32"
+          "baseType": "FLOAT32",
+          "UOM": "kGrit"
         },
         "154": {
           "num": 154,
           "name": "avg_flow",
-          "baseType": "FLOAT32"
+          "baseType": "FLOAT32",
+          "UOM": "flow"
         },
         "155": {
           "num": 155,
           "name": "calories",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "kcal"
         },
         "156": {
           "num": 156,
           "name": "total_fractional_ascent",
           "baseType": "UINT8",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "157": {
           "num": 157,
           "name": "total_fractional_descent",
           "baseType": "UINT8",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "158": {
           "num": 158,
           "name": "avg_core_temperature",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "degC"
         },
         "159": {
           "num": 159,
           "name": "min_core_temperature",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "degC"
         },
         "160": {
           "num": 160,
           "name": "max_core_temperature",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "degC"
         },
         "161": {
           "num": 161,
           "name": "grade_adjusted_speed",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "163": {
           "num": 163,
           "name": "unpaved",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "164": {
           "num": 164,
           "name": "step_speed_loss_distance",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "cm/s"
         },
         "165": {
           "num": 165,
           "name": "step_speed_loss_percentage",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "166": {
           "num": 166,
           "name": "avg_force",
           "baseType": "SINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "newton"
         },
         "167": {
           "num": 167,
           "name": "max_force",
           "baseType": "SINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "newton"
         },
         "168": {
           "num": 168,
           "name": "normalized_force",
           "baseType": "SINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "newton"
         },
         "253": {
           "num": 253,
@@ -3271,59 +3561,68 @@
           "num": 0,
           "name": "latitude",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "1": {
           "num": 1,
           "name": "longitude",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "2": {
           "num": 2,
           "name": "altitude",
           "baseType": "UINT16",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "3": {
           "num": 3,
           "name": "heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "4": {
           "num": 4,
           "name": "cadence",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "rpm"
         },
         "5": {
           "num": 5,
           "name": "distance",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "6": {
           "num": 6,
           "name": "speed",
           "baseType": "UINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "7": {
           "num": 7,
           "name": "power",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "8": {
           "num": 8,
           "name": "compressed_speed_distance",
-          "baseType": "BASE_TYPE_BYTE",
+          "baseType": "BYTE",
           "arrayLen": 3
         },
         "9": {
           "num": 9,
           "name": "grade",
           "baseType": "SINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "10": {
           "num": 10,
@@ -3334,45 +3633,53 @@
           "num": 11,
           "name": "time_from_course",
           "baseType": "SINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "12": {
           "num": 12,
           "name": "cycle_length",
           "baseType": "UINT8",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "13": {
           "num": 13,
           "name": "temperature",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "degC"
         },
         "17": {
           "num": 17,
           "name": "speed_1s",
           "baseType": "UINT8",
           "scale": 16,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "m/s"
         },
         "18": {
           "num": 18,
           "name": "cycles",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "cycles"
         },
         "19": {
           "num": 19,
           "name": "total_cycles",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "cycles"
         },
         "28": {
           "num": 28,
           "name": "compressed_accumulated_power",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "29": {
           "num": 29,
           "name": "accumulated_power",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "watts"
         },
         "30": {
           "num": 30,
@@ -3382,36 +3689,42 @@
         "31": {
           "num": 31,
           "name": "gps_accuracy",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "m"
         },
         "32": {
           "num": 32,
           "name": "vertical_speed",
           "baseType": "SINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "33": {
           "num": 33,
           "name": "calories",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "kcal"
         },
         "39": {
           "num": 39,
           "name": "oscillation",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "mm"
         },
         "40": {
           "num": 40,
           "name": "stance_time_percent",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "41": {
           "num": 41,
           "name": "stance_time",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "ms"
         },
         "42": {
           "num": 42,
@@ -3422,37 +3735,43 @@
           "num": 43,
           "name": "left_torque_effectiveness",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "44": {
           "num": 44,
           "name": "right_torque_effectiveness",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "45": {
           "num": 45,
           "name": "left_pedal_smoothness",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "46": {
           "num": 46,
           "name": "right_pedal_smoothness",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "47": {
           "num": 47,
           "name": "combined_pedal_smoothness",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "48": {
           "num": 48,
           "name": "time128",
           "baseType": "UINT8",
-          "scale": 128
+          "scale": 128,
+          "UOM": "seconds"
         },
         "49": {
           "num": 49,
@@ -3468,55 +3787,64 @@
           "num": 51,
           "name": "ball_speed",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m/s"
         },
         "52": {
           "num": 52,
           "name": "cadence256",
           "baseType": "UINT16",
-          "scale": 256
+          "scale": 256,
+          "UOM": "rpm"
         },
         "53": {
           "num": 53,
           "name": "fractional_cadence",
           "baseType": "UINT8",
-          "scale": 128
+          "scale": 128,
+          "UOM": "rpm"
         },
         "54": {
           "num": 54,
           "name": "avg_total_hemoglobin_conc",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "g/dL"
         },
         "55": {
           "num": 55,
           "name": "min_total_hemoglobin_conc",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "g/dL"
         },
         "56": {
           "num": 56,
           "name": "max_total_hemoglobin_conc",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "g/dL"
         },
         "57": {
           "num": 57,
           "name": "avg_saturated_hemoglobin_percent",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "percent"
         },
         "58": {
           "num": 58,
           "name": "min_saturated_hemoglobin_percent",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "percent"
         },
         "59": {
           "num": 59,
           "name": "max_saturated_hemoglobin_percent",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "percent"
         },
         "62": {
           "num": 62,
@@ -3526,12 +3854,14 @@
         "67": {
           "num": 67,
           "name": "left_pco",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "mm"
         },
         "68": {
           "num": 68,
           "name": "right_pco",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "mm"
         },
         "69": {
           "num": 69,
@@ -3561,49 +3891,57 @@
           "num": 73,
           "name": "enhanced_speed",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "78": {
           "num": 78,
           "name": "enhanced_altitude",
           "baseType": "UINT32",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "81": {
           "num": 81,
           "name": "battery_soc",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "82": {
           "num": 82,
           "name": "motor_power",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "83": {
           "num": 83,
           "name": "vertical_ratio",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "84": {
           "num": 84,
           "name": "stance_time_balance",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "85": {
           "num": 85,
           "name": "step_length",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "mm"
         },
         "87": {
           "num": 87,
           "name": "cycle_length16",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "90": {
           "num": 90,
@@ -3613,55 +3951,65 @@
         "91": {
           "num": 91,
           "name": "absolute_pressure",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "Pascal"
         },
         "92": {
           "num": 92,
           "name": "depth",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m"
         },
         "93": {
           "num": 93,
           "name": "next_stop_depth",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m"
         },
         "94": {
           "num": 94,
           "name": "next_stop_time",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "95": {
           "num": 95,
           "name": "time_to_surface",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "96": {
           "num": 96,
           "name": "ndl_time",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "97": {
           "num": 97,
           "name": "cns_load",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "98": {
           "num": 98,
           "name": "n2_load",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "percent"
         },
         "99": {
           "num": 99,
           "name": "respiration_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "seconds"
         },
         "108": {
           "num": 108,
           "name": "enhanced_respiration_rate",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "breaths/min"
         },
         "114": {
           "num": 114,
@@ -3682,12 +4030,14 @@
         "117": {
           "num": 117,
           "name": "ebike_travel_rang",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "km"
         },
         "118": {
           "num": 118,
           "name": "ebike_battery_level",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "119": {
           "num": 119,
@@ -3697,74 +4047,87 @@
         "120": {
           "num": 120,
           "name": "ebike_assist_level_percent",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "121": {
           "num": 121,
           "name": "total_ascent",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "m"
         },
         "123": {
           "num": 123,
           "name": "air_time_remaining",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "124": {
           "num": 124,
           "name": "pressure_sac",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "bar/min"
         },
         "125": {
           "num": 125,
           "name": "volume_sac",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "L/min"
         },
         "126": {
           "num": 126,
           "name": "rmv",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "L/min"
         },
         "127": {
           "num": 127,
           "name": "ascent_rate",
           "baseType": "SINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "129": {
           "num": 129,
           "name": "po2",
           "baseType": "UINT8",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "136": {
           "num": 136,
           "name": "wrist_heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "137": {
           "num": 137,
           "name": "stamina_potential",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "138": {
           "num": 138,
           "name": "stamina",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "139": {
           "num": 139,
           "name": "core_temperature",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "degC"
         },
         "140": {
           "num": 140,
           "name": "grade_adjusted_speed",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "143": {
           "num": 143,
@@ -3774,25 +4137,29 @@
         "144": {
           "num": 144,
           "name": "external_heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "146": {
           "num": 146,
           "name": "step_speed_loss_distance",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "cm/s"
         },
         "147": {
           "num": 147,
           "name": "step_speed_loss_percentage",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "148": {
           "num": 148,
           "name": "force",
           "baseType": "SINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "newton"
         },
         "253": {
           "num": 253,
@@ -3874,7 +4241,8 @@
         "15": {
           "num": 15,
           "name": "start_timestamp",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "21": {
           "num": 21,
@@ -3890,13 +4258,15 @@
           "num": 23,
           "name": "radar_threat_avg_approach_speed",
           "baseType": "UINT8",
-          "scale": 10
+          "scale": 10,
+          "UOM": "m/s"
         },
         "24": {
           "num": 24,
           "name": "radar_threat_max_approach_speed",
           "baseType": "UINT8",
-          "scale": 10
+          "scale": 10,
+          "UOM": "m/s"
         },
         "253": {
           "num": 253,
@@ -3995,13 +4365,15 @@
         "7": {
           "num": 7,
           "name": "cum_operating_time",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "10": {
           "num": 10,
           "name": "battery_voltage",
           "baseType": "UINT16",
-          "scale": 256
+          "scale": 256,
+          "UOM": "Volt"
         },
         "11": {
           "num": 11,
@@ -4052,7 +4424,8 @@
         "32": {
           "num": 32,
           "name": "battery_level",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "253": {
           "num": 253,
@@ -4105,7 +4478,8 @@
           "num": 14,
           "name": "pool_length",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "15": {
           "num": 15,
@@ -4126,13 +4500,15 @@
           "num": 21,
           "name": "time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "22": {
           "num": 22,
           "name": "distance",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "254": {
           "num": 254,
@@ -4209,7 +4585,8 @@
           "num": 12,
           "name": "exercise_weight",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "kg"
         },
         "13": {
           "num": 13,
@@ -4309,13 +4686,15 @@
           "num": 1,
           "name": "position_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "2": {
           "num": 2,
           "name": "position_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "3": {
           "num": 3,
@@ -4328,12 +4707,14 @@
           "name": "altitude",
           "baseType": "UINT16",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "5": {
           "num": 5,
           "name": "enhanced_altitude",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "m"
         },
         "6": {
           "num": 6,
@@ -4361,43 +4742,50 @@
           "num": 0,
           "name": "weight",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "kg"
         },
         "1": {
           "num": 1,
           "name": "percent_fat",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "2": {
           "num": 2,
           "name": "percent_hydration",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "3": {
           "num": 3,
           "name": "visceral_fat_mass",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "kg"
         },
         "4": {
           "num": 4,
           "name": "bone_mass",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "kg"
         },
         "5": {
           "num": 5,
           "name": "muscle_mass",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "kg"
         },
         "7": {
           "num": 7,
           "name": "basal_met",
           "baseType": "UINT16",
-          "scale": 4
+          "scale": 4,
+          "UOM": "kcal/day"
         },
         "8": {
           "num": 8,
@@ -4408,12 +4796,14 @@
           "num": 9,
           "name": "active_met",
           "baseType": "UINT16",
-          "scale": 4
+          "scale": 4,
+          "UOM": "kcal/day"
         },
         "10": {
           "num": 10,
           "name": "metabolic_age",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "years"
         },
         "11": {
           "num": 11,
@@ -4429,7 +4819,8 @@
           "num": 13,
           "name": "bmi",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "kg/m^2"
         },
         "253": {
           "num": 253,
@@ -4480,19 +4871,22 @@
           "num": 2,
           "name": "position_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "3": {
           "num": 3,
           "name": "position_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "4": {
           "num": 4,
           "name": "distance",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "5": {
           "num": 5,
@@ -4525,17 +4919,20 @@
         "0": {
           "num": 0,
           "name": "timer_time",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "1": {
           "num": 1,
           "name": "distance",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "m"
         },
         "2": {
           "num": 2,
           "name": "calories",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "kcal"
         },
         "3": {
           "num": 3,
@@ -4545,7 +4942,8 @@
         "4": {
           "num": 4,
           "name": "elapsed_time",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "5": {
           "num": 5,
@@ -4555,7 +4953,8 @@
         "6": {
           "num": 6,
           "name": "active_time",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "9": {
           "num": 9,
@@ -4677,7 +5076,8 @@
         "4": {
           "num": 4,
           "name": "max_size",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "bytes"
         },
         "254": {
           "num": 254,
@@ -4776,37 +5176,44 @@
         "0": {
           "num": 0,
           "name": "systolic_pressure",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "mmHg"
         },
         "1": {
           "num": 1,
           "name": "diastolic_pressure",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "mmHg"
         },
         "2": {
           "num": 2,
           "name": "mean_arterial_pressure",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "mmHg"
         },
         "3": {
           "num": 3,
           "name": "map_3_sample_mean",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "mmHg"
         },
         "4": {
           "num": 4,
           "name": "map_morning_values",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "mmHg"
         },
         "5": {
           "num": 5,
           "name": "map_evening_values",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "mmHg"
         },
         "6": {
           "num": 6,
           "name": "heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "7": {
           "num": 7,
@@ -4839,7 +5246,8 @@
           "num": 0,
           "name": "high_value",
           "baseType": "UINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "1": {
           "num": 1,
@@ -4865,7 +5273,8 @@
         "1": {
           "num": 1,
           "name": "calories",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "kcal"
         },
         "2": {
           "num": 2,
@@ -4881,7 +5290,8 @@
           "num": 4,
           "name": "active_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "5": {
           "num": 5,
@@ -4901,17 +5311,20 @@
         "8": {
           "num": 8,
           "name": "distance_16",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "100 * m"
         },
         "9": {
           "num": 9,
           "name": "cycles_16",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "2 * cycles (steps)"
         },
         "10": {
           "num": 10,
           "name": "active_time_16",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "seconds"
         },
         "11": {
           "num": 11,
@@ -4922,55 +5335,58 @@
           "num": 12,
           "name": "temperature",
           "baseType": "SINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "degC"
         },
         "14": {
           "num": 14,
           "name": "temperature_min",
           "baseType": "SINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "degC"
         },
         "15": {
           "num": 15,
           "name": "temperature_max",
           "baseType": "SINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "degC"
         },
         "16": {
           "num": 16,
           "name": "activity_time",
           "baseType": "UINT16",
-          "arrayLen": 8
+          "arrayLen": 8,
+          "UOM": "minutes"
         },
         "19": {
           "num": 19,
           "name": "active_calories",
-          "baseType": "UINT16"
-        },
-        "29": {
-          "num": 29,
-          "name": "duration_min",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "kcal"
         },
         "24": {
           "num": 24,
           "name": "current_activity_type_intensity",
-          "baseType": "BASE_TYPE_BYTE"
-        },
-        "26": {
-          "num": 26,
-          "name": "timestamp_16",
-          "baseType": "UINT16"
+          "baseType": "BYTE"
         },
         "25": {
           "num": 25,
           "name": "timestamp_min_8",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "min"
+        },
+        "26": {
+          "num": 26,
+          "name": "timestamp_16",
+          "baseType": "UINT16",
+          "UOM": "seconds"
         },
         "27": {
           "num": 27,
           "name": "heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "28": {
           "num": 28,
@@ -4978,54 +5394,69 @@
           "baseType": "UINT8",
           "scale": 10
         },
+        "29": {
+          "num": 29,
+          "name": "duration_min",
+          "baseType": "UINT16",
+          "UOM": "min"
+        },
         "30": {
           "num": 30,
           "name": "duration",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "31": {
           "num": 31,
           "name": "ascent",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m"
         },
         "32": {
           "num": 32,
           "name": "descent",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m"
         },
         "33": {
           "num": 33,
           "name": "moderate_activity_minutes",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "minutes"
         },
         "34": {
           "num": 34,
           "name": "vigorous_activity_minutes",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "minutes"
         },
         "35": {
           "num": 35,
           "name": "total_ascent",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m"
         },
         "36": {
           "num": 36,
           "name": "total_descent",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m"
         },
         "37": {
           "num": 37,
           "name": "moderate_activity",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "minutes"
         },
         "38": {
           "num": 38,
           "name": "vigorous_activity",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "minutes"
         },
         "253": {
           "num": 253,
@@ -5209,19 +5640,22 @@
         "1": {
           "num": 1,
           "name": "age",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "years"
         },
         "2": {
           "num": 2,
           "name": "height",
           "baseType": "UINT8",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "3": {
           "num": 3,
           "name": "weight",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "kg"
         },
         "4": {
           "num": 4,
@@ -5236,23 +5670,27 @@
         "8": {
           "num": 8,
           "name": "remaining_recovery_time",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "minutes"
         },
         "11": {
           "num": 11,
           "name": "lactate_threshold_heart_rate",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "bpm"
         },
         "12": {
           "num": 12,
           "name": "lactate_threshold_power",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "13": {
           "num": 13,
           "name": "lactate_threshold_speed",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "km/h"
         },
         "15": {
           "num": 15,
@@ -5272,7 +5710,8 @@
         "32": {
           "num": 32,
           "name": "beginning_potential",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "35": {
           "num": 35,
@@ -5301,17 +5740,18 @@
           "num": 0,
           "name": "fractional_timestamp",
           "baseType": "UINT16",
-          "scale": 32768
+          "scale": 32768,
+          "UOM": "seconds"
         },
         "1": {
           "num": 1,
           "name": "mesg_id",
-          "baseType": "BASE_TYPE_BYTE"
+          "baseType": "BYTE"
         },
         "2": {
           "num": 2,
           "name": "mesg_data",
-          "baseType": "BASE_TYPE_BYTE",
+          "baseType": "BYTE",
           "arrayLen": 0
         },
         "3": {
@@ -5322,7 +5762,7 @@
         "4": {
           "num": 4,
           "name": "data",
-          "baseType": "BASE_TYPE_BYTE",
+          "baseType": "BYTE",
           "arrayLen": 0
         },
         "253": {
@@ -5341,17 +5781,18 @@
           "num": 0,
           "name": "fractional_timestamp",
           "baseType": "UINT16",
-          "scale": 32768
+          "scale": 32768,
+          "UOM": "seconds"
         },
         "1": {
           "num": 1,
           "name": "mesg_id",
-          "baseType": "BASE_TYPE_BYTE"
+          "baseType": "BYTE"
         },
         "2": {
           "num": 2,
           "name": "mesg_data",
-          "baseType": "BASE_TYPE_BYTE",
+          "baseType": "BYTE",
           "arrayLen": 0
         },
         "3": {
@@ -5362,7 +5803,7 @@
         "4": {
           "num": 4,
           "name": "data",
-          "baseType": "BASE_TYPE_BYTE",
+          "baseType": "BYTE",
           "arrayLen": 0
         },
         "253": {
@@ -5449,34 +5890,40 @@
           "num": 3,
           "name": "total_elapsed_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "4": {
           "num": 4,
           "name": "total_timer_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "5": {
           "num": 5,
           "name": "total_strokes",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "strokes"
         },
         "6": {
           "num": 6,
           "name": "avg_speed",
           "baseType": "UINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "7": {
           "num": 7,
           "name": "swim_stroke",
-          "baseType": "ENUM"
+          "baseType": "ENUM",
+          "UOM": "swim_stroke"
         },
         "9": {
           "num": 9,
           "name": "avg_swimming_cadence",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "strokes/min"
         },
         "10": {
           "num": 10,
@@ -5486,7 +5933,8 @@
         "11": {
           "num": 11,
           "name": "total_calories",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "kcal"
         },
         "12": {
           "num": 12,
@@ -5507,13 +5955,15 @@
           "num": 20,
           "name": "stroke_count",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "counts"
         },
         "21": {
           "num": 21,
           "name": "zone_count",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "counts"
         },
         "22": {
           "num": 22,
@@ -5557,7 +6007,8 @@
         "0": {
           "num": 0,
           "name": "local_timestamp",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "1": {
           "num": 1,
@@ -5570,19 +6021,22 @@
           "name": "steps_to_distance",
           "baseType": "UINT16",
           "scale": 5000,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "m/cycle"
         },
         "4": {
           "num": 4,
           "name": "steps_to_calories",
           "baseType": "UINT16",
           "scale": 5000,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "kcal/cycle"
         },
         "5": {
           "num": 5,
           "name": "resting_metabolic_rate",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "kcal/day"
         },
         "253": {
           "num": 253,
@@ -5605,12 +6059,14 @@
         "2": {
           "num": 2,
           "name": "battery_level",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "3": {
           "num": 3,
           "name": "temperature",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "degC"
         },
         "253": {
           "num": 253,
@@ -5805,7 +6261,8 @@
           "num": 1,
           "name": "temperature",
           "type": "TEMPERATURE",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "degC"
         },
         "2": {
           "num": 2,
@@ -5816,7 +6273,8 @@
         "3": {
           "num": 3,
           "name": "wind_direction",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "degrees"
         },
         "4": {
           "num": 4,
@@ -5833,7 +6291,8 @@
           "num": 6,
           "name": "temperature_feels_like",
           "type": "TEMPERATURE",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "degC"
         },
         "7": {
           "num": 7,
@@ -5856,13 +6315,15 @@
           "num": 10,
           "name": "observed_location_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "11": {
           "num": 11,
           "name": "observed_location_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "12": {
           "num": 12,
@@ -5874,13 +6335,15 @@
           "num": 13,
           "name": "high_temperature",
           "type": "TEMPERATURE",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "degC"
         },
         "14": {
           "num": 14,
           "name": "low_temperature",
           "type": "TEMPERATURE",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "degC"
         },
         "15": {
           "num": 15,
@@ -5951,7 +6414,8 @@
         "0": {
           "num": 0,
           "name": "high_value",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "rpm"
         },
         "1": {
           "num": 1,
@@ -5973,31 +6437,35 @@
           "num": 0,
           "name": "fractional_timestamp",
           "baseType": "UINT16",
-          "scale": 32768
+          "scale": 32768,
+          "UOM": "seconds"
         },
         "1": {
           "num": 1,
           "name": "time256",
           "baseType": "UINT8",
-          "scale": 256
+          "scale": 256,
+          "UOM": "seconds"
         },
         "6": {
           "num": 6,
           "name": "filtered_bpm",
           "baseType": "UINT8",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "bpm"
         },
         "9": {
           "num": 9,
           "name": "event_timestamp",
           "baseType": "UINT32",
           "scale": 1024,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "seconds"
         },
         "10": {
           "num": 10,
           "name": "event_timestamp_12",
-          "baseType": "BASE_TYPE_BYTE",
+          "baseType": "BYTE",
           "arrayLen": 0
         },
         "253": {
@@ -6038,7 +6506,8 @@
         "1": {
           "num": 1,
           "name": "new_hr_max",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "4": {
           "num": 4,
@@ -6055,7 +6524,8 @@
         "9": {
           "num": 9,
           "name": "recovery_time",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "minutes"
         },
         "11": {
           "num": 11,
@@ -6065,18 +6535,21 @@
         "14": {
           "num": 14,
           "name": "lactate_threshold_heart_rate",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "bpm"
         },
         "15": {
           "num": 15,
           "name": "lactate_threshold_power",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "16": {
           "num": 16,
           "name": "lactate_threshold_speed",
           "baseType": "UINT16",
-          "scale": 10
+          "scale": 10,
+          "UOM": "km/h"
         },
         "17": {
           "num": 17,
@@ -6113,7 +6586,8 @@
         "50": {
           "num": 50,
           "name": "ending_potential",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "60": {
           "num": 60,
@@ -6193,110 +6667,130 @@
           "num": 3,
           "name": "start_position_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "4": {
           "num": 4,
           "name": "start_position_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "5": {
           "num": 5,
           "name": "end_position_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "6": {
           "num": 6,
           "name": "end_position_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "7": {
           "num": 7,
           "name": "total_elapsed_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "8": {
           "num": 8,
           "name": "total_timer_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "9": {
           "num": 9,
           "name": "total_distance",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "10": {
           "num": 10,
           "name": "total_cycles",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "cycles"
         },
         "11": {
           "num": 11,
           "name": "total_calories",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "kcal"
         },
         "12": {
           "num": 12,
           "name": "total_fat_calories",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "kcal"
         },
         "13": {
           "num": 13,
           "name": "avg_speed",
           "baseType": "UINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "14": {
           "num": 14,
           "name": "max_speed",
           "baseType": "UINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "15": {
           "num": 15,
           "name": "avg_heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "16": {
           "num": 16,
           "name": "max_heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "17": {
           "num": 17,
           "name": "avg_cadence",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "rpm"
         },
         "18": {
           "num": 18,
           "name": "max_cadence",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "rpm"
         },
         "19": {
           "num": 19,
           "name": "avg_power",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "20": {
           "num": 20,
           "name": "max_power",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "21": {
           "num": 21,
           "name": "total_ascent",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "m"
         },
         "22": {
           "num": 22,
           "name": "total_descent",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "m"
         },
         "23": {
           "num": 23,
@@ -6312,25 +6806,29 @@
           "num": 25,
           "name": "nec_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "26": {
           "num": 26,
           "name": "nec_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "27": {
           "num": 27,
           "name": "swc_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "28": {
           "num": 28,
           "name": "swc_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "29": {
           "num": 29,
@@ -6341,7 +6839,8 @@
         "30": {
           "num": 30,
           "name": "normalized_power",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "31": {
           "num": 31,
@@ -6356,124 +6855,144 @@
         "33": {
           "num": 33,
           "name": "total_work",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "Joule"
         },
         "34": {
           "num": 34,
           "name": "avg_altitude",
           "baseType": "UINT16",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "35": {
           "num": 35,
           "name": "max_altitude",
           "baseType": "UINT16",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "36": {
           "num": 36,
           "name": "gps_accuracy",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "m"
         },
         "37": {
           "num": 37,
           "name": "avg_grade",
           "baseType": "SINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "38": {
           "num": 38,
           "name": "avg_pos_grade",
           "baseType": "SINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "39": {
           "num": 39,
           "name": "avg_neg_grade",
           "baseType": "SINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "40": {
           "num": 40,
           "name": "max_pos_grade",
           "baseType": "SINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "41": {
           "num": 41,
           "name": "max_neg_grade",
           "baseType": "SINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "42": {
           "num": 42,
           "name": "avg_temperature",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "degC"
         },
         "43": {
           "num": 43,
           "name": "max_temperature",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "degC"
         },
         "44": {
           "num": 44,
           "name": "total_moving_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "45": {
           "num": 45,
           "name": "avg_pos_vertical_speed",
           "baseType": "SINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "46": {
           "num": 46,
           "name": "avg_neg_vertical_speed",
           "baseType": "SINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "47": {
           "num": 47,
           "name": "max_pos_vertical_speed",
           "baseType": "SINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "48": {
           "num": 48,
           "name": "max_neg_vertical_speed",
           "baseType": "SINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "49": {
           "num": 49,
           "name": "time_in_hr_zone",
           "baseType": "UINT32",
           "scale": 1000,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "seconds"
         },
         "50": {
           "num": 50,
           "name": "time_in_speed_zone",
           "baseType": "UINT32",
           "scale": 1000,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "seconds"
         },
         "51": {
           "num": 51,
           "name": "time_in_cadence_zone",
           "baseType": "UINT32",
           "scale": 1000,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "seconds"
         },
         "52": {
           "num": 52,
           "name": "time_in_power_zone",
           "baseType": "UINT32",
           "scale": 1000,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "seconds"
         },
         "53": {
           "num": 53,
@@ -6485,18 +7004,21 @@
           "name": "min_altitude",
           "baseType": "UINT16",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "55": {
           "num": 55,
           "name": "min_heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "56": {
           "num": 56,
           "name": "active_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "57": {
           "num": 57,
@@ -6512,31 +7034,36 @@
           "num": 59,
           "name": "avg_left_torque_effectiveness",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "60": {
           "num": 60,
           "name": "avg_right_torque_effectiveness",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "61": {
           "num": 61,
           "name": "avg_left_pedal_smoothness",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "62": {
           "num": 62,
           "name": "avg_right_pedal_smoothness",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "63": {
           "num": 63,
           "name": "avg_combined_pedal_smoothness",
           "baseType": "UINT8",
-          "scale": 2
+          "scale": 2,
+          "UOM": "percent"
         },
         "64": {
           "num": 64,
@@ -6553,19 +7080,22 @@
           "num": 66,
           "name": "avg_fractional_cadence",
           "baseType": "UINT8",
-          "scale": 128
+          "scale": 128,
+          "UOM": "rpm"
         },
         "67": {
           "num": 67,
           "name": "max_fractional_cadence",
           "baseType": "UINT8",
-          "scale": 128
+          "scale": 128,
+          "UOM": "rpm"
         },
         "68": {
           "num": 68,
           "name": "total_fractional_cycles",
           "baseType": "UINT8",
-          "scale": 128
+          "scale": 128,
+          "UOM": "cycles"
         },
         "69": {
           "num": 69,
@@ -6581,7 +7111,8 @@
           "num": 71,
           "name": "time_standing",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "72": {
           "num": 72,
@@ -6591,12 +7122,14 @@
         "73": {
           "num": 73,
           "name": "avg_left_pco",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "mm"
         },
         "74": {
           "num": 74,
           "name": "avg_right_pco",
-          "baseType": "SINT8"
+          "baseType": "SINT8",
+          "UOM": "mm"
         },
         "75": {
           "num": 75,
@@ -6626,25 +7159,29 @@
           "num": 79,
           "name": "avg_power_position",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "watts"
         },
         "80": {
           "num": 80,
           "name": "max_power_position",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "watts"
         },
         "81": {
           "num": 81,
           "name": "avg_cadence_position",
           "baseType": "UINT8",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "rpm"
         },
         "82": {
           "num": 82,
           "name": "max_cadence_position",
           "baseType": "UINT8",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "rpm"
         },
         "83": {
           "num": 83,
@@ -6654,55 +7191,64 @@
         "84": {
           "num": 84,
           "name": "total_grit",
-          "baseType": "FLOAT32"
+          "baseType": "FLOAT32",
+          "UOM": "kGrit"
         },
         "85": {
           "num": 85,
           "name": "total_flow",
-          "baseType": "FLOAT32"
+          "baseType": "FLOAT32",
+          "UOM": "flow"
         },
         "86": {
           "num": 86,
           "name": "avg_grit",
-          "baseType": "FLOAT32"
+          "baseType": "FLOAT32",
+          "UOM": "kGrit"
         },
         "87": {
           "num": 87,
           "name": "avg_flow",
-          "baseType": "FLOAT32"
+          "baseType": "FLOAT32",
+          "UOM": "flow"
         },
         "89": {
           "num": 89,
           "name": "total_fractional_ascent",
           "baseType": "UINT8",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "90": {
           "num": 90,
           "name": "total_fractional_descent",
           "baseType": "UINT8",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "91": {
           "num": 91,
           "name": "enhanced_avg_altitude",
           "baseType": "UINT32",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "92": {
           "num": 92,
           "name": "enhanced_max_altitude",
           "baseType": "UINT32",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "93": {
           "num": 93,
           "name": "enhanced_min_altitude",
           "baseType": "UINT32",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "253": {
           "num": 253,
@@ -6806,7 +7352,7 @@
         "0": {
           "num": 0,
           "name": "memo",
-          "baseType": "BASE_TYPE_BYTE",
+          "baseType": "BYTE",
           "arrayLen": 0
         },
         "1": {
@@ -7001,7 +7547,8 @@
           "num": 4,
           "name": "segment_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "5": {
           "num": 5,
@@ -7024,40 +7571,46 @@
           "num": 1,
           "name": "position_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "2": {
           "num": 2,
           "name": "position_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "3": {
           "num": 3,
           "name": "distance",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "4": {
           "num": 4,
           "name": "altitude",
           "baseType": "UINT16",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "5": {
           "num": 5,
           "name": "leader_time",
           "baseType": "UINT32",
           "scale": 1000,
-          "arrayLen": 6
+          "arrayLen": 6,
+          "UOM": "seconds"
         },
         "6": {
           "num": 6,
           "name": "enhanced_altitude",
           "baseType": "UINT32",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "254": {
           "num": 254,
@@ -7175,7 +7728,8 @@
           "num": 4,
           "name": "pool_length",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "5": {
           "num": 5,
@@ -7201,7 +7755,7 @@
         "1": {
           "num": 1,
           "name": "layout",
-          "baseType": "BASE_TYPE_BYTE"
+          "baseType": "BYTE"
         },
         "254": {
           "num": 254,
@@ -7217,50 +7771,58 @@
         "0": {
           "num": 0,
           "name": "timestamp_ms",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "ms"
         },
         "1": {
           "num": 1,
           "name": "position_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "2": {
           "num": 2,
           "name": "position_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "3": {
           "num": 3,
           "name": "enhanced_altitude",
           "baseType": "UINT32",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "4": {
           "num": 4,
           "name": "enhanced_speed",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "5": {
           "num": 5,
           "name": "heading",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "degrees"
         },
         "6": {
           "num": 6,
           "name": "utc_timestamp",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "7": {
           "num": 7,
           "name": "velocity",
           "baseType": "SINT16",
           "scale": 100,
-          "arrayLen": 3
+          "arrayLen": 3,
+          "UOM": "m/s"
         },
         "253": {
           "num": 253,
@@ -7277,7 +7839,8 @@
         "0": {
           "num": 0,
           "name": "timestamp_ms",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "ms"
         },
         "1": {
           "num": 1,
@@ -7310,33 +7873,39 @@
           "num": 0,
           "name": "fractional_timestamp",
           "baseType": "UINT16",
-          "scale": 32768
+          "scale": 32768,
+          "UOM": "seconds"
         },
         "1": {
           "num": 1,
           "name": "system_timestamp",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "2": {
           "num": 2,
           "name": "fractional_system_timestamp",
           "baseType": "UINT16",
-          "scale": 32768
+          "scale": 32768,
+          "UOM": "seconds"
         },
         "3": {
           "num": 3,
           "name": "local_timestamp",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "4": {
           "num": 4,
           "name": "timestamp_ms",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "ms"
         },
         "5": {
           "num": 5,
           "name": "system_timestamp_ms",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "ms"
         },
         "253": {
           "num": 253,
@@ -7353,49 +7922,57 @@
         "0": {
           "num": 0,
           "name": "timestamp_ms",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "ms"
         },
         "1": {
           "num": 1,
           "name": "sample_time_offset",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "ms"
         },
         "2": {
           "num": 2,
           "name": "gyro_x",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "counts"
         },
         "3": {
           "num": 3,
           "name": "gyro_y",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "counts"
         },
         "4": {
           "num": 4,
           "name": "gyro_z",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "counts"
         },
         "5": {
           "num": 5,
           "name": "calibrated_gyro_x",
           "baseType": "FLOAT32",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "deg/s"
         },
         "6": {
           "num": 6,
           "name": "calibrated_gyro_y",
           "baseType": "FLOAT32",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "deg/s"
         },
         "7": {
           "num": 7,
           "name": "calibrated_gyro_z",
           "baseType": "FLOAT32",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "deg/s"
         },
         "253": {
           "num": 253,
@@ -7412,67 +7989,78 @@
         "0": {
           "num": 0,
           "name": "timestamp_ms",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "ms"
         },
         "1": {
           "num": 1,
           "name": "sample_time_offset",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "ms"
         },
         "2": {
           "num": 2,
           "name": "accel_x",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "counts"
         },
         "3": {
           "num": 3,
           "name": "accel_y",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "counts"
         },
         "4": {
           "num": 4,
           "name": "accel_z",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "counts"
         },
         "5": {
           "num": 5,
           "name": "calibrated_accel_x",
           "baseType": "FLOAT32",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "g"
         },
         "6": {
           "num": 6,
           "name": "calibrated_accel_y",
           "baseType": "FLOAT32",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "g"
         },
         "7": {
           "num": 7,
           "name": "calibrated_accel_z",
           "baseType": "FLOAT32",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "g"
         },
         "8": {
           "num": 8,
           "name": "compressed_calibrated_accel_x",
           "baseType": "SINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "mG"
         },
         "9": {
           "num": 9,
           "name": "compressed_calibrated_accel_y",
           "baseType": "SINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "mG"
         },
         "10": {
           "num": 10,
           "name": "compressed_calibrated_accel_z",
           "baseType": "SINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "mG"
         },
         "253": {
           "num": 253,
@@ -7499,7 +8087,8 @@
         "2": {
           "num": 2,
           "name": "calibration_divisor",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "counts"
         },
         "3": {
           "num": 3,
@@ -7534,7 +8123,8 @@
         "0": {
           "num": 0,
           "name": "timestamp_ms",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "ms"
         },
         "1": {
           "num": 1,
@@ -7572,7 +8162,7 @@
         "101": {
           "num": 101,
           "name": "field_bits",
-          "baseType": "BASE_TYPE_BYTE"
+          "baseType": "BYTE"
         }
       }
     },
@@ -7584,13 +8174,15 @@
           "num": 6,
           "name": "average_distance",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "19": {
           "num": 19,
           "name": "max_distance",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         }
       }
     },
@@ -7601,23 +8193,25 @@
         "0": {
           "num": 0,
           "name": "timestamp_ms",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "ms"
         },
         "1": {
           "num": 1,
           "name": "time_offset",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "ms"
         },
         "2": {
           "num": 2,
           "name": "pid",
-          "baseType": "BASE_TYPE_BYTE"
+          "baseType": "BYTE"
         },
         "3": {
           "num": 3,
           "name": "raw_data",
-          "baseType": "BASE_TYPE_BYTE",
+          "baseType": "BYTE",
           "arrayLen": 0
         },
         "4": {
@@ -7640,7 +8234,8 @@
         "7": {
           "num": 7,
           "name": "start_timestamp_ms",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "ms"
         },
         "253": {
           "num": 253,
@@ -7657,7 +8252,8 @@
         "0": {
           "num": 0,
           "name": "timestamp_ms",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "ms"
         },
         "1": {
           "num": 1,
@@ -7679,13 +8275,15 @@
         "0": {
           "num": 0,
           "name": "timestamp_ms",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "ms"
         },
         "1": {
           "num": 1,
           "name": "system_time",
           "baseType": "UINT32",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "ms"
         },
         "2": {
           "num": 2,
@@ -7704,21 +8302,24 @@
           "name": "accel_lateral",
           "baseType": "SINT16",
           "scale": 100,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "m/s^2"
         },
         "5": {
           "num": 5,
           "name": "accel_normal",
           "baseType": "SINT16",
           "scale": 100,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "m/s^2"
         },
         "6": {
           "num": 6,
           "name": "turn_rate",
           "baseType": "SINT16",
           "scale": 1024,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "radians/second"
         },
         "7": {
           "num": 7,
@@ -7730,7 +8331,8 @@
           "num": 8,
           "name": "attitude_stage_complete",
           "baseType": "UINT8",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "percent"
         },
         "9": {
           "num": 9,
@@ -7769,7 +8371,8 @@
         "2": {
           "num": 2,
           "name": "duration",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "ms"
         }
       }
     },
@@ -7847,12 +8450,14 @@
         "6": {
           "num": 6,
           "name": "clip_start",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "ms"
         },
         "7": {
           "num": 7,
           "name": "clip_end",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "ms"
         }
       }
     },
@@ -7901,19 +8506,22 @@
         "2": {
           "num": 2,
           "name": "local_time",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "3": {
           "num": 3,
           "name": "start_time",
           "type": "TIMESTAMP",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "4": {
           "num": 4,
           "name": "end_time",
           "type": "TIMESTAMP",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "8": {
           "num": 8,
@@ -8045,7 +8653,8 @@
           "num": 1,
           "name": "distance",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "2": {
           "num": 2,
@@ -8061,13 +8670,15 @@
           "num": 4,
           "name": "position_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "5": {
           "num": 5,
           "name": "position_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "253": {
           "num": 253,
@@ -8090,25 +8701,29 @@
           "num": 2,
           "name": "start_position_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "3": {
           "num": 3,
           "name": "start_position_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "4": {
           "num": 4,
           "name": "end_position_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "5": {
           "num": 5,
           "name": "end_position_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "7": {
           "num": 7,
@@ -8162,7 +8777,7 @@
         "1": {
           "num": 1,
           "name": "concept_field",
-          "baseType": "BASE_TYPE_BYTE"
+          "baseType": "BYTE"
         },
         "2": {
           "num": 2,
@@ -8199,7 +8814,7 @@
         "1": {
           "num": 1,
           "name": "concept_field",
-          "baseType": "BASE_TYPE_BYTE"
+          "baseType": "BYTE"
         },
         "2": {
           "num": 2,
@@ -8334,13 +8949,13 @@
         "0": {
           "num": 0,
           "name": "developer_id",
-          "baseType": "BASE_TYPE_BYTE",
+          "baseType": "BYTE",
           "arrayLen": 16
         },
         "1": {
           "num": 1,
           "name": "application_id",
-          "baseType": "BASE_TYPE_BYTE",
+          "baseType": "BYTE",
           "arrayLen": 16
         },
         "2": {
@@ -8367,49 +8982,57 @@
         "0": {
           "num": 0,
           "name": "timestamp_ms",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "ms"
         },
         "1": {
           "num": 1,
           "name": "sample_time_offset",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "ms"
         },
         "2": {
           "num": 2,
           "name": "mag_x",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "counts"
         },
         "3": {
           "num": 3,
           "name": "mag_y",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "counts"
         },
         "4": {
           "num": 4,
           "name": "mag_z",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "counts"
         },
         "5": {
           "num": 5,
           "name": "calibrated_mag_x",
           "baseType": "FLOAT32",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "Gauss"
         },
         "6": {
           "num": 6,
           "name": "calibrated_mag_y",
           "baseType": "FLOAT32",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "Gauss"
         },
         "7": {
           "num": 7,
           "name": "calibrated_mag_z",
           "baseType": "FLOAT32",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "Gauss"
         },
         "253": {
           "num": 253,
@@ -8426,19 +9049,22 @@
         "0": {
           "num": 0,
           "name": "timestamp_ms",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "ms"
         },
         "1": {
           "num": 1,
           "name": "sample_time_offset",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "ms"
         },
         "2": {
           "num": 2,
           "name": "baro_pres",
           "baseType": "UINT32",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "Pascal"
         },
         "253": {
           "num": 253,
@@ -8465,7 +9091,8 @@
         "2": {
           "num": 2,
           "name": "calibration_divisor",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "counts"
         },
         "3": {
           "num": 3,
@@ -8492,12 +9119,14 @@
         "0": {
           "num": 0,
           "name": "resting_heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "1": {
           "num": 1,
           "name": "current_day_resting_heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "253": {
           "num": 253,
@@ -8532,46 +9161,53 @@
           "name": "time_in_speed_zone",
           "baseType": "UINT32",
           "scale": 1000,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "seconds"
         },
         "4": {
           "num": 4,
           "name": "time_in_cadence_zone",
           "baseType": "UINT32",
           "scale": 1000,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "seconds"
         },
         "5": {
           "num": 5,
           "name": "time_in_power_zone",
           "baseType": "UINT32",
           "scale": 1000,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "seconds"
         },
         "6": {
           "num": 6,
           "name": "hr_zone_high_boundary",
           "type": "HR_ZONE_HIGH_BOUNDARY",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "7": {
           "num": 7,
           "name": "speed_zone_high_boundary",
           "baseType": "UINT16",
           "scale": 1000,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "m/s"
         },
         "8": {
           "num": 8,
           "name": "cadence_zone_high_boundary",
           "baseType": "UINT8",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "rpm"
         },
         "9": {
           "num": 9,
           "name": "power_zone_high_boundary",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "watts"
         },
         "10": {
           "num": 10,
@@ -8679,7 +9315,8 @@
           "num": 0,
           "name": "duration",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "3": {
           "num": 3,
@@ -8690,7 +9327,8 @@
           "num": 4,
           "name": "weight",
           "baseType": "UINT16",
-          "scale": 16
+          "scale": 16,
+          "UOM": "kg"
         },
         "5": {
           "num": 5,
@@ -8738,6 +9376,111 @@
         }
       }
     },
+    "227": {
+      "num": 227,
+      "name": "STRESS_LEVEL",
+      "fields": {
+        "0": {
+          "num": 0,
+          "name": "stress_level_value",
+          "baseType": "SINT16"
+        },
+        "1": {
+          "num": 1,
+          "name": "stress_level_time",
+          "type": "TIMESTAMP",
+          "baseType": "UINT32",
+          "UOM": "seconds"
+        },
+        "3": {
+          "num": 3,
+          "name": "body_energy",
+          "baseType": "SINT8"
+        }
+      }
+    },
+    "229": {
+      "num": 229,
+      "name": "MAX_MET_DATA",
+      "fields": {
+        "0": {
+          "num": 0,
+          "name": "update_time",
+          "type": "TIMESTAMP",
+          "baseType": "UINT32"
+        },
+        "2": {
+          "num": 2,
+          "name": "vo2_max",
+          "baseType": "UINT16",
+          "scale": 10,
+          "UOM": "mL/kg/min"
+        },
+        "5": {
+          "num": 5,
+          "name": "sport",
+          "baseType": "ENUM"
+        },
+        "6": {
+          "num": 6,
+          "name": "sub_sport",
+          "baseType": "ENUM"
+        },
+        "8": {
+          "num": 8,
+          "name": "max_met_category",
+          "baseType": "ENUM"
+        },
+        "9": {
+          "num": 9,
+          "name": "calibrated_data",
+          "baseType": "ENUM"
+        },
+        "12": {
+          "num": 12,
+          "name": "hr_source",
+          "baseType": "ENUM"
+        },
+        "13": {
+          "num": 13,
+          "name": "speed_source",
+          "baseType": "ENUM"
+        }
+      }
+    },
+    "243": {
+      "num": 243,
+      "name": "MUSIC_INFO",
+      "fields": {
+        "0": {
+          "num": 0,
+          "name": "start_time",
+          "baseType": "UINT32",
+          "UOM": "seconds"
+        },
+        "2": {
+          "num": 2,
+          "name": "title",
+          "baseType": "STRING"
+        },
+        "3": {
+          "num": 3,
+          "name": "artist",
+          "baseType": "STRING"
+        },
+        "4": {
+          "num": 4,
+          "name": "genre",
+          "baseType": "STRING"
+        },
+        "5": {
+          "num": 5,
+          "name": "duration",
+          "baseType": "UINT16",
+          "UOM": "seconds"
+        }
+      }
+    },
     "258": {
       "num": 258,
       "name": "DIVE_SETTINGS",
@@ -8755,12 +9498,14 @@
         "2": {
           "num": 2,
           "name": "gf_low",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "3": {
           "num": 3,
           "name": "gf_high",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "4": {
           "num": 4,
@@ -8771,25 +9516,29 @@
         "5": {
           "num": 5,
           "name": "water_density",
-          "baseType": "FLOAT32"
+          "baseType": "FLOAT32",
+          "UOM": "kg/m^3"
         },
         "6": {
           "num": 6,
           "name": "po2_warn",
           "baseType": "UINT8",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "7": {
           "num": 7,
           "name": "po2_critical",
           "baseType": "UINT8",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "8": {
           "num": 8,
           "name": "po2_deco",
           "baseType": "UINT8",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "9": {
           "num": 9,
@@ -8834,12 +9583,14 @@
         "17": {
           "num": 17,
           "name": "repeat_dive_interval",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "seconds"
         },
         "18": {
           "num": 18,
           "name": "safety_stop_time",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "seconds"
         },
         "19": {
           "num": 19,
@@ -8865,13 +9616,15 @@
           "num": 23,
           "name": "ccr_low_setpoint",
           "baseType": "UINT8",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "24": {
           "num": 24,
           "name": "ccr_low_setpoint_depth",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m"
         },
         "25": {
           "num": 25,
@@ -8882,13 +9635,15 @@
           "num": 26,
           "name": "ccr_high_setpoint",
           "baseType": "UINT8",
-          "scale": 100
+          "scale": 100,
+          "UOM": "percent"
         },
         "27": {
           "num": 27,
           "name": "ccr_high_setpoint_depth",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m"
         },
         "29": {
           "num": 29,
@@ -8936,12 +9691,14 @@
         "0": {
           "num": 0,
           "name": "helium_content",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "1": {
           "num": 1,
           "name": "oxygen_content",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "2": {
           "num": 2,
@@ -8960,59 +9717,6 @@
         }
       }
     },
-    "227": {
-      "num": 227,
-      "name": "STRESS_LEVEL",
-      "fields": {
-        "0": {
-          "num": 0,
-          "name": "stress_level_value",
-          "baseType": "SINT16"
-        },
-        "1": {
-          "num": 1,
-          "name": "stress_level_time",
-          "type": "TIMESTAMP",
-          "baseType": "UINT32"
-        },
-        "3": {
-          "num": 3,
-          "name": "body_energy",
-          "baseType": "SINT8"
-        }
-      }
-    },
-    "243": {
-      "num": 243,
-      "name": "MUSIC_INFO",
-      "fields": {
-        "0": {
-          "num": 0,
-          "name": "start_time",
-          "baseType": "UINT32"
-        },
-        "2": {
-          "num": 2,
-          "name": "title",
-          "baseType": "STRING"
-        },
-        "3": {
-          "num": 3,
-          "name": "artist",
-          "baseType": "STRING"
-        },
-        "4": {
-          "num": 4,
-          "name": "genre",
-          "baseType": "STRING"
-        },
-        "5": {
-          "num": 5,
-          "name": "duration",
-          "baseType": "UINT16"
-        }
-      }
-    },
     "262": {
       "num": 262,
       "name": "DIVE_ALARM",
@@ -9021,12 +9725,14 @@
           "num": 0,
           "name": "depth",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m"
         },
         "1": {
           "num": 1,
           "name": "time",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "seconds"
         },
         "2": {
           "num": 2,
@@ -9083,7 +9789,8 @@
           "num": 11,
           "name": "speed",
           "baseType": "SINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "mps"
         },
         "254": {
           "num": 254,
@@ -9118,6 +9825,160 @@
         }
       }
     },
+    "268": {
+      "num": 268,
+      "name": "DIVE_SUMMARY",
+      "fields": {
+        "0": {
+          "num": 0,
+          "name": "reference_mesg",
+          "baseType": "UINT16"
+        },
+        "1": {
+          "num": 1,
+          "name": "reference_index",
+          "baseType": "UINT16"
+        },
+        "2": {
+          "num": 2,
+          "name": "avg_depth",
+          "baseType": "UINT32",
+          "scale": 1000,
+          "UOM": "m"
+        },
+        "3": {
+          "num": 3,
+          "name": "max_depth",
+          "baseType": "UINT32",
+          "scale": 1000,
+          "UOM": "m"
+        },
+        "4": {
+          "num": 4,
+          "name": "surface_interval",
+          "baseType": "UINT32",
+          "UOM": "seconds"
+        },
+        "5": {
+          "num": 5,
+          "name": "start_cns",
+          "baseType": "UINT8",
+          "UOM": "percent"
+        },
+        "6": {
+          "num": 6,
+          "name": "end_cns",
+          "baseType": "UINT8",
+          "UOM": "percent"
+        },
+        "7": {
+          "num": 7,
+          "name": "start_n2",
+          "baseType": "UINT16",
+          "UOM": "percent"
+        },
+        "8": {
+          "num": 8,
+          "name": "end_n2",
+          "baseType": "UINT16",
+          "UOM": "percent"
+        },
+        "9": {
+          "num": 9,
+          "name": "o2_toxicity",
+          "baseType": "UINT16",
+          "UOM": "OTUs"
+        },
+        "10": {
+          "num": 10,
+          "name": "dive_number",
+          "baseType": "UINT32"
+        },
+        "11": {
+          "num": 11,
+          "name": "bottom_time",
+          "baseType": "UINT32",
+          "scale": 1000,
+          "UOM": "seconds"
+        },
+        "12": {
+          "num": 12,
+          "name": "avg_pressure_sac",
+          "baseType": "UINT16",
+          "scale": 100,
+          "UOM": "bar/min"
+        },
+        "13": {
+          "num": 13,
+          "name": "avg_volume_sac",
+          "baseType": "UINT16",
+          "scale": 100,
+          "UOM": "L/min"
+        },
+        "14": {
+          "num": 14,
+          "name": "avg_rmv",
+          "baseType": "UINT16",
+          "scale": 100,
+          "UOM": "L/min"
+        },
+        "15": {
+          "num": 15,
+          "name": "descent_time",
+          "baseType": "UINT32",
+          "scale": 1000,
+          "UOM": "seconds"
+        },
+        "16": {
+          "num": 16,
+          "name": "ascent_time",
+          "baseType": "UINT32",
+          "scale": 1000,
+          "UOM": "seconds"
+        },
+        "17": {
+          "num": 17,
+          "name": "avg_ascent_rate",
+          "baseType": "SINT32",
+          "scale": 1000,
+          "UOM": "m/s"
+        },
+        "22": {
+          "num": 22,
+          "name": "avg_descent_rate",
+          "baseType": "UINT32",
+          "scale": 1000,
+          "UOM": "m/s"
+        },
+        "23": {
+          "num": 23,
+          "name": "max_ascent_rate",
+          "baseType": "UINT32",
+          "scale": 1000,
+          "UOM": "m/s"
+        },
+        "24": {
+          "num": 24,
+          "name": "max_descent_rate",
+          "baseType": "UINT32",
+          "scale": 1000,
+          "UOM": "m/s"
+        },
+        "25": {
+          "num": 25,
+          "name": "hang_time",
+          "baseType": "UINT32",
+          "scale": 1000,
+          "UOM": "seconds"
+        },
+        "253": {
+          "num": 253,
+          "name": "timestamp",
+          "type": "TIMESTAMP",
+          "baseType": "UINT32"
+        }
+      }
+    },
     "269": {
       "num": 269,
       "name": "SPO2",
@@ -9125,7 +9986,8 @@
         "0": {
           "num": 0,
           "name": "reading_spo2",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "1": {
           "num": 1,
@@ -9157,12 +10019,14 @@
         "1": {
           "num": 1,
           "name": "sample_length",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "seconds"
         },
         "2": {
           "num": 2,
           "name": "local_timestamp",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "3": {
           "num": 3,
@@ -9189,7 +10053,7 @@
         "0": {
           "num": 0,
           "name": "bytes",
-          "baseType": "BASE_TYPE_BYTE"
+          "baseType": "BYTE"
         }
       }
     },
@@ -9211,189 +10075,6 @@
         }
       }
     },
-    "229": {
-      "num": 229,
-      "name": "MAX_MET_DATA",
-      "fields": {
-        "0": {
-          "num": 0,
-          "name": "update_time",
-          "type": "TIMESTAMP",
-          "baseType": "UINT32"
-        },
-        "2": {
-          "num": 2,
-          "name": "vo2_max",
-          "baseType": "UINT16",
-          "scale": 10
-        },
-        "5": {
-          "num": 5,
-          "name": "sport",
-          "baseType": "ENUM"
-        },
-        "6": {
-          "num": 6,
-          "name": "sub_sport",
-          "baseType": "ENUM"
-        },
-        "8": {
-          "num": 8,
-          "name": "max_met_category",
-          "baseType": "ENUM"
-        },
-        "9": {
-          "num": 9,
-          "name": "calibrated_data",
-          "baseType": "ENUM"
-        },
-        "12": {
-          "num": 12,
-          "name": "hr_source",
-          "baseType": "ENUM"
-        },
-        "13": {
-          "num": 13,
-          "name": "speed_source",
-          "baseType": "ENUM"
-        }
-      }
-    },
-    "268": {
-      "num": 268,
-      "name": "DIVE_SUMMARY",
-      "fields": {
-        "0": {
-          "num": 0,
-          "name": "reference_mesg",
-          "baseType": "UINT16"
-        },
-        "1": {
-          "num": 1,
-          "name": "reference_index",
-          "baseType": "UINT16"
-        },
-        "2": {
-          "num": 2,
-          "name": "avg_depth",
-          "baseType": "UINT32",
-          "scale": 1000
-        },
-        "3": {
-          "num": 3,
-          "name": "max_depth",
-          "baseType": "UINT32",
-          "scale": 1000
-        },
-        "4": {
-          "num": 4,
-          "name": "surface_interval",
-          "baseType": "UINT32"
-        },
-        "5": {
-          "num": 5,
-          "name": "start_cns",
-          "baseType": "UINT8"
-        },
-        "6": {
-          "num": 6,
-          "name": "end_cns",
-          "baseType": "UINT8"
-        },
-        "7": {
-          "num": 7,
-          "name": "start_n2",
-          "baseType": "UINT16"
-        },
-        "8": {
-          "num": 8,
-          "name": "end_n2",
-          "baseType": "UINT16"
-        },
-        "9": {
-          "num": 9,
-          "name": "o2_toxicity",
-          "baseType": "UINT16"
-        },
-        "10": {
-          "num": 10,
-          "name": "dive_number",
-          "baseType": "UINT32"
-        },
-        "11": {
-          "num": 11,
-          "name": "bottom_time",
-          "baseType": "UINT32",
-          "scale": 1000
-        },
-        "12": {
-          "num": 12,
-          "name": "avg_pressure_sac",
-          "baseType": "UINT16",
-          "scale": 100
-        },
-        "13": {
-          "num": 13,
-          "name": "avg_volume_sac",
-          "baseType": "UINT16",
-          "scale": 100
-        },
-        "14": {
-          "num": 14,
-          "name": "avg_rmv",
-          "baseType": "UINT16",
-          "scale": 100
-        },
-        "15": {
-          "num": 15,
-          "name": "descent_time",
-          "baseType": "UINT32",
-          "scale": 1000
-        },
-        "16": {
-          "num": 16,
-          "name": "ascent_time",
-          "baseType": "UINT32",
-          "scale": 1000
-        },
-        "17": {
-          "num": 17,
-          "name": "avg_ascent_rate",
-          "baseType": "SINT32",
-          "scale": 1000
-        },
-        "22": {
-          "num": 22,
-          "name": "avg_descent_rate",
-          "baseType": "UINT32",
-          "scale": 1000
-        },
-        "23": {
-          "num": 23,
-          "name": "max_ascent_rate",
-          "baseType": "UINT32",
-          "scale": 1000
-        },
-        "24": {
-          "num": 24,
-          "name": "max_descent_rate",
-          "baseType": "UINT32",
-          "scale": 1000
-        },
-        "25": {
-          "num": 25,
-          "name": "hang_time",
-          "baseType": "UINT32",
-          "scale": 1000
-        },
-        "253": {
-          "num": 253,
-          "name": "timestamp",
-          "type": "TIMESTAMP",
-          "baseType": "UINT32"
-        }
-      }
-    },
     "279": {
       "num": 279,
       "name": "MONITORING_ALTITUDE",
@@ -9403,7 +10084,8 @@
           "name": "altitude",
           "baseType": "UINT32",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "253": {
           "num": 253,
@@ -9437,12 +10119,14 @@
         "0": {
           "num": 0,
           "name": "distance",
-          "baseType": "FLOAT32"
+          "baseType": "FLOAT32",
+          "UOM": "m"
         },
         "1": {
           "num": 1,
           "name": "heigh",
-          "baseType": "FLOAT32"
+          "baseType": "FLOAT32",
+          "UOM": "m"
         },
         "2": {
           "num": 2,
@@ -9452,7 +10136,8 @@
         "3": {
           "num": 3,
           "name": "hang_time",
-          "baseType": "FLOAT32"
+          "baseType": "FLOAT32",
+          "UOM": "seconds"
         },
         "4": {
           "num": 4,
@@ -9463,25 +10148,29 @@
           "num": 5,
           "name": "position_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "6": {
           "num": 6,
           "name": "position_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "7": {
           "num": 7,
           "name": "speed",
           "baseType": "UINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "8": {
           "num": 8,
           "name": "enhanced_speed",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "253": {
           "num": 253,
@@ -9498,7 +10187,8 @@
         "0": {
           "num": 0,
           "name": "time",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "seconds"
         },
         "1": {
           "num": 1,
@@ -9535,13 +10225,15 @@
         "0": {
           "num": 0,
           "name": "timestamp_ms",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "ms"
         },
         "1": {
           "num": 1,
           "name": "time",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "ms"
         },
         "253": {
           "num": 253,
@@ -9559,7 +10251,8 @@
           "num": 0,
           "name": "respiration_rate",
           "baseType": "SINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "breaths/min"
         },
         "253": {
           "num": 253,
@@ -9576,12 +10269,14 @@
         "0": {
           "num": 0,
           "name": "timestamp_ms",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "ms"
         },
         "1": {
           "num": 1,
           "name": "sampling_interval",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "ms"
         },
         "2": {
           "num": 2,
@@ -9621,13 +10316,15 @@
         "0": {
           "num": 0,
           "name": "processing_interval",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "seconds"
         },
         "1": {
           "num": 1,
           "name": "steps",
           "baseType": "UINT32",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "steps"
         },
         "253": {
           "num": 253,
@@ -9644,13 +10341,15 @@
         "0": {
           "num": 0,
           "name": "processing_interval",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "seconds"
         },
         "1": {
           "num": 1,
           "name": "reading_spo2",
           "baseType": "UINT8",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "percent"
         },
         "2": {
           "num": 2,
@@ -9673,13 +10372,15 @@
         "0": {
           "num": 0,
           "name": "processing_interval",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "seconds"
         },
         "1": {
           "num": 1,
           "name": "stress_level",
           "baseType": "SINT8",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "seconds"
         },
         "253": {
           "num": 253,
@@ -9696,14 +10397,16 @@
         "0": {
           "num": 0,
           "name": "processing_interval",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "seconds"
         },
         "1": {
           "num": 1,
           "name": "respiration_rate",
           "baseType": "SINT16",
           "scale": 100,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "breaths/min"
         },
         "253": {
           "num": 253,
@@ -9720,7 +10423,8 @@
         "0": {
           "num": 0,
           "name": "processing_interval",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "seconds"
         },
         "1": {
           "num": 1,
@@ -9731,7 +10435,8 @@
           "num": 2,
           "name": "heart_rate",
           "baseType": "UINT8",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "bpm"
         },
         "253": {
           "num": 253,
@@ -9765,25 +10470,29 @@
           "num": 3,
           "name": "goal_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "4": {
           "num": 4,
           "name": "goal_speed",
           "baseType": "UINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "5": {
           "num": 5,
           "name": "distance",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "7": {
           "num": 7,
           "name": "split_distance",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         }
       }
     },
@@ -9795,69 +10504,80 @@
           "num": 0,
           "name": "time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "1": {
           "num": 1,
           "name": "distance",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "2": {
           "num": 2,
           "name": "split_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "3": {
           "num": 3,
           "name": "split_distance",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "4": {
           "num": 4,
           "name": "split_speed",
           "baseType": "UINT16",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "9": {
           "num": 9,
           "name": "start_position_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "10": {
           "num": 10,
           "name": "start_position_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "11": {
           "num": 11,
           "name": "end_position_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "12": {
           "num": 12,
           "name": "end_position_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "13": {
           "num": 13,
           "name": "start_altitude",
           "baseType": "UINT32",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "14": {
           "num": 14,
           "name": "end_altitude",
           "baseType": "UINT32",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "254": {
           "num": 254,
@@ -9879,25 +10599,29 @@
           "num": 1,
           "name": "total_elapsed_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "2": {
           "num": 2,
           "name": "total_timer_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "3": {
           "num": 3,
           "name": "total_distance",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "4": {
           "num": 4,
           "name": "avg_speed",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "9": {
           "num": 9,
@@ -9907,48 +10631,56 @@
         "13": {
           "num": 13,
           "name": "total_ascent",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "m"
         },
         "14": {
           "num": 14,
           "name": "total_descent",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "m"
         },
         "21": {
           "num": 21,
           "name": "start_position_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "22": {
           "num": 22,
           "name": "start_position_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "23": {
           "num": 23,
           "name": "end_position_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "24": {
           "num": 24,
           "name": "end_position_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "25": {
           "num": 25,
           "name": "max_speed",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "26": {
           "num": 26,
           "name": "avg_vert_speed",
           "baseType": "SINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "27": {
           "num": 27,
@@ -9958,26 +10690,30 @@
         "28": {
           "num": 28,
           "name": "total_calories",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "kcal"
         },
         "74": {
           "num": 74,
           "name": "start_elevation",
           "baseType": "UINT32",
           "scale": 5,
-          "offset": 500
+          "offset": 500,
+          "UOM": "m"
         },
         "78": {
           "num": 78,
           "name": "active_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "110": {
           "num": 110,
           "name": "total_moving_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "253": {
           "num": 253,
@@ -10010,68 +10746,80 @@
           "num": 4,
           "name": "total_timer_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "5": {
           "num": 5,
           "name": "total_distance",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "m"
         },
         "6": {
           "num": 6,
           "name": "avg_speed",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "7": {
           "num": 7,
           "name": "max_speed",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "8": {
           "num": 8,
           "name": "total_ascent",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "m"
         },
         "9": {
           "num": 9,
           "name": "total_descent",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "m"
         },
         "10": {
           "num": 10,
           "name": "avg_heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "11": {
           "num": 11,
           "name": "max_heart_rate",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "12": {
           "num": 12,
           "name": "avg_vert_speed",
           "baseType": "SINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "13": {
           "num": 13,
           "name": "total_calories",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "kcal"
         },
         "65": {
           "num": 65,
           "name": "active_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "77": {
           "num": 77,
           "name": "total_moving_time",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "seconds"
         },
         "253": {
           "num": 253,
@@ -10093,13 +10841,15 @@
         "0": {
           "num": 0,
           "name": "processing_interval",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "seconds"
         },
         "1": {
           "num": 1,
           "name": "level",
           "baseType": "SINT8",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "percent"
         },
         "2": {
           "num": 2,
@@ -10146,13 +10896,15 @@
           "num": 0,
           "name": "position_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "1": {
           "num": 1,
           "name": "position_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "2": {
           "num": 2,
@@ -10172,7 +10924,8 @@
         "5": {
           "num": 5,
           "name": "current_dist",
-          "baseType": "FLOAT32"
+          "baseType": "FLOAT32",
+          "UOM": "m"
         },
         "253": {
           "num": 253,
@@ -10200,7 +10953,8 @@
         "3": {
           "num": 3,
           "name": "gain",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "ms"
         },
         "253": {
           "num": 253,
@@ -10223,7 +10977,8 @@
           "num": 1,
           "name": "pressure",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "bar"
         },
         "253": {
           "num": 253,
@@ -10267,19 +11022,22 @@
           "num": 1,
           "name": "start_pressure",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "bar"
         },
         "2": {
           "num": 2,
           "name": "end_pressure",
           "baseType": "UINT16",
-          "scale": 100
+          "scale": 100,
+          "UOM": "bar"
         },
         "3": {
           "num": 3,
           "name": "volume_used",
           "baseType": "UINT32",
-          "scale": 100
+          "scale": 100,
+          "UOM": "L"
         },
         "253": {
           "num": 253,
@@ -10364,12 +11122,14 @@
         "11": {
           "num": 11,
           "name": "sample_time",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "seconds"
         },
         "12": {
           "num": 12,
           "name": "sdrr_hrv",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "ms"
         }
       }
     },
@@ -10402,27 +11162,32 @@
         "0": {
           "num": 0,
           "name": "local_timestamp",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "1": {
           "num": 1,
           "name": "time_5k",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "seconds"
         },
         "2": {
           "num": 2,
           "name": "time_10k",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "seconds"
         },
         "3": {
           "num": 3,
           "name": "time_half_marathon",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "seconds"
         },
         "4": {
           "num": 4,
           "name": "time_full_marathon",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "seconds"
         },
         "253": {
           "num": 253,
@@ -10531,7 +11296,8 @@
         "0": {
           "num": 0,
           "name": "unknown_0",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "kcal"
         },
         "2": {
           "num": 2,
@@ -10546,7 +11312,8 @@
         "4": {
           "num": 4,
           "name": "functional_threshold_power",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "5": {
           "num": 5,
@@ -10561,17 +11328,20 @@
         "7": {
           "num": 7,
           "name": "running_lactate_threshold_power",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "watts"
         },
         "8": {
           "num": 8,
           "name": "running_lactate_threshold_hr",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "9": {
           "num": 9,
           "name": "cycling_lactace_threshold_hr",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "bpm"
         },
         "10": {
           "num": 10,
@@ -10629,13 +11399,15 @@
           "num": 6,
           "name": "start_point_lat",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "7": {
           "num": 7,
           "name": "start_point_long",
           "type": "COORDINATE",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "semicircles"
         },
         "10": {
           "num": 10,
@@ -10701,7 +11473,8 @@
         "5": {
           "num": 5,
           "name": "unknown_5",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "6": {
           "num": 6,
@@ -10711,12 +11484,14 @@
         "7": {
           "num": 7,
           "name": "unknown_7",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "min"
         },
         "8": {
           "num": 8,
           "name": "unknown_8",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "9": {
           "num": 9,
@@ -10726,7 +11501,8 @@
         "10": {
           "num": 10,
           "name": "unknown_10",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "11": {
           "num": 11,
@@ -10736,7 +11512,8 @@
         "12": {
           "num": 12,
           "name": "unknown_12",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "13": {
           "num": 13,
@@ -10746,7 +11523,8 @@
         "14": {
           "num": 14,
           "name": "unknown_14",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "15": {
           "num": 15,
@@ -10756,7 +11534,8 @@
         "16": {
           "num": 16,
           "name": "unknown_16",
-          "baseType": "UINT8"
+          "baseType": "UINT8",
+          "UOM": "percent"
         },
         "17": {
           "num": 17,
@@ -10776,7 +11555,8 @@
         "20": {
           "num": 20,
           "name": "local_timestamp",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "21": {
           "num": 21,
@@ -10834,37 +11614,43 @@
           "num": 0,
           "name": "weekly_average",
           "baseType": "UINT16",
-          "scale": 128
+          "scale": 128,
+          "UOM": "ms"
         },
         "1": {
           "num": 1,
           "name": "last_night_average",
           "baseType": "UINT16",
-          "scale": 128
+          "scale": 128,
+          "UOM": "ms"
         },
         "2": {
           "num": 2,
           "name": "last_night_5_min_high",
           "baseType": "UINT16",
-          "scale": 128
+          "scale": 128,
+          "UOM": "ms"
         },
         "3": {
           "num": 3,
           "name": "baseline_low_upper",
           "baseType": "UINT16",
-          "scale": 128
+          "scale": 128,
+          "UOM": "ms"
         },
         "4": {
           "num": 4,
           "name": "baseline_balanced_lower",
           "baseType": "UINT16",
-          "scale": 128
+          "scale": 128,
+          "UOM": "ms"
         },
         "5": {
           "num": 5,
           "name": "baseline_balanced_upper",
           "baseType": "UINT16",
-          "scale": 128
+          "scale": 128,
+          "UOM": "ms"
         },
         "6": {
           "num": 6,
@@ -10888,7 +11674,8 @@
           "num": 0,
           "name": "value",
           "baseType": "UINT16",
-          "scale": 128
+          "scale": 128,
+          "UOM": "ms"
         },
         "253": {
           "num": 253,
@@ -10905,7 +11692,8 @@
         "0": {
           "num": 0,
           "name": "timestamp_ms",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "ms"
         },
         "1": {
           "num": 1,
@@ -10917,7 +11705,8 @@
           "num": 2,
           "name": "time",
           "baseType": "UINT16",
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "ms"
         },
         "3": {
           "num": 3,
@@ -10952,7 +11741,8 @@
           "num": 1,
           "name": "battery_voltage",
           "baseType": "UINT16",
-          "scale": 256
+          "scale": 256,
+          "UOM": "Volt"
         },
         "2": {
           "num": 2,
@@ -10979,12 +11769,14 @@
         "0": {
           "num": 0,
           "name": "timestamp_ms",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "ms"
         },
         "1": {
           "num": 1,
           "name": "sampling_interval",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "1/32768 s"
         },
         "2": {
           "num": 2,
@@ -11007,24 +11799,8 @@
         "5": {
           "num": 5,
           "name": "timestamp_32k",
-          "baseType": "UINT32"
-        },
-        "253": {
-          "num": 253,
-          "name": "timestamp",
-          "type": "TIMESTAMP",
-          "baseType": "UINT32"
-        }
-      }
-    },
-    "397": {
-      "num": 397,
-      "name": "SKIN_TEMP_RAW",
-      "fields": {
-        "1": {
-          "num": 1,
-          "name": "deviation",
-          "baseType": "FLOAT32"
+          "baseType": "UINT32",
+          "UOM": "1/32768 s"
         },
         "253": {
           "num": 253,
@@ -11107,19 +11883,22 @@
           "num": 0,
           "name": "min_speed",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "1": {
           "num": 1,
           "name": "max_speed",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "2": {
           "num": 2,
           "name": "avg_speed",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "3": {
           "num": 3,
@@ -11135,13 +11914,15 @@
           "num": 5,
           "name": "grain_weight",
           "baseType": "UINT32",
-          "scale": 10
+          "scale": 10,
+          "UOM": "gr"
         },
         "6": {
           "num": 6,
           "name": "standard_deviation",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "253": {
           "num": 253,
@@ -11159,7 +11940,8 @@
           "num": 0,
           "name": "shot_speed",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m/s"
         },
         "1": {
           "num": 1,
@@ -11181,7 +11963,7 @@
         "0": {
           "num": 0,
           "name": "data",
-          "baseType": "BASE_TYPE_BYTE",
+          "baseType": "BYTE",
           "arrayLen": 0
         },
         "1": {
@@ -11205,12 +11987,14 @@
           "num": 0,
           "name": "depth",
           "baseType": "UINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "m"
         },
         "1": {
           "num": 1,
           "name": "time",
-          "baseType": "SINT32"
+          "baseType": "SINT32",
+          "UOM": "seconds"
         },
         "2": {
           "num": 2,
@@ -11267,7 +12051,8 @@
           "num": 11,
           "name": "speed",
           "baseType": "SINT32",
-          "scale": 1000
+          "scale": 1000,
+          "UOM": "mps"
         },
         "254": {
           "num": 254,
@@ -11294,6 +12079,23 @@
           "num": 2,
           "name": "end_time",
           "baseType": "UINT32"
+        },
+        "253": {
+          "num": 253,
+          "name": "timestamp",
+          "type": "TIMESTAMP",
+          "baseType": "UINT32"
+        }
+      }
+    },
+    "397": {
+      "num": 397,
+      "name": "SKIN_TEMP_RAW",
+      "fields": {
+        "1": {
+          "num": 1,
+          "name": "deviation",
+          "baseType": "FLOAT32"
         },
         "253": {
           "num": 253,
@@ -11456,14 +12258,16 @@
         "0": {
           "num": 0,
           "name": "processing_interval",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "seconds"
         },
         "1": {
           "num": 1,
           "name": "value",
           "baseType": "UINT16",
           "scale": 1000,
-          "arrayLen": 0
+          "arrayLen": 0,
+          "UOM": "degC"
         },
         "253": {
           "num": 253,
@@ -11480,12 +12284,14 @@
         "0": {
           "num": 0,
           "name": "normal",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "minutes"
         },
         "1": {
           "num": 1,
           "name": "demand",
-          "baseType": "UINT16"
+          "baseType": "UINT16",
+          "UOM": "minutes"
         },
         "253": {
           "num": 253,
@@ -11503,23 +12309,27 @@
           "num": 0,
           "name": "start_timestamp",
           "type": "TIMESTAMP",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "1": {
           "num": 1,
           "name": "start_tz_offset",
-          "baseType": "SINT16"
+          "baseType": "SINT16",
+          "UOM": "minutes"
         },
         "2": {
           "num": 2,
           "name": "end_timestamp",
           "type": "TIMESTAMP",
-          "baseType": "UINT32"
+          "baseType": "UINT32",
+          "UOM": "seconds"
         },
         "3": {
           "num": 3,
           "name": "end_tz_offset",
-          "baseType": "SINT16"
+          "baseType": "SINT16",
+          "UOM": "minutes"
         },
         "4": {
           "num": 4,

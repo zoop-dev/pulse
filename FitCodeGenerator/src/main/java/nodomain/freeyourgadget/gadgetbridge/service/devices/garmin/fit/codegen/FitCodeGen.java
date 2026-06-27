@@ -21,10 +21,8 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.StringWriter;
@@ -37,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
@@ -44,7 +43,6 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@SuppressWarnings("DuplicateStringLiteralInspection")
 public enum FitCodeGen {
     ;
 
@@ -100,7 +98,7 @@ public enum FitCodeGen {
         File manualMessageDir = new File(pathToManual, "messages").getAbsoluteFile();
 
         if (messageDir.exists()) {
-            for (File file : messageDir.listFiles()) {
+            for (final File file : messageDir.listFiles()) {
                 file.delete();
             }
         } else {
@@ -114,7 +112,7 @@ public enum FitCodeGen {
         }
     }
 
-    private static void generateNativeFile(final TreeSet<NativeFITMessage> messages, File outputDir) throws IOException {
+    private static void generateNativeFile(final TreeSet<NativeFITMessage> messages, final File outputDir) throws IOException {
         final File nativeFile = new File(outputDir, "NativeFITMessages.java");
         StringWriter writer = new StringWriter();
         PrintWriter printer = new PrintWriter(writer);
@@ -122,40 +120,37 @@ public enum FitCodeGen {
         printer.println("}");
         printer.flush();
 
-        Files.writeString(nativeFile.toPath(), writer.toString(), StandardOpenOption.CREATE);
+        Files.writeString(nativeFile.toPath(), writer.toString(), StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE);
         System.out.println("Written " + nativeFile.getCanonicalPath());
     }
 
-    static TreeSet<NativeFITMessage> readJson(final Reader reader) {
-        JSONTokener tokenizer = new JSONTokener(reader);
-        JSONObject root = new JSONObject(tokenizer);
-        JSONObject messages = root.getJSONObject("messages");
-        TreeSet<Integer> messageKeys = new TreeSet<Integer>();
+    private static TreeSet<NativeFITMessage> readJson(final Reader reader) {
+        final JSONTokener tokenizer = new JSONTokener(reader);
+        final JSONObject root = new JSONObject(tokenizer);
+        final JSONObject messages = root.getJSONObject("messages");
+        final Set<Integer> messageKeys = new TreeSet<>();
         for (final String key : messages.keySet()) {
             messageKeys.add(Integer.decode(key));
         }
 
-        TreeSet<NativeFITMessage> fitMessages = new TreeSet<>();
+        final TreeSet<NativeFITMessage> fitMessages = new TreeSet<>();
         for (final Integer messageKey : messageKeys) {
-            JSONObject message = messages.getJSONObject(messageKey.toString());
-            NativeFITMessage fitMessage = new NativeFITMessage();
+            final JSONObject message = messages.getJSONObject(messageKey.toString());
+            final NativeFITMessage fitMessage = new NativeFITMessage();
             fitMessage.num = message.getInt("num");
             fitMessage.name = message.getString("name");
             fitMessages.add(fitMessage);
-            JSONObject fields = message.getJSONObject("fields");
-            SortedSet<Integer> fieldKeys = new TreeSet<Integer>();
+            final JSONObject fields = message.getJSONObject("fields");
+            final SortedSet<Integer> fieldKeys = new TreeSet<>();
             for (final String fieldKey : fields.keySet()) {
                 fieldKeys.add(Integer.decode(fieldKey));
             }
             for (final Integer fieldKey : fieldKeys) {
-                JSONObject field = fields.getJSONObject(fieldKey.toString());
-                FieldDefinitionPrimitive fitField = new FieldDefinitionPrimitive();
+                final JSONObject field = fields.getJSONObject(fieldKey.toString());
+                final FieldDefinitionPrimitive fitField = new FieldDefinitionPrimitive();
                 fitField.num = field.getInt("num");
                 fitField.name = field.getString("name");
 
-                if (fitField.name.equalsIgnoreCase("mesg_data")) {
-                    field.toString();
-                }
                 fitField.type = field.has("type") ? field.getString("type") : null;
                 fitField.scale = field.has("scale") ? field.getDouble("scale") : 1.0;
                 fitField.offset = field.has("offset") ? field.getDouble("offset") : 0.0;
@@ -183,35 +178,34 @@ public enum FitCodeGen {
         return fitMessages;
     }
 
-    static void generateNativeFile(final TreeSet<NativeFITMessage> fitMessages, final PrintWriter printer) throws IOException {
+    private static void generateNativeFile(final TreeSet<NativeFITMessage> fitMessages, final PrintWriter printer) {
         printer.println(COPYRIGHT_HEADER);
         printer.println(NATIVE_HEADER);
 
         for (final NativeFITMessage messsage : fitMessages) {
-            printer.println("\tprivate static NativeFITMessage " + messsage.name + "() {");
-            printer.println("\t\treturn new NativeFITMessage(" + messsage.num + ", \"" + messsage.name + "\", List.of(");
+            printer.println("\tpublic static NativeFITMessage FIT_" + messsage.name + " = new NativeFITMessage(" + messsage.num + ", \"" + messsage.name + "\", List.of(");
 
-            FieldDefinitionPrimitive[] fields = messsage.fields.toArray(new FieldDefinitionPrimitive[0]);
+            final FieldDefinitionPrimitive[] fields = messsage.fields.toArray(new FieldDefinitionPrimitive[0]);
             for (int i = 0; i < fields.length; i++) {
-                FieldDefinitionPrimitive field = fields[i];
+                final FieldDefinitionPrimitive field = fields[i];
                 // TODO: offset - add support for non-int in Java stage
                 // TODO: scale - add support for non-int in Java stage
                 // TODO: support - add support for string arrays in Java stage
                 int size = field.stringLen > 0 ? field.stringLen : (field.arrayLen >= 0 ? field.arrayLen : 0);
                 final Number scale;
                 {
-                    long intScale = Math.round(field.scale);
-                    if (intScale == field.scale) {
-                        scale = intScale;
+                    final long longScale = Math.round(field.scale);
+                    if (longScale == field.scale) {
+                        scale = longScale;
                     } else {
                         scale = field.scale;
                     }
                 }
                 final Number offset;
                 {
-                    long intOffset = Math.round(field.offset);
-                    if (intOffset == field.offset) {
-                        offset = intOffset;
+                    final long longOffset = Math.round(field.offset);
+                    if (longOffset == field.offset) {
+                        offset = longOffset;
                     } else {
                         offset = field.offset;
                     }
@@ -236,14 +230,12 @@ public enum FitCodeGen {
                             + scale + ", "
                             + offset + ")"
                     );
-
                 } else {
                     printer.print("\t\t\tnew FieldDefinitionPrimitive(" +
                             field.num + ", " + field.baseType + ", \"" + field.name + "\")");
                 }
 
-
-                boolean isLast = i + 1 >= fields.length;
+                final boolean isLast = i + 1 >= fields.length;
                 if (!isLast) {
                     printer.print(",");
                 }
@@ -255,22 +247,20 @@ public enum FitCodeGen {
 
                 printer.println();
             }
-            printer.println("\t\t));");
-            printer.println("\t}");
+            printer.println("\t));");
         }
 
-        printer.println("\tpublic static final SortedMap<Integer, NativeFITMessage> KNOWN_MESSAGES() {");
+        printer.println("\tstatic final SortedMap<Integer, NativeFITMessage> mapKnownMessages() {");
         printer.println("\t\tSortedMap<Integer, NativeFITMessage> map = new TreeMap<>();");
         printer.println("\t\tNativeFITMessage mesg;");
         for (final NativeFITMessage message : fitMessages) {
-            printer.println("\t\tmesg = " + message.name + "();");
-            printer.println("\t\tmap.put(mesg.getNumber(), mesg);");
+            printer.println("\t\tmap.put(" + message.num + ", FIT_" + message.name + ");");
         }
         printer.println("\t\treturn map;");
         printer.println("\t}");
     }
 
-    static void generateFitRecordDataFactory(TreeSet<NativeFITMessage> messages, File outputDir) throws IOException {
+    private static void generateFitRecordDataFactory(final TreeSet<NativeFITMessage> messages, final File outputDir) throws IOException {
         final File factoryFile = new File(outputDir, "FitRecordDataFactory.java");
 
         final List<String> switchCases = new ArrayList<>();
@@ -307,24 +297,20 @@ public enum FitCodeGen {
                     }
                 }
                 """;
-        final String existingHeader = getHeader(factoryFile);
 
         final String result = template
-                .replace("${copyrightHeader}", (existingHeader.isEmpty() ? COPYRIGHT_HEADER : existingHeader).strip())
+                .replace("${copyrightHeader}", COPYRIGHT_HEADER.strip())
                 .replace("${generatorClass}", Objects.requireNonNull(FitCodeGen.class.getCanonicalName()))
                 .replace("${switchCases}", String.join("\n", switchCases))
                 .replaceAll("\\R", System.lineSeparator());
 
-        Files.writeString(factoryFile.toPath(), result, StandardOpenOption.CREATE);
+        Files.writeString(factoryFile.toPath(), result, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE);
         System.out.println("Written " + factoryFile.getCanonicalPath());
     }
 
-    static void generateFitMessageClassFile(final NativeFITMessage nativeFITMessage, File messagesDir, File manualMessageDir) throws IOException {
+    private static void generateFitMessageClassFile(final NativeFITMessage nativeFITMessage, final File messagesDir, final File manualMessageDir) throws IOException {
         String className = "Fit" + capitalize(toCamelCase(nativeFITMessage.name));
-        if(className.contains("Monitoring")){
-            className.toString();
-        }
-        if(new File(manualMessageDir, className+".java").exists()){
+        if (new File(manualMessageDir, className + ".java").exists()) {
             className = "Abstract" + className;
         }
         final File outputFile = new File(
@@ -367,8 +353,7 @@ public enum FitCodeGen {
         // Copyright header + package
         //
         final StringBuilder sb = new StringBuilder();
-        String header = getHeader(outputFile);
-        sb.append((header.isEmpty() ? COPYRIGHT_HEADER : header).strip()).append("\n");
+        sb.append(COPYRIGHT_HEADER.strip()).append("\n");
         sb.append("package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages;\n\n");
 
         //
@@ -392,7 +377,7 @@ public enum FitCodeGen {
         // Imports - rest
         //
         boolean wroteOthers = false;
-        for (String i : uniqueImports) {
+        for (final String i : uniqueImports) {
             if (importOrder.stream().noneMatch(i::startsWith)) {
                 sb.append("import ").append(i).append(";\n");
                 wroteOthers = true;
@@ -515,7 +500,7 @@ public enum FitCodeGen {
 
         final String output = sb.toString().replaceAll("\\R", System.lineSeparator());
 
-        Files.writeString(outputFile.toPath(), output, StandardOpenOption.CREATE);
+        Files.writeString(outputFile.toPath(), output, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE);
         System.out.println("Written " + outputFile.getCanonicalPath());
     }
 
@@ -608,7 +593,7 @@ public enum FitCodeGen {
     }
 
     private static String toCamelCase(final String str) {
-        final StringBuilder sb = new StringBuilder(str.toLowerCase());
+        final StringBuilder sb = new StringBuilder(str.toLowerCase(Locale.ROOT));
 
         for (int i = 0; i < sb.length(); i++) {
             if (sb.charAt(i) == '_') {
@@ -629,26 +614,11 @@ public enum FitCodeGen {
     }
 
     /**
-     * Get a java file header, before the package, if any.
-     */
-    private static String getHeader(final File file) throws IOException {
-        if (file.exists()) {
-            final String fileContents = new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
-            final int packageIndex = fileContents.indexOf("package") - 1;
-            if (packageIndex > 0) {
-                return fileContents.substring(0, packageIndex);
-            }
-        }
-
-        return "";
-    }
-
-    /**
      * Get all the imports from an existing java file.
      */
     private static List<String> getImports(final File file) throws IOException {
         if (file.exists()) {
-            final String fileContents = new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
+            final String fileContents = Files.readString(file.toPath(), StandardCharsets.UTF_8);
             final List<String> imports = new ArrayList<>();
 
             final Matcher m = Pattern.compile("import (.+);")
@@ -728,31 +698,17 @@ public enum FitCodeGen {
         }
     }
 
-    static class FieldClass {
-        final String CanonicalName;
-        final boolean isArray;
-
-        FieldClass(String canonicalName) {
-            CanonicalName = canonicalName;
-            isArray = false;
+    record FieldClass(String CanonicalName, boolean isArray) {
+        FieldClass(final String canonicalName) {
+            this(canonicalName, false);
         }
 
-        FieldClass(String canonicalName, boolean isArray) {
-            CanonicalName = canonicalName;
-            this.isArray = isArray;
+        FieldClass(final Class<?> clazz) {
+            this(clazz.getCanonicalName(), clazz.isArray());
         }
 
-        FieldClass(Class<?> clazz) {
-            CanonicalName = clazz.getCanonicalName();
-            this.isArray = clazz.isArray();
-        }
-
-        public String getCanonicalName() {
+        String getCanonicalName() {
             return CanonicalName;
-        }
-
-        boolean isArray() {
-            return isArray;
         }
 
         String getSimpleName() {
