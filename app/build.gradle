@@ -164,8 +164,9 @@ android {
     }
 
     sourceSets {
-        main {
+         main {
             java.srcDirs += "build/generated/sources/gbdao"
+            java.srcDirs += "build/generated/sources/fit"
             res.srcDirs += "build/generated/res/changelog"
         }
         test {
@@ -326,10 +327,12 @@ dependencies {
 }
 
 preBuild.dependsOn(":GBDaoGenerator:genSources")
+preBuild.dependsOn(':FitCodeGenerator:genFit')
 preBuild.dependsOn(tasks.buildGitChangelog)
 
 gradle.beforeProject {
     preBuild.dependsOn(":GBDaoGenerator:genSources")
+    preBuild.dependsOn(':FitCodeGenerator:genFit')
 }
 
 tasks.register('cleanGenerated', Delete) {
