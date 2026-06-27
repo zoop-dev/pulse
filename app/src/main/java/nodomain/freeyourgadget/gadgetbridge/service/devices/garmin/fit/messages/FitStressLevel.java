@@ -1,4 +1,4 @@
-/*  Copyright (C) 2024 José Rebelo
+/*  Copyright (C) 2024-2026 José Rebelo, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -16,79 +16,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages;
 
-import androidx.annotation.Nullable;
-
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
 
-/**
- * WARNING: This class was auto-generated, please avoid modifying it directly.
- * See {@link nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen.FitCodeGen}
- *
- * @noinspection unused
- */
-public class FitStressLevel extends RecordData {
+public class FitStressLevel extends AbstractFitStressLevel {
     public FitStressLevel(final RecordDefinition recordDefinition, final RecordHeader recordHeader) {
         super(recordDefinition, recordHeader);
-
-        final int nativeNumber = recordDefinition.getNativeFITMessage().getNumber();
-        if (nativeNumber != 227) {
-            throw new IllegalArgumentException("FitStressLevel expects native messages of " + 227 + ", got " + nativeNumber);
-        }
     }
-
-    @Nullable
-    public Integer getStressLevelValue() {
-        return getFieldByNumber(0, Integer.class);
-    }
-
-    @Nullable
-    public Long getStressLevelTime() {
-        return getFieldByNumber(1, Long.class);
-    }
-
-    @Nullable
-    public Integer getBodyEnergy() {
-        return getFieldByNumber(3, Integer.class);
-    }
-
-    /**
-     * @noinspection unused
-     */
-    public static class Builder extends FitRecordDataBuilder {
-        public Builder() {
-            super(227);
-        }
-
-        public Builder setStressLevelValue(final Integer value) {
-            setFieldByNumber(0, value);
-            return this;
-        }
-
-        public Builder setStressLevelTime(final Long value) {
-            setFieldByNumber(1, value);
-            return this;
-        }
-
-        public Builder setBodyEnergy(final Integer value) {
-            setFieldByNumber(3, value);
-            return this;
-        }
-
-        @Override
-        public FitStressLevel build() {
-            return (FitStressLevel) super.build();
-        }
-
-        @Override
-        public FitStressLevel build(final int localMessageType) {
-            return (FitStressLevel) super.build(localMessageType);
-        }
-    }
-
-    // manual changes below
 
     @Override
     public Long getComputedTimestamp() {

@@ -1,14 +1,36 @@
+/*  Copyright (C) 2024-2026 José Rebelo, Daniele Gobbetti, Sebastian Dröge,
+        punchdeerflyscorpion, Thomas Kuehne
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.codegen;
 
-import android.os.Build;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -17,42 +39,31 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.FileType;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.NativeFITMessage;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes.BaseType;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionAlarmLabel;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionBatteryStatus;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionCoursePoint;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionExerciseCategory;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionGoalSource;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionGoalType;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWaterType;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherReport;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionHrvStatus;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionLanguage;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionLocationSymbol;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionMeasurementSystem;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionSleepStage;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionSwimStyle;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherAqi;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherCondition;
-import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
+@SuppressWarnings("DuplicateStringLiteralInspection")
+public enum FitCodeGen {
+    ;
 
-/**
- * This class is only used to generate code, and will not be packaged in the final apk
- *
- * @noinspection ReadWriteStringCanBeUsed
- */
-@RequiresApi(api = Build.VERSION_CODES.CUR_DEVELOPMENT)
-public class FitCodeGen {
+    private static final String NATIVE_HEADER =
+            """                        
+                    package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit;
+                    
+                    import static nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.baseTypes.BaseType.*;
+                    import static nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FieldDefinitionFactory.FIELD.*;
+                    import static nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.NativeFITMessage.FieldDefinitionPrimitive;
+                    
+                    import java.util.List;
+                    import java.util.SortedMap;
+                    import java.util.TreeMap;
+                    
+                    @SuppressWarnings("DuplicateStringLiteralInspection")
+                    public enum NativeFITMessages {
+                        DUMMY();""";
+
     private static final String COPYRIGHT_HEADER = """
             /*  Copyright (C) 2026 Freeyourgadget
             
@@ -73,24 +84,197 @@ public class FitCodeGen {
             """;
 
     public static void main(final String[] args) throws Exception {
-        // To run this in Android Studio, right click and select "Run 'FitCodeGen.main()' with Coverage"
-        // for some reason, the classpath is broken otherwise.
-        new FitCodeGen().generate();
-    }
+        String pathToJson = (args.length > 0) ? args[0] : "FitCodeGenerator/src/main/resources/fit_profile.json";
+        String pathToOutput = (args.length > 1) ? args[1] : "app/build/generated/sources/fit/nodomain/freeyourgadget/gadgetbridge/service/devices/garmin/fit/";
+        String pathToManual = (args.length > 2) ? args[2] : "app/src/main/java/nodomain/freeyourgadget/gadgetbridge/service/devices/garmin/fit/";
 
-    public void generate() throws IOException {
-        generateFitRecordDataFactory();
+        File jsonFile = new File(pathToJson).getAbsoluteFile();
+        File outputDir = new File(pathToOutput).getAbsoluteFile();
 
-        for (final NativeFITMessage value : NativeFITMessage.KNOWN_MESSAGES.values()) {
-            generateFitMessageClassFile(value);
+        final TreeSet<NativeFITMessage> messages;
+        try (FileReader reader = new FileReader(jsonFile, StandardCharsets.UTF_8)) {
+            messages = readJson(reader);
+        }
+
+        File messageDir = new File(outputDir, "messages").getAbsoluteFile();
+        File manualMessageDir = new File(pathToManual, "messages").getAbsoluteFile();
+
+        if (messageDir.exists()) {
+            for (File file : messageDir.listFiles()) {
+                file.delete();
+            }
+        } else {
+            messageDir.mkdirs();
+        }
+
+        generateNativeFile(messages, outputDir);
+        generateFitRecordDataFactory(messages, messageDir);
+        for (final NativeFITMessage message : messages) {
+            generateFitMessageClassFile(message, messageDir, manualMessageDir);
         }
     }
 
-    private void generateFitRecordDataFactory() throws IOException {
-        final File factoryFile = new File("app/src/main/java/nodomain/freeyourgadget/gadgetbridge/service/devices/garmin/fit/messages/FitRecordDataFactory.java");
+    private static void generateNativeFile(final TreeSet<NativeFITMessage> messages, File outputDir) throws IOException {
+        final File nativeFile = new File(outputDir, "NativeFITMessages.java");
+        StringWriter writer = new StringWriter();
+        PrintWriter printer = new PrintWriter(writer);
+        generateNativeFile(messages, printer);
+        printer.println("}");
+        printer.flush();
+
+        Files.writeString(nativeFile.toPath(), writer.toString(), StandardOpenOption.CREATE);
+        System.out.println("Written " + nativeFile.getCanonicalPath());
+    }
+
+    static TreeSet<NativeFITMessage> readJson(final Reader reader) {
+        JSONTokener tokenizer = new JSONTokener(reader);
+        JSONObject root = new JSONObject(tokenizer);
+        JSONObject messages = root.getJSONObject("messages");
+        TreeSet<Integer> messageKeys = new TreeSet<Integer>();
+        for (final String key : messages.keySet()) {
+            messageKeys.add(Integer.decode(key));
+        }
+
+        TreeSet<NativeFITMessage> fitMessages = new TreeSet<>();
+        for (final Integer messageKey : messageKeys) {
+            JSONObject message = messages.getJSONObject(messageKey.toString());
+            NativeFITMessage fitMessage = new NativeFITMessage();
+            fitMessage.num = message.getInt("num");
+            fitMessage.name = message.getString("name");
+            fitMessages.add(fitMessage);
+            JSONObject fields = message.getJSONObject("fields");
+            SortedSet<Integer> fieldKeys = new TreeSet<Integer>();
+            for (final String fieldKey : fields.keySet()) {
+                fieldKeys.add(Integer.decode(fieldKey));
+            }
+            for (final Integer fieldKey : fieldKeys) {
+                JSONObject field = fields.getJSONObject(fieldKey.toString());
+                FieldDefinitionPrimitive fitField = new FieldDefinitionPrimitive();
+                fitField.num = field.getInt("num");
+                fitField.name = field.getString("name");
+
+                if (fitField.name.equalsIgnoreCase("mesg_data")) {
+                    field.toString();
+                }
+                fitField.type = field.has("type") ? field.getString("type") : null;
+                fitField.scale = field.has("scale") ? field.getDouble("scale") : 1.0;
+                fitField.offset = field.has("offset") ? field.getDouble("offset") : 0.0;
+                fitField.arrayLen = field.has("arrayLen") ? field.getInt("arrayLen") : -1;
+                fitField.stringLen = field.has("stringLen") ? field.getInt("stringLen") : -1;
+                fitField.UOM = field.has("UOM") ? field.getString("UOM") : null;
+                fitField.baseType = field.getString("baseType");
+                if ("BYTE".contentEquals(fitField.baseType)) {
+                    fitField.baseType = "BASE_TYPE_BYTE";
+                }
+                if (fitField.arrayLen < 0) {
+                    fitField.arrayLen = -1;
+                } else {
+                    fitField.type = "ARRAY";
+                }
+                if (fitField.stringLen <= 0) {
+                    fitField.stringLen = -1;
+                }
+                if (fitField.baseType != null && fitField.type != null && fitField.baseType.contentEquals(fitField.type)) {
+                    fitField.type = null;
+                }
+                fitMessage.fields.add(fitField);
+            }
+        }
+        return fitMessages;
+    }
+
+    static void generateNativeFile(final TreeSet<NativeFITMessage> fitMessages, final PrintWriter printer) throws IOException {
+        printer.println(COPYRIGHT_HEADER);
+        printer.println(NATIVE_HEADER);
+
+        for (final NativeFITMessage messsage : fitMessages) {
+            printer.println("\tprivate static NativeFITMessage " + messsage.name + "() {");
+            printer.println("\t\treturn new NativeFITMessage(" + messsage.num + ", \"" + messsage.name + "\", List.of(");
+
+            FieldDefinitionPrimitive[] fields = messsage.fields.toArray(new FieldDefinitionPrimitive[0]);
+            for (int i = 0; i < fields.length; i++) {
+                FieldDefinitionPrimitive field = fields[i];
+                // TODO: offset - add support for non-int in Java stage
+                // TODO: scale - add support for non-int in Java stage
+                // TODO: support - add support for string arrays in Java stage
+                int size = field.stringLen > 0 ? field.stringLen : (field.arrayLen >= 0 ? field.arrayLen : 0);
+                final Number scale;
+                {
+                    long intScale = Math.round(field.scale);
+                    if (intScale == field.scale) {
+                        scale = intScale;
+                    } else {
+                        scale = field.scale;
+                    }
+                }
+                final Number offset;
+                {
+                    long intOffset = Math.round(field.offset);
+                    if (intOffset == field.offset) {
+                        offset = intOffset;
+                    } else {
+                        offset = field.offset;
+                    }
+                }
+
+                if (size > 0) {
+                    printer.print("\t\t\tnew FieldDefinitionPrimitive(" +
+                            field.num + ", "
+                            + field.baseType + ", "
+                            + size + ", \""
+                            + field.name + "\", "
+                            + (field.type == null ? "null" : field.type) + ", "
+                            + scale + ", "
+                            + offset + ")"
+                    );
+                } else if (field.offset != 0 || field.scale != 1 || field.type != null || field.UOM != null) {
+                    printer.print("\t\t\tnew FieldDefinitionPrimitive(" +
+                            field.num + ", "
+                            + field.baseType + ", \""
+                            + field.name + "\", "
+                            + (field.type == null ? "null" : field.type) + ", "
+                            + scale + ", "
+                            + offset + ")"
+                    );
+
+                } else {
+                    printer.print("\t\t\tnew FieldDefinitionPrimitive(" +
+                            field.num + ", " + field.baseType + ", \"" + field.name + "\")");
+                }
+
+
+                boolean isLast = i + 1 >= fields.length;
+                if (!isLast) {
+                    printer.print(",");
+                }
+
+                if (null != field.UOM) {
+                    printer.print(" // ");
+                    printer.print(field.UOM);
+                }
+
+                printer.println();
+            }
+            printer.println("\t\t));");
+            printer.println("\t}");
+        }
+
+        printer.println("\tpublic static final SortedMap<Integer, NativeFITMessage> KNOWN_MESSAGES() {");
+        printer.println("\t\tSortedMap<Integer, NativeFITMessage> map = new TreeMap<>();");
+        printer.println("\t\tNativeFITMessage mesg;");
+        for (final NativeFITMessage message : fitMessages) {
+            printer.println("\t\tmesg = " + message.name + "();");
+            printer.println("\t\tmap.put(mesg.getNumber(), mesg);");
+        }
+        printer.println("\t\treturn map;");
+        printer.println("\t}");
+    }
+
+    static void generateFitRecordDataFactory(TreeSet<NativeFITMessage> messages, File outputDir) throws IOException {
+        final File factoryFile = new File(outputDir, "FitRecordDataFactory.java");
 
         final List<String> switchCases = new ArrayList<>();
-        final List<NativeFITMessage> nativeFITMessages = new ArrayList<>(NativeFITMessage.KNOWN_MESSAGES.values());
+        final List<NativeFITMessage> nativeFITMessages = new ArrayList<>(messages);
         nativeFITMessages.sort(Comparator.comparingInt(NativeFITMessage::getNumber));
 
         for (final NativeFITMessage value : nativeFITMessages) {
@@ -127,17 +311,24 @@ public class FitCodeGen {
 
         final String result = template
                 .replace("${copyrightHeader}", (existingHeader.isEmpty() ? COPYRIGHT_HEADER : existingHeader).strip())
-                .replace("${generatorClass}", Objects.requireNonNull(getClass().getCanonicalName()))
+                .replace("${generatorClass}", Objects.requireNonNull(FitCodeGen.class.getCanonicalName()))
                 .replace("${switchCases}", String.join("\n", switchCases))
                 .replaceAll("\\R", System.lineSeparator());
 
-        FileUtils.copyStringToFile(result, factoryFile, "replace");
+        Files.writeString(factoryFile.toPath(), result, StandardOpenOption.CREATE);
+        System.out.println("Written " + factoryFile.getCanonicalPath());
     }
 
-    public void generateFitMessageClassFile(final NativeFITMessage nativeFITMessage) throws IOException {
-        final String className = "Fit" + capitalize(toCamelCase(nativeFITMessage.name()));
+    static void generateFitMessageClassFile(final NativeFITMessage nativeFITMessage, File messagesDir, File manualMessageDir) throws IOException {
+        String className = "Fit" + capitalize(toCamelCase(nativeFITMessage.name));
+        if(className.contains("Monitoring")){
+            className.toString();
+        }
+        if(new File(manualMessageDir, className+".java").exists()){
+            className = "Abstract" + className;
+        }
         final File outputFile = new File(
-                "app/src/main/java/nodomain/freeyourgadget/gadgetbridge/service/devices/garmin/fit/messages/",
+                messagesDir,
                 className + ".java"
         );
 
@@ -145,19 +336,19 @@ public class FitCodeGen {
         // Collect all imports
         //
         final List<String> imports = new ArrayList<>(List.of(
-                Nullable.class.getCanonicalName(),
-                FitRecordDataBuilder.class.getCanonicalName(),
-                RecordData.class.getCanonicalName(),
-                RecordDefinition.class.getCanonicalName(),
-                RecordHeader.class.getCanonicalName()
+                "androidx.annotation.Nullable",
+                "nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitRecordDataBuilder",
+                "nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData",
+                "nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition",
+                "nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordHeader"
         ));
         imports.addAll(getImports(outputFile));
 
         //
         // Add field-specific imports
         //
-        for (final NativeFITMessage.FieldDefinitionPrimitive primitive : nativeFITMessage.getFieldDefinitionPrimitives()) {
-            final Class<?> fieldType = getFieldType(primitive);
+        for (final FieldDefinitionPrimitive primitive : nativeFITMessage.getFieldDefinitionPrimitives()) {
+            final FieldClass fieldType = getFieldType(primitive);
             if (!Objects.requireNonNull(fieldType.getCanonicalName()).startsWith("java.lang")) {
                 if (fieldType.isArray()) {
                     imports.add(fieldType.getCanonicalName().replace("[]", ""));
@@ -231,7 +422,7 @@ public class FitCodeGen {
                         }
                     }
                 """
-                .replace("${classCanonicalName}", Objects.requireNonNull(getClass().getCanonicalName()))
+                .replace("${classCanonicalName}", Objects.requireNonNull(FitCodeGen.class.getCanonicalName()))
                 .replace("${className}", className)
                 .replace("${nativeNumber}", String.valueOf(nativeFITMessage.getNumber()))
         );
@@ -239,8 +430,8 @@ public class FitCodeGen {
         //
         // Field accessors
         //
-        for (final NativeFITMessage.FieldDefinitionPrimitive primitive : nativeFITMessage.getFieldDefinitionPrimitives()) {
-            final Class<?> fieldType = getFieldType(primitive);
+        for (final FieldDefinitionPrimitive primitive : nativeFITMessage.getFieldDefinitionPrimitives()) {
+            final FieldClass fieldType = getFieldType(primitive);
             final String fieldTypeName;
             final String accessorTemplate;
             if (fieldType.isArray()) {
@@ -287,8 +478,8 @@ public class FitCodeGen {
                 .replace("${nativeNumber}", String.valueOf(nativeFITMessage.getNumber()))
         );
 
-        for (final NativeFITMessage.FieldDefinitionPrimitive primitive : nativeFITMessage.getFieldDefinitionPrimitives()) {
-            final Class<?> fieldType = getFieldType(primitive);
+        for (final FieldDefinitionPrimitive primitive : nativeFITMessage.getFieldDefinitionPrimitives()) {
+            final FieldClass fieldType = getFieldType(primitive);
             final String fieldTypeName = fieldType.getSimpleName();
 
             sb.append("""
@@ -311,7 +502,7 @@ public class FitCodeGen {
                         public ${className} build() {
                             return (${className}) super.build();
                         }
-
+                
                         @Override
                         public ${className} build(final int localMessageType) {
                             return (${className}) super.build(localMessageType);
@@ -320,96 +511,103 @@ public class FitCodeGen {
                 """
                 .replace("${className}", className)
         );
-
-        //
-        // Preserve manual changes if any
-        //
-        if (outputFile.exists()) {
-            final String fileContents = new String(Files.readAllBytes(outputFile.toPath()), StandardCharsets.UTF_8);
-            final int manualChangesIndex = fileContents.indexOf("// manual changes below");
-            if (manualChangesIndex > 0) {
-                sb.append("\n    ").append(fileContents.substring(manualChangesIndex));
-            } else {
-                sb.append("}\n");
-            }
-        } else {
-            sb.append("}\n");
-        }
+        sb.append("}\n");
 
         final String output = sb.toString().replaceAll("\\R", System.lineSeparator());
 
-        FileUtils.copyStringToFile(output, outputFile, "replace");
+        Files.writeString(outputFile.toPath(), output, StandardOpenOption.CREATE);
+        System.out.println("Written " + outputFile.getCanonicalPath());
     }
 
-    public Class<?> getFieldType(final NativeFITMessage.FieldDefinitionPrimitive primitive) {
+    private static FieldClass getFieldType(final FieldDefinitionPrimitive primitive) {
         if (primitive.getType() != null) {
             return switch (primitive.getType()) {
-                case ALARM -> LocalTime.class;
-                case ARRAY -> primitive.getBaseType() == BaseType.STRING ? String[].class : Number[].class;
-                case BOOLEAN -> Boolean.class;
-                case DAY_OF_WEEK -> DayOfWeek.class;
-                case EXERCISE_CATEGORY -> FieldDefinitionExerciseCategory.ExerciseCategory[].class;
-                case ALARM_LABEL -> FieldDefinitionAlarmLabel.Label.class;
-                case FILE_TYPE -> FileType.FILETYPE.class;
-                case GOAL_SOURCE -> FieldDefinitionGoalSource.Source.class;
-                case GOAL_TYPE -> FieldDefinitionGoalType.Type.class;
-                case HRV_STATUS -> FieldDefinitionHrvStatus.HrvStatus.class;
-                case HR_TIME_IN_ZONE -> Double[].class;
-                case HR_ZONE_HIGH_BOUNDARY -> Integer[].class;
-                case MEASUREMENT_SYSTEM -> FieldDefinitionMeasurementSystem.Type.class;
-                case TEMPERATURE -> Integer.class;
-                case TIMESTAMP -> Long.class;
-                case WEATHER_CONDITION -> FieldDefinitionWeatherCondition.Condition.class;
-                case LANGUAGE -> FieldDefinitionLanguage.Language.class;
-                case SLEEP_STAGE -> FieldDefinitionSleepStage.SleepStage.class;
-                case WEATHER_AQI -> FieldDefinitionWeatherAqi.AQI_LEVELS.class;
-                case COORDINATE -> Double.class;
-                case SWIM_STYLE -> FieldDefinitionSwimStyle.SwimStyle.class;
-                case LOCATION_SYMBOL -> FieldDefinitionLocationSymbol.LocationSymbol.class;
-                case COURSE_POINT -> FieldDefinitionCoursePoint.CoursePoint.class;
-                case WEATHER_REPORT -> FieldDefinitionWeatherReport.Type.class;
-                case BATTERY_STATUS -> FieldDefinitionBatteryStatus.BatteryStatus.class;
-                case WATER_TYPE -> FieldDefinitionWaterType.WaterType.class;
+                case "ALARM" -> new FieldClass(LocalTime.class);
+                case "ARRAY" ->
+                        primitive.getBaseType().contentEquals("STRING") ? new FieldClass(String[].class) : new FieldClass(Number[].class);
+                case "BOOLEAN" -> new FieldClass(Boolean.class);
+                case "DAY_OF_WEEK" -> new FieldClass(DayOfWeek.class);
+                case "EXERCISE_CATEGORY" ->
+                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionExerciseCategory.ExerciseCategory[]", true);
+                case "ALARM_LABEL" ->
+                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionAlarmLabel.Label");
+                case "FILE_TYPE" ->
+                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.FileType.FILETYPE");
+                case "GOAL_SOURCE" ->
+                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionGoalSource.Source");
+                case "GOAL_TYPE" ->
+                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionGoalType.Type");
+                case "HRV_STATUS" ->
+                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionHrvStatus.HrvStatus");
+                case "HR_TIME_IN_ZONE" -> new FieldClass(Double[].class);
+                case "HR_ZONE_HIGH_BOUNDARY" -> new FieldClass(Integer[].class);
+                case "MEASUREMENT_SYSTEM" ->
+                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionMeasurementSystem.Type");
+                case "TEMPERATURE" -> new FieldClass(Integer.class);
+                case "TIMESTAMP" -> new FieldClass(Long.class);
+                case "WEATHER_CONDITION" ->
+                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherCondition.Condition");
+                case "LANGUAGE" ->
+                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionLanguage.Language");
+                case "SLEEP_STAGE" ->
+                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionSleepStage.SleepStage");
+                case "WEATHER_AQI" ->
+                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherAqi.AQI_LEVELS");
+                case "COORDINATE" -> new FieldClass(Double.class);
+                case "SWIM_STYLE" ->
+                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionSwimStyle.SwimStyle");
+                case "LOCATION_SYMBOL" ->
+                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionLocationSymbol.LocationSymbol");
+                case "COURSE_POINT" ->
+                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionCoursePoint.CoursePoint");
+                case "WEATHER_REPORT" ->
+                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWeatherReport.Type");
+                case "BATTERY_STATUS" ->
+                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionBatteryStatus.BatteryStatus");
+                case "WATER_TYPE" ->
+                        new FieldClass("nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWaterType.WaterType");
+                default ->
+                        throw new RuntimeException("getFieldType doesn't support: " + primitive.type);
             };
         }
 
         switch (primitive.getBaseType()) {
-            case ENUM:
-            case SINT8:
-            case UINT8:
-            case SINT16:
-            case UINT16:
-            case UINT8Z:
-            case UINT16Z:
-            case BASE_TYPE_BYTE:
+            case "ENUM":
+            case "SINT8":
+            case "UINT8":
+            case "SINT16":
+            case "UINT16":
+            case "UINT8Z":
+            case "UINT16Z":
+            case "BASE_TYPE_BYTE":
                 if (primitive.getScale() != 1) {
-                    return Float.class;
+                    return new FieldClass(Float.class);
                 } else {
-                    return Integer.class;
+                    return new FieldClass(Integer.class);
                 }
-            case SINT32:
-            case UINT32:
-            case UINT32Z:
-            case SINT64:
-            case UINT64:
-            case UINT64Z:
+            case "SINT32":
+            case "UINT32":
+            case "UINT32Z":
+            case "SINT64":
+            case "UINT64":
+            case "UINT64Z":
                 if (primitive.getScale() != 1) {
-                    return Double.class;
+                    return new FieldClass(Double.class);
                 } else {
-                    return Long.class;
+                    return new FieldClass(Long.class);
                 }
-            case STRING:
-                return String.class;
-            case FLOAT32:
-                return Float.class;
-            case FLOAT64:
-                return Double.class;
+            case "STRING":
+                return new FieldClass(String.class);
+            case "FLOAT32":
+                return new FieldClass(Float.class);
+            case "FLOAT64":
+                return new FieldClass(Double.class);
         }
 
         throw new RuntimeException("Unknown base type " + primitive.getBaseType());
     }
 
-    private String toCamelCase(final String str) {
+    private static String toCamelCase(final String str) {
         final StringBuilder sb = new StringBuilder(str.toLowerCase());
 
         for (int i = 0; i < sb.length(); i++) {
@@ -422,11 +620,11 @@ public class FitCodeGen {
         return sb.toString();
     }
 
-    public String method(final String methodName, final NativeFITMessage.FieldDefinitionPrimitive primitive) {
+    private static String method(final String methodName, final FieldDefinitionPrimitive primitive) {
         return methodName + capitalize(toCamelCase(primitive.getName()));
     }
 
-    private String capitalize(final String str) {
+    private static String capitalize(final String str) {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
@@ -462,5 +660,104 @@ public class FitCodeGen {
         }
 
         return Collections.emptyList();
+    }
+
+    static class FieldDefinitionPrimitive implements Comparable<FieldDefinitionPrimitive> {
+        int num;
+        String name;
+        String type;
+        String baseType;
+        double scale;
+        double offset;
+        int arrayLen;
+        int stringLen;
+        String UOM;
+
+        @Override
+        public int compareTo(final FieldDefinitionPrimitive o) {
+            return Integer.compare(num, o.num);
+        }
+
+        String getName() {
+            return name;
+        }
+
+        String getType() {
+            return type;
+        }
+
+        String getBaseType() {
+            return baseType;
+        }
+
+        int getNumber() {
+            return num;
+        }
+
+        double getScale() {
+            return scale;
+        }
+    }
+
+    static final class NativeFITMessage implements Comparable<NativeFITMessage> {
+        int num;
+        String name;
+        SortedSet<FieldDefinitionPrimitive> fields;
+
+        NativeFITMessage() {
+            num = -1;
+            name = null;
+            fields = new TreeSet<>();
+        }
+
+        @Override
+        public int compareTo(final NativeFITMessage o) {
+            return Integer.compare(num, o.num);
+        }
+
+        int getNumber() {
+            return num;
+        }
+
+        String name() {
+            return name;
+        }
+
+        Set<FieldDefinitionPrimitive> getFieldDefinitionPrimitives() {
+            return fields;
+        }
+    }
+
+    static class FieldClass {
+        final String CanonicalName;
+        final boolean isArray;
+
+        FieldClass(String canonicalName) {
+            CanonicalName = canonicalName;
+            isArray = false;
+        }
+
+        FieldClass(String canonicalName, boolean isArray) {
+            CanonicalName = canonicalName;
+            this.isArray = isArray;
+        }
+
+        FieldClass(Class<?> clazz) {
+            CanonicalName = clazz.getCanonicalName();
+            this.isArray = clazz.isArray();
+        }
+
+        public String getCanonicalName() {
+            return CanonicalName;
+        }
+
+        boolean isArray() {
+            return isArray;
+        }
+
+        String getSimpleName() {
+            int index = CanonicalName.lastIndexOf('.');
+            return CanonicalName.substring(index + 1);
+        }
     }
 }

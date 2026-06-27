@@ -2501,7 +2501,9 @@ public class NativeFITMessage {
             new FieldDefinitionPrimitive(253, BaseType.UINT32, "timestamp", FieldDefinitionFactory.FIELD.TIMESTAMP)
     ));
 
-    public static final Map<Integer, NativeFITMessage> KNOWN_MESSAGES = new HashMap<>() {{
+    public static final Map<Integer, NativeFITMessage> KNOWN_MESSAGES = NativeFITMessages.KNOWN_MESSAGES();
+
+    public static final Map<Integer, NativeFITMessage> KNOWN_MESSAGES_LEGACY = new HashMap<>() {{
         put(0, FILE_ID);
         put(1, CAPABILITIES);
         put(2, DEVICE_SETTINGS);
@@ -2688,7 +2690,7 @@ public class NativeFITMessage {
 
     private final List<FieldDefinitionPrimitive> fieldDefinitionPrimitives;
 
-    private NativeFITMessage(int number, String name, List<FieldDefinitionPrimitive> fieldDefinitionPrimitives) {
+    NativeFITMessage(int number, String name, List<FieldDefinitionPrimitive> fieldDefinitionPrimitives) {
         this.number = number;
         this.name = name;
         this.fieldDefinitionPrimitives = fieldDefinitionPrimitives;
