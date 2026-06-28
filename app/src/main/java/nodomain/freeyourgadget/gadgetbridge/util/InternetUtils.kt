@@ -46,7 +46,7 @@ class InternetUtils {
     companion object {
         private val LOG: Logger = LoggerFactory.getLogger(InternetUtils::class.java)
         private val defaultClient = OkHttpClient()
-        private const val USER_AGENT = "Gadgetbridge/${BuildConfig.VERSION_NAME} (${BuildConfig.GIT_HASH_SHORT})"
+        private const val USER_AGENT = "Gadgetbridge/${BuildConfig.VERSION_NAME} (${BuildConfig.GIT_HASH_SHORT}${BuildConfig.GIT_DIRTY_STATUS})"
 
         /**
          * Returns a new Map containing the User-Agent header.

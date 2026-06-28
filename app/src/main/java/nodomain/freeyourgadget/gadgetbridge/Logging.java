@@ -80,8 +80,14 @@ public class Logging {
             } else {
                 stopFileLogger();
             }
-            LOG.info("Gadgetbridge version: {}-{} {} {}", BuildConfig.VERSION_NAME,
-                    BuildConfig.GIT_HASH_SHORT, BuildConfig.FLAVOR, BuildConfig.BUILD_TYPE);
+            LOG.info(
+                    "Gadgetbridge version: {}-{}{} {} {}",
+                    BuildConfig.VERSION_NAME,
+                    BuildConfig.GIT_HASH_SHORT,
+                    BuildConfig.GIT_DIRTY_STATUS,
+                    BuildConfig.FLAVOR,
+                    BuildConfig.BUILD_TYPE
+            );
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.BAKLAVA) {
                 LOG.info(

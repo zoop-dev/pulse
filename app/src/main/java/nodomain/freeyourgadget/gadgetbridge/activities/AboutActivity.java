@@ -42,7 +42,7 @@ public class AboutActivity extends AbstractGBActivity {
         TextView about_version = findViewById(R.id.about_version);
         TextView about_hash = findViewById(R.id.about_hash);
         String versionName = BuildConfig.VERSION_NAME;
-        String versionHASH = BuildConfig.GIT_HASH_SHORT;
+        String versionHASH = BuildConfig.GIT_HASH_SHORT + BuildConfig.GIT_DIRTY_STATUS;
         about_version.setText(String.format(getString(R.string.about_version), versionName));
         about_version.setOnClickListener(this::copyVersionToClipboard);
         about_hash.setText(String.format(getString(R.string.about_hash), versionHASH));
@@ -61,7 +61,7 @@ public class AboutActivity extends AbstractGBActivity {
 
     private void copyVersionToClipboard(View view) {
         String versions = "Version: " + BuildConfig.VERSION_NAME +
-                "\nCommit: " + BuildConfig.GIT_HASH_SHORT +
+                "\nCommit: " + BuildConfig.GIT_HASH_SHORT + BuildConfig.GIT_DIRTY_STATUS +
                 "\nFlavor: " + BuildConfig.FLAVOR;
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("Build data", versions);

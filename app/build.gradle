@@ -85,6 +85,16 @@ final def getGitHashShort = { ->
     }
 }
 
+final def getGitDirtyFlag = { ->
+    try {
+        return providers.exec {
+            commandLine('git', 'status', '--porcelain')
+        }.standardOutput.asText.get().trim().isBlank() ? "" : " (dirty)"
+    } catch (ignored) {
+        return " (unknown status)"
+    }
+}
+
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)
 }
@@ -124,6 +134,7 @@ android {
         versionCode 249
         vectorDrawables.useSupportLibrary = true
         buildConfigField "String", "GIT_HASH_SHORT", "\"${getGitHashShort()}\""
+        buildConfigField "String", "GIT_DIRTY_STATUS", "\"${getGitDirtyFlag()}\""
         buildConfigField "boolean", "INTERNET_ACCESS", "false"
 
         manifestPlaceholders = [
