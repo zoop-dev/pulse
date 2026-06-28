@@ -22,6 +22,7 @@ import androidx.activity.result.ActivityResultCaller;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.preference.Preference;
+import androidx.preference.PreferenceScreen;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
@@ -82,4 +83,12 @@ public interface DeviceSpecificSettingsHandler extends ActivityResultCaller {
      * @return the {@link Context}.
      */
     Context getContext();
+
+    /**
+     * Navigate to the given {@link PreferenceScreen}. Used by the programmatic settings renderer to
+     * trigger sub-screen navigation for model-defined screens.
+     *
+     * @param screen the screen to navigate to.
+     */
+    void navigateToScreen(@NonNull PreferenceScreen screen);
 }

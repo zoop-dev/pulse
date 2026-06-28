@@ -32,6 +32,10 @@ import java.util.List;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsHandler;
 
+/**
+ * @deprecated prefer to use {@link nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.components.PasswordComponentKt}
+ */
+@Deprecated
 public class PasswordCapabilityImpl {
     public static final String PREF_SCREEN_PASSWORD = "pref_screen_password";
     public static final String PREF_PASSWORD = "pref_password";

@@ -29,6 +29,7 @@ import android.text.format.DateFormat;
 import androidx.annotation.NonNull;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.Language;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
@@ -159,5 +160,25 @@ public class DevicePrefs extends Prefs {
 
     public int getScreenTimeout() {
         return getInt(PREF_SCREEN_TIMEOUT, 5);
+    }
+
+    public Language getLanguage(final Language defaultLanguage) {
+        String localeString = getString(PREF_LANGUAGE, defaultLanguage.name().toLowerCase(Locale.ROOT));
+        if (localeString == null || localeString.equals(Language.AUTO.name().toLowerCase(Locale.ROOT))) {
+            String language = Locale.getDefault().getLanguage();
+            String country = Locale.getDefault().getCountry();
+
+            //noinspection ConstantValue
+            if (country == null) {
+                // sometimes country is null, no idea why, guess it.
+                country = language;
+            }
+            localeString = language + "_" + country.toUpperCase();
+        }
+        try {
+            return Language.valueOf(localeString);
+        } catch (final Exception e) {
+            return defaultLanguage;
+        }
     }
 }

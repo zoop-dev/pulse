@@ -3,9 +3,14 @@ package nodomain.freeyourgadget.gadgetbridge.devices.sinilink
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer
-import nodomain.freeyourgadget.gadgetbridge.capabilities.password.PasswordCapabilityImpl
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.DeviceSettingsSpec
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.components.deviceName
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.components.enumList
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.components.equalizerPreset
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.components.PasswordMode
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.components.passwordScreen
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.components.volume
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.deviceSettings
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCardAction
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator
@@ -13,6 +18,9 @@ import nodomain.freeyourgadget.gadgetbridge.devices.deviceCardAction
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sinilink.SinilinkButton
+import nodomain.freeyourgadget.gadgetbridge.service.devices.sinilink.SinilinkEqualizer
+import nodomain.freeyourgadget.gadgetbridge.service.devices.sinilink.SinilinkMediaSource
+import nodomain.freeyourgadget.gadgetbridge.service.devices.sinilink.SinilinkPlaybackMode
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sinilink.SinilinkPlaybackState
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sinilink.SinilinkSupport
 import java.util.regex.Pattern
@@ -55,34 +63,31 @@ class SinilinkCoordinator : AbstractBLEDeviceCoordinator() {
         return 0
     }
 
-    override fun getDeviceSpecificSettings(device: GBDevice): DeviceSpecificSettings {
-        val settings = DeviceSpecificSettings()
-
-        settings.addRootScreen(R.xml.devicesettings_sinilink)
-        settings.addRootScreen(R.xml.devicesettings_device_name)
-        settings.addRootScreen(R.xml.devicesettings_password)
-
-        settings.addConnectedPreferences(
-            DeviceSettingsPreferenceConst.PREF_MEDIA_SOURCE,
-            DeviceSettingsPreferenceConst.PREF_HEADPHONES_EQUALIZER,
-            DeviceSettingsPreferenceConst.PREF_MEDIA_PLAYBACK_MODE,
-            DeviceSettingsPreferenceConst.PREF_VOLUME,
-            DeviceSettingsPreferenceConst.PREF_PROMPT_TONE,
-            DeviceSettingsPreferenceConst.PREF_DEVICE_NAME,
-            PasswordCapabilityImpl.PREF_SCREEN_PASSWORD,
-            PasswordCapabilityImpl.PREF_PASSWORD_ENABLED,
-            PasswordCapabilityImpl.PREF_PASSWORD,
+    override fun getDeviceSettings(device: GBDevice): DeviceSettingsSpec = deviceSettings {
+        enumList<SinilinkMediaSource>(
+            key = DeviceSettingsPreferenceConst.PREF_MEDIA_SOURCE,
+            title = R.string.media_source,
+            icon = R.drawable.ic_music_note,
+            defaultValue = SinilinkMediaSource.BLUETOOTH,
         )
-
-        return settings
-    }
-
-    override fun getDeviceSpecificSettingsCustomizer(device: GBDevice): DeviceSpecificSettingsCustomizer {
-        return SinilinkSettingsCustomizer()
-    }
-
-    override fun getPasswordCapability(): PasswordCapabilityImpl.Mode {
-        return PasswordCapabilityImpl.Mode.VISIBLE_NUMBERS_4_DIGITS_0_TO_9
+        equalizerPreset<SinilinkEqualizer>(
+            defaultValue = SinilinkEqualizer.NORMAL,
+        )
+        enumList<SinilinkPlaybackMode>(
+            key = DeviceSettingsPreferenceConst.PREF_MEDIA_PLAYBACK_MODE,
+            title = R.string.media_playback_mode,
+            icon = R.drawable.ic_play,
+            defaultValue = SinilinkPlaybackMode.LIST_CYCLE,
+        )
+        volume(max = 30, defaultValue = 15)
+        switchSetting(
+            key = DeviceSettingsPreferenceConst.PREF_PROMPT_TONE,
+            title = R.string.sinilink_prompt_tone,
+            icon = R.drawable.ic_notifications,
+            defaultValue = true,
+        )
+        deviceName(maxLength = 10)
+        passwordScreen(PasswordMode.VISIBLE_NUMBERS_4_DIGITS_0_TO_9)
     }
 
     override fun getCustomActions(): List<DeviceCardAction> {
@@ -107,7 +112,9 @@ class SinilinkCoordinator : AbstractBLEDeviceCoordinator() {
                     }
                 }
                 description = { _, context -> context.getString(R.string.moondrop_touch_action_play_pause) }
-                onClick = { device, _ -> GBApplication.deviceService(device).onSendConfiguration(SinilinkButton.PLAY_PAUSE.name) }
+                onClick = { device, _ ->
+                    GBApplication.deviceService(device).onSendConfiguration(SinilinkButton.PLAY_PAUSE.name)
+                }
             },
 
             DeviceCardAction.forConfiguration(

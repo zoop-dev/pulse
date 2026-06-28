@@ -41,6 +41,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBException;
 import nodomain.freeyourgadget.gadgetbridge.activities.charts.DeviceChartsProvider;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.DeviceSettingsSpec;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.HeartRateCapability;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.loyaltycards.BarcodeFormat;
 import nodomain.freeyourgadget.gadgetbridge.capabilities.password.PasswordCapabilityImpl;
@@ -891,17 +892,33 @@ public interface DeviceCoordinator {
     /**
      * Indicates which device specific settings the device supports (not per device type or family, but unique per device).
      *
-     * @deprecated use {@link #getDeviceSpecificSettings(GBDevice)}
+     * @deprecated use {@link #getDeviceSettings} instead
      */
     @Deprecated
     @Nullable
     int[] getSupportedDeviceSpecificSettings(@NonNull final GBDevice device);
 
     /**
-     * Returns the device-specific settings supported by this specific device. See
-     * {@link DeviceSpecificSettings} for more information
+     * Returns the programmatic settings model for this device. When non-null, this supersedes
+     * {@link #getDeviceSpecificSettings(GBDevice)} for the device-specific portion of the
+     * settings screen. Generic screens (Battery, Connection, Developer, etc.) are always added.
+     * <p>
+     * Use {@link nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.DeviceSettingsDslKt#deviceSettings}
+     * to build the spec. {@link nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.XmlScreenSetting}
+     * nodes can be used as an escape hatch to include legacy XML-based preferences.
      */
     @Nullable
+    default DeviceSettingsSpec getDeviceSettings(@NonNull final GBDevice device) {
+        return null;
+    }
+
+    /**
+     * Returns the device-specific settings supported by this specific device. See
+     * {@link DeviceSpecificSettings} for more information
+     * @deprecated use {@link #getDeviceSettings} instead
+     */
+    @Nullable
+    @Deprecated
     DeviceSpecificSettings getDeviceSpecificSettings(@NonNull final GBDevice device);
 
     /**
@@ -912,8 +929,11 @@ public interface DeviceCoordinator {
 
     /**
      * Indicates which device specific language the device supports
+     *
+     * @deprecated for new implementations, prefer adding it to {@link #getDeviceSettings}
      */
     @Nullable
+    @Deprecated
     String[] getSupportedLanguageSettings(@NonNull final GBDevice device);
 
     /**
@@ -936,6 +956,10 @@ public interface DeviceCoordinator {
 
     boolean supportsPowerOff(@NonNull final GBDevice device);
 
+    /**
+     * @deprecated prefer to use {@link nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.components.PasswordComponentKt}
+     */
+    @Deprecated
     PasswordCapabilityImpl.Mode getPasswordCapability();
 
     List<HeartRateCapability.MeasurementInterval> getHeartRateMeasurementIntervals();

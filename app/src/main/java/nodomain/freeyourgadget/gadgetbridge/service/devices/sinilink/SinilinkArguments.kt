@@ -1,12 +1,15 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.sinilink
 
-enum class SinilinkEqualizer(val code: Int) {
-    NORMAL(0x09),
-    ROCK(0x0a),
-    POP(0x0b),
-    CLASSIC(0x0c),
-    JAZZ(0x0d),
-    COUNTRY(0x0e),
+import nodomain.freeyourgadget.gadgetbridge.R
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.LabeledEntry
+
+enum class SinilinkEqualizer(val code: Int, override val label: Int) : LabeledEntry {
+    NORMAL(0x09, R.string.pref_title_equalizer_normal),
+    ROCK(0x0a, R.string.nothing_equalizer_rock),
+    POP(0x0b, R.string.nothing_equalizer_pop),
+    CLASSIC(0x0c, R.string.nothing_equalizer_classical),
+    JAZZ(0x0d, R.string.soundcore_equalizer_preset_jazz),
+    COUNTRY(0x0e, R.string.equalizer_preset_country),
     ;
 
     companion object {
@@ -15,12 +18,12 @@ enum class SinilinkEqualizer(val code: Int) {
     }
 }
 
-enum class SinilinkPlaybackMode(val code: Int) {
-    SINGLE_HEAD(0x10),
-    SINGLE_CYCLE(0x11),
-    RANDOM(0x12),
-    ORDER(0x13),
-    LIST_CYCLE(0x0f),
+enum class SinilinkPlaybackMode(val code: Int, override val label: Int) : LabeledEntry {
+    SINGLE_HEAD(0x10, R.string.sinilink_playback_mode_single_head),
+    SINGLE_CYCLE(0x11, R.string.sinilink_playback_mode_single_cycle),
+    RANDOM(0x12, R.string.sinilink_playback_mode_random),
+    ORDER(0x13, R.string.sinilink_playback_mode_order),
+    LIST_CYCLE(0x0f, R.string.sinilink_playback_mode_list_cycle),
     ;
 
     companion object {
@@ -40,12 +43,12 @@ enum class SinilinkPlaybackState(val code: Int) {
     }
 }
 
-enum class SinilinkMediaSource(val code: Int) {
-    TF(0x03),
-    USB(0x04),
-    BLUETOOTH(0x14),
-    AUDIO_CARD(0x15),
-    AUX(0x16),
+enum class SinilinkMediaSource(val code: Int, override val label: Int) : LabeledEntry {
+    TF(0x03, R.string.media_source_tf),
+    USB(0x04, R.string.media_source_usb),
+    BLUETOOTH(0x14, R.string.menuitem_bluetooth),
+    AUDIO_CARD(0x15, R.string.media_source_audio_card),
+    AUX(0x16, R.string.media_source_aux),
     ;
 
     companion object {
@@ -61,7 +64,6 @@ enum class SinilinkButton(val code: Int) {
     ;
 
     companion object {
-        fun fromPreference(value: String): SinilinkButton? = entries.find { it.name == value.uppercase() }
         fun fromCode(code: Int): SinilinkButton? = entries.find { it.code == code }
     }
 }

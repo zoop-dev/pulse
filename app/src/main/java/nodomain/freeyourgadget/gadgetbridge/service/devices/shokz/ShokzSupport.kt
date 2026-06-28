@@ -9,6 +9,7 @@ import android.os.Handler
 import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.Language
 import nodomain.freeyourgadget.gadgetbridge.activities.multipoint.MultipointDevice
 import nodomain.freeyourgadget.gadgetbridge.activities.multipoint.MultipointPairingActivity
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo
@@ -162,16 +163,16 @@ class ShokzSupport : AbstractHeadphoneBTBRDeviceSupport(LOG, MAX_MTU) {
     }
 
     private fun setLanguage() {
-        val localeString: String = devicePrefs.getString("language", "en")
-        val language = ShokzLanguage.fromLocale(localeString) ?: run {
-            LOG.warn("Unknown language {}, falling back to english", localeString)
+        val language = devicePrefs.getLanguage(Language.EN)
+        val shokzLanguage = ShokzLanguage.fromLanguage(language) ?: run {
+            LOG.warn("Unknown language {}, falling back to english", language)
             ShokzLanguage.ENGLISH
         }
         LOG.info("Setting language to {}", language)
 
         queueCommand(
             ShokzCommand.LANGUAGE_SET,
-            byteArrayOf(language.code.toByte(), 0x00, 0x00, 0x00)
+            byteArrayOf(shokzLanguage.code.toByte(), 0x00, 0x00, 0x00)
         )
     }
 
@@ -529,7 +530,7 @@ class ShokzSupport : AbstractHeadphoneBTBRDeviceSupport(LOG, MAX_MTU) {
                 evaluateGBDeviceEvent(
                     GBDeviceEventUpdatePreferences(
                         DeviceSettingsPreferenceConst.PREF_LANGUAGE,
-                        language.locale
+                        language.language
                     )
                 )
             }
