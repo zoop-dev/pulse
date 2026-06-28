@@ -42,7 +42,13 @@ class GenericWeightScaleCoordinator : AbstractBLEDeviceCoordinator() {
     }
 
     override fun getCustomActions(): MutableList<DeviceCardAction?> {
-        return Collections.singletonList<DeviceCardAction>(GenericWeightScaleAction())
+        return Collections.singletonList(
+            DeviceCardAction.forActivity(
+                R.drawable.ic_balance,
+                R.string.weight_scale_show_measurement,
+                GenericWeightScaleMeasurementActivity::class.java
+            )
+        )
     }
 
     override fun getOrderPriority(): Int {
@@ -60,7 +66,7 @@ class GenericWeightScaleCoordinator : AbstractBLEDeviceCoordinator() {
         return true
     }
 
-    override fun getManufacturer(): String? {
+    override fun getManufacturer(): String {
         return "Generic"
     }
 

@@ -22,7 +22,9 @@ import android.content.Intent;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.CameraActivity;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventCameraRemote;
@@ -46,6 +48,129 @@ public interface DeviceCardAction {
 
     void onClick(@NonNull final GBDevice device, @NonNull final Context context);
 
+    /**
+     * Creates an action that launches an Activity, passing the device as {@link GBDevice#EXTRA_DEVICE}.
+     */
+    static DeviceCardAction forActivity(@DrawableRes final int icon, @StringRes final int description, @NonNull final Class<?> activityClass) {
+        return new ActivityAction(icon, description, activityClass);
+    }
+
+    /**
+     * Creates an action that sends a local broadcast, passing the device as {@link GBDevice#EXTRA_DEVICE}.
+     */
+    static DeviceCardAction forBroadcast(@DrawableRes final int icon, @StringRes final int description, @NonNull final String intentAction) {
+        return new BroadcastAction(icon, description, intentAction);
+    }
+
+    /**
+     * Creates an action that calls {@link nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport#onSendConfiguration}
+     * on the device service with the given key.
+     */
+    static DeviceCardAction forConfiguration(@DrawableRes final int icon, @StringRes final int description, @NonNull final String configKey) {
+        return new ConfigurationAction(icon, description, configKey);
+    }
+
+    class ActivityAction implements DeviceCardAction {
+        private final int icon;
+        private final int description;
+        private final Class<?> activityClass;
+
+        ActivityAction(@DrawableRes final int icon,
+                       @StringRes final int description,
+                       @NonNull final Class<?> activityClass) {
+            this.icon = icon;
+            this.description = description;
+            this.activityClass = activityClass;
+        }
+
+        @Override
+        public int getIcon(@NonNull final GBDevice device) {
+            return icon;
+        }
+
+        @NonNull
+        @Override
+        public String getDescription(@NonNull final GBDevice device,
+                                     @NonNull final Context context) {
+            return context.getString(description);
+        }
+
+        @Override
+        public void onClick(@NonNull final GBDevice device,
+                            @NonNull final Context context) {
+            final Intent intent = new Intent(context, activityClass);
+            intent.putExtra(GBDevice.EXTRA_DEVICE, device);
+            context.startActivity(intent);
+        }
+    }
+
+    class BroadcastAction implements DeviceCardAction {
+        private final int icon;
+        private final int description;
+        private final String intentAction;
+
+        BroadcastAction(@DrawableRes final int icon,
+                        @StringRes final int description,
+                        @NonNull final String intentAction) {
+            this.icon = icon;
+            this.description = description;
+            this.intentAction = intentAction;
+        }
+
+        @Override
+        public int getIcon(@NonNull final GBDevice device) {
+            return icon;
+        }
+
+        @NonNull
+        @Override
+        public String getDescription(@NonNull final GBDevice device,
+                                     @NonNull final Context context) {
+            return context.getString(description);
+        }
+
+        @Override
+        public void onClick(@NonNull final GBDevice device,
+                            @NonNull final Context context) {
+            final Intent intent = new Intent(intentAction);
+            intent.putExtra(GBDevice.EXTRA_DEVICE, device);
+            intent.setPackage(context.getPackageName());
+            context.sendBroadcast(intent);
+        }
+    }
+
+    class ConfigurationAction implements DeviceCardAction {
+        private final int icon;
+        private final int description;
+        private final String configKey;
+
+        ConfigurationAction(@DrawableRes final int icon,
+                            @StringRes final int description,
+                            @NonNull final String configKey) {
+            this.icon = icon;
+            this.description = description;
+            this.configKey = configKey;
+        }
+
+        @Override
+        public int getIcon(@NonNull final GBDevice device) {
+            return icon;
+        }
+
+        @NonNull
+        @Override
+        public String getDescription(@NonNull final GBDevice device,
+                                     @NonNull final Context context) {
+            return context.getString(description);
+        }
+
+        @Override
+        public void onClick(@NonNull final GBDevice device,
+                            @NonNull final Context context) {
+            GBApplication.deviceService(device).onSendConfiguration(configKey);
+        }
+    }
+
     class CameraAction implements DeviceCardAction {
         @Override
         public int getIcon(@NonNull GBDevice device) {
@@ -54,12 +179,14 @@ public interface DeviceCardAction {
 
         @NonNull
         @Override
-        public String getDescription(@NonNull GBDevice device, @NonNull Context context) {
+        public String getDescription(@NonNull GBDevice device,
+                                     @NonNull Context context) {
             return context.getString(R.string.open_camera);
         }
 
         @Override
-        public void onClick(@NonNull GBDevice device, @NonNull Context context) {
+        public void onClick(@NonNull GBDevice device,
+                            @NonNull Context context) {
             final Intent cameraIntent = new Intent(context, CameraActivity.class);
             cameraIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             cameraIntent.putExtra(

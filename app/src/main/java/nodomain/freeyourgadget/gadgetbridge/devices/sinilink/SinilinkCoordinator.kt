@@ -1,16 +1,15 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.sinilink
 
-import android.content.Context
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen
 import nodomain.freeyourgadget.gadgetbridge.capabilities.password.PasswordCapabilityImpl
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCardAction
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator
+import nodomain.freeyourgadget.gadgetbridge.devices.deviceCardAction
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sinilink.SinilinkButton
@@ -48,7 +47,7 @@ class SinilinkCoordinator : AbstractBLEDeviceCoordinator() {
         return R.drawable.ic_device_speaker
     }
 
-    override fun getDeviceKind(device: GBDevice): DeviceCoordinator.DeviceKind? {
+    override fun getDeviceKind(device: GBDevice): DeviceCoordinator.DeviceKind {
         return DeviceCoordinator.DeviceKind.SPEAKER
     }
 
@@ -92,53 +91,30 @@ class SinilinkCoordinator : AbstractBLEDeviceCoordinator() {
 
     companion object {
         private val DEVICE_CARD_ACTIONS = listOf(
-            // previous
-            object : DeviceCardAction {
-                override fun getIcon(device: GBDevice): Int {
-                    return R.drawable.ic_skip_previous
-                }
+            DeviceCardAction.forConfiguration(
+                R.drawable.ic_skip_previous,
+                R.string.pref_media_previous,
+                SinilinkButton.PREVIOUS.name
+            ),
 
-                override fun getDescription(device: GBDevice, context: Context): String {
-                    return context.getString(R.string.pref_media_previous)
-                }
-
-                override fun onClick(device: GBDevice, context: Context) {
-                    GBApplication.deviceService(device).onSendConfiguration(SinilinkButton.PREVIOUS.name)
-                }
-            },
-
-            // play / pause
-            object : DeviceCardAction {
-                override fun getIcon(device: GBDevice): Int {
-                    return when (SinilinkPlaybackState.fromPreference(device.getExtraInfo("playback_state") as? String ?: return R.drawable.ic_play)) {
-                        SinilinkPlaybackState.PLAYING -> R.drawable.ic_pause
-                        else -> R.drawable.ic_play
+            deviceCardAction {
+                icon = { device ->
+                    val state = device.getExtraInfo("playback_state") as? String
+                    if (state != null && SinilinkPlaybackState.fromPreference(state) == SinilinkPlaybackState.PLAYING) {
+                        R.drawable.ic_pause
+                    } else {
+                        R.drawable.ic_play
                     }
                 }
-
-                override fun getDescription(device: GBDevice, context: Context): String {
-                    return context.getString(R.string.moondrop_touch_action_play_pause)
-                }
-
-                override fun onClick(device: GBDevice, context: Context) {
-                    GBApplication.deviceService(device).onSendConfiguration(SinilinkButton.PLAY_PAUSE.name)
-                }
+                description = { _, context -> context.getString(R.string.moondrop_touch_action_play_pause) }
+                onClick = { device, _ -> GBApplication.deviceService(device).onSendConfiguration(SinilinkButton.PLAY_PAUSE.name) }
             },
 
-            // next
-            object : DeviceCardAction {
-                override fun getIcon(device: GBDevice): Int {
-                    return R.drawable.ic_skip_next
-                }
-
-                override fun getDescription(device: GBDevice, context: Context): String {
-                    return context.getString(R.string.pref_media_next)
-                }
-
-                override fun onClick(device: GBDevice, context: Context) {
-                    GBApplication.deviceService(device).onSendConfiguration(SinilinkButton.NEXT.name)
-                }
-            }
+            DeviceCardAction.forConfiguration(
+                R.drawable.ic_skip_next,
+                R.string.pref_media_next,
+                SinilinkButton.NEXT.name
+            ),
         )
     }
 }

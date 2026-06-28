@@ -17,9 +17,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.supercars;
 
-import android.content.Context;
-import android.content.Intent;
-
 import androidx.annotation.NonNull;
 
 import java.util.Collections;
@@ -47,7 +44,7 @@ public class SuperCarsCoordinator extends AbstractBLEDeviceCoordinator {
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(@NonNull final GBDevice device) {
         return SuperCarsSupport.class;
     }
 
@@ -73,26 +70,12 @@ public class SuperCarsCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public List<DeviceCardAction> getCustomActions() {
-        return Collections.singletonList(new ControlDeviceCardAction());
-    }
-
-    private static final class ControlDeviceCardAction implements DeviceCardAction {
-        @Override
-        public int getIcon(@NonNull GBDevice device) {
-            return R.drawable.ic_steering_wheel;
-        }
-
-        @NonNull
-        @Override
-        public String getDescription(@NonNull final GBDevice device, @NonNull final Context context) {
-            return context.getString(R.string.remote_control);
-        }
-
-        @Override
-        public void onClick(@NonNull final GBDevice device, @NonNull final Context context) {
-            final Intent startIntent = new Intent(context, ControlActivity.class);
-            startIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
-            context.startActivity(startIntent);
-        }
+        return Collections.singletonList(
+                DeviceCardAction.forActivity(
+                        R.drawable.ic_steering_wheel,
+                        R.string.remote_control,
+                        ControlActivity.class
+                )
+        );
     }
 }

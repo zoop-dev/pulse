@@ -1,10 +1,11 @@
 package nodomain.freeyourgadget.gadgetbridge.devices.victron
 
-import android.content.Context
+import androidx.annotation.StringRes
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCardAction
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator
+import nodomain.freeyourgadget.gadgetbridge.devices.deviceCardAction
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport
 import nodomain.freeyourgadget.gadgetbridge.service.devices.victron.VictronSmartShuntSupport
@@ -44,80 +45,18 @@ class VictronSmartShuntCoordinator : AbstractBLEDeviceCoordinator() {
         return DeviceCoordinator.DeviceKind.BATTERY_MONITOR
     }
 
-    override fun getCustomActions(): List<DeviceCardAction> {
-        return listOf(
-            // Consumed
-            object : DeviceCardAction {
-                override fun getIcon(device: GBDevice): Int {
-                    return R.drawable.ic_bolt
-                }
+    override fun getCustomActions(): List<DeviceCardAction> = listOf(
+        displayAction(R.string.consumed_electrical_energy, EXTRA_CONSUMED),
+        displayAction(R.string.power_w, EXTRA_POWER),
+        displayAction(R.string.electrical_current, EXTRA_CURRENT),
+    )
 
-                override fun isVisible(device: GBDevice): Boolean {
-                    val value = device.getExtraInfo(EXTRA_CONSUMED) as? String
-                    return device.isConnected && !value.isNullOrBlank()
-                }
-
-                override fun getDescription(device: GBDevice, context: Context): String {
-                    return context.getString(R.string.consumed_electrical_energy)
-                }
-
-                override fun getLabel(device: GBDevice, context: Context): String {
-                    return device.getExtraInfo(EXTRA_CONSUMED) as? String ?: ""
-                }
-
-                override fun onClick(device: GBDevice, context: Context) {
-                    // No UI for this yet
-                }
-            },
-
-            // Power
-            object : DeviceCardAction {
-                override fun getIcon(device: GBDevice): Int {
-                    return R.drawable.ic_bolt
-                }
-
-                override fun isVisible(device: GBDevice): Boolean {
-                    val value = device.getExtraInfo(EXTRA_POWER) as? String
-                    return device.isConnected && !value.isNullOrBlank()
-                }
-
-                override fun getDescription(device: GBDevice, context: Context): String {
-                    return context.getString(R.string.power_w)
-                }
-
-                override fun getLabel(device: GBDevice, context: Context): String {
-                    return device.getExtraInfo(EXTRA_POWER) as? String ?: ""
-                }
-
-                override fun onClick(device: GBDevice, context: Context) {
-                    // No UI for this yet
-                }
-            },
-
-            // Current
-            object : DeviceCardAction {
-                override fun getIcon(device: GBDevice): Int {
-                    return R.drawable.ic_bolt
-                }
-
-                override fun isVisible(device: GBDevice): Boolean {
-                    val value = device.getExtraInfo(EXTRA_CURRENT) as? String
-                    return device.isConnected && !value.isNullOrBlank()
-                }
-
-                override fun getDescription(device: GBDevice, context: Context): String {
-                    return context.getString(R.string.electrical_current)
-                }
-
-                override fun getLabel(device: GBDevice, context: Context): String {
-                    return device.getExtraInfo(EXTRA_CURRENT) as? String ?: ""
-                }
-
-                override fun onClick(device: GBDevice, context: Context) {
-                    // No UI for this yet
-                }
-            }
-        )
+    private fun displayAction(@StringRes descriptionRes: Int, extraKey: String) = deviceCardAction {
+        icon = { R.drawable.ic_bolt }
+        isVisible = { device -> device.isConnected && !(device.getExtraInfo(extraKey) as? String).isNullOrBlank() }
+        description = { _, context -> context.getString(descriptionRes) }
+        label = { device, _ -> device.getExtraInfo(extraKey) as? String ?: "" }
+        onClick = { _, _ -> }
     }
 
     companion object {
