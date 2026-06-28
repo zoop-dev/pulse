@@ -516,7 +516,7 @@ class ShokzSupport : AbstractHeadphoneBTBRDeviceSupport(LOG, MAX_MTU) {
             }
 
             ShokzCommand.LANGUAGE_RET -> {
-                buf.getShort() // 0
+                buf.get() // 0
                 val code = buf.get().toInt() and 0xff
                 val language = ShokzLanguage.fromCode(code)
                 if (language == null) {
