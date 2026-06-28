@@ -27,4 +27,7 @@ tasks.register<JavaExec>("genFit") {
     args(project.rootProject.file("app/build/generated/sources/fit/nodomain/freeyourgadget/gadgetbridge/service/devices/garmin/fit/").absolutePath)
     args(project.rootProject.file("app/src/main/java/nodomain/freeyourgadget/gadgetbridge/service/devices/garmin/fit/").absolutePath)
     classpath = sourceSets.main.get().runtimeClasspath
+    if (gradle.startParameter.logLevel <= LogLevel.INFO) {
+        jvmArgs("-Dverbose=true")
+    }
 }

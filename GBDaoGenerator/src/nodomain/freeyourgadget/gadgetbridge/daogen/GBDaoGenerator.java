@@ -263,9 +263,14 @@ public class GBDaoGenerator {
 
         new DaoGenerator().generateAll(schema, OUTPUT_DIR);
 
+        final long start = System.currentTimeMillis();
+
         for (Entity entity : sampleProvidersToGenerate) {
             generateSampleProvider(entity);
         }
+
+        long time = System.currentTimeMillis() - start;
+        System.out.println("Written " + sampleProvidersToGenerate.size() + " sample providers in " + time + "ms");
     }
 
     private static void deleteOldFiles() throws IOException {
@@ -317,7 +322,9 @@ public class GBDaoGenerator {
                     return FileVisitResult.SKIP_SUBTREE;
                 }
                 if (path.toString().endsWith(".java")) {
-                    System.out.println("Deleting: " + path);
+                    if (Boolean.getBoolean("verbose")) {
+                        System.out.println("Deleting: " + path);
+                    }
                     Files.delete(path);
                 }
                 return FileVisitResult.CONTINUE;
@@ -2433,6 +2440,8 @@ public class GBDaoGenerator {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, false))) {
             writer.write(generatedCode);
         }
-        System.out.println("Written " + file.getCanonicalPath());
+        if (Boolean.getBoolean("verbose")) {
+            System.out.println("Written " + file.getCanonicalPath());
+        }
     }
 }

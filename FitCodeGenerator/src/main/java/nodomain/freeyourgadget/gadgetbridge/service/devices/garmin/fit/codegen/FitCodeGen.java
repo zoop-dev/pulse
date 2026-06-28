@@ -82,6 +82,8 @@ public enum FitCodeGen {
             """;
 
     public static void main(final String[] args) throws Exception {
+        final long start = System.currentTimeMillis();
+
         String pathToJson = (args.length > 0) ? args[0] : "FitCodeGenerator/src/main/resources/fit_profile.json";
         String pathToOutput = (args.length > 1) ? args[1] : "app/build/generated/sources/fit/nodomain/freeyourgadget/gadgetbridge/service/devices/garmin/fit/";
         String pathToManual = (args.length > 2) ? args[2] : "app/src/main/java/nodomain/freeyourgadget/gadgetbridge/service/devices/garmin/fit/";
@@ -107,9 +109,13 @@ public enum FitCodeGen {
 
         generateNativeFile(messages, outputDir);
         generateFitRecordDataFactory(messages, messageDir);
+        int numFiles = 0;
         for (final NativeFITMessage message : messages) {
+            numFiles++;
             generateFitMessageClassFile(message, messageDir, manualMessageDir);
         }
+        long time = System.currentTimeMillis() - start;
+        System.out.println("Written " + numFiles + " files to " + messageDir + " in " + time + "ms");
     }
 
     private static void generateNativeFile(final TreeSet<NativeFITMessage> messages, final File outputDir) throws IOException {
@@ -501,7 +507,9 @@ public enum FitCodeGen {
         final String output = sb.toString().replaceAll("\\R", System.lineSeparator());
 
         Files.writeString(outputFile.toPath(), output, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE);
-        System.out.println("Written " + outputFile.getCanonicalPath());
+        if (Boolean.getBoolean("verbose")) {
+            System.out.println("Written " + outputFile.getCanonicalPath());
+        }
     }
 
     private static FieldClass getFieldType(final FieldDefinitionPrimitive primitive) {

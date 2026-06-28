@@ -41,4 +41,7 @@ tasks.register<JavaExec>("genSources") {
     mainClass = application.mainClass
     classpath = sourceSets.main.get().runtimeClasspath
     workingDir = file("../")
+    if (gradle.startParameter.logLevel <= LogLevel.INFO) {
+        jvmArgs("-Dverbose=true")
+    }
 }

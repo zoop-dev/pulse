@@ -156,7 +156,9 @@ public class DaoGenerator {
             try {
                 template.process(root, writer);
                 writer.flush();
-                System.out.println("Written " + file.getCanonicalPath());
+                if (Boolean.getBoolean("verbose")) {
+                    System.out.println("Written " + file.getCanonicalPath());
+                }
             } finally {
                 writer.close();
             }
