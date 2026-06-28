@@ -3,6 +3,10 @@
   "extends": [
     "config:recommended"
   ],
+  "semanticCommits": "disabled",
+  "commitMessagePrefix": "Update",
+  "commitMessageAction": "",
+  "commitMessageTopic": "{{depName}}",
   "labels": [
     "dependency"
   ],
@@ -15,6 +19,13 @@
       "groupName": "protobuf",
       "matchPackageNames": [
         "com.google.protobuf:*"
+      ]
+    },
+    {
+      "groupName": "kotlin",
+      "matchPackageNames": [
+        "org.jetbrains.kotlin.*",
+        "org.jetbrains.kotlin:*"
       ]
     },
     {
