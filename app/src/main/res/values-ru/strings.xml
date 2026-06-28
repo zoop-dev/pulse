@@ -733,8 +733,6 @@
     <string name="pref_chart_heartrate_color_orange">Оранжевый</string>
     <string name="pref_title_chart_heartrate_color">Цвет пульса</string>
     <string name="pref_title_chart_sleep_rolling_24_hour">Диапазон сна</string>
-    <string name="pref_chart_sleep_rolling_24_on">Последние 24 часа</string>
-    <string name="pref_chart_sleep_rolling_24_off">С полудня до полудня</string>
     <string name="fw_upgrade_notice_amazfitgts">Вы собираетесь установить прошивку %s на ваш Amazfit GTS.
 \n
 \nБудьте внимательны: сперва установите файл .fw, затем .res. После установки .fw ваши часы будут перезагружены.
@@ -742,15 +740,10 @@
 \nПримечание: если версия файла .res совпадает с установленной, его не нужно переустанавливать.
 \n
 \nВЫ ДЕЙСТВУЕТЕ НА СВОЙ СТРАХ И РИСК!</string>
-    <string name="preferences_qhybrid_settings">Настройки Q Hybrid</string>
     <string name="watch_not_connected">Часы не подсоединены</string>
-    <string name="qhybrid_vibration_strength">сила вибрации:</string>
-    <string name="qhybrid_goal_in_steps">Цель в шагах</string>
     <string name="qhybrid_time_shift">Временной сдвиг</string>
     <string name="qhybrid_second_timezone_offset_relative_to_utc">Второе смещение часового пояса относительно UTC</string>
-    <string name="qhybrid_overwrite_buttons">кнопки перезаписи</string>
     <string name="qhybrid_use_activity_hand_as_notification_counter">Используйте руку в движении в качестве счетчика уведомлений</string>
-    <string name="qhybrid_prompt_million_steps">Пожалуйста, установите счетчик шагов на миллион, чтобы активировать это.</string>
     <string name="qhybrid_buttons_overwrite_success">Кнопки перезаписаны</string>
     <string name="qhybrid_buttons_overwrite_error">Ошибка перезаписи кнопок</string>
     <string name="qhybrid_offset_timezone">Смещение часового пояса на</string>
@@ -1929,7 +1922,6 @@
     <string name="wifi_hotspot_configuration">Настройка точки доступа Wi-Fi</string>
     <string name="wifi_ssid">SSID</string>
     <string name="status_icon">Значок статуса</string>
-    <string name="loyalty_cards_install">Установить Catima</string>
     <string name="loyalty_cards_sync_groups_only">Синхронизировать только выбранные группы</string>
     <string name="pref_app_logs_start_summary">Начать ведение журнала из приложений часов</string>
     <string name="pref_app_logs_stop_summary">Остановить ведение журнала</string>
@@ -2053,8 +2045,6 @@
     <string name="sony_ambient_sound_ambient_sound">Звук окружения</string>
     <string name="loyalty_cards_sync_archived">Синхронизировать активированные карты</string>
     <string name="loyalty_cards_sync_summary">Нажмите для синхронизации карт с часами</string>
-    <string name="loyalty_cards_catima_package">Имя набора Catima</string>
-    <string name="loyalty_cards_install_catima_fail">Не удалось открыть магазин приложений для установки Catima</string>
     <string name="loyalty_cards_sync_title">Синхронизировать бонусные карты</string>
     <string name="loyalty_cards_sync_options">Настройки синхронизации</string>
     <string name="loyalty_cards_sync">Синхронизация</string>
@@ -2065,7 +2055,6 @@
     <string name="sony_ambient_sound_control_button_mode_nc_as_off">Подавление, Звук окружения, Выкл</string>
     <string name="wifi_hotspot_start_summary">Запускайте точку доступа с часов</string>
     <string name="voice_service_class_summary">Полный путь до службы обработки голосовых команд</string>
-    <string name="loyalty_cards_catima_permissions_summary">Для синхронизации карт Catima, Gadgetbridge требуются разрешения на их чтение. Нажмите эту кнопку, чтобы выдать их.</string>
     <string name="withings_calibration_text_minutes">Теперь используйте циферблат для установки минутной стрелки на 12.</string>
     <string name="pref_theme_dynamic_colors_not_available_warning">Адаптивные цвета недоступны на Вашем устройстве. Этот функционал поддерживается на Android 12 и выше. Gadgetbridge будет использовать цвета Material 3 по умолчанию.</string>
     <string name="pref_header_sony_ambient_sound_control">Управление звуком окружения</string>
@@ -2080,8 +2069,6 @@
     <string name="pref_activity_full_sync_trigger_summary">Запустить полную синхронизацию данных о всех активностях</string>
     <string name="voice_service">Служба голоса</string>
     <string name="loyalty_cards_sync_starred">Синхронизировать только карты в избранном</string>
-    <string name="loyalty_cards_catima_not_compatible">Установленная версия Catima несовместима с Gadgetbridge. Пожалуйста, обновите оба приложения до последних версий.</string>
-    <string name="loyalty_cards_open_catima">Открыть Catima</string>
     <string name="loyalty_cards">Бонусные карты</string>
     <string name="loyalty_cards_syncing">Синхронизация %d бонусных карт на устройство</string>
     <string name="withings_calibration_text_hours">Пожалуйста, используйте циферблат ниже для установки часовой стрелки на 12.</string>
@@ -2091,7 +2078,6 @@
     <string name="info_menu_structure_set">Структура меню JSON, заданная в ГБ</string>
     <string name="button_open_menu_companion">Открыть меню приложения-спутника</string>
     <string name="error_menu_companion_not_installed">Скорее всего, не установлено приложение \"HR Menu Companion\"</string>
-    <string name="loyalty_cards_catima_not_installed">Для управления бонусными картами требуется Catima</string>
     <string name="loyalty_cards_catima_permissions_title">Отсутствующие разрешения</string>
     <string name="error_invalid_menu_structure">Некорректная структура меню JSON</string>
     <string name="button_reset_menu_structure">Сбросить структуру меню</string>
@@ -2596,7 +2582,6 @@
     <string name="pref_wearing_tone_summary">Проигрывать сигнал, когда вставлен наушник</string>
     <string name="pref_touch_tone">Сигнал касания</string>
     <string name="pref_wearing_tone">Сигнал ношения</string>
-    <string name="preferences_qhybrid_settings_summary">Старые настройки для часов Q Hybrid</string>
     <string name="pref_adaptive_noise_cancelling_title">Адаптивное подавление шума</string>
     <string name="pref_adaptive_noise_cancelling_summary">Задавать уровень активного подавления шума в зависимости от громкости окружения</string>
     <string name="pref_title_wheel_diameter">Диаметр колеса</string>

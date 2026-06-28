@@ -818,7 +818,6 @@
     <string name="pref_sleep_mode_smart_enable_title">Okos engedélyezés</string>
     <string name="mode_configuration">Módbeállítás</string>
     <string name="busy_task_fetch_sports_summaries">Sportösszesítések lekérdezése</string>
-    <string name="qhybrid_overwrite_buttons">gombok felülírása</string>
     <string name="choose_auto_export_location">Válassza ki az exportálás helyét</string>
     <string name="weekstepschart_steps_a_month">Havi lépés</string>
     <string name="pai_chart_per_week">Heti PAI</string>
@@ -845,7 +844,6 @@
     <string name="pref_vibrate_for_alert">Rezgés ébresztéskor</string>
     <string name="activity_type_pingpong">Asztalitenisz</string>
     <string name="qhybrid_buttons_overwrite_error">Hiba történt a gombok felülírásakor</string>
-    <string name="qhybrid_vibration_strength">rezgés erőssége:</string>
     <string name="title_activity_notification_filter">Értesítésszűrő</string>
     <string name="abstract_chart_fragment_kind_rem_sleep">REM-fázis</string>
     <string name="pref_sleep_mode_title">Alvó üzemmód</string>
@@ -855,9 +853,7 @@
     <string name="mi3_prefs_night_mode_summary">Automatikusan csökkenti a karkötő képernyőjének fényerejét éjszaka</string>
     <string name="watch9_calibration_hint">Állítsa be az időt, amelyet az eszköze jelenleg megjelenít.</string>
     <string name="busy_task_fetch_sports_details">Sportrészletek lekérdezése</string>
-    <string name="pref_chart_sleep_rolling_24_on">Előző 24 óra</string>
     <string name="pref_header_sound_vibration">Hang és rezgés</string>
-    <string name="pref_chart_sleep_rolling_24_off">Déltől délig</string>
     <string name="pref_header_heartrate_sleep">Alvás</string>
     <string name="prefs_events_forwarding_title">Eszközműveletek</string>
     <string name="vibration_profile_default">Alapértelmezett</string>
@@ -1810,12 +1806,10 @@
     <string name="menuitem_workout_shortcuts">Edzés parancsikonok</string>
     <string name="menuitem_body_composition">Test felépítés</string>
     <string name="notification_channel_low_battery_name">Alacsony akkumulátor töltöttség</string>
-    <string name="preferences_qhybrid_settings">Q Hybrid beállítások</string>
     <string name="menuitem_zepp_pay">Zepp Pay</string>
     <string name="menuitem_thermometer">Hőmérő</string>
     <string name="menuitem_readiness">Készenlét</string>
     <string name="zepp_os_watchface_guider">Guider</string>
-    <string name="qhybrid_prompt_million_steps">Állítsa a lépésszámot egy millióra az aktiváláshoz.</string>
     <string name="hr_appname_wellness">Wellness</string>
     <string name="prefs_fm_preset_instructions">Hosszan nyomja meg a gombot az előbeállítás tárolásához</string>
     <string name="toast_app_must_not_be_selected">Az alkalmazás nem választható ki a beállításhoz</string>
@@ -1836,7 +1830,6 @@
     <string name="pref_invalid_frequency_message">Adjon meg egy 87,5 és 108,0 közötti frekvenciát</string>
     <string name="pref_title_lower_button_short_press_action">Alsó gomb rövid megnyomású művelet</string>
     <string name="quick_alarm_description">Riasztás a modulról</string>
-    <string name="qhybrid_goal_in_steps">Cél lépésenként</string>
     <string name="prefs_button_single_press_action_selection_title">1. esemény művelet</string>
     <string name="prefs_button_long_press_action_selection_title">Hosszú gombnyomás művelet</string>
     <string name="prefs_fm_presets_presets">Előbeállítások</string>
@@ -2429,7 +2422,6 @@
     <string name="hrZoneEasy">Könnyű</string>
     <string name="prefs_noise_control_with_one_earbud">Zajszabályozás egy fülhallgatóval</string>
     <string name="loyalty_cards_sync_archived">Archivált kártyák szinkronizálása</string>
-    <string name="loyalty_cards_install_catima_fail">Nem sikerült megnyitni az alkalmazás-áruházat a Catima telepítéséhez</string>
     <string name="loyalty_cards_sync_starred">Csak a csillaggal jelölt kártyák szinkronizálása</string>
     <string name="prefs_wena3_home_icon_name_edy">Edy egyensúly</string>
     <string name="widget_screen_min_screens">Legalább %1$s képernyőnek kell lennie</string>
@@ -2531,7 +2523,6 @@
     <string name="hrv_status_unbalanced">Kiegyensúlyozatlan</string>
     <string name="pref_app_logs_stop_summary">Naplózás leállítása az óraalkalmazásokból</string>
     <string name="pref_app_connection_duration">Az alkalmazáskapcsolat időtartama</string>
-    <string name="loyalty_cards_install">Catima telepítése</string>
     <string name="prefs_wena3_home_icon_title">Kezdőképernyő ikonok</string>
     <string name="prefs_wena3_home_icon_name_clock">Jelenlegi idő</string>
     <string name="prefs_wena3_menu_icon_hint">A Beállítások ikon mindig a végén jelenik meg</string>
@@ -2555,7 +2546,6 @@
     <string name="debug_companion_show_associated">Társeszközök megjelenítése</string>
     <string name="contact_missing_name">A név üres</string>
     <string name="voice_service_class_title">Hangszolgáltatás-osztály</string>
-    <string name="loyalty_cards_catima_not_installed">Catima szükséges a hűségkártyák kezeléséhez</string>
     <string name="loyalty_cards_syncing">%d hűségkártya szinkronizálása az eszközhöz</string>
     <string name="withings_calibration_text_minutes">Most pedig a tárcsázó segítségével, igazítsa a percmutatót a 12 órához.</string>
     <string name="error_invalid_menu_structure">Érvénytelen menüelrendezési .json-fájl</string>
@@ -2657,7 +2647,6 @@
     <string name="soundcore_equalizer_band1">1. sáv</string>
     <string name="huawei_alarm_smart_description">Ne távolítsa el az intelligens ébresztés jelölőnégyzetet.</string>
     <string name="voice_service_package_title">Hangszolgáltatás-csomag</string>
-    <string name="loyalty_cards_catima_package">Catima csomagnév</string>
     <string name="pref_activity_full_sync_trigger_title">Teljes szinkronizálás</string>
     <string name="purple">Lila</string>
     <string name="prefs_wena3_home_icon_name_qrio">Qrio</string>
@@ -2834,7 +2823,6 @@
     <string name="redmi_buds_5_pro_equalizer_neg3">-3 dB</string>
     <string name="redmi_buds_5_pro_equalizer_neg2">-2 dB</string>
     <string name="redmi_buds_5_pro_equalizer_neg1">-1 dB</string>
-    <string name="loyalty_cards_catima_not_compatible">A telepített Catima-verzió nem kompatibilis a Gadgetbridge-dzsel. Frissítsen a Catima és a Gadgetbridge legújabb verziójára.</string>
     <string name="pref_auto_reply_calls_summary">A telefon automatikusan fogadja a bejövő hívásokat</string>
     <string name="pref_speak_notifications_aloud_summary">Az értesítések hangosan felolvasásra kerülnek a fejhallgatón keresztül</string>
     <string name="pref_speak_notifications_aloud_title">Értesítések hangos kimondása</string>
@@ -2906,7 +2894,6 @@
     <string name="huawei_alarm_event_description">Ne jelölje be az intelligens ébresztés jelölőnégyzetet.</string>
     <string name="pref_app_logs_summary">Naplózás engedélyezése az óraalkalmazásokból</string>
     <string name="loyalty_cards_sync_title">Hűségkártyák szinkronizálása</string>
-    <string name="loyalty_cards_open_catima">Catima megnyitása</string>
     <string name="info_menu_structure_removed">Menüszerkezet eltávolítva</string>
     <string name="prefs_home_icon_center_item">Középre</string>
     <string name="prefs_home_icon_right_item">Jobbra</string>
@@ -3027,7 +3014,6 @@
     <string name="hrv_status_seven_days_avg">7 napos átlag</string>
     <string name="hrv_status_unit">%1$d ms</string>
     <string name="body_energy_legend_level">Testenergia szint</string>
-    <string name="preferences_qhybrid_settings_summary">Örökölt beállítások a Q Hybrid órákhoz</string>
     <string name="max_respiration_rate">Maximális légzési gyakoriság</string>
     <string name="fossil_hr_commute_actions_explanation">Az itt konfigurált műveletek a Commute alkalmazásban jelennek meg az óráján. Olvassa el a további információkat a weboldalon az ilyen műveletek által létrehozott intentek kezeléséről.</string>
     <string name="watchface_widget_type_sp02">SpO2</string>
@@ -3155,7 +3141,6 @@
     <string name="pref_dashboard_widget_today_time_indicator_summary">Mutató megjelenítése a jelenlegi időpontban, hogy vizuálisan elkülönítse a tegnapi és a mai adatokat</string>
     <string name="pref_dnd_follow_phone_title">A telefon DND beállításának követése</string>
     <string name="inactivity_warnings_minimum_steps_title">Minimális lépésszám</string>
-    <string name="loyalty_cards_catima_permissions_summary">A Gadgetbridge alkalmazásnak olvasási jogosultságokra van szüksége a Catima kártyákon a szinkronizáláshoz. A jogosultságok megadásához koppintson erre a gombra.</string>
     <string name="info_menu_structure_contents">Menüszerkezet: %s</string>
     <string name="prefs_home_icon_left_item">Balra</string>
     <string name="cyan">Cián</string>

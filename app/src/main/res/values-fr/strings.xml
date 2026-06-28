@@ -710,8 +710,6 @@
     <string name="discovery_need_to_enter_authkey">Cet appareil nécessite une clé d\'authentification secrète : appuyez longuement pour la saisir. Plus d\'informations sur le site web.</string>
     <string name="pref_chart_heartrate_color_red">Rouge</string>
     <string name="pref_chart_heartrate_color_orange">Orange</string>
-    <string name="pref_chart_sleep_rolling_24_on">Dernières 24 heures</string>
-    <string name="pref_chart_sleep_rolling_24_off">De midi à midi</string>
     <string name="fw_upgrade_notice_amazfitbip_lite">Vous êtes sur le point d\'installer le micrologiciel %s sur votre Amazfit Bip Lite. 
 \n 
 \nVeuillez installer le fichier .fw, puis le fichier .res. Votre montre redémarrera après l\'installation du .fw. 
@@ -735,17 +733,12 @@
 \nNote : vous n\'avez pas à installer les fichiers .res et .gps s\'ils sont exactement les mêmes que ceux installés précédemment. 
 \n 
 \nCONTINUEZ À VOS RISQUES ET PÉRILS !</string>
-    <string name="preferences_qhybrid_settings">Paramètres hybrides Q</string>
     <string name="watch_not_connected">Montre non connectée</string>
-    <string name="qhybrid_vibration_strength">Puissance de vibration :</string>
-    <string name="qhybrid_goal_in_steps">Objectif de pas</string>
     <string name="qhybrid_time_shift">Décalage horaire</string>
     <string name="qhybrid_second_timezone_offset_relative_to_utc">Décalage du deuxième fuseau horaire par rapport à UTC</string>
-    <string name="qhybrid_prompt_million_steps">Veuillez régler le compteur de pas à un million pour l\'activer.</string>
     <string name="qhybrid_changes_delay_prompt">La modification peut prendre quelques secondes…</string>
     <string name="pref_disable_new_ble_scanning">Désactiver la nouvelle détection BLE</string>
     <string name="pref_summary_disable_new_ble_scanning">Cochez cette option si votre appareil ne peut être découvert</string>
-    <string name="qhybrid_overwrite_buttons">modifier les boutons</string>
     <string name="qhybrid_use_activity_hand_as_notification_counter">Utilise l\'activité de la main comme compteur de notification</string>
     <string name="qhybrid_buttons_overwrite_success">Boutons modifiés</string>
     <string name="qhybrid_buttons_overwrite_error">Une erreur est survenue lors de la modification des boutons</string>
@@ -2103,24 +2096,17 @@
     <string name="pai_chart_per_week">PAI par semaine</string>
     <string name="pai_total">Total</string>
     <string name="pai_day">Augmentation journalière</string>
-    <string name="loyalty_cards_install">Installer Catima</string>
     <string name="loyalty_cards_sync_groups">Groupes à synchroniser</string>
-    <string name="loyalty_cards_install_catima_fail">Impossible d\'ouvrir l\'app store pour installer Catima</string>
     <string name="loyalty_cards_sync_summary">Toucher pour synchroniser les cartes dans la montre</string>
-    <string name="loyalty_cards_catima_not_installed">Catima est requis pour gérer les cartes de fidélité</string>
     <string name="loyalty_cards_sync_options">Options de synchronisation</string>
     <string name="loyalty_cards_sync">Sync</string>
     <string name="loyalty_cards_catima">Catima</string>
-    <string name="loyalty_cards_open_catima">Démarrer Catima</string>
     <string name="loyalty_cards_catima_permissions_title">Autorisations manquantes</string>
-    <string name="loyalty_cards_catima_permissions_summary">Gadgetbridge a besoin d\'une autorisation de lecture sur les cartes Catima pour les synchroniser. Appuyer sur ce bouton pour l\'autoriser.</string>
-    <string name="loyalty_cards_catima_package">Nom du logiciel Catima</string>
     <string name="loyalty_cards_sync_groups_only">Synchroniser uniquement certains groupes</string>
     <string name="loyalty_cards_sync_archived">Synchroniser les cartes archivées</string>
     <string name="loyalty_cards_sync_starred">Synchroniser uniquement les cartes étoilées</string>
     <string name="loyalty_cards_sync_title">Synchroniser les cartes de fidélité</string>
     <string name="loyalty_cards_syncing">Synchronisation de %d des cartes de fidélité dans l\'appareil</string>
-    <string name="loyalty_cards_catima_not_compatible">La version installée de Catima est incompatible avec Gadgetbridge. Merci de mettre à jour Catima et Gadgetbridge en dernière version.</string>
     <string name="loyalty_cards">Cartes de fidélité</string>
     <string name="pref_title_mb_intents">Diffuser les annonces Media directement</string>
     <string name="pref_summary_mb_intents">Activer si le contrôle des médias ne marche pas dans certaines applications</string>
@@ -2613,7 +2599,6 @@
     <string name="scan_not_scanning">Scan non actif</string>
     <string name="scan_scanning_all_devices">Scan de tous les appareils</string>
     <string name="pref_adaptive_volume_control_title">Contrôle du volume adaptatif</string>
-    <string name="preferences_qhybrid_settings_summary">Anciens réglages pour les montres Q Hybrid</string>
     <string name="Pace">Rythme</string>
     <string name="RunningForm">Départ depuis</string>
     <string name="pref_wide_area_tap_summary">Distinguer entre les taps sur les joues et sur les oreilles</string>

@@ -912,9 +912,7 @@
     <string name="weekstepschart_steps_a_month">Месечни кораци</string>
     <string name="weeksleepchart_sleep_a_month">Месечно спавање</string>
     <string name="pref_title_chart_sleep_rolling_24_hour">Опсег спавања</string>
-    <string name="pref_chart_sleep_rolling_24_on">Последњих 24 часа</string>
     <string name="activity_prefs_chart_min_steps_per_minute_for_run">Најмањи број корака у минуту ради препознавања трчања</string>
-    <string name="pref_chart_sleep_rolling_24_off">Од поднева до поднева</string>
     <string name="activity_prefs_chart_min_steps_per_minute">Најмањи број корака у минуту ради препознавања дејствовања</string>
     <string name="activity_prefs_chart_max_idle_phase_length">Дужина одмора ради одвајања дејстава (у минутима)</string>
     <string name="activity_prefs_chart_min_session_length">Најмања дужина дејства (у минутима)</string>
@@ -1108,9 +1106,7 @@
     <string name="title_activity_notification_filter">Пропусник обавештења</string>
     <string name="filter_mode_none">Не користи пропусник</string>
     <string name="filter_mode">Начин пропуштања</string>
-    <string name="qhybrid_overwrite_buttons">препиши дугмад</string>
     <string name="qhybrid_use_activity_hand_as_notification_counter">Користи дејствену руку као бројач обавештења</string>
-    <string name="qhybrid_prompt_million_steps">Молим, поставите бројач корака на милион ради покретања тога.</string>
     <string name="about_contributors">Доприносиоци</string>
     <string name="hrZoneFatBurn">Топљење сала</string>
     <string name="hrZoneWarmUp">Загревање</string>
@@ -1245,9 +1241,7 @@
     <string name="toast_notification_filter_words_empty_hint">Молим, унеси најмање једну реч</string>
     <string name="mode_configuration">Поставке начина</string>
     <string name="appwidget_setting_alarm">Поставка ларме за %1$02d:%2$02d</string>
-    <string name="qhybrid_vibration_strength">снага трешње:</string>
     <string name="qhybrid_time_shift">Временски помак</string>
-    <string name="qhybrid_goal_in_steps">Циљ у корацима</string>
     <string name="qhybrid_second_timezone_offset_relative_to_utc">Помак друге временске области у односу на обласно време</string>
     <string name="pref_title_middle_button_function_long">Дуго средње дугме</string>
     <string name="hr_widget_battery">Батерије</string>
@@ -2233,7 +2227,6 @@
     <string name="activity_type_sailing">Једрење</string>
     <string name="activity_type_treadmill">Трака за трчање</string>
     <string name="average_respiration_rate">Разина дисања</string>
-    <string name="preferences_qhybrid_settings_summary">Старе поставке часовника Ку Хибрида</string>
     <string name="hrZoneThreshold">Задшка</string>
     <string name="max_respiration_rate">Највећа разина дисања</string>
     <string name="cycling">Кружење</string>
@@ -2266,7 +2259,6 @@
     <string name="stepRateAvg">Просек брзине корака</string>
     <string name="pref_summary_keep_data_on_device">Задржаваће податке на уређају чак и након усклађивања. Корисно је уколико се ГБ користи заједно са другим програмима. То може узроковати да часовник препуни простор памети и/ли престане да се усклађује ваљано.</string>
     <string name="activity_type_pilates">Пилатес</string>
-    <string name="preferences_qhybrid_settings">Поставке Ку Хибрида</string>
     <string name="distance_total">Укупна даљина</string>
     <string name="error_no_bluetooth_connect">Приступ повезивању блутутом мора бити одобрено и омогућено ради правилног рада претраге</string>
     <string name="pref_summary_low_latency_fw_update">Може бити корисно на уређајима где угњежђавање драма не успева.</string>

@@ -709,11 +709,7 @@
     <string name="pref_chart_heartrate_color_orange">Arancione</string>
     <string name="pref_title_chart_heartrate_color">Colore della frequenza cardiaca</string>
     <string name="pref_title_chart_sleep_rolling_24_hour">Intervallo di sonno</string>
-    <string name="pref_chart_sleep_rolling_24_on">Ultime 24 ore</string>
-    <string name="pref_chart_sleep_rolling_24_off">Da mezzogiorno a mezzogiorno</string>
     <string name="watch_not_connected">Orologio non connesso</string>
-    <string name="qhybrid_vibration_strength">forza della vibrazione:</string>
-    <string name="qhybrid_goal_in_steps">Obiettivo in passi</string>
     <string name="qhybrid_changes_delay_prompt">Il cambiamento potrebbe richiedere qualche secondo…</string>
     <string name="pref_disable_new_ble_scanning">Disattivare nuove scansioni BLE</string>
     <string name="pref_summary_disable_new_ble_scanning">Selezionare questa opzione se il dispositivo viene trovato durante il rilevamento</string>
@@ -751,8 +747,6 @@
 \nNota: non è necessario installare .res e .gps se questi file sono esattamente gli stessi installati in precedenza.
 \n
 \nPROCEDI A TUO RISCHIO!</string>
-    <string name="preferences_qhybrid_settings">Impostazioni Q Hybrid</string>
-    <string name="qhybrid_prompt_million_steps">Impostare il contatore dei passi a un milione per attivare.</string>
     <string name="qhybrid_buttons_overwrite_success">Pulsanti sovrascritti</string>
     <string name="qhybrid_buttons_overwrite_error">Errore durante la modifica dei pulsanti</string>
     <string name="prefs_button_variable_actions">Impostazioni dettagliate per la pressione del pulsante</string>
@@ -781,7 +775,6 @@
     <string name="hr_appname_workout">Allenamento</string>
     <string name="hr_appname_wellness">Benessere</string>
     <string name="qhybrid_use_activity_hand_as_notification_counter">utilizzare la mano di attività come contatore di notifica</string>
-    <string name="qhybrid_overwrite_buttons">sovrascrivere i pulsanti</string>
     <string name="notification_channel_high_priority_name">Alta priorità</string>
     <string name="find_my_phone_notification">Trova il mio telefono</string>
     <string name="pref_title_vibration_strength">Resistenza alle vibrazioni</string>
@@ -2080,11 +2073,7 @@
     <string name="watchface_widget_type_uv_index">Indice UV</string>
     <string name="stress_relaxed">Rilassato</string>
     <string name="stress_high">Elevato</string>
-    <string name="loyalty_cards_catima_package">Nome pacchetto Catima</string>
-    <string name="loyalty_cards_install_catima_fail">Non siamo riusciti ad aprire l\'app store per installare Catima</string>
-    <string name="loyalty_cards_catima_not_installed">Catima è necessario per gestire le carte fedeltà</string>
     <string name="loyalty_cards_catima_permissions_title">Permessi mancanti</string>
-    <string name="loyalty_cards_open_catima">Apri Catima</string>
     <string name="loyalty_cards_syncing">Sincronizzando %d carte con il dispositivo</string>
     <string name="title">Titolo</string>
     <string name="pref_summary_banglejs_phone_gps_network_only">Usa solo il fornitore di rete per determinare la posizione. Questo riduce il consumo di energia al costo della precisione. È necessaria una riconnessione.</string>
@@ -2100,8 +2089,6 @@
     <string name="fwapp_install_device_not_supported">Installazione file fallita, dispositivo non supportato.</string>
     <string name="status_icon">Icona stato</string>
     <string name="changelog_full_title">Registro modifiche</string>
-    <string name="loyalty_cards_install">Installa Catima</string>
-    <string name="loyalty_cards_catima_permissions_summary">Gadgetbridge ha bisogno del permesso per leggere le carte Catima per sincronizzarle. Toccare questo pulsante per concederlo.</string>
     <string name="loyalty_cards_catima">Catima</string>
     <string name="loyalty_cards">Carte Fedeltà</string>
     <string name="changelog_show_full">Altro…</string>
@@ -2118,7 +2105,6 @@
     <string name="loyalty_cards_sync_summary">Tocca per sincronizzare le carte con l\'orologio</string>
     <string name="loyalty_cards_sync_options">Opzioni Sincronizzazione</string>
     <string name="loyalty_cards_sync">Sincronizza</string>
-    <string name="loyalty_cards_catima_not_compatible">La versione di Catima installata non è compatibile con Gadgetbridge. Aggiorna Catima e Gadgetbridge alle ultime versioni.</string>
     <string name="activity_prefs_goals">Obiettivi</string>
     <string name="charts_legend_stress_average">Stress medio</string>
     <string name="error_no_bluetooth_scan">L\'accesso alla scansione Bluetooth deve essere consentito e abilitato perché la scansione funzioni correttamente</string>
@@ -2465,7 +2451,6 @@
     <string name="pref_wearing_tone">Tono inserimento</string>
     <string name="pref_touch_tone_summary">Riproduci un tono quando l\'auricolare viene toccato</string>
     <string name="pref_wearing_tone_summary">Riproduci un tono quando l\'auricolare viene inserito</string>
-    <string name="preferences_qhybrid_settings_summary">Impostazioni obsolete per gli orologi Q Hybrid</string>
     <string name="impactMax">Impatto massimo</string>
     <string name="pref_force_options">Forza le opzioni</string>
     <string name="pref_spo_automatic_enable">Abilita la misurazione automatica della SpO2</string>

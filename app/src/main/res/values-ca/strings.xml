@@ -715,8 +715,6 @@
     <string name="pref_chart_heartrate_color_orange">Taronja</string>
     <string name="pref_title_chart_heartrate_color">Color de freqüència cardíaca</string>
     <string name="pref_title_chart_sleep_rolling_24_hour">Interval de son</string>
-    <string name="pref_chart_sleep_rolling_24_on">Últimes 24 hores</string>
-    <string name="pref_chart_sleep_rolling_24_off">De migdia a migdia</string>
     <string name="fw_upgrade_notice_amazfitgts">Esteu a punt d\'instal·lar el microprogramari %s en el vostre Amazfit GTS.
 \n
 \nSi us plau, assegureu-vos d\'instal·lar el fitxer .fw, el fitxer .res i, finalment, el fitxer .gps. El vostre rellotge es reiniciarà després d\'instal·lar l\'arxiu .fw.
@@ -735,15 +733,10 @@
     <string name="prefs_find_phone_summary">Fes servir la teva banda per a reproduir el to del telèfon.</string>
     <string name="discovery_need_to_enter_authkey">Aquest aparell requereix una clau d\'autenticació secreta, mantingueu premut sobre l\'aparell per a introduir-la. Consulteu la wiki.</string>
     <string name="pref_summary_allow_high_mtu">Augmenta la velocitat de transferència, però pot ser que no funcioni en alguns aparells Android.</string>
-    <string name="preferences_qhybrid_settings">Configuració de Q Hybrid</string>
     <string name="watch_not_connected">Rellotge no connectat</string>
-    <string name="qhybrid_vibration_strength">intensitat de vibració:</string>
-    <string name="qhybrid_goal_in_steps">Objectiu en passes</string>
     <string name="qhybrid_time_shift">decalat horari</string>
     <string name="qhybrid_second_timezone_offset_relative_to_utc">decalat del segon fus horari relatiu a UTC</string>
-    <string name="qhybrid_overwrite_buttons">sobreescriu els botons</string>
     <string name="qhybrid_use_activity_hand_as_notification_counter">utilitza la maneta d\'activitat com a comptador de notificacions</string>
-    <string name="qhybrid_prompt_million_steps">Si us plau, estableix el comptador de passes a un milió per a activar-ho.</string>
     <string name="qhybrid_buttons_overwrite_success">Botons sobreescrits</string>
     <string name="qhybrid_buttons_overwrite_error">Error al sobreescriure botons</string>
     <string name="qhybrid_offset_timezone">decala el fus horari en</string>

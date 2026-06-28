@@ -720,8 +720,6 @@
     <string name="pref_chart_heartrate_color_orange">橙</string>
     <string name="pref_title_chart_heartrate_color">心率颜色</string>
     <string name="pref_title_chart_sleep_rolling_24_hour">睡眠范围</string>
-    <string name="pref_chart_sleep_rolling_24_on">过去 24 小时</string>
-    <string name="pref_chart_sleep_rolling_24_off">中午到中午</string>
     <string name="fw_upgrade_notice_amazfitgts">您即将在跃我手表 GTS(Amazfit GTS)上安装 %s 版本的固件
 \n
 \n请确保先安装 .fw 文件，再安装 .res 文件。您的手环将会在安装了 .fw 文件后重启。
@@ -730,15 +728,10 @@
 \n
 \n风险自担！</string>
     <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>
-    <string name="preferences_qhybrid_settings">Q Hybrid 设置</string>
     <string name="watch_not_connected">手表未连接</string>
-    <string name="qhybrid_vibration_strength">振动强度：</string>
-    <string name="qhybrid_goal_in_steps">目标步数</string>
     <string name="qhybrid_time_shift">时移</string>
     <string name="qhybrid_second_timezone_offset_relative_to_utc">相对于协调世界时的第二个时区偏移</string>
-    <string name="qhybrid_overwrite_buttons">覆盖按钮</string>
     <string name="qhybrid_use_activity_hand_as_notification_counter">使用活动手作为通知计数</string>
-    <string name="qhybrid_prompt_million_steps">请将步数设置为100万来激活它。</string>
     <string name="qhybrid_buttons_overwrite_success">按钮覆盖</string>
     <string name="qhybrid_buttons_overwrite_error">覆盖按钮时出错</string>
     <string name="qhybrid_offset_timezone">时区偏移量</string>
@@ -2098,23 +2091,16 @@
     <string name="pai_plus_num">+%d</string>
     <string name="pai_total">总计</string>
     <string name="pai_day">每日增长</string>
-    <string name="loyalty_cards_catima_not_installed">需要 Catima 来管理会员卡</string>
-    <string name="loyalty_cards_catima_package">Catima 包名</string>
-    <string name="loyalty_cards_install">安装 Catima</string>
     <string name="loyalty_cards_sync_groups_only">仅同步特定的分组</string>
     <string name="loyalty_cards_sync_groups">要同步的群组</string>
     <string name="loyalty_cards_sync_archived">同步已存档的卡片</string>
-    <string name="loyalty_cards_install_catima_fail">无法打开应用程序商店来安装 Catima</string>
     <string name="loyalty_cards_sync_starred">仅同步加星标的卡片</string>
     <string name="loyalty_cards_sync_title">同步会员卡</string>
     <string name="loyalty_cards_sync_summary">点击即可将卡片同步到手表</string>
-    <string name="loyalty_cards_catima_not_compatible">安装的 Catima 版本与 Gadgetbridge 不兼容。请将 Catima 和 Gadgetbridge 更新到最新版本。</string>
     <string name="loyalty_cards_sync_options">同步选项</string>
     <string name="loyalty_cards_sync">同步</string>
     <string name="loyalty_cards_catima">Catima</string>
     <string name="loyalty_cards_catima_permissions_title">缺少权限</string>
-    <string name="loyalty_cards_open_catima">打开 Catima</string>
-    <string name="loyalty_cards_catima_permissions_summary">Gadgetbridge 需要 Catima 卡包的读取权限才能同步它们。点击此按钮即可进行授权。</string>
     <string name="loyalty_cards_syncing">正在将 %d 张会员卡同步到设备</string>
     <string name="loyalty_cards">会员卡</string>
     <string name="pref_title_mb_intents">广播媒体按钮直接广播意图</string>
@@ -2710,7 +2696,6 @@
     <string name="pref_adaptive_noise_cancelling_title">自适应主动降噪</string>
     <string name="pref_touch_tone_summary">触摸耳机时会发出提示音</string>
     <string name="pref_adaptive_noise_cancelling_summary">根据环境声级自动设置自动降噪强度</string>
-    <string name="preferences_qhybrid_settings_summary">Q Hybrid 手表的旧设置</string>
     <string name="device_name_cycling_sensor">骑行传感器</string>
     <string name="devicetype_cycling_sensor">骑行速度传感器</string>
     <string name="title_cycling">骑自行车</string>

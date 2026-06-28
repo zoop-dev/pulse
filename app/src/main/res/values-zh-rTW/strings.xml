@@ -106,7 +106,6 @@
     <string name="mi3_prefs_band_screen_unlock_summary">上滑以解鎖手環螢幕</string>
     <string name="activity_prefs_about_you">關於你</string>
     <string name="weeksleepchart_sleep_a_month">每月睡眠</string>
-    <string name="pref_chart_sleep_rolling_24_on">過去 24 小時</string>
     <string name="menuitem_weather">天氣</string>
     <string name="menuitem_settings">設定</string>
     <string name="language_and_region_prefs">語言與地區設定</string>
@@ -261,7 +260,6 @@
     <string name="pref_title_chart_heartrate_color">心率顏色</string>
     <string name="weekstepschart_steps_a_month">每月步數</string>
     <string name="pref_title_chart_sleep_rolling_24_hour">睡眠範圍</string>
-    <string name="pref_chart_sleep_rolling_24_off">前天中午至當天中午</string>
     <string name="action_db_management">資料管理</string>
     <string name="title_activity_db_management">資料管理</string>
     <string name="activity_DB_empty_button">清空資料庫</string>
@@ -444,8 +442,6 @@
     <string name="hr_widget_nothing">沒有</string>
     <string name="hr_widget_calories">卡路里</string>
     <string name="error_no_location_access">位置存取權限必須被授予並啟用才能進行掃描</string>
-    <string name="qhybrid_goal_in_steps">目標步數</string>
-    <string name="qhybrid_vibration_strength">振動強度：</string>
     <string name="save_configuration">儲存設定</string>
     <string name="preferences_fm_frequency">FM 頻率</string>
     <string name="preferences_led_color">LED 顏色</string>
@@ -693,7 +689,6 @@
     <string name="zepp_os_watchface_red_fantasy">紅色幻想</string>
     <string name="toast_app_must_be_selected">必須選擇應用程式才能進行配置</string>
     <string name="appwidget_sleep_alarm_widget_label">睡眠鬧鐘</string>
-    <string name="qhybrid_prompt_million_steps">請將步數設置為一百萬以啟用該功能。</string>
     <string name="qhybrid_buttons_overwrite_success">按鈕被覆蓋</string>
     <string name="qhybrid_buttons_overwrite_error">覆寫按鈕時出錯</string>
     <string name="qhybrid_offset_timezone">偏移時區</string>
@@ -874,7 +869,6 @@
     <string name="activity_type_biking">騎自行車</string>
     <string name="kind_gpx_route">GPX 路線</string>
     <string name="menuitem_flashlight">手電筒</string>
-    <string name="qhybrid_overwrite_buttons">覆寫按鈕</string>
     <string name="sony_equalizer_band_400">400</string>
     <string name="prefs_wena3_item_weather_statusbar">狀態欄中的天氣</string>
     <string name="prefs_wena3_button_action_item_long">長按</string>
@@ -1795,14 +1789,9 @@
     <string name="pref_app_logs_title">應用程序日誌</string>
     <string name="changelog_show_full">更多…</string>
     <string name="changelog_ok_button">好</string>
-    <string name="loyalty_cards_catima_package">Catima 套件名稱</string>
-    <string name="loyalty_cards_install">安裝 Catima</string>
     <string name="loyalty_cards_sync_groups_only">僅同步特定群組</string>
     <string name="loyalty_cards_sync_archived">同步已存檔的卡片</string>
-    <string name="loyalty_cards_install_catima_fail">無法打開應用商店以安裝 Catima</string>
     <string name="loyalty_cards_sync_summary">點擊以同步卡片至手錶</string>
-    <string name="loyalty_cards_catima_not_installed">Catima 需要用來管理忠誠卡</string>
-    <string name="loyalty_cards_catima_permissions_summary">Gadgetbridge 需要對 Catima 卡片的讀取權限才能同步它們。點擊此按鈕以授予權限。</string>
     <string name="pref_theme_dynamic_colors_explanation">注意：對於動態顏色主題，您需要在 Android 12 以上的外觀設置中啟用壁紙顏色或顏色調色板。如果不啟用，Gadgetbridge 將使用默認的 Material 3 顏色。</string>
     <string name="prefs_home_icon_left_item">左</string>
     <string name="prefs_wena3_vibration_smart_item">智慧震動</string>
@@ -2081,7 +2070,6 @@
     <string name="soundcore_equalizer_reset_summary">將所有均衡器頻段恢復為默認設置</string>
     <string name="strokes_unit">strokes</string>
     <string name="Elevation">海拔</string>
-    <string name="loyalty_cards_open_catima">開放 Catima</string>
     <string name="body_energy_gained">獲得</string>
     <string name="body_energy_lost">迷失</string>
     <string name="body_energy_legend_level">身體能量水平</string>
@@ -2417,8 +2405,6 @@
     <string name="menuitem_breathing">呼吸</string>
     <string name="menuitem_cycles">週期追蹤</string>
     <string name="menuitem_cards">卡片</string>
-    <string name="preferences_qhybrid_settings">Q 混合設置</string>
-    <string name="preferences_qhybrid_settings_summary">Q Hybrid 手錶的遺留設置</string>
     <string name="menuitem_workout">運動</string>
     <string name="menuitem_unknown">未知</string>
     <string name="menuitem_goal">活動目標</string>
@@ -2780,7 +2766,6 @@
     <string name="preview_image">預覽圖片</string>
     <string name="status_icon">狀態圖示</string>
     <string name="changelog_full_title">變更日誌</string>
-    <string name="loyalty_cards_catima_not_compatible">安裝的 Catima 版本與 Gadgetbridge 不相容。請將 Catima 和 Gadgetbridge 更新到最新版本。</string>
     <string name="loyalty_cards_sync_options">同步選項</string>
     <string name="loyalty_cards_sync">同步</string>
     <string name="loyalty_cards_catima_permissions_title">缺少權限</string>

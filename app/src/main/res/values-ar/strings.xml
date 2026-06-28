@@ -747,7 +747,6 @@
     <string name="activity_type_biking">ركوب الدراجة</string>
     <string name="activity_summary_yesterday">أمس</string>
     <string name="edittext_notification_filter_words_hint">أدخل الكلمات المطلوبة ، سطر جديد لكل منها</string>
-    <string name="qhybrid_prompt_million_steps">يرجى تعيين عدد الخطوات إلى مليون لتفعيل ذلك.</string>
     <string name="sports_activity_confirm_delete_description">هل أنت متأكد أنك تريد حذف أنشطة %d؟</string>
     <string name="qhybrid_pref_summary_external_intents">يسمح لتطبيقات Android الأخرى بتحميل / الكتابة فوق الملفات</string>
     <string name="prefs_game_mode_summary">فقط إذا كان هاتفك يدعم وضع اللعبة</string>
@@ -1129,7 +1128,6 @@
     <string name="gadgetbridge_running_main_nightly">اليلي GB يعمل</string>
     <string name="title_activity_controlcenter_main_nopebble">Gadgetbridge اليلي لا Pebble</string>
     <string name="gadgetbridge_running_main_nopebble">ليلاً NoPebble GB قيد التشغيل</string>
-    <string name="preferences_qhybrid_settings">إعدادات Q الهجينة</string>
     <string name="menuitem_hr">معدل نبضات القلب</string>
     <string name="menuitem_pomodoro">Pomodoro متتبع</string>
     <string name="menuitem_voice_memos">المذكرات الصوتية</string>
@@ -1384,7 +1382,6 @@
     <string name="pref_media_previous">المسار السابق</string>
     <string name="pref_title_opentracks_packagename">اسم حزمة OpenTracks</string>
     <string name="supercars_lights_blinking_label">وامض</string>
-    <string name="qhybrid_goal_in_steps">الهدف في الخطوات</string>
     <string name="status">الحالة</string>
     <string name="stop">توقف</string>
     <string name="activity_DB_ShowContentButton">إظهار محتوى دليل التصدير/الاستيراد</string>
@@ -1622,7 +1619,6 @@
     <string name="controlcenter_folder_name">اسم المجلد:</string>
     <string name="step_streak_ongoing">جارية</string>
     <string name="pref_title_chart_sleep_rolling_24_hour">نطاق النوم</string>
-    <string name="pref_chart_sleep_rolling_24_on">ال 24 ساعة الماضية</string>
     <string name="kind_gps_almanac">تقويم GPS</string>
     <string name="preferences_led_color">لون LED</string>
     <string name="preferences_fm_frequency">تردد FM</string>
@@ -1810,7 +1806,6 @@
     <string name="croatian">الكرواتية</string>
     <string name="scandinavian">الاسكندنافية</string>
     <string name="weekstepschart_steps_a_month">عدد الخطوات في الشهر</string>
-    <string name="pref_chart_sleep_rolling_24_off">من الظهر إلى الظهر</string>
     <string name="waiting_for_reconnect">في انتظار إعادة الاتصال</string>
     <string name="activity_prefs_chart_min_session_length">أقل مدة للنشاط (بالدقائق)</string>
     <string name="authentication_required">المصادقة مطلوبة</string>
@@ -1825,8 +1820,6 @@
     <string name="pref_invalid_frequency_title">تردد غير صالح</string>
     <string name="toast_notification_filter_saved_successfully">تم حفظ عامل تصفية الإشعارات</string>
     <string name="filter_mode">وضع التصفية</string>
-    <string name="qhybrid_vibration_strength">قوة الاهتزاز:</string>
-    <string name="qhybrid_overwrite_buttons">الكتابة فوق الزر</string>
     <string name="widget_set_alarm_after">ضبط المنبه بعد:</string>
     <string name="pref_title_middle_button_function_long">الزر الأوسط طويل</string>
     <string name="qhybrid_offset_timezone">إزاحة المنطقة الزمنية بمقدار</string>
@@ -2098,25 +2091,18 @@
     <string name="pai_chart_per_month">PAI في الشهر</string>
     <string name="pai_total">المجموع</string>
     <string name="pai_day">زيادة اليوم</string>
-    <string name="loyalty_cards_install">تثبيت كاتيما</string>
     <string name="loyalty_cards_sync_groups_only">مزامنة مجموعات محددة فقط</string>
-    <string name="loyalty_cards_install_catima_fail">فشل في فتح متجر التطبيقات لتثبيت كاتيما</string>
     <string name="loyalty_cards_sync_title">مزامنة بطاقات الولا</string>
     <string name="loyalty_cards_sync_options">خيارات المزامنة</string>
     <string name="loyalty_cards_sync">مزامنة</string>
     <string name="loyalty_cards_catima_permissions_title">أذونات مفقودة</string>
     <string name="loyalty_cards_syncing">مزامنة بطاقات الولاء %d مع الجهاز</string>
-    <string name="loyalty_cards_catima_package">اسم حزمة كاتيما</string>
-    <string name="loyalty_cards_open_catima">افتح كاتيما</string>
     <string name="loyalty_cards_sync_groups">المجموعات المراد مزامنتها</string>
     <string name="loyalty_cards_sync_archived">مزامنة البطاقات المؤرشفة</string>
-    <string name="loyalty_cards_catima_not_compatible">إصدار كاتيما المثبت غير متوافق مع Gadgetbridge. يرجى تحديث كاتيما و Gadgetbridge إلى أحدث اصدار.</string>
     <string name="loyalty_cards_sync_starred">مزامنة البطاقات المميزة بنجمة فقط</string>
     <string name="loyalty_cards_sync_summary">انقر لمزامنة البطاقات مع الساعة</string>
     <string name="loyalty_cards_catima">كاتيما</string>
     <string name="loyalty_cards">بطاقات الولاء</string>
-    <string name="loyalty_cards_catima_permissions_summary">يحتاج Gadgetbridge إلى أذونات قراءة لبطاقات كاتيما لمزامنتها. اضغط على هذا الزر لمنحها.</string>
-    <string name="loyalty_cards_catima_not_installed">هناك حاجة إلى كاتيما لإدارة بطاقات الولاء</string>
     <string name="pref_title_mb_intents">نوايا زر بث الوسائط مباشرة</string>
     <string name="pref_summary_mb_intents">تمكين إذا كان التحكم في وسائط الجهاز لا يعمل مع تطبيقات معينة</string>
     <string name="busy_task_fetch_sports_details">جلب التفاصيل الرياضية</string>
@@ -2716,7 +2702,6 @@
     <string name="pref_touch_tone_summary">يصدر نغمة عند لمس سماعة الأذن</string>
     <string name="pref_wearing_tone">نغمة الإرتداء</string>
     <string name="pref_wearing_tone_summary">يصدر نغمة عند تركيب سماعة الأذن</string>
-    <string name="preferences_qhybrid_settings_summary">الإعدادات القديمة لساعات Q الهجينة</string>
     <string name="pref_adaptive_noise_cancelling_title">عزل الصوت المتكيف</string>
     <string name="pref_adaptive_noise_cancelling_summary">اضبط قوة عزل الصوت تلقائيًا على مستوى الصوت المحيط</string>
     <string name="device_name_bicycle_sensor">حساس الدراجة</string>

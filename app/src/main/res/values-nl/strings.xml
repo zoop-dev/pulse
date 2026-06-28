@@ -723,8 +723,6 @@
     <string name="pref_chart_heartrate_color_orange">Oranje</string>
     <string name="pref_title_chart_heartrate_color">Kleur hartslag</string>
     <string name="pref_title_chart_sleep_rolling_24_hour">Slaapbereik</string>
-    <string name="pref_chart_sleep_rolling_24_on">Afgelopen 24 uur</string>
-    <string name="pref_chart_sleep_rolling_24_off">Van middag tot middag</string>
     <string name="fw_upgrade_notice_amazfitgts">U staat op het punt om de firmware %s te installeren op uw Amazfit GTS.
 \n
 \nZorg ervoor dat u het .fw-bestand installeert, daarna het .res-bestand en als laatste het .gps-bestand. Uw horloge wordt opnieuw gestart na het installeren van het .fw-bestand.
@@ -733,15 +731,10 @@
 \n
 \nGA VERDER OP EIGEN RISICO!</string>
     <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>
-    <string name="preferences_qhybrid_settings">Q Hybrid instellingen</string>
     <string name="watch_not_connected">Horloge niet verbonden</string>
-    <string name="qhybrid_vibration_strength">trillingssterkte:</string>
-    <string name="qhybrid_goal_in_steps">Doel in stappen</string>
     <string name="qhybrid_time_shift">tijdsverschuiving</string>
     <string name="qhybrid_second_timezone_offset_relative_to_utc">tweede tijdzone offset ten opzichte van UTC</string>
-    <string name="qhybrid_overwrite_buttons">knoppen overschrijven</string>
     <string name="qhybrid_use_activity_hand_as_notification_counter">gebruik activiteitswijzer als notificatieteller</string>
-    <string name="qhybrid_prompt_million_steps">Zet het aantal stappen op een miljoen om dat te activeren.</string>
     <string name="qhybrid_buttons_overwrite_success">Knoppen overschreven</string>
     <string name="qhybrid_buttons_overwrite_error">Fout bij het overschrijven van knoppen</string>
     <string name="qhybrid_offset_timezone">offset tijdzone met</string>
@@ -2103,24 +2096,17 @@
     <string name="pai_plus_num">+%d</string>
     <string name="pai_chart_per_month">PAI per maand</string>
     <string name="pai_day">Dag-toename</string>
-    <string name="loyalty_cards_catima_package">Catima-pakketnaam</string>
     <string name="loyalty_cards_sync_archived">Gearchiveerde kaarten synchroniseren</string>
     <string name="loyalty_cards_sync_starred">Alleen kaarten met ster synchroniseren</string>
     <string name="loyalty_cards_sync_title">Klantenkaarten synchroniseren</string>
-    <string name="loyalty_cards_catima_not_compatible">De geïnstalleerde Catima-versie is niet compatibel met Gadgetbridge. Update Catima en Gadgetbridge naar de nieuwste versies.</string>
     <string name="loyalty_cards_catima">Catima</string>
-    <string name="loyalty_cards_open_catima">Open Catima</string>
     <string name="loyalty_cards_catima_permissions_title">Ontbrekende machtigingen</string>
     <string name="loyalty_cards_sync">Synchroniseren</string>
     <string name="loyalty_cards">Klantenkaarten</string>
     <string name="loyalty_cards_syncing">%d klantenkaarten synchroniseren met apparaat</string>
     <string name="loyalty_cards_sync_groups_only">Alleen specifieke groepen synchroniseren</string>
-    <string name="loyalty_cards_install">Catima installeren</string>
     <string name="loyalty_cards_sync_groups">Te synchroniseren groepen</string>
     <string name="loyalty_cards_sync_summary">Tik om de kaarten met het horloge te synchroniseren</string>
-    <string name="loyalty_cards_catima_not_installed">Catima is nodig om de klantenkaarten te beheren</string>
-    <string name="loyalty_cards_install_catima_fail">Kan app store niet openen om Catima te installeren</string>
-    <string name="loyalty_cards_catima_permissions_summary">Gadgetbridge heeft leesrechten op Catima-kaarten nodig om ze te synchroniseren. Tik op deze knop om ze te verlenen.</string>
     <string name="loyalty_cards_sync_options">Synchronisatie-opties</string>
     <string name="pref_title_mb_intents">Broadcast Media Knop Intents Direct</string>
     <string name="pref_summary_mb_intents">Inschakelen als mediabediening van apparaat niet werkt voor bepaalde apps</string>
@@ -2722,7 +2708,6 @@
     <string name="folder">Directory</string>
     <string name="url">URL</string>
     <string name="garmin_agps_local_file">Lokaal bestand</string>
-    <string name="preferences_qhybrid_settings_summary">Verouderde instellingen voor Fossil Q Hybrid horloges</string>
     <string name="device_name_bicycle_sensor">Fietssensor</string>
     <string name="pref_adaptive_noise_cancelling_title">Automatische ruisonderdrukking</string>
     <string name="pref_speak_notifications_focus_exclusive_summary_off">Audio van andere apps zal op een lager volume afgespeeld worden tijdens het oplezen van meldingen</string>

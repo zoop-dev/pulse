@@ -726,8 +726,6 @@
     <string name="pref_chart_heartrate_color_orange">כתום</string>
     <string name="pref_title_chart_heartrate_color">צבע דופק</string>
     <string name="pref_title_chart_sleep_rolling_24_hour">טווח שינה</string>
-    <string name="pref_chart_sleep_rolling_24_on">24 השעות האחרונות</string>
-    <string name="pref_chart_sleep_rolling_24_off">צהריים עד צהריים</string>
     <string name="fw_upgrade_notice_amazfitgts">פעולה זו תתקין את הקושחה %s ב־Amazfit GTS שלך.
 \n
 \nנא לוודא את התקנת קושחת ה־‎.fw בהתחלה, לאחר מכן את קובץ ה־‎.res ולבסוף קובץ ה־‎.gps השעון שלך יופעל מחדש לאחר התקנת קובץ ה־fw.
@@ -736,14 +734,9 @@
 \n
 \nהמשך התהליך הוא על אחריותך!</string>
     <string name="mi2_prefs_button_press_broadcast_default_value" translatable="false">nodomain.freeyourgadget.gadgetbridge.ButtonPressed</string>
-    <string name="preferences_qhybrid_settings">הגדרות Q Hybrid</string>
     <string name="watch_not_connected">השעון לא מחובר</string>
-    <string name="qhybrid_vibration_strength">עצמת רטט:</string>
-    <string name="qhybrid_goal_in_steps">יעד בצעדים</string>
     <string name="qhybrid_time_shift">הזחת זמן</string>
     <string name="qhybrid_second_timezone_offset_relative_to_utc">היסט אזור זמן שני ביחס ל־UTC</string>
-    <string name="qhybrid_overwrite_buttons">דריסת כפתורים</string>
-    <string name="qhybrid_prompt_million_steps">נא להגדיר את מניין הצעדים למיליון כדי להפעיל זאת.</string>
     <string name="qhybrid_buttons_overwrite_success">הכפתורים נדרסו</string>
     <string name="qhybrid_buttons_overwrite_error">דריסת הכפתורים נכשלה</string>
     <string name="qhybrid_changes_delay_prompt">השינויים יתבצעו בהקדם…</string>
@@ -2104,25 +2097,18 @@
     <string name="pai_plus_num">+%d</string>
     <string name="pai_chart_per_month">PAI בחודש</string>
     <string name="pai_chart_per_week">PAI בשבוע</string>
-    <string name="loyalty_cards_install">התקנת Catima</string>
     <string name="loyalty_cards_sync_groups_only">סנכרון קבוצות מסוימות בלבד</string>
     <string name="loyalty_cards_sync_archived">סנכרון כרטיסים בארכיון</string>
-    <string name="loyalty_cards_install_catima_fail">פתיחת החנות להתקנת Catima נכשלה</string>
     <string name="loyalty_cards_sync_starred">לסנכרן כרטיסים בכוכב בלבד</string>
-    <string name="loyalty_cards_catima_not_compatible">גרסת ה־Catima המותקנת לא תואמת ל־Gadgetbridge. נא לעדכן את Catima ואת Gadgetbridge לגרסאות העדכניות ביותר.</string>
     <string name="loyalty_cards_catima">Catima</string>
-    <string name="loyalty_cards_open_catima">פתיחת Catima</string>
     <string name="pai_total">סך הכול</string>
     <string name="pai_day">עלייה יומית</string>
     <string name="loyalty_cards_sync_groups">קבוצות לסנכרון</string>
     <string name="loyalty_cards_sync_title">סנכרון כרטיסי מועדון</string>
-    <string name="loyalty_cards_catima_package">שם חבילת Catima</string>
     <string name="loyalty_cards_sync_summary">יש ללחוץ כדי לסנכרן את הכרטיסים לשעון</string>
-    <string name="loyalty_cards_catima_not_installed">צריך Catima כדי לנהל את כרטיסי המועדון</string>
     <string name="loyalty_cards_catima_permissions_title">חסרות הרשאות</string>
     <string name="loyalty_cards_sync_options">אפשרויות סנכרון</string>
     <string name="loyalty_cards_sync">סנכרון</string>
-    <string name="loyalty_cards_catima_permissions_summary">ל־Gadgetbridge דרושות הרשאות לקרוא כרטיסים מ־Catima כדי סלנכרן אותם. נגיעה בכפתור הזה תאשר את הגישה.</string>
     <string name="loyalty_cards">כרטיסי מועדון</string>
     <string name="loyalty_cards_syncing">%d כרטיסי מועדון מסונכרנים למכשיר</string>
     <string name="pref_title_mb_intents">שידור Intents של כפתורי מדיה ישירות</string>

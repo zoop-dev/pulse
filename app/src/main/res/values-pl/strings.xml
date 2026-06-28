@@ -678,8 +678,6 @@
 \nKONTYNUUJ NA WŁASNE RYZYKO!</string>
     <string name="pref_chart_heartrate_color_orange">Pomarańczowy</string>
     <string name="pref_title_chart_sleep_rolling_24_hour">Zakres snu</string>
-    <string name="pref_chart_sleep_rolling_24_on">Ostatnie 24 godziny</string>
-    <string name="pref_chart_sleep_rolling_24_off">Od południa do południa</string>
     <string name="fw_upgrade_notice_amazfitgts">Właśnie zamierzasz zainstalować oprogramowanie układowe %s na swoim Amazfit GTS.
 \n
 \nProszę upewnić się, że zainstalowany został plik .fw, następnie plik .res i na końcu plik .gps. Po zainstalowaniu pliku .fw Twój zegarek zostanie ponownie uruchomiony.
@@ -687,7 +685,6 @@
 \nUwaga: Nie musisz instalować plików .res i .gps, jeśli te pliki są dokładnie takie same jak te, które zostały wcześniej zainstalowane.
 \n
 \nKONTYNUUJ NA WŁASNE RYZYKO!</string>
-    <string name="preferences_qhybrid_settings">Ustawienia Q Hybrid</string>
     <string name="pref_disable_new_ble_scanning">Wyłącz nowe skanowania BLE</string>
     <string name="pref_summary_disable_new_ble_scanning">Zaznacz tę opcję, jeśli urządzenie nie może zostać znalezione podczas wykrywania</string>
     <string name="alarm_snooze">Drzemka</string>
@@ -745,11 +742,7 @@
     <string name="discovery_need_to_enter_authkey">To urządzenie wymaga poufnego klucza autoryzacji, naciśnij i przytrzymaj, aby go wprowadzić. Więcej informacji na stronie internetowej.</string>
     <string name="pref_title_chart_heartrate_color">Kolor tętna</string>
     <string name="watch_not_connected">Zegarek niepołączony</string>
-    <string name="qhybrid_vibration_strength">siła wibracji:</string>
-    <string name="qhybrid_goal_in_steps">Cel w krokach</string>
     <string name="qhybrid_second_timezone_offset_relative_to_utc">Różnica czasu w stosunku do czasu UTC</string>
-    <string name="qhybrid_overwrite_buttons">nadpisanie przycisków</string>
-    <string name="qhybrid_prompt_million_steps">Proszę ustawić liczbę kroków na milion, aby to aktywować.</string>
     <string name="qhybrid_buttons_overwrite_success">Przyciski zostały nadpisane</string>
     <string name="qhybrid_buttons_overwrite_error">Błąd podczas nadpisania przycisków</string>
     <string name="qhybrid_offset_timezone">Przesuń strefę czasową o</string>
@@ -2086,7 +2079,6 @@
     <string name="updatefirmwareoperation_updateproblem_free_space">Na urządzeniu nie ma wystarczającej ilości wolnego miejsca</string>
     <string name="busy_task_fetch_sports_summaries">Pobieranie podsumowań sportowych</string>
     <string name="prefs_wena3_home_icon_name_calories">Kalorie</string>
-    <string name="loyalty_cards_install">Zainstaluj Catimę</string>
     <string name="prefs_home_icon_left_item">Do lewej</string>
     <string name="prefs_wena3_led_none">Bez LED</string>
     <string name="spanish_es">Hiszpański (Hiszpania)</string>
@@ -2150,7 +2142,6 @@
     <string name="menuitem_cards">Karty</string>
     <string name="prefs_wena3_item_weather_statusbar">Pogoda w pasku stanu</string>
     <string name="loyalty_cards_sync_groups_only">Synchronizuj tylko określone grupy</string>
-    <string name="loyalty_cards_catima_permissions_summary">Gadgetbridge potrzebuje uprawnień do odczytu kart Catima, aby je zsynchronizować. Dotknij tego przycisku, aby je przyznać.</string>
     <string name="zepp_os_watchface_red_fantasy">Czerwona fantazja</string>
     <string name="prefs_shortcut_cards">Karty skrótów</string>
     <string name="temperature_scale_celsius">Skala Celsjusza</string>
@@ -2169,7 +2160,6 @@
     <string name="english_au">Angielski (Australia)</string>
     <string name="prefs_wena3_home_icon_name_energy">Energia ciała</string>
     <string name="permission_request">%1$s umożliwia wysyłanie wiadomości i innych danych z Androida na Twoje urządzenie. Aby to zrobić, wymagany jest dostęp do tych danych i bez niego może nie działać poprawnie. \n \nZostanie wyświetlonych kilka okien dialogowych Androida z prośbą o te uprawnienia. \n \nAby kontynuować, kliknij „%2$s”.</string>
-    <string name="loyalty_cards_catima_package">Nazwa pakietu Catima</string>
     <string name="prefs_wena3_notification_vibration_repetition_2">Dwukrotnie</string>
     <string name="prefs_wena3_auto_power_off_hint">Urządzenie wyłączy się i włączy automatycznie według określonego harmonogramu</string>
     <string name="menuitem_vo2_max">Maks VO₂</string>
@@ -2183,7 +2173,6 @@
     <string name="prefs_wena3_hint_large_font">Zwiększ rozmiar czcionki w kalendarzu, powiadomieniach itp.</string>
     <string name="loyalty_cards_sync_summary">Kliknij, aby zsynchronizować karty z zegarkiem</string>
     <string name="prefs_wena3_button_action_item_double">Podwójne naciśnięcie</string>
-    <string name="loyalty_cards_open_catima">Otwórz Catimę</string>
     <string name="prefs_wena3_vibration_rapid">Szybkie</string>
     <string name="text_receiver_activity_title">Wyślij SMS-a na urządzenie</string>
     <string name="prefs_wena3_button_action_name_qrio_unlock">Blokada Qrio</string>
@@ -2237,7 +2226,6 @@
     <string name="loyalty_cards_sync_starred">Synchronizuj tylko karty oznaczone gwiazdką</string>
     <string name="changelog_full_title">Lista zmian</string>
     <string name="pref_contacts_summary">Skonfiguruj kontakty na zegarku</string>
-    <string name="loyalty_cards_install_catima_fail">Nie udało się otworzyć sklepu z aplikacjami, aby zainstalować Catimę</string>
     <string name="preview_image">Miniaturka</string>
     <string name="loyalty_cards_sync">Synchronizuj</string>
     <string name="english_gb">Angielski (Wielka Brytania)</string>
@@ -2245,7 +2233,6 @@
     <string name="intent_api_allow_debug_commands_summary">Zezwalaj na uruchamianie poleceń menu debugowania za pośrednictwem interfejsu Intent API</string>
     <string name="loyalty_cards_sync_options">Opcje synchronizacji</string>
     <string name="prefs_wena3_notification_default_vibration">Wibracja powiadomień</string>
-    <string name="loyalty_cards_catima_not_compatible">Zainstalowana wersja Catimy nie jest kompatybilna z Gadgetbridge. Zaktualizuj Catima i Gadgetbridge do najnowszych wersji.</string>
     <string name="prefs_wena3_notification_vibration_repetition_0">W sposób nieokreślony</string>
     <string name="activity_detail_share_raw_details">Udostępnij surowe szczegóły</string>
     <string name="activity_type_windsurfing">Windsurfing</string>
@@ -2276,7 +2263,6 @@
     <string name="info_fossil_rebuild_watchface_custom_menu">Przebuduj tarczę zegarka, aby uzyskać niestandardowe menu</string>
     <string name="pai_total">Całkowite</string>
     <string name="zepp_os_watchface_minimalist">Minimalistyczny</string>
-    <string name="loyalty_cards_catima_not_installed">Catima jest potrzebna do zarządzania kartami lojalnościowymi</string>
     <string name="prefs_wena3_notification_default_led">Kolor diody powiadomień</string>
     <string name="sony_speak_to_chat_summary">Wyłącz automatycznie redukcję szumów, gdy zaczniesz mówić.</string>
     <string name="prefs_wena3_auto_power_off_item">Automatyczny wyłącznik</string>
@@ -2746,7 +2732,6 @@
     <string name="activity_type_biathlon">Biathlon</string>
     <string name="pref_force_enable_spo2_support">Wymuś wsparcie dla SpO2</string>
     <string name="pref_adaptive_volume_control_title">Automatyczna kontrola głośności</string>
-    <string name="preferences_qhybrid_settings_summary">Stare ustawienia dla zegarków Q hybrid</string>
     <string name="stepLengthAvg">Średnia długość kroku</string>
     <string name="RunningForm">Styl biegania</string>
     <string name="pref_header_sony_sound_control">Kontrola dźwięku</string>

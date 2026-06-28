@@ -217,7 +217,6 @@
     <string name="share_log_warning">Imajte na umu da datoteke zapisnika Gadgetbridgea koje mogu sadržavati mnogo osobnih podataka, uključujući, ali ne ograničavajući se na zdravstvene podatke, jedinstvene identifikatore (kao što je MAC adresa uređaja), glazbene postavke itd. Razmislite o uređivanju datoteke i uklanjanju ovih informacija prije slanja datoteke javnom izvješću o problemu.</string>
     <string name="toast_app_must_be_selected">Aplikacija mora biti odabrana da bi se konfigurirala</string>
     <string name="edittext_notification_filter_words_hint">Unesite željene riječi, novi redak za svaku</string>
-    <string name="qhybrid_prompt_million_steps">Postavite broj koraka na milijun da biste to aktivirali.</string>
     <string name="hr_widget_battery">Baterija</string>
     <string name="hr_widget_weather">Vrijeme</string>
     <string name="hr_widget_nothing">Ništa</string>
@@ -550,8 +549,6 @@
     <string name="widget_listing_label">Status i alarmi</string>
     <string name="widget_set_alarm_after">Postavi alarm nakon:</string>
     <string name="widget_20_minutes">20 minuta</string>
-    <string name="qhybrid_vibration_strength">Jačina vibracije:</string>
-    <string name="qhybrid_goal_in_steps">Cilj u koracima</string>
     <string name="qhybrid_use_activity_hand_as_notification_counter">koristite ruku aktivnosti kao brojač obavijesti</string>
     <string name="qhybrid_buttons_overwrite_success">Gumbi su prepisani</string>
     <string name="qhybrid_buttons_overwrite_error">Pogreška pri prepisivanju gumba</string>
@@ -870,7 +867,6 @@
     <string name="pref_charts_range_off">Raspon grafikona postavljen je na tjedan</string>
     <string name="pref_chart_heartrate_color_orange">Narančasta</string>
     <string name="pref_title_chart_heartrate_color">Boja otkucaja srca</string>
-    <string name="pref_chart_sleep_rolling_24_off">Od podne do podne</string>
     <string name="activity_prefs_chart_min_steps_per_minute">Minimalni broj koraka u minuti za otkrivanje aktivnosti</string>
     <string name="activity_prefs_chart_max_idle_phase_length">Duljina pauze za odvajanje aktivnosti (minute)</string>
     <string name="activity_prefs_chart_min_session_length">Minimalna duljina aktivnosti (minute)</string>
@@ -969,7 +965,6 @@
     <string name="watchface_dialog_widget_timeout_hide_text">Sakrij tekst nakon isteka vremena</string>
     <string name="menuitem_mutephone">Bešumno</string>
     <string name="qhybrid_time_shift">vremenski pomak</string>
-    <string name="qhybrid_overwrite_buttons">gumbi za prepisivanje</string>
     <string name="gpx_receiver_activity_title">Gadgetbridge GPX prijemnika</string>
     <string name="gpx_receiver_files_received">Primljene GPX datoteke:</string>
     <string name="gpx_receiver_overwrite_some_files">Neke datoteke već postoje. Prepisati\?</string>
@@ -1145,7 +1140,6 @@
     <string name="italian">Talijanski</string>
     <string name="weeksleepchart_sleep_a_month">Spavanje mjesečno</string>
     <string name="pref_title_chart_sleep_rolling_24_hour">Raspon spavanja</string>
-    <string name="pref_chart_sleep_rolling_24_on">Posljednja 24 sata</string>
     <string name="activity_prefs_activetime_minutes">Dnevni cilj: aktivno vrijeme u minutama</string>
     <string name="pref_title_pebble_health_store_raw">Spremi neobrađeni zapis u bazu podataka</string>
     <string name="pref_summary_pebble_health_store_raw">Sprema podatke „nepromijenjeno”, povećavajući korištenje baze podataka kako bi se omogućila kasnija interpretacija.</string>
@@ -1381,7 +1375,6 @@
     <string name="menuitem_compass">Kompas</string>
     <string name="menuitem_settings">Postavke</string>
     <string name="menuitem_alipay">Alipay</string>
-    <string name="preferences_qhybrid_settings">Q Hybrid postavke</string>
     <string name="menuitem_music">Glazba</string>
     <string name="menuitem_more">Više</string>
     <string name="menuitem_nfc">NFC</string>
@@ -1494,8 +1487,6 @@
     <string name="changelog_ok_button">U redu</string>
     <string name="changelog_full_title">Dnevnik promjena</string>
     <string name="changelog_show_full">Više …</string>
-    <string name="loyalty_cards_catima_package">Ime Catima paketa</string>
-    <string name="loyalty_cards_install">Instaliraj Catima</string>
     <string name="action_changelog">Dnevnik promjena</string>
     <string name="search">Traži</string>
     <string name="controlcenter_get_heartrate_measurement">Mjerenje otkucaja srca</string>

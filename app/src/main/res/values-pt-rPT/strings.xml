@@ -988,8 +988,6 @@
     <string name="weekstepschart_steps_a_week_or_month">Passos por semana/mês</string>
     <string name="weeksleepchart_sleep_a_week_or_month">Sono por semana/mês</string>
     <string name="pref_title_chart_sleep_rolling_24_hour">Intervalo de sono</string>
-    <string name="pref_chart_sleep_rolling_24_on">Últimas 24 horas</string>
-    <string name="pref_chart_sleep_rolling_24_off">Meio-dia ao meio-dia</string>
     <string name="activity_prefs_chart_min_steps_per_minute_for_run">Passos mínimos por minuto para detetar corrida</string>
     <string name="activity_prefs_chart_min_steps_per_minute">Passos mínimos por minuto para detetar atividade</string>
     <string name="activity_prefs_chart_max_idle_phase_length">Duração da pausa para separar atividades (minutos)</string>
@@ -1206,7 +1204,6 @@
     <string name="menuitem_compass">Bússola</string>
     <string name="menuitem_settings">Configurações</string>
     <string name="menuitem_alipay">Alipay</string>
-    <string name="preferences_qhybrid_settings">Configurações de Q Hybrid</string>
     <string name="menuitem_music">Música</string>
     <string name="menuitem_more">Mais</string>
     <string name="menuitem_nfc">NFC</string>
@@ -1292,13 +1289,9 @@
     <string name="quick_alarm">Alarme rápido</string>
     <string name="quick_alarm_description">Alarme do widget</string>
     <string name="watch_not_connected">Relógio não conectado</string>
-    <string name="qhybrid_vibration_strength">força da vibração:</string>
-    <string name="qhybrid_goal_in_steps">Meta em passos</string>
     <string name="qhybrid_time_shift">deslocamento de tempo</string>
     <string name="qhybrid_second_timezone_offset_relative_to_utc">segundo deslocamento de fuso horário relativo a UTC</string>
-    <string name="qhybrid_overwrite_buttons">sobrescrever botões</string>
     <string name="qhybrid_use_activity_hand_as_notification_counter">usar mão de atividade como contador da notificação</string>
-    <string name="qhybrid_prompt_million_steps">Defina a contagem de passos para um milhão para ativá-lo.</string>
     <string name="qhybrid_buttons_overwrite_success">Botões sobrescritos</string>
     <string name="qhybrid_buttons_overwrite_error">Erro ao sobrescrever botões</string>
     <string name="qhybrid_offset_timezone">deslocar fuso horário por</string>
@@ -2691,7 +2684,6 @@
     <string name="menuitem_wechat_pay">WeChat Pay</string>
     <string name="menuitem_cards">Cartões</string>
     <string name="menuitem_mi_ai">MI AI</string>
-    <string name="preferences_qhybrid_settings_summary">Configurações herdadas para relógios Q Hybrid</string>
     <string name="menuitem_calories_segmented">Calorias (segmentadas)</string>
     <string name="menuitem_calories_active_goal">Meta de calorias (ativo)</string>
     <string name="menuitem_zepp_flow">Zepp Flow</string>

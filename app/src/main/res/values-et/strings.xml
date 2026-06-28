@@ -445,7 +445,6 @@
     <string name="pref_chart_heartrate_color_red">Punane</string>
     <string name="pref_chart_heartrate_color_orange">Oraanž</string>
     <string name="pref_title_chart_heartrate_color">Pulsi värv</string>
-    <string name="pref_chart_sleep_rolling_24_on">Viimased 24 tundi</string>
     <string name="controlcenter_set_alias">Sea kuvatav nimi</string>
     <string name="fw_upgrade_notice_amazfitgts">Olete installimas %s püsivara enda Amazfit Bip\'ile. 
 \n 
@@ -572,10 +571,7 @@
     <string name="mi2_prefs_inactivity_warnings">Inaktiivsushoiatused</string>
     <string name="pref_qhybrid_save_raw_activity_files">Salvestage tegevuste failid töötlemata</string>
     <string name="qhybrid_changes_delay_prompt">muudatus võib võtta mõne hetke…</string>
-    <string name="qhybrid_overwrite_buttons">muuda nuppude käitumist</string>
     <string name="qhybrid_time_shift">ajanihe</string>
-    <string name="qhybrid_goal_in_steps">Sammude eesmärk</string>
-    <string name="qhybrid_vibration_strength">värina tugevus:</string>
     <string name="watch_not_connected">Kell ei ole ühenduses</string>
     <string name="widget_5_minutes">5 minutit</string>
     <string name="widget_set_alarm_after">Sea äratus pärast:</string>
@@ -607,7 +603,6 @@
     <string name="menuitem_eventreminder">Sündmuse meeldetuletus</string>
     <string name="menuitem_hr">Südame löögisagedus</string>
     <string name="menuitem_pai">PAI</string>
-    <string name="preferences_qhybrid_settings">Q Hybrid\'i sätted</string>
     <string name="menuitem_alipay">Alipay</string>
     <string name="menuitem_settings">Seadistused</string>
     <string name="menuitem_compass">Kompass</string>
@@ -754,7 +749,6 @@
     <string name="activity_prefs_calories_burnt">Päevane eesmärk: põletatud kaloreid</string>
     <string name="device_fw">Püsivaraversioon: %1$s</string>
     <string name="device_hw">Riistvaraversioon: %1$s</string>
-    <string name="pref_chart_sleep_rolling_24_off">Lõunast lõunani</string>
     <string name="weeksleepchart_sleep_a_month">Und kuus</string>
     <string name="dbmanagementactivity_error_exporting_shared">Viga sätteid eksportides: %1$s</string>
     <string name="dbmanagementactivity_error_exporting_db">Viga andmebaasi eksportides: %1$s</string>
@@ -899,9 +893,7 @@
     <string name="pref_summary_notification_wake_on_open">Ärata ja ava Android-seade, kui nutiseade saadab tagasi vastuse OPEN. Peab olema usaldusväärses olekus.</string>
     <string name="notification_gps_title">Gadgetbridge GPS</string>
     <string name="huawei_trusleep_warning">Hoiatus: TruSleep™ pole täielikult implementeeritud. Mõne seadme puhul saad ta sisse lülitada ja siis kuvatakse Gadgetbridge\'is kogu uni kerge unena!</string>
-    <string name="loyalty_cards_catima_not_compatible">Paigaldatud Catima versioon ei ühildu Gadgetbridge\'iga. Värskenda Catima ja Gadgetbridge uusimatele versioonidele.</string>
     <string name="pref_theme_dynamic_colors_not_available_warning">Dünaamilised värvid pole sinu seadmes saadaval, seda funktsiooni toetab ainult Android 12+. Gadgetbridge kasutab Material 3 vaikevärve.</string>
-    <string name="loyalty_cards_catima_permissions_summary">Gadgetbridge vajab Catima kaartide sünkroonimiseks lugemisõigusi. Nende andmiseks puuduta seda nuppu.</string>
     <string name="share_log_warning">Pea meeles, et Gadgetbridge logib failid, mis võivad sisaldada palju isiklikku teavet, sealhulgas terviseandmeid, kordumatuid identifikaatoreid (nt seadme MAC-aadress), muusikaeelistusi jne. Kaalu faili muutmist ja selle teabe eemaldamist enne faili saatmist avalikule probleemiaruandele.</string>
     <string name="pref_show_changelog_summary">Kuva pärast uuendamist Gadgetbridge\'i muudatuste logi alates viimasest versioonist</string>
     <string name="first_start_permissions_desc">Gadgetbridge vajab kõigi oma funktsioonide täitmiseks palju õigusi. Vaata allolevad load ja nende eesmärgid üle.</string>

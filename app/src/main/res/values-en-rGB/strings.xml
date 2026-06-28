@@ -55,15 +55,10 @@
     <string name="qhybrid_offset_timezone">offset timezone by</string>
     <string name="qhybrid_buttons_overwrite_error">Error overwriting buttons</string>
     <string name="qhybrid_buttons_overwrite_success">Buttons overwritten</string>
-    <string name="qhybrid_prompt_million_steps">Please set the step count to a million to activate that.</string>
     <string name="qhybrid_use_activity_hand_as_notification_counter">use activity hand as notification counter</string>
-    <string name="qhybrid_overwrite_buttons">overwrite buttons</string>
     <string name="qhybrid_second_timezone_offset_relative_to_utc">second timezone offset relative to UTC</string>
     <string name="qhybrid_time_shift">time shift</string>
-    <string name="qhybrid_goal_in_steps">Goal in steps</string>
-    <string name="qhybrid_vibration_strength">vibration strength:</string>
     <string name="watch_not_connected">Watch not connected</string>
-    <string name="preferences_qhybrid_settings">Q Hybrid Settings</string>
     <string name="fw_upgrade_notice_amazfitgts">You are about to install the %s firmware on your Amazfit GTS.
 \n
 \nPlease make sure to install the .fw file, then the .res file, and finally the .gps file. Your watch will reboot after installing the .fw file.
@@ -71,8 +66,6 @@
 \nNote: You do not have to install .res and .gps if these files are exactly the same as the ones previously installed.
 \n
 \nPROCEED AT YOUR OWN RISK!</string>
-    <string name="pref_chart_sleep_rolling_24_off">Noon to noon</string>
-    <string name="pref_chart_sleep_rolling_24_on">Past 24 hours</string>
     <string name="pref_title_chart_sleep_rolling_24_hour">Sleep range</string>
     <string name="pref_chart_heartrate_color_orange">Orange</string>
     <string name="pref_chart_heartrate_color_red">Red</string>

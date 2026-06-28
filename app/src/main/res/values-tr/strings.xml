@@ -442,8 +442,6 @@
     <string name="pref_call_privacy_mode_off">Ad ve numarayı göster</string>
     <string name="pref_chart_heartrate_color_orange">Turuncu</string>
     <string name="pref_chart_heartrate_color_red">Kırmızı</string>
-    <string name="pref_chart_sleep_rolling_24_off">Öğleden öğleye</string>
-    <string name="pref_chart_sleep_rolling_24_on">Son 24 saat</string>
     <string name="pref_charts_range_off">Haftalık ortalama çizelgesi</string>
     <string name="pref_charts_range_on">Aylık ortalama çizelgesi</string>
     <string name="pref_default">Öntanımlı</string>
@@ -628,7 +626,6 @@
     <string name="preferences_hplus_settings">HPlus/Makibes ayarları</string>
     <string name="preferences_led_color">LED Rengi</string>
     <string name="preferences_makibes_hr3_settings">Makibes HR3 ayarları</string>
-    <string name="preferences_qhybrid_settings">Q Hybrid Ayarları</string>
     <string name="preferences_rtl_settings">Sağdan Sola Desteği</string>
     <string name="prefs_button_double_press_action_selection_title">Etkinlik 2 eylemi</string>
     <string name="prefs_button_long_press_action_selection_title">Uzun basma eylemi</string>
@@ -650,15 +647,11 @@
     <string name="qhybrid_buttons_overwrite_error">Düğmelerin üzerine yazılırken hata oluştu</string>
     <string name="qhybrid_buttons_overwrite_success">Düğmelerin üzerine yazıldı</string>
     <string name="qhybrid_changes_delay_prompt">değişiklik birkaç saniye sürebilir…</string>
-    <string name="qhybrid_goal_in_steps">Adım sayısı hedefi</string>
     <string name="qhybrid_offset_time_by">saati kaydır</string>
     <string name="qhybrid_offset_timezone">saat dilimini kaydır</string>
-    <string name="qhybrid_overwrite_buttons">düğmelerin üzerine yaz</string>
-    <string name="qhybrid_prompt_million_steps">Etkinleştirmek için lütfen adım sayısını bir milyona ayarlayın.</string>
     <string name="qhybrid_second_timezone_offset_relative_to_utc">UTC olarak ikinci saat dilimi farkı</string>
     <string name="qhybrid_time_shift">zaman değişimi</string>
     <string name="qhybrid_use_activity_hand_as_notification_counter">etkinlik elini bildirim sayacı olarak kullan</string>
-    <string name="qhybrid_vibration_strength">titreşim gücü:</string>
     <string name="reset_index">Getirme tarihini sıfırla</string>
     <string name="right">Sağ</string>
     <string name="russian">Rusça</string>
@@ -2361,7 +2354,6 @@
     <string name="contact_phone_number">Telefon numarası</string>
     <string name="status_icon">Durum simgesi</string>
     <string name="changelog_ok_button">Tamam</string>
-    <string name="loyalty_cards_catima_package">Catima paket adı</string>
     <string name="pref_app_logs_title">Uygulama günlükleri</string>
     <string name="loyalty_cards_sync_groups_only">Yalnızca belirli grupları eşzamanla</string>
     <string name="loyalty_cards_sync_archived">Arşivlenen kartları eşzamanla</string>
@@ -2379,8 +2371,6 @@
     <string name="voice_service">Ses Hizmeti</string>
     <string name="loyalty_cards_sync_starred">Yalnızca yıldızlanan kartları eşzamanla</string>
     <string name="changelog_title">Yenilikler</string>
-    <string name="loyalty_cards_install">Catima\'yı kur</string>
-    <string name="loyalty_cards_install_catima_fail">Catima\'yı kurmak için uygulama mağazası açılamadı</string>
     <string name="pref_app_logs_summary">Saat uygulamalarından günlükleri etkinleştir</string>
     <string name="pref_app_logs_start_summary">Saat uygulamalarından günlükleri başlat</string>
     <string name="pref_app_logs_stop_summary">Saat uygulamalarından günlükleri durdur</string>
@@ -2448,7 +2438,6 @@
     <string name="menuitem_running">Çalışıyor</string>
     <string name="pref_vitality_score_7_day_summary">Son 7 gün içinde canlılık puanınız 30, 60 veya 100\'e ulaştığında bir bildirim alın</string>
     <string name="pref_summary_fossil_hr_navigation_instructions">Saat üzerinde navigasyon uygulaması davranışını yapılandır</string>
-    <string name="loyalty_cards_open_catima">Catima\'yı aç</string>
     <string name="loyalty_cards">Sadakat Kartları</string>
     <string name="drag_handle">sürükleme kolu</string>
     <string name="prefs_wena3_hint_lift_wrist">Bileğinize baktığınızda ekranı aç</string>
@@ -2483,12 +2472,9 @@
     <string name="prefs_wena3_vibration_warning">Uyarı</string>
     <string name="prefs_wena3_led_none">LED Yok</string>
     <string name="temperature_scale_cf">Sıcaklık ölçeği</string>
-    <string name="loyalty_cards_catima_not_installed">Sadakat kartlarını yönetmek için Catima gereklidir</string>
     <string name="loyalty_cards_sync_summary">Kartları saate eşzamanlamak için dokunun</string>
-    <string name="loyalty_cards_catima_not_compatible">Kurulu Catima sürümü Gadgetbridge ile uyumlu değil. Lütfen Catima ve Gadgetbridge\'i en son sürümlere güncelleyin.</string>
     <string name="loyalty_cards_sync">Eşzamanla</string>
     <string name="loyalty_cards_catima">Catima</string>
-    <string name="loyalty_cards_catima_permissions_summary">Gadgetbridge\'in Catima kartlarını eşzamanlamak için okuma izinlerine ihtiyacı vardır. İzinleri vermek için bu düğmeye dokunun.</string>
     <string name="withings_bt_calibration_previous">Önceki</string>
     <string name="withings_calibration_text_minutes">Şimdi yelkovanı 12\'ye hizalamak için kadranı kullanın.</string>
     <string name="info_menu_structure_contents">Menü yapısı: %s</string>
@@ -2728,7 +2714,6 @@
     <string name="pref_wearing_tone_summary">Kulaklık takıldığında bir ses çalar</string>
     <string name="pref_adaptive_noise_cancelling_title">Uyarlanabilir ANC</string>
     <string name="pref_adaptive_noise_cancelling_summary">Ortam ses seviyesine bağlı olarak ANC\'nin gücünü otomatik olarak ayarla</string>
-    <string name="preferences_qhybrid_settings_summary">Q Hybrid saatler için eski ayarlar</string>
     <string name="device_name_cycling_sensor">Döngü sensörü</string>
     <string name="devicetype_cycling_sensor">Döngü hızı sensörü</string>
     <string name="title_cycling">Bisiklet sürme</string>

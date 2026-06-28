@@ -385,7 +385,6 @@
     <string name="pref_header_charts">Taulukoiden asetukset</string>
     <string name="activity_prefs_height_cm">Pituus (cm)</string>
     <string name="activity_prefs_step_length_cm">Askeleen pituus (cm)</string>
-    <string name="pref_chart_sleep_rolling_24_on">Viimeiset 24h</string>
     <string name="live_activity_heart_rate">Syke</string>
     <string name="action_db_management">Tietojen hallinta</string>
     <string name="watch9_time_hours">Tunnit:</string>
@@ -479,7 +478,6 @@
     <string name="changelog_ok_button">Valmis</string>
     <string name="about_contributors">Osallistujat</string>
     <string name="controlcenter_start_activitymonitor">Aktiivisuutesi</string>
-    <string name="preferences_qhybrid_settings">Q Hybridin asetukset</string>
     <string name="changelog_full_title">Muutosloki</string>
     <string name="pref_write_logfiles">Kirjoita lokitiedostoja</string>
     <string name="pref_theme_dynamic_colors_not_available_warning">Dynaamiset värit ei ole tuettu, se vaati Android 12:sta tai uudemman. Tästä johtuen Gadgetbridge käyttää oletus Material 3 -värejä.</string>

@@ -145,17 +145,10 @@
     <string name="qhybrid_offset_timezone">décale le fuseau horaire de</string>
     <string name="qhybrid_buttons_overwrite_error">Une erreur est survenue lors de la modification des boutons</string>
     <string name="qhybrid_buttons_overwrite_success">Boutons modifiés</string>
-    <string name="qhybrid_prompt_million_steps">Veuillez régler le compteur de pas à un million pour l\'activer.</string>
     <string name="qhybrid_use_activity_hand_as_notification_counter">utilise l\'activité de la main comme compteur de notification</string>
-    <string name="qhybrid_overwrite_buttons">modifier les boutons</string>
     <string name="qhybrid_second_timezone_offset_relative_to_utc">décalage du deuxième fuseau horaire par rapport à UTC</string>
     <string name="qhybrid_time_shift">décalage horaire</string>
-    <string name="qhybrid_goal_in_steps">Objectif de pas</string>
-    <string name="qhybrid_vibration_strength">Puissance de vibration :</string>
     <string name="watch_not_connected">Montre non connectée</string>
-    <string name="preferences_qhybrid_settings">Paramètres hybrides Q</string>
-    <string name="pref_chart_sleep_rolling_24_off">De midi à midi</string>
-    <string name="pref_chart_sleep_rolling_24_on">Dernières 24 heures</string>
     <string name="pref_title_chart_sleep_rolling_24_hour">Plage de sommeil</string>
     <string name="pref_title_chart_heartrate_color">Couleur du rythme cardiaque</string>
     <string name="pref_chart_heartrate_color_orange">Orange</string>
