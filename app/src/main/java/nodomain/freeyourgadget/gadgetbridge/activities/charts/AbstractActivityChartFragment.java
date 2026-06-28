@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -177,11 +178,19 @@ public abstract class AbstractActivityChartFragment<D extends ChartsData> extend
      */
     protected List<? extends ActivitySample> getAllSamples(DBHandler db, GBDevice device, int tsFrom, int tsTo) {
         SampleProvider<? extends ActivitySample> provider = getProvider(db, device);
+        if (provider == null) {
+            LOG.error("Activity sample provider for all samples is null for {}", device);
+            return new LinkedList<>();
+        }
         return provider.getAllActivitySamples(tsFrom, tsTo);
     }
 
     protected List<? extends ActivitySample> getAllSamplesHighRes(DBHandler db, GBDevice device, int tsFrom, int tsTo) {
         SampleProvider<? extends ActivitySample> provider = getProvider(db, device);
+        if (provider == null) {
+            LOG.error("Activity sample provider for high res samples is null for {}", device);
+            return new LinkedList<>();
+        }
         // Only retrieve if the provider signals it has high-res data, otherwise it is useless
         if (provider.hasHighResData())
             return provider.getAllActivitySamplesHighRes(tsFrom, tsTo);
@@ -190,6 +199,10 @@ public abstract class AbstractActivityChartFragment<D extends ChartsData> extend
 
     protected List<? extends AbstractActivitySample> getActivitySamples(DBHandler db, GBDevice device, int tsFrom, int tsTo) {
         SampleProvider<? extends AbstractActivitySample> provider = getProvider(db, device);
+        if (provider == null) {
+            LOG.error("Activity sample provider for activity samples is null for {}", device);
+            return new LinkedList<>();
+        }
         return provider.getActivitySamples(tsFrom, tsTo);
     }
 
