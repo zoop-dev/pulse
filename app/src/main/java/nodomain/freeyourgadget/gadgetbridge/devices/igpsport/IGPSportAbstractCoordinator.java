@@ -31,6 +31,8 @@ import nodomain.freeyourgadget.gadgetbridge.devices.InstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminWorkoutParser;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryParser;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrackProvider;
+import nodomain.freeyourgadget.gadgetbridge.model.FitActivityTrackProvider;
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.igpsport.IGPSportDeviceSupport;
 
@@ -47,7 +49,7 @@ public abstract class IGPSportAbstractCoordinator extends AbstractBLEDeviceCoord
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(@NonNull final GBDevice device) {
         return IGPSportDeviceSupport.class;
     }
 
@@ -57,6 +59,11 @@ public abstract class IGPSportAbstractCoordinator extends AbstractBLEDeviceCoord
         return new GarminWorkoutParser(context);
     }
 
+    @Override
+    @Nullable
+    public ActivityTrackProvider getActivityTrackProvider(@NonNull final GBDevice device, @NonNull final Context context) {
+        return new FitActivityTrackProvider();
+    }
 
     @Override
     public int getBondingStyle(){
@@ -79,12 +86,12 @@ public abstract class IGPSportAbstractCoordinator extends AbstractBLEDeviceCoord
     }
 
     @Override
-    public boolean supportsAppsManagement(final GBDevice device) {
+    public boolean supportsAppsManagement(@NonNull final GBDevice device) {
         return true;
     }
 
     @Override
-    public boolean supportsAppListFetching(final GBDevice device) {
+    public boolean supportsAppListFetching(@NonNull final GBDevice device) {
         return true;
     }
 
