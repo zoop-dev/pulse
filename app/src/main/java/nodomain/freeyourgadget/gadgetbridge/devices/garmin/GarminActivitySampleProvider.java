@@ -115,7 +115,7 @@ public class GarminActivitySampleProvider extends AbstractSampleProvider<GarminA
         samples.forEach(s -> s.setTimestamp(s.getTimestamp() - 60));
 
         if (!samples.isEmpty()) {
-            convertCumulativeSteps(samples, GarminActivitySampleDao.Properties.Steps);
+            convertCumulativeSteps(samples, GarminActivitySampleDao.Properties.Steps, -60);
         }
 
         convertCalories(samples);

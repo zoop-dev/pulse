@@ -37,6 +37,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
+import java.util.function.ToIntFunction;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
@@ -65,6 +66,7 @@ public abstract class AbstractSampleProvider<T extends AbstractActivitySample> i
     private static final Logger LOG = LoggerFactory.getLogger(AbstractSampleProvider.class);
 
     private static final WhereCondition[] NO_CONDITIONS = new WhereCondition[0];
+    private static final int CUMULATIVE_COUNTER_DAY_BOUNDARY_MAX_GAP_SECONDS = 30 * 60;
     private final DaoSession mSession;
     private final GBDevice mDevice;
 
@@ -279,90 +281,317 @@ public abstract class AbstractSampleProvider<T extends AbstractActivitySample> i
     protected abstract Property getDeviceIdentifierSampleProperty();
 
     public void convertCumulativeSteps(final List<T> samples, final Property stepsSampleProperty) {
+        convertCumulativeSteps(samples, stepsSampleProperty, 0);
+    }
+
+    protected void convertCumulativeSteps(final List<T> samples,
+                                          final Property stepsSampleProperty,
+                                          final int previousSampleTimestampOffsetSeconds) {
+        final T firstSample = samples.get(0);
+        final int firstTimestamp = firstSample.getTimestamp();
+        final int firstSteps = firstSample.getSteps();
+        final int firstDistance = firstSample.getDistanceCm();
+        final int firstActiveCalories = firstSample.getActiveCalories();
+
         // Fix over-counting at the turn of day
-        final T lastSample = getLastSampleWithStepsBefore(samples.get(0).getTimestamp(), stepsSampleProperty);
-        if (lastSample != null && sameDay(lastSample.getTimestamp(), samples.get(0).getTimestamp())) {
-            if (samples.get(0).getSteps() > 0) {
-                samples.get(0).setSteps(samples.get(0).getSteps() - lastSample.getSteps());
-            }
-
-            if (samples.get(0).getDistanceCm() > 0) {
-                samples.get(0).setDistanceCm(samples.get(0).getDistanceCm() - lastSample.getDistanceCm());
-            }
-
-            if (samples.get(0).getActiveCalories() > 0) {
-                samples.get(0).setActiveCalories(samples.get(0).getActiveCalories() - lastSample.getActiveCalories());
-            }
+        final T lastSample = getLastSampleWithStepsBefore(firstTimestamp, stepsSampleProperty);
+        if (lastSample != null) {
+            final int previousTimestamp = lastSample.getTimestamp() + previousSampleTimestampOffsetSeconds;
+            firstSample.setSteps(convertFirstCumulativeValue(
+                    previousTimestamp,
+                    firstTimestamp,
+                    samples,
+                    0,
+                    firstSteps,
+                    lastSample.getSteps(),
+                    AbstractActivitySample::getSteps
+            ));
+            firstSample.setDistanceCm(convertFirstCumulativeValue(
+                    previousTimestamp,
+                    firstTimestamp,
+                    samples,
+                    0,
+                    firstDistance,
+                    lastSample.getDistanceCm(),
+                    AbstractActivitySample::getDistanceCm
+            ));
+            firstSample.setActiveCalories(convertFirstCumulativeValue(
+                    previousTimestamp,
+                    firstTimestamp,
+                    samples,
+                    0,
+                    firstActiveCalories,
+                    lastSample.getActiveCalories(),
+                    AbstractActivitySample::getActiveCalories
+            ));
         }
 
         // This slightly breaks activity recognition, because we don't have per-minute granularity...
-        int prevTimestamp = samples.get(0).getTimestamp();
-        int prevSteps = samples.get(0).getSteps();
-        int prevDistance = samples.get(0).getDistanceCm();
-        int prevActiveCalories = samples.get(0).getActiveCalories();
-        int lastDecreaseTimestamp = 0;
+        final CumulativeCounterState stepsState = initialCounterState(
+                firstTimestamp,
+                firstSteps,
+                lastSample,
+                previousSampleTimestampOffsetSeconds,
+                AbstractActivitySample::getSteps
+        );
+        final CumulativeCounterState distanceState = initialCounterState(
+                firstTimestamp,
+                firstDistance,
+                lastSample,
+                previousSampleTimestampOffsetSeconds,
+                AbstractActivitySample::getDistanceCm
+        );
+        final CumulativeCounterState activeCaloriesState = initialCounterState(
+                firstTimestamp,
+                firstActiveCalories,
+                lastSample,
+                previousSampleTimestampOffsetSeconds,
+                AbstractActivitySample::getActiveCalories
+        );
         // Round timestamp to the nearest minute
-        samples.get(0).setTimestamp((samples.get(0).getTimestamp() / 60) * 60);
-        int bak;
+        samples.get(0).setTimestamp((firstTimestamp / 60) * 60);
 
         for (int i = 1; i < samples.size(); i++) {
             final T s1 = samples.get(i - 1);
             final T s2 = samples.get(i);
-            s2.setTimestamp((s2.getTimestamp() / 60) * 60);
+            final int timestamp = (s2.getTimestamp() / 60) * 60;
+            final int steps = s2.getSteps();
+            final int distance = s2.getDistanceCm();
+            final int activeCalories = s2.getActiveCalories();
+            s2.setTimestamp(timestamp);
 
-            if (!sameDay(s1.getTimestamp(), s2.getTimestamp())) {
-                // went past midnight - reset steps
-                prevTimestamp = s2.getTimestamp();
-                prevSteps = s2.getSteps() > 0 ? s2.getSteps() : 0;
-                prevDistance = s2.getDistanceCm() > 0 ? s2.getDistanceCm() : 0;
-                prevActiveCalories = s2.getActiveCalories() > 0 ? s2.getActiveCalories() : 0;
-            } else {
-                if (s2.getSteps() >= 0 && s2.getSteps() < prevSteps) {
-                    // This is likely a bug, since cumulative steps shouldn't ever go down within the same day.
-                    // Mitigate it by ignoring the second sample, but this will likely still result in inconsistent data for the day.
-                    LOG.warn(
-                            "Cumulative steps went down from {} to {} ({} to {}) within the same day",
-                            prevTimestamp,
-                            s2.getTimestamp(),
-                            prevSteps,
-                            s2.getSteps()
-                    );
-                    if (!sameDay(lastDecreaseTimestamp, s2.getTimestamp())) {
-                        // This is the first jump in this day. Since it may have happened due to a timezone shift, let's
-                        // persist the values to mitigate missing data
-                        prevTimestamp = s2.getTimestamp();
-                        prevSteps = s2.getSteps();
-                        prevDistance = s2.getDistanceCm();
-                        prevActiveCalories = s2.getActiveCalories();
-                        lastDecreaseTimestamp = s2.getTimestamp();
-                        // We need to erase whatever cumulative value we have in this sample, or it might cause a large jump
-                        // FIXME: This might introduce missing data on timezone changes
-                        s2.setSteps(-1);
-                        s2.setDistanceCm(-1);
-                        s2.setActiveCalories(-1);
-                        continue;
-                    }
-                }
+            s2.setSteps(convertCumulativeValue(
+                    samples,
+                    i,
+                    s1.getTimestamp(),
+                    timestamp,
+                    steps,
+                    stepsState,
+                    AbstractActivitySample::getSteps,
+                    "steps"
+            ));
+            s2.setDistanceCm(convertCumulativeValue(
+                    samples,
+                    i,
+                    s1.getTimestamp(),
+                    timestamp,
+                    distance,
+                    distanceState,
+                    AbstractActivitySample::getDistanceCm,
+                    "distance"
+            ));
+            s2.setActiveCalories(convertCumulativeValue(
+                    samples,
+                    i,
+                    s1.getTimestamp(),
+                    timestamp,
+                    activeCalories,
+                    activeCaloriesState,
+                    AbstractActivitySample::getActiveCalories,
+                    "active calories"
+            ));
+        }
+    }
 
-                // New value for the current day - subtract the previous seen sample
+    private int convertFirstCumulativeValue(final int previousTimestamp,
+                                            final int currentTimestamp,
+                                            final List<T> samples,
+                                            final int currentIndex,
+                                            final int currentValue,
+                                            final int previousValue,
+                                            final ToIntFunction<T> counterValue) {
+        if (shouldRebaseCumulativeValueAfter(
+                previousTimestamp,
+                currentTimestamp,
+                samples,
+                currentIndex,
+                currentValue,
+                previousValue,
+                counterValue
+        )) {
+            return rebaseContinuedCumulativeValue(currentValue, previousValue);
+        }
+        return currentValue;
+    }
 
-                if (s2.getSteps() > 0) {
-                    bak = s2.getSteps();
-                    s2.setSteps(s2.getSteps() - prevSteps);
-                    prevSteps = bak;
-                    prevTimestamp = s2.getTimestamp();
+    private CumulativeCounterState initialCounterState(final int firstTimestamp,
+                                                       final int firstValue,
+                                                       @Nullable final T lastSample,
+                                                       final int previousSampleTimestampOffsetSeconds,
+                                                       final ToIntFunction<T> counterValue) {
+        if (measuredCounterValue(firstValue) || lastSample == null) {
+            return new CumulativeCounterState(firstTimestamp, firstValue);
+        }
+
+        final int previousTimestamp = lastSample.getTimestamp() + previousSampleTimestampOffsetSeconds;
+        return new CumulativeCounterState(
+                previousTimestamp,
+                counterValue.applyAsInt(lastSample),
+                isPotentialDayBoundaryGap(previousTimestamp, firstTimestamp)
+        );
+    }
+
+    private int convertCumulativeValue(final List<T> samples,
+                                       final int currentIndex,
+                                       final int previousSampleTimestamp,
+                                       final int currentTimestamp,
+                                       final int currentValue,
+                                       final CumulativeCounterState state,
+                                       final ToIntFunction<T> counterValue,
+                                       final String counterName) {
+        final boolean crossedDayBoundary = !sameDay(previousSampleTimestamp, currentTimestamp);
+
+        if (crossedDayBoundary || state.pendingDayBoundary) {
+            if (!measuredCounterValue(currentValue)) {
+                if (crossedDayBoundary) {
+                    state.pendingDayBoundary = true;
                 }
-                if (s2.getDistanceCm() > 0) {
-                    bak = s2.getDistanceCm();
-                    s2.setDistanceCm(s2.getDistanceCm() - prevDistance);
-                    prevDistance = bak;
-                }
-                if (s2.getActiveCalories() > 0) {
-                    bak = s2.getActiveCalories();
-                    s2.setActiveCalories(s2.getActiveCalories() - prevActiveCalories);
-                    prevActiveCalories = bak;
-                }
+                return currentValue;
             }
+
+            final int convertedValue = convertFirstCumulativeValue(
+                    state.previousTimestamp,
+                    currentTimestamp,
+                    samples,
+                    currentIndex,
+                    currentValue,
+                    state.previousValue,
+                    counterValue
+            );
+            state.update(currentTimestamp, currentValue);
+            state.pendingDayBoundary = false;
+            return convertedValue;
+        }
+
+        if (!measuredCounterValue(currentValue)) {
+            return currentValue;
+        }
+
+        if (counterDecreased(currentValue, state.previousValue)) {
+            // This is likely a bug, since cumulative activity counters should not go down within the same day.
+            // Mitigate it by ignoring the current sample, but keep the new baseline for following samples.
+            LOG.warn(
+                    "Cumulative {} went down from {} to {} ({} to {}) within the same day",
+                    counterName,
+                    state.previousTimestamp,
+                    currentTimestamp,
+                    state.previousValue,
+                    currentValue
+            );
+            state.update(currentTimestamp, currentValue);
+            return ActivitySample.NOT_MEASURED;
+        }
+
+        if (currentValue > 0) {
+            final int previousValue = state.previousValue;
+            state.update(currentTimestamp, currentValue);
+            return currentValue - previousValue;
+        }
+
+        state.update(currentTimestamp, currentValue);
+        return currentValue;
+    }
+
+    private boolean shouldRebaseCumulativeValueAfter(final int previousTimestamp,
+                                                     final int currentTimestamp,
+                                                     final List<T> samples,
+                                                     final int currentIndex,
+                                                     final int currentValue,
+                                                     final int previousValue,
+                                                     final ToIntFunction<T> counterValue) {
+        if (!continuedCumulativeValue(currentValue, previousValue)) {
+            return false;
+        }
+
+        if (sameDay(previousTimestamp, currentTimestamp)) {
+            return true;
+        }
+
+        if (currentTimestamp <= previousTimestamp
+                || currentTimestamp - previousTimestamp > CUMULATIVE_COUNTER_DAY_BOUNDARY_MAX_GAP_SECONDS) {
+            return false;
+        }
+
+        return currentValue == previousValue || hasCounterDecreaseNear(samples, currentIndex, counterValue);
+    }
+
+    private boolean hasCounterDecreaseNear(final List<T> samples,
+                                           final int startIndex,
+                                           final ToIntFunction<T> counterValue) {
+        final T firstSample = samples.get(startIndex);
+        final int firstTimestamp = firstSample.getTimestamp();
+        int previousTimestamp = firstTimestamp;
+        int previousValue = counterValue.applyAsInt(firstSample);
+
+        for (int i = startIndex + 1; i < samples.size(); i++) {
+            final T sample = samples.get(i);
+            if (!sameDay(firstTimestamp, sample.getTimestamp())
+                    || sample.getTimestamp() - firstTimestamp > CUMULATIVE_COUNTER_DAY_BOUNDARY_MAX_GAP_SECONDS) {
+                break;
+            }
+
+            final int currentValue = counterValue.applyAsInt(sample);
+            if (sameDay(previousTimestamp, sample.getTimestamp())
+                    && counterDecreased(currentValue, previousValue)) {
+                return true;
+            }
+
+            if (measuredCounterValue(currentValue)) {
+                previousTimestamp = sample.getTimestamp();
+                previousValue = currentValue;
+            }
+        }
+
+        return false;
+    }
+
+    private int rebaseContinuedCumulativeValue(final int currentValue, final int previousValue) {
+        if (continuedCumulativeValue(currentValue, previousValue)) {
+            return currentValue - previousValue;
+        }
+        return currentValue;
+    }
+
+    private boolean continuedCumulativeValue(final int currentValue, final int previousValue) {
+        return currentValue > 0 && previousValue > 0 && currentValue >= previousValue;
+    }
+
+    private boolean measuredCounterValue(final int value) {
+        return value >= 0;
+    }
+
+    private boolean counterDecreased(final int currentValue, final int previousValue) {
+        return currentValue >= 0 && previousValue > 0 && currentValue < previousValue;
+    }
+
+    private boolean isPotentialDayBoundaryGap(final int previousTimestamp, final int currentTimestamp) {
+        if (currentTimestamp < previousTimestamp
+                || currentTimestamp - previousTimestamp > CUMULATIVE_COUNTER_DAY_BOUNDARY_MAX_GAP_SECONDS) {
+            return false;
+        }
+
+        return !sameDay(previousTimestamp, currentTimestamp);
+    }
+
+    private static final class CumulativeCounterState {
+        private int previousTimestamp;
+        private int previousValue;
+        private boolean pendingDayBoundary;
+
+        private CumulativeCounterState(final int previousTimestamp, final int previousValue) {
+            this(previousTimestamp, previousValue, false);
+        }
+
+        private CumulativeCounterState(final int previousTimestamp,
+                                       final int previousValue,
+                                       final boolean pendingDayBoundary) {
+            update(previousTimestamp, previousValue);
+            this.pendingDayBoundary = pendingDayBoundary;
+        }
+
+        private void update(final int timestamp, final int value) {
+            previousTimestamp = timestamp;
+            previousValue = value > 0 ? value : 0;
         }
     }
 

@@ -104,7 +104,7 @@ public class OVTouch26SampleProvider extends AbstractSampleProvider<OVTouch26Act
         samples.forEach(s -> s.setTimestamp(s.getTimestamp() - 60));
 
         if (!samples.isEmpty()) {
-            convertCumulativeSteps(samples, OVTouch26ActivitySampleDao.Properties.Steps);
+            convertCumulativeSteps(samples, OVTouch26ActivitySampleDao.Properties.Steps, -60);
         }
 
         final long nanoEnd = System.nanoTime();
