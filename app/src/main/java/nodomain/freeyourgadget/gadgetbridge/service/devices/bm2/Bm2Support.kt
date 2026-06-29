@@ -31,7 +31,7 @@ class Bm2Support : AbstractBTLESingleDeviceSupport(LOG) {
                 when (action) {
                     DeviceInfoProfile.ACTION_DEVICE_INFO -> {
                         @Suppress("DEPRECATION")
-                        var deviceInfo = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                        val deviceInfo = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
                             intent.getParcelableExtra(DeviceInfoProfile.EXTRA_DEVICE_INFO, DeviceInfo::class.java)
                         } else {
                             intent.getParcelableExtra(DeviceInfoProfile.EXTRA_DEVICE_INFO)

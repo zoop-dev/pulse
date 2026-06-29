@@ -211,6 +211,7 @@ public class BluetoothNameTest extends TestBase {
             put("OV-Touch2.6_LE", DeviceType.OVTOUCH26); // #5628
             put("BPW4500", DeviceType.BRAUN_BPW4500); // #5886
             put("MATSON Monitor", DeviceType.BM2_BATTERY_MONITOR); // #6212
+            put("BM6", DeviceType.BM6_BATTERY_MONITOR); // #6236
             put("Xiaomi Smart Band 10 Pro AB01", DeviceType.MIBAND10PRO); // #6248
             put("SmartShunt HQ2303UCHFV", DeviceType.VICTRON_SMARTSHUNT); // #6263
         }};
