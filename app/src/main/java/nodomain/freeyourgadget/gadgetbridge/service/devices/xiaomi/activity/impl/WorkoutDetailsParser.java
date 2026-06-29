@@ -236,24 +236,24 @@ public class WorkoutDetailsParser extends XiaomiActivityParser {
                     recordSize = 6;
                     tsPosition = 8;
                     nrPosition = 4;
-                } else if (bytes.length >= 11
-                        && bytes[8] == (byte) 0xFF && bytes[9] == (byte) 0xBB && bytes[10] == (byte) 0x53) {
-                    // SPORTS_FREESTYLE v3 (Mi Band 8): signature FF BB 53.
-                    //   16-byte segment header:
-                    //     offset 0:    byte marker (=0x11; semantic unknown)
-                    //     offset 1-2:  2 byte pad
-                    //     offset 3-6:  int32 ts (start, unix seconds)
-                    //     offset 7:    byte phase
-                    //     offset 8-11: int32 distance
-                    //     offset 12-15: 4 byte pad
-                    //   4-byte records: [hr][events][unk][unk]
-                    // No reliable nr field in the header — overridden after read to consume the
-                    // remaining buffer as a single segment.
-                    expectedSignature = new byte[]{(byte) 0xFF, (byte) 0xBB, (byte) 0x53};
-                    segmentHeaderSize = 16;
+                } else if (bytes.length >= 10
+                        && bytes[8] == (byte) 0xFF && bytes[9] == (byte) 0xBB) {
+                    // SPORTS_FREESTYLE v3: signature FF BB. The byte after the signature is the
+                    // low byte of the record count and varies per workout — earlier code matched
+                    // a fixed third byte (0x53) and so parsed only one workout in seven.
+                    //   9-byte segment header:
+                    //     offset 0-1:  int16 nr  — record count (read as int32; offset 2-3 are 0 pad)
+                    //     offset 2-3:  2 byte pad
+                    //     offset 4-7:  int32 ts  — segment start, unix seconds
+                    //     offset 8:    byte phase — only 0x7f observed
+                    //   4-byte records: [hr][flags][reserved][reserved]. Validated against 7
+                    //   captured workouts: each tiles exactly (19 + nr*4 == payload end) and the
+                    //   per-record HR range is physiological (max 145-188).
+                    expectedSignature = new byte[]{(byte) 0xFF, (byte) 0xBB};
+                    segmentHeaderSize = 9;
                     recordSize = 4;
-                    tsPosition = 3;
-                    nrPosition = 12; // arbitrary 4-byte aligned offset; nr is overridden below
+                    tsPosition = 4;
+                    nrPosition = 0;
                     layoutCode = 103; // synthetic: v3-freestyle record shape
                 } else if (bytes.length >= 11
                         && bytes[8] == (byte) 0xDF && bytes[9] == (byte) 0xCF && bytes[10] == (byte) 0xFB) {
@@ -464,10 +464,9 @@ public class WorkoutDetailsParser extends XiaomiActivityParser {
             final ByteBuffer segHdr = ByteBuffer.wrap(segmentHeaderBytes).order(ByteOrder.LITTLE_ENDIAN);
             int nr = segHdr.getInt(nrPosition);
             int ts = segHdr.getInt(tsPosition);
-            // v3 FREESTYLE: the nr field in the segment header is unreliable (observed value 17 vs
-            // ~4433 actual records). Treat the file as single-segment and consume all remaining
-            // record bytes instead.
-            if (layoutCode == 103 || layoutCode == 205) {
+            // Treadmill v5 (205) has no record-count field in its header — treat the file as a
+            // single segment and consume all remaining record bytes instead.
+            if (layoutCode == 205) {
                 nr = buf.remaining() / recordSize;
             }
             LOG.debug("Segment: {} records starting at ts={}", nr, ts);

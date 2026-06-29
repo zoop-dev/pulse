@@ -864,4 +864,58 @@ public class WorkoutDetailsParserTest {
         assertNull(points.get(0).getLocation());
         assertEquals(124, points.get(2).getHeartRate());
     }
+
+    // ---- freestyle v3 (signature FF BB; the byte after the signature is the record-count
+    //      low byte and varies per workout — not a fixed 0x53). ----
+
+    /** Build a freestyle-v3 DETAILS payload. 9-byte header: int16 nr | 2 pad | int32 ts |
+     *  byte phase (0x7f); 4-byte records carrying HR at byte 0. */
+    private static byte[] buildFreestyleV3Bytes(final int startTs, final int[] hrs) {
+        final byte[] signature = {(byte) 0xFF, (byte) 0xBB};
+        final int segmentHeaderSize = 9;
+        final int recordSize = 4;
+        final int dataSize = 7 + 1 + signature.length + segmentHeaderSize
+                + hrs.length * recordSize + 4;
+        final ByteBuffer buf = ByteBuffer.allocate(dataSize).order(ByteOrder.LITTLE_ENDIAN);
+        buf.put(new byte[7]);  // fileId placeholder
+        buf.put((byte) 0);     // padding
+        buf.put(signature);
+
+        final byte[] hdr = new byte[segmentHeaderSize];
+        final ByteBuffer hdrBuf = ByteBuffer.wrap(hdr).order(ByteOrder.LITTLE_ENDIAN);
+        hdrBuf.putShort(0, (short) hrs.length); // int16 nr (parser reads getInt(0); offset 2-3 stay 0)
+        hdrBuf.putInt(4, startTs);
+        hdr[8] = (byte) 0x7f;  // phase
+        buf.put(hdr);
+
+        for (final int hr : hrs) {
+            buf.put((byte) hr); // HR at byte 0
+            buf.put((byte) 0);  // flags
+            buf.put((byte) 0);  // reserved
+            buf.put((byte) 0);  // reserved
+        }
+
+        final byte[] arr = buf.array();
+        buf.putInt(CheckSums.getCRC32(arr, 0, arr.length - 4));
+        return buf.array();
+    }
+
+    @Test
+    public void testV3FreestyleHr() {
+        final int startTs = 1748594392;
+        // nr = 3 → the byte after FF BB is 0x03, NOT the old hard-coded 0x53.
+        final byte[] bytes = buildFreestyleV3Bytes(startTs, new int[]{100, 150, 188});
+
+        // sanity: third signature byte is the nr low byte, proving the generalized match
+        assertEquals((byte) 0x03, bytes[10]);
+
+        final List<WorkoutDetailRecord> records = WorkoutDetailsParser.parseBytes(makeFileId(3), bytes);
+
+        assertNotNull(records);
+        assertEquals(3, records.size());
+        assertEquals(startTs, records.get(0).ts);
+        assertEquals(100, records.get(0).hr);
+        assertEquals(150, records.get(1).hr);
+        assertEquals(188, records.get(2).hr);
+    }
 }
