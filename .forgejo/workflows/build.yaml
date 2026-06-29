@@ -8,7 +8,14 @@ jobs:
       image: codeberg.org/freeyourgadget/android-fdroid-tools:36.0.0-androguard-4.1.2-java-21
 
     steps:
-      - uses: actions/checkout@v7
+      # We can't use actions/checkout since the image does not have node
+      - name: git clone and checkout
+        run: |
+          set -eu
+          git config --global user.name "CODEBERG CI"
+          git config --global user.email "noreply@nodomain.nodomain"
+
+          git clone -q -b "${{ env.GITHUB_REF_NAME }}" https://${{ env.GITHUB_TOKEN}}@codeberg.org/${{ env.GITHUB_REPOSITORY }} .
 
       - name: Build
         run: |
