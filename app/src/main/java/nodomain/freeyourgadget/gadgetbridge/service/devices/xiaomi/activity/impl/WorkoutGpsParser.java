@@ -225,6 +225,14 @@ public class WorkoutGpsParser extends XiaomiActivityParser {
             return false;
         }
 
+        // Patch HR / cadence / speed from the DETAILS file onto the GPS track before
+        // auto-export. WorkoutGpsParser builds the track from GPS samples only; without this
+        // the auto-exported GPX/FIT carry position + speed but no HR. The manual export path
+        // (XiaomiActivityTrackProvider.getActivityTrack) already merges — this brings the
+        // auto-export to parity. DETAILS is fetched before GPS_TRACK, so it is already persisted.
+        XiaomiActivityTrackProvider.mergeDetailsForExport(
+                gbDevice, activityTrack, fileId.getTimestamp().getTime() / 1000L);
+
         AutoGpxExporter.doExport(context, gbDevice, summary, activityTrack);
         AutoFitExporter.doExport(context, gbDevice, summary, activityTrack);
 

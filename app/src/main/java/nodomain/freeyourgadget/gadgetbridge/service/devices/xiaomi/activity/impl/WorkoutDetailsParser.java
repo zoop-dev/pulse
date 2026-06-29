@@ -178,9 +178,31 @@ public class WorkoutDetailsParser extends XiaomiActivityParser {
     /**
      * Parse DETAILS binary data into a list of records.
      * Returns null on parse failure (bad version/signature), empty list if no records.
+     *
+     * Guard wrapper around {@link #parseRecords}: any outcome that yields no per-record
+     * samples (unsupported version, unknown signature, or an empty record stream) is logged
+     * once at WARN with the full fileId + signature. This is the single point where an
+     * unsupported or format-drifted DETAILS layout silently strips HR / cadence from the
+     * GPX / FIT export — without this line the only symptom is "the exported file has no HR".
+     * Known gaps that trip this guard today: OUTDOOR_CYCLING v3 (sig DF CF FB), INDOOR_CYCLING
+     * v6 (DF BB BB BF), ELLIPTICAL v3 (FF FF F7 06). Grep {@code "DETAILS produced no samples"}
+     * to find devices whose per-record stream still needs a layout.
      */
     @Nullable
     public static List<WorkoutDetailRecord> parseBytes(final XiaomiActivityFileId fileId, final byte[] bytes) {
+        final List<WorkoutDetailRecord> records = parseRecords(fileId, bytes);
+        if (records == null || records.isEmpty()) {
+            final String sig = (bytes != null && bytes.length >= 16)
+                    ? GB.hexdump(bytes, 8, 8)
+                    : "<short>";
+            LOG.warn("Xiaomi workout DETAILS produced no samples — HR/cadence will be ABSENT "
+                    + "from this workout's export. fileId={} sig@8={}", fileId, sig);
+        }
+        return records;
+    }
+
+    @Nullable
+    private static List<WorkoutDetailRecord> parseRecords(final XiaomiActivityFileId fileId, final byte[] bytes) {
         final int version = fileId.getVersion();
         // Layout code keys the segment-header + record-read switches. Defaults to `version`,
         // but signature-keyed sub-dispatch (e.g. v3 FFBB53, v5 FFCFF8BFFF) can override it
@@ -233,6 +255,35 @@ public class WorkoutDetailsParser extends XiaomiActivityParser {
                     tsPosition = 3;
                     nrPosition = 12; // arbitrary 4-byte aligned offset; nr is overridden below
                     layoutCode = 103; // synthetic: v3-freestyle record shape
+                } else if (bytes.length >= 11
+                        && bytes[8] == (byte) 0xDF && bytes[9] == (byte) 0xCF && bytes[10] == (byte) 0xFB) {
+                    // SPORTS_OUTDOOR_CYCLING (subtype 0x17) v3: signature DF CF FB.
+                    //   17-byte segment header:
+                    //     offset 0-3:   4 pad
+                    //     offset 4-7:   int32 nr        — record count for this segment
+                    //     offset 8-11:  int32 ts        — segment start, unix seconds
+                    //     offset 12:    byte  phase     — only 0x7f observed
+                    //     offset 13-16: int32 distance  — meters
+                    //   7-byte records — HR decoded in case 113. Validated against the paired
+                    //   cycling summary: the max per-record HR matched the summary HR_MAX.
+                    expectedSignature = new byte[]{(byte) 0xDF, (byte) 0xCF, (byte) 0xFB};
+                    segmentHeaderSize = 17;
+                    recordSize = 7;
+                    tsPosition = 8;
+                    nrPosition = 4;
+                    layoutCode = 113; // synthetic: outdoor-cycling-v3 record shape
+                } else if (bytes.length >= 10
+                        && bytes[8] == (byte) 0xFF && bytes[9] == (byte) 0xFF) {
+                    // SPORTS_ELLIPTICAL (subtype 0x0B) v3: signature FF FF.
+                    //   9-byte segment header: int32 nr | int32 ts | byte phase (0x7f only observed).
+                    //   3-byte records — HR decoded in case 111. Validated against the paired
+                    //   elliptical summary: the max per-record HR matched the summary HR_MAX.
+                    expectedSignature = new byte[]{(byte) 0xFF, (byte) 0xFF};
+                    segmentHeaderSize = 9;
+                    recordSize = 3;
+                    tsPosition = 4;
+                    nrPosition = 0;
+                    layoutCode = 111; // synthetic: elliptical-v3 record shape
                 } else {
                     LOG.warn("Unknown v3 DETAILS signature: {}",
                             GB.hexdump(bytes, 8, Math.min(3, bytes.length - 8)));
@@ -318,18 +369,41 @@ public class WorkoutDetailsParser extends XiaomiActivityParser {
                 }
                 break;
             case 6:
-                // Signature: FF FF 8B FF (4 bytes), segment header 13 bytes, 12-byte records.
-                // Used by treadmill workouts with high-res HR + cadence + raw speed.
-                // Segment header layout:
-                //   offset 0-3:  int32 nr            — record count for this segment
-                //   offset 4-7:  int32 ts            — segment start, unix seconds
-                //   offset 8:    byte  phase         — only 0x7f observed; semantic unconfirmed
-                //   offset 9-12: int32 distance      — meters; matches summary DISTANCE_METERS
-                expectedSignature = new byte[]{(byte) 0xFF, (byte) 0xFF, (byte) 0x8B, (byte) 0xFF};
-                segmentHeaderSize = 13;
-                recordSize = 12;
-                tsPosition = 4;
-                nrPosition = 0;
+                // v6 reused across sport types. Dispatch by signature.
+                if (bytes.length >= 12
+                        && bytes[8] == (byte) 0xFF && bytes[9] == (byte) 0xFF
+                        && bytes[10] == (byte) 0x8B && bytes[11] == (byte) 0xFF) {
+                    // SPORTS_TREADMILL: Signature FF FF 8B FF (4 bytes), segment header 13 bytes,
+                    // 12-byte records. High-res HR + cadence + raw speed.
+                    // Segment header layout:
+                    //   offset 0-3:  int32 nr            — record count for this segment
+                    //   offset 4-7:  int32 ts            — segment start, unix seconds
+                    //   offset 8:    byte  phase         — only 0x7f observed; semantic unconfirmed
+                    //   offset 9-12: int32 distance      — meters; matches summary DISTANCE_METERS
+                    expectedSignature = new byte[]{(byte) 0xFF, (byte) 0xFF, (byte) 0x8B, (byte) 0xFF};
+                    segmentHeaderSize = 13;
+                    recordSize = 12;
+                    tsPosition = 4;
+                    nrPosition = 0;
+                } else if (bytes.length >= 12
+                        && bytes[8] == (byte) 0xDF && bytes[9] == (byte) 0xBB
+                        && bytes[10] == (byte) 0xBB && bytes[11] == (byte) 0xBF) {
+                    // SPORTS_INDOOR_CYCLING (subtype 0x07) v6: signature DF BB BB BF.
+                    //   13-byte segment header (same shape as treadmill): int32 nr | int32 ts |
+                    //   byte phase (0x7f only observed) | int32 distance.
+                    //   9-byte records — HR decoded in case 116. Validated against the paired
+                    //   indoor cycling summary: the max per-record HR matched the summary HR_MAX.
+                    expectedSignature = new byte[]{(byte) 0xDF, (byte) 0xBB, (byte) 0xBB, (byte) 0xBF};
+                    segmentHeaderSize = 13;
+                    recordSize = 9;
+                    tsPosition = 4;
+                    nrPosition = 0;
+                    layoutCode = 116; // synthetic: indoor-cycling-v6 record shape
+                } else {
+                    LOG.warn("Unknown v6 DETAILS signature: {}",
+                            GB.hexdump(bytes, 8, Math.min(4, bytes.length - 8)));
+                    return null;
+                }
                 break;
             case 8:
                 // SPORTS_OUTDOOR_WALKING_V2 v8: extended walking layout.
@@ -517,6 +591,27 @@ public class WorkoutDetailsParser extends XiaomiActivityParser {
                         // Belt speed shown on the treadmill display, in units of 0.1 km/h.
                         r.speedRaw = buf.get() & 0xFF;
                         buf.getInt();                    // reserved (4 bytes)
+                        break;
+                    case 111:
+                        // SPORTS_ELLIPTICAL v3: 3-byte record. HR at byte 1.
+                        buf.get();                       // reserved (1 byte)
+                        r.hr = buf.get() & 0xFF;
+                        buf.get();                       // reserved (1 byte)
+                        break;
+                    case 113:
+                        // SPORTS_OUTDOOR_CYCLING v3: 7-byte record. HR at byte 1.
+                        buf.get();                       // reserved (1 byte)
+                        r.hr = buf.get() & 0xFF;
+                        buf.getInt();                    // reserved (4 bytes)
+                        buf.get();                       // reserved (1 byte)
+                        break;
+                    case 116:
+                        // SPORTS_INDOOR_CYCLING v6: 9-byte record. HR at byte 1.
+                        buf.get();                       // reserved (1 byte)
+                        r.hr = buf.get() & 0xFF;
+                        buf.getInt();                    // reserved (4 bytes)
+                        buf.getShort();                  // reserved (2 bytes)
+                        buf.get();                       // reserved (1 byte)
                         break;
                     case 108:
                         // SPORTS_OUTDOOR_WALKING_V2 v8: 21-byte record. Same prefix as v5 + 8 trailing bytes.

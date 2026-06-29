@@ -97,6 +97,44 @@ public class XiaomiActivityTrackProvider implements ActivityTrackProvider {
         return new GpxActivityTrackProvider().getActivityTrack(summary);
     }
 
+    /**
+     * Merge the DETAILS per-record stream (HR / cadence / speed) onto an already-parsed GPS
+     * {@link ActivityTrack}. For the auto-export path ({@code WorkoutGpsParser.parse}), which
+     * builds the GPS track itself and emits GPX/FIT immediately instead of going through
+     * {@link #getActivityTrack} — without this the auto-exported files carry GPS + speed but no
+     * HR. No-op when the workout has no DETAILS file or the file yields no samples. Relies on
+     * the DETAILS file already being persisted, guaranteed by the fetch order (DETAILS is
+     * fetched before GPS_TRACK — see {@link XiaomiActivityFileId.DetailType#getFetchOrder}).
+     */
+    public static void mergeDetailsForExport(@NonNull final GBDevice device,
+                                             @NonNull final ActivityTrack track,
+                                             final long tsSeconds) {
+        if (tsSeconds <= 0) {
+            return;
+        }
+        XiaomiActivityFile detailsFile = null;
+        try (DBHandler dbh = GBApplication.acquireDbReadOnly()) {
+            final DaoSession session = dbh.getDaoSession();
+            final Device dbDevice = DBHelper.getDevice(device, session);
+            final List<XiaomiActivityFile> files = session.getXiaomiActivityFileDao().queryBuilder()
+                    .where(XiaomiActivityFileDao.Properties.DeviceId.eq(dbDevice.getId()),
+                            XiaomiActivityFileDao.Properties.Timestamp.eq(tsSeconds))
+                    .list();
+            for (final XiaomiActivityFile f : files) {
+                if (f.getDetailType() == XiaomiActivityFileId.DetailType.DETAILS.getCode()) {
+                    detailsFile = f;
+                    break;
+                }
+            }
+        } catch (final Exception e) {
+            LOG.error("Failed DETAILS lookup for auto-export ts={}", tsSeconds, e);
+            return;
+        }
+        if (detailsFile != null) {
+            mergeDetails(track, detailsFile);
+        }
+    }
+
     public static boolean hasAnyNonNullIslandLocation(final ActivityTrack track) {
         for (final ActivityPoint p : track.getAllPoints()) {
             if (hasNonNullIslandLocation(p)) {

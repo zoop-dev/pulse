@@ -755,4 +755,113 @@ public class WorkoutDetailsParserTest {
         // speed: raw 90 (0.1 km/h) / 36 = 2.5 m/s
         assertEquals(2.5f, points.get(1).getSpeed(), 0.001f);
     }
+
+    // ---- HR-only layouts: outdoor cycling v3 (DF CF FB), elliptical v3 (FF FF),
+    //      indoor cycling v6 (DF BB BB BF). Each has a distinct signature on an already-used
+    //      version and a record whose only decoded field is HR at byte 1. ----
+
+    /**
+     * Build a single-segment HR-only DETAILS payload. Segment header is {@code nr | ts}
+     * (4-byte ints at nrPos / tsPos) with the remainder zero-filled; each record is
+     * {@code recordSize} bytes carrying HR at byte index 1 and zeros elsewhere.
+     */
+    private static byte[] buildHrOnlyBytes(final byte[] signature,
+                                           final int segmentHeaderSize,
+                                           final int recordSize,
+                                           final int nrPos,
+                                           final int tsPos,
+                                           final int startTs,
+                                           final int[] hrs) {
+        final int dataSize = 7 + 1 + signature.length + segmentHeaderSize
+                + hrs.length * recordSize + 4;
+        final ByteBuffer buf = ByteBuffer.allocate(dataSize).order(ByteOrder.LITTLE_ENDIAN);
+        buf.put(new byte[7]);  // fileId placeholder
+        buf.put((byte) 0);     // padding
+        buf.put(signature);
+
+        final byte[] hdr = new byte[segmentHeaderSize];
+        final ByteBuffer hdrBuf = ByteBuffer.wrap(hdr).order(ByteOrder.LITTLE_ENDIAN);
+        hdrBuf.putInt(nrPos, hrs.length);
+        hdrBuf.putInt(tsPos, startTs);
+        buf.put(hdr);
+
+        for (final int hr : hrs) {
+            final byte[] rec = new byte[recordSize];
+            rec[1] = (byte) hr; // HR at byte 1
+            buf.put(rec);
+        }
+
+        final byte[] arr = buf.array();
+        buf.putInt(CheckSums.getCRC32(arr, 0, arr.length - 4));
+        return buf.array();
+    }
+
+    @Test
+    public void testV3OutdoorCyclingHr() {
+        final int startTs = 1751136604;
+        final byte[] bytes = buildHrOnlyBytes(
+                new byte[]{(byte) 0xDF, (byte) 0xCF, (byte) 0xFB}, 17, 7, 4, 8,
+                startTs, new int[]{130, 127, 124});
+
+        final List<WorkoutDetailRecord> records = WorkoutDetailsParser.parseBytes(makeFileId(3), bytes);
+
+        assertNotNull(records);
+        assertEquals(3, records.size());
+        assertEquals(startTs, records.get(0).ts);
+        assertEquals(130, records.get(0).hr);
+        assertEquals(127, records.get(1).hr);
+        assertEquals(124, records.get(2).hr);
+    }
+
+    @Test
+    public void testV3EllipticalHr() {
+        final int startTs = 1739182000;
+        final byte[] bytes = buildHrOnlyBytes(
+                new byte[]{(byte) 0xFF, (byte) 0xFF}, 9, 3, 0, 4,
+                startTs, new int[]{118, 140, 156});
+
+        final List<WorkoutDetailRecord> records = WorkoutDetailsParser.parseBytes(makeFileId(3), bytes);
+
+        assertNotNull(records);
+        assertEquals(3, records.size());
+        assertEquals(startTs, records.get(0).ts);
+        assertEquals(118, records.get(0).hr);
+        assertEquals(140, records.get(1).hr);
+        assertEquals(156, records.get(2).hr);
+    }
+
+    @Test
+    public void testV6IndoorCyclingHr() {
+        final int startTs = 1756745770;
+        final byte[] bytes = buildHrOnlyBytes(
+                new byte[]{(byte) 0xDF, (byte) 0xBB, (byte) 0xBB, (byte) 0xBF}, 13, 9, 0, 4,
+                startTs, new int[]{120, 133, 150});
+
+        final List<WorkoutDetailRecord> records = WorkoutDetailsParser.parseBytes(makeFileId(6), bytes);
+
+        assertNotNull(records);
+        assertEquals(3, records.size());
+        assertEquals(startTs, records.get(0).ts);
+        assertEquals(120, records.get(0).hr);
+        assertEquals(133, records.get(1).hr);
+        assertEquals(150, records.get(2).hr);
+    }
+
+    @Test
+    public void testGetActivityTrackV3OutdoorCycling() {
+        final int startTs = 1751136604;
+        final byte[] bytes = buildHrOnlyBytes(
+                new byte[]{(byte) 0xDF, (byte) 0xCF, (byte) 0xFB}, 17, 7, 4, 8,
+                startTs, new int[]{130, 0, 124});
+
+        final ActivityTrack track = new WorkoutDetailsParser().getActivityTrack(makeFileId(3), bytes);
+
+        assertNotNull(track);
+        final List<ActivityPoint> points = track.getAllPoints();
+        assertEquals(3, points.size());
+        assertEquals(130, points.get(0).getHeartRate());
+        // hr=0 → left unset on the point (default 0), no location either way
+        assertNull(points.get(0).getLocation());
+        assertEquals(124, points.get(2).getHeartRate());
+    }
 }
