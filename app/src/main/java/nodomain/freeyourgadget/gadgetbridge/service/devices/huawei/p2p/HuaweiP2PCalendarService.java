@@ -252,13 +252,13 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
         return ret;
     }
 
-    private List<CalendarEvent> getCalendarEventList() {
+    private List<CalendarEvent> getCalendarEventList(int days) {
         final CalendarManager upcomingEvents = new CalendarManager(manager.getSupportProvider().getContext(), manager.getSupportProvider().getDevice().getAddress());
-        return upcomingEvents.getCalendarEventList(7);
+        return upcomingEvents.getCalendarEventList(days);
     }
 
-    private JsonArray getFullCalendarData() {
-        final List<CalendarEvent> calendarEvents = getCalendarEventList();
+    private JsonArray getFullCalendarData(int days) {
+        final List<CalendarEvent> calendarEvents = getCalendarEventList(days);
 
         JsonArray events = new JsonArray();
         for (final CalendarEvent calendarEvent : calendarEvents) {
@@ -269,8 +269,8 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
         return events;
     }
 
-    private JsonArray getUpdateCalendarData() {
-        final List<CalendarEvent> calendarEvents = getCalendarEventList();
+    private JsonArray getUpdateCalendarData(int days) {
+        final List<CalendarEvent> calendarEvents = getCalendarEventList(days);
 
         List<CalendarEvent> newEvents = new ArrayList<>();
         List<CalendarEvent> updatedEvents = new ArrayList<>();
@@ -398,7 +398,7 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
     }
 
 
-    private boolean syncCalendarEvents(String majorVersion, short minorVersion, short scheduleCount) {
+    private boolean syncCalendarEvents(String majorVersion, short minorVersion, short scheduleCount, int days) {
         LOG.info("Sync calendar file upload info");
 
         JsonArray calendarData;
@@ -407,7 +407,7 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
                 minorVersion = 0;
                 calendarData = new JsonArray();
             } else {
-                calendarData = getFullCalendarData();
+                calendarData = getFullCalendarData(days);
                 if (calendarData.isEmpty()) {
                     if (minorVersion == 0 && !TextUtils.isEmpty(majorVersion)) {
                         return false;
@@ -418,7 +418,7 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
                 }
             }
         } else {
-            calendarData = getUpdateCalendarData();
+            calendarData = getUpdateCalendarData(days);
             if (calendarData.isEmpty())
                 return false;
         }
@@ -446,6 +446,7 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
                 String majorVersion = null;
                 short minorVersion = -1;
                 short scheduleCount = -1;
+                int days = 7;
 
                 if (tlv.contains(0x1))
                     operateMode = tlv.getByte(0x1);
@@ -455,8 +456,10 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
                     minorVersion = tlv.getShort(0x3);
                 if (tlv.contains(0x4))
                     scheduleCount = tlv.getShort(0x4);
+                if (tlv.contains(0x5))
+                    days = tlv.getAsInteger(0x5);
 
-                LOG.info("Operate mode: {} Major: {} Minor: {} Schedule Count: {}", operateMode, majorVersion, minorVersion, scheduleCount);
+                LOG.info("Operate mode: {} Major: {} Minor: {} Schedule Count: {} Days: {}", operateMode, majorVersion, minorVersion, scheduleCount, days);
 
                 // NOTE: device can initiate calendar sync. So we need to check and answer properly.
                 final boolean syncEnabled = GBApplication.getDeviceSpecificSharedPrefs(manager.getSupportProvider().getDevice().getAddress()).getBoolean(PREF_SYNC_CALENDAR, false);
@@ -477,7 +480,7 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
                         // NOTE: scheduleCount is a max number of events to send. It suitable only if supportsExternalCalendarService not set
                         //external calendar synchronization only supported on Harmony devices. I don't know how to deal with this.
                         if (!manager.getSupportProvider().getDeviceState().supportsExternalCalendarService()) {
-                            if (!syncCalendarEvents(majorVersion, minorVersion, scheduleCount)) {
+                            if (!syncCalendarEvents(majorVersion, minorVersion, scheduleCount, days)) {
                                 sendCalendarCmd((byte) 0x01, (byte) 0x04, null);  //No sync required
                             }
                         }
