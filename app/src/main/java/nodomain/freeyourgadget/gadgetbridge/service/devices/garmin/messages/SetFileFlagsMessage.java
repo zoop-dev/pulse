@@ -30,7 +30,8 @@ public class SetFileFlagsMessage extends GFDIMessage {
         UNK_00000010,
         UNK_00000100,
         UNK_00001000,
-        ARCHIVE,
+        ARCHIVE, // 16 - 0x10 - 0001_0000
+        DELETE, // 32 - 0x20 - 0010_0000
         ;
 
         public static EnumSet<FileFlags> fromBitMask(final int code) {

@@ -141,7 +141,10 @@ public class FileType {
 
         // Other files
         DOWNLOAD_COURSE(255, 4),
+        UNKNOWN_255_008(255, 8), // HRM Pro Plus
         PRG(255, 17),
+        UNKNOWN_255_020(255, 20), // HRM Pro Plus
+        UNKNOWN_255_022(255, 22), // HRM Pro Plus
         ERROR_SHUTDOWN_REPORTS(255, 245, true, "ErrorShutdownReports"),
         IQ_ERROR_REPORTS(255, 244, true, "IQErrorReports"),
         GOLF_SCORECARD(255, 246, true, "GOLF_SCORECARD"), // Garmin vívoactive 5 - #4522
