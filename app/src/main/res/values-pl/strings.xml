@@ -4392,4 +4392,8 @@
     <string name="dual_connection_title">Podwójne połączenie</string>
     <string name="dual_connection_summary">Umożliwia jednoczesne połączenie dwóch aplikacji lub urządzeń.</string>
     <string name="device">Urządzenie</string>
+    <string name="phone_gps_not_available">GPS w telefonie jest niedostępny</string>
+    <string name="pref_header_auto_export_fit">Automatyczne eksportowanie tras FIT</string>
+    <string name="pref_auto_export_fit_summary">Automatyczny eksport plików FIT podczas synchronizacji tras aktywności</string>
+    <string name="pref_auto_export_fit_all_devices_summary">Eksportuj trasy FIT ze wszystkich urządzeń</string>
 </resources>
