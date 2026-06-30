@@ -326,10 +326,14 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
 
         LOG.info("Attempting to connect to {}", mGbDevice.getName());
 
+        final boolean lowPower = GBApplication.getDevicePrefs(mGbDevice).getConnectionPriorityLowPower();
+        // 30 seconds: the longest allowed ATT transaction timeout
+        // 32 seconds: the longest allowed BLE connection timeout for an established  connection (supervision timeout)
+        // => wait a few more seconds for establishing a new connection
         mGattConnectTimeoutHandler.postDelayed(() -> {
             LOG.warn("Timed out connecting to GATT for {}", mGbDevice.getName());
             handleDisconnected(0x93 /* BluetoothGatt.GATT_CONNECTION_TIMEOUT */);
-        }, 5000L);
+        }, lowPower ? 45000L : 5000L);
 
         mBluetoothAdapter.cancelDiscovery();
         BluetoothDevice remoteDevice = mBluetoothAdapter.getRemoteDevice(mGbDevice.getAddress());
