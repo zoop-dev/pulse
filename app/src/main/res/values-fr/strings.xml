@@ -4412,4 +4412,21 @@
     <string name="unable_to_share_gpx_track_toast">Impossible de partager la piste GPX : %1$s</string>
     <string name="endurain_setup_mfa_code">Code MFA</string>
     <string name="endurain_setup_next">Suivant</string>
+    <string name="configuredTimeGoal">Objectif de temps</string>
+    <string name="configuredCaloriesGoal">Objectif de calories</string>
+    <string name="maximumCaloriesGoal">Objectif de calories max</string>
+    <string name="configuredPaceGoal">Objectif d\'allure</string>
+    <string name="configuredSpeedGoal">Objectif de vitesse</string>
+    <string name="configuredCadenceGoal">Objectif de cadence</string>
+    <string name="time_goal_percent">Objectif de temps atteint</string>
+    <string name="calories_goal_percent">Objectif de calories atteint</string>
+    <string name="speed_goal_percent">Objectif de vitesse atteint</string>
+    <string name="cadence_goal_percent">Objectif de cadence atteint</string>
+    <string name="workout_distance_goal">Objectif de distance</string>
+    <string name="workout_distance_goal_percent">Objectif de distance atteint</string>
+    <string name="workout_distance_meters_calibrated">Distance calibrée</string>
+    <string name="minutes_500m">min/500m</string>
+    <string name="predictions">Prévisions</string>
+    <string name="pace_goal_percent">Objectif d\'allure atteint</string>
+    <string name="lengths_goal_percent">Objectif de longueurs atteint</string>
 </resources>
