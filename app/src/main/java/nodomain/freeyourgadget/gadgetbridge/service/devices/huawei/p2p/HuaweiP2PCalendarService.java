@@ -113,7 +113,7 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
     }
 
     private void startSynchronization() {
-        sendCalendarCmd((byte) 0x02, (byte) 0x01, null); // download calendar request but it does not work on my device
+        sendCalendarCmd((byte) 0x02, (byte) 0x01, null); // download calendar request, but it does not work on my device
         sendCalendarCmd((byte) 0x01, (byte) 0x01, null); // send sync upload request
     }
 
@@ -183,7 +183,7 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
     private JsonObject calendarEventToJson(CalendarEvent calendarEvent, int operation) {
         JsonObject ret = new JsonObject();
 
-        // NOTE: Calendar contain reminders already in required format. But GB reformat them.
+        // NOTE: Calendar contain reminders already in required format. But GB reformats them.
         // So we need to reformat them back.
         StringBuilder reminders = new StringBuilder();
         for (long rem : calendarEvent.getRemindersAbsoluteTs()) {
@@ -326,8 +326,14 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
 
         byte[] dataBytes = data.getBytes(StandardCharsets.UTF_8);
         ByteBuffer sendData = ByteBuffer.allocate(dataBytes.length + 8); // 8 is data header
-        //NOTE: minor version is short in response but in this case it writes as integer
-        sendData.putInt(minorVersion);
+        //NOTE: This is a sync flag. It should be 0 on full sync and 1 on increment.
+        // We perform full sync only with minor version 0
+        if(minorVersion == 0) {
+            sendData.putInt(0);
+        } else {
+            sendData.putInt(1);
+        }
+
         sendData.putInt(dataBytes.length);
         sendData.put(dataBytes);
 
