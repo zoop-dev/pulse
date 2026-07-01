@@ -148,6 +148,7 @@ public class ActivityListingAdapter extends AbstractActivityListingAdapter<Activ
                     session.getIntensity(),
                     session.getEndTime().getTime() - session.getStartTime().getTime(),
                     false,
+                    false,
                     null,
                     position % 2 == 1,
                     selected

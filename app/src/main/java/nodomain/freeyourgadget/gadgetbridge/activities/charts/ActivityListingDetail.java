@@ -92,6 +92,7 @@ public class ActivityListingDetail extends DialogFragment {
                 item.getIntensity(),
                 item.getEndTime().getTime() - item.getStartTime().getTime(),
                 false,
+                false,
                 null,
                 false,
                 false

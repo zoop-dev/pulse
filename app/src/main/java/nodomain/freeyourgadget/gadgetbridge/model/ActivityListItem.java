@@ -42,6 +42,7 @@ public class ActivityListItem {
     private final RelativeLayout parentLayout;
     private final ImageView activityIcon;
     private final ImageView gpsIcon;
+    private final ImageView photoIcon;
 
     private final int backgroundColor;
     private final int alternateColor;
@@ -71,6 +72,7 @@ public class ActivityListItem {
 
         this.activityIcon = itemView.findViewById(R.id.line_layout_activity_icon);
         this.gpsIcon = itemView.findViewById(R.id.line_layout_gps_icon);
+        this.photoIcon = itemView.findViewById(R.id.line_layout_photo_icon);
 
         this.backgroundColor = 0;
         this.alternateColor = getThemedColor(itemView.getContext(), R.attr.alternate_row_background);
@@ -87,6 +89,7 @@ public class ActivityListItem {
                        final float intensity,
                        final long duration,
                        final boolean hasGps,
+                       final boolean hasHeaderPhoto,
                        @Nullable final Date date,
                        final boolean zebraStripe,
                        final boolean selected) {
@@ -148,6 +151,12 @@ public class ActivityListItem {
             gpsIcon.setVisibility(View.VISIBLE);
         } else {
             gpsIcon.setVisibility(View.GONE);
+        }
+
+        if (hasHeaderPhoto) {
+            photoIcon.setVisibility(View.VISIBLE);
+        } else {
+            photoIcon.setVisibility(View.GONE);
         }
 
         activityIcon.setImageResource(activityKind.getIcon());

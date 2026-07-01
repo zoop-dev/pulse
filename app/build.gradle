@@ -292,6 +292,7 @@ dependencies {
     implementation libs.androidx.lifecycle.process
     implementation libs.androidx.security.crypto
     implementation libs.androidx.browser
+    implementation libs.androidx.exifinterface
 
     implementation libs.material
     implementation libs.flexbox

@@ -138,6 +138,13 @@
                         android:orientation="horizontal">
 
                         <ImageView
+                            android:id="@+id/line_layout_photo_icon"
+                            android:layout_width="20dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_height="19dp"
+                            android:contentDescription="@string/candidate_item_device_image"
+                            app:srcCompat="@android:drawable/ic_menu_camera" />
+                        <ImageView
                             android:id="@+id/line_layout_gps_icon"
                             android:layout_width="20dp"
                             android:layout_marginStart="2dp"

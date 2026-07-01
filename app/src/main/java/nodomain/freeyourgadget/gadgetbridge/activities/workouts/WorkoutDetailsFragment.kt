@@ -20,6 +20,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
@@ -115,7 +116,7 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        workoutEditor = WorkoutEditor(requireContext())
+        workoutEditor = WorkoutEditor(requireContext(), this)
         arguments?.let {
             workoutId = it.getLong(ARG_WORKOUT_ID, -1)
         }
@@ -257,6 +258,14 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         )
 
         view?.let {
+            // Header photo
+            if (summary.headerPhoto == null) {
+                binding.headerphoto.setImageDrawable(null)
+            } else {
+                binding.headerphoto.setImageURI(Uri.fromFile(File(summary.headerPhoto)))
+            }
+
+            // Activity icon
             binding.itemImage.setImageResource(
                 ActivityKind.fromCode(summary.activityKind).icon
             )
@@ -599,6 +608,32 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
                 true
             }
 
+            R.id.activity_summary_detail_action_add_photo -> {
+                currentWorkout?.let {
+                    workoutEditor.setHeaderPhoto(it, object : WorkoutEditor.Callback {
+                        override fun onWorkoutUpdated() {
+                            notifyWorkoutChanged()
+                            // Reload only the workout header
+                            updateWorkoutHeader(it.summary)
+                        }
+                    })
+                }
+                true
+            }
+
+            R.id.activity_summary_detail_action_remove_photo -> {
+                currentWorkout?.let {
+                    workoutEditor.removeHeaderPhoto(it, object : WorkoutEditor.Callback {
+                        override fun onWorkoutUpdated() {
+                            notifyWorkoutChanged()
+                            // Reload only the workout header
+                            updateWorkoutHeader(it.summary)
+                        }
+                    })
+                }
+                true
+            }
+
             R.id.activity_summary_detail_action_edit_gps -> {
                 currentWorkout?.let {
                     workoutEditor.editGpsTrack(it, object : WorkoutEditor.Callback {
@@ -648,6 +683,10 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
             val devToolsSubMenu = devToolsMenu?.subMenu
             devToolsMenu?.isVisible = devToolsSubMenu != null && devToolsSubMenu.hasVisibleItems()
         }
+
+        val overflowMenu2 = menu.findItem(R.id.activity_detail_overflowMenu2)?.subMenu
+        overflowMenu2?.findItem(R.id.activity_summary_detail_action_add_photo)?.isVisible = workout.summary.headerPhoto == null
+        overflowMenu2?.findItem(R.id.activity_summary_detail_action_remove_photo)?.isVisible = workout.summary.headerPhoto != null
 
         // Endurain accepts FIT (built from the summary alone if needed), so it is offered
         // for any workout. Wanderer only supports GPX uploads, so it requires a GPS track.

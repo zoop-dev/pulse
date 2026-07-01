@@ -79,7 +79,7 @@ public class GBDaoGenerator {
             outputDir.mkdirs();
         }
 
-        final Schema schema = new Schema(135, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(136, MAIN_PACKAGE + ".entities");
 
         final List<Entity> sampleProvidersToGenerate = new LinkedList<>();
 
@@ -1642,6 +1642,7 @@ public class GBDaoGenerator {
 
         summary.addStringProperty("gpxTrack").codeBeforeGetter(OVERRIDE);
         summary.addStringProperty("rawDetailsPath");
+        summary.addStringProperty("headerPhoto");
 
         Property deviceId = summary.addLongProperty("deviceId").notNull().codeBeforeGetter(OVERRIDE).getProperty();
         summary.addToOne(device, deviceId);

@@ -105,6 +105,7 @@ class WorkoutSummariesAdapter(
                 -1f,
                 summary.endTime.time - summary.startTime.time,
                 hasGps,
+                workout.summary.headerPhoto != null,
                 summary.startTime,
                 position % 2 == 1,
                 selected

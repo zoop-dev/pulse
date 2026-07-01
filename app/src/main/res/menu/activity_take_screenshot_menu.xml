@@ -17,6 +17,17 @@
                 app:showAsAction="never" />
 
             <item
+                android:id="@+id/activity_summary_detail_action_add_photo"
+                android:icon="@drawable/ic_camera_remote"
+                android:title="@string/activity_summary_set_header_photo_title"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/activity_summary_detail_action_remove_photo"
+                android:icon="@drawable/ic_camera_remote"
+                android:title="@string/activity_summary_remove_header_photo_title"
+                app:showAsAction="never" />
+
+            <item
                 android:id="@+id/activity_summary_detail_action_edit_gps"
                 android:icon="@drawable/ic_gps_edit"
                 android:title="@string/activity_summary_detail_select_gpx_track"
