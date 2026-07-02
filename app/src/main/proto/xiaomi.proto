@@ -147,7 +147,10 @@ message System {
   // 2, 59
   optional VibrationTest vibrationTestCustom = 41;
 
-  // 2, 47
+  // 2, 61 - reference Vibrator.Removal (delete stored patterns by id)
+  optional VibrationRemove vibrationRemove = 42;
+
+  // 2, 47 - reference VibratorError (response code)
   optional VibrationPatternAck vibrationPatternAck = 43;
 
   // 2, 78
@@ -353,6 +356,21 @@ message PhoneSilentMode {
   optional bool silent = 1;
 }
 
+// Notification / vibration category ids shared by CustomVibrationPattern.type and
+// VibrationNotificationType.notificationType. The fields stay uint32 - proto2 closed enums drop
+// unknown values (and the raw int) on the wire - so map to this enum with forNumber() in code.
+enum VibrationType {
+  VIBRATION_TYPE_NONE = 0;
+  VIBRATION_TYPE_CALL = 1;          // incoming calls (confirmed: Double -> 1)
+  VIBRATION_TYPE_TASK = 2;          // task reminders (confirmed)
+  VIBRATION_TYPE_ALARM = 3;         // alarms / clock
+  VIBRATION_TYPE_NOTIFICATION = 4;  // notifications
+  VIBRATION_TYPE_STANDING = 5;      // standing / sedentary reminders
+  VIBRATION_TYPE_SMS = 6;           // sms / messages
+  VIBRATION_TYPE_GOAL = 7;          // goal
+  VIBRATION_TYPE_EVENT = 8;         // events / calendar (confirmed)
+}
+
 message VibrationPatterns {
   repeated VibrationNotificationType notificationType = 1;
   optional uint32 unknown2 = 2; // 50, max patterns?
@@ -362,34 +380,34 @@ message VibrationPatterns {
 message CustomVibrationPattern {
   optional uint32 id = 1;
   optional string name = 2;
+  // The band never populates the segments on a GET response, only on create/update (phone -> watch)
   repeated Vibration vibration = 3;
-  optional uint32 unknown4 = 4; // 1 on creation
+  optional uint32 type = 4; // see VibrationType
 }
 
 message VibrationNotificationType {
-  // 1 incoming calls
-  // 2 events // TODO confirm which one is events, which one is schedule
-  // 3 alarms
-  // 4 notifications
-  // 5 standing reminder
-  // 6 sms
-  // 7 goal
-  // 8 events // TODO confirm which one is events, which one is schedule
-  optional uint32 notificationType = 1;
-  optional uint32 preset = 2;
+  optional uint32 notificationType = 1; // see VibrationType
+  optional uint32 preset = 2; // reference VibratorItem.id - the assigned vibrator id (0 = default)
 }
 
 message VibrationTest {
   repeated Vibration vibration = 1;
 }
 
+// reference VibratorError: response code: 0 OK, 1 NUMBER_LIMIT, 2 ID_NOT_EXIST
 message VibrationPatternAck {
-  optional uint32 status = 1; // 0
+  optional uint32 status = 1;
+}
+
+// reference Vibrator.Removal: delete stored patterns by id
+message VibrationRemove {
+  repeated uint32 id = 1;
 }
 
 message Vibration {
-  optional uint32 vibrate = 1; // 0/1
-  optional uint32 ms = 2;
+  optional uint32 vibrate = 1;  // reference Segment.on (0/1)
+  optional uint32 ms = 2;       // reference Segment.duration
+  optional uint32 strength = 3; // reference Segment.strength
 }
 
 message DeviceActivityState {

@@ -1165,6 +1165,21 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
+    public boolean supportsCustomVibrationPatterns(@NonNull final GBDevice device) {
+        return false;
+    }
+
+    @Override
+    public int getVibrationPresetNameRes(final int presetId) {
+        return 0;
+    }
+
+    @Override
+    public boolean isProtectedVibrationPatternId(final int id) {
+        return false;
+    }
+
+    @Override
     public AbstractNotificationPattern[] getNotificationVibrationPatterns() {
         return new AbstractNotificationPattern[0];
     }

@@ -55,4 +55,29 @@ public class MiBand10Coordinator extends XiaomiCoordinator {
     public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
         return DeviceCoordinator.DeviceKind.FITNESS_BAND;
     }
+
+    @Override
+    public boolean supportsCustomVibrationPatterns(@NonNull final GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public int getVibrationPresetNameRes(final int presetId) {
+        switch (presetId) {
+            case 250: return R.string.xiaomi_vibration_builtin_good_day;
+            case 251: return R.string.xiaomi_vibration_builtin_beeper;
+            case 252: return R.string.xiaomi_vibration_builtin_toybox;
+            case 253: return R.string.xiaomi_vibration_builtin_iced_latte;
+            case 254: return R.string.xiaomi_vibration_builtin_jump;
+            case 255: return R.string.xiaomi_vibration_builtin_wave;
+            default: return 0;
+        }
+    }
+
+    @Override
+    public boolean isProtectedVibrationPatternId(final int id) {
+        // Only the built-in firmware presets - the ids we have a name for - must not be removed.
+        return getVibrationPresetNameRes(id) != 0;
+    }
+
 }

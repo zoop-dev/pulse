@@ -5126,6 +5126,46 @@
     <string name="goodPunchCount">Good punches</string>
     <string name="missPunchCount">Missed punches</string>
 
+    <!-- Xiaomi vibration patterns -->
+    <string name="pref_xiaomi_vibration_patterns_title">Vibration patterns</string>
+    <string name="xiaomi_vibration_patterns_empty">No vibration settings found on the device. They are read when the device connects.</string>
+    <string name="xiaomi_vibration_pattern_unnamed">Pattern %1$d</string>
+    <string name="xiaomi_vibration_section_types">Notification types</string>
+    <string name="xiaomi_vibration_section_patterns">Custom patterns</string>
+    <string name="xiaomi_vibration_default">Default</string>
+    <string name="xiaomi_vibration_preset">Built-in %1$d</string>
+    <string name="xiaomi_vibration_type_call">Incoming calls</string>
+    <string name="xiaomi_vibration_type_event">Events</string>
+    <string name="xiaomi_vibration_type_task">Task reminders</string>
+    <string name="xiaomi_vibration_type_alarm">Alarms</string>
+    <string name="xiaomi_vibration_type_notification">Notifications</string>
+    <string name="xiaomi_vibration_type_standing">Standing reminders</string>
+    <string name="xiaomi_vibration_type_sms">SMS</string>
+    <string name="xiaomi_vibration_type_goal">Goal notifications</string>
+    <string name="xiaomi_vibration_type_unknown">Type %1$d</string>
+    <string name="xiaomi_vibration_builtin_good_day">Good Day</string>
+    <string name="xiaomi_vibration_builtin_beeper">Beeper</string>
+    <string name="xiaomi_vibration_builtin_toybox">Toybox</string>
+    <string name="xiaomi_vibration_builtin_iced_latte">Iced latte</string>
+    <string name="xiaomi_vibration_builtin_jump">Jump</string>
+    <string name="xiaomi_vibration_builtin_wave">Wave</string>
+    <string name="xiaomi_vibration_refresh">Refresh from device</string>
+    <string name="xiaomi_vibration_refresh_requested">Requested patterns from device</string>
+    <string name="xiaomi_vibration_add_test">Add vibration</string>
+    <string name="xiaomi_vibration_add_requested">Sent add request to device</string>
+    <string name="xiaomi_vibration_delete_title">Delete vibration pattern</string>
+    <string name="xiaomi_vibration_delete_message">Delete \"%1$s\" from the device?</string>
+    <string name="xiaomi_vibration_add_title">Add vibration pattern</string>
+    <string name="xiaomi_vibration_name_hint">Name</string>
+    <string name="xiaomi_vibration_type_label">Notification type</string>
+    <string name="xiaomi_vibration_segments_label">Segments</string>
+    <string name="xiaomi_vibration_segment_add">Add segment</string>
+    <string name="xiaomi_vibration_segment_on">Vibrate</string>
+    <string name="xiaomi_vibration_segment_ms_hint">Duration (ms)</string>
+    <string name="xiaomi_vibration_segment_strength_hint">Strength (1-100)</string>
+    <string name="xiaomi_vibration_segment_remove">Remove segment</string>
+    <string name="xiaomi_vibration_no_segments">Add at least one segment</string>
+
     <string name="pref_header_quick_settings">Quick Settings &amp; Device Controls</string>
     <string name="pref_summary_quick_settings">Configure quick settings tiles and device controls</string>
     <string name="qs_tile_activity_title">Quick Settings Tiles</string>

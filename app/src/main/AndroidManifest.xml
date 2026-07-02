@@ -847,6 +847,10 @@
             android:label="@string/menuitem_widgets"
             android:parentActivityName=".activities.ControlCenterv2" />
         <activity
+            android:name=".activities.xiaomi.XiaomiVibrationPatternsActivity"
+            android:label="@string/pref_xiaomi_vibration_patterns_title"
+            android:parentActivityName=".activities.ControlCenterv2" />
+        <activity
             android:name=".activities.ConfigureWorldClocks"
             android:label="@string/pref_world_clocks_title"
             android:parentActivityName=".activities.ControlCenterv2" />

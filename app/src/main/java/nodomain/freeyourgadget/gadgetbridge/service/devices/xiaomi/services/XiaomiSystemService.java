@@ -112,8 +112,11 @@ public class XiaomiSystemService extends AbstractXiaomiService implements Xiaomi
     private BatteryState currentBatteryState = BatteryState.UNKNOWN;
     private SleepState currentSleepDetectionState = SleepState.UNKNOWN;
 
+    private final XiaomiVibrationManager vibrationManager;
+
     public XiaomiSystemService(final XiaomiSupport support) {
         super(support);
+        this.vibrationManager = new XiaomiVibrationManager(support);
     }
 
     @Override
@@ -223,6 +226,11 @@ public class XiaomiSystemService extends AbstractXiaomiService implements Xiaomi
             case CMD_WIDGET_PARTS_GET:
                 handleWidgetParts(cmd.getSystem().getWidgetParts());
                 return;
+            case XiaomiVibrationManager.CMD_GET:
+            case XiaomiVibrationManager.CMD_ADD:
+            case XiaomiVibrationManager.CMD_REMOVE:
+                vibrationManager.handleCommand(cmd);
+                return;
             case CMD_DEVICE_STATE_GET:
                 handleBasicDeviceState(cmd.getSystem().hasBasicDeviceState()
                         ? cmd.getSystem().getBasicDeviceState()
@@ -267,6 +275,10 @@ public class XiaomiSystemService extends AbstractXiaomiService implements Xiaomi
             case DeviceSettingsPreferenceConst.PREF_WIDGETS:
                 setWidgets();
                 return true;
+            case XiaomiVibrationManager.PREF_REFRESH:
+            case XiaomiVibrationManager.PREF_ADD:
+            case XiaomiVibrationManager.PREF_REMOVE:
+                return vibrationManager.onSendConfiguration(config);
         }
 
         return super.onSendConfiguration(config, prefs);

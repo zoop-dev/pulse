@@ -514,7 +514,7 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
         // Notifications
         //
         final List<Integer> notifications = deviceSpecificSettings.addRootScreen(DeviceSpecificSettingsScreen.NOTIFICATIONS);
-        // TODO not implemented settings.add(R.xml.devicesettings_vibrationpatterns);
+        notifications.add(R.xml.devicesettings_xiaomi_vibration_patterns);
         // TODO not implemented settings.add(R.xml.devicesettings_donotdisturb_withauto_and_always);
         notifications.add(R.xml.devicesettings_send_app_notifications);
         if (supports(device, FEAT_SCREEN_ON_ON_NOTIFICATIONS)) {

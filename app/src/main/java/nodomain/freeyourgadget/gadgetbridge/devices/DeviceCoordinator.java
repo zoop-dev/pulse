@@ -999,6 +999,12 @@ public interface DeviceCoordinator {
      */
     boolean supportsNotificationVibrationRepetitionPatterns(@NonNull final GBDevice device);
 
+    boolean supportsCustomVibrationPatterns(@NonNull final GBDevice device);
+
+    int getVibrationPresetNameRes(final int presetId);
+
+    boolean isProtectedVibrationPatternId(final int id);
+
     /**
      * Whether the device supports a variety of LED patterns for notifications.
      */
