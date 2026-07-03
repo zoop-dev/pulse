@@ -38,6 +38,7 @@ import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -292,8 +293,7 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
         }
 
         List<CalendarEvent> removedEvents = new ArrayList<>(lastEventsIds.values());
-
-
+        
         JsonArray events = new JsonArray();
 
         for (final CalendarEvent calendarEvent : updatedEvents) {
@@ -315,7 +315,37 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
         return events;
     }
 
-    private byte[] getCalendarFileContent(String majorVersion, short minorVersion, JsonArray scheduleList) {
+    private List<JsonArray> splitList(JsonArray sourceArray, int chunkSize) {
+        if (sourceArray == null || sourceArray.isEmpty()) {
+            LOG.info("source empty");
+            return Collections.emptyList();
+        }
+        int totalSize = sourceArray.size();
+        if (totalSize <= chunkSize) {
+            ArrayList<JsonArray> singleChunk = new ArrayList<>();
+            singleChunk.add(sourceArray);
+            return singleChunk;
+        }
+        int fullChunks = totalSize / chunkSize;
+        int remainderChunk = 1;
+        if (totalSize % chunkSize == 0) {
+            remainderChunk = 0;
+        }
+        int chunkCount = fullChunks + remainderChunk;
+        ArrayList<JsonArray> result = new ArrayList<>(chunkCount);
+        for (int chunkIndex = 0; chunkIndex < chunkCount; chunkIndex++) {
+            int start = chunkIndex * chunkSize;
+            int end = Math.min(start + chunkSize, totalSize);
+            JsonArray chunk = new JsonArray();
+            for (int elementIndex = start; elementIndex < end; elementIndex++) {
+                chunk.add(sourceArray.get(elementIndex));
+            }
+            result.add(chunk);
+        }
+        return result;
+    }
+
+    private byte[] getEmptyCalendarFileContent(String majorVersion, short minorVersion, JsonArray scheduleList, boolean fullSync) {
         JsonObject syncData = new JsonObject();
         syncData.addProperty("major", majorVersion);
         syncData.addProperty("minor", minorVersion);
@@ -327,12 +357,7 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
         byte[] dataBytes = data.getBytes(StandardCharsets.UTF_8);
         ByteBuffer sendData = ByteBuffer.allocate(dataBytes.length + 8); // 8 is data header
         //NOTE: This is a sync flag. It should be 0 on full sync and 1 on increment.
-        // We perform full sync only with minor version 0
-        if(minorVersion == 0) {
-            sendData.putInt(0);
-        } else {
-            sendData.putInt(1);
-        }
+        sendData.putInt(fullSync?0:1);
 
         sendData.putInt(dataBytes.length);
         sendData.put(dataBytes);
@@ -340,14 +365,52 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
         return sendData.array();
     }
 
-    private boolean sendCalendarFile(String majorVersion, short minorVersion, JsonArray calendarData) {
+    private byte[] getCalendarFileContent(String majorVersion, short minorVersion, JsonArray scheduleList, boolean fullSync) {
+
+        if(scheduleList.isEmpty()) {
+            return getEmptyCalendarFileContent(majorVersion, minorVersion, scheduleList, fullSync);
+        }
+
+        List<JsonArray> schedules = splitList(scheduleList, 10);
+
+        ArrayList<byte[]> events = new ArrayList<>(schedules.size());
+
+        int minor = 0;
+
+        int sendLen = 4; // sync flag len
+        Gson gson = new Gson();
+        for(int i = 0; i< schedules.size(); i++) {
+            minor += schedules.get(i).size() * (i + 1);
+            JsonObject syncData = new JsonObject();
+            syncData.addProperty("major", majorVersion);
+            syncData.addProperty("minor", minor);
+            syncData.add("scheduleList", schedules.get(i));
+            String data = gson.toJson(syncData);
+            LOG.info(data);
+            byte[] buf = data.getBytes(StandardCharsets.UTF_8);
+            events.add(buf);
+            sendLen += (4 + buf.length); // chunk len + chunk data
+        }
+
+        ByteBuffer sendData = ByteBuffer.allocate(sendLen);
+        //NOTE: This is a sync flag. It should be 0 on full sync and 1 on increment.
+        sendData.putInt(fullSync?0:1);
+        for(byte[] data: events) {
+            sendData.putInt(data.length);
+            sendData.put(data);
+        }
+
+        return sendData.array();
+    }
+
+    private boolean sendCalendarFile(String majorVersion, short minorVersion, JsonArray calendarData, boolean fullSync) {
         LOG.info("Send calendar file upload info");
 
         if (majorVersion == null || majorVersion.isEmpty()) {
             majorVersion = new String(this.manager.getSupportProvider().getAndroidId(), StandardCharsets.UTF_8);
         }
 
-        byte[] data = getCalendarFileContent(majorVersion, minorVersion, calendarData);
+        byte[] data = getCalendarFileContent(majorVersion, minorVersion, calendarData, fullSync);
 
         HuaweiUploadManager.FileUploadInfo fileInfo = new HuaweiUploadManager.FileUploadInfo();
 
@@ -408,6 +471,8 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
         LOG.info("Sync calendar file upload info");
 
         JsonArray calendarData;
+        boolean fullSync = false;
+
         if (TextUtils.isEmpty(majorVersion) || lastCalendarEvents == null || minorVersion == 0) {
             if(lastCalendarEvents == null && minorVersion != 0) {
                 minorVersion = 0;
@@ -423,12 +488,12 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
                     minorVersion++;
                 }
             }
+            fullSync = true;
         } else {
             calendarData = getUpdateCalendarData(days);
             if (calendarData.isEmpty())
                 return false;
         }
-
 
         if (calendarData.size() > scheduleCount) {
             JsonArray newData = new JsonArray();
@@ -438,7 +503,7 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
             calendarData = newData;
         }
 
-        return sendCalendarFile(majorVersion, minorVersion, calendarData);
+        return sendCalendarFile(majorVersion, minorVersion, calendarData, fullSync);
     }
 
     @Override
