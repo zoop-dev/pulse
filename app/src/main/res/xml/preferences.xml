@@ -288,6 +288,13 @@
         android:summary="@string/pref_description_automations"
         android:title="@string/pref_header_automations" />
 
+    <Preference
+        android:icon="@drawable/ic_settings_remote"
+        android:key="pref_screen_quick_settings"
+        android:summary="@string/pref_summary_quick_settings"
+        android:title="@string/pref_header_quick_settings"
+        app:iconSpaceReserved="false" />
+
     <PreferenceScreen
         android:icon="@drawable/ic_extension"
         android:key="pref_screen_external_integrations"

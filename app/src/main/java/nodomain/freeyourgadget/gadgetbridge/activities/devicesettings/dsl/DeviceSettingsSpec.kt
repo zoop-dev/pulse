@@ -71,4 +71,19 @@ class DeviceSettingsSpec(val items: List<DeviceSetting>) {
             else -> {}
         }
     }
+
+    /**
+     * Returns the key of the top-level [ScreenSetting] that (transitively) contains [prefKey],
+     * or null if [prefKey] is itself a top-level item or is not found in the spec.
+     */
+    fun findTopScreenKeyForPreference(prefKey: String): String? {
+        for (item in items) {
+            if (item.key == prefKey) return null
+            if (item is ScreenSetting && screenContainsKey(item, prefKey)) return item.key
+        }
+        return null
+    }
+
+    private fun screenContainsKey(screen: ScreenSetting, prefKey: String): Boolean =
+        screen.children.any { it.key == prefKey || (it is ScreenSetting && screenContainsKey(it, prefKey)) }
 }

@@ -31,6 +31,7 @@ import androidx.preference.SeekBarPreference
 import androidx.preference.SwitchPreferenceCompat
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsHandler
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs
+import nodomain.freeyourgadget.gadgetbridge.util.preferences.GBSimpleSummaryProvider
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -154,7 +155,19 @@ object DeviceSettingRenderer {
                         setTitle(setting.title)
                     }
                     parent.addPreference(category)
-                    renderItems(setting.children, category, prefs, handler, visibilityPairs, dynamicEntryPairs, categoryMemberPairs, spListeners, mainHandler, sp, postRefresh)
+                    renderItems(
+                        setting.children,
+                        category,
+                        prefs,
+                        handler,
+                        visibilityPairs,
+                        dynamicEntryPairs,
+                        categoryMemberPairs,
+                        spListeners,
+                        mainHandler,
+                        sp,
+                        postRefresh
+                    )
                     val members = (0 until category.preferenceCount).map { category.getPreference(it) }.toMutableList()
                     if (members.isNotEmpty()) {
                         categoryMemberPairs.add(category to members)
@@ -275,6 +288,11 @@ object DeviceSettingRenderer {
                         isEnabled = setting.enabled
                         if (setting.summary != 0) {
                             setSummary(setting.summary)
+                        } else if (setting.defaultSummary != null && setting.summaryTemplate != 0) {
+                            summaryProvider = GBSimpleSummaryProvider(
+                                setting.defaultSummary.invoke(context),
+                                setting.summaryTemplate,
+                            )
                         } else {
                             summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
                         }

@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl
 
+import android.content.Context
 import android.content.Intent
 import android.text.InputType
 import androidx.annotation.ArrayRes
@@ -231,6 +232,8 @@ class DeviceSettingsScope {
         visibleWhen: ((Prefs) -> Boolean)? = null,
         onSharedPreferenceChanged: ((String) -> Unit)? = null,
         onBindEditText: ((android.widget.EditText) -> Unit)? = null,
+        defaultSummary: ((Context) -> String)? = null,
+        @StringRes summaryTemplate: Int = 0,
     ) {
         items.add(
             TextSetting(
@@ -247,6 +250,8 @@ class DeviceSettingsScope {
                 visibleWhen = visibleWhen,
                 onSharedPreferenceChanged = onSharedPreferenceChanged,
                 onBindEditText = onBindEditText,
+                defaultSummary = defaultSummary,
+                summaryTemplate = summaryTemplate,
             )
         )
     }

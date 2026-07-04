@@ -29,6 +29,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -69,6 +70,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.discovery.DiscoveryPairin
 import nodomain.freeyourgadget.gadgetbridge.activities.endurain.OnlineFitnessTrackersPreferencesActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsSettingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.preferences.HealthConnectPreferencesActivity;
+import nodomain.freeyourgadget.gadgetbridge.activities.quicksettings.QuickSettingsPreferencesActivity;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.TimeChangeReceiver;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -382,6 +384,19 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
                     startActivity(enableIntent);
                     return true;
                 });
+            }
+
+            pref = findPreference("pref_screen_quick_settings");
+            if (pref != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    pref.setOnPreferenceClickListener(preference -> {
+                        Intent enableIntent = new Intent(requireContext(), QuickSettingsPreferencesActivity.class);
+                        startActivity(enableIntent);
+                        return true;
+                    });
+                } else {
+                    pref.setVisible(false);
+                }
             }
 
             pref = findPreference("pref_category_sleepasandroid");

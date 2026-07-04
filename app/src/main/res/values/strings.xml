@@ -5093,4 +5093,33 @@
     <string name="perfectPunchCount">Perfect punches</string>
     <string name="goodPunchCount">Good punches</string>
     <string name="missPunchCount">Missed punches</string>
+
+    <string name="pref_header_quick_settings">Quick Settings &amp; Device Controls</string>
+    <string name="pref_summary_quick_settings">Configure quick settings tiles and device controls</string>
+    <string name="qs_tile_activity_title">Quick Settings Tiles</string>
+    <string name="qs_tile_not_assigned">Not assigned</string>
+    <string name="qs_tile_slot_number">Tile %1$d</string>
+    <string name="qs_tile_slot_assigned">Tile %1$d: %2$s · %3$s</string>
+    <string name="qs_tile_slot_unassigned">Tile %1$d: Not assigned</string>
+    <string name="qs_tile_device">Device</string>
+    <string name="qs_tile_setting">Setting</string>
+    <string name="qs_tile_no_device_selected">None</string>
+    <string name="qs_tile_not_connected">%s not connected</string>
+    <string name="qs_tile_allow_lockscreen">Allow from lock screen</string>
+    <string name="qs_tile_allow_lockscreen_summary">Toggle this setting without unlocking the device</string>
+    <string name="qs_tile_add_to_quick_settings">Add to Quick Settings</string>
+    <string name="qs_tile_already_in_quick_settings">Tile already in Quick Settings</string>
+    <string name="qs_tile_clear">Clear</string>
+    <string name="qs_tile_cycle_values">Cycle through values</string>
+    <string name="qs_tile_cycle_values_all">All values</string>
+    <string name="qs_tile_label_1">Gadgetbridge 1</string>
+    <string name="qs_tile_label_2">Gadgetbridge 2</string>
+    <string name="qs_tile_label_3">Gadgetbridge 3</string>
+    <string name="qs_tile_label_4">Gadgetbridge 4</string>
+    <string name="qs_tile_label_5">Gadgetbridge 5</string>
+    <string name="qs_tile_label_6">Gadgetbridge 6</string>
+    <string name="qs_tile_label_7">Gadgetbridge 7</string>
+    <string name="qs_tile_label_8">Gadgetbridge 8</string>
+    <string name="qs_tile_label_9">Gadgetbridge 9</string>
+    <string name="qs_tile_label_10">Gadgetbridge 10</string>
 </resources>

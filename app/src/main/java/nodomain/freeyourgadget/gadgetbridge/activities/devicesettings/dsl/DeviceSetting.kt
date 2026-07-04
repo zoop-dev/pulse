@@ -18,6 +18,7 @@
 
 package nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl
 
+import android.content.Context
 import android.text.InputType
 import android.widget.EditText
 import androidx.annotation.ArrayRes
@@ -150,6 +151,10 @@ data class TextSetting(
     val enabled: Boolean = true,
     val onSharedPreferenceChanged: ((String) -> Unit)? = null,
     val onBindEditText: ((EditText) -> Unit)? = null,
+    /** When non-null, shown as the summary when no value is set. */
+    val defaultSummary: ((Context) -> String)? = null,
+    /** When non-zero, wraps the current value in this format string for the summary. */
+    @StringRes val summaryTemplate: Int = 0,
 ) : DeviceSetting()
 
 /**

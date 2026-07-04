@@ -1167,6 +1167,142 @@
                 <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
             </intent-filter>
         </activity-alias>
+
+        <!-- Quick Settings preset tiles (API 24+). Each tile is independently assignable
+             to a device setting via QuickSettingsTilesActivity. -->
+        <service
+            android:name=".activities.quicksettings.DeviceTileService0"
+            android:exported="true"
+            android:icon="@drawable/ic_devices_other"
+            android:label="@string/qs_tile_label_1"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            tools:targetApi="24">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".activities.quicksettings.DeviceTileService1"
+            android:exported="true"
+            android:icon="@drawable/ic_devices_other"
+            android:label="@string/qs_tile_label_2"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            tools:targetApi="24">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".activities.quicksettings.DeviceTileService2"
+            android:exported="true"
+            android:icon="@drawable/ic_devices_other"
+            android:label="@string/qs_tile_label_3"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            tools:targetApi="24">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".activities.quicksettings.DeviceTileService3"
+            android:exported="true"
+            android:icon="@drawable/ic_devices_other"
+            android:label="@string/qs_tile_label_4"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            tools:targetApi="24">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".activities.quicksettings.DeviceTileService4"
+            android:exported="true"
+            android:icon="@drawable/ic_devices_other"
+            android:label="@string/qs_tile_label_5"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            tools:targetApi="24">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".activities.quicksettings.DeviceTileService5"
+            android:exported="true"
+            android:icon="@drawable/ic_devices_other"
+            android:label="@string/qs_tile_label_6"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            tools:targetApi="24">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".activities.quicksettings.DeviceTileService6"
+            android:exported="true"
+            android:icon="@drawable/ic_devices_other"
+            android:label="@string/qs_tile_label_7"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            tools:targetApi="24">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".activities.quicksettings.DeviceTileService7"
+            android:exported="true"
+            android:icon="@drawable/ic_devices_other"
+            android:label="@string/qs_tile_label_8"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            tools:targetApi="24">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".activities.quicksettings.DeviceTileService8"
+            android:exported="true"
+            android:icon="@drawable/ic_devices_other"
+            android:label="@string/qs_tile_label_9"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            tools:targetApi="24">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".activities.quicksettings.DeviceTileService9"
+            android:exported="true"
+            android:icon="@drawable/ic_devices_other"
+            android:label="@string/qs_tile_label_10"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            tools:targetApi="24">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <!-- Configuration activity for the preset Quick Settings tiles. -->
+        <activity
+            android:name=".activities.quicksettings.QuickSettingsTilesActivity"
+            android:exported="false"
+            android:label="@string/qs_tile_activity_title"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"
+            tools:targetApi="24" />
+
+        <!-- Settings screen for Quick Settings tiles and Device Controls. -->
+        <activity
+            android:name=".activities.quicksettings.QuickSettingsPreferencesActivity"
+            android:exported="true"
+            android:label="@string/pref_header_quick_settings"
+            android:parentActivityName=".activities.SettingsActivity"
+            tools:targetApi="24">
+            <!-- Handle long-press on any of the QS tiles -->
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
 
     <queries>
