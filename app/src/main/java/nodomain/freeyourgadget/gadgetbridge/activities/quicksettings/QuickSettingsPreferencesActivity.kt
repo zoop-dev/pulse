@@ -45,13 +45,14 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs
 /**
  * Settings screen for Quick Settings tiles and Device Controls.
  *
- * **Root screen** — lists all [NUM_TILES] tile slots with their current summary. Tapping a slot
+ * **Root screen** - lists all [NUM_TILES] tile slots with their current summary. Tapping a slot
  * navigates into a per-tile sub-screen.
  *
- * **Per-tile sub-screen** (key `"qs_tile_N"`) — three native preferences:
- * 1. **Device** ([ListPreference]) — choose from paired devices that expose DSL settings.
- * 2. **Setting** ([ListPreference]) — choose a toggle or list setting from the selected device.
- * 3. **Cycle through values** ([MultiSelectListPreference]) — restrict which values a list setting
+ * **Per-tile sub-screen** (key `"qs_tile_N"`) - three native preferences:
+ * 1. **Device** ([ListPreference]) - choose from all paired devices.
+ * 2. **Setting** ([ListPreference]) - choose a toggle or list setting from the selected device;
+ *    disabled with an explanatory summary if the device exposes no DSL settings.
+ * 3. **Cycle through values** ([MultiSelectListPreference]) - restrict which values a list setting
  *    cycles through; hidden for toggle settings.
  *
  * All three preferences are non-persistent; changes are committed to [DeviceTilePrefs] manually
@@ -221,9 +222,7 @@ class QuickSettingsPreferencesActivity : AbstractSettingsActivityV2() {
                     }
                 }
 
-                // All devices that expose at least one DSL setting
                 val allDevices = GBApplication.app().deviceManager.devices
-                    .filter { QuickSettings.listFor(it).isNotEmpty() }
 
                 //
                 // Device
@@ -372,7 +371,9 @@ class QuickSettingsPreferencesActivity : AbstractSettingsActivityV2() {
             /**
              * Populates [settingPref] with the DSL settings available on [device]. If [currentKey]
              * matches one of the available settings it is pre-selected; otherwise the preference is
-             * left unset. Also resets [cyclePref] entries since the setting changed.
+             * left unset. If [device] exposes no DSL settings, [settingPref] is disabled and its
+             * summary explains why instead of offering an empty dialog. Also resets [cyclePref]
+             * entries since the setting changed.
              */
             private fun populateSettingPref(
                 settingPref: ListPreference,
@@ -390,6 +391,20 @@ class QuickSettingsPreferencesActivity : AbstractSettingsActivityV2() {
                     return
                 }
                 val descriptors = QuickSettings.listFor(device)
+                if (descriptors.isEmpty()) {
+                    settingPref.entries = emptyArray()
+                    settingPref.entryValues = emptyArray()
+                    settingPref.value = null
+                    settingPref.isEnabled = false
+                    settingPref.summaryProvider = null
+                    settingPref.summary = getString(R.string.qs_tile_no_preferences_supported)
+                    settingPref.isVisible = true
+                    cyclePref.entries = emptyArray()
+                    cyclePref.entryValues = emptyArray()
+                    return
+                }
+                settingPref.isEnabled = true
+                settingPref.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
                 settingPref.entries = descriptors.map { getString(it.title) }.toTypedArray()
                 settingPref.entryValues = descriptors.map { it.key }.toTypedArray()
                 settingPref.value = currentKey.ifEmpty { null }

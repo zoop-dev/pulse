@@ -5104,6 +5104,7 @@
     <string name="qs_tile_device">Device</string>
     <string name="qs_tile_setting">Setting</string>
     <string name="qs_tile_no_device_selected">None</string>
+    <string name="qs_tile_no_preferences_supported">This device has no preferences supported by quick settings</string>
     <string name="qs_tile_not_connected">%s not connected</string>
     <string name="qs_tile_allow_lockscreen">Allow from lock screen</string>
     <string name="qs_tile_allow_lockscreen_summary">Toggle this setting without unlocking the device</string>
