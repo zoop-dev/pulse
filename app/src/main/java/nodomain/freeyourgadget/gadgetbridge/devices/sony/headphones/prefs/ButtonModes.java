@@ -22,15 +22,31 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import androidx.annotation.StringRes;
+
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.LabeledEntry;
 
 public class ButtonModes {
-    public enum Mode {
-        OFF,
-        AMBIENT_SOUND_CONTROL,
-        PLAYBACK_CONTROL,
-        VOLUME_CONTROL,
+    public enum Mode implements LabeledEntry {
+        OFF(R.string.sony_button_mode_off),
+        AMBIENT_SOUND_CONTROL(R.string.sony_button_mode_ambient_sound_control),
+        PLAYBACK_CONTROL(R.string.sony_button_mode_playback_control),
+        VOLUME_CONTROL(R.string.sony_button_mode_volume_control),
         ;
+
+        @StringRes
+        private final int label;
+
+        Mode(@StringRes final int label) {
+            this.label = label;
+        }
+
+        @Override
+        public int getLabel() {
+            return label;
+        }
     }
 
     final Mode left;
@@ -50,7 +66,7 @@ public class ButtonModes {
     }
 
     public Map<String, Object> toPreferences() {
-        return new HashMap<String, Object>() {{
+        return new HashMap<>() {{
             put(DeviceSettingsPreferenceConst.PREF_SONY_BUTTON_MODE_LEFT, left.name().toLowerCase(Locale.getDefault()));
             put(DeviceSettingsPreferenceConst.PREF_SONY_BUTTON_MODE_RIGHT, right.name().toLowerCase(Locale.getDefault()));
         }};

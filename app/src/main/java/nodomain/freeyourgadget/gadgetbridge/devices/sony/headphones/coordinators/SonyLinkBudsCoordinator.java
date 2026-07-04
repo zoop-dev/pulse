@@ -36,8 +36,9 @@ public class SonyLinkBudsCoordinator extends SonyHeadphonesCoordinator {
         return Pattern.compile("^LinkBuds$");
     }
 
+    @NonNull
     @Override
-    public Set<SonyHeadphonesCapabilities> getCapabilities() {
+    public Set<SonyHeadphonesCapabilities> getDefaultCapabilities() {
         return new HashSet<>(Arrays.asList(
                 SonyHeadphonesCapabilities.BatteryDual,
                 SonyHeadphonesCapabilities.BatteryCase,

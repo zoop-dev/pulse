@@ -22,14 +22,31 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
+
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.LabeledEntry;
 
 public class AmbientSoundControl {
-    public enum Mode {
-        OFF,
-        NOISE_CANCELLING,
-        WIND_NOISE_REDUCTION,
-        AMBIENT_SOUND
+    public enum Mode implements LabeledEntry {
+        OFF(R.string.sony_ambient_sound_off),
+        NOISE_CANCELLING(R.string.sony_ambient_sound_noise_cancelling),
+        WIND_NOISE_REDUCTION(R.string.sony_ambient_sound_wind_noise_reduction),
+        AMBIENT_SOUND(R.string.sony_ambient_sound_ambient_sound);
+
+        @StringRes
+        private final int label;
+
+        Mode(@StringRes final int label) {
+            this.label = label;
+        }
+
+        @Override
+        public int getLabel() {
+            return label;
+        }
     }
 
     private final Mode mode;
@@ -46,6 +63,7 @@ public class AmbientSoundControl {
         this.ambientSound = ambientSound;
     }
 
+    @NonNull
     public String toString() {
         return String.format(Locale.getDefault(), "AmbientSoundControl{mode=%s, focusOnVoice=%s, ambientSound=%d}", mode, focusOnVoice, ambientSound);
     }
@@ -63,7 +81,7 @@ public class AmbientSoundControl {
     }
 
     public Map<String, Object> toPreferences() {
-        return new HashMap<String, Object>() {{
+        return new HashMap<>() {{
             put(DeviceSettingsPreferenceConst.PREF_SONY_AMBIENT_SOUND_CONTROL, mode.name().toLowerCase(Locale.getDefault()));
 
             if (AmbientSoundControl.Mode.AMBIENT_SOUND.equals(mode)) {

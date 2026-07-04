@@ -66,7 +66,7 @@ public class SonyProtocolImplV1Test {
 
     @Before
     public void before() {
-        coordinator.getCapabilities().clear();
+        coordinator.getDefaultCapabilities().clear();
     }
 
     @Test

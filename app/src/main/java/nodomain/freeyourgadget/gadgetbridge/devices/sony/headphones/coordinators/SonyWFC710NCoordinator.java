@@ -37,8 +37,9 @@ public class SonyWFC710NCoordinator extends SonyHeadphonesCoordinator {
         return Pattern.compile("(?!LE_).*WF-C710N$");
     }
 
+    @NonNull
     @Override
-    public Set<SonyHeadphonesCapabilities> getCapabilities() {
+    public Set<SonyHeadphonesCapabilities> getDefaultCapabilities() {
         return new HashSet<>(Arrays.asList(
                 SonyHeadphonesCapabilities.BatteryDual2,
                 SonyHeadphonesCapabilities.BatteryCase,

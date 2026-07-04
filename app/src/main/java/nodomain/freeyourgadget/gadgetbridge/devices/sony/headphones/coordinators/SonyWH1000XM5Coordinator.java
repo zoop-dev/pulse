@@ -40,8 +40,9 @@ public class SonyWH1000XM5Coordinator extends SonyHeadphonesCoordinator {
         return R.string.devicetype_sony_wh_1000xm5;
     }
 
+    @NonNull
     @Override
-    public Set<SonyHeadphonesCapabilities> getCapabilities() {
+    public Set<SonyHeadphonesCapabilities> getDefaultCapabilities() {
         return new HashSet<>(Arrays.asList(
                 // TODO R.xml.devicesettings_connect_two_devices,
                 // TODO automatic ANC depending on state (might need phone?)

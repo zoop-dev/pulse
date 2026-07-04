@@ -45,8 +45,9 @@ public class SonyWF1000XM4Coordinator extends SonyHeadphonesCoordinator {
         return new BatteryConfig[]{battery1, battery2, battery3};
     }
 
+    @NonNull
     @Override
-    public Set<SonyHeadphonesCapabilities> getCapabilities() {
+    public Set<SonyHeadphonesCapabilities> getDefaultCapabilities() {
         return new HashSet<>(Arrays.asList(
                 SonyHeadphonesCapabilities.BatteryDual,
                 SonyHeadphonesCapabilities.BatteryCase,

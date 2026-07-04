@@ -40,8 +40,9 @@ public class SonyWHULT900NCoordinator extends SonyHeadphonesCoordinator {
         return R.string.devicetype_sony_wh_ult900n;
     }
 
+    @NonNull
     @Override
-    public Set<SonyHeadphonesCapabilities> getCapabilities() {
+    public Set<SonyHeadphonesCapabilities> getDefaultCapabilities() {
         return new HashSet<>(Arrays.asList(
                 SonyHeadphonesCapabilities.BatterySingle,
                 SonyHeadphonesCapabilities.AmbientSoundControl2,

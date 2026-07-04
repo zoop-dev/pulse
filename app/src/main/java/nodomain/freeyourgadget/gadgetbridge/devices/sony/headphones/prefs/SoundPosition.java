@@ -22,20 +22,32 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
+import androidx.annotation.StringRes;
 
-public enum SoundPosition {
-    OFF((byte) 0x00),
-    FRONT((byte) 0x03),
-    FRONT_LEFT((byte) 0x01),
-    FRONT_RIGHT((byte) 0x02),
-    REAR_LEFT((byte) 0x11),
-    REAR_RIGHT((byte) 0x12);
+import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.LabeledEntry;
+
+public enum SoundPosition implements LabeledEntry {
+    OFF((byte) 0x00, R.string.sony_sound_position_off),
+    FRONT((byte) 0x03, R.string.sony_sound_position_front),
+    FRONT_LEFT((byte) 0x01, R.string.sony_sound_position_front_left),
+    FRONT_RIGHT((byte) 0x02, R.string.sony_sound_position_front_right),
+    REAR_LEFT((byte) 0x11, R.string.sony_sound_position_rear_left),
+    REAR_RIGHT((byte) 0x12, R.string.sony_sound_position_rear_right);
 
     private final byte code;
+    @StringRes
+    private final int label;
 
-    SoundPosition(final byte code) {
+    SoundPosition(final byte code, @StringRes final int label) {
         this.code = code;
+        this.label = label;
+    }
+
+    @Override
+    public int getLabel() {
+        return label;
     }
 
     public byte getCode() {
@@ -43,7 +55,7 @@ public enum SoundPosition {
     }
 
     public Map<String, Object> toPreferences() {
-        return new HashMap<String, Object>() {{
+        return new HashMap<>() {{
             put(DeviceSettingsPreferenceConst.PREF_SONY_SOUND_POSITION, name().toLowerCase(Locale.getDefault()));
         }};
     }

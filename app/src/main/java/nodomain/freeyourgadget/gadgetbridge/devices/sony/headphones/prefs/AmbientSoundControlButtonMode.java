@@ -22,19 +22,31 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
+import androidx.annotation.StringRes;
 
-public enum AmbientSoundControlButtonMode {
-    NC_AS_OFF((byte) 0x01),
-    NC_AS((byte) 0x02),
-    NC_OFF((byte) 0x03),
-    AS_OFF((byte) 0x04),
+import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.LabeledEntry;
+
+public enum AmbientSoundControlButtonMode implements LabeledEntry {
+    NC_AS_OFF((byte) 0x01, R.string.sony_ambient_sound_control_button_mode_nc_as_off),
+    NC_AS((byte) 0x02, R.string.sony_ambient_sound_control_button_mode_nc_as),
+    NC_OFF((byte) 0x03, R.string.sony_ambient_sound_control_button_mode_nc_off),
+    AS_OFF((byte) 0x04, R.string.sony_ambient_sound_control_button_mode_as_off),
     ;
 
     private final byte code;
+    @StringRes
+    private final int label;
 
-    AmbientSoundControlButtonMode(final byte code) {
+    AmbientSoundControlButtonMode(final byte code, @StringRes final int label) {
         this.code = code;
+        this.label = label;
+    }
+
+    @Override
+    public int getLabel() {
+        return label;
     }
 
     public byte getCode() {
@@ -42,7 +54,7 @@ public enum AmbientSoundControlButtonMode {
     }
 
     public Map<String, Object> toPreferences() {
-        return new HashMap<String, Object>() {{
+        return new HashMap<>() {{
             put(DeviceSettingsPreferenceConst.PREF_SONY_AMBIENT_SOUND_CONTROL_BUTTON_MODE, name().toLowerCase(Locale.getDefault()));
         }};
     }

@@ -22,26 +22,38 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
+import androidx.annotation.StringRes;
 
-public enum EqualizerPreset {
-    OFF((byte) 0x00),
-    BRIGHT((byte) 0x10),
-    EXCITED((byte) 0x11),
-    MELLOW((byte) 0x12),
-    RELAXED((byte) 0x13),
-    VOCAL((byte) 0x14),
-    TREBLE_BOOST((byte) 0x15),
-    BASS_BOOST((byte) 0x16),
-    SPEECH((byte) 0x17),
-    MANUAL((byte) 0xa0),
-    CUSTOM_1((byte) 0xa1),
-    CUSTOM_2((byte) 0xa2);
+import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.LabeledEntry;
+
+public enum EqualizerPreset implements LabeledEntry {
+    OFF((byte) 0x00, R.string.sony_equalizer_preset_off),
+    BRIGHT((byte) 0x10, R.string.sony_equalizer_preset_bright),
+    EXCITED((byte) 0x11, R.string.sony_equalizer_preset_excited),
+    MELLOW((byte) 0x12, R.string.sony_equalizer_preset_mellow),
+    RELAXED((byte) 0x13, R.string.sony_equalizer_preset_relaxed),
+    VOCAL((byte) 0x14, R.string.sony_equalizer_preset_vocal),
+    TREBLE_BOOST((byte) 0x15, R.string.sony_equalizer_preset_treble_boost),
+    BASS_BOOST((byte) 0x16, R.string.sony_equalizer_preset_bass_boost),
+    SPEECH((byte) 0x17, R.string.sony_equalizer_preset_speech),
+    MANUAL((byte) 0xa0, R.string.sony_equalizer_preset_manual),
+    CUSTOM_1((byte) 0xa1, R.string.sony_equalizer_preset_custom_1),
+    CUSTOM_2((byte) 0xa2, R.string.sony_equalizer_preset_custom_2);
 
     private final byte code;
+    @StringRes
+    private final int label;
 
-    EqualizerPreset(final byte code) {
+    EqualizerPreset(final byte code, @StringRes final int label) {
         this.code = code;
+        this.label = label;
+    }
+
+    @Override
+    public int getLabel() {
+        return label;
     }
 
     public byte getCode() {
@@ -49,7 +61,7 @@ public enum EqualizerPreset {
     }
 
     public Map<String, Object> toPreferences() {
-        return new HashMap<String, Object>() {{
+        return new HashMap<>() {{
             put(DeviceSettingsPreferenceConst.PREF_SONY_EQUALIZER_MODE, name().toLowerCase(Locale.getDefault()));
         }};
     }

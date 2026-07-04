@@ -22,22 +22,34 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import androidx.annotation.StringRes;
+
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.LabeledEntry;
 
 public class QuickAccess {
-    public enum Mode {
-        OFF((byte) 0x00),
-        SPOTIFY((byte) 0x01),
+    public enum Mode implements LabeledEntry {
+        OFF((byte) 0x00, R.string.off),
+        SPOTIFY((byte) 0x01, R.string.pref_title_touch_spotify),
         ;
 
         private final byte code;
+        @StringRes
+        private final int label;
 
-        Mode(final byte code) {
+        Mode(final byte code, @StringRes final int label) {
             this.code = code;
+            this.label = label;
         }
 
         public byte getCode() {
             return this.code;
+        }
+
+        @Override
+        public int getLabel() {
+            return label;
         }
 
         public static Mode fromCode(final byte code) {
@@ -68,7 +80,7 @@ public class QuickAccess {
     }
 
     public Map<String, Object> toPreferences() {
-        return new HashMap<String, Object>() {{
+        return new HashMap<>() {{
             put(DeviceSettingsPreferenceConst.PREF_SONY_QUICK_ACCESS_DOUBLE_TAP, doubleTap.name().toLowerCase(Locale.getDefault()));
             put(DeviceSettingsPreferenceConst.PREF_SONY_QUICK_ACCESS_TRIPLE_TAP, tripleTap.name().toLowerCase(Locale.getDefault()));
         }};

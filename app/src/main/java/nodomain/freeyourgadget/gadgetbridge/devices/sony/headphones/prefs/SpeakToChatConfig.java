@@ -22,23 +22,36 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
+
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.LabeledEntry;
 
 public class SpeakToChatConfig {
-    public enum Sensitivity {
-        AUTO(0x00),
-        HIGH(0x01),
-        LOW(0x02),
+    public enum Sensitivity implements LabeledEntry {
+        AUTO(0x00, R.string.sony_speak_to_chat_sensitivity_auto),
+        HIGH(0x01, R.string.sony_speak_to_chat_sensitivity_high),
+        LOW(0x02, R.string.sony_speak_to_chat_sensitivity_low),
         ;
 
         private final byte code;
+        @StringRes
+        private final int label;
 
-        Sensitivity(final int code) {
+        Sensitivity(final int code, @StringRes final int label) {
             this.code = (byte) code;
+            this.label = label;
         }
 
         public byte getCode() {
             return this.code;
+        }
+
+        @Override
+        public int getLabel() {
+            return label;
         }
 
         public static Sensitivity fromCode(final byte b) {
@@ -52,21 +65,29 @@ public class SpeakToChatConfig {
         }
     }
 
-    public enum Timeout {
-        SHORT(0x00),
-        STANDARD(0x01),
-        LONG(0x02),
-        OFF(0x03),
+    public enum Timeout implements LabeledEntry {
+        OFF(0x03, R.string.sony_speak_to_chat_timeout_off),
+        SHORT(0x00, R.string.sony_speak_to_chat_timeout_short),
+        STANDARD(0x01, R.string.sony_speak_to_chat_timeout_standard),
+        LONG(0x02, R.string.sony_speak_to_chat_timeout_long),
         ;
 
         private final byte code;
+        @StringRes
+        private final int label;
 
-        Timeout(final int code) {
+        Timeout(final int code, @StringRes final int label) {
             this.code = (byte) code;
+            this.label = label;
         }
 
         public byte getCode() {
             return this.code;
+        }
+
+        @Override
+        public int getLabel() {
+            return label;
         }
 
         public static Timeout fromCode(final byte b) {
@@ -102,12 +123,13 @@ public class SpeakToChatConfig {
         return timeout;
     }
 
+    @NonNull
     public String toString() {
         return String.format(Locale.getDefault(), "SpeakToChatConfig{focusOnVoice=%s, sensitivity=%s, timeout=%s}", focusOnVoice, sensitivity, timeout);
     }
 
     public Map<String, Object> toPreferences() {
-        return new HashMap<String, Object>() {{
+        return new HashMap<>() {{
             put(DeviceSettingsPreferenceConst.PREF_SONY_SPEAK_TO_CHAT_FOCUS_ON_VOICE, focusOnVoice);
             put(DeviceSettingsPreferenceConst.PREF_SONY_SPEAK_TO_CHAT_SENSITIVITY, sensitivity.name().toLowerCase(Locale.getDefault()));
             put(DeviceSettingsPreferenceConst.PREF_SONY_SPEAK_TO_CHAT_TIMEOUT, timeout.name().toLowerCase(Locale.getDefault()));

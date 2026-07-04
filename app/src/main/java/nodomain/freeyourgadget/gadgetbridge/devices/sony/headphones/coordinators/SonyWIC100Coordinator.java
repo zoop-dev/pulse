@@ -35,8 +35,9 @@ public class SonyWIC100Coordinator extends SonyHeadphonesCoordinator {
         return Pattern.compile(".*WI-C100.*");
     }
 
+    @NonNull
     @Override
-    public Set<SonyHeadphonesCapabilities> getCapabilities() {
+    public Set<SonyHeadphonesCapabilities> getDefaultCapabilities() {
         return new HashSet<>(Arrays.asList(
                 SonyHeadphonesCapabilities.BatterySingle,
                 SonyHeadphonesCapabilities.EqualizerSimple,

@@ -48,7 +48,6 @@ inline fun <reified T> DeviceSettingsScope.equalizerPreset(
 
 fun DeviceSettingsScope.volume(
     key: String = DeviceSettingsPreferenceConst.PREF_VOLUME,
-    min: Int = 0,
     max: Int,
     defaultValue: Int,
     connectedOnly: Boolean = true,
@@ -59,7 +58,6 @@ fun DeviceSettingsScope.volume(
             key = key,
             title = R.string.menuitem_volume,
             icon = R.drawable.ic_volume_up,
-            min = min,
             max = max,
             defaultValue = defaultValue,
             connectedOnly = connectedOnly,

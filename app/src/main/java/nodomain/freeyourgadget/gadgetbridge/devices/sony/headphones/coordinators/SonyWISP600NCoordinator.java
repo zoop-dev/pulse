@@ -39,8 +39,9 @@ public class SonyWISP600NCoordinator extends SonyHeadphonesCoordinator {
         return R.string.devicetype_sony_wi_sp600n;
     }
 
+    @NonNull
     @Override
-    public Set<SonyHeadphonesCapabilities> getCapabilities() {
+    public Set<SonyHeadphonesCapabilities> getDefaultCapabilities() {
         return new HashSet<>(Arrays.asList(
                 SonyHeadphonesCapabilities.BatterySingle,
                 SonyHeadphonesCapabilities.AmbientSoundControl,

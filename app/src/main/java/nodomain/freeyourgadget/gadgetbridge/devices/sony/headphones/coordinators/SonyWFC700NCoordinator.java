@@ -36,8 +36,9 @@ public class SonyWFC700NCoordinator extends SonyHeadphonesCoordinator {
         return Pattern.compile(".*WF-C700N.*");
     }
 
+    @NonNull
     @Override
-    public Set<SonyHeadphonesCapabilities> getCapabilities() {
+    public Set<SonyHeadphonesCapabilities> getDefaultCapabilities() {
         return new HashSet<>(Arrays.asList(
                 SonyHeadphonesCapabilities.BatteryDual2,
                 SonyHeadphonesCapabilities.BatteryCase,

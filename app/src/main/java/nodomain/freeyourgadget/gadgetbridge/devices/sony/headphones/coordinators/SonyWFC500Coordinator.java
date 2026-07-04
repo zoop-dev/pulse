@@ -35,8 +35,9 @@ public class SonyWFC500Coordinator extends SonyHeadphonesCoordinator {
         return Pattern.compile(".*WF-C500.*");
     }
 
+    @NonNull
     @Override
-    public Set<SonyHeadphonesCapabilities> getCapabilities() {
+    public Set<SonyHeadphonesCapabilities> getDefaultCapabilities() {
         return new HashSet<>(Arrays.asList(
                 SonyHeadphonesCapabilities.BatteryDual2,
                 SonyHeadphonesCapabilities.EqualizerSimple,

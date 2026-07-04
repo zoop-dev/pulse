@@ -44,22 +44,38 @@ sealed class DeviceSetting {
 }
 
 /**
+ * A [DeviceSetting] that contains child settings. Both [ScreenSetting] and [CategorySetting]
+ * are groups; tree-walking code can match on this type to recurse without caring which kind.
+ */
+sealed class GroupSetting : DeviceSetting() {
+    abstract val children: List<DeviceSetting>
+}
+
+/**
  * A navigable sub-screen whose children are rendered programmatically when entered.
  * In the root preference list this appears as a single tappable row (title + icon).
  */
 data class ScreenSetting(
     override val key: String,
     @StringRes val title: Int,
+    @StringRes val summary: Int = 0,
     @DrawableRes val icon: Int = 0,
     override val visibleWhen: ((Prefs) -> Boolean)? = null,
     override val connectedOnly: Boolean = true,
-    val children: List<DeviceSetting> = emptyList(),
-) : DeviceSetting()
+    override val children: List<DeviceSetting> = emptyList(),
+) : GroupSetting()
 
-/** A switch boolean setting, equivalent to SwitchPreferenceCompat. */
+/**
+ * A switch boolean setting, equivalent to SwitchPreferenceCompat.
+ * [summaryOn] and [summaryOff] show different text depending on the checked state; [summary] shows
+ * static text regardless. If none are set, no summary is displayed.
+ */
 data class SwitchSetting(
     override val key: String,
     @StringRes val title: Int,
+    @StringRes val summary: Int = 0,
+    @StringRes val summaryOn: Int = 0,
+    @StringRes val summaryOff: Int = 0,
     @DrawableRes val icon: Int = 0,
     val defaultValue: Boolean = false,
     val dependency: String? = null,
@@ -74,10 +90,13 @@ data class SwitchSetting(
  *  - [entries]: static list built at DSL construction time (e.g. from a [LabeledEntry] enum).
  *  - [entriesRes] + [entryValuesRes]: legacy resource arrays, for devices not yet migrated to
  *    programmatic entries.
+ *
+ * If [summary] is set it overrides the default behaviour of showing the selected entry as summary.
  */
 data class ListSetting(
     override val key: String,
     @StringRes val title: Int,
+    @StringRes val summary: Int = 0,
     @DrawableRes val icon: Int = 0,
     @ArrayRes val entriesRes: Int = 0,
     @ArrayRes val entryValuesRes: Int = 0,
@@ -93,8 +112,8 @@ data class ListSetting(
 data class SeekBarSetting(
     override val key: String,
     @StringRes val title: Int,
+    @StringRes val summary: Int = 0,
     @DrawableRes val icon: Int = 0,
-    val min: Int = 0,
     val max: Int,
     val defaultValue: Int,
     val showValue: Boolean = true,
@@ -103,10 +122,24 @@ data class SeekBarSetting(
     override val connectedOnly: Boolean = true,
 ) : DeviceSetting()
 
-/** A free text setting, equivalent to EditTextPreference. */
+/** A preference category header, equivalent to PreferenceCategory. Children are rendered inside the group. */
+data class CategorySetting(
+    override val key: String,
+    @StringRes val title: Int,
+    override val children: List<DeviceSetting> = emptyList(),
+    override val visibleWhen: ((Prefs) -> Boolean)? = null,
+    override val connectedOnly: Boolean = false,
+) : GroupSetting()
+
+/**
+ * A free text setting, equivalent to EditTextPreference.
+ * If [summary] is set it overrides the default behaviour of showing the current value as summary.
+ * Set [enabled] to false to make the field read-only (displayed but not editable).
+ */
 data class TextSetting(
     override val key: String,
     @StringRes val title: Int,
+    @StringRes val summary: Int = 0,
     @DrawableRes val icon: Int = 0,
     val defaultValue: String = "",
     val maxLength: Int? = null,
@@ -114,6 +147,8 @@ data class TextSetting(
     val dependency: String? = null,
     override val visibleWhen: ((Prefs) -> Boolean)? = null,
     override val connectedOnly: Boolean = true,
+    val enabled: Boolean = true,
+    val onSharedPreferenceChanged: ((String) -> Unit)? = null,
     val onBindEditText: ((EditText) -> Unit)? = null,
 ) : DeviceSetting()
 
@@ -123,7 +158,8 @@ data class TextSetting(
  */
 data class ActionSetting(
     override val key: String,
-    @StringRes val title: Int,
+    @StringRes val title: Int = 0,
+    @StringRes val summary: Int = 0,
     @DrawableRes val icon: Int = 0,
     override val visibleWhen: ((Prefs) -> Boolean)? = null,
     override val connectedOnly: Boolean = true,

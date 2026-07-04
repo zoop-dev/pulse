@@ -22,19 +22,31 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
+import androidx.annotation.StringRes;
 
-public enum SurroundMode {
-    OFF((byte) 0x00),
-    ARENA((byte) 0x02),
-    CLUB((byte) 0x04),
-    OUTDOOR_STAGE((byte) 0x01),
-    CONCERT_HALL((byte) 0x03);
+import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.LabeledEntry;
+
+public enum SurroundMode implements LabeledEntry {
+    OFF((byte) 0x00, R.string.sony_surround_mode_off),
+    ARENA((byte) 0x02, R.string.sony_surround_mode_arena),
+    CLUB((byte) 0x04, R.string.sony_surround_mode_club),
+    OUTDOOR_STAGE((byte) 0x01, R.string.sony_surround_mode_outdoor_stage),
+    CONCERT_HALL((byte) 0x03, R.string.sony_surround_mode_concert_hall);
 
     private final byte code;
+    @StringRes
+    private final int label;
 
-    SurroundMode(final byte code) {
+    SurroundMode(final byte code, @StringRes final int label) {
         this.code = code;
+        this.label = label;
+    }
+
+    @Override
+    public int getLabel() {
+        return label;
     }
 
     public byte getCode() {
@@ -42,7 +54,7 @@ public enum SurroundMode {
     }
 
     public Map<String, Object> toPreferences() {
-        return new HashMap<String, Object>() {{
+        return new HashMap<>() {{
             put(DeviceSettingsPreferenceConst.PREF_SONY_SURROUND_MODE, name().toLowerCase(Locale.getDefault()));
         }};
     }

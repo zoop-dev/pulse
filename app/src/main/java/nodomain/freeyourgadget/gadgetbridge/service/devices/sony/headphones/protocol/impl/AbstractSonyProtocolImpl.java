@@ -157,6 +157,6 @@ public abstract class AbstractSonyProtocolImpl {
     public abstract List<? extends GBDeviceEvent> handlePayload(final MessageType messageType, final byte[] payload);
 
     protected boolean supports(final SonyHeadphonesCapabilities capability) {
-        return getCoordinator().supports(device, capability);
+        return getCoordinator().getCapabilities(device).contains(capability);
     }
 }

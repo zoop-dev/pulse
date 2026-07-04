@@ -24,14 +24,34 @@ package nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl
  */
 class DeviceSettingsSpec(val items: List<DeviceSetting>) {
 
-    /** Finds a [ScreenSetting] by its key, searching only the top-level items. */
-    fun findScreen(key: String): ScreenSetting? =
-        items.filterIsInstance<ScreenSetting>().firstOrNull { it.key == key }
+    /** Finds a [ScreenSetting] by its key, searching the full tree. */
+    fun findScreen(key: String): ScreenSetting? = findScreen(key, items)
+
+    private fun findScreen(key: String, nodes: List<DeviceSetting>): ScreenSetting? {
+        for (node in nodes) {
+            if (node is ScreenSetting && node.key == key) return node
+            if (node is GroupSetting) {
+                val inner = findScreen(key, node.children)
+                if (inner != null) return inner
+            }
+        }
+        return null
+    }
 
     /**
-     * Returns all top-level preference keys managed by this spec.
+     * Returns all preference keys managed by this spec.
      */
-    fun collectAllKeys(): Set<String> = items.mapNotNull { it.key.ifEmpty { null } }.toHashSet()
+    fun collectAllKeys(): Set<String> {
+        val keys = mutableSetOf<String>()
+        items.forEach { collectKeys(it, keys) }
+        return keys
+    }
+
+    private fun collectKeys(node: DeviceSetting, out: MutableSet<String>) {
+        val k = node.key
+        if (k.isNotEmpty()) out.add(k)
+        if (node is GroupSetting) node.children.forEach { collectKeys(it, out) }
+    }
 
     /**
      * Returns all preference keys that should be disabled when the device is not connected.
@@ -39,16 +59,14 @@ class DeviceSettingsSpec(val items: List<DeviceSetting>) {
      */
     fun collectConnectedKeys(): Array<String> {
         val keys = mutableListOf<String>()
-        for (item in items) {
-            collectConnectedKeys(item, keys)
-        }
+        items.forEach { collectConnectedKeys(it, keys) }
         return keys.toTypedArray()
     }
 
     private fun collectConnectedKeys(node: DeviceSetting, out: MutableList<String>) {
         if (node.connectedOnly) out.add(node.key)
         when (node) {
-            is ScreenSetting -> node.children.forEach { collectConnectedKeys(it, out) }
+            is GroupSetting -> node.children.forEach { collectConnectedKeys(it, out) }
             is XmlScreenSetting -> out.addAll(node.childConnectedKeys)
             else -> {}
         }

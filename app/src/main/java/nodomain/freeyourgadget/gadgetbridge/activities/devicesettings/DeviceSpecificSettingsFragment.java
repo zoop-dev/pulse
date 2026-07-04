@@ -84,6 +84,7 @@ import nodomain.freeyourgadget.gadgetbridge.activities.app_specific_notification
 import nodomain.freeyourgadget.gadgetbridge.activities.audiorecordings.AudioRecordingsActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.DeviceSetting;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.DeviceSettingRenderer;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.DeviceSettingsRefreshHandle;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.DeviceSettingsSpec;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.ScreenSetting;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.XmlScreenSetting;
@@ -119,12 +120,12 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
     private GBDevice device;
 
     /**
-     * Visibility-refresh callback returned by {@link DeviceSettingRenderer}
-     * after rendering model-provided preferences. Invoked when device connection state changes so
-     * that conditional visibility predicates are re-evaluated.
+     * Handle returned by {@link DeviceSettingRenderer} after rendering model-provided preferences.
+     * Run to re-evaluate conditional visibility; call {@link DeviceSettingsRefreshHandle#cleanup()}
+     * to unregister any SharedPreferences listeners registered for getOnSharedPreferenceChanged callbacks.
      */
     @Nullable
-    private Runnable modelVisibilityRefresh;
+    private DeviceSettingsRefreshHandle modelVisibilityRefresh;
 
     /**
      * Preference keys owned by the programmatic model renderer. {@link #addPreferenceHandlerFor}
@@ -194,6 +195,11 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
 
     @Override
     public void onDestroyView() {
+        if (modelVisibilityRefresh != null) {
+            // Using onDestroyView (rather than onStop) keeps the listeners alive across the onStop -> onStart
+            // cycle that occurs when the user backgrounds the app or navigates into a sub-screen and back.
+            modelVisibilityRefresh.cleanup();
+        }
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(mDeviceUpdateReceiver);
         super.onDestroyView();
     }
@@ -254,8 +260,18 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
                         prefs,
                         this
                 );
+                // XmlScreenSetting nodes are inflated inline by the renderer; only add the
+                // remaining XML screens (CONNECTION, BATTERY, DEVELOPER, etc.) at the end.
+                final java.util.Set<Integer> modelXmlScreens = new java.util.HashSet<>();
+                for (final DeviceSetting item : modelSpec.getItems()) {
+                    if (item instanceof XmlScreenSetting) {
+                        modelXmlScreens.add(((XmlScreenSetting) item).getScreen().getXml());
+                    }
+                }
                 for (final int screen : deviceSpecificSettings.getRootScreens()) {
-                    addPreferencesFromResource(screen);
+                    if (!modelXmlScreens.contains(screen)) {
+                        addPreferencesFromResource(screen);
+                    }
                 }
             } else {
                 boolean first = true;
@@ -906,37 +922,8 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         addPreferenceHandlerFor(PREF_REDMI_BUDS_8_ACTIVE_CONTROL_LONG_TAP_MODE_RIGHT);
         addPreferenceHandlerFor(PREF_REDMI_BUDS_8_ACTIVE_EQUALIZER_PRESET);
 
-        addPreferenceHandlerFor(PREF_SONY_AMBIENT_SOUND_CONTROL);
         addPreferenceHandlerFor(PREF_SONY_AMBIENT_SOUND_CONTROL_BUTTON_MODE);
-        addPreferenceHandlerFor(PREF_SONY_FOCUS_VOICE);
         addPreferenceHandlerFor(PREF_SONY_AMBIENT_SOUND_LEVEL);
-        addPreferenceHandlerFor(PREF_SONY_SOUND_POSITION);
-        addPreferenceHandlerFor(PREF_SONY_SURROUND_MODE);
-        addPreferenceHandlerFor(PREF_SONY_EQUALIZER_MODE);
-        addPreferenceHandlerFor(PREF_SONY_EQUALIZER_BAND_400);
-        addPreferenceHandlerFor(PREF_SONY_EQUALIZER_BAND_1000);
-        addPreferenceHandlerFor(PREF_SONY_EQUALIZER_BAND_2500);
-        addPreferenceHandlerFor(PREF_SONY_EQUALIZER_BAND_6300);
-        addPreferenceHandlerFor(PREF_SONY_EQUALIZER_BAND_16000);
-        addPreferenceHandlerFor(PREF_SONY_EQUALIZER_BASS);
-        addPreferenceHandlerFor(PREF_SONY_AUDIO_HD);
-        addPreferenceHandlerFor(PREF_SONY_BUTTON_FUNCTION_NC_AMBIENT);
-        addPreferenceHandlerFor(PREF_SONY_AUDIO_UPSAMPLING);
-        addPreferenceHandlerFor(PREF_SONY_TOUCH_SENSOR);
-        addPreferenceHandlerFor(PREF_SONY_PAUSE_WHEN_TAKEN_OFF);
-        addPreferenceHandlerFor(PREF_SONY_BUTTON_MODE_LEFT);
-        addPreferenceHandlerFor(PREF_SONY_BUTTON_MODE_RIGHT);
-        addPreferenceHandlerFor(PREF_SONY_QUICK_ACCESS_DOUBLE_TAP);
-        addPreferenceHandlerFor(PREF_SONY_QUICK_ACCESS_TRIPLE_TAP);
-        addPreferenceHandlerFor(PREF_SONY_AUTOMATIC_POWER_OFF);
-        addPreferenceHandlerFor(PREF_SONY_NOTIFICATION_VOICE_GUIDE);
-        addPreferenceHandlerFor(PREF_SONY_SPEAK_TO_CHAT);
-        addPreferenceHandlerFor(PREF_SONY_SPEAK_TO_CHAT_SENSITIVITY);
-        addPreferenceHandlerFor(PREF_SONY_SPEAK_TO_CHAT_FOCUS_ON_VOICE);
-        addPreferenceHandlerFor(PREF_SONY_SPEAK_TO_CHAT_TIMEOUT);
-        addPreferenceHandlerFor(PREF_SONY_CONNECT_TWO_DEVICES);
-        addPreferenceHandlerFor(PREF_SONY_ADAPTIVE_VOLUME_CONTROL);
-        addPreferenceHandlerFor(PREF_SONY_WIDE_AREA_TAP);
 
         addPreferenceHandlerFor(PREF_GYMLINK_ENABLED);
         addPreferenceHandlerFor(PREF_ANTPLUS_ENABLED);
@@ -1503,10 +1490,10 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         setNumericInputTypeWithRangeFor(PREF_OUTPUT_POWER_GRID, 0, 2400, false);
         setNumericInputTypeWithRangeFor(PREF_BATTERY_MINIMUM_CHARGE, 0, 100, false);
         setNumericInputTypeWithRangeFor(PREF_BATTERY_MAXIMUM_CHARGE, 0, 100, false);
-        setNumericInputTypeWithRangeFor(PREF_SOLAR_PANEL1_PEAK_W, 0,1000,false);
-        setNumericInputTypeWithRangeFor(PREF_SOLAR_PANEL2_PEAK_W, 0,1000,false);
-        setNumericInputTypeWithRangeFor(PREF_SOLAR_PANEL3_PEAK_W, 0,1000,false);
-        setNumericInputTypeWithRangeFor(PREF_SOLAR_PANEL4_PEAK_W, 0,1000,false);
+        setNumericInputTypeWithRangeFor(PREF_SOLAR_PANEL1_PEAK_W, 0, 1000, false);
+        setNumericInputTypeWithRangeFor(PREF_SOLAR_PANEL2_PEAK_W, 0, 1000, false);
+        setNumericInputTypeWithRangeFor(PREF_SOLAR_PANEL3_PEAK_W, 0, 1000, false);
+        setNumericInputTypeWithRangeFor(PREF_SOLAR_PANEL4_PEAK_W, 0, 1000, false);
 
         new PasswordCapabilityImpl().registerPreferences(getContext(), coordinator.getPasswordCapability(), this);
         new HeartRateCapability().registerPreferences(getContext(), coordinator.getHeartRateMeasurementIntervals(), this);
@@ -1844,6 +1831,11 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
     @Override
     public void navigateToScreen(@NonNull final PreferenceScreen screen) {
         onNavigateToScreen(screen);
+    }
+
+    @Override
+    public void addXmlPreferences(final int resId) {
+        addPreferencesFromResource(resId);
     }
 
     @Override

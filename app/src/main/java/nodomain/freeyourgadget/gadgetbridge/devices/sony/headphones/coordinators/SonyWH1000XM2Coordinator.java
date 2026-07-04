@@ -40,8 +40,9 @@ public class SonyWH1000XM2Coordinator extends SonyHeadphonesCoordinator {
         return R.string.devicetype_sony_wh_1000xm2;
     }
 
+    @NonNull
     @Override
-    public Set<SonyHeadphonesCapabilities> getCapabilities() {
+    public Set<SonyHeadphonesCapabilities> getDefaultCapabilities() {
         return new HashSet<>(Arrays.asList(
                 SonyHeadphonesCapabilities.BatterySingle,
                 SonyHeadphonesCapabilities.AmbientSoundControl,

@@ -49,13 +49,15 @@ public class MockSonyCoordinator extends SonyHeadphonesCoordinator {
         capabilities.add(capability);
     }
 
+    @NonNull
     @Override
-    public Set<SonyHeadphonesCapabilities> getCapabilities() {
+    public Set<SonyHeadphonesCapabilities> getDefaultCapabilities() {
         return capabilities;
     }
 
+    @NonNull
     @Override
-    public Set<SonyHeadphonesCapabilities> getCapabilities(final GBDevice device) {
-        return getCapabilities();
+    public Set<SonyHeadphonesCapabilities> getCapabilities(@NonNull final GBDevice device) {
+        return getDefaultCapabilities();
     }
 }

@@ -22,20 +22,32 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
+import androidx.annotation.StringRes;
 
-public enum AutomaticPowerOff {
-    OFF(new byte[]{(byte) 0x11, (byte) 0x00}),
-    AFTER_5_MIN(new byte[]{(byte) 0x00, (byte) 0x00}),
-    AFTER_30_MIN(new byte[]{(byte) 0x01, (byte) 0x01}),
-    AFTER_1_HOUR(new byte[]{(byte) 0x02, (byte) 0x02}),
-    AFTER_3_HOUR(new byte[]{(byte) 0x03, (byte) 0x03}),
-    WHEN_TAKEN_OFF(new byte[]{(byte) 0x10, (byte) 0x00});
+import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.LabeledEntry;
+
+public enum AutomaticPowerOff implements LabeledEntry {
+    OFF(new byte[]{(byte) 0x11, (byte) 0x00}, R.string.sony_automatic_power_off_off),
+    AFTER_5_MIN(new byte[]{(byte) 0x00, (byte) 0x00}, R.string.sony_automatic_power_off_5_min),
+    AFTER_30_MIN(new byte[]{(byte) 0x01, (byte) 0x01}, R.string.sony_automatic_power_off_30_min),
+    AFTER_1_HOUR(new byte[]{(byte) 0x02, (byte) 0x02}, R.string.sony_automatic_power_off_1_hour),
+    AFTER_3_HOUR(new byte[]{(byte) 0x03, (byte) 0x03}, R.string.sony_automatic_power_off_3_hour),
+    WHEN_TAKEN_OFF(new byte[]{(byte) 0x10, (byte) 0x00}, R.string.sony_automatic_power_off_when_taken_off);
 
     private final byte[] code;
+    @StringRes
+    private final int label;
 
-    AutomaticPowerOff(final byte[] code) {
+    AutomaticPowerOff(final byte[] code, @StringRes final int label) {
         this.code = code;
+        this.label = label;
+    }
+
+    @Override
+    public int getLabel() {
+        return label;
     }
 
     public byte[] getCode() {
@@ -43,7 +55,7 @@ public enum AutomaticPowerOff {
     }
 
     public Map<String, Object> toPreferences() {
-        return new HashMap<String, Object>() {{
+        return new HashMap<>() {{
             put(DeviceSettingsPreferenceConst.PREF_SONY_AUTOMATIC_POWER_OFF, name().toLowerCase(Locale.getDefault()));
         }};
     }

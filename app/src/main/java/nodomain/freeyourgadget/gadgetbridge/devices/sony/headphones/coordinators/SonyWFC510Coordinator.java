@@ -36,8 +36,9 @@ public class SonyWFC510Coordinator extends SonyHeadphonesCoordinator {
         return Pattern.compile(".*WF-C510.*");
     }
 
+    @NonNull
     @Override
-    public Set<SonyHeadphonesCapabilities> getCapabilities() {
+    public Set<SonyHeadphonesCapabilities> getDefaultCapabilities() {
         return new HashSet<>(Arrays.asList(
                 SonyHeadphonesCapabilities.BatteryDual2,
                 SonyHeadphonesCapabilities.BatteryCase,

@@ -44,8 +44,9 @@ class DeviceSettingsScope {
     fun screen(
         key: String,
         @StringRes title: Int,
+        @StringRes summary: Int = 0,
         @DrawableRes icon: Int = 0,
-        connectedOnly: Boolean = true,
+        connectedOnly: Boolean = false,
         visibleWhen: ((Prefs) -> Boolean)? = null,
         block: DeviceSettingsScope.() -> Unit,
     ) {
@@ -53,6 +54,7 @@ class DeviceSettingsScope {
             ScreenSetting(
                 key = key,
                 title = title,
+                summary = summary,
                 icon = icon,
                 connectedOnly = connectedOnly,
                 visibleWhen = visibleWhen,
@@ -64,6 +66,9 @@ class DeviceSettingsScope {
     fun switchSetting(
         key: String,
         @StringRes title: Int,
+        @StringRes summary: Int = 0,
+        @StringRes summaryOn: Int = 0,
+        @StringRes summaryOff: Int = 0,
         @DrawableRes icon: Int = 0,
         defaultValue: Boolean = false,
         dependency: String? = null,
@@ -74,6 +79,9 @@ class DeviceSettingsScope {
             SwitchSetting(
                 key = key,
                 title = title,
+                summary = summary,
+                summaryOn = summaryOn,
+                summaryOff = summaryOff,
                 icon = icon,
                 defaultValue = defaultValue,
                 dependency = dependency,
@@ -86,6 +94,7 @@ class DeviceSettingsScope {
     fun list(
         key: String,
         @StringRes title: Int,
+        @StringRes summary: Int = 0,
         @DrawableRes icon: Int = 0,
         @ArrayRes entriesRes: Int,
         @ArrayRes entryValuesRes: Int,
@@ -98,6 +107,7 @@ class DeviceSettingsScope {
             ListSetting(
                 key = key,
                 title = title,
+                summary = summary,
                 icon = icon,
                 entriesRes = entriesRes,
                 entryValuesRes = entryValuesRes,
@@ -112,6 +122,7 @@ class DeviceSettingsScope {
     fun list(
         key: String,
         @StringRes title: Int,
+        @StringRes summary: Int = 0,
         @DrawableRes icon: Int = 0,
         entries: List<ListEntry>,
         defaultValue: String = "",
@@ -123,6 +134,7 @@ class DeviceSettingsScope {
             ListSetting(
                 key = key,
                 title = title,
+                summary = summary,
                 icon = icon,
                 entries = entries,
                 defaultValue = defaultValue,
@@ -136,6 +148,7 @@ class DeviceSettingsScope {
     fun list(
         key: String,
         @StringRes title: Int,
+        @StringRes summary: Int = 0,
         @DrawableRes icon: Int = 0,
         entriesProvider: (Prefs) -> List<ListEntry>,
         defaultValue: String = "",
@@ -147,6 +160,7 @@ class DeviceSettingsScope {
             ListSetting(
                 key = key,
                 title = title,
+                summary = summary,
                 icon = icon,
                 entriesProvider = entriesProvider,
                 defaultValue = defaultValue,
@@ -160,8 +174,8 @@ class DeviceSettingsScope {
     fun seekbar(
         key: String,
         @StringRes title: Int,
+        @StringRes summary: Int = 0,
         @DrawableRes icon: Int = 0,
-        min: Int = 0,
         max: Int,
         defaultValue: Int,
         showValue: Boolean = true,
@@ -173,8 +187,8 @@ class DeviceSettingsScope {
             SeekBarSetting(
                 key = key,
                 title = title,
+                summary = summary,
                 icon = icon,
-                min = min,
                 max = max,
                 defaultValue = defaultValue,
                 showValue = showValue,
@@ -185,29 +199,53 @@ class DeviceSettingsScope {
         )
     }
 
+    fun category(
+        key: String,
+        @StringRes title: Int,
+        connectedOnly: Boolean = false,
+        visibleWhen: ((Prefs) -> Boolean)? = null,
+        block: DeviceSettingsScope.() -> Unit = {},
+    ) {
+        items.add(
+            CategorySetting(
+                key = key,
+                title = title,
+                children = DeviceSettingsScope().apply(block).build(),
+                connectedOnly = connectedOnly,
+                visibleWhen = visibleWhen,
+            )
+        )
+    }
+
     fun text(
         key: String,
         @StringRes title: Int,
+        @StringRes summary: Int = 0,
         @DrawableRes icon: Int = 0,
         defaultValue: String = "",
         maxLength: Int? = null,
         inputType: Int = InputType.TYPE_CLASS_TEXT,
         dependency: String? = null,
         connectedOnly: Boolean = true,
+        enabled: Boolean = true,
         visibleWhen: ((Prefs) -> Boolean)? = null,
+        onSharedPreferenceChanged: ((String) -> Unit)? = null,
         onBindEditText: ((android.widget.EditText) -> Unit)? = null,
     ) {
         items.add(
             TextSetting(
                 key = key,
                 title = title,
+                summary = summary,
                 icon = icon,
                 defaultValue = defaultValue,
                 maxLength = maxLength,
                 inputType = inputType,
                 dependency = dependency,
                 connectedOnly = connectedOnly,
+                enabled = enabled,
                 visibleWhen = visibleWhen,
+                onSharedPreferenceChanged = onSharedPreferenceChanged,
                 onBindEditText = onBindEditText,
             )
         )
@@ -215,7 +253,8 @@ class DeviceSettingsScope {
 
     fun action(
         key: String,
-        @StringRes title: Int,
+        @StringRes title: Int = 0,
+        @StringRes summary: Int = 0,
         @DrawableRes icon: Int = 0,
         connectedOnly: Boolean = true,
         visibleWhen: ((Prefs) -> Boolean)? = null,
@@ -225,6 +264,7 @@ class DeviceSettingsScope {
             ActionSetting(
                 key = key,
                 title = title,
+                summary = summary,
                 icon = icon,
                 connectedOnly = connectedOnly,
                 visibleWhen = visibleWhen,
@@ -236,6 +276,7 @@ class DeviceSettingsScope {
     fun externalSettings(
         key: String,
         @StringRes title: Int,
+        @StringRes summary: Int = 0,
         @DrawableRes icon: Int = 0,
         connectedOnly: Boolean = false,
         visibleWhen: ((Prefs) -> Boolean)? = null,
@@ -244,6 +285,7 @@ class DeviceSettingsScope {
         action(
             key = key,
             title = title,
+            summary = summary,
             icon = icon,
             connectedOnly = connectedOnly,
             visibleWhen = visibleWhen,

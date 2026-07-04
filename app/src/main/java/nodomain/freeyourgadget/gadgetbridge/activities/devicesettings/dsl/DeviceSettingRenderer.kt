@@ -25,6 +25,7 @@ import android.text.InputFilter.LengthFilter
 import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceGroup
 import androidx.preference.SeekBarPreference
 import androidx.preference.SwitchPreferenceCompat
@@ -34,10 +35,28 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 /**
+ * Handle returned by [DeviceSettingRenderer.render]. Call [run] to refresh visibility and dynamic
+ * entries; call [cleanup] in [androidx.preference.PreferenceFragmentCompat.onDestroyView] to
+ * unregister any SharedPreferences listeners registered for callbacks.
+ */
+class DeviceSettingsRefreshHandle(
+    private val sp: SharedPreferences,
+    private val spListeners: List<SharedPreferences.OnSharedPreferenceChangeListener>,
+    private val refreshAction: Runnable,
+) : Runnable {
+    override fun run() = refreshAction.run()
+    fun cleanup() = spListeners.forEach { sp.unregisterOnSharedPreferenceChangeListener(it) }
+}
+
+/**
  * Converts a list of [DeviceSetting] nodes into androidx [Preference] objects and adds them to
- * a parent [PreferenceGroup]. Returns a [Runnable] that re-evaluates all [DeviceSetting.visibleWhen] predicates
- * and repopulates all dynamic [ListSetting.entriesProvider] when invoked (e.g. on device state change).
- * The caller is responsible for invoking it when needed.
+ * a parent [PreferenceGroup]. Returns a [DeviceSettingsRefreshHandle] that re-evaluates all
+ * [DeviceSetting.visibleWhen] predicates and repopulates all dynamic [ListSetting.entriesProvider]
+ * when invoked. Call [DeviceSettingsRefreshHandle.cleanup] when the fragment stops to unregister
+ * any SharedPreferences listeners.
+ *
+ * [CategorySetting] nodes are automatically hidden when all of their member preferences (those
+ * between this category and the next one or an [XmlScreenSetting]) are invisible.
  */
 object DeviceSettingRenderer {
     private val LOG: Logger = LoggerFactory.getLogger(DeviceSettingRenderer::class.java)
@@ -47,9 +66,11 @@ object DeviceSettingRenderer {
         parent: PreferenceGroup,
         prefs: Prefs,
         handler: DeviceSpecificSettingsHandler,
-    ): Runnable {
+    ): DeviceSettingsRefreshHandle {
         val visibilityPairs = mutableListOf<Pair<Preference, (Prefs) -> Boolean>>()
         val dynamicEntryPairs = mutableListOf<Pair<ListPreference, (Prefs) -> List<ListEntry>>>()
+        val categoryMemberPairs = mutableListOf<Pair<PreferenceCategory, MutableList<Preference>>>()
+        val spListeners = mutableListOf<SharedPreferences.OnSharedPreferenceChangeListener>()
         val mainHandler = Handler(Looper.getMainLooper())
         val sp: SharedPreferences = prefs.preferences
 
@@ -62,6 +83,9 @@ object DeviceSettingRenderer {
             dynamicEntryPairs.forEach { (pref, provider) ->
                 applyEntries(pref, provider(livePrefs), context)
             }
+            categoryMemberPairs.forEach { (cat, members) ->
+                cat.isVisible = members.isNotEmpty() && members.any { it.isVisible }
+            }
         }
 
         val postRefresh: () -> Unit = {
@@ -70,12 +94,27 @@ object DeviceSettingRenderer {
             }
         }
 
-        renderItems(items, parent, prefs, handler, visibilityPairs, dynamicEntryPairs, postRefresh)
+        renderItems(
+            items,
+            parent,
+            prefs,
+            handler,
+            visibilityPairs,
+            dynamicEntryPairs,
+            categoryMemberPairs,
+            spListeners,
+            mainHandler,
+            sp,
+            postRefresh
+        )
 
-        // Initial visibility pass
+        // Initial visibility passes - individual predicates first, then category membership
         visibilityPairs.forEach { (pref, predicate) -> pref.isVisible = predicate(prefs) }
+        categoryMemberPairs.forEach { (cat, members) ->
+            cat.isVisible = members.isNotEmpty() && members.any { it.isVisible }
+        }
 
-        return refreshRunnable
+        return DeviceSettingsRefreshHandle(sp, spListeners, refreshRunnable)
     }
 
     private fun applyEntries(pref: ListPreference, entries: List<ListEntry>, context: Context) {
@@ -95,19 +134,42 @@ object DeviceSettingRenderer {
         handler: DeviceSpecificSettingsHandler,
         visibilityPairs: MutableList<Pair<Preference, (Prefs) -> Boolean>>,
         dynamicEntryPairs: MutableList<Pair<ListPreference, (Prefs) -> List<ListEntry>>>,
+        categoryMemberPairs: MutableList<Pair<PreferenceCategory, MutableList<Preference>>>,
+        spListeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener>,
+        mainHandler: Handler,
+        sp: SharedPreferences,
         postRefresh: () -> Unit,
     ) {
         LOG.debug("Rendering device settings")
 
         val context = handler.context
+
         for (setting in items) {
             LOG.debug("Rendering {} as {}", setting.key, setting.javaClass.simpleName)
 
             val pref: Preference = when (setting) {
+                is CategorySetting -> {
+                    val category = PreferenceCategory(context).apply {
+                        key = setting.key
+                        setTitle(setting.title)
+                    }
+                    parent.addPreference(category)
+                    renderItems(setting.children, category, prefs, handler, visibilityPairs, dynamicEntryPairs, categoryMemberPairs, spListeners, mainHandler, sp, postRefresh)
+                    val members = (0 until category.preferenceCount).map { category.getPreference(it) }.toMutableList()
+                    if (members.isNotEmpty()) {
+                        categoryMemberPairs.add(category to members)
+                    }
+                    if (setting.visibleWhen != null) {
+                        visibilityPairs.add(category to setting.visibleWhen)
+                    }
+                    continue
+                }
+
                 is ScreenSetting -> {
                     val screen = parent.preferenceManager.createPreferenceScreen(context)
                     screen.key = setting.key
                     screen.setTitle(setting.title)
+                    if (setting.summary != 0) screen.setSummary(setting.summary)
                     if (setting.icon != 0) screen.setIcon(setting.icon)
                     // Must be added to parent before rendering children so that dependencies can be resolved
                     parent.addPreference(screen)
@@ -118,10 +180,14 @@ object DeviceSettingRenderer {
                         handler,
                         visibilityPairs,
                         dynamicEntryPairs,
+                        categoryMemberPairs,
+                        spListeners,
+                        mainHandler,
+                        sp,
                         postRefresh
                     )
                     if (setting.visibleWhen != null) {
-                        visibilityPairs.add(screen to setting.visibleWhen!!)
+                        visibilityPairs.add(screen to setting.visibleWhen)
                     }
                     continue
                 }
@@ -130,6 +196,14 @@ object DeviceSettingRenderer {
                     SwitchPreferenceCompat(context).apply {
                         key = setting.key
                         setTitle(setting.title)
+                        when {
+                            setting.summaryOn != 0 || setting.summaryOff != 0 -> {
+                                if (setting.summaryOn != 0) setSummaryOn(setting.summaryOn)
+                                if (setting.summaryOff != 0) setSummaryOff(setting.summaryOff)
+                            }
+
+                            setting.summary != 0 -> setSummary(setting.summary)
+                        }
                         if (setting.icon != 0) setIcon(setting.icon)
                         setDefaultValue(setting.defaultValue)
                         setOnPreferenceChangeListener { _, _ ->
@@ -160,7 +234,11 @@ object DeviceSettingRenderer {
                             }
                         }
                         setDefaultValue(setting.defaultValue)
-                        summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
+                        if (setting.summary != 0) {
+                            setSummary(setting.summary)
+                        } else {
+                            summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
+                        }
                         setOnPreferenceChangeListener { _, _ ->
                             handler.notifyPreferenceChanged(setting.key)
                             postRefresh()
@@ -173,8 +251,9 @@ object DeviceSettingRenderer {
                     SeekBarPreference(context).apply {
                         key = setting.key
                         setTitle(setting.title)
+                        if (setting.summary != 0) setSummary(setting.summary)
                         if (setting.icon != 0) setIcon(setting.icon)
-                        min = setting.min
+                        // TODO: Not supported by our sdk version: min = setting.min
                         max = setting.max
                         setDefaultValue(setting.defaultValue)
                         showSeekBarValue = setting.showValue
@@ -193,7 +272,12 @@ object DeviceSettingRenderer {
                         setDialogTitle(setting.title)
                         if (setting.icon != 0) setIcon(setting.icon)
                         setDefaultValue(setting.defaultValue)
-                        summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
+                        isEnabled = setting.enabled
+                        if (setting.summary != 0) {
+                            setSummary(setting.summary)
+                        } else {
+                            summaryProvider = EditTextPreference.SimpleSummaryProvider.getInstance()
+                        }
                         setOnBindEditTextListener { editText ->
                             editText.inputType = setting.inputType
                             if (setting.maxLength != null) {
@@ -206,13 +290,26 @@ object DeviceSettingRenderer {
                             postRefresh()
                             true
                         }
+                        if (setting.onSharedPreferenceChanged != null) {
+                            val listener =
+                                SharedPreferences.OnSharedPreferenceChangeListener { sharedPrefs, changedKey ->
+                                    if (changedKey == setting.key) {
+                                        val newValue = sharedPrefs.getString(changedKey, setting.defaultValue)
+                                            ?: setting.defaultValue
+                                        mainHandler.post { setting.onSharedPreferenceChanged.invoke(newValue) }
+                                    }
+                                }
+                            spListeners.add(listener)
+                            sp.registerOnSharedPreferenceChangeListener(listener)
+                        }
                     }
                 }
 
                 is ActionSetting -> {
                     Preference(context).apply {
                         key = setting.key
-                        setTitle(setting.title)
+                        if (setting.title != 0) setTitle(setting.title)
+                        if (setting.summary != 0) setSummary(setting.summary)
                         if (setting.icon != 0) setIcon(setting.icon)
                         isPersistent = false
                         setOnPreferenceClickListener {
@@ -221,7 +318,12 @@ object DeviceSettingRenderer {
                     }
                 }
 
-                is XmlScreenSetting -> continue
+                is XmlScreenSetting -> {
+                    // Inflate the root XML entry at the correct position so it appears in the
+                    // order declared in the DSL rather than being appended at the end.
+                    handler.addXmlPreferences(setting.screen.xml)
+                    continue
+                }
             }
 
             parent.addPreference(pref)

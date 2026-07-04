@@ -21,20 +21,26 @@ import android.content.SharedPreferences;
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.annotation.StringRes;
+import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.LabeledEntry;
 
 public class ButtonFunctionNcAmbient {
-    public enum Mode {
-        SWITCH_AMBIENT_SOUND("switch_ambient_sound", 0x00),
-        GOOGLE_ASSISTANT("google_assistant", 0x01),
-        ALEXA_ASSISTANT("alexa_assistant", 0x02);
+    public enum Mode implements LabeledEntry {
+        SWITCH_AMBIENT_SOUND("switch_ambient_sound", 0x00, R.string.sony_button_function_nc_ambient_switch_ambient_sound),
+        GOOGLE_ASSISTANT("google_assistant", 0x01, R.string.sony_button_function_nc_ambient_google_assistant),
+        ALEXA_ASSISTANT("alexa_assistant", 0x02, R.string.sony_button_function_nc_ambient_alexa_assistant);
 
         private final String prefValue;
         private final byte code;
+        @StringRes
+        private final int label;
 
-        Mode(final String prefValue, final int code) {
+        Mode(final String prefValue, final int code, @StringRes final int label) {
             this.prefValue = prefValue;
             this.code = (byte) code;
+            this.label = label;
         }
 
         public String getPrefValue() {
@@ -43,6 +49,11 @@ public class ButtonFunctionNcAmbient {
 
         public byte getCode() {
             return code;
+        }
+
+        @Override
+        public int getLabel() {
+            return label;
         }
 
         public static ButtonFunctionNcAmbient.Mode fromCode(final byte b) {
@@ -77,7 +88,7 @@ public class ButtonFunctionNcAmbient {
     }
 
     public Map<String, Object> toPreferences() {
-        return new HashMap<String, Object>() {{
+        return new HashMap<>() {{
             put(DeviceSettingsPreferenceConst.PREF_SONY_BUTTON_FUNCTION_NC_AMBIENT, mode.getPrefValue());
         }};
     }
