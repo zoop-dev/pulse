@@ -4657,4 +4657,16 @@
     <string name="perfectPunchCount">完美重拳</string>
     <string name="goodPunchCount">好拳</string>
     <string name="missPunchCount">未打中</string>
+    <string name="pref_header_quick_settings">快速设置和设备控制</string>
+    <string name="pref_summary_quick_settings">配置快速设置磁贴和设备控制</string>
+    <string name="qs_tile_activity_title">快速设置磁贴</string>
+    <string name="qs_tile_not_assigned">未分配</string>
+    <string name="qs_tile_slot_number">磁贴 %1$d</string>
+    <string name="qs_tile_slot_assigned">磁贴 %1$d: %2$s · %3$s</string>
+    <string name="qs_tile_slot_unassigned">磁贴 %1$d: 未分配</string>
+    <string name="qs_tile_device">设备</string>
+    <string name="qs_tile_setting">设置</string>
+    <string name="qs_tile_no_device_selected">无</string>
+    <string name="qs_tile_no_preferences_supported">此设备没有快速设置支持的首选项</string>
+    <string name="qs_tile_not_connected">%s 未连接</string>
 </resources>
