@@ -1,0 +1,55 @@
+/*  Copyright (C) 2026
+
+    This file is part of Gadgetbridge.
+
+    Gadgetbridge is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Gadgetbridge is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>. */
+
+package nodomain.freeyourgadget.gadgetbridge.devices.huawei.freeclip;
+
+import androidx.annotation.NonNull;
+
+import java.util.Collections;
+import java.util.Set;
+import java.util.regex.Pattern;
+
+import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiFreebudsCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiHeadphonesCapabilities;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiFreebudsSupport;
+
+public class HuaweiFreeClip2Coordinator extends HuaweiFreebudsCoordinator {
+
+    @Override
+    protected Pattern getSupportedDeviceName() {
+        return Pattern.compile("huawei freeclip 2.*", Pattern.CASE_INSENSITIVE);
+    }
+
+    @Override
+    public Set<HuaweiHeadphonesCapabilities> getCapabilities() {
+        return Collections.singleton(HuaweiHeadphonesCapabilities.InEarDetection);
+    }
+
+    @NonNull
+    @Override
+    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
+        return HuaweiFreebudsSupport.class;
+    }
+
+    @Override
+    public int getDeviceNameResource() {
+        return R.string.devicetype_huawei_freeclip_2;
+    }
+}

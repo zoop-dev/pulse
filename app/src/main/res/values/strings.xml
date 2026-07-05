@@ -2221,6 +2221,7 @@
     <string name="devicetype_huawei_watch4pro" translatable="false">Huawei Watch 4 (Pro)</string>
     <string name="devicetype_huawei_watch5" translatable="false">Huawei Watch 5</string>
     <string name="devicetype_huawei_freearc" translatable="false">Huawei FreeArc</string>
+    <string name="devicetype_huawei_freeclip_2" translatable="false">Huawei FreeClip 2</string>
     <string name="devicetype_huawei_freebuds_5i" translatable="false">Huawei FreeBuds 5i</string>
     <string name="devicetype_huawei_freebuds_pro" translatable="false">Huawei FreeBuds Pro</string>
     <string name="devicetype_huawei_freebuds_6" translatable="false">Huawei FreeBuds 6</string>
