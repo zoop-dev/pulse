@@ -229,7 +229,7 @@ public class HuaweiP2PAppIcon extends HuaweiBaseP2PService {
 
         fileInfo.setFileType((byte) 7);
         fileInfo.setFileName(filename);
-        fileInfo.setBytes(data);
+        fileInfo.setUploadData(new HuaweiUploadManager.UploadDataBuffer(data));
         fileInfo.setSrcPackage(this.getModule());
         fileInfo.setDstPackage(this.getPackage());
         fileInfo.setSrcFingerprint(this.getLocalFingerprint());

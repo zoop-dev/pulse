@@ -21,6 +21,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -49,7 +52,6 @@ public class HuaweiFwHelper {
     private final Uri uri;
 
     private byte[] fw;
-    private int fileSize = 0;
     private byte fileType = 0;
     String fileName = "";
 
@@ -60,9 +62,14 @@ public class HuaweiFwHelper {
     AudioInfo musicInfo;
     Context mContext;
 
+    public boolean isOfflineMap = false;
+    public String mapName;
+    public int mapVersion = 0;
+    public boolean isMapContour = false;
+
+
     public boolean isFirmware = false;
     public HuaweiOTAFileList.OTAFileInfo fwInfo = null;
-
 
     public HuaweiFwHelper(final Uri uri, final Context context) {
         this.uri = uri;
@@ -72,7 +79,9 @@ public class HuaweiFwHelper {
     }
 
     private void parseFile() {
-        if (parseAsFirmware()) {
+        if (parseAsOfflineMap()) {
+            isOfflineMap = true;
+        } else if (parseAsFirmware()) {
             isFirmware = true;
         } else if (parseAsMusic()) {
             fileType = FileUpload.Filetype.music;
@@ -86,6 +95,81 @@ public class HuaweiFwHelper {
             assert watchfaceDescription.title != null;
             fileType = FileUpload.Filetype.watchface;
         }
+    }
+
+    private boolean parseAsOfflineMap() {
+        try {
+            final UriHelper uriHelper = UriHelper.get(uri, this.mContext);
+
+            String currentFileName = uriHelper.getFileName();
+
+            if (TextUtils.isEmpty(currentFileName) || !currentFileName.toLowerCase().endsWith(".bin")) {
+                return false;
+            }
+
+            String withoutExt = currentFileName.substring(0, currentFileName.length() - 4);
+            boolean isContour = withoutExt.endsWith("_contour");
+            if(!withoutExt.equals("global")) {
+                String idPart = isContour ? withoutExt.substring(0, withoutExt.length() - 8) : withoutExt;
+                long mapId;
+                try {
+                    mapId = Long.parseLong(idPart);
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+                LOG.info("MapId: {}", mapId);
+            } else {
+                LOG.info("World overview map");
+            }
+
+            LOG.info("Contour: {}", isContour);
+            isMapContour = isContour;
+
+            InputStream inputStream = uriHelper.openInputStream();
+
+            byte[] header = new byte[0x440];
+            int nRead = inputStream.read(header, 0, header.length);
+            if (nRead != header.length)
+                return false;
+            inputStream.close();
+
+            if (header[0] != 'o' || header[1] != 'f' || header[2] != 'f' ||
+                    header[3] != 'v' || header[4] != 'm' || header[5] != 'p') { // offvmp
+                return false;
+            }
+            ByteBuffer buffer = ByteBuffer.wrap(header);
+            buffer.order(ByteOrder.LITTLE_ENDIAN);
+
+            buffer.position(6);
+
+            int version = buffer.getInt();
+            LOG.info("version: {}", version);
+
+            int indexOffset = buffer.getInt();
+            LOG.info("index_offset: {}", indexOffset);
+
+            if (indexOffset > uriHelper.getFileSize()) {
+                return false;
+            }
+
+            buffer.position(63);
+            byte[] countryBytes = new byte[511];
+            buffer.get(countryBytes);
+
+            String countryName = new String(countryBytes, StandardCharsets.UTF_8).trim();
+            LOG.info("country_name: {}", countryName);
+
+            mapName = countryName;
+            mapVersion = version;
+
+            fw = null;
+            fileName = currentFileName;
+            LOG.info("OfflineMap: valid");
+            return true;
+        } catch (Exception e) {
+            LOG.error("OfflineMap: error occurred", e);
+        }
+        return false;
     }
 
     private boolean parseAsFirmware() {
@@ -172,7 +256,6 @@ public class HuaweiFwHelper {
 
             fileName = musicInfo.getFileName();
             fw = musicData;
-            fileSize = fw.length;
 
             return true;
         } catch (FileNotFoundException e) {
@@ -203,7 +286,6 @@ public class HuaweiFwHelper {
             fileName = app.getPackageName() + "_INSTALL"; //TODO: INSTALL or UPDATE suffix
 
             fw = appData;
-            fileSize = fw.length;
 
             byte[] icon = app.getEntryContent("icon_small.png");
             if (icon != null) {
@@ -224,6 +306,14 @@ public class HuaweiFwHelper {
         return false;
     }
 
+    public UriHelper getUriHelper() {
+        try {
+            return UriHelper.get(uri, this.mContext);
+        } catch (IOException e) {
+            LOG.error("getUriHelper: General IO error occurred {}", e.getMessage());
+        }
+        return null;
+    }
 
     public byte[] getBytes() {
         return fw;
@@ -265,7 +355,7 @@ public class HuaweiFwHelper {
 
             String watchfacePath;
             if (watchfaceDescription.isHonor) {
-                watchfacePath ="com.honor.watchface";
+                watchfacePath = "com.honor.watchface";
             } else {
                 watchfacePath = "com.huawei.watchface";
             }
@@ -278,7 +368,6 @@ public class HuaweiFwHelper {
                 LOG.error("Unable to get watchfaceZip,  it seems older already watchface.bin");
                 fw = watchfaceZip;
             }
-            fileSize = fw.length;
             isWatchface = true;
 
         } catch (ZipFileException e) {
@@ -307,7 +396,7 @@ public class HuaweiFwHelper {
     }
 
     public boolean isValid() {
-        return isWatchface() || isAPP() || isMusic() || isFirmware;
+        return isWatchface() || isAPP() || isMusic() || isFirmware || isOfflineMap;
     }
 
     public Bitmap getPreviewBitmap() {

@@ -20,17 +20,120 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.huawei;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.FileUpload;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.FileUpload.FileUploadParams;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
+import nodomain.freeyourgadget.gadgetbridge.util.UriHelper;
 
 public class HuaweiUploadManager {
     private static final Logger LOG = LoggerFactory.getLogger(HuaweiUploadManager.class);
+
+    public interface UploadData {
+        int getDataSize();
+        byte[] getSHA256();
+        byte[] getDataChunk(int pos, int size);
+    }
+
+    public static class UploadDataBuffer implements UploadData {
+        private final int dataSize;
+        private final byte[] data;
+        private byte[] dataSHA256 = null;
+
+        public UploadDataBuffer(byte[] data) {
+            this.dataSize = data.length;
+            this.data = data;
+
+            try {
+                MessageDigest m = MessageDigest.getInstance("SHA256");
+                m.update(data, 0, data.length);
+                this.dataSHA256 =  m.digest();
+            } catch (NoSuchAlgorithmException e) {
+                LOG.error("Digest algorithm not found.", e);
+            }
+        }
+
+        @Override
+        public int getDataSize() {
+            return dataSize;
+        }
+
+        @Override
+        public byte[] getSHA256() {
+            return dataSHA256;
+        }
+
+        @Override
+        public byte[] getDataChunk(int pos, int size) {
+            byte[] ret = new byte[size];
+            System.arraycopy(data, pos, ret, 0, size);
+            return ret;
+        }
+    }
+
+    public static class UploadDataFile implements UploadData {
+        private final UriHelper uriHelper;
+        private byte[] dataSHA256 = null;
+
+        public UploadDataFile(UriHelper uriHelper) {
+            this.uriHelper = uriHelper;
+
+            try {
+                MessageDigest sha256 = MessageDigest.getInstance("SHA256");
+                InputStream inStream = uriHelper.openInputStream();
+                int n;
+                byte[] buf = new byte[4096];
+                while ((n = inStream.read(buf)) != -1) {
+                    if (n > 0) {
+                        sha256.update(buf, 0, n);
+                    }
+                }
+                inStream.close();
+                dataSHA256 = sha256.digest();
+            } catch (Exception e) {
+                LOG.error("Error calculate checksum", e);
+            }
+        }
+
+        @Override
+        public int getDataSize() {
+            return (int) uriHelper.getFileSize();
+        }
+
+        @Override
+        public byte[] getSHA256() {
+            return dataSHA256;
+        }
+
+        @Override
+        public byte[] getDataChunk(int pos, int size) {
+            try {
+                InputStream inStream = uriHelper.openInputStream();
+                byte[] buf = new byte[size];
+                int n = (int) inStream.skip(pos);
+                if (n == pos) {
+                    int k = inStream.read(buf);
+                    if(k == size){
+                        return buf;
+                    }
+                }
+                LOG.error("File read error");
+                inStream.close();
+            } catch (Exception e) {
+                LOG.error("Read file exception", e);
+            }
+            return null;
+        }
+    }
 
     public interface FileUploadCallback {
         void onUploadStart();
@@ -40,10 +143,9 @@ public class HuaweiUploadManager {
     }
 
     public static class FileUploadInfo {
-        private byte[] fileBin;
-        private byte[] fileSHA256;
+
+        UploadData uploadData;
         private byte fileType = 1; // 1 - watchface, 2 - music, 3 - png for background , 7 - app
-        private int fileSize = 0;
         private byte fileId = 0; // get on incoming (2803)
 
         private String fileName = ""; //FIXME generate random name
@@ -82,29 +184,16 @@ public class HuaweiUploadManager {
             return fileUploadParams.no_encrypt == 0;
         }
 
-        public void setBytes(byte[] uploadArray) {
-
-            this.fileSize = uploadArray.length;
-            this.fileBin = uploadArray;
-
-            try {
-                MessageDigest m = MessageDigest.getInstance("SHA256");
-                m.update(fileBin, 0, fileBin.length);
-                fileSHA256 =  m.digest();
-            } catch (NoSuchAlgorithmException e) {
-                LOG.error("Digest algorithm not found.", e);
-                return;
-            }
+        public void setUploadData(UploadData uploadData) {
+            this.uploadData = uploadData;
 
             currentUploadPosition = 0;
             uploadChunkSize = 0;
-
-            LOG.info("File ready for upload, SHA256: {} fileName: {} filetype: {}", GB.hexdump(fileSHA256), fileName, fileType);
-
+            LOG.info("File ready for upload, SHA256: {} fileName: {} filetype: {}", GB.hexdump(uploadData.getSHA256()), fileName, fileType);
         }
 
         public int getFileSize() {
-            return fileSize;
+            return uploadData.getDataSize();
         }
 
         public String getFileName() {
@@ -148,7 +237,7 @@ public class HuaweiUploadManager {
         public void setDstFingerprint(String dstFingerprint) { this.dstFingerprint = dstFingerprint;}
 
         public byte[] getFileSHA256() {
-            return fileSHA256;
+            return uploadData.getSHA256();
         }
 
         public void setUploadChunkSize(int chunkSize) {
@@ -164,9 +253,7 @@ public class HuaweiUploadManager {
         }
 
         public byte[] getCurrentChunk() {
-            byte[] ret = new byte[uploadChunkSize];
-            System.arraycopy(fileBin, currentUploadPosition, ret, 0, uploadChunkSize);
-            return ret;
+            return uploadData.getDataChunk(currentUploadPosition, uploadChunkSize);
         }
     }
 

@@ -35,6 +35,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiP2PMana
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.dictionarysync.HuaweiDictionarySyncAltitude;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.dictionarysync.HuaweiDictionarySyncArterialStiffness;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.dictionarysync.HuaweiDictionarySyncBloodPressure;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.dictionarysync.HuaweiDictionarySyncDebug;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.dictionarysync.HuaweiDictionarySyncEmotion;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.dictionarysync.HuaweiDictionarySyncHRV;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.dictionarysync.HuaweiDictionarySyncInterface;
@@ -82,11 +83,25 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
         return "SystemApp";
     }
 
+    // According to HCI logs this value is variable size.
     public static byte[] dictToBytes(int value) {
-        return new byte[]{
-                (byte) (value >>> 16),
-                (byte) (value >>> 8),
-                (byte) value};
+        if (value < 256) {
+            return new byte[]{(byte) value};
+        }
+
+        int numBytes = 0;
+        int temp = value;
+        while (temp > 0) {
+            temp >>= 8;
+            numBytes++;
+        }
+
+        byte[] byteArray = new byte[numBytes];
+        for (int j = numBytes - 1; j >= 0; j--) {
+            byteArray[j] = (byte) (value & 0xFF);
+            value >>= 8;
+        }
+        return byteArray;
     }
 
     private List<HuaweiDictionarySyncInterface> getSyncHandlers() {
@@ -99,6 +114,7 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
         ret.add(new HuaweiDictionarySyncAltitude());
         ret.add(new HuaweiDictionarySyncBloodPressure());
         ret.add(new HuaweiDictionarySyncLakeLouiseAMS());
+        ret.add(new HuaweiDictionarySyncDebug());
         return ret;
     }
 
@@ -161,7 +177,7 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
 
         HuaweiTLV tlv = new HuaweiTLV()
                 .put(0x1, (byte) 1)
-                .put(0x2, dictToBytes(dictClass)) //-- skin temperature
+                .put(0x2, dictToBytes(dictClass))
                 .put(0x5, startTime)
                 .put(0x6, System.currentTimeMillis())
                 .put(0x0d, (byte) 1);
@@ -309,6 +325,7 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
                 }
 
                 if (operation != 1) {
+                    LOG.info("P2PDataDictionarySyncService unknown operation: {}", operation);
                     return;
                     //I never see value differ from 1. So I don't know how to interpret others. Just ignore for now
                     //callback.onComplete(true);
@@ -363,6 +380,8 @@ public class HuaweiP2PDataDictionarySyncService extends HuaweiBaseP2PService {
                     callback.onComplete(false);
                 }
             }
+        } else {
+            LOG.info("P2PDataDictionarySyncService unsupported data: {}", data[0]);
         }
     }
 

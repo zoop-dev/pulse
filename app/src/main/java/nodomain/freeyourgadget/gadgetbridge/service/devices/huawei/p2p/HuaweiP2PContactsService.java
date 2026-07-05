@@ -230,7 +230,7 @@ public class HuaweiP2PContactsService extends HuaweiBaseP2PService {
 
         fileInfo.setFileType((byte) 7);
         fileInfo.setFileName("contacts.json");
-        fileInfo.setBytes(data);
+        fileInfo.setUploadData(new HuaweiUploadManager.UploadDataBuffer(data));
         fileInfo.setSrcPackage(this.getModule());
         fileInfo.setDstPackage(this.getPackage());
         fileInfo.setSrcFingerprint(this.getLocalFingerprint());

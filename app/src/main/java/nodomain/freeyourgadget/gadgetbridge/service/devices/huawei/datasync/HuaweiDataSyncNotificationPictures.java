@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 
@@ -75,7 +76,7 @@ public class HuaweiDataSyncNotificationPictures implements HuaweiDataSyncCommon.
 
         fileInfo.setFileType((byte) 0x07);
         fileInfo.setFileName(filename);
-        fileInfo.setBytes(data);
+        fileInfo.setUploadData(new HuaweiUploadManager.UploadDataBuffer(data));
 
         fileInfo.setSrcPackage(SRC_PKG_NAME);
         fileInfo.setDstPackage(PKG_NAME);

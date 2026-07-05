@@ -140,6 +140,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2P
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PCannedRepliesService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PContactsService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PDirection;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PMapkitService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PTrackService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.HuaweiP2PDataDictionarySyncService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.p2p.dictionarysync.HuaweiDictionarySyncInterface;
@@ -1014,6 +1015,13 @@ public class HuaweiSupportProvider {
                         if (getDeviceState().supportsContactsSync()) {
                             if (HuaweiP2PContactsService.getRegisteredInstance(huaweiP2PManager) == null) {
                                 HuaweiP2PContactsService contactsService = new HuaweiP2PContactsService(huaweiP2PManager);
+                                contactsService.register();
+                            }
+                        }
+
+                        if (getDeviceState().supportsOfflineMap()) {
+                            if (HuaweiP2PMapkitService.getRegisteredInstance(huaweiP2PManager) == null) {
+                                HuaweiP2PMapkitService contactsService = new HuaweiP2PMapkitService(huaweiP2PManager);
                                 contactsService.register();
                             }
                         }
@@ -2394,6 +2402,12 @@ public class HuaweiSupportProvider {
         LOG.info("enter onAppInstall uri: {}", uri);
         HuaweiFwHelper huaweiFwHelper = new HuaweiFwHelper(uri, getContext());
 
+        if(huaweiFwHelper.isOfflineMap) {
+            HuaweiP2PMapkitService mapkitService = HuaweiP2PMapkitService.getRegisteredInstance(huaweiP2PManager);
+            mapkitService.startUpload(huaweiFwHelper.getFileName(), huaweiFwHelper.getUriHelper());
+            return;
+        }
+
         if (huaweiFwHelper.isFirmware) {
             huaweiOTAManager.startFwUpdate(huaweiFwHelper.fwInfo, uri);
             return;
@@ -2411,7 +2425,8 @@ public class HuaweiSupportProvider {
         } else {
             fileInfo.setFileName(huaweiFwHelper.getFileName());
         }
-        fileInfo.setBytes(huaweiFwHelper.getBytes());
+
+        fileInfo.setUploadData(new HuaweiUploadManager.UploadDataBuffer(huaweiFwHelper.getBytes()));
 
         fileInfo.setFileUploadCallback(new HuaweiUploadManager.FileUploadCallback() {
             @Override
@@ -2907,7 +2922,7 @@ public class HuaweiSupportProvider {
 
                         LOG.debug("Parsing PDR file");
                         HuaweiPdrParser.PdrPoint[] points = HuaweiPdrParser.parseHuaweiPdr(fileRequest.getData());
-                        LOG.info("Points: " + points);
+                        LOG.info("Points: {}", points);
                         //TODO: postprocess and combine with Gps data
                     }
 

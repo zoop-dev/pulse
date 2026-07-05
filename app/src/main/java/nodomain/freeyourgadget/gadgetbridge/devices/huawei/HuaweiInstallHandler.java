@@ -113,6 +113,46 @@ public class HuaweiInstallHandler implements InstallHandler {
     public void validateInstallation(@NonNull InstallActivity installActivity, @NonNull GBDevice device) {
         final HuaweiState huaweiDeviceState = HuaweiDeviceStateManager.get(device);
 
+        if (helper.isOfflineMap) {
+            this.valid = true;
+
+            if (device.isBusy()) {
+                installActivity.setInfoText(device.getBusyTask());
+                installActivity.setInstallEnabled(false);
+                return;
+            }
+
+            if (!device.isConnected() || !device.isInitialized()) {
+                LOG.error("Offline Map cannot be uploaded(not connected or wrong device)");
+                installActivity.setInfoText("Offline Map cannot be uploaded (not connected or wrong device)");
+                installActivity.setInstallEnabled(false);
+                return;
+            }
+
+            if (this.helper.isMapContour)
+                this.valid = huaweiDeviceState.supportsOfflineContourMap();
+
+            if (!this.valid) {
+                LOG.error("Offline Map cannot be uploaded");
+                installActivity.setInstallEnabled(false);
+                return;
+            }
+
+            GenericItem installItem = new GenericItem();
+
+            installItem.setName(helper.mapName + "("+ helper.getFileName() +")");
+            installItem.setDetails(String.valueOf(helper.mapVersion));
+            installItem.setIcon(R.drawable.ic_offlinemap);
+
+            installActivity.setInstallItem(installItem);
+
+            installActivity.setInfoText("");
+            installActivity.setInstallEnabled(true);
+
+            LOG.debug("Initialized HuaweiInstallHandler: Offline Map");
+            return;
+        }
+
         if (helper.isFirmware) {
             this.valid = true; //NOTE: nothing to verify for now
 
