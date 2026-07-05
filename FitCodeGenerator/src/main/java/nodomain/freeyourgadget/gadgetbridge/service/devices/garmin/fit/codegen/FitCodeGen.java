@@ -32,6 +32,8 @@ import java.nio.file.StandardOpenOption;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -45,6 +47,10 @@ import java.util.regex.Pattern;
 
 public enum FitCodeGen {
     ;
+
+    // messages definitions directly accessed repeatedly
+    // put everything else in functions to avoid "code to large" for the class constructor
+    static final int[] DIRECT_ACCESS_MESSAGES = {0, 1, 206};
 
     private static final String NATIVE_HEADER =
             """                        
@@ -189,7 +195,12 @@ public enum FitCodeGen {
         printer.println(NATIVE_HEADER);
 
         for (final NativeFITMessage messsage : fitMessages) {
-            printer.println("\tpublic static NativeFITMessage FIT_" + messsage.name + " = new NativeFITMessage(" + messsage.num + ", \"" + messsage.name + "\", List.of(");
+            boolean directAccess = Arrays.binarySearch(DIRECT_ACCESS_MESSAGES, messsage.num) >= 0;
+            if(directAccess) {
+                printer.println("\tpublic static NativeFITMessage FIT_" + messsage.name + " = new NativeFITMessage(" + messsage.num + ", \"" + messsage.name + "\", List.of(");
+            }else{
+                printer.println("\tpublic static NativeFITMessage FIT_" + messsage.name + "() { return new NativeFITMessage(" + messsage.num + ", \"" + messsage.name + "\", List.of(");
+            }
 
             final FieldDefinitionPrimitive[] fields = messsage.fields.toArray(new FieldDefinitionPrimitive[0]);
             for (int i = 0; i < fields.length; i++) {
@@ -253,14 +264,23 @@ public enum FitCodeGen {
 
                 printer.println();
             }
-            printer.println("\t));");
+            if (directAccess) {
+                printer.println("\t));");
+            } else {
+                printer.println("\t));}");
+            }
         }
 
         printer.println("\tstatic final SortedMap<Integer, NativeFITMessage> mapKnownMessages() {");
         printer.println("\t\tSortedMap<Integer, NativeFITMessage> map = new TreeMap<>();");
         printer.println("\t\tNativeFITMessage mesg;");
         for (final NativeFITMessage message : fitMessages) {
-            printer.println("\t\tmap.put(" + message.num + ", FIT_" + message.name + ");");
+            boolean directAccess = Arrays.binarySearch(DIRECT_ACCESS_MESSAGES, message.num) >= 0;
+            if (directAccess) {
+                printer.println("\t\tmap.put(" + message.num + ", FIT_" + message.name + ");");
+            } else {
+                printer.println("\t\tmap.put(" + message.num + ", FIT_" + message.name + "());");
+            }
         }
         printer.println("\t\treturn map;");
         printer.println("\t}");
