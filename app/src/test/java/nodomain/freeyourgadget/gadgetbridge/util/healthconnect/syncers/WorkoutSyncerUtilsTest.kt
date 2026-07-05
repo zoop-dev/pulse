@@ -94,7 +94,7 @@ class WorkoutSyncerUtilsTest {
             WorkoutSyncerUtils.mapActivityKindToExerciseType(ActivityKind.STRENGTH_TRAINING)
         )
         assertEquals(
-            ExerciseSessionRecord.EXERCISE_TYPE_STRENGTH_TRAINING,
+            ExerciseSessionRecord.EXERCISE_TYPE_WEIGHTLIFTING,
             WorkoutSyncerUtils.mapActivityKindToExerciseType(ActivityKind.WEIGHTLIFTING)
         )
         assertEquals(

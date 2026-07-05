@@ -28,10 +28,13 @@ internal object WorkoutSyncerUtils {
      */
     fun mapActivityKindToExerciseType(activityKind: ActivityKind): Int {
         return when (activityKind) {
-            ActivityKind.RUNNING, ActivityKind.OUTDOOR_RUNNING, ActivityKind.CROSS_COUNTRY_RUNNING, ActivityKind.TRAIL_RUN -> ExerciseSessionRecord.EXERCISE_TYPE_RUNNING
+            ActivityKind.RUNNING, ActivityKind.OUTDOOR_RUNNING, ActivityKind.CROSS_COUNTRY_RUNNING, ActivityKind.TRAIL_RUN,
+            ActivityKind.STREET_RUNNING, ActivityKind.TRACK_RUN, ActivityKind.ULTRA_RUN, ActivityKind.VIRTUAL_RUN -> ExerciseSessionRecord.EXERCISE_TYPE_RUNNING
             ActivityKind.WALKING, ActivityKind.OUTDOOR_WALKING, ActivityKind.RACE_WALKING -> ExerciseSessionRecord.EXERCISE_TYPE_WALKING
             ActivityKind.SWIMMING -> ExerciseSessionRecord.EXERCISE_TYPE_SWIMMING_POOL
-            ActivityKind.CYCLING, ActivityKind.OUTDOOR_CYCLING -> ExerciseSessionRecord.EXERCISE_TYPE_BIKING
+            ActivityKind.CYCLING, ActivityKind.OUTDOOR_CYCLING, ActivityKind.BIKE_TOUR, ActivityKind.CYCLING_DOWNHILL,
+            ActivityKind.CYCLO_CROSS, ActivityKind.E_MOUNTAIN_BIKE, ActivityKind.GRAVEL_BIKE, ActivityKind.MOUNTAIN_BIKE,
+            ActivityKind.ROAD_BIKE -> ExerciseSessionRecord.EXERCISE_TYPE_BIKING
             ActivityKind.TREADMILL, ActivityKind.INDOOR_RUNNING -> ExerciseSessionRecord.EXERCISE_TYPE_RUNNING_TREADMILL
             ActivityKind.INDOOR_CYCLING, ActivityKind.DYNAMIC_CYCLE, ActivityKind.SPINNING -> ExerciseSessionRecord.EXERCISE_TYPE_BIKING_STATIONARY
             ActivityKind.SWIMMING_OPENWATER, ActivityKind.FINSWIMMING -> ExerciseSessionRecord.EXERCISE_TYPE_SWIMMING_OPEN_WATER
@@ -45,24 +48,30 @@ internal object WorkoutSyncerUtils {
             ActivityKind.BASKETBALL -> ExerciseSessionRecord.EXERCISE_TYPE_BASKETBALL
             ActivityKind.PINGPONG, ActivityKind.TABLE_TENNIS -> ExerciseSessionRecord.EXERCISE_TYPE_TABLE_TENNIS
             ActivityKind.BADMINTON, ActivityKind.SHUTTLECOCK -> ExerciseSessionRecord.EXERCISE_TYPE_BADMINTON
-            ActivityKind.STRENGTH_TRAINING, ActivityKind.WEIGHTLIFTING, ActivityKind.DUMBBELL, ActivityKind.BARBELL, ActivityKind.DEADLIFT, ActivityKind.PULL_UPS, ActivityKind.PUSH_UPS, ActivityKind.SIT_UPS, ActivityKind.PLANK, ActivityKind.BURPEE, ActivityKind.ABS, ActivityKind.BACK, ActivityKind.UPPER_BODY, ActivityKind.LOWER_BODY, ActivityKind.SMITH_MACHINE, ActivityKind.BATTLE_ROPE -> ExerciseSessionRecord.EXERCISE_TYPE_STRENGTH_TRAINING
-            ActivityKind.HIKING, ActivityKind.MOUNTAIN_HIKE, ActivityKind.TREKKING -> ExerciseSessionRecord.EXERCISE_TYPE_HIKING
+            ActivityKind.STRENGTH_TRAINING, ActivityKind.DUMBBELL, ActivityKind.BARBELL, ActivityKind.DEADLIFT, ActivityKind.PULL_UPS, ActivityKind.PUSH_UPS, ActivityKind.SIT_UPS, ActivityKind.PLANK, ActivityKind.BURPEE, ActivityKind.ABS, ActivityKind.BACK, ActivityKind.UPPER_BODY, ActivityKind.LOWER_BODY, ActivityKind.SMITH_MACHINE, ActivityKind.BATTLE_ROPE, ActivityKind.CROSS_TRAINING -> ExerciseSessionRecord.EXERCISE_TYPE_STRENGTH_TRAINING
+            ActivityKind.WEIGHTLIFTING -> ExerciseSessionRecord.EXERCISE_TYPE_WEIGHTLIFTING
+            ActivityKind.HIKING, ActivityKind.MOUNTAIN_HIKE, ActivityKind.TREKKING, ActivityKind.TRAIL_HIKE, ActivityKind.EXPEDITION, ActivityKind.GEOCACHING -> ExerciseSessionRecord.EXERCISE_TYPE_HIKING
             ActivityKind.CLIMBING, ActivityKind.ROCK_CLIMBING, ActivityKind.CLIMB_INDOOR, ActivityKind.BOULDERING, ActivityKind.FLOOR_CLIMBING, ActivityKind.MOUNTAINEERING -> ExerciseSessionRecord.EXERCISE_TYPE_ROCK_CLIMBING
             ActivityKind.HANDCYCLING, ActivityKind.HANDCYCLING_INDOOR -> ExerciseSessionRecord.EXERCISE_TYPE_BIKING_STATIONARY
             ActivityKind.E_BIKE -> ExerciseSessionRecord.EXERCISE_TYPE_BIKING
             ActivityKind.BIKE_COMMUTE -> ExerciseSessionRecord.EXERCISE_TYPE_BIKING
-            ActivityKind.STAIR_STEPPER, ActivityKind.STAIR_CLIMBER, ActivityKind.STAIRS -> ExerciseSessionRecord.EXERCISE_TYPE_STAIR_CLIMBING_MACHINE
+            ActivityKind.STAIR_STEPPER, ActivityKind.STAIR_CLIMBER, ActivityKind.STEPPER -> ExerciseSessionRecord.EXERCISE_TYPE_STAIR_CLIMBING_MACHINE
+            ActivityKind.STAIRS -> ExerciseSessionRecord.EXERCISE_TYPE_STAIR_CLIMBING
             ActivityKind.PILATES -> ExerciseSessionRecord.EXERCISE_TYPE_PILATES
             ActivityKind.POOL_SWIM, ActivityKind.ARTISTIC_SWIMMING -> ExerciseSessionRecord.EXERCISE_TYPE_SWIMMING_POOL
-            ActivityKind.TENNIS, ActivityKind.PLATFORM_TENNIS, ActivityKind.PICKLEBALL, ActivityKind.PADEL, ActivityKind.SQUASH, ActivityKind.RACQUETBALL -> ExerciseSessionRecord.EXERCISE_TYPE_TENNIS
-            ActivityKind.AMERICAN_FOOTBALL, ActivityKind.AUSTRALIAN_FOOTBALL, ActivityKind.RUGBY -> ExerciseSessionRecord.EXERCISE_TYPE_FOOTBALL_AMERICAN
+            ActivityKind.TENNIS, ActivityKind.PLATFORM_TENNIS, ActivityKind.PICKLEBALL, ActivityKind.PADEL -> ExerciseSessionRecord.EXERCISE_TYPE_TENNIS
+            ActivityKind.SQUASH -> ExerciseSessionRecord.EXERCISE_TYPE_SQUASH
+            ActivityKind.RACQUETBALL -> ExerciseSessionRecord.EXERCISE_TYPE_RACQUETBALL
+            ActivityKind.AMERICAN_FOOTBALL -> ExerciseSessionRecord.EXERCISE_TYPE_FOOTBALL_AMERICAN
+            ActivityKind.AUSTRALIAN_FOOTBALL -> ExerciseSessionRecord.EXERCISE_TYPE_FOOTBALL_AUSTRALIAN
+            ActivityKind.RUGBY -> ExerciseSessionRecord.EXERCISE_TYPE_RUGBY
             ActivityKind.CARDIO, ActivityKind.AEROBICS, ActivityKind.AEROBIC_EXERCISE, ActivityKind.AEROBIC_COMBO, ActivityKind.STEP_AEROBICS -> ExerciseSessionRecord.EXERCISE_TYPE_DANCING
             ActivityKind.BREATHWORK -> ExerciseSessionRecord.EXERCISE_TYPE_GUIDED_BREATHING
             ActivityKind.MEDITATION, ActivityKind.MIND_AND_BODY -> ExerciseSessionRecord.EXERCISE_TYPE_GUIDED_BREATHING
             ActivityKind.INDOOR_WALKING -> ExerciseSessionRecord.EXERCISE_TYPE_WALKING
-            ActivityKind.XC_CLASSIC_SKI, ActivityKind.CROSS_COUNTRY_SKIING -> ExerciseSessionRecord.EXERCISE_TYPE_SKIING
-            ActivityKind.SKIING -> ExerciseSessionRecord.EXERCISE_TYPE_SKIING
-            ActivityKind.SNOWBOARDING -> ExerciseSessionRecord.EXERCISE_TYPE_SNOWBOARDING
+            ActivityKind.XC_CLASSIC_SKI, ActivityKind.CROSS_COUNTRY_SKIING, ActivityKind.XC_SKATE_SKI -> ExerciseSessionRecord.EXERCISE_TYPE_SKIING
+            ActivityKind.SKIING, ActivityKind.BACKCOUNTRY_SKIING, ActivityKind.INDOOR_SKIING -> ExerciseSessionRecord.EXERCISE_TYPE_SKIING
+            ActivityKind.SNOWBOARDING, ActivityKind.BACKCOUNTRY_SNOWBOARDING -> ExerciseSessionRecord.EXERCISE_TYPE_SNOWBOARDING
             ActivityKind.GOLF -> ExerciseSessionRecord.EXERCISE_TYPE_GOLF
             ActivityKind.INLINE_SKATING, ActivityKind.ROLLER_SKATING, ActivityKind.SKATING -> ExerciseSessionRecord.EXERCISE_TYPE_SKATING
             ActivityKind.ICE_SKATING, ActivityKind.INDOOR_ICE_SKATING -> ExerciseSessionRecord.EXERCISE_TYPE_ICE_SKATING
@@ -78,9 +87,10 @@ internal object WorkoutSyncerUtils {
             ActivityKind.SOFTBALL, ActivityKind.SOFTBALL_SLOW_PITCH -> ExerciseSessionRecord.EXERCISE_TYPE_SOFTBALL
             ActivityKind.HIIT -> ExerciseSessionRecord.EXERCISE_TYPE_HIGH_INTENSITY_INTERVAL_TRAINING
             ActivityKind.HOCKEY, ActivityKind.ICE_HOCKEY -> ExerciseSessionRecord.EXERCISE_TYPE_ICE_HOCKEY
+            ActivityKind.FLOORBALL -> ExerciseSessionRecord.EXERCISE_TYPE_ROLLER_HOCKEY
             ActivityKind.LACROSSE, ActivityKind.LACROSS -> ExerciseSessionRecord.EXERCISE_TYPE_ICE_HOCKEY
             ActivityKind.VOLLEYBALL, ActivityKind.BEACH_VOLLEYBALL -> ExerciseSessionRecord.EXERCISE_TYPE_VOLLEYBALL
-            ActivityKind.MIXED_MARTIAL_ARTS, ActivityKind.FREE_SPARRING, ActivityKind.BODY_COMBAT, ActivityKind.CARDIO_COMBAT -> ExerciseSessionRecord.EXERCISE_TYPE_MARTIAL_ARTS
+            ActivityKind.MIXED_MARTIAL_ARTS, ActivityKind.FREE_SPARRING, ActivityKind.BODY_COMBAT, ActivityKind.CARDIO_COMBAT, ActivityKind.MMA_HIIT -> ExerciseSessionRecord.EXERCISE_TYPE_MARTIAL_ARTS
             ActivityKind.DANCE, ActivityKind.BELLY_DANCE, ActivityKind.JAZZ_DANCE, ActivityKind.LATIN_DANCE, ActivityKind.BALLET, ActivityKind.STREET_DANCE, ActivityKind.ZUMBA, ActivityKind.BALLROOM_DANCE, ActivityKind.BREAKING, ActivityKind.FOLK_DANCE, ActivityKind.HIP_HOP, ActivityKind.MODERN_DANCE, ActivityKind.POLE_DANCE, ActivityKind.SQUARE_DANCE, ActivityKind.PLAZA_DANCING -> ExerciseSessionRecord.EXERCISE_TYPE_DANCING
             ActivityKind.KICKBOXING, ActivityKind.TAE_BO -> ExerciseSessionRecord.EXERCISE_TYPE_BOXING
             ActivityKind.CROSSFIT, ActivityKind.FUNCTIONAL_TRAINING, ActivityKind.PHYSICAL_TRAINING, ActivityKind.FREE_TRAINING, ActivityKind.FITNESS_EXERCISES -> ExerciseSessionRecord.EXERCISE_TYPE_STRENGTH_TRAINING
@@ -99,14 +109,14 @@ internal object WorkoutSyncerUtils {
             ActivityKind.SAILING, ActivityKind.SAIL_RACE, ActivityKind.SAIL_EXPEDITION -> ExerciseSessionRecord.EXERCISE_TYPE_SAILING
             ActivityKind.SKATEBOARDING -> ExerciseSessionRecord.EXERCISE_TYPE_SKATING
             ActivityKind.PARKOUR -> ExerciseSessionRecord.EXERCISE_TYPE_CALISTHENICS
-            ActivityKind.STRETCHING, ActivityKind.FLEXIBILITY, ActivityKind.ROLLING -> ExerciseSessionRecord.EXERCISE_TYPE_STRETCHING
+            ActivityKind.STRETCHING, ActivityKind.FLEXIBILITY, ActivityKind.ROLLING, ActivityKind.MOBILITY -> ExerciseSessionRecord.EXERCISE_TYPE_STRETCHING
             ActivityKind.WATER_POLO -> ExerciseSessionRecord.EXERCISE_TYPE_WATER_POLO
             ActivityKind.OBSTACLE_RACE -> ExerciseSessionRecord.EXERCISE_TYPE_OTHER_WORKOUT
             ActivityKind.SLEDDING, ActivityKind.BOBSLEIGH, ActivityKind.LUGE -> ExerciseSessionRecord.EXERCISE_TYPE_SKIING
             ActivityKind.BIATHLON -> ExerciseSessionRecord.EXERCISE_TYPE_RUNNING
             ActivityKind.ORIENTEERING -> ExerciseSessionRecord.EXERCISE_TYPE_RUNNING
             ActivityKind.TRIATHLON, ActivityKind.MULTISPORT -> ExerciseSessionRecord.EXERCISE_TYPE_RUNNING
-            ActivityKind.DIVING, ActivityKind.FREE_DIVING, ActivityKind.APNEA_TRAINING, ActivityKind.APNEA_TEST, ActivityKind.SCUBA_DIVING, ActivityKind.SNORKELING -> ExerciseSessionRecord.EXERCISE_TYPE_SCUBA_DIVING
+            ActivityKind.DIVING, ActivityKind.FREE_DIVING, ActivityKind.APNEA_TRAINING, ActivityKind.APNEA_TEST, ActivityKind.SCUBA_DIVING, ActivityKind.SNORKELING, ActivityKind.CCR_DIVING -> ExerciseSessionRecord.EXERCISE_TYPE_SCUBA_DIVING
             ActivityKind.PARAGLIDING, ActivityKind.HANG_GLIDING, ActivityKind.JUMPMASTER, ActivityKind.PARACHUTING, ActivityKind.SKY_DIVING -> ExerciseSessionRecord.EXERCISE_TYPE_PARAGLIDING
             ActivityKind.TRACK_AND_FIELD, ActivityKind.ATHLETICS, ActivityKind.JAVELIN, ActivityKind.LONG_JUMP, ActivityKind.HIGH_JUMP, ActivityKind.SHOT -> ExerciseSessionRecord.EXERCISE_TYPE_RUNNING
             ActivityKind.DISC_GOLF, ActivityKind.FRISBEE, ActivityKind.ULTIMATE_DISC -> ExerciseSessionRecord.EXERCISE_TYPE_FRISBEE_DISC
@@ -132,12 +142,11 @@ internal object WorkoutSyncerUtils {
             ActivityKind.HACKY_SACK, ActivityKind.JAI_ALAI, ActivityKind.SHUFFLEBOARD, ActivityKind.TABLE_FOOTBALL,
             ActivityKind.TUG_OF_WAR, ActivityKind.WALL_BALL, ActivityKind.WEIQI, ActivityKind.LASER_TAG, ActivityKind.BILLIARD_POOL,
             ActivityKind.ATV, ActivityKind.POWERBOATING, ActivityKind.SHOOTING, ActivityKind.BOCCE,
+            ActivityKind.ADVENTURE_RACE, ActivityKind.ANCHOR, ActivityKind.DODGEBALL, ActivityKind.MAP, ActivityKind.MOTOCROSS,
+            ActivityKind.MOTOR_SPORT, ActivityKind.OVERLANDING, ActivityKind.STOP_WATCH, ActivityKind.TRACK_ME, ActivityKind.TROLLING_MOTOR,
             ActivityKind.UNKNOWN, ActivityKind.NOT_MEASURED, ActivityKind.NOT_WORN -> ExerciseSessionRecord.EXERCISE_TYPE_OTHER_WORKOUT
 
             ActivityKind.LIGHT_SLEEP, ActivityKind.DEEP_SLEEP, ActivityKind.REM_SLEEP, ActivityKind.AWAKE_SLEEP, ActivityKind.SLEEP_ANY -> ExerciseSessionRecord.EXERCISE_TYPE_OTHER_WORKOUT
-
-            else -> ExerciseSessionRecord.EXERCISE_TYPE_OTHER_WORKOUT
         }
     }
 }
-
