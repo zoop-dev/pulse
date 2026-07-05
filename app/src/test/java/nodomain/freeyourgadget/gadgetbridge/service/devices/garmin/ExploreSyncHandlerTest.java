@@ -25,9 +25,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminCapability;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminPreferences;
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
@@ -75,6 +78,10 @@ public class ExploreSyncHandlerTest extends TestBase {
                 new GBDevice(DEVICE_ADDRESS, "TestFenix", null, null, DeviceType.GARMIN_FENIX_7_PRO),
                 /*btAdapter*/ null,
                 org.robolectric.RuntimeEnvironment.getApplication());
+        support.getDevicePrefs().getPreferences().edit()
+                .putStringSet(GarminPreferences.PREF_GARMIN_CAPABILITIES,
+                        Collections.singleton(GarminCapability.EXPLORE_SYNC.name()))
+                .apply();
         handler = new ExploreSyncHandler(support);
     }
 
@@ -471,6 +478,26 @@ public class ExploreSyncHandlerTest extends TestBase {
                         .setActiveLineDigestWriteRequest(GdiExploreSyncService.ActiveLineDigestWriteRequest.getDefaultInstance())
                         .build())
                         .getActiveLineDigestWriteResponse().getStatus());
+    }
+
+    // ---- GarminSupport.finishFileSync / ExploreSync re-arm ----------------------
+    //
+    // Historical bug: the "no more files to download" fetch cycle in
+    // GarminSupport has two exits — no FIT files were queued for parsing,
+    // or FitAsyncProcessor just finished parsing what was queued. A prior
+    // refactor (upstream "Only trigger ExploreSync after normal sync")
+    // added the ExploreSync re-arm to only the first exit; the second —
+    // the common case, since a watch almost always has at least one
+    // pending FIT file — silently never restarted ExploreSync.
+    // finishFileSync() is now the single shared tail for both exits, so
+    // testing it directly (rather than via either caller) covers both.
+
+    @Test
+    public void finishFileSync_reArmsExploreSync() {
+        support.finishFileSync();
+
+        Assert.assertEquals(1, support.outgoing.size());
+        Assert.assertTrue(support.outgoing.get(0).getExploreSyncService().hasStartSyncRequest());
     }
 
     // ---- helpers ----------------------------------------------------------------

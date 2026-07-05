@@ -32,6 +32,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.documentfile.provider.DocumentFile;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -944,34 +945,19 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
                 return;
             }
 
+            // Keep the device marked as busy while we process the files asynchronously, but unset
+            // isBusyFetching so we do not start multiple processors
+            isBusyFetching = false;
+
             if (filesToProcess.isEmpty()) {
                 LOG.debug("No pending files to process");
-                // No downloaded fit files to process
-                if (isBusyFetching) {
-                    getDevice().unsetBusyTask();
-                    GB.signalActivityDataFinish(getDevice());
-                    transferNotification.finish();
-                    getDevice().sendDeviceUpdateIntent(getContext());
-                }
-                isBusyFetching = false;
+                finishFileSync();
 
                 // FIXME: This should probably only happen after exploresync also finishes
                 sendOutgoingMessage("set sync complete", new SystemEventMessage(SystemEventMessage.GarminSystemEventType.SYNC_COMPLETE, 0));
 
-                if (getCoordinator().supports(getDevice(), GarminCapability.EXPLORE_SYNC)) {
-                    // Re-arm the ExploreSync historical catalog walk so any activities
-                    // recorded since the initial connect get picked up. Watches that
-                    // don't support the service reject our StartSyncRequest and the
-                    // handler tears the session down on its own.
-                    protocolBufferHandler.getExploreSyncHandler().startSession();
-                }
-
                 return;
             }
-
-            // Keep the device marked as busy while we process the files asynchronously, but unset
-            // isBusyFetching so we do not start multiple processors
-            isBusyFetching = false;
 
             transferNotification.start(R.string.busy_task_processing_files, 0, filesToProcess.size());
 
@@ -984,12 +970,31 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
                 @Override
                 public void onFinish() {
-                    getDevice().unsetBusyTask();
-                    GB.signalActivityDataFinish(getDevice());
-                    transferNotification.finish();
-                    getDevice().sendDeviceUpdateIntent(getContext());
+                    finishFileSync();
                 }
             });
+        }
+    }
+
+    /**
+     * Common tail of both "no more files to download" exits — whether
+     * there was nothing queued for parsing, or {@link FitAsyncProcessor}
+     * just finished parsing what was queued. Unblocks the device's busy
+     * state, signals the new data to the UI, and re-arms ExploreSync's
+     * historical catalog walk so any activities recorded since the
+     * initial connect get picked up. Watches that don't support the
+     * service reject our StartSyncRequest and the handler tears the
+     * session down on its own.
+     */
+    @VisibleForTesting
+    void finishFileSync() {
+        getDevice().unsetBusyTask();
+        GB.signalActivityDataFinish(getDevice());
+        transferNotification.finish();
+        getDevice().sendDeviceUpdateIntent(getContext());
+
+        if (getCoordinator().supports(getDevice(), GarminCapability.EXPLORE_SYNC)) {
+            protocolBufferHandler.getExploreSyncHandler().startSession();
         }
     }
 
