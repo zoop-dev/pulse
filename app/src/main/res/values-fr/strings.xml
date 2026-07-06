@@ -904,7 +904,7 @@
     <string name="averageKMPaceSeconds">Rythme</string>
     <string name="averageHR">Fréquence cardiaque moyenne</string>
     <string name="totalStride">Foulées totales</string>
-    <string name="caloriesBurnt">Calories</string>
+    <string name="caloriesBurnt">Calories totales</string>
     <string name="activeSeconds">Actif</string>
     <string name="steps">Pas</string>
     <string name="minAltitude">Minimum</string>
@@ -4390,11 +4390,11 @@
     <string name="activityTotalAscent">Dénivelé positif total</string>
     <string name="activityTotalDescent">Dénivelé négatif total</string>
     <string name="average_ascent_velocity">Vitesse moyenne d\'ascension</string>
-    <string name="consumed_electrical_energy">Energie consommée</string>
+    <string name="consumed_electrical_energy">Énergie consommée</string>
     <string name="electrical_current">Courant</string>
     <string name="unit_ampere">A</string>
     <string name="unit_ampere_hour">Ah</string>
-    <string name="left_right_balance">Equilibre</string>
+    <string name="left_right_balance">Équilibre</string>
     <string name="diving_gas">Gaz</string>
     <string name="helium_content">Teneur en hélium</string>
     <string name="oxygen_content">Teneur en oxygène</string>
@@ -4404,7 +4404,7 @@
     <string name="soundbrenner_category_tempo">Tempo</string>
     <string name="soundbrenner_pref_subdivision_triplet">Triolets</string>
     <string name="media_source_aux">AUX</string>
-    <string name="endurain_failed_to_connect_to_server">Echec de la connexion au serveur</string>
+    <string name="endurain_failed_to_connect_to_server">Échec de la connexion au serveur</string>
     <string name="endurain_invalid_mfa_code">Code MFA invalide</string>
     <string name="endurain_mfa_verification_failed">La vérification MFA a échoué</string>
     <string name="endurain_server_version">\nVersion du serveur : %1$s</string>
