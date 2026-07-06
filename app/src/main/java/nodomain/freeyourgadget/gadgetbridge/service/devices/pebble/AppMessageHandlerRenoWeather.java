@@ -34,7 +34,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather;
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
-class AppMessageHandlerRealWeather extends AppMessageHandler {
+class AppMessageHandlerRenoWeather extends AppMessageHandler {
     private static int CLEAR_DAY = 0;
     private static int CLEAR_NIGHT = 1;
     private static int WINDY = 2;
@@ -52,16 +52,20 @@ class AppMessageHandlerRealWeather extends AppMessageHandler {
 
     private Integer KEY_WEATHER_ICON;
     private Integer KEY_WEATHER_TEMP;
+    private Integer KEY_INVERT_COLOR = -1;
 
-    AppMessageHandlerRealWeather(UUID uuid, PebbleProtocol pebbleProtocol) {
+    AppMessageHandlerRenoWeather(UUID uuid, PebbleProtocol pebbleProtocol) {
         super(uuid, pebbleProtocol);
 
         try {
             JSONObject appKeys = getAppKeys();
             KEY_WEATHER_TEMP = appKeys.getInt("temperature");
             KEY_WEATHER_ICON = appKeys.getInt("icon");
+            if (appKeys.has("invert_color")) {
+                KEY_INVERT_COLOR = appKeys.getInt("invert_color");
+            }
         } catch (JSONException e) {
-            GB.toast("There was an error accessing the RealWeather watchface configuration.", Toast.LENGTH_LONG, GB.ERROR, e);
+            GB.toast("There was an error accessing the reno watchface configuration.", Toast.LENGTH_LONG, GB.ERROR, e);
         } catch (IOException ignore) {
         }
     }
@@ -119,6 +123,9 @@ class AppMessageHandlerRealWeather extends AppMessageHandler {
         ArrayList<Pair<Integer, Object>> pairs = new ArrayList<>(2);
         pairs.add(new Pair<>(KEY_WEATHER_TEMP, (Object) (String.format(Locale.ENGLISH, "%.0f°", weatherSpec.getCurrentTemp() - 273.15))));
         pairs.add(new Pair<>(KEY_WEATHER_ICON, (Object) (getIconForConditionCode(weatherSpec.getCurrentConditionCode(), isNight))));
+        if (KEY_INVERT_COLOR > 0) {
+            pairs.add(new Pair<>(KEY_INVERT_COLOR, 0) );
+        }
         byte[] weatherMessage = mPebbleProtocol.encodeApplicationMessagePush(PebbleProtocol.ENDPOINT_APPLICATIONMESSAGE, mUUID, pairs, null);
 
         ByteBuffer buf = ByteBuffer.allocate(weatherMessage.length);
