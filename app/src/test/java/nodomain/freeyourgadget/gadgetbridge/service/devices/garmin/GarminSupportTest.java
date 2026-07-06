@@ -1,4 +1,4 @@
-/*  Copyright (C) 2024-2025 Daniele Gobbetti, José Rebelo, Thomas Kuehne
+/*  Copyright (C) 2024-2026 Daniele Gobbetti, José Rebelo, Thomas Kuehne
 
     This file is part of Gadgetbridge.
 
@@ -42,7 +42,6 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.deviceevents.IncomingFitDefinitionDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FieldDefinition;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.NativeFITMessage;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.NativeFITMessages;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordDefinition;
@@ -72,7 +71,7 @@ public class GarminSupportTest extends TestBase {
         byte[] weatherDefinitionMessage = GB.hexStringToByteArray("81009313400001008011000100FD04860904860101010E01010D01010201000302840501020402840601010701020A04850B04850F0101110100080F0741000100800A000100FD0486010101020100060101030284040284050102070102100488420001008008000100FD04860E01010D01010201000501020C0100110100F2FF");
         FitDefinitionMessage fitDefinitionMessage = (FitDefinitionMessage) GFDIMessage.parseIncoming(weatherDefinitionMessage);
 
-        List<RecordData>  recordDataList = fitDataMessage.applyDefinitions(fitDefinitionMessage.getRecordDefinitions());
+        List<RecordData> recordDataList = fitDataMessage.applyDefinitions(fitDefinitionMessage.getRecordDefinitions());
 
         List<RecordData> weatherData = new ArrayList<>();
 
@@ -118,10 +117,11 @@ public class GarminSupportTest extends TestBase {
         FitDataStatusMessage ok_applied_data = new FitDataStatusMessage(GFDIMessage.GarminMessage.FIT_DATA, GFDIMessage.Status.ACK, FitDataStatusMessage.FitDataStatusCode.APPLIED, true);
         Assert.assertArrayEquals(ok_applied_data.getOutgoingMessage(), fitDataMessage.getAckBytestream());
     }
+
     @Test
     public void testBaseFields() {
 
-        RecordDefinition recordDefinition = new RecordDefinition(new RecordHeader((byte) 6), ByteOrder.LITTLE_ENDIAN, NativeFITMessages.FIT_WEATHER, null, null); //just some random data
+        RecordDefinition recordDefinition = new RecordDefinition(new RecordHeader((byte) 6), ByteOrder.LITTLE_ENDIAN, NativeFITMessages.FIT_WEATHER(), null, null); //just some random data
         List<FieldDefinition> fieldDefinitionList = new ArrayList<>();
         for (BaseType baseType :
                 BaseType.values()) {
