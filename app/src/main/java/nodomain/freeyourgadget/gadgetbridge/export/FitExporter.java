@@ -230,6 +230,23 @@ public class FitExporter {
         return strokes * strokeLengthM;
     }
 
+    // Mean Earth radius (m) for the haversine great-circle distance below.
+    private static final double EARTH_RADIUS_M = 6_371_000.0;
+
+    /// Great-circle distance in metres between two coordinates. Pure Java (haversine) —
+    /// deliberately NOT GPSCoordinate.getDistance, which delegates to
+    /// android.location.Location and is unavailable in the exporter's plain-JVM unit tests.
+    private static double haversineMeters(@NonNull final GPSCoordinate a,
+                                          @NonNull final GPSCoordinate b) {
+        final double lat1 = Math.toRadians(a.getLatitude());
+        final double lat2 = Math.toRadians(b.getLatitude());
+        final double dLat = lat2 - lat1;
+        final double dLon = Math.toRadians(b.getLongitude() - a.getLongitude());
+        final double h = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        return 2 * EARTH_RADIUS_M * Math.asin(Math.min(1.0, Math.sqrt(h)));
+    }
+
     public void performExport(@Nullable final ActivityTrack track,
                               @NonNull final BaseActivitySummary summary,
                               @Nullable final ActivitySummaryData summaryData,
@@ -279,6 +296,10 @@ public class FitExporter {
         final Optional<GarminSport> garminSport = GarminSport.fromActivityKind(kind);
         final int sport = garminSport.map(GarminSport::getType).orElse(GarminSport.GENERIC.getType());
         final int subSport = garminSport.map(GarminSport::getSubtype).orElse(GarminSport.GENERIC.getSubtype());
+        // Gate GPS-derived distance recovery: only sports with a meaningful distance-over-
+        // time (walking, running, cycling, on-water…). Stationary sports never get an
+        // invented distance from any stray GPS jitter.
+        final boolean locomotion = isLocomotionSport(sport, subSport);
 
         // Sensor-presence pre-pass: when a track-wide cadence or power stream is all
         // zero, the source has no cadence/power sensor — emitting "0" per record
@@ -317,6 +338,11 @@ public class FitExporter {
         long lastEventTs = startSeconds;
         long lastEmittedSig = 0L;
         boolean haveLastSig = false;
+        // Running cumulative GPS distance across the whole track (monotonic), used to fill
+        // record.distance when the source supplied GPS positions but no measured per-record
+        // distance. Advances on every located point, including deduped duplicates.
+        GPSCoordinate prevGpsLoc = null;
+        double gpsCumulativeDistance = 0.0;
 
         for (int s = 0; s < segments.size(); s++) {
             final List<ActivityPoint> seg = segments.get(s);
@@ -337,6 +363,18 @@ public class FitExporter {
                 final long ts = p.getTime().getTime() / 1000L;
                 if (ts < segStartTs) segStartTs = ts;
                 if (ts > segEndTs) segEndTs = ts;
+                // Advance the cumulative GPS distance for this point (before any dedup skip
+                // so the running total stays correct across duplicates). Non-located points
+                // leave it unchanged and get a null fallback in buildRecord.
+                Double gpsDistanceForPoint = null;
+                final GPSCoordinate pointLoc = p.getLocation();
+                if (pointLoc != null) {
+                    if (prevGpsLoc != null) {
+                        gpsCumulativeDistance += haversineMeters(prevGpsLoc, pointLoc);
+                    }
+                    prevGpsLoc = pointLoc;
+                    gpsDistanceForPoint = gpsCumulativeDistance;
+                }
                 // Pause / segment-break markers — most non-Garmin parsers signal these via
                 // ActivityPoint.description. Emit a TIMER STOP_ALL event so importers that
                 // honour pauses (Strava, Garmin Connect) see them. Skip if a STOP/START
@@ -349,7 +387,8 @@ public class FitExporter {
                 // (same ts, same fields). Keeps multi-record-per-second sources intact.
                 final long sig = pointSignature(p);
                 if (haveLastSig && sig == lastEmittedSig) continue;
-                final RecordData rec = buildRecord(p, trackHasCadence, trackHasPower);
+                final RecordData rec = buildRecord(p, trackHasCadence, trackHasPower,
+                        locomotion ? gpsDistanceForPoint : null);
                 if (rec != null) {
                     records.add(rec);
                     lastEmittedSig = sig;
@@ -593,7 +632,8 @@ public class FitExporter {
     @Nullable
     private RecordData buildRecord(@NonNull final ActivityPoint p,
                                    final boolean trackHasCadence,
-                                   final boolean trackHasPower) {
+                                   final boolean trackHasPower,
+                                   @Nullable final Double gpsCumulativeDistance) {
         if (p.getTime() == null) {
             return null;
         }
@@ -604,6 +644,18 @@ public class FitExporter {
         if (loc != null) {
             b.setLatitude(loc.getLatitude());
             b.setLongitude(loc.getLongitude());
+            // gps_accuracy (field 31, UINT8 metres, scale 1 — the byte IS the accuracy in
+            // metres, no proportionate scaling). GB stores horizontal accuracy in metres in
+            // the GPSCoordinate hdop slot (documented UNIT_METERS in ActivityPoint.Builder),
+            // so it maps 1:1. Emit only when the metre value fits the field's valid range;
+            // an accuracy worse than 254 m is no usable fix, so omit it rather than saturate
+            // (255 = FIT invalid, i.e. field absent anyway).
+            if (loc.hasHdop()) {
+                final long acc = Math.round(loc.getHdop());
+                if (acc >= 0 && acc <= 254) {
+                    b.setGpsAccuracy((int) acc);
+                }
+            }
         }
 
         final double altitude = p.getAltitude();
@@ -630,6 +682,12 @@ public class FitExporter {
         final double distance = p.getDistance();
         if (distance >= 0.0) {
             b.setDistance(distance);
+        } else if (gpsCumulativeDistance != null) {
+            // No measured per-record distance, but the source had GPS positions — fill the
+            // running cumulative haversine distance so the per-record distance stream (used
+            // by Strava / Garmin Connect) is present and monotonic. Caller passes null for
+            // non-locomotion sports.
+            b.setDistance(gpsCumulativeDistance);
         }
 
         // Same sensor-presence gate as cadence — see comment above.
@@ -649,13 +707,14 @@ public class FitExporter {
             b.setDepth(depth);
         }
 
-        // step length: disabled until source semantics are confirmed.
-        // ActivityPoint exposes both stride (foot-to-same-foot, mm) and stepLength
-        // (foot-to-opposite-foot, mm). FIT record.step_length wants foot-to-opposite (mm).
-        // Some non-Garmin parsers populate `stride` only, others populate `stepLength`,
-        // and a few may use cm. Until each source parser is audited, do not emit — the
-        // session-level STEP_LENGTH_AVG aggregate (which is unit-converted via
-        // readMillimetersFromInt) is enough.
+        // step_length (FIT field 85, mm). Both current ActivityPoint sources store mm:
+        // FitRecord.toActivityPoint round-trips the FIT value (already mm), and
+        // ZeppOsActivityDetailsParser converts its cm stride to a mm step. Emit when set
+        // (ActivityPoint default is -1 = unset; 0 mm is not a meaningful step).
+        final int stepLength = p.getStepLength();
+        if (stepLength > 0) {
+            b.setStepLength((float) stepLength);
+        }
 
         final float respirationRate = p.getRespiratoryRate();
         if (Float.isFinite(respirationRate) && respirationRate > 0f) {
@@ -770,6 +829,11 @@ public class FitExporter {
         }
 
         Double distance = first(overrides.distance, readDistanceMeters(data, agg.getLastDistance()));
+        // GPS fallback: no measured/summary distance but the lap's points carried GPS
+        // positions → use the per-lap cumulative haversine. Gated on locomotion sports.
+        if (distance == null && isLocomotionSport(sport, subSport)) {
+            distance = agg.getGpsDistance();
+        }
         if (overrides.strokes != null) {
             // Per-segment stroke count parsed from device payload (e.g. Xiaomi rowing v4).
             // FIT lap.total_cycles covers strokes for paddle/row sports.
@@ -790,11 +854,13 @@ public class FitExporter {
         if (distance != null) {
             b.setTotalDistance(distance);
         }
-        final Double ascent = readMeters(data, ActivitySummaryEntries.ASCENT_METERS);
+        // Ascent/descent: prefer the source summary, fall back to GPS-derived elevation
+        // (null when the altitude stream was absent/constant, e.g. Xiaomi GPS V1/V2).
+        final Double ascent = first(readMeters(data, ActivitySummaryEntries.ASCENT_METERS), agg.getGpsAscent());
         if (ascent != null) {
             b.setTotalAscent((int) Math.round(ascent));
         }
-        final Double descent = readMeters(data, ActivitySummaryEntries.DESCENT_METERS);
+        final Double descent = first(readMeters(data, ActivitySummaryEntries.DESCENT_METERS), agg.getGpsDescent());
         if (descent != null) {
             b.setTotalDescent((int) Math.round(descent));
         }
@@ -987,6 +1053,13 @@ public class FitExporter {
         }
 
         Double distance = readDistanceMeters(data, agg.getLastDistance());
+        // GPS fallback: no measured/summary distance but the track carried GPS positions →
+        // use the whole-track cumulative haversine. Gated on locomotion sports so a
+        // stationary workout never gets an invented distance. Runs before the rowing synth
+        // so on-water rowing prefers real GPS distance over the stroke estimate.
+        if (distance == null && isLocomotionSport(sport, subSport)) {
+            distance = agg.getGpsDistance();
+        }
         boolean totalCyclesSet = false;
         // Rowing-only synth: when no measured distance is available, derive from total
         // strokes × default stroke length. Strokes prefer summary STROKES (single
@@ -1023,11 +1096,13 @@ public class FitExporter {
                 b.setTotalCycles(strokeCount);
             }
         }
-        final Double ascent = readMeters(data, ActivitySummaryEntries.ASCENT_METERS);
+        // Ascent/descent: prefer the source summary, fall back to GPS-derived elevation
+        // (null when the altitude stream was absent/constant, e.g. Xiaomi GPS V1/V2).
+        final Double ascent = first(readMeters(data, ActivitySummaryEntries.ASCENT_METERS), agg.getGpsAscent());
         if (ascent != null) {
             b.setTotalAscent((int) Math.round(ascent));
         }
-        final Double descent = readMeters(data, ActivitySummaryEntries.DESCENT_METERS);
+        final Double descent = first(readMeters(data, ActivitySummaryEntries.DESCENT_METERS), agg.getGpsDescent());
         if (descent != null) {
             b.setTotalDescent((int) Math.round(descent));
         }
@@ -1458,6 +1533,20 @@ public class FitExporter {
         private double powerSum;
         private int powerCount;
         private float powerMax = -1f;
+        // GPS-derived distance: cumulative haversine over consecutive located points, used
+        // as the last-resort fallback when the source supplied positions but no measured
+        // distance (DISTANCE_METERS / per-record distance).
+        private GPSCoordinate prevLocForDistance;
+        private double gpsDistanceSum;
+        // GPS-derived elevation: ascent/descent summed from altitude deltas between
+        // consecutive altitude-bearing points, plus min/max to gate emission. altMin==altMax
+        // (e.g. Xiaomi GPS V1/V2 which store a constant altitude=0) → no real elevation data,
+        // so the getters return null and the exporter omits ascent/descent rather than 0.
+        private double altMin = Double.POSITIVE_INFINITY;
+        private double altMax = Double.NEGATIVE_INFINITY;
+        private double ascentSum;
+        private double descentSum;
+        private double prevAltForElevation = Double.NaN;
 
         void accumulate(@NonNull final ActivityPoint p) {
             final GPSCoordinate loc = p.getLocation();
@@ -1470,6 +1559,21 @@ public class FitExporter {
                 if (lat > maxLat) maxLat = lat;
                 if (lon < minLong) minLong = lon;
                 if (lon > maxLong) maxLong = lon;
+                if (prevLocForDistance != null) {
+                    gpsDistanceSum += haversineMeters(prevLocForDistance, loc);
+                }
+                prevLocForDistance = loc;
+                if (loc.hasAltitude()) {
+                    final double alt = loc.getAltitude();
+                    if (alt < altMin) altMin = alt;
+                    if (alt > altMax) altMax = alt;
+                    if (!Double.isNaN(prevAltForElevation)) {
+                        final double dAlt = alt - prevAltForElevation;
+                        if (dAlt > 0) ascentSum += dAlt;
+                        else descentSum += -dAlt;
+                    }
+                    prevAltForElevation = alt;
+                }
             }
 
             final double dist = p.getDistance();
@@ -1537,6 +1641,14 @@ public class FitExporter {
 
         @Nullable Integer getAvgPower() { return powerCount > 0 ? (int) Math.round(powerSum / powerCount) : null; }
         @Nullable Integer getMaxPower() { return powerCount > 0 ? (int) Math.round((double) powerMax) : null; }
+
+        /// Cumulative GPS (haversine) distance in metres, or null when no located points
+        /// contributed a segment (fewer than two positions).
+        @Nullable Double getGpsDistance() { return gpsDistanceSum > 0.0 ? gpsDistanceSum : null; }
+        /// GPS-derived ascent/descent in metres, or null when the altitude stream was
+        /// absent or constant (e.g. all-zero) so there is no real elevation profile.
+        @Nullable Double getGpsAscent()  { return altMax > altMin ? ascentSum : null; }
+        @Nullable Double getGpsDescent() { return altMax > altMin ? descentSum : null; }
     }
 
     @Nullable
