@@ -61,6 +61,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefi
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionExerciseCategory.ExerciseCategory;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionMeasurementSystem;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.fieldDefinitions.FieldDefinitionWaterType;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitActivity;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitDeviceInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitFileCreator;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.messages.FitFileId;
@@ -131,7 +132,8 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
     private FitFileId fileId = null;
     @Nullable
     private FitFileCreator fileCreator = null;
-
+    @Nullable
+    private FitActivity activity = null;
     public GarminWorkoutParser(final Context context) {
         this.context = context;
     }
@@ -238,6 +240,7 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
         workout = null;
         fileId = null;
         fileCreator = null;
+        activity = null;
     }
 
     public boolean handleRecord(final RecordData record) {
@@ -366,6 +369,12 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
             } else {
                 workout = fitWorkout;
             }
+        } else if (record instanceof FitActivity fitActivity) {
+            if (activity != null){
+                LOG.warn("Got multiple activities - NOT SUPPORTED: {}", fitActivity);
+            } else {
+                activity = fitActivity;
+            }
         } else if (record instanceof FitTankSummary fitTankSummary){
             final Float start = fitTankSummary.getStartPressure();
             final Float end = fitTankSummary.getEndPressure();
@@ -400,10 +409,13 @@ public class GarminWorkoutParser implements ActivitySummaryParser {
 
         final ActivityKind activityKind;
 
-        // prioritize names: FitWorkout > FitSession > FitSport
+        // prioritize names: FitActivity > FitWorkout > FitSession > FitSport
         if (StringUtils.isNullOrEmpty(summary.getName())) {
             String workoutName = null;
-            if (workout != null) {
+            if (activity != null) {
+                workoutName = activity.getName();
+            }
+            if (StringUtils.isNullOrEmpty(workoutName) && workout != null) {
                 workoutName = workout.getName();
             }
             if (StringUtils.isNullOrEmpty(workoutName)) {
