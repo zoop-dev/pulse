@@ -202,7 +202,7 @@ public class HuamiActivitySummaryParser implements ActivitySummaryParser {
         if (version >= 512) {
             if (version == 519) {
                 buffer.get(); // skip one byte
-                minHR  = buffer.getShort();
+                minHR = buffer.getShort(); // offset 25: garbage sentinel on v519 (always 0x00 0xFF = -256), filtered below
                 // hack that skips data on yet unknown summary version 519 data
                 buffer.position(0x8c);
             } else if (version == 516) {
@@ -400,7 +400,9 @@ public class HuamiActivitySummaryParser implements ActivitySummaryParser {
                 activityKind == ActivityKind.EXERCISE ||
                 activityKind == ActivityKind.YOGA ||
                 activityKind == ActivityKind.INDOOR_CYCLING)) {
-            summaryData.add(PACE_MIN, minPace, UNIT_SECONDS_PER_M);
+            if (minPace > 0 && minPace <= 60.0f) { // > 60 s/m (~100 min/km) is a firmware sentinel (paused, minSpeed==0)
+                summaryData.add(PACE_MIN, minPace, UNIT_SECONDS_PER_M);
+            }
             summaryData.add(PACE_MAX, maxPace, UNIT_SECONDS_PER_M);
             // summaryData.add("averagePace", averagePace, UNIT_SECONDS_PER_M);
         }
@@ -408,7 +410,9 @@ public class HuamiActivitySummaryParser implements ActivitySummaryParser {
         summaryData.add(STRIDE_TOTAL, totalStride, UNIT_METERS);
         summaryData.add(HR_AVG, averageHR, UNIT_BPM);
         summaryData.add(HR_MAX, maxHR, UNIT_BPM);
-        summaryData.add(HR_MIN, minHR, UNIT_BPM);
+        if (minHR > 0) {
+            summaryData.add(HR_MIN, minHR, UNIT_BPM);
+        }
         summaryData.add(PACE_AVG_SECONDS_KM, averageKMPaceSeconds, UNIT_SECONDS_PER_KM);
         summaryData.add(STRIDE_AVG, averageStride, UNIT_CM);
         summaryData.add(STRIDE_MAX, maxStride, UNIT_CM);
