@@ -769,11 +769,12 @@ class HealthConnectUtils {
                 return
             }
 
+            var currentRecords = records
             var lastException: Exception? = null
             for (i in 0..MAX_RETRIES) {
                 try {
-                    healthConnectClient.insertRecords(records)
-                    CompanionLogger.debug("Successfully inserted {} records into Health Connect.", records.size)
+                    healthConnectClient.insertRecords(currentRecords)
+                    CompanionLogger.debug("Successfully inserted {} records into Health Connect.", currentRecords.size)
                     return // Success
                 } catch (e: SecurityException) {
                     // Permission error - don't retry, abort immediately
@@ -787,6 +788,15 @@ class HealthConnectUtils {
                     )
                 } catch (e: Exception) {
                     lastException = e
+                    // The HC platform enforces a 1MB per-record limit (RateLimiter) not exposed by
+                    // any API. An oversized record fails deterministically, so plain retries just
+                    // burn all attempts. The only variable-size record we build is the GPS route
+                    // embedded in ExerciseSessionRecord; shrink it by the limit/was ratio and retry.
+                    val shrunk = shrinkOversizedRoute(currentRecords, e)
+                    if (shrunk != null) {
+                        currentRecords = shrunk
+                        continue
+                    }
                     if (i < MAX_RETRIES) {
                         val delayMillis = INITIAL_DELAY_MS * 2.0.pow(i).toLong()
                         CompanionLogger.warn(
@@ -805,6 +815,80 @@ class HealthConnectUtils {
                 ),
                 lastException
             )
+        }
+
+        // Matches "...single record size limit: 1000000, was: 1700644" from the HC platform.
+        private val RECORD_SIZE_REGEX =
+            Regex("single record size limit:\\s*(\\d+),\\s*was:\\s*(\\d+)")
+
+        /**
+         * If [e] is a "record size exceeded" error and [records] contains a downsizable
+         * ExerciseSessionRecord route, returns a copy of the list with every route decimated by
+         * the limit/was ratio (with margin). Returns null when the error is unrelated or nothing
+         * can be shrunk, so the caller falls back to normal retry/abort.
+         */
+        internal fun shrinkOversizedRoute(records: List<Record>, e: Exception): List<Record>? {
+            val match = RECORD_SIZE_REGEX.find(e.message ?: "") ?: return null
+            val limit = match.groupValues[1].toLongOrNull() ?: return null
+            val was = match.groupValues[2].toLongOrNull() ?: return null
+            if (limit <= 0 || was <= limit) {
+                return null
+            }
+
+            // Aim for 90% of the limit to leave room for per-point overhead we don't model.
+            val keepRatio = (limit.toDouble() / was.toDouble()) * 0.9
+            var shrankAny = false
+            val result = records.map { record ->
+                if (record !is ExerciseSessionRecord) {
+                    return@map record
+                }
+                val route = (record.exerciseRouteResult as? ExerciseRouteResult.Data)?.exerciseRoute
+                    ?: return@map record
+                val points = route.route
+                val target = (points.size * keepRatio).toInt()
+                if (points.size < 2 || target >= points.size) {
+                    return@map record
+                }
+                shrankAny = true
+                val decimated = decimateRoute(points, target.coerceAtLeast(2))
+                CompanionLogger.warn(
+                    "$HC_SYNC_TAG ExerciseSessionRecord route too large ({} bytes > {} limit); decimated route from {} to {} points and retrying.",
+                    was, limit, points.size, decimated.size
+                )
+                ExerciseSessionRecord(
+                    startTime = record.startTime,
+                    startZoneOffset = record.startZoneOffset,
+                    endTime = record.endTime,
+                    endZoneOffset = record.endZoneOffset,
+                    exerciseType = record.exerciseType,
+                    title = record.title,
+                    notes = record.notes,
+                    segments = record.segments,
+                    laps = record.laps,
+                    exerciseRoute = ExerciseRoute(decimated),
+                    metadata = record.metadata
+                )
+            }
+            return if (shrankAny) result else null
+        }
+
+        /** Uniformly decimates [points] down to [target] points, preserving first and last. */
+        private fun decimateRoute(
+            points: List<ExerciseRoute.Location>,
+            target: Int
+        ): List<ExerciseRoute.Location> {
+            val kept = ArrayList<ExerciseRoute.Location>(target)
+            val lastIndex = points.size - 1
+            val step = lastIndex.toDouble() / (target - 1).toDouble()
+            var idx = 0.0
+            repeat(target - 1) {
+                // Clamp below lastIndex so the explicit last point is never duplicated
+                // (HC rejects routes with duplicate timestamps).
+                kept.add(points[idx.toInt().coerceAtMost(lastIndex - 1)])
+                idx += step
+            }
+            kept.add(points.last())
+            return kept
         }
     }
 }
