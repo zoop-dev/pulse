@@ -4429,4 +4429,19 @@
     <string name="predictions">Prévisions</string>
     <string name="pace_goal_percent">Objectif d\'allure atteint</string>
     <string name="lengths_goal_percent">Objectif de longueurs atteint</string>
+    <string name="qs_tile_device">Appareil</string>
+    <string name="qs_tile_setting">Paramètre</string>
+    <string name="qs_tile_no_device_selected">Aucun</string>
+    <string name="qs_tile_no_preferences_supported">Cet appareil n’a pas de préférences prises en charge par les paramètres rapides</string>
+    <string name="qs_tile_not_connected">%s non connecté</string>
+    <string name="qs_tile_allow_lockscreen">Autoriser depuis l’écran de verrouillage</string>
+    <string name="qs_tile_allow_lockscreen_summary">Bascule ce paramètre sans déverrouiller l’appareil</string>
+    <string name="qs_tile_add_to_quick_settings">Ajout aux paramètres rapides</string>
+    <string name="qs_tile_clear">Vider</string>
+    <string name="qs_tile_cycle_values">Parcourir les valeurs</string>
+    <string name="qs_tile_cycle_values_all">Toutes valeurs</string>
+    <string name="prefs_title_offgrid_mode">Mode hors réseau</string>
+    <string name="prefs_title_battery_allow_bypass_mode">Permettre contournement batterie</string>
+    <string name="pref_health_connect_detailed_workout_sync_title">Sync détaillée entraînements</string>
+    <string name="infinitime_filesystem_access_disabled">Accès au système de fichiers désactivé dans InfiniTime</string>
 </resources>
