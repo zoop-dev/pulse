@@ -80,6 +80,16 @@
           "num": 23,
           "name": "connectivity_supported",
           "baseType": "UINT32Z"
+        },
+        "24": {
+          "num": 24,
+          "name": "wifi",
+          "baseType": "ENUM"
+        },
+        "26": {
+          "num": 26,
+          "name": "audio_prompts",
+          "baseType": "UINT32Z"
         }
       }
     },
@@ -680,7 +690,7 @@
         "67": {
           "num": 67,
           "name": "user_name",
-          "baseType": "STRING",
+          "baseType": "STRING"
         },
         "254": {
           "num": 254,
@@ -5159,6 +5169,18 @@
           "name": "favorite",
           "baseType": "ENUM"
         },
+        "11": {
+          "num": 11,
+          "name": "label",
+          "baseType": "STRING"
+        },
+        "15": {
+          "num": 15,
+          "name": "rest_duration",
+          "baseType": "UINT32",
+          "scale": 1000,
+          "UOM": "seconds"
+        },
         "254": {
           "num": 254,
           "name": "message_index",
@@ -8215,6 +8237,11 @@
           "name": "layout",
           "baseType": "BYTE"
         },
+        "13": {
+          "num": 13,
+          "name": "accent_color",
+          "baseType": "UINT16"
+        },
         "254": {
           "num": 254,
           "name": "message_index",
@@ -8936,6 +8963,11 @@
         "0": {
           "num": 0,
           "name": "enabled",
+          "baseType": "ENUM"
+        },
+        "2": {
+          "num": 2,
+          "name": "transmit_hr",
           "baseType": "ENUM"
         },
         "253": {
@@ -9715,6 +9747,27 @@
         }
       }
     },
+    "217": {
+      "num": 217,
+      "name": "SETTINGS_CHANGELOG",
+      "fields": {
+        "0": {
+          "num": 0,
+          "name": "message_number",
+          "baseType": "UINT16"
+        },
+        "2": {
+          "num": 2,
+          "name": "field_number",
+          "baseType": "UINT8"
+        },
+        "253": {
+          "num": 253,
+          "name": "timestamp",
+          "baseType": "UINT32"
+        }
+      }
+    },
     "222": {
       "num": 222,
       "name": "ALARM_SETTINGS",
@@ -9767,6 +9820,11 @@
           "name": "time_updated",
           "type": "TIMESTAMP",
           "baseType": "UINT32"
+        },
+        "12": {
+          "num": 12,
+          "name": "smart_wake",
+          "baseType": "ENUM"
         },
         "254": {
           "num": 254,
@@ -10378,6 +10436,32 @@
           "num": 254,
           "name": "message_index",
           "baseType": "UINT16"
+        }
+      }
+    },
+    "266": {
+      "num": 266,
+      "name": "AUDIO_PROMPTS",
+      "fields": {
+        "1": {
+          "num": 1,
+          "name": "lap_alerts",
+          "baseType": "ENUM"
+        },
+        "10": {
+          "num": 10,
+          "name": "dialect",
+          "baseType": "ENUM"
+        },
+        "12": {
+          "num": 12,
+          "name": "activity_alerts",
+          "baseType": "ENUM"
+        },
+        "18": {
+          "num": 18,
+          "name": "workout_alerts",
+          "baseType": "ENUM"
         }
       }
     },
@@ -12294,6 +12378,47 @@
         }
       }
     },
+    "354": {
+      "num": 354,
+      "name": "HOT_KEYS",
+      "fields": {
+        "0": {
+          "num": 0,
+          "name": "hot_key_1",
+          "baseType": "ENUM"
+        },
+        "1": {
+          "num": 1,
+          "name": "hot_key_2",
+          "baseType": "ENUM"
+        },
+        "2": {
+          "num": 2,
+          "name": "hot_key_3",
+          "baseType": "ENUM"
+        },
+        "3": {
+          "num": 3,
+          "name": "hot_key_4",
+          "baseType": "ENUM"
+        },
+        "4": {
+          "num": 4,
+          "name": "hot_key_5",
+          "baseType": "ENUM"
+        },
+        "5": {
+          "num": 5,
+          "name": "hot_key_6",
+          "baseType": "ENUM"
+        },
+        "6": {
+          "num": 6,
+          "name": "hot_key_7",
+          "baseType": "ENUM"
+        }
+      }
+    },
     "356": {
       "num": 356,
       "name": "FUNCTIONAL_METRICS",
@@ -12732,6 +12857,22 @@
           "name": "timestamp",
           "type": "TIMESTAMP",
           "baseType": "UINT32"
+        }
+      }
+    },
+    "373": {
+      "num": 373,
+      "name": "MORNING_REPORT",
+      "fields": {
+        "0": {
+          "num": 0,
+          "name": "status",
+          "baseType": "ENUM"
+        },
+        "2": {
+          "num": 2,
+          "name": "theme",
+          "baseType": "ENUM"
         }
       }
     },
@@ -13519,6 +13660,53 @@
         }
       }
     },
+    "415": {
+      "num": 415,
+      "name": "DEVICE_SETTINGS_2",
+      "fields": {
+        "13": {
+          "num": 13,
+          "name": "find_my_phone_alerts",
+          "baseType": "ENUM"
+        },
+        "15": {
+          "num": 15,
+          "name": "garmin_share",
+          "baseType": "ENUM"
+        }
+      }
+    },
+    "423": {
+      "num": 423,
+      "name": "TIME_ZONE",
+      "fields": {
+        "1": {
+          "num": 1,
+          "name": "region",
+          "baseType": "UINT8"
+        },
+        "2": {
+          "num": 2,
+          "name": "name",
+          "baseType": "STRING"
+        },
+        "3": {
+          "num": 3,
+          "name": "abbreviation",
+          "baseType": "STRING"
+        },
+        "4": {
+          "num": 4,
+          "name": "favorite",
+          "baseType": "ENUM"
+        },
+        "254": {
+          "num": 254,
+          "name": "message_index",
+          "baseType": "UINT16"
+        }
+      }
+    },
     "428": {
       "num": 428,
       "name": "WORKOUT_SCHEDULE",
@@ -13571,6 +13759,22 @@
           "name": "timestamp",
           "type": "TIMESTAMP",
           "baseType": "UINT32"
+        }
+      }
+    },
+    "436": {
+      "num": 436,
+      "name": "EVENING_REPORT",
+      "fields": {
+        "0": {
+          "num": 0,
+          "name": "status",
+          "baseType": "ENUM"
+        },
+        "2": {
+          "num": 2,
+          "name": "alert_time",
+          "baseType": "UINT16"
         }
       }
     },
