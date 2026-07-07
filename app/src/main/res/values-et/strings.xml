@@ -68,7 +68,7 @@
     <string name="pref_header_datetime">Kuupäev ja kellaaeg</string>
     <string name="pref_title_datetime_syctimeonconnect">Sünkrooni aega</string>
     <string name="pref_summary_datetime_syctimeonconnect">Sünkrooni kellaaeg Gadgetbridge seadme(te)ga ühendumise ajal, samuti siis kui Androidi seadmes aeg või ajavöönd muutub ning samuti perioodiliselt</string>
-    <string name="miband_firmware_suggest_whitelist">Kui te siiski soovite jätkata ja seade jätkab tööd ka hiljem palun andke Gadgetbridge\'i arendajatele teada, et nad lisaksid %s versiooni toetatud püsivarade nimekirja.</string>
+    <string name="miband_firmware_suggest_whitelist">Kui sa siiski soovid jätkata ja seade jätkab tööd ka hiljem, palun annna Gadgetbridge\'i arendajatele teada, et nad lisaksid %s versiooni toetatud püsivarade loendisse.</string>
     <string name="pref_title_charts_swipe">Luba viiped vasakule/paremale graafikute vaates</string>
     <string name="pref_title_theme">Kujundus</string>
     <string name="pref_theme_light">Hele kujundus</string>
@@ -548,7 +548,7 @@
     <string name="mi2_dnd_automatic">Automaatne (unejälgimine)</string>
     <string name="mi3_night_mode_sunset">Päikeseloojangul</string>
     <string name="mi2_dnd_off">Väljas</string>
-    <string name="mi2_enable_text_notifications_summary"><![CDATA[Vajalik on püsivara versioon >= 1.0.1.28 ja Mili_pro.ft* eelnev paigaldamine.]]></string>
+    <string name="mi2_enable_text_notifications_summary"><![CDATA[Vajalik on püsivara versioon &gt;= 1.0.1.28 ja Mili_pro.ft* eelnev paigaldamine.]]></string>
     <string name="mi2_enable_text_notifications">Sõnumite teavitused</string>
     <string name="mi2_fw_installhandler_fw53_hint">Te peate paigaldama versiooni %1$s enne selle püsivara paigaldamist!</string>
     <string name="miband2_prefs_timeformat">Mi2: Ajaformaat</string>
@@ -570,8 +570,8 @@
     <string name="mi2_prefs_inactivity_warnings_summary">Kell väriseb, kui sa oled tükk aega inaktiivne olnud</string>
     <string name="mi2_prefs_inactivity_warnings">Inaktiivsushoiatused</string>
     <string name="pref_qhybrid_save_raw_activity_files">Salvestage tegevuste failid töötlemata</string>
-    <string name="qhybrid_changes_delay_prompt">muudatus võib võtta mõne hetke…</string>
-    <string name="qhybrid_time_shift">ajanihe</string>
+    <string name="qhybrid_changes_delay_prompt">Muudatus võib võtta mõne hetke…</string>
+    <string name="qhybrid_time_shift">Ajanihe</string>
     <string name="watch_not_connected">Kell ei ole ühenduses</string>
     <string name="widget_5_minutes">5 minutit</string>
     <string name="widget_set_alarm_after">Sea äratus pärast:</string>
@@ -625,7 +625,7 @@
     <string name="hr_widget_date">Kuupäev</string>
     <string name="hr_widget_steps">Sammud</string>
     <string name="hr_widget_heart_rate">Südame löögisagedus</string>
-    <string name="qhybrid_offset_time_by">nihuta kellaaega</string>
+    <string name="qhybrid_offset_time_by">Nihuta kellaaega</string>
     <string name="live_activity_start_your_activity">Alusta tegevusega</string>
     <string name="live_activity_steps_per_minute_history">Samme minuti kohta varem</string>
     <string name="live_activity_total_steps">Samme kokku</string>
@@ -728,7 +728,7 @@
     <string name="stats_title">Kiirustsoonid</string>
     <string name="prefs_title_heartrate_measurement_interval">Terve päeva kestev pulsimõõtmine</string>
     <string name="watch9_pairing_tap_hint">Kui su kell väriseb, raputa seadet või vajuta selle nupule.</string>
-    <string name="discovery_connected_devices_hint">Muuda enda seade nähtavaks. Juba paaritatud seadmeid ilmselt ei kuvata. Lülita sisse ja luba ligipääs asukohale. Lülita välja Privacy Guard sest see võib su telefoni taaskäivitama panna. Kui ühtegi seadet ei leita, proovi uuesti pärast taaskäivitust.</string>
+    <string name="discovery_connected_devices_hint">Muuda enda seade nähtavaks. Juba paardunud seadmeid ilmselt ei kuvata. Lülita sisse ja luba asukohatuvastus. Lülita välja Privacy Guard sest see võib su telefoni taaskäivitama panna. Kui ühtegi seadet ei leita, proovi uuesti pärast taaskäivitust.</string>
     <string name="fw_upgrade_notice_miband5">Olete installimas %s püsivara enda Mi Band 5\'le.
 \n
 \nPaigalda .fw fail ja seejärel .res fail. Teie kell taaskäivitub pärast .fw faili paigaldust.
@@ -772,7 +772,7 @@
     <string name="pref_summary_keep_data_on_device">Hoiab aktiivsusandmed seadmes isegi pärast sünkroonimist. Kasulik, kui GB on kasutusel koos teiste sarnaste rakendustega. See aga võib põhjustada olukorra, kus nutikellas tekib andmeruumi puudus ja/või sünkroonimine ei toimi korralikult.</string>
     <string name="pref_summary_dont_ack_transfers">Kui Band\'ile kinnitust ei saada siis aktiivsusandmeid ei kustutata. Kasulik, kui kasutate GBd koos teiste sarnaste rakendustega.</string>
     <string name="steps">Samme</string>
-    <string name="caloriesBurnt">Kaloreid</string>
+    <string name="caloriesBurnt">Kaloreid kokku</string>
     <string name="activity_filter_name_contains">Silt</string>
     <string name="activity_filter_filter_title">Filter</string>
     <string name="activity_summaries_statistics">Statistika</string>
@@ -782,7 +782,7 @@
     <string name="sonyswr12_settings_alarm_interval">Nutika häire intervall minutites</string>
     <string name="sonyswr12_settings_low_vibration_summary">Luba madala vibratsiooni intensiivsus ribal</string>
     <string name="sonyswr12_settings_stamina_summary">Energiasäästurežiim lülitab südame löögisageduse perioodilise automaatse mõõtmise välja, pikendades seega tööaega</string>
-    <string name="sonyswr12_settings_alarm_interval_summary">Nutika häire intervall on intervall enne installitud alarmi. Selles intervallis üritab seade kasutaja ärkamiseks tuvastada une kergemat faasi</string>
+    <string name="sonyswr12_settings_alarm_interval_summary">Nutika äratuse välp on ajavahemik enne seadistatud äratust. Selles ajavahemikus üritab seade kasutaja äratamiseks tuvastada une kergemat faasi</string>
     <string name="weekly_total">Nädala kokkuvõte</string>
     <string name="prefs_wena3_title_activity">Aktiivsuse seaded</string>
     <string name="white">Valge</string>
@@ -886,7 +886,7 @@
     <string name="pref_header_time">Aeg</string>
     <string name="debugactivity_confirm_remove_device_preferences_title">Kas eemaldame seadme eelistused?</string>
     <string name="pref_header_sound">Heli</string>
-    <string name="pref_header_workout">Trenn</string>
+    <string name="pref_header_workout">Treening</string>
     <string name="pref_header_equalizer">Ekvalaiser</string>
     <string name="fw_upgrade_notice_amazfitbip3">Oled paigaldamas %s püsivara oma Amazfit Bip 3 kellale.\n\nPaigalda .fw fail ja pärast seda .res fail. Pärast .fw faili paigaldamist kell taaskäivitub.\n\nMärkus: .res faili ei pea paigaldama, kui tegu on juba paigaldatud versiooniga.\n\nJÄTKA OMAL VASTUTUSEL!</string>
     <string name="fw_upgrade_notice_amazfitbip3pro">Oled paigaldamas %s püsivara oma Amazfit Bip 3 PRO kellale.\n\nPaigalda .fw fail ja pärast seda .res fail. Pärast .fw faili paigaldamist kell taaskäivitub.\n\nMärkus: .res faili ei pea paigaldama, kui tegu on juba paigaldatud versiooniga..\n\nJÄTKA OMAL VASTUTUSEL!</string>
@@ -1203,4 +1203,28 @@
     <string name="normal">Tavaline</string>
     <string name="sensitive">Tundlik</string>
     <string name="enhanced">Tõhustatud</string>
+    <string name="open_fw_installer_pick_file">Vali fail</string>
+    <string name="open_fw_installer_info_text_title">Failipaigaldaja</string>
+    <string name="open_source_licenses">Litsentsid</string>
+    <string name="dialog_close">Sulge</string>
+    <string name="dialog_open_url">Ava võrguaadress</string>
+    <string name="open_fw_installer_select_file">Vali faili, mida tahad seadmesse üles laadida: %s</string>
+    <string name="open_fw_installer_connect_minimum_one_device">Palun ühenda VÄHEMALT ÜKS seade, kuhu tahaksid faili edastada.</string>
+    <string name="open_fw_installer_connect_maximum_one_device">Palun ühenda TÄPSELT ÜKS seade, kuhu tahaksid faili edastada.</string>
+    <string name="open_fw_installer_ensure_device_connected">Palun kontrolli, et „%s“ seade on ühendatud</string>
+    <string name="zepp_os_install_map_instructions">Kui paigaldamine algab telefoni poolel, siis sellega nõustuma ka nutikella liideses.</string>
+    <string name="pref_header_sync">Sünkroonimine</string>
+    <string name="pref_header_system">Süsteem</string>
+    <string name="proprietary_app_warning">See funktsionaalsus eeldab suletud/omandusliku/mittevaba rakenduse paigaldamist</string>
+    <string name="pref_header_audio">Heli</string>
+    <string name="pref_header_calendar">Kalender</string>
+    <string name="pref_header_connection">Ühendus</string>
+    <string name="pref_header_dashboard">Juhtpaneel</string>
+    <string name="pref_header_display">Ekraanivaade</string>
+    <string name="pref_header_generic">Üldseadistused</string>
+    <string name="pref_header_health">Tervis</string>
+    <string name="pref_header_sound_vibration">Heli ja värin</string>
+    <string name="sound_and_vibration">Heli ja värin</string>
+    <string name="pref_header_main_screen">Põhivaade</string>
+    <string name="pref_title_user_interface">Kasutajaliides</string>
 </resources>
