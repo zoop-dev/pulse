@@ -77,6 +77,8 @@ Please see the [Features](https://gadgetbridge.org/basics/features/) page on the
 
 ## Contribute
 
+See CONTRIBUTING.md for the contribution policy of Gadgetbridge.
+
 Contributions are welcome, be it feedback, bug reports, documentation, translation, research or code. Feel free to work
 on any of the open [issues](https://codeberg.org/Freeyourgadget/Gadgetbridge/issues);
 just leave a comment that you're working on one to avoid duplicated work.
