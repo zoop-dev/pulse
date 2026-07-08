@@ -312,13 +312,15 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
 
     @Override
     public Request setConnectTwoDevices(final ConnectTwoDevices config) {
+        // 0x98 00 06 01 is a fixed "apply" commit sent for both ON and OFF;
+        // the actual state change is driven by the preceding setWideAreaTap call.
         return new Request(
                 PayloadTypeV2.SYSTEM_CONTROL_SET.getMessageType(),
                 new byte[]{
                         PayloadTypeV2.SYSTEM_CONTROL_SET.getCode(),
                         (byte) 0x00,
                         (byte) 0x06,
-                        (byte) (config.isEnabled() ? 0x01 : 0x00)
+                        (byte) 0x01
                 }
         );
     }
@@ -1057,10 +1059,10 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
 
         LOG.debug("Wide Area Tap: {}", enabled);
 
-        // WAT and ConnectTwoDevices are mutually exclusive: WAT=enabled ↔ CTD=disabled
+        // WAT and ConnectTwoDevices are co-directional: WAT=enabled ↔ CTD=enabled
         final GBDeviceEventUpdatePreferences event = new GBDeviceEventUpdatePreferences()
                 .withPreferences(new WideAreaTap(enabled).toPreferences())
-                .withPreferences(new ConnectTwoDevices(!enabled).toPreferences());
+                .withPreferences(new ConnectTwoDevices(enabled).toPreferences());
 
         return Collections.singletonList(event);
     }

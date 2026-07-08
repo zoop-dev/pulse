@@ -273,17 +273,12 @@ public class SonyHeadphonesProtocol extends GBDeviceProtocol {
                 break;
             case DeviceSettingsPreferenceConst.PREF_SONY_CONNECT_TWO_DEVICES: {
                 final ConnectTwoDevices connectTwoDevices = ConnectTwoDevices.fromPreferences(prefs);
-                if (connectTwoDevices.isEnabled()) {
-                    // ON flow: disable WideAreaTap first, then enable ConnectTwoDevices
-                    final Request ctdRequest = protocolImpl.setConnectTwoDevices(connectTwoDevices);
-                    if (ctdRequest != null) {
-                        enqueueRequests(Collections.singletonList(ctdRequest));
-                    }
-                    configRequest = protocolImpl.setWideAreaTap(new WideAreaTap(false));
-                } else {
-                    // OFF flow: send CTD=OFF only; device automatically restores WAT=enabled
-                    configRequest = protocolImpl.setConnectTwoDevices(connectTwoDevices);
+                // Both ON and OFF: set WAT to same state first, then send fixed apply commit
+                final Request ctdRequest = protocolImpl.setConnectTwoDevices(connectTwoDevices);
+                if (ctdRequest != null) {
+                    enqueueRequests(Collections.singletonList(ctdRequest));
                 }
+                configRequest = protocolImpl.setWideAreaTap(new WideAreaTap(connectTwoDevices.isEnabled()));
                 break;
             }
             case DeviceSettingsPreferenceConst.PREF_SONY_SPEAK_TO_CHAT:
