@@ -58,7 +58,8 @@ public class SonyWHULT900NCoordinator extends SonyHeadphonesCoordinator {
                 SonyHeadphonesCapabilities.PauseWhenTakenOff,
                 SonyHeadphonesCapabilities.AutomaticPowerOffWhenTakenOff,
                 SonyHeadphonesCapabilities.QuickAccess,
-                SonyHeadphonesCapabilities.VoiceNotifications
+                SonyHeadphonesCapabilities.VoiceNotifications,
+                SonyHeadphonesCapabilities.ConnectTwoDevices
         ));
     }
 

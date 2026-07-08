@@ -54,6 +54,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.VoiceN
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.SoundPosition;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.SurroundMode;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.TouchSensor;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ConnectTwoDevices;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.WideAreaTap;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.protocol.Request;
@@ -270,9 +271,21 @@ public class SonyHeadphonesProtocol extends GBDeviceProtocol {
             case DeviceSettingsPreferenceConst.PREF_SONY_NOTIFICATION_VOICE_GUIDE:
                 configRequest = protocolImpl.setVoiceNotifications(VoiceNotifications.fromPreferences(prefs));
                 break;
-            case DeviceSettingsPreferenceConst.PREF_SONY_CONNECT_TWO_DEVICES:
-                LOG.warn("Connection to two devices not implemented ('{}')", config);
-                return super.encodeSendConfiguration(config);
+            case DeviceSettingsPreferenceConst.PREF_SONY_CONNECT_TWO_DEVICES: {
+                final ConnectTwoDevices connectTwoDevices = ConnectTwoDevices.fromPreferences(prefs);
+                if (connectTwoDevices.isEnabled()) {
+                    // ON flow: disable WideAreaTap first, then enable ConnectTwoDevices
+                    final Request ctdRequest = protocolImpl.setConnectTwoDevices(connectTwoDevices);
+                    if (ctdRequest != null) {
+                        enqueueRequests(Collections.singletonList(ctdRequest));
+                    }
+                    configRequest = protocolImpl.setWideAreaTap(new WideAreaTap(false));
+                } else {
+                    // OFF flow: send CTD=OFF only; device automatically restores WAT=enabled
+                    configRequest = protocolImpl.setConnectTwoDevices(connectTwoDevices);
+                }
+                break;
+            }
             case DeviceSettingsPreferenceConst.PREF_SONY_SPEAK_TO_CHAT:
                 configRequest = protocolImpl.setSpeakToChatEnabled(SpeakToChatEnabled.fromPreferences(prefs));
                 break;

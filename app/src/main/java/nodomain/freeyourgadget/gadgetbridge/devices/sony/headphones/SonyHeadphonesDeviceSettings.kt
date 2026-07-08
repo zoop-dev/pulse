@@ -394,6 +394,16 @@ fun sonyHeadphonesDeviceSettings(
     //
 
     category(key = "pref_header_system", title = R.string.pref_header_system) {
+        if (capabilities.contains(SonyHeadphonesCapabilities.ConnectTwoDevices)) {
+            switchSetting(
+                key = DeviceSettingsPreferenceConst.PREF_SONY_CONNECT_TWO_DEVICES,
+                title = R.string.dual_device_mode_title,
+                summary = R.string.dual_device_mode_summary,
+                icon = R.drawable.ic_devices_other,
+                defaultValue = false,
+            )
+        }
+
         if (capabilities.contains(SonyHeadphonesCapabilities.WideAreaTap)) {
             switchSetting(
                 key = DeviceSettingsPreferenceConst.PREF_SONY_WIDE_AREA_TAP,

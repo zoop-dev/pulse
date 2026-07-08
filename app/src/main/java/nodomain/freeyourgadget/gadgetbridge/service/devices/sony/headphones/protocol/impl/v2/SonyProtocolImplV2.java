@@ -48,6 +48,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.SpeakT
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.SurroundMode;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.TouchSensor;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.VoiceNotifications;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ConnectTwoDevices;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.WideAreaTap;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.protocol.MessageType;
@@ -310,6 +311,31 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
     }
 
     @Override
+    public Request setConnectTwoDevices(final ConnectTwoDevices config) {
+        return new Request(
+                PayloadTypeV2.SYSTEM_CONTROL_SET.getMessageType(),
+                new byte[]{
+                        PayloadTypeV2.SYSTEM_CONTROL_SET.getCode(),
+                        (byte) 0x00,
+                        (byte) 0x06,
+                        (byte) (config.isEnabled() ? 0x01 : 0x00)
+                }
+        );
+    }
+
+    @Override
+    public Request getConnectTwoDevices() {
+        return new Request(
+                PayloadTypeV2.SYSTEM_CONTROL_GET.getMessageType(),
+                new byte[]{
+                        PayloadTypeV2.SYSTEM_CONTROL_GET.getCode(),
+                        (byte) 0x00,
+                        (byte) 0x06
+                }
+        );
+    }
+
+    @Override
     public Request getButtonModes() {
         return new Request(
                 PayloadTypeV1.AUTOMATIC_POWER_OFF_BUTTON_MODE_GET.getMessageType(),
@@ -533,13 +559,13 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
     @Override
     public Request reboot() {
         return new Request(
-            MessageType.COMMAND_1,
-            new byte[]{
-                (byte) 0x98,
-                (byte) 0x00,
-                (byte) 0x16,
-                (byte) 0x01
-            }
+                PayloadTypeV2.SYSTEM_CONTROL_SET.getMessageType(),
+                new byte[]{
+                        PayloadTypeV2.SYSTEM_CONTROL_SET.getCode(),
+                        (byte) 0x00,
+                        (byte) 0x16,
+                        (byte) 0x01
+                }
         );
     }
 
@@ -572,6 +598,8 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
             case AMBIENT_SOUND_CONTROL_BUTTON_MODE_RET:
             case AMBIENT_SOUND_CONTROL_BUTTON_MODE_NOTIFY:
                 return handleAmbientSoundControlButtonMode(payload);
+            case SYSTEM_CONTROL_RET:
+                return handleSystemControl(payload);
         }
 
         return super.handlePayload(messageType, payload);
@@ -1029,10 +1057,32 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
 
         LOG.debug("Wide Area Tap: {}", enabled);
 
+        // WAT and ConnectTwoDevices are mutually exclusive: WAT=enabled ↔ CTD=disabled
         final GBDeviceEventUpdatePreferences event = new GBDeviceEventUpdatePreferences()
-                .withPreferences(new WideAreaTap(enabled).toPreferences());
+                .withPreferences(new WideAreaTap(enabled).toPreferences())
+                .withPreferences(new ConnectTwoDevices(!enabled).toPreferences());
 
         return Collections.singletonList(event);
+    }
+
+    public List<? extends GBDeviceEvent> handleSystemControl(final byte[] payload) {
+        if (payload.length != 4) {
+            LOG.warn("Unexpected system control payload length {}", payload.length);
+            return Collections.emptyList();
+        }
+
+        final byte subcode = payload[2];
+
+        if (subcode == (byte) 0x06) {
+            // Connect Two Devices (dual device mode)
+            final boolean enabled = payload[3] == (byte) 0x01;
+            LOG.debug("Connect Two Devices: {}", enabled);
+            return Collections.singletonList(new GBDeviceEventUpdatePreferences()
+                    .withPreferences(new ConnectTwoDevices(enabled).toPreferences()));
+        }
+
+        LOG.debug("Unhandled system control subcode 0x{}", String.format("%02x", subcode));
+        return Collections.emptyList();
     }
 
     @Override

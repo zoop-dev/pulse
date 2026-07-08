@@ -47,6 +47,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AudioU
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AutomaticPowerOff;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ButtonFunctionNcAmbient;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ButtonModes;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ConnectTwoDevices;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.EqualizerCustomBands;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.EqualizerPreset;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.PauseWhenTakenOff;
@@ -356,6 +357,18 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
     @Override
     public Request getWideAreaTap() {
         LOG.warn("Adaptive volume control not implemented for V1");
+        return null;
+    }
+
+    @Override
+    public Request setConnectTwoDevices(final ConnectTwoDevices config) {
+        LOG.warn("Connect two devices not implemented for V1");
+        return null;
+    }
+
+    @Override
+    public Request getConnectTwoDevices() {
+        LOG.warn("Connect two devices not implemented for V1");
         return null;
     }
 
@@ -725,6 +738,7 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
             put(SonyHeadphonesCapabilities.Volume, getVolume());
             put(SonyHeadphonesCapabilities.AdaptiveVolumeControl, getAdaptiveVolumeControl());
             put(SonyHeadphonesCapabilities.WideAreaTap, getWideAreaTap());
+            put(SonyHeadphonesCapabilities.ConnectTwoDevices, getConnectTwoDevices());
         }};
 
         for (Map.Entry<SonyHeadphonesCapabilities, Request> capabilityEntry : capabilityRequestMap.entrySet()) {
