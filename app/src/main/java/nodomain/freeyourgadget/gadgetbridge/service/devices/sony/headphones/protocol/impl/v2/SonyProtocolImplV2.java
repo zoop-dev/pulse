@@ -327,14 +327,12 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
 
     @Override
     public Request getConnectTwoDevices() {
-        return new Request(
-                PayloadTypeV2.SYSTEM_CONTROL_GET.getMessageType(),
-                new byte[]{
-                        PayloadTypeV2.SYSTEM_CONTROL_GET.getCode(),
-                        (byte) 0x00,
-                        (byte) 0x06
-                }
-        );
+        // In V2, the actual CTD state is carried by the WideAreaTap (TOUCH_SENSOR) response.
+        // Delegate to getWideAreaTap() so the init capabilityRequestMap sends a TOUCH_SENSOR_GET,
+        // whose TOUCH_SENSOR_RET reply is handled by handleTouchSensor(), which updates both
+        // WideAreaTap and ConnectTwoDevices preferences with the correct co-directional value.
+        // (SYSTEM_CONTROL_RET always returns value=01 regardless of actual CTD state.)
+        return getWideAreaTap();
     }
 
     @Override
