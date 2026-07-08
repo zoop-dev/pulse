@@ -40,14 +40,23 @@ public class SonyWHULT900NCoordinator extends SonyHeadphonesCoordinator {
         return R.string.devicetype_sony_wh_ult900n;
     }
 
+    @Override
+    public boolean preferServiceV2() {
+        return true;
+    }
+
     @NonNull
     @Override
     public Set<SonyHeadphonesCapabilities> getDefaultCapabilities() {
         return new HashSet<>(Arrays.asList(
                 SonyHeadphonesCapabilities.BatterySingle,
                 SonyHeadphonesCapabilities.AmbientSoundControl2,
+                SonyHeadphonesCapabilities.AmbientSoundControlButtonMode,
+                SonyHeadphonesCapabilities.EqualizerWithCustomBands, // Not changing
+                SonyHeadphonesCapabilities.AudioUpsampling,
                 SonyHeadphonesCapabilities.PowerOffFromPhone,
                 SonyHeadphonesCapabilities.PauseWhenTakenOff,
+                SonyHeadphonesCapabilities.AutomaticPowerOffWhenTakenOff,
                 SonyHeadphonesCapabilities.QuickAccess,
                 SonyHeadphonesCapabilities.VoiceNotifications
         ));
