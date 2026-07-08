@@ -29,6 +29,7 @@ import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.Logging;
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.AbstractMoyoungDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.moyoung.MoyoungConstants;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
@@ -38,6 +39,9 @@ import nodomain.freeyourgadget.gadgetbridge.util.GB;
 public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSupport> {
 
     private static final Logger LOG = LoggerFactory.getLogger(FetchDataOperation.class);
+
+    // CMD_QUERY_PAST_HEART_RATE_2 returns today's heart rate in 20 packets (index 0..19)
+    private static final int PAST_HEART_RATE_PACKET_COUNT = 20;
 
     private final boolean[] receivedSteps = new boolean[3];
     private final boolean[] receivedSleep = new boolean[3];
@@ -66,6 +70,11 @@ public class FetchDataOperation extends AbstractBTLEOperation<MoyoungDeviceSuppo
         builder.read(MoyoungConstants.UUID_CHARACTERISTIC_STEPS);
         getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_QUERY_MOVEMENT_HEART_RATE, new byte[]{}));
         getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_QUERY_PAST_HEART_RATE_1, new byte[]{0x00}));
+        if (((AbstractMoyoungDeviceCoordinator) getDevice().getDeviceCoordinator()).supportsHeartRateHistory()) {
+            for (byte i = 0; i < PAST_HEART_RATE_PACKET_COUNT; i++) {
+                getSupport().sendPacket(builder, MoyoungPacketOut.buildPacket(getSupport().getMtu(), MoyoungConstants.CMD_QUERY_PAST_HEART_RATE_2, new byte[]{i}));
+            }
+        }
         builder.queue();
 
         updateProgressAndCheckFinish();

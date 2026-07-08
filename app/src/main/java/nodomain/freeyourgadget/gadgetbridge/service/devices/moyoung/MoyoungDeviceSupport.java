@@ -41,6 +41,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -123,6 +124,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.Batter
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.battery.BatteryInfoProfile;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfo;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.deviceinfo.DeviceInfoProfile;
+import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.heartrate.HeartRate;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.profiles.heartrate.HeartRateProfile;
 import nodomain.freeyourgadget.gadgetbridge.util.AlarmUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.ArrayUtils;
@@ -136,6 +138,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.calendar.CalendarManager;
 public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private static final Logger LOG = LoggerFactory.getLogger(MoyoungDeviceSupport.class);
     private static final long IDLE_STEPS_INTERVAL = 5 * 60 * 1000;
+    private static final long HEART_RATE_STREAM_SAMPLE_INTERVAL = 60 * 1000;
 
     private final DeviceInfoProfile<MoyoungDeviceSupport> deviceInfoProfile;
     private final BatteryInfoProfile<MoyoungDeviceSupport> batteryInfoProfile;
@@ -148,6 +151,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
     private MoyoungPacketIn packetIn = new MoyoungPacketIn();
 
     private boolean realTimeHeartRate;
+    private long lastHeartRateStreamSampleTimestamp = 0;
     private boolean findMyPhoneActive = false;
     private boolean takePhotoActive = false;
     private final Set<CalendarEvent> lastSync = new HashSet<>();
@@ -174,6 +178,9 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
             }
             if (Objects.equals(s, BatteryInfoProfile.ACTION_BATTERY_INFO)) {
                 handleBatteryInfo(intent.getParcelableExtra(BatteryInfoProfile.EXTRA_BATTERY_INFO));
+            }
+            if (Objects.equals(s, HeartRateProfile.ACTION_HEART_RATE)) {
+                handleRealtimeHeartRate(intent.getParcelableExtra(HeartRateProfile.EXTRA_HEART_RATE));
             }
         };
         deviceInfoProfile = new DeviceInfoProfile<>(this);
@@ -302,6 +309,12 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
         }
         if (packetType == MoyoungConstants.CMD_TRIGGER_MEASURE_BLOOD_OXYGEN) {
             int percent = payload[0] & 0xff;
+
+            if (percent <= 0 || percent >= 255) {
+                LOG.warn("Ignoring invalid blood oxygen value: {}", percent);
+                return true;
+            }
+
             LOG.info("Measure blood oxygen finished: {}%", percent);
 
             try (DBHandler dbHandler = GBApplication.acquireDB()) {
@@ -382,6 +395,13 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
         if (packetType == MoyoungConstants.CMD_QUERY_PAST_HEART_RATE_1) {
             handleHeartRateHistory(payload);
+            return true;
+        }
+
+        if (packetType == MoyoungConstants.CMD_QUERY_PAST_HEART_RATE_2) {
+            int index = payload[0] & 0xff;
+            byte[] data = Arrays.copyOfRange(payload, 1, payload.length);
+            handlePastHeartRate(index, data);
             return true;
         }
 
@@ -521,6 +541,7 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
 
     private void broadcastSample(MoyoungActivitySample sample) {
         Intent intent = new Intent(DeviceService.ACTION_REALTIME_SAMPLES)
+                .putExtra(GBDevice.EXTRA_DEVICE, getDevice())
                 .putExtra(DeviceService.EXTRA_REALTIME_SAMPLE, sample)
                 .putExtra(DeviceService.EXTRA_TIMESTAMP, sample.getTimestamp());
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
@@ -531,9 +552,51 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
         genericSample.setTimestamp((int) (sample.getTimestamp() / 1000));
         genericSample.setHeartRate(sample.getHeartRate());
         Intent intent = new Intent(DeviceService.ACTION_REALTIME_SAMPLES)
+                .putExtra(GBDevice.EXTRA_DEVICE, getDevice())
                 .putExtra(DeviceService.EXTRA_REALTIME_SAMPLE, genericSample)
                 .putExtra(DeviceService.EXTRA_TIMESTAMP, genericSample.getTimestamp());
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+    }
+
+    /**
+     * Handles heart rate values delivered via the standard Bluetooth Heart Rate profile
+     * (characteristic 0x2A37). Some Moyoung watches (e.g. the L 70) stream their live heart
+     * rate this way instead of replying to the custom CMD_TRIGGER_MEASURE_HEARTRATE packet,
+     * so without this the values are decoded but never shown or stored.
+     */
+    private void handleRealtimeHeartRate(final HeartRate heartRate) {
+        if (heartRate == null || heartRate.getHeartRate() <= 0) {
+            return;
+        }
+        if (!((AbstractMoyoungDeviceCoordinator) getDevice().getDeviceCoordinator()).supportsHeartRateStreaming()) {
+            return;
+        }
+
+        final long now = System.currentTimeMillis();
+
+        final MoyoungHeartRateSample sample = new MoyoungHeartRateSample();
+        sample.setTimestamp(now);
+        sample.setHeartRate(heartRate.getHeartRate());
+
+        // Always broadcast so the live heart rate view updates smoothly
+        broadcastSample(sample);
+
+        // Persist at most once per minute to avoid flooding the database with the ~2 Hz stream
+        if (now - lastHeartRateStreamSampleTimestamp < HEART_RATE_STREAM_SAMPLE_INTERVAL) {
+            return;
+        }
+        lastHeartRateStreamSampleTimestamp = now;
+
+        try (DBHandler dbHandler = GBApplication.acquireDB()) {
+            MoyoungHeartRateSampleProvider sampleProvider = new MoyoungHeartRateSampleProvider(getDevice(), dbHandler.getDaoSession());
+            Long userId = DBHelper.getUser(dbHandler.getDaoSession()).getId();
+            Long deviceId = DBHelper.getDevice(getDevice(), dbHandler.getDaoSession()).getId();
+            sample.setDeviceId(deviceId);
+            sample.setUserId(userId);
+            sampleProvider.addSample(sample);
+        } catch (Exception e) {
+            LOG.error("Error acquiring database for recording heart rate samples", e);
+        }
     }
 
     private void handleDeviceInfo(DeviceInfo info) {
@@ -652,6 +715,11 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
             case 0x00:
                 // Single stress measurement result
                 int stressLevel = payload[2] & 0xff;
+
+                if (stressLevel <= 0 || stressLevel >= 255) {
+                    LOG.warn("Ignoring invalid stress value: {}", stressLevel);
+                    return;
+                }
                 try (DBHandler dbHandler = GBApplication.acquireDB()) {
                     MoyoungStressSampleProvider sampleProvider = new MoyoungStressSampleProvider(getDevice(), dbHandler.getDaoSession());
                     Long userId = DBHelper.getUser(dbHandler.getDaoSession()).getId();
@@ -1200,6 +1268,46 @@ public class MoyoungDeviceSupport extends AbstractBTLESingleDeviceSupport {
             builder.queue();
         } catch (IOException e) {
             LOG.error("Failed sending HR history request packet: ", e);
+        }
+    }
+
+    /**
+     * Handles a CMD_QUERY_PAST_HEART_RATE_2 (0x36) packet: today's heart rate history,
+     * one sample per minute. Packet {@code packetIndex} covers minutes
+     * [packetIndex * N, packetIndex * N + N), where N is the number of samples per packet.
+     * A value of 0 means "no measurement".
+     */
+    public void handlePastHeartRate(int packetIndex, byte[] data) {
+        final int samplesPerPacket = 72;  // one sample per minute, 20 packets * 72 = 1440 minutes
+        final List<MoyoungHeartRateSample> hrSamples = new ArrayList<>();
+        final Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        for (int i = 0; i < data.length && i < samplesPerPacket; i++) {
+            final int minuteOfDay = packetIndex * samplesPerPacket + i;
+            cal.set(Calendar.HOUR_OF_DAY, minuteOfDay / 60);
+            cal.set(Calendar.MINUTE, minuteOfDay % 60);
+            final int hr = data[i] & 0xff;
+            if (HeartRateUtils.getInstance().isValidHeartRateValue(hr)
+                    && cal.getTimeInMillis() < System.currentTimeMillis()) {
+                MoyoungHeartRateSample sample = new MoyoungHeartRateSample();
+                sample.setTimestamp(cal.getTimeInMillis());
+                sample.setHeartRate(hr);
+                hrSamples.add(sample);
+            }
+        }
+        try (DBHandler dbHandler = GBApplication.acquireDB()) {
+            MoyoungHeartRateSampleProvider sampleProvider = new MoyoungHeartRateSampleProvider(getDevice(), dbHandler.getDaoSession());
+            Long userId = DBHelper.getUser(dbHandler.getDaoSession()).getId();
+            Long deviceId = DBHelper.getDevice(getDevice(), dbHandler.getDaoSession()).getId();
+            for (MoyoungHeartRateSample sample : hrSamples) {
+                sample.setDeviceId(deviceId);
+                sample.setUserId(userId);
+            }
+            LOG.debug("Will persist {} past HR samples (index {})", hrSamples.size(), packetIndex);
+            sampleProvider.addSamples(hrSamples);
+        } catch (Exception e) {
+            LOG.error("Error acquiring database for recording heart rate samples", e);
         }
     }
 

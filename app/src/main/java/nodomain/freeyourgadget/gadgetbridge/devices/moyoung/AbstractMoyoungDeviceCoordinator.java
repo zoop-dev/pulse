@@ -148,6 +148,14 @@ public abstract class AbstractMoyoungDeviceCoordinator extends AbstractBLEDevice
         return true;
     }
 
+    public boolean supportsHeartRateStreaming() {
+        return false;
+    }
+
+    public boolean supportsHeartRateHistory() {
+        return false;
+    }
+
     @Override
     public boolean supportsCalendarEvents(@NonNull final GBDevice device) {
         return true;
