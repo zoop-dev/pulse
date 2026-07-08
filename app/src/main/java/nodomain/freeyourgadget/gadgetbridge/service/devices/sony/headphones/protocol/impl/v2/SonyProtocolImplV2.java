@@ -228,14 +228,28 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
 
     @Override
     public Request getAudioLDAC() {
-        LOG.warn("Audio LDAC get not implemented for V2");
-        return null;
+        // In V2, connection quality (LDAC vs SBC) uses AUDIO_UPSAMPLING_GET with subtype 0x02
+        return new Request(
+                PayloadTypeV1.AUDIO_UPSAMPLING_GET.getMessageType(),
+                new byte[]{
+                        PayloadTypeV1.AUDIO_UPSAMPLING_GET.getCode(),
+                        (byte) 0x02
+                }
+        );
     }
 
     @Override
     public Request setAudioLDAC(final AudioLDAC config) {
-        LOG.warn("Audio LDAC set not implemented for V2");
-        return null;
+        // In V2, connection quality (LDAC vs SBC) uses AUDIO_UPSAMPLING_SET with subtype 0x02
+        // enabled (sound quality / LDAC) = 0x00, disabled (stable connection / SBC) = 0x01
+        return new Request(
+                PayloadTypeV1.AUDIO_UPSAMPLING_SET.getMessageType(),
+                new byte[]{
+                        PayloadTypeV1.AUDIO_UPSAMPLING_SET.getCode(),
+                        (byte) 0x02,
+                        (byte) (config.isEnabled() ? 0x00 : 0x01)
+                }
+        );
     }
 
     @Override
@@ -702,23 +716,28 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
             return Collections.emptyList();
         }
 
-        if (payload[1] != 0x01) {
-            LOG.warn("Not audio upsampling, ignoring {}", payload[1]);
-            return Collections.emptyList();
-        }
-
-        final Boolean enabled = booleanFromByte(payload[2]);
-        if (enabled == null) {
+        final Boolean value = booleanFromByte(payload[2]);
+        if (value == null) {
             LOG.warn("Unknown audio upsampling code {}", String.format("%02x", payload[2]));
             return Collections.emptyList();
         }
 
-        LOG.debug("Audio Upsampling: {}", enabled);
-
-        final GBDeviceEventUpdatePreferences event = new GBDeviceEventUpdatePreferences()
-                .withPreferences(new AudioUpsampling(enabled).toPreferences());
-
-        return Collections.singletonList(event);
+        switch (payload[1]) {
+            case 0x01:
+                // DSEE / Audio upsampling
+                LOG.debug("Audio Upsampling: {}", value);
+                return Collections.singletonList(new GBDeviceEventUpdatePreferences()
+                        .withPreferences(new AudioUpsampling(value).toPreferences()));
+            case 0x02:
+                // Bluetooth connection quality: 0x00 = sound quality (LDAC), 0x01 = stable connection (SBC)
+                // value=true means payload[2]=0x01 (stable), so LDAC enabled = !value
+                LOG.debug("Bluetooth Connection Quality (LDAC): {}", !value);
+                return Collections.singletonList(new GBDeviceEventUpdatePreferences()
+                        .withPreferences(new AudioLDAC(!value).toPreferences()));
+            default:
+                LOG.warn("Unknown audio upsampling subtype {}", String.format("%02x", payload[1]));
+                return Collections.emptyList();
+        }
     }
 
     @Override

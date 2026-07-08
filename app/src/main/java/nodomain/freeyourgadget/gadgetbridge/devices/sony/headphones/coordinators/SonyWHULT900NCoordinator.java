@@ -54,6 +54,7 @@ public class SonyWHULT900NCoordinator extends SonyHeadphonesCoordinator {
                 SonyHeadphonesCapabilities.AmbientSoundControlButtonMode,
                 SonyHeadphonesCapabilities.EqualizerWithCustomBands, // Not changing
                 SonyHeadphonesCapabilities.AudioUpsampling,
+                SonyHeadphonesCapabilities.AudioLDAC,
                 SonyHeadphonesCapabilities.PowerOffFromPhone,
                 SonyHeadphonesCapabilities.PauseWhenTakenOff,
                 SonyHeadphonesCapabilities.AutomaticPowerOffWhenTakenOff,
