@@ -1,4 +1,4 @@
-/*  Copyright (C) 2026 ExploWare
+/*  Copyright (C) 2026 Gadgetbridge contributors
 
     This file is part of Gadgetbridge.
 
@@ -21,6 +21,8 @@ import android.bluetooth.BluetoothGattCharacteristic
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo
+import nodomain.freeyourgadget.gadgetbridge.devices.GloryFitStepsSampleProvider
+import nodomain.freeyourgadget.gadgetbridge.entities.GloryFitStepsSample
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec
@@ -68,6 +70,9 @@ class GloryFitProSupport : AbstractBTLESingleDeviceSupport(LOG) {
             setTime(builder)
         }
 
+        // Ask for today's step total.
+        builder.write(UUID_CHARACTERISTIC_DATA_WRITE, *cmdGetAll(CMD_ACTIVITY_DAY))
+
         // FIXME: likely too early, refine once the init handshake is fully understood.
         builder.setDeviceState(GBDevice.State.INITIALIZED)
 
@@ -100,7 +105,74 @@ class GloryFitProSupport : AbstractBTLESingleDeviceSupport(LOG) {
         }
         when (cmd) {
             CMD_DEVICE_INFO -> handleDeviceInfo(value)
+            CMD_ACTIVITY_DAY -> handleDaySummary(value)
             else -> LOG.debug("Unhandled cmd 0x{}: {}", Integer.toHexString(cmd.toInt() and 0xff), value.toHex())
+        }
+    }
+
+    override fun onFetchRecordedData(dataTypes: Int) {
+        val builder = createTransactionBuilder("fetch steps")
+        builder.write(UUID_CHARACTERISTIC_DATA_WRITE, *cmdGetAll(CMD_ACTIVITY_DAY))
+        builder.queue()
+    }
+
+    /** Day summary reply "01 c3 aaaa 00 ... aa 0c <len> <inner sub-TLV>"; steps = inner subfield 0x05. */
+    private fun handleDaySummary(value: ByteArray) {
+        if (value.size < 5 || value[2] != MODE_GET) return
+        val metrics = parseTlv(value, 5)[FIELD_DAY_METRICS] ?: return
+        val steps = parseInnerInt(metrics, SUBFIELD_STEPS) ?: return
+        storeDailySteps(steps)
+    }
+
+    /** Parse a variable-length big-endian integer [subfield] from an inner "<field><len><value>" TLV blob. */
+    private fun parseInnerInt(blob: ByteArray, subfield: Int): Int? {
+        var i = 0
+        while (i + 2 <= blob.size) {
+            val field = blob[i].toInt() and 0xff
+            val len = blob[i + 1].toInt() and 0xff
+            if (i + 2 + len > blob.size) break
+            if (field == subfield && len >= 1) {
+                var v = 0
+                for (k in 0 until len) v = (v shl 8) or (blob[i + 2 + k].toInt() and 0xff)
+                return v
+            }
+            i += 2 + len
+        }
+        return null
+    }
+
+    /**
+     * Store today's step total as a delta relative to what was already recorded today, so
+     * Gadgetbridge's per-interval sum equals the watch's daily total.
+     */
+    private fun storeDailySteps(total: Int) {
+        try {
+            GBApplication.acquireDB().use { handler ->
+                val session = handler.daoSession
+                val provider = GloryFitStepsSampleProvider(device, session)
+                val cal = GregorianCalendar.getInstance()
+                cal.set(Calendar.HOUR_OF_DAY, 0)
+                cal.set(Calendar.MINUTE, 0)
+                cal.set(Calendar.SECOND, 0)
+                cal.set(Calendar.MILLISECOND, 0)
+                val now = System.currentTimeMillis()
+                val recorded = provider.getAllSamples(cal.timeInMillis, now).sumOf { it.totalSteps }
+                val delta = total - recorded
+                LOG.info("DM58 daily steps total={} recorded={} delta={}", total, recorded, delta)
+                if (delta <= 0) return
+                val sample = GloryFitStepsSample()
+                sample.timestamp = now
+                sample.totalSteps = delta
+                sample.runningStart = 0
+                sample.runningEnd = 0
+                sample.runningSteps = 0
+                sample.walkingStart = 0
+                sample.walkingEnd = 0
+                sample.walkingSteps = 0
+                provider.persistSamples(listOf(sample), context)
+            }
+        } catch (e: Exception) {
+            LOG.error("Failed to store steps", e)
         }
     }
 
@@ -249,9 +321,12 @@ class GloryFitProSupport : AbstractBTLESingleDeviceSupport(LOG) {
         const val CMD_TIME: Byte = 0xa3.toByte()
         const val CMD_DEVICE_INFO: Byte = 0xa4.toByte()
         const val CMD_NOTIFICATION: Byte = 0xb0.toByte()
+        const val CMD_ACTIVITY_DAY: Byte = 0xc3.toByte()
 
         const val FIELD_MODEL: Byte = 0x02
         const val FIELD_FIRMWARE: Byte = 0x15
         const val FIELD_BATTERY: Byte = 0x16
+        const val FIELD_DAY_METRICS: Byte = 0x0c
+        const val SUBFIELD_STEPS: Int = 0x05
     }
 }

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2026 ExploWare
+/*  Copyright (C) 2026 Gadgetbridge contributors
 
     This file is part of Gadgetbridge.
 
@@ -16,11 +16,18 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.devices.gloryfitpro
 
+import de.greenrobot.dao.AbstractDao
+import de.greenrobot.dao.Property
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsScreen
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator
+import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider
+import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.GloryFitActivitySampleProvider
+import nodomain.freeyourgadget.gadgetbridge.entities.AbstractActivitySample
+import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession
+import nodomain.freeyourgadget.gadgetbridge.entities.GloryFitStepsSampleDao
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport
 import nodomain.freeyourgadget.gadgetbridge.service.devices.gloryfitpro.GloryFitProSupport
@@ -45,6 +52,29 @@ abstract class GloryFitProCoordinator : AbstractBLEDeviceCoordinator() {
 
     override fun suggestUnbindBeforePair(): Boolean {
         return false
+    }
+
+    override fun supportsActivityTracking(device: GBDevice): Boolean {
+        return true
+    }
+
+    override fun supportsDataFetching(device: GBDevice): Boolean {
+        return true
+    }
+
+    override fun getSampleProvider(
+        device: GBDevice,
+        session: DaoSession
+    ): SampleProvider<out AbstractActivitySample>? {
+        return GloryFitActivitySampleProvider(device, session)
+    }
+
+    override fun getAllDeviceDao(session: DaoSession): MutableMap<AbstractDao<*, *>, Property> {
+        return object : HashMap<AbstractDao<*, *>, Property>() {
+            init {
+                put(session.gloryFitStepsSampleDao, GloryFitStepsSampleDao.Properties.DeviceId)
+            }
+        }
     }
 
     override fun getDeviceSpecificSettings(device: GBDevice): DeviceSpecificSettings {
