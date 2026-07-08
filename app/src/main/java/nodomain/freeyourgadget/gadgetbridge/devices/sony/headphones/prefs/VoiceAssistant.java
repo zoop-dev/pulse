@@ -1,4 +1,4 @@
-/*  Copyright (C) 2025 José Rebelo
+/*  Copyright (C) 2026 David Giron
 
     This file is part of Gadgetbridge.
 
