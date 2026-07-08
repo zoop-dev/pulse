@@ -46,6 +46,7 @@ public enum SonyHeadphonesCapabilities {
     SpeakToChatFocusOnVoice,
     SurroundMode,
     TouchSensorSingle,
+    VoiceAssistantFunction,
     VoiceNotifications,
     Volume,
     WideAreaTap,

@@ -17,6 +17,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.Button
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.EqualizerPreset
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.QuickAccess
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.SoundPosition
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.VoiceAssistant
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.SpeakToChatConfig
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.SurroundMode
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
@@ -529,6 +530,15 @@ fun sonyHeadphonesDeviceSettings(
                 title = R.string.sony_quick_access_triple_tap,
                 icon = R.drawable.ic_filter_3,
                 defaultValue = QuickAccess.Mode.OFF,
+            )
+        }
+
+        if (capabilities.contains(SonyHeadphonesCapabilities.VoiceAssistantFunction)) {
+            enumList<VoiceAssistant.Mode>(
+                key = DeviceSettingsPreferenceConst.PREF_SONY_VOICE_ASSISTANT_FUNCTION,
+                title = R.string.sony_voice_assistant_function,
+                icon = R.drawable.ic_voice,
+                defaultValue = VoiceAssistant.Mode.DO_NOT_USE,
             )
         }
 

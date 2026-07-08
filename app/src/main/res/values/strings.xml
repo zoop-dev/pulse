@@ -3559,6 +3559,8 @@
     <string name="sony_ambient_sound_control_button_mode_as_off">Ambient Sound, Off</string>
     <string name="sony_quick_access_double_tap">Quick Access (Double Tap)</string>
     <string name="sony_quick_access_triple_tap">Quick Access (Triple Tap)</string>
+    <string name="sony_voice_assistant_function">Voice Assistant Function</string>
+    <string name="sony_voice_assistant_mobile_device">Voice Assistant (Mobile Device)</string>
     <string name="sony_protocol_v1">Version 1</string>
     <string name="sony_protocol_v2">Version 2</string>
     <string name="sony_protocol_v3">Version 3</string>

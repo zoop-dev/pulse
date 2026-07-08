@@ -57,6 +57,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.SpeakT
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.SpeakToChatEnabled;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.SurroundMode;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.TouchSensor;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.VoiceAssistant;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.VoiceNotifications;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.WideAreaTap;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -585,6 +586,16 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
     }
 
     @Override
+    public Request getVoiceAssistant() {
+        return null;
+    }
+
+    @Override
+    public Request setVoiceAssistant(final VoiceAssistant config) {
+        return null;
+    }
+
+    @Override
     public Request startNoiseCancellingOptimizer(final boolean start) {
         return new Request(
                 PayloadTypeV1.NOISE_CANCELLING_OPTIMIZER_START.getMessageType(),
@@ -723,6 +734,7 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
             put(SonyHeadphonesCapabilities.ButtonFunctionNcAmbient, getButtonFunctionNcAmbient());
             put(SonyHeadphonesCapabilities.ButtonModesLeftRight, getButtonModes());
             put(SonyHeadphonesCapabilities.VoiceNotifications, getVoiceNotifications());
+            put(SonyHeadphonesCapabilities.VoiceAssistantFunction, getVoiceAssistant());
             put(SonyHeadphonesCapabilities.AutomaticPowerOffWhenTakenOff, getAutomaticPowerOff());
             put(SonyHeadphonesCapabilities.AutomaticPowerOffByTime, getAutomaticPowerOff());
             put(SonyHeadphonesCapabilities.TouchSensorSingle, getTouchSensor());

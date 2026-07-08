@@ -38,6 +38,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.SpeakT
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.SpeakToChatEnabled;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.SurroundMode;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.TouchSensor;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.VoiceAssistant;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.VoiceNotifications;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ConnectTwoDevices;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.WideAreaTap;
@@ -144,6 +145,10 @@ public abstract class AbstractSonyProtocolImpl {
     public abstract Request getTouchSensor();
 
     public abstract Request setTouchSensor(final TouchSensor config);
+
+    public abstract Request getVoiceAssistant();
+
+    public abstract Request setVoiceAssistant(final VoiceAssistant config);
 
     public abstract Request getVoiceNotifications();
 

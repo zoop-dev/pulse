@@ -54,6 +54,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.VoiceN
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.SoundPosition;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.SurroundMode;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.TouchSensor;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.VoiceAssistant;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ConnectTwoDevices;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.WideAreaTap;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -286,6 +287,18 @@ public class SonyHeadphonesProtocol extends GBDeviceProtocol {
             case DeviceSettingsPreferenceConst.PREF_SONY_QUICK_ACCESS_TRIPLE_TAP:
                 configRequest = protocolImpl.setQuickAccess(QuickAccess.fromPreferences(prefs));
                 break;
+            case DeviceSettingsPreferenceConst.PREF_SONY_VOICE_ASSISTANT_FUNCTION: {
+                final VoiceAssistant voiceAssistant = VoiceAssistant.fromPreferences(prefs);
+                configRequest = protocolImpl.setVoiceAssistant(voiceAssistant);
+                // A reboot is needed when switching FROM or TO Google/Alexa.
+                // Since the old preference is already overwritten at this point, always send
+                // the reboot to cover all transitions involving Google or Alexa.
+                final Request vaRebootRequest = protocolImpl.reboot();
+                if (vaRebootRequest != null) {
+                    enqueueRequests(Collections.singletonList(vaRebootRequest));
+                }
+                break;
+            }
             case DeviceSettingsPreferenceConst.PREF_SONY_PAUSE_WHEN_TAKEN_OFF:
                 configRequest = protocolImpl.setPauseWhenTakenOff(PauseWhenTakenOff.fromPreferences(prefs));
                 break;

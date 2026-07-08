@@ -47,6 +47,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.SpeakT
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.SpeakToChatEnabled;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.SurroundMode;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.TouchSensor;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.VoiceAssistant;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.VoiceNotifications;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ConnectTwoDevices;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.WideAreaTap;
@@ -542,6 +543,29 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
     }
 
     @Override
+    public Request getVoiceAssistant() {
+        return new Request(
+                PayloadTypeV1.AUTOMATIC_POWER_OFF_BUTTON_MODE_GET.getMessageType(),
+                new byte[]{
+                        PayloadTypeV1.AUTOMATIC_POWER_OFF_BUTTON_MODE_GET.getCode(),
+                        (byte) 0x04
+                }
+        );
+    }
+
+    @Override
+    public Request setVoiceAssistant(final VoiceAssistant config) {
+        return new Request(
+                PayloadTypeV1.AUTOMATIC_POWER_OFF_BUTTON_MODE_SET.getMessageType(),
+                new byte[]{
+                        PayloadTypeV1.AUTOMATIC_POWER_OFF_BUTTON_MODE_SET.getCode(),
+                        (byte) 0x04,
+                        config.getMode().getCode()
+                }
+        );
+    }
+
+    @Override
     public Request getVoiceNotifications() {
         return new Request(
                 PayloadTypeV1.VOICE_NOTIFICATIONS_GET.getMessageType(),
@@ -889,6 +913,29 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
         return Collections.singletonList(event);
     }
 
+    public List<? extends GBDeviceEvent> handleVoiceAssistant(final byte[] payload) {
+        if (payload.length != 3) {
+            LOG.warn("Unexpected voice assistant payload length {}", payload.length);
+            return Collections.emptyList();
+        }
+
+        if (payload[1] != (byte) 0x04) {
+            LOG.warn("Unexpected voice assistant subtype {}", String.format("%02x", payload[1]));
+            return Collections.emptyList();
+        }
+
+        final VoiceAssistant.Mode mode = VoiceAssistant.Mode.fromCode(payload[2]);
+        if (mode == null) {
+            LOG.warn("Unknown voice assistant mode {}", String.format("%02x", payload[2]));
+            return Collections.emptyList();
+        }
+
+        LOG.debug("Voice Assistant: {}", mode);
+
+        return Collections.singletonList(new GBDeviceEventUpdatePreferences()
+                .withPreferences(new VoiceAssistant(mode).toPreferences()));
+    }
+
     public List<? extends GBDeviceEvent> handleAmbientSoundControlButtonMode(final byte[] payload) {
         if (payload.length == 4 && payload[1] == 0x0c) {
             // FIXME split this
@@ -1030,6 +1077,8 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
                 return handlePauseWhenTakenOff(payload);
             case 0x03:
                 return handleButtonModes(payload);
+            case 0x04:
+                return handleVoiceAssistant(payload);
             case 0x0a:
                 return handleAdaptiveVolumeControl(payload);
             case 0x0c:
