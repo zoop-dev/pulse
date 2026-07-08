@@ -254,25 +254,32 @@ public class SonyHeadphonesProtocol extends GBDeviceProtocol {
                 break;
             case DeviceSettingsPreferenceConst.PREF_SONY_TOUCH_SENSOR: {
                 final TouchSensor touchSensor = TouchSensor.fromPreferences(prefs);
-                configRequest = protocolImpl.setTouchSensor(touchSensor);
                 if (!touchSensor.isEnabled() && protocolImpl instanceof SonyProtocolImplV2) {
-                    // When disabling the touch panel on V2, also disable Voice Assistant
-                    // if it is currently assigned to a quick access gesture
-                    final QuickAccess quickAccess = QuickAccess.fromPreferences(prefs);
-                    if (quickAccess.getModeDoubleTap() == QuickAccess.Mode.VOICE_ASSISTANT
-                            || quickAccess.getModeTripleTap() == QuickAccess.Mode.VOICE_ASSISTANT) {
-                        // SYSTEM_CONTROL_SET 0x98 00 0x0A 0x01 — deactivate voice assistant
-                        final Request disableVaRequest = new Request(
-                                MessageType.COMMAND_1,
-                                new byte[]{
-                                        (byte) 0x98,
-                                        (byte) 0x00,
-                                        (byte) 0x0A,
-                                        (byte) 0x01
-                                }
-                        );
-                        enqueueRequests(Collections.singletonList(disableVaRequest));
+                    // When disabling the touch panel on V2, also disable Voice Assistant if active.
+                    // VA must be cleared first; touch sensor command is enqueued after.
+                    final VoiceAssistant currentVa = VoiceAssistant.fromPreferences(prefs);
+                    if (currentVa.getMode() == VoiceAssistant.Mode.DO_NOT_USE) {
+                        // Voice Assistant already off, send touch sensor command directly
+                        configRequest = protocolImpl.setTouchSensor(touchSensor);
+                        break;
                     }
+                    configRequest = protocolImpl.setVoiceAssistant(
+                            new VoiceAssistant(VoiceAssistant.Mode.DO_NOT_USE));
+                    final List<Request> followUp = new ArrayList<>();
+                    if (currentVa.getMode() == VoiceAssistant.Mode.DIGITAL_ASSISTANT_GOOGLE
+                            || currentVa.getMode() == VoiceAssistant.Mode.AMAZON_ALEXA) {
+                        final Request vaRebootRequest = protocolImpl.reboot();
+                        if (vaRebootRequest != null) {
+                            followUp.add(vaRebootRequest);
+                        }
+                    }
+                    final Request touchRequest = protocolImpl.setTouchSensor(touchSensor);
+                    if (touchRequest != null) {
+                        followUp.add(touchRequest);
+                    }
+                    enqueueRequests(followUp);
+                } else {
+                    configRequest = protocolImpl.setTouchSensor(touchSensor);
                 }
                 break;
             }

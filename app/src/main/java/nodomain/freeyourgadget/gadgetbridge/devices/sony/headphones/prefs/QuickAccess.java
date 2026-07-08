@@ -32,7 +32,6 @@ public class QuickAccess {
     public enum Mode implements LabeledEntry {
         OFF((byte) 0x00, R.string.off),
         SPOTIFY((byte) 0x01, R.string.pref_title_touch_spotify),
-        VOICE_ASSISTANT((byte) 0x02, R.string.pref_title_touch_voice_assistant),
         ;
 
         private final byte code;
