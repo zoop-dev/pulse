@@ -251,9 +251,30 @@ public class SonyHeadphonesProtocol extends GBDeviceProtocol {
             case DeviceSettingsPreferenceConst.PREF_VOLUME:
                 configRequest = protocolImpl.setVolume(prefs.getInt(config, 15));
                 break;
-            case DeviceSettingsPreferenceConst.PREF_SONY_TOUCH_SENSOR:
-                configRequest = protocolImpl.setTouchSensor(TouchSensor.fromPreferences(prefs));
+            case DeviceSettingsPreferenceConst.PREF_SONY_TOUCH_SENSOR: {
+                final TouchSensor touchSensor = TouchSensor.fromPreferences(prefs);
+                configRequest = protocolImpl.setTouchSensor(touchSensor);
+                if (!touchSensor.isEnabled() && protocolImpl instanceof SonyProtocolImplV2) {
+                    // When disabling the touch panel on V2, also disable Voice Assistant
+                    // if it is currently assigned to a quick access gesture
+                    final QuickAccess quickAccess = QuickAccess.fromPreferences(prefs);
+                    if (quickAccess.getModeDoubleTap() == QuickAccess.Mode.VOICE_ASSISTANT
+                            || quickAccess.getModeTripleTap() == QuickAccess.Mode.VOICE_ASSISTANT) {
+                        // SYSTEM_CONTROL_SET 0x98 00 0x0A 0x01 — deactivate voice assistant
+                        final Request disableVaRequest = new Request(
+                                MessageType.COMMAND_1,
+                                new byte[]{
+                                        (byte) 0x98,
+                                        (byte) 0x00,
+                                        (byte) 0x0A,
+                                        (byte) 0x01
+                                }
+                        );
+                        enqueueRequests(Collections.singletonList(disableVaRequest));
+                    }
+                }
                 break;
+            }
             case DeviceSettingsPreferenceConst.PREF_SONY_AUTOMATIC_POWER_OFF:
                 configRequest = protocolImpl.setAutomaticPowerOff(AutomaticPowerOff.fromPreferences(prefs));
                 break;

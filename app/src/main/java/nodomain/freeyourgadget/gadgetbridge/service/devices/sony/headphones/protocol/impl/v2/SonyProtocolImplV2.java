@@ -519,14 +519,26 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
 
     @Override
     public Request getTouchSensor() {
-        LOG.warn("Touch sensor not implemented for V2");
-        return null;
+        return new Request(
+                PayloadTypeV1.TOUCH_SENSOR_GET.getMessageType(),
+                new byte[]{
+                        PayloadTypeV1.TOUCH_SENSOR_GET.getCode(),
+                        (byte) 0xd2
+                }
+        );
     }
 
     @Override
     public Request setTouchSensor(final TouchSensor config) {
-        LOG.warn("Touch sensor not implemented for V2");
-        return null;
+        return new Request(
+                PayloadTypeV1.TOUCH_SENSOR_SET.getMessageType(),
+                new byte[]{
+                        PayloadTypeV1.TOUCH_SENSOR_SET.getCode(),
+                        (byte) 0xd2,
+                        (byte) 0x00,
+                        (byte) (config.isEnabled() ? 0x00 : 0x01)
+                }
+        );
     }
 
     @Override
@@ -1054,34 +1066,27 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
             return Collections.emptyList();
         }
 
-        if (payload[1] != (byte) 0xd1) {
-            LOG.warn("Not wide area tap");
-            return Collections.emptyList();
-        }
-
-        boolean enabled;
-
-        // reversed?
-        switch (payload[3]) {
-            case 0x00:
-                enabled = true;
-                break;
-            case 0x01:
-                enabled = false;
-                break;
+        switch (payload[1]) {
+            case (byte) 0xd1: {
+                // WideAreaTap / ConnectTwoDevices — reversed logic in V2
+                final boolean enabled = payload[3] == (byte) 0x00;
+                LOG.debug("Wide Area Tap: {}", enabled);
+                // WAT and ConnectTwoDevices are co-directional: WAT=enabled ↔ CTD=enabled
+                return Collections.singletonList(new GBDeviceEventUpdatePreferences()
+                        .withPreferences(new WideAreaTap(enabled).toPreferences())
+                        .withPreferences(new ConnectTwoDevices(enabled).toPreferences()));
+            }
+            case (byte) 0xd2: {
+                // Touch Sensor Control Panel — 0x00=ON, 0x01=OFF
+                final boolean enabled = payload[3] == (byte) 0x00;
+                LOG.debug("Touch Sensor: {}", enabled);
+                return Collections.singletonList(new GBDeviceEventUpdatePreferences()
+                        .withPreferences(new TouchSensor(enabled).toPreferences()));
+            }
             default:
-                LOG.warn("Unknown wide area tap code {}", String.format("%02x", payload[3]));
+                LOG.warn("Unknown touch sensor subtype {}", String.format("%02x", payload[1]));
                 return Collections.emptyList();
         }
-
-        LOG.debug("Wide Area Tap: {}", enabled);
-
-        // WAT and ConnectTwoDevices are co-directional: WAT=enabled ↔ CTD=enabled
-        final GBDeviceEventUpdatePreferences event = new GBDeviceEventUpdatePreferences()
-                .withPreferences(new WideAreaTap(enabled).toPreferences())
-                .withPreferences(new ConnectTwoDevices(enabled).toPreferences());
-
-        return Collections.singletonList(event);
     }
 
     public List<? extends GBDeviceEvent> handleSystemControl(final byte[] payload) {
