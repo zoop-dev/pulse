@@ -32,7 +32,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 public class SonyWHULT900NCoordinator extends SonyHeadphonesCoordinator {
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("^Sony ULT|ULT WEAR$");
+        return Pattern.compile("^Sony ULT|ULT WEAR.*$");
     }
 
     @Override
