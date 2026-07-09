@@ -172,6 +172,8 @@ public abstract class AbstractSonyProtocolImpl {
 
     public abstract Request reboot();
 
+    public abstract Request factoryReset();
+
     public abstract Request getVolume();
 
     public abstract Request setVolume(final int volume);

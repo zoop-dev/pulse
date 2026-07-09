@@ -682,6 +682,18 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
     }
 
     @Override
+    public Request factoryReset() {
+        return new Request(
+                PayloadTypeV2.FACTORY_RESET_SET.getMessageType(),
+                new byte[]{
+                        PayloadTypeV2.FACTORY_RESET_SET.getCode(),
+                        (byte) 0x09,
+                        (byte) 0x01
+                }
+        );
+    }
+
+    @Override
     public Request getVolume() {
         LOG.warn("Volume not implemented for V2");
         return null;

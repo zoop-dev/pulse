@@ -383,6 +383,23 @@ public class SonyHeadphonesProtocol extends GBDeviceProtocol {
 
     @Override
     public byte[] encodeReset(final int flags) {
+        if ((flags & RESET_FLAGS_FACTORY_RESET) != 0) {
+            if (protocolImpl == null) {
+                LOG.error("No protocol implementation, ignoring factory reset request");
+                return super.encodeReset(flags);
+            }
+
+            final Request factoryResetRequest = protocolImpl.factoryReset();
+            if (factoryResetRequest == null) {
+                LOG.warn("Failed to encode factory reset request");
+                return super.encodeReset(flags);
+            }
+
+            pendingAcks++;
+
+            return factoryResetRequest.encode(sequenceNumber);
+        }
+
         if ((flags & RESET_FLAGS_REBOOT) == 0) {
             return super.encodeReset(flags);
         }

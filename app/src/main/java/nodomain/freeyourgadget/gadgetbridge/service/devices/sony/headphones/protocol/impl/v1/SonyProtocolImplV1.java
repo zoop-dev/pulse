@@ -666,6 +666,12 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
     }
 
     @Override
+    public Request factoryReset() {
+        LOG.warn("Factory reset not implemented for V1");
+        return null;
+    }
+
+    @Override
     public Request getVolume() {
         return new Request(
                 PayloadTypeV1.VOLUME_GET.getMessageType(),
