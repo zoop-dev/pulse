@@ -293,7 +293,7 @@ public class HuaweiP2PCalendarService extends HuaweiBaseP2PService {
         }
 
         List<CalendarEvent> removedEvents = new ArrayList<>(lastEventsIds.values());
-        
+
         JsonArray events = new JsonArray();
 
         for (final CalendarEvent calendarEvent : updatedEvents) {

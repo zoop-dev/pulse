@@ -1857,7 +1857,8 @@ public class DeviceConfig {
                 this.commandId = id;
 
                 // Bits like ext capabilities
-                byte[] capabilities = {(byte) 0xFD, (byte) 0xF7, (byte)0x73, (byte)0x7A};
+                //byte[] capabilities = {(byte) 0xFD, (byte) 0xF7, (byte)0x73, (byte)0x7A};
+                byte[] capabilities = {(byte) 0xFD, (byte) 0xF7, 0x33, (byte) 0xFA, 0x29, 0x37};
                 this.tlv = new HuaweiTLV()
                         .put(0x01, capabilities);
 
