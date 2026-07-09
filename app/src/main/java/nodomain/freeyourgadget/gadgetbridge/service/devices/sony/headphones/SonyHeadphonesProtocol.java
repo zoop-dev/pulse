@@ -314,6 +314,9 @@ public class SonyHeadphonesProtocol extends GBDeviceProtocol {
             case DeviceSettingsPreferenceConst.PREF_SONY_NOTIFICATION_VOICE_GUIDE:
                 configRequest = protocolImpl.setVoiceNotifications(VoiceNotifications.fromPreferences(prefs));
                 break;
+            case DeviceSettingsPreferenceConst.PREF_SONY_NOTIFICATION_VOICE_GUIDE_VOLUME:
+                configRequest = protocolImpl.setVoiceNotificationsVolume(VoiceNotifications.fromPreferences(prefs));
+                break;
             case DeviceSettingsPreferenceConst.PREF_SONY_CONNECT_TWO_DEVICES: {
                 final ConnectTwoDevices connectTwoDevices = ConnectTwoDevices.fromPreferences(prefs);
                 // Both ON and OFF: set WAT to same state first, then send fixed apply commit

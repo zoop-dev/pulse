@@ -618,6 +618,18 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
     }
 
     @Override
+    public Request getVoiceNotificationsVolume() {
+        LOG.warn("Voice notifications volume not implemented for V1");
+        return null;
+    }
+
+    @Override
+    public Request setVoiceNotificationsVolume(final VoiceNotifications config) {
+        LOG.warn("Voice notifications volume not implemented for V1");
+        return null;
+    }
+
+    @Override
     public Request getVoiceAssistant() {
         return null;
     }

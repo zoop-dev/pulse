@@ -581,6 +581,7 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_SONY_VOICE_ASSISTANT_FUNCTION = "pref_sony_voice_assistant_function";
     public static final String PREF_SONY_AUTOMATIC_POWER_OFF = "pref_sony_automatic_power_off";
     public static final String PREF_SONY_NOTIFICATION_VOICE_GUIDE = "pref_sony_notification_voice_guide";
+    public static final String PREF_SONY_NOTIFICATION_VOICE_GUIDE_VOLUME = "pref_sony_notification_voice_guide_volume";
     public static final String PREF_SONY_SPEAK_TO_CHAT = "pref_sony_speak_to_chat";
     public static final String PREF_SONY_SPEAK_TO_CHAT_SENSITIVITY = "pref_sony_speak_to_chat_sensitivity";
     public static final String PREF_SONY_SPEAK_TO_CHAT_FOCUS_ON_VOICE = "pref_sony_speak_to_chat_focus_on_voice";

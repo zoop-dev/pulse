@@ -166,6 +166,10 @@ public abstract class AbstractSonyProtocolImpl {
 
     public abstract Request setVoiceNotifications(final VoiceNotifications config);
 
+    public abstract Request getVoiceNotificationsVolume();
+
+    public abstract Request setVoiceNotificationsVolume(final VoiceNotifications config);
+
     public abstract Request startNoiseCancellingOptimizer(final boolean start);
 
     public abstract Request powerOff();

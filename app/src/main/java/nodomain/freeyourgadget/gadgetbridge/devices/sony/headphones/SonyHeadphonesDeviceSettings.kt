@@ -595,6 +595,14 @@ fun sonyHeadphonesDeviceSettings(
                 icon = R.drawable.ic_notifications,
                 defaultValue = true,
             )
+            seekbar(
+                key = DeviceSettingsPreferenceConst.PREF_SONY_NOTIFICATION_VOICE_GUIDE_VOLUME,
+                title = R.string.sony_voice_notifications_volume,
+                icon = R.drawable.ic_volume_up,
+                max = 4,
+                defaultValue = 2,
+                visibleWhen = { prefs -> prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SONY_NOTIFICATION_VOICE_GUIDE, true) },
+            )
         }
 
         if (capabilities.contains(SonyHeadphonesCapabilities.CaptureVoiceDuringCall)) {

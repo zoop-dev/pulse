@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -54,6 +55,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.Connec
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ServiceLink;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.WideAreaTap;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.deviceevents.SonyHeadphonesEnqueueRequestEvent;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.protocol.MessageType;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.protocol.Request;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.protocol.impl.v1.PayloadTypeV1;
@@ -651,6 +653,30 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
     }
 
     @Override
+    public Request getVoiceNotificationsVolume() {
+        return new Request(
+                PayloadTypeV1.VOICE_NOTIFICATIONS_GET.getMessageType(),
+                new byte[]{
+                        PayloadTypeV1.VOICE_NOTIFICATIONS_GET.getCode(),
+                        (byte) 0x20
+                }
+        );
+    }
+
+    @Override
+    public Request setVoiceNotificationsVolume(final VoiceNotifications config) {
+        return new Request(
+                PayloadTypeV1.VOICE_NOTIFICATIONS_SET.getMessageType(),
+                new byte[]{
+                        PayloadTypeV1.VOICE_NOTIFICATIONS_SET.getCode(),
+                        (byte) 0x20,
+                        (byte) config.getVolume(),
+                        (byte) 0x00
+                }
+        );
+    }
+
+    @Override
     public Request startNoiseCancellingOptimizer(final boolean start) {
         LOG.warn("Noise cancelling optimizer not implemented for V2");
         return null;
@@ -734,7 +760,19 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
 
     @Override
     public List<? extends GBDeviceEvent> handleInitResponse(final byte[] payload) {
-        return super.handleInitResponse(payload);
+        final List<GBDeviceEvent> events = new ArrayList<>(super.handleInitResponse(payload));
+        if (supports(SonyHeadphonesCapabilities.VoiceNotifications)) {
+            final Request volumeGet = getVoiceNotificationsVolume();
+            if (volumeGet != null) {
+                for (final GBDeviceEvent event : events) {
+                    if (event instanceof SonyHeadphonesEnqueueRequestEvent) {
+                        ((SonyHeadphonesEnqueueRequestEvent) event).getRequests().add(volumeGet);
+                        break;
+                    }
+                }
+            }
+        }
+        return events;
     }
 
     @Override
@@ -1262,27 +1300,33 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
             return Collections.emptyList();
         }
 
-        boolean enabled;
-
-        // reversed?
-        switch (payload[2]) {
-            case 0x00:
-                enabled = true;
-                break;
-            case 0x01:
-                enabled = false;
-                break;
+        switch (payload[1]) {
+            case 0x01: {
+                // on/off toggle
+                boolean enabled;
+                switch (payload[2]) {
+                    case 0x00: enabled = true; break;
+                    case 0x01: enabled = false; break;
+                    default:
+                        LOG.warn("Unknown voice notifications code {}", String.format("%02x", payload[2]));
+                        return Collections.emptyList();
+                }
+                LOG.debug("Voice Notifications enabled: {}", enabled);
+                return Collections.singletonList(new GBDeviceEventUpdatePreferences()
+                        .withPreference(DeviceSettingsPreferenceConst.PREF_SONY_NOTIFICATION_VOICE_GUIDE, enabled));
+            }
+            case 0x20: {
+                // volume level: signed byte (-2..+2)
+                final int volume = (byte) payload[2];
+                LOG.debug("Voice Notifications volume: {}", volume);
+                // Only update the volume pref, keep toggle state unchanged
+                return Collections.singletonList(new GBDeviceEventUpdatePreferences()
+                        .withPreference(DeviceSettingsPreferenceConst.PREF_SONY_NOTIFICATION_VOICE_GUIDE_VOLUME, volume + 2));
+            }
             default:
-                LOG.warn("Unknown voice notifications code {}", String.format("%02x", payload[3]));
+                LOG.warn("Unknown voice notifications subtype {}", String.format("%02x", payload[1]));
                 return Collections.emptyList();
         }
-
-        LOG.debug("Voice Notifications: {}", enabled);
-
-        final GBDeviceEventUpdatePreferences event = new GBDeviceEventUpdatePreferences()
-                .withPreferences(new VoiceNotifications(enabled).toPreferences());
-
-        return Collections.singletonList(event);
     }
 
     @Override

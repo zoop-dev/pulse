@@ -25,22 +25,35 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSett
 
 public class VoiceNotifications {
     private final boolean enabled;
+    private final int volume; // -2 to +2, 0 = center
 
     public VoiceNotifications(final boolean enabled) {
+        this(enabled, 0);
+    }
+
+    public VoiceNotifications(final boolean enabled, final int volume) {
         this.enabled = enabled;
+        this.volume = volume;
     }
 
     public boolean isEnabled() {
         return enabled;
     }
 
+    public int getVolume() {
+        return volume;
+    }
+
     public Map<String, Object> toPreferences() {
         return new HashMap<String, Object>() {{
             put(DeviceSettingsPreferenceConst.PREF_SONY_NOTIFICATION_VOICE_GUIDE, enabled);
+            put(DeviceSettingsPreferenceConst.PREF_SONY_NOTIFICATION_VOICE_GUIDE_VOLUME, volume + 2);
         }};
     }
 
     public static VoiceNotifications fromPreferences(final SharedPreferences prefs) {
-        return new VoiceNotifications(prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SONY_NOTIFICATION_VOICE_GUIDE, true));
+        final boolean enabled = prefs.getBoolean(DeviceSettingsPreferenceConst.PREF_SONY_NOTIFICATION_VOICE_GUIDE, true);
+        final int volume = prefs.getInt(DeviceSettingsPreferenceConst.PREF_SONY_NOTIFICATION_VOICE_GUIDE_VOLUME, 2) - 2;
+        return new VoiceNotifications(enabled, volume);
     }
 }

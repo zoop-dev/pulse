@@ -3540,6 +3540,7 @@
     <string name="sony_speak_to_chat_timeout_long">Long (1m)</string>
     <string name="sony_connect_two_devices">Connect to 2 devices simultaneously</string>
     <string name="sony_notification_voice_guide">Notifications &amp; Voice Guide</string>
+    <string name="sony_voice_notifications_volume">Voice Guide Volume</string>
     <string name="sony_automatic_power_off">Automatic Power Off</string>
     <string name="sony_automatic_power_off_off">Do not turn off</string>
     <string name="sony_automatic_power_off_5_min">5 minutes</string>
