@@ -3519,6 +3519,8 @@
     <string name="pref_adaptive_volume_control_title">Adaptive volume control</string>
     <string name="pref_adaptive_noise_cancelling_title">Adaptive ANC</string>
     <string name="pref_adaptive_noise_cancelling_summary">Set the strength of the ANC automatically depending on the ambient sound level</string>
+    <string name="sony_capture_voice_during_call">Capture voice during call</string>
+    <string name="sony_capture_voice_during_call_summary">Your own voice will be easier to hear during calls. If your voice sounds too loud or background noise is distracting, please turn off this feature.</string>
     <!--    <string name="pref_personalized_noise_cancelling_title">Personalized ANC</string>-->
     <!--    <string name="pref_personalized_noise_cancelling_summary">Set whether to use personalized active noise-cancelling</string>-->
     <string name="sony_speak_to_chat">Speak-to-chat</string>

@@ -596,6 +596,16 @@ fun sonyHeadphonesDeviceSettings(
                 defaultValue = true,
             )
         }
+
+        if (capabilities.contains(SonyHeadphonesCapabilities.CaptureVoiceDuringCall)) {
+            switchSetting(
+                key = DeviceSettingsPreferenceConst.PREF_SONY_CAPTURE_VOICE_DURING_CALL,
+                title = R.string.sony_capture_voice_during_call,
+                summary = R.string.sony_capture_voice_during_call_summary,
+                icon = R.drawable.ic_voice,
+                defaultValue = false,
+            )
+        }
     }
 
     //

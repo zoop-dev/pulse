@@ -47,6 +47,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AudioU
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.AutomaticPowerOff;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ButtonFunctionNcAmbient;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ButtonModes;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.CaptureVoiceDuringCall;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ConnectTwoDevices;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.EqualizerCustomBands;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.EqualizerPreset;
@@ -358,6 +359,18 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
     @Override
     public Request getWideAreaTap() {
         LOG.warn("Adaptive volume control not implemented for V1");
+        return null;
+    }
+
+    @Override
+    public Request getCaptureVoiceDuringCall() {
+        LOG.warn("Capture voice during call not implemented for V1");
+        return null;
+    }
+
+    @Override
+    public Request setCaptureVoiceDuringCall(final CaptureVoiceDuringCall config) {
+        LOG.warn("Capture voice during call not implemented for V1");
         return null;
     }
 
@@ -751,6 +764,7 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
             put(SonyHeadphonesCapabilities.AdaptiveVolumeControl, getAdaptiveVolumeControl());
             put(SonyHeadphonesCapabilities.WideAreaTap, getWideAreaTap());
             put(SonyHeadphonesCapabilities.ConnectTwoDevices, getConnectTwoDevices());
+            put(SonyHeadphonesCapabilities.CaptureVoiceDuringCall, getCaptureVoiceDuringCall());
         }};
 
         for (Map.Entry<SonyHeadphonesCapabilities, Request> capabilityEntry : capabilityRequestMap.entrySet()) {

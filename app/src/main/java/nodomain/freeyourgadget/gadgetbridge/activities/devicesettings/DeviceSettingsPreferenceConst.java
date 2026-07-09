@@ -588,6 +588,7 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_SONY_CONNECT_TWO_DEVICES = "pref_sony_connect_two_devices";
     public static final String PREF_SONY_ADAPTIVE_VOLUME_CONTROL = "pref_adaptive_volume_control";
     public static final String PREF_SONY_WIDE_AREA_TAP = "pref_wide_area_tap";
+    public static final String PREF_SONY_CAPTURE_VOICE_DURING_CALL = "pref_sony_capture_voice_during_call";
 
     public static final String PREF_GYMLINK_ENABLED = "gymlink_enabled";
     public static final String PREF_ANTPLUS_ENABLED = "antplus_enabled";

@@ -55,6 +55,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.SoundP
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.SurroundMode;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.TouchSensor;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.VoiceAssistant;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.CaptureVoiceDuringCall;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ConnectTwoDevices;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.WideAreaTap;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -335,6 +336,9 @@ public class SonyHeadphonesProtocol extends GBDeviceProtocol {
                 break;
             case DeviceSettingsPreferenceConst.PREF_SONY_WIDE_AREA_TAP:
                 configRequest = protocolImpl.setWideAreaTap(WideAreaTap.fromPreferences(prefs));
+                break;
+            case DeviceSettingsPreferenceConst.PREF_SONY_CAPTURE_VOICE_DURING_CALL:
+                configRequest = protocolImpl.setCaptureVoiceDuringCall(CaptureVoiceDuringCall.fromPreferences(prefs));
                 break;
             default:
                 LOG.warn("Unknown config '{}'", config);

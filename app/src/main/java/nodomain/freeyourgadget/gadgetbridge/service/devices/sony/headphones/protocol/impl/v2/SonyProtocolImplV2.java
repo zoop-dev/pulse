@@ -49,6 +49,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.Surrou
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.TouchSensor;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.VoiceAssistant;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.VoiceNotifications;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.CaptureVoiceDuringCall;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ConnectTwoDevices;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.WideAreaTap;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -321,6 +322,30 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
                 new byte[]{
                         PayloadTypeV1.TOUCH_SENSOR_GET.getCode(),
                         (byte) 0xd1
+                }
+        );
+    }
+
+    @Override
+    public Request getCaptureVoiceDuringCall() {
+        return new Request(
+                PayloadTypeV1.TOUCH_SENSOR_GET.getMessageType(),
+                new byte[]{
+                        PayloadTypeV1.TOUCH_SENSOR_GET.getCode(),
+                        (byte) 0xd3
+                }
+        );
+    }
+
+    @Override
+    public Request setCaptureVoiceDuringCall(final CaptureVoiceDuringCall config) {
+        return new Request(
+                PayloadTypeV1.TOUCH_SENSOR_SET.getMessageType(),
+                new byte[]{
+                        PayloadTypeV1.TOUCH_SENSOR_SET.getCode(),
+                        (byte) 0xd3,
+                        (byte) 0x00,
+                        (byte) (config.isEnabled() ? 0x00 : 0x01)
                 }
         );
     }
@@ -1115,10 +1140,10 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
             return Collections.emptyList();
         }
 
+        final boolean enabled = payload[3] == (byte) 0x00;
         switch (payload[1]) {
             case (byte) 0xd1: {
                 // WideAreaTap / ConnectTwoDevices — reversed logic in V2
-                final boolean enabled = payload[3] == (byte) 0x00;
                 LOG.debug("Wide Area Tap: {}", enabled);
                 // WAT and ConnectTwoDevices are co-directional: WAT=enabled ↔ CTD=enabled
                 return Collections.singletonList(new GBDeviceEventUpdatePreferences()
@@ -1126,11 +1151,16 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
                         .withPreferences(new ConnectTwoDevices(enabled).toPreferences()));
             }
             case (byte) 0xd2: {
-                // Touch Sensor Control Panel — 0x00=ON, 0x01=OFF
-                final boolean enabled = payload[3] == (byte) 0x00;
+                // Touch Sensor Control Panel
                 LOG.debug("Touch Sensor: {}", enabled);
                 return Collections.singletonList(new GBDeviceEventUpdatePreferences()
                         .withPreferences(new TouchSensor(enabled).toPreferences()));
+            }
+            case (byte) 0xd3: {
+                // Capture Voice During Call
+                LOG.debug("Capture Voice During Call: {}", enabled);
+                return Collections.singletonList(new GBDeviceEventUpdatePreferences()
+                        .withPreferences(new CaptureVoiceDuringCall(enabled).toPreferences()));
             }
             default:
                 LOG.warn("Unknown touch sensor subtype {}", String.format("%02x", payload[1]));
