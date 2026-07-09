@@ -826,10 +826,19 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
                 val apiClient = EndurainApiClient(serverUrl!!, endurainVm.endurainTokenManager)
                 endurainVm.endurainTokenManager.performTokenRefresh(serverUrl) {
                     LOG.info("Uploading workout '{}' (type {}) to Endurain", workoutName, activityKind)
+                    GB.toast(
+                        getString(R.string.endurain_uploading_started),
+                        Toast.LENGTH_SHORT,
+                        GB.INFO
+                    )
                     apiClient.uploadActivity(activityFile) { newId ->
                         if (newId != null) {
                             // Update activity type on the server
                             apiClient.editActivity(newId, activityKind, workoutName)
+                            // Upload workout photo to the new activity
+                            if (workout.summary.headerPhoto != null) {
+                                apiClient.uploadActivityPhoto(newId, File(workout.summary.headerPhoto))
+                            }
                         }
                         activity?.runOnUiThread {
                             if (newId != null)

@@ -328,6 +328,32 @@ class EndurainApiClient(
     }
 
     /**
+     * Upload activity photo
+     */
+    fun uploadActivityPhoto(activityId: Int, file: File) {
+        Thread {
+            try {
+                val uri = "$baseUrl/api/v1/activities_media/upload/activity_id/$activityId".toUri()
+                val headers = buildHeaders(EndurainAuthType.AUTH_TOKEN)
+
+                InternetUtils.uploadBinaryFile(
+                    uri = uri,
+                    file = file,
+                    requestHeaders = headers
+                ) { success, statusCode, responseText ->
+                    if (success && responseText != null) {
+                        LOG.debug("Response ($statusCode) from Endurain: $responseText")
+                    } else {
+                        LOG.error("Activity photo upload to Endurain failed. Response ($statusCode) received: $responseText")
+                    }
+                }
+            } catch (e: Exception) {
+                LOG.error("Activity photo upload error", e)
+            }
+        }.start()
+    }
+
+    /**
      * Edit uploaded activity
      */
     fun editActivity(id: Int, activityKind: ActivityKind, name: String): Boolean {

@@ -5069,6 +5069,7 @@
     <string name="no_activity_track_in_activity_toast">No activity track in this activity</string>
     <string name="unable_to_display_gpx_track_toast">Unable to display GPX track: %1$s</string>
     <string name="unable_to_share_gpx_track_toast">Unable to share GPX track: %1$s</string>
+    <string name="endurain_uploading_started">Uploading to Endurain…</string>
     <string name="endurain_successfully_uploaded_toast">Successfully uploaded to Endurain</string>
     <string name="endurain_error_while_uploading_toast">Error while uploading to Endurain</string>
     <string name="endurain_unable_to_upload_gpx_file_toast">Unable to upload activity file to Endurain: %1$s</string>
