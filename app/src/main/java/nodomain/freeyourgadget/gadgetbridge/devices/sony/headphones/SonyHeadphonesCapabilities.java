@@ -41,6 +41,7 @@ public enum SonyHeadphonesCapabilities {
     PauseWhenTakenOff,
     PowerOffFromPhone,
     QuickAccess,
+    ServiceLink,
     SoundPosition,
     SpeakToChatConfig,
     SpeakToChatEnabled,

@@ -57,6 +57,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.TouchS
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.VoiceAssistant;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.CaptureVoiceDuringCall;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ConnectTwoDevices;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ServiceLink;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.WideAreaTap;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.protocol.Request;
@@ -340,6 +341,15 @@ public class SonyHeadphonesProtocol extends GBDeviceProtocol {
             case DeviceSettingsPreferenceConst.PREF_SONY_CAPTURE_VOICE_DURING_CALL:
                 configRequest = protocolImpl.setCaptureVoiceDuringCall(CaptureVoiceDuringCall.fromPreferences(prefs));
                 break;
+            case DeviceSettingsPreferenceConst.PREF_SONY_SERVICE_LINK: {
+                final ServiceLink serviceLink = ServiceLink.fromPreferences(prefs);
+                final Request applyRequest = protocolImpl.applyServiceLink(serviceLink);
+                if (applyRequest != null) {
+                    enqueueRequests(Collections.singletonList(applyRequest));
+                }
+                configRequest = protocolImpl.setServiceLink(serviceLink);
+                break;
+            }
             default:
                 LOG.warn("Unknown config '{}'", config);
                 return super.encodeSendConfiguration(config);

@@ -42,6 +42,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.VoiceA
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.VoiceNotifications;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.CaptureVoiceDuringCall;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ConnectTwoDevices;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ServiceLink;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.WideAreaTap;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.protocol.Request;
@@ -112,6 +113,12 @@ public abstract class AbstractSonyProtocolImpl {
     public abstract Request getCaptureVoiceDuringCall();
 
     public abstract Request setCaptureVoiceDuringCall(final CaptureVoiceDuringCall config);
+
+    public abstract Request getServiceLink();
+
+    public abstract Request setServiceLink(final ServiceLink config);
+
+    public abstract Request applyServiceLink(final ServiceLink config);
 
     public abstract Request setConnectTwoDevices(final ConnectTwoDevices config);
 

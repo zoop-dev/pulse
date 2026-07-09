@@ -49,6 +49,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.Button
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ButtonModes;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.CaptureVoiceDuringCall;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ConnectTwoDevices;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ServiceLink;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.EqualizerCustomBands;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.EqualizerPreset;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.PauseWhenTakenOff;
@@ -371,6 +372,24 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
     @Override
     public Request setCaptureVoiceDuringCall(final CaptureVoiceDuringCall config) {
         LOG.warn("Capture voice during call not implemented for V1");
+        return null;
+    }
+
+    @Override
+    public Request getServiceLink() {
+        LOG.warn("Service link not implemented for V1");
+        return null;
+    }
+
+    @Override
+    public Request setServiceLink(final ServiceLink config) {
+        LOG.warn("Service link not implemented for V1");
+        return null;
+    }
+
+    @Override
+    public Request applyServiceLink(final ServiceLink config) {
+        LOG.warn("Service link not implemented for V1");
         return null;
     }
 
@@ -765,6 +784,7 @@ public class SonyProtocolImplV1 extends AbstractSonyProtocolImpl {
             put(SonyHeadphonesCapabilities.WideAreaTap, getWideAreaTap());
             put(SonyHeadphonesCapabilities.ConnectTwoDevices, getConnectTwoDevices());
             put(SonyHeadphonesCapabilities.CaptureVoiceDuringCall, getCaptureVoiceDuringCall());
+            put(SonyHeadphonesCapabilities.ServiceLink, getServiceLink());
         }};
 
         for (Map.Entry<SonyHeadphonesCapabilities, Request> capabilityEntry : capabilityRequestMap.entrySet()) {

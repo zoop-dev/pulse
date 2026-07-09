@@ -51,6 +51,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.VoiceA
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.VoiceNotifications;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.CaptureVoiceDuringCall;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ConnectTwoDevices;
+import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.ServiceLink;
 import nodomain.freeyourgadget.gadgetbridge.devices.sony.headphones.prefs.WideAreaTap;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.sony.headphones.protocol.MessageType;
@@ -346,6 +347,42 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
                         (byte) 0xd3,
                         (byte) 0x00,
                         (byte) (config.isEnabled() ? 0x00 : 0x01)
+                }
+        );
+    }
+
+    @Override
+    public Request getServiceLink() {
+        return new Request(
+                PayloadTypeV2.SERVICE_LINK_GET.getMessageType(),
+                new byte[]{
+                        PayloadTypeV2.SERVICE_LINK_GET.getCode(),
+                        (byte) 0x10
+                }
+        );
+    }
+
+    @Override
+    public Request setServiceLink(final ServiceLink config) {
+        return new Request(
+                PayloadTypeV2.SERVICE_LINK_SET.getMessageType(),
+                new byte[]{
+                        PayloadTypeV2.SERVICE_LINK_SET.getCode(),
+                        (byte) 0x10,
+                        (byte) (config.isEnabled() ? 0x00 : 0x01)
+                }
+        );
+    }
+
+    @Override
+    public Request applyServiceLink(final ServiceLink config) {
+        return new Request(
+                PayloadTypeV2.SYSTEM_CONTROL_SET.getMessageType(),
+                new byte[]{
+                        PayloadTypeV2.SYSTEM_CONTROL_SET.getCode(),
+                        (byte) 0x00,
+                        (byte) (config.isEnabled() ? 0x29 : 0x1e),
+                        (byte) 0x01
                 }
         );
     }
@@ -675,6 +712,9 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
                 return handleAmbientSoundControlButtonMode(payload);
             case SYSTEM_CONTROL_RET:
                 return handleSystemControl(payload);
+            case SERVICE_LINK_RET:
+            case SERVICE_LINK_NOTIFY:
+                return handleServiceLink(payload);
         }
 
         return super.handlePayload(messageType, payload);
@@ -1186,6 +1226,21 @@ public class SonyProtocolImplV2 extends SonyProtocolImplV1 {
 
         LOG.debug("Unhandled system control subcode 0x{}", String.format("%02x", subcode));
         return Collections.emptyList();
+    }
+
+    public List<? extends GBDeviceEvent> handleServiceLink(final byte[] payload) {
+        if (payload.length != 3) {
+            LOG.warn("Unexpected service link payload length {}", payload.length);
+            return Collections.emptyList();
+        }
+        if (payload[1] != (byte) 0x10) {
+            LOG.warn("Unexpected service link subtype {}", String.format("%02x", payload[1]));
+            return Collections.emptyList();
+        }
+        final boolean enabled = payload[2] == (byte) 0x00;
+        LOG.debug("Service Link: {}", enabled);
+        return Collections.singletonList(new GBDeviceEventUpdatePreferences()
+                .withPreferences(new ServiceLink(enabled).toPreferences()));
     }
 
     @Override

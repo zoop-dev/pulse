@@ -606,6 +606,16 @@ fun sonyHeadphonesDeviceSettings(
                 defaultValue = false,
             )
         }
+
+        if (capabilities.contains(SonyHeadphonesCapabilities.ServiceLink)) {
+            switchSetting(
+                key = DeviceSettingsPreferenceConst.PREF_SONY_SERVICE_LINK,
+                title = R.string.sony_service_link,
+                summary = R.string.sony_service_link_summary,
+                icon = R.drawable.ic_devices_other,
+                defaultValue = false,
+            )
+        }
     }
 
     //

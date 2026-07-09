@@ -63,7 +63,8 @@ public class SonyWHULT900NCoordinator extends SonyHeadphonesCoordinator {
                 SonyHeadphonesCapabilities.VoiceAssistantFunction,
                 SonyHeadphonesCapabilities.TouchSensorSingle,
                 SonyHeadphonesCapabilities.ConnectTwoDevices,
-                SonyHeadphonesCapabilities.CaptureVoiceDuringCall
+                SonyHeadphonesCapabilities.CaptureVoiceDuringCall,
+                SonyHeadphonesCapabilities.ServiceLink
         ));
     }
 
