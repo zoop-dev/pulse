@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SeekBarPreference
+        android:defaultValue="50"
+        android:icon="@drawable/ic_vibration"
+        android:key="vibration_strength"
+        android:max="100"
+        android:title="@string/pref_title_vibration_strength" />
+</androidx.preference.PreferenceScreen>

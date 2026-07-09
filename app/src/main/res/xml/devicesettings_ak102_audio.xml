@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/ak102_prefs_audio_header">
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_bluetooth_connected"
+            android:key="ak102_audio_auto_connect"
+            android:summary="@string/ak102_pref_audio_auto_connect_summary"
+            android:title="@string/ak102_pref_audio_auto_connect_title" />
+        <Preference
+            android:icon="@drawable/ic_bluetooth"
+            android:key="ak102_audio_pair"
+            android:summary="@string/ak102_pref_audio_pair_summary"
+            android:title="@string/ak102_pref_audio_pair_title" />
+        <Preference
+            android:icon="@drawable/ic_bluetooth_disabled"
+            android:key="ak102_audio_unpair"
+            android:summary="@string/ak102_pref_audio_unpair_summary"
+            android:title="@string/ak102_pref_audio_unpair_title" />
+    </PreferenceCategory>
+</androidx.preference.PreferenceScreen>

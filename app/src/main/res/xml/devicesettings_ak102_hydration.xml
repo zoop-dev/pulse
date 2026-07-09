@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceScreen
+        android:icon="@drawable/ic_drink"
+        android:key="screen_hydration_reminder"
+        android:persistent="false"
+        android:summary="@string/lefun_prefs_hydration_reminder_summary"
+        android:title="@string/lefun_prefs_hydration_reminder_title">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_drink"
+            android:key="pref_hydration_switch"
+            android:layout="@layout/preference_checkbox"
+            android:title="@string/lefun_prefs_hydration_reminder_title" />
+
+        <EditTextPreference
+            android:defaultValue="60"
+            android:dependency="pref_hydration_switch"
+            android:icon="@drawable/ic_timer"
+            android:key="pref_hydration_period"
+            android:title="@string/lefun_prefs_hydration_reminder_interval_title" />
+
+        <nodomain.freeyourgadget.gadgetbridge.util.XTimePreference
+            android:defaultValue="08:00"
+            android:dependency="pref_hydration_switch"
+            android:icon="@drawable/ic_start"
+            android:key="pref_hydration_reminder_start"
+            android:title="@string/mi2_prefs_do_not_disturb_start" />
+
+        <nodomain.freeyourgadget.gadgetbridge.util.XTimePreference
+            android:defaultValue="20:00"
+            android:dependency="pref_hydration_switch"
+            android:icon="@drawable/ic_keyboard_tab"
+            android:key="pref_hydration_reminder_end"
+            android:title="@string/mi2_prefs_do_not_disturb_end" />
+    </PreferenceScreen>
+</androidx.preference.PreferenceScreen>

@@ -506,6 +506,53 @@
         <item>@string/p_scheduled</item>
     </string-array>
 
+    <string-array name="do_not_disturb_always_scheduled">
+        <item>@string/mi2_dnd_off</item>
+        <item>@string/mi2_dnd_always</item>
+        <item>@string/mi2_dnd_scheduled</item>
+    </string-array>
+    <string-array name="do_not_disturb_always_scheduled_values">
+        <item>@string/p_off</item>
+        <item>@string/p_always</item>
+        <item>@string/p_scheduled</item>
+    </string-array>
+
+    <string-array name="ak102_display_items">
+        <item>@string/steps</item>
+        <item>@string/distance</item>
+        <item>@string/calories</item>
+        <item>@string/menuitem_sleep</item>
+        <item>@string/menuitem_hr</item>
+        <item>@string/blood_pressure</item>
+        <item>@string/menuitem_spo2</item>
+        <item>@string/menuitem_weather</item>
+        <item>@string/prefs_find_phone</item>
+        <item>@string/menuitem_stopwatch</item>
+    </string-array>
+    <string-array name="ak102_display_items_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>7</item>
+        <item>6</item>
+        <item>8</item>
+        <item>9</item>
+        <item>13</item>
+    </string-array>
+    <string-array name="ak102_display_items_default">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>8</item>
+        <item>9</item>
+        <item>13</item>
+    </string-array>
+
     <string-array name="zetime_do_not_disturb">
         <item>@string/mi2_dnd_off</item>
         <item>@string/mi2_dnd_scheduled</item>

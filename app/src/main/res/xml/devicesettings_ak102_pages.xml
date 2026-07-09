@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <MultiSelectListPreference
+        android:defaultValue="@array/ak102_display_items_default"
+        android:dialogTitle="@string/ak102_pref_display_items_title"
+        android:entries="@array/ak102_display_items"
+        android:entryValues="@array/ak102_display_items_values"
+        android:icon="@drawable/ic_widgets"
+        android:key="ak102_display_items"
+        android:summary="@string/ak102_pref_display_items_summary"
+        android:title="@string/ak102_pref_display_items_title" />
+</androidx.preference.PreferenceScreen>

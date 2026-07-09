@@ -1281,6 +1281,18 @@
     <string name="lefun_prefs_antilost_title">Anti-loss</string>
     <string name="lefun_prefs_antilost_summary">The band will vibrate if your phone disconnects from the band</string>
     <string name="lefun_prefs_interface_language_title">Interface language</string>
+    <string name="ak102_prefs_audio_header">Bluetooth call audio</string>
+    <string name="ak102_pref_audio_auto_connect_title">Auto-connect call audio</string>
+    <string name="ak102_pref_audio_auto_connect_summary">Reconnect the watch as a Bluetooth headset whenever it connects. Calls, contacts and call records on the watch need this link.</string>
+    <string name="ak102_pref_audio_pair_title">Pair call audio</string>
+    <string name="ak102_pref_audio_pair_summary">Pair the watch\'s Bluetooth Classic side and connect the audio profiles</string>
+    <string name="ak102_pref_audio_unpair_title">Unpair call audio</string>
+    <string name="ak102_pref_audio_unpair_summary">Remove the Bluetooth pairing with the watch</string>
+    <string name="ak102_audio_pairing_started">Pairing call audio, accept the pairing request on phone and watch if prompted</string>
+    <string name="ak102_audio_connected">Call audio pairing done</string>
+    <string name="ak102_audio_unpaired">Call audio unpaired</string>
+    <string name="ak102_pref_display_items_title">Display items</string>
+    <string name="ak102_pref_display_items_summary">Screens shown on the watch</string>
     <string name="automatic">Automatic</string>
     <string name="manual">Manual</string>
     <string name="simplified_chinese">Chinese (Simplified)</string>
@@ -2142,6 +2154,7 @@
     <string name="devicetype_fitpro" translatable="false">FitPro</string>
     <string name="devicetype_colacao21" translatable="false">ColaCao 2021</string>
     <string name="devicetype_colacao23" translatable="false">ColaCao 2023</string>
+    <string name="devicetype_ak102" translatable="false">AK102</string>
     <string name="devicetype_domyos_t540" translatable="false">Domyos T540</string>
     <string name="devicetype_even_realities_g1" translatable="false">Even Realities G1</string>
     <string name="devicetype_laxasfit" translatable="false">LaxasFit</string>
