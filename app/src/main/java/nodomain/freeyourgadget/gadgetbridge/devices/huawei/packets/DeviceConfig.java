@@ -837,7 +837,7 @@ public class DeviceConfig {
                         case 0xf:
                             break;
                         case 0x11:
-                            this.tlv.put(b, 1600008300); // Force AppVersion to 16.0.8.300
+                            this.tlv.put(b, 1600103320); // Force AppVersion to 16.1.3.320
                             break;
                         case 0x15:
                             this.tlv.put(b); // Force buildOSPlatformVersion to ""
