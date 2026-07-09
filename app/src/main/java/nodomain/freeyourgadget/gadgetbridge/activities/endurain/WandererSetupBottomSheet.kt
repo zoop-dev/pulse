@@ -28,6 +28,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.util.GB
+import nodomain.freeyourgadget.gadgetbridge.util.InternetUtils
 import org.slf4j.LoggerFactory
 
 class WandererSetupBottomSheet : BottomSheetDialogFragment() {
@@ -57,19 +58,38 @@ class WandererSetupBottomSheet : BottomSheetDialogFragment() {
             val serverName = serverNameInput.text.toString().trim()
             val apiToken = apiTokenInput.text.toString().trim()
 
-            if (serverName.isNotEmpty() && apiToken.startsWith("wanderer_key_")) {
-                LOG.info("Saving Wanderer server ({}) and API token", serverName)
-                prefs.edit { putString("wanderer_server", serverName) }
-                WandererTokenManager(requireContext()).saveToken(apiToken)
-                parentFragmentManager.setFragmentResult(
-                    "wanderer_login_result",
-                    Bundle().apply { putBoolean("success", true) }
-                )
-                dismiss()
-            } else if (serverName.isNotEmpty() && apiToken.isNotEmpty()) {
-                GB.toast(getString(R.string.wanderer_setup_api_token_error), Toast.LENGTH_SHORT, GB.WARN)
-            } else {
+            if (serverName.isEmpty() || apiToken.isEmpty()) {
                 GB.toast(getString(R.string.wanderer_setup_missing_information), Toast.LENGTH_SHORT, GB.WARN)
+                return@setOnClickListener
+            }
+            if (!apiToken.startsWith("wanderer_key_")) {
+                GB.toast(getString(R.string.wanderer_setup_api_token_error), Toast.LENGTH_SHORT, GB.WARN)
+                return@setOnClickListener
+            }
+
+            // Verify the server is reachable before saving, so a bad URL / dead server /
+            // missing internet is reported now instead of silently at the first upload.
+            saveButton.isEnabled = false
+            WandererApiClient(serverName, WandererTokenManager(requireContext())).checkServerReachable { reachable ->
+                activity?.runOnUiThread {
+                    saveButton.isEnabled = true
+                    if (!reachable) {
+                        GB.toast(
+                            InternetUtils.connectFailureReason(requireContext(), serverName),
+                            Toast.LENGTH_LONG,
+                            GB.ERROR
+                        )
+                        return@runOnUiThread
+                    }
+                    LOG.info("Saving Wanderer server ({}) and API token", serverName)
+                    prefs.edit { putString("wanderer_server", serverName) }
+                    WandererTokenManager(requireContext()).saveToken(apiToken)
+                    parentFragmentManager.setFragmentResult(
+                        "wanderer_login_result",
+                        Bundle().apply { putBoolean("success", true) }
+                    )
+                    dismiss()
+                }
             }
         }
     }

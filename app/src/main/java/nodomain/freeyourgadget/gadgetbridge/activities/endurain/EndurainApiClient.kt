@@ -308,7 +308,7 @@ class EndurainApiClient(
                     uri = uri,
                     file = file,
                     requestHeaders = headers
-                ) { success, statusCode, responseText ->
+                ) { success, statusCode, responseText, reason ->
                     if (success && responseText != null) {
                         LOG.debug("Response $statusCode from Endurain: $responseText")
                         val jsonArray = JSONArray(responseText)
@@ -316,7 +316,7 @@ class EndurainApiClient(
                         val id = firstObject.getInt("id")
                         callback(id)
                     } else {
-                        LOG.error("Activity upload failed")
+                        LOG.error("Activity upload failed (status {}, reason {})", statusCode, reason)
                         callback(null)
                     }
                 }

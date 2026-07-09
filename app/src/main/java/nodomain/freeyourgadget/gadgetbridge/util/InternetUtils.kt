@@ -21,6 +21,7 @@ import android.net.Uri
 import android.webkit.WebResourceResponse
 import nodomain.freeyourgadget.gadgetbridge.BuildConfig
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
+import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.internethelper.aidl.http.HttpRequest
 import okhttp3.Headers
 import okhttp3.MediaType.Companion.toMediaType
@@ -35,9 +36,13 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.net.ConnectException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
 import javax.net.ssl.SSLContext
+import javax.net.ssl.SSLException
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 
@@ -105,6 +110,11 @@ class InternetUtils {
                 body,
                 allowInsecure
             )
+            if (text == null) {
+                // No response at all (no connectivity / internet helper unavailable / server
+                // unreachable). Not a parse error — return null quietly, callers report the reason.
+                return null
+            }
             try {
                 return JSONObject(text)
             } catch (e: Exception) {
@@ -150,56 +160,128 @@ class InternetUtils {
             }
         }
 
+        /**
+         * Uploads [file] as multipart/form-data. [onComplete] is invoked exactly once, always
+         * *after* the network try/catch so that any exception thrown by the callback itself is
+         * NOT mistaken for an upload failure (which previously double-fired the callback). On
+         * failure [reason] carries a human-readable, localized explanation for the user
+         * (no internet / server unreachable / …); it is null on success.
+         */
         fun uploadBinaryFile(
             uri: Uri,
             file: File,
             requestHeaders: Map<String, String> = emptyMap(),
             method: String = "POST",
             allowInsecure: Boolean = false,
-            onComplete: (success: Boolean, statusCode: Int?, response: String?) -> Unit
+            onComplete: (success: Boolean, statusCode: Int?, response: String?, reason: String?) -> Unit
         ) {
+            var success = false
+            var statusCode: Int? = null
+            var responseText: String? = null
+            var reason: String? = null
+
             try {
                 if (!file.exists() || !file.canRead()) {
                     LOG.error("File does not exist or cannot be read: ${file.path}")
-                    onComplete(false, null, null)
-                    return
-                }
-
-                val fileName = file.name
-                val mimeType = when (fileName.substringAfterLast('.', "").lowercase()) {
-                    "gpx" -> "application/gpx+xml"
-                    else -> "application/octet-stream"
-                }
-
-                val boundary = "----GadgetbridgeFormBoundary${System.currentTimeMillis()}"
-                val multipartBodyBytes = buildMultipartBody(file, fileName, mimeType, boundary)
-
-                val headers = requestHeaders.toMutableMap()
-                headers["Content-Type"] = "multipart/form-data; boundary=$boundary"
-
-                val response = if (GBApplication.hasDirectInternetAccess()) {
-                    directBinaryRequest(
-                        uri = uri,
-                        method = method,
-                        requestHeaders = headers,
-                        body = multipartBodyBytes,
-                        allowInsecure = allowInsecure
-                    )
+                    reason = file.name
                 } else {
-                    InternetHelperSingleton.send(
-                        uri,
-                        HttpRequest.Method.valueOf(method),
-                        headers,
-                        multipartBodyBytes,
-                        allowInsecure
-                    )
-                }
+                    val fileName = file.name
+                    val mimeType = when (fileName.substringAfterLast('.', "").lowercase()) {
+                        "gpx" -> "application/gpx+xml"
+                        else -> "application/octet-stream"
+                    }
 
-                val responseText = response?.data?.bufferedReader()?.use { it.readText() }
-                onComplete(response != null, response?.statusCode, responseText)
+                    val boundary = "----GadgetbridgeFormBoundary${System.currentTimeMillis()}"
+                    val multipartBodyBytes = buildMultipartBody(file, fileName, mimeType, boundary)
+
+                    val headers = requestHeaders.toMutableMap()
+                    headers["Content-Type"] = "multipart/form-data; boundary=$boundary"
+
+                    val response = if (GBApplication.hasDirectInternetAccess()) {
+                        directBinaryRequest(
+                            uri = uri,
+                            method = method,
+                            requestHeaders = headers,
+                            body = multipartBodyBytes,
+                            allowInsecure = allowInsecure
+                        )
+                    } else {
+                        InternetHelperSingleton.send(
+                            uri,
+                            HttpRequest.Method.valueOf(method),
+                            headers,
+                            multipartBodyBytes,
+                            allowInsecure
+                        )
+                    }
+
+                    statusCode = response?.statusCode
+                    responseText = response?.data?.bufferedReader()?.use { it.readText() }
+                    success = response != null
+                    if (!success) {
+                        reason = networkFailureReason(null)
+                    }
+                }
             } catch (e: Exception) {
                 LOG.error("Uploading $uri failed: ", e)
-                onComplete(false, null, null)
+                reason = networkFailureReason(e)
+            }
+
+            onComplete(success, statusCode, responseText, reason)
+        }
+
+        /**
+         * Localized, user-facing reason for a failed request to an online tracker (Endurain,
+         * Wanderer, …) when there was no usable response. Distinguishes "no internet access at
+         * all" (no permission / internet helper unavailable / offline) from "server unreachable".
+         * Shared by every online-tracker setup/connect path so the messaging stays consistent.
+         */
+        fun connectFailureReason(context: android.content.Context, serverUrl: String?): String {
+            if (!GBApplication.hasInternetAccess()) {
+                return noInternetAccessReason(context)
+            }
+            return if (serverUrl != null) {
+                context.getString(R.string.internet_helper_error_could_not_reach_server, serverUrl)
+            } else {
+                context.getString(R.string.internet_helper_error_server_unreachable)
+            }
+        }
+
+        /**
+         * Why there is no internet access, made actionable: if the Internet Helper app is
+         * installed but its (dangerous, runtime) permission was never granted, tell the user to
+         * grant it — otherwise point them at the helper itself.
+         */
+        private fun noInternetAccessReason(context: android.content.Context): String {
+            return when {
+                !InternetHelperSingleton.isInternetHelperInstalled() ->
+                    context.getString(R.string.internet_helper_error_no_internet_helper)
+                !InternetHelperSingleton.isInternetHelperPermissionGranted() ->
+                    context.getString(R.string.internet_helper_error_permission)
+                else ->
+                    context.getString(R.string.internet_helper_error_no_internet_helper)
+            }
+        }
+
+        /**
+         * Builds a localized, user-facing reason for an upload/network failure. Distinguishes
+         * "no internet connection" from "server unreachable" using connectivity + exception type.
+         */
+        fun networkFailureReason(e: Throwable?): String {
+            val context = GBApplication.getContext()
+            if (!GBApplication.hasInternetAccess()) {
+                // No direct permission and no usable internet helper (uninstalled, disabled, or
+                // its runtime permission not granted) — give the actionable reason.
+                return noInternetAccessReason(context)
+            }
+            return when (e) {
+                is UnknownHostException,
+                is ConnectException,
+                is SocketTimeoutException,
+                is SSLException ->
+                    context.getString(R.string.internet_helper_error_server_unreachable)
+                else -> e?.localizedMessage
+                    ?: context.getString(R.string.internet_helper_error_server_unreachable)
             }
         }
 

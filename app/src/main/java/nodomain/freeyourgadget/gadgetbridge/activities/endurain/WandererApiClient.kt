@@ -42,6 +42,26 @@ class WandererApiClient(
     }
 
     /**
+     * Verifies the server is reachable (host responds to a request). Any HTTP response — even a
+     * 4xx — counts as reachable; only connection failures (bad host, refused, offline, internet
+     * helper unavailable) count as unreachable. [callback] fires with `true` when reachable.
+     */
+    fun checkServerReachable(callback: (Boolean) -> Unit) {
+        Thread {
+            try {
+                val response = InternetUtils.doStringRequest(
+                    uri = baseUrl.toUri(),
+                    requestHeaders = buildHeaders()
+                )
+                callback(response != null)
+            } catch (e: Exception) {
+                LOG.error("Wanderer reachability check failed", e)
+                callback(false)
+            }
+        }.start()
+    }
+
+    /**
      * Upload activity file (GPX)
      */
     fun uploadActivity(file: File, callback: (String?, String?) -> Unit) {
@@ -55,21 +75,20 @@ class WandererApiClient(
                     file = file,
                     requestHeaders = headers,
                     method = "PUT"
-                ) { success, statusCode, responseText ->
+                ) { success, statusCode, responseText, reason ->
                     if (success && statusCode != null && statusCode >= 200 && statusCode < 300 && responseText != null) {
                         LOG.debug("Response $statusCode from Wanderer: $responseText")
                         val jsonObject = JSONObject(responseText)
                         callback(jsonObject.getString("id"), null)
                     } else {
-                        if (responseText != null) {
-                            val jsonObject = JSONObject(responseText)
-                            val message = jsonObject.getString("message")
-                            LOG.error("Activity upload failed: $message")
-                            callback(null, message)
-                        } else {
-                            LOG.error("Activity upload failed")
-                            callback(null, null)
-                        }
+                        // Prefer the server's own error message; fall back to the network reason.
+                        val message = try {
+                            if (responseText != null) JSONObject(responseText).getString("message") else null
+                        } catch (e: Exception) {
+                            null
+                        } ?: reason ?: statusCode?.let { "HTTP $it" }
+                        LOG.error("Activity upload failed: {}", message)
+                        callback(null, message)
                     }
                 }
             } catch (e: Exception) {

@@ -36,6 +36,7 @@ import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
+import nodomain.freeyourgadget.gadgetbridge.util.InternetUtils
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 import org.slf4j.LoggerFactory
@@ -241,7 +242,8 @@ class EndurainSetupBottomSheet : BottomSheetDialogFragment() {
             activity?.runOnUiThread {
                 showProgress(false)
                 if (!ok) {
-                    GB.toast(getString(R.string.endurain_failed_to_connect_to_server), Toast.LENGTH_SHORT, GB.INFO)
+                    val reason = InternetUtils.connectFailureReason(requireContext(), server)
+                    GB.toast(reason, Toast.LENGTH_LONG, GB.ERROR)
                     return@runOnUiThread
                 }
                 vm.step = EndurainSetupViewModel.Step.LOGIN_TYPE
