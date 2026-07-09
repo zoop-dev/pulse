@@ -72,6 +72,7 @@ public class SleepAsAndroidPreferencesActivity extends AbstractSettingsActivityV
                             findPreference("pref_key_sleepasandroid_feat_hr").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.HEART_RATE));
                             findPreference("pref_key_sleepasandroid_feat_oximetry").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.OXIMETRY));
                             findPreference("pref_key_sleepasandroid_feat_spo2").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.SPO2));
+                            findPreference("pref_key_sleepasandroid_spo2_autofetch_enable").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.SPO2));
 
                             ListPreference alarmSlots = findPreference("sleepasandroid_alarm_slot");
                             if (alarmSlots != null)
@@ -103,6 +104,7 @@ public class SleepAsAndroidPreferencesActivity extends AbstractSettingsActivityV
                     findPreference("pref_key_sleepasandroid_feat_hr").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.HEART_RATE));
                     findPreference("pref_key_sleepasandroid_feat_oximetry").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.OXIMETRY));
                     findPreference("pref_key_sleepasandroid_feat_spo2").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.SPO2));
+                    findPreference("pref_key_sleepasandroid_spo2_autofetch_enable").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.SPO2));
                 }
             }
         }

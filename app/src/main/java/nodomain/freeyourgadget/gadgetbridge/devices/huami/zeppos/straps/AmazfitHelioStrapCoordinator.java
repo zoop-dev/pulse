@@ -19,10 +19,12 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.straps;
 import androidx.annotation.NonNull;
 
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.devices.SleepAsAndroidFeature;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
@@ -66,5 +68,10 @@ public class AmazfitHelioStrapCoordinator extends ZeppOsCoordinator {
     @Override
     public DeviceKind getDeviceKind(@NonNull GBDevice device) {
         return DeviceKind.FITNESS_BAND;
+    }
+
+    @Override
+    public Set<SleepAsAndroidFeature> getSleepAsAndroidFeatures() {
+        return EnumSet.of(SleepAsAndroidFeature.ACCELEROMETER, SleepAsAndroidFeature.HEART_RATE, SleepAsAndroidFeature.ALARMS, SleepAsAndroidFeature.NOTIFICATIONS, SleepAsAndroidFeature.SPO2);
     }
 }

@@ -64,6 +64,7 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventDisplayMes
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventScreenshot;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsMapsInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsMusicInstallHandler;
+import nodomain.freeyourgadget.gadgetbridge.devices.SleepAsAndroidFeature;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
@@ -153,6 +154,7 @@ public class ZeppOsSupport extends AbstractDeviceSupport
     // Keep track of whether the rawSensor is enabled
     private boolean rawSensor = false;
     private ScheduledExecutorService rawSensorScheduler;
+    private ScheduledExecutorService spo2AutoFetchScheduler;
 
     private int mMTU = 23;
 
@@ -280,6 +282,7 @@ public class ZeppOsSupport extends AbstractDeviceSupport
 
     @Override
     public void dispose() {
+        enableSpo2AutoFetch(false);
         for (final Short endpoint : mSupportedServices) {
             if (mServiceMap.containsKey(endpoint)) {
                 Objects.requireNonNull(mServiceMap.get(endpoint)).dispose();
@@ -702,12 +705,14 @@ public class ZeppOsSupport extends AbstractDeviceSupport
                 heartRateService.onEnableRealtimeHeartRateMeasurement(true);
                 enableRawSensor(true);
                 sleepAsAndroidSender.startTracking();
+                enableSpo2AutoFetch(true);
                 break;
             // Received when the app stops sleep tracking
             case SleepAsAndroidAction.STOP_TRACKING:
                 heartRateService.onEnableRealtimeHeartRateMeasurement(false);
                 enableRawSensor(false);
                 sleepAsAndroidSender.stopTracking();
+                enableSpo2AutoFetch(false);
                 break;
             // Received when the app pauses sleep tracking
 //            case SleepAsAndroidAction.SET_PAUSE:
@@ -812,6 +817,41 @@ public class ZeppOsSupport extends AbstractDeviceSupport
             stopRawSensors();
         }
 
+    }
+
+    private void enableSpo2AutoFetch(final boolean enable) {
+        if (spo2AutoFetchScheduler != null) {
+            spo2AutoFetchScheduler.shutdownNow();
+            spo2AutoFetchScheduler = null;
+        }
+
+        if (!enable) {
+            return;
+        }
+
+        if (!sleepAsAndroidSender.hasFeature(SleepAsAndroidFeature.SPO2) || !sleepAsAndroidSender.isFeatureEnabled(SleepAsAndroidFeature.SPO2)) {
+            return;
+        }
+
+        if (!GBApplication.getPrefs().getBoolean("pref_key_sleepasandroid_spo2_autofetch_enable", false)) {
+            return;
+        }
+
+        final int intervalMinutes = GBApplication.getPrefs().getInt("pref_key_sleepasandroid_spo2_autofetch_interval", 2);
+        if (intervalMinutes <= 0) {
+            LOG.warn("Invalid spo2 auto-fetch interval {}, not starting", intervalMinutes);
+            return;
+        }
+
+        LOG.info("Starting spo2 auto-fetch for sleep as android, every {} minutes", intervalMinutes);
+
+        spo2AutoFetchScheduler = Executors.newSingleThreadScheduledExecutor();
+        spo2AutoFetchScheduler.scheduleWithFixedDelay(
+                () -> GBApplication.deviceService(gbDevice).onFetchRecordedData(RecordedDataTypes.TYPE_SPO2),
+                intervalMinutes,
+                intervalMinutes,
+                TimeUnit.MINUTES
+        );
     }
 
     public void requestDisplayItems(final ZeppOsTransactionBuilder builder) {
@@ -921,6 +961,11 @@ public class ZeppOsSupport extends AbstractDeviceSupport
     @Override
     public ZeppOsCoordinator getCoordinator() {
         return (ZeppOsCoordinator) gbDevice.getDeviceCoordinator();
+    }
+
+    @Override
+    public SleepAsAndroidSender getSleepAsAndroidSender() {
+        return sleepAsAndroidSender;
     }
 
     private void setRawSensor(final boolean enable) {
