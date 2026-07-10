@@ -764,8 +764,8 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
 
     private fun uploadToEndurain() {
         val workout = currentWorkout ?: return
-        val workoutName = workout.summary.name
         val activityKind = ActivityKind.fromCode(workout.summary.activityKind)
+        val workoutName = workout.summary.name ?: activityKind.getLabel(requireContext())
 
         lifecycleScope.launch {
             val activityFile = try {

@@ -650,11 +650,11 @@ class GloryFitSupport() : AbstractBTLESingleDeviceSupport(LOG) {
 
             if (appSpecificSetting != null) {
                 if (appSpecificSetting.vibrationPattern != null) {
-                    vibrationKind = VibrationKind.valueOf(appSpecificSetting.vibrationPattern.uppercase(Locale.ROOT))
+                    vibrationKind = VibrationKind.valueOf(appSpecificSetting.vibrationPattern!!.uppercase(Locale.ROOT))
                 }
 
                 if (appSpecificSetting.vibrationRepetition != null) {
-                    vibrationCount = appSpecificSetting.vibrationRepetition.toInt()
+                    vibrationCount = appSpecificSetting.vibrationRepetition!!.toInt()
                 }
             }
         }

@@ -20,10 +20,28 @@ along with greenDAO Generator.  If not, see <http://www.gnu.org/licenses/>.
 <#assign toBindType = {"Boolean":"Long", "Byte":"Long", "Short":"Long", "Int":"Long", "Long":"Long", "Float":"Double", "Double":"Double", "String":"String", "ByteArray":"Blob" }/>
 <#assign toCursorType = {"Boolean":"Short", "Byte":"Short", "Short":"Short", "Int":"Int", "Long":"Long", "Float":"Float", "Double":"Double", "String":"String", "ByteArray":"Blob" }/>
 <#assign complexTypes = ["String", "ByteArray", "Date"]/>
+<#assign primitiveJavaTypes = ["boolean", "byte", "short", "int", "long", "float", "double", "char"]/>
+<#assign needsNonNull = false>
+<#assign needsNullable = false>
+<#list entity.properties as property>
+<#if !primitiveJavaTypes?seq_contains(property.javaTypeInEntity)>
+<#if property.notNull>
+<#assign needsNonNull = true>
+<#else>
+<#assign needsNullable = true>
+</#if>
+</#if>
+</#list>
 package ${entity.javaPackage};
 
 <#if entity.toManyRelations?has_content>
 import java.util.List;
+</#if>
+<#if needsNonNull>
+import androidx.annotation.NonNull;
+</#if>
+<#if needsNullable>
+import androidx.annotation.Nullable;
 </#if>
 <#if entity.active>
 import ${schema.defaultJavaPackageDao}.DaoSession;
@@ -69,6 +87,9 @@ ${property.javaDocField}
 </#if>
 <#if property.codeBeforeField ??>
      ${property.codeBeforeField}
+</#if>
+<#if !primitiveJavaTypes?seq_contains(property.javaTypeInEntity)>
+    <#if property.notNull>@NonNull<#else>@Nullable</#if>
 </#if>
     private ${property.javaTypeInEntity} ${property.propertyName};
 </#list>
@@ -138,6 +159,9 @@ ${property.javaDocGetter}
 <#if property.codeBeforeGetter ??>
     ${property.codeBeforeGetter}
 </#if>
+<#if !primitiveJavaTypes?seq_contains(property.javaTypeInEntity)>
+    <#if property.notNull>@NonNull<#else>@Nullable</#if>
+</#if>
     public ${property.javaTypeInEntity} get${property.propertyName?cap_first}() {
         return ${property.propertyName};
     }
@@ -151,7 +175,7 @@ ${property.javaDocSetter}
 <#if property.codeBeforeSetter ??>
     ${property.codeBeforeSetter}
 </#if>
-    public void set${property.propertyName?cap_first}(${property.javaTypeInEntity} ${property.propertyName}) {
+    public void set${property.propertyName?cap_first}(<#if !primitiveJavaTypes?seq_contains(property.javaTypeInEntity)>${(property.notNull)?string("@NonNull ", "@Nullable ")}</#if>${property.javaTypeInEntity} ${property.propertyName}) {
         this.${property.propertyName} = ${property.propertyName};
     }
 

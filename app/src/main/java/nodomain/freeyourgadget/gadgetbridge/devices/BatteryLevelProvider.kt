@@ -53,7 +53,7 @@ class BatteryLevelProvider(val device: GBDevice, val session: DaoSession) :
                 LOG.warn("Device not found in database for '{}'", gbDevice.getAliasOrName())
                 return false
             }
-            val deviceId = device.id
+            val deviceId = device.id!!
 
             for (sample in samples) {
                 sample.deviceId = deviceId

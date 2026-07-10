@@ -453,7 +453,7 @@ class HealthConnectUtils {
                         val deviceFromDb = DBHelper.getDevice(gbDevice, db.daoSession)
                         val syncStateDao = db.daoSession.healthConnectSyncStateDao
                         val syncState = HealthConnectSyncState(
-                            deviceFromDb.id,
+                            deviceFromDb.id!!,
                             dataType.name,
                             timestampToPersistForThisDataType.epochSecond
                         )

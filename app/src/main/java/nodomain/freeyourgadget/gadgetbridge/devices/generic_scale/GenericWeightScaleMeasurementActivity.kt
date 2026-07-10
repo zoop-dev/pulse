@@ -108,8 +108,8 @@ class GenericWeightScaleMeasurementActivity : AbstractGBActivity() {
         try {
             GBApplication.acquireDB().use { db ->
                 val provider = GenericWeightSampleProvider(device, db.getDaoSession())
-                val userId = DBHelper.getUser(db.getDaoSession()).id
-                val deviceId = DBHelper.getDevice(device, db.getDaoSession()).id
+                val userId = DBHelper.getUser(db.getDaoSession()).id!!
+                val deviceId = DBHelper.getDevice(device, db.getDaoSession()).id!!
 
                 val sample = GenericWeightSample(
                     measurement.time!!.epochSecond,

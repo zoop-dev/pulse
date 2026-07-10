@@ -50,10 +50,10 @@ class BaseActivitySummaryProvider(val device: GBDevice, val session: DaoSession)
                 LOG.warn("Device not found in database for '{}'", gbDevice.getAliasOrName())
                 return false
             }
-            val deviceId = device.id
+            val deviceId = device.id!!
 
             val user = DBHelper.getUser(session)
-            val userId = user.id
+            val userId = user.id!!
 
             for (sample in samples) {
                 sample.deviceId = deviceId

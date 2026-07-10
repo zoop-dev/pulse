@@ -12,11 +12,11 @@ class WorkoutViewPagerAdapter(fragmentActivity: FragmentActivity) : FragmentStat
     override fun getItemCount(): Int = workouts.size
 
     override fun createFragment(position: Int): Fragment {
-        return WorkoutDetailsFragment.newInstance(workouts[position].id)
+        return WorkoutDetailsFragment.newInstance(workouts[position].id!!)
     }
 
     override fun getItemId(position: Int): Long {
-        return workouts[position].id
+        return workouts[position].id!!
     }
 
     override fun containsItem(itemId: Long): Boolean {
