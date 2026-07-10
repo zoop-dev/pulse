@@ -32,7 +32,7 @@ public class SoundcoreQ30Coordinator extends AbstractBLClassicDeviceCoordinator 
 
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile("Soundcore Q30");
+        return Pattern.compile("Soundcore +Q30", Pattern.CASE_INSENSITIVE);
     }
 
     @Override

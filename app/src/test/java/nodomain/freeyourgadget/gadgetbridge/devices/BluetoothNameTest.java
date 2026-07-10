@@ -32,6 +32,9 @@ public class BluetoothNameTest extends TestBase {
             put("CMF Buds 2", DeviceType.NOTHING_CMF_BUDS_2); // #5579
             put("CMF Buds 2a", DeviceType.NOTHING_CMF_BUDS_2A); // #6028
             put("HC96", DeviceType.HC96);
+            put("Soundcore Q30", DeviceType.SOUNDCORE_Q30); // #4316
+            put("soundcore Q30", DeviceType.SOUNDCORE_Q30); // #6371
+            put("soundcore  Q30", DeviceType.SOUNDCORE_Q30); // #6371 - unsure
             put("P8", DeviceType.WASPOS); // from wasp-os source
             put("P8DFU", DeviceType.WASPOS); // from wasp-os source
             put("P80", DeviceType.COLMI_P80);
