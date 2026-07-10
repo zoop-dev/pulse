@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.lang.reflect.Method;
 import java.util.concurrent.atomic.AtomicLong;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -61,6 +62,7 @@ public final class BtBRQueue {
     private final int mBufferSize;
     private final int mConnectDelayMillis;
 
+    private final int mRfcommChannel;
     private final Handler mWriteHandler;
     private final HandlerThread mWriteHandlerThread = new HandlerThread("BtBRQueue_write_" + THREAD_COUNTER.getAndIncrement(), Process.THREAD_PRIORITY_BACKGROUND);
 
@@ -122,7 +124,8 @@ public final class BtBRQueue {
                      SocketCallback socketCallback,
                      @NonNull UUID supportedService,
                      int bufferSize,
-                     int connectDelayMillis) {
+                     int connectDelayMillis,
+                     final int rfcommChannel) {
         LOG = LoggerFactory.getLogger(BtBRQueue.class.getName() + "(" + QUEUE_COUNTER.getAndIncrement() + ")");
 
         mBtAdapter = btAdapter;
@@ -132,6 +135,7 @@ public final class BtBRQueue {
         mService = supportedService;
         mBufferSize = bufferSize;
         mConnectDelayMillis = connectDelayMillis;
+        mRfcommChannel = rfcommChannel;
         mDisposed = new AtomicBoolean(false);
 
         mWriteHandlerThread.start();
@@ -275,7 +279,19 @@ public final class BtBRQueue {
 
         try {
             BluetoothDevice btDevice = mBtAdapter.getRemoteDevice(mGbDevice.getAddress());
-            mBtSocket = btDevice.createRfcommSocketToServiceRecord(mService);
+            if (mRfcommChannel >= 0) {
+                try {
+                    final Method createMethod = BluetoothDevice.class.getMethod("createRfcommSocket", int.class);
+                    mBtSocket = (BluetoothSocket) createMethod.invoke(btDevice, mRfcommChannel);
+                } catch (final Exception e) {
+                    LOG.error("Unable to create RFCOMM socket on channel " + mRfcommChannel + ": ", e);
+                    setDeviceConnectionState(originalState);
+                    cleanup();
+                    return false;
+                }
+            } else {
+                mBtSocket = btDevice.createRfcommSocketToServiceRecord(mService);
+            }
         } catch (IOException e) {
             LOG.error("Unable to connect to RFCOMM endpoint: ", e);
             setDeviceConnectionState(originalState);

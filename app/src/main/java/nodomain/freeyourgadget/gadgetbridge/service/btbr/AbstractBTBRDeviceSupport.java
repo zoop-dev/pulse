@@ -89,7 +89,8 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
                         this,
                         supportedService,
                         getBufferSize(),
-                        getConnectDelayMillis()
+                        getConnectDelayMillis(),
+                        getRfcommChannel()
                 );
             }
             return mQueue.connect();
@@ -159,6 +160,15 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
     protected UUID getSupportedService() {
         return mSupportedService;
     }
+
+    /**
+     * Subclasses can override this to specify a fixed RFCOMM channel number.
+     * If -1 (default), the service UUID is used for SDP resolution.
+     */
+    protected int getRfcommChannel() {
+        return -1;
+    }
+
 
     protected int getBufferSize() {
         return mBufferSize;
