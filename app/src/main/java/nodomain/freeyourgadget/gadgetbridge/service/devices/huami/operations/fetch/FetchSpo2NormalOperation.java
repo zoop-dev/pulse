@@ -105,8 +105,11 @@ public class FetchSpo2NormalOperation extends AbstractRepeatingFetchOperation {
     private void forwardToSleepAsAndroid(final List<HuamiSpo2Sample> samples) {
         final SleepAsAndroidSender sleepAsAndroidSender = fetcher.getSleepAsAndroidSender();
         if (sleepAsAndroidSender == null) {
+            LOG.debug("Not forwarding {} spo2 samples to sleep as android, no sender for this device", samples.size());
             return;
         }
+
+        LOG.debug("Forwarding {} spo2 samples to sleep as android", samples.size());
 
         for (final HuamiSpo2Sample sample : samples) {
             sleepAsAndroidSender.sendExtra(null, null, (float) sample.getSpo2(), null, sample.getTimestamp());

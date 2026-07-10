@@ -413,8 +413,18 @@ public class SleepAsAndroidSender {
      */
     public void sendExtra(Float hr, Float extraDataRR, Float spo2, Float sdnn, Long sdnnTimestamp) {
 
-        if (!isDeviceDefault() || !trackingOngoing) return;
-        if (trackingPaused) return;
+        if (!isDeviceDefault()) {
+            LOG.debug("Not sending extra data (spo2={}), device is not the default sleep as android device", spo2);
+            return;
+        }
+        if (!trackingOngoing) {
+            LOG.debug("Not sending extra data (spo2={}), tracking is not ongoing", spo2);
+            return;
+        }
+        if (trackingPaused) {
+            LOG.debug("Not sending extra data (spo2={}), tracking is paused", spo2);
+            return;
+        }
         Intent intent = new Intent(ACTION_EXTRA_DATA_UPDATE);
 
         // Heart Rate
@@ -423,8 +433,14 @@ public class SleepAsAndroidSender {
         }
 
         // SpO2
-        if (spo2 != null && (hasFeature(SleepAsAndroidFeature.SPO2) && isFeatureEnabled(SleepAsAndroidFeature.SPO2))) {
-            intent.putExtra(EXTRA_DATA_SPO2, spo2);
+        if (spo2 != null) {
+            if (hasFeature(SleepAsAndroidFeature.SPO2) && isFeatureEnabled(SleepAsAndroidFeature.SPO2)) {
+                LOG.debug("Sending spo2 data: {} at {}", spo2, sdnnTimestamp);
+                intent.putExtra(EXTRA_DATA_SPO2, spo2);
+            } else {
+                LOG.debug("Not sending spo2 data {}, hasFeature={}, isFeatureEnabled={}", spo2,
+                        hasFeature(SleepAsAndroidFeature.SPO2), isFeatureEnabled(SleepAsAndroidFeature.SPO2));
+            }
         }
 
         // SDNN

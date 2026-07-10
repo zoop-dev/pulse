@@ -98,9 +98,9 @@
             android:dependency="pref_key_sleepasandroid_spo2_autofetch_enable"
             android:title="@string/pref_sleepasandroid_spo2_autofetch_interval"
             android:inputType="number"
-            android:maxLength="3"
+            android:maxLength="4"
             app:iconSpaceReserved="false"
-            android:defaultValue="5">
+            android:defaultValue="60">
         </EditTextPreference>
     </PreferenceCategory>
 </PreferenceScreen>
