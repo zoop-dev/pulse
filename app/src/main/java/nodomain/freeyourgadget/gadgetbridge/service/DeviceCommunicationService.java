@@ -741,7 +741,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
 
                 final boolean createSupport = (deviceSupport == null);
                 if (createSupport) {
-                    LOG.debug("connectToDevice - {} create new device support", deviceAddress);
+                    LOG.debug("connectToDevice - create new device support for {} ({})", deviceAddress, gbDevice.getType());
                     deviceSupport = mFactory.createDeviceSupport(gbDevice);
                     LOG.debug("connectToDevice - created {} for {}", deviceSupport != null ? deviceSupport.getClass().getSimpleName() : "(null)", deviceAddress);
                     registeredStruct.setDeviceSupport(deviceSupport);

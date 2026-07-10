@@ -28,6 +28,7 @@ package nodomain.freeyourgadget.gadgetbridge.service;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.slf4j.Logger;
@@ -57,7 +58,7 @@ public class DeviceSupportFactory {
     }
 
     @Nullable
-    public synchronized DeviceSupport createDeviceSupport(GBDevice device) throws GBException {
+    public synchronized DeviceSupport createDeviceSupport(final @NonNull GBDevice device) throws GBException {
         DeviceSupport deviceSupport;
         String deviceAddress = device.getAddress();
         int indexFirstColon = deviceAddress.indexOf(":");
