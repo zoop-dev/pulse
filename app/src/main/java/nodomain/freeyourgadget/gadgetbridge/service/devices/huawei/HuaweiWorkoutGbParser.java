@@ -217,7 +217,7 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
             final ActivitySummaryData activitySummaryData = ActivitySummaryData.fromJson(summary.getSummaryData());
             if (summary.getGpxTrack() == null) {
                 // Quickly check and update whether the activity has gps
-                try (DBHandler db = GBApplication.acquireDB()) {
+                try (DBHandler db = GBApplication.acquireDbReadOnly()) {
                     final DaoSession session = db.getDaoSession();
                     final Device device = DBHelper.getDevice(gbDevice, session);
                     final User user = DBHelper.getUser(session);
@@ -239,7 +239,7 @@ public class HuaweiWorkoutGbParser implements ActivitySummaryParser {
         }
 
         // Find the existing HuaweiWorkoutSummarySample
-        try (DBHandler db = GBApplication.acquireDB()) {
+        try (DBHandler db = GBApplication.acquireDbReadOnly()) {
             final DaoSession session = db.getDaoSession();
             final Device device = DBHelper.getDevice(gbDevice, session);
             final User user = DBHelper.getUser(session);
