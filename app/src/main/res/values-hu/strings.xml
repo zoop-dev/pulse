@@ -4533,4 +4533,11 @@
     <string name="qs_tile_label_8">Gadgetbridge 8</string>
     <string name="qs_tile_label_9">Gadgetbridge 9</string>
     <string name="qs_tile_label_10">Gadgetbridge 10</string>
+    <string name="sony_capture_voice_during_call">Hangrögzítés hívás közben</string>
+    <string name="sony_capture_voice_during_call_summary">A saját hangját könnyebben hallhatja a hívás közben. Ha túl hangosnak érzi a saját hangját, vagy a háttérzaj zavaró, kapcsolja ki ezt a funkciót.</string>
+    <string name="sony_service_link_summary">Integráció engedélyezése más szolgáltatásokkal, beleértve a Spotify-t és az Endelt</string>
+    <string name="sony_voice_notifications_volume">Hangos útmutatás hangereje</string>
+    <string name="sony_voice_assistant_function">Hangsegéd-funkció</string>
+    <string name="sony_voice_assistant_mobile_device">Hangsegéd (hordozható eszköz)</string>
+    <string name="sony_service_link">Szolgáltatás hivatkozása</string>
 </resources>
