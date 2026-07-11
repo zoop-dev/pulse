@@ -1,5 +1,21 @@
 ### Changelog
 
+#### Next release (WIP)
+
+* Initial support for HUAWEI FreeClip 2
+* Initial support for Garmin Forerunner 170 Music
+* Experimental support for BM6 Battery Monitor
+* Add cumulative calories daily chart
+* Add Quick Settings tiles for some device
+* Garmin HRM Pro+: Improved connection support
+* Garmin: Add point winds support
+* Huawei: GPS track uploading
+* Huawei: Offline maps basic support
+* Huawei: Improved calendar sync
+* Sony WH-ULT900N: Enable more features
+* Xiaomi-protobuf: Improve workout summary parsing
+* Xiaomi-protobuf: Parse workout details
+
 #### 0.92.2
 
 * Charts: Avoid empty charts if no charts are enabled
