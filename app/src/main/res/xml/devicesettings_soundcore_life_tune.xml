@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory
+        android:key="pref_key_header_soundcore_ambient_sound_control"
+        android:title="@string/pref_header_sony_ambient_sound_control">
+
+        <ListPreference
+            android:defaultValue="noise_cancelling"
+            android:entries="@array/sony_ambient_sound_control_names"
+            android:entryValues="@array/sony_ambient_sound_control_values"
+            android:icon="@drawable/ic_hearing"
+            android:key="pref_soundcore_ambient_sound_control"
+            app:useSimpleSummaryProvider="true"
+            android:title="@string/sony_ambient_sound" />
+
+        <ListPreference
+            android:defaultValue="transport"
+            android:entries="@array/soundcore_anc_mode_names"
+            android:entryValues="@array/soundcore_anc_mode_values"
+            android:icon="@drawable/ic_hearing"
+            android:key="pref_soundcore_anc_mode"
+            app:useSimpleSummaryProvider="true"
+            android:title="@string/prefs_active_noise_cancelling_level" />
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

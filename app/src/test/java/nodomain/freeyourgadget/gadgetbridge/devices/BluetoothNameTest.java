@@ -222,6 +222,9 @@ public class BluetoothNameTest extends TestBase {
             put("BM6", DeviceType.BM6_BATTERY_MONITOR); // #6236
             put("Xiaomi Smart Band 10 Pro AB01", DeviceType.MIBAND10PRO); // #6248
             put("SmartShunt HQ2303UCHFV", DeviceType.VICTRON_SMARTSHUNT); // #6263
+            put("Soundcore Q30", DeviceType.SOUNDCORE_Q30); // #6396
+            put("Soundcore Life Tune", DeviceType.SOUNDCORE_LIFE_TUNE); // #6396
+            put("Soundcore Life Tune XR", DeviceType.SOUNDCORE_LIFE_TUNE_XR); // #6396
         }};
 
         for (Map.Entry<String, DeviceType> e : bluetoothNameToExpectedType.entrySet()) {
