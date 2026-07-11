@@ -53,6 +53,7 @@ class HealthConnectDebugFragment : AbstractDebugFragment() {
                     try {
                         GBApplication.acquireDB().use { db ->
                             db.daoSession.healthConnectSyncStateDao.deleteAll()
+                            db.daoSession.healthConnectSleepSessionDao.deleteAll()
                             GB.toast("Health Connect sync state reset successfully", Toast.LENGTH_SHORT, GB.INFO)
                         }
                     } catch (e: Exception) {

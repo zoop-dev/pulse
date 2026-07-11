@@ -38,6 +38,8 @@ import nodomain.freeyourgadget.gadgetbridge.devices.GlucoseSampleProvider
 import nodomain.freeyourgadget.gadgetbridge.devices.SampleProvider
 import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao
+import nodomain.freeyourgadget.gadgetbridge.entities.HealthConnectSleepSession
+import nodomain.freeyourgadget.gadgetbridge.entities.HealthConnectSleepSessionDao
 import nodomain.freeyourgadget.gadgetbridge.entities.HealthConnectSyncState
 import nodomain.freeyourgadget.gadgetbridge.entities.HealthConnectSyncStateDao
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
@@ -340,6 +342,13 @@ class HealthConnectUtils {
 
                 var currentSliceStartTs = currentDataTypeStartTsFromDb
 
+                // Sleep carries a per-night registry (frozen clientRecordId + grown span) across
+                // slices, persisted once at the end, to decouple HC record identity from the
+                // unstable session start.
+                val isSleep = dataType == HealthConnectPermissionManager.HealthConnectDataType.SLEEP
+                var sleepRows: List<SleepSessionRow> =
+                    if (isSleep) loadSleepRows(gbDevice) else emptyList()
+
                 while (currentSliceStartTs.isBefore(currentDataTypeEndTsFromDb)) {
                     var currentSliceEndTs = currentSliceStartTs.plusSeconds(syncIntervalInSeconds)
                     if (currentSliceEndTs.isAfter(currentDataTypeEndTsFromDb)) {
@@ -389,18 +398,33 @@ class HealthConnectUtils {
                         }
 
                     try {
-                        val sliceStats = syncDataTypeSlice(
-                            dataType = dataType,
-                            healthConnectClient = healthConnectClient,
-                            gbDevice = gbDevice,
-                            metadata = metadata,
-                            offset = zoneId,
-                            currentSliceStartTs = currentSliceStartTs,
-                            currentSliceEndTs = currentSliceEndTs,
-                            grantedPermissions = grantedPermissions,
-                            activityBasedSamples = activityBasedSamples,
-                            context = context
-                        )
+                        val sliceStats: List<SyncerStatistics>
+                        if (isSleep) {
+                            if (activityBasedSamples.isNullOrEmpty()) {
+                                sliceStats = emptyList()
+                            } else {
+                                val result = SleepSyncer.sync(
+                                    healthConnectClient, gbDevice, metadata, zoneId,
+                                    grantedPermissions, activityBasedSamples, context,
+                                    sleepRows
+                                )
+                                sleepRows = result.rows
+                                sliceStats = listOf(result.statistics)
+                            }
+                        } else {
+                            sliceStats = syncDataTypeSlice(
+                                dataType = dataType,
+                                healthConnectClient = healthConnectClient,
+                                gbDevice = gbDevice,
+                                metadata = metadata,
+                                offset = zoneId,
+                                currentSliceStartTs = currentSliceStartTs,
+                                currentSliceEndTs = currentSliceEndTs,
+                                grantedPermissions = grantedPermissions,
+                                activityBasedSamples = activityBasedSamples,
+                                context = context
+                            )
+                        }
 
                         for (stat in sliceStats) {
                             val key = stat.recordType
@@ -464,6 +488,18 @@ class HealthConnectUtils {
                 } catch (e: Exception) {
                     LOG.error("$HC_SYNC_TAG Error updating Health Connect sync state for device {}, data type {}: {}", gbDevice.aliasOrName, dataType.name, e.localizedMessage, e)
                     dataTypesWithErrors.add(dataType.name)
+                }
+
+                if (isSleep) {
+                    // Prune rows unreachable by the next run's scan (end < cursor - lookBack), persist.
+                    val pruneBefore = timestampToPersistForThisDataType.minusSeconds(lookBackInSeconds)
+                    val prunedRows = SleepSyncer.pruneSleepRows(sleepRows, pruneBefore)
+                    try {
+                        persistSleepRows(gbDevice, prunedRows)
+                    } catch (e: Exception) {
+                        LOG.error("$HC_SYNC_TAG Error persisting Health Connect sleep sessions for device {}: {}", gbDevice.aliasOrName, e.localizedMessage, e)
+                        dataTypesWithErrors.add(dataType.name)
+                    }
                 }
             } // End dataTypeLoop
         } // End device loop
@@ -618,12 +654,7 @@ class HealthConnectUtils {
                     }
                 }
                 HealthConnectPermissionManager.HealthConnectDataType.SLEEP -> {
-                    if (!activityBasedSamples.isNullOrEmpty()) {
-                        sliceStats.add(SleepSyncer.sync(
-                            healthConnectClient, gbDevice, metadata, offset,
-                            currentSliceStartTs, currentSliceEndTs, grantedPermissions, activityBasedSamples, context
-                        ))
-                    }
+                    // Handled statefully in the slice loop; identity carried across slices.
                 }
                 HealthConnectPermissionManager.HealthConnectDataType.VO2MAX -> sliceStats.add(Vo2MaxSyncer.sync(
                     healthConnectClient, gbDevice, metadata, offset,
@@ -680,6 +711,47 @@ class HealthConnectUtils {
                 return emptyList() // Return empty list on error
             }
             return provider.getAllActivitySamples(tsFrom, tsTo)
+        }
+
+        private fun loadSleepRows(gbDevice: GBDevice): List<SleepSessionRow> {
+            return GBApplication.acquireDbReadOnly().use { db ->
+                val deviceFromDb = DBHelper.getDevice(gbDevice, db.daoSession) ?: return@use emptyList()
+                db.daoSession.healthConnectSleepSessionDao.queryBuilder()
+                    .where(HealthConnectSleepSessionDao.Properties.DeviceId.eq(deviceFromDb.id))
+                    .list()
+                    .map {
+                        SleepSessionRow(
+                            clientRecordId = it.clientRecordId,
+                            startTime = Instant.ofEpochSecond(it.startTime),
+                            endTime = Instant.ofEpochSecond(it.endTime)
+                        )
+                    }
+            }
+        }
+
+        private fun persistSleepRows(gbDevice: GBDevice, rows: List<SleepSessionRow>) {
+            GBApplication.acquireDB().use { db ->
+                val deviceFromDb = DBHelper.getDevice(gbDevice, db.daoSession) ?: return@use
+                val dao = db.daoSession.healthConnectSleepSessionDao
+                val entities = rows.map {
+                    HealthConnectSleepSession(
+                        null,
+                        deviceFromDb.id,
+                        it.clientRecordId,
+                        it.startTime.epochSecond,
+                        it.endTime.epochSecond
+                    )
+                }
+                // Atomic replace: a failed insert must not leave the delete committed, else ids
+                // re-mint next run and duplicate HC records.
+                db.daoSession.runInTx {
+                    dao.queryBuilder()
+                        .where(HealthConnectSleepSessionDao.Properties.DeviceId.eq(deviceFromDb.id))
+                        .buildDelete()
+                        .executeDeleteWithoutDetachingEntities()
+                    dao.insertInTx(entities)
+                }
+            }
         }
 
         private fun getFirstSampleTimestamp(
