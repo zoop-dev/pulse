@@ -1,5 +1,10 @@
 ### Changelog
 
+#### 0.92.1
+
+* iGPSPORT: Fix activity track reprocessing
+* Fix sleep time mismatch on some devices
+
 #### 0.92.0
 
 * Add activity upload to Endurain / Wanderer

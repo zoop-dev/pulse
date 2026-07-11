@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="0.92.1" versioncode="250">
+        <change>iGPSPORT: Fix activity track reprocessing</change>
+        <change>Fix sleep time mismatch on some devices</change>
+    </release>
     <release version="0.92.0" versioncode="249">
         <change>Add activity upload to Endurain / Wanderer</change>
         <change>Initial support for Anker Soundcore Sport X20</change>
