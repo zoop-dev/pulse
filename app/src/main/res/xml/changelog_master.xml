@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <changelog>
+    <release version="0.92.2" versioncode="251">
+        <change>Charts: Avoid empty charts if no charts are enabled</change>
+        <change>Garmin: Fix regression in ExploreSync historical-catalog sync</change>
+        <change>Health Connect: Fix some workouts mapping</change>
+        <change>Huawei: Fix deadlock on activity listing</change>
+        <change>Improve connection to low power devices</change>
+        <change>Mi Band 6: Hide some invalid workout summary values</change>
+        <change>Shokz: Fix reading language from device</change>
+        <change>Soundcore Q30: Add some other device names</change>
+    </release>
     <release version="0.92.1" versioncode="250">
         <change>iGPSPORT: Fix activity track reprocessing</change>
         <change>Fix sleep time mismatch on some devices</change>

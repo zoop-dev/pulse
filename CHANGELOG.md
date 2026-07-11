@@ -1,5 +1,16 @@
 ### Changelog
 
+#### 0.92.2
+
+* Charts: Avoid empty charts if no charts are enabled
+* Garmin: Fix regression in ExploreSync historical-catalog sync
+* Health Connect: Fix some workouts mapping
+* Huawei: Fix deadlock on activity listing
+* Improve connection to low power devices
+* Mi Band 6: Hide some invalid workout summary values
+* Shokz: Fix reading language from device
+* Soundcore Q30: Add some other device names
+
 #### 0.92.1
 
 * iGPSPORT: Fix activity track reprocessing
