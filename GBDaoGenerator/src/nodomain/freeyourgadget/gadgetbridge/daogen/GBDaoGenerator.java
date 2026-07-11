@@ -1432,7 +1432,6 @@ public class GBDaoGenerator {
         Property clientRecordId = healthConnectSleepSession.addStringProperty("clientRecordId").notNull().getProperty();
         healthConnectSleepSession.addLongProperty("startTime").notNull();
         healthConnectSleepSession.addLongProperty("endTime").notNull();
-        healthConnectSleepSession.addBooleanProperty("finalized").notNull();
         healthConnectSleepSession.addToOne(device, deviceId);
         Index indexUnique = new Index();
         indexUnique.addProperty(deviceId);

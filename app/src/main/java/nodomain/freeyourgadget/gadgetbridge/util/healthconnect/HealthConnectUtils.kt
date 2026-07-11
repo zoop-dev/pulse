@@ -342,12 +342,10 @@ class HealthConnectUtils {
 
                 var currentSliceStartTs = currentDataTypeStartTsFromDb
 
-                // Stateful sleep-session identity: a night re-segments earlier as samples arrive, so
-                // we carry a per-session registry (clientRecordId + grown span) across slices and the
-                // whole run, then persist it once at the end. Decouples HC record identity from the
+                // Sleep carries a per-night registry (frozen clientRecordId + grown span) across
+                // slices, persisted once at the end, to decouple HC record identity from the
                 // unstable session start.
                 val isSleep = dataType == HealthConnectPermissionManager.HealthConnectDataType.SLEEP
-                val sleepNow = Instant.now()
                 var sleepRows: List<SleepSessionRow> =
                     if (isSleep) loadSleepRows(gbDevice) else emptyList()
 
@@ -408,7 +406,7 @@ class HealthConnectUtils {
                                 val result = SleepSyncer.sync(
                                     healthConnectClient, gbDevice, metadata, zoneId,
                                     grantedPermissions, activityBasedSamples, context,
-                                    sleepRows, sleepNow
+                                    sleepRows
                                 )
                                 sleepRows = result.rows
                                 sliceStats = listOf(result.statistics)
@@ -493,8 +491,7 @@ class HealthConnectUtils {
                 }
 
                 if (isSleep) {
-                    // Prune finalized rows that can no longer be re-detected (their end is older than
-                    // the next run's earliest scan, i.e. cursor - lookBack), then persist the registry.
+                    // Prune rows unreachable by the next run's scan (end < cursor - lookBack), persist.
                     val pruneBefore = timestampToPersistForThisDataType.minusSeconds(lookBackInSeconds)
                     val prunedRows = SleepSyncer.pruneSleepRows(sleepRows, pruneBefore)
                     try {
@@ -657,8 +654,7 @@ class HealthConnectUtils {
                     }
                 }
                 HealthConnectPermissionManager.HealthConnectDataType.SLEEP -> {
-                    // Sleep is handled statefully in the slice loop (see SleepSyncer.sync there),
-                    // because session identity is carried across slices and the whole run.
+                    // Handled statefully in the slice loop; identity carried across slices.
                 }
                 HealthConnectPermissionManager.HealthConnectDataType.VO2MAX -> sliceStats.add(Vo2MaxSyncer.sync(
                     healthConnectClient, gbDevice, metadata, offset,
@@ -727,8 +723,7 @@ class HealthConnectUtils {
                         SleepSessionRow(
                             clientRecordId = it.clientRecordId,
                             startTime = Instant.ofEpochSecond(it.startTime),
-                            endTime = Instant.ofEpochSecond(it.endTime),
-                            finalized = it.finalized
+                            endTime = Instant.ofEpochSecond(it.endTime)
                         )
                     }
             }
@@ -744,12 +739,11 @@ class HealthConnectUtils {
                         deviceFromDb.id,
                         it.clientRecordId,
                         it.startTime.epochSecond,
-                        it.endTime.epochSecond,
-                        it.finalized
+                        it.endTime.epochSecond
                     )
                 }
-                // Replace this device's registry atomically: a failed insert must not leave the
-                // delete committed (which would re-mint ids next run and duplicate HC records).
+                // Atomic replace: a failed insert must not leave the delete committed, else ids
+                // re-mint next run and duplicate HC records.
                 db.daoSession.runInTx {
                     dao.queryBuilder()
                         .where(HealthConnectSleepSessionDao.Properties.DeviceId.eq(deviceFromDb.id))

@@ -77,6 +77,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.DeviceAttributes;
 import nodomain.freeyourgadget.gadgetbridge.entities.DeviceAttributesDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericTrainingLoadAcuteSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.GenericTrainingLoadChronicSample;
+import nodomain.freeyourgadget.gadgetbridge.entities.HealthConnectSleepSessionDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.HealthConnectSyncStateDao;
 import nodomain.freeyourgadget.gadgetbridge.entities.InternetFirewallRuleDao;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -232,6 +233,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
                 deleteBy(session.getBatteryLevelDao(), BatteryLevelDao.Properties.DeviceId, device.getId());
                 deleteBy(session.getAlarmDao(), AlarmDao.Properties.DeviceId, device.getId());
                 deleteBy(session.getHealthConnectSyncStateDao(), HealthConnectSyncStateDao.Properties.DeviceId, device.getId());
+                deleteBy(session.getHealthConnectSleepSessionDao(), HealthConnectSleepSessionDao.Properties.DeviceId, device.getId());
                 deleteBy(session.getInternetFirewallRuleDao(), InternetFirewallRuleDao.Properties.DeviceId, device.getId());
                 session.getDeviceDao().delete(device);
             } else {

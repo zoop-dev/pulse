@@ -29,22 +29,16 @@ import nodomain.freeyourgadget.gadgetbridge.util.healthconnect.HealthConnectUtil
 import org.slf4j.LoggerFactory
 import java.time.Instant
 import java.time.ZoneId
-import java.time.temporal.ChronoUnit
 
 private val LOG = LoggerFactory.getLogger("SleepSyncer")
 
-private const val IN_PROGRESS_THRESHOLD_HOURS = 6L
-
-// Persisted identity of a sleep session, decoupled from the GreenDAO entity (which stores epoch
-// seconds). SleepAnalysis is stateless and re-segments as samples arrive, so a night's start can
-// move earlier across syncs. We pin a clientRecordId on first sight and reuse it for any later
-// detection that overlaps in time, so the single Health Connect record grows in place instead of
-// spawning a new id (the old behaviour, which orphaned the night and left junk fragments).
+// Persisted per-night identity. SleepAnalysis re-segments a night's start earlier across syncs, so
+// we freeze a clientRecordId on first sight and reuse it for any later time-overlapping detection;
+// the HC record then grows in place instead of orphaning the night under a new id.
 internal data class SleepSessionRow(
     val clientRecordId: String,
     val startTime: Instant,
-    val endTime: Instant,
-    val finalized: Boolean
+    val endTime: Instant
 )
 
 internal data class DetectedSleepSession(
@@ -61,8 +55,7 @@ internal data class PlannedSleepRecord(
 
 internal data class SleepSyncPlan(
     val planned: List<PlannedSleepRecord>,
-    val rows: List<SleepSessionRow>,
-    val cursor: Instant?
+    val rows: List<SleepSessionRow>
 )
 
 internal data class SleepSyncResult(
@@ -73,24 +66,16 @@ internal data class SleepSyncResult(
 internal object SleepSyncer {
 
     /**
-     * Pure decision core: matches freshly detected sessions against the persisted registry by
-     * temporal overlap, freezing the clientRecordId on the matched (or newly minted) row, and
-     * derives the sync cursor. No HC / DB / Android dependencies, so it is unit-testable.
-     *
-     * Cursor contract: the cursor is the latest END of a *completed* session processed this pass,
-     * or null if none completed. Sessions are sequential and non-overlapping and the in-progress
-     * one is always the most recent, so max(completed.end) <= any open session's start. Returning
-     * that (or null to hold) feeds the orchestrator's forward-only advance without ever stranding
-     * an open session: its earlier samples stay inside the 24h look-back window on the next run.
+     * Pure decision core (no HC/DB/Android deps, unit-testable): overlap-match each detection to a
+     * stored row, freeze/reuse its clientRecordId, grow its span. Only new or grown sessions go into
+     * `planned`; an unchanged re-detection keeps its row but is skipped so the look-back re-scan
+     * doesn't rewrite the same night to HC each sync.
      */
     internal fun planSleepSessions(
         existingRows: List<SleepSessionRow>,
         detected: List<DetectedSleepSession>,
-        now: Instant,
-        thresholdHours: Long,
         mintId: (Instant) -> String
     ): SleepSyncPlan {
-        val cutoff = now.minus(thresholdHours, ChronoUnit.HOURS)
         val rows = existingRows.toMutableList()
         val used = HashSet<Int>()
         val planned = ArrayList<PlannedSleepRecord>(detected.size)
@@ -100,56 +85,38 @@ internal object SleepSyncer {
             for (idx in rows.indices) {
                 if (idx in used) continue
                 val r = rows[idx]
-                // Inclusive overlap: d.start <= r.end && d.end >= r.start. SleepAnalysis splits
-                // sessions only across a wake gap > 1h, so distinct sessions are never exactly
-                // adjacent; inclusive overlap therefore won't merge them, and it still matches a
-                // single-sample fragment sitting exactly on the grown session's start edge (which
-                // strict overlap would miss, re-orphaning the night).
+                // Inclusive overlap (d.start <= r.end && d.end >= r.start): SleepAnalysis only
+                // splits across a >1h wake gap so distinct sessions never touch, and inclusive
+                // still matches a fragment sitting exactly on the grown session's start edge.
                 if (!d.start.isAfter(r.endTime) && !d.end.isBefore(r.startTime)) {
                     matchIdx = idx
                     break
                 }
             }
 
-            val id: String
-            val start: Instant
-            val end: Instant
             if (matchIdx >= 0) {
                 val r = rows[matchIdx]
-                start = if (d.start.isBefore(r.startTime)) d.start else r.startTime
-                end = if (d.end.isAfter(r.endTime)) d.end else r.endTime
-                val finalized = r.finalized || !end.isAfter(cutoff)
-                rows[matchIdx] = SleepSessionRow(r.clientRecordId, start, end, finalized)
+                val start = if (d.start.isBefore(r.startTime)) d.start else r.startTime
+                val end = if (d.end.isAfter(r.endTime)) d.end else r.endTime
                 used.add(matchIdx)
-                id = r.clientRecordId
+                val changed = start != r.startTime || end != r.endTime
+                if (changed) {
+                    rows[matchIdx] = SleepSessionRow(r.clientRecordId, start, end)
+                    planned.add(PlannedSleepRecord(i, r.clientRecordId, start, end))
+                }
             } else {
-                id = mintId(d.start)
-                start = d.start
-                end = d.end
-                val finalized = !end.isAfter(cutoff)
-                rows.add(SleepSessionRow(id, start, end, finalized))
+                val id = mintId(d.start)
+                rows.add(SleepSessionRow(id, d.start, d.end))
                 used.add(rows.size - 1)
-            }
-            planned.add(PlannedSleepRecord(i, id, start, end))
-        }
-
-        var cursor: Instant? = null
-        for (idx in used) {
-            val r = rows[idx]
-            if (r.finalized && (cursor == null || r.endTime.isAfter(cursor))) {
-                cursor = r.endTime
+                planned.add(PlannedSleepRecord(i, id, d.start, d.end))
             }
         }
 
-        return SleepSyncPlan(planned, rows, cursor)
+        return SleepSyncPlan(planned, rows)
     }
 
-    /** Drops any row whose end is at or before the prune horizon (cursor - look-back): it can no
-     *  longer fall inside any future scan window, so it can never be re-detected, grown, or
-     *  finalized again and its frozen id is dead weight. This covers stale OPEN rows too (e.g. an
-     *  in-progress session whose samples were deleted, which would otherwise never be pruned). A
-     *  genuinely in-progress session is safe: its end is within the 6h threshold of now, while the
-     *  horizon is cursor - 24h <= now - 24h, so a live session's end is always after the horizon. */
+    /** Drops rows whose end predates the prune horizon (cursor - look-back): unreachable by any
+     *  future scan, so the frozen id is dead weight. */
     internal fun pruneSleepRows(rows: List<SleepSessionRow>, pruneBefore: Instant): List<SleepSessionRow> {
         return rows.filter { it.endTime.isAfter(pruneBefore) }
     }
@@ -162,8 +129,7 @@ internal object SleepSyncer {
         grantedPermissions: Set<String>,
         deviceSamples: List<ActivitySample>,
         context: Context,
-        existingRows: List<SleepSessionRow>,
-        now: Instant
+        existingRows: List<SleepSessionRow>
     ): SleepSyncResult {
 
         val deviceName = gbDevice.aliasOrName
@@ -192,9 +158,7 @@ internal object SleepSyncer {
             return SleepSyncResult(SyncerStatistics(recordType = "Sleep"), existingRows)
         }
 
-        // Build a record candidate (stage list + its true span) per identified session. No slice
-        // ownership filter: a session is no longer tied to the slice its start falls in. Dedup is
-        // now provided by the frozen clientRecordId, so re-discovery across the look-back overlap
+        // No slice-ownership filter: the frozen clientRecordId dedups, so look-back re-discovery
         // upserts the same record instead of duplicating.
         val candidates = allIdentifiedSessions.mapNotNull { buildCandidate(it, sortedDeviceSamples, deviceName) }
         val skippedCount = allIdentifiedSessions.size - candidates.size
@@ -215,15 +179,12 @@ internal object SleepSyncer {
         val plan = planSleepSessions(
             existingRows = existingRows,
             detected = candidates.map { it.detected },
-            now = now,
-            thresholdHours = IN_PROGRESS_THRESHOLD_HOURS,
             mintId = mintId
         )
 
-        // clientRecordVersion is the sync run's wall clock so a later run always outranks the value
-        // it previously wrote for this id (HC keeps the highest version on conflict), letting a
-        // grown session overwrite the partial record it replaces.
-        val version = now.epochSecond
+        // Version = wall clock so a later run outranks its own earlier write (HC keeps the highest),
+        // letting a grown session overwrite the partial it replaces.
+        val version = Instant.now().epochSecond
 
         val records = plan.planned.map { p ->
             val candidate = candidates[p.detectedIndex]
@@ -248,11 +209,16 @@ internal object SleepSyncer {
         HealthConnectUtils.insertRecords(records, healthConnectClient)
         LOG.info("Successfully inserted SleepSessionRecord(s) for device '$deviceName'.")
 
+        // Plain forward cursor: latest end synced this slice, null to hold when nothing synced.
+        // Safe to advance past an open night: it re-enters the 24h look-back next run and
+        // overlap-matches its frozen id.
+        val cursor = plan.planned.maxOfOrNull { it.end }
+
         val stats = SyncerStatistics(
             recordsSynced = records.size,
             recordsSkipped = skippedCount,
             recordType = "Sleep",
-            latestRecordTimestamp = plan.cursor
+            latestRecordTimestamp = cursor
         )
         return SleepSyncResult(stats, plan.rows)
     }
