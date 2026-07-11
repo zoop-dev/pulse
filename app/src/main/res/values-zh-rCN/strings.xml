@@ -4686,4 +4686,11 @@
     <string name="qs_tile_clear">清除</string>
     <string name="qs_tile_cycle_values">循环切换值</string>
     <string name="qs_tile_cycle_values_all">所有值</string>
+    <string name="sony_capture_voice_during_call">通话期间捕捉声音</string>
+    <string name="sony_capture_voice_during_call_summary">通话中更容易听到自己的声音。如果你的声音太响或背景噪音令人分心，请关闭此功能。</string>
+    <string name="sony_service_link">服务链接</string>
+    <string name="sony_service_link_summary">允许和其他服务集成，包括 Spotify 和 Endel</string>
+    <string name="sony_voice_notifications_volume">语音向导音量</string>
+    <string name="sony_voice_assistant_function">语音助手功能</string>
+    <string name="sony_voice_assistant_mobile_device">语音助手（移动设备）</string>
 </resources>
