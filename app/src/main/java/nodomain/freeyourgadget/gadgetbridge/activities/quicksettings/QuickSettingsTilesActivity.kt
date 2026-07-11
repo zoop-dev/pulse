@@ -100,18 +100,16 @@ class QuickSettingsTilesActivity : AbstractGBActivity() {
     }
 
     private fun showSettingPicker(tileIndex: Int, device: GBDevice) {
-        val settings = QuickSettings.listFor(device)
-        val labels = settings.map { getString(it.title) }.toTypedArray()
-
-        MaterialAlertDialogBuilder(this)
-            .setTitle(device.aliasOrName)
-            .setItems(labels) { _, which ->
-                DeviceTilePrefs.save(tileIndex, device.address, settings[which].key)
-                refreshTile(tileIndex)
-                openTileSettings(tileIndex)
-            }
-            .setOnCancelListener { showDevicePicker(tileIndex) }
-            .show()
+        QuickSettingPickerDialog.show(
+            context = this,
+            title = device.aliasOrName,
+            settings = QuickSettings.listFor(device),
+            onCancel = { showDevicePicker(tileIndex) },
+        ) { descriptor ->
+            DeviceTilePrefs.save(tileIndex, device.address, descriptor.key)
+            refreshTile(tileIndex)
+            openTileSettings(tileIndex)
+        }
     }
 
     private fun refreshTile(tileIndex: Int) {

@@ -40,6 +40,8 @@ data class QuickSettingDescriptor(
     @param:StringRes val title: Int,
     @param:DrawableRes val icon: Int,
     val type: QuickSettingType,
+    /** Title of the closest ancestor [ScreenSetting]/[CategorySetting], or 0 if top-level. */
+    @param:StringRes val category: Int = 0,
 )
 
 /**
@@ -73,10 +75,12 @@ object QuickSettings {
         items: List<DeviceSetting>,
         prefs: Prefs,
         out: MutableList<QuickSettingDescriptor>,
+        @StringRes categoryTitle: Int = 0,
     ) {
         for (setting in items) {
             when (setting) {
-                is GroupSetting -> collectNodes(device, setting.children, prefs, out)
+                is ScreenSetting -> collectNodes(device, setting.children, prefs, out, setting.title)
+                is CategorySetting -> collectNodes(device, setting.children, prefs, out, setting.title)
                 is SwitchSetting -> out.add(
                     QuickSettingDescriptor(
                         deviceAddress = device.address,
@@ -85,6 +89,7 @@ object QuickSettings {
                         title = setting.title,
                         icon = setting.icon,
                         type = QuickSettingType.TOGGLE,
+                        category = categoryTitle,
                     )
                 )
 
@@ -96,10 +101,11 @@ object QuickSettings {
                         title = setting.title,
                         icon = setting.icon,
                         type = QuickSettingType.LIST,
+                        category = categoryTitle,
                     )
                 )
 
-                // CategorySetting, TextSetting, ActionSetting, XmlScreenSetting excluded
+                // TextSetting, ActionSetting, XmlScreenSetting excluded
                 else -> {}
             }
         }

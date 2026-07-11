@@ -48,15 +48,17 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs
  * **Root screen** - lists all [NUM_TILES] tile slots with their current summary. Tapping a slot
  * navigates into a per-tile sub-screen.
  *
- * **Per-tile sub-screen** (key `"qs_tile_N"`) - three native preferences:
- * 1. **Device** ([ListPreference]) - choose from all paired devices.
- * 2. **Setting** ([ListPreference]) - choose a toggle or list setting from the selected device;
+ * **Per-tile sub-screen** (key `"qs_tile_N"`) - four native preferences:
+ * 1. **Device** ([ListPreference]) - choose from paired devices.
+ * 2. **Setting** (plain [Preference]) - choose a toggle or list setting from the selected device,
+ *    via [QuickSettingPickerDialog] grouped by the setting's DSL category/screen;
  *    disabled with an explanatory summary if the device exposes no DSL settings.
  * 3. **Cycle through values** ([MultiSelectListPreference]) - restrict which values a list setting
  *    cycles through; hidden for toggle settings.
+ * 4. **Allow lock screen** ([SwitchPreferenceCompat]) - whether the tile may be toggled while locked.
  *
- * All three preferences are non-persistent; changes are committed to [DeviceTilePrefs] manually
- * via change listeners.
+ * All preferences are non-persistent; changes are committed to [DeviceTilePrefs] manually via
+ * change/click listeners.
  */
 @RequiresApi(Build.VERSION_CODES.N)
 class QuickSettingsPreferencesActivity : AbstractSettingsActivityV2() {
@@ -245,13 +247,14 @@ class QuickSettingsPreferencesActivity : AbstractSettingsActivityV2() {
                 //
                 // Setting
                 //
-                val settingPref = ListPreference(ctx).apply {
+                var selectedDevice = currentDevice
+                var selectedKey = currentKey
+
+                val settingPref = Preference(ctx).apply {
                     key = KEY_SETTING
                     setTitle(R.string.qs_tile_setting)
-                    setDialogTitle(R.string.qs_tile_setting)
                     setIcon(R.drawable.ic_settings_applications)
                     isPersistent = false
-                    summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
                 }
                 preferenceScreen.addPreference(settingPref)
 
@@ -280,6 +283,45 @@ class QuickSettingsPreferencesActivity : AbstractSettingsActivityV2() {
                 }
                 preferenceScreen.addPreference(cyclePref)
 
+                // Refreshes settingPref's visibility/summary/click-target for the current
+                // selectedDevice/selectedKey. Re-run whenever either changes.
+                fun refreshSettingPref() {
+                    val device = selectedDevice
+                    if (device == null) {
+                        settingPref.isVisible = false
+                        return
+                    }
+                    val descriptors = QuickSettings.listFor(device)
+                    settingPref.isVisible = true
+
+                    if (!descriptors.isEmpty()) {
+                        settingPref.isEnabled = true
+                        settingPref.summary = descriptors.firstOrNull { it.key == selectedKey }
+                            ?.let { getString(it.title) }
+                            ?: getString(R.string.not_set)
+                    } else {
+                        settingPref.isEnabled = false
+                        settingPref.summary = getString(R.string.qs_tile_no_preferences_supported)
+                    }
+
+                    settingPref.setOnPreferenceClickListener {
+                        QuickSettingPickerDialog.show(
+                            context = ctx,
+                            title = getString(R.string.qs_tile_setting),
+                            settings = descriptors,
+                            selectedKey = selectedKey,
+                        ) { descriptor ->
+                            selectedKey = descriptor.key
+                            DeviceTilePrefs.save(tileIdx, descriptor.deviceAddress, descriptor.key)
+                            DeviceTilePrefs.saveCycleValues(tileIdx, emptyList())
+                            populateCyclePref(cyclePref, device, descriptor, emptyList())
+                            refreshSettingPref()
+                            notifyTile(tileIdx)
+                        }
+                        true
+                    }
+                }
+
                 //
                 // Lock screen
                 //
@@ -299,7 +341,7 @@ class QuickSettingsPreferencesActivity : AbstractSettingsActivityV2() {
                 }
 
                 // Populate setting and cycle prefs from the current device (if any)
-                populateSettingPref(settingPref, cyclePref, currentDevice, currentKey)
+                refreshSettingPref()
                 populateCyclePref(cyclePref, currentDevice, currentDescriptor, currentCycleValues)
 
                 //
@@ -311,34 +353,13 @@ class QuickSettingsPreferencesActivity : AbstractSettingsActivityV2() {
                     val device = GBApplication.app().deviceManager.getDeviceByAddress(address)
 
                     // Reset setting and cycle when device changes
-                    populateSettingPref(settingPref, cyclePref, device, "")
+                    selectedDevice = device
+                    selectedKey = ""
+                    refreshSettingPref()
                     cyclePref.isVisible = false
                     cyclePref.values = emptySet()
 
-                    if (address.isEmpty()) {
-                        DeviceTilePrefs.clear(tileIdx)
-                    } else {
-                        // Setting must also be chosen before we save - clear it for now
-                        DeviceTilePrefs.clear(tileIdx)
-                    }
-                    notifyTile(tileIdx)
-                    true
-                }
-
-                settingPref.setOnPreferenceChangeListener { _, newVal ->
-                    val key = newVal as String
-                    val address = devicePref.value ?: ""
-                    val device = GBApplication.app().deviceManager.getDeviceByAddress(address)
-                    val descriptor = device?.let { QuickSettings.find(address, key) }
-
-                    // Update cycle pref for the new setting
-                    populateCyclePref(cyclePref, device, descriptor, emptyList())
-
-                    if (address.isNotEmpty() && key.isNotEmpty()) {
-                        DeviceTilePrefs.save(tileIdx, address, key)
-                        DeviceTilePrefs.saveCycleValues(tileIdx, emptyList())
-                    }
-
+                    DeviceTilePrefs.clear(tileIdx)
                     notifyTile(tileIdx)
                     true
                 }
@@ -346,15 +367,13 @@ class QuickSettingsPreferencesActivity : AbstractSettingsActivityV2() {
                 cyclePref.setOnPreferenceChangeListener { _, newVal ->
                     @Suppress("UNCHECKED_CAST")
                     val selected = newVal as Set<String>
-                    val address = devicePref.value ?: ""
-                    val key = settingPref.value ?: ""
-                    val device = GBApplication.app().deviceManager.getDeviceByAddress(address)
-                    val descriptor = device?.let { QuickSettings.find(address, key) }
+                    val device = selectedDevice
+                    val descriptor = device?.let { QuickSettings.find(it.address, selectedKey) }
 
                     // Preserve the declaration order from the full entry list
-                    val ordered = if (descriptor != null) {
+                    val ordered = if (device != null && descriptor != null) {
                         val setting = QuickSettings.getListSetting(device, descriptor.key)
-                        val sp = GBApplication.getDeviceSpecificSharedPrefs(address)
+                        val sp = GBApplication.getDeviceSpecificSharedPrefs(device.address)
                         val allEntries = setting?.let {
                             QuickSettings.resolveEntries(ctx, it, Prefs(sp))
                         } ?: emptyList()
@@ -366,49 +385,6 @@ class QuickSettingsPreferencesActivity : AbstractSettingsActivityV2() {
                     notifyTile(tileIdx)
                     true
                 }
-            }
-
-            /**
-             * Populates [settingPref] with the DSL settings available on [device]. If [currentKey]
-             * matches one of the available settings it is pre-selected; otherwise the preference is
-             * left unset. If [device] exposes no DSL settings, [settingPref] is disabled and its
-             * summary explains why instead of offering an empty dialog. Also resets [cyclePref]
-             * entries since the setting changed.
-             */
-            private fun populateSettingPref(
-                settingPref: ListPreference,
-                cyclePref: MultiSelectListPreference,
-                device: GBDevice?,
-                currentKey: String,
-            ) {
-                if (device == null) {
-                    settingPref.entries = emptyArray()
-                    settingPref.entryValues = emptyArray()
-                    settingPref.value = null
-                    settingPref.isVisible = false
-                    cyclePref.entries = emptyArray()
-                    cyclePref.entryValues = emptyArray()
-                    return
-                }
-                val descriptors = QuickSettings.listFor(device)
-                if (descriptors.isEmpty()) {
-                    settingPref.entries = emptyArray()
-                    settingPref.entryValues = emptyArray()
-                    settingPref.value = null
-                    settingPref.isEnabled = false
-                    settingPref.summaryProvider = null
-                    settingPref.summary = getString(R.string.qs_tile_no_preferences_supported)
-                    settingPref.isVisible = true
-                    cyclePref.entries = emptyArray()
-                    cyclePref.entryValues = emptyArray()
-                    return
-                }
-                settingPref.isEnabled = true
-                settingPref.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
-                settingPref.entries = descriptors.map { getString(it.title) }.toTypedArray()
-                settingPref.entryValues = descriptors.map { it.key }.toTypedArray()
-                settingPref.value = currentKey.ifEmpty { null }
-                settingPref.isVisible = true
             }
 
             /**
