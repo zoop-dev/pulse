@@ -86,8 +86,6 @@ public class FindPhoneActivity extends AbstractGBActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_phone);
 
-        final boolean ring = getIntent().getBooleanExtra(EXTRA_RING, true);
-
         IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_FOUND);
         filter.addAction(ACTION_VIBRATE);
@@ -102,6 +100,19 @@ public class FindPhoneActivity extends AbstractGBActivity {
                 finish();
             }
         });
+
+        handleIntent(getIntent());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        final boolean ring = intent.getBooleanExtra(EXTRA_RING, true);
 
         GB.removeNotification(GB.NOTIFICATION_ID_PHONE_FIND, this);
 

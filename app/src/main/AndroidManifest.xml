@@ -898,7 +898,8 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".activities.FindPhoneActivity"
-            android:label="Find Phone" />
+            android:label="@string/prefs_find_phone"
+            android:launchMode="singleTask" />
 
         <provider
             android:name=".contentprovider.PebbleContentProvider"
