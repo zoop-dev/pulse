@@ -96,6 +96,15 @@ public class ActivityPoint {
         return GPSCoordinate.UNKNOWN_ALTITUDE;
     }
 
+    /// Set the point altitude directly, independent of any GPS location. Use for
+    /// tracks whose altitude comes from a non-GPS sample stream (e.g. barometric
+    /// altitude in a workout-data feed) so no fake (0,0) location is fabricated.
+    ///
+    /// @see ActivitySummaryEntries#UNIT_METERS
+    public void setAltitude(final double altitude) {
+        this.altitude = altitude;
+    }
+
     /// 24/7 energy level
     ///
     /// @see ActivitySummaryEntries#UNIT_PERCENTAGE

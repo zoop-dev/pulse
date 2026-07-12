@@ -42,6 +42,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityPoint
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries
+import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary
 import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao
@@ -335,6 +336,14 @@ internal object RecordedWorkoutSyncer {
             }
             addElevationGainedRecord(summaryData, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
             addCadenceRecords(summaryData, activityKind, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
+        }
+
+        // If the summary carried no elevation gain, derive it from per-sample altitude in the
+        // track (e.g. Huawei GPS altitude, or any device that samples altitude but doesn't
+        // populate a summary ascent field).
+        val hasSummaryElevation = summaryData != null && summaryElevationGain(summaryData) > 0.0
+        if (!hasSummaryElevation) {
+            addElevationGainedFromPoints(activityPoints, workoutStartInstant, workoutEndInstant, startOffset, endOffset, metadata, grantedPermissions, recordsToInsert, deviceName)
         }
     }
 
@@ -755,13 +764,7 @@ internal object RecordedWorkoutSyncer {
             return
         }
 
-        var elevationGain = summaryData.getNumber(ActivitySummaryEntries.ELEVATION_GAIN, 0.0).toDouble()
-        if (elevationGain == 0.0) {
-            elevationGain = summaryData.getNumber(ActivitySummaryEntries.TOTAL_ASCENT, 0.0).toDouble()
-        }
-        if (elevationGain == 0.0) {
-            elevationGain = summaryData.getNumber(ActivitySummaryEntries.ASCENT_METERS, 0.0).toDouble()
-        }
+        val elevationGain = summaryElevationGain(summaryData)
 
         if (elevationGain > 0) {
             recordsToInsert.add(
@@ -775,6 +778,79 @@ internal object RecordedWorkoutSyncer {
                 )
             )
             LOG.debug("Added ElevationGainedRecord ({} m) for workout at {} for device '{}'.", elevationGain, startTime, deviceName)
+        }
+    }
+
+    /**
+     * Cumulative elevation gain (sum of positive altitude deltas) across consecutive track
+     * points that carry a known altitude. Points without altitude are skipped without breaking
+     * the running comparison, so a mid-track gap does not fabricate a spurious climb.
+     */
+    internal fun cumulativeElevationGain(activityPoints: List<ActivityPoint>): Double {
+        var previous: Double? = null
+        var gain = 0.0
+        for (point in activityPoints) {
+            val altitude = point.altitude
+            if (altitude <= GPSCoordinate.UNKNOWN_ALTITUDE) {
+                continue
+            }
+            val prev = previous
+            if (prev != null && altitude > prev) {
+                gain += altitude - prev
+            }
+            previous = altitude
+        }
+        return gain
+    }
+
+    /** Elevation gain from the summary JSON, trying the known ascent keys in order. */
+    private fun summaryElevationGain(summaryData: ActivitySummaryData): Double {
+        var elevationGain = summaryData.getNumber(ActivitySummaryEntries.ELEVATION_GAIN, 0.0).toDouble()
+        if (elevationGain == 0.0) {
+            elevationGain = summaryData.getNumber(ActivitySummaryEntries.TOTAL_ASCENT, 0.0).toDouble()
+        }
+        if (elevationGain == 0.0) {
+            elevationGain = summaryData.getNumber(ActivitySummaryEntries.ASCENT_METERS, 0.0).toDouble()
+        }
+        return elevationGain
+    }
+
+    /**
+     * Derive cumulative elevation gain from per-sample altitude and emit an
+     * [ElevationGainedRecord]. Used as a fallback in the detailed path when the summary has no
+     * ascent field but the track samples altitude. Sums only positive deltas between
+     * consecutive points that carry a known altitude.
+     */
+    private fun addElevationGainedFromPoints(
+        activityPoints: List<ActivityPoint>,
+        startTime: Instant,
+        endTime: Instant,
+        startOffset: ZoneOffset,
+        endOffset: ZoneOffset,
+        metadata: Metadata,
+        grantedPermissions: Set<String>,
+        recordsToInsert: MutableList<Record>,
+        deviceName: String
+    ) {
+        val elevationPermission = HealthPermission.getWritePermission(ElevationGainedRecord::class)
+        if (elevationPermission !in grantedPermissions) {
+            return
+        }
+
+        val gain = cumulativeElevationGain(activityPoints)
+
+        if (gain > 0.0) {
+            recordsToInsert.add(
+                ElevationGainedRecord(
+                    startTime = startTime,
+                    startZoneOffset = startOffset,
+                    endTime = endTime,
+                    endZoneOffset = endOffset,
+                    elevation = Length.meters(gain),
+                    metadata = metadata
+                )
+            )
+            LOG.debug("Added ElevationGainedRecord ({} m) derived from {} track points for workout at {} for device '{}'.", gain, activityPoints.size, startTime, deviceName)
         }
     }
 
