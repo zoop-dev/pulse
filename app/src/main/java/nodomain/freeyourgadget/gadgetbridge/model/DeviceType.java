@@ -401,6 +401,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.nothing.Ear2Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.nothing.EarACoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.nothing.EarStickCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.nut.NutCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.ollee.OlleeDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.onemoresonoflow.OneMoreSonoFlowCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.onetouch.OneTouchCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.oppo.OppoEncoAir2Coordinator;
@@ -1027,6 +1028,7 @@ public enum DeviceType {
     IGPSPORT_IGS630S(IGPSportiGS630SCoordinator.class),
     IGPSPORT_IGS800(IGPSportiGS800Coordinator.class),
     IGPSPORT_BINAVI_AIR(IGPSportBiNaviAirCoordinator.class),
+    OLLEE_WATCH_ONE(OlleeDeviceCoordinator.class),
     TEST(TestDeviceCoordinator.class);
 
     private DeviceCoordinator coordinator;

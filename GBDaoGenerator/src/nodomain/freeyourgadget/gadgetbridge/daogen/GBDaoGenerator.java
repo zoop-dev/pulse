@@ -240,6 +240,8 @@ public class GBDaoGenerator {
         addUltrahumanActivitySample(schema, user, device);
         sampleProvidersToGenerate.add(addUltrahumanDeviceStateSample(schema, user, device));
 
+        addOlleeActivitySample(schema, user, device);
+
         Entity huaweiWorkoutSummary = addHuaweiWorkoutSummarySample(schema, user, device);
         addHuaweiWorkoutSummaryAdditionalValuesSample(schema, huaweiWorkoutSummary);
         addHuaweiWorkoutDataSample(schema, huaweiWorkoutSummary);
@@ -1321,6 +1323,15 @@ public class GBDaoGenerator {
         activitySample.addIntProperty(SAMPLE_RAW_KIND).notNull().codeBeforeGetterAndSetter(OVERRIDE);
         activitySample.addIntProperty(SAMPLE_STEPS).notNull().codeBeforeGetterAndSetter(OVERRIDE);
         activitySample.addIntProperty("calories").notNull().codeBeforeGetter(OVERRIDE);
+        return activitySample;
+    }
+
+    private static Entity addOlleeActivitySample(Schema schema, Entity user, Entity device) {
+        Entity activitySample = addEntity(schema, "OlleeActivitySample");
+        activitySample.implementsSerializable();
+        addCommonActivitySampleProperties("AbstractActivitySample", activitySample, user, device);
+        activitySample.addIntProperty(SAMPLE_RAW_KIND).notNull().codeBeforeGetterAndSetter(OVERRIDE);
+        activitySample.addIntProperty(SAMPLE_STEPS).notNull().codeBeforeGetterAndSetter(OVERRIDE);
         return activitySample;
     }
 
