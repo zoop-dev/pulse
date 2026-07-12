@@ -134,8 +134,8 @@ public class Ak102SyncParserTest {
 
         assertEquals(1, points.size());
         assertEquals(1000, points.get(0).steps);
-        assertEquals(25, points.get(0).distance);
-        assertEquals(3, points.get(0).calories);
+        assertEquals(25, points.get(0).distanceCm);
+        assertEquals(3, points.get(0).activeCalories);
     }
 
     // Sleep ------------------------------------------------------------------
