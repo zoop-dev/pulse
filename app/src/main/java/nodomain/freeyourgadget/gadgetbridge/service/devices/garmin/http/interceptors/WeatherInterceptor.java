@@ -16,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.charset.StandardCharsets;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -69,9 +71,9 @@ public class WeatherInterceptor implements HttpInterceptor {
             {
                 final int version = path.startsWith("/weather/v2/") ? 2 : 1;
 
-                final int lat = getQueryNum(query, "lat", 0);
-                final int lon = getQueryNum(query, "lon", 0);
-                final int duration = getQueryNum(query, "duration", 5);
+                final float lat = getQueryNum(query, "lat", 0).floatValue();
+                final float lon = getQueryNum(query, "lon", 0).floatValue();
+                final int duration = getQueryNum(query, "duration", 5).intValue();
                 final String tempUnit = getQueryString(query, "tempUnit", "CELSIUS");
 
                 // Args below only in V2
@@ -92,9 +94,9 @@ public class WeatherInterceptor implements HttpInterceptor {
             case "/weather/v1/forecast/hour":
             case "/weather/v2/forecast/hour":
             {
-                final int lat = getQueryNum(query, "lat", 0);
-                final int lon = getQueryNum(query, "lon", 0);
-                final int duration = getQueryNum(query, "duration", 13); // 12 on v1
+                final float lat = getQueryNum(query, "lat", 0).floatValue();
+                final float lon = getQueryNum(query, "lon", 0).floatValue();
+                final int duration = getQueryNum(query, "duration", 13).intValue(); // 12 on v
                 final String speedUnit = getQueryString(query, "speedUnit", "METERS_PER_SECOND");
                 final String tempUnit = getQueryString(query, "tempUnit", "CELSIUS");
 
@@ -120,8 +122,8 @@ public class WeatherInterceptor implements HttpInterceptor {
             case "/weather/v1/current":
             case "/weather/v2/current":
             {
-                final int lat = getQueryNum(query, "lat", 0);
-                final int lon = getQueryNum(query, "lon", 0);
+                final float lat = getQueryNum(query, "lat", 0).floatValue();
+                final float lon = getQueryNum(query, "lon", 0).floatValue();
                 final String tempUnit = getQueryString(query, "tempUnit", "CELSIUS");
                 final String speedUnit = getQueryString(query, "speedUnit", "METERS_PER_SECOND");
                 // only in v2
@@ -130,14 +132,14 @@ public class WeatherInterceptor implements HttpInterceptor {
                 break;
             }
             //case "/weather/v1/calibration/altimeter": {
-            //    final int lat = getQueryNum(query, "lat", 0);
-            //    final int lon = getQueryNum(query, "lon", 0);
+            //    final float lat = getQueryNum(query, "lat", 0).floatValue();
+            //    final float lon = getQueryNum(query, "lon", 0).floatValue();
             //    weatherData = new WeatherAltimeterCalibration();
             //    break;
             //}
             case "/weather/pointWinds": {
-                final int lat = getQueryNum(query, "lat", 0);
-                final int lon = getQueryNum(query, "lon", 0);
+                final float lat = getQueryNum(query, "lat", 0).floatValue();
+                final float lon = getQueryNum(query, "lon", 0).floatValue();
                 final String rspFmt = getQueryString(query, "rspFmt", "json");
                 if (!"json".equals(rspFmt)) {
                     LOG.error("Unknown response format {} for pointWinds", rspFmt);
@@ -161,10 +163,15 @@ public class WeatherInterceptor implements HttpInterceptor {
         return response;
     }
 
-    private static int getQueryNum(final Map<String, String> query, final String key, final int defaultValue) {
+    private static Number getQueryNum(final Map<String, String> query, final String key, final int defaultValue) {
         final String str = query.get(key);
         if (str != null) {
-            return Integer.parseInt(str);
+            try {
+                return NumberFormat.getInstance().parse(str);
+            } catch (final ParseException e) {
+                LOG.error("Failed to parse {} as number for {}, returning default of {}", str, key, defaultValue, e);
+                return defaultValue;
+            }
         } else {
             return defaultValue;
         }
