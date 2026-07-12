@@ -46,6 +46,8 @@ public class MlrCommunicator {
     private final Runnable ackRunnable = this::sendAckPacket;
     private final Runnable retransmissionRunnable = this::onRetransmissionTimeout;
 
+    private volatile boolean closed = false;
+
     private final MessageSender messageSender;
     private final MessageReceiver messageReceiver;
 
@@ -198,6 +200,11 @@ public class MlrCommunicator {
     }
 
     private void sendAckPacket() {
+        if (closed) {
+            LOG.warn("Attempted to send ack packet after closed");
+            return;
+        }
+
         timeoutHandler.removeCallbacks(ackRunnable);
 
         // Send ACK-only packet (no data)
@@ -208,6 +215,11 @@ public class MlrCommunicator {
     }
 
     private void runProtocol() {
+        if (closed) {
+            LOG.warn("Attempted to run protocol after closed");
+            return;
+        }
+
         // Check if we can send more packets
         final int numSentUnacked = (nextSendSeq - lastRcvAck + MAX_SEQ_NUM + 1) % (MAX_SEQ_NUM + 1);
 
@@ -259,6 +271,11 @@ public class MlrCommunicator {
     }
 
     private void onRetransmissionTimeout() {
+        if (closed) {
+            LOG.warn("Attempted to retransmission timeout after closed");
+            return;
+        }
+
         LOG.debug("Retransmission timeout expired");
 
         // Backoff retransmission timeout and reduce the maximum unacked
@@ -291,6 +308,8 @@ public class MlrCommunicator {
     public void close() {
         LOG.debug("Closing MLR communicator");
 
+        closed = true;
+
         timeoutHandler.removeCallbacksAndMessages(null);
 
         fragmentQueue.clear();
@@ -298,6 +317,7 @@ public class MlrCommunicator {
 
     public void onConnectionStateChange(final BluetoothGatt gatt, final int status, final int newState) {
         if (newState != BluetoothGatt.STATE_CONNECTED) {
+            closed = true;
             timeoutHandler.removeCallbacksAndMessages(null);
         }
     }
