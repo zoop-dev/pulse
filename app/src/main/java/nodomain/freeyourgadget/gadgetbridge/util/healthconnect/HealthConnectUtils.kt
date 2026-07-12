@@ -736,7 +736,7 @@ class HealthConnectUtils {
                 val entities = rows.map {
                     HealthConnectSleepSession(
                         null,
-                        deviceFromDb.id,
+                        deviceFromDb.id!!,
                         it.clientRecordId,
                         it.startTime.epochSecond,
                         it.endTime.epochSecond
