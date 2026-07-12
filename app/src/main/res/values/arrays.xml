@@ -4587,6 +4587,34 @@
         <item>254</item>
     </string-array>
 
+    <string-array name="haylou_s35_anc_audio_mode_names">
+        <item>@string/off</item>
+        <item>@string/prefs_active_noise_cancelling</item>
+        <item>@string/prefs_active_noise_cancelling_transparency</item>
+    </string-array>
+
+    <string-array name="haylou_s35_anc_audio_mode_values">
+        <item>off</item>
+        <item>anc</item>
+        <item>transparency</item>
+    </string-array>
+
+    <string-array name="haylou_s35_anc_eq_preset_names">
+        <item>@string/pref_default</item>
+        <item>@string/nothing_equalizer_rock</item>
+        <item>@string/haylou_s35_anc_eq_classic</item>
+        <item>@string/haylou_s35_anc_eq_bass</item>
+        <item>@string/pref_title_equalizer_soft</item>
+    </string-array>
+
+    <string-array name="haylou_s35_anc_eq_preset_values">
+        <item>default</item>
+        <item>rock</item>
+        <item>classic</item>
+        <item>bass</item>
+        <item>soft</item>
+    </string-array>
+
     <string-array name="soundcore_button_brightness_names">
         <item>@string/off</item>
         <item>@string/soundcore_button_brightness_low</item>

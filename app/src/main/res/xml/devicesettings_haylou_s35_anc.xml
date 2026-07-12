@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<androidx.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+>
+
+    <PreferenceCategory android:title="@string/prefs_noise_control">
+        <ListPreference
+            android:defaultValue="off"
+            android:entries="@array/haylou_s35_anc_audio_mode_names"
+            android:entryValues="@array/haylou_s35_anc_audio_mode_values"
+            android:icon="@drawable/ic_hearing"
+            android:key="pref_haylou_s35_anc_audio_mode"
+            android:title="@string/prefs_noise_control"
+            app:useSimpleSummaryProvider="true"
+        />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_header_equalizer">
+        <ListPreference
+            android:defaultValue="default"
+            android:entries="@array/haylou_s35_anc_eq_preset_names"
+            android:entryValues="@array/haylou_s35_anc_eq_preset_values"
+            android:icon="@drawable/ic_equalizer"
+            android:key="pref_haylou_s35_anc_eq_preset"
+            android:title="@string/prefs_equalizer_preset"
+            app:useSimpleSummaryProvider="true"
+        />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_header_connection">
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_videogame"
+            android:key="pref_haylou_s35_anc_game_mode"
+            android:title="@string/prefs_game_mode"
+        />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_music_note"
+            android:key="pref_haylou_s35_anc_ldac_mode"
+            android:summary="@string/soundcore_ldac_mode_summary"
+            android:title="@string/soundcore_ldac_mode_title"
+        />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:icon="@drawable/ic_bluetooth_searching"
+            android:key="pref_haylou_s35_anc_multipoint"
+            android:title="@string/bluetooth_multipoint"
+        />
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

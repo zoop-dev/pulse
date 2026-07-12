@@ -204,6 +204,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.Y66Coordina
 import nodomain.freeyourgadget.gadgetbridge.devices.gloryfit.watches.Y6Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.gree.GreeAcCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.hama.fit6900.HamaFit6900DeviceCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.haylou.HaylouS35AncCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watches.MiBand10ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.victron.VictronSmartShuntCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.xplora.XploraXmoveDeviceCoordinator;
@@ -863,6 +864,7 @@ public enum DeviceType {
     SOUNDCORE_LIFE_TUNE_XR(SoundcoreLifeTuneXRCoordinator.class),
     SOUNDCORE_AEROFIT2(SoundcoreAeroFit2Coordinator.class),
     SOUNDCORE_SPORT_X20(SoundcoreSportX20Coordinator.class),
+    HAYLOU_S35_ANC(HaylouS35AncCoordinator.class),
     MOONDROP_SPACE_TRAVEL(MoondropSpaceTravelCoordinator.class),
     MOONDROP_SPACE_TRAVEL_2(MoondropSpaceTravel2Coordinator.class),
     MOONDROP_SPACE_TRAVEL_2_ULTRA(MoondropSpaceTravel2UltraCoordinator.class),

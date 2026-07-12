@@ -552,6 +552,13 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_SOUNDCORE_EQUALIZER_BAND8_VALUE = "pref_soundcore_equalizer_band8_value";
     public static final String PREF_SOUNDCORE_EQUALIZER_BAND9_FREQ = "pref_soundcore_equalizer_band9_freq";
     public static final String PREF_SOUNDCORE_EQUALIZER_BAND9_VALUE = "pref_soundcore_equalizer_band9_value";
+
+    public static final String PREF_HAYLOU_S35_ANC_AUDIO_MODE = "pref_haylou_s35_anc_audio_mode";
+    public static final String PREF_HAYLOU_S35_ANC_GAME_MODE = "pref_haylou_s35_anc_game_mode";
+    public static final String PREF_HAYLOU_S35_ANC_LDAC_MODE = "pref_haylou_s35_anc_ldac_mode";
+    public static final String PREF_HAYLOU_S35_ANC_MULTIPOINT = "pref_haylou_s35_anc_multipoint";
+    public static final String PREF_HAYLOU_S35_ANC_EQ_PRESET = "pref_haylou_s35_anc_eq_preset";
+
     public static final String PREF_SONY_AMBIENT_SOUND_CONTROL_BUTTON_MODE = "pref_sony_ambient_sound_control_button_mode";
     public static final String PREF_SONY_FOCUS_VOICE = "pref_sony_focus_voice";
     public static final String PREF_SONY_AMBIENT_SOUND_LEVEL = "pref_sony_ambient_sound_level";
