@@ -2,7 +2,11 @@ package nodomain.freeyourgadget.gadgetbridge.devices.soundcore.sport_x20;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettings;
@@ -57,6 +61,17 @@ public class SoundcoreSportX20Coordinator extends AbstractBLClassicDeviceCoordin
         final BatteryConfig battery2 = new BatteryConfig(1, R.drawable.ic_nothing_ear_l, R.string.left_earbud);
         final BatteryConfig battery3 = new BatteryConfig(2, R.drawable.ic_nothing_ear_r, R.string.right_earbud);
         return new BatteryConfig[]{battery1, battery2, battery3};
+    }
+
+    @Override
+    public int[] getSupportedDeviceSpecificConnectionSettings() {
+        final List<Integer> settings = new ArrayList<>();
+        settings.add(R.xml.devicesettings_soundcore_sport_x20_connection);
+
+        return ArrayUtils.addAll(
+                ArrayUtils.toPrimitive(settings.toArray(new Integer[0])),
+                super.getSupportedDeviceSpecificConnectionSettings()
+        );
     }
 
     @Override

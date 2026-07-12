@@ -25,7 +25,7 @@ public abstract class AbstractSoundcoreProtocol extends GBDeviceProtocol {
         GBDeviceEventVersionInfo info = new GBDeviceEventVersionInfo();
         info.hwVersion = serialNumber;
         info.fwVersion = firmware1;
-        info.fwVersion2 = firmware2;
+        info.fwVersion2 = (firmware2 != null && firmware2.equals(firmware1)) ? null : firmware2;
         return info;
     }
 

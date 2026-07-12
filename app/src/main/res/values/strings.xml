@@ -4014,6 +4014,12 @@
     <string name="dual_device_mode_title">Dual device mode</string>
     <string name="dual_device_mode_summary">Allow connecting headphones to two devices simultaneously</string>
 
+    <string name="pref_soundcore_fit_test_title">Fit test</string>
+    <string name="pref_soundcore_fit_test_summary">Evaluate noise cancelling effectiveness. Perform in a quiet place.</string>
+    <string name="pref_soundcore_fit_test_result">Fit test – Left: %1$s, Right: %2$s</string>
+    <string name="pref_soundcore_fit_test_excellent_seal">Excellent seal</string>
+    <string name="pref_soundcore_fit_test_poor_seal">Adjust or try a different ear tip</string>
+
     <string name="prefs_wena3_title_screen">Display Settings</string>
     <string name="prefs_wena3_title_activity">Activity Settings</string>
     <string name="prefs_wena3_item_background_sync">Background Activity Data Sync</string>

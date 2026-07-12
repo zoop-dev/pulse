@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="pref_soundcore_dual_connection"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/dual_device_mode_summary"
+        android:title="@string/dual_device_mode_title" />
+
+    <Preference
+        android:dependency="pref_soundcore_dual_connection"
+        android:key="pref_soundcore_enable_pairing_mode"
+        android:persistent="false"
+        android:summary="@string/soundcore_enable_pairing_mode_summary"
+        android:title="@string/bluetooth_multipoint_pair_new" />
+
+</PreferenceScreen>

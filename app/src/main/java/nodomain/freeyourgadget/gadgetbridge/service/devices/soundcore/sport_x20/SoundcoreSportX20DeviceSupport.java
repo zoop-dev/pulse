@@ -20,7 +20,12 @@ public class SoundcoreSportX20DeviceSupport extends AbstractHeadphoneSerialDevic
 
     @Override
     protected TransactionBuilder initializeDevice(final TransactionBuilder builder) {
+        // 1. Request device info (battery, firmware, serial, embedded control functions)
         builder.write(mDeviceProtocol.encodeDeviceInfoRequest());
+        // 2. Request extended info (firmware details, serial, additional settings)
+        builder.write(mDeviceProtocol.encodeExtendedInfoRequest());
+        // 3. Session-init handshake – the device ACKs with an empty response
+        builder.write(mDeviceProtocol.encodeSessionInitRequest());
         builder.setDeviceState(GBDevice.State.INITIALIZED);
         return builder;
     }
