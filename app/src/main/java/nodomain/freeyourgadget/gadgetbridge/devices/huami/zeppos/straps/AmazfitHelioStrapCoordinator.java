@@ -72,6 +72,6 @@ public class AmazfitHelioStrapCoordinator extends ZeppOsCoordinator {
 
     @Override
     public Set<SleepAsAndroidFeature> getSleepAsAndroidFeatures() {
-        return EnumSet.of(SleepAsAndroidFeature.ACCELEROMETER, SleepAsAndroidFeature.HEART_RATE, SleepAsAndroidFeature.ALARMS, SleepAsAndroidFeature.NOTIFICATIONS, SleepAsAndroidFeature.SPO2);
+        return EnumSet.of(SleepAsAndroidFeature.ACCELEROMETER, SleepAsAndroidFeature.HEART_RATE, SleepAsAndroidFeature.ALARMS, SleepAsAndroidFeature.NOTIFICATIONS, SleepAsAndroidFeature.SPO2, SleepAsAndroidFeature.SPO2_AUTOFETCH);
     }
 }

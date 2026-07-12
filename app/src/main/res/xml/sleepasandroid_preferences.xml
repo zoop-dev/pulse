@@ -83,23 +83,16 @@
 
     <PreferenceCategory
         android:key="pref_key_sleepasandroid_spo2_autofetch"
-        android:title="@string/pref_sleepasandroid_feat_spo2"
+        android:title="@string/pref_sleepasandroid_spo2_autofetch"
         app:iconSpaceReserved="false">
-        <SwitchPreferenceCompat
-            android:key="pref_key_sleepasandroid_spo2_autofetch_enable"
-            android:title="@string/pref_sleepasandroid_spo2_autofetch"
-            android:summary="@string/pref_sleepasandroid_spo2_autofetch_summary"
-            app:iconSpaceReserved="false"
-            android:defaultValue="false"
-            android:enabled="false">
-        </SwitchPreferenceCompat>
         <EditTextPreference
             android:key="pref_key_sleepasandroid_spo2_autofetch_interval"
-            android:dependency="pref_key_sleepasandroid_spo2_autofetch_enable"
+            android:dependency="pref_key_sleepasandroid_feat_spo2"
             android:title="@string/pref_sleepasandroid_spo2_autofetch_interval"
             android:inputType="number"
             android:maxLength="4"
             app:iconSpaceReserved="false"
+            android:enabled="false"
             android:defaultValue="60">
         </EditTextPreference>
     </PreferenceCategory>

@@ -160,4 +160,10 @@ public interface DeviceSupport extends EventHandler {
      * then {@link #connect}
      */
     boolean canReconnect();
+
+    /**
+     * Returns the sender used to forward data to Sleep as Android, or null if this device
+     * does not support it.
+     */
+    SleepAsAndroidSender getSleepAsAndroidSender();
 }

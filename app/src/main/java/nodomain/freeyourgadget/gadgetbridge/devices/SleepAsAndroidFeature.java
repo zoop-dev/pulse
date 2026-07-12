@@ -7,5 +7,8 @@ public enum SleepAsAndroidFeature {
     NOTIFICATIONS,
     ACCELEROMETER,
     OXIMETRY,
-    SPO2
+    SPO2,
+    // Device only gets SPO2 via periodic fetching of recorded samples, not live readings.
+    // Should be reported alongside SPO2.
+    SPO2_AUTOFETCH
 }

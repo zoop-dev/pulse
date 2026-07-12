@@ -13,9 +13,11 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
 import nodomain.freeyourgadget.gadgetbridge.devices.SleepAsAndroidFeature;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.sleepasandroid.SleepAsAndroidAction;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class SleepAsAndroidSender {
@@ -54,6 +56,7 @@ public class SleepAsAndroidSender {
 
     private ArrayList<Float> accData = new ArrayList<>();
     private ScheduledExecutorService accDataScheduler;
+    private ScheduledExecutorService spo2AutoFetchScheduler;
     private Set<SleepAsAndroidFeature> features;
 
     public SleepAsAndroidSender(GBDevice gbDevice) {
@@ -134,6 +137,8 @@ public class SleepAsAndroidSender {
         lastHrDataMs = System.currentTimeMillis();
 
         this.trackingOngoing = true;
+
+        enableSpo2AutoFetch(true);
     }
 
     /**
@@ -145,12 +150,57 @@ public class SleepAsAndroidSender {
             accDataScheduler.shutdownNow();
             accDataScheduler = null;
         }
+        enableSpo2AutoFetch(false);
 
         this.trackingOngoing = false;
         this.hrData = new ArrayList<>();
         this.accData = new ArrayList<>();
         this.lastHrDataMs = 0;
         this.lastRawDataMs = 0;
+    }
+
+    /**
+     * Starts or stops the periodic fetching of recorded SPO2 samples, for devices that can
+     * only deliver SPO2 to Sleep as Android this way instead of pushing live readings.
+     */
+    private void enableSpo2AutoFetch(final boolean enable) {
+        if (spo2AutoFetchScheduler != null) {
+            spo2AutoFetchScheduler.shutdownNow();
+            spo2AutoFetchScheduler = null;
+        }
+
+        if (!enable) {
+            return;
+        }
+
+        if (!hasFeature(SleepAsAndroidFeature.SPO2_AUTOFETCH) || !isFeatureEnabled(SleepAsAndroidFeature.SPO2)) {
+            LOG.debug("Not starting spo2 auto-fetch, feature not supported/enabled: hasFeature={}, isFeatureEnabled={}",
+                    hasFeature(SleepAsAndroidFeature.SPO2_AUTOFETCH), isFeatureEnabled(SleepAsAndroidFeature.SPO2));
+            return;
+        }
+
+        final int intervalSeconds = GBApplication.getPrefs().getInt("pref_key_sleepasandroid_spo2_autofetch_interval", 60);
+        if (intervalSeconds <= 0) {
+            LOG.warn("Invalid spo2 auto-fetch interval {}, not starting", intervalSeconds);
+            return;
+        }
+
+        final boolean allDayMonitoringEnabled = GBApplication.getDevicePrefs(device).getBoolean(DeviceSettingsPreferenceConst.PREF_SPO2_ALL_DAY_MONITORING, false);
+        LOG.debug("Starting spo2 auto-fetch for sleep as android, every {} seconds (spo2_all_day_monitoring_enabled={})", intervalSeconds, allDayMonitoringEnabled);
+        if (!allDayMonitoringEnabled) {
+            LOG.warn("SpO2 all-day monitoring is disabled on the device - the watch will likely not record any new normal spo2 samples for the auto-fetch to pick up");
+        }
+
+        spo2AutoFetchScheduler = Executors.newSingleThreadScheduledExecutor();
+        spo2AutoFetchScheduler.scheduleWithFixedDelay(
+                () -> {
+                    LOG.debug("Spo2 auto-fetch tick, triggering onFetchRecordedData(TYPE_SPO2)");
+                    GBApplication.deviceService(device).onFetchRecordedData(RecordedDataTypes.TYPE_SPO2);
+                },
+                intervalSeconds,
+                intervalSeconds,
+                TimeUnit.SECONDS
+        );
     }
 
     /**

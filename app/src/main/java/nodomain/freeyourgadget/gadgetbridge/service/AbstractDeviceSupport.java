@@ -628,6 +628,11 @@ public abstract class AbstractDeviceSupport implements DeviceSupport {
     }
 
     @Override
+    public SleepAsAndroidSender getSleepAsAndroidSender() {
+        return null;
+    }
+
+    @Override
     public void onCameraStatusChange(GBDeviceEventCameraRemote.Event event, String filename) {}
 
     @Override

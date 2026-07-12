@@ -218,8 +218,6 @@ public class HuamiFetcher {
         void setActivityNotifications(boolean control, boolean data);
         void writeActivityControl(String name, byte[] value);
 
-        default SleepAsAndroidSender getSleepAsAndroidSender() {
-            return null;
-        }
+        SleepAsAndroidSender getSleepAsAndroidSender();
     }
 }

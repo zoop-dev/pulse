@@ -64,8 +64,6 @@ import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventDisplayMes
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventScreenshot;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsMapsInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.ZeppOsMusicInstallHandler;
-import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
-import nodomain.freeyourgadget.gadgetbridge.devices.SleepAsAndroidFeature;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
 import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
@@ -155,7 +153,6 @@ public class ZeppOsSupport extends AbstractDeviceSupport
     // Keep track of whether the rawSensor is enabled
     private boolean rawSensor = false;
     private ScheduledExecutorService rawSensorScheduler;
-    private ScheduledExecutorService spo2AutoFetchScheduler;
 
     private int mMTU = 23;
 
@@ -283,7 +280,7 @@ public class ZeppOsSupport extends AbstractDeviceSupport
 
     @Override
     public void dispose() {
-        enableSpo2AutoFetch(false);
+        sleepAsAndroidSender.stopTracking();
         for (final Short endpoint : mSupportedServices) {
             if (mServiceMap.containsKey(endpoint)) {
                 Objects.requireNonNull(mServiceMap.get(endpoint)).dispose();
@@ -706,14 +703,12 @@ public class ZeppOsSupport extends AbstractDeviceSupport
                 heartRateService.onEnableRealtimeHeartRateMeasurement(true);
                 enableRawSensor(true);
                 sleepAsAndroidSender.startTracking();
-                enableSpo2AutoFetch(true);
                 break;
             // Received when the app stops sleep tracking
             case SleepAsAndroidAction.STOP_TRACKING:
                 heartRateService.onEnableRealtimeHeartRateMeasurement(false);
                 enableRawSensor(false);
                 sleepAsAndroidSender.stopTracking();
-                enableSpo2AutoFetch(false);
                 break;
             // Received when the app pauses sleep tracking
 //            case SleepAsAndroidAction.SET_PAUSE:
@@ -818,54 +813,6 @@ public class ZeppOsSupport extends AbstractDeviceSupport
             stopRawSensors();
         }
 
-    }
-
-    private void enableSpo2AutoFetch(final boolean enable) {
-        LOG.debug("enableSpo2AutoFetch({})", enable);
-
-        if (spo2AutoFetchScheduler != null) {
-            LOG.debug("Stopping existing spo2 auto-fetch scheduler");
-            spo2AutoFetchScheduler.shutdownNow();
-            spo2AutoFetchScheduler = null;
-        }
-
-        if (!enable) {
-            return;
-        }
-
-        if (!sleepAsAndroidSender.hasFeature(SleepAsAndroidFeature.SPO2) || !sleepAsAndroidSender.isFeatureEnabled(SleepAsAndroidFeature.SPO2)) {
-            LOG.debug("Not starting spo2 auto-fetch, feature not supported/enabled: hasFeature={}, isFeatureEnabled={}",
-                    sleepAsAndroidSender.hasFeature(SleepAsAndroidFeature.SPO2), sleepAsAndroidSender.isFeatureEnabled(SleepAsAndroidFeature.SPO2));
-            return;
-        }
-
-        if (!GBApplication.getPrefs().getBoolean("pref_key_sleepasandroid_spo2_autofetch_enable", false)) {
-            LOG.debug("Not starting spo2 auto-fetch, pref_key_sleepasandroid_spo2_autofetch_enable is disabled");
-            return;
-        }
-
-        final int intervalSeconds = GBApplication.getPrefs().getInt("pref_key_sleepasandroid_spo2_autofetch_interval", 60);
-        if (intervalSeconds <= 0) {
-            LOG.warn("Invalid spo2 auto-fetch interval {}, not starting", intervalSeconds);
-            return;
-        }
-
-        final boolean allDayMonitoringEnabled = getDevicePrefs().getBoolean(DeviceSettingsPreferenceConst.PREF_SPO2_ALL_DAY_MONITORING, false);
-        LOG.debug("Starting spo2 auto-fetch for sleep as android, every {} seconds (spo2_all_day_monitoring_enabled={})", intervalSeconds, allDayMonitoringEnabled);
-        if (!allDayMonitoringEnabled) {
-            LOG.warn("SpO2 all-day monitoring is disabled on the device - the watch will likely not record any new normal spo2 samples for the auto-fetch to pick up");
-        }
-
-        spo2AutoFetchScheduler = Executors.newSingleThreadScheduledExecutor();
-        spo2AutoFetchScheduler.scheduleWithFixedDelay(
-                () -> {
-                    LOG.debug("Spo2 auto-fetch tick, triggering onFetchRecordedData(TYPE_SPO2)");
-                    GBApplication.deviceService(gbDevice).onFetchRecordedData(RecordedDataTypes.TYPE_SPO2);
-                },
-                intervalSeconds,
-                intervalSeconds,
-                TimeUnit.SECONDS
-        );
     }
 
     public void requestDisplayItems(final ZeppOsTransactionBuilder builder) {
