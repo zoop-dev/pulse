@@ -37,8 +37,8 @@ import androidx.core.graphics.scale
 import androidx.exifinterface.media.ExifInterface
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import nodomain.freeyourgadget.gadgetbridge.R
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.workout.Workout
-import nodomain.freeyourgadget.gadgetbridge.util.FileUtils
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 import org.slf4j.LoggerFactory
 import java.io.File
@@ -48,6 +48,7 @@ import java.util.Collections
 import java.util.Locale
 
 class WorkoutEditor(private val context: Context, resultCaller: ActivityResultCaller) {
+    lateinit var gbDevice: GBDevice
     var filesGpxList: MutableList<String> = ArrayList()
     var selectedGpxIndex: Int = 0
     var selectedGpxFile: String? = null
@@ -95,7 +96,7 @@ class WorkoutEditor(private val context: Context, resultCaller: ActivityResultCa
     private fun buildGpxFileList(): MutableList<String> {
         val files: MutableList<File> = ArrayList()
         val gpxFileFilter = FileFilter { file: File? ->
-            file!!.isFile() && file.path.lowercase(Locale.getDefault()).endsWith(".gpx")
+            file!!.isFile && file.path.lowercase(Locale.getDefault()).endsWith(".gpx")
         }
         exportPathRoot?.let {
             val rootFiles: Array<File?>? = it.listFiles(gpxFileFilter)
@@ -115,7 +116,7 @@ class WorkoutEditor(private val context: Context, resultCaller: ActivityResultCa
         val list: MutableList<String> = ArrayList()
         list.add(context.getString(R.string.activity_summary_detail_clear_gpx_track))
         for (file in files) {
-            list.add(file.getName())
+            list.add(file.name)
         }
 
         return list
@@ -124,7 +125,7 @@ class WorkoutEditor(private val context: Context, resultCaller: ActivityResultCa
     private fun getPath(): File? {
         var path: File? = null
         try {
-            path = FileUtils.getExternalFilesDir()
+            path = gbDevice.deviceCoordinator.getWritableExportDirectory(gbDevice, true)
         } catch (e: IOException) {
             LOG.error("Error getting path", e)
         }
@@ -142,16 +143,16 @@ class WorkoutEditor(private val context: Context, resultCaller: ActivityResultCa
         builder.setSingleChoiceItems(directoryListing, 0) { dialog: DialogInterface?, which: Int ->
             selectedGpxIndex = which
             val selectedFilename = filesGpxList[selectedGpxIndex]
-            if (File(exportPathGpx, selectedFilename).isFile()) {
+            selectedGpxFile = if (File(exportPathGpx, selectedFilename).isFile) {
                 // Note: if selectedFilename exists in both exportPathGpx and exportPathRoot,
                 // this code will always choose the one in exportPathGpx. This is acceptable
                 // because exportPathGpx is where all new files end up, and gpx files tend to
                 // have a unique name anyway because it usually contains some timestamp.
-                selectedGpxFile = File(exportPathGpx, selectedFilename).getPath()
+                File(exportPathGpx, selectedFilename).path
             } else {
-                selectedGpxFile = File(exportPathRoot, selectedFilename).getPath()
+                File(exportPathRoot, selectedFilename).path
             }
-            var message = String.format("%s %s?", context.getString(R.string.set), filesGpxList.get(selectedGpxIndex))
+            var message = String.format("%s %s?", context.getString(R.string.set), filesGpxList[selectedGpxIndex])
             if (selectedGpxIndex == 0) {
                 selectedGpxFile = null
                 message = String.format("%s?", context.getString(R.string.activity_summary_detail_clear_gpx_track))
@@ -186,7 +187,10 @@ class WorkoutEditor(private val context: Context, resultCaller: ActivityResultCa
     }
 
     fun removeHeaderPhoto(workout: Workout, callback: Callback) {
-        val photoFile = File(workout.summary.headerPhoto)
+        if (workout.summary.headerPhoto == null) {
+            return
+        }
+        val photoFile = File(workout.summary.headerPhoto!!)
         if (photoFile.exists())
             photoFile.delete()
         workout.summary.headerPhoto = null
@@ -364,7 +368,7 @@ class WorkoutEditor(private val context: Context, resultCaller: ActivityResultCa
 
     private fun calculateInSampleSize(originalWidth: Int, targetWidth: Int): Int {
         var sampleSize = 1
-        var halfWidth = originalWidth / 2
+        val halfWidth = originalWidth / 2
         while (halfWidth / sampleSize >= targetWidth) {
             sampleSize *= 2
         }
