@@ -4733,4 +4733,20 @@
     <string name="xiaomi_vibration_segment_strength_hint">强度（1-100）</string>
     <string name="xiaomi_vibration_segment_remove">移除片段</string>
     <string name="xiaomi_vibration_no_segments">请至少添加一个片段</string>
+    <string name="ak102_pref_audio_auto_connect_summary">每当该手表连接时将其重新连接为蓝牙耳机。手表上的通话、联系人和通话记录需要此链接。</string>
+    <string name="ak102_pref_audio_pair_summary">配对手表的“经典蓝牙”侧并连接音频配置文件</string>
+    <string name="ak102_pref_audio_unpair_summary">删除手表的蓝牙配对</string>
+    <string name="ak102_audio_pairing_started">配对通话音频，接受手机上配对请求，观察是否有提示</string>
+    <string name="haylou_s35_anc_eq_classic">经典</string>
+    <string name="haylou_s35_anc_eq_bass">低音</string>
+    <string name="pref_soundcore_fit_test_title">适合度测试</string>
+    <string name="pref_soundcore_fit_test_summary">评估噪音消除有效性。在安静的地方进行。</string>
+    <string name="pref_soundcore_fit_test_result">适合度测试 —— 左：%1$s，右：%2$s</string>
+    <string name="pref_soundcore_fit_test_excellent_seal">绝佳</string>
+    <string name="pref_soundcore_fit_test_poor_seal">调整或尝试不同的耳机</string>
+    <string name="xiaomi_vibration_builtin_beeper">寻呼机</string>
+    <string name="xiaomi_vibration_builtin_toybox">玩具盒</string>
+    <string name="xiaomi_vibration_builtin_iced_latte">冰拿铁</string>
+    <string name="xiaomi_vibration_builtin_jump">跳跃</string>
+    <string name="xiaomi_vibration_builtin_wave">波浪</string>
 </resources>
