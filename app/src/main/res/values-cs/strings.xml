@@ -4699,4 +4699,9 @@
     <string name="sony_voice_notifications_volume">Hlasitost hlasového průvodce</string>
     <string name="sony_voice_assistant_function">Funkce hlasového asistenta</string>
     <string name="sony_voice_assistant_mobile_device">Hlasový asistent (mobilní zařízení)</string>
+    <string name="ak102_prefs_audio_header">Zvuk hovoru Bluetooth</string>
+    <string name="ak102_pref_audio_auto_connect_title">Automaticky připojit zvuk hovoru</string>
+    <string name="ak102_pref_audio_auto_connect_summary">Znovu připojit hodinky jako Bluetooth headset, jakmile se připojí. Volání, kontakty a záznamy hovorů na hodinkách potřebují toto propojení.</string>
+    <string name="ak102_pref_audio_pair_title">Spárovat zvuk hovorů</string>
+    <string name="ak102_pref_audio_pair_summary">Spárovat stranu Bluetooth Classic na hodinkách a připojit zvukové profily</string>
 </resources>
