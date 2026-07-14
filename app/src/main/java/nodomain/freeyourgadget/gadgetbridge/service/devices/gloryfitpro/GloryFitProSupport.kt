@@ -20,11 +20,14 @@ import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventMusicControl
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo
 import nodomain.freeyourgadget.gadgetbridge.devices.GloryFitStepsSampleProvider
 import nodomain.freeyourgadget.gadgetbridge.entities.GloryFitStepsSample
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState
+import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec
+import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder
@@ -106,8 +109,76 @@ class GloryFitProSupport : AbstractBTLESingleDeviceSupport(LOG) {
         when (cmd) {
             CMD_DEVICE_INFO -> handleDeviceInfo(value)
             CMD_ACTIVITY_DAY -> handleDaySummary(value)
+            CMD_MUSIC_CONTROL -> handleMusicControl(value)
             else -> LOG.debug("Unhandled cmd 0x{}: {}", Integer.toHexString(cmd.toInt() and 0xff), value.toHex())
         }
+    }
+
+    /** Music remote button: "01 e2 ac 01 02 <code> 00" (device -> phone). */
+    private fun handleMusicControl(value: ByteArray) {
+        if (value.size < 6 || value[3] != 0x01.toByte() || value[4] != 0x02.toByte()) {
+            return
+        }
+        val event = when (value[5].toInt() and 0xff) {
+            0x01 -> GBDeviceEventMusicControl.Event.PLAY
+            0x02 -> GBDeviceEventMusicControl.Event.PAUSE
+            0x03 -> GBDeviceEventMusicControl.Event.PREVIOUS
+            0x04 -> GBDeviceEventMusicControl.Event.NEXT
+            0x05 -> GBDeviceEventMusicControl.Event.VOLUMEUP
+            0x06 -> GBDeviceEventMusicControl.Event.VOLUMEDOWN
+            else -> return
+        }
+        evaluateGBDeviceEvent(GBDeviceEventMusicControl(event))
+    }
+
+    override fun onSetPhoneVolume(volume: Float) {
+        sendVolume(volume.toInt())
+    }
+
+    /** Volume to the watch: "01 e2 ab 01 01 <vol 0..100>". */
+    private fun sendVolume(percent: Int) {
+        val vol = percent.coerceIn(0, 100)
+        val builder = createTransactionBuilder("set phone volume")
+        builder.write(
+            UUID_CHARACTERISTIC_DATA_WRITE,
+            *byteArrayOf(PKT_HEADER, CMD_MUSIC_CONTROL, MODE_SET, 0x01, 0x01, vol.toByte())
+        )
+        builder.queue()
+    }
+
+    private var lastMusicSpec: MusicSpec? = null
+
+    override fun onSetMusicInfo(musicSpec: MusicSpec) {
+        lastMusicSpec = musicSpec
+        sendMusicInfo(musicSpec.artist, musicSpec.track)
+    }
+
+    override fun onSetMusicState(stateSpec: MusicStateSpec) {
+        // Resend the track so the watch shows it. Keeping the "playing" icon in sync and a live
+        // volume bar would require streaming updates ~2x/s like the official app; that flooded the
+        // connection here, so it's left as a follow-up (TODO).
+        sendMusicInfo(lastMusicSpec?.artist, lastMusicSpec?.track)
+    }
+
+    /** Music info to the watch: "01 e2 abab 00 ab 01 <artist> ab 02 <title> ab 03/04/05 <state>". */
+    private fun sendMusicInfo(artistRaw: String?, titleRaw: String?) {
+        val artist = (artistRaw ?: "").take(32).toByteArray(Charsets.UTF_16BE)
+        val title = (titleRaw ?: "").take(48).toByteArray(Charsets.UTF_16BE)
+        val data = ByteArrayOutputStream()
+        data.write(byteArrayOf(PKT_HEADER, CMD_MUSIC_CONTROL, MODE_SET, MODE_SET, 0x00))
+        data.write(byteArrayOf(MODE_SET, 0x01, artist.size.toByte())); data.write(artist)
+        data.write(byteArrayOf(MODE_SET, 0x02, title.size.toByte())); data.write(title)
+        data.write(byteArrayOf(MODE_SET, 0x03, 0x01, 0x00))
+        data.write(byteArrayOf(MODE_SET, 0x04, 0x01, 0x0f))
+        data.write(byteArrayOf(MODE_SET, 0x05, 0x01, 0x08))
+        val dataPkt = data.toByteArray()
+        var xor = 0
+        for (b in dataPkt) xor = xor xor (b.toInt() and 0xff)
+        val terminator = byteArrayOf(PKT_HEADER, CMD_MUSIC_CONTROL, MODE_SET, MODE_SET, PKT_TERMINATOR, xor.toByte())
+        val builder = createTransactionBuilder("set music info")
+        builder.write(UUID_CHARACTERISTIC_DATA_WRITE, *dataPkt)
+        builder.write(UUID_CHARACTERISTIC_DATA_WRITE, *terminator)
+        builder.queue()
     }
 
     override fun onFetchRecordedData(dataTypes: Int) {
@@ -322,6 +393,7 @@ class GloryFitProSupport : AbstractBTLESingleDeviceSupport(LOG) {
         const val CMD_DEVICE_INFO: Byte = 0xa4.toByte()
         const val CMD_NOTIFICATION: Byte = 0xb0.toByte()
         const val CMD_ACTIVITY_DAY: Byte = 0xc3.toByte()
+        const val CMD_MUSIC_CONTROL: Byte = 0xe2.toByte()
 
         const val FIELD_MODEL: Byte = 0x02
         const val FIELD_FIRMWARE: Byte = 0x15

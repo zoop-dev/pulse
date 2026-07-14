@@ -58,6 +58,11 @@ abstract class GloryFitProCoordinator : AbstractBLEDeviceCoordinator() {
         return true
     }
 
+    override fun supportsMusicInfo(device: GBDevice): Boolean {
+        // Not music info as such, but the watch can control media playback.
+        return true
+    }
+
     override fun supportsDataFetching(device: GBDevice): Boolean {
         return true
     }
