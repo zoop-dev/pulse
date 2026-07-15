@@ -4704,4 +4704,5 @@
     <string name="ak102_pref_audio_auto_connect_summary">Znovu připojit hodinky jako Bluetooth headset, jakmile se připojí. Volání, kontakty a záznamy hovorů na hodinkách potřebují toto propojení.</string>
     <string name="ak102_pref_audio_pair_title">Spárovat zvuk hovorů</string>
     <string name="ak102_pref_audio_pair_summary">Spárovat stranu Bluetooth Classic na hodinkách a připojit zvukové profily</string>
+    <string name="ak102_pref_audio_unpair_title">Zrušit párování zvuku hovoru</string>
 </resources>
