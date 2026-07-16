@@ -63,6 +63,18 @@ abstract class GloryFitProCoordinator : AbstractBLEDeviceCoordinator() {
         return true
     }
 
+    override fun supportsFindDevice(device: GBDevice): Boolean {
+        return true
+    }
+
+    override fun getAlarmSlotCount(device: GBDevice): Int {
+        return 5
+    }
+
+    override fun supportsWeather(device: GBDevice): Boolean {
+        return true
+    }
+
     override fun supportsDataFetching(device: GBDevice): Boolean {
         return true
     }

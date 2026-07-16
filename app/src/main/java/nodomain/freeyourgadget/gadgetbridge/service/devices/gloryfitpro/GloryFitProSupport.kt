@@ -20,15 +20,19 @@ import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo
+import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventFindPhone
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventMusicControl
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo
 import nodomain.freeyourgadget.gadgetbridge.devices.GloryFitStepsSampleProvider
 import nodomain.freeyourgadget.gadgetbridge.entities.GloryFitStepsSample
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
+import nodomain.freeyourgadget.gadgetbridge.model.Alarm
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec
+import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec
+import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder
 import org.slf4j.Logger
@@ -68,6 +72,9 @@ class GloryFitProSupport : AbstractBTLESingleDeviceSupport(LOG) {
 
         // Ask the watch for its device info (firmware etc.).
         builder.write(UUID_CHARACTERISTIC_DATA_WRITE, *cmdGetAll(CMD_DEVICE_INFO))
+
+        // Enable the watch's "find phone" feature (otherwise the watch button is greyed out).
+        builder.write(UUID_CHARACTERISTIC_DATA_WRITE, *byteArrayOf(PKT_HEADER, CMD_DEVICE_CONTROL, MODE_SET, 0x0a, 0x01, 0x01))
 
         if (GBApplication.getPrefs().syncTime()) {
             setTime(builder)
@@ -110,6 +117,7 @@ class GloryFitProSupport : AbstractBTLESingleDeviceSupport(LOG) {
             CMD_DEVICE_INFO -> handleDeviceInfo(value)
             CMD_ACTIVITY_DAY -> handleDaySummary(value)
             CMD_MUSIC_CONTROL -> handleMusicControl(value)
+            CMD_DEVICE_CONTROL -> handleDeviceControl(value)
             else -> LOG.debug("Unhandled cmd 0x{}: {}", Integer.toHexString(cmd.toInt() and 0xff), value.toHex())
         }
     }
@@ -325,6 +333,91 @@ class GloryFitProSupport : AbstractBTLESingleDeviceSupport(LOG) {
         builder.queue()
     }
 
+    override fun onFindDevice(start: Boolean) {
+        val builder = createTransactionBuilder("find device $start")
+        builder.write(
+            UUID_CHARACTERISTIC_DATA_WRITE,
+            *byteArrayOf(PKT_HEADER, CMD_DEVICE_CONTROL, MODE_SET, 0x04, 0x01, if (start) 0x01 else 0x00)
+        )
+        builder.queue()
+    }
+
+    /** Find-phone: the watch pushes "01 a5 ac 02 01 <01 start / 00 stop>". */
+    private fun handleDeviceControl(value: ByteArray) {
+        if (value.size >= 6 && value[2] == MODE_REPORT && value[3] == 0x02.toByte()) {
+            val event = GBDeviceEventFindPhone()
+            event.event = if (value[5].toInt() != 0) {
+                GBDeviceEventFindPhone.Event.START
+            } else {
+                GBDeviceEventFindPhone.Event.STOP
+            }
+            evaluateGBDeviceEvent(event)
+        }
+    }
+
+    override fun onSetAlarms(alarms: ArrayList<out Alarm>) {
+        // 01 c7 abab 00 [per slot: ab 01 02 <idx><idx> | ab 02 02 <idx><weekdayMask> |
+        //   ab 03 02 <idx><enabled> | ab 04 03 <idx><HH><MM> | ab 05 01 <idx>] + terminator.
+        val data = ByteArrayOutputStream()
+        data.write(byteArrayOf(PKT_HEADER, CMD_ALARM, MODE_SET, MODE_SET, 0x00))
+        for ((i, alarm) in alarms.withIndex()) {
+            val idx = (i + 1).toByte()
+            val rep = alarm.repetition
+            var mask = 0  // bit0=Sun, bit1=Mon .. bit6=Sat
+            if (rep and Alarm.ALARM_SUN.toInt() != 0) mask = mask or 0x01
+            if (rep and Alarm.ALARM_MON.toInt() != 0) mask = mask or 0x02
+            if (rep and Alarm.ALARM_TUE.toInt() != 0) mask = mask or 0x04
+            if (rep and Alarm.ALARM_WED.toInt() != 0) mask = mask or 0x08
+            if (rep and Alarm.ALARM_THU.toInt() != 0) mask = mask or 0x10
+            if (rep and Alarm.ALARM_FRI.toInt() != 0) mask = mask or 0x20
+            if (rep and Alarm.ALARM_SAT.toInt() != 0) mask = mask or 0x40
+            data.write(byteArrayOf(MODE_SET, 0x01, 0x02, idx, idx))
+            data.write(byteArrayOf(MODE_SET, 0x02, 0x02, idx, mask.toByte()))
+            data.write(byteArrayOf(MODE_SET, 0x03, 0x02, idx, if (alarm.enabled) 0x01 else 0x00))
+            data.write(byteArrayOf(MODE_SET, 0x04, 0x03, idx, alarm.hour.toByte(), alarm.minute.toByte()))
+            data.write(byteArrayOf(MODE_SET, 0x05, 0x01, idx))
+        }
+        queueTlvWithTerminator("set alarms", CMD_ALARM, data.toByteArray())
+    }
+
+    override fun onSendWeather() {
+        val weather: WeatherSpec = Weather.getWeatherSpec() ?: return
+        val city = (weather.location ?: "").take(24).toByteArray(Charsets.UTF_16BE)
+        val cur = (weather.currentTemp - 273)
+        val high = (weather.todayMaxTemp - 273)
+        val low = (weather.todayMinTemp - 273)
+        val humidity = weather.currentHumidity.coerceIn(0, 100)
+        val uv = weather.uvIndex.toInt().coerceIn(0, 15)
+        val ts = weather.timestamp
+
+        // Chunk 0 = current weather (forecast chunks are a TODO).
+        val data = ByteArrayOutputStream()
+        data.write(byteArrayOf(PKT_HEADER, CMD_WEATHER, MODE_SET, MODE_SET, 0x00))
+        data.write(byteArrayOf(MODE_SET, 0x05, city.size.toByte())); data.write(city)
+        data.write(byteArrayOf(MODE_SET, 0x06, 0x02, hi(cur), lo(cur)))
+        data.write(byteArrayOf(MODE_SET, 0x07, 0x02, hi(high), lo(high)))
+        data.write(byteArrayOf(MODE_SET, 0x08, 0x02, hi(low), lo(low)))
+        data.write(byteArrayOf(MODE_SET, 0x0a, 0x01, uv.toByte()))
+        data.write(byteArrayOf(MODE_SET, 0x0b, 0x04, (ts ushr 24).toByte(), (ts ushr 16).toByte(), (ts ushr 8).toByte(), ts.toByte()))
+        // f0f = [humidity][condition]; condition mapping to the watch's codes is a TODO.
+        data.write(byteArrayOf(MODE_SET, 0x0f, 0x02, humidity.toByte(), 0x00))
+        queueTlvWithTerminator("send weather", CMD_WEATHER, data.toByteArray())
+    }
+
+    private fun hi(v: Int): Byte = ((v ushr 8) and 0xff).toByte()
+    private fun lo(v: Int): Byte = (v and 0xff).toByte()
+
+    /** Write a TLV "01 CMD abab 00 ..." data packet followed by "01 CMD abab fd <xor>". */
+    private fun queueTlvWithTerminator(label: String, cmd: Byte, dataPkt: ByteArray) {
+        var xor = 0
+        for (b in dataPkt) xor = xor xor (b.toInt() and 0xff)
+        val terminator = byteArrayOf(PKT_HEADER, cmd, MODE_SET, MODE_SET, PKT_TERMINATOR, xor.toByte())
+        val builder = createTransactionBuilder(label)
+        builder.write(UUID_CHARACTERISTIC_DATA_WRITE, *dataPkt)
+        builder.write(UUID_CHARACTERISTIC_DATA_WRITE, *terminator)
+        builder.queue()
+    }
+
     private fun setTime(builder: TransactionBuilder) {
         val now = GregorianCalendar.getInstance()
         val epoch = (now.timeInMillis / 1000L).toInt()  // watch expects UTC unix time
@@ -394,6 +487,9 @@ class GloryFitProSupport : AbstractBTLESingleDeviceSupport(LOG) {
         const val CMD_NOTIFICATION: Byte = 0xb0.toByte()
         const val CMD_ACTIVITY_DAY: Byte = 0xc3.toByte()
         const val CMD_MUSIC_CONTROL: Byte = 0xe2.toByte()
+        const val CMD_DEVICE_CONTROL: Byte = 0xa5.toByte()
+        const val CMD_ALARM: Byte = 0xc7.toByte()
+        const val CMD_WEATHER: Byte = 0xe0.toByte()
 
         const val FIELD_MODEL: Byte = 0x02
         const val FIELD_FIRMWARE: Byte = 0x15
