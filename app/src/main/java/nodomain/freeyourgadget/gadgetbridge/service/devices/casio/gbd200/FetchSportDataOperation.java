@@ -52,6 +52,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLEOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.operations.OperationStatus;
+import nodomain.freeyourgadget.gadgetbridge.util.BcdUtil;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.ACTIVE_SECONDS;
@@ -85,6 +86,8 @@ public class FetchSportDataOperation extends AbstractBTLEOperation<CasioGBD200De
     private static final Logger LOG = LoggerFactory.getLogger(FetchSportDataOperation.class);
 
     private static final int SESSION_LIST_BASE = 0x46a0;
+    // Summary for used-slot bit b lives at SESSION_SUMMARY_BASE + b (feature 0x1e)
+    private static final int SESSION_SUMMARY_BASE = SESSION_LIST_BASE + 0x41;
     private static final int META_BLOCK_HDR    = 15;
     private static final int META_LAP_STRIDE   = 19;
     private static final int TIMEOUT_MS        = 45_000;
@@ -105,8 +108,8 @@ public class FetchSportDataOperation extends AbstractBTLEOperation<CasioGBD200De
 
     private State mState = State.WAIT_PING_ECHO;
     private final ArrayList<Byte> mConvoyBuf = new ArrayList<>();
-    private int mTotalSessions = 0;
-    private int mCurrentSession = 0;   // 1-based
+    private final ArrayList<Integer> mUsedSlots = new ArrayList<>();
+    private int mCurrentSession = 0;   // 1-based index into mUsedSlots
     private int mMetaAddress  = 0;
     private int mSegCount     = 0;
     private BaseActivitySummary mCurrentSummary = null;
@@ -208,48 +211,65 @@ public class FetchSportDataOperation extends AbstractBTLEOperation<CasioGBD200De
 
     // ── Session list parsing ──────────────────────────────────────────────────
 
-    private int parseSessionCount(byte[] payload) {
-        // The used-slot bitmask starts at payload[6] and spans 4 bytes (32 slots max).
-        // Each bit: 0 = slot in use, 1 = free. Count zero bits across all 4 bytes.
-        int count = 0;
-        for (int i = 6; i < Math.min(10, payload.length); i++) {
-            count += Integer.bitCount((~payload[i]) & 0xff);
+    /** Parse the used-slot bitmask at payload[6..18] into mUsedSlots. */
+    private void parseUsedSlots(byte[] payload) {
+        // The used-slot bitmask starts at payload[6] and spans 13 bytes (104 slots;
+        // the watch stores up to ~100 runs). Each bit: 0 = slot in use, 1 = free.
+        // Slots form a ring buffer, so used slots need not be contiguous — record
+        // each used bit position so sessions can be requested by actual slot index.
+        mUsedSlots.clear();
+        if (payload.length < 19) {
+            LOG.warn("Session list payload truncated ({} bytes) — slot bitmask incomplete",
+                    payload.length);
         }
-        return count;
+        for (int i = 6; i < Math.min(19, payload.length); i++) {
+            int used = (~payload[i]) & 0xff;
+            for (int bit = 0; bit < 8; bit++) {
+                if ((used & (1 << bit)) != 0) {
+                    mUsedSlots.add((i - 6) * 8 + bit);
+                }
+            }
+        }
     }
 
     // ── Session summary parsing and DB save ──────────────────────────────────
 
-    private int bcd(byte b) {
-        return ((b >> 4) & 0x0f) * 10 + (b & 0x0f);
-    }
-
-    /** Parse 7-byte BCD timestamp starting at payload[offset]. */
+    /**
+     * Parse 7-byte BCD timestamp starting at payload[offset].
+     * Returns null when the field holds no plausible timestamp — erased flash
+     * slots read back as all-0x00 or all-0xFF, which decode to year 0 or ~16665.
+     */
     private Date parseBcdTimestamp(byte[] p, int offset) {
-        if (offset + 7 > p.length) return new Date(0);
-        int yearLo = bcd(p[offset]);
-        int yearHi = bcd(p[offset + 1]);
-        int year   = yearHi * 100 + yearLo;
-        int month  = bcd(p[offset + 2]) - 1; // 0-based
-        int day    = bcd(p[offset + 3]);
-        int hour   = bcd(p[offset + 4]);
-        int min    = bcd(p[offset + 5]);
-        int sec    = bcd(p[offset + 6]);
+        if (offset + 7 > p.length) return null;
+        int year = BcdUtil.fromBcd8(p[offset + 1]) * 100 + BcdUtil.fromBcd8(p[offset]);
+        if (year < 2000 || year > 2099) return null;
+        int month = BcdUtil.fromBcd8(p[offset + 2]) - 1; // 0-based
+        int day   = BcdUtil.fromBcd8(p[offset + 3]);
+        int hour  = BcdUtil.fromBcd8(p[offset + 4]);
+        int min   = BcdUtil.fromBcd8(p[offset + 5]);
+        int sec   = BcdUtil.fromBcd8(p[offset + 6]);
         Calendar cal = Calendar.getInstance();
         cal.set(year, month, day, hour, min, sec);
         cal.set(Calendar.MILLISECOND, 0);
         return cal.getTime();
     }
 
-    enum SaveResult { NEW, EXISTING, ERROR }
+    enum SaveResult { NEW, EXISTING, SKIPPED, ERROR }
 
     private SaveResult parseAndSaveSession(byte[] payload, int sessionIndex) {
         mCurrentSummary = null;
+        mMetaAddress = 0;
+        mSegCount    = 0;
         if (payload.length < 186) {
             LOG.warn("Session {} payload too short: {} bytes", sessionIndex, payload.length);
-            mMetaAddress = 0;
-            mSegCount    = 0;
             return SaveResult.ERROR;
+        }
+
+        Date startTime = parseBcdTimestamp(payload, 147);
+        if (startTime == null) {
+            LOG.info("Session {} has no plausible start time — skipping erased slot",
+                    sessionIndex);
+            return SaveResult.SKIPPED;
         }
 
         // All offsets are direct indices into payload[] (0-based)
@@ -267,9 +287,13 @@ public class FetchSportDataOperation extends AbstractBTLEOperation<CasioGBD200De
         float distKm = ByteBuffer.wrap(payload, 169, 4)
                 .order(ByteOrder.LITTLE_ENDIAN)
                 .getFloat();
+        // Corrupt slots can carry a valid timestamp but garbage floats; a NaN
+        // here would end up serialized into the summary JSON.
+        if (Float.isNaN(distKm) || distKm < 0) {
+            distKm = 0;
+        }
 
-        Date startTime = parseBcdTimestamp(payload, 147);
-        Date endTime   = parseBcdTimestamp(payload, 154);
+        Date endTime = parseBcdTimestamp(payload, 154);
 
         int totalSeconds = durationMin * 60 + durationSec;
         int avgPaceSeconds = avgPaceMin * 60 + avgPaceSec;
@@ -288,8 +312,8 @@ public class FetchSportDataOperation extends AbstractBTLEOperation<CasioGBD200De
 
         BaseActivitySummary summary = new BaseActivitySummary();
         summary.setName(ActivityKind.RUNNING.getLabel(getContext()));
-        summary.setStartTime(startTime.getTime() == 0 ? new Date() : startTime);
-        summary.setEndTime(endTime.getTime() == 0 ? new Date(startTime.getTime() + totalSeconds * 1000L) : endTime);
+        summary.setStartTime(startTime);
+        summary.setEndTime(endTime == null ? new Date(startTime.getTime() + totalSeconds * 1000L) : endTime);
         summary.setActivityKind(ActivityKind.RUNNING.getCode());
         summary.setSummaryData(sd.toString());
 
@@ -392,7 +416,7 @@ public class FetchSportDataOperation extends AbstractBTLEOperation<CasioGBD200De
         mState = State.WAIT_PING_ECHO;
         mConvoyBuf.clear();
 
-        mTimeoutHandler.postDelayed(this::onTimeout, TIMEOUT_MS);
+        armWatchdog();
 
         // CONVOY_INIT request to h0011
         writeH0011(featReq(0x1c, 0, 0), "convoy_init");
@@ -400,12 +424,23 @@ public class FetchSportDataOperation extends AbstractBTLEOperation<CasioGBD200De
         writeH0014(new byte[]{0x00, 0x00, 0x00}, "ping");
     }
 
+    /**
+     * (Re-)arm the inactivity watchdog. Fetching all sessions can take far longer
+     * than TIMEOUT_MS in total, so the timeout acts per step, not per operation.
+     */
+    private void armWatchdog() {
+        mTimeoutHandler.removeCallbacksAndMessages(null);
+        mTimeoutHandler.postDelayed(this::onTimeout, TIMEOUT_MS);
+    }
+
     private void onTimeout() {
+        if (operationStatus == OperationStatus.FINISHED) return;
         LOG.warn("FetchSportDataOperation timed out in state {}", mState);
         GB.toast(getContext(), getContext().getString(R.string.busy_task_fetch_activity_data)
                 + ": timeout", Toast.LENGTH_SHORT, GB.WARN);
-        enableNotifications(false);
-        operationFinished();
+        // Close via cancel so the watch leaves convoy mode — otherwise it stays
+        // BUSY and the next fetch has to go through BUSY recovery.
+        closeSession();
     }
 
     @Override
@@ -438,21 +473,29 @@ public class FetchSportDataOperation extends AbstractBTLEOperation<CasioGBD200De
 
     private void proceedToNextSessionOrClose() {
         mCurrentSession++;
-        if (mCurrentSession > mTotalSessions) {
+        if (mCurrentSession > mUsedSlots.size()) {
             LOG.info("All sessions fetched");
             closeSession();
         } else {
-            mConvoyBuf.clear();
-            mState = State.COLLECTING_SESSION;
-            int addr = SESSION_LIST_BASE + 0x40 + mCurrentSession;
-            LOG.debug("Requesting session {}/{} @ 0x{}", mCurrentSession, mTotalSessions,
-                    Integer.toHexString(addr));
-            int progress = 40 + (int) ((float) mCurrentSession / mTotalSessions * 55);
-            GB.updateTransferNotification(null,
-                    getContext().getString(R.string.busy_task_fetch_activity_data),
-                    true, progress, getContext());
-            writeH0011(featReq(0x1e, addr, 0x01), "session_request_" + mCurrentSession);
+            requestCurrentSession();
         }
+    }
+
+    /** Request the summary of mUsedSlots[mCurrentSession - 1] and re-arm the watchdog. */
+    private void requestCurrentSession() {
+        mConvoyBuf.clear();
+        mState = State.COLLECTING_SESSION;
+        armWatchdog();
+        int slot = mUsedSlots.get(mCurrentSession - 1);
+        int addr = SESSION_SUMMARY_BASE + slot;
+        LOG.debug("Requesting session {}/{} (slot {}) @ 0x{}", mCurrentSession, mUsedSlots.size(),
+                slot, Integer.toHexString(addr));
+        // Progress reflects completed sessions; the current one hasn't arrived yet.
+        int progress = 40 + (int) ((float) (mCurrentSession - 1) / mUsedSlots.size() * 55);
+        GB.updateTransferNotification(null,
+                getContext().getString(R.string.busy_task_fetch_activity_data),
+                true, progress, getContext());
+        writeH0011(featReq(0x1e, addr, 0x01), "session_request_" + mCurrentSession);
     }
 
     private void closeSession() {
@@ -586,27 +629,18 @@ public class FetchSportDataOperation extends AbstractBTLEOperation<CasioGBD200De
             case COLLECTING_LIST:
                 // DATA_READY signal (0x09)
                 if (data[0] == 0x09) {
-                    byte[] payload = getConvoyPayload();
-                    mTotalSessions = parseSessionCount(payload);
-                    LOG.info("Session list received: {} sessions", mTotalSessions);
+                    parseUsedSlots(getConvoyPayload());
+                    LOG.info("Session list received: {} sessions", mUsedSlots.size());
 
                     writeH0011(echo10(data), "echo_list_signal");
                     writeH0011(ackReq(0x1d), "ack_list");
 
-                    if (mTotalSessions == 0) {
+                    if (mUsedSlots.isEmpty()) {
                         LOG.info("No sessions to fetch");
                         closeSession();
                     } else {
                         mCurrentSession = 1;
-                        mConvoyBuf.clear();
-                        mState = State.COLLECTING_SESSION;
-                        int addr = SESSION_LIST_BASE + 0x40 + mCurrentSession;
-                        LOG.debug("Requesting session {}/{} @ 0x{}", mCurrentSession, mTotalSessions,
-                                Integer.toHexString(addr));
-                        GB.updateTransferNotification(null,
-                                getContext().getString(R.string.busy_task_fetch_activity_data),
-                                true, 40, getContext());
-                        writeH0011(featReq(0x1e, addr, 0x01), "session_request_1");
+                        requestCurrentSession();
                     }
                 }
                 break;
@@ -614,31 +648,28 @@ public class FetchSportDataOperation extends AbstractBTLEOperation<CasioGBD200De
             case COLLECTING_SESSION:
                 if (data[0] == 0x09) {
                     byte[] payload = getConvoyPayload();
-                    LOG.debug("Session {}/{} payload: {} bytes", mCurrentSession, mTotalSessions,
+                    LOG.debug("Session {}/{} payload: {} bytes", mCurrentSession, mUsedSlots.size(),
                             payload.length);
                     SaveResult result = parseAndSaveSession(payload, mCurrentSession);
 
                     writeH0011(echo10(data), "echo_session_signal");
                     writeH0011(ackReq(0x1e), "ack_session");
 
-                    int progress = 40 + (int) ((float) mCurrentSession / mTotalSessions * 55);
+                    int progress = 40 + (int) ((float) mCurrentSession / mUsedSlots.size() * 55);
                     GB.updateTransferNotification(null,
                             getContext().getString(R.string.busy_task_fetch_activity_data),
                             true, progress, getContext());
 
-                    if (result == SaveResult.EXISTING) {
-                        // Session already in DB — lap data is already saved, skip meta download.
-                        proceedToNextSessionOrClose();
-                    } else if (result == SaveResult.NEW) {
-                        if (mMetaAddress != 0 && mMetaAddress != 0xffff && mSegCount > 0) {
-                            mConvoyBuf.clear();
-                            mState = State.COLLECTING_META;
-                            LOG.debug("Requesting meta @ 0x{} for session {}", Integer.toHexString(mMetaAddress), mCurrentSession);
-                            writeH0011(featReq(0x20, mMetaAddress, 0x01), "meta_request_" + mCurrentSession);
-                        } else {
-                            proceedToNextSessionOrClose();
-                        }
+                    if (result == SaveResult.NEW
+                            && mMetaAddress != 0 && mMetaAddress != 0xffff && mSegCount > 0) {
+                        mConvoyBuf.clear();
+                        mState = State.COLLECTING_META;
+                        // The meta transfer is its own step for the watchdog.
+                        armWatchdog();
+                        LOG.debug("Requesting meta @ 0x{} for session {}", Integer.toHexString(mMetaAddress), mCurrentSession);
+                        writeH0011(featReq(0x20, mMetaAddress, 0x01), "meta_request_" + mCurrentSession);
                     } else {
+                        // EXISTING (laps already saved), SKIPPED, ERROR, or no meta block.
                         proceedToNextSessionOrClose();
                     }
                 }
