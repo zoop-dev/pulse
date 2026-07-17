@@ -72,6 +72,17 @@ public class CasioGBD200DeviceCoordinator extends CasioGBX100DeviceCoordinator {
     }
 
     @Override
+    public int getWorldClocksSlotCount() {
+        // wire carries 2 slots; slot 0 is the home clock, so the generic UI manages 1
+        return 1;
+    }
+
+    @Override
+    public int getWorldClocksLabelLength() {
+        return 18;
+    }
+
+    @Override
     public int[] getSupportedDeviceSpecificSettings(GBDevice device) {
         return new int[]{
                 R.xml.devicesettings_find_phone,
@@ -84,7 +95,8 @@ public class CasioGBD200DeviceCoordinator extends CasioGBX100DeviceCoordinator {
                 R.xml.devicesettings_autoremove_message,
                 R.xml.devicesettings_transliteration,
                 R.xml.devicesettings_preview_message_in_title,
-                R.xml.devicesettings_casio_alert
+                R.xml.devicesettings_casio_alert,
+                R.xml.devicesettings_world_clocks
         };
     }
 }

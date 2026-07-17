@@ -334,6 +334,18 @@ public abstract class Casio2C2DSupport extends CasioSupport {
         writeAllFeatures(builder, arr);
     }
 
+    /** Writes a full clock-slot set (slot 0 = home, slots 1+ = world) inside the 0x21
+     *  settings-session bracket. withNames=false for devices without 0x1f (e.g. WS-B1000). */
+    protected void writeClocks(TransactionBuilder builder, CasioTimeZone[] zones, boolean withNames) {
+        writeAllFeatures(builder, CasioWorldClockCodec.SESSION_OPEN);
+        for (byte[] frame : CasioWorldClockCodec.clockFrames(zones, withNames)) {
+            writeAllFeatures(builder, frame);
+        }
+        writeAllFeatures(builder, CasioWorldClockCodec.SESSION_CLOSE_A);
+        writeAllFeatures(builder, CasioWorldClockCodec.SESSION_CLOSE_B);
+        writeAllFeatures(builder, CasioWorldClockCodec.SESSION_CLOSE_C);
+    }
+
     FeatureCache featureCache = new FeatureCache();
     public class FeatureCache {
 

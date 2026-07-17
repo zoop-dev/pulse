@@ -36,11 +36,17 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -54,13 +60,15 @@ import nodomain.freeyourgadget.gadgetbridge.devices.casio.gbx100.CasioGBX100Samp
 import nodomain.freeyourgadget.gadgetbridge.entities.CasioGBX100ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.entities.User;
+import nodomain.freeyourgadget.gadgetbridge.externalevents.opentracks.OpenTracksController;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
 import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
+import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.casio.Casio2C2DSupport;
-import nodomain.freeyourgadget.gadgetbridge.externalevents.opentracks.OpenTracksController;
-import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.casio.CasioTimeZone;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
@@ -199,8 +207,73 @@ public class CasioGBD200DeviceSupport extends Casio2C2DSupport
             TransactionBuilder builder = performInitialized("onSetTime");
             writeCurrentTime(builder, ZonedDateTime.now());
             builder.queue();
+            syncHomeClock();
         } catch (IOException e) {
             LOG.warn("onSetTime failed: {}", e.getMessage());
+        }
+    }
+
+    @Override
+    public void onSetWorldClocks(ArrayList<? extends WorldClock> clocks) {
+        WorldClock clock = null;
+        for (WorldClock c : clocks) {
+            if (c.getEnabled() == null || c.getEnabled()) {
+                clock = c;
+                break;
+            }
+        }
+        if (clock == null) {
+            LOG.info("no world clock configured, leaving watch world time unchanged");
+            return;
+        }
+        try {
+            ZoneId zone = ZoneId.of(clock.getTimeZoneId());
+            String label = clock.getLabel();
+            if (label == null || label.isEmpty()) {
+                label = zone.getDisplayName(TextStyle.SHORT, Locale.getDefault());
+            }
+            CasioTimeZone world = CasioTimeZone.fromZoneId(zone, Instant.now(),
+                    label.toUpperCase(Locale.ROOT));
+            TransactionBuilder builder = performInitialized("onSetWorldClocks");
+            writeClocks(builder, new CasioTimeZone[]{phoneHomeZone(), world}, true);
+            builder.queue();
+        } catch (IOException e) {
+            LOG.warn("onSetWorldClocks failed: {}", e.getMessage());
+        }
+    }
+
+    /** wire slots on the GBD-200: slot 0 = home, slot 1 = the world time city (capture 2026-07-17) */
+    private static final int CLOCK_SLOTS = 2;
+
+    private CasioTimeZone phoneHomeZone() {
+        ZoneId zone = TimeZone.getDefault().toZoneId();
+        return CasioTimeZone.fromZoneId(zone, Instant.now(),
+                zone.getDisplayName(TextStyle.SHORT, Locale.getDefault()).toUpperCase(Locale.ROOT));
+    }
+
+    /** Sets the home clock (slot 0) from the phone timezone, preserving the watch's
+     *  world time city (slot 1) via read-back — on-watch changes survive routine syncs. */
+    private void syncHomeClock() {
+        try {
+            TransactionBuilder builder = performInitialized("requestClocks");
+            HashSet<FeatureRequest> requests = new HashSet<>();
+            for (int i = 0; i < CLOCK_SLOTS; i++) {
+                requests.addAll(CasioTimeZone.requests(i));
+            }
+            requestFeatures(builder, requests, responses -> {
+                if (responses.size() < requests.size()) {
+                    LOG.warn("world clock read-back incomplete ({}/{}), skipping clock sync",
+                            responses.size(), requests.size());
+                    return;
+                }
+                CasioTimeZone world = CasioTimeZone.fromWatchResponses(responses, 1);
+                TransactionBuilder clockBuilder = createTransactionBuilder("writeClocks");
+                writeClocks(clockBuilder, new CasioTimeZone[]{phoneHomeZone(), world}, true);
+                clockBuilder.queue();
+            });
+            builder.queue();
+        } catch (IOException e) {
+            LOG.warn("syncHomeClock failed: {}", e.getMessage());
         }
     }
 
@@ -271,6 +344,7 @@ public class CasioGBD200DeviceSupport extends Casio2C2DSupport
                     TransactionBuilder b = performInitialized("writeCurrentTime");
                     writeCurrentTime(b, ZonedDateTime.now());
                     b.queue();
+                    syncHomeClock();
                 } catch (IOException e) {
                     LOG.warn("Time resync failed: {}", e.getMessage());
                 }
