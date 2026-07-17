@@ -209,10 +209,13 @@ public class FetchSportDataOperation extends AbstractBTLEOperation<CasioGBD200De
     // ── Session list parsing ──────────────────────────────────────────────────
 
     private int parseSessionCount(byte[] payload) {
-        if (payload.length <= 6) return 0;
-        int raw = payload[6] & 0xff;
-        int inv = (~raw) & 0xff;
-        return Integer.bitCount(inv);
+        // The used-slot bitmask starts at payload[6] and spans 4 bytes (32 slots max).
+        // Each bit: 0 = slot in use, 1 = free. Count zero bits across all 4 bytes.
+        int count = 0;
+        for (int i = 6; i < Math.min(10, payload.length); i++) {
+            count += Integer.bitCount((~payload[i]) & 0xff);
+        }
+        return count;
     }
 
     // ── Session summary parsing and DB save ──────────────────────────────────
