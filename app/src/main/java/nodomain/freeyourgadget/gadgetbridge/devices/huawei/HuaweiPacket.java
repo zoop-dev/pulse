@@ -475,6 +475,8 @@ public class HuaweiPacket {
                         return new DeviceConfig.PinCode.Response(paramsProvider).fromPacket(this);
                     case DeviceConfig.ExpandCapability.id:
                         return new DeviceConfig.ExpandCapability.Response(paramsProvider).fromPacket(this);
+                    case DeviceConfig.DualChannel.id:
+                        return new DeviceConfig.DualChannel.Response(paramsProvider).fromPacket(this);
                     case DeviceConfig.ActivityType.id:
                         return new DeviceConfig.ActivityType.Response(paramsProvider).fromPacket(this);
                     case DeviceConfig.SettingRelated.id:

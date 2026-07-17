@@ -63,6 +63,11 @@ public final class BtBRQueue {
     private final int mConnectDelayMillis;
 
     private final int mRfcommChannel;
+    /// When true this queue drives a secondary ("aux") socket: it shares the device's
+    /// {@link SocketCallback#onSocketRead} sink but never mutates the {@link GBDevice} connection
+    /// state and never triggers {@link SocketCallback#onConnectionEstablished()}, so it can be
+    /// opened/closed independently of the primary connection.
+    private final boolean mIsAux;
     private final Handler mWriteHandler;
     private final HandlerThread mWriteHandlerThread = new HandlerThread("BtBRQueue_write_" + THREAD_COUNTER.getAndIncrement(), Process.THREAD_PRIORITY_BACKGROUND);
 
@@ -105,12 +110,17 @@ public final class BtBRQueue {
 
                 cleanup();
 
-                if (mDisposed.get() || !GBApplication.getPrefs().getAutoReconnect(mGbDevice)) {
-                    LOG.debug("Exited read thread loop, disconnecting");
-                    mGbDevice.setUpdateState(GBDevice.State.NOT_CONNECTED, mContext);
+                // An aux socket dropping must not tear down the primary device connection.
+                if (!mIsAux) {
+                    if (mDisposed.get() || !GBApplication.getPrefs().getAutoReconnect(mGbDevice)) {
+                        LOG.debug("Exited read thread loop, disconnecting");
+                        mGbDevice.setUpdateState(GBDevice.State.NOT_CONNECTED, mContext);
+                    } else {
+                        LOG.debug("Exited read thread loop, will wait for reconnect");
+                        mGbDevice.setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, mContext);
+                    }
                 } else {
-                    LOG.debug("Exited read thread loop, will wait for reconnect");
-                    mGbDevice.setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, mContext);
+                    LOG.debug("Exited aux read thread loop for channel {}", mRfcommChannel);
                 }
 
                 LOG.debug("finished thread {}", getName());
@@ -126,6 +136,18 @@ public final class BtBRQueue {
                      int bufferSize,
                      int connectDelayMillis,
                      final int rfcommChannel) {
+        this(btAdapter, gbDevice, context, socketCallback, supportedService, bufferSize, connectDelayMillis, rfcommChannel, false);
+    }
+
+    public BtBRQueue(BluetoothAdapter btAdapter,
+                     GBDevice gbDevice,
+                     Context context,
+                     SocketCallback socketCallback,
+                     @NonNull UUID supportedService,
+                     int bufferSize,
+                     int connectDelayMillis,
+                     final int rfcommChannel,
+                     final boolean isAux) {
         LOG = LoggerFactory.getLogger(BtBRQueue.class.getName() + "(" + QUEUE_COUNTER.getAndIncrement() + ")");
 
         mBtAdapter = btAdapter;
@@ -136,6 +158,7 @@ public final class BtBRQueue {
         mBufferSize = bufferSize;
         mConnectDelayMillis = connectDelayMillis;
         mRfcommChannel = rfcommChannel;
+        mIsAux = isAux;
         mDisposed = new AtomicBoolean(false);
 
         mWriteHandlerThread.start();
@@ -153,10 +176,12 @@ public final class BtBRQueue {
                     case HANDLER_SUBJECT_CONNECT: {
                         if (mBtSocket == null) {
                             LOG.error("Got request to connect to RFCOMM socket, but it is null");
-                            if (!GBApplication.getPrefs().getAutoReconnect(mGbDevice)) {
-                                mGbDevice.setUpdateState(GBDevice.State.NOT_CONNECTED, mContext);
-                            } else {
-                                mGbDevice.setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, mContext);
+                            if (!mIsAux) {
+                                if (!GBApplication.getPrefs().getAutoReconnect(mGbDevice)) {
+                                    mGbDevice.setUpdateState(GBDevice.State.NOT_CONNECTED, mContext);
+                                } else {
+                                    mGbDevice.setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, mContext);
+                                }
                             }
                             return;
                         }
@@ -175,8 +200,7 @@ public final class BtBRQueue {
 
                             mBtSocket.connect();
 
-                            LOG.info("Connected to RFCOMM socket for {}", mGbDevice.getName());
-                            setDeviceConnectionState(GBDevice.State.CONNECTED);
+                            LOG.info("Connected to RFCOMM socket for {}{}", mGbDevice.getName(), mIsAux ? " (aux channel " + mRfcommChannel + ")" : "");
 
                             if (readThread == null || !readThread.isAlive()) {
                                 readThread = createReadThread();
@@ -184,26 +208,35 @@ public final class BtBRQueue {
 
                             // now that connect has been created, start the threads
                             readThread.start();
-                            onConnectionEstablished();
+
+                            // An aux socket must not touch the primary device state or re-run init.
+                            if (!mIsAux) {
+                                setDeviceConnectionState(GBDevice.State.CONNECTED);
+                                onConnectionEstablished();
+                            }
                         } catch (IOException e) {
                             LOG.error("IO exception while establishing socket connection: ", e);
 
                             cleanup();
 
-                            if (mDisposed.get() || !GBApplication.getPrefs().getAutoReconnect(mGbDevice)) {
-                                mGbDevice.setUpdateState(GBDevice.State.NOT_CONNECTED, mContext);
-                            } else {
-                                mGbDevice.setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, mContext);
+                            if (!mIsAux) {
+                                if (mDisposed.get() || !GBApplication.getPrefs().getAutoReconnect(mGbDevice)) {
+                                    mGbDevice.setUpdateState(GBDevice.State.NOT_CONNECTED, mContext);
+                                } else {
+                                    mGbDevice.setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, mContext);
+                                }
                             }
                         } catch (SecurityException e) {
                             LOG.error("Security exception while establishing socket connection: ", e);
 
                             cleanup();
 
-                            if (mDisposed.get() || !GBApplication.getPrefs().getAutoReconnect(mGbDevice)) {
-                                mGbDevice.setUpdateState(GBDevice.State.NOT_CONNECTED, mContext);
-                            } else {
-                                mGbDevice.setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, mContext);
+                            if (!mIsAux) {
+                                if (mDisposed.get() || !GBApplication.getPrefs().getAutoReconnect(mGbDevice)) {
+                                    mGbDevice.setUpdateState(GBDevice.State.NOT_CONNECTED, mContext);
+                                } else {
+                                    mGbDevice.setUpdateState(GBDevice.State.WAITING_FOR_RECONNECT, mContext);
+                                }
                             }
                         }
 
@@ -212,8 +245,12 @@ public final class BtBRQueue {
                     case HANDLER_SUBJECT_PERFORM_TRANSACTION: {
                         try {
                             if (!isConnected()) {
-                                LOG.debug("Not connected, updating device state to WAITING_FOR_RECONNECT");
-                                setDeviceConnectionState(GBDevice.State.WAITING_FOR_RECONNECT);
+                                if (!mIsAux) {
+                                    LOG.debug("Not connected, updating device state to WAITING_FOR_RECONNECT");
+                                    setDeviceConnectionState(GBDevice.State.WAITING_FOR_RECONNECT);
+                                } else {
+                                    LOG.debug("Aux channel {} not connected, dropping transaction", mRfcommChannel);
+                                }
                                 return;
                             }
 
@@ -257,7 +294,9 @@ public final class BtBRQueue {
     @SuppressLint("MissingPermission")
     public boolean connect() {
         final GBDevice.State state = mGbDevice.getState();
-        if (state.equalsOrHigherThan(GBDevice.State.CONNECTING)) {
+        // An aux socket is opened while the device is already connected, so the "already
+        // connecting/connected" guard and the CONNECTING state transition are skipped for it.
+        if (!mIsAux && state.equalsOrHigherThan(GBDevice.State.CONNECTING)) {
             LOG.warn("connect - ignored, state is {}", state);
             return false;
         } else if (mBtSocket != null) {
@@ -275,7 +314,8 @@ public final class BtBRQueue {
 
         // revert to original state upon exception
         GBDevice.State originalState = mGbDevice.getState();
-        setDeviceConnectionState(GBDevice.State.CONNECTING);
+        if (!mIsAux)
+            setDeviceConnectionState(GBDevice.State.CONNECTING);
 
         try {
             BluetoothDevice btDevice = mBtAdapter.getRemoteDevice(mGbDevice.getAddress());
@@ -285,7 +325,8 @@ public final class BtBRQueue {
                     mBtSocket = (BluetoothSocket) createMethod.invoke(btDevice, mRfcommChannel);
                 } catch (final Exception e) {
                     LOG.error("Unable to create RFCOMM socket on channel " + mRfcommChannel + ": ", e);
-                    setDeviceConnectionState(originalState);
+                    if (!mIsAux)
+                        setDeviceConnectionState(originalState);
                     cleanup();
                     return false;
                 }
@@ -294,7 +335,8 @@ public final class BtBRQueue {
             }
         } catch (IOException e) {
             LOG.error("Unable to connect to RFCOMM endpoint: ", e);
-            setDeviceConnectionState(originalState);
+            if (!mIsAux)
+                setDeviceConnectionState(originalState);
             cleanup();
             return false;
         }
@@ -323,7 +365,8 @@ public final class BtBRQueue {
         }
 
         mBtSocket = null;
-        setDeviceConnectionState(GBDevice.State.NOT_CONNECTED);
+        if (!mIsAux)
+            setDeviceConnectionState(GBDevice.State.NOT_CONNECTED);
     }
 
     /**

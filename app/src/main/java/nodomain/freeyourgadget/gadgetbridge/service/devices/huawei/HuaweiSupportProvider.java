@@ -206,6 +206,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetB
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetConnectStatusRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetDeviceStatusRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetDndLiftWristTypeRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetDualChannelRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetLinkParamsRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetPincodeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetProductInformationRequest;
@@ -279,6 +280,7 @@ public class HuaweiSupportProvider {
     private final HuaweiPacket.ParamsProvider paramsProvider = new HuaweiPacket.ParamsProvider();
 
     protected ResponseManager responseManager = new ResponseManager(this);
+    protected HuaweiDualChannelHelper dualChannelHelper = new HuaweiDualChannelHelper();
     protected HuaweiUploadManager huaweiUploadManager = new HuaweiUploadManager(this);
 
     protected HuaweiWatchfaceManager huaweiWatchfaceManager = new HuaweiWatchfaceManager(this);
@@ -330,6 +332,21 @@ public class HuaweiSupportProvider {
 
     public HuaweiState getDeviceState() {
         return HuaweiDeviceStateManager.get(getDevice());
+    }
+
+    public HuaweiDualChannelHelper getDualChannelHelper() {
+        return dualChannelHelper;
+    }
+
+    /**
+     * Opens the secondary RFCOMM socket negotiated by the 0x3C command. No-op on BLE or when no
+     * channel was negotiated. Once connected, packets whose (service, command) is flagged by
+     * {@link HuaweiDualChannelHelper} are routed there; until then they use the primary socket.
+     */
+    public void openDualChannel(int channel) {
+        if (isBLE() || channel <= 0)
+            return;
+        brSupport.openAuxChannel(channel);
     }
 
     public HuaweiUploadManager getUploadManager() {
@@ -911,6 +928,9 @@ public class HuaweiSupportProvider {
 
             // All of the below check that they are supported and otherwise they skip themselves
             final List<Request> initRequestQueue = new ArrayList<>();
+            // Negotiate the dual RFCOMM channel before the rest, so its routing tables are known
+            // early. Skips itself unless the device is BR and advertises dual-socket support.
+            initRequestQueue.add(new GetDualChannelRequest(this));
             initRequestQueue.add(new SendExtendedAccountRequest(this));
             initRequestQueue.add(new GetSettingRelatedRequest(this));
             initRequestQueue.add(new AcceptAgreementsRequest(this));

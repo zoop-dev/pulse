@@ -22,7 +22,9 @@ import android.os.ParcelUuid;
 
 import org.slf4j.Logger;
 
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.AbstractDeviceSupport;
@@ -44,6 +46,9 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
     protected final Object ConnectionMonitor = new Object();
 
     private BtBRQueue mQueue;
+    /// Secondary ("aux") RFCOMM sockets keyed by channel number, opened on demand via
+    /// {@link #openAuxChannel(int)}. Empty for the common single-socket case.
+    private final Map<Integer, BtBRQueue> mAuxQueues = new ConcurrentHashMap<>();
     private UUID mSupportedService = null;
     private final int mBufferSize;
     private final Logger logger;
@@ -105,9 +110,69 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
 
     public void disconnect() {
         synchronized (ConnectionMonitor) {
+            closeAllAuxChannels();
             if (mQueue != null) {
                 mQueue.disconnect();
             }
+        }
+    }
+
+    /**
+     * Opens a secondary ("aux") RFCOMM socket on the given channel, in addition to the primary
+     * connection. Aux sockets share this support's {@link #onSocketRead(byte[])} sink but never
+     * affect the primary device connection state or re-run device initialization. Writes are
+     * routed to an aux socket by setting the target channel on the transaction
+     * ({@link TransactionBuilder#setChannel(int)}); channel 0 always means the primary socket.
+     *
+     * @return true if the aux connection attempt was successfully triggered
+     */
+    public boolean openAuxChannel(final int channel) {
+        synchronized (ConnectionMonitor) {
+            if (channel <= 0) {
+                logger.warn("openAuxChannel - ignored, invalid channel {}", channel);
+                return false;
+            }
+            final UUID supportedService = getSupportedService();
+            if (supportedService == null) {
+                logger.warn("openAuxChannel - ignored, no supported service UUID");
+                return false;
+            }
+            if (mAuxQueues.containsKey(channel)) {
+                logger.debug("openAuxChannel - channel {} already open", channel);
+                return true;
+            }
+            final BtBRQueue auxQueue = new BtBRQueue(
+                    getBluetoothAdapter(),
+                    getDevice(),
+                    getContext(),
+                    this,
+                    supportedService,
+                    getBufferSize(),
+                    getConnectDelayMillis(),
+                    channel,
+                    true
+            );
+            mAuxQueues.put(channel, auxQueue);
+            return auxQueue.connect();
+        }
+    }
+
+    /// Closes and disposes the aux socket previously opened on the given channel, if any.
+    public void closeAuxChannel(final int channel) {
+        synchronized (ConnectionMonitor) {
+            final BtBRQueue auxQueue = mAuxQueues.remove(channel);
+            if (auxQueue != null) {
+                auxQueue.dispose();
+            }
+        }
+    }
+
+    private void closeAllAuxChannels() {
+        synchronized (ConnectionMonitor) {
+            for (final BtBRQueue auxQueue : mAuxQueues.values()) {
+                auxQueue.dispose();
+            }
+            mAuxQueues.clear();
         }
     }
 
@@ -125,6 +190,7 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
     @Override
     public void dispose() {
         synchronized (ConnectionMonitor) {
+            closeAllAuxChannels();
             if (mQueue != null) {
                 mQueue.dispose();
                 mQueue = null;
@@ -144,6 +210,21 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
     }
 
     BtBRQueue getQueue() {
+        return mQueue;
+    }
+
+    /// Returns the queue for the given channel: an aux queue when {@code channel > 0} and one is
+    /// open, otherwise the primary queue. Callers can route unconditionally; an unavailable aux
+    /// channel transparently falls back to the primary socket.
+    BtBRQueue getQueue(final int channel) {
+        if (channel > 0) {
+            final BtBRQueue auxQueue = mAuxQueues.get(channel);
+            // Only route to the aux socket once it is actually connected; until then transactions
+            // transparently use the primary socket so nothing is dropped while it comes up.
+            if (auxQueue != null && auxQueue.isConnected()) {
+                return auxQueue;
+            }
+        }
         return mQueue;
     }
 

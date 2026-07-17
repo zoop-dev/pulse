@@ -220,6 +220,17 @@ public class HuaweiState {
         return notificationConstraints.getShort(which);
     }
 
+    // Expand-capability bit 56: device accepts a second ("dual") RFCOMM socket.
+    public boolean supportsDualSocket() {
+        return supportsExpandCapability(56);
+    }
+
+    // Expand-capability bit 142: device supports the richer "extend" dual-channel format
+    // (adds file types and per-service command/package routing tables to the 0x3C response).
+    public boolean supportsExtendSocket() {
+        return supportsExpandCapability(142);
+    }
+
     public boolean supportsDateFormat() {
         return supportsCommandForService(0x01, 0x04);
     }

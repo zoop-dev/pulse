@@ -365,6 +365,13 @@ public class Request {
             handler.postDelayed(this.timeoutRunner, this.timeout);
 
         if (!this.supportProvider.isBLE()) {
+            // Route to the negotiated dual channel when this packet is flagged for it; otherwise
+            // (and until the aux socket is up) it goes on the primary socket.
+            int channel = 0;
+            if (supportProvider.getDualChannelHelper().useExtraChannel(this.serviceId & 0xFF, this.commandId & 0xFF)) {
+                channel = supportProvider.getDualChannelHelper().getChannel();
+            }
+            builderBr.setChannel(channel);
             builderBr.queue();
         } else {
             builderLe.queue();

@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TreeMap;
@@ -1755,6 +1756,80 @@ public class DeviceConfig {
             }
         }
 
+    }
+
+    // Negotiates a second RFCOMM socket ("dual channel") and the routing tables that decide
+    // which services/commands are sent over it. Gated on expand-capability bit 56 (dual socket)
+    // and bit 142 (extend socket). See DUAL_CHANNEL_NOTES for the reverse-engineered format.
+    public static class DualChannel {
+        public static final int id = 0x3C;
+
+        // Services that must never be routed to the extra channel (vendor DeviceDualChannelHelper.e).
+        public static final byte[] alwaysMainChannelServices = new byte[]{0x28, 0x2C};
+
+        // One entry per service that has per-command or per-package routing to the extra channel.
+        public static class ChannelEntry {
+            public byte service;
+            public byte[] commands = new byte[0];      // command ids routed to the extra channel
+            public List<String> packages = new ArrayList<>(); // P2P destination package names (services 0x34/0x37)
+        }
+
+        public static class Request extends HuaweiPacket {
+            public Request(ParamsProvider paramsProvider, boolean supportsExtend) {
+                super(paramsProvider);
+
+                this.serviceId = DeviceConfig.id;
+                this.commandId = id;
+
+                // All-empty tags: ask the watch to fill them in. Extend format adds tags 3 and 4.
+                this.tlv = new HuaweiTLV()
+                    .put(0x01)
+                    .put(0x02);
+                if (supportsExtend) {
+                    this.tlv.put(0x03).put(0x04);
+                }
+
+                this.complete = true;
+            }
+        }
+
+        public static class Response extends HuaweiPacket {
+            public int channel = 0;                 // tag 1: RFCOMM channel of the extra socket
+            public byte[] dualServices = new byte[0];   // tag 2: services routed wholesale to extra channel
+            public byte[] fileTypes = new byte[0];      // tag 3: file types (extend only)
+            public List<ChannelEntry> entries = new ArrayList<>(); // tag 0x84 -> 0x85 entries (extend only)
+
+            public Response(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+                this.serviceId = DeviceConfig.id;
+                this.commandId = id;
+            }
+
+            @Override
+            public void parseTlv() throws ParseException {
+                if (this.tlv.contains(0x01))
+                    this.channel = this.tlv.getAsInteger(0x01);
+                if (this.tlv.contains(0x02))
+                    this.dualServices = this.tlv.getBytes(0x02);
+                if (this.tlv.contains(0x03))
+                    this.fileTypes = this.tlv.getBytes(0x03);
+                if (this.tlv.contains(0x84)) {
+                    HuaweiTLV container = this.tlv.getObject(0x84);
+                    for (HuaweiTLV entryTlv : container.getObjects(0x85)) {
+                        ChannelEntry entry = new ChannelEntry();
+                        if (entryTlv.contains(0x06))
+                            entry.service = entryTlv.getByte(0x06);
+                        if (entryTlv.contains(0x07))
+                            entry.commands = entryTlv.getBytes(0x07);
+                        if (entryTlv.contains(0x08)) {
+                            String names = new String(entryTlv.getBytes(0x08), StandardCharsets.UTF_8);
+                            entry.packages = Arrays.asList(names.split("#"));
+                        }
+                        this.entries.add(entry);
+                    }
+                }
+            }
+        }
     }
 
     public static class PermissionCheck {
