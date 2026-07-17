@@ -33,6 +33,11 @@ public class HonorWatch5Coordinator extends HonorBRCoordinator {
     }
 
     @Override
+    public boolean supportsHiChainPake() {
+        return true;
+    }
+
+    @Override
     public String getManufacturer() {
         return "Honor";
     }

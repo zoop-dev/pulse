@@ -189,6 +189,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetT
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.StopFindPhoneRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.StopNotificationRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetFitnessTotalsRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetHiChainPakeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetHiChainRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetSleepDataCountRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetStepDataCountRequest;
@@ -609,13 +610,10 @@ public class HuaweiSupportProvider {
                 RequestCallback securityFinalizeReq = new RequestCallback(this) {
                     @Override
                     public void call() {
-                        if (securityNegoReq.authType == 0x0186A0 || isHiChain3(securityNegoReq.authType)) {
-                            LOG.debug("HiChain mode");
-                            initializeDeviceHiChainMode();
-                        } else if (securityNegoReq.authType == 0x01 || securityNegoReq.authType == 0x02) {
-                            LOG.debug("HiChain Lite mode");
-                            // Keep track the gadget is connected
-                            initializeDeviceHiChainLiteMode(linkParamsReq);
+                        if (getCoordinator().supportsHiChainPake()) {
+                            finalizeSecurityNegotiationPake(securityNegoReq);
+                        } else {
+                            finalizeSecurityNegotiationHiChain(securityNegoReq, linkParamsReq);
                         }
                     }
                 };
@@ -628,6 +626,42 @@ public class HuaweiSupportProvider {
         } catch (IOException e) {
             GB.toast(context, "Init deal with HiChain of Huawei device failed", Toast.LENGTH_SHORT, GB.ERROR, e);
             LOG.error("Init deal with HiChain of Huawei device failed", e);
+        }
+    }
+
+    /**
+     * Finalize security negotiation for Honor PAKE devices (e.g. Honor Watch 5), gated by
+     * {@link HuaweiCoordinator#supportsHiChainPake()}. These always run the PAKE/STS stack; the
+     * watch dictates which via the negotiated pairType (tag 0x02 of the 0x33 response): 2 = it
+     * trusts us -> STS fast reconnect; anything else (incl. FIRST_PAIR=1) -> a full PAKE bind. We
+     * request pairType=2 ourselves once we hold a stored peer identity (see
+     * GetSecurityNegotiationRequest); the watch downgrades us to FIRST_PAIR if it has not persisted
+     * our trust, and the (PIN-less, DH-derived) re-bind then connects reliably. authType is
+     * intentionally not consulted here: on reconnect the watch echoes authType=2, which would
+     * otherwise fall through to the HiChain Lite branch of the classic path.
+     */
+    protected void finalizeSecurityNegotiationPake(final GetSecurityNegotiationRequest securityNegoReq) {
+        boolean stsReconnect = (securityNegoReq.honorPairType == 0x02);
+        LOG.debug("HiChain PAKE mode (authType={}, honorPairType={} -> {})",
+                securityNegoReq.authType, securityNegoReq.honorPairType,
+                stsReconnect ? "STS reconnect" : "PAKE bind");
+        initializeDeviceHiChainModePake(securityNegoReq.responseNonce, stsReconnect);
+    }
+
+    /**
+     * Finalize security negotiation for classic Huawei HiChain devices (everything that is not an
+     * Honor PAKE device), dispatching to HiChain / HiChain3 or HiChain Lite based on the negotiated
+     * authType.
+     */
+    protected void finalizeSecurityNegotiationHiChain(final GetSecurityNegotiationRequest securityNegoReq,
+                                                      final Request linkParamsReq) {
+        if (securityNegoReq.authType == 0x0186A0 || isHiChain3(securityNegoReq.authType)) {
+            LOG.debug("HiChain mode");
+            initializeDeviceHiChainMode();
+        } else if (securityNegoReq.authType == 0x01 || securityNegoReq.authType == 0x02) {
+            LOG.debug("HiChain Lite mode");
+            // Keep track the gadget is connected
+            initializeDeviceHiChainLiteMode(linkParamsReq);
         }
     }
 
@@ -677,6 +711,19 @@ public class HuaweiSupportProvider {
         } catch (IOException e) {
             GB.toast(context, "HiChain Mode init of Huawei device failed", Toast.LENGTH_SHORT, GB.ERROR, e);
             LOG.error("HiChain Mode init of Huawei device failed", e);
+        }
+    }
+
+    /** Honor PAKE/STS auth path (Honor Watch 5); gated by {@link HuaweiCoordinator#supportsHiChainPake()}. */
+    protected void initializeDeviceHiChainModePake(byte[] securityNonce, boolean stsReconnect) {
+        try {
+            GetHiChainPakeRequest hiChainReq = new GetHiChainPakeRequest(this, stsReconnect);
+            hiChainReq.serverNonce = securityNonce;
+            hiChainReq.setFinalizeReq(configureReq);
+            hiChainReq.doPerform();
+        } catch (IOException e) {
+            GB.toast(context, "HiChain PAKE Mode init of Huawei device failed", Toast.LENGTH_SHORT, GB.ERROR, e);
+            LOG.error("HiChain PAKE Mode init of Huawei device failed", e);
         }
     }
 
@@ -875,6 +922,49 @@ public class HuaweiSupportProvider {
 
     public byte[] getAndroidId() {
         return androidID.getBytes(StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Persistent 32-byte Ed25519 identity seed for the HiChain PAKE (Honor Watch 5) bind.
+     * Generated once per device and reused so the peer keeps trusting our long-term key on
+     * reconnect. Stored per-device so a re-pair of the same watch keeps the same identity.
+     */
+    public byte[] getPakeIdentitySeed() {
+        SharedPreferences sharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(deviceMac);
+        String seedHex = sharedPrefs.getString("huawei_pake_ed25519_seed", null);
+        if (seedHex == null || seedHex.isEmpty()) {
+            seedHex = StringUtils.bytesToHex(HuaweiCrypto.generateNonce()); // 16 bytes
+            seedHex += StringUtils.bytesToHex(HuaweiCrypto.generateNonce()); // -> 32 bytes
+            sharedPrefs.edit().putString("huawei_pake_ed25519_seed", seedHex).apply();
+        }
+        return GB.hexStringToByteArray(seedHex);
+    }
+
+    /**
+     * Persists the peer (watch) identity learned during the HiChain PAKE bind exchange: its
+     * authId and its Ed25519 public key. These are needed on reconnect for the STS mutual-auth
+     * (operationCode 2), which proves possession of the identity keys instead of a fresh PIN.
+     */
+    public void savePakePeerIdentity(byte[] peerAuthId, byte[] peerAuthPk) {
+        SharedPreferences sharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(deviceMac);
+        sharedPrefs.edit()
+                .putString("huawei_pake_peer_auth_id", StringUtils.bytesToHex(peerAuthId))
+                .putString("huawei_pake_peer_auth_pk", StringUtils.bytesToHex(peerAuthPk))
+                .apply();
+    }
+
+    /** Watch authId stored at bind, or null if we have never completed a bind with this device. */
+    public byte[] getPakePeerAuthId() {
+        SharedPreferences sharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(deviceMac);
+        String hex = sharedPrefs.getString("huawei_pake_peer_auth_id", null);
+        return (hex == null || hex.isEmpty()) ? null : GB.hexStringToByteArray(hex);
+    }
+
+    /** Watch Ed25519 identity public key stored at bind, or null if none. */
+    public byte[] getPakePeerAuthPk() {
+        SharedPreferences sharedPrefs = GBApplication.getDeviceSpecificSharedPrefs(deviceMac);
+        String hex = sharedPrefs.getString("huawei_pake_peer_auth_pk", null);
+        return (hex == null || hex.isEmpty()) ? null : GB.hexStringToByteArray(hex);
     }
 
     public Context getContext() {

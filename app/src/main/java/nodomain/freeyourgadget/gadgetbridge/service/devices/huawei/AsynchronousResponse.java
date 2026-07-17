@@ -106,9 +106,18 @@ public class AsynchronousResponse {
     }
 
     public void handleResponse(HuaweiPacket response) {
-        // Ignore messages if the key isn't set yet
-        if (support.getParamsProvider().getSecretKey() == null)
+        // Ignore messages if the key isn't set yet.
+        //
+        // Note: during STS reconnect the watch fires an async PermissionCheck (service 1 / cmd 0x38,
+        // permission=0x0002) before it sends the STS AUTH_START_RESPONSE. It is purely informational
+        // and must NOT be answered here: the official Honor app only replies to permission==1 (SMS)
+        // and simply ignores every other permission, yet still reconnects. Answering permission=2
+        // with our {permission,status} format makes the watch reject it (error 0x186A4) and it then
+        // loops on the error instead of ever sending the STS response. So we drop async messages
+        // during auth exactly as before; the STS response arrives on its own within the timeout.
+        if (support.getParamsProvider().getSecretKey() == null) {
             return;
+        }
 
         try {
             response.parseTlv();

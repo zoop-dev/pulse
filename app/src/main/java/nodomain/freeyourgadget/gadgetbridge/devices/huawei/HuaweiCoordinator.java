@@ -109,6 +109,16 @@ public abstract class HuaweiCoordinator extends AbstractDeviceCoordinator {
         return false;
     }
 
+    /**
+     * Whether this device authenticates with the HiChain PSK-SPEKE PAKE / STS flow
+     * (as used by the Honor Watch 5) instead of the standard Huawei HiChain / HiChainLite
+     * handshake. Only PAKE devices may be routed through the Honor-specific bind/reconnect
+     * code; every other Huawei device keeps its original auth path.
+     */
+    public boolean supportsHiChainPake() {
+        return false;
+    }
+
     public abstract HuaweiDeviceType getHuaweiType();
 
     @NonNull
