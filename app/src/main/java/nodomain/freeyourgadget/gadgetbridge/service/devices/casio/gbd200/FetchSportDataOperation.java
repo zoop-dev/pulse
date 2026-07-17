@@ -234,11 +234,7 @@ public class FetchSportDataOperation extends AbstractBTLEOperation<CasioGBD200De
 
     // ── Session summary parsing and DB save ──────────────────────────────────
 
-    /**
-     * Parse 7-byte BCD timestamp starting at payload[offset].
-     * Returns null when the field holds no plausible timestamp — erased flash
-     * slots read back as all-0x00 or all-0xFF, which decode to year 0 or ~16665.
-     */
+    /** Parse 7-byte BCD timestamp starting at payload[offset]. */
     private Date parseBcdTimestamp(byte[] p, int offset) {
         if (offset + 7 > p.length) return null;
         int year = BcdUtil.fromBcd8(p[offset + 1]) * 100 + BcdUtil.fromBcd8(p[offset]);
@@ -438,8 +434,6 @@ public class FetchSportDataOperation extends AbstractBTLEOperation<CasioGBD200De
         LOG.warn("FetchSportDataOperation timed out in state {}", mState);
         GB.toast(getContext(), getContext().getString(R.string.busy_task_fetch_activity_data)
                 + ": timeout", Toast.LENGTH_SHORT, GB.WARN);
-        // Close via cancel so the watch leaves convoy mode — otherwise it stays
-        // BUSY and the next fetch has to go through BUSY recovery.
         closeSession();
     }
 
