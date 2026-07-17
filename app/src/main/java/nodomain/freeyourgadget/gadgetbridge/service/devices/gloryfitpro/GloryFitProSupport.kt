@@ -18,7 +18,10 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.gloryfitpro
 
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
+import android.content.Intent
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
+import nodomain.freeyourgadget.gadgetbridge.database.DBHelper
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventFindPhone
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventMusicControl
@@ -28,6 +31,7 @@ import nodomain.freeyourgadget.gadgetbridge.entities.GloryFitStepsSample
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState
+import nodomain.freeyourgadget.gadgetbridge.model.DeviceService
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec
@@ -76,6 +80,9 @@ class GloryFitProSupport : AbstractBTLESingleDeviceSupport(LOG) {
         // Enable the watch's "find phone" feature (otherwise the watch button is greyed out).
         builder.write(UUID_CHARACTERISTIC_DATA_WRITE, *byteArrayOf(PKT_HEADER, CMD_DEVICE_CONTROL, MODE_SET, 0x0a, 0x01, 0x01))
 
+        // Read the watch's alarms so ones edited on the watch appear in Gadgetbridge (read-only sync).
+        builder.write(UUID_CHARACTERISTIC_DATA_WRITE, *cmdGetAll(CMD_ALARM))
+
         if (GBApplication.getPrefs().syncTime()) {
             setTime(builder)
         }
@@ -118,6 +125,7 @@ class GloryFitProSupport : AbstractBTLESingleDeviceSupport(LOG) {
             CMD_ACTIVITY_DAY -> handleDaySummary(value)
             CMD_MUSIC_CONTROL -> handleMusicControl(value)
             CMD_DEVICE_CONTROL -> handleDeviceControl(value)
+            CMD_ALARM -> handleAlarmData(value)
             else -> LOG.debug("Unhandled cmd 0x{}: {}", Integer.toHexString(cmd.toInt() and 0xff), value.toHex())
         }
     }
@@ -378,6 +386,66 @@ class GloryFitProSupport : AbstractBTLESingleDeviceSupport(LOG) {
             data.write(byteArrayOf(MODE_SET, 0x05, 0x01, idx))
         }
         queueTlvWithTerminator("set alarms", CMD_ALARM, data.toByteArray())
+    }
+
+    /** Read reply "01 c7 aaaa 00 [0f aa 01 01 <idx> aa 02 01 <mask> aa 03 01 <en> aa 04 02 <HH><MM>]*". */
+    private fun handleAlarmData(value: ByteArray) {
+        if (value.size < 7 || value[2] != MODE_GET || value[4] == PKT_TERMINATOR) return
+        val parsed = HashMap<Int, IntArray>() // position -> [hour, minute, mask, enabled]
+        var cur: IntArray? = null
+        var i = 4 // after "01 c7 aaaa"; status(00) and per-alarm separators(0f) are skipped below
+        while (i < value.size) {
+            if (value[i] != MODE_GET) { i += 1; continue }
+            if (i + 3 > value.size) break
+            val field = value[i + 1].toInt() and 0xff
+            val len = value[i + 2].toInt() and 0xff
+            if (i + 3 + len > value.size) break
+            when (field) {
+                0x01 -> {
+                    val pos = (value[i + 3].toInt() and 0xff) - 1
+                    cur = intArrayOf(0, 0, 0, 0)
+                    if (pos >= 0) parsed[pos] = cur!!
+                }
+                0x02 -> cur?.set(2, value[i + 3].toInt() and 0xff)
+                0x03 -> cur?.set(3, value[i + 3].toInt() and 0xff)
+                0x04 -> {
+                    cur?.set(0, value[i + 3].toInt() and 0xff)
+                    if (len >= 2) cur?.set(1, value[i + 4].toInt() and 0xff)
+                }
+            }
+            i += 3 + len
+        }
+        if (parsed.isNotEmpty()) storeAlarmsFromWatch(parsed)
+    }
+
+    private fun storeAlarmsFromWatch(parsed: Map<Int, IntArray>) {
+        // Update Gadgetbridge's alarm DB only; do NOT re-send to the watch (avoids a sync loop that
+        // could overwrite alarms just edited on the watch).
+        val dbAlarms = DBHelper.getAlarms(device)
+        for (dbAlarm in dbAlarms) {
+            val a = parsed[dbAlarm.position] ?: continue
+            dbAlarm.unused = false
+            dbAlarm.enabled = a[3] != 0
+            dbAlarm.hour = a[0]
+            dbAlarm.minute = a[1]
+            dbAlarm.repetition = maskToRepetition(a[2])
+            DBHelper.store(dbAlarm)
+        }
+        LOG.info("DM58 loaded {} alarms from watch", parsed.size)
+        // Refresh the alarm UI from the DB (does not re-send to the watch).
+        LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(DeviceService.ACTION_SAVE_ALARMS))
+    }
+
+    private fun maskToRepetition(mask: Int): Int {
+        var rep = 0
+        if (mask and 0x01 != 0) rep = rep or Alarm.ALARM_SUN.toInt()
+        if (mask and 0x02 != 0) rep = rep or Alarm.ALARM_MON.toInt()
+        if (mask and 0x04 != 0) rep = rep or Alarm.ALARM_TUE.toInt()
+        if (mask and 0x08 != 0) rep = rep or Alarm.ALARM_WED.toInt()
+        if (mask and 0x10 != 0) rep = rep or Alarm.ALARM_THU.toInt()
+        if (mask and 0x20 != 0) rep = rep or Alarm.ALARM_FRI.toInt()
+        if (mask and 0x40 != 0) rep = rep or Alarm.ALARM_SAT.toInt()
+        return rep
     }
 
     override fun onSendWeather() {
