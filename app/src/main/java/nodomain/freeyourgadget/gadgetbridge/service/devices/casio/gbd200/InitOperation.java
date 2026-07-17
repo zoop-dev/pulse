@@ -419,6 +419,9 @@ public class InitOperation extends AbstractBTLEOperation<CasioGBD200DeviceSuppor
                         // First reconnect after pairing: read config from watch, then
                         // GetConfigurationOperation will call syncProfile() when done.
                         mSupport.onReadConfiguration(null);
+                    } else {
+                        // Regular reconnect: reconcile the interval timer from the watch.
+                        mSupport.readIntervalTimerFromWatch();
                     }
                     // Regular reconnects: skip syncProfile() here so auto-fetch is not
                     // blocked by a "Configuring" busy state. Settings changed while

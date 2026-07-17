@@ -69,6 +69,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.WorldClock;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.casio.Casio2C2DSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.casio.CasioTimeZone;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.casio.CasioIntervalTimerLibrary;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
 
@@ -719,6 +720,10 @@ public class CasioGBD200DeviceSupport extends Casio2C2DSupport
 
     @Override
     public void onSendConfiguration(String config) {
+        if (CasioIntervalTimerLibrary.CONFIG_INTERVAL_TIMER_ACTIVE.equals(config)) {
+            pushActiveTimer();
+            return;
+        }
         onSharedPreferenceChanged(null, config);
     }
 

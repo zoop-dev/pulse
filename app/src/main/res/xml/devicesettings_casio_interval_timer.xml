@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:icon="@drawable/ic_timer"
+        android:key="pref_casio_interval_timer"
+        android:title="@string/pref_casio_interval_timer_title" />
+</androidx.preference.PreferenceScreen>

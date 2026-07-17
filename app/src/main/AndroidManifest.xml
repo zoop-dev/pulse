@@ -861,6 +861,10 @@
             android:label="@string/pref_xiaomi_vibration_patterns_title"
             android:parentActivityName=".activities.ControlCenterv2" />
         <activity
+            android:name=".activities.casio.CasioIntervalTimerActivity"
+            android:label="@string/pref_casio_interval_timer_title"
+            android:parentActivityName=".activities.ControlCenterv2" />
+        <activity
             android:name=".activities.ConfigureWorldClocks"
             android:label="@string/pref_world_clocks_title"
             android:parentActivityName=".activities.ControlCenterv2" />

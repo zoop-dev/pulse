@@ -20,6 +20,7 @@ import java.time.ZonedDateTime;
 import java.time.ZoneId;
 import java.time.LocalDate;
 import java.nio.charset.StandardCharsets;
+import java.io.IOException;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.widget.Toast;
@@ -1013,6 +1014,68 @@ public abstract class Casio2C2DSupport extends CasioSupport {
         { name = PREF_HOURLY_CHIME_ENABLE; }
         { feature = FEATURE_SETTING_FOR_ALM; }
         { index = 1; mask = (byte) (0x80 & 0xff); }
+    }
+
+    // ── Interval timer (shared across Casio watches with this feature) ──────
+
+    public CasioIntervalTimerLibrary loadLibrary() {
+        String json = GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress())
+                .getString(CasioIntervalTimerLibrary.PREF_INTERVAL_TIMER_LIBRARY, null);
+        return CasioIntervalTimerLibrary.fromJson(json);
+    }
+
+    public void saveLibrary(CasioIntervalTimerLibrary lib) {
+        GBApplication.getDeviceSpecificSharedPrefs(getDevice().getAddress()).edit()
+                .putString(CasioIntervalTimerLibrary.PREF_INTERVAL_TIMER_LIBRARY, lib.toJson()).apply();
+    }
+
+    public void pushActiveTimer() {
+        if (!isInitialized()) {
+            LOG.info("pushActiveTimer skipped: not initialized");
+            return;
+        }
+        CasioIntervalTimer active = loadLibrary().getActive();
+        if (active == null) {
+            LOG.info("pushActiveTimer skipped: no active timer");
+            return;
+        }
+        try {
+            TransactionBuilder b = performInitialized("pushIntervalTimer");
+            for (byte[] packet : CasioIntervalTimerCodec.encode(active)) {
+                writeAllFeatures(b, packet);
+            }
+            b.queue();
+        } catch (IOException e) {
+            LOG.warn("pushActiveTimer failed: {}", e.getMessage());
+        }
+    }
+
+    public void readIntervalTimerFromWatch() {
+        if (!isInitialized()) return;
+        try {
+            TransactionBuilder b = performInitialized("readIntervalTimer");
+            Set<FeatureRequest> reqs = new LinkedHashSet<>();
+            reqs.add(new FeatureRequest(CasioIntervalTimerCodec.FEATURE_CONFIG));
+            for (byte slot = 1; slot <= CasioIntervalTimer.SLOT_COUNT; slot++) {
+                reqs.add(new FeatureRequest(CasioIntervalTimerCodec.FEATURE_NAME, slot));
+            }
+            requestFeatures(b, reqs, responses -> {
+                byte[][] packets = responses.values().toArray(new byte[0][]);
+                CasioIntervalTimer fromWatch = CasioIntervalTimerCodec.decode(packets);
+                if (fromWatch == null) {
+                    LOG.warn("interval-timer read-back: undecodable payload");
+                    return;
+                }
+                CasioIntervalTimerLibrary lib = loadLibrary();
+                if (lib.reconcileFromWatch(fromWatch)) {
+                    saveLibrary(lib);
+                    LOG.info("interval-timer library reconciled from watch");
+                }
+            });
+            b.queue();
+        } catch (IOException e) {
+            LOG.warn("readIntervalTimerFromWatch failed: {}", e.getMessage());
+        }
     }
 
 }

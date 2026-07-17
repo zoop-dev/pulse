@@ -393,6 +393,16 @@
     <string name="pref_summary_casio_alert_sms">Alert (vibrate/beep) for SMS (text message) notifications</string>
     <string name="pref_title_casio_alert_other">Alert for \"other\" notifications</string>
     <string name="pref_summary_casio_alert_other">Alert (vibrate/beep) for notifications in the \"other\" category</string>
+    <string name="pref_casio_interval_timer_title">Interval timer</string>
+    <string name="casio_interval_timer_add">Add timer</string>
+    <string name="casio_interval_timer_empty">No interval timers yet. Tap + to add one.</string>
+    <string name="casio_interval_timer_limit_reached">Maximum of 50 timers reached</string>
+    <string name="casio_interval_timer_active">Active on watch</string>
+    <string name="casio_interval_timer_slot">Step %1$d</string>
+    <string name="casio_interval_timer_skip">Skip</string>
+    <string name="casio_interval_timer_repeat">Auto-repeat</string>
+    <string name="casio_interval_timer_default_label">Timer %1$d</string>
+    <string name="casio_interval_timer_total">Total: %1$s × %2$d = %3$s</string>
     <string name="pref_title_autoremove_notifications">Autoremove dismissed notifications</string>
     <string name="pref_summary_autoremove_notifications">Notifications are automatically removed from the device when dismissed from the phone</string>
     <string name="pref_title_screen_on_on_notifications">Screen On on Notifications</string>

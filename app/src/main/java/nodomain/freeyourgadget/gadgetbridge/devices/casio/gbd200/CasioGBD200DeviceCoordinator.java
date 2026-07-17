@@ -25,6 +25,8 @@ import java.util.regex.Pattern;
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst;
+import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSpecificSettingsCustomizer;
+import nodomain.freeyourgadget.gadgetbridge.devices.casio.CasioIntervalTimerSettingsCustomizer;
 import nodomain.freeyourgadget.gadgetbridge.devices.casio.gbx100.CasioGBX100DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate;
@@ -96,7 +98,13 @@ public class CasioGBD200DeviceCoordinator extends CasioGBX100DeviceCoordinator {
                 R.xml.devicesettings_transliteration,
                 R.xml.devicesettings_preview_message_in_title,
                 R.xml.devicesettings_casio_alert,
-                R.xml.devicesettings_world_clocks
+                R.xml.devicesettings_world_clocks,
+                R.xml.devicesettings_casio_interval_timer
         };
+    }
+
+    @Override
+    public DeviceSpecificSettingsCustomizer getDeviceSpecificSettingsCustomizer(final GBDevice device) {
+        return new CasioIntervalTimerSettingsCustomizer(device);
     }
 }
