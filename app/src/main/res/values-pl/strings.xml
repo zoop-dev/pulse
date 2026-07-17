@@ -4754,4 +4754,5 @@
     <string name="xiaomi_vibration_segment_strength_hint">Siła (1-100)</string>
     <string name="xiaomi_vibration_segment_remove">Usuń segment</string>
     <string name="xiaomi_vibration_no_segments">Dodaj co najmniej jeden segment</string>
+    <string name="endurain_uploading_started">Przesyłanie do Endurain…</string>
 </resources>
