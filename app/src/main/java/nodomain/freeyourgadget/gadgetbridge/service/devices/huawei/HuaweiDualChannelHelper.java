@@ -48,6 +48,16 @@ public class HuaweiDualChannelHelper {
             ALWAYS_MAIN_CHANNEL.add(s & 0xFF);
     }
 
+    // EXPERIMENT (dual-channel file download): the vendor forces the 0x2C file-download service to
+    // the main socket, but on the Watch 4 that download appears to get no reply on main while dual
+    // channel is active (sleep sequence_data / stress / ECG download hangs, which then blocks the
+    // whole sync queue and stops workouts from ever syncing). Try routing 0x2C over the aux socket
+    // like all the other data traffic. Remove this set to restore vendor-faithful main-channel routing.
+    private static final Set<Integer> FORCE_AUX_CHANNEL = new HashSet<>();
+    static {
+        FORCE_AUX_CHANNEL.add(0x2C);
+    }
+
     private boolean active = false;
     private int channel = 0;
     private final Set<Integer> dualServices = new HashSet<>();
@@ -90,6 +100,10 @@ public class HuaweiDualChannelHelper {
     public synchronized boolean useExtraChannel(int serviceId, int commandId) {
         if (!isActive())
             return false;
+        // EXPERIMENT: force the file-download service onto the aux socket (see FORCE_AUX_CHANNEL).
+        // Checked before ALWAYS_MAIN so it overrides the vendor's main-channel pinning for 0x2C.
+        if (FORCE_AUX_CHANNEL.contains(serviceId & 0xFF))
+            return true;
         if (ALWAYS_MAIN_CHANNEL.contains(serviceId & 0xFF))
             return false;
         if (dualServices.contains(serviceId & 0xFF))

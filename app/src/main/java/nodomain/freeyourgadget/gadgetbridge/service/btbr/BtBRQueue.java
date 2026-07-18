@@ -99,10 +99,11 @@ public final class BtBRQueue {
                         break;
                     }
 
-                    LOG.debug("Received {} bytes: {}", nRead, GB.hexdump(buffer, 0, nRead));
+                    LOG.debug("Received {} bytes on {}: {}", nRead,
+                            mIsAux ? "aux ch " + mRfcommChannel : "main", GB.hexdump(buffer, 0, nRead));
 
                     try {
-                        mCallback.onSocketRead(Arrays.copyOf(buffer, nRead));
+                        mCallback.onSocketRead(Arrays.copyOf(buffer, nRead), mRfcommChannel);
                     } catch (Throwable ex) {
                         LOG.error("Failed to process received bytes in onSocketRead callback: ", ex);
                     }
@@ -261,7 +262,8 @@ public final class BtBRQueue {
 
                             for (BtBRAction action : transaction.getActions()) {
                                 if (LOG.isDebugEnabled()) {
-                                    LOG.debug("About to run action: {}", action);
+                                    LOG.debug("About to run action on {}: {}",
+                                            mIsAux ? "aux ch " + mRfcommChannel : "main", action);
                                 }
 
                                 if (action.run(mBtSocket)) {

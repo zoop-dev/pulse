@@ -1182,6 +1182,10 @@ public class HuaweiSupportProvider {
         responseManager.handleData(data);
     }
 
+    public void onSocketRead(byte[] data, int channel) {
+        responseManager.handleData(data, channel);
+    }
+
     public void removeInProgressRequests(Request req) {
         responseManager.removeHandler(req);
     }
@@ -1593,7 +1597,12 @@ public class HuaweiSupportProvider {
             getSleepDataCountRequest = new GetSleepDataCountRequest(this, leBuilder, sleepStart, end);
         } else {
             nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder brBuilder = createBrTransactionBuilder("FetchRecordedData");
-            brBuilder.setBusyTask(R.string.busy_task_fetch_activity_data);
+            // When the dual channel is active this fetch rides the aux socket. Marking the whole
+            // device busy would block the main channel (notifications/commands) for the entire
+            // background sync — which can be minutes on a first sync — defeating the purpose of the
+            // second socket. So only take the busy flag when everything runs on the primary socket.
+            if (!getDualChannelHelper().isActive())
+                brBuilder.setBusyTask(R.string.busy_task_fetch_activity_data);
             getSleepDataCountRequest = new GetSleepDataCountRequest(this, brBuilder, sleepStart, end);
         }
 
