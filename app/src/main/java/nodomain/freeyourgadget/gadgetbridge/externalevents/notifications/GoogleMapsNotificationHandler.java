@@ -36,6 +36,7 @@ import java.util.Optional;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.model.NavigationInfoSpec;
+import nodomain.freeyourgadget.gadgetbridge.util.NavigationUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class GoogleMapsNotificationHandler {
@@ -1279,25 +1280,6 @@ public class GoogleMapsNotificationHandler {
     }
 
     private void checkShouldSendNavigation(final Context context) {
-        final Prefs prefs = GBApplication.getPrefs();
-
-        final boolean navigationForward = prefs.getBoolean("navigation_forward", true);
-        final boolean navigationGMaps = prefs.getBoolean("navigation_app_gmaps", true);
-        if (!navigationForward || !navigationGMaps) {
-            shouldSendNavigation = false;
-            return;
-        }
-
-        final boolean navigationScreenOn = prefs.getBoolean("nagivation_screen_on", true);
-        if (!navigationScreenOn) {
-            PowerManager powermanager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-            if (powermanager != null && powermanager.isScreenOn()) {
-                LOG.info("Not forwarding navigation instructions, screen seems to be on and settings do not allow this");
-                shouldSendNavigation = false;
-                return;
-            }
-        }
-
-        shouldSendNavigation = true;
+        shouldSendNavigation = NavigationUtils.shouldSendNavigation(context, "gmaps");
     }
 }

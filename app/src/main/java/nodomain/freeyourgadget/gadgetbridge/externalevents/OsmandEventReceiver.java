@@ -23,7 +23,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
-import android.os.PowerManager;
 import android.os.RemoteException;
 import android.view.KeyEvent;
 
@@ -46,6 +45,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.model.NavigationInfoSpec;
 import nodomain.freeyourgadget.gadgetbridge.util.AndroidUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.NavigationUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
 public class OsmandEventReceiver {
@@ -78,7 +78,7 @@ public class OsmandEventReceiver {
             navigationInfoSpec.nextAction = directionInfo.getTurnType();
             navigationInfoSpec.distanceToTurn = directionInfo.getDistanceTo()+"m";
 
-            if (shouldSendNavigation()) {
+            if (NavigationUtils.shouldSendNavigation(app, "osmand")) {
                 GBApplication.deviceService().onSetNavigationInfo(navigationInfoSpec);
             }
 
@@ -176,27 +176,6 @@ public class OsmandEventReceiver {
             }
         }
         return -1L;
-    }
-
-    private boolean shouldSendNavigation() {
-        Prefs prefs = GBApplication.getPrefs();
-
-        boolean navigationForward = prefs.getBoolean("navigation_forward", true);
-        boolean navigationOsmAnd = prefs.getBoolean("navigation_app_osmand", true);
-        if (!navigationForward || !navigationOsmAnd) {
-            return false;
-        }
-
-        boolean navigationScreenOn = prefs.getBoolean("nagivation_screen_on", true);
-        if (!navigationScreenOn) {
-            PowerManager powermanager = (PowerManager) app.getSystemService(Context.POWER_SERVICE);
-            if (powermanager != null && powermanager.isScreenOn()) {
-                LOG.info("Not forwarding navigation instructions, screen seems to be on and settings do not allow this");
-                return false;
-            }
-        }
-
-        return true;
     }
 
     /**

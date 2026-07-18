@@ -48,6 +48,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Pair;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -93,6 +94,7 @@ import nodomain.freeyourgadget.gadgetbridge.externalevents.LineageOsWeatherRecei
 import nodomain.freeyourgadget.gadgetbridge.externalevents.MusicPlaybackReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.NewDataReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.OmniJawsObserver;
+import nodomain.freeyourgadget.gadgetbridge.externalevents.comaps.CoMapsNavigationReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.OsmandEventReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.PebbleReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.PhoneCallReceiver;
@@ -101,6 +103,7 @@ import nodomain.freeyourgadget.gadgetbridge.externalevents.SilentModeReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.TimeChangeReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.TinyWeatherForecastGermanyReceiver;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.VolumeChangeReceiver;
+import nodomain.freeyourgadget.gadgetbridge.externalevents.comaps.CoMapsNavigationReceiverFactory;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.gps.GBLocationService;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.sleepasandroid.SleepAsAndroidReceiver;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -288,6 +291,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
     private GBLocationService locationService = null;
 
     private OsmandEventReceiver mOsmandAidlHelper = null;
+    private List<CoMapsNavigationReceiver> mCoMapsNavigationReceivers;
 
     private SleepAsAndroidReceiver mSleepAsAndroidReceiver = null;
 
@@ -1100,6 +1104,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 navigationInfoSpec.nextAction = intentCopy.getIntExtra(EXTRA_NAVIGATION_NEXT_ACTION,0);
                 navigationInfoSpec.distanceToTurn = intentCopy.getStringExtra(EXTRA_NAVIGATION_DISTANCE_TO_TURN);
                 navigationInfoSpec.ETA = intentCopy.getStringExtra(EXTRA_NAVIGATION_ETA);
+                navigationInfoSpec.completionPercent = intentCopy.getIntExtra(EXTRA_NAVIGATION_COMPLETION_PERCENT, 0);
                 deviceSupport.onSetNavigationInfo(navigationInfoSpec);
                 break;
             case ACTION_REQUEST_APPINFO:
@@ -1489,6 +1494,14 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 mOsmandAidlHelper = new OsmandEventReceiver(this.getApplication());
             }
 
+            if (mCoMapsNavigationReceivers == null && features.supportsNavigation() && getPrefs().getBoolean(GBPrefs.NAVIGATION_APP_COMAPS, false)) {
+                mCoMapsNavigationReceivers = new ArrayList<>();
+                for (Pair<Uri, CoMapsNavigationReceiver> pair : CoMapsNavigationReceiverFactory.createCoMapsNavigationReceiversForApplication(this.getApplication())) {
+                    getContentResolver().registerContentObserver(pair.first, false, pair.second);
+                    mCoMapsNavigationReceivers.add(pair.second);
+                }
+            }
+
             // Weather receivers
             if (features.supportsWeather()) {
                 if (GBApplication.isRunningOreoOrLater()) {
@@ -1590,6 +1603,10 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             if (mOsmandAidlHelper != null) {
                 mOsmandAidlHelper.cleanupResources();
                 mOsmandAidlHelper = null;
+            }
+            if (mCoMapsNavigationReceivers != null) {
+                mCoMapsNavigationReceivers.forEach(getContentResolver()::unregisterContentObserver);
+                mCoMapsNavigationReceivers = null;
             }
             if (mGBAutoFetchReceiver != null) {
                 unregisterReceiver(mGBAutoFetchReceiver);

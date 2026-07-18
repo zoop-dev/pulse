@@ -40,11 +40,16 @@ public class NavigationInfoSpec {
     public static final int ACTION_FINISH = 17;
     public static final int ACTION_MERGE = 18;
 
-    // ETA? Total Distance?
+    // Next instruction
     public String instruction;
-    public String distanceToTurn; ///< Distance to turn (as a string, eg "100m")
-    public int nextAction; ///< One of the ACTION_ constants
-    public String ETA; ///< Estimated time of Arrival
+    // Distance to turn (as a string, e.g. "100m")
+    public String distanceToTurn;
+    // One of the ACTION_ constants
+    public int nextAction;
+    // Estimated time of arrival
+    public String ETA;
+    // Completion percent
+    public int completionPercent;
 
     @NonNull
     @Override
@@ -54,6 +59,7 @@ public class NavigationInfoSpec {
         tsb.append("distanceToTurn", distanceToTurn);
         tsb.append("nextAction", nextAction);
         tsb.append("ETA", ETA);
+        tsb.append("completionPercent", completionPercent);
         return tsb.toString();
     }
 }

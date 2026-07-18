@@ -128,6 +128,8 @@ public class GBPrefs extends Prefs {
     public static final String HEALTH_CONNECT_LAST_GRANTED_PERMISSIONS = "health_connect_last_granted_permissions";
     public static final String HEALTH_CONNECT_PROMPT_FOR_FULL_DAO_RESET = "health_connect_prompt_for_full_dao_reset";
 
+    public static final String NAVIGATION_APP_COMAPS = "navigation_app_comaps";
+
     @Deprecated
     public GBPrefs(Prefs prefs) {
         this(prefs.getPreferences());

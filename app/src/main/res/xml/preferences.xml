@@ -356,6 +356,12 @@
                     android:layout="@layout/preference_checkbox"
                     android:title="@string/pref_navigation_app_gmaps"
                     app:iconSpaceReserved="false" />
+                <SwitchPreferenceCompat
+                    android:defaultValue="false"
+                    android:key="navigation_app_comaps"
+                    android:layout="@layout/preference_checkbox"
+                    android:title="@string/pref_navigation_app_comaps"
+                    app:iconSpaceReserved="false" />
             </PreferenceCategory>
         </PreferenceScreen>
 

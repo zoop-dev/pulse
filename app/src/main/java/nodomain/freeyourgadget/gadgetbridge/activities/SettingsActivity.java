@@ -20,6 +20,7 @@
 package nodomain.freeyourgadget.gadgetbridge.activities;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,6 +30,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
@@ -40,6 +42,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.preference.ListPreference;
@@ -55,6 +58,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -72,15 +76,19 @@ import nodomain.freeyourgadget.gadgetbridge.activities.maps.MapsSettingsActivity
 import nodomain.freeyourgadget.gadgetbridge.activities.preferences.HealthConnectPreferencesActivity;
 import nodomain.freeyourgadget.gadgetbridge.activities.quicksettings.QuickSettingsPreferencesActivity;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.TimeChangeReceiver;
+import nodomain.freeyourgadget.gadgetbridge.externalevents.comaps.CoMapsNavigationReceiverFactory;
 import nodomain.freeyourgadget.gadgetbridge.util.FileUtils;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
+import nodomain.freeyourgadget.gadgetbridge.util.GBPrefs;
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs;
 
-public class SettingsActivity extends AbstractSettingsActivityV2 {
+public class SettingsActivity extends AbstractSettingsActivityV2 implements ActivityCompat.OnRequestPermissionsResultCallback {
     public static final String PREF_LANGUAGE = "language";
     public static final String PREF_UNIT_WEIGHT = "unit_weight";
     public static final String PREF_UNIT_TEMPERATURE = "unit_temperature";
     public static final String PREF_UNIT_DISTANCE = "unit_distance";
+
+    public static final int COMAPS_PERMISSION_REQUEST_CODE = 1;
 
     @Override
     protected PreferenceFragmentCompat newFragment() {
@@ -109,6 +117,22 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
             open(InternetHelperPreferencesActivity.class, result);
         } else {
             super.onSearchResultClicked(result);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode != COMAPS_PERMISSION_REQUEST_CODE) {
+            return;
+        }
+
+        if (Arrays.stream(grantResults).anyMatch(it -> it == PackageManager.PERMISSION_GRANTED)) {
+            GBApplication.getPrefs().getPreferences()
+                    .edit()
+                    .putBoolean(GBPrefs.NAVIGATION_APP_COMAPS, true)
+                    .apply();
         }
     }
 
@@ -547,6 +571,44 @@ public class SettingsActivity extends AbstractSettingsActivityV2 {
                             .setNegativeButton(R.string.cancel, (dialog, which) -> {})
                             .show();
                     return false;
+                });
+            }
+
+            pref = findPreference(GBPrefs.NAVIGATION_APP_COMAPS);
+            if (pref != null) {
+                pref.setOnPreferenceChangeListener((preference, newValue) ->  {
+                    if (!(boolean) newValue) {
+                        return true;
+                    }
+
+                    Activity activity = requireActivity();
+                    List<String> allPermissions = CoMapsNavigationReceiverFactory.discoverInstalledVersions(activity.getPackageManager());
+                    List<String> neededPermissions = allPermissions.stream()
+                            .map(app -> app + CoMapsNavigationReceiverFactory.PERMISSION_SUFFIX)
+                            .filter(it -> activity.checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED)
+                            .toList();
+
+                    if (neededPermissions.isEmpty()) {
+                        return true;
+                    }
+
+                    ActivityCompat.requestPermissions(activity, neededPermissions.toArray(String[]::new), COMAPS_PERMISSION_REQUEST_CODE);
+
+                    if (neededPermissions.stream().anyMatch(activity::shouldShowRequestPermissionRationale)) {
+                        new MaterialAlertDialogBuilder(activity)
+                                .setMessage(activity.getString(R.string.permission_navigation_comaps, activity.getString(R.string.app_name), activity.getString(android.R.string.ok)))
+                                .setPositiveButton(android.R.string.ok, (d, w) -> {
+                                    Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                    intent.setData(Uri.fromParts("package", activity.getPackageName(), null));
+                                    activity.startActivity(intent);
+                                })
+                                .setNegativeButton(android.R.string.cancel, null)
+                                .show();
+                    }
+
+                    // In the niche case where the user happens to have several versions of CoMaps
+                    // installed, and only grants permission to one, we still enable the option
+                    return neededPermissions.size() < allPermissions.size();
                 });
             }
         }
