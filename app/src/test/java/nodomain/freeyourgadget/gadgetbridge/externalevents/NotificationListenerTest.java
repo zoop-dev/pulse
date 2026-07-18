@@ -1,5 +1,11 @@
 package nodomain.freeyourgadget.gadgetbridge.externalevents;
 
+import android.app.Notification;
+import android.os.Bundle;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.Person;
+
 import org.junit.Test;
 
 import java.time.LocalTime;
@@ -8,9 +14,11 @@ import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.activities.NotificationFilterActivity;
 import nodomain.freeyourgadget.gadgetbridge.entities.NotificationFilter;
+import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.test.TestBase;
 
 import static nodomain.freeyourgadget.gadgetbridge.util.GB.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -168,5 +176,48 @@ public class NotificationListenerTest extends TestBase {
             /* start= */ LocalTime.of(20, 0),
             /* end= */ LocalTime.of(7, 0)
         ));
+    }
+
+    @Test
+    public void dissectNotificationTo_prefersMessagingMetadataForSenderAndBody() {
+        final NotificationListener listener = new NotificationListener();
+        final NotificationSpec spec = new NotificationSpec();
+
+        final Person sender = new Person.Builder().setName("Alice").build();
+        final Person user = new Person.Builder().setName("Me").build();
+        final Notification notification = new NotificationCompat.Builder(getContext(), "test")
+                .setContentTitle("Fallback title")
+                .setContentText("Fallback body")
+                .setStyle(new NotificationCompat.MessagingStyle(user)
+                        .setConversationTitle("Family Group")
+                        .addMessage("Latest message", System.currentTimeMillis(), sender))
+                .build();
+
+        listener.dissectNotificationTo(notification, spec, true);
+
+        assertEquals("Alice", spec.sender);
+        assertEquals("Family Group", spec.title);
+        assertEquals("Latest message", spec.body);
+    }
+
+    @Test
+    public void dissectNotificationTo_usesConversationTitleWhenTitleMissing() {
+        final NotificationListener listener = new NotificationListener();
+        final NotificationSpec spec = new NotificationSpec();
+
+        final Bundle extras = new Bundle();
+        extras.putCharSequence(NotificationCompat.EXTRA_CONVERSATION_TITLE, "Chat Room");
+        final Notification notification = new NotificationCompat.Builder(getContext(), "test")
+                .setExtras(extras)
+                .setStyle(new NotificationCompat.MessagingStyle(new Person.Builder().setName("Me").build())
+                        .setConversationTitle("Chat Room")
+                        .addMessage("Body text", System.currentTimeMillis(), new Person.Builder().setName("Bob").build()))
+                .build();
+
+        listener.dissectNotificationTo(notification, spec, true);
+
+        assertEquals("Chat Room", spec.title);
+        assertEquals("Bob", spec.sender);
+        assertEquals("Body text", spec.body);
     }
 }

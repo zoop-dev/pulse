@@ -183,6 +183,7 @@ public class GBDeviceService implements DeviceService {
                 .putExtra(EXTRA_NOTIFICATION_SOURCENAME, notificationSpec.sourceName)
                 .putExtra(EXTRA_NOTIFICATION_SOURCEAPPID, notificationSpec.sourceAppId)
                 .putExtra(EXTRA_NOTIFICATION_ICONID, notificationSpec.iconId)
+                .putExtra(EXTRA_NOTIFICATION_ICONPACKAGEID, notificationSpec.iconPackageId)
                 .putExtra(NOTIFICATION_PICTURE_PATH, notificationSpec.picturePath)
                 .putExtra(EXTRA_NOTIFICATION_DNDSUPPRESSED, notificationSpec.dndSuppressed)
                 .putExtra(EXTRA_NOTIFICATION_CHANNEL_ID, notificationSpec.channelId)

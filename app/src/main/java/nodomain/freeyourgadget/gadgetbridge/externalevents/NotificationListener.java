@@ -28,6 +28,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Person;
+import android.content.ComponentName;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -622,6 +623,38 @@ public class NotificationListener extends NotificationListenerService {
         GBApplication.deviceService().onNotification(notificationSpec);
     }
 
+    @Override
+    public void onListenerConnected() {
+        super.onListenerConnected();
+
+        int activeCount = -1;
+        try {
+            final StatusBarNotification[] activeNotifications = getActiveNotifications();
+            if (activeNotifications != null) {
+                activeCount = activeNotifications.length;
+            }
+        } catch (final Exception e) {
+            LOG.warn("Failed to query active notifications on listener connect", e);
+        }
+
+        LOG.info("NotificationListener connected, activeNotifications={}", activeCount);
+    }
+
+    @Override
+    public void onListenerDisconnected() {
+        super.onListenerDisconnected();
+
+        LOG.warn("NotificationListener disconnected, requesting rebind");
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            try {
+                requestRebind(new ComponentName(this, NotificationListener.class));
+            } catch (final Exception e) {
+                LOG.error("Failed to request NotificationListener rebind", e);
+            }
+        }
+    }
+
     static boolean isOutsideNotificationTimes(final LocalTime now, final LocalTime start, final LocalTime end) {
         if (start.isBefore(end)) {
             // eg. 06:00 -> 22:00
@@ -880,7 +913,7 @@ public class NotificationListener extends NotificationListenerService {
         return extras != null && extras.containsKey(NotificationCompat.EXTRA_PICTURE);
     }
 
-    private void dissectNotificationTo(Notification notification, NotificationSpec notificationSpec,
+    void dissectNotificationTo(Notification notification, NotificationSpec notificationSpec,
                                        boolean preferBigText) {
 
         Bundle extras = NotificationCompat.getExtras(notification);
@@ -908,10 +941,34 @@ public class NotificationListener extends NotificationListenerService {
 
         NotificationCompat.MessagingStyle messagingStyle = NotificationCompat.MessagingStyle.extractMessagingStyleFromNotification(notification);
         if (messagingStyle != null) {
+            // Extract conversation title as the notification title (e.g. group name)
+            final CharSequence conversationTitle = messagingStyle.getConversationTitle();
+            if (conversationTitle != null) {
+                final String sanitizedConversationTitle = sanitizeUnicode(conversationTitle.toString());
+                if (!org.apache.commons.lang3.StringUtils.isBlank(sanitizedConversationTitle)) {
+                    notificationSpec.title = sanitizedConversationTitle;
+                }
+            }
+
             List<NotificationCompat.MessagingStyle.Message> messages = messagingStyle.getMessages();
             if (!messages.isEmpty()) {
                 // Get the last message (assumed to be the most recent)
                 NotificationCompat.MessagingStyle.Message lastMessage = messages.get(messages.size() - 1);
+
+                // Extract sender from the Person object
+                final androidx.core.app.Person senderPerson = lastMessage.getPerson();
+                if (senderPerson != null && !org.apache.commons.lang3.StringUtils.isBlank(senderPerson.getName())) {
+                    final String senderName = sanitizeUnicode(senderPerson.getName().toString());
+                    if (org.apache.commons.lang3.StringUtils.isBlank(notificationSpec.sender)) {
+                        notificationSpec.sender = senderName;
+                    }
+                }
+
+                // Extract message text
+                final CharSequence messageText = lastMessage.getText();
+                if (!org.apache.commons.lang3.StringUtils.isBlank(messageText)) {
+                    notificationSpec.body = sanitizeUnicode(messageText.toString());
+                }
 
                 if (supportedPictureMimeTypes.contains(lastMessage.getDataMimeType()) && lastMessage.getDataUri() != null) {
                     ContentResolver contentResolver = getContentResolver();
