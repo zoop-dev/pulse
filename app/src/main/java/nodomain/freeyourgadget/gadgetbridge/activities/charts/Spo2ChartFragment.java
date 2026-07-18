@@ -102,9 +102,8 @@ public class Spo2ChartFragment extends AbstractChartFragment<Spo2ChartFragment.S
         int endTs = startTs + 24 * 60 * 60 - 1;
         tsTranslation = new TimestampTranslation();
         tsTranslation.shorten(startTs);
-        String formattedDate = new SimpleDateFormat("E, MMM dd").format(chartsHost.getEndDate());
-        binding.dateView.setText(formattedDate);
-        return fetchSpo2Data(db, device, startTs, endTs);
+        final String formattedDate = new SimpleDateFormat("E, MMM dd").format(chartsHost.getEndDate());
+        return fetchSpo2Data(db, device, startTs, endTs, formattedDate);
     }
 
     protected LineDataSet createDataSet(final List<Entry> values, boolean manualPoints) {
@@ -133,14 +132,12 @@ public class Spo2ChartFragment extends AbstractChartFragment<Spo2ChartFragment.S
         binding.manualMeasurementsList.removeAllViews();
         binding.manualMeasurements.setVisibility(View.GONE);
         final String emptyValue = requireContext().getString(R.string.stats_empty_value);
+        binding.dateView.setText(data.formattedDate);
         binding.spo2Minimum.setText(data.minimum > 0 ? getString(R.string.battery_percentage_str, String.valueOf(data.minimum)) : emptyValue);
         binding.spo2Maximum.setText(data.maximum > 0 ? getString(R.string.battery_percentage_str, String.valueOf(data.maximum)) : emptyValue);
         binding.spo2Average.setText(data.average > 0 ? getString(R.string.battery_percentage_str, String.valueOf(data.average)) : emptyValue);
         binding.spo2LineChart.setData(null); // workaround for https://github.com/PhilJay/MPAndroidChart/issues/2317
         binding.spo2LineChart.getAxisLeft().removeAllLimitLines();
-        Date date = new Date((long) getTSEnd() * 1000);
-        String formattedDate = new SimpleDateFormat("E, MMM dd").format(date);
-        binding.dateView.setText(formattedDate);
 
         final List<LegendEntry> legendEntries = new ArrayList<>(1);
         final LegendEntry spo2RateEntry = new LegendEntry();
@@ -269,7 +266,11 @@ public class Spo2ChartFragment extends AbstractChartFragment<Spo2ChartFragment.S
     }
 
 
-    private Spo2ChartsData fetchSpo2Data(DBHandler db, GBDevice device, int startTs, int endTs) {
+    private Spo2ChartsData fetchSpo2Data(final DBHandler db,
+                                         final GBDevice device,
+                                         final int startTs,
+                                         final int endTs,
+                                         final String formattedDate) {
         List<? extends Spo2Sample> samples = getSamples(db, device, startTs, endTs);
 
         final Accumulator accumulator = new Accumulator();
@@ -284,7 +285,7 @@ public class Spo2ChartFragment extends AbstractChartFragment<Spo2ChartFragment.S
         final int minimum = accumulator.getCount() > 0 ? (int) Math.round(accumulator.getMin()) : DATA_INVALID;
         final int maximum = accumulator.getCount() > 0 ? (int) Math.round(accumulator.getMax()) : DATA_INVALID;
 
-        return new Spo2ChartsData(samples, average, minimum, maximum);
+        return new Spo2ChartsData(samples, average, minimum, maximum, formattedDate);
     }
 
     protected static class Spo2ChartsData extends ChartsData {
@@ -292,12 +293,18 @@ public class Spo2ChartFragment extends AbstractChartFragment<Spo2ChartFragment.S
         public final int average;
         public final int minimum;
         public final int maximum;
+        public final String formattedDate;
 
-        public Spo2ChartsData(List<? extends Spo2Sample> samples, int average, int minimum, int maximum) {
+        public Spo2ChartsData(final List<? extends Spo2Sample> samples,
+                              final int average,
+                              final int minimum,
+                              final int maximum,
+                              final String formattedDate) {
             this.samples = samples;
             this.average = average;
             this.minimum = minimum;
             this.maximum = maximum;
+            this.formattedDate = formattedDate;
         }
     }
 

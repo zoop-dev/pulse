@@ -188,8 +188,7 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
         int startTs = (int) (day.getTimeInMillis() / 1000);
         int endTs = startTs + 24 * 60 * 60 - 1;
         Date date = new Date((long) endTs * 1000);
-        String formattedDate = new SimpleDateFormat("E, MMM dd").format(date);
-        dateView.setText(formattedDate);
+        final String formattedDate = new SimpleDateFormat("E, MMM dd").format(date);
         List<? extends ActivitySample> samples = getActivitySamples(db, device, startTs, endTs);
         final ActiveCaloriesDailyData activeCaloriesData = createActiveCaloriesDailyData(samples, startTs);
         final Integer restingMetabolicRate;
@@ -201,7 +200,7 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
             restingMetabolicRate = (sample == null) ? null : sample.getRestingMetabolicRate();
         }
         if (restingMetabolicRate == null) {
-            return new CaloriesData(0, 0, 0, 0, activeCaloriesData.entries, startTs);
+            return new CaloriesData(0, 0, 0, 0, activeCaloriesData.entries, startTs, formattedDate);
         }
         int totalBurnt;
         int activeBurnt = activeCaloriesData.activeCalories;
@@ -215,7 +214,8 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
 
         totalBurnt = restingBurnt + activeBurnt;
 
-        return new CaloriesData(totalBurnt, activeBurnt, restingBurnt, restingMetabolicRate, activeCaloriesData.entries, startTs);
+        return new CaloriesData(totalBurnt, activeBurnt, restingBurnt, restingMetabolicRate,
+                activeCaloriesData.entries, startTs, formattedDate);
     }
 
     @Override
@@ -224,6 +224,7 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
         int activeCalories = data.activeBurnt;
         int totalCalories = activeCalories + restingCalories;
         final String kcal = getString(R.string.calories_unit);
+        dateView.setText(data.formattedDate);
         caloriesActive.setText(String.format(Locale.getDefault(), "%d %s", activeCalories, kcal));
         metabolicRate.setText(String.format(Locale.getDefault(), "%d %s", data.restingMetabolicRate, kcal));
         caloriesResting.setText(String.format(Locale.getDefault(), "%d %s", restingCalories, kcal));
@@ -344,6 +345,7 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
         public int restingMetabolicRate;
         public List<Entry> activeCaloriesEntries;
         public int startTs;
+        public final String formattedDate;
 
         protected CaloriesData(
                 int totalBurnt,
@@ -351,7 +353,8 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
                 int restingBurnt,
                 final int restingMetabolicRate,
                 final List<Entry> activeCaloriesEntries,
-                final int startTs
+                final int startTs,
+                final String formattedDate
         ) {
             this.totalBurnt = totalBurnt;
             this.activeBurnt = activeBurnt;
@@ -359,6 +362,7 @@ public class CaloriesDailyFragment extends AbstractChartFragment<CaloriesDailyFr
             this.restingMetabolicRate = restingMetabolicRate;
             this.activeCaloriesEntries = activeCaloriesEntries;
             this.startTs = startTs;
+            this.formattedDate = formattedDate;
         }
     }
 }
