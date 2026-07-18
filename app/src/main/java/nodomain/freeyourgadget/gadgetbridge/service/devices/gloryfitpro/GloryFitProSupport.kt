@@ -483,9 +483,129 @@ class GloryFitProSupport : AbstractBTLESingleDeviceSupport(LOG) {
         data.write(byteArrayOf(MODE_SET, 0x08, 0x02, hi(low), lo(low)))
         data.write(byteArrayOf(MODE_SET, 0x0a, 0x01, uv.toByte()))
         data.write(byteArrayOf(MODE_SET, 0x0b, 0x04, (ts ushr 24).toByte(), (ts ushr 16).toByte(), (ts ushr 8).toByte(), ts.toByte()))
-        // f0f = [humidity][condition]; condition mapping to the watch's codes is a TODO.
-        data.write(byteArrayOf(MODE_SET, 0x0f, 0x02, humidity.toByte(), 0x00))
+        // f0f = [humidity][condition].
+        data.write(byteArrayOf(MODE_SET, 0x0f, 0x02, humidity.toByte(), mapConditionToWatch(weather.currentConditionCode).toByte()))
         queueTlvWithTerminator("send weather", CMD_WEATHER, data.toByteArray())
+
+        sendForecast(weather)
+    }
+
+    /** Big-endian 4-byte unix timestamp. */
+    private fun be32(v: Int): ByteArray =
+        byteArrayOf((v ushr 24).toByte(), (v ushr 16).toByte(), (v ushr 8).toByte(), v.toByte())
+
+    /**
+     * Forecast is a separate e0 message: "ab0b <update ts>" then a run of hourly entries
+     * (ab0d) and daily entries (ab0e), split into <=239-byte chunks "01 e0 abab <idx> ..."
+     * ending with "01 e0 abab fd <xor over every transmitted byte>".
+     * Hourly ab0d = {01: ts(4), 02: flag(1), 03: temp C(2)}.
+     * Daily  ab0e = {01: high C(2), 02: low C(2), 03:(1)=0, 04: moonrise(4), 05: moonset(4),
+     *               06:(1)=0, 07: sunrise(4), 08: sunset(4), 09: day midnight(4), 0a: humidity(1),
+     *               0b: condition(1)}.
+     */
+    private fun sendForecast(weather: WeatherSpec) {
+        val body = ByteArrayOutputStream()
+        body.write(byteArrayOf(MODE_SET, 0x0b, 0x04)); body.write(be32(weather.timestamp))
+
+        // Hourly entries (may be empty depending on the weather source).
+        for (h in weather.hourly.take(24)) {
+            val temp = h.temp - 273
+            val entry = ByteArrayOutputStream()
+            entry.write(byteArrayOf(0x01, 0x04)); entry.write(be32(h.timestamp))
+            entry.write(byteArrayOf(0x02, 0x01, mapConditionToWatch(h.conditionCode).toByte()))
+            entry.write(byteArrayOf(0x03, 0x02, hi(temp), lo(temp)))
+            val e = entry.toByteArray()
+            body.write(byteArrayOf(MODE_SET, 0x0d, e.size.toByte())); body.write(e)
+        }
+
+        // Daily entries: today first, then the per-day forecasts.
+        val days = ArrayList<WeatherSpec.Daily>()
+        days.add(weather.todayAsDaily())
+        days.addAll(weather.forecasts)
+        val midnight = Calendar.getInstance()
+        midnight.timeInMillis = weather.timestamp * 1000L
+        midnight.set(Calendar.HOUR_OF_DAY, 0)
+        midnight.set(Calendar.MINUTE, 0)
+        midnight.set(Calendar.SECOND, 0)
+        midnight.set(Calendar.MILLISECOND, 0)
+        for ((i, d) in days.take(7).withIndex()) {
+            val dayCal = midnight.clone() as Calendar
+            dayCal.add(Calendar.DAY_OF_MONTH, i)
+            val dayStart = (dayCal.timeInMillis / 1000L).toInt()
+            val high = d.maxTemp - 273
+            val low = d.minTemp - 273
+            val humidity = (if (d.humidity in 1..100) d.humidity else weather.currentHumidity).coerceIn(0, 100)
+            val sunrise = if (d.sunRise > 0) d.sunRise else dayStart + 6 * 3600
+            val sunset = if (d.sunSet > 0) d.sunSet else dayStart + 21 * 3600
+            val moonrise = if (d.moonRise > 0) d.moonRise else dayStart + 8 * 3600
+            val moonset = if (d.moonSet > 0) d.moonSet else dayStart + 23 * 3600
+            val cond = mapConditionToWatch(d.conditionCode)
+            val entry = ByteArrayOutputStream()
+            entry.write(byteArrayOf(0x01, 0x02, hi(high), lo(high)))
+            entry.write(byteArrayOf(0x02, 0x02, hi(low), lo(low)))
+            entry.write(byteArrayOf(0x03, 0x01, 0x00))
+            entry.write(byteArrayOf(0x04, 0x04)); entry.write(be32(moonrise))
+            entry.write(byteArrayOf(0x05, 0x04)); entry.write(be32(moonset))
+            entry.write(byteArrayOf(0x06, 0x01, cond.toByte()))
+            entry.write(byteArrayOf(0x07, 0x04)); entry.write(be32(sunrise))
+            entry.write(byteArrayOf(0x08, 0x04)); entry.write(be32(sunset))
+            entry.write(byteArrayOf(0x09, 0x04)); entry.write(be32(dayStart))
+            entry.write(byteArrayOf(0x0a, 0x01, humidity.toByte()))
+            entry.write(byteArrayOf(0x0b, 0x01, cond.toByte()))
+            val e = entry.toByteArray()
+            body.write(byteArrayOf(MODE_SET, 0x0e, e.size.toByte())); body.write(e)
+        }
+
+        queueChunkedTlv("send weather forecast", CMD_WEATHER, body.toByteArray())
+    }
+
+    /**
+     * Map an OpenWeatherMap condition code to the watch's icon code. Best-effort (the watch's
+     * exact code table is not documented); refine by comparing icons on hardware.
+     */
+    private fun mapConditionToWatch(owm: Int): Int = when (owm) {
+        in 200..299          -> 4   // thunderstorm      -> cloud+rain+lightning
+        in 300..399          -> 3   // drizzle           -> sun+cloud+light rain
+        511                  -> 6   // freezing rain     -> sleet/snow
+        500, 520             -> 3   // light rain        -> sun+cloud+light rain
+        502, 503, 504, 522   -> 8   // heavy rain        -> cloud+heavy rain
+        in 500..599          -> 7   // rain              -> cloud+rain
+        in 600..699          -> 6   // snow / sleet      -> cloud+snow+rain
+        in 700..799          -> 2   // fog / mist / haze -> cloud
+        800                  -> 0   // clear             -> sun
+        801, 802             -> 1   // few/scattered     -> sun+cloud
+        803, 804             -> 2   // broken/overcast   -> cloud
+        906                  -> 5   // hail              -> cloud+hail+lightning
+        else                 -> 2
+    }
+    // Watch icon codes (verified on hardware): 0 clear, 1 partly cloudy, 2 cloudy,
+    // 3 light rain, 4 thunderstorm, 5 hail, 6 snow, 7 rain, 8 heavy rain.
+
+    /**
+     * Write a chunked TLV message: "01 CMD abab <idx> <body slice>" per BLE write, followed by
+     * "01 CMD abab fd <xor>", where the xor is over every byte of every write (index bytes and
+     * the repeated 01 CMD abab prefixes cancel out, so this also equals the xor of the body).
+     */
+    private fun queueChunkedTlv(label: String, cmd: Byte, body: ByteArray) {
+        val builder = createTransactionBuilder(label)
+        var xor = 0
+        var off = 0
+        var idx = 0
+        val maxSlice = 239
+        while (off < body.size) {
+            val end = minOf(off + maxSlice, body.size)
+            val pkt = ByteArrayOutputStream()
+            pkt.write(byteArrayOf(PKT_HEADER, cmd, MODE_SET, MODE_SET, idx.toByte()))
+            pkt.write(body, off, end - off)
+            val pktBytes = pkt.toByteArray()
+            for (b in pktBytes) xor = xor xor (b.toInt() and 0xff)
+            builder.write(UUID_CHARACTERISTIC_DATA_WRITE, *pktBytes)
+            off = end
+            idx++
+        }
+        val terminator = byteArrayOf(PKT_HEADER, cmd, MODE_SET, MODE_SET, PKT_TERMINATOR, xor.toByte())
+        builder.write(UUID_CHARACTERISTIC_DATA_WRITE, *terminator)
+        builder.queue()
     }
 
     private fun hi(v: Int): Byte = ((v ushr 8) and 0xff).toByte()
