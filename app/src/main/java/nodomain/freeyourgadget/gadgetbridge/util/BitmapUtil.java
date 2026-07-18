@@ -28,8 +28,10 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.AdaptiveIconDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 
 import androidx.annotation.Nullable;
 
@@ -228,10 +230,17 @@ public class BitmapUtil {
             return ((BitmapDrawable) drawable).getBitmap();
         }
 
-        final Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Drawable renderDrawable = drawable;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && drawable instanceof AdaptiveIconDrawable) {
+            renderDrawable = ((AdaptiveIconDrawable) drawable).getForeground();
+        }
+
+        final int width = renderDrawable.getIntrinsicWidth() > 0 ? renderDrawable.getIntrinsicWidth() : 128;
+        final int height = renderDrawable.getIntrinsicHeight() > 0 ? renderDrawable.getIntrinsicHeight() : 128;
+        final Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         final Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
+        renderDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        renderDrawable.draw(canvas);
         return bitmap;
     }
 
