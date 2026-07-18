@@ -116,6 +116,15 @@
                 android:inputType="number"
                 android:hint="@string/alarm_smart_wakeup_interval_default" />
 
+            <TextView
+                android:id="@+id/tv_smart_wakeup_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:visibility="gone" />
+
             <TimePicker
                 android:id="@+id/time_picker"
                 android:layout_width="match_parent"

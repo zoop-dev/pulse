@@ -85,6 +85,8 @@ public class AlarmDetails extends AbstractGBActivity {
         boolean smartAlarmSupported = supportsSmartWakeup(alarm.getPosition());
         boolean smartAlarmForced = forcedSmartWakeup(alarm.getPosition());
         boolean smartAlarmIntervalSupported = supportsSmartWakeupInterval(alarm.getPosition());
+        final int smartWakeupMax = getSmartWakeupMaxInterval();
+        final String smartWakeupDescription = getSmartWakeupDescription();
 
         binding.cbSmartWakeup.setChecked(alarm.getSmartWakeup() || smartAlarmForced);
         binding.cbSmartWakeup.setVisibility(smartAlarmSupported ? View.VISIBLE : View.GONE);
@@ -106,19 +108,20 @@ public class AlarmDetails extends AbstractGBActivity {
         if (alarm.getSmartWakeupInterval() != null) {
             binding.cbSmartWakeupInterval.setText(NumberFormat.getInstance().format(alarm.getSmartWakeupInterval()));
         }
+        final int maxDigits = String.valueOf(smartWakeupMax).length();
         binding.cbSmartWakeupInterval.setFilters(new InputFilter[]{
                 new InputFilter() {
                     @Override
                     public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-                        if (dend >= 3) // Limit length
+                        if (dend >= maxDigits + 1) // Limit length
                             return "";
 
                         String strValue = dest.subSequence(0, dstart) + source.subSequence(start, end).toString() + dest.subSequence(dend, dest.length());
                         try {
                             int value = Integer.parseInt(strValue);
-                            if (value > 255) {
-                                binding.cbSmartWakeupInterval.setText("255");
-                                binding.cbSmartWakeupInterval.setSelection(3); // Move cursor to end
+                            if (value > smartWakeupMax) {
+                                binding.cbSmartWakeupInterval.setText(String.valueOf(smartWakeupMax));
+                                binding.cbSmartWakeupInterval.setSelection(String.valueOf(smartWakeupMax).length()); // Move cursor to end
                             }
                         } catch (NumberFormatException e) {
                             return "";
@@ -127,6 +130,13 @@ public class AlarmDetails extends AbstractGBActivity {
                     }
                 }
         });
+
+        if (smartAlarmIntervalSupported && smartWakeupDescription != null) {
+            binding.tvSmartWakeupDescription.setText(smartWakeupDescription);
+            binding.tvSmartWakeupDescription.setVisibility(View.VISIBLE);
+        } else {
+            binding.tvSmartWakeupDescription.setVisibility(View.GONE);
+        }
 
         binding.cbSnooze.setChecked(alarm.getSnooze());
         binding.cbSnooze.setVisibility(supportsSnoozing() ? View.VISIBLE : View.GONE);
@@ -194,6 +204,14 @@ public class AlarmDetails extends AbstractGBActivity {
 
     private boolean supportsSmartWakeupInterval(int position) {
         return device.getDeviceCoordinator().supportsSmartWakeupInterval(device, position);
+    }
+
+    private int getSmartWakeupMaxInterval() {
+        return device.getDeviceCoordinator().getSmartWakeupMaxInterval(device);
+    }
+
+    private String getSmartWakeupDescription() {
+        return device.getDeviceCoordinator().getSmartWakeupDescription(device);
     }
 
     /**

@@ -435,12 +435,19 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
                 batteryStatusLabels[batteryIndex].setVisibility(View.VISIBLE);
             }
         }
-        holder.heartRateStatusBox.setVisibility((device.isInitialized() && coordinator.supportsRealtimeData(device) && coordinator.supportsManualHeartRateMeasurement(device)) ? View.VISIBLE : View.GONE);
+        final boolean withingsLiveOnlyHeartRate = coordinator.supportsLiveOnlyHeartRateDisplay(device);
+        holder.heartRateStatusBox.setVisibility((device.isInitialized() && coordinator.supportsRealtimeData(device) && (!withingsLiveOnlyHeartRate || coordinator.supportsManualHeartRateMeasurement(device))) ? View.VISIBLE : View.GONE);
         if (parent.getContext() instanceof ControlCenterv2) {
             ActivitySample sample = ((ControlCenterv2) parent.getContext()).getCurrentHRSample(device);
             if (sample != null) {
                 holder.heartRateStatusLabel.setText(String.valueOf(sample.getHeartRate()));
+                if (withingsLiveOnlyHeartRate) {
+                    holder.heartRateStatusBox.setVisibility(View.VISIBLE);
+                }
             } else {
+                if (withingsLiveOnlyHeartRate) {
+                    holder.heartRateStatusBox.setVisibility(View.GONE);
+                }
                 holder.heartRateStatusLabel.setText("");
             }
 
@@ -452,15 +459,23 @@ public class GBDeviceAdapterv2 extends ListAdapter<GBDevice, GBDeviceAdapterv2.V
             }
         }
 
-        holder.heartRateStatusBox.setOnClickListener(new View.OnClickListener() {
-                                                         @Override
-                                                         public void onClick(View v) {
-                                                             GBApplication.deviceService(device).onHeartRateTest();
-                                                             HeartRateDialog dialog = new HeartRateDialog(device, context);
-                                                             dialog.show();
+        if (withingsLiveOnlyHeartRate) {
+            holder.heartRateStatusBox.setOnClickListener(null);
+            holder.heartRateStatusBox.setClickable(false);
+            holder.heartRateStatusBox.setFocusable(false);
+        } else {
+            holder.heartRateStatusBox.setOnClickListener(new View.OnClickListener() {
+                                                             @Override
+                                                             public void onClick(View v) {
+                                                                 GBApplication.deviceService(device).onHeartRateTest();
+                                                                 HeartRateDialog dialog = new HeartRateDialog(device, context);
+                                                                 dialog.show();
+                                                             }
                                                          }
-                                                     }
-        );
+            );
+            holder.heartRateStatusBox.setClickable(true);
+            holder.heartRateStatusBox.setFocusable(true);
+        }
 
         //device specific settings
         holder.deviceSpecificSettingsView.setVisibility(coordinator.getSupportedDeviceSpecificSettings(device)  != null ? View.VISIBLE : View.GONE);

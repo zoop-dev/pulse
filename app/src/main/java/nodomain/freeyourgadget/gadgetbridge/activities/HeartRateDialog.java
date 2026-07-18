@@ -38,6 +38,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
@@ -146,7 +147,14 @@ public class HeartRateDialog extends Dialog {
         heart_rate_dialog_results_layout.setVisibility(View.GONE);
         heart_rate_dialog_loading_layout.setVisibility(View.VISIBLE);
 
+        if (device.getDeviceCoordinator().supportsLiveOnlyHeartRateDisplay(device)) {
+            GBApplication.deviceService(device).onEnableRealtimeHeartRateMeasurement(true);
+        }
+
         setOnCancelListener(dialogInterface -> {
+            if (device.getDeviceCoordinator().supportsLiveOnlyHeartRateDisplay(device)) {
+                GBApplication.deviceService(device).onEnableRealtimeHeartRateMeasurement(false);
+            }
             LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
         });
     }
