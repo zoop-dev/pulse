@@ -752,8 +752,19 @@ public class HuaweiFileDownloadManager {
     }
 
     private void downloadNextFileBlock() {
-        if (currentFileRequest.buffer == null) // New file
+        if (currentFileRequest.buffer == null) { // New file
+            if (currentFileRequest.fileSize < 0) {
+                // The watch reported an invalid/negative file size (seen as 0xFFFFFFFF, together with
+                // an error status TLV, for a sequence_data file it has no data for). Fail this file
+                // gracefully instead of ByteBuffer.allocate(-1), which throws and kills the socket
+                // read thread, stalling the whole sync.
+                currentFileRequest.fileDownloadCallback.downloadException(new HuaweiFileDownloadException(
+                        currentFileRequest, "Invalid file size reported by device: " + currentFileRequest.fileSize));
+                reset();
+                return;
+            }
             currentFileRequest.buffer = ByteBuffer.allocate(currentFileRequest.fileSize);
+        }
         currentFileRequest.lastPacketNumber = -1; // Counts per block
         currentFileRequest.startOfBlockOffset = currentFileRequest.buffer.position();
         currentFileRequest.currentBlockSize = Math.min(
