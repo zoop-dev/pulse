@@ -379,6 +379,7 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
         }
         safeWriteToCharacteristic(builder, PineTimeJFConstants.UUID_CHARACTERISTICS_NAVIGATION_NARRATIVE, navigationInfoSpec.instruction.getBytes(StandardCharsets.UTF_8));
         safeWriteToCharacteristic(builder, PineTimeJFConstants.UUID_CHARACTERISTICS_NAVIGATION_MAN_DISTANCE, navigationInfoSpec.distanceToTurn.getBytes(StandardCharsets.UTF_8));
+        safeWriteToCharacteristic(builder, PineTimeJFConstants.UUID_CHARACTERISTICS_NAVIGATION_PROGRESS, ByteBuffer.allocate(1).put((byte) navigationInfoSpec.completionPercent).array());
         String iconname;
         switch (navigationInfoSpec.nextAction) {
             case NavigationInfoSpec.ACTION_CONTINUE:
@@ -418,8 +419,17 @@ public class PineTimeJFSupport extends AbstractBTLESingleDeviceSupport implement
             case NavigationInfoSpec.ACTION_ROUNDABOUT_LEFT:
                 iconname = "roundabout-left";
                 break;
+            case NavigationInfoSpec.ACTION_ROUNDABOUT_STRAIGHT:
+                iconname = "roundabout-straight";
+                break;
             case NavigationInfoSpec.ACTION_OFFROUTE:
                 iconname = "close";
+                break;
+            case NavigationInfoSpec.ACTION_FINISH:
+                iconname = "flag";
+                break;
+            case NavigationInfoSpec.ACTION_MERGE:
+                iconname = "merge-straight";
                 break;
             default:
                 iconname = "invalid";
