@@ -37,38 +37,56 @@ public class NotifyCharacteristicChangedAction extends BtLEServerAction {
 
     private final BluetoothGattCharacteristic characteristic;
     private final byte[] value;
+    private final boolean confirm;
 
     public NotifyCharacteristicChangedAction(@NonNull BluetoothDevice device,
                                              @NonNull BluetoothGattCharacteristic characteristic,
                                              byte[] value) {
+        this(device, characteristic, value, false);
+    }
+
+    /**
+     * @param confirm if true, sends an indication (requires ACK from remote device);
+     *                if false, sends a notification (fire-and-forget).
+     */
+    public NotifyCharacteristicChangedAction(@NonNull BluetoothDevice device,
+                                             @NonNull BluetoothGattCharacteristic characteristic,
+                                             byte[] value,
+                                             boolean confirm) {
         super(device);
         this.characteristic = characteristic;
         this.value = value;
+        this.confirm = confirm;
     }
 
     @Override
     public boolean expectsResult() {
-        return false;
+        // We MUST wait for the onNotificationSent callback before sending the next
+        // notification. The Android BLE documentation states: "The application should
+        // wait for onNotificationSent before sending more notifications."
+        // Failing to do so causes the BLE stack to overflow and silently drop
+        // notifications, which makes the watch's ANCS state machine stall.
+        return true;
     }
 
     @SuppressLint("MissingPermission")
     @Override
     public boolean run(BluetoothGattServer server) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            int status = server.notifyCharacteristicChanged(getDevice(), characteristic, false, value);
+            int status = server.notifyCharacteristicChanged(getDevice(), characteristic, confirm, value);
             if (status == BluetoothStatusCodes.SUCCESS) {
                 return true;
             }
-            LOG.error("notifyCharacteristicChanged {} failed: {}",
-                    characteristic.getUuid(), BleNamesResolver.getBluetoothStatusString(status));
+            LOG.error("notifyCharacteristicChanged {} (confirm={}) failed: {}",
+                    characteristic.getUuid(), confirm, BleNamesResolver.getBluetoothStatusString(status));
             return false;
         }
 
         if (characteristic.setValue(value)) {
-            if (server.notifyCharacteristicChanged(getDevice(), characteristic, false)) {
+            if (server.notifyCharacteristicChanged(getDevice(), characteristic, confirm)) {
                 return true;
             }
-            LOG.error("notifyCharacteristicChanged {} failed", characteristic.getUuid());
+            LOG.error("notifyCharacteristicChanged {} (confirm={}) failed", characteristic.getUuid(), confirm);
         } else {
             LOG.error("setting value of characteristic {} failed", characteristic.getUuid());
         }
