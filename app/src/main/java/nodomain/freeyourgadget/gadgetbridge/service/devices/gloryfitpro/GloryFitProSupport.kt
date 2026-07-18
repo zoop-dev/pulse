@@ -18,7 +18,9 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.gloryfitpro
 
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
+import android.content.Context
 import android.content.Intent
+import android.media.AudioManager
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper
@@ -34,6 +36,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.BatteryState
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec
+import nodomain.freeyourgadget.gadgetbridge.util.MediaManager
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec
 import nodomain.freeyourgadget.gadgetbridge.model.WeatherSpec
 import nodomain.freeyourgadget.gadgetbridge.model.weather.Weather
@@ -89,6 +92,16 @@ class GloryFitProSupport : AbstractBTLESingleDeviceSupport(LOG) {
 
         // Ask for today's step total.
         builder.write(UUID_CHARACTERISTIC_DATA_WRITE, *cmdGetAll(CMD_ACTIVITY_DAY))
+
+        // Push the currently-playing media so the watch's music screen is populated on connect
+        // (otherwise it shows nothing until the next play/pause event).
+        val mediaManager = MediaManager(context)
+        mediaManager.refresh()
+        mediaManager.bufferMusicSpec?.let { spec ->
+            lastMusicSpec = spec
+            lastMusicPlaying = mediaManager.bufferMusicStateSpec?.state?.toInt() == MusicStateSpec.STATE_PLAYING
+            writeMusicInfo(builder, spec.artist, spec.track)
+        }
 
         // FIXME: likely too early, refine once the init handshake is fully understood.
         builder.setDeviceState(GBDevice.State.INITIALIZED)
@@ -148,21 +161,15 @@ class GloryFitProSupport : AbstractBTLESingleDeviceSupport(LOG) {
     }
 
     override fun onSetPhoneVolume(volume: Float) {
-        sendVolume(volume.toInt())
-    }
-
-    /** Volume to the watch: "01 e2 ab 01 01 <vol 0..100>". */
-    private fun sendVolume(percent: Int) {
-        val vol = percent.coerceIn(0, 100)
-        val builder = createTransactionBuilder("set phone volume")
-        builder.write(
-            UUID_CHARACTERISTIC_DATA_WRITE,
-            *byteArrayOf(PKT_HEADER, CMD_MUSIC_CONTROL, MODE_SET, 0x01, 0x01, vol.toByte())
-        )
-        builder.queue()
+        // The watch shows the volume in the music-info frame's field05; re-send the current track
+        // so its volume bar reflects the phone volume.
+        if (lastMusicSpec != null) {
+            sendMusicInfo(lastMusicSpec?.artist, lastMusicSpec?.track)
+        }
     }
 
     private var lastMusicSpec: MusicSpec? = null
+    private var lastMusicPlaying = false
 
     override fun onSetMusicInfo(musicSpec: MusicSpec) {
         lastMusicSpec = musicSpec
@@ -170,31 +177,40 @@ class GloryFitProSupport : AbstractBTLESingleDeviceSupport(LOG) {
     }
 
     override fun onSetMusicState(stateSpec: MusicStateSpec) {
-        // Resend the track so the watch shows it. Keeping the "playing" icon in sync and a live
-        // volume bar would require streaming updates ~2x/s like the official app; that flooded the
-        // connection here, so it's left as a follow-up (TODO).
+        // Re-send full music info so field03 (play/pause icon) reflects the new state immediately.
+        lastMusicPlaying = stateSpec.state.toInt() == MusicStateSpec.STATE_PLAYING
         sendMusicInfo(lastMusicSpec?.artist, lastMusicSpec?.track)
     }
 
     /** Music info to the watch: "01 e2 abab 00 ab 01 <artist> ab 02 <title> ab 03/04/05 <state>". */
     private fun sendMusicInfo(artistRaw: String?, titleRaw: String?) {
+        val builder = createTransactionBuilder("set music info")
+        writeMusicInfo(builder, artistRaw, titleRaw)
+        builder.queue()
+    }
+
+    private fun writeMusicInfo(builder: TransactionBuilder, artistRaw: String?, titleRaw: String?) {
         val artist = (artistRaw ?: "").take(32).toByteArray(Charsets.UTF_16BE)
         val title = (titleRaw ?: "").take(48).toByteArray(Charsets.UTF_16BE)
         val data = ByteArrayOutputStream()
         data.write(byteArrayOf(PKT_HEADER, CMD_MUSIC_CONTROL, MODE_SET, MODE_SET, 0x00))
         data.write(byteArrayOf(MODE_SET, 0x01, artist.size.toByte())); data.write(artist)
         data.write(byteArrayOf(MODE_SET, 0x02, title.size.toByte())); data.write(title)
-        data.write(byteArrayOf(MODE_SET, 0x03, 0x01, 0x00))
-        data.write(byteArrayOf(MODE_SET, 0x04, 0x01, 0x0f))
-        data.write(byteArrayOf(MODE_SET, 0x05, 0x01, 0x08))
+        // Watch icon flag: 0x03 -> pause icon (=playing), 0x02 -> play icon (=paused). Verified on hardware.
+        data.write(byteArrayOf(MODE_SET, 0x03, 0x01, if (lastMusicPlaying) 0x03 else 0x02))
+        // Volume bar: field04 = max steps, field05 = current step. Use the phone's own media-volume
+        // scale so each volume key press moves the bar by exactly one segment.
+        val audio = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        val volMax = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC).coerceIn(1, 63)
+        val volCur = audio.getStreamVolume(AudioManager.STREAM_MUSIC).coerceIn(0, volMax)
+        data.write(byteArrayOf(MODE_SET, 0x04, 0x01, volMax.toByte()))
+        data.write(byteArrayOf(MODE_SET, 0x05, 0x01, volCur.toByte()))
         val dataPkt = data.toByteArray()
         var xor = 0
         for (b in dataPkt) xor = xor xor (b.toInt() and 0xff)
         val terminator = byteArrayOf(PKT_HEADER, CMD_MUSIC_CONTROL, MODE_SET, MODE_SET, PKT_TERMINATOR, xor.toByte())
-        val builder = createTransactionBuilder("set music info")
         builder.write(UUID_CHARACTERISTIC_DATA_WRITE, *dataPkt)
         builder.write(UUID_CHARACTERISTIC_DATA_WRITE, *terminator)
-        builder.queue()
     }
 
     override fun onFetchRecordedData(dataTypes: Int) {
