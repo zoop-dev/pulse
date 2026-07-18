@@ -126,16 +126,16 @@ public class Ak102SyncParserTest {
         final ByteArrayOutputStream buf = new ByteArrayOutputStream();
         writeHeader(buf, 1, packMinuteTs(2026, 7, 7, 10 * 60), 5);
         writeU16(buf, 1000); // steps
-        writeU16(buf, 2500); // raw distance -> 25 m
-        writeU16(buf, 3000); // raw calories -> 3 kcal
+        writeU16(buf, 2500); // raw km/100000 -> 25 m -> 2500 cm
+        writeU16(buf, 3000); // raw kcal/1000 -> 3 kcal -> 3000 cal
 
         final List<Ak102SyncParser.ActivityPoint> points =
                 Ak102SyncParser.parseSteps(buf.toByteArray(), true, false);
 
         assertEquals(1, points.size());
         assertEquals(1000, points.get(0).steps);
-        assertEquals(25, points.get(0).distanceCm);
-        assertEquals(3, points.get(0).activeCalories);
+        assertEquals(2500, points.get(0).distanceCm);
+        assertEquals(3000, points.get(0).activeCalories);
     }
 
     // Sleep ------------------------------------------------------------------
