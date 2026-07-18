@@ -43,7 +43,6 @@ import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityTrack;
 import nodomain.freeyourgadget.gadgetbridge.model.GPSCoordinate;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.FileType;
-import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminTimeUtils;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.FitFile;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.RecordData;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.fit.enums.GarminSport;
@@ -563,14 +562,13 @@ public class FitExporter {
     }
 
     private RecordData buildTimestampCorrelation(final long startSeconds, final int utcOffsetSeconds) {
-        // system_timestamp (field 1) and local_timestamp (field 3) are plain UINT32 — they
-        // lack the FIT TIMESTAMP marker, so the encoder does NOT auto-subtract the Garmin
-        // epoch; it is applied manually here (same reasoning as buildActivity's field 5).
-        // timestamp (field 253) IS a TIMESTAMP, so it takes raw Unix seconds and the encoder
-        // subtracts the epoch. Importers recover the timezone as local_timestamp - system_timestamp.
+        // All three fields are FIT TIMESTAMP type, so the encoder subtracts the Garmin epoch
+        // automatically — pass raw Unix seconds. system_timestamp and timestamp are the UTC
+        // start instant; local_timestamp carries the phone-zone offset so importers recover
+        // the timezone as local_timestamp - system_timestamp.
         return new FitTimestampCorrelation.Builder()
-                .setSystemTimestamp(startSeconds - GarminTimeUtils.GARMIN_TIME_EPOCH)
-                .setLocalTimestamp((startSeconds + utcOffsetSeconds) - GarminTimeUtils.GARMIN_TIME_EPOCH)
+                .setSystemTimestamp(startSeconds)
+                .setLocalTimestamp(startSeconds + utcOffsetSeconds)
                 .setTimestamp(startSeconds)
                 .build(LMT_TIMESTAMP_CORRELATION);
     }
@@ -1514,13 +1512,13 @@ public class FitExporter {
                                      final int utcOffsetSeconds) {
         // NativeFITMessage.ACTIVITY field 0 (total_timer_time) is declared without scale —
         // FIT spec is scale=1000 unit=s, so pre-multiply seconds → milliseconds.
-        // Field 5 (local_timestamp) likewise lacks the TIMESTAMP marker, so the encoder
-        // does not subtract the Garmin epoch — do it manually. Add the phone-zone UTC offset
-        // so local_timestamp holds the local wall-clock; importers recover the timezone as
+        // Field 5 (local_timestamp) is a FIT TIMESTAMP, so the encoder subtracts the Garmin
+        // epoch — pass raw Unix seconds plus the phone-zone UTC offset so local_timestamp
+        // holds the local wall-clock; importers recover the timezone as
         // local_timestamp - timestamp == utcOffsetSeconds (0 when the phone is in UTC).
         return new FitActivity.Builder()
                 .setTimestamp(endSeconds)
-                .setLocalTimestamp((endSeconds + utcOffsetSeconds) - GarminTimeUtils.GARMIN_TIME_EPOCH)
+                .setLocalTimestamp(endSeconds + utcOffsetSeconds)
                 .setTotalTimerTime(elapsedSeconds * 1000L)
                 .setNumSessions(1)
                 .setType(ACTIVITY_TYPE_MANUAL)
