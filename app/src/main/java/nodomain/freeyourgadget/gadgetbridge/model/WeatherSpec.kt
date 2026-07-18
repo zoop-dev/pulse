@@ -27,6 +27,7 @@ import net.e175.klaus.solarpositioning.SunriseTransitSet
 import java.util.Date
 import java.util.GregorianCalendar
 import kotlin.math.floor
+import kotlin.random.Random
 
 // FIXME: document me and my fields, including units
 /**
@@ -742,21 +743,39 @@ class WeatherSpec() : Parcelable {
         fun createTestWeather(): WeatherSpec {
             val weather = WeatherSpec()
 
-            weather.location = "Green Hill"
-            weather.timestamp = 1764364324
-            weather.currentTemp = 15 + 273
-            weather.todayMinTemp = 10 + 273
-            weather.todayMaxTemp = 25 + 273
-            weather.currentConditionCode = 601 // snow
-            weather.currentCondition = "Snowy"
+            val conditions = listOf(
+                211 /* thunderstorm */ to "Thunderstorm",
+                301 /* drizzle */ to "Drizzly",
+                314 /* heavy shower rain and drizzle */ to "Heavy rain",
+                500 /* light rain */ to "Rainy",
+                501 /* moderate rain */ to "Moderate rain",
+                521 /* shower rain */ to "Shower rain",
+                601 /* snow */ to "Snowy",
+                741 /* fog */ to "Foggy",
+                781 /* tornado */ to "Tornado",
+                800 /* clear */ to "Clear sky",
+                803 /* clouds */ to "Cloudy",
+                804 /* overcast clouds */ to "Overcast"
+            )
+
+            weather.location = "Random Hill"
+            weather.timestamp = (System.currentTimeMillis() / 1000).toInt()
+            weather.currentTemp = Random.nextInt(-40, 40) + 273
+            weather.todayMinTemp = weather.currentTemp - Random.nextInt(0, 15)
+            weather.todayMaxTemp = weather.currentTemp + Random.nextInt(0, 15)
+
+            val (conditionCode, conditionText) = conditions.random()
+            weather.currentConditionCode = conditionCode
+            weather.currentCondition = conditionText
+
             weather.windDirection = 12
             weather.precipProbability = 99
             weather.windSpeed = 10f
-            weather.feelsLikeTemp = 13 + 273
-            weather.currentHumidity = 70
+            weather.feelsLikeTemp = weather.currentTemp + Random.nextInt(-5, 5)
+            weather.currentHumidity = Random.nextInt(20, 80)
             weather.latitude = 38.250137f
             weather.longitude = -122.410805f
-            weather.dewPoint = 10 + 273
+            weather.dewPoint = weather.currentTemp - Random.nextInt(5, 10)
             val airQuality = AirQuality()
             airQuality.aqi = 50
             weather.airQuality = airQuality
@@ -768,8 +787,11 @@ class WeatherSpec() : Parcelable {
             for (i in 0..23) {
                 val gbForecast = Hourly()
                 gbForecast.timestamp = hourlyTimestamp
-                gbForecast.temp = 10 + i + 273
-                gbForecast.conditionCode = 800 // clear
+                gbForecast.temp = weather.currentTemp + i
+
+                val (conditionCode, conditionText) = conditions.random()
+                gbForecast.conditionCode = conditionCode
+
                 gbForecast.precipProbability = 50 + i
                 gbForecast.windDirection = 30 + i
                 gbForecast.windSpeed = 20f + i
@@ -784,9 +806,12 @@ class WeatherSpec() : Parcelable {
             weather.forecasts = ArrayList()
             for (i in 0..4) {
                 val gbForecast = Daily()
-                gbForecast.minTemp = 10 + i + 273
-                gbForecast.maxTemp = 25 + i + 273
-                gbForecast.conditionCode = 800 // clear
+                gbForecast.minTemp = weather.currentTemp - 30 + (i * 10) - Random.nextInt(0, 15)
+                gbForecast.maxTemp = weather.currentTemp - 30 + (i * 10) + Random.nextInt(0, 15)
+
+                val (conditionCode, conditionText) = conditions.random()
+                gbForecast.conditionCode = conditionCode
+
                 gbForecast.precipProbability = 50 + i
                 val airQualityDaily = AirQuality()
                 airQualityDaily.aqi = 120 + i
