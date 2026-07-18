@@ -51,4 +51,9 @@ public class SendDataSyncConfigCommand extends Request {
             throw new RequestCreationException(e);
         }
     }
+
+    @Override
+    protected String getDualChannelDestPackage() {
+        return this.dstPackage;
+    }
 }

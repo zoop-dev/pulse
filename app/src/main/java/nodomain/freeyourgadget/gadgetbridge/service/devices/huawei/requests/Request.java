@@ -31,7 +31,10 @@ import java.util.List;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiCrypto;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.DataSync;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.P2P;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiDualChannelHelper;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.operations.OperationStatus;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -368,7 +371,7 @@ public class Request {
             // Route to the negotiated dual channel when this packet is flagged for it; otherwise
             // (and until the aux socket is up) it goes on the primary socket.
             int channel = 0;
-            if (supportProvider.getDualChannelHelper().useExtraChannel(this.serviceId & 0xFF, this.commandId & 0xFF)) {
+            if (routeToExtraChannel()) {
                 channel = supportProvider.getDualChannelHelper().getChannel();
             }
             builderBr.setChannel(channel);
@@ -376,6 +379,34 @@ public class Request {
         } else {
             builderLe.queue();
         }
+    }
+
+    /**
+     * Decides whether this outgoing packet goes on the aux (dual channel) socket. Most services are
+     * routed by their (service, command) pair; the P2P services 0x34/0x37 are instead routed by the
+     * destination package name (vendor {@code getSocketChannelForDestPackageName}), which the P2P
+     * sender requests supply via {@link #getDualChannelDestPackage()}.
+     */
+    private boolean routeToExtraChannel() {
+        HuaweiDualChannelHelper helper = supportProvider.getDualChannelHelper();
+        if (!helper.isActive())
+            return false;
+        int svc = this.serviceId & 0xFF;
+        if (svc == (P2P.id & 0xFF) || svc == (DataSync.id & 0xFF)) {
+            String dstPackage = getDualChannelDestPackage();
+            return helper.useExtraChannelForPackage(svc, dstPackage);
+        }
+        return helper.useExtraChannel(svc, this.commandId & 0xFF);
+    }
+
+    /**
+     * The destination package name for dual channel routing of the P2P services 0x34/0x37. The P2P
+     * sender requests build their packet in {@link #createRequest()} without populating the base
+     * {@code sendingPacket}, so they expose the package here instead. Returns null for all other
+     * requests (they route by service/command, not by package).
+     */
+    protected String getDualChannelDestPackage() {
+        return null;
     }
 
     public boolean autoRemoveFromResponseHandler() {
