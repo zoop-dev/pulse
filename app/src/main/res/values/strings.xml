@@ -1934,6 +1934,8 @@
     <string name="devicetype_amazfit_balance" translatable="false">Amazfit Balance</string>
     <string name="devicetype_amazfit_balance_2" translatable="false">Amazfit Balance 2</string>
     <string name="devicetype_amazfit_balance_2_xt" translatable="false">Amazfit Balance 2 XT</string>
+    <string name="devicetype_amazfit_balance_3" translatable="false">Amazfit Balance 3</string>
+    <string name="devicetype_amazfit_balance_ultra" translatable="false">Amazfit Balance Ultra</string>
     <string name="devicetype_amazfit_active" translatable="false">Amazfit Active</string>
     <string name="devicetype_amazfit_active_2" translatable="false">Amazfit Active 2</string>
     <string name="devicetype_amazfit_active_2_round" translatable="false">Amazfit Active 2 (Round)</string>
@@ -1945,6 +1947,8 @@
     <string name="devicetype_amazfit_cheetah_round" translatable="false">Amazfit Cheetah (Round)</string>
     <string name="devicetype_amazfit_cheetah_pro" translatable="false">Amazfit Cheetah Pro</string>
     <string name="devicetype_amazfit_cheetah_2_pro" translatable="false">Amazfit Cheetah 2 Pro</string>
+    <string name="devicetype_amazfit_cheetah_2_ultra" translatable="false">Amazfit Cheetah 2 Ultra</string>
+    <string name="devicetype_amazfit_bip_max" translatable="false">Amazfit Bip Max</string>
     <string name="devicetype_amazfit_gts3" translatable="false">Amazfit GTS 3</string>
     <string name="devicetype_amazfit_gts4" translatable="false">Amazfit GTS 4</string>
     <string name="devicetype_amazfit_gts4_mini" translatable="false">Amazfit GTS 4 Mini</string>
