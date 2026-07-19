@@ -1,10 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.externalevents;
 
 import android.app.Notification;
-import android.os.Bundle;
-
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.Person;
+import android.graphics.drawable.Icon;
 
 import org.junit.Test;
 
@@ -179,45 +176,27 @@ public class NotificationListenerTest extends TestBase {
     }
 
     @Test
-    public void dissectNotificationTo_prefersMessagingMetadataForSenderAndBody() {
-        final NotificationListener listener = new NotificationListener();
+    public void populateNotificationIcon_preservesResourceOwner() {
+        final Notification notification = new Notification.Builder(getContext())
+                .setSmallIcon(Icon.createWithResource("com.example.owner", android.R.drawable.ic_dialog_info))
+                .build();
         final NotificationSpec spec = new NotificationSpec();
 
-        final Person sender = new Person.Builder().setName("Alice").build();
-        final Person user = new Person.Builder().setName("Me").build();
-        final Notification notification = new NotificationCompat.Builder(getContext(), "test")
-                .setContentTitle("Fallback title")
-                .setContentText("Fallback body")
-                .setStyle(new NotificationCompat.MessagingStyle(user)
-                        .setConversationTitle("Family Group")
-                        .addMessage("Latest message", System.currentTimeMillis(), sender))
-                .build();
+        NotificationListener.populateNotificationIcon(notification, "com.example.source", spec);
 
-        listener.dissectNotificationTo(notification, spec, true);
-
-        assertEquals("Alice", spec.sender);
-        assertEquals("Family Group", spec.title);
-        assertEquals("Latest message", spec.body);
+        assertEquals(android.R.drawable.ic_dialog_info, spec.iconId);
+        assertEquals("com.example.owner", spec.iconPackageId);
     }
 
     @Test
-    public void dissectNotificationTo_usesConversationTitleWhenTitleMissing() {
-        final NotificationListener listener = new NotificationListener();
+    public void populateNotificationIcon_usesSourceForLegacyResource() {
+        final Notification notification = new Notification();
+        notification.icon = android.R.drawable.ic_dialog_alert;
         final NotificationSpec spec = new NotificationSpec();
 
-        final Bundle extras = new Bundle();
-        extras.putCharSequence(NotificationCompat.EXTRA_CONVERSATION_TITLE, "Chat Room");
-        final Notification notification = new NotificationCompat.Builder(getContext(), "test")
-                .setExtras(extras)
-                .setStyle(new NotificationCompat.MessagingStyle(new Person.Builder().setName("Me").build())
-                        .setConversationTitle("Chat Room")
-                        .addMessage("Body text", System.currentTimeMillis(), new Person.Builder().setName("Bob").build()))
-                .build();
+        NotificationListener.populateNotificationIcon(notification, "com.example.source", spec);
 
-        listener.dissectNotificationTo(notification, spec, true);
-
-        assertEquals("Chat Room", spec.title);
-        assertEquals("Bob", spec.sender);
-        assertEquals("Body text", spec.body);
+        assertEquals(android.R.drawable.ic_dialog_alert, spec.iconId);
+        assertEquals("com.example.source", spec.iconPackageId);
     }
 }
