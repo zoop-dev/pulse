@@ -4752,4 +4752,5 @@
     <string name="endurain_uploading_started">正上传到 Endurian…</string>
     <string name="activity_summary_set_header_photo_title">设置标头照</string>
     <string name="activity_summary_remove_header_photo_title">删除标头照</string>
+    <string name="xiaomi_vibration_builtin_good_day">日安</string>
 </resources>
