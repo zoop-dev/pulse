@@ -24,14 +24,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
 import de.greenrobot.daogenerator.Index;
 import de.greenrobot.daogenerator.Property;
 import de.greenrobot.daogenerator.Schema;
+import de.greenrobot.daogenerator.ToManyBase;
+import de.greenrobot.daogenerator.ToOne;
 
 /**
  * Generates entities and DAOs for the example project DaoExample.
@@ -73,9 +80,26 @@ public class GBDaoGenerator {
     private static final String TIMESTAMP_FROM = "timestampFrom";
     private static final String TIMESTAMP_TO = "timestampTo";
 
+    /**
+     * Interfaces (beyond a literal {@link Entity#implementsSerializable()}) that are known to extend
+     * {@code java.io.Serializable}. This module has no compile-time dependency on the app's model
+     * classes (that would be circular, since the app depends on this module's generated output), so
+     * this list can't be derived automatically and has to be kept in sync by hand with whatever
+     * marker interfaces are passed to {@link Entity#implementsInterface}.
+     */
+    private static final Set<String> SERIALIZABLE_INTERFACES = Set.of(
+            "java.io.Serializable",
+            ACTIVITY_SUMMARY,
+            MODEL_PACKAGE + ".Alarm",
+            MODEL_PACKAGE + ".Reminder",
+            MODEL_PACKAGE + ".WorldClock",
+            MODEL_PACKAGE + ".Contact"
+    );
+
     public static void main(String[] args) throws Exception {
         File outputDir = new File(OUTPUT_DIR);
         if (!outputDir.exists()) {
+            //noinspection ResultOfMethodCallIgnored
             outputDir.mkdirs();
         }
 
@@ -262,6 +286,8 @@ public class GBDaoGenerator {
         sampleProvidersToGenerate.add(addGenericSleepScoreSample(schema, user, device));
         sampleProvidersToGenerate.add(addGenericBodyEnergySample(schema, user, device));
 
+        validateSerializableEntities(schema);
+
         deleteOldFiles();
 
         new DaoGenerator().generateAll(schema, OUTPUT_DIR);
@@ -274,6 +300,55 @@ public class GBDaoGenerator {
 
         long time = System.currentTimeMillis() - start;
         System.out.println("Written " + sampleProvidersToGenerate.size() + " sample providers in " + time + "ms");
+    }
+
+    private static boolean isSerializable(final Entity entity) {
+        for (final String i : entity.getInterfacesToImplement()) {
+            if (SERIALIZABLE_INTERFACES.contains(i)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Validate if all relations for entities that are serializable also lead to a Serializable entity.
+     */
+    private static void validateSerializableEntities(final Schema schema) {
+        final Deque<Entity> queue = new ArrayDeque<>();
+        for (final Entity entity : schema.getEntities()) {
+            if (isSerializable(entity)) {
+                queue.add(entity);
+            }
+        }
+
+        final Set<Entity> reachable = new LinkedHashSet<>();
+        while (!queue.isEmpty()) {
+            final Entity entity = queue.poll();
+            if (!reachable.add(entity)) {
+                continue;
+            }
+            for (final ToOne toOne : entity.getToOneRelations()) {
+                queue.add(toOne.getTargetEntity());
+            }
+            for (final ToManyBase toMany : entity.getToManyRelations()) {
+                queue.add(toMany.getTargetEntity());
+            }
+        }
+
+        final List<String> violations = new ArrayList<>();
+        for (final Entity entity : reachable) {
+            if (!isSerializable(entity)) {
+                violations.add(entity.getClassName());
+            }
+        }
+
+        if (!violations.isEmpty()) {
+            throw new IllegalStateException(
+                    "Non-serializable relations used in serializable entities: [" + violations + "]. " +
+                            "Fix by calling entity.implementsSerializable() when defining them in " +
+                            GBDaoGenerator.class.getSimpleName());
+        }
     }
 
     private static void deleteOldFiles() throws IOException {
@@ -396,6 +471,7 @@ public class GBDaoGenerator {
         // this allows changing attributes while preserving user identity
         Entity userAttributes = addEntity(schema, "UserAttributes");
         userAttributes.addIdProperty();
+        userAttributes.implementsSerializable();
         userAttributes.addIntProperty("heightCM").notNull();
         userAttributes.addIntProperty("weightKG").notNull();
         userAttributes.addIntProperty("sleepGoalHPD").javaDocGetterAndSetter("@deprecated").codeBeforeGetterAndSetter("@Deprecated");
@@ -2436,39 +2512,39 @@ public class GBDaoGenerator {
                 You should have received a copy of the GNU Affero General Public License
                 along with this program.  If not, see <https://www.gnu.org/licenses/>. */
             package nodomain.freeyourgadget.gadgetbridge.devices;
-        
+            
             import androidx.annotation.NonNull;
-        
+            
             import de.greenrobot.dao.AbstractDao;
             import de.greenrobot.dao.Property;
             import nodomain.freeyourgadget.gadgetbridge.entities.${classNameSample};
             import nodomain.freeyourgadget.gadgetbridge.entities.${classNameDao};
             import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
             import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-        
+            
             public class ${classNameSample}Provider extends AbstractTimeSampleProvider<${classNameSample}> {
                 public ${classNameSample}Provider(@NonNull final GBDevice device, @NonNull final DaoSession session) {
                     super(device, session);
                 }
-        
+            
                 @NonNull
                 @Override
                 public AbstractDao<${classNameSample}, ?> getSampleDao() {
                     return getSession().get${classNameDao}();
                 }
-        
+            
                 @NonNull
                 @Override
                 protected Property getTimestampSampleProperty() {
                     return ${classNameDao}.Properties.Timestamp;
                 }
-        
+            
                 @NonNull
                 @Override
                 protected Property getDeviceIdentifierSampleProperty() {
                     return ${classNameDao}.Properties.DeviceId;
                 }
-        
+            
                 @NonNull
                 @Override
                 public ${classNameSample} createSample() {
