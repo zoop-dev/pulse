@@ -573,8 +573,9 @@ class GloryFitProSupport : AbstractBTLESingleDeviceSupport(LOG) {
      */
     private fun mapConditionToWatch(owm: Int): Int = when (owm) {
         in 200..232 -> 4                 // thunderstorm
-        in 300..399 -> 7                 // drizzle -> rain (no lighter icon exists)
-        500, 501 -> 7                    // light / moderate rain
+        in 300..399 -> 3                 // drizzle -> light rain (cloud+sun+rain, visually lighter)
+        500 -> 3                         // light rain -> cloud+sun+rain
+        501 -> 7                         // rain
         502 -> 8                         // heavy rain
         503, 504 -> 9                    // very heavy / extreme rain
         511 -> 6                         // freezing rain -> hail/ice
