@@ -2031,6 +2031,7 @@
     <string name="devicetype_garmin_fenix_5" translatable="false">Garmin Fenix 5</string>
     <string name="devicetype_garmin_fenix_5s" translatable="false">Garmin Fenix 5S</string>
     <string name="devicetype_garmin_fenix_5_plus" translatable="false">Garmin Fenix 5 Plus</string>
+    <string name="devicetype_garmin_fenix_5s_plus" translatable="false">Garmin Fenix 5S Plus</string>
     <string name="devicetype_garmin_fenix_5x_plus" translatable="false">Garmin Fenix 5X Plus</string>
     <string name="devicetype_garmin_fenix_6" translatable="false">Garmin Fenix 6</string>
     <string name="devicetype_garmin_fenix_6_pro" translatable="false">Garmin Fenix 6 Pro</string>
