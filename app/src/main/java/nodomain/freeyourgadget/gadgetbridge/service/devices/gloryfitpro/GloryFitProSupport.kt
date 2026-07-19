@@ -563,20 +563,41 @@ class GloryFitProSupport : AbstractBTLESingleDeviceSupport(LOG) {
      * Map an OpenWeatherMap condition code to the watch's icon code. Best-effort (the watch's
      * exact code table is not documented); refine by comparing icons on hardware.
      */
+    /**
+     * Map an OpenWeatherMap condition code to the watch icon code. Icon codes 0..31 were
+     * catalogued on hardware (34+ are placeholders/other resources; see the protocol doc):
+     * 0 clear, 1 partly cloudy, 2 cloudy, 3 rain, 4 thunderstorm, 5 thunderstorm+hail,
+     * 6 hail/ice, 7 rain, 8 heavy rain, 9 extreme rain, 10 showers, 11 heavy showers,
+     * 12 violent showers, 13 snow shower, 14 light snow, 15 snow, 16 heavy snow,
+     * 17 snowstorm, 18 fog/mist, 19 sleet, 20 blizzard.
+     */
     private fun mapConditionToWatch(owm: Int): Int = when (owm) {
-        in 200..299          -> 4   // thunderstorm      -> cloud+rain+lightning
-        in 300..399          -> 3   // drizzle           -> sun+cloud+light rain
-        511                  -> 6   // freezing rain     -> sleet/snow
-        500, 520             -> 3   // light rain        -> sun+cloud+light rain
-        502, 503, 504, 522   -> 8   // heavy rain        -> cloud+heavy rain
-        in 500..599          -> 7   // rain              -> cloud+rain
-        in 600..699          -> 6   // snow / sleet      -> cloud+snow+rain
-        in 700..799          -> 2   // fog / mist / haze -> cloud
-        800                  -> 0   // clear             -> sun
-        801, 802             -> 1   // few/scattered     -> sun+cloud
-        803, 804             -> 2   // broken/overcast   -> cloud
-        906                  -> 5   // hail              -> cloud+hail+lightning
-        else                 -> 2
+        in 200..232 -> 4                 // thunderstorm
+        in 300..399 -> 7                 // drizzle -> rain (no lighter icon exists)
+        500, 501 -> 7                    // light / moderate rain
+        502 -> 8                         // heavy rain
+        503, 504 -> 9                    // very heavy / extreme rain
+        511 -> 6                         // freezing rain -> hail/ice
+        520 -> 3                         // light shower -> changeable (cloud+sun+rain)
+        521, 531 -> 10                   // shower
+        522 -> 11                        // heavy shower
+        in 505..599 -> 7                 // other rain
+        600 -> 14                        // light snow
+        601, 621 -> 15                   // snow
+        602 -> 16                        // heavy snow
+        611, 612, 613, 615, 616 -> 19    // sleet (rain + snow)
+        620 -> 13                        // light shower snow
+        622 -> 17                        // heavy shower snow
+        in 600..699 -> 15                // other snow
+        771 -> 12                        // squall
+        781 -> 4                         // tornado -> storm
+        in 700..799 -> 18                // fog / mist / haze / dust
+        800 -> 0                         // clear
+        801, 802 -> 1                    // few / scattered clouds
+        803, 804 -> 2                    // broken / overcast
+        906 -> 6                         // hail
+        in 900..999 -> 4                 // extreme
+        else -> 2
     }
     // Watch icon codes (verified on hardware): 0 clear, 1 partly cloudy, 2 cloudy,
     // 3 light rain, 4 thunderstorm, 5 hail, 6 snow, 7 rain, 8 heavy rain.
