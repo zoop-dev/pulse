@@ -22,7 +22,7 @@ import java.util.regex.Pattern
 
 class DM58Coordinator : GloryFitProCoordinator() {
     override fun getManufacturer(): String {
-        return "Unknown"
+        return "GloryFitPro"
     }
 
     override fun getSupportedDeviceName(): Pattern? {
