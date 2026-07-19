@@ -2,19 +2,40 @@
 
 #### Next release (WIP)
 
-* Initial support for HUAWEI FreeClip 2
+* Initial support for AK102 (TopStep / FitCloud)
 * Initial support for Garmin Forerunner 170 Music
+* Initial support for Haylou S35 ANC
+* Initial support for HUAWEI FreeClip 2
+* Initial support for Soundcore Life Tune XR
+* Experimental support for Amazfit Balance 3, Balance Ultra, Bip Max, Cheetah 2 Ultra
 * Experimental support for BM6 Battery Monitor
+* Experimental support for Garmin Fenix 5S Plus
 * Add cumulative calories daily chart
 * Add Quick Settings tiles for some device
+* Amazfit Active 3 Premium: Fix map upload via Bluetooth
+* Debug: Randomize test weather
+* Endurain: Upload workout photos
+* FIT Export: Add local timestamp, distance, elevation, step length
+* Fix crash when opening map view
 * Garmin HRM Pro+: Improved connection support
 * Garmin: Add point winds support
+* Garmin: Fix crash on number parsing
+* Garmin: Fix crash when Bluetooth is disconnected
+* Health Connect: Fix sleep sync being cut off on some devices
+* Health Connect: Fix sync of very long GPS routes
+* Huawei: Basic support for offline maps
 * Huawei: GPS track uploading
-* Huawei: Offline maps basic support
 * Huawei: Improved calendar sync
+* Mi Band 9 Active: Fix activity summary parsing
+* Prevent multiple find phone activities from being opened
 * Sony WH-ULT900N: Enable more features
+* Soundcore Sport X20: Extend functionality
+* Workouts: Add function to set header photo
+* Xiaomi-protobuf: Add dynamic vibration pattern configuration screen
+* Xiaomi-protobuf: Improve daily summary parsing
 * Xiaomi-protobuf: Improve workout summary parsing
 * Xiaomi-protobuf: Parse workout details
+* Yawell Rings: Fix temperature sync to Health Connect
 
 #### 0.92.2
 
