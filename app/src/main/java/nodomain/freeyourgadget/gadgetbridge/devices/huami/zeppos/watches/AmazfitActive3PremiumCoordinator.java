@@ -73,11 +73,6 @@ public class AmazfitActive3PremiumCoordinator extends ZeppOsCoordinator {
     }
 
     @Override
-    public boolean supportsWifiHotspot(final GBDevice device) {
-        return true;
-    }
-
-    @Override
     public boolean supportsBluetoothPhoneCalls(final GBDevice device) {
         return true;
     }

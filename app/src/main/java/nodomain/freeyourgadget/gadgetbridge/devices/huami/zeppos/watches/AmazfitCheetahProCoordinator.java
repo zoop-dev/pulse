@@ -68,16 +68,6 @@ public class AmazfitCheetahProCoordinator extends ZeppOsCoordinator {
     }
 
     @Override
-    public boolean supportsWifiHotspot(final GBDevice device) {
-        return true;
-    }
-
-    @Override
-    public boolean supportsFtpServer(final GBDevice device) {
-        return true;
-    }
-
-    @Override
     public boolean supportsBluetoothPhoneCalls(final GBDevice device) {
         return true;
     }
