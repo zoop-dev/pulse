@@ -211,22 +211,22 @@ public class FetchSportDataOperation extends AbstractBTLEOperation<CasioGBD200De
 
     // ── Session list parsing ──────────────────────────────────────────────────
 
-    /** Parse the used-slot bitmask at payload[6..18] into mUsedSlots. */
+    /** Parse the used-slot bitmask at payload[5..17] into mUsedSlots. */
     private void parseUsedSlots(byte[] payload) {
-        // The used-slot bitmask starts at payload[6] and spans 13 bytes (104 slots;
+        // The used-slot bitmask starts at payload[5] and spans 13 bytes (104 slots;
         // the watch stores up to ~100 runs). Each bit: 0 = slot in use, 1 = free.
         // Slots form a ring buffer, so used slots need not be contiguous — record
         // each used bit position so sessions can be requested by actual slot index.
         mUsedSlots.clear();
-        if (payload.length < 19) {
+        if (payload.length < 18) {
             LOG.warn("Session list payload truncated ({} bytes) — slot bitmask incomplete",
                     payload.length);
         }
-        for (int i = 6; i < Math.min(19, payload.length); i++) {
+        for (int i = 5; i < Math.min(18, payload.length); i++) {
             int used = (~payload[i]) & 0xff;
             for (int bit = 0; bit < 8; bit++) {
                 if ((used & (1 << bit)) != 0) {
-                    mUsedSlots.add((i - 6) * 8 + bit);
+                    mUsedSlots.add((i - 5) * 8 + bit);
                 }
             }
         }
