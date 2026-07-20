@@ -371,9 +371,16 @@ public class Request {
             // Route to the negotiated dual channel when this packet is flagged for it; otherwise
             // (and until the aux socket is up) it goes on the primary socket.
             int channel = 0;
-            if (routeToExtraChannel()) {
+            boolean aux = routeToExtraChannel();
+            if (aux)
                 channel = supportProvider.getDualChannelHelper().getChannel();
-            }
+            // Diagnostic: log the routing decision for every packet (main and aux), including the
+            // P2P destination package, so mis-routed packets (e.g. an aux-listed package sent on
+            // main) are visible in the capture.
+            LOG.debug("Dual channel: service 0x{} cmd 0x{}{} -> {} (channel {})",
+                    Integer.toHexString(this.serviceId & 0xFF), Integer.toHexString(this.commandId & 0xFF),
+                    getDualChannelDestPackage() != null ? " pkg=" + getDualChannelDestPackage() : "",
+                    aux ? "AUX" : "MAIN", channel);
             builderBr.setChannel(channel);
             builderBr.queue();
         } else {

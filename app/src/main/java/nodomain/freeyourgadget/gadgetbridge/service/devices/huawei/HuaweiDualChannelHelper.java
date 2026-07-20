@@ -71,6 +71,17 @@ public class HuaweiDualChannelHelper {
         this.active = this.channel > 0;
         LOG.debug("Dual channel updated: active={}, channel={}, dualServices={}, entries={}",
                 active, channel, dualServices.size(), entries.size());
+        // Per-device routing table dump — the negotiated tables differ between watch models, so
+        // log them to make it clear which services/commands/packages each device puts on aux.
+        for (Integer s : dualServices)
+            LOG.debug("Dual channel: service 0x{} -> aux (whole service)", Integer.toHexString(s & 0xFF));
+        for (DeviceConfig.DualChannel.ChannelEntry entry : entries) {
+            StringBuilder cmds = new StringBuilder();
+            for (byte c : entry.commands)
+                cmds.append(String.format("0x%02X ", c & 0xFF));
+            LOG.debug("Dual channel: entry service=0x{} commands=[{}] packages={}",
+                    Integer.toHexString(entry.service & 0xFF), cmds.toString().trim(), entry.packages);
+        }
     }
 
     public synchronized void reset() {
