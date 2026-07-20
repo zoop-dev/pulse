@@ -70,7 +70,7 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
     private static final byte[] EMPTY = new byte[0];
     private static final AtomicLong QUEUE_COUNTER = new AtomicLong(0L);
     private static final AtomicLong THREAD_COUNTER = new AtomicLong(0L);
-    private static final long ACTION_RESULT_TIMEOUT_SECONDS = 30L;
+    private static final long SERVER_ACTION_RESULT_TIMEOUT_SECONDS = 30L;
 
     private final Object mGattMonitor;
     private final GBDevice mGbDevice;
@@ -147,7 +147,7 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
                                 // check again, maybe due to some condition, action did not need to write, so we can't wait
                                 boolean waitForResult = action.expectsResult();
                                 if (waitForResult) {
-                                    if (!mWaitForServerActionResultLatch.await(ACTION_RESULT_TIMEOUT_SECONDS, TimeUnit.SECONDS)) {
+                                    if (!mWaitForServerActionResultLatch.await(SERVER_ACTION_RESULT_TIMEOUT_SECONDS, TimeUnit.SECONDS)) {
                                         LOG.error("Timed out waiting for server action result: {}", action);
                                         mAbortServerTransaction = true;
                                         handleDisconnected(0x93 /* BluetoothGatt.GATT_CONNECTION_TIMEOUT */);
@@ -200,11 +200,7 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
                                 // check again, maybe due to some condition, action did not need to write, so we can't wait
                                 boolean waitForResult = action.expectsResult();
                                 if (waitForResult) {
-                                    if (!mWaitForActionResultLatch.await(ACTION_RESULT_TIMEOUT_SECONDS, TimeUnit.SECONDS)) {
-                                        LOG.error("Timed out waiting for action result: {}", action);
-                                        mAbortTransaction = true;
-                                        handleDisconnected(0x93 /* BluetoothGatt.GATT_CONNECTION_TIMEOUT */);
-                                    }
+                                    mWaitForActionResultLatch.await();
                                     mWaitForActionResultLatch = null;
                                     if (mAbortTransaction) {
                                         break;
@@ -363,12 +359,7 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
                 LOG.error("Error opening Gatt Server");
                 return false;
             }
-            LOG.debug("GATT server opened, adding {} server services", mSupportedServerServices.size());
             for(BluetoothGattService service : mSupportedServerServices) {
-                LOG.debug("Adding server service uuid={} type={} chars={}",
-                        service.getUuid(),
-                        service.getType() == BluetoothGattService.SERVICE_TYPE_PRIMARY ? "PRIMARY" : "SECONDARY",
-                        service.getCharacteristics().size());
                 mBluetoothGattServer.addService(service);
             }
         }
@@ -415,37 +406,6 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
 
             if (mGbDevice.getState() != State.NOT_CONNECTED) {
                 setDeviceConnectionState(State.NOT_CONNECTED);
-            }
-        }
-    }
-
-    /**
-     * Removes and re-adds all server services on the GATT server.
-     * <p>
-     * This is needed when a bonded device reconnects via bond restoration
-     * after the phone reboots: the GATT server services are re-created,
-     * but the device may not re-discover them because it was already
-     * connected when the services were added.  Cycling the services
-     * triggers Android's Service Changed indication to the bonded device,
-     * forcing it to re-discover services and re-subscribe to CCC
-     * descriptors.
-     */
-    public void refreshServerServices() {
-        synchronized (mGattMonitor) {
-            BluetoothGattServer gattServer = mBluetoothGattServer;
-            if (gattServer == null) {
-                LOG.warn("refreshServerServices: no GATT server");
-                return;
-            }
-            if (mSupportedServerServices.isEmpty()) {
-                LOG.debug("refreshServerServices: no server services to refresh");
-                return;
-            }
-            LOG.debug("refreshServerServices: removing and re-adding {} server services", mSupportedServerServices.size());
-            gattServer.clearServices();
-            for (BluetoothGattService service : mSupportedServerServices) {
-                LOG.debug("refreshServerServices: re-adding service uuid={}", service.getUuid());
-                gattServer.addService(service);
             }
         }
     }
@@ -1093,8 +1053,7 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
 
         @Override
         public void onConnectionStateChange(BluetoothDevice device, int status, int newState) {
-            LOG.debug("gatt server onConnectionStateChange device={}, newState={} (0=DISCONNECTED, 2=CONNECTED), status={}",
-                    device.getAddress(), newState, BleNamesResolver.getStatusString(status));
+            LOG.debug("gatt server connection state change, newState: {} {}", newState, BleNamesResolver.getStatusString(status));
 
             if(!checkCorrectBluetoothDevice(device)) {
                 return;
@@ -1179,11 +1138,7 @@ public final class BtLEQueue implements Thread.UncaughtExceptionHandler {
 
         @Override
         public void onServiceAdded(int status, BluetoothGattService service) {
-            LOG.debug("server.onServiceAdded status={} uuid={} instanceId={} type={} characteristics={}",
-                    BleNamesResolver.getStatusString(status),
-                    service.getUuid(), service.getInstanceId(),
-                    service.getType() == BluetoothGattService.SERVICE_TYPE_PRIMARY ? "PRIMARY" : "SECONDARY",
-                    service.getCharacteristics().size());
+            LOG.debug("server.onServiceAdded {} {}", service.getUuid(), service.getInstanceId());
         }
 
         @Override

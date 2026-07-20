@@ -60,24 +60,6 @@ public class ServerTransactionBuilder {
         return add(action);
     }
 
-    /**
-     * Sends an indication (confirmed characteristic changed) to the remote device.
-     * Unlike {@link #notifyCharacteristicChanged}, indications require the remote device
-     * to send back an acknowledgment before the next indication can be sent, providing
-     * natural flow control.
-     */
-    @NonNull
-    public ServerTransactionBuilder indicateCharacteristicChanged(@NonNull BluetoothDevice device,
-                                                                  @NonNull BluetoothGattCharacteristic characteristic,
-                                                                  @NonNull byte[] value) {
-        if (device == null) {
-            LOG.warn("Unable to write to device: null");
-            return this;
-        }
-        BtLEServerAction action = new NotifyCharacteristicChangedAction(device, characteristic, value, true);
-        return add(action);
-    }
-
     @NonNull
     public ServerTransactionBuilder add(@NonNull BtLEServerAction action) {
         mTransaction.add(action);
