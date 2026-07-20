@@ -39,6 +39,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.workout.Workout
+import nodomain.freeyourgadget.gadgetbridge.util.FileUtils
 import nodomain.freeyourgadget.gadgetbridge.util.GB
 import org.slf4j.LoggerFactory
 import java.io.File
@@ -125,9 +126,19 @@ class WorkoutEditor(private val context: Context, resultCaller: ActivityResultCa
     private fun getPath(): File? {
         var path: File? = null
         try {
-            path = gbDevice.deviceCoordinator.getWritableExportDirectory(gbDevice, true)
+            path = FileUtils.getExternalFilesDir()
         } catch (e: IOException) {
             LOG.error("Error getting path", e)
+        }
+        return path
+    }
+
+    private fun getDeviceSpecificPath(): File? {
+        var path: File? = null
+        try {
+            path = gbDevice.deviceCoordinator.getWritableExportDirectory(gbDevice, true)
+        } catch (e: IOException) {
+            LOG.error("Error getting device specific path", e)
         }
         return path
     }
@@ -226,7 +237,7 @@ class WorkoutEditor(private val context: Context, resultCaller: ActivityResultCa
 
     private fun copyHeaderPhotoToAppStorage(uri: Uri): String? {
         return try {
-            val exportPathPhotos = File(getPath(), "workout_photos")
+            val exportPathPhotos = File(getDeviceSpecificPath(), "workout_photos")
             if (!exportPathPhotos.exists() && !exportPathPhotos.mkdirs()) {
                 LOG.error("Failed to create photos directory: {}", exportPathPhotos)
                 return null
