@@ -2959,6 +2959,7 @@
     <string name="unit_revolutions_per_minute">revs/min</string>
     <string name="unit_rpm">rpm</string>
     <string name="unit_millimeter">mm</string>
+    <string name="unit_inch">in</string>
     <string name="unit_watt">Watt</string>
     <string name="unit_joule">Joule</string>
     <string name="unit_ampere">A</string>

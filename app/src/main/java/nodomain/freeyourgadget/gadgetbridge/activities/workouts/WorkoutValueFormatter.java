@@ -36,6 +36,7 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_KM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_MILE;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MM;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_INCH;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_NAUTICAL_MILES;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_RAW_STRING;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS;
@@ -79,10 +80,23 @@ public class WorkoutValueFormatter {
     }
 
     public WorkoutValueFormatter(final ActivityKind activityKind) {
+        this(activityKind,
+                GBApplication.getPrefs().getDistanceUnit(),
+                GBApplication.getPrefs().getWeightUnit(),
+                GBApplication.getPrefs().getBoolean("units_nautical", true));
+    }
+
+    /**
+     * Constructor with explicit units, mostly for testing without touching the shared preferences.
+     */
+    public WorkoutValueFormatter(final ActivityKind activityKind,
+                                 final DistanceUnit distanceUnit,
+                                 final WeightUnit weightUnit,
+                                 final boolean useNauticalUnits) {
         this.activityKind = activityKind;
-        this.distanceUnit = GBApplication.getPrefs().getDistanceUnit();
-        this.weightUnit = GBApplication.getPrefs().getWeightUnit();
-        this.useNauticalUnits = GBApplication.getPrefs().getBoolean("units_nautical", true);
+        this.distanceUnit = distanceUnit;
+        this.weightUnit = weightUnit;
+        this.useNauticalUnits = useNauticalUnits;
     }
 
     public void setActivityKind(final ActivityKind activityKind) {
@@ -119,123 +133,16 @@ public class WorkoutValueFormatter {
         double value = ((Number) rawValue).doubleValue();
 
         if (!show_raw_data) {
-            //special casing here + imperial units handling
-
-            if (UNIT_MM.equals(unit)) {
-                if (value > 1000) {
-                    unit = UNIT_METERS;
-                    value /= 1000d;
-                } else if (value > 100) {
-                    unit = UNIT_CM;
-                    value /= 10d;
-                }
+            // weight has its own locale-aware formatter and returns a finished string directly
+            if (UNIT_KG.equals(unit)) {
+                return WeightUnit.Companion.formatWeight(GBApplication.getContext(), value, weightUnit);
             }
-
-            switch (unit) {
-                case UNIT_KG:
-                    return WeightUnit.Companion.formatWeight(GBApplication.getContext(), value, weightUnit);
-                case UNIT_LB:
-                    return WeightUnit.Companion.formatWeight(GBApplication.getContext(), value / 2.2046226f, weightUnit);
-                case UNIT_CM:
-                    if (distanceUnit == DistanceUnit.IMPERIAL) {
-                        value = value * 0.0328084;
-                        unit = UNIT_FOOT;
-                    }
-                    break;
-                case UNIT_METERS_PER_SECOND:
-                    if (distanceUnit == DistanceUnit.IMPERIAL) {
-                        value = value * 2.236936D;
-                        unit = UNIT_MILE_PER_HOUR;
-                    } else { //metric
-                        value = value * 3.6;
-                        unit = UNIT_KMPH;
-                    }
-                    break;
-                case UNIT_METERS_PER_HOUR:
-                    if (distanceUnit == DistanceUnit.IMPERIAL) {
-                        value = value * 3.28084D;
-                        unit = UNIT_FOOT_PER_HOUR;
-                    }
-                    break;
-                case UNIT_SECONDS_PER_M:
-                    if (distanceUnit == DistanceUnit.IMPERIAL) {
-                        value = value * (1609.344 / 60D);
-                        unit = UNIT_MINUTES_PER_MILE;
-                    } else { //metric
-                        value = value * (1000 / 60D);
-                        unit = UNIT_MINUTES_PER_KM;
-                    }
-                    break;
-                case UNIT_SECONDS_PER_KM:
-                    if (distanceUnit == DistanceUnit.IMPERIAL) {
-                        value = value / 60D * 1.609344;
-                        unit = UNIT_MINUTES_PER_MILE;
-                    } else { //metric
-                        value = value / 60D;
-                        unit = UNIT_MINUTES_PER_KM;
-                    }
-                    break;
-                case UNIT_KILOMETERS:
-                    if (distanceUnit == DistanceUnit.IMPERIAL) {
-                        value = value * 0.621371D;
-                        unit = UNIT_MILE;
-                    }
-                    break;
-                case UNIT_METERS:
-                    if (useNauticalUnits && ActivityKind.isNauticalActivity(activityKind)) {
-                        value = value / 1852D;
-                        unit = UNIT_NAUTICAL_MILES;
-                    } else if (distanceUnit == DistanceUnit.IMPERIAL) {
-                        value = value * 3.28084D;
-                        unit = UNIT_FOOT;
-                        if (value > 6000) {
-                            value = value * 0.0001893939D;
-                            unit = UNIT_MILE;
-                        }
-                    } else { //metric
-                        if (value > 2000) {
-                            value = value / 1000;
-                            unit = UNIT_KILOMETERS;
-                        }
-                    }
-                    break;
-                case UNIT_KMPH:
-                    if (useNauticalUnits && ActivityKind.isNauticalActivity(activityKind)) {
-                        value = value / 1.852D;
-                        unit = UNIT_KNOTS;
-                    } else if (distanceUnit == DistanceUnit.IMPERIAL) {
-                        value = value * 0.621371D;
-                        unit = UNIT_MILE_PER_HOUR;
-                    }
-                    break;
-                case UNIT_SECONDS_PER_100_METERS:
-                    if (distanceUnit == DistanceUnit.IMPERIAL) {
-                        value = (value * 0.9144) / 60D;
-                        unit = UNIT_MINUTES_PER_100_YARDS;
-                    } else { //metric
-                        value = value / 60D;
-                        unit = UNIT_MINUTES_PER_100_METERS;
-                    }
-                    break;
-                case UNIT_SECONDS_PER_100_YARDS:
-                    if (distanceUnit == DistanceUnit.IMPERIAL) {
-                        value = value / 60D;
-                        unit = UNIT_MINUTES_PER_100_YARDS;
-                    } else { //metric
-                        value = (value * 1.0936133D) / 60D;
-                        unit = UNIT_MINUTES_PER_100_METERS;
-                    }
-                    break;
-                case UNIT_SECONDS_PER_500_METERS:
-                    value = value / 60D;
-                    unit = UNIT_MINUTES_PER_500_METERS;
-                    break;
-                case ActivitySummaryEntries.UNIT_JOULE:
-                    if (value > 10000) {
-                        value = value / 1000D;
-                        unit = "unit_kilojoule";
-                    }
+            if (UNIT_LB.equals(unit)) {
+                return WeightUnit.Companion.formatWeight(GBApplication.getContext(), value / 2.2046226f, weightUnit);
             }
+            final Converted converted = convert(value, unit, false);
+            value = converted.value;
+            unit = converted.unit;
         }
 
         if (unit.equals(UNIT_SECONDS) && !show_raw_data && showUnit) { //rather than plain seconds, show formatted duration
@@ -268,6 +175,151 @@ public class WorkoutValueFormatter {
 
     public String formatValue(final Object rawValue, String unit) {
         return formatValue(rawValue, unit, true);
+    }
+
+    /** A value converted to its display unit: the numeric value plus the display unit token. */
+    public static final class Converted {
+        public final double value;
+        public final String unit;
+
+        public Converted(final double value, final String unit) {
+            this.value = value;
+            this.unit = unit;
+        }
+    }
+
+    /**
+     * The single source of truth for metric→display unit conversion. Given a value and its
+     * metric unit token, returns the value converted to the configured distance/nautical unit
+     * system plus the matching display unit token. Final string formatting (pace min:sec,
+     * durations, decimals, weight) stays in {@link #formatValue}; weight tokens are not handled
+     * here.
+     *
+     * @param fixedUnit when {@code true}, the magnitude-based roll-ups (m→km, ft→mi,
+     *                  mm→m/cm, J→kJ) are skipped so a quantity maps to one stable unit
+     *                  across its whole range – required for continuous chart axes. Summary
+     *                  rows pass {@code false}.
+     */
+    public Converted convert(double value, String unit, final boolean fixedUnit) {
+        if (!fixedUnit && UNIT_MM.equals(unit)) {
+            if (value > 1000) {
+                unit = UNIT_METERS;
+                value /= 1000d;
+            } else if (value > 100) {
+                unit = UNIT_CM;
+                value /= 10d;
+            }
+        }
+
+        switch (unit) {
+            case UNIT_MM:
+                if (distanceUnit == DistanceUnit.IMPERIAL) {
+                    value = value / 25.4d;
+                    unit = UNIT_INCH;
+                }
+                break;
+            case UNIT_CM:
+                if (distanceUnit == DistanceUnit.IMPERIAL) {
+                    value = value * 0.0328084;
+                    unit = UNIT_FOOT;
+                }
+                break;
+            case UNIT_METERS_PER_SECOND:
+                if (distanceUnit == DistanceUnit.IMPERIAL) {
+                    value = value * 2.236936D;
+                    unit = UNIT_MILE_PER_HOUR;
+                } else { //metric
+                    value = value * 3.6;
+                    unit = UNIT_KMPH;
+                }
+                break;
+            case UNIT_METERS_PER_HOUR:
+                if (distanceUnit == DistanceUnit.IMPERIAL) {
+                    value = value * 3.28084D;
+                    unit = UNIT_FOOT_PER_HOUR;
+                }
+                break;
+            case UNIT_SECONDS_PER_M:
+                if (distanceUnit == DistanceUnit.IMPERIAL) {
+                    value = value * (1609.344 / 60D);
+                    unit = UNIT_MINUTES_PER_MILE;
+                } else { //metric
+                    value = value * (1000 / 60D);
+                    unit = UNIT_MINUTES_PER_KM;
+                }
+                break;
+            case UNIT_SECONDS_PER_KM:
+                if (distanceUnit == DistanceUnit.IMPERIAL) {
+                    value = value / 60D * 1.609344;
+                    unit = UNIT_MINUTES_PER_MILE;
+                } else { //metric
+                    value = value / 60D;
+                    unit = UNIT_MINUTES_PER_KM;
+                }
+                break;
+            case UNIT_KILOMETERS:
+                if (distanceUnit == DistanceUnit.IMPERIAL) {
+                    value = value * 0.621371D;
+                    unit = UNIT_MILE;
+                }
+                break;
+            case UNIT_METERS:
+                if (useNauticalUnits && ActivityKind.isNauticalActivity(activityKind)) {
+                    value = value / 1852D;
+                    unit = UNIT_NAUTICAL_MILES;
+                } else if (distanceUnit == DistanceUnit.IMPERIAL) {
+                    value = value * 3.28084D;
+                    unit = UNIT_FOOT;
+                    if (!fixedUnit && value > 6000) {
+                        value = value * 0.0001893939D;
+                        unit = UNIT_MILE;
+                    }
+                } else { //metric
+                    if (!fixedUnit && value > 2000) {
+                        value = value / 1000;
+                        unit = UNIT_KILOMETERS;
+                    }
+                }
+                break;
+            case UNIT_KMPH:
+                if (useNauticalUnits && ActivityKind.isNauticalActivity(activityKind)) {
+                    value = value / 1.852D;
+                    unit = UNIT_KNOTS;
+                } else if (distanceUnit == DistanceUnit.IMPERIAL) {
+                    value = value * 0.621371D;
+                    unit = UNIT_MILE_PER_HOUR;
+                }
+                break;
+            case UNIT_SECONDS_PER_100_METERS:
+                if (distanceUnit == DistanceUnit.IMPERIAL) {
+                    value = (value * 0.9144) / 60D;
+                    unit = UNIT_MINUTES_PER_100_YARDS;
+                } else { //metric
+                    value = value / 60D;
+                    unit = UNIT_MINUTES_PER_100_METERS;
+                }
+                break;
+            case UNIT_SECONDS_PER_100_YARDS:
+                if (distanceUnit == DistanceUnit.IMPERIAL) {
+                    value = value / 60D;
+                    unit = UNIT_MINUTES_PER_100_YARDS;
+                } else { //metric
+                    value = (value * 1.0936133D) / 60D;
+                    unit = UNIT_MINUTES_PER_100_METERS;
+                }
+                break;
+            case UNIT_SECONDS_PER_500_METERS:
+                value = value / 60D;
+                unit = UNIT_MINUTES_PER_500_METERS;
+                break;
+            case ActivitySummaryEntries.UNIT_JOULE:
+                if (!fixedUnit && value > 10000) {
+                    value = value / 1000D;
+                    unit = "unit_kilojoule";
+                }
+                break;
+        }
+        return new Converted(value, unit);
     }
 
     public String getStringResourceByName(String aString) {

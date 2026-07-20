@@ -322,6 +322,8 @@ public class ActivitySummaryEntries {
     public static final String UNIT_MILE = "mi";
     public static final String UNIT_MILE_PER_HOUR = "mi_h";
     public static final String UNIT_MINUTES_PER_MILE = "minutes_mi";
+    public static final String UNIT_INCH = "unit_inch";
+    public static final String UNIT_FAHRENHEIT = "unit_fahrenheit";
 
     public static final String GROUP_PACE = "Pace";
     public static final String GROUP_ACTIVITY = "Activity";
