@@ -22,6 +22,7 @@ import org.junit.Test;
 
 import java.util.List;
 
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Earphones;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.FindPhone;
 
 public class TestHuaweiPacket {
@@ -214,6 +215,29 @@ public class TestHuaweiPacket {
 
         Assert.assertEquals(1, output.size());
         Assert.assertArrayEquals(expected, output.get(0));
+    }
+
+    @Test
+    public void testAdaptiveVolumeSerialize() throws HuaweiPacket.CryptoException {
+        byte[] expectedEnabled = {(byte) 0x5a, 0x00, 0x09, 0x00, 0x2b, (byte) 0xb4, 0x01, 0x01, 0x02, 0x02, 0x01, 0x01, 0x03, (byte) 0xc0};
+        byte[] expectedDisabled = {(byte) 0x5a, 0x00, 0x09, 0x00, 0x2b, (byte) 0xb4, 0x01, 0x01, 0x02, 0x02, 0x01, 0x00, 0x13, (byte) 0xe1};
+
+        Assert.assertArrayEquals(expectedEnabled, new Earphones.AdaptiveVolume.SetRequest(paramsProvider, true).serialize().get(0));
+        Assert.assertArrayEquals(expectedDisabled, new Earphones.AdaptiveVolume.SetRequest(paramsProvider, false).serialize().get(0));
+    }
+
+    @Test
+    public void testAdaptiveVolumeResponseParse() throws HuaweiPacket.ParseException {
+        byte[] enabled = {(byte) 0x5a, 0x00, 0x0c, 0x00, 0x2b, (byte) 0xb4, 0x01, 0x01, 0x02, 0x02, 0x01, 0x01, 0x03, 0x01, 0x01, 0x75, (byte) 0x8a};
+        byte[] disabled = {(byte) 0x5a, 0x00, 0x0c, 0x00, 0x2b, (byte) 0xb4, 0x01, 0x01, 0x02, 0x02, 0x01, 0x00, 0x03, 0x01, 0x01, 0x03, 0x3e};
+
+        Earphones.AdaptiveVolume.Response enabledResponse = (Earphones.AdaptiveVolume.Response) new HuaweiPacket(paramsProvider).parse(enabled);
+        enabledResponse.parseTlv();
+        Assert.assertTrue(enabledResponse.enabled);
+
+        Earphones.AdaptiveVolume.Response disabledResponse = (Earphones.AdaptiveVolume.Response) new HuaweiPacket(paramsProvider).parse(disabled);
+        disabledResponse.parseTlv();
+        Assert.assertFalse(disabledResponse.enabled);
     }
 
     @Test

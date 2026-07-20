@@ -4656,6 +4656,8 @@
     <string name="huawei_voice_boost">Voice Boost</string>
     <string name="huawei_better_audio_quality_title">Prioritise better audio quality.</string>
     <string name="huawei_better_audio_quality_summary">Enable better audio codecs (LDAC). This should improve sound quality, but it increases power consumption and can cause delays.</string>
+    <string name="huawei_adaptive_volume_title">Adaptive Volume</string>
+    <string name="huawei_adaptive_volume_summary">Automatically adjust volume based on your environment. (Increases power usage)</string>
     <string name="maps">Maps</string>
     <string name="workout_charts">Workout Charts</string>
     <string name="maps_settings">Maps settings</string>

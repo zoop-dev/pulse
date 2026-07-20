@@ -121,6 +121,54 @@ public class Earphones {
     // TODO: get long tap action 0x17
     // TODO: Audio mode cycle 0x19
 
+    public static class AdaptiveVolume {
+        public static final byte id = (byte) 0xb4;
+        public static final byte FEATURE_ID = 0x02;
+
+        public static class SetRequest extends HuaweiPacket {
+            public SetRequest(ParamsProvider paramsProvider, boolean enabled) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+
+                this.tlv = new HuaweiTLV()
+                        .put(0x01, FEATURE_ID)
+                        .put(0x02, enabled ? (byte) 0x01 : (byte) 0x00);
+
+                this.complete = true;
+            }
+        }
+
+        public static class GetRequest extends HuaweiPacket {
+            public GetRequest(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+
+                this.tlv = new HuaweiTLV()
+                        .put(0x01, FEATURE_ID);
+
+                this.complete = true;
+            }
+        }
+
+        public static class Response extends HuaweiPacket {
+            public boolean enabled;
+
+            public Response(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+                this.complete = true;
+            }
+
+            @Override
+            public void parseTlv() throws ParseException {
+                this.enabled = this.tlv.getByte(0x02, (byte) 0) == 0x01;
+            }
+        }
+    }
+
     public static class GetAudioModeRequest {
         public static final byte id = 0x2a;
 
