@@ -1,6 +1,7 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.charts;
 
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_100_METERS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_500_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_KM;
 
 import com.github.mikephil.charting.formatter.ValueFormatter;
@@ -20,6 +21,8 @@ public class SpeedYLabelFormatter extends ValueFormatter {
     public String getFormattedValue(float value) {
         if(unit.equals(UNIT_SECONDS_PER_100_METERS)) {
             value = value > 0 ? Math.round(100.0 / value) : 0;
+        } else if (unit.equals(UNIT_SECONDS_PER_500_METERS)) {
+            value = value > 0 ? Math.round(500.0 / value) : 0;
         } else if (unit.equals(UNIT_SECONDS_PER_KM)) {
             value = value > 0 ? Math.round((60 / (value * 3.6)) * 60) : 0;
         }

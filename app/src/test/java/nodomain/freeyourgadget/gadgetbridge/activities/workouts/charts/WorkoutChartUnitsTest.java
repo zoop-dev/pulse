@@ -8,6 +8,8 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_INCH;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KILOMETERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KMPH;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KNOTS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MINUTES_PER_500_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MILE;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MILE_PER_HOUR;
@@ -20,6 +22,7 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import org.junit.Test;
 
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.charts.WorkoutChartUnits.Quantity;
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.DistanceUnit;
 import nodomain.freeyourgadget.gadgetbridge.model.TemperatureUnit;
 
@@ -88,6 +91,29 @@ public class WorkoutChartUnitsTest {
         assertEquals(UNIT_FAHRENHEIT, metricFahrenheit.token(Quantity.TEMPERATURE));
         assertEquals(68.0, metricFahrenheit.convert(Quantity.TEMPERATURE, 20), EPS);
         assertEquals(UNIT_METERS, metricFahrenheit.token(Quantity.ELEVATION));
+    }
+
+    @Test
+    public void nauticalActivityUsesKnotsForSpeed() {
+        // knots override the distance unit; even an imperial sailor gets knots
+        final WorkoutChartUnits sailingMetric =
+                new WorkoutChartUnits(DistanceUnit.METRIC, TemperatureUnit.CELSIUS, ActivityKind.SAILING, true);
+        assertEquals(UNIT_KNOTS, sailingMetric.token(Quantity.SPEED));
+        assertEquals(19.43844, sailingMetric.convert(Quantity.SPEED, 10), EPS);
+
+        final WorkoutChartUnits sailingImperial =
+                new WorkoutChartUnits(DistanceUnit.IMPERIAL, TemperatureUnit.CELSIUS, ActivityKind.SAILING, true);
+        assertEquals(UNIT_KNOTS, sailingImperial.token(Quantity.SPEED));
+
+        // a non-nautical activity keeps the ordinary speed unit
+        assertEquals(UNIT_KMPH, metric.token(Quantity.SPEED));
+    }
+
+    @Test
+    public void rowingPaceIsAlwaysMetric500m() {
+        assertEquals(UNIT_MINUTES_PER_500_METERS, metric.token(Quantity.PACE_500M));
+        // stays min/500m even for an imperial user
+        assertEquals(UNIT_MINUTES_PER_500_METERS, imperial.token(Quantity.PACE_500M));
     }
 
     @Test

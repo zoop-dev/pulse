@@ -426,6 +426,24 @@ public enum ActivityKind {
         return activityKind.name().contains("SWIM");
     }
 
+    /**
+     * Rowing and paddle sports, whose pace is conventionally reported per 500 m (always metric,
+     * regardless of the distance unit setting) rather than per km/mile.
+     */
+    public static boolean isRowingActivity(final ActivityKind activityKind) {
+        switch (activityKind) {
+            case ROWING:
+            case ROWING_MACHINE:
+            case KAYAKING:
+            case PADDLING:
+            case RAFTING:
+            case STAND_UP_PADDLEBOARDING:
+                return true;
+            default:
+                return false;
+        }
+    }
+
     public static boolean isDiving(final ActivityKind activityKind) {
         return activityKind.name().contains("DIVING") || activityKind.name().contains("APNEA");
     }

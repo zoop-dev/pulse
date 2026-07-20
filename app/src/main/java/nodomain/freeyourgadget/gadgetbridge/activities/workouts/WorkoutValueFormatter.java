@@ -225,7 +225,10 @@ public class WorkoutValueFormatter {
                 }
                 break;
             case UNIT_METERS_PER_SECOND:
-                if (distanceUnit == DistanceUnit.IMPERIAL) {
+                if (useNauticalUnits && ActivityKind.isNauticalActivity(activityKind)) {
+                    value = value * 1.943844D;
+                    unit = UNIT_KNOTS;
+                } else if (distanceUnit == DistanceUnit.IMPERIAL) {
                     value = value * 2.236936D;
                     unit = UNIT_MILE_PER_HOUR;
                 } else { //metric

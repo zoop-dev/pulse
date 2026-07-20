@@ -28,6 +28,7 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_PERCENTAGE;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_100_METERS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_500_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_KM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SPM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_WATT;
@@ -378,8 +379,20 @@ public class DefaultWorkoutCharts {
     private static WorkoutChart createSpeedChart(final Context context,
                                                  final ActivityKind activityKind,
                                                  final List<Entry> speedDataPoints) {
-        final WorkoutChartUnits units = chartUnits();
-        if (ActivityKind.isSwimActivity(activityKind)) {
+        final WorkoutChartUnits units = chartUnits(activityKind);
+        if (ActivityKind.isRowingActivity(activityKind)) {
+            final String unitString = getUnitString(context, units.token(WorkoutChartUnits.Quantity.PACE_500M));
+            final String label = String.format("%s (%s)", context.getString(R.string.Pace), unitString);
+            final LineDataSet dataset = createLineDataSet(context, speedDataPoints, label, ContextCompat.getColor(context, R.color.chart_line_speed));
+            return new WorkoutChart(
+                    "pace",
+                    context.getString(R.string.Pace),
+                    ActivitySummaryEntries.GROUP_SPEED,
+                    new LineData(dataset),
+                    new SpeedYLabelFormatter(UNIT_SECONDS_PER_500_METERS),
+                    unitString
+            );
+        } else if (ActivityKind.isSwimActivity(activityKind)) {
             final String unitString = getUnitString(context, units.token(WorkoutChartUnits.Quantity.PACE_SWIM));
             final String label = String.format("%s (%s)", context.getString(R.string.Pace), unitString);
             final LineDataSet dataset = createLineDataSet(context, speedDataPoints, label, ContextCompat.getColor(context, R.color.chart_line_speed));
@@ -773,6 +786,15 @@ public class DefaultWorkoutCharts {
         return new WorkoutChartUnits(
                 GBApplication.getPrefs().getDistanceUnit(),
                 GBApplication.getPrefs().getTemperatureUnit()
+        );
+    }
+
+    private static WorkoutChartUnits chartUnits(final ActivityKind activityKind) {
+        return new WorkoutChartUnits(
+                GBApplication.getPrefs().getDistanceUnit(),
+                GBApplication.getPrefs().getTemperatureUnit(),
+                activityKind,
+                GBApplication.getPrefs().getBoolean("units_nautical", true)
         );
     }
 

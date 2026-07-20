@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_FOOT;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KILOMETERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KMPH;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_KNOTS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MILE;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS_PER_SECOND;
@@ -140,5 +141,14 @@ public class WorkoutValueFormatterTest extends TestBase {
         // metric fixed keeps meters instead of rolling up to km
         assertEquals(UNIT_METERS, metric.convert(5000, UNIT_METERS, true).unit);
         assertEquals(5000.0, metric.convert(5000, UNIT_METERS, true).value, 1e-6);
+    }
+
+    @Test
+    public void convertNauticalSpeedYieldsKnots() {
+        final WorkoutValueFormatter sailing = new WorkoutValueFormatter(
+                ActivityKind.SAILING, DistanceUnit.METRIC, WeightUnit.KILOGRAM, true);
+        WorkoutValueFormatter.Converted knots = sailing.convert(10, UNIT_METERS_PER_SECOND, true);
+        assertEquals(UNIT_KNOTS, knots.unit);
+        assertEquals(19.43844, knots.value, 1e-4);
     }
 }

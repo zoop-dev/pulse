@@ -23,6 +23,7 @@ import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_METERS_PER_SECOND;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_MM;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_100_METERS;
+import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_500_METERS;
 import static nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_SECONDS_PER_KM;
 
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.WorkoutValueFormatter;
@@ -46,9 +47,10 @@ import nodomain.freeyourgadget.gadgetbridge.model.WeightUnit;
  */
 public class WorkoutChartUnits {
     public enum Quantity {
-        SPEED,        // data m/s
+        SPEED,        // data m/s (knots for nautical activities)
         PACE,         // inverse, data m/s -> min/distance (value formatted elsewhere)
-        PACE_SWIM,    // inverse
+        PACE_SWIM,    // inverse, min/100m or min/100yd
+        PACE_500M,    // inverse, rowing/paddle min/500m (always metric)
         ELEVATION,    // data meters
         DEPTH,        // data meters
         DISTANCE,     // data meters (shown as km/mi, which read better than m/ft on a distance axis)
@@ -57,12 +59,23 @@ public class WorkoutChartUnits {
     }
 
     private final WorkoutValueFormatter authority;
+    private final WorkoutValueFormatter speedAuthority;
     private final boolean fahrenheit;
 
     public WorkoutChartUnits(final DistanceUnit distanceUnit, final TemperatureUnit temperatureUnit) {
-        // Weight is irrelevant here; nautical stays off and the activity is unknown until the
-        // activity-specific conventions are wired in, keeping convert() on its generic path.
+        this(distanceUnit, temperatureUnit, ActivityKind.UNKNOWN, false);
+    }
+
+    public WorkoutChartUnits(final DistanceUnit distanceUnit,
+                             final TemperatureUnit temperatureUnit,
+                             final ActivityKind activityKind,
+                             final boolean nautical) {
+        // Weight is irrelevant here. The generic authority stays activity-agnostic so linear
+        // quantities (elevation/distance/…) follow the plain distance unit; only speed is
+        // activity-aware, so a nautical activity reads in knots without turning an elevation in
+        // metres into nautical miles.
         this.authority = new WorkoutValueFormatter(ActivityKind.UNKNOWN, distanceUnit, WeightUnit.KILOGRAM, false);
+        this.speedAuthority = new WorkoutValueFormatter(activityKind, distanceUnit, WeightUnit.KILOGRAM, nautical);
         this.fahrenheit = temperatureUnit == TemperatureUnit.FAHRENHEIT;
     }
 
@@ -70,11 +83,13 @@ public class WorkoutChartUnits {
     public String token(final Quantity quantity) {
         switch (quantity) {
             case SPEED:
-                return authority.convert(1, UNIT_METERS_PER_SECOND, true).unit;
+                return speedAuthority.convert(1, UNIT_METERS_PER_SECOND, true).unit;
             case PACE:
                 return authority.convert(1, UNIT_SECONDS_PER_KM, true).unit;
             case PACE_SWIM:
                 return authority.convert(1, UNIT_SECONDS_PER_100_METERS, true).unit;
+            case PACE_500M:
+                return authority.convert(1, UNIT_SECONDS_PER_500_METERS, true).unit;
             case ELEVATION:
             case DEPTH:
                 return authority.convert(1, UNIT_METERS, true).unit;
@@ -96,7 +111,7 @@ public class WorkoutChartUnits {
     public double convert(final Quantity quantity, final double value) {
         switch (quantity) {
             case SPEED:
-                return authority.convert(value, UNIT_METERS_PER_SECOND, true).value;
+                return speedAuthority.convert(value, UNIT_METERS_PER_SECOND, true).value;
             case ELEVATION:
             case DEPTH:
                 return authority.convert(value, UNIT_METERS, true).value;
