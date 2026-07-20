@@ -169,6 +169,59 @@ public class Earphones {
         }
     }
 
+    public static class SetExtraMediaVolume {
+        public static final byte id = (byte) 0x87;
+
+        public static class Request extends HuaweiPacket {
+            public Request(ParamsProvider paramsProvider, boolean enabled) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+                this.tlv = new HuaweiTLV().put(0x01, enabled);
+                this.complete = true;
+            }
+        }
+
+        public static class Response extends HuaweiPacket {
+            public Response(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+                this.complete = true;
+            }
+        }
+    }
+
+    public static class GetExtraMediaVolume {
+        public static final byte id = (byte) 0x88;
+
+        public static class Request extends HuaweiPacket {
+            public Request(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+                this.tlv = new HuaweiTLV().put(0x01);
+                this.complete = true;
+            }
+        }
+
+        public static class Response extends HuaweiPacket {
+            public boolean enabled;
+
+            public Response(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+                this.complete = true;
+            }
+
+            @Override
+            public void parseTlv() throws ParseException {
+                this.enabled = this.tlv.getByte(0x01) == 0x01;
+            }
+        }
+    }
+
     public static class GetAudioModeRequest {
         public static final byte id = 0x2a;
 

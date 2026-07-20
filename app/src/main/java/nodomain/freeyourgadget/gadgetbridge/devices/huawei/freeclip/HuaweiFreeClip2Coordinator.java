@@ -40,7 +40,8 @@ public class HuaweiFreeClip2Coordinator extends HuaweiFreebudsCoordinator {
     public Set<HuaweiHeadphonesCapabilities> getCapabilities() {
         return Set.of(
                 HuaweiHeadphonesCapabilities.InEarDetection,
-                HuaweiHeadphonesCapabilities.AdaptiveVolume
+                HuaweiHeadphonesCapabilities.AdaptiveVolume,
+                HuaweiHeadphonesCapabilities.ExtraMediaVolume
         );
     }
 

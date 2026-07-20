@@ -39,12 +39,14 @@ import nodomain.freeyourgadget.gadgetbridge.service.HeadphoneHelper;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetAdaptiveVolumeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetBetterAudioQualityRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetExtraMediaVolumeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetProductInformationRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.Request;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetANCModeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetAudioModeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetBetterAudioQualityRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetAdaptiveVolumeRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetExtraMediaVolumeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetVoiceBoostRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetPauseWhenRemovedFromEarRequest;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -76,6 +78,9 @@ public class HuaweiFreebudsSupport extends HuaweiBRSupport implements HeadphoneH
             if (coordinator.supports(this.gbDevice, HuaweiHeadphonesCapabilities.AdaptiveVolume)) {
                 GetAdaptiveVolumeRequest req = new GetAdaptiveVolumeRequest(super.getSupportProvider());
                 req.doPerform();
+            }
+            if (coordinator.supports(this.gbDevice, HuaweiHeadphonesCapabilities.ExtraMediaVolume)) {
+                new GetExtraMediaVolumeRequest(super.getSupportProvider()).doPerform();
             }
 
         } catch (IOException e) {
@@ -162,6 +167,9 @@ public class HuaweiFreebudsSupport extends HuaweiBRSupport implements HeadphoneH
                     break;
                 case DeviceSettingsPreferenceConst.PREF_HUAWEI_FREEBUDS_ADAPTIVE_VOLUME:
                     new SetAdaptiveVolumeRequest(getSupportProvider()).doPerform();
+                    break;
+                case DeviceSettingsPreferenceConst.PREF_HUAWEI_FREEBUDS_EXTRA_MEDIA_VOLUME:
+                    new SetExtraMediaVolumeRequest(getSupportProvider()).doPerform();
                     break;
                 case DeviceSettingsPreferenceConst.PREF_BATTERY_POLLING_ENABLE:
                     if (!GBApplication.getDevicePrefs(gbDevice).getBatteryPollingEnabled()) {

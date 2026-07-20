@@ -391,6 +391,7 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_HUAWEI_FREEBUDS_VOICE_BOOST = "pref_freebuds_voice_boost";
     public static final String PREF_HUAWEI_FREEBUDS_BETTER_AUDIO_QUALITY = "pref_freebuds_better_audio_quality";
     public static final String PREF_HUAWEI_FREEBUDS_ADAPTIVE_VOLUME = "pref_freebuds_adaptive_volume";
+    public static final String PREF_HUAWEI_FREEBUDS_EXTRA_MEDIA_VOLUME = "pref_freebuds_extra_media_volume";
 
     public static final String PREF_GALAXY_BUDS_AMBIENT_MODE = "pref_galaxy_buds_ambient_mode";
     public static final String PREF_GALAXY_BUDS_AMBIENT_VOICE_FOCUS = "pref_galaxy_buds_ambient_voice_focus";

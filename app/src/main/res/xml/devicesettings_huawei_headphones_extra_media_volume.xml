@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:icon="@drawable/ic_volume_up"
+        android:key="pref_freebuds_extra_media_volume"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/huawei_extra_media_volume_summary"
+        android:title="@string/huawei_extra_media_volume_title" />
+</androidx.preference.PreferenceScreen>

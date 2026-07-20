@@ -241,6 +241,31 @@ public class TestHuaweiPacket {
     }
 
     @Test
+    public void testExtraMediaVolumeSerialize() throws HuaweiPacket.CryptoException {
+        byte[] expectedEnabled = {(byte) 0x5a, 0x00, 0x06, 0x00, 0x2b, (byte) 0x87, 0x01, 0x01, 0x01, 0x3e, (byte) 0xe4};
+        byte[] expectedDisabled = {(byte) 0x5a, 0x00, 0x06, 0x00, 0x2b, (byte) 0x87, 0x01, 0x01, 0x00, 0x2e, (byte) 0xc5};
+        byte[] expectedGet = {(byte) 0x5a, 0x00, 0x05, 0x00, 0x2b, (byte) 0x88, 0x01, 0x00, (byte) 0x91, (byte) 0x82};
+
+        Assert.assertArrayEquals(expectedEnabled, new Earphones.SetExtraMediaVolume.Request(paramsProvider, true).serialize().get(0));
+        Assert.assertArrayEquals(expectedDisabled, new Earphones.SetExtraMediaVolume.Request(paramsProvider, false).serialize().get(0));
+        Assert.assertArrayEquals(expectedGet, new Earphones.GetExtraMediaVolume.Request(paramsProvider).serialize().get(0));
+    }
+
+    @Test
+    public void testExtraMediaVolumeResponseParse() throws HuaweiPacket.ParseException {
+        byte[] enabled = {(byte) 0x5a, 0x00, 0x06, 0x00, 0x2b, (byte) 0x88, 0x01, 0x01, 0x01, (byte) 0xea, 0x0a};
+        byte[] disabled = {(byte) 0x5a, 0x00, 0x06, 0x00, 0x2b, (byte) 0x88, 0x01, 0x01, 0x00, (byte) 0xfa, 0x2b};
+
+        Earphones.GetExtraMediaVolume.Response enabledResponse = (Earphones.GetExtraMediaVolume.Response) new HuaweiPacket(paramsProvider).parse(enabled);
+        enabledResponse.parseTlv();
+        Assert.assertTrue(enabledResponse.enabled);
+
+        Earphones.GetExtraMediaVolume.Response disabledResponse = (Earphones.GetExtraMediaVolume.Response) new HuaweiPacket(paramsProvider).parse(disabled);
+        disabledResponse.parseTlv();
+        Assert.assertFalse(disabledResponse.enabled);
+    }
+
+    @Test
     public void testEncryptedUnslicedSerialize() throws HuaweiPacket.CryptoException {
         byte serviceId = 0x01;
         byte commandId = 0x02;

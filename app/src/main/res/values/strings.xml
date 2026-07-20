@@ -4658,6 +4658,8 @@
     <string name="huawei_better_audio_quality_summary">Enable better audio codecs (LDAC). This should improve sound quality, but it increases power consumption and can cause delays.</string>
     <string name="huawei_adaptive_volume_title">Adaptive Volume</string>
     <string name="huawei_adaptive_volume_summary">Automatically adjust volume based on your environment. (Increases power usage)</string>
+    <string name="huawei_extra_media_volume_title">Extra media volume</string>
+    <string name="huawei_extra_media_volume_summary">Allow a beyond maximum media volume. This may affect audio quality. May dammage hearing. </string>
     <string name="maps">Maps</string>
     <string name="workout_charts">Workout Charts</string>
     <string name="maps_settings">Maps settings</string>
