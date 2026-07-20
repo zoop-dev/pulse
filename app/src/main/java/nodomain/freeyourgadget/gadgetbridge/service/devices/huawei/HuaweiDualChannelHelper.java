@@ -48,20 +48,18 @@ public class HuaweiDualChannelHelper {
             ALWAYS_MAIN_CHANNEL.add(s & 0xFF);
     }
 
-    // EXPERIMENT (dual-channel file download): the vendor forces the 0x2C file-download service to
-    // the main socket, but on the Watch 4 that download appears to get no reply on main while dual
-    // channel is active (sleep sequence_data / stress / ECG download hangs, which then blocks the
-    // whole sync queue and stops workouts from ever syncing). Try routing 0x2C over the aux socket
-    // like all the other data traffic. Remove this set to restore vendor-faithful main-channel routing.
-    private static final Set<Integer> FORCE_AUX_CHANNEL = new HashSet<>();
-    static {
-        FORCE_AUX_CHANNEL.add(0x2C);
-    }
-
     private boolean active = false;
     private int channel = 0;
     private final Set<Integer> dualServices = new HashSet<>();
     private final List<DeviceConfig.DualChannel.ChannelEntry> entries = new ArrayList<>();
+
+    /**
+     * Watch 4 firmware quirk: while dual channel is active it never answers the 0x2C
+     * FileDownloadInit on the main socket, but answers immediately on aux. When the download
+     * manager detects that (init timeout on main), it sets this flag so all further 0x2C traffic
+     * of this connection rides the aux socket. Reset on (re)negotiation.
+     */
+    private boolean fileDownloadViaAux = false;
 
     /** Stores the routing tables from a parsed 0x3C response. Call on (re)connection. */
     public synchronized void update(DeviceConfig.DualChannel.Response response) {
@@ -80,6 +78,16 @@ public class HuaweiDualChannelHelper {
         channel = 0;
         dualServices.clear();
         entries.clear();
+        fileDownloadViaAux = false;
+    }
+
+    /** See {@link #fileDownloadViaAux}. */
+    public synchronized void setFileDownloadViaAux(boolean fileDownloadViaAux) {
+        this.fileDownloadViaAux = fileDownloadViaAux;
+    }
+
+    public synchronized boolean isFileDownloadViaAux() {
+        return fileDownloadViaAux;
     }
 
     /** The negotiated RFCOMM channel of the extra socket, or 0 when dual channel is inactive. */
@@ -100,9 +108,10 @@ public class HuaweiDualChannelHelper {
     public synchronized boolean useExtraChannel(int serviceId, int commandId) {
         if (!isActive())
             return false;
-        // EXPERIMENT: force the file-download service onto the aux socket (see FORCE_AUX_CHANNEL).
-        // Checked before ALWAYS_MAIN so it overrides the vendor's main-channel pinning for 0x2C.
-        if (FORCE_AUX_CHANNEL.contains(serviceId & 0xFF))
+        // Firmware fallback (see fileDownloadViaAux): file download moved to aux for this
+        // connection after the watch ignored it on main. Checked before ALWAYS_MAIN_CHANNEL,
+        // which would otherwise pin 0x2C to the main socket.
+        if (fileDownloadViaAux && (serviceId & 0xFF) == 0x2C)
             return true;
         if (ALWAYS_MAIN_CHANNEL.contains(serviceId & 0xFF))
             return false;

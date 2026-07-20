@@ -103,7 +103,9 @@ public final class BtBRQueue {
                             mIsAux ? "aux ch " + mRfcommChannel : "main", GB.hexdump(buffer, 0, nRead));
 
                     try {
-                        mCallback.onSocketRead(Arrays.copyOf(buffer, nRead), mRfcommChannel);
+                        // The main socket may have been opened via SDP lookup (mRfcommChannel -1);
+                        // normalize to 0 so downstream consumers can rely on 0 == main socket.
+                        mCallback.onSocketRead(Arrays.copyOf(buffer, nRead), mIsAux ? mRfcommChannel : 0);
                     } catch (Throwable ex) {
                         LOG.error("Failed to process received bytes in onSocketRead callback: ", ex);
                     }
