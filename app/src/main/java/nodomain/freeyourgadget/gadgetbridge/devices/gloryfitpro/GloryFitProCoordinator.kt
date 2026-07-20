@@ -67,6 +67,10 @@ abstract class GloryFitProCoordinator : AbstractBLEDeviceCoordinator() {
         return true
     }
 
+    override fun getContactsSlotCount(device: GBDevice): Int {
+        return 20
+    }
+
     override fun getAlarmSlotCount(device: GBDevice): Int {
         return 5
     }
@@ -100,6 +104,9 @@ abstract class GloryFitProCoordinator : AbstractBLEDeviceCoordinator() {
         notifications.add(R.xml.devicesettings_header_notifications)
         notifications.add(R.xml.devicesettings_send_app_notifications)
         notifications.add(R.xml.devicesettings_per_app_notifications)
+        if (getContactsSlotCount(device) > 0) {
+            notifications.add(R.xml.devicesettings_contacts)
+        }
         return settings
     }
 }

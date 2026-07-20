@@ -34,6 +34,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService
+import nodomain.freeyourgadget.gadgetbridge.model.Contact
 import nodomain.freeyourgadget.gadgetbridge.model.MusicSpec
 import nodomain.freeyourgadget.gadgetbridge.model.MusicStateSpec
 import nodomain.freeyourgadget.gadgetbridge.util.MediaManager
@@ -634,6 +635,50 @@ class GloryFitProSupport : AbstractBTLESingleDeviceSupport(LOG) {
     private fun lo(v: Int): Byte = (v and 0xff).toByte()
 
     /** Write a TLV "01 CMD abab 00 ..." data packet followed by "01 CMD abab fd <xor>". */
+    override fun onSetContacts(contacts: ArrayList<out Contact>) {
+        val builder = createTransactionBuilder("set contacts")
+        // START
+        builder.write(UUID_CHARACTERISTIC_DATA_WRITE, PKT_HEADER, CMD_CONTACTS, MODE_SET, 0x06, 0x01, 0x00)
+        // Contact list (field 0x07): [ numberLen | number UTF-16BE | nameLen | name UTF-16BE ]*
+        val payload = ByteArrayOutputStream()
+        for (contact in contacts) {
+            val number = (contact.number ?: "").take(64).toByteArray(Charsets.UTF_16BE)
+            val name = (contact.name ?: "").take(64).toByteArray(Charsets.UTF_16BE)
+            if (number.isEmpty()) continue
+            payload.write(number.size); payload.write(number)
+            payload.write(name.size); payload.write(name)
+        }
+        writeContactsField(builder, 0x07, payload.toByteArray())
+        // END / commit
+        builder.write(UUID_CHARACTERISTIC_DATA_WRITE, PKT_HEADER, CMD_CONTACTS, MODE_SET, 0x09, 0x01, 0x01)
+        builder.queue()
+    }
+
+    /**
+     * Write a contacts field (0x07 = list, 0x08 = SOS) as
+     * "01 c0 ab <field> <offset:2> <len> <slice>" per BLE write (offset = byte offset into the
+     * payload; a single frame for lists that fit), closed by "01 c0 ab <field> fd <xor>" whose
+     * xor covers every transmitted byte of this field.
+     */
+    private fun writeContactsField(builder: TransactionBuilder, field: Byte, payload: ByteArray) {
+        var xor = 0
+        var off = 0
+        val maxSlice = 230
+        do {
+            val end = minOf(off + maxSlice, payload.size)
+            val frame = ByteArrayOutputStream()
+            frame.write(byteArrayOf(PKT_HEADER, CMD_CONTACTS, MODE_SET, field,
+                (off ushr 8).toByte(), off.toByte(), (end - off).toByte()))
+            frame.write(payload, off, end - off)
+            val fb = frame.toByteArray()
+            for (b in fb) xor = xor xor (b.toInt() and 0xff)
+            builder.write(UUID_CHARACTERISTIC_DATA_WRITE, *fb)
+            off = end
+        } while (off < payload.size)
+        val terminator = byteArrayOf(PKT_HEADER, CMD_CONTACTS, MODE_SET, field, PKT_TERMINATOR, xor.toByte())
+        builder.write(UUID_CHARACTERISTIC_DATA_WRITE, *terminator)
+    }
+
     private fun queueTlvWithTerminator(label: String, cmd: Byte, dataPkt: ByteArray) {
         var xor = 0
         for (b in dataPkt) xor = xor xor (b.toInt() and 0xff)
@@ -716,6 +761,7 @@ class GloryFitProSupport : AbstractBTLESingleDeviceSupport(LOG) {
         const val CMD_DEVICE_CONTROL: Byte = 0xa5.toByte()
         const val CMD_ALARM: Byte = 0xc7.toByte()
         const val CMD_WEATHER: Byte = 0xe0.toByte()
+        const val CMD_CONTACTS: Byte = 0xc0.toByte()
 
         const val FIELD_MODEL: Byte = 0x02
         const val FIELD_FIRMWARE: Byte = 0x15
