@@ -4480,7 +4480,7 @@
     <string name="xiaomi_vibration_builtin_toybox">Jouet</string>
     <string name="xiaomi_vibration_builtin_jump">Saut</string>
     <string name="xiaomi_vibration_builtin_wave">Vague</string>
-    <string name="xiaomi_vibration_refresh">Rafraîchir à partir de l\'appareil</string>
+    <string name="xiaomi_vibration_refresh">Rafraîchir depuis l\'appareil</string>
     <string name="xiaomi_vibration_add_test">Ajouter vibration</string>
     <string name="xiaomi_vibration_add_requested">Demande d\'ajout envoyée à l\'appareil</string>
     <string name="xiaomi_vibration_delete_message">Effacer \"%1$s\" de l\'appareil ?</string>
