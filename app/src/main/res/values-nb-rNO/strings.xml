@@ -4082,4 +4082,13 @@
     <string name="health_connect_exception">Synkroniseringsunntak</string>
     <string name="health_connect_sync_failed">Synkronisering mislyktes</string>
     <string name="infinitime_filesystem_access_disabled">Infinitime filsystemtilgang deaktivert</string>
+    <string name="pref_title_nautical_units">Nautiske enheter</string>
+    <string name="pref_title_unit_distance">Avstandsenhet</string>
+    <string name="pref_title_unit_temperature">Temperaturenhet</string>
+    <string name="pref_title_unit_weight">Vektenhet</string>
+    <string name="phone_gps_not_available">Telefonens GPS er ikke tilgjengelig</string>
+    <string name="permission_not_granted_contacts">Tilgang til kontakter er ikke gitt</string>
+    <string name="permission_not_granted_calendar">Tilgang til kalender er ikke gitt</string>
+    <string name="pref_summary_nautical_units">Vis fart og avstand i knop / nautiske mil for maritime aktiviteter</string>
+    <string name="pref_header_auto_export_gpx">Eksporter GPX-spor automatisk</string>
 </resources>
