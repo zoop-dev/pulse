@@ -2160,6 +2160,7 @@
     <string name="devicetype_colacao21" translatable="false">ColaCao 2021</string>
     <string name="devicetype_colacao23" translatable="false">ColaCao 2023</string>
     <string name="devicetype_ak102" translatable="false">AK102</string>
+    <string name="devicetype_ak86" translatable="false">AK86</string>
     <string name="devicetype_domyos_t540" translatable="false">Domyos T540</string>
     <string name="devicetype_even_realities_g1" translatable="false">Even Realities G1</string>
     <string name="devicetype_laxasfit" translatable="false">LaxasFit</string>
