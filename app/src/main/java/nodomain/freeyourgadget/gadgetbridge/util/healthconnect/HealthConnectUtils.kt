@@ -378,11 +378,24 @@ class HealthConnectUtils {
 
                     updateSyncStatus(summary, true, summaryCallback, mainHandler)
 
-                    val queryStartTs = currentSliceStartTs.minusSeconds(lookBackInSeconds)
-                    val queryEndTs = if (dataType == HealthConnectPermissionManager.HealthConnectDataType.SLEEP) {
+                    val queryEndTs = if (isSleep) {
                         currentSliceEndTs.plusSeconds(sleepLookForwardSeconds)
                     } else {
                         currentSliceEndTs
+                    }
+                    val baseQueryStartTs = currentSliceStartTs.minusSeconds(lookBackInSeconds)
+                    // For SLEEP, extend the fetch back to cover any stored night that began before the
+                    // plain look-back window, so SleepAnalysis re-derives its full stage list instead
+                    // of a clipped tail (issue #6453). Clamped to one extra look-back.
+                    val queryStartTs = if (isSleep) {
+                        SleepSyncer.sleepQueryStart(
+                            rows = sleepRows,
+                            baseStart = baseQueryStartTs,
+                            end = queryEndTs,
+                            floor = baseQueryStartTs.minusSeconds(lookBackInSeconds)
+                        )
+                    } else {
+                        baseQueryStartTs
                     }
                     LOG.info("$HC_SYNC_TAG Querying Gadgetbridge DB for {}({}) from {} to {}", gbDevice.aliasOrName, dataType.name, queryStartTs, queryEndTs)
 

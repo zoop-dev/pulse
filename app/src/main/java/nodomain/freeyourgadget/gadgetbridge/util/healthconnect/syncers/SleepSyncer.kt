@@ -121,6 +121,36 @@ internal object SleepSyncer {
         return rows.filter { it.endTime.isAfter(pruneBefore) }
     }
 
+    /**
+     * Pure fetch-window lower bound for SLEEP (no HC/DB/Android deps, unit-testable). SleepAnalysis
+     * re-derives stages from the fetched samples alone, so a stored night whose start predates the
+     * plain look-back would be re-detected as a clipped tail and overwrite its good HC record with
+     * truncated stages (issue #6453). Extend the start back to the earliest stored row that overlaps
+     * [baseStart, end] but began before baseStart. Clamped to `floor` so a stale row with a far-past
+     * start can't balloon the fetch unboundedly.
+     *
+     * The clamp assumes a night is shorter than floor-to-baseStart (one look-back, ~24h): SleepAnalysis
+     * splits on any wake gap > 1h, so a real session never spans that long. A pathological > 24h
+     * session (e.g. a sensor misclassifying continuous wake as sleep) could clamp short of its true
+     * start and still write clipped stages — acceptable, as that input is already malformed.
+     */
+    internal fun sleepQueryStart(
+        rows: List<SleepSessionRow>,
+        baseStart: Instant,
+        end: Instant,
+        floor: Instant
+    ): Instant {
+        val earliestOverlappingStart = rows
+            .filter { !it.endTime.isBefore(baseStart) && !it.startTime.isAfter(end) }
+            .minOfOrNull { it.startTime }
+        val extended = if (earliestOverlappingStart != null && earliestOverlappingStart.isBefore(baseStart)) {
+            earliestOverlappingStart
+        } else {
+            baseStart
+        }
+        return if (extended.isBefore(floor)) floor else extended
+    }
+
     suspend fun sync(
         healthConnectClient: HealthConnectClient,
         gbDevice: GBDevice,
@@ -273,7 +303,7 @@ internal object SleepSyncer {
     /**
      * Builds sleep stages from activity samples by grouping consecutive samples of the same type.
      */
-    private fun buildSleepStages(
+    internal fun buildSleepStages(
         samplesForThisSession: List<ActivitySample>,
         deviceName: String
     ): List<SleepSessionRecord.Stage> {
@@ -301,15 +331,13 @@ internal object SleepSyncer {
                 // Stage ends when the next, different sample begins
                 stageEndTime = Instant.ofEpochSecond(samplesForThisSession[nextDifferentSampleIndex].timestamp.toLong())
             } else {
-                // This is the last stage of this session. End time is slightly after the last sample's timestamp.
+                // This is the last stage of this session. End time is one second after the last
+                // sample. Must land on a whole second: the per-night registry persists the span as
+                // epochSeconds, so a sub-second end (e.g. +1ms) reloads truncated and makes an
+                // otherwise-unchanged re-detection compare unequal -> the skip-unchanged guard in
+                // planSleepSessions is defeated and the night is needlessly rewritten every sync.
                 val lastSampleTimestamp = samplesForThisSession.last().timestamp.toLong()
-                val provisionalEnd = Instant.ofEpochSecond(lastSampleTimestamp)
-                // Ensure endTime is exclusive and after startTime
-                stageEndTime = if (provisionalEnd.plusMillis(1).isAfter(stageStartTime)) {
-                    provisionalEnd.plusMillis(1)
-                } else {
-                    stageStartTime.plusSeconds(1) // Fallback for very short/single sample stages
-                }
+                stageEndTime = Instant.ofEpochSecond(lastSampleTimestamp).plusSeconds(1)
             }
 
             if (stageEndTime.isAfter(stageStartTime)) {
