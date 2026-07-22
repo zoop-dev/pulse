@@ -4403,4 +4403,5 @@
     <string name="stamina_at_start">Uithoudingsvermogen begin</string>
     <string name="stamina_min">Uithoudingsvermogen minimum</string>
     <string name="device">Apparaat</string>
+    <string name="stride">Paslengte</string>
 </resources>
