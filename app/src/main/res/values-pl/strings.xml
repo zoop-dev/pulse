@@ -4755,4 +4755,6 @@
     <string name="xiaomi_vibration_segment_remove">Usuń segment</string>
     <string name="xiaomi_vibration_no_segments">Dodaj co najmniej jeden segment</string>
     <string name="endurain_uploading_started">Przesyłanie do Endurain…</string>
+    <string name="activity_summary_set_header_photo_title">Ustaw zdjęcie w nagłówku</string>
+    <string name="activity_summary_remove_header_photo_title">Usuń zdjęcie z nagłówka</string>
 </resources>
