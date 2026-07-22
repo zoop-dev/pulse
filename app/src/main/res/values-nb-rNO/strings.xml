@@ -3883,9 +3883,9 @@
     <string name="pref_title_calendar_sync_choose">Kalendere som skal synkroniseres</string>
     <string name="pref_title_calendar_sync_colors">Hendelses farger som skal synkroniseres</string>
     <string name="pref_summary_calendar_sync_canceled">Kalenderhendelser som blir avlyst, blir synkronisert med enheten</string>
-    <string name="pref_title_calendar_sync_canceled">Synkroniser avlyste hendelser</string>
+    <string name="pref_title_calendar_sync_canceled">Synkroniser avlyste kalenderhendelser</string>
     <string name="pref_summary_calendar_sync_declined">Kalenderhendelser du har avslått, blir synkronisert med enheten</string>
-    <string name="pref_title_calendar_sync_declined">Synkroniser avviste hendelser</string>
+    <string name="pref_title_calendar_sync_declined">Synkroniser avviste kalenderhendelser</string>
     <string name="pref_summary_calendar_sync_focus_time">Kalenderhendelser som er merket som «Fokustid», blir synkronisert med enheten</string>
     <string name="pref_title_calendar_sync_focus_time">Synkroniser fokus tid</string>
     <string name="pref_summary_calendar_sync_all_day">Synkroniser hele dagsarrangementer</string>
@@ -3958,7 +3958,7 @@
     <string name="pref_even_realities_g1_touch_long_left_summary">Lang berøring venstre sammendrag</string>
     <string name="pref_even_realities_g1_touch_long_right_title">Lang berøring høyre</string>
     <string name="pref_even_realities_g1_touch_long_right_summary">Lang berøring høyre sammendrag</string>
-    <string name="even_realities_no_calendar_events">Ingen kalenderarrangementer</string>
+    <string name="even_realities_no_calendar_events">Ingen kommende hendelser</string>
     <string name="movementConsistency">Bevegelseskonsistens</string>
     <string name="movementStability">Bevegelsesstabilitet</string>
     <string name="movementContinuity">Bevegelseskontinuitet</string>
@@ -4091,4 +4091,12 @@
     <string name="permission_not_granted_calendar">Tilgang til kalender er ikke gitt</string>
     <string name="pref_summary_nautical_units">Vis fart og avstand i knop / nautiske mil for maritime aktiviteter</string>
     <string name="pref_header_auto_export_gpx">Eksporter GPX-spor automatisk</string>
+    <string name="pref_summary_calendar_sync_event_reminders">Påminnelser om arrangementer vil bli synkronisert til enheten</string>
+    <string name="pref_title_calendar_sync_event_reminders">Synkroniser påminnelser om arrangementer</string>
+    <string name="xiaomi_vibration_type_event">Hendelser</string>
+    <string name="pref_auto_export_gpx_summary">Eksporter GPX-filer automatisk ved synkronisering av aktiviteter</string>
+    <string name="pref_auto_export_fit_summary">Eksporter FIT-filer automatisk ved synkronisering av aktiviteter</string>
+    <string name="pref_auto_export_gpx_selected_devices">Valgte enheter</string>
+    <string name="pref_restart_logging_title">Start logging</string>
+    <string name="pref_restart_logging_summary">Klikk her for å prøve å starte loggfilen</string>
 </resources>
