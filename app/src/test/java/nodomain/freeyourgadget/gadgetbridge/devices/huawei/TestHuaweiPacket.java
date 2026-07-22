@@ -302,6 +302,22 @@ public class TestHuaweiPacket {
     }
 
     @Test
+    public void testLowLatencySerialize() throws HuaweiPacket.CryptoException {
+        byte[] expectedEnabled = {(byte) 0x5a, 0x00, 0x06, 0x00, 0x2b, 0x6c, 0x01, 0x01, 0x01, (byte) 0xa4, 0x11};
+        byte[] expectedDisabled = {(byte) 0x5a, 0x00, 0x06, 0x00, 0x2b, 0x6c, 0x01, 0x01, 0x00, (byte) 0xb4, 0x30};
+
+        Assert.assertArrayEquals(expectedEnabled, new Earphones.SetLowLatency.Request(paramsProvider, true).serialize().get(0));
+        Assert.assertArrayEquals(expectedDisabled, new Earphones.SetLowLatency.Request(paramsProvider, false).serialize().get(0));
+    }
+
+    @Test
+    public void testLowLatencyResponseParse() throws HuaweiPacket.ParseException {
+        byte[] response = {(byte) 0x5a, 0x00, 0x09, 0x00, 0x2b, 0x6c, 0x7f, 0x04, 0x00, 0x01, (byte) 0x86, (byte) 0xa0, (byte) 0xa4, (byte) 0x97};
+
+        Assert.assertEquals(Earphones.SetLowLatency.Response.class, new HuaweiPacket(paramsProvider).parse(response).getClass());
+    }
+
+    @Test
     public void testEncryptedUnslicedSerialize() throws HuaweiPacket.CryptoException {
         byte serviceId = 0x01;
         byte commandId = 0x02;

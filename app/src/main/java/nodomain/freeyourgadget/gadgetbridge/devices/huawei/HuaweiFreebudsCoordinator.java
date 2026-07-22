@@ -131,6 +131,9 @@ public abstract class HuaweiFreebudsCoordinator extends HuaweiBRCoordinator {
         if (supports(device, HuaweiHeadphonesCapabilities.FindHeadphones)) {
             deviceSpecificSettings.addRootScreen(R.xml.devicesettings_huawei_headphones_find_headphones);
         }
+        if (supports(device, HuaweiHeadphonesCapabilities.LowLatency)) {
+            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_headphones_low_latency);
+        }
         deviceSpecificSettings.addRootScreen(R.xml.devicesettings_headphones);
         return deviceSpecificSettings;
     }

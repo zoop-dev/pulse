@@ -42,7 +42,8 @@ public class HuaweiFreeClip2Coordinator extends HuaweiFreebudsCoordinator {
                 HuaweiHeadphonesCapabilities.InEarDetection,
                 HuaweiHeadphonesCapabilities.AdaptiveVolume,
                 HuaweiHeadphonesCapabilities.ExtraMediaVolume,
-                HuaweiHeadphonesCapabilities.FindHeadphones
+                HuaweiHeadphonesCapabilities.FindHeadphones,
+                HuaweiHeadphonesCapabilities.LowLatency
         );
     }
 

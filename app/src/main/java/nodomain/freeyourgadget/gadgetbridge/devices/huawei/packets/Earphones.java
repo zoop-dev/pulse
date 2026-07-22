@@ -219,6 +219,29 @@ public class Earphones {
         }
     }
 
+    public static class SetLowLatency {
+        public static final byte id = 0x6c;
+
+        public static class Request extends HuaweiPacket {
+            public Request(ParamsProvider paramsProvider, boolean enabled) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+                this.tlv = new HuaweiTLV().put(0x01, enabled);
+                this.complete = true;
+            }
+        }
+
+        public static class Response extends HuaweiPacket {
+            public Response(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+                this.complete = true;
+            }
+        }
+    }
+
     public static class SetExtraMediaVolume {
         public static final byte id = (byte) 0x87;
 

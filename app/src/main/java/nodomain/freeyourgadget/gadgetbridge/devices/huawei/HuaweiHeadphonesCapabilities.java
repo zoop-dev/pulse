@@ -25,5 +25,6 @@ public enum HuaweiHeadphonesCapabilities {
     BetterAudioQuality,
     AdaptiveVolume,
     ExtraMediaVolume,
-    FindHeadphones
+    FindHeadphones,
+    LowLatency
 }

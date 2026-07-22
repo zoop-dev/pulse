@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/huawei_find_headphones_names"
+        android:entryValues="@array/huawei_find_headphones_values"
+        android:icon="@drawable/ic_action_find_lost_device"
+        android:key="pref_freebuds_find_headphones"
+        android:title="@string/earfun_find_headphones"
+        app:useSimpleSummaryProvider="true" />
+    <Preference
+        android:key="pref_freebuds_find_headphones_hint"
+        android:selectable="false"
+        android:summary="@string/earfun_find_headphones_hint" />
+</androidx.preference.PreferenceScreen>

@@ -48,6 +48,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetB
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetAdaptiveVolumeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetExtraMediaVolumeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetFindHeadphonesRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetLowLatencyRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetVoiceBoostRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetPauseWhenRemovedFromEarRequest;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -179,6 +180,9 @@ public class HuaweiFreebudsSupport extends HuaweiBRSupport implements HeadphoneH
                     break;
                 case DeviceSettingsPreferenceConst.PREF_HUAWEI_FREEBUDS_FIND_HEADPHONES:
                     new SetFindHeadphonesRequest(getSupportProvider()).doPerform();
+                    break;
+                case DeviceSettingsPreferenceConst.PREF_HEADPHONES_LOW_LATENCY:
+                    new SetLowLatencyRequest(getSupportProvider()).doPerform();
                     break;
                 case DeviceSettingsPreferenceConst.PREF_BATTERY_POLLING_ENABLE:
                     if (!GBApplication.getDevicePrefs(gbDevice).getBatteryPollingEnabled()) {
