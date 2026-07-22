@@ -241,9 +241,9 @@ class InternetUtils {
                 return noInternetAccessReason(context)
             }
             return if (serverUrl != null) {
-                context.getString(R.string.internet_helper_error_could_not_reach_server, serverUrl)
+                context.getString(R.string.toast_error_could_not_reach_server, serverUrl)
             } else {
-                context.getString(R.string.internet_helper_error_server_unreachable)
+                context.getString(R.string.toast_error_server_unreachable)
             }
         }
 
@@ -254,9 +254,9 @@ class InternetUtils {
          */
         private fun noInternetAccessReason(context: android.content.Context): String {
             return when {
-                !InternetHelperSingleton.isInternetHelperInstalled() ->
+                !AndroidUtils.isPackageInstalled(PermissionsUtils.PACKAGE_INTERNET_HELPER) ->
                     context.getString(R.string.internet_helper_error_no_internet_helper)
-                !InternetHelperSingleton.isInternetHelperPermissionGranted() ->
+                !PermissionsUtils.checkPermission(context, PermissionsUtils.CUSTOM_PERM_INTERNET_HELPER) ->
                     context.getString(R.string.internet_helper_error_permission)
                 else ->
                     context.getString(R.string.internet_helper_error_no_internet_helper)
@@ -264,8 +264,9 @@ class InternetUtils {
         }
 
         /**
-         * Builds a localized, user-facing reason for an upload/network failure. Distinguishes
-         * "no internet connection" from "server unreachable" using connectivity + exception type.
+         * Builds a localized, user-facing reason for an upload/network failure. First distinguishes
+         * "no internet connection" from a reachable-network failure, then maps the exception type to
+         * an actionable message (host not resolved / connection refused / timed out / TLS error).
          */
         fun networkFailureReason(e: Throwable?): String {
             val context = GBApplication.getContext()
@@ -275,13 +276,16 @@ class InternetUtils {
                 return noInternetAccessReason(context)
             }
             return when (e) {
-                is UnknownHostException,
-                is ConnectException,
-                is SocketTimeoutException,
+                is UnknownHostException ->
+                    context.getString(R.string.toast_error_could_not_resolve_host)
+                is ConnectException ->
+                    context.getString(R.string.toast_error_connection_refused)
+                is SocketTimeoutException ->
+                    context.getString(R.string.toast_error_connection_timed_out)
                 is SSLException ->
-                    context.getString(R.string.internet_helper_error_server_unreachable)
+                    context.getString(R.string.toast_error_tls)
                 else -> e?.localizedMessage
-                    ?: context.getString(R.string.internet_helper_error_server_unreachable)
+                    ?: context.getString(R.string.toast_error_server_unreachable)
             }
         }
 

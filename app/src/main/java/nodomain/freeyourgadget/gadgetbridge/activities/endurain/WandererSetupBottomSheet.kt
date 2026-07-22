@@ -67,15 +67,16 @@ class WandererSetupBottomSheet : BottomSheetDialogFragment() {
                 return@setOnClickListener
             }
 
-            // Verify the server is reachable before saving, so a bad URL / dead server /
-            // missing internet is reported now instead of silently at the first upload.
+            // Verify the server is reachable and the API key is valid before saving, so a bad URL /
+            // dead server / missing internet / wrong key is reported now instead of silently at the
+            // first upload.
             saveButton.isEnabled = false
-            WandererApiClient(serverName, WandererTokenManager(requireContext())).checkServerReachable { reachable ->
+            WandererApiClient(serverName, WandererTokenManager(requireContext())).checkServerReachable(apiToken) { reachable, reason ->
                 activity?.runOnUiThread {
                     saveButton.isEnabled = true
                     if (!reachable) {
                         GB.toast(
-                            InternetUtils.connectFailureReason(requireContext(), serverName),
+                            reason ?: InternetUtils.connectFailureReason(requireContext(), serverName),
                             Toast.LENGTH_LONG,
                             GB.ERROR
                         )

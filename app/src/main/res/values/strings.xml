@@ -4940,10 +4940,15 @@
     <string name="internet_helper_banglejs_permission_missing_title">Permission missing</string>
     <string name="internet_helper_banglejs_permission_missing_text">Access to the Bangle.js app loader is currently not allowed by your settings. Please go to the internet helper settings in the external integrations settings to enable it.</string>
     <!-- Generic internet/connectivity error reasons (shared by any feature that needs the network) -->
-    <string name="internet_helper_error_could_not_reach_server">Could not reach %1$s.</string>
-    <string name="internet_helper_error_server_unreachable">Server unreachable</string>
+    <string name="toast_error_could_not_reach_server">Could not reach %1$s.</string>
+    <string name="toast_error_server_unreachable">Server unreachable</string>
+    <string name="toast_error_could_not_resolve_host">Could not resolve server address. Check the URL and your connection.</string>
+    <string name="toast_error_connection_refused">Connection refused by the server. Check the address and port.</string>
+    <string name="toast_error_connection_timed_out">Connection timed out. The server took too long to respond.</string>
+    <string name="toast_error_tls">Secure connection failed. Check the server certificate.</string>
     <string name="internet_helper_error_no_internet_helper">This feature requires the Internet Helper</string>
     <string name="internet_helper_error_permission">Internet Helper doesn\'t have internet permission</string>
+    <string name="toast_error_invalid_api_key">Invalid API key</string>
     <string name="eco">Eco</string>
     <string name="prefs_title_offgrid_mode">Off-grid mode</string>
     <string name="solar_panel1_peak_w">Solar panel 1 peak W</string>

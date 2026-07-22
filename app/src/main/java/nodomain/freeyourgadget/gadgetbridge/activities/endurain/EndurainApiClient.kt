@@ -340,11 +340,11 @@ class EndurainApiClient(
                     uri = uri,
                     file = file,
                     requestHeaders = headers
-                ) { success, statusCode, responseText ->
+                ) { success, statusCode, responseText, reason ->
                     if (success && responseText != null) {
                         LOG.debug("Response ($statusCode) from Endurain: $responseText")
                     } else {
-                        LOG.error("Activity photo upload to Endurain failed. Response ($statusCode) received: $responseText")
+                        LOG.error("Activity photo upload to Endurain failed. Response ($statusCode, reason {}) received: $responseText", reason)
                     }
                 }
             } catch (e: Exception) {

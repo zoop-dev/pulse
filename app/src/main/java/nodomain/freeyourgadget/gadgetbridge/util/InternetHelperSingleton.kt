@@ -48,25 +48,6 @@ object InternetHelperSingleton {
     @Volatile
     private var bindLatch: CountDownLatch? = null
 
-    const val INTERNET_HELPER_PACKAGE = "nodomain.freeyourgadget.internethelper"
-    const val INTERNET_HELPER_PERMISSION = "nodomain.freeyourgadget.internethelper.INTERNET"
-
-    /** True when the Internet Helper companion app is installed. */
-    fun isInternetHelperInstalled(): Boolean {
-        return try {
-            GBApplication.getContext().packageManager.getApplicationInfo(INTERNET_HELPER_PACKAGE, 0)
-            true
-        } catch (_: PackageManager.NameNotFoundException) {
-            false
-        }
-    }
-
-    /** True when we hold the (dangerous, runtime) permission needed to call the Internet Helper. */
-    fun isInternetHelperPermissionGranted(): Boolean {
-        return GBApplication.getContext()
-            .checkSelfPermission(INTERNET_HELPER_PERMISSION) == PackageManager.PERMISSION_GRANTED
-    }
-
     private val internetHelperConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName?, service: IBinder?) {
             LOG.info("Internet helper service successfully bound")
@@ -116,7 +97,9 @@ object InternetHelperSingleton {
      */
     fun ensureInternetHelperBoundBlocking(timeoutMs: Long = 3000): Boolean {
         if (internetHelper != null) return true
-        if (!isInternetHelperInstalled() || !isInternetHelperPermissionGranted()) return false
+        if (!AndroidUtils.isPackageInstalled(PermissionsUtils.PACKAGE_INTERNET_HELPER)
+            || !PermissionsUtils.checkPermission(GBApplication.getContext(), PermissionsUtils.CUSTOM_PERM_INTERNET_HELPER)
+        ) return false
         val latch = CountDownLatch(1)
         bindLatch = latch
         ensureInternetHelperBound()

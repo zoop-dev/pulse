@@ -17,6 +17,8 @@
 package nodomain.freeyourgadget.gadgetbridge.activities.endurain
 
 import androidx.core.net.toUri
+import nodomain.freeyourgadget.gadgetbridge.GBApplication
+import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.util.InternetUtils
 import org.json.JSONObject
 import org.slf4j.LoggerFactory
@@ -42,21 +44,36 @@ class WandererApiClient(
     }
 
     /**
-     * Verifies the server is reachable (host responds to a request). Any HTTP response — even a
-     * 4xx — counts as reachable; only connection failures (bad host, refused, offline, internet
-     * helper unavailable) count as unreachable. [callback] fires with `true` when reachable.
+     * Verifies both that the server is reachable and that [apiToken] is valid, by calling an
+     * authenticated endpoint. Wanderer's auth layer rejects a bad/revoked key on any /api request
+     * (the response carries an error object instead of a resource list), so a successful list
+     * response means the key is good. [apiToken] is passed in explicitly because during setup it
+     * is not persisted yet. [callback] fires with (reachable, reason): reason is null on success,
+     * otherwise a localized, user-facing explanation (server unreachable / invalid API key).
      */
-    fun checkServerReachable(callback: (Boolean) -> Unit) {
+    fun checkServerReachable(apiToken: String, callback: (reachable: Boolean, reason: String?) -> Unit) {
         Thread {
+            val context = GBApplication.getContext()
             try {
-                val response = InternetUtils.doStringRequest(
-                    uri = baseUrl.toUri(),
-                    requestHeaders = buildHeaders()
+                val headers = mutableMapOf("Authorization" to "Bearer $apiToken")
+                val response = InternetUtils.doJsonRequest(
+                    uri = "$baseUrl/api/v1/api-token".toUri(),
+                    requestHeaders = headers
                 )
-                callback(response != null)
+                when {
+                    // No usable response at all: offline / helper unavailable / server down.
+                    response == null ->
+                        callback(false, InternetUtils.connectFailureReason(context, baseUrl))
+                    // Authenticated list came back → server reachable and key accepted.
+                    response.has("items") ->
+                        callback(true, null)
+                    // Server responded but rejected the credentials (bad or revoked key).
+                    else ->
+                        callback(false, context.getString(R.string.toast_error_invalid_api_key))
+                }
             } catch (e: Exception) {
                 LOG.error("Wanderer reachability check failed", e)
-                callback(false)
+                callback(false, InternetUtils.connectFailureReason(context, baseUrl))
             }
         }.start()
     }
