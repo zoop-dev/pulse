@@ -185,6 +185,40 @@ public class Earphones {
         }
     }
 
+    public static class FindHeadphones {
+        public static final byte id = 0x5d;
+        public static final byte stateId = 0x5e;
+
+        public static class Request extends HuaweiPacket {
+            public Request(ParamsProvider paramsProvider, byte side, boolean stop) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+                this.tlv = new HuaweiTLV().put(0x01, new byte[]{side, stop ? (byte) 0x01 : (byte) 0x00});
+                this.complete = true;
+            }
+        }
+
+        public static class Response extends HuaweiPacket {
+            public byte side;
+            public boolean stopped;
+
+            public Response(ParamsProvider paramsProvider, byte commandId) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = commandId;
+                this.complete = true;
+            }
+
+            @Override
+            public void parseTlv() throws ParseException {
+                byte[] state = this.tlv.getBytes(0x02);
+                this.side = state[0];
+                this.stopped = state[1] == 0x01;
+            }
+        }
+    }
+
     public static class SetExtraMediaVolume {
         public static final byte id = (byte) 0x87;
 

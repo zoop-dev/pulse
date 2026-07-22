@@ -47,6 +47,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetA
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetBetterAudioQualityRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetAdaptiveVolumeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetExtraMediaVolumeRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetFindHeadphonesRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetVoiceBoostRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetPauseWhenRemovedFromEarRequest;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -81,6 +82,11 @@ public class HuaweiFreebudsSupport extends HuaweiBRSupport implements HeadphoneH
             }
             if (coordinator.supports(this.gbDevice, HuaweiHeadphonesCapabilities.ExtraMediaVolume)) {
                 new GetExtraMediaVolumeRequest(super.getSupportProvider()).doPerform();
+            }
+            if (coordinator.supports(this.gbDevice, HuaweiHeadphonesCapabilities.FindHeadphones)) {
+                GBApplication.getDeviceSpecificSharedPrefs(this.gbDevice.getAddress()).edit()
+                        .putString(DeviceSettingsPreferenceConst.PREF_HUAWEI_FREEBUDS_FIND_HEADPHONES, "0")
+                        .apply();
             }
 
         } catch (IOException e) {
@@ -170,6 +176,9 @@ public class HuaweiFreebudsSupport extends HuaweiBRSupport implements HeadphoneH
                     break;
                 case DeviceSettingsPreferenceConst.PREF_HUAWEI_FREEBUDS_EXTRA_MEDIA_VOLUME:
                     new SetExtraMediaVolumeRequest(getSupportProvider()).doPerform();
+                    break;
+                case DeviceSettingsPreferenceConst.PREF_HUAWEI_FREEBUDS_FIND_HEADPHONES:
+                    new SetFindHeadphonesRequest(getSupportProvider()).doPerform();
                     break;
                 case DeviceSettingsPreferenceConst.PREF_BATTERY_POLLING_ENABLE:
                     if (!GBApplication.getDevicePrefs(gbDevice).getBatteryPollingEnabled()) {

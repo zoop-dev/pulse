@@ -273,6 +273,35 @@ public class TestHuaweiPacket {
     }
 
     @Test
+    public void testFindHeadphonesSerialize() throws HuaweiPacket.CryptoException {
+        byte[] leftStart = {(byte) 0x5a, 0x00, 0x07, 0x00, 0x2b, 0x5d, 0x01, 0x02, 0x00, 0x00, 0x6f, 0x63};
+        byte[] leftStop = {(byte) 0x5a, 0x00, 0x07, 0x00, 0x2b, 0x5d, 0x01, 0x02, 0x00, 0x01, 0x7f, 0x42};
+        byte[] rightStart = {(byte) 0x5a, 0x00, 0x07, 0x00, 0x2b, 0x5d, 0x01, 0x02, 0x01, 0x00, 0x5c, 0x52};
+        byte[] rightStop = {(byte) 0x5a, 0x00, 0x07, 0x00, 0x2b, 0x5d, 0x01, 0x02, 0x01, 0x01, 0x4c, 0x73};
+
+        Assert.assertArrayEquals(leftStart, new Earphones.FindHeadphones.Request(paramsProvider, (byte) 0x00, false).serialize().get(0));
+        Assert.assertArrayEquals(leftStop, new Earphones.FindHeadphones.Request(paramsProvider, (byte) 0x00, true).serialize().get(0));
+        Assert.assertArrayEquals(rightStart, new Earphones.FindHeadphones.Request(paramsProvider, (byte) 0x01, false).serialize().get(0));
+        Assert.assertArrayEquals(rightStop, new Earphones.FindHeadphones.Request(paramsProvider, (byte) 0x01, true).serialize().get(0));
+    }
+
+    @Test
+    public void testFindHeadphonesResponseParse() throws HuaweiPacket.ParseException {
+        byte[] acknowledgement = {(byte) 0x5a, 0x00, 0x07, 0x00, 0x2b, 0x5d, 0x02, 0x02, 0x00, 0x00, (byte) 0xf4, (byte) 0xbf};
+        byte[] notification = {(byte) 0x5a, 0x00, 0x07, 0x00, 0x2b, 0x5e, 0x02, 0x02, 0x01, 0x01, 0x39, 0x7d};
+
+        Earphones.FindHeadphones.Response acknowledgementResponse = (Earphones.FindHeadphones.Response) new HuaweiPacket(paramsProvider).parse(acknowledgement);
+        acknowledgementResponse.parseTlv();
+        Assert.assertEquals(0x00, acknowledgementResponse.side);
+        Assert.assertFalse(acknowledgementResponse.stopped);
+
+        Earphones.FindHeadphones.Response notificationResponse = (Earphones.FindHeadphones.Response) new HuaweiPacket(paramsProvider).parse(notification);
+        notificationResponse.parseTlv();
+        Assert.assertEquals(0x01, notificationResponse.side);
+        Assert.assertTrue(notificationResponse.stopped);
+    }
+
+    @Test
     public void testEncryptedUnslicedSerialize() throws HuaweiPacket.CryptoException {
         byte serviceId = 0x01;
         byte commandId = 0x02;

@@ -708,6 +708,10 @@ public class HuaweiPacket {
                         return new Earphones.GetBetterAudioQuality.Response(paramsProvider).fromPacket(this);
                     case Earphones.AdaptiveVolume.id:
                         return new Earphones.AdaptiveVolume.Response(paramsProvider).fromPacket(this);
+                    case Earphones.FindHeadphones.id:
+                        return new Earphones.FindHeadphones.Response(paramsProvider, Earphones.FindHeadphones.id).fromPacket(this);
+                    case Earphones.FindHeadphones.stateId:
+                        return new Earphones.FindHeadphones.Response(paramsProvider, Earphones.FindHeadphones.stateId).fromPacket(this);
                     case Earphones.SetExtraMediaVolume.id:
                         return new Earphones.SetExtraMediaVolume.Response(paramsProvider).fromPacket(this);
                     case Earphones.GetExtraMediaVolume.id:
