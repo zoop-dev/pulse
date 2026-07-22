@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <SwitchPreferenceCompat
-        android:defaultValue="false"
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ListPreference
+        android:defaultValue="off"
+        android:entries="@array/huawei_adaptive_volume_names"
+        android:entryValues="@array/huawei_adaptive_volume_values"
         android:icon="@drawable/ic_noise_control_on"
-        android:key="pref_freebuds_adaptive_volume"
-        android:layout="@layout/preference_checkbox"
+        android:key="pref_freebuds_adaptive_volume_mode"
         android:title="@string/huawei_adaptive_volume_title"
-        android:summary="@string/huawei_adaptive_volume_summary" />
+        app:useSimpleSummaryProvider="true" />
 </androidx.preference.PreferenceScreen>

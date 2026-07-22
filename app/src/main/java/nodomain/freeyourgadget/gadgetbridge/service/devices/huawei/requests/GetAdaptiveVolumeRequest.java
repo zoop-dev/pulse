@@ -58,8 +58,10 @@ public class GetAdaptiveVolumeRequest extends Request {
         Earphones.AdaptiveVolume.Response packet = (Earphones.AdaptiveVolume.Response) receivedPacket;
 
         SharedPreferences prefs = GBApplication.getDeviceSpecificSharedPrefs(this.getDevice().getAddress());
+        String mode = SetAdaptiveVolumeRequest.Mode.fromResponse(packet).toPreference();
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean(DeviceSettingsPreferenceConst.PREF_HUAWEI_FREEBUDS_ADAPTIVE_VOLUME, packet.enabled);
+        editor.putString(DeviceSettingsPreferenceConst.PREF_HUAWEI_FREEBUDS_ADAPTIVE_VOLUME, mode);
+        editor.putString(DeviceSettingsPreferenceConst.PREF_HUAWEI_FREEBUDS_ADAPTIVE_VOLUME_APPLIED, mode);
         editor.apply();
     }
 }

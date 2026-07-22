@@ -139,6 +139,20 @@ public class Earphones {
             }
         }
 
+        public static class SetSensitivityRequest extends HuaweiPacket {
+            public SetSensitivityRequest(ParamsProvider paramsProvider, byte sensitivity) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+
+                this.tlv = new HuaweiTLV()
+                        .put(0x01, FEATURE_ID)
+                        .put(0x03, sensitivity);
+
+                this.complete = true;
+            }
+        }
+
         public static class GetRequest extends HuaweiPacket {
             public GetRequest(ParamsProvider paramsProvider) {
                 super(paramsProvider);
@@ -154,6 +168,7 @@ public class Earphones {
 
         public static class Response extends HuaweiPacket {
             public boolean enabled;
+            public byte sensitivity;
 
             public Response(ParamsProvider paramsProvider) {
                 super(paramsProvider);
@@ -165,6 +180,7 @@ public class Earphones {
             @Override
             public void parseTlv() throws ParseException {
                 this.enabled = this.tlv.getByte(0x02, (byte) 0) == 0x01;
+                this.sensitivity = this.tlv.getByte(0x03, (byte) 0x01);
             }
         }
     }

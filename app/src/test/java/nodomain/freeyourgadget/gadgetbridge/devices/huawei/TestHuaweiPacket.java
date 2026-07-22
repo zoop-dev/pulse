@@ -221,9 +221,15 @@ public class TestHuaweiPacket {
     public void testAdaptiveVolumeSerialize() throws HuaweiPacket.CryptoException {
         byte[] expectedEnabled = {(byte) 0x5a, 0x00, 0x09, 0x00, 0x2b, (byte) 0xb4, 0x01, 0x01, 0x02, 0x02, 0x01, 0x01, 0x03, (byte) 0xc0};
         byte[] expectedDisabled = {(byte) 0x5a, 0x00, 0x09, 0x00, 0x2b, (byte) 0xb4, 0x01, 0x01, 0x02, 0x02, 0x01, 0x00, 0x13, (byte) 0xe1};
+        byte[] expectedLow = {(byte) 0x5a, 0x00, 0x09, 0x00, 0x2b, (byte) 0xb4, 0x01, 0x01, 0x02, 0x03, 0x01, 0x00, 0x24, (byte) 0xd1};
+        byte[] expectedDefault = {(byte) 0x5a, 0x00, 0x09, 0x00, 0x2b, (byte) 0xb4, 0x01, 0x01, 0x02, 0x03, 0x01, 0x01, 0x34, (byte) 0xf0};
+        byte[] expectedHigh = {(byte) 0x5a, 0x00, 0x09, 0x00, 0x2b, (byte) 0xb4, 0x01, 0x01, 0x02, 0x03, 0x01, 0x02, 0x04, (byte) 0x93};
 
         Assert.assertArrayEquals(expectedEnabled, new Earphones.AdaptiveVolume.SetRequest(paramsProvider, true).serialize().get(0));
         Assert.assertArrayEquals(expectedDisabled, new Earphones.AdaptiveVolume.SetRequest(paramsProvider, false).serialize().get(0));
+        Assert.assertArrayEquals(expectedLow, new Earphones.AdaptiveVolume.SetSensitivityRequest(paramsProvider, (byte) 0x00).serialize().get(0));
+        Assert.assertArrayEquals(expectedDefault, new Earphones.AdaptiveVolume.SetSensitivityRequest(paramsProvider, (byte) 0x01).serialize().get(0));
+        Assert.assertArrayEquals(expectedHigh, new Earphones.AdaptiveVolume.SetSensitivityRequest(paramsProvider, (byte) 0x02).serialize().get(0));
     }
 
     @Test
@@ -234,6 +240,7 @@ public class TestHuaweiPacket {
         Earphones.AdaptiveVolume.Response enabledResponse = (Earphones.AdaptiveVolume.Response) new HuaweiPacket(paramsProvider).parse(enabled);
         enabledResponse.parseTlv();
         Assert.assertTrue(enabledResponse.enabled);
+        Assert.assertEquals(0x01, enabledResponse.sensitivity);
 
         Earphones.AdaptiveVolume.Response disabledResponse = (Earphones.AdaptiveVolume.Response) new HuaweiPacket(paramsProvider).parse(disabled);
         disabledResponse.parseTlv();
