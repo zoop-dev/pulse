@@ -4946,6 +4946,7 @@
     <string name="toast_error_connection_refused">Connection refused by the server. Check the address and port.</string>
     <string name="toast_error_connection_timed_out">Connection timed out. The server took too long to respond.</string>
     <string name="toast_error_tls">Secure connection failed. Check the server certificate.</string>
+    <string name="toast_error_unexpected_response">Unexpected response from server.</string>
     <string name="internet_helper_error_no_internet_helper">This feature requires the Internet Helper</string>
     <string name="internet_helper_error_permission">Internet Helper doesn\'t have internet permission</string>
     <string name="toast_error_invalid_api_key">Invalid API key</string>

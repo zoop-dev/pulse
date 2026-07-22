@@ -71,61 +71,84 @@ class InternetUtils {
 
         /**
          * Performs an HTTP request to the given URI, optionally allowing insecure connections.
+         * On failure returns null; [onError] (default no-op) is invoked with a localized,
+         * user-facing reason (no internet / server unreachable / could not resolve host / ...)
+         * so callers that surface errors can opt in without changing the return type.
          */
+        @JvmOverloads
         fun doStringRequest(
             uri: Uri,
             method: String = "GET",
             requestHeaders: Map<String, String> = emptyMap(),
             body: String? = null,
-            allowInsecure: Boolean = false
+            allowInsecure: Boolean = false,
+            onError: (reason: String) -> Unit = {},
         ): String? {
-            val response: WebResourceResponse? = if (GBApplication.hasDirectInternetAccess()) {
-                directRequest(uri, method, requestHeaders, body, allowInsecure)
-            } else {
-                InternetHelperSingleton.send(
-                    uri,
-                    HttpRequest.Method.valueOf(method),
-                    headersWithUserAgent(requestHeaders),
-                    body?.toByteArray(),
-                    allowInsecure,
-                )
+            val response: WebResourceResponse? = try {
+                if (GBApplication.hasDirectInternetAccess()) {
+                    directRequest(uri, method, requestHeaders, body, allowInsecure)
+                } else {
+                    InternetHelperSingleton.send(
+                        uri,
+                        HttpRequest.Method.valueOf(method),
+                        headersWithUserAgent(requestHeaders),
+                        body?.toByteArray(),
+                        allowInsecure,
+                    )
+                }
+            } catch (e: Exception) {
+                LOG.error("Request to $uri failed: ", e)
+                onError(networkFailureReason(e))
+                return null
             }
-            if (response == null) return null
+            if (response == null) {
+                onError(networkFailureReason(null))
+                return null
+            }
 
             // Convert response InputStream to String
             return response.data.bufferedReader().use { it.readText() }
         }
 
+        @JvmOverloads
         fun doJsonRequest(
             uri: Uri,
             method: String = "GET",
             requestHeaders: Map<String, String> = emptyMap(),
             body: String? = null,
-            allowInsecure: Boolean = false
+            allowInsecure: Boolean = false,
+            onError: (reason: String) -> Unit = {},
         ): JSONObject? {
             val text = doStringRequest(
                 uri,
                 method,
                 headersWithUserAgent(requestHeaders),
                 body,
-                allowInsecure
+                allowInsecure,
+                onError,
             )
             if (text == null) {
                 // No response at all (no connectivity / internet helper unavailable / server
-                // unreachable). Not a parse error — return null quietly, callers report the reason.
+                // unreachable). Not a parse error, onError already fired with the network reason.
                 return null
             }
             try {
                 return JSONObject(text)
             } catch (e: Exception) {
                 LOG.error("Error while parsing JSON response", e)
+                onError(GBApplication.getContext().getString(R.string.toast_error_unexpected_response))
                 return null
             }
         }
 
+        /**
+         * Downloads [uri] into [targetFile]. On success [onComplete] is invoked with the file;
+         * on failure [onError] (default no-op) is invoked with a localized, user-facing reason.
+         */
         fun downloadBinaryFile(
             uri: Uri,
             targetFile: File,
+            onError: (reason: String) -> Unit = {},
             onComplete: (File) -> Unit
         ) {
             try {
@@ -147,16 +170,21 @@ class InternetUtils {
                     )
                 }
 
-                response?.data?.use { input ->
+                if (response == null) {
+                    onError(networkFailureReason(null))
+                    return
+                }
+
+                response.data?.use { input ->
                     FileOutputStream(targetFile).use { output ->
                         input.copyTo(output)
                     }
                 }
 
-                if (response != null)
-                    onComplete(targetFile)
+                onComplete(targetFile)
             } catch (e: Exception) {
                 LOG.error("Downloading $uri failed: ", e)
+                onError(networkFailureReason(e))
             }
         }
 
