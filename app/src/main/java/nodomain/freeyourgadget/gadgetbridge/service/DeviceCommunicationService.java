@@ -263,6 +263,8 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
     private DeviceSupportFactory mFactory;
     private final ArrayList<DeviceStruct> deviceStructs = new ArrayList<>(1);
     private final HashMap<String, ArrayList<Intent>> cachedNotifications = new HashMap<>();
+    private boolean mReceiversEnabled = false;
+    private FeatureSet mCurrentFeatureSet = null;
 
     private PhoneCallReceiver mPhoneCallReceiver = null;
     private SMSReceiver mSMSReceiver = null;
@@ -291,7 +293,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
     private GBLocationService locationService = null;
 
     private OsmandEventReceiver mOsmandAidlHelper = null;
-    private List<CoMapsNavigationReceiver> mCoMapsNavigationReceivers;
+    private final List<CoMapsNavigationReceiver> mCoMapsNavigationReceivers = new ArrayList<>();
 
     private SleepAsAndroidReceiver mSleepAsAndroidReceiver = null;
 
@@ -1403,6 +1405,9 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             throw new RuntimeException("features cannot be null when enabling receivers");
         }
 
+        mReceiversEnabled = enable;
+        mCurrentFeatureSet = features;
+
         if (enable && initialized && features.supportsCalendarEvents()) {
             for (GBDevice deviceWithCalendar : devicesWithCalendar) {
                 if (!deviceHasCalendarReceiverRegistered(deviceWithCalendar)) {
@@ -1494,8 +1499,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 mOsmandAidlHelper = new OsmandEventReceiver(this.getApplication());
             }
 
-            if (mCoMapsNavigationReceivers == null && features.supportsNavigation() && getPrefs().getBoolean(GBPrefs.NAVIGATION_APP_COMAPS, false)) {
-                mCoMapsNavigationReceivers = new ArrayList<>();
+            if (features.supportsNavigation() && getPrefs().getBoolean(GBPrefs.NAVIGATION_APP_COMAPS, false)) {
                 for (Pair<Uri, CoMapsNavigationReceiver> pair : CoMapsNavigationReceiverFactory.createCoMapsNavigationReceiversForApplication(this.getApplication())) {
                     getContentResolver().registerContentObserver(pair.first, false, pair.second);
                     mCoMapsNavigationReceivers.add(pair.second);
@@ -1604,10 +1608,8 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 mOsmandAidlHelper.cleanupResources();
                 mOsmandAidlHelper = null;
             }
-            if (mCoMapsNavigationReceivers != null) {
-                mCoMapsNavigationReceivers.forEach(getContentResolver()::unregisterContentObserver);
-                mCoMapsNavigationReceivers = null;
-            }
+            mCoMapsNavigationReceivers.forEach(getContentResolver()::unregisterContentObserver);
+            mCoMapsNavigationReceivers.clear();
             if (mGBAutoFetchReceiver != null) {
                 unregisterReceiver(mGBAutoFetchReceiver);
                 mGBAutoFetchReceiver = null;
@@ -1684,18 +1686,36 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (GBPrefs.DEVICE_AUTO_RECONNECT.equals(key)) {
-            for(DeviceStruct deviceStruct : deviceStructs){
-                boolean autoReconnect = getPrefs().getAutoReconnect(deviceStruct.getDevice());
-                deviceStruct.getDeviceSupport().setAutoReconnect(autoReconnect);
+        if (key == null) return;
+
+        switch (key) {
+            case GBPrefs.DEVICE_AUTO_RECONNECT -> {
+                for (DeviceStruct deviceStruct : deviceStructs) {
+                    boolean autoReconnect = getPrefs().getAutoReconnect(deviceStruct.getDevice());
+                    deviceStruct.getDeviceSupport().setAutoReconnect(autoReconnect);
+                }
             }
-        }
-        if (GBPrefs.CHART_MAX_HEART_RATE.equals(key) || GBPrefs.CHART_MIN_HEART_RATE.equals(key)) {
-            HeartRateUtils.getInstance().updateCachedHeartRatePreferences();
-        }
-        if (GBPrefs.PREF_ALLOW_INTENT_API.equals(key)){
-            allowBluetoothIntentApi = sharedPreferences.getBoolean(GBPrefs.PREF_ALLOW_INTENT_API, false);
-            LOG.info("allowBluetoothIntentApi changed to {}", allowBluetoothIntentApi);
+            case GBPrefs.CHART_MAX_HEART_RATE, GBPrefs.CHART_MIN_HEART_RATE ->
+                    HeartRateUtils.getInstance().updateCachedHeartRatePreferences();
+            case GBPrefs.PREF_ALLOW_INTENT_API -> {
+                allowBluetoothIntentApi = sharedPreferences.getBoolean(GBPrefs.PREF_ALLOW_INTENT_API, false);
+                LOG.info("allowBluetoothIntentApi changed to {}", allowBluetoothIntentApi);
+            }
+            case GBPrefs.NAVIGATION_APP_COMAPS -> {
+                if (mReceiversEnabled && mCurrentFeatureSet != null && mCurrentFeatureSet.supportsNavigation()) {
+                    boolean enable = sharedPreferences.getBoolean(GBPrefs.NAVIGATION_APP_COMAPS, false);
+                    LOG.debug("Actioning CoMaps preference change to {}", enable);
+                    if (enable) {
+                        for (Pair<Uri, CoMapsNavigationReceiver> pair : CoMapsNavigationReceiverFactory.createCoMapsNavigationReceiversForApplication(this.getApplication())) {
+                            getContentResolver().registerContentObserver(pair.first, false, pair.second);
+                            mCoMapsNavigationReceivers.add(pair.second);
+                        }
+                    } else {
+                        mCoMapsNavigationReceivers.forEach(getContentResolver()::unregisterContentObserver);
+                        mCoMapsNavigationReceivers.clear();
+                    }
+                }
+            }
         }
     }
 
