@@ -1526,7 +1526,7 @@
     <string name="pref_title_device_internet_access">Autoriser l\'accès à Internet</string>
     <string name="pref_summary_device_internet_access">Permettre aux apps sur cet appareil d\'accéder à Internet</string>
     <string name="pref_title_device_intents">Permettre les intentions</string>
-    <string name="pref_workout_start_on_phone_title">Application de suivi sportif</string>
+    <string name="pref_workout_start_on_phone_title">App de suivi sportif</string>
     <string name="pref_workout_start_on_phone_summary">Démarre/arrête le suivi sportif sur le téléphone si une activité GPS est démarrée sur le bracelet</string>
     <string name="pref_workout_send_gps_title">Envoyer le GPS durant l\'exercice</string>
     <string name="pref_workout_send_gps_summary">Envoyer les données GPS en cours durant un exercice</string>
@@ -2627,7 +2627,7 @@
     <string name="pref_dashboard_select_devices_summary">Combines les données d\'activité des appareils choisis pour les totaux sur le tableau de bord</string>
     <string name="pref_dashboard_widget_show_legend_summary">Afficher la légende sous le widget expliquant les couleurs</string>
     <string name="error_showing_changelog">Erreur lors de l\'affichage du Changelog</string>
-    <string name="dashboard_settings">Réglages du Tableau de bord</string>
+    <string name="dashboard_settings">Réglages tableau de bord</string>
     <string name="activity_type_worn">Porté</string>
     <string name="pref_dashboard_widget_today_hr_interval_title">Intervalle de fréquence cardiaque</string>
     <string name="pref_sleepasandroid_features_title">Fonctionnalités</string>
@@ -4330,7 +4330,7 @@
     <string name="diving_cns_toxicity">Toxicité pour le SNC</string>
     <string name="diving_nitrogen_load">Charge en azote</string>
     <string name="diving_surface_interval">Intervalle en surface</string>
-    <string name="pref_summary_third_party_app_device_alarms">Permettre à des applis tierces de mettre en place des alarmes au moyen d\'intents</string>
+    <string name="pref_summary_third_party_app_device_alarms">Permettre à des applis tierces de mettre en place des alarmes au moyen d\'intents.</string>
     <string name="prefs_device_id">ID de l\'appareil</string>
     <string name="persisting_samples_failed">Erreur d\'enregistrement des échantillons : %1$s</string>
     <string name="activity_type_adventure_race">Course d\'aventure</string>
@@ -4493,4 +4493,24 @@
     <string name="xiaomi_vibration_segment_strength_hint">Intensité (1-100)</string>
     <string name="xiaomi_vibration_segment_remove">Effacer segment</string>
     <string name="xiaomi_vibration_no_segments">Ajoutez au moins un segment</string>
+    <string name="prefs_online_fitness_trackers_title">Traqueurs de fitness en ligne</string>
+    <string name="prefs_online_fitness_trackers_summary">Configurer comment accéder et utiliser les traqueurs de fitness en ligne</string>
+    <string name="ak102_pref_display_items_summary">Écrans affichés sur la montre</string>
+    <string name="endurain_invalid_server_url">URL serveur invalide</string>
+    <string name="internet_helper_banglejs_permission_missing_text">L’accès au chargeur d’app Bangle.js n’est actuellement pas autorisé par vos paramètres. Veuillez vous rendre sur les paramètres de l’assistant Internet dans les paramètres des intégrations externes afin de l’activer.</string>
+    <string name="gymlink_summary">Autorise les équipements compatibles GymLink à se connecter à l’appareil.</string>
+    <string name="gymlink_title">GymLink</string>
+    <string name="endurain_failed_to_open_browser">Échec d\'ouverture navigateur : %1$s</string>
+    <string name="endurain_verify_mfa">Vérifier MFA</string>
+    <string name="endurain_enter_your_mfa_code">Entrer votre code MFA</string>
+    <string name="endurain_mfa_verification_successful">Vérification MFA réussie</string>
+    <string name="endurain_select_identity_provider">Sélection fournisseur d’identité</string>
+    <string name="warning_network_required_summary">Ces intégrations nécessitent une connectivité réseau. Veuillez installer et activer l’app complémentaire d’assistance Internet.</string>
+    <string name="no_activity_track_in_activity_toast">Aucun suivi d’activité dans cette activité</string>
+    <string name="endurain_successfully_uploaded_toast">Téléversé avec succès vers Endurain</string>
+    <string name="endurain_error_while_uploading_toast">Erreur lors téléversement vers Endurain</string>
+    <string name="endurain_unable_to_upload_gpx_file_toast">Impossible de téléverser le fichier d’activité vers Endurain : %1$s</string>
+    <string name="endurain_setup_title">Configuration d’Endurain</string>
+    <string name="activity_detail_upload_to_endurain">Téléverser dans Endurain</string>
+    <string name="goals">Objectifs</string>
 </resources>
