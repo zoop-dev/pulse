@@ -56,14 +56,18 @@ class WandererApiClient(
             val context = GBApplication.getContext()
             try {
                 val headers = mutableMapOf("Authorization" to "Bearer $apiToken")
+                // networkFailureReason() (via onError) is more specific than connectFailureReason:
+                // it distinguishes could-not-resolve-host / refused / timed-out / TLS.
+                var networkReason: String? = null
                 val response = InternetUtils.doJsonRequest(
                     uri = "$baseUrl/api/v1/api-token".toUri(),
-                    requestHeaders = headers
+                    requestHeaders = headers,
+                    onError = { reason -> networkReason = reason }
                 )
                 when {
                     // No usable response at all: offline / helper unavailable / server down.
                     response == null ->
-                        callback(false, InternetUtils.connectFailureReason(context, baseUrl))
+                        callback(false, networkReason ?: InternetUtils.connectFailureReason(context, baseUrl))
                     // Authenticated list came back → server reachable and key accepted.
                     response.has("items") ->
                         callback(true, null)

@@ -71,15 +71,17 @@ class EndurainSetupViewModel(application: Application) : AndroidViewModel(applic
     /**
      * Fetch server capabilities to determine available login methods
      */
-    fun fetchServerCapabilities(serverUrl: String, callback: (Boolean) -> Unit) {
+    fun fetchServerCapabilities(serverUrl: String, callback: (Boolean, String?) -> Unit) {
         Thread {
             try {
                 // Fetch server settings from the public endpoint
                 val settingsUri = "$serverUrl/api/v1/public/server_settings".toUri()
                 val headers = mutableMapOf("X-Client-Type" to "mobile")
+                var networkReason: String? = null
                 val settingsResponse = InternetUtils.doJsonRequest(
                     uri = settingsUri,
-                    requestHeaders = headers
+                    requestHeaders = headers,
+                    onError = { reason -> networkReason = reason }
                 )
 
                 if (settingsResponse != null) {
@@ -95,20 +97,20 @@ class EndurainSetupViewModel(application: Application) : AndroidViewModel(applic
                         localLoginEnabled = true
                     }
 
-                    callback(true)
+                    callback(true, null)
                 } else {
                     LOG.error("Failed to fetch server settings")
                     // Default to local login on failure
                     localLoginEnabled = true
                     ssoEnabled = false
-                    callback(false)
+                    callback(false, networkReason)
                 }
             } catch (e: Exception) {
                 LOG.error("Error fetching server capabilities", e)
                 // Default to local login on error
                 localLoginEnabled = true
                 ssoEnabled = false
-                callback(false)
+                callback(false, InternetUtils.networkFailureReason(e))
             }
         }.start()
     }

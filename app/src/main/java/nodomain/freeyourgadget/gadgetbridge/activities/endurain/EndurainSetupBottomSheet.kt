@@ -238,12 +238,17 @@ class EndurainSetupBottomSheet : BottomSheetDialogFragment() {
         prefs.edit { putString("endurain_server", server) }
 
         showProgress(true)
-        vm.fetchServerCapabilities(server) { ok ->
+        vm.fetchServerCapabilities(server) { ok, reason ->
             activity?.runOnUiThread {
                 showProgress(false)
                 if (!ok) {
-                    val reason = InternetUtils.connectFailureReason(requireContext(), server)
-                    GB.toast(reason, Toast.LENGTH_LONG, GB.ERROR)
+                    // Prefer the specific network reason (could-not-resolve / refused / timed-out /
+                    // TLS) from the request helper; fall back to the generic could-not-reach message.
+                    GB.toast(
+                        reason ?: InternetUtils.connectFailureReason(requireContext(), server),
+                        Toast.LENGTH_LONG,
+                        GB.ERROR
+                    )
                     return@runOnUiThread
                 }
                 vm.step = EndurainSetupViewModel.Step.LOGIN_TYPE
