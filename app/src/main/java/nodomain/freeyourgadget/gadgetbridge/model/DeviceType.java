@@ -60,6 +60,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.earfun.EarFunAirSCoordinator
 import nodomain.freeyourgadget.gadgetbridge.devices.evenrealities.G1DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.femometer.FemometerVinca2DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.fitcloud.ak102.Ak102Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.fitcloud.ak75.Ak75ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.fitcloud.ak86.Ak86Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.fitpro.FitProDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.fitpro.colacao.ColaCao21Coordinator;
@@ -694,6 +695,7 @@ public enum DeviceType {
     COLACAO21(ColaCao21Coordinator.class),
     COLACAO23(ColaCao23Coordinator.class),
     AK102(Ak102Coordinator.class),
+    AK75_PRO(Ak75ProCoordinator.class),
     AK86(Ak86Coordinator.class),
     LAXASFIT_Q11(LaxasFitCoordinator.class),
     ITAG(ITagCoordinator.class),

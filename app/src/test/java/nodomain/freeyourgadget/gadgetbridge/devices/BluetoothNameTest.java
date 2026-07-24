@@ -127,6 +127,7 @@ public class BluetoothNameTest extends TestBase {
             put("quatix 8 - 51mm", DeviceType.GARMIN_QUATIX_8); // #5575
             put("tactix 7", DeviceType.GARMIN_TACTIX_7); // #5782
             put("tactix 8 - 51mm", DeviceType.GARMIN_TACTIX_8); // #5772
+            put("AK75 PRO", DeviceType.AK75_PRO); // #6446
             put("Forerunner 265S", DeviceType.GARMIN_FORERUNNER_265S);
             put("Forerunner 935", DeviceType.GARMIN_FORERUNNER_935); // #5870
             put("Forerunner 955", DeviceType.GARMIN_FORERUNNER_955); // #4124
