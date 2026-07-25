@@ -3945,4 +3945,13 @@
     <string name="install_app_fail">%s kurmak için uygulama mağazası açılamadı</string>
     <string name="loyalty_cards_app_not_installed">Sadakat kartlarını yönetmek için bir sadakat kartı uygulaması gereklidir. Lütfen aşağıda desteklenen uygulamalardan birini kurun.</string>
     <string name="loyalty_cards_app_not_compatible">Kurulu %1s sürümü Gadgetbridge ile uyumlu değil. Lütfen en son %1s ve Gadgetbridge sürümlerine güncelleyin.</string>
+    <string name="internet_firewall_action">Eylem</string>
+    <string name="internet_firewall_allow">İzin ver</string>
+    <string name="internet_firewall_block">Engelle</string>
+    <string name="endurain_invalid_server_url">Geçersiz sunucu URL\'si</string>
+    <string name="endurain_failed_to_connect_to_server">Sunucuya bağlanılamadı</string>
+    <string name="endurain_server_version">\nSunucu sürümü: %1$s</string>
+    <string name="xiaomi_vibration_section_types">Bildirim türleri</string>
+    <string name="xiaomi_vibration_type_notification">Bildirimler</string>
+    <string name="xiaomi_vibration_type_sms">SMS</string>
 </resources>
