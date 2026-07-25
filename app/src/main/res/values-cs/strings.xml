@@ -4759,4 +4759,5 @@
     <string name="xiaomi_vibration_no_segments">Přidejte alespoň jeden segment</string>
     <string name="activity_summary_set_header_photo_title">Nastavit fotografii záhlaví</string>
     <string name="activity_summary_remove_header_photo_title">Odstranit fotografii záhlaví</string>
+    <string name="unit_inch">in</string>
 </resources>
