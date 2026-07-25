@@ -2233,6 +2233,7 @@
     <string name="devicetype_honor_watchgspro" translatable="false">Honor Watch GS Pro</string>
     <string name="devicetype_honor_watch4" translatable="false">Honor Watch 4 (Pro)</string>
     <string name="devicetype_honor_watch5" translatable="false">Honor Watch 5</string>
+    <string name="devicetype_honor_watch5_pro" translatable="false">Honor Watch 5 Pro</string>
     <string name="devicetype_honor_watch6" translatable="false">Honor Watch 6</string>
     <string name="devicetype_huawei_band_aw70" translatable="false">Huawei Band (AW70)</string>
     <string name="devicetype_huawei_band6" translatable="false">Huawei Band 6</string>
