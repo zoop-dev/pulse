@@ -5418,7 +5418,7 @@
     <string-array name="huawei_adaptive_volume_names">
         <item>@string/off</item>
         <item>@string/low</item>
-        <item>@string/default_value</item>
+        <item>@string/pref_default</item>
         <item>@string/high</item>
     </string-array>
 
