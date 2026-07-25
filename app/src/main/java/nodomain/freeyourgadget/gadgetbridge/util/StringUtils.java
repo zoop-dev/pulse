@@ -57,15 +57,50 @@ public class StringUtils {
             return new byte[]{};
         }
 
-        int i = 0;
-        while (++i < s.length()) {
-            final String subString = s.substring(0, i + 1);
-            if (subString.getBytes(StandardCharsets.UTF_8).length > len) {
-                break;
-            }
+        return truncateToBytes(s, len, "").getBytes(StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Truncate a string to a certain maximum number of bytes, assuming UTF-8 encoding, appending
+     * suffix if truncation occurs.
+     */
+    public static String truncateToBytes(final String s, final int maxBytes, final String suffix) {
+        if (StringUtils.isNullOrEmpty(s)) {
+            return s;
         }
 
-        return s.substring(0, i).getBytes(StandardCharsets.UTF_8);
+        if (maxBytes <= 0) {
+            return "";
+        }
+
+        if (s.getBytes(StandardCharsets.UTF_8).length <= maxBytes) {
+            return s;
+        }
+
+        final int suffixLength = suffix.getBytes(StandardCharsets.UTF_8).length;
+
+        if (maxBytes < suffixLength) {
+            // No room left for the suffix, so truncate without it.
+            return s.substring(0, longestPrefixCharCount(s, maxBytes));
+        }
+
+        return s.substring(0, longestPrefixCharCount(s, maxBytes - suffixLength)) + suffix;
+    }
+
+    // Longest prefix of s (in chars) whose UTF-8 encoding fits byteBudget, without splitting a surrogate pair.
+    private static int longestPrefixCharCount(final String s, final int byteBudget) {
+        int i = 0;
+        while (i < s.length()) {
+            int next = i + 1;
+            if (Character.isHighSurrogate(s.charAt(i)) && next < s.length() && Character.isLowSurrogate(s.charAt(next))) {
+                next++;
+            }
+            if (s.substring(0, next).getBytes(StandardCharsets.UTF_8).length > byteBudget) {
+                break;
+            }
+            i = next;
+        }
+        return i;
     }
 
     public static int utf8ByteLength(String string, int length) {

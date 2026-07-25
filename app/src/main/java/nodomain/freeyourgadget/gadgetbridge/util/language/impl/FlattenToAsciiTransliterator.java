@@ -24,6 +24,10 @@ import nodomain.freeyourgadget.gadgetbridge.util.language.Transliterator;
 public class FlattenToAsciiTransliterator implements Transliterator {
     @Override
     public String transliterate(String txt) {
+        return flatten(txt);
+    }
+
+    public static String flatten(String txt) {
         if (txt == null || txt.isEmpty()) {
             return txt;
         }

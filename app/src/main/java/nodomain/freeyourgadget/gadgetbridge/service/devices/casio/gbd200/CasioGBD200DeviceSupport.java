@@ -524,13 +524,13 @@ public class CasioGBD200DeviceSupport extends Casio2C2DSupport
                 && icon != CasioConstants.CATEGORY_EMAIL) {
             if (StringUtils.isNullOrEmpty(sender)) sender = title;
             if (!StringUtils.isNullOrEmpty(message))
-                title = message.substring(0, Math.min(message.length(), 18)) + "..";
+                title = StringUtils.truncateToBytes(message, 20, "..");
         }
 
         byte[] titleBytes = StringUtils.isNullOrEmpty(title) ? new byte[0]
-                : truncate(title, 32).getBytes(StandardCharsets.UTF_8);
+                : StringUtils.truncateToBytes(title, 32, "..").getBytes(StandardCharsets.UTF_8);
         byte[] senderBytes = StringUtils.isNullOrEmpty(sender) ? new byte[0]
-                : truncate(sender, 32).getBytes(StandardCharsets.UTF_8);
+                : StringUtils.truncateToBytes(sender, 32, "..").getBytes(StandardCharsets.UTF_8);
         byte[] subtitleBytes = StringUtils.isNullOrEmpty(subtitle) ? new byte[0]
                 : StringUtils.truncateToBytes(subtitle, 32);
         byte[] messageBytes = StringUtils.isNullOrEmpty(message) ? new byte[0]
@@ -559,10 +559,6 @@ public class CasioGBD200DeviceSupport extends Casio2C2DSupport
         } catch (IOException e) {
             LOG.error("showNotification failed: {}", e.getMessage());
         }
-    }
-
-    private String truncate(String s, int maxLen) {
-        return s.length() > maxLen ? s.substring(0, maxLen - 2) + ".." : s;
     }
 
     /** Build header + TLV fields (LE16 length + bytes) for each string. */

@@ -53,6 +53,7 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.casio.CasioSupport;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 import nodomain.freeyourgadget.gadgetbridge.util.StringUtils;
+import nodomain.freeyourgadget.gadgetbridge.util.language.impl.FlattenToAsciiTransliterator;
 
 import static nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst.PREF_DISCONNECTNOTIF_NOSHED;
 
@@ -453,17 +454,16 @@ public class CasioGB6900DeviceSupport extends CasioSupport {
             return;
         try {
             TransactionBuilder builder = performInitialized("showNotification");
-            int len;
 
-            byte[] titleBytes = title.getBytes(StandardCharsets.US_ASCII);
-            len = titleBytes.length > 18 ? 18 : titleBytes.length;
+            final byte[] titleBytes = FlattenToAsciiTransliterator.flatten(title).getBytes(StandardCharsets.US_ASCII);
+            final int len = Math.min(titleBytes.length, 18);
             byte[] msg = new byte[2 + len];
             msg[0] = icon;
             msg[1] = 1;
             System.arraycopy(titleBytes, 0, msg, 2, len);
 
             builder.writeLegacy(getCharacteristic(CasioConstants.ALERT_CHARACTERISTIC_UUID), msg);
-            LOG.info("Showing notification, title: " + title + " message (not sent): " + message);
+            LOG.info("Showing notification, title: {} message (not sent): {}", title, message);
             builder.queue();
         } catch (IOException e) {
             LOG.warn("showNotification failed: " + e.getMessage());

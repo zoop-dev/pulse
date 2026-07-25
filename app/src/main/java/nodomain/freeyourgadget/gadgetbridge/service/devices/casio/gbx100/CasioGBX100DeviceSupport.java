@@ -310,24 +310,20 @@ public class CasioGBX100DeviceSupport extends Casio2C2DSupport implements Shared
             }
             //Shift content to title
             if (!StringUtils.isNullOrEmpty(message)) {
-                title = message.substring(0, Math.min(message.length(), 18)) + "..";
+                title = StringUtils.truncateToBytes(message, 20, "..");
             }
         }
 
         // Make sure title and sender are less than 32 characters
         byte[] titleBytes = new byte[0];
         if (!StringUtils.isNullOrEmpty(title)) {
-            if (title.length() > 32) {
-                title = title.substring(0, 30) + "..";
-            }
+            title = StringUtils.truncateToBytes(title, 32, "..");
             titleBytes = title.getBytes(StandardCharsets.UTF_8);
         }
 
         byte[] senderBytes = new byte[0];
         if (!StringUtils.isNullOrEmpty(sender)) {
-            if (sender.length() > 32) {
-                sender = sender.substring(0, 30) + "..";
-            }
+            sender = StringUtils.truncateToBytes(sender, 32, "..");
             senderBytes = sender.getBytes(StandardCharsets.UTF_8);
         }
 
