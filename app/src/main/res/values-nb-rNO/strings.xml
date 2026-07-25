@@ -4126,4 +4126,15 @@
     <string name="qs_tile_label_8">Gadgetbridge 8</string>
     <string name="qs_tile_label_9">Gadgetbridge 9</string>
     <string name="qs_tile_label_10">Gadgetbridge 10</string>
+    <string name="activity_type_cycling_downhill">Utforsykling</string>
+    <string name="activity_type_indoor_skiing">Innendørsskikjøring</string>
+    <string name="hrv_status_nightly_avg">Gjennomsnitt per natt</string>
+    <string name="hrv_status_daily_range_legend">Dagsintervall</string>
+    <string name="task_installing_route">Legger inn rute</string>
+    <string name="route_upload_completed">Rute lastet opp</string>
+    <string name="route_upload_failed">Opplasting av rute feilet</string>
+    <string name="generic_metric_select_metric">Måleverdi</string>
+    <string name="generic_metric_samples">Eksempler</string>
+    <string name="generic_metric_chart_label_with_unit">%1$s (%2$s)</string>
+    <string name="metric_garmin_endurance_score">Utholdenhetsscore</string>
 </resources>
