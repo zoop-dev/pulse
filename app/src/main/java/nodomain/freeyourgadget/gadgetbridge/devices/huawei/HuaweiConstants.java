@@ -63,6 +63,8 @@ public final class HuaweiConstants {
     public static final String HO_WATCHGSPRO_NAME = "honor watch gs pro-";
     public static final String HO_WATCH4_NAME = "honor watch 4-";
     public static final String HO_WATCH5_NAME = "honor watch 5-";
+    public static final String HO_WATCH5PRO_NAME = "honor watch 5 pro-";
+    public static final String HO_WATCH6_NAME = "honor watch 6-";
     public static final String HO_WATCH4PRO_NAME = "honor watch 4 pro-";
     public static final String HU_BAND3E_NAME = "huawei band 3e-";
     public static final String HU_BAND4E_NAME = "huawei band 4e-";
