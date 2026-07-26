@@ -4760,4 +4760,8 @@
     <string name="activity_summary_set_header_photo_title">Nastavit fotografii záhlaví</string>
     <string name="activity_summary_remove_header_photo_title">Odstranit fotografii záhlaví</string>
     <string name="unit_inch">in</string>
+    <string name="sony_equalizer_bluetooth">Ekvalizér (Bluetooth)</string>
+    <string name="sony_equalizer_mp3">Ekvalizér (MP3)</string>
+    <string name="wifi_channel_2_4_ghz">Kanál Wi-Fi (2,4 GHz)</string>
+    <string name="wifi_channel_5_ghz">Kanál Wi-Fi (5 GHz)</string>
 </resources>
