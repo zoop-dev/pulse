@@ -63,7 +63,7 @@ public class SoFlowCoordinator extends AbstractBLEDeviceCoordinator {
 
     @NonNull
     @Override
-    public Class<? extends DeviceSupport> getDeviceSupportClass(final GBDevice device) {
+    public Class<? extends DeviceSupport> getDeviceSupportClass(@NonNull final GBDevice device) {
         return SoFlowSupport.class;
     }
 
@@ -75,11 +75,11 @@ public class SoFlowCoordinator extends AbstractBLEDeviceCoordinator {
 
     @Override
     public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceCoordinator.DeviceKind.UNKNOWN;
+        return DeviceCoordinator.DeviceKind.SCOOTER;
     }
 
     @Override
     public int getDefaultIconResource() {
-        return R.drawable.ic_device_vesc;
+        return R.drawable.ic_device_scooter;
     }
 }
