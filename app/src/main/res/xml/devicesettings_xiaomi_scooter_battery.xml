@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:key="xiaomi_scooter_battery_info"
+        android:title="@string/category_info"
+        app:iconSpaceReserved="false">
+
+        <EditTextPreference
+            android:defaultValue="@string/unknown"
+            android:enabled="false"
+            android:key="xiaomi_scooter_voltage"
+            android:shouldDisableView="false"
+            android:title="@string/xiaomi_scooter_voltage"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="@string/unknown"
+            android:enabled="false"
+            android:key="xiaomi_scooter_current"
+            android:shouldDisableView="false"
+            android:title="@string/electrical_current"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="@string/unknown"
+            android:enabled="false"
+            android:key="xiaomi_scooter_power"
+            android:shouldDisableView="false"
+            android:title="@string/xiaomi_scooter_power"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="@string/unknown"
+            android:enabled="false"
+            android:key="xiaomi_scooter_battery_temp"
+            android:shouldDisableView="false"
+            android:title="@string/xiaomi_scooter_battery_temp"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="@string/unknown"
+            android:enabled="false"
+            android:key="xiaomi_scooter_battery_cycles"
+            android:shouldDisableView="false"
+            android:title="@string/xiaomi_scooter_battery_cycles"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="@string/unknown"
+            android:enabled="false"
+            android:key="xiaomi_scooter_battery_mfg_date"
+            android:shouldDisableView="false"
+            android:title="@string/xiaomi_scooter_battery_mfg_date"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="@string/unknown"
+            android:enabled="false"
+            android:key="xiaomi_scooter_battery_serial"
+            android:shouldDisableView="false"
+            android:title="@string/xiaomi_scooter_battery_serial"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="@string/unknown"
+            android:enabled="false"
+            android:key="xiaomi_scooter_bms_fw_version"
+            android:shouldDisableView="false"
+            android:title="@string/xiaomi_scooter_bms_fw_version"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+</androidx.preference.PreferenceScreen>

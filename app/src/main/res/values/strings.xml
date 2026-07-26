@@ -3915,6 +3915,41 @@
     <string name="pref_title_debug">Debug request</string>
     <string name="devicetype_asteroidos" translatable="false">AsteroidOS</string>
     <string name="devicetype_soflow_s06" translatable="false">SoFlow SO6</string>
+    <string name="devicetype_xiaomi_scooter_5_max" translatable="false">Xiaomi Scooter 5 Max</string>
+    <string name="scooter_lock_motor_title">Lock motor</string>
+    <string name="scooter_lock_motor_summary">After 24h, the scooter will automatically turn off and won\'t remain locked when it is off. This function cannot protect the scooter from being stolen.</string>
+    <string name="xiaomi_scooter_category_assisted_driving">Assisted driving</string>
+    <string name="category_info">Info</string>
+    <string name="xiaomi_scooter_ride_mode">Ride mode</string>
+    <string name="xiaomi_scooter_ride_mode_standard">Standard</string>
+    <string name="xiaomi_scooter_ride_mode_sport">Sport</string>
+    <string name="xiaomi_scooter_ride_mode_walk">Walk</string>
+    <string name="xiaomi_scooter_taillight_always_on">Tail light always on</string>
+    <string name="xiaomi_scooter_auto_lights_title">Auto lights</string>
+    <string name="xiaomi_scooter_auto_lights_summary">Turn on the front and tail light automatically, depending on the ambient light. If the lights are adjusted manually, the feature will be temporarily disabled until the scooter is turned off and on again.</string>
+    <string name="xiaomi_scooter_ambient_light_title">Ambient light</string>
+    <string name="xiaomi_scooter_ambient_light_summary">Turn on ambient light with the front and tail light.</string>
+    <string name="xiaomi_scooter_smart_energy_recovery_title">Smart energy recovery</string>
+    <string name="xiaomi_scooter_smart_energy_recovery_summary">When the scooter is moving on a slope, automatically adjusts the energy recovery intensity to "low". After leaving the slope, it will be automatically restored to the previous setting.</string>
+    <string name="xiaomi_scooter_slope_parking_title">Slope parking</string>
+    <string name="xiaomi_scooter_slope_parking_summary">When stopping on a slope, squeeze the brake for 3s to lock the motor. Press the accelerator to unlock the motor.</string>
+    <string name="xiaomi_scooter_tcs_anti_slip_title">Traction Control System</string>
+    <string name="xiaomi_scooter_tcs_anti_slip_summary">Prevent the wheel from slipping, especially on slippery surfaces.</string>
+    <string name="xiaomi_scooter_energy_recovery_level">Energy recovery level</string>
+    <string name="xiaomi_scooter_energy_recovery_low">Low</string>
+    <string name="xiaomi_scooter_energy_recovery_medium">Medium</string>
+    <string name="xiaomi_scooter_energy_recovery_high">High</string>
+    <string name="xiaomi_scooter_voltage">Voltage</string>
+    <string name="xiaomi_scooter_power">Power</string>
+    <string name="xiaomi_scooter_battery_temp">Battery temperature</string>
+    <string name="xiaomi_scooter_scooter_temp">Scooter temperature</string>
+    <string name="xiaomi_scooter_battery_cycles">Battery cycles</string>
+    <string name="xiaomi_scooter_battery_mfg_date">Battery manufacture date</string>
+    <string name="xiaomi_scooter_battery_serial">Battery serial number</string>
+    <string name="xiaomi_scooter_bms_fw_version">BMS firmware version</string>
+    <string name="xiaomi_scooter_keep_bluetooth_on_title">Bluetooth always on</string>
+    <string name="xiaomi_scooter_keep_bluetooth_on_summary">Allows to find scooter while turned off. Increases power usage. This function is automatically disabled if battery is under 10%. If the scooter is not used for a long time, please disable this function.
+</string>
     <string name="pref_title_lock_unlock">Lock</string>
     <string name="wifi_hotspot">Wi-Fi Hotspot</string>
     <string name="wifi_hotspot_summary">Control the Wi-Fi hotspot on the watch</string>

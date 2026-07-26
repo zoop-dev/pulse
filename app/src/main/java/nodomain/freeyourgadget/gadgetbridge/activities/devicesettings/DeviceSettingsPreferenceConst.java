@@ -771,4 +771,25 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_ATC_BLE_OEPL_MODEL = "pref_atc_ble_oepl_model";
     public static final String PREF_ATC_BLE_OEPL_BLE_ADV_INTERVAL = "pref_atc_ble_oepl_ble_adv_interval";
     public static final String PREF_ATC_BLE_OEPL_OEPL_PROTOCOL_ENABLE = "pref_atc_ble_oepl_oepl_protocol_enable";
+
+    public static final String PREF_XIAOMI_SCOOTER_MOTOR_LOCKED = "xiaomi_scooter_motor_locked";
+    public static final String PREF_XIAOMI_SCOOTER_RIDE_MODE = "xiaomi_scooter_ride_mode";
+    public static final String PREF_XIAOMI_SCOOTER_SPEED_UNIT = "xiaomi_scooter_speed_unit";
+    public static final String PREF_XIAOMI_SCOOTER_TAILLIGHT_ALWAYS_ON = "xiaomi_scooter_taillight_always_on";
+    public static final String PREF_XIAOMI_SCOOTER_AUTO_LIGHTS = "xiaomi_scooter_auto_lights";
+    public static final String PREF_XIAOMI_SCOOTER_AMBIENT_LIGHT = "xiaomi_scooter_ambient_light";
+    public static final String PREF_XIAOMI_SCOOTER_SMART_ENERGY_RECOVERY = "xiaomi_scooter_smart_energy_recovery";
+    public static final String PREF_XIAOMI_SCOOTER_SLOPE_PARKING = "xiaomi_scooter_slope_parking";
+    public static final String PREF_XIAOMI_SCOOTER_TCS_ANTI_SLIP = "xiaomi_scooter_tcs_anti_slip";
+    public static final String PREF_XIAOMI_SCOOTER_ENERGY_RECOVERY_INTENSITY = "xiaomi_scooter_energy_recovery_intensity";
+    public static final String PREF_XIAOMI_SCOOTER_VOLTAGE = "xiaomi_scooter_voltage";
+    public static final String PREF_XIAOMI_SCOOTER_CURRENT = "xiaomi_scooter_current";
+    public static final String PREF_XIAOMI_SCOOTER_POWER = "xiaomi_scooter_power";
+    public static final String PREF_XIAOMI_SCOOTER_BATTERY_TEMP = "xiaomi_scooter_battery_temp";
+    public static final String PREF_XIAOMI_SCOOTER_SCOOTER_TEMP = "xiaomi_scooter_scooter_temp";
+    public static final String PREF_XIAOMI_SCOOTER_BATTERY_CYCLES = "xiaomi_scooter_battery_cycles";
+    public static final String PREF_XIAOMI_SCOOTER_BATTERY_MFG_DATE = "xiaomi_scooter_battery_mfg_date";
+    public static final String PREF_XIAOMI_SCOOTER_BATTERY_SERIAL = "xiaomi_scooter_battery_serial";
+    public static final String PREF_XIAOMI_SCOOTER_BMS_FW_VERSION = "xiaomi_scooter_bms_fw_version";
+    public static final String PREF_XIAOMI_SCOOTER_KEEP_BLUETOOTH_ON = "xiaomi_scooter_keep_bluetooth_on";
 }

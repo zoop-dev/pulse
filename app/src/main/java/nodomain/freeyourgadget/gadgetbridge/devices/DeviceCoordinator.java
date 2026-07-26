@@ -111,7 +111,9 @@ public interface DeviceCoordinator {
 
     /**
      * A secret key has to be entered before connecting
+     * @deprecated override {@link #requiresAuthKey} instead
      */
+    @Deprecated
     int BONDING_STYLE_REQUIRE_KEY = 3;
 
     /**
@@ -161,6 +163,7 @@ public interface DeviceCoordinator {
         GLUCOSE_METER,
         BLOOD_PRESSURE_METER,
         BATTERY_MONITOR,
+        SCOOTER,
     }
 
     /**
@@ -716,6 +719,11 @@ public interface DeviceCoordinator {
     int getBondingStyle();
 
     /**
+     * Whether the given device requires the user to input an auth key before connecting to it.
+     */
+    boolean requiresAuthKey();
+
+    /**
      * Returns the preferred BLE PHY mask for GATT connections, as passed to
      * {@link android.bluetooth.BluetoothDevice#connectGatt}. Defaults to
      * {@link android.bluetooth.BluetoothDevice#PHY_LE_1M_MASK} and
@@ -1026,6 +1034,10 @@ public interface DeviceCoordinator {
 
     boolean validateAuthKey(String authKey);
 
+    /**
+     * Returns a url to the authentication help page, if necessary, to instruct the user on how to
+     * obtain an auth key for the device.
+     */
     @Nullable
     String getAuthHelp();
 

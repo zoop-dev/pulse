@@ -616,6 +616,11 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
+    public boolean requiresAuthKey() {
+        return getBondingStyle() == BONDING_STYLE_REQUIRE_KEY;
+    }
+
+    @Override
     public int getBlePhyMask() {
         // this is specified as a recommendation ("prefer to use ...") by Google
         // however some roms - e.g. MIUI - treat it as law ("must only use ...") (#6230)
@@ -1200,7 +1205,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public boolean validateAuthKey(final String authKey) {
+    public boolean validateAuthKey(@NonNull final String authKey) {
         return !(authKey.getBytes().length < 34 || !authKey.startsWith("0x"));
     }
 

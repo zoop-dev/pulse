@@ -650,7 +650,7 @@ public class DiscoveryActivityV2 extends AbstractGBActivity implements AdapterVi
     }
 
     private void checkAuthKeyAndPair(final GBDeviceCandidate deviceCandidate, final DeviceCoordinator coordinator) {
-        if (coordinator.getBondingStyle() == DeviceCoordinator.BONDING_STYLE_REQUIRE_KEY) {
+        if (coordinator.requiresAuthKey()) {
             final Intent authIntent = AuthKeyActivity.Companion.newIntent(this, deviceCandidate);
             authKeyLauncher.launch(authIntent);
         } else {
