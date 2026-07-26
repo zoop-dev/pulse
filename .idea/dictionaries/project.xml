@@ -1,5 +1,5 @@
 <component name="ProjectDictionaryState">
-  <dictionary name="t">
+  <dictionary name="project">
     <words>
       <w>aawireless</w>
       <w>abettenburg</w>
@@ -45,6 +45,7 @@
       <w>drobnič</w>
       <w>dulfo</w>
       <w>duml</w>
+      <w>ecdh</w>
       <w>elagin</w>
       <w>encryptable</w>
       <w>endurain</w>
@@ -76,6 +77,7 @@
       <w>haylou</w>
       <w>heartrate</w>
       <w>hiit</w>
+      <w>hkdf</w>
       <w>hmac</w>
       <w>hplus</w>
       <w>huami</w>

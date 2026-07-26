@@ -60,7 +60,7 @@ secrets/
 !.idea/icon.svg
 !.idea/dictionaries
 .idea/dictionaries/*
-!.idea/dictionaries/t.xml
+!.idea/dictionaries/project.xml
 *.iml
 
 MPChartLib
