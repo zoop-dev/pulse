@@ -1548,8 +1548,8 @@ public class ZeppOsConfigService extends AbstractZeppOsService {
     }};
 
     private static final Map<Byte, Enum<?>> TEMPERATURE_UNIT_MAP = new HashMap<>() {{
-        put((byte) 0x00, DistanceUnit.METRIC);
-        put((byte) 0x01, DistanceUnit.IMPERIAL);
+        put((byte) 0x00, TemperatureUnit.CELSIUS);
+        put((byte) 0x01, TemperatureUnit.FAHRENHEIT);
     }};
 
     private static final Map<Byte, Enum<?>> WEIGHT_UNIT_MAP = new HashMap<>() {{
