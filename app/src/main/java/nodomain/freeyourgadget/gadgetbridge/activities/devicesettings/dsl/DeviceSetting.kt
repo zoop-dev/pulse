@@ -80,6 +80,10 @@ data class SwitchSetting(
     @DrawableRes val icon: Int = 0,
     val defaultValue: Boolean = false,
     val dependency: String? = null,
+    /** Mirrors androidx's `app:disableDependentsState` */
+    val disableDependentsState: Boolean = false,
+    /** When non-zero, changing this setting shows a confirmation dialog with this message before the new value is applied. */
+    @StringRes val confirmationMessage: Int = 0,
     override val visibleWhen: ((Prefs) -> Boolean)? = null,
     override val connectedOnly: Boolean = true,
 ) : DeviceSetting()
@@ -166,6 +170,7 @@ data class ActionSetting(
     @StringRes val title: Int = 0,
     @StringRes val summary: Int = 0,
     @DrawableRes val icon: Int = 0,
+    val enabled: Boolean = true,
     override val visibleWhen: ((Prefs) -> Boolean)? = null,
     override val connectedOnly: Boolean = true,
     val onClick: ((DeviceSpecificSettingsHandler) -> Boolean)? = null,

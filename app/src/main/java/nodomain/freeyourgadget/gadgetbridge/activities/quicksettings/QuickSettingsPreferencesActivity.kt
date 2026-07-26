@@ -224,7 +224,7 @@ class QuickSettingsPreferencesActivity : AbstractSettingsActivityV2() {
                     }
                 }
 
-                val allDevices = GBApplication.app().deviceManager.devices
+                val allDevices = GBApplication.app().deviceManager.devices.sortedBy { it.aliasOrName }
 
                 //
                 // Device

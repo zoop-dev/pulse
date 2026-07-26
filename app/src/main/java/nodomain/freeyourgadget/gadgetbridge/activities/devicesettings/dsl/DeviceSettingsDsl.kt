@@ -73,6 +73,8 @@ class DeviceSettingsScope {
         @DrawableRes icon: Int = 0,
         defaultValue: Boolean = false,
         dependency: String? = null,
+        disableDependentsState: Boolean = false,
+        @StringRes confirmationMessage: Int = 0,
         connectedOnly: Boolean = true,
         visibleWhen: ((Prefs) -> Boolean)? = null,
     ) {
@@ -86,6 +88,8 @@ class DeviceSettingsScope {
                 icon = icon,
                 defaultValue = defaultValue,
                 dependency = dependency,
+                disableDependentsState = disableDependentsState,
+                confirmationMessage = confirmationMessage,
                 connectedOnly = connectedOnly,
                 visibleWhen = visibleWhen,
             )
@@ -261,6 +265,7 @@ class DeviceSettingsScope {
         @StringRes title: Int = 0,
         @StringRes summary: Int = 0,
         @DrawableRes icon: Int = 0,
+        enabled: Boolean = true,
         connectedOnly: Boolean = true,
         visibleWhen: ((Prefs) -> Boolean)? = null,
         onClick: ((DeviceSpecificSettingsHandler) -> Boolean)? = null,
@@ -271,6 +276,7 @@ class DeviceSettingsScope {
                 title = title,
                 summary = summary,
                 icon = icon,
+                enabled = enabled,
                 connectedOnly = connectedOnly,
                 visibleWhen = visibleWhen,
                 onClick = onClick,

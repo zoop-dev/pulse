@@ -49,7 +49,7 @@ abstract class ShokzCoordinator : AbstractBLClassicDeviceCoordinator() {
         // Equalizer presets - same enum, filtered to entries valid for each media source
         equalizerPreset<ShokzEqualizer>(
             key = DeviceSettingsPreferenceConst.PREF_SHOKZ_EQUALIZER_BLUETOOTH,
-            title = R.string.sony_equalizer,
+            title = R.string.sony_equalizer_bluetooth,
             defaultValue = ShokzEqualizer.STANDARD,
             filter = { ShokzMediaSource.BLUETOOTH in it.sources },
             visibleWhen = { prefs ->
@@ -60,7 +60,7 @@ abstract class ShokzCoordinator : AbstractBLClassicDeviceCoordinator() {
         )
         equalizerPreset<ShokzEqualizer>(
             key = DeviceSettingsPreferenceConst.PREF_SHOKZ_EQUALIZER_MP3,
-            title = R.string.sony_equalizer,
+            title = R.string.sony_equalizer_mp3,
             defaultValue = ShokzEqualizer.STANDARD,
             filter = { ShokzMediaSource.MP3 in it.sources },
             visibleWhen = { prefs ->

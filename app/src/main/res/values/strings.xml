@@ -3503,6 +3503,8 @@
     <string name="sony_surround_mode_concert_hall">Concert Hall</string>
     <string name="sony_warn_sbc_codec">Warning: The equalizer, audio position and surround settings only work for the SBC audio codec.</string>
     <string name="sony_equalizer">Equalizer</string>
+    <string name="sony_equalizer_bluetooth">Equalizer (Bluetooth)</string>
+    <string name="sony_equalizer_mp3">Equalizer (MP3)</string>
     <string name="sony_anc_optimizer_status_starting">Starting…</string>
     <string name="sony_anc_optimizer_status_not_running">Not Running</string>
     <string name="sony_anc_optimizer_status_wearing_condition">Measuring wearing condition…</string>
@@ -4717,6 +4719,8 @@
     <string name="single_click">Single click</string>
     <string name="switch_to_phone">Switch to %1$s</string>
     <string name="wifi_channel">Wi-Fi Channel</string>
+    <string name="wifi_channel_2_4_ghz">Wi-Fi Channel (2.4 GHz)</string>
+    <string name="wifi_channel_5_ghz">Wi-Fi Channel (5 GHz)</string>
     <string name="wifi_frequency_2_4_ghz">2.4 GHz</string>
     <string name="wifi_frequency_5_ghz">5 GHz</string>
     <string name="wifi_frequency">Wi-Fi Frequency</string>

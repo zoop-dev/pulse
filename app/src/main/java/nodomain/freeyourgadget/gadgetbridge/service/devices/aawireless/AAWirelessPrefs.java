@@ -55,8 +55,6 @@ public class AAWirelessPrefs extends DevicePrefs {
     // Phone management
     public static final String PREF_PREFER_LAST_CONNECTED = "prefer_last_connected";
     public static final String PREF_SCREEN_PAIRED_PHONES = "screen_paired_phones";
-    public static final String PREF_HEADER_PAIRED_PHONES = "paired_phones_header";
-    public static final String PREF_NO_PAIRED_PHONES = "no_paired_phones";
     public static final String PREF_KNOWN_PHONES_COUNT = "aawireless_known_phones_count";
     public static final String PREF_KNOWN_PHONES_MAC = "aawireless_known_phones_mac_";
     public static final String PREF_KNOWN_PHONES_NAME = "aawireless_known_phones_name_";
