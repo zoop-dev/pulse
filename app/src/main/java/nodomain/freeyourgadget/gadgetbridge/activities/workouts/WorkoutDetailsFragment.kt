@@ -362,6 +362,8 @@ class WorkoutDetailsFragment : Fragment(), MenuProvider {
         // If there's a device-specific HR chart, prefer it over the default one
         if (workout.charts.any { chart -> chart.group == ActivitySummaryEntries.GROUP_HEART_RATE }) {
             binding.heartRateChartWrapper.visibility = View.GONE
+        } else if (!gbDevice.deviceCoordinator.supportsHeartRateMeasurement(gbDevice)) {
+            binding.heartRateChartWrapper.visibility = View.GONE
         } else {
             chartFragment?.setDateAndGetData(
                 workout.summary,

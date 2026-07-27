@@ -447,7 +447,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     @Override
     @Nullable
     public ActivitySummaryParser getActivitySummaryParser(final GBDevice device, final Context context) {
-        return null;
+        return new ActivitySummaryParser.NoopActivitySummaryParser();
     }
 
     @Override

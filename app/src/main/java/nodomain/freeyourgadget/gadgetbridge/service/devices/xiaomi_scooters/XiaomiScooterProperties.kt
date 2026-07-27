@@ -38,6 +38,20 @@ object XiaomiScooterProperties {
     const val CODE_SERIAL_NUMBER = 0x0404
     const val CODE_FIRMWARE_VERSION = 0x0405
     const val CODE_FIND_SCOOTER = 0x040a
+    const val CODE_LAST_RIDE_1 = 0x0601
+    const val CODE_LAST_RIDE_2 = 0x0602
+    const val CODE_LAST_RIDE_3 = 0x0603
+    const val CODE_LAST_RIDE_4 = 0x0604
+    const val CODE_LAST_RIDE_5 = 0x0605
+
+    /** Ride history codes, ordered oldest to newest. */
+    val RIDE_HISTORY_CODES: List<Int> = listOf(
+        CODE_LAST_RIDE_1,
+        CODE_LAST_RIDE_2,
+        CODE_LAST_RIDE_3,
+        CODE_LAST_RIDE_4,
+        CODE_LAST_RIDE_5,
+    )
 
     /** One row of the declarative apply/parse mapping. */
     sealed class PropertyMapping {
@@ -212,7 +226,11 @@ object XiaomiScooterProperties {
         0x0522,
     )
 
-    /** Codes fetched once via GET right after login to seed the settings screen and battery card. */
+    /**
+     * Codes fetched once via GET right after login to seed the settings screen and battery card.
+     *
+     * [RIDE_HISTORY_CODES] is deliberately NOT included here and fetched separately, see requestRideHistory().
+     */
     // TODO: Review
     val INITIAL_GET_CODES: List<Int> = SETTINGS.map { it.code } + TELEMETRY.map { it.code } + listOf(
         CODE_BATTERY_PERCENT,

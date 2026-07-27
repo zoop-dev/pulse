@@ -1686,6 +1686,7 @@
     <string name="activity_type_indoor_track">Indoor Track</string>
     <string name="activity_type_handcycling">Handcycling</string>
     <string name="activity_type_e_bike">E-Bike</string>
+    <string name="activity_type_e_scooter">E-Scooter</string>
     <string name="activity_type_bike_commute">Bike Commute</string>
     <string name="activity_type_handcycling_indoor">Handcycling Indoor</string>
     <string name="activity_type_transition">Transition</string>

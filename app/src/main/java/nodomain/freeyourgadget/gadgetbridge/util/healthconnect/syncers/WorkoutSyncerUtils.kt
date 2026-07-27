@@ -54,6 +54,7 @@ internal object WorkoutSyncerUtils {
             ActivityKind.CLIMBING, ActivityKind.ROCK_CLIMBING, ActivityKind.CLIMB_INDOOR, ActivityKind.BOULDERING, ActivityKind.FLOOR_CLIMBING, ActivityKind.MOUNTAINEERING -> ExerciseSessionRecord.EXERCISE_TYPE_ROCK_CLIMBING
             ActivityKind.HANDCYCLING, ActivityKind.HANDCYCLING_INDOOR -> ExerciseSessionRecord.EXERCISE_TYPE_BIKING_STATIONARY
             ActivityKind.E_BIKE -> ExerciseSessionRecord.EXERCISE_TYPE_BIKING
+            ActivityKind.E_SCOOTER -> ExerciseSessionRecord.EXERCISE_TYPE_BIKING
             ActivityKind.BIKE_COMMUTE -> ExerciseSessionRecord.EXERCISE_TYPE_BIKING
             ActivityKind.STAIR_STEPPER, ActivityKind.STAIR_CLIMBER, ActivityKind.STEPPER -> ExerciseSessionRecord.EXERCISE_TYPE_STAIR_CLIMBING_MACHINE
             ActivityKind.STAIRS -> ExerciseSessionRecord.EXERCISE_TYPE_STAIR_CLIMBING

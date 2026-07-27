@@ -348,6 +348,7 @@ public enum ActivityKind {
     MOTOR_SPORT(0x0400013B, R.string.activity_type_motor_sport, R.drawable.ic_sports_motorsports),
     CYCLING_DOWNHILL(0x0400013C, R.string.activity_type_cycling_downhill, R.drawable.ic_landscape),
     INDOOR_SKIING(0x0400013D, R.string.activity_type_indoor_skiing, R.drawable.ic_activity_skiing),
+    E_SCOOTER(0x0400013E, R.string.activity_type_e_scooter, R.drawable.ic_electric_scooter),
     ;
 
     private final int code;

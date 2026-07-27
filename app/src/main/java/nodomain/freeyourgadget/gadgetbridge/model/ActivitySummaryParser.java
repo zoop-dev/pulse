@@ -117,4 +117,11 @@ public interface ActivitySummaryParser {
 
         return createBaseActivitySummary(session, deviceId, timestampSeconds);
     }
+
+    class NoopActivitySummaryParser implements ActivitySummaryParser {
+        @Override
+        public BaseActivitySummary parseBinaryData(final BaseActivitySummary summary, final boolean forDetails) {
+            return summary;
+        }
+    }
 }

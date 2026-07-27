@@ -76,6 +76,10 @@ abstract class XiaomiScooterCoordinator : AbstractBLEDeviceCoordinator() {
         return true
     }
 
+    override fun supportsRecordedActivities(device: GBDevice): Boolean {
+        return true
+    }
+
     override fun getDeviceSettings(device: GBDevice): DeviceSettingsSpec = deviceSettings {
         switchSetting(
             key = DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_MOTOR_LOCKED,

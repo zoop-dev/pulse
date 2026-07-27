@@ -7,11 +7,19 @@ import android.widget.Toast
 import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst
+import nodomain.freeyourgadget.gadgetbridge.database.DBHelper
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdateDeviceInfo
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventVersionInfo
+import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummary
+import nodomain.freeyourgadget.gadgetbridge.entities.BaseActivitySummaryDao
+import nodomain.freeyourgadget.gadgetbridge.entities.Device
+import nodomain.freeyourgadget.gadgetbridge.entities.User
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
+import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind
+import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryData
+import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder
@@ -20,6 +28,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.Prefs
 import org.slf4j.LoggerFactory
 import java.security.KeyPair
 import java.util.ArrayDeque
+import java.util.Date
 import java.util.UUID
 
 /**
@@ -48,6 +57,9 @@ class XiaomiScooterSupport : AbstractBTLESingleDeviceSupport(LOG) {
     private var pendingReportFrameCount = 1
     private val pendingReportPayloads = mutableListOf<ByteArray>()
 
+    // Ride-history entries (last_ride_1..5) trickle in as separate GET_RSP entries; buffered here
+    private val rideHistoryRaw = mutableMapOf<Int, String>()
+
     init {
         addSupportedService(UUID_SERVICE_XIAOMI)
     }
@@ -66,6 +78,7 @@ class XiaomiScooterSupport : AbstractBTLESingleDeviceSupport(LOG) {
         txn = 1
         pendingReportFrameCount = 1
         pendingReportPayloads.clear()
+        rideHistoryRaw.clear()
 
         builder.setDeviceState(GBDevice.State.INITIALIZING)
 
@@ -244,6 +257,7 @@ class XiaomiScooterSupport : AbstractBTLESingleDeviceSupport(LOG) {
         enqueueMessage(XiaomiScooterProtocol.encodeHello(nextTxn()))
         subscribeTelemetry()
         requestInitialProperties()
+        requestRideHistory()
 
         gbDevice.setUpdateState(GBDevice.State.INITIALIZED, context)
     }
@@ -332,6 +346,11 @@ class XiaomiScooterSupport : AbstractBTLESingleDeviceSupport(LOG) {
     private fun requestInitialProperties() {
         LOG.debug("Requesting initial properties")
         enqueueMessage(XiaomiScooterProtocol.encodeGet(nextTxn(), XiaomiScooterProperties.INITIAL_GET_CODES))
+    }
+
+    private fun requestRideHistory() {
+        LOG.debug("Requesting ride history")
+        enqueueMessage(XiaomiScooterProtocol.encodeGet(nextTxn(), XiaomiScooterProperties.RIDE_HISTORY_CODES))
     }
 
     // =======================================================================
@@ -465,6 +484,11 @@ class XiaomiScooterSupport : AbstractBTLESingleDeviceSupport(LOG) {
                 }
                 return false
             }
+
+            in XiaomiScooterProperties.RIDE_HISTORY_CODES -> {
+                value.asString()?.let { onRideHistoryEntry(entry.code, it) }
+                return false
+            }
         }
 
         XiaomiScooterProperties.SETTINGS_BY_CODE[entry.code]?.let { mapping ->
@@ -488,6 +512,119 @@ class XiaomiScooterSupport : AbstractBTLESingleDeviceSupport(LOG) {
         }
 
         return false
+    }
+
+    // =======================================================================
+    // Ride history (last_ride_1..5)
+    // =======================================================================
+
+    private fun onRideHistoryEntry(code: Int, raw: String) {
+        rideHistoryRaw[code] = raw
+        if (XiaomiScooterProperties.RIDE_HISTORY_CODES.any { it !in rideHistoryRaw }) {
+            // We're still missing some of the codes
+            return
+        }
+
+        LOG.debug("Got all ride history entries")
+
+        val entries = XiaomiScooterProperties.RIDE_HISTORY_CODES.map { rideHistoryRaw.getValue(it) }
+        rideHistoryRaw.clear()
+        persistNewRides(XiaomiScooterRideHistory.flatten(entries))
+    }
+
+    /**
+     * [current]: individual 16-digit ride records, oldest first (see [XiaomiScooterRideHistory.flatten]).
+     *
+     * Dedupes against rides already imported for this device, reading their raw records back
+     * from [BaseActivitySummary.getRawSummaryData].
+     */
+    private fun persistNewRides(current: List<String>) {
+        if (current.isEmpty()) {
+            return
+        }
+
+        try {
+            GBApplication.acquireDB().use { db ->
+                val daoSession = db.daoSession
+                val device = DBHelper.getDevice(gbDevice, daoSession)
+                val user = DBHelper.getUser(daoSession)
+                val summaryDao = daoSession.baseActivitySummaryDao
+
+                val previouslySeen = summaryDao.queryBuilder()
+                    .where(BaseActivitySummaryDao.Properties.DeviceId.eq(device.id))
+                    .orderDesc(BaseActivitySummaryDao.Properties.StartTime)
+                    .limit(current.size)
+                    .list()
+                    .mapNotNull { it.rawSummaryData?.toString(Charsets.US_ASCII) }
+
+                val newRides = XiaomiScooterRideHistory.newRidesSince(previouslySeen, current)
+                if (newRides.isEmpty()) {
+                    LOG.debug("No new rides to be persisted")
+                    return
+                }
+
+                insertNewRideSummaries(summaryDao, device, user, newRides)
+            }
+        } catch (e: Exception) {
+            LOG.error("Error saving ride history", e)
+        }
+    }
+
+    /**
+     * Inserts the newly-observed rides as activity summaries. The device sends no timestamp for a
+     * ride, so times are synthesized: the newest new ride ends "now" (fetch time), and each older
+     * one is stacked back-to-back before it using its duration.
+     */
+    private fun insertNewRideSummaries(
+        summaryDao: BaseActivitySummaryDao,
+        device: Device,
+        user: User,
+        newRides: List<String>,
+    ) {
+        var endTime = Date()
+        for (raw in newRides.asReversed()) {
+            val ride = XiaomiScooterRideHistory.decodeRecord(raw)
+            if (ride == null) {
+                LOG.warn("Failed to decode ride history entry {}", raw)
+                continue
+            }
+            if (ride.isEmpty()) {
+                continue
+            }
+
+            val durationMs = (ride.durationMinutes * 60_000f).toLong()
+            val startTime = Date(endTime.time - durationMs)
+
+            val summaryData = ActivitySummaryData()
+            summaryData.add(
+                ActivitySummaryEntries.ACTIVE_SECONDS,
+                durationMs / 1000,
+                ActivitySummaryEntries.UNIT_SECONDS
+            )
+            summaryData.add(
+                ActivitySummaryEntries.DISTANCE_METERS,
+                ride.distanceKm * 1000,
+                ActivitySummaryEntries.UNIT_METERS
+            )
+            summaryData.add(
+                ActivitySummaryEntries.SPEED_AVG,
+                ride.avgSpeedKmh,
+                ActivitySummaryEntries.UNIT_KMPH
+            )
+
+            val summary = BaseActivitySummary()
+            summary.device = device
+            summary.user = user
+            summary.name = ActivityKind.E_SCOOTER.getLabel(context)
+            summary.activityKind = ActivityKind.E_SCOOTER.code
+            summary.startTime = startTime
+            summary.endTime = endTime
+            summary.summaryData = summaryData.toString()
+            summary.rawSummaryData = raw.toByteArray(Charsets.US_ASCII)
+            summaryDao.insert(summary)
+
+            endTime = startTime
+        }
     }
 
     // =======================================================================
