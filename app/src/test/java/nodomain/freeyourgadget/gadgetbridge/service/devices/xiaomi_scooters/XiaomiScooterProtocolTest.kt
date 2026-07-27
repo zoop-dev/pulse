@@ -254,6 +254,48 @@ class XiaomiScooterProtocolTest {
     }
 
     @Test
+    fun testEncodeDecode_largeMessageUsesExtendedLengthBits() {
+        // 6-byte header + 50 * 6-byte SET entries = 306 bytes: over the 8-bit range of a single
+        // length byte, so this exercises the 13-bit length (low byte in frame[0], high bits packed
+        // into the marker byte at frame[1]). 306 = 0x132 -> low byte 0x32 (50), high bits 0b00001
+        // packed onto the marker (0x20 | 1 = 0x21).
+        val entries = (1..50).map { code ->
+            XiaomiScooterProtocol.SetEntry(code, XiaomiScooterProtocol.TYPE_BOOL, byteArrayOf(1))
+        }
+        val encoded = XiaomiScooterProtocol.encodeSet(txn = 1, entries = entries)
+        assertEquals(306, encoded.size)
+        assertEquals(0x32, encoded[0].toInt() and 0xff)
+        assertEquals(0x21, encoded[1].toInt() and 0xff)
+
+        val decoded = XiaomiScooterProtocol.decode(encoded)
+        assertNotNull(decoded)
+        assertEquals(50, decoded!!.entries.size)
+        assertEquals(1, decoded.entries[0].code)
+        assertEquals(50, decoded.entries[49].code)
+    }
+
+    @Test
+    fun testDecode_realCaptureExtendedLength() {
+        // Real capture: a 458-byte GET_RSP (many properties incl. ride history) whose header read
+        // len=0xca (202) and marker=0x21 -- initially looked like single-byte-length corruption,
+        // until working out that 458 = 0x1ca: low byte 0xca, high bits 0b00001 packed onto the
+        // marker byte (0x20 | 1 = 0x21). Reconstructs that header shape with a minimal empty body.
+        val frame = ByteArray(458)
+        frame[0] = 0xca.toByte()
+        frame[1] = 0x21.toByte()
+        frame[2] = 0x01.toByte() // txn low
+        frame[3] = 0x00.toByte() // txn high
+        frame[4] = XiaomiScooterProtocol.OPCODE_GET_RSP.toByte()
+        frame[5] = 0x00.toByte() // count
+
+        val decoded = XiaomiScooterProtocol.decode(frame)
+        assertNotNull(decoded)
+        assertEquals(XiaomiScooterProtocol.OPCODE_GET_RSP, decoded!!.opcode)
+        assertEquals(1, decoded.txn)
+        assertEquals(0, decoded.entries.size)
+    }
+
+    @Test
     fun testEncodeHello() {
         val encoded = XiaomiScooterProtocol.encodeHello(txn = 0)
         assertArrayHexEquals("05200000f0", encoded)

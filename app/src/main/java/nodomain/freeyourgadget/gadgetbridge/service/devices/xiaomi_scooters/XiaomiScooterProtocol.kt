@@ -9,8 +9,13 @@ import java.nio.ByteOrder
  * All commands, configuration and telemetry are one of these messages:
  *
  * ```
- * [len:1] [0x20] [txn:u16-LE] [opcode:1] [count:1] <entries...>
+ * [len:13 bits] [0x20-marked:1] [txn:u16-LE] [opcode:1] [count:1] <entries...>
  * ```
+ *
+ * The total frame length is more than 8 bits wide: the low 8 bits sit in byte 0, and the high 5 bits
+ * are packed into the low 5 bits of byte 1 -- whose top 3 bits are the fixed marker (`0x20` when
+ * the length fits in a single byte). Only ever observed a single high bit overflowing into byte 1,
+ * when requesting too many values with the GET opcode.
  */
 @Suppress("ArrayInDataClass")
 object XiaomiScooterProtocol {
@@ -30,6 +35,8 @@ object XiaomiScooterProtocol {
     const val TYPE_STR = 0xa0
 
     private const val MARKER = 0x20
+    private const val MARKER_MASK = 0xe0
+    private const val LEN_HIGH_BITS_MASK = 0x1f
     private const val HEADER_SIZE = 6
 
     /** A decoded property value, still tagged with its wire type. */
@@ -108,14 +115,14 @@ object XiaomiScooterProtocol {
             LOG.error("Frame size {} is too short", frame.size)
             return null
         }
-        val len = frame[0].toInt() and 0xff
-        if (len != frame.size ) {
-            LOG.error("Frame size {} mismatch with wire length {}", frame.size, len)
-            return null
-        }
-        val marker = frame[1].toInt() and 0xff
+        val marker = frame[1].toInt() and MARKER_MASK
         if (marker != MARKER) {
             LOG.error("Unexpected marker 0x{} at position 1", marker.toHexString())
+            return null
+        }
+        val len = (frame[0].toInt() and 0xff) or ((frame[1].toInt() and LEN_HIGH_BITS_MASK) shl 8)
+        if (len != frame.size) {
+            LOG.error("Frame size {} mismatch with wire length {}", frame.size, len)
             return null
         }
         val txn = ((frame[3].toInt() and 0xff) shl 8) or (frame[2].toInt() and 0xff)
@@ -167,8 +174,8 @@ object XiaomiScooterProtocol {
     private fun wrap(txn: Int, opcode: Int, count: Int, body: ByteArray): ByteArray {
         val totalLen = HEADER_SIZE + body.size
         val buffer = ByteBuffer.allocate(totalLen).order(ByteOrder.LITTLE_ENDIAN)
-        buffer.put(totalLen.toByte())
-        buffer.put(MARKER.toByte())
+        buffer.put((totalLen and 0xff).toByte())
+        buffer.put((MARKER or ((totalLen shr 8) and LEN_HIGH_BITS_MASK)).toByte())
         buffer.putShort(txn.toShort())
         buffer.put(opcode.toByte())
         buffer.put(count.toByte())
