@@ -296,6 +296,56 @@ class XiaomiScooterProtocolTest {
     }
 
     @Test
+    fun testDecodeTirePressureMaintenance_set30d() {
+        val decoded = XiaomiScooterProperties.decodeTirePressureMaintenance("0030012")
+        assertNotNull(decoded)
+        assertEquals(true, decoded!!.enabled)
+        assertEquals(30, decoded.intervalDays)
+        assertEquals(12, decoded.remainingDays)
+    }
+
+    @Test
+    fun testDecodeTirePressureMaintenance_set60d() {
+        val decoded = XiaomiScooterProperties.decodeTirePressureMaintenance("0060058")
+        assertNotNull(decoded)
+        assertEquals(true, decoded!!.enabled)
+        assertEquals(60, decoded.intervalDays)
+        assertEquals(58, decoded.remainingDays)
+    }
+
+    @Test
+    fun testDecodeTirePressureMaintenance_set180d() {
+        val decoded = XiaomiScooterProperties.decodeTirePressureMaintenance("0180178")
+        assertNotNull(decoded)
+        assertEquals(true, decoded!!.enabled)
+        assertEquals(180, decoded.intervalDays)
+        assertEquals(178, decoded.remainingDays)
+    }
+
+    @Test
+    fun testDecodeTirePressureMaintenance_set14d() {
+        val decoded = XiaomiScooterProperties.decodeTirePressureMaintenance("0014012")
+        assertNotNull(decoded)
+        assertEquals(true, decoded!!.enabled)
+        assertEquals(14, decoded.intervalDays)
+        assertEquals(12, decoded.remainingDays)
+    }
+
+    @Test
+    fun testDecodeTirePressureMaintenance_disable30d() {
+        val decoded = XiaomiScooterProperties.decodeTirePressureMaintenance("2030030")
+        assertNotNull(decoded)
+        assertEquals(false, decoded!!.enabled)
+        assertEquals(30, decoded.intervalDays)
+        assertEquals(30, decoded.remainingDays)
+    }
+
+    @Test
+    fun testDecodeTirePressureMaintenance_rejectsTooShort() {
+        assertNull(XiaomiScooterProperties.decodeTirePressureMaintenance("003001"))
+    }
+
+    @Test
     fun testEncodeHello() {
         val encoded = XiaomiScooterProtocol.encodeHello(txn = 0)
         assertArrayHexEquals("05200000f0", encoded)

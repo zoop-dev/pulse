@@ -36,3 +36,17 @@ enum class XiaomiScooterUnits(val code: Int, override val label: Int) : LabeledE
         fun fromCode(code: Int): XiaomiScooterUnits? = entries.find { it.code == code }
     }
 }
+
+enum class XiaomiScooterTirePressureInterval(val days: Int, override val label: Int) : LabeledEntry {
+    DAYS_14(14, R.string.xiaomi_scooter_tire_pressure_interval_14),
+    DAYS_30(30, R.string.xiaomi_scooter_tire_pressure_interval_30),
+    DAYS_60(60, R.string.xiaomi_scooter_tire_pressure_interval_60),
+    DAYS_180(180, R.string.xiaomi_scooter_tire_pressure_interval_180),
+    ;
+
+    companion object {
+        fun fromPreference(value: String): XiaomiScooterTirePressureInterval? =
+            entries.find { it.name == value.uppercase() }
+        fun fromDays(days: Int): XiaomiScooterTirePressureInterval? = entries.find { it.days == days }
+    }
+}

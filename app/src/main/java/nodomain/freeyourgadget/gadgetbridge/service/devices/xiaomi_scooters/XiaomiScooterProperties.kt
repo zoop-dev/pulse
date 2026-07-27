@@ -38,6 +38,7 @@ object XiaomiScooterProperties {
     const val CODE_SERIAL_NUMBER = 0x0404
     const val CODE_FIRMWARE_VERSION = 0x0405
     const val CODE_FIND_SCOOTER = 0x040a
+    const val CODE_TIRE_PRESSURE_MAINTENANCE = 0x0307
     const val CODE_LAST_RIDE_1 = 0x0601
     const val CODE_LAST_RIDE_2 = 0x0602
     const val CODE_LAST_RIDE_3 = 0x0603
@@ -53,15 +54,31 @@ object XiaomiScooterProperties {
         CODE_LAST_RIDE_5,
     )
 
-    /** One row of the declarative apply/parse mapping. */
-    sealed class PropertyMapping {
-        abstract val code: Int
-        abstract val prefKey: String
-        abstract val wireType: Int
+    /**
+     * Anything that can be written to the device via SET: a 2-byte `code`, its wire type, and how
+     * to turn the current SharedPreferences state into the bytes to send.
+     */
+    sealed interface Encodable {
+        val code: Int
+        val prefKey: String
+        val wireType: Int
 
         /** Reads the current preference value and returns the bytes to SET on the device. */
-        abstract fun encode(prefs: Prefs): ByteArray
+        fun encode(prefs: Prefs): ByteArray
+    }
 
+    /**
+     * One row of the declarative apply/parse mapping for a property that maps 1:1 to a single
+     * preference: encode and decode live on the same object here, so they can never drift apart.
+     *
+     * Properties where one wire value maps to *several* preferences at once (e.g.
+     * tire_pressure_maintenance, which packs an enabled flag, an interval and a remaining-days
+     * count into a single value) don't fit that shape and aren't modeled as a [PropertyMapping] at
+     * all -- see [TIRE_PRESSURE_ENCODERS] for their (still 1:1, per-preference) encode side, and
+     * [decodeTirePressureMaintenance] plus [XiaomiScooterSupport.handlePropertyEntry] for the
+     * necessarily-multi-preference decode side.
+     */
+    sealed class PropertyMapping : Encodable {
         /** Converts a decoded wire value into what `GBDeviceEventUpdatePreferences` expects. */
         abstract fun decode(value: XiaomiScooterProtocol.RawValue): Any?
     }
@@ -76,6 +93,80 @@ object XiaomiScooterProperties {
             byteArrayOf(if (prefs.getBoolean(prefKey, defaultValue)) 1 else 0)
 
         override fun decode(value: XiaomiScooterProtocol.RawValue): Any? = value.asU8()?.let { it != 0 }
+    }
+
+    /** A single writable preference/action belonging to a composite property; see [TIRE_PRESSURE_ENCODERS]. */
+    class CompositeEncoder(
+        override val code: Int,
+        override val prefKey: String,
+        override val wireType: Int,
+        private val encodeFn: (Prefs) -> ByteArray,
+    ) : Encodable {
+        override fun encode(prefs: Prefs): ByteArray = encodeFn(prefs)
+    }
+
+    // tire_pressure_maintenance's wire value is `[status:1][interval:3]` for SET, plus a trailing
+    // `[remaining:3]` on GET_RSP/NOTIFY. Status 0 = enabled, 2 = disabled (SET "2030" -> GET_RSP "2030030");
+    // 3 = reset the remaining-days countdown back to the full interval, a one-shot action rather than a persisted
+    // status (only ever observed in a SET, never echoed back in a GET_RSP).
+    private const val TIRE_PRESSURE_STATUS_ENABLED = 0
+    private const val TIRE_PRESSURE_STATUS_DISABLED = 2
+    private const val TIRE_PRESSURE_STATUS_RESET = 3
+    private val DEFAULT_TIRE_PRESSURE_INTERVAL = XiaomiScooterTirePressureInterval.DAYS_30
+
+    private fun encodeTirePressureMaintenanceSet(status: Int, days: Int): ByteArray =
+        "$status${days.toString().padStart(3, '0')}".toByteArray(Charsets.US_ASCII)
+
+    private fun Prefs.tirePressureInterval(): XiaomiScooterTirePressureInterval {
+        val prefValue = getString(
+            DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_TIRE_PRESSURE_INTERVAL_DAYS,
+            DEFAULT_TIRE_PRESSURE_INTERVAL.name.lowercase(),
+        )
+        return XiaomiScooterTirePressureInterval.fromPreference(prefValue) ?: DEFAULT_TIRE_PRESSURE_INTERVAL
+    }
+
+    private fun Prefs.tirePressureEnabled(): Boolean =
+        getBoolean(DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_TIRE_PRESSURE_ENABLED, true)
+
+    private fun Prefs.tirePressureStatus(): Int =
+        if (tirePressureEnabled()) TIRE_PRESSURE_STATUS_ENABLED else TIRE_PRESSURE_STATUS_DISABLED
+
+    /**
+     * Encoders for tire_pressure_maintenance's three writable preferences/actions: the interval
+     * list setting, the enabled switch, and the one-shot reset action. All three read each other's
+     * current state (via the `Prefs.tirePressure*()` helpers above) to reconstruct the single
+     * combined wire value, since none of them alone carries the full picture. The read side is
+     * [decodeTirePressureMaintenance], applied directly in [XiaomiScooterSupport.handlePropertyEntry].
+     */
+    val TIRE_PRESSURE_ENCODERS: List<CompositeEncoder> = listOf(
+        CompositeEncoder(
+            code = CODE_TIRE_PRESSURE_MAINTENANCE,
+            prefKey = DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_TIRE_PRESSURE_INTERVAL_DAYS,
+            wireType = XiaomiScooterProtocol.TYPE_STR,
+        ) { prefs -> encodeTirePressureMaintenanceSet(prefs.tirePressureStatus(), prefs.tirePressureInterval().days) },
+        CompositeEncoder(
+            code = CODE_TIRE_PRESSURE_MAINTENANCE,
+            prefKey = DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_TIRE_PRESSURE_ENABLED,
+            wireType = XiaomiScooterProtocol.TYPE_STR,
+        ) { prefs -> encodeTirePressureMaintenanceSet(prefs.tirePressureStatus(), prefs.tirePressureInterval().days) },
+        CompositeEncoder(
+            code = CODE_TIRE_PRESSURE_MAINTENANCE,
+            prefKey = DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_TIRE_PRESSURE_RESET,
+            wireType = XiaomiScooterProtocol.TYPE_STR,
+        ) { prefs -> encodeTirePressureMaintenanceSet(TIRE_PRESSURE_STATUS_RESET, prefs.tirePressureInterval().days) },
+    )
+
+    /** Decoded `tire_pressure_maintenance` GET_RSP/NOTIFY value: `[status:1][interval:3][remaining:3]` ASCII digits. */
+    data class TirePressureMaintenance(val enabled: Boolean, val intervalDays: Int, val remainingDays: Int)
+
+    fun decodeTirePressureMaintenance(raw: String): TirePressureMaintenance? {
+        if (raw.length < 7 || !raw.all { it.isDigit() }) {
+            return null
+        }
+        val status = raw.substring(0, 1).toIntOrNull() ?: return null
+        val interval = raw.substring(1, 4).toIntOrNull() ?: return null
+        val remaining = raw.substring(4, 7).toIntOrNull() ?: return null
+        return TirePressureMaintenance(status != TIRE_PRESSURE_STATUS_DISABLED, interval, remaining)
     }
 
     class EnumProperty(
@@ -156,7 +247,9 @@ object XiaomiScooterProperties {
     )
 
     val SETTINGS_BY_CODE: Map<Int, PropertyMapping> = SETTINGS.associateBy { it.code }
-    val SETTINGS_BY_PREF_KEY: Map<String, PropertyMapping> = SETTINGS.associateBy { it.prefKey }
+    val SETTINGS_BY_PREF_KEY: Map<String, Encodable> = SETTINGS.plus<Encodable>(
+        TIRE_PRESSURE_ENCODERS
+    ).associateBy { it.prefKey }
 
     /** A read-only property, decoded straight into the display string for a `text` setting. */
     class TelemetryProperty(
@@ -236,5 +329,6 @@ object XiaomiScooterProperties {
         CODE_BATTERY_PERCENT,
         CODE_SERIAL_NUMBER,
         CODE_FIRMWARE_VERSION,
+        CODE_TIRE_PRESSURE_MAINTENANCE,
     )
 }

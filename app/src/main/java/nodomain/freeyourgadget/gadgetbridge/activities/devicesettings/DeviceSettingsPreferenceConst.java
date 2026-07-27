@@ -796,4 +796,8 @@ public class DeviceSettingsPreferenceConst {
     public static final String PREF_XIAOMI_SCOOTER_BATTERY_SERIAL = "xiaomi_scooter_battery_serial";
     public static final String PREF_XIAOMI_SCOOTER_BMS_FW_VERSION = "xiaomi_scooter_bms_fw_version";
     public static final String PREF_XIAOMI_SCOOTER_KEEP_BLUETOOTH_ON = "xiaomi_scooter_keep_bluetooth_on";
+    public static final String PREF_XIAOMI_SCOOTER_TIRE_PRESSURE_ENABLED = "xiaomi_scooter_tire_pressure_enabled";
+    public static final String PREF_XIAOMI_SCOOTER_TIRE_PRESSURE_INTERVAL_DAYS = "xiaomi_scooter_tire_pressure_interval_days";
+    public static final String PREF_XIAOMI_SCOOTER_TIRE_PRESSURE_REMAINING_DAYS = "xiaomi_scooter_tire_pressure_remaining_days";
+    public static final String PREF_XIAOMI_SCOOTER_TIRE_PRESSURE_RESET = "xiaomi_scooter_tire_pressure_reset";
 }

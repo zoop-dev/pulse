@@ -260,12 +260,39 @@ class DeviceSettingsScope {
         )
     }
 
+    /**
+     * A non-interactive, read-only row showing a device-reported value; see [InfoSetting].
+     */
+    fun info(
+        key: String,
+        @StringRes title: Int,
+        @DrawableRes icon: Int = 0,
+        defaultValue: String = "",
+        dependency: String? = null,
+        connectedOnly: Boolean = true,
+        visibleWhen: ((Prefs) -> Boolean)? = null,
+    ) {
+        items.add(
+            InfoSetting(
+                key = key,
+                title = title,
+                icon = icon,
+                defaultValue = defaultValue,
+                dependency = dependency,
+                connectedOnly = connectedOnly,
+                visibleWhen = visibleWhen,
+            )
+        )
+    }
+
     fun action(
         key: String,
         @StringRes title: Int = 0,
         @StringRes summary: Int = 0,
         @DrawableRes icon: Int = 0,
+        dependency: String? = null,
         enabled: Boolean = true,
+        @StringRes confirmationMessage: Int = 0,
         connectedOnly: Boolean = true,
         visibleWhen: ((Prefs) -> Boolean)? = null,
         onClick: ((DeviceSpecificSettingsHandler) -> Boolean)? = null,
@@ -276,7 +303,9 @@ class DeviceSettingsScope {
                 title = title,
                 summary = summary,
                 icon = icon,
+                dependency = dependency,
                 enabled = enabled,
+                confirmationMessage = confirmationMessage,
                 connectedOnly = connectedOnly,
                 visibleWhen = visibleWhen,
                 onClick = onClick,

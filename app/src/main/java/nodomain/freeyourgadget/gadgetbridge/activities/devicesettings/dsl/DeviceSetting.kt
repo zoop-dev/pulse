@@ -162,6 +162,21 @@ data class TextSetting(
 ) : DeviceSetting()
 
 /**
+ * A non-interactive, read-only row that just displays a SharedPreferences string value as its
+ * summary -- for device-reported values that are never meant to be edited.
+ * Backed by a plain `Preference` (not EditTextPreference): no dialog, never selectable.
+ */
+data class InfoSetting(
+    override val key: String,
+    @StringRes val title: Int,
+    @DrawableRes val icon: Int = 0,
+    val defaultValue: String = "",
+    val dependency: String? = null,
+    override val visibleWhen: ((Prefs) -> Boolean)? = null,
+    override val connectedOnly: Boolean = true,
+) : DeviceSetting()
+
+/**
  * A non-persistent action preference. [onClick] receives the [DeviceSpecificSettingsHandler] so
  * it can launch activities or invoke device-specific operations.
  */
@@ -170,7 +185,10 @@ data class ActionSetting(
     @StringRes val title: Int = 0,
     @StringRes val summary: Int = 0,
     @DrawableRes val icon: Int = 0,
+    val dependency: String? = null,
     val enabled: Boolean = true,
+    /** When non-zero, tapping this action shows a confirmation dialog with this message before [onClick] runs. */
+    @StringRes val confirmationMessage: Int = 0,
     override val visibleWhen: ((Prefs) -> Boolean)? = null,
     override val connectedOnly: Boolean = true,
     val onClick: ((DeviceSpecificSettingsHandler) -> Boolean)? = null,

@@ -485,6 +485,41 @@ class XiaomiScooterSupport : AbstractBTLESingleDeviceSupport(LOG) {
                 return false
             }
 
+            // A composite property: one wire value carries the enabled flag, the interval, and the
+            // days-remaining count, which map to three separate preferences. Decoded directly here
+            // rather than through SETTINGS_BY_CODE/TELEMETRY_BY_CODE, which only support a single
+            // preference per code; see XiaomiScooterProperties.TIRE_PRESSURE_ENCODERS for the
+            // (still 1:1) encode side of each of those preferences.
+            XiaomiScooterProperties.CODE_TIRE_PRESSURE_MAINTENANCE -> {
+                val decoded = value.asString()?.let { XiaomiScooterProperties.decodeTirePressureMaintenance(it) }
+                if (decoded == null) {
+                    LOG.warn("Failed to decode tire pressure maintenance value")
+                    return false
+                }
+                event.withPreference(
+                    DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_TIRE_PRESSURE_ENABLED,
+                    decoded.enabled
+                )
+                // The interval preference backs a ListSetting over XiaomiScooterTirePressureInterval,
+                // so it must be stored as the enum's lowercased name, not the bare day count.
+                val intervalPref = XiaomiScooterTirePressureInterval.fromDays(decoded.intervalDays)?.name?.lowercase()
+                if (intervalPref != null) {
+                    event.withPreference(
+                        DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_TIRE_PRESSURE_INTERVAL_DAYS,
+                        intervalPref
+                    )
+                }
+                event.withPreference(
+                    DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_TIRE_PRESSURE_REMAINING_DAYS,
+                    context.resources.getQuantityString(
+                        R.plurals.amount_of_days,
+                        decoded.remainingDays,
+                        decoded.remainingDays
+                    )
+                )
+                return true
+            }
+
             in XiaomiScooterProperties.RIDE_HISTORY_CODES -> {
                 value.asString()?.let { onRideHistoryEntry(entry.code, it) }
                 return false

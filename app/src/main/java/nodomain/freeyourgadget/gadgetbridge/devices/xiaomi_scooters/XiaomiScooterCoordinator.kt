@@ -15,6 +15,7 @@ import nodomain.freeyourgadget.gadgetbridge.model.DeviceType
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi_scooters.XiaomiScooterEnergyRecovery
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi_scooters.XiaomiScooterSupport
+import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi_scooters.XiaomiScooterTirePressureInterval
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi_scooters.XiaomiScooterUnits
 
 abstract class XiaomiScooterCoordinator : AbstractBLEDeviceCoordinator() {
@@ -159,6 +160,45 @@ abstract class XiaomiScooterCoordinator : AbstractBLEDeviceCoordinator() {
                 title = R.string.xiaomi_scooter_tcs_anti_slip_title,
                 summary = R.string.xiaomi_scooter_tcs_anti_slip_summary,
                 icon = R.drawable.ic_tcs_anti_slip,
+            )
+        }
+
+        screen(
+            key = "xiaomi_scooter_tire_pressure",
+            title = R.string.xiaomi_scooter_tire_pressure_title,
+            icon = R.drawable.ic_tire_repair,
+        ) {
+            switchSetting(
+                key = DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_TIRE_PRESSURE_ENABLED,
+                title = R.string.xiaomi_scooter_tire_pressure_enabled_title,
+                summary = R.string.xiaomi_scooter_tire_pressure_enabled_summary,
+                defaultValue = true,
+                icon = R.drawable.ic_tire_repair,
+            )
+            enumList<XiaomiScooterTirePressureInterval>(
+                key = DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_TIRE_PRESSURE_INTERVAL_DAYS,
+                title = R.string.xiaomi_scooter_tire_pressure_interval_title,
+                defaultValue = XiaomiScooterTirePressureInterval.DAYS_30,
+                dependency = DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_TIRE_PRESSURE_ENABLED,
+                icon = R.drawable.ic_calendar_from,
+            )
+            info(
+                key = DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_TIRE_PRESSURE_REMAINING_DAYS,
+                title = R.string.xiaomi_scooter_tire_pressure_remaining_title,
+                icon = R.drawable.ic_timer,
+                dependency = DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_TIRE_PRESSURE_ENABLED,
+            )
+            action(
+                key = DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_TIRE_PRESSURE_RESET,
+                title = R.string.xiaomi_scooter_tire_pressure_reset_title,
+                summary = R.string.xiaomi_scooter_tire_pressure_reset_summary,
+                icon = R.drawable.ic_refresh,
+                dependency = DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_TIRE_PRESSURE_ENABLED,
+                confirmationMessage = R.string.xiaomi_scooter_tire_pressure_reset_confirmation,
+                onClick = { handler ->
+                    handler.notifyPreferenceChanged(DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_TIRE_PRESSURE_RESET)
+                    true
+                },
             )
         }
 

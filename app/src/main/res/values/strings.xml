@@ -3951,6 +3951,18 @@
     <string name="xiaomi_scooter_keep_bluetooth_on_title">Bluetooth always on</string>
     <string name="xiaomi_scooter_keep_bluetooth_on_summary">Allows to find scooter while turned off. Increases power usage. This function is automatically disabled if battery is under 10%. If the scooter is not used for a long time, please disable this function.
 </string>
+    <string name="xiaomi_scooter_tire_pressure_title">Tire pressure maintenance</string>
+    <string name="xiaomi_scooter_tire_pressure_enabled_title">Reminder enabled</string>
+    <string name="xiaomi_scooter_tire_pressure_enabled_summary">Display an icon on the scooter\'s control panel to remind of tire pressure maintenance.</string>
+    <string name="xiaomi_scooter_tire_pressure_interval_title">Reminder interval</string>
+    <string name="xiaomi_scooter_tire_pressure_interval_14">14 days</string>
+    <string name="xiaomi_scooter_tire_pressure_interval_30">30 days</string>
+    <string name="xiaomi_scooter_tire_pressure_interval_60">60 days</string>
+    <string name="xiaomi_scooter_tire_pressure_interval_180">180 days</string>
+    <string name="xiaomi_scooter_tire_pressure_remaining_title">Days remaining</string>
+    <string name="xiaomi_scooter_tire_pressure_reset_title">Reset reminder</string>
+    <string name="xiaomi_scooter_tire_pressure_reset_summary">Click this button to restart the tire pressure maintenance timer.</string>
+    <string name="xiaomi_scooter_tire_pressure_reset_confirmation">Reset the tire pressure maintenance reminder?</string>
     <string name="pref_title_lock_unlock">Lock</string>
     <string name="wifi_hotspot">Wi-Fi Hotspot</string>
     <string name="wifi_hotspot_summary">Control the Wi-Fi hotspot on the watch</string>
