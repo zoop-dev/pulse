@@ -22,5 +22,9 @@ public enum HuaweiHeadphonesCapabilities {
     AudioModes,
     NoiseCancellationModes,
     VoiceBoost,
-    BetterAudioQuality
+    BetterAudioQuality,
+    AdaptiveVolume,
+    ExtraMediaVolume,
+    FindHeadphones,
+    LowLatency
 }

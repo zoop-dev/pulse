@@ -22,6 +22,7 @@ import org.junit.Test;
 
 import java.util.List;
 
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Earphones;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.FindPhone;
 
 public class TestHuaweiPacket {
@@ -214,6 +215,106 @@ public class TestHuaweiPacket {
 
         Assert.assertEquals(1, output.size());
         Assert.assertArrayEquals(expected, output.get(0));
+    }
+
+    @Test
+    public void testAdaptiveVolumeSerialize() throws HuaweiPacket.CryptoException {
+        byte[] expectedEnabled = {(byte) 0x5a, 0x00, 0x09, 0x00, 0x2b, (byte) 0xb4, 0x01, 0x01, 0x02, 0x02, 0x01, 0x01, 0x03, (byte) 0xc0};
+        byte[] expectedDisabled = {(byte) 0x5a, 0x00, 0x09, 0x00, 0x2b, (byte) 0xb4, 0x01, 0x01, 0x02, 0x02, 0x01, 0x00, 0x13, (byte) 0xe1};
+        byte[] expectedLow = {(byte) 0x5a, 0x00, 0x09, 0x00, 0x2b, (byte) 0xb4, 0x01, 0x01, 0x02, 0x03, 0x01, 0x00, 0x24, (byte) 0xd1};
+        byte[] expectedDefault = {(byte) 0x5a, 0x00, 0x09, 0x00, 0x2b, (byte) 0xb4, 0x01, 0x01, 0x02, 0x03, 0x01, 0x01, 0x34, (byte) 0xf0};
+        byte[] expectedHigh = {(byte) 0x5a, 0x00, 0x09, 0x00, 0x2b, (byte) 0xb4, 0x01, 0x01, 0x02, 0x03, 0x01, 0x02, 0x04, (byte) 0x93};
+
+        Assert.assertArrayEquals(expectedEnabled, new Earphones.AdaptiveVolume.SetRequest(paramsProvider, true).serialize().get(0));
+        Assert.assertArrayEquals(expectedDisabled, new Earphones.AdaptiveVolume.SetRequest(paramsProvider, false).serialize().get(0));
+        Assert.assertArrayEquals(expectedLow, new Earphones.AdaptiveVolume.SetSensitivityRequest(paramsProvider, (byte) 0x00).serialize().get(0));
+        Assert.assertArrayEquals(expectedDefault, new Earphones.AdaptiveVolume.SetSensitivityRequest(paramsProvider, (byte) 0x01).serialize().get(0));
+        Assert.assertArrayEquals(expectedHigh, new Earphones.AdaptiveVolume.SetSensitivityRequest(paramsProvider, (byte) 0x02).serialize().get(0));
+    }
+
+    @Test
+    public void testAdaptiveVolumeResponseParse() throws HuaweiPacket.ParseException {
+        byte[] enabled = {(byte) 0x5a, 0x00, 0x0c, 0x00, 0x2b, (byte) 0xb4, 0x01, 0x01, 0x02, 0x02, 0x01, 0x01, 0x03, 0x01, 0x01, 0x75, (byte) 0x8a};
+        byte[] disabled = {(byte) 0x5a, 0x00, 0x0c, 0x00, 0x2b, (byte) 0xb4, 0x01, 0x01, 0x02, 0x02, 0x01, 0x00, 0x03, 0x01, 0x01, 0x03, 0x3e};
+
+        Earphones.AdaptiveVolume.Response enabledResponse = (Earphones.AdaptiveVolume.Response) new HuaweiPacket(paramsProvider).parse(enabled);
+        enabledResponse.parseTlv();
+        Assert.assertTrue(enabledResponse.enabled);
+        Assert.assertEquals(0x01, enabledResponse.sensitivity);
+
+        Earphones.AdaptiveVolume.Response disabledResponse = (Earphones.AdaptiveVolume.Response) new HuaweiPacket(paramsProvider).parse(disabled);
+        disabledResponse.parseTlv();
+        Assert.assertFalse(disabledResponse.enabled);
+    }
+
+    @Test
+    public void testExtraMediaVolumeSerialize() throws HuaweiPacket.CryptoException {
+        byte[] expectedEnabled = {(byte) 0x5a, 0x00, 0x06, 0x00, 0x2b, (byte) 0x87, 0x01, 0x01, 0x01, 0x3e, (byte) 0xe4};
+        byte[] expectedDisabled = {(byte) 0x5a, 0x00, 0x06, 0x00, 0x2b, (byte) 0x87, 0x01, 0x01, 0x00, 0x2e, (byte) 0xc5};
+        byte[] expectedGet = {(byte) 0x5a, 0x00, 0x05, 0x00, 0x2b, (byte) 0x88, 0x01, 0x00, (byte) 0x91, (byte) 0x82};
+
+        Assert.assertArrayEquals(expectedEnabled, new Earphones.SetExtraMediaVolume.Request(paramsProvider, true).serialize().get(0));
+        Assert.assertArrayEquals(expectedDisabled, new Earphones.SetExtraMediaVolume.Request(paramsProvider, false).serialize().get(0));
+        Assert.assertArrayEquals(expectedGet, new Earphones.GetExtraMediaVolume.Request(paramsProvider).serialize().get(0));
+    }
+
+    @Test
+    public void testExtraMediaVolumeResponseParse() throws HuaweiPacket.ParseException {
+        byte[] enabled = {(byte) 0x5a, 0x00, 0x06, 0x00, 0x2b, (byte) 0x88, 0x01, 0x01, 0x01, (byte) 0xea, 0x0a};
+        byte[] disabled = {(byte) 0x5a, 0x00, 0x06, 0x00, 0x2b, (byte) 0x88, 0x01, 0x01, 0x00, (byte) 0xfa, 0x2b};
+
+        Earphones.GetExtraMediaVolume.Response enabledResponse = (Earphones.GetExtraMediaVolume.Response) new HuaweiPacket(paramsProvider).parse(enabled);
+        enabledResponse.parseTlv();
+        Assert.assertTrue(enabledResponse.enabled);
+
+        Earphones.GetExtraMediaVolume.Response disabledResponse = (Earphones.GetExtraMediaVolume.Response) new HuaweiPacket(paramsProvider).parse(disabled);
+        disabledResponse.parseTlv();
+        Assert.assertFalse(disabledResponse.enabled);
+    }
+
+    @Test
+    public void testFindHeadphonesSerialize() throws HuaweiPacket.CryptoException {
+        byte[] leftStart = {(byte) 0x5a, 0x00, 0x07, 0x00, 0x2b, 0x5d, 0x01, 0x02, 0x00, 0x00, 0x6f, 0x63};
+        byte[] leftStop = {(byte) 0x5a, 0x00, 0x07, 0x00, 0x2b, 0x5d, 0x01, 0x02, 0x00, 0x01, 0x7f, 0x42};
+        byte[] rightStart = {(byte) 0x5a, 0x00, 0x07, 0x00, 0x2b, 0x5d, 0x01, 0x02, 0x01, 0x00, 0x5c, 0x52};
+        byte[] rightStop = {(byte) 0x5a, 0x00, 0x07, 0x00, 0x2b, 0x5d, 0x01, 0x02, 0x01, 0x01, 0x4c, 0x73};
+
+        Assert.assertArrayEquals(leftStart, new Earphones.FindHeadphones.Request(paramsProvider, (byte) 0x00, false).serialize().get(0));
+        Assert.assertArrayEquals(leftStop, new Earphones.FindHeadphones.Request(paramsProvider, (byte) 0x00, true).serialize().get(0));
+        Assert.assertArrayEquals(rightStart, new Earphones.FindHeadphones.Request(paramsProvider, (byte) 0x01, false).serialize().get(0));
+        Assert.assertArrayEquals(rightStop, new Earphones.FindHeadphones.Request(paramsProvider, (byte) 0x01, true).serialize().get(0));
+    }
+
+    @Test
+    public void testFindHeadphonesResponseParse() throws HuaweiPacket.ParseException {
+        byte[] acknowledgement = {(byte) 0x5a, 0x00, 0x07, 0x00, 0x2b, 0x5d, 0x02, 0x02, 0x00, 0x00, (byte) 0xf4, (byte) 0xbf};
+        byte[] notification = {(byte) 0x5a, 0x00, 0x07, 0x00, 0x2b, 0x5e, 0x02, 0x02, 0x01, 0x01, 0x39, 0x7d};
+
+        Earphones.FindHeadphones.Response acknowledgementResponse = (Earphones.FindHeadphones.Response) new HuaweiPacket(paramsProvider).parse(acknowledgement);
+        acknowledgementResponse.parseTlv();
+        Assert.assertEquals(0x00, acknowledgementResponse.side);
+        Assert.assertFalse(acknowledgementResponse.stopped);
+
+        Earphones.FindHeadphones.Response notificationResponse = (Earphones.FindHeadphones.Response) new HuaweiPacket(paramsProvider).parse(notification);
+        notificationResponse.parseTlv();
+        Assert.assertEquals(0x01, notificationResponse.side);
+        Assert.assertTrue(notificationResponse.stopped);
+    }
+
+    @Test
+    public void testLowLatencySerialize() throws HuaweiPacket.CryptoException {
+        byte[] expectedEnabled = {(byte) 0x5a, 0x00, 0x06, 0x00, 0x2b, 0x6c, 0x01, 0x01, 0x01, (byte) 0xa4, 0x11};
+        byte[] expectedDisabled = {(byte) 0x5a, 0x00, 0x06, 0x00, 0x2b, 0x6c, 0x01, 0x01, 0x00, (byte) 0xb4, 0x30};
+
+        Assert.assertArrayEquals(expectedEnabled, new Earphones.SetLowLatency.Request(paramsProvider, true).serialize().get(0));
+        Assert.assertArrayEquals(expectedDisabled, new Earphones.SetLowLatency.Request(paramsProvider, false).serialize().get(0));
+    }
+
+    @Test
+    public void testLowLatencyResponseParse() throws HuaweiPacket.ParseException {
+        byte[] response = {(byte) 0x5a, 0x00, 0x09, 0x00, 0x2b, 0x6c, 0x7f, 0x04, 0x00, 0x01, (byte) 0x86, (byte) 0xa0, (byte) 0xa4, (byte) 0x97};
+
+        Assert.assertEquals(Earphones.SetLowLatency.Response.class, new HuaweiPacket(paramsProvider).parse(response).getClass());
     }
 
     @Test

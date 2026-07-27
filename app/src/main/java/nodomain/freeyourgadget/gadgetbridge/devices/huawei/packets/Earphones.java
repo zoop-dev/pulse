@@ -121,6 +121,180 @@ public class Earphones {
     // TODO: get long tap action 0x17
     // TODO: Audio mode cycle 0x19
 
+    public static class AdaptiveVolume {
+        public static final byte id = (byte) 0xb4;
+        public static final byte FEATURE_ID = 0x02;
+
+        public static class SetRequest extends HuaweiPacket {
+            public SetRequest(ParamsProvider paramsProvider, boolean enabled) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+
+                this.tlv = new HuaweiTLV()
+                        .put(0x01, FEATURE_ID)
+                        .put(0x02, enabled ? (byte) 0x01 : (byte) 0x00);
+
+                this.complete = true;
+            }
+        }
+
+        public static class SetSensitivityRequest extends HuaweiPacket {
+            public SetSensitivityRequest(ParamsProvider paramsProvider, byte sensitivity) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+
+                this.tlv = new HuaweiTLV()
+                        .put(0x01, FEATURE_ID)
+                        .put(0x03, sensitivity);
+
+                this.complete = true;
+            }
+        }
+
+        public static class GetRequest extends HuaweiPacket {
+            public GetRequest(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+
+                this.tlv = new HuaweiTLV()
+                        .put(0x01, FEATURE_ID);
+
+                this.complete = true;
+            }
+        }
+
+        public static class Response extends HuaweiPacket {
+            public boolean enabled;
+            public byte sensitivity;
+
+            public Response(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+                this.complete = true;
+            }
+
+            @Override
+            public void parseTlv() throws ParseException {
+                this.enabled = this.tlv.getByte(0x02, (byte) 0) == 0x01;
+                this.sensitivity = this.tlv.getByte(0x03, (byte) 0x01);
+            }
+        }
+    }
+
+    public static class FindHeadphones {
+        public static final byte id = 0x5d;
+        public static final byte stateId = 0x5e;
+
+        public static class Request extends HuaweiPacket {
+            public Request(ParamsProvider paramsProvider, byte side, boolean stop) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+                this.tlv = new HuaweiTLV().put(0x01, new byte[]{side, stop ? (byte) 0x01 : (byte) 0x00});
+                this.complete = true;
+            }
+        }
+
+        public static class Response extends HuaweiPacket {
+            public byte side;
+            public boolean stopped;
+
+            public Response(ParamsProvider paramsProvider, byte commandId) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = commandId;
+                this.complete = true;
+            }
+
+            @Override
+            public void parseTlv() throws ParseException {
+                byte[] state = this.tlv.getBytes(0x02);
+                this.side = state[0];
+                this.stopped = state[1] == 0x01;
+            }
+        }
+    }
+
+    public static class SetLowLatency {
+        public static final byte id = 0x6c;
+
+        public static class Request extends HuaweiPacket {
+            public Request(ParamsProvider paramsProvider, boolean enabled) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+                this.tlv = new HuaweiTLV().put(0x01, enabled);
+                this.complete = true;
+            }
+        }
+
+        public static class Response extends HuaweiPacket {
+            public Response(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+                this.complete = true;
+            }
+        }
+    }
+
+    public static class SetExtraMediaVolume {
+        public static final byte id = (byte) 0x87;
+
+        public static class Request extends HuaweiPacket {
+            public Request(ParamsProvider paramsProvider, boolean enabled) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+                this.tlv = new HuaweiTLV().put(0x01, enabled);
+                this.complete = true;
+            }
+        }
+
+        public static class Response extends HuaweiPacket {
+            public Response(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+                this.complete = true;
+            }
+        }
+    }
+
+    public static class GetExtraMediaVolume {
+        public static final byte id = (byte) 0x88;
+
+        public static class Request extends HuaweiPacket {
+            public Request(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+                this.tlv = new HuaweiTLV().put(0x01);
+                this.complete = true;
+            }
+        }
+
+        public static class Response extends HuaweiPacket {
+            public boolean enabled;
+
+            public Response(ParamsProvider paramsProvider) {
+                super(paramsProvider);
+                this.serviceId = Earphones.id;
+                this.commandId = id;
+                this.complete = true;
+            }
+
+            @Override
+            public void parseTlv() throws ParseException {
+                this.enabled = this.tlv.getByte(0x01) == 0x01;
+            }
+        }
+    }
+
     public static class GetAudioModeRequest {
         public static final byte id = 0x2a;
 

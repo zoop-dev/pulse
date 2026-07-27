@@ -53,6 +53,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.DataSync;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.DeviceConfig;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Ephemeris;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.EphemerisFileUpload;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Earphones;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.FileDownloadService2C;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.FindPhone;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.GpsAndTime;
@@ -137,10 +138,25 @@ public class AsynchronousResponse {
             handleDataSyncCommands(response);
             handleOTA(response);
             handleFileDownload(response);
+            handleExtraMediaVolume(response);
 
         } catch (Request.ResponseParseException e) {
             LOG.error("Response parse exception", e);
         }
+    }
+
+    private void handleExtraMediaVolume(HuaweiPacket response) throws Request.ResponseParseException {
+        if (response.serviceId != Earphones.id || response.commandId != Earphones.GetExtraMediaVolume.id) {
+            return;
+        }
+        if (!(response instanceof Earphones.GetExtraMediaVolume.Response)) {
+            throw new Request.ResponseTypeMismatchException(response, Earphones.GetExtraMediaVolume.Response.class);
+        }
+
+        boolean enabled = ((Earphones.GetExtraMediaVolume.Response) response).enabled;
+        GBApplication.getDeviceSpecificSharedPrefs(support.getDeviceMac()).edit()
+                .putBoolean(DeviceSettingsPreferenceConst.PREF_HUAWEI_FREEBUDS_EXTRA_MEDIA_VOLUME, enabled)
+                .apply();
     }
 
     private void handleFindPhone(HuaweiPacket response) throws Request.ResponseParseException {

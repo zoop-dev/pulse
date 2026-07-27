@@ -706,6 +706,18 @@ public class HuaweiPacket {
                         return new Earphones.SetBetterAudioQuality.Response(paramsProvider).fromPacket(this);
                     case Earphones.GetBetterAudioQuality.id:
                         return new Earphones.GetBetterAudioQuality.Response(paramsProvider).fromPacket(this);
+                    case Earphones.AdaptiveVolume.id:
+                        return new Earphones.AdaptiveVolume.Response(paramsProvider).fromPacket(this);
+                    case Earphones.FindHeadphones.id:
+                        return new Earphones.FindHeadphones.Response(paramsProvider, Earphones.FindHeadphones.id).fromPacket(this);
+                    case Earphones.FindHeadphones.stateId:
+                        return new Earphones.FindHeadphones.Response(paramsProvider, Earphones.FindHeadphones.stateId).fromPacket(this);
+                    case Earphones.SetLowLatency.id:
+                        return new Earphones.SetLowLatency.Response(paramsProvider).fromPacket(this);
+                    case Earphones.SetExtraMediaVolume.id:
+                        return new Earphones.SetExtraMediaVolume.Response(paramsProvider).fromPacket(this);
+                    case Earphones.GetExtraMediaVolume.id:
+                        return new Earphones.GetExtraMediaVolume.Response(paramsProvider).fromPacket(this);
                 }
             case FileDownloadService2C.id:
                 switch (this.commandId) {

@@ -37,12 +37,18 @@ import nodomain.freeyourgadget.gadgetbridge.model.CallSpec;
 import nodomain.freeyourgadget.gadgetbridge.model.NotificationSpec;
 import nodomain.freeyourgadget.gadgetbridge.service.HeadphoneHelper;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetAdaptiveVolumeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetBetterAudioQualityRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetExtraMediaVolumeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetProductInformationRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.Request;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetANCModeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetAudioModeRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetBetterAudioQualityRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetAdaptiveVolumeRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetExtraMediaVolumeRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetFindHeadphonesRequest;
+import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetLowLatencyRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetVoiceBoostRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.SetPauseWhenRemovedFromEarRequest;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
@@ -70,6 +76,18 @@ public class HuaweiFreebudsSupport extends HuaweiBRSupport implements HeadphoneH
             if (coordinator.supports(this.gbDevice, HuaweiHeadphonesCapabilities.BetterAudioQuality)) {
                 GetBetterAudioQualityRequest req = new GetBetterAudioQualityRequest(super.getSupportProvider());
                 req.doPerform();
+            }
+            if (coordinator.supports(this.gbDevice, HuaweiHeadphonesCapabilities.AdaptiveVolume)) {
+                GetAdaptiveVolumeRequest req = new GetAdaptiveVolumeRequest(super.getSupportProvider());
+                req.doPerform();
+            }
+            if (coordinator.supports(this.gbDevice, HuaweiHeadphonesCapabilities.ExtraMediaVolume)) {
+                new GetExtraMediaVolumeRequest(super.getSupportProvider()).doPerform();
+            }
+            if (coordinator.supports(this.gbDevice, HuaweiHeadphonesCapabilities.FindHeadphones)) {
+                GBApplication.getDeviceSpecificSharedPrefs(this.gbDevice.getAddress()).edit()
+                        .putString(DeviceSettingsPreferenceConst.PREF_HUAWEI_FREEBUDS_FIND_HEADPHONES, "0")
+                        .apply();
             }
 
         } catch (IOException e) {
@@ -153,6 +171,18 @@ public class HuaweiFreebudsSupport extends HuaweiBRSupport implements HeadphoneH
                     break;
                 case DeviceSettingsPreferenceConst.PREF_HUAWEI_FREEBUDS_BETTER_AUDIO_QUALITY:
                     new SetBetterAudioQualityRequest(getSupportProvider()).doPerform();
+                    break;
+                case DeviceSettingsPreferenceConst.PREF_HUAWEI_FREEBUDS_ADAPTIVE_VOLUME:
+                    new SetAdaptiveVolumeRequest(getSupportProvider()).doPerform();
+                    break;
+                case DeviceSettingsPreferenceConst.PREF_HUAWEI_FREEBUDS_EXTRA_MEDIA_VOLUME:
+                    new SetExtraMediaVolumeRequest(getSupportProvider()).doPerform();
+                    break;
+                case DeviceSettingsPreferenceConst.PREF_HUAWEI_FREEBUDS_FIND_HEADPHONES:
+                    new SetFindHeadphonesRequest(getSupportProvider()).doPerform();
+                    break;
+                case DeviceSettingsPreferenceConst.PREF_HEADPHONES_LOW_LATENCY:
+                    new SetLowLatencyRequest(getSupportProvider()).doPerform();
                     break;
                 case DeviceSettingsPreferenceConst.PREF_BATTERY_POLLING_ENABLE:
                     if (!GBApplication.getDevicePrefs(gbDevice).getBatteryPollingEnabled()) {

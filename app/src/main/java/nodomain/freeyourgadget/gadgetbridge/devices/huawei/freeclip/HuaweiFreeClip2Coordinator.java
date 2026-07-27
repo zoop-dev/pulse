@@ -19,7 +19,6 @@ package nodomain.freeyourgadget.gadgetbridge.devices.huawei.freeclip;
 
 import androidx.annotation.NonNull;
 
-import java.util.Collections;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -39,7 +38,13 @@ public class HuaweiFreeClip2Coordinator extends HuaweiFreebudsCoordinator {
 
     @Override
     public Set<HuaweiHeadphonesCapabilities> getCapabilities() {
-        return Collections.singleton(HuaweiHeadphonesCapabilities.InEarDetection);
+        return Set.of(
+                HuaweiHeadphonesCapabilities.InEarDetection,
+                HuaweiHeadphonesCapabilities.AdaptiveVolume,
+                HuaweiHeadphonesCapabilities.ExtraMediaVolume,
+                HuaweiHeadphonesCapabilities.FindHeadphones,
+                HuaweiHeadphonesCapabilities.LowLatency
+        );
     }
 
     @NonNull

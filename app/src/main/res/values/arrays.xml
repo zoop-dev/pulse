@@ -5403,6 +5403,32 @@
         <item>calories_segmented</item>
     </string-array>
 
+    <string-array name="huawei_find_headphones_names">
+        <item>@string/off</item>
+        <item>@string/left_earbud</item>
+        <item>@string/right_earbud</item>
+    </string-array>
+
+    <string-array name="huawei_find_headphones_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="huawei_adaptive_volume_names">
+        <item>@string/off</item>
+        <item>@string/low</item>
+        <item>@string/pref_default</item>
+        <item>@string/high</item>
+    </string-array>
+
+    <string-array name="huawei_adaptive_volume_values">
+        <item>off</item>
+        <item>low</item>
+        <item>default</item>
+        <item>high</item>
+    </string-array>
+
     <string-array name="huawei_freebuds_audio_mode_names">
         <item>@string/prefs_active_noise_cancelling</item>
         <item>@string/prefs_active_noise_cancelling_transparency</item>
