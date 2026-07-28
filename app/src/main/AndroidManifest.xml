@@ -304,6 +304,10 @@
             android:label="@string/loading"
             android:parentActivityName=".activities.devicesettings.DeviceSettingsActivity" />
         <activity
+            android:name=".devices.garmin.GarminAuthExpiredActivity"
+            android:label="@string/authentication_expired"
+            android:parentActivityName=".activities.devicesettings.DeviceSettingsActivity" />
+        <activity
             android:name=".devices.huawei.ui.HuaweiStressCalibrationActivity"
             android:label="@string/huawei_stress_calibrate"
             android:parentActivityName=".activities.devicesettings.DeviceSettingsActivity" />

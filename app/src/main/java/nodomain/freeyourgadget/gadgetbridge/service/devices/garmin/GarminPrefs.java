@@ -8,6 +8,7 @@ import nodomain.freeyourgadget.gadgetbridge.util.preferences.DevicePrefs;
 public class GarminPrefs extends DevicePrefs {
     public static final String PREF_FAKE_OAUTH_WARNING = "garmin_fake_oauth_warning";
     public static final String PREF_FAKE_OAUTH_ENABLED = "garmin_fake_oauth_enabled";
+    public static final String PREF_AUTH_EXPIRED_NOTIFICATION_ENABLED = "garmin_auth_expired_notification_enabled";
 
     public GarminPrefs(final SharedPreferences preferences, final GBDevice gbDevice) {
         super(preferences, gbDevice);
@@ -16,5 +17,9 @@ public class GarminPrefs extends DevicePrefs {
     public boolean fakeOauthEnabled() {
         return getBoolean(PREF_FAKE_OAUTH_WARNING, false) &&
                 getBoolean(PREF_FAKE_OAUTH_ENABLED, false);
+    }
+
+    public boolean authExpiredNotificationEnabled() {
+        return getBoolean(PREF_AUTH_EXPIRED_NOTIFICATION_ENABLED, true);
     }
 }

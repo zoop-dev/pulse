@@ -1212,7 +1212,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     @Override
     @Nullable
     public String getAuthHelp() {
-        return null;
+        return "https://gadgetbridge.org/basics/pairing/#authentication-key";
     }
 
     @Override

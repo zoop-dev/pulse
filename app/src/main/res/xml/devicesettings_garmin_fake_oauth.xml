@@ -16,4 +16,12 @@
         android:layout="@layout/preference_checkbox"
         android:summary="@string/pref_garmin_fake_oauth_summary"
         android:title="@string/pref_garmin_fake_oauth_title" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:icon="@drawable/ic_notifications"
+        android:key="garmin_auth_expired_notification_enabled"
+        android:layout="@layout/preference_checkbox"
+        android:summary="@string/auth_expiration_notifications_summary"
+        android:title="@string/expiration_notifications_title" />
 </androidx.preference.PreferenceScreen>

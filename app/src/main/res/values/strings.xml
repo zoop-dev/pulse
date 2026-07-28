@@ -360,6 +360,7 @@
     <string name="pref_title_canned_messages_set">Update on device</string>
     <string name="pref_header_development">Developer options</string>
     <string name="pref_header_intent_api">Intent API</string>
+    <string name="authentication_settings">Authentication settings</string>
     <string name="pref_header_authentication">Authentication</string>
     <string name="pref_title_development_miaddr">Mi Band address</string>
     <string name="pref_title_pebble_settings">Pebble settings</string>
@@ -1396,6 +1397,13 @@
     <string name="authentication_required">Authentication required</string>
     <string name="authentication_failed_check_key">Authentication failed, please check auth key</string>
     <string name="authentication_failed_negotiation">Authentication key negotiation failed</string>
+    <string name="click_here_for_more_information">Click here for more information.</string>
+    <string name="authentication_expired">Authentication expired</string>
+    <string name="expiration_notifications_title">Expiration notification</string>
+    <string name="auth_expiration_notifications_summary">Display a notification when authentication is expired.</string>
+    <string name="garmin_oauth_expired_description">Authentication for %1$s has expired, some functions may not work. Click here for more information.</string>
+    <string name="garmin_auth_expired_activity_description">The authentication token for \'%1$s\' has expired, so some functions (such as weather and AGPS updates) may stop working until it is re-authenticated with the official Garmin Connect app.\n\nAs a workaround, Gadgetbridge can send fake authentication responses to the watch instead. Do not enable this if you plan to use the official Garmin Connect app or connect the watch to the internet, as you may need to factory reset the watch afterwards to authenticate again.</string>
+    <string name="dont_show_again">Don\'t show again</string>
     <string name="activity_prefs_sleep_duration_minutes">Preferred sleep duration in minutes</string>
     <string name="device_hw">Hardware revision: %1$s</string>
     <string name="device_fw">Firmware version: %1$s</string>
@@ -5048,6 +5056,7 @@
     <string name="health_connect_finished_with_errors">Health Connect Sync experienced errors, some data will not be available.</string>
     <string name="health_connect_syncing">Syncing…</string>
     <string name="notification_channel_health_connect_sync_name">Health Connect Sync</string>
+    <string name="notification_channel_device_warnings">Device Warnings</string>
     <string name="health_connect_sync_status_title">Sync Status</string>
     <string name="pref_health_connect_detailed_workout_sync_title">Detailed workout sync</string>
     <string name="pref_health_connect_detailed_workout_sync_summary">Sync GPS routes and per-second metrics (heart rate, speed, power) for workouts. Provides richer data but may take longer.</string>

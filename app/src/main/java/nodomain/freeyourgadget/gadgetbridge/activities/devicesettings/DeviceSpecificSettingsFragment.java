@@ -1708,7 +1708,6 @@ public class DeviceSpecificSettingsFragment extends AbstractPreferenceFragment i
         final DeviceSpecificSettings deviceSpecificSettings = new DeviceSpecificSettings();
 
         if (applicationSpecificSettings.equals(DeviceSettingsActivity.MENU_ENTRY_POINTS.AUTH_SETTINGS)) { //auth settings screen
-            deviceSpecificSettings.addRootScreen(R.xml.devicesettings_pairingkey_explanation);
             for (final int s : coordinator.getSupportedDeviceSpecificAuthenticationSettings()) {
                 deviceSpecificSettings.addRootScreen(s);
             }

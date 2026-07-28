@@ -1,7 +1,12 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.interceptors;
 
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Intent;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -16,11 +21,15 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminAuthExpiredActivity;
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiHttpService;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminPrefs;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.GarminHttpRequest;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.http.GarminHttpResponse;
+import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
 public class OauthInterceptor implements HttpInterceptor {
     private static final Logger LOG = LoggerFactory.getLogger(OauthInterceptor.class);
@@ -51,6 +60,9 @@ public class OauthInterceptor implements HttpInterceptor {
         final GarminPrefs devicePrefs = deviceSupport.getDevicePrefs();
         if (!devicePrefs.fakeOauthEnabled()) {
             LOG.warn("Got OAuth HTTP request, but fake OAuth is disabled");
+            if (request.getPath().equals("/oauthTokenExchangeService/connectToIT") || request.getPath().equals("/api/oauth/token")) {
+                showAuthExpiredNotification();
+            }
             return null;
         }
 
@@ -125,6 +137,47 @@ public class OauthInterceptor implements HttpInterceptor {
         }
 
         return null;
+    }
+
+    private void showAuthExpiredNotification() {
+        final GarminPrefs devicePrefs = deviceSupport.getDevicePrefs();
+        if (!devicePrefs.authExpiredNotificationEnabled()) {
+            LOG.debug("Will not notify, auth expired notification is disabled for this device");
+            return;
+        }
+
+        final long currentTime = System.currentTimeMillis();
+        final long lastNotificationTime = devicePrefs.getLong("last_auth_expired_notification", 0);
+        if (currentTime - lastNotificationTime < 604800000 /* 1 week */) {
+            LOG.debug("Will not notify, last notification was at {}", lastNotificationTime);
+            return;
+        }
+        devicePrefs.getPreferences().edit()
+                .putLong("last_auth_expired_notification", currentTime)
+                .apply();
+
+        final GBDevice device = deviceSupport.getDevice();
+        final Intent activityIntent = new Intent(deviceSupport.getContext(), GarminAuthExpiredActivity.class);
+        activityIntent.putExtra(GBDevice.EXTRA_DEVICE, device);
+
+        final Notification notification = new NotificationCompat.Builder(deviceSupport.getContext(), GB.NOTIFICATION_CHANNEL_ID_DEVICE_WARNINGS)
+                .setSmallIcon(R.drawable.ic_warning)
+                .setContentTitle(deviceSupport.getContext().getString(R.string.authentication_expired))
+                .setContentText(deviceSupport.getContext().getString(R.string.click_here_for_more_information))
+                .setStyle(
+                        new NotificationCompat.BigTextStyle()
+                                .bigText(deviceSupport.getContext().getString(R.string.garmin_oauth_expired_description, device.getName()))
+                )
+                .setAutoCancel(true)
+                .setContentIntent(PendingIntent.getActivity(
+                        deviceSupport.getContext(),
+                        0,
+                        activityIntent,
+                        PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE
+                ))
+                .build();
+
+        GB.notify((int) (currentTime / 1000L), notification, deviceSupport.getContext());
     }
 
     public static class AuthorizationResponse {
