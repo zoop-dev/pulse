@@ -43,8 +43,9 @@ public class TransactionBuilder {
     private final AbstractBTBRDeviceSupport mDeviceSupport;
     private final Transaction mTransaction;
     private boolean mQueued;
-    /// Target RFCOMM channel: 0 (default) = primary socket, >0 = an aux socket if open.
-    private int mChannel = 0;
+    /// Target RFCOMM channel: {@link AbstractBTBRDeviceSupport#RFCOMM_CHANNEL_UNSPECIFIED} (default)
+    /// or the primary socket's own channel = primary socket, any other channel = an aux socket if open.
+    private int mChannel = AbstractBTBRDeviceSupport.RFCOMM_CHANNEL_UNSPECIFIED;
 
     TransactionBuilder(String taskName, @NonNull AbstractBTBRDeviceSupport deviceSupport) {
         mTransaction = new Transaction(taskName);
@@ -146,9 +147,11 @@ public class TransactionBuilder {
 
     /**
      * Routes this transaction to a secondary ("aux") RFCOMM socket (see
-     * {@link AbstractBTBRDeviceSupport#openAuxChannel(int)}). Channel 0 (the default) is the
-     * primary socket. If the requested aux channel is not open, the transaction falls back to the
-     * primary socket.
+     * {@link AbstractBTBRDeviceSupport#openAuxChannel(int)}).
+     * {@link AbstractBTBRDeviceSupport#RFCOMM_CHANNEL_UNSPECIFIED} (the default) and the primary
+     * socket's own {@link AbstractBTBRDeviceSupport#getRfcommChannel()} both select the primary
+     * socket. If the requested aux channel is not open, the transaction falls back to the primary
+     * socket.
      *
      * @param channel the target RFCOMM channel
      */

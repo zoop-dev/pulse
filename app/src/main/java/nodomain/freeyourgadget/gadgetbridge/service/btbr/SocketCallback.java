@@ -36,7 +36,10 @@ public interface SocketCallback {
      * the default keeps their existing behaviour.
      *
      * @param data    the received bytes
-     * @param channel the RFCOMM channel the bytes were read from (0 for the primary socket)
+     * @param channel the RFCOMM channel the socket was opened on — the primary socket reports its
+     *                own {@link AbstractBTBRDeviceSupport#getRfcommChannel()}, which is
+     *                {@link AbstractBTBRDeviceSupport#RFCOMM_CHANNEL_UNSPECIFIED} when it was
+     *                resolved through SDP
      */
     default void onSocketRead(byte[] data, int channel) {
         onSocketRead(data);

@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.AbstractBTBRDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.Request;
 
 /**
@@ -34,6 +35,10 @@ import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.Requ
  */
 public class ResponseManager {
     private static final Logger LOG = LoggerFactory.getLogger(ResponseManager.class);
+
+    /// Reassembly key of the primary transport (BLE, or an RFCOMM socket opened through SDP).
+    /// Negative, so it can never collide with a negotiated aux RFCOMM channel.
+    public static final int MAIN_CHANNEL = AbstractBTBRDeviceSupport.RFCOMM_CHANNEL_UNSPECIFIED;
 
     private final List<Request> handlers = Collections.synchronizedList(new ArrayList<>());
     // Reassembly state is per transport channel: the main socket and each aux (dual channel)
@@ -88,7 +93,7 @@ public class ResponseManager {
      * @param data The received data
      */
     public void handleData(byte[] data) {
-        handleData(data, 0);
+        handleData(data, MAIN_CHANNEL);
     }
 
     /**
@@ -97,9 +102,10 @@ public class ResponseManager {
      * or as an asynchronous request otherwise.
      *
      * @param data    The received data
-     * @param channel The transport channel the data arrived on (0 = primary socket / BLE,
-     *                &gt;0 = negotiated dual channel aux socket). Reassembly state is kept per
-     *                channel so the two independent socket streams never corrupt each other.
+     * @param channel The transport channel the data arrived on ({@link #MAIN_CHANNEL} for BLE and
+     *                for a primary socket resolved through SDP, otherwise the RFCOMM channel the
+     *                socket was opened on). Reassembly state is kept per channel so the
+     *                independent socket streams never corrupt each other.
      */
     public synchronized void handleData(byte[] data, int channel) {
         //NOTE: This is a quick fix issue with concatenated packets.

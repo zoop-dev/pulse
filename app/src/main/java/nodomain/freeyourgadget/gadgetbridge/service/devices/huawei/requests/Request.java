@@ -34,6 +34,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.DataSync;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.P2P;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
+import nodomain.freeyourgadget.gadgetbridge.service.btbr.AbstractBTBRDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiDualChannelHelper;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.HuaweiSupportProvider;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.miband.operations.OperationStatus;
@@ -370,7 +371,7 @@ public class Request {
         if (!this.supportProvider.isBLE()) {
             // Route to the negotiated dual channel when this packet is flagged for it; otherwise
             // (and until the aux socket is up) it goes on the primary socket.
-            int channel = 0;
+            int channel = AbstractBTBRDeviceSupport.RFCOMM_CHANNEL_UNSPECIFIED;
             boolean aux = routeToExtraChannel();
             if (aux)
                 channel = supportProvider.getDualChannelHelper().getChannel();

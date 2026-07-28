@@ -42,6 +42,14 @@ import nodomain.freeyourgadget.gadgetbridge.service.btle.BleNamesResolver;
  */
 public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport implements SocketCallback {
 
+    /**
+     * "No explicit RFCOMM channel". Matches what
+     * {@link BluetoothDevice#createRfcommSocketToServiceRecord} uses internally, and is the default
+     * of both {@link #getRfcommChannel()} (primary socket resolved through SDP) and
+     * {@link TransactionBuilder#setChannel(int)} (transaction goes to the primary socket).
+     */
+    public static final int RFCOMM_CHANNEL_UNSPECIFIED = -1;
+
     /// used to guard {@link #connect()}, {@link #disconnect()} and {@link #dispose()}
     protected final Object ConnectionMonitor = new Object();
 
@@ -122,14 +130,16 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
      * connection. Aux sockets share this support's {@link #onSocketRead(byte[])} sink but never
      * affect the primary device connection state or re-run device initialization. Writes are
      * routed to an aux socket by setting the target channel on the transaction
-     * ({@link TransactionBuilder#setChannel(int)}); channel 0 always means the primary socket.
+     * ({@link TransactionBuilder#setChannel(int)}); {@link #RFCOMM_CHANNEL_UNSPECIFIED} and the
+     * primary socket's own {@link #getRfcommChannel()} both mean the primary socket.
      *
      * @return true if the aux connection attempt was successfully triggered
      */
     public boolean openAuxChannel(final int channel) {
         synchronized (ConnectionMonitor) {
-            if (channel <= 0) {
-                logger.warn("openAuxChannel - ignored, invalid channel {}", channel);
+            if (channel <= 0 || channel == getRfcommChannel()) {
+                logger.warn("openAuxChannel - ignored, invalid aux channel {} (primary channel is {})",
+                        channel, getRfcommChannel());
                 return false;
             }
             final UUID supportedService = getSupportedService();
@@ -213,11 +223,14 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
         return mQueue;
     }
 
-    /// Returns the queue for the given channel: an aux queue when {@code channel > 0} and one is
+    /// Returns the queue for the given RFCOMM channel: an aux queue when the channel is an explicit
+    /// one that is not the primary socket's ({@link #getRfcommChannel()}) and that aux socket is
     /// open, otherwise the primary queue. Callers can route unconditionally; an unavailable aux
     /// channel transparently falls back to the primary socket.
     BtBRQueue getQueue(final int channel) {
-        if (channel > 0) {
+        // A negative channel is "unspecified" and always means the primary socket, as does the
+        // primary socket's own channel for devices that pin it to a fixed number.
+        if (channel >= 0 && channel != getRfcommChannel()) {
             final BtBRQueue auxQueue = mAuxQueues.get(channel);
             // Only route to the aux socket once it is actually connected; until then transactions
             // transparently use the primary socket so nothing is dropped while it comes up.
@@ -243,11 +256,12 @@ public abstract class AbstractBTBRDeviceSupport extends AbstractDeviceSupport im
     }
 
     /**
-     * Subclasses can override this to specify a fixed RFCOMM channel number.
-     * If -1 (default), the service UUID is used for SDP resolution.
+     * Subclasses can override this to specify a fixed RFCOMM channel number for the primary
+     * socket. If {@link #RFCOMM_CHANNEL_UNSPECIFIED} (default), the service UUID is used for SDP
+     * resolution.
      */
     protected int getRfcommChannel() {
-        return -1;
+        return RFCOMM_CHANNEL_UNSPECIFIED;
     }
 
 

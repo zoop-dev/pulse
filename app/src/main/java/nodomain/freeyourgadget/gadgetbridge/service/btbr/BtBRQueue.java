@@ -103,9 +103,10 @@ public final class BtBRQueue {
                             mIsAux ? "aux ch " + mRfcommChannel : "main", GB.hexdump(buffer, 0, nRead));
 
                     try {
-                        // The main socket may have been opened via SDP lookup (mRfcommChannel -1);
-                        // normalize to 0 so downstream consumers can rely on 0 == main socket.
-                        mCallback.onSocketRead(Arrays.copyOf(buffer, nRead), mIsAux ? mRfcommChannel : 0);
+                        // Tag the data with the channel this socket was opened on, so it matches
+                        // what the write side uses to address it. The primary socket reports its
+                        // own channel, which is RFCOMM_CHANNEL_UNSPECIFIED when resolved via SDP.
+                        mCallback.onSocketRead(Arrays.copyOf(buffer, nRead), mRfcommChannel);
                     } catch (Throwable ex) {
                         LOG.error("Failed to process received bytes in onSocketRead callback: ", ex);
                     }
