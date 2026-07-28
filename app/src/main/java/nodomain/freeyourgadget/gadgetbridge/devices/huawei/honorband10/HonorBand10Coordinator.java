@@ -14,19 +14,18 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-package nodomain.freeyourgadget.gadgetbridge.devices.huawei.honorband7;
+package nodomain.freeyourgadget.gadgetbridge.devices.huawei.honorband10;
 
 import androidx.annotation.NonNull;
 
 import java.util.regex.Pattern;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
-import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiConstants;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiLECoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 
-public class HonorBand7Coordinator extends HuaweiLECoordinator {
+public class HonorBand10Coordinator extends HuaweiLECoordinator {
     @Override
     public boolean isExperimental() {
         // #6027
@@ -40,26 +39,21 @@ public class HonorBand7Coordinator extends HuaweiLECoordinator {
 
     @Override
     protected Pattern getSupportedDeviceName() {
-        return Pattern.compile(HuaweiConstants.HO_BAND7_NAME + ".*", Pattern.CASE_INSENSITIVE);
+        return Pattern.compile(HuaweiConstants.HO_BAND10_NAME + ".*", Pattern.CASE_INSENSITIVE);
     }
 
     @Override
     public int getDeviceNameResource() {
-        return R.string.devicetype_honor_band7;
+        return R.string.devicetype_honor_band10;
     }
 
     @Override
-    public DeviceCoordinator.DeviceKind getDeviceKind(@NonNull GBDevice device) {
-        return DeviceCoordinator.DeviceKind.FITNESS_BAND;
+    public DeviceKind getDeviceKind(@NonNull GBDevice device) {
+        return DeviceKind.FITNESS_BAND;
     }
 
     @Override
     public boolean isNewHonorProtocol() {
         return true;
-    }
-
-    @Override
-    public boolean supportsVO2Max(@NonNull final GBDevice device) {
-        return false;
     }
 }

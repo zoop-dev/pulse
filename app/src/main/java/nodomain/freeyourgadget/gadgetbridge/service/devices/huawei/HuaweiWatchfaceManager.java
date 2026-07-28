@@ -72,6 +72,7 @@ public class HuaweiWatchfaceManager {
             map.put("HNHD02", "368*194");
             map.put("HNHD03", "450*390");
             map.put("HNHD04", "454*454");
+            map.put("HNHD05", "402*256");
             map.put("QXHD01", "402*256");
             map.put("QXHD02", "502*410");
         }

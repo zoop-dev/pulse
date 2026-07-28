@@ -211,6 +211,7 @@ public class BluetoothNameTest extends TestBase {
             put("Galaxy Buds Pro (B352)", DeviceType.GALAXY_BUDS_PRO); // #2642
             put("Redmi Watch 2 Lite 31A5", DeviceType.REDMIWATCH2LITE); // #2637
             put("honor Watch-7EE", DeviceType.HONORMAGICWATCH); // #5816
+            put("HONOR Band 10-DEO", DeviceType.HONORBAND10); // #6027
             put("HUAWEI Band 6-A47", DeviceType.HUAWEIBAND6); // #2569
             put("WATCH Ultimate 2-D96", DeviceType.HUAWEIWATCHULTIMATE2); // matrix
             put("716", DeviceType.FITPRO);

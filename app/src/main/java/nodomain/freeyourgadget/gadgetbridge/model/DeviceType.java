@@ -214,6 +214,8 @@ import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.Amazfit
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitBalanceUltraCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitBipMaxCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.huami.zeppos.watches.AmazfitCheetah2UltraCoordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.honorband10.HonorBand10Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.huawei.honorband9.HonorBand9Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi.watches.MiBand10ProCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.xiaomi_scooters.XiaomiScooter5MaxCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.victron.VictronSmartShuntCoordinator;
@@ -905,6 +907,8 @@ public enum DeviceType {
     HUAWEIBAND7(HuaweiBand7Coordinator.class),
     HONORBAND6(HonorBand6Coordinator.class),
     HONORBAND7(HonorBand7Coordinator.class),
+    HONORBAND9(HonorBand9Coordinator.class),
+    HONORBAND10(HonorBand10Coordinator.class),
     HONORWATCH4(HonorWatch4Coordinator.class),
     HONORMAGICWATCH(HonorMagicWatchCoordinator.class),
     HONORMAGICWATCH2(HonorMagicWatch2Coordinator.class),

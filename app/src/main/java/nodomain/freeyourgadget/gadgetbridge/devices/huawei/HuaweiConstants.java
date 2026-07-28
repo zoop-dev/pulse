@@ -25,6 +25,11 @@ public final class HuaweiConstants {
     public static final UUID UUID_SERVICE_HUAWEI_SERVICE = UUID.fromString(String.format(BASE_UUID, "FE86"));
     public static final UUID UUID_CHARACTERISTIC_HUAWEI_WRITE = UUID.fromString(String.format(BASE_UUID, "FE01"));
     public static final UUID UUID_CHARACTERISTIC_HUAWEI_READ = UUID.fromString(String.format(BASE_UUID, "FE02"));
+
+    public static final UUID UUID_SERVICE_HONOR_SERVICE = UUID.fromString("c5f0ad48-cc27-48fd-9f67-8dc8e8f4a9cb");
+    public static final UUID UUID_CHARACTERISTIC_HONOR_WRITE = UUID.fromString("2a5fc8bd-3de4-43cb-9449-354bcdeccc70");
+    public static final UUID UUID_CHARACTERISTIC_HONOR_READ = UUID.fromString("a563d757-b216-48bc-8a0f-e8dde1f916aa");
+
     public static final UUID UUID_SERVICE_HUAWEI_SDP = UUID.fromString("82FF3820-8411-400C-B85A-55BDB32CF060");
     public static final UUID UUID_SERVICE_HONOR_SDP = UUID.fromString("C9770A18-4C3D-453A-8AAF-D7EC7BBD2785");
 
@@ -50,6 +55,8 @@ public final class HuaweiConstants {
     public static final String HO_BAND5_NAME = "honor band 5-";
     public static final String HO_BAND6_NAME = "honor band 6-";
     public static final String HO_BAND7_NAME = "honor band 7-";
+    public static final String HO_BAND9_NAME = "honor band 9-";
+    public static final String HO_BAND10_NAME = "honor band 10-";
     public static final String HO_MAGICWATCH_NAME = "honor Watch-";
     public static final String HO_MAGICWATCH2_NAME = "honor magicwatch 2-";
     public static final String HO_WATCHGS3_NAME = "honor watch gs 3-";

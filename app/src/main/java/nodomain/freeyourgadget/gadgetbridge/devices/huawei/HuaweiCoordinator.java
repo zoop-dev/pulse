@@ -105,6 +105,10 @@ public abstract class HuaweiCoordinator extends AbstractDeviceCoordinator {
         return true;
     }
 
+    public boolean isNewHonorProtocol() {
+        return false;
+    }
+
     public abstract HuaweiDeviceType getHuaweiType();
 
     @NonNull

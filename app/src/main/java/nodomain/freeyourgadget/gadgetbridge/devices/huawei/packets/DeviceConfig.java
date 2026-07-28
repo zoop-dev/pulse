@@ -1749,7 +1749,9 @@ public class DeviceConfig {
 
             @Override
             public void parseTlv() throws ParseException {
-               this.expandCapabilities = this.tlv.getBytes(0x01);
+                if (this.tlv.contains(0x01)) {
+                    this.expandCapabilities = this.tlv.getBytes(0x01);
+                }
             }
         }
 

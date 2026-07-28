@@ -342,7 +342,11 @@ public class Request {
         if (!this.supportProvider.isBLE()) {
             this.builderBr.write(data);
         } else {
-            this.builderLe.write(HuaweiConstants.UUID_CHARACTERISTIC_HUAWEI_WRITE, data);
+            if (supportProvider.getCoordinator().isNewHonorProtocol()) {
+                this.builderLe.write(HuaweiConstants.UUID_CHARACTERISTIC_HONOR_WRITE, data);
+            } else {
+                this.builderLe.write(HuaweiConstants.UUID_CHARACTERISTIC_HUAWEI_WRITE, data);
+            }
         }
     }
 
