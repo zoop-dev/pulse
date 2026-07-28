@@ -4788,7 +4788,21 @@
     <string name="xiaomi_scooter_battery_serial">电池序列号</string>
     <string name="xiaomi_scooter_bms_fw_version">BMS 固件版本</string>
     <string name="xiaomi_scooter_keep_bluetooth_on_title">蓝牙始终开启</string>
-    <string name="xiaomi_scooter_keep_bluetooth_on_summary">可以在滑板车关闭时找到滑板车。会增加功耗。如电量低于 10% 会自动禁用该功能。如果长时间不用滑板车请禁用该功能。</string>
+    <string name="xiaomi_scooter_keep_bluetooth_on_summary">可以在滑板车关闭时找到滑板车。会增加电量使用。如电量低于 10% 会自动禁用该功能。如果长时间不用滑板车请禁用该功能。</string>
     <string name="wifi_channel_2_4_ghz">Wi-Fi 信道 (2.4 GHz)</string>
     <string name="wifi_channel_5_ghz">Wi-Fi 信道 (5 GHz)</string>
+    <string name="huawei_adaptive_volume_title">自适应音量</string>
+    <string name="huawei_adaptive_volume_summary">根据环境自动调整音量。（增加电量使用）</string>
+    <string name="huawei_extra_media_volume_title">附加的媒体音量</string>
+    <string name="huawei_extra_media_volume_summary">提高最大媒体音量。这可能影响音质。可能伤害听力。</string>
+    <string name="toast_error_could_not_reach_server">连不上 %1$s。</string>
+    <string name="toast_error_server_unreachable">服务器不可达</string>
+    <string name="toast_error_could_not_resolve_host">无法解析服务器地址。检查 URL 和你的连接。</string>
+    <string name="toast_error_connection_refused">服务器拒绝了连接。检查地址和端口。</string>
+    <string name="toast_error_connection_timed_out">连接超时。服务器响应时间太长。</string>
+    <string name="toast_error_tls">服务器连接失败。检查服务器证书。</string>
+    <string name="toast_error_unexpected_response">来自服务器的意外响应。</string>
+    <string name="internet_helper_error_no_internet_helper">此功能需要互联网助手</string>
+    <string name="internet_helper_error_permission">互联网助手没有联网权限</string>
+    <string name="toast_error_invalid_api_key">无效的 API 密钥</string>
 </resources>
