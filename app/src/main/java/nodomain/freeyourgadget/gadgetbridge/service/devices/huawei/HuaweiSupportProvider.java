@@ -1183,7 +1183,7 @@ public class HuaweiSupportProvider {
     }
 
     public void onSocketRead(byte[] data, int channel) {
-        if (channel != 0)
+        if (channel != ResponseManager.MAIN_CHANNEL)
             LOG.debug("Dual channel: received {} bytes on aux socket (channel {}): {}",
                     data.length, channel, GB.hexdump(data));
         responseManager.handleData(data, channel);
