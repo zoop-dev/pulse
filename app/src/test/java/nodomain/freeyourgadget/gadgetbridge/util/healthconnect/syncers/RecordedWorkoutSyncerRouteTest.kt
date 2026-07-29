@@ -84,6 +84,21 @@ class RecordedWorkoutSyncerRouteTest {
     }
 
     @Test
+    fun pointAtExactEndTime_dropped() {
+        val atEnd = ActivityPoint(Date.from(end)).apply {
+            location = GPSCoordinate(13.4, 52.5, GPSCoordinate.UNKNOWN_ALTITUDE)
+        }
+        val route = RecordedWorkoutSyncer.buildSanitisedRoute(
+            listOf(point(1), point(2), atEnd), start, end, device
+        )
+        assertNotNull(route)
+        assertEquals(
+            setOf(start.plusSeconds(1), start.plusSeconds(2)),
+            route!!.route.map { it.time }.toSet()
+        )
+    }
+
+    @Test
     fun nanLatitude_dropped() {
         val route = RecordedWorkoutSyncer.buildSanitisedRoute(
             listOf(point(0, lat = Double.NaN), point(1), point(2)),

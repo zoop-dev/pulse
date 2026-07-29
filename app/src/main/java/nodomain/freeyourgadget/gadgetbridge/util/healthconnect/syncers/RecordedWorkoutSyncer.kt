@@ -364,7 +364,7 @@ internal object RecordedWorkoutSyncer {
                 val time = point.time ?: continue
                 val location = point.location ?: continue
                 val pointInstant = time.toInstant()
-                if (pointInstant.isBefore(workoutStartInstant) || pointInstant.isAfter(workoutEndInstant)) {
+                if (pointInstant.isBefore(workoutStartInstant) || !pointInstant.isBefore(workoutEndInstant)) {
                     droppedOutOfWindow++
                     continue
                 }
