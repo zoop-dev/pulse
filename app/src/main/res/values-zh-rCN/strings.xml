@@ -4805,4 +4805,26 @@
     <string name="internet_helper_error_no_internet_helper">此功能需要互联网助手</string>
     <string name="internet_helper_error_permission">互联网助手没有联网权限</string>
     <string name="toast_error_invalid_api_key">无效的 API 密钥</string>
+    <string name="authentication_settings">身份认证设置</string>
+    <string name="click_here_for_more_information">单击此处获取更多信息。</string>
+    <string name="authentication_expired">身份认证已过期</string>
+    <string name="expiration_notifications_title">过期通知</string>
+    <string name="auth_expiration_notifications_summary">身份认证过期时显示一则通知。</string>
+    <string name="garmin_oauth_expired_description">%1$s 的身份认证已过期，一些功能可能不工作。单击此处获取更多信息。</string>
+    <string name="garmin_auth_expired_activity_description">%1$s 的身份认证令牌已过期， 因此一些功能（比如天气和 AGPS 更新） 可能停止工作，直到用官方 Garmin Connect 应用重新进行身份认证。\n\nGadgetbridge 可以发送虚假的身份认证响应到 Garmin 手表来解决这个问题。如果计划使用官方 Garmin Connect 应用或将手表连接到互联网，请勿启用此功能，因为之后可能需要将手表恢复出厂设置才能重新进行身份验证。</string>
+    <string name="dont_show_again">不再显示</string>
+    <string name="activity_type_e_scooter">电动滑板车</string>
+    <string name="xiaomi_scooter_tire_pressure_title">胎压维护</string>
+    <string name="xiaomi_scooter_tire_pressure_enabled_title">启用了提醒</string>
+    <string name="xiaomi_scooter_tire_pressure_enabled_summary">在滑板车的控制面板上显示图标提醒维护胎压。</string>
+    <string name="xiaomi_scooter_tire_pressure_interval_title">提醒间隔</string>
+    <string name="xiaomi_scooter_tire_pressure_interval_14">14 天</string>
+    <string name="xiaomi_scooter_tire_pressure_interval_30">30 天</string>
+    <string name="xiaomi_scooter_tire_pressure_interval_60">60 天</string>
+    <string name="xiaomi_scooter_tire_pressure_interval_180">180 天</string>
+    <string name="xiaomi_scooter_tire_pressure_remaining_title">剩余天数</string>
+    <string name="xiaomi_scooter_tire_pressure_reset_title">重置提醒</string>
+    <string name="xiaomi_scooter_tire_pressure_reset_summary">单击次按钮重启胎压维护计时器。</string>
+    <string name="xiaomi_scooter_tire_pressure_reset_confirmation">重置胎压维护提醒？</string>
+    <string name="notification_channel_device_warnings">设备警告</string>
 </resources>
