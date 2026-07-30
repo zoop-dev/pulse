@@ -4827,4 +4827,16 @@
     <string name="xiaomi_scooter_tire_pressure_reset_summary">单击次按钮重启胎压维护计时器。</string>
     <string name="xiaomi_scooter_tire_pressure_reset_confirmation">重置胎压维护提醒？</string>
     <string name="notification_channel_device_warnings">设备警告</string>
+    <string name="pref_casio_interval_timer_title">间隔计时器</string>
+    <string name="casio_interval_timer_add">添加计时器</string>
+    <string name="casio_interval_timer_empty">尚无间隔计时器。轻触 + 添加一个。</string>
+    <string name="casio_interval_timer_limit_reached">已达最多 50 个计时器</string>
+    <string name="casio_interval_timer_active">活跃</string>
+    <string name="casio_interval_timer_slot">步骤 %1$d</string>
+    <string name="casio_interval_timer_skip">跳过</string>
+    <string name="casio_interval_timer_repeat">自动重复</string>
+    <string name="casio_interval_timer_default_label">计时器 %1$d</string>
+    <string name="casio_interval_timer_total">总计：%1$s × %2$d = %3$s</string>
+    <string name="permission_navigation_comaps">%1$s 需要读取 CoMaps 导航数据的权限。请轻按\"%2$s\" 转到系统应用设置并启用权限， 然后回到这里再次切换选项。</string>
+    <string name="pref_navigation_app_comaps">CoMaps</string>
 </resources>
