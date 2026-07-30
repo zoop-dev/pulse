@@ -61,6 +61,7 @@ import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -190,7 +191,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         protocolBufferHandler = new ProtocolBufferHandler(this);
         fileTransferHandler = new FileTransferHandler(this);
         filesToDownload = new LinkedList<>();
-        messageHandlers = new ArrayList<>();
+        messageHandlers = new CopyOnWriteArrayList<>();
         notificationsHandler = new NotificationsHandler();
         messageHandlers.add(fileTransferHandler);
         messageHandlers.add(protocolBufferHandler);
