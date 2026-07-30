@@ -952,10 +952,6 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             if (filesToProcess.isEmpty()) {
                 LOG.debug("No pending files to process");
                 finishFileSync();
-
-                // FIXME: This should probably only happen after exploresync also finishes
-                sendOutgoingMessage("set sync complete", new SystemEventMessage(SystemEventMessage.GarminSystemEventType.SYNC_COMPLETE, 0));
-
                 return;
             }
 
@@ -988,6 +984,9 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
      */
     @VisibleForTesting
     void finishFileSync() {
+        // FIXME: This should probably only happen after exploresync also finishes
+        sendOutgoingMessage("set sync complete", new SystemEventMessage(SystemEventMessage.GarminSystemEventType.SYNC_COMPLETE, 0));
+
         getDevice().unsetBusyTask();
         GB.signalActivityDataFinish(getDevice());
         transferNotification.finish();
