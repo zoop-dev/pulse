@@ -2,40 +2,70 @@
 
 #### Next release (WIP)
 
-* Initial support for AK102 (TopStep / FitCloud)
+* Initial support for AK75 Pro, AK86, AK102 (TopStep / FitCloud)
+* Initial support for DM58 (GloryFit Pro)
 * Initial support for Garmin Forerunner 170 Music
 * Initial support for Haylou S35 ANC
 * Initial support for HUAWEI FreeClip 2
+* Initial support for MoYoung L70
+* Initial support for Ollee Watch One
 * Initial support for Soundcore Life Tune XR
 * Experimental support for Amazfit Balance 3, Balance Ultra, Bip Max, Cheetah 2 Ultra
 * Experimental support for BM6 Battery Monitor
 * Experimental support for Garmin Fenix 5S Plus
+* Experimental support for Honor Band 7, 9, 10
+* Experimental support for Xiaomi Scooter 5 Max
 * Add cumulative calories daily chart
-* Add Quick Settings tiles for some device
+* Add Quick Settings tiles for some device (AAWireless, Sinilink, Shokz, Sony Headphones)
 * Amazfit Active 3 Premium: Fix map upload via Bluetooth
+* Bangle.js: Support notification actions
+* Casio GBD-200: Add world time / world clocks support
+* Casio GBD-200: Add world time / world clocks support
+* Casio GBD-200: Improve activity session sync
+* Casio: Fix notifications with long unicode text
+* Casio: Fix notifications with long unicode text
+* Charts: Respect unit preferences
+* Charts: Use activity-specific units for charts
+* CoMaps: Add support for navigation instructions
 * Debug: Randomize test weather
 * Endurain: Upload workout photos
 * FIT Export: Add local timestamp, distance, elevation, step length
 * Fix crash when opening map view
 * Garmin HRM Pro+: Improved connection support
 * Garmin: Add point winds support
+* Garmin: Display notification on OAuth expiration
+* Garmin: Fix activity sync signal
 * Garmin: Fix crash on number parsing
 * Garmin: Fix crash when Bluetooth is disconnected
+* Garmin: Fix race condition on some devices
+* Health Connect: Fix sleep sessions written with truncated stages
 * Health Connect: Fix sleep sync being cut off on some devices
+* Health Connect: Fix sync of GPS route for some devices
 * Health Connect: Fix sync of very long GPS routes
+* HUAWEI FreeClip 2: Add adaptive volume, extra media volume
+* HUAWEI FreeClip 2: Add find headphones
+* HUAWEI FreeClip 2: Add low Latency mode
+* Huawei: Add per-sample workout metrics (HR, speed, cadence, altitude) into activity track
 * Huawei: Basic support for offline maps
 * Huawei: GPS track uploading
 * Huawei: Improved calendar sync
+* InfiniTime: Add navigation competion percentage and more icons
+* Internet Helper: Improved error feedback
 * Mi Band 9 Active: Fix activity summary parsing
+* Pebble: Add support for Weather Land and Love Weather watchfaces
 * Prevent multiple find phone activities from being opened
+* Recognize "Google Messages" as SMS app
+* SoFlow: Update icon and device kind to scooter
 * Sony WH-ULT900N: Enable more features
 * Soundcore Sport X20: Extend functionality
+* Withings: Improved connection flow control
 * Workouts: Add function to set header photo
 * Xiaomi-protobuf: Add dynamic vibration pattern configuration screen
 * Xiaomi-protobuf: Improve daily summary parsing
 * Xiaomi-protobuf: Improve workout summary parsing
 * Xiaomi-protobuf: Parse workout details
 * Yawell Rings: Fix temperature sync to Health Connect
+* Zepp OS: Fix temperature and distance units
 
 #### 0.92.2
 
