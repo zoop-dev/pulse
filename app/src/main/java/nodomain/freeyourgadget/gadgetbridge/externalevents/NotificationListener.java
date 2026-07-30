@@ -1188,6 +1188,7 @@ public class NotificationListener extends NotificationListenerService {
                 source.equals("com.android.mms") ||
                 source.equals("com.sonyericsson.conversations") ||
                 source.equals("com.android.messaging") ||
+                source.equals("com.google.android.apps.messaging") ||
                 source.equals("org.smssecure.smssecure") ||
                 source.equals("org.fossify.messages") ||
                 source.equals("com.goodwy.smsmessenger") ||
