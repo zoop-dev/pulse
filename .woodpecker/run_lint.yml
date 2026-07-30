@@ -1,9 +1,13 @@
 steps:
   lint:
-    image: codeberg.org/freeyourgadget/android-fdroid-tools:36.0.0-androguard-4.1.2-java-21
+    image: codeberg.org/freeyourgadget/android-fdroid-tools:37.0.0-0
     commands:
       - pwd #bump
       - ./gradlew lint
+    environment:
+      # Explicitly enable filesystem watch, reduces build time by 1m30s
+      # https://stackoverflow.com/questions/71559269/why-does-gradle-initializing-sometimes-take-very-long
+      GRADLE_OPTS: "-Dorg.gradle.vfs.watch=true"
 
 #when:
 #repo: Freeyourgadget/Gadgetbridge
