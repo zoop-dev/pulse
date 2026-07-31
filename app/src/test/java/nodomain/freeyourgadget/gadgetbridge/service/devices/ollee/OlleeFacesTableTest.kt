@@ -16,212 +16,115 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>. */
 package nodomain.freeyourgadget.gadgetbridge.service.devices.ollee
 
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.junit.Assert.*
 
 class OlleeFacesTableTest {
 
-    private fun String.hexToByteArray(): ByteArray {
-        require(length % 2 == 0) { "Hex string must have even length" }
-        return ByteArray(length / 2) { i ->
-            substring(i * 2, i * 2 + 2).toInt(16).toByte()
-        }
-    }
+    private fun String.hex(): ByteArray =
+        ByteArray(length / 2) { substring(it * 2, it * 2 + 2).toInt(16).toByte() }
 
-    private fun ByteArray.toHex(): String = joinToString("") { "%02x".format(it) }
+    /** Verbatim readback from the Ollee Copper, 2026-07-30: 17 faces, all shown, Timer starred. */
+    private val live = (
+        "040000000000" +
+            "050100010001" + "060100010002" + "070100010003" + "080100010011" +
+            "090100010104" + "0A0100010005" + "0B0100010008" + "0C0100010009" +
+            "0D010001000A" + "0E010001000B" + "0F010001000C" + "10010001000D" +
+            "11010001000F" + "12010001000E" + "130100010007" + "140100010006" +
+            "150100010010"
+        ).hex()
 
-    /**
-     * Builds a full 14-record faces table. Slot->ID: 01=05 02=07 03=09 04=11 05=06 06=0D 07=08
-     * 08=0E 09=0A 0A=0B 0B=0C 0C=0F 0D=10 0E=12. [unknownByteForId] overrides the ?? byte (default 0).
-     */
-    private fun buildFacesPayload(
-        enabledIds: Set<Int> = emptySet(),
-        unknownByteForId: Map<Int, Int> = emptyMap()
-    ): ByteArray {
-        val payload = mutableListOf<Byte>()
-
-        // 6-byte header
-        payload.add(0x04)
-        payload.add(0x00)
-        payload.add(0x00)
-        payload.add(0x00)
-        payload.add(0x00)
-        payload.add(0x00)
-
-        // Slot to (ID, slot) mapping
-        val slotToId = mapOf(
-            0x01 to 0x05,
-            0x02 to 0x07,
-            0x03 to 0x09,
-            0x04 to 0x11,
-            0x05 to 0x06,
-            0x06 to 0x0D,
-            0x07 to 0x08,
-            0x08 to 0x0E,
-            0x09 to 0x0A,
-            0x0A to 0x0B,
-            0x0B to 0x0C,
-            0x0C to 0x0F,
-            0x0D to 0x10,
-            0x0E to 0x12
-        )
-
-        // 14 records in slot order
-        for (slot in 0x01..0x0E) {
-            val faceId = slotToId[slot] ?: error("Unknown slot $slot")
-            val enabled = if (enabledIds.contains(faceId)) 0x01 else 0x00
-            val unknownByte = unknownByteForId[faceId] ?: 0x00
-
-            payload.add(faceId.toByte())
-            payload.add(0x01)
-            payload.add(enabled.toByte())
-            payload.add(0x01)
-            payload.add(unknownByte.toByte())
-            payload.add(slot.toByte())
-        }
-
-        return payload.toByteArray()
-    }
-
-    // Test 1: Build full 14-record table payload
     @Test
-    fun buildFacesPayloadCreates14Records() {
-        val payload = buildFacesPayload()
-        // 6-byte header + 14 * 6-byte records = 90 bytes
-        assertEquals(90, payload.size)
+    fun parsesSeventeenRecords() {
+        assertEquals(108, live.size)
+        assertEquals(17, OlleeFacesTable.parse(live).size)
     }
 
-    // Test 2: withFaceEnabled flips exactly one byte for ID 0x06 (World Time)
     @Test
-    fun withFaceEnabledFlipsExactlyOneByte() {
-        val payload = buildFacesPayload(
-            enabledIds = setOf(0x0B), // Temperature enabled
-            unknownByteForId = mapOf(0x0B to 0x2A) // Mark World Time's ?? byte as 0x2A
-        )
-        // Slot 5 is ID 0x06 (World Time), currently disabled
-        val result = OlleeFacesTable.withFaceEnabled(payload, 0x06, true)
-
-        // Check length is unchanged
-        assertEquals(payload.size, result.size)
-
-        // Find the World Time record (slot 5)
-        // Header is 6 bytes, then records start. Slot 5 is the 5th record (index 4)
-        val recordOffset = 6 + 4 * 6 // bytes into payload
-        val enabledByteOffset = recordOffset + 2
-
-        // The enabled byte should have flipped from 0x00 to 0x01
-        assertEquals(0x00.toByte(), payload[enabledByteOffset])
-        assertEquals(0x01.toByte(), result[enabledByteOffset])
-
-        // All other bytes should be identical
-        for (i in payload.indices) {
-            if (i != enabledByteOffset) {
-                assertEquals(
-                    "Byte at index $i differs",
-                    payload[i], result[i]
-                )
-            }
-        }
+    fun allFacesAreEnabledInTheLiveTable() {
+        // Byte 2 is 0 on every record and the vendor app showed every face switched ON, which is
+        // what proves byte 2 means "hidden" rather than "enabled".
+        assertTrue(OlleeFacesTable.parse(live).all { it.enabled })
     }
 
-    // Test 3: withFaceEnabled on already-enabled face returns content-equal payload
     @Test
-    fun withFaceEnabledAlreadyEnabledReturnsSameContent() {
-        val payload = buildFacesPayload(enabledIds = setOf(0x06)) // World Time already enabled
-        val result = OlleeFacesTable.withFaceEnabled(payload, 0x06, true)
-
-        // Should be equal in content
-        assertArrayEquals(payload, result)
+    fun onlyTimerIsStarred() {
+        val starred = OlleeFacesTable.parse(live).filter { it.starred }.map { it.id }
+        assertEquals(listOf(0x09), starred)
     }
 
-    // Test 4: isFaceEnabled reflects the ENABLED byte
     @Test
-    fun isFaceEnabledReflectsEnabledByte() {
-        val payload = buildFacesPayload(
-            enabledIds = setOf(0x06) // World Time enabled
-        )
-
-        assertTrue("World Time (0x06) should be enabled", OlleeFacesTable.isFaceEnabled(payload, 0x06)!!)
-        assertFalse("Temperature (0x0B) should be disabled", OlleeFacesTable.isFaceEnabled(payload, 0x0B)!!)
+    fun slotOrderIsNotPayloadOrder() {
+        // Records are laid out by ID, but Set Clock (0x08) sits at the last display slot. The two
+        // disagreeing is what identifies byte 5 as the display order.
+        val faces = OlleeFacesTable.parse(live)
+        assertEquals(listOf(5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21),
+            faces.map { it.id })
+        assertEquals(17, OlleeFacesTable.slotOf(live, 0x08))
+        assertEquals(4, OlleeFacesTable.slotOf(live, 0x09))
     }
 
-    // Test 5: isFaceEnabled returns null for unknown ID
     @Test
-    fun isFaceEnabledReturnsNullForUnknownId() {
-        val payload = buildFacesPayload()
-        val result = OlleeFacesTable.isFaceEnabled(payload, 0x42)
-        assertNull("Unknown ID 0x42 should return null", result)
+    fun disablingWritesOneToTheHiddenByte() {
+        // Hardware 2026-07-30: turning Flashlight (0x0E) off in the vendor app produced a frame
+        // whose only change was this byte going 0 -> 1.
+        val result = OlleeFacesTable.withFaceEnabled(live, 0x0E, false)
+        assertEquals(1, result[6 + 6 * 9 + 2].toInt())
+        assertFalse(OlleeFacesTable.isFaceEnabled(result, 0x0E)!!)
+        assertTrue(OlleeFacesTable.isFaceEnabled(result, 0x0F)!!)
     }
 
-    // Test 6: isFaceEnabled returns null for too-short payload
     @Test
-    fun isFaceEnabledReturnsNullForTooShortPayload() {
-        val tooShort = byteArrayOf(0x04, 0x00, 0x00)
-        val result = OlleeFacesTable.isFaceEnabled(tooShort, 0x06)
-        assertNull("Too-short payload should return null", result)
+    fun enablingWritesZeroToTheHiddenByte() {
+        val hidden = OlleeFacesTable.withFaceEnabled(live, 0x0E, false)
+        val shown = OlleeFacesTable.withFaceEnabled(hidden, 0x0E, true)
+        assertTrue(OlleeFacesTable.isFaceEnabled(shown, 0x0E)!!)
+        assertArrayEqualsIgnoringNothing(live, shown)
     }
 
-    // Test 7: The ?? byte survives withFaceEnabled
     @Test
-    fun unknownBytePreservedOnWithFaceEnabled() {
-        val payload = buildFacesPayload(
-            enabledIds = setOf(0x0A), // Step Counter enabled, World Time disabled
-            unknownByteForId = mapOf(0x06 to 0x2A, 0x0A to 0x3B) // Different ?? bytes
-        )
-
-        // Flip World Time (0x06) to enabled
-        val result = OlleeFacesTable.withFaceEnabled(payload, 0x06, true)
-
-        // Find World Time record (slot 5, record index 4)
-        val recordOffset = 6 + 4 * 6
-        val unknownByteOffset = recordOffset + 4
-
-        // The ?? byte (0x2A) should be preserved
-        assertEquals(0x2A.toByte(), payload[unknownByteOffset])
-        assertEquals(0x2A.toByte(), result[unknownByteOffset])
-
-        // Also verify Step Counter's ?? byte is untouched
-        // Slot 9 is record index 8
-        val stepCounterRecordOffset = 6 + 8 * 6
-        val stepCounterUnknownOffset = stepCounterRecordOffset + 4
-        assertEquals(0x3B.toByte(), result[stepCounterUnknownOffset])
+    fun starringIsIndependentPerFace() {
+        // Starring Alarm while Timer was starred produced a frame with byte 4 set on both, so the
+        // star is not a single mutually-exclusive selection.
+        val both = OlleeFacesTable.withFaceStarred(live, 0x05, true)
+        assertTrue(OlleeFacesTable.isFaceStarred(both, 0x05)!!)
+        assertTrue(OlleeFacesTable.isFaceStarred(both, 0x09)!!)
     }
 
-    // Test 8: withFaceEnabled disabling a face
     @Test
-    fun withFaceEnabledDisablingFace() {
-        val payload = buildFacesPayload(enabledIds = setOf(0x06, 0x0B)) // Both enabled
-        val result = OlleeFacesTable.withFaceEnabled(payload, 0x06, false)
-
-        // World Time should be disabled in result
-        assertFalse("World Time should be disabled", OlleeFacesTable.isFaceEnabled(result, 0x06)!!)
-        // Temperature should still be enabled
-        assertTrue("Temperature should still be enabled", OlleeFacesTable.isFaceEnabled(result, 0x0B)!!)
+    fun reorderRenumbersSlotsFromOne() {
+        val result = OlleeFacesTable.withOrder(live, listOf(0x09, 0x06, 0x05))
+        assertEquals(1, OlleeFacesTable.slotOf(result, 0x09))
+        assertEquals(2, OlleeFacesTable.slotOf(result, 0x06))
+        assertEquals(3, OlleeFacesTable.slotOf(result, 0x05))
     }
 
-    // Test 9: Trailing partial record is tolerated (payload with < 6 bytes at end)
     @Test
-    fun trailingPartialRecordTolerated() {
-        val fullPayload = buildFacesPayload(enabledIds = setOf(0x06))
-        // Remove last 3 bytes from last record
-        val truncated = fullPayload.copyOfRange(0, fullPayload.size - 3)
-
-        // isFaceEnabled should still work on earlier records
-        assertTrue(OlleeFacesTable.isFaceEnabled(truncated, 0x06)!!)
-
-        // Attempting to query a face in the truncated record should return null
-        // (because it can't be found completely)
-        val result = OlleeFacesTable.isFaceEnabled(truncated, 0x12) // Game C (slot 0E, last record)
-        assertNull("Incomplete record for Game C should return null", result)
+    fun facesOmittedFromAReorderKeepTheirSlot() {
+        // A partial list must not blank the rest of the table.
+        val result = OlleeFacesTable.withOrder(live, listOf(0x09))
+        assertEquals(17, OlleeFacesTable.slotOf(result, 0x08))
+        assertEquals(5, OlleeFacesTable.slotOf(result, 0x0A))
     }
 
-    // Test 10: withFaceEnabled on unknown face returns payload unchanged
     @Test
-    fun withFaceEnabledUnknownFaceReturnsUnchanged() {
-        val payload = buildFacesPayload(enabledIds = setOf(0x06))
-        val result = OlleeFacesTable.withFaceEnabled(payload, 0x42, true)
+    fun unknownFaceLeavesThePayloadUntouched() {
+        val result = OlleeFacesTable.withFaceEnabled(live, 0x42, false)
+        assertArrayEqualsIgnoringNothing(live, result)
+        assertNull(OlleeFacesTable.isFaceEnabled(live, 0x42))
+    }
 
-        // Content should be identical (no change)
-        assertArrayEquals(payload, result)
+    @Test
+    fun aTruncatedRecordIsIgnoredRatherThanCrashing() {
+        val truncated = live.copyOf(live.size - 3)
+        assertEquals(16, OlleeFacesTable.parse(truncated).size)
+        assertNull(OlleeFacesTable.isFaceEnabled(truncated, 0x15))
+    }
+
+    private fun assertArrayEqualsIgnoringNothing(expected: ByteArray, actual: ByteArray) {
+        assertEquals(expected.toList(), actual.toList())
     }
 }

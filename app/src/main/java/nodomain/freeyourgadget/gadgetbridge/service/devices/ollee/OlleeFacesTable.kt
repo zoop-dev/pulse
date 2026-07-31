@@ -17,57 +17,88 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.ollee
 
 /**
- * 02 37 read / 02 36 write faces table: header then 6-byte records [ID, 01, ENABLED, 01, ??, SLOT].
- * Read-modify-write helper: parse a read-back payload, flip one face's ENABLED byte, write back.
+ * 02 37 read / 02 36 write faces table: 6-byte header then 6-byte records
+ * `[ID, 01, HIDDEN, 01, STARRED, SLOT]`. Read-modify-write: parse a readback, change one field,
+ * write the whole table back. Decoded from a live readback and vendor-app writes 2026-07-30.
  */
 object OlleeFacesTable {
 
     private const val HEADER_SIZE = 6
     private const val RECORD_SIZE = 6
     private const val RECORD_ID_INDEX = 0
-    private const val RECORD_ENABLED_INDEX = 2
+
+    /** 1 means the face is hidden, so enabled is the *absence* of this byte. Do not invert. */
+    private const val RECORD_HIDDEN_INDEX = 2
+
+    /** Marks a face as a Favorite-glance target. Any number of faces may carry it. */
+    private const val RECORD_STARRED_INDEX = 4
+
+    /** Display position, 1-based. Independent of the record's position in the payload. */
+    private const val RECORD_SLOT_INDEX = 5
+
+    data class Face(val id: Int, val enabled: Boolean, val starred: Boolean, val slot: Int)
+
+    /** Every record in the table, in payload order (which is by ID, not by slot). */
+    fun parse(payload: ByteArray): List<Face> {
+        val faces = mutableListOf<Face>()
+        var offset = HEADER_SIZE
+        while (offset + RECORD_SIZE <= payload.size) {
+            faces.add(
+                Face(
+                    id = payload[offset + RECORD_ID_INDEX].toInt() and 0xFF,
+                    enabled = payload[offset + RECORD_HIDDEN_INDEX].toInt() and 0xFF == 0,
+                    starred = payload[offset + RECORD_STARRED_INDEX].toInt() and 0xFF != 0,
+                    slot = payload[offset + RECORD_SLOT_INDEX].toInt() and 0xFF
+                )
+            )
+            offset += RECORD_SIZE
+        }
+        return faces
+    }
+
+    /** Copy of [payload] with [faceId]'s hidden byte set so the face is [enabled]. */
+    fun withFaceEnabled(payload: ByteArray, faceId: Int, enabled: Boolean): ByteArray =
+        withByte(payload, faceId, RECORD_HIDDEN_INDEX, if (enabled) 0x00 else 0x01)
+
+    /** Copy of [payload] with [faceId] marked as a Favorite-glance target or not. */
+    fun withFaceStarred(payload: ByteArray, faceId: Int, starred: Boolean): ByteArray =
+        withByte(payload, faceId, RECORD_STARRED_INDEX, if (starred) 0x01 else 0x00)
+
+    /** Copy of [payload] with [faceId] moved to 1-based display position [slot]. */
+    fun withFaceSlot(payload: ByteArray, faceId: Int, slot: Int): ByteArray =
+        withByte(payload, faceId, RECORD_SLOT_INDEX, slot)
 
     /**
-     * Copy of [getFacesReplyPayload] (from a 02 37 read) with [faceId]'s ENABLED byte set to
-     * [enabled]; all other bytes identical. Returned unchanged if [faceId] has no record.
+     * Copy of [payload] with slots renumbered so the faces appear in [orderedIds]. IDs missing from
+     * the list keep their existing slot, so a partial list cannot silently blank the rest.
      */
-    fun withFaceEnabled(getFacesReplyPayload: ByteArray, faceId: Int, enabled: Boolean): ByteArray {
-        val enabledByte = if (enabled) 0x01.toByte() else 0x00.toByte()
+    fun withOrder(payload: ByteArray, orderedIds: List<Int>): ByteArray {
+        var result = payload
+        orderedIds.forEachIndexed { index, faceId ->
+            result = withFaceSlot(result, faceId, index + 1)
+        }
+        return result
+    }
 
-        // Start with a copy of the payload
-        val result = getFacesReplyPayload.copyOf()
+    fun isFaceEnabled(payload: ByteArray, faceId: Int): Boolean? =
+        parse(payload).firstOrNull { it.id == faceId }?.enabled
 
-        // Iterate through records starting after the 6-byte header
+    fun isFaceStarred(payload: ByteArray, faceId: Int): Boolean? =
+        parse(payload).firstOrNull { it.id == faceId }?.starred
+
+    fun slotOf(payload: ByteArray, faceId: Int): Int? =
+        parse(payload).firstOrNull { it.id == faceId }?.slot
+
+    private fun withByte(payload: ByteArray, faceId: Int, index: Int, value: Int): ByteArray {
+        val result = payload.copyOf()
         var offset = HEADER_SIZE
         while (offset + RECORD_SIZE <= result.size) {
-            val recordId = result[offset + RECORD_ID_INDEX].toInt() and 0xFF
-            if (recordId == faceId) {
-                // Found the matching record; flip the ENABLED byte
-                result[offset + RECORD_ENABLED_INDEX] = enabledByte
+            if (result[offset + RECORD_ID_INDEX].toInt() and 0xFF == faceId) {
+                result[offset + index] = value.toByte()
                 return result
             }
             offset += RECORD_SIZE
         }
-
-        // Face not found; return the payload unchanged
         return result
-    }
-
-    /** ENABLED state of [faceId] in a 02 37 payload; null if no record or payload too short. */
-    fun isFaceEnabled(getFacesReplyPayload: ByteArray, faceId: Int): Boolean? {
-        // Iterate through records starting after the 6-byte header
-        var offset = HEADER_SIZE
-        while (offset + RECORD_SIZE <= getFacesReplyPayload.size) {
-            val recordId = getFacesReplyPayload[offset + RECORD_ID_INDEX].toInt() and 0xFF
-            if (recordId == faceId) {
-                // Found the matching record; read the ENABLED byte
-                val enabledByte = getFacesReplyPayload[offset + RECORD_ENABLED_INDEX].toInt() and 0xFF
-                return enabledByte != 0x00
-            }
-            offset += RECORD_SIZE
-        }
-
-        // Face not found (either unknown ID or incomplete record); return null
-        return null
     }
 }

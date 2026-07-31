@@ -143,7 +143,8 @@ class OlleeDeviceSupport : AbstractBTLESingleDeviceSupport(LOG) {
                 if (initReadChain) sendRead("faces table", OlleeConstants.TARGET_GET_FACES)
             }
             OlleeConstants.TARGET_GET_FACES + OlleeConstants.RESPONSE_TARGET_OFFSET -> {
-                LOG.debug("Faces table readback ({} bytes)", frame.payload.size)
+                LOG.debug("Faces table readback ({} bytes): {}", frame.payload.size, GB.hexdump(frame.payload))
+                logFacesRecords(frame.payload)
                 lastFacesReadback = frame.payload
                 initReadChain = false
             }
@@ -154,6 +155,19 @@ class OlleeDeviceSupport : AbstractBTLESingleDeviceSupport(LOG) {
             OlleeConstants.TARGET_ACTIVITY_COMMIT + OlleeConstants.RESPONSE_TARGET_OFFSET ->
                 LOG.debug("Activity commit acknowledged") // not sent by current firmware
             else -> LOG.debug("Unhandled Ollee frame 0x{}", Integer.toHexString(frame.target))
+        }
+    }
+
+    /** Byte 4 is still unidentified; logging it per record is how we find out what it means. */
+    private fun logFacesRecords(payload: ByteArray) {
+        var offset = 6
+        while (offset + 6 <= payload.size) {
+            fun at(i: Int) = payload[offset + i].toInt() and 0xFF
+            LOG.debug(
+                "Face id=0x{} b1={} enabled={} b3={} unknown4={} slot={}",
+                Integer.toHexString(at(0)), at(1), at(2), at(3), at(4), at(5)
+            )
+            offset += 6
         }
     }
 
