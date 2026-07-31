@@ -129,8 +129,6 @@ public class BloodPressureChartFragment extends AbstractChartFragment<BloodPress
         int endTs = startTs + 24 * 60 * 60 - 1;
         tsTranslation = new TimestampTranslation();
         tsTranslation.shorten(startTs);
-        String formattedDate = new SimpleDateFormat("E, MMM dd", Locale.getDefault()).format(chartsHost.getEndDate());
-        mDateView.setText(formattedDate);
         return fetchBloodPressureData(db, device, startTs, endTs);
     }
 

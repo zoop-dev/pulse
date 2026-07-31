@@ -122,11 +122,11 @@ public class RespiratoryRatePeriodFragment extends RespiratoryRateFragment<Respi
     protected RespiratoryRateData refreshInBackground(ChartsHost chartsHost, DBHandler db, GBDevice device) {
         Calendar day = Calendar.getInstance();
         Date to = new Date((long) this.getTSEnd() * 1000);
-        mDateView.setText(DateTimeUtils.formatDaysUntil(TOTAL_DAYS, getTSEnd()));
+        final String formattedDate = DateTimeUtils.formatDaysUntil(TOTAL_DAYS, getTSEnd());
 
         day.setTime(to);
         List<RespiratoryRateDay> respiratoryRateDaysData = getMyRespiratoryRateDaysData(db, day, device);
-        return new RespiratoryRateData(respiratoryRateDaysData);
+        return new RespiratoryRateData(respiratoryRateDaysData, formattedDate);
     }
 
     protected LineDataSet createDataSet(final List<Entry> values, String label, int color) {
@@ -148,6 +148,7 @@ public class RespiratoryRatePeriodFragment extends RespiratoryRateFragment<Respi
     @Override
     protected void updateChartsnUIThread(RespiratoryRateData respiratoryRateData) {
         respiratoryRateChart.setData(null);
+        mDateView.setText(respiratoryRateData.formattedDate);
         final String emptyValue = requireContext().getString(R.string.stats_empty_value);
         sleepAvg.setText(respiratoryRateData.sleepRateAvg > 0 ? String.valueOf(respiratoryRateData.sleepRateAvg) : emptyValue);
         awakeAvg.setText(respiratoryRateData.awakeRateAvg > 0 ? String.valueOf(respiratoryRateData.awakeRateAvg) : emptyValue);
@@ -212,9 +213,11 @@ public class RespiratoryRatePeriodFragment extends RespiratoryRateFragment<Respi
         List<RespiratoryRateDay> days;
         int awakeRateAvg;
         int sleepRateAvg;
+        final String formattedDate;
 
-        protected RespiratoryRateData(List<RespiratoryRateDay> days) {
+        protected RespiratoryRateData(List<RespiratoryRateDay> days, String formattedDate) {
             this.days = days;
+            this.formattedDate = formattedDate;
             int awakeTotal = 0;
             int sleepTotal = 0;
             int awakeCounter = 0;

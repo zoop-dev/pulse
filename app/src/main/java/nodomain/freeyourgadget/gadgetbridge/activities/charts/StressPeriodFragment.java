@@ -64,7 +64,6 @@ public class StressPeriodFragment extends StressFragment<StressPeriodFragment.My
     protected static final Logger LOG = LoggerFactory.getLogger(StressPeriodFragment.class);
 
     protected int TOTAL_DAYS = getRangeDays();
-    protected int TOTAL_DAYS_FOR_AVERAGE = 0;
 
     private TextView relaxedStressTimeText;
     private TextView mildStressTimeText;
@@ -74,8 +73,6 @@ public class StressPeriodFragment extends StressFragment<StressPeriodFragment.My
     private PieChart mStressLevelsPieChart;
     private BarChart mWeekChart;
 
-    private MyStressWeeklyData myStressWeeklyData;
-    private boolean showStressLevelInPercents = false;
     protected Locale mLocale;
 
     public static StressPeriodFragment newInstance(int totalDays) {
@@ -121,10 +118,10 @@ public class StressPeriodFragment extends StressFragment<StressPeriodFragment.My
     protected MyChartsData refreshInBackground(ChartsHost chartsHost, DBHandler db, GBDevice device) {
         Calendar day = Calendar.getInstance();
         day.setTime(chartsHost.getEndDate());
-        DefaultChartsData<BarData> weekBeforeData = refreshWeekBeforeStressData(db, mWeekChart, day, device);
-        myStressWeeklyData = getMyStressWeeklyData(db, day, device);
+        DefaultChartsData<BarData> weekBeforeData = refreshWeekBeforeStressData(db, day, device);
+        MyStressWeeklyData stressWeeklyData = getMyStressWeeklyData(db, day, device);
 
-        return new MyChartsData(weekBeforeData);
+        return new MyChartsData(weekBeforeData, stressWeeklyData);
     }
 
     @Override
@@ -136,36 +133,36 @@ public class StressPeriodFragment extends StressFragment<StressPeriodFragment.My
         mWeekChart.getXAxis().setValueFormatter(mcd.getWeekBeforeData().getXValueFormatter());
         mWeekChart.getBarData().setValueTextSize(10f);
 
-        updatePieChart();
-        updateStressTimeTexts();
+        updatePieChart(mcd.getStressWeeklyData());
+        updateStressTimeTexts(mcd.getStressWeeklyData());
 
         stressDatesText.setText(DateTimeUtils.formatDaysUntil(TOTAL_DAYS, getTSEnd()));
     }
 
-    private void updatePieChart() {
+    private void updatePieChart(final MyStressWeeklyData stressWeeklyData) {
         List<PieEntry> pieEntries = new ArrayList<>();
         List<Integer> pieColors = new ArrayList<>();
 
-        if (TOTAL_DAYS_FOR_AVERAGE > 0 && myStressWeeklyData != null) {
-            long totalTime = myStressWeeklyData.totalStressTime();
+        if (stressWeeklyData.totalDaysForAverage() > 0) {
+            long totalTime = stressWeeklyData.totalStressTime();
             if (totalTime > 0) {
-                if (myStressWeeklyData.totalRelaxed() > 0) {
-                    pieEntries.add(new PieEntry(myStressWeeklyData.totalRelaxed(),
+                if (stressWeeklyData.totalRelaxed() > 0) {
+                    pieEntries.add(new PieEntry(stressWeeklyData.totalRelaxed(),
                             StressType.RELAXED.getLabel(getContext())));
                     pieColors.add(StressType.RELAXED.getColor(getContext()));
                 }
-                if (myStressWeeklyData.totalMild() > 0) {
-                    pieEntries.add(new PieEntry(myStressWeeklyData.totalMild(),
+                if (stressWeeklyData.totalMild() > 0) {
+                    pieEntries.add(new PieEntry(stressWeeklyData.totalMild(),
                             StressType.MILD.getLabel(getContext())));
                     pieColors.add(StressType.MILD.getColor(getContext()));
                 }
-                if (myStressWeeklyData.totalModerate() > 0) {
-                    pieEntries.add(new PieEntry(myStressWeeklyData.totalModerate(),
+                if (stressWeeklyData.totalModerate() > 0) {
+                    pieEntries.add(new PieEntry(stressWeeklyData.totalModerate(),
                             StressType.MODERATE.getLabel(getContext())));
                     pieColors.add(StressType.MODERATE.getColor(getContext()));
                 }
-                if (myStressWeeklyData.totalHigh() > 0) {
-                    pieEntries.add(new PieEntry(myStressWeeklyData.totalHigh(),
+                if (stressWeeklyData.totalHigh() > 0) {
+                    pieEntries.add(new PieEntry(stressWeeklyData.totalHigh(),
                             StressType.HIGH.getLabel(getContext())));
                     pieColors.add(StressType.HIGH.getColor(getContext()));
                 }
@@ -190,8 +187,8 @@ public class StressPeriodFragment extends StressFragment<StressPeriodFragment.My
         mStressLevelsPieChart.setData(pieData);
 
         // Set center text with average stress level
-        if (myStressWeeklyData != null && myStressWeeklyData.averageStress() > 0) {
-            int avgStress = myStressWeeklyData.averageStress();
+        if (stressWeeklyData.averageStress() > 0) {
+            int avgStress = stressWeeklyData.averageStress();
             int noc = String.valueOf(avgStress).length();
             SpannableString centerText = new SpannableString(avgStress + "\n" +
                     getContext().getString(R.string.stress_average));
@@ -207,14 +204,14 @@ public class StressPeriodFragment extends StressFragment<StressPeriodFragment.My
         }
     }
 
-    private void updateStressTimeTexts() {
-        if (TOTAL_DAYS_FOR_AVERAGE > 0 && myStressWeeklyData != null) {
-            int relaxedAvg = (int) (myStressWeeklyData.totalRelaxed() / TOTAL_DAYS_FOR_AVERAGE);
-            int mildAvg = (int) (myStressWeeklyData.totalMild() / TOTAL_DAYS_FOR_AVERAGE);
-            int moderateAvg = (int) (myStressWeeklyData.totalModerate() / TOTAL_DAYS_FOR_AVERAGE);
-            int highAvg = (int) (myStressWeeklyData.totalHigh() / TOTAL_DAYS_FOR_AVERAGE);
+    private void updateStressTimeTexts(final MyStressWeeklyData stressWeeklyData) {
+        if (stressWeeklyData.totalDaysForAverage() > 0) {
+            int relaxedAvg = (int) (stressWeeklyData.totalRelaxed() / stressWeeklyData.totalDaysForAverage());
+            int mildAvg = (int) (stressWeeklyData.totalMild() / stressWeeklyData.totalDaysForAverage());
+            int moderateAvg = (int) (stressWeeklyData.totalModerate() / stressWeeklyData.totalDaysForAverage());
+            int highAvg = (int) (stressWeeklyData.totalHigh() / stressWeeklyData.totalDaysForAverage());
 
-            if (showStressLevelInPercents) {
+            if (stressWeeklyData.showStressLevelInPercents()) {
                 long totalDailyAvg = relaxedAvg + mildAvg + moderateAvg + highAvg;
                 relaxedStressTimeText.setText(String.format(Locale.ROOT, "%d%%",
                         totalDailyAvg > 0 ? Math.round(100f * relaxedAvg / totalDailyAvg) : 0));
@@ -241,7 +238,7 @@ public class StressPeriodFragment extends StressFragment<StressPeriodFragment.My
     private MyStressWeeklyData getMyStressWeeklyData(DBHandler db, Calendar day, GBDevice device) {
         day = (Calendar) day.clone(); // do not modify the caller's argument
         day.add(Calendar.DATE, -TOTAL_DAYS + 1);
-        TOTAL_DAYS_FOR_AVERAGE = 0;
+        int totalDaysForAverage = 0;
 
         long relaxedWeeklyTotal = 0;
         long mildWeeklyTotal = 0;
@@ -252,7 +249,7 @@ public class StressPeriodFragment extends StressFragment<StressPeriodFragment.My
         long avgStressSamples = 0;
 
         int[] stressRanges = device.getDeviceCoordinator().getStressRanges();
-        showStressLevelInPercents = device.getDeviceCoordinator().showStressLevelInPercents();
+        boolean showStressLevelInPercents = device.getDeviceCoordinator().showStressLevelInPercents();
 
         DeviceCoordinator coordinator = device.getDeviceCoordinator();
         int sampleRate = 60; // Default sample rate
@@ -271,7 +268,7 @@ public class StressPeriodFragment extends StressFragment<StressPeriodFragment.My
                     (int) (dayEnd.getTimeInMillis() / 1000));
 
             if (!samples.isEmpty()) {
-                TOTAL_DAYS_FOR_AVERAGE++;
+                totalDaysForAverage++;
 
                 Map<StressType, Integer> dailyTotals = calculateStressTotals(samples, stressRanges, sampleRate);
                 relaxedWeeklyTotal += dailyTotals.getOrDefault(StressType.RELAXED, 0);
@@ -294,10 +291,11 @@ public class StressPeriodFragment extends StressFragment<StressPeriodFragment.My
         int averageStress = avgStressSamples > 0 ? Math.round((float) avgStressSum / avgStressSamples) : 0;
 
         return new MyStressWeeklyData(relaxedWeeklyTotal, mildWeeklyTotal, moderateWeeklyTotal,
-                highWeeklyTotal, totalStressTime, averageStress);
+                highWeeklyTotal, totalStressTime, averageStress, totalDaysForAverage,
+                showStressLevelInPercents);
     }
 
-    private DefaultChartsData<BarData> refreshWeekBeforeStressData(DBHandler db, BarChart chart, Calendar day, GBDevice device) {
+    private DefaultChartsData<BarData> refreshWeekBeforeStressData(DBHandler db, Calendar day, GBDevice device) {
         day = (Calendar) day.clone();
         day.set(Calendar.HOUR_OF_DAY, 0);
         day.set(Calendar.MINUTE, 0);
@@ -490,21 +488,30 @@ public class StressPeriodFragment extends StressFragment<StressPeriodFragment.My
 
     protected static class MyChartsData extends ChartsData {
         private final DefaultChartsData<BarData> weekBeforeData;
+        private final MyStressWeeklyData stressWeeklyData;
 
-        public MyChartsData(DefaultChartsData<BarData> weekBeforeData) {
+        public MyChartsData(DefaultChartsData<BarData> weekBeforeData,
+                            MyStressWeeklyData stressWeeklyData) {
             this.weekBeforeData = weekBeforeData;
+            this.stressWeeklyData = stressWeeklyData;
         }
 
         public DefaultChartsData<BarData> getWeekBeforeData() {
             return weekBeforeData;
+        }
+
+        public MyStressWeeklyData getStressWeeklyData() {
+            return stressWeeklyData;
         }
     }
 
     private record MyStressWeeklyData(long totalRelaxed,
                                       long totalMild,
                                       long totalModerate,
-                                      long totalHigh,
-                                      long totalStressTime,
-                                      int averageStress) {
+                                       long totalHigh,
+                                       long totalStressTime,
+                                       int averageStress,
+                                       int totalDaysForAverage,
+                                       boolean showStressLevelInPercents) {
     }
 }

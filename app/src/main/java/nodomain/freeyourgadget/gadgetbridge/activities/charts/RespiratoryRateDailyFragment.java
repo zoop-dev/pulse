@@ -75,8 +75,6 @@ public class RespiratoryRateDailyFragment extends RespiratoryRateFragment<Respir
     protected RespiratoryRateDay refreshInBackground(ChartsHost chartsHost, DBHandler db, GBDevice device) {
         Calendar day = Calendar.getInstance();
         day.setTime(chartsHost.getEndDate());
-        String formattedDate = new SimpleDateFormat("E, MMM dd").format(chartsHost.getEndDate());
-        mDateView.setText(formattedDate);
         List<RespiratoryRateDay> stepsDayList = getMyRespiratoryRateDaysData(db, day, device);
         if (stepsDayList.isEmpty()) {
             LOG.error("Failed to get RespiratoryRateDay for {}", day);
@@ -88,6 +86,8 @@ public class RespiratoryRateDailyFragment extends RespiratoryRateFragment<Respir
 
     @Override
     protected void updateChartsnUIThread(RespiratoryRateFragment.RespiratoryRateDay respiratoryRateDay) {
+        String formattedDate = new SimpleDateFormat("E, MMM dd").format(respiratoryRateDay.day.getTime());
+        mDateView.setText(formattedDate);
         final String emptyValue = requireContext().getString(R.string.stats_empty_value);
         awakeAvg.setText(respiratoryRateDay.awakeRateAvg > 0 ? String.valueOf(respiratoryRateDay.awakeRateAvg) : emptyValue);
         sleepAvg.setText(respiratoryRateDay.sleepRateAvg > 0 ? String.valueOf(respiratoryRateDay.sleepRateAvg) : emptyValue);

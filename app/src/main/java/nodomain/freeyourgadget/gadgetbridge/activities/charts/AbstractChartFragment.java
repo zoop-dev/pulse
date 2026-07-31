@@ -43,7 +43,9 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.AbstractGBFragment;
@@ -76,6 +78,7 @@ public abstract class AbstractChartFragment<D extends ChartsData> extends Abstra
     protected final int ANIM_TIME = 250;
 
     private static final Logger LOG = LoggerFactory.getLogger(AbstractChartFragment.class);
+    private static final Map<ChartsHost, AbstractChartFragment<?>> LOADING_OWNERS = new WeakHashMap<>();
     @SuppressLint("SimpleDateFormat")
     protected final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
@@ -149,6 +152,20 @@ public abstract class AbstractChartFragment<D extends ChartsData> extends Abstra
         loadingHandler.removeCallbacksAndMessages(null);
         super.onDestroy();
         LocalBroadcastManager.getInstance(requireActivity()).unregisterReceiver(mReceiver);
+    }
+
+    @Override
+    public void onDestroyView() {
+        loadingHandler.removeCallbacksAndMessages(null);
+        final FragmentActivity activity = getActivity();
+        if (activity instanceof ChartsHost) {
+            hideLoading((ChartsHost) activity);
+        }
+        if (refreshTask != null) {
+            refreshTask.cancel(true);
+            refreshTask = null;
+        }
+        super.onDestroyView();
     }
 
     /**
@@ -341,7 +358,7 @@ public abstract class AbstractChartFragment<D extends ChartsData> extends Abstra
         if (chartsHost != null) {
             if (chartsHost.getDevice() != null) {
                 // Delay the loading slightly to prevent quick flashes on fast loading
-                loadingHandler.postDelayed(() -> chartsHost.setLoading(true), 300L);
+                loadingHandler.postDelayed(() -> showLoading(chartsHost), 300L);
                 mChartDirty = false;
                 if (refreshTask != null && refreshTask.getStatus() != AsyncTask.Status.FINISHED) {
                     refreshTask.cancel(true);
@@ -377,13 +394,13 @@ public abstract class AbstractChartFragment<D extends ChartsData> extends Abstra
         protected void onPostExecute(final Object o) {
             super.onPostExecute(o);
             final FragmentActivity activity = getActivity();
-            if (activity == null || activity.isFinishing() || activity.isDestroyed()) {
+            if (activity == null || activity.isFinishing() || activity.isDestroyed() || getView() == null) {
                 LOG.info("Not rendering charts because activity is not available anymore");
                 return;
             }
 
             loadingHandler.removeCallbacksAndMessages(null);
-            getChartsHost().setLoading(false);
+            hideLoading(getChartsHost());
 
             if (getTaskError() != null) {
                 // Async task failed - we will have no data, so avoid NPE crashes
@@ -394,6 +411,19 @@ public abstract class AbstractChartFragment<D extends ChartsData> extends Abstra
             updateChartsnUIThread(chartsData);
             renderCharts();
         }
+    }
+
+    private void showLoading(final ChartsHost chartsHost) {
+        LOADING_OWNERS.put(chartsHost, this);
+        chartsHost.setLoading(true);
+    }
+
+    private void hideLoading(final ChartsHost chartsHost) {
+        if (LOADING_OWNERS.get(chartsHost) != this) {
+            return;
+        }
+        LOADING_OWNERS.remove(chartsHost);
+        chartsHost.setLoading(false);
     }
 
     /**

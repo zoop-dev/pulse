@@ -75,6 +75,7 @@ public class ActivitySummariesChartFragment extends AbstractActivityChartFragmen
     private int endTime;
 
     private boolean chartsSetUp;
+    private RefreshTask refreshTask;
 
     @Override
     protected void onReceive(final Context context, final Intent intent) {
@@ -95,7 +96,7 @@ public class ActivitySummariesChartFragment extends AbstractActivityChartFragmen
         this.gbDevice = gbDevice;
         if (this.view != null) {
             setupChart();
-            createLocalRefreshTask("getting hr and activity", getActivity()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            startRefreshTask();
         }
     }
 
@@ -118,8 +119,28 @@ public class ActivitySummariesChartFragment extends AbstractActivityChartFragmen
         this.view = view;
         if (this.summary != null || this.gbDevice != null) {
             setupChart();
-            createLocalRefreshTask("getting hr and activity", getActivity()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            startRefreshTask();
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (refreshTask != null) {
+            refreshTask.cancel(true);
+            refreshTask = null;
+        }
+        mChart = null;
+        view = null;
+        chartsSetUp = false;
+        super.onDestroyView();
+    }
+
+    private void startRefreshTask() {
+        if (refreshTask != null) {
+            refreshTask.cancel(true);
+        }
+        refreshTask = createLocalRefreshTask("getting hr and activity", getActivity());
+        refreshTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
 
@@ -218,6 +239,7 @@ public class ActivitySummariesChartFragment extends AbstractActivityChartFragmen
     }
 
     public class RefreshTask extends DBAccess {
+        private DefaultChartsData<LineData> chartsData;
 
         public RefreshTask(String task, Context context) {
             super(task, context, false);
@@ -225,7 +247,6 @@ public class ActivitySummariesChartFragment extends AbstractActivityChartFragmen
 
         @Override
         protected void doInBackground(DBHandler handler) {
-            final DefaultChartsData<?> dcd;
             final DefaultChartsData<LineData> activitySamplesData = buildChartFromSamples(handler);
 
             if (summary != null && gbDevice != null) {
@@ -239,23 +260,26 @@ public class ActivitySummariesChartFragment extends AbstractActivityChartFragmen
                 }
 
                 if (activityPoints != null && !activityPoints.isEmpty()) {
-                    dcd = buildHeartRateChart(activityPoints, activitySamplesData);
+                    chartsData = buildHeartRateChart(activityPoints, activitySamplesData);
                 } else {
-                    dcd = activitySamplesData;
+                    chartsData = activitySamplesData;
                 }
             } else {
-                dcd = activitySamplesData;
-            }
-
-            if (dcd != null) {
-                mChart.setData(null); // workaround for https://github.com/PhilJay/MPAndroidChart/issues/2317
-                mChart.getXAxis().setValueFormatter(dcd.getXValueFormatter());
-                mChart.setData((LineData) dcd.getData());
+                chartsData = activitySamplesData;
             }
         }
 
         @Override
         protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            if (getTaskError() != null || mChart == null) {
+                return;
+            }
+            if (chartsData != null) {
+                mChart.setData(null); // workaround for https://github.com/PhilJay/MPAndroidChart/issues/2317
+                mChart.getXAxis().setValueFormatter(chartsData.getXValueFormatter());
+                mChart.setData(chartsData.getData());
+            }
             mChart.invalidate();
         }
 

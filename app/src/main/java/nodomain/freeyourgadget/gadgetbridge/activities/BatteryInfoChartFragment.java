@@ -74,6 +74,7 @@ public class BatteryInfoChartFragment extends AbstractGBFragment {
     private int endTime;
     private GBDevice gbDevice;
     private int batteryIndex;
+    private RefreshTask refreshTask;
 
     public void setDateAndGetData(GBDevice gbDevice, int batteryIndex, long startTime, long endTime) {
         this.startTime = (int) startTime;
@@ -81,7 +82,7 @@ public class BatteryInfoChartFragment extends AbstractGBFragment {
         this.gbDevice = gbDevice;
         this.batteryIndex = batteryIndex;
         try {
-            createRefreshTask("Visualizing data", getActivity()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            startRefreshTask();
         } catch (Exception e) {
             LOG.debug("Unable to fill charts data right now:", e);
         }
@@ -135,9 +136,27 @@ public class BatteryInfoChartFragment extends AbstractGBFragment {
         mChart = rootView.findViewById(R.id.activitysleepchart);
         if (this.gbDevice != null) {
             setupChart();
-            createRefreshTask("Visualizing data", getActivity()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            startRefreshTask();
         }
         return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (refreshTask != null) {
+            refreshTask.cancel(true);
+            refreshTask = null;
+        }
+        mChart = null;
+        super.onDestroyView();
+    }
+
+    private void startRefreshTask() {
+        if (refreshTask != null) {
+            refreshTask.cancel(true);
+        }
+        refreshTask = createRefreshTask("Visualizing data", getActivity());
+        refreshTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
@@ -210,6 +229,7 @@ public class BatteryInfoChartFragment extends AbstractGBFragment {
     }
 
     public class RefreshTask extends DBAccess {
+        private DefaultBatteryChartsData chartsData;
 
         public RefreshTask(String task, Context context) {
             super(task, context, false);
@@ -218,22 +238,23 @@ public class BatteryInfoChartFragment extends AbstractGBFragment {
         @Override
         protected void doInBackground(DBHandler handler) {
             List<? extends BatteryLevel> samples = getBatteryLevels(handler, gbDevice, batteryIndex, startTime, endTime);
-            DefaultBatteryChartsData dcd = null;
             try {
-                dcd = fill_dcd(samples);
+                chartsData = fill_dcd(samples);
             } catch (Exception e) {
                 LOG.debug("Unable to get charts data right now:", e);
-            }
-            if (dcd != null && mChart != null) {
-                mChart.setTouchEnabled(true);
-                mChart.setMarker(new batteryValuesAndDateMarker(getContext(), R.layout.custom_chart_marker, dcd.firstTs));
-                mChart.getXAxis().setValueFormatter(dcd.getXValueFormatter());
-                mChart.setData((LineData) dcd.getData());
             }
         }
 
         @Override
         protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            if (getTaskError() != null || chartsData == null || mChart == null) {
+                return;
+            }
+            mChart.setTouchEnabled(true);
+            mChart.setMarker(new batteryValuesAndDateMarker(getContext(), R.layout.custom_chart_marker, chartsData.firstTs));
+            mChart.getXAxis().setValueFormatter(chartsData.getXValueFormatter());
+            mChart.setData((LineData) chartsData.getData());
             mChart.invalidate();
         }
     }

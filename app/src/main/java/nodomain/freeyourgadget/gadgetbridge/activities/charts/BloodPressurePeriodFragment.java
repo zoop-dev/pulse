@@ -189,9 +189,8 @@ public class BloodPressurePeriodFragment extends AbstractChartFragment<BloodPres
             result.add(dayData);
         }
 
-        allSamples = getSamples(db, device, startTs, endTs);
-
-        return new BloodPressurePeriodData(result);
+        final List<? extends BloodPressureSample> samples = getSamples(db, device, startTs, endTs);
+        return new BloodPressurePeriodData(result, samples);
     }
 
     private List<? extends BloodPressureSample> getSamples(DBHandler db, GBDevice device, int startTs, int endTs) {
@@ -203,6 +202,7 @@ public class BloodPressurePeriodFragment extends AbstractChartFragment<BloodPres
     @Override
     protected void updateChartsnUIThread(BloodPressurePeriodData data) {
         final int startTs = getStartTs();
+        allSamples = data.samples;
         mDateView.setText(DateTimeUtils.formatDaysUntil(TOTAL_DAYS, getTSEnd()));
 
         final Accumulator systolicAvgAcc = new Accumulator();
@@ -418,9 +418,12 @@ public class BloodPressurePeriodFragment extends AbstractChartFragment<BloodPres
 
     protected static class BloodPressurePeriodData extends ChartsData {
         public List<BloodPressureDayData> days;
+        public List<? extends BloodPressureSample> samples;
 
-        protected BloodPressurePeriodData(List<BloodPressureDayData> days) {
+        protected BloodPressurePeriodData(List<BloodPressureDayData> days,
+                                          List<? extends BloodPressureSample> samples) {
             this.days = days;
+            this.samples = samples;
         }
     }
 

@@ -70,8 +70,6 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
     protected static final Logger LOG = LoggerFactory.getLogger(SleepPeriodFragment.class);
 
     protected int TOTAL_DAYS = getRangeDays();
-    protected int TOTAL_DAYS_FOR_AVERAGE = 0;
-    private MySleepWeeklyData mySleepWeeklyData;
 
     private FragmentWeeksleepChartBinding binding;
     protected Locale mLocale;
@@ -98,7 +96,7 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
     private MySleepWeeklyData getMySleepWeeklyData(DBHandler db, Calendar day, GBDevice device) {
         day = (Calendar) day.clone(); // do not modify the caller's argument
         day.add(Calendar.DATE, -TOTAL_DAYS + 1);
-        TOTAL_DAYS_FOR_AVERAGE = 0;
+        int totalDaysForAverage = 0;
         long awakeWeeklyTotal = 0;
         long remWeeklyTotal = 0;
         long deepWeeklyTotal = 0;
@@ -107,24 +105,29 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
         for (int counter = 0; counter < TOTAL_DAYS; counter++) {
             ActivityAmounts amounts = getActivityAmountsForDay(db, day, device);
             if (calculateBalance(amounts) > 0) {
-                TOTAL_DAYS_FOR_AVERAGE++;
+                totalDaysForAverage++;
             }
 
             float[] totalAmounts = getTotalsForActivityAmounts(amounts);
             int i = 0;
             deepWeeklyTotal += (long) totalAmounts[i++];
             lightWeeklyTotal += (long) totalAmounts[i++];
-            if (supportsRemSleep(getChartsHost().getDevice())) {
+            if (supportsRemSleep(device)) {
                 remWeeklyTotal += (long) totalAmounts[i++];
             }
-            if (supportsAwakeSleep(getChartsHost().getDevice())) {
+            if (supportsAwakeSleep(device)) {
                 awakeWeeklyTotal += (long) totalAmounts[i++];
             }
 
             day.add(Calendar.DATE, 1);
         }
 
-        return new MySleepWeeklyData(awakeWeeklyTotal, remWeeklyTotal, deepWeeklyTotal, lightWeeklyTotal);
+        return new MySleepWeeklyData(
+                awakeWeeklyTotal,
+                remWeeklyTotal,
+                deepWeeklyTotal,
+                lightWeeklyTotal,
+                totalDaysForAverage);
     }
 
     @Override
@@ -217,6 +220,7 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
         weekSleepChart.getXAxis().setValueFormatter(mcd.getWeekBeforeData().getXValueFormatter());
         weekSleepChart.getBarData().setValueTextSize(10f);
         weekSleepChart.getBarData().setValueTextColor(LEGEND_TEXT_COLOR);
+        updateLimitLines(weekSleepChart, weekBeforeData);
 
         if (supportsSleepScore()) {
             binding.sleepScoreChart.setData(null);
@@ -232,14 +236,16 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
         final int barIgnoreLast = supportsAwakeSleep(getChartsHost().getDevice()) ? 1 : 0;
         weekSleepChart.getBarData().setValueFormatter(new BarChartStackedTimeValueFormatter(false, "", 0, barIgnoreLast));
 
-        if (TOTAL_DAYS_FOR_AVERAGE > 0) {
-            float avgDeep = Math.abs(this.mySleepWeeklyData.getTotalDeep() / TOTAL_DAYS_FOR_AVERAGE);
+        final MySleepWeeklyData sleepWeeklyData = mcd.getSleepWeeklyData();
+        final int totalDaysForAverage = sleepWeeklyData.getTotalDaysForAverage();
+        if (totalDaysForAverage > 0) {
+            float avgDeep = Math.abs(sleepWeeklyData.getTotalDeep() / totalDaysForAverage);
             binding.sleepChartLegendDeepTime.setText(DateTimeUtils.formatDurationHoursMinutes((int) avgDeep, TimeUnit.MINUTES));
-            float avgLight = Math.abs(this.mySleepWeeklyData.getTotalLight() / TOTAL_DAYS_FOR_AVERAGE);
+            float avgLight = Math.abs(sleepWeeklyData.getTotalLight() / totalDaysForAverage);
             binding.sleepChartLegendLightTime.setText(DateTimeUtils.formatDurationHoursMinutes((int) avgLight, TimeUnit.MINUTES));
-            float avgRem = Math.abs(this.mySleepWeeklyData.getTotalRem() / TOTAL_DAYS_FOR_AVERAGE);
+            float avgRem = Math.abs(sleepWeeklyData.getTotalRem() / totalDaysForAverage);
             binding.sleepChartLegendRemTime.setText(DateTimeUtils.formatDurationHoursMinutes((int) avgRem, TimeUnit.MINUTES));
-            float avgAwake = Math.abs(this.mySleepWeeklyData.getTotalAwake() / TOTAL_DAYS_FOR_AVERAGE);
+            float avgAwake = Math.abs(sleepWeeklyData.getTotalAwake() / totalDaysForAverage);
             binding.sleepChartLegendAwakeTime.setText(DateTimeUtils.formatDurationHoursMinutes((int) avgAwake, TimeUnit.MINUTES));
         } else {
             binding.sleepChartLegendDeepTime.setText("-");
@@ -266,13 +272,13 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
         Calendar day = Calendar.getInstance();
         day.setTime(chartsHost.getEndDate());
         //NB: we could have omitted the day, but this way we can move things to the past easily
-        WeekChartsData<BarData> weekBeforeData = refreshWeekBeforeData(db, binding.weekSleepChart, day, device);
-        mySleepWeeklyData = getMySleepWeeklyData(db, day, device);
+        WeekChartsData<BarData> weekBeforeData = refreshWeekBeforeData(db, day, device);
+        MySleepWeeklyData sleepWeeklyData = getMySleepWeeklyData(db, day, device);
 
-        return new MyChartsData(weekBeforeData);
+        return new MyChartsData(weekBeforeData, sleepWeeklyData);
     }
 
-    protected WeekChartsData<BarData> refreshWeekBeforeData(DBHandler db, BarChart barChart, Calendar day, GBDevice device) {
+    protected WeekChartsData<BarData> refreshWeekBeforeData(DBHandler db, Calendar day, GBDevice device) {
         day = (Calendar) day.clone(); // do not modify the caller's argument
         day.add(Calendar.DATE, -TOTAL_DAYS + 1);
         List<BarEntry> entries = new ArrayList<>();
@@ -280,7 +286,7 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
 
         long balance = 0;
         long daily_balance = 0;
-        TOTAL_DAYS_FOR_AVERAGE = 0;
+        int totalDaysForAverage = 0;
         List<Entry> sleepScoreEntities = new ArrayList<>();
         final Accumulator sleepScoreAccumulator = new Accumulator();
         final List<ILineDataSet> sleepScoreDataSets = new ArrayList<>();
@@ -289,7 +295,7 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
             ActivityAmounts amounts = getActivityAmountsForDay(db, day, device);
             daily_balance = calculateBalance(amounts);
             if (daily_balance > 0) {
-                TOTAL_DAYS_FOR_AVERAGE++;
+                totalDaysForAverage++;
             }
             balance += daily_balance;
             entries.add(new BarEntry(counter, getTotalsForActivityAmounts(amounts)));
@@ -326,49 +332,52 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
         barData.setValueTextColor(Color.GRAY); //prevent tearing other graph elements with the black text. Another approach would be to hide the values completely with data.setDrawValues(false);
         barData.setValueTextSize(10f);
 
-        barChart.getAxisLeft().setAxisMaximum(Math.max(set.getYMax(), mTargetValue) + 60);
-
-        LimitLine target = new LimitLine(mTargetValue);
-        target.setLineWidth(1.5f);
-        target.enableDashedLine(15f, 10f, 0f);
-        target.setLineColor(getResources().getColor(R.color.chart_deep_sleep_dark));
-        barChart.getAxisLeft().removeAllLimitLines();
-        barChart.getAxisLeft().addLimitLine(target);
-
         float average = 0;
-        if (TOTAL_DAYS_FOR_AVERAGE > 0) {
-            average = Math.abs(balance / TOTAL_DAYS_FOR_AVERAGE);
+        if (totalDaysForAverage > 0) {
+            average = Math.abs(balance / totalDaysForAverage);
         }
-        LimitLine average_line = new LimitLine(average);
-        average_line.setLineWidth(1.5f);
-        average_line.enableDashedLine(15f, 10f, 0f);
-        average_line.setLabel(getString(R.string.average, getAverage(average)));
-
-        if (average > (mTargetValue)) {
-            average_line.setLineColor(Color.GREEN);
-            average_line.setTextColor(Color.GREEN);
-        } else {
-            average_line.setLineColor(Color.RED);
-            average_line.setTextColor(Color.RED);
-        }
-        if (average > 0) {
-            if (GBApplication.getPrefs().getBoolean("charts_show_average", true)) {
-                barChart.getAxisLeft().addLimitLine(average_line);
-            }
-        }
-
         if (supportsSleepScore()) {
             return new WeekChartsData(
                     barData,
                     new PreformattedXIndexLabelFormatter(labels),
-                    getBalanceMessage(balance, mTargetValue),
+                    getBalanceMessage(balance, mTargetValue, totalDaysForAverage),
+                    average,
                     sleepScoreLineData,
                     (int) Math.round(sleepScoreAccumulator.getAverage()),
                     (int) Math.round(sleepScoreAccumulator.getMax()),
                     (int) Math.round(sleepScoreAccumulator.getMin())
             );
         }
-        return new WeekChartsData(barData, new PreformattedXIndexLabelFormatter(labels), getBalanceMessage(balance, mTargetValue));
+        return new WeekChartsData(
+                barData,
+                new PreformattedXIndexLabelFormatter(labels),
+                getBalanceMessage(balance, mTargetValue, totalDaysForAverage),
+                average);
+    }
+
+    private void updateLimitLines(final BarChart chart, final WeekChartsData<BarData> data) {
+        final YAxis yAxis = chart.getAxisLeft();
+        yAxis.setAxisMaximum(Math.max(data.getData().getYMax(), mTargetValue) + 60);
+        yAxis.removeAllLimitLines();
+
+        final LimitLine target = new LimitLine(mTargetValue);
+        target.setLineWidth(1.5f);
+        target.enableDashedLine(15f, 10f, 0f);
+        target.setLineColor(getResources().getColor(R.color.chart_deep_sleep_dark));
+        yAxis.addLimitLine(target);
+
+        if (data.getAverage() <= 0 || !GBApplication.getPrefs().getBoolean("charts_show_average", true)) {
+            return;
+        }
+
+        final LimitLine average = new LimitLine(data.getAverage());
+        average.setLineWidth(1.5f);
+        average.enableDashedLine(15f, 10f, 0f);
+        average.setLabel(getString(R.string.average, getAverage(data.getAverage())));
+        final int color = data.getAverage() > mTargetValue ? Color.GREEN : Color.RED;
+        average.setLineColor(color);
+        average.setTextColor(color);
+        yAxis.addLimitLine(average);
     }
 
     protected String getWeeksChartsLabel(Calendar day) {
@@ -492,9 +501,9 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
         return (int) (balance / 60);
     }
 
-    protected String getBalanceMessage(long balance, int targetValue) {
+    protected String getBalanceMessage(long balance, int targetValue, int totalDaysForAverage) {
         if (balance > 0) {
-            final long totalBalance = balance - ((long) targetValue * TOTAL_DAYS_FOR_AVERAGE);
+            final long totalBalance = balance - ((long) targetValue * totalDaysForAverage);
             if (totalBalance > 0)
                 return getString(R.string.overslept, getHM(totalBalance));
             else
@@ -611,13 +620,19 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
 
     protected static class MyChartsData extends ChartsData {
         private final WeekChartsData<BarData> weekBeforeData;
+        private final MySleepWeeklyData sleepWeeklyData;
 
-        MyChartsData(WeekChartsData<BarData> weekBeforeData) {
+        MyChartsData(WeekChartsData<BarData> weekBeforeData, MySleepWeeklyData sleepWeeklyData) {
             this.weekBeforeData = weekBeforeData;
+            this.sleepWeeklyData = sleepWeeklyData;
         }
 
         WeekChartsData<BarData> getWeekBeforeData() {
             return weekBeforeData;
+        }
+
+        MySleepWeeklyData getSleepWeeklyData() {
+            return sleepWeeklyData;
         }
     }
 
@@ -672,19 +687,22 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
 
     protected class WeekChartsData<T extends ChartData<?>> extends DefaultChartsData<T> {
         private final String balanceMessage;
+        private final float average;
         private LineData sleepScoresLineData;
         private int avgSleepScore;
         private int highestSleepScore;
         private int lowestSleepScore;
 
-        public WeekChartsData(T data, PreformattedXIndexLabelFormatter xIndexLabelFormatter, String balanceMessage) {
+        public WeekChartsData(T data, PreformattedXIndexLabelFormatter xIndexLabelFormatter, String balanceMessage, float average) {
             super(data, xIndexLabelFormatter);
             this.balanceMessage = balanceMessage;
+            this.average = average;
         }
 
-        public WeekChartsData(T data, PreformattedXIndexLabelFormatter xIndexLabelFormatter, String balanceMessage, LineData sleepScores, int avgSleepScore, int highestSleepScore, int lowestSleepScore) {
+        public WeekChartsData(T data, PreformattedXIndexLabelFormatter xIndexLabelFormatter, String balanceMessage, float average, LineData sleepScores, int avgSleepScore, int highestSleepScore, int lowestSleepScore) {
             super(data, xIndexLabelFormatter);
             this.balanceMessage = balanceMessage;
+            this.average = average;
             this.sleepScoresLineData = sleepScores;
             this.avgSleepScore = avgSleepScore;
             this.highestSleepScore = highestSleepScore;
@@ -707,6 +725,10 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
             return balanceMessage;
         }
 
+        public float getAverage() {
+            return average;
+        }
+
         public LineData getSleepScoreData() {
             return sleepScoresLineData;
         }
@@ -719,12 +741,16 @@ public class SleepPeriodFragment extends SleepFragment<SleepPeriodFragment.MyCha
         private final long totalLight;
         private final int totalDaysForAverage;
 
-        public MySleepWeeklyData(long totalAwake, long totalRem, long totalDeep, long totalLight) {
+        public MySleepWeeklyData(long totalAwake,
+                                 long totalRem,
+                                 long totalDeep,
+                                 long totalLight,
+                                 int totalDaysForAverage) {
             this.totalDeep = totalDeep;
             this.totalRem = totalRem;
             this.totalAwake = totalAwake;
             this.totalLight = totalLight;
-            this.totalDaysForAverage = 0;
+            this.totalDaysForAverage = totalDaysForAverage;
         }
 
         public long getTotalAwake() {
