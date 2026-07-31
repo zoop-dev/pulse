@@ -6,13 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo;
-import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventUpdatePreferences;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
 import nodomain.freeyourgadget.gadgetbridge.util.GB;
 
@@ -139,9 +137,9 @@ public class HaylouS35AncProtocol {
 
     private static byte[] encodeCommand(final byte[] payload) {
         final ByteArrayOutputStream packet = new ByteArrayOutputStream();
-        packet.writeBytes(HEADER);
-        packet.writeBytes(payload);
-        packet.writeBytes(FOOTER);
+        packet.write(HEADER, 0, HEADER.length);
+        packet.write(payload, 0, payload.length);
+        packet.write(FOOTER, 0, FOOTER.length);
         return packet.toByteArray();
     }
 
