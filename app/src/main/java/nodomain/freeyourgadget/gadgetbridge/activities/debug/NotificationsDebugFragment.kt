@@ -81,6 +81,7 @@ class NotificationsDebugFragment : AbstractDebugFragment() {
         notificationSpec.channelId = sharedPreferences.getString(PREF_DEBUG_NOTIFICATIONS_CHANNELID, "the_channel")
         notificationSpec.category = sharedPreferences.getString(PREF_DEBUG_NOTIFICATIONS_CATEGORY, null)
         notificationSpec.iconId = sharedPreferences.getString(PREF_DEBUG_NOTIFICATIONS_ICONID, "0")!!.toInt()
+        notificationSpec.iconPackageId = BuildConfig.APPLICATION_ID
 
         if (sharedPreferences.getBoolean(PREF_DEBUG_NOTIFICATIONS_PICTUREPATH_BOOL, false)) {
             notificationSpec.picturePath = getTestPicture()?.absolutePath

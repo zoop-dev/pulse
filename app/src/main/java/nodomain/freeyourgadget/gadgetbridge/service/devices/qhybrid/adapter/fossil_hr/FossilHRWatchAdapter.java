@@ -1371,7 +1371,7 @@ public class FossilHRWatchAdapter extends FossilWatchAdapter {
                 try {
                     Drawable icon = null;
                     if (notificationSpec.iconId != 0) {
-                        Context sourcePackageContext = getContext().createPackageContext(sourceAppId, 0);
+                        Context sourcePackageContext = getContext().createPackageContext(notificationSpec.iconPackageId, 0);
                         icon = ResourcesCompat.getDrawable(sourcePackageContext.getResources(), notificationSpec.iconId, null);
                     }
                     if (icon == null) {

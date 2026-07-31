@@ -977,23 +977,26 @@ public class NotificationListener extends NotificationListenerService {
     static void populateNotificationIcon(final Notification notification,
                                          final String sourcePackage,
                                          final NotificationSpec notificationSpec) {
-        final Icon smallIcon = notification.getSmallIcon();
-        if (smallIcon != null) {
-            try {
-                final int resourceId = smallIcon.getResId();
-                if (resourceId != 0) {
-                    notificationSpec.iconId = resourceId;
-                    final String resourcePackage = smallIcon.getResPackage();
-                    notificationSpec.iconPackageId = StringUtils.isBlank(resourcePackage)
-                            ? sourcePackage
-                            : resourcePackage;
-                    return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            final Icon smallIcon = notification.getSmallIcon();
+            if (smallIcon != null) {
+                try {
+                    final int resourceId = smallIcon.getResId();
+                    if (resourceId != 0) {
+                        notificationSpec.iconId = resourceId;
+                        final String resourcePackage = smallIcon.getResPackage();
+                        notificationSpec.iconPackageId = StringUtils.isBlank(resourcePackage)
+                                ? sourcePackage
+                                : resourcePackage;
+                        return;
+                    }
+                } catch (final IllegalStateException e) {
+                    LOG.debug("Notification small icon is not a resource icon");
                 }
-            } catch (final IllegalStateException e) {
-                LOG.debug("Notification small icon is not a resource icon");
             }
         }
 
+        //noinspection deprecation
         notificationSpec.iconId = notification.icon;
         if (notificationSpec.iconId != 0) {
             notificationSpec.iconPackageId = sourcePackage;
