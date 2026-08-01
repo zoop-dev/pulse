@@ -358,11 +358,10 @@ class OlleeDeviceSupport : AbstractBTLESingleDeviceSupport(LOG) {
     }
 
     private fun handleVersionReply(payload: ByteArray) {
-        OlleeProtocol.parseFirmwareVersion(payload)?.let { fw ->
-            val version = GBDeviceEventVersionInfo()
-            version.fwVersion = fw
-            evaluateGBDeviceEvent(version)
-        }
+        val version = GBDeviceEventVersionInfo()
+        val fw = OlleeProtocol.parseFirmwareVersion(payload)?.also { version.fwVersion = it }
+        val hw = OlleeProtocol.parseHardwareVersion(payload)?.also { version.hwVersion = it }
+        if (fw != null || hw != null) evaluateGBDeviceEvent(version)
         OlleeProtocol.parseVoltageMillivolts(payload)?.let { mv ->
             val battery = GBDeviceEventBatteryInfo()
             battery.level = GBDevice.BATTERY_UNKNOWN.toInt()

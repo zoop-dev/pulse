@@ -115,20 +115,30 @@ object OlleeProtocol {
         return (hi shl SHIFT_BYTE_1) or lo
     }
 
+    /** ASCII hardware revision from a version-reply (0x4A) payload, e.g. "01.05.00". */
+    fun parseHardwareVersion(versionReplyPayload: ByteArray): String? =
+        parseVersionField(versionReplyPayload, HARDWARE_VERSION_OFFSET)
+
     /**
-     * ASCII firmware version from a version-reply (0x4A) payload: 16 chars at offset 8
-     * (e.g. "01.05.0000.01.10"). Null if too short or not printable ASCII.
+     * ASCII firmware version from a version-reply (0x4A) payload, e.g. "00.01.10". The reply holds
+     * hardware and firmware as two adjacent 8-char triples, so reading all 16 as one string reports
+     * the hardware revision as part of the firmware version.
      */
-    fun parseFirmwareVersion(versionReplyPayload: ByteArray): String? {
-        val end = VERSION_STRING_OFFSET + VERSION_STRING_LENGTH
-        if (versionReplyPayload.size < end) return null
-        val chars = versionReplyPayload.copyOfRange(VERSION_STRING_OFFSET, end)
+    fun parseFirmwareVersion(versionReplyPayload: ByteArray): String? =
+        parseVersionField(versionReplyPayload, FIRMWARE_VERSION_OFFSET)
+
+    /** Null if the payload is too short or the field is not printable ASCII. */
+    private fun parseVersionField(payload: ByteArray, offset: Int): String? {
+        val end = offset + VERSION_FIELD_LENGTH
+        if (payload.size < end) return null
+        val chars = payload.copyOfRange(offset, end)
         if (chars.any { it < 0x20 || it > 0x7E }) return null
         return String(chars, Charsets.US_ASCII).trim()
     }
 
-    private const val VERSION_STRING_OFFSET = 8
-    private const val VERSION_STRING_LENGTH = 16
+    private const val HARDWARE_VERSION_OFFSET = 8
+    private const val FIRMWARE_VERSION_OFFSET = 16
+    private const val VERSION_FIELD_LENGTH = 8
 }
 
 /**

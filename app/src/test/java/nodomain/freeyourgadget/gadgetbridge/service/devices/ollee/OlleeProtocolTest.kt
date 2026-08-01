@@ -166,24 +166,37 @@ class OlleeProtocolTest {
         assertNull(reassembler.pending())
     }
 
-    // Test 10: firmware version parsed from the real 0x4A payload (hardware capture)
+    // Test 10: hardware and firmware split out of the real 0x4A payload (hardware capture)
     @Test
     fun firmwareVersionGoldenVector() {
         val payload = (
             "4445414442454546" +                    // "DEADBEEF"
-            "30312E30352E303030302E30312E3130" +    // "01.05.0000.01.10"
+            "30312E30352E3030" +                    // "01.05.00" hardware
+            "30302E30312E3130" +                    // "00.01.10" firmware
             "4445414442454546" +                    // "DEADBEEF"
             "0000" + "0B20"                         // padding + 2848 mV
         ).hexToByteArray()
 
-        assertEquals("01.05.0000.01.10", OlleeProtocol.parseFirmwareVersion(payload))
+        // Two adjacent triples, not one 16-char string: the run of zeros hides the seam.
+        assertEquals("01.05.00", OlleeProtocol.parseHardwareVersion(payload))
+        assertEquals("00.01.10", OlleeProtocol.parseFirmwareVersion(payload))
         assertEquals(2848, OlleeProtocol.parseVoltageMillivolts(payload))
     }
 
-    // Test 11: firmware version is null on short or non-ASCII payloads
+    // Test 11: both versions are null on short or non-ASCII payloads
     @Test
     fun firmwareVersionNullOnBadPayload() {
         assertNull(OlleeProtocol.parseFirmwareVersion(ByteArray(10)))
         assertNull(OlleeProtocol.parseFirmwareVersion(ByteArray(36))) // all zero bytes
+        assertNull(OlleeProtocol.parseHardwareVersion(ByteArray(10)))
+        assertNull(OlleeProtocol.parseHardwareVersion(ByteArray(36)))
+    }
+
+    // Test 11b: a payload long enough for hardware but not firmware yields only the hardware half
+    @Test
+    fun hardwareVersionSurvivesATruncatedPayload() {
+        val payload = ("4445414442454546" + "30312E30352E3030").hexToByteArray()
+        assertEquals("01.05.00", OlleeProtocol.parseHardwareVersion(payload))
+        assertNull(OlleeProtocol.parseFirmwareVersion(payload))
     }
 }
