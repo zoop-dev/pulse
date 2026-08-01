@@ -229,6 +229,12 @@ public class BluetoothNameTest extends TestBase {
             put("MATSON Monitor", DeviceType.BM2_BATTERY_MONITOR); // #6212
             put("BM6", DeviceType.BM6_BATTERY_MONITOR); // #6236
             put("Ollee Watch", DeviceType.OLLEE_WATCH_ONE); // #6411
+            put("UNA Watch 403795", DeviceType.UNA_WATCH); // #6504
+            put("UNA Watch 1", DeviceType.UNA_WATCH); // #6504
+            put("UNA Watch 12345678", DeviceType.UNA_WATCH); // #6504
+            put("una watch 403795", null); // #6504
+            put("UNA Watch403795", null); // #6504
+            put("UNA Watch ", null); // #6504
             put("Xiaomi Smart Band 10 Pro AB01", DeviceType.MIBAND10PRO); // #6248
             put("SmartShunt HQ2303UCHFV", DeviceType.VICTRON_SMARTSHUNT); // #6263
             put("Soundcore Q30", DeviceType.SOUNDCORE_Q30); // #6396

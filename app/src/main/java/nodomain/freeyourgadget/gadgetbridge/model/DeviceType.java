@@ -479,6 +479,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.thermalprinter.ThermalPrinte
 import nodomain.freeyourgadget.gadgetbridge.devices.tlw64.TLW64Coordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.ultrahuman.UltrahumanDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.um25.Coordinator.UM25Coordinator;
+import nodomain.freeyourgadget.gadgetbridge.devices.una.UnaDeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.vesc.VescCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.vibratissimo.VibratissimoCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.waspos.WaspOSCoordinator;
@@ -1041,6 +1042,7 @@ public enum DeviceType {
     IGPSPORT_IGS800(IGPSportiGS800Coordinator.class),
     IGPSPORT_BINAVI_AIR(IGPSportBiNaviAirCoordinator.class),
     OLLEE_WATCH_ONE(OlleeDeviceCoordinator.class),
+    UNA_WATCH(UnaDeviceCoordinator.class),
     TEST(TestDeviceCoordinator.class);
 
     private DeviceCoordinator coordinator;
