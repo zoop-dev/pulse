@@ -24,6 +24,8 @@ public interface ICommunicator {
 
     void onEnableRealtimeSteps(final boolean enable);
 
+    void onEnableRealtimeAccelerometer(final boolean enable);
+
     interface Callback {
         void onMessage(byte[] message);
     }

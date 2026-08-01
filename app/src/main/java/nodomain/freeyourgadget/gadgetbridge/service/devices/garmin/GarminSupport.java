@@ -1527,6 +1527,6 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
 
     @Override
     public void onTestNewFunction(@Nullable Bundle options) {
-
+        //communicator.onEnableRealtimeAccelerometer(true);
     }
 }

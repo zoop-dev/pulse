@@ -252,6 +252,11 @@ public class CommunicatorV2 implements ICommunicator {
         }
     }
 
+    @Override
+    public void onEnableRealtimeAccelerometer(final boolean enable) {
+        toggleService(Service.REALTIME_ACCELEROMETER, enable);
+    }
+
     private boolean toggleService(final Service service, final boolean enable) {
         final int currentHandle = Objects.requireNonNull(handleByService.getOrDefault(service, 0));
         if (enable && currentHandle == 0) {
@@ -454,15 +459,65 @@ public class CommunicatorV2 implements ICommunicator {
         }
     }
 
+    /**
+     * Realtime accelerometer stream. Each message is 16 bytes:
+     * <p>
+     * - bits 0..12: timestamp in milliseconds, wraps every 8192 ms
+     * - bits 13..15: always 3, number of samples that follow?
+     * - bits 16..123: 9 signed 12-bit values, little-endian nibble packing, as 3 (x, y, z)
+     * samples - the axes are interleaved, not grouped per axis
+     * - bits 124..127: always 1, unknown
+     * <p>
+     * Consecutive messages are ~115.5 ms apart, so the 3 samples are ~38.5 ms (26 Hz) apart.
+     * 1 g is {@link #ACCEL_SCALE_FACTOR} raw units, and the values are the gravity vector in the
+     * device frame, i.e. the watch reads z = -1g while laying face up - the opposite sign of the
+     * Android accelerometer convention.
+     */
     private static class RealtimeAccelerometerCallback implements ServiceCallback {
+        private static final int ACCEL_SAMPLES_OFFSET = 2;
+        private static final float ACCEL_SCALE_FACTOR = 256f;
+        private static final float ACCEL_GRAVITY = -9.81f;
+
         @Override
         public void onConnect(final ServiceWriter writer) {
-            writer.write("start realtime accel", new byte[]{0x01});
+            writer.write("start realtime accelerometer", new byte[]{0x01});
         }
 
         @Override
         public void onMessage(final byte[] value) {
-            LOG.debug("Got realtime accel: {}", GB.hexdump(value));
+            if (value.length != 16) {
+                LOG.warn("Unexpected realtime accelerometer message of {} bytes: {}", value.length, GB.hexdump(value));
+                return;
+            }
+
+            final int header = BLETypeConversions.toUint16(value, 0);
+            final int timestamp = header & 0x1fff;
+            final int numSamples = header >> 13;
+
+            if (numSamples > 3) {
+                LOG.warn("Unexpected realtime accelerometer sample count {}: {}", numSamples, GB.hexdump(value));
+                return;
+            }
+
+            for (int i = 0; i < numSamples; i++) {
+                final float x = accelSample(value, i * 3);
+                final float y = accelSample(value, i * 3 + 1);
+                final float z = accelSample(value, i * 3 + 2);
+
+                LOG.debug("Got realtime accelerometer at {}: x={} y={} z={}", timestamp, x, y, z);
+            }
+        }
+
+        /**
+         * Read the i-th signed 12-bit value of the sample block and convert it to m/s², in the
+         * Android accelerometer convention.
+         */
+        private float accelSample(final byte[] value, final int i) {
+            final int base = ACCEL_SAMPLES_OFFSET + (i / 2) * 3;
+            final int raw = (i % 2 == 0)
+                    ? (value[base] & 0xff) | ((value[base + 1] & 0x0f) << 8)
+                    : ((value[base + 1] & 0xff) >> 4) | ((value[base + 2] & 0xff) << 4);
+            return ((raw << 20) >> 20) * ACCEL_GRAVITY / ACCEL_SCALE_FACTOR;
         }
     }
 
