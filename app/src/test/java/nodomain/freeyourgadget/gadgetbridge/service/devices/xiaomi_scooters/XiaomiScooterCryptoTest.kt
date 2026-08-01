@@ -120,15 +120,27 @@ class XiaomiScooterCryptoTest {
             devIv = ByteArray(4) { it.toByte() },
             appIv = ByteArray(4) { (it + 1).toByte() },
         )
+        // The app encrypts with appKey/appIv and decrypts with devKey/devIv, so a session standing
+        // in for the device has to mirror the two directions.
+        val mirroredKeys = XiaomiScooterCrypto.SessionKeys(
+            devKey = keys.appKey,
+            appKey = keys.devKey,
+            devIv = keys.appIv,
+            appIv = keys.devIv,
+        )
         val appSession = XiaomiScooterCrypto.Session(keys)
-        val deviceSession = XiaomiScooterCrypto.Session(keys)
+        val deviceSession = XiaomiScooterCrypto.Session(mirroredKeys)
 
         for (i in 0 until 5) {
-            val plaintext = "message $i".toByteArray()
-            val frame = appSession.encryptForDevice(plaintext)
-            assertEquals(i, frame.wireCounter)
-            val decrypted = deviceSession.decryptFromDevice(frame.wireCounter, frame.ciphertext)
-            assertArrayEquals(plaintext, decrypted)
+            val toDevice = "app message $i".toByteArray()
+            val appFrame = appSession.encryptForDevice(toDevice)
+            assertEquals(i, appFrame.wireCounter)
+            assertArrayEquals(toDevice, deviceSession.decryptFromDevice(appFrame.wireCounter, appFrame.ciphertext))
+
+            val toApp = "device message $i".toByteArray()
+            val deviceFrame = deviceSession.encryptForDevice(toApp)
+            assertEquals(i, deviceFrame.wireCounter)
+            assertArrayEquals(toApp, appSession.decryptFromDevice(deviceFrame.wireCounter, deviceFrame.ciphertext))
         }
     }
 

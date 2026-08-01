@@ -35,11 +35,11 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.devices.huawei.HuaweiPacket;
-import nodomain.freeyourgadget.gadgetbridge.devices.huawei.packets.Workout;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.service.btbr.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huawei.requests.GetEventAlarmList;
@@ -147,7 +147,7 @@ public class TestResponseManager {
     };
 
     Field handlersField;
-    Field receivedPacketField;
+    Field receivedPacketsField;
     Field asynchronousResponseField;
 
     @Before
@@ -158,8 +158,21 @@ public class TestResponseManager {
         asynchronousResponseField = ResponseManager.class.getDeclaredField("asynchronousResponse");
         asynchronousResponseField.setAccessible(true);
 
-        receivedPacketField = ResponseManager.class.getDeclaredField("receivedPacket");
-        receivedPacketField.setAccessible(true);
+        receivedPacketsField = ResponseManager.class.getDeclaredField("receivedPackets");
+        receivedPacketsField.setAccessible(true);
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<Integer, HuaweiPacket> getReceivedPackets(ResponseManager responseManager) throws IllegalAccessException {
+        return (Map<Integer, HuaweiPacket>) receivedPacketsField.get(responseManager);
+    }
+
+    private HuaweiPacket getReceivedPacket(ResponseManager responseManager) throws IllegalAccessException {
+        return getReceivedPackets(responseManager).get(ResponseManager.MAIN_CHANNEL);
+    }
+
+    private void setReceivedPacket(ResponseManager responseManager, HuaweiPacket packet) throws IllegalAccessException {
+        getReceivedPackets(responseManager).put(ResponseManager.MAIN_CHANNEL, packet);
     }
 
     @Test
@@ -250,13 +263,13 @@ public class TestResponseManager {
 
         ResponseManager responseManager = new ResponseManager(supportProvider);
         handlersField.set(responseManager, inputHandlers);
-        receivedPacketField.set(responseManager, mockHuaweiPacket);
+        setReceivedPacket(responseManager, mockHuaweiPacket);
         asynchronousResponseField.set(responseManager, mockAsynchronousResponse);
 
         responseManager.handleData(input);
 
         Assert.assertEquals(expectedHandlers, handlersField.get(responseManager));
-        Assert.assertNull(receivedPacketField.get(responseManager));
+        Assert.assertNull(getReceivedPacket(responseManager));
 
         verify(mockHuaweiPacket, times(1)).parse(input);
         verify(mockAsynchronousResponse, times(0)).handleResponse(any());
@@ -296,13 +309,13 @@ public class TestResponseManager {
 
         ResponseManager responseManager = new ResponseManager(supportProvider);
         handlersField.set(responseManager, inputHandlers);
-        receivedPacketField.set(responseManager, mockHuaweiPacket);
+        setReceivedPacket(responseManager, mockHuaweiPacket);
         asynchronousResponseField.set(responseManager, mockAsynchronousResponse);
 
         responseManager.handleData(input);
 
         Assert.assertEquals(expectedHandlers, handlersField.get(responseManager));
-        Assert.assertNull(receivedPacketField.get(responseManager));
+        Assert.assertNull(getReceivedPacket(responseManager));
 
         verify(mockHuaweiPacket, times(1)).parse(input);
         verify(mockAsynchronousResponse, times(1)).handleResponse(mockHuaweiPacket);
@@ -346,13 +359,13 @@ public class TestResponseManager {
 
         ResponseManager responseManager = new ResponseManager(supportProvider);
         handlersField.set(responseManager, inputHandlers);
-        receivedPacketField.set(responseManager, mockHuaweiPacket);
+        setReceivedPacket(responseManager, mockHuaweiPacket);
         asynchronousResponseField.set(responseManager, mockAsynchronousResponse);
 
         responseManager.handleData(input1);
 
         Assert.assertEquals(expectedHandlers1, handlersField.get(responseManager));
-        Assert.assertEquals(mockHuaweiPacket, receivedPacketField.get(responseManager));
+        Assert.assertEquals(mockHuaweiPacket, getReceivedPacket(responseManager));
 
         verify(mockHuaweiPacket, times(1)).parse(input1);
         verify(mockAsynchronousResponse, times(0)).handleResponse(any());
@@ -365,7 +378,7 @@ public class TestResponseManager {
         responseManager.handleData(input2);
 
         Assert.assertEquals(expectedHandlers2, handlersField.get(responseManager));
-        Assert.assertNull(receivedPacketField.get(responseManager));
+        Assert.assertNull(getReceivedPacket(responseManager));
 
         verify(mockHuaweiPacket, times(1)).parse(input2);
         verify(mockAsynchronousResponse, times(0)).handleResponse(any());
@@ -406,13 +419,13 @@ public class TestResponseManager {
 
         ResponseManager responseManager = new ResponseManager(supportProvider);
         handlersField.set(responseManager, inputHandlers);
-        receivedPacketField.set(responseManager, mockHuaweiPacket);
+        setReceivedPacket(responseManager, mockHuaweiPacket);
         asynchronousResponseField.set(responseManager, mockAsynchronousResponse);
 
         responseManager.handleData(input1);
 
         Assert.assertEquals(expectedHandlers, handlersField.get(responseManager));
-        Assert.assertEquals(mockHuaweiPacket, receivedPacketField.get(responseManager));
+        Assert.assertEquals(mockHuaweiPacket, getReceivedPacket(responseManager));
 
         verify(mockHuaweiPacket, times(1)).parse(input1);
         verify(mockAsynchronousResponse, times(0)).handleResponse(any());
@@ -425,7 +438,7 @@ public class TestResponseManager {
         responseManager.handleData(input2);
 
         Assert.assertEquals(expectedHandlers, handlersField.get(responseManager));
-        Assert.assertNull(receivedPacketField.get(responseManager));
+        Assert.assertNull(getReceivedPacket(responseManager));
 
         verify(mockHuaweiPacket, times(1)).parse(input2);
         verify(mockAsynchronousResponse, times(1)).handleResponse(any());
