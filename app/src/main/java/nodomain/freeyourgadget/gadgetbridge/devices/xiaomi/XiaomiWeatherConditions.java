@@ -149,6 +149,7 @@ public class XiaomiWeatherConditions {
             case 801:  // few clouds
             case 802:  // scattered clouds
             case 803:  // broken clouds
+                return CLOUDY;
             case 804:  // overcast clouds
                 return OVERCAST;
 //Group 90x: Extreme
