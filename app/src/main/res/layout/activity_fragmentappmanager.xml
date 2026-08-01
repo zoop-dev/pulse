@@ -34,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:contentDescription="@string/appinstaller_install"
         android:layout_gravity="bottom|end"
         app:srcCompat="@android:drawable/stat_sys_upload"
         android:layout_margin="16dp" />
@@ -44,6 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:contentDescription="@string/create_watchface"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="90dp"
@@ -57,6 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:contentDescription="@string/appmanager_app_store"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="90dp"

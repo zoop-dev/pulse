@@ -31,6 +31,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_gravity="bottom|end"
+        android:contentDescription="@string/fossil_hr_new_action"
         app:srcCompat="@drawable/ic_add"
         android:layout_margin="16dp" />
 </RelativeLayout>

@@ -116,6 +116,7 @@
     <string name="appmananger_app_delete_cache">Delete and remove from cache</string>
     <string name="appmananger_app_reinstall">Reinstall</string>
     <string name="appmanager_app_share">Share</string>
+    <string name="appmanager_app_store">App store</string>
     <string name="appmanager_app_openinstore">Search in Pebble appstore</string>
     <string name="appmanager_health_activate">Activate</string>
     <string name="appmanager_health_deactivate">Deactivate</string>
@@ -195,6 +196,7 @@
     <string name="open_source_licenses">Licenses</string>
     <string name="dialog_close">Close</string>
     <string name="dialog_open_url">Open URL</string>
+    <string name="refresh">Refresh</string>
     <string name="open_fw_installer_select_file">Select a file you want to upload to device: %s</string>
     <string name="open_fw_installer_connect_minimum_one_device">Please connect AT LEAST ONE device you want to send the file to.</string>
     <string name="open_fw_installer_connect_maximum_one_device">Please connect ONLY ONE device you want to send the file to.</string>
@@ -728,6 +730,7 @@
     <string name="firmware_install_warning">YOU ARE TRYING TO INSTALL A FIRMWARE, PROCEED AT YOUR OWN RISK.\n\n\n This firmware is for HW Revision: %s</string>
     <string name="app_install_info">You are about to install the following app:\n\n%1$s\nVersion %2$s by %3$s\n</string>
     <string name="watchface_install_info">You are about to install the following watchface:\n\n%1$s\nVersion %2$s by %3$s\n</string>
+    <string name="create_watchface">Create watchface</string>
     <string name="music_upload_info">You are about to upload the following music file:\n\n%1$s\nSong title: %2$s\nAlbum: %3$s\n</string>
     <string name="n_a">N/A</string>
     <string name="initialized">initialized</string>
@@ -930,12 +933,15 @@
     <string name="reminder_every_month">Every month</string>
     <string name="reminder_every_year">Every year</string>
     <string name="reminder_delete_confirm_title">Delete reminder</string>
+    <string name="add_reminder">Add reminder</string>
     <string name="reminder_delete_confirm_description">Are you sure you want to delete the reminder?</string>
     <string name="reminder_no_free_slots_title">No free slots</string>
     <string name="reminder_no_free_slots_description">The device has no free slots for reminders (total slots: %1$s)</string>
+    <string name="add_contact">Add contact</string>
     <string name="contact_delete_confirm_title">Delete contact</string>
     <string name="contact_delete_confirm_description">Are you sure you want to delete \"%1$s\"?</string>
     <string name="contact_no_free_slots_description">The device has no free slots for contacts (total slots: %1$s)</string>
+    <string name="add_world_clock">Add world clock</string>
     <string name="world_clock_delete_confirm_title">Delete \"%1$s\"</string>
     <string name="world_clock_delete_confirm_description">Are you sure you want to delete the world clock?</string>
     <string name="world_clock_no_free_slots_title">No free slots</string>
@@ -1072,6 +1078,7 @@
     <string name="music_upload_failed">Music upload failed</string>
     <string name="music_upload_complete">Music upload complete</string>
     <string name="music_upload_in_progress">Uploading music</string>
+    <string name="upload_music">Upload music</string>
     <string name="updatefirmwareoperation_failed_low_mtu">Current MTU of %1$d is too low, please enable high MTU in the device settings and disconnect/re-connect the device.</string>
     <string name="chart_steps">Steps</string>
     <string name="calories">Calories</string>
@@ -4231,6 +4238,7 @@
     <string name="pref_vitality_score_daily_title">Daily progress</string>
     <string name="pref_vitality_score_daily_summary">Get a notification when you reached the maximum number of vitality points for the day</string>
     <string name="widget">Widget</string>
+    <string name="add_widget_screen">Add widget screen</string>
     <string name="widget_screen">Widget Screen</string>
     <string name="widget_screen_delete_confirm_title">Delete widget screen</string>
     <string name="widget_screen_delete_confirm_description">Are you sure you want to delete \"%1$s\"?</string>

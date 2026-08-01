@@ -38,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:contentDescription="@string/refresh"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:tint="@android:color/white"
