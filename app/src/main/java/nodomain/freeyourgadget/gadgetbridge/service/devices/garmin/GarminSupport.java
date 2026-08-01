@@ -704,6 +704,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     private void sendWeatherConditions(WeatherSpec weather) {
         if (!getCoordinator().supports(getDevice(), GarminCapability.WEATHER_CONDITIONS)) {
             // Device does not support sending weather as fit
+            LOG.debug("Not sending weather to device, it does not support WEATHER_CONDITIONS. Weather will be sent via HTTP once the watch requests it.");
             return;
         }
 
