@@ -19,6 +19,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,10 +28,15 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 
 import de.greenrobot.daogenerator.DaoGenerator;
 import de.greenrobot.daogenerator.Entity;
@@ -296,8 +302,9 @@ public class GBDaoGenerator {
 
         final long start = System.currentTimeMillis();
 
+        final Template sampleProviderTemplate = loadSampleProviderTemplate();
         for (Entity entity : sampleProvidersToGenerate) {
-            generateSampleProvider(entity);
+            generateSampleProvider(sampleProviderTemplate, entity);
         }
 
         long time = System.currentTimeMillis() - start;
@@ -2505,73 +2512,21 @@ public class GBDaoGenerator {
         return sample;
     }
 
-    private static final String SAMPLE_PROVIDER_TEMPLATE = """
-            /*  Copyright (C) 2026 Freeyourgadget
-            
-                This file is part of Gadgetbridge.
-            
-                Gadgetbridge is free software: you can redistribute it and/or modify
-                it under the terms of the GNU Affero General Public License as published
-                by the Free Software Foundation, either version 3 of the License, or
-                (at your option) any later version.
-            
-                Gadgetbridge is distributed in the hope that it will be useful,
-                but WITHOUT ANY WARRANTY; without even the implied warranty of
-                MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-                GNU Affero General Public License for more details.
-            
-                You should have received a copy of the GNU Affero General Public License
-                along with this program.  If not, see <https://www.gnu.org/licenses/>. */
-            package nodomain.freeyourgadget.gadgetbridge.devices;
-            
-            import androidx.annotation.NonNull;
-            
-            import de.greenrobot.dao.AbstractDao;
-            import de.greenrobot.dao.Property;
-            import nodomain.freeyourgadget.gadgetbridge.entities.${classNameSample};
-            import nodomain.freeyourgadget.gadgetbridge.entities.${classNameDao};
-            import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-            import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
-            
-            public class ${classNameSample}Provider extends AbstractTimeSampleProvider<${classNameSample}> {
-                public ${classNameSample}Provider(@NonNull final GBDevice device, @NonNull final DaoSession session) {
-                    super(device, session);
-                }
-            
-                @NonNull
-                @Override
-                public AbstractDao<${classNameSample}, ?> getSampleDao() {
-                    return getSession().get${classNameDao}();
-                }
-            
-                @NonNull
-                @Override
-                protected Property getTimestampSampleProperty() {
-                    return ${classNameDao}.Properties.Timestamp;
-                }
-            
-                @NonNull
-                @Override
-                protected Property getDeviceIdentifierSampleProperty() {
-                    return ${classNameDao}.Properties.DeviceId;
-                }
-            
-                @NonNull
-                @Override
-                public ${classNameSample} createSample() {
-                    return new ${classNameSample}();
-                }
-            }
-            """;
+    private static Template loadSampleProviderTemplate() throws IOException {
+        final Configuration config = new Configuration(Configuration.VERSION_2_3_23);
+        config.setClassForTemplateLoading(GBDaoGenerator.class, "/");
+        return config.getTemplate("gadgetbridge/time-sample-provider.ftl");
+    }
 
-    private static void generateSampleProvider(final Entity entity) throws IOException {
+    private static void generateSampleProvider(final Template template, final Entity entity) throws Exception {
         final File outputDir = new File(OUTPUT_DIR + "/nodomain/freeyourgadget/gadgetbridge/devices");
         //noinspection ResultOfMethodCallIgnored
         outputDir.mkdirs();
-        final String generatedCode = SAMPLE_PROVIDER_TEMPLATE
-                .replace("${classNameSample}", entity.getClassName())
-                .replace("${classNameDao}", entity.getClassNameDao())
-                .replaceAll("\\R", System.lineSeparator());
+        final Map<String, Object> root = new HashMap<>();
+        root.put("entity", entity);
+        final StringWriter rendered = new StringWriter();
+        template.process(root, rendered);
+        final String generatedCode = rendered.toString().replaceAll("\\R", System.lineSeparator());
         final File file = new File(outputDir, entity.getClassName() + "Provider.java");
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, false))) {
             writer.write(generatedCode);

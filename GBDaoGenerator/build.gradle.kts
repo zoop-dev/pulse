@@ -36,6 +36,7 @@ sourceSets {
 
 tasks.register<JavaExec>("genSources") {
     inputs.dir("src")
+    inputs.dir("src-template")
     outputs.dir(project.rootProject.file("app/build/generated/sources/gbdao"))
 
     mainClass = application.mainClass
