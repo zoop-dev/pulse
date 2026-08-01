@@ -65,7 +65,7 @@ public class SleepAsAndroidPreferencesActivity extends AbstractSettingsActivityV
 
                             GBApplication.getPrefs().getPreferences().edit().putString("sleepasandroid_device", device.getAddress()).apply();
 
-                            Set<SleepAsAndroidFeature> supportedFeatures = device.getDeviceCoordinator().getSleepAsAndroidFeatures();
+                            Set<SleepAsAndroidFeature> supportedFeatures = device.getDeviceCoordinator().getSleepAsAndroidFeatures(device);
                             findPreference("sleepasandroid_alarm_slot").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.ALARMS));
                             findPreference("pref_key_sleepasandroid_feat_alarms").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.ALARMS));
                             findPreference("pref_key_sleepasandroid_feat_notifications").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.NOTIFICATIONS));
@@ -101,7 +101,7 @@ public class SleepAsAndroidPreferencesActivity extends AbstractSettingsActivityV
                 GBDevice device = GBApplication.app().getDeviceManager().getDeviceByAddress(defaultDeviceAddr);
                 if (device != null) {
 
-                    Set<SleepAsAndroidFeature> supportedFeatures = device.getDeviceCoordinator().getSleepAsAndroidFeatures();
+                    Set<SleepAsAndroidFeature> supportedFeatures = device.getDeviceCoordinator().getSleepAsAndroidFeatures(device);
                     findPreference("sleepasandroid_alarm_slot").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.ALARMS));
                     findPreference("pref_key_sleepasandroid_feat_alarms").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.ALARMS));
                     findPreference("pref_key_sleepasandroid_feat_notifications").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.NOTIFICATIONS));

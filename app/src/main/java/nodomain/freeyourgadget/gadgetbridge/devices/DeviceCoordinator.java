@@ -889,7 +889,7 @@ public interface DeviceCoordinator {
      * Returns the set of supported sleep as Android features
       * @return Set
      */
-    Set<SleepAsAndroidFeature> getSleepAsAndroidFeatures();
+    Set<SleepAsAndroidFeature> getSleepAsAndroidFeatures(@NonNull final GBDevice device);
 
     /**
      * Returns device specific settings related to connection

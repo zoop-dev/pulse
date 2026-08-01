@@ -408,7 +408,7 @@ public abstract class XiaomiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public Set<SleepAsAndroidFeature> getSleepAsAndroidFeatures() {
+    public Set<SleepAsAndroidFeature> getSleepAsAndroidFeatures(@NonNull final GBDevice device) {
         // Default set for Xiaomi protobuf devices. Raw accelerometer is streamed via the
         // synthetic-workout raw-sensor protocol (sport=810, subtype 53; see
         // XiaomiHealthService.startRawSensor). Devices that do not honor it should override

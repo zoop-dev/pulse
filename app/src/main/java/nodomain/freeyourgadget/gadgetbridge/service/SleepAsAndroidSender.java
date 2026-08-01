@@ -75,7 +75,7 @@ public class SleepAsAndroidSender {
 
     public SleepAsAndroidSender(GBDevice gbDevice) {
         this.device = gbDevice;
-        this.features = gbDevice.getDeviceCoordinator().getSleepAsAndroidFeatures();
+        this.features = gbDevice.getDeviceCoordinator().getSleepAsAndroidFeatures(gbDevice);
     }
 
     /**

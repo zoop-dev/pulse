@@ -374,8 +374,14 @@ public abstract class HuamiSupport extends AbstractBTLESingleDeviceSupport
     @CallSuper
     @Override
     public void dispose() {
+        sleepAsAndroidSender.stopTracking();
         calendarSyncHandler.removeCallbacksAndMessages(null);
         super.dispose();
+    }
+
+    @Override
+    public SleepAsAndroidSender getSleepAsAndroidSender() {
+        return sleepAsAndroidSender;
     }
 
     @Override

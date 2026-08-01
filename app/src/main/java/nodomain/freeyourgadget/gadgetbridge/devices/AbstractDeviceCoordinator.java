@@ -1010,7 +1010,7 @@ public abstract class AbstractDeviceCoordinator implements DeviceCoordinator {
     }
 
     @Override
-    public Set<SleepAsAndroidFeature> getSleepAsAndroidFeatures() {
+    public Set<SleepAsAndroidFeature> getSleepAsAndroidFeatures(@NonNull final GBDevice device) {
         return Collections.emptySet();
     }
 

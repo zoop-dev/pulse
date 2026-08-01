@@ -177,12 +177,18 @@ public abstract class HuamiCoordinator extends AbstractBLEDeviceCoordinator {
     }
 
     @Override
-    public Set<SleepAsAndroidFeature> getSleepAsAndroidFeatures() {
-        return EnumSet.of(
+    public Set<SleepAsAndroidFeature> getSleepAsAndroidFeatures(@NonNull final GBDevice device) {
+        final EnumSet<SleepAsAndroidFeature> features = EnumSet.of(
                 SleepAsAndroidFeature.ACCELEROMETER,
                 SleepAsAndroidFeature.HEART_RATE,
                 SleepAsAndroidFeature.ALARMS,
-                SleepAsAndroidFeature.NOTIFICATIONS);
+                SleepAsAndroidFeature.NOTIFICATIONS
+        );
+        if (supportsSpo2(device)) {
+            features.add(SleepAsAndroidFeature.SPO2);
+            features.add(SleepAsAndroidFeature.SPO2_AUTOFETCH);
+        }
+        return features;
     }
 
     @Override

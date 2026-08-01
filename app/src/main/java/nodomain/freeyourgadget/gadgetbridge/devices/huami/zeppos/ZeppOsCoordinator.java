@@ -256,11 +256,6 @@ public abstract class ZeppOsCoordinator extends HuamiCoordinator {
     }
 
     @Override
-    public Set<SleepAsAndroidFeature> getSleepAsAndroidFeatures() {
-        return EnumSet.of(SleepAsAndroidFeature.ACCELEROMETER, SleepAsAndroidFeature.HEART_RATE, SleepAsAndroidFeature.ALARMS, SleepAsAndroidFeature.NOTIFICATIONS);
-    }
-
-    @Override
     public int getWorldClocksSlotCount() {
         return hasDisplay() ? 20 : 0; // as enforced by Zepp
     }
