@@ -279,6 +279,7 @@ public class ZeppOsSupport extends AbstractDeviceSupport
 
     @Override
     public void dispose() {
+        sleepAsAndroidSender.stopTracking();
         for (final Short endpoint : mSupportedServices) {
             if (mServiceMap.containsKey(endpoint)) {
                 Objects.requireNonNull(mServiceMap.get(endpoint)).dispose();
@@ -966,6 +967,11 @@ public class ZeppOsSupport extends AbstractDeviceSupport
     @Override
     public ZeppOsCoordinator getCoordinator() {
         return (ZeppOsCoordinator) gbDevice.getDeviceCoordinator();
+    }
+
+    @Override
+    public SleepAsAndroidSender getSleepAsAndroidSender() {
+        return sleepAsAndroidSender;
     }
 
     private void setRawSensor(final boolean enable) {

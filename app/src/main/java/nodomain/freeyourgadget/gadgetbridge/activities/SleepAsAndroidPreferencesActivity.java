@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SwitchPreferenceCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +72,12 @@ public class SleepAsAndroidPreferencesActivity extends AbstractSettingsActivityV
                             findPreference("pref_key_sleepasandroid_feat_movement").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.ACCELEROMETER));
                             findPreference("pref_key_sleepasandroid_feat_hr").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.HEART_RATE));
                             findPreference("pref_key_sleepasandroid_feat_oximetry").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.OXIMETRY));
-                            findPreference("pref_key_sleepasandroid_feat_spo2").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.SPO2));
+                            final boolean spo2Supported = supportedFeatures.contains(SleepAsAndroidFeature.SPO2);
+                            final boolean spo2AutofetchSupported = supportedFeatures.contains(SleepAsAndroidFeature.SPO2_AUTOFETCH);
+                            final SwitchPreferenceCompat spo2Pref = findPreference("pref_key_sleepasandroid_feat_spo2");
+                            spo2Pref.setEnabled(spo2Supported);
+                            spo2Pref.setSummary(spo2AutofetchSupported ? getString(R.string.pref_sleepasandroid_feat_spo2_autofetch_only_summary) : null);
+                            findPreference("pref_key_sleepasandroid_spo2_autofetch_interval").setEnabled(spo2AutofetchSupported && spo2Supported && spo2Pref.isChecked());
 
                             ListPreference alarmSlots = findPreference("sleepasandroid_alarm_slot");
                             if (alarmSlots != null)
@@ -102,7 +108,12 @@ public class SleepAsAndroidPreferencesActivity extends AbstractSettingsActivityV
                     findPreference("pref_key_sleepasandroid_feat_movement").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.ACCELEROMETER));
                     findPreference("pref_key_sleepasandroid_feat_hr").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.HEART_RATE));
                     findPreference("pref_key_sleepasandroid_feat_oximetry").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.OXIMETRY));
-                    findPreference("pref_key_sleepasandroid_feat_spo2").setEnabled(supportedFeatures.contains(SleepAsAndroidFeature.SPO2));
+                    final boolean spo2Supported = supportedFeatures.contains(SleepAsAndroidFeature.SPO2);
+                    final boolean spo2AutofetchSupported = supportedFeatures.contains(SleepAsAndroidFeature.SPO2_AUTOFETCH);
+                    final SwitchPreferenceCompat spo2Pref = findPreference("pref_key_sleepasandroid_feat_spo2");
+                    spo2Pref.setEnabled(spo2Supported);
+                    spo2Pref.setSummary(spo2AutofetchSupported ? getString(R.string.pref_sleepasandroid_feat_spo2_autofetch_only_summary) : null);
+                    findPreference("pref_key_sleepasandroid_spo2_autofetch_interval").setEnabled(spo2AutofetchSupported && spo2Supported && spo2Pref.isChecked());
                 }
             }
         }

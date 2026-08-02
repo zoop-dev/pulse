@@ -13,6 +13,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.RecordedDataTypes;
+import nodomain.freeyourgadget.gadgetbridge.service.SleepAsAndroidSender;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.AbstractFetchOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchActivityOperation;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.huami.operations.fetch.FetchDebugLogsOperation;
@@ -162,6 +163,10 @@ public class HuamiFetcher {
         return mSupport instanceof ZeppOsSupport;
     }
 
+    public SleepAsAndroidSender getSleepAsAndroidSender() {
+        return mSupport.getSleepAsAndroidSender();
+    }
+
     public void triggerNextOperation() {
         final boolean wasFetching = currentOperation != null;
         currentOperation = this.fetchOperationQueue.poll();
@@ -212,5 +217,7 @@ public class HuamiFetcher {
         byte[] getTimeBytes(final Calendar calendar, final TimeUnit precision);
         void setActivityNotifications(boolean control, boolean data);
         void writeActivityControl(String name, byte[] value);
+
+        SleepAsAndroidSender getSleepAsAndroidSender();
     }
 }
