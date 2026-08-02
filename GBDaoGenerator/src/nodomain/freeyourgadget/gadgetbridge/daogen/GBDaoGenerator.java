@@ -109,9 +109,10 @@ public class GBDaoGenerator {
             outputDir.mkdirs();
         }
 
-        final Schema schema = new Schema(136, MAIN_PACKAGE + ".entities");
+        final Schema schema = new Schema(137, MAIN_PACKAGE + ".entities");
 
         final List<Entity> sampleProvidersToGenerate = new LinkedList<>();
+        final List<Entity> batterySampleProvidersToGenerate = new LinkedList<>();
 
         Entity userAttributes = addUserAttributes(schema);
         Entity user = addUserInfo(schema, userAttributes);
@@ -277,7 +278,12 @@ public class GBDaoGenerator {
         addNotificationFilterEntry(schema, notificationFilter);
 
         addActivitySummary(schema, user, device);
+        // FIXME: BatteryLevel timestamp is in seconds, maybe migrate it once #6177 is merged
         addBatteryLevel(schema, device);
+        batterySampleProvidersToGenerate.add(addBatteryVoltageSample(schema, device));
+        batterySampleProvidersToGenerate.add(addBatteryCurrentSample(schema, device));
+        batterySampleProvidersToGenerate.add(addBatteryPowerSample(schema, device));
+        batterySampleProvidersToGenerate.add(addBatteryTemperatureSample(schema, device));
 
         sampleProvidersToGenerate.add(addGenericHeartRateSample(schema, user, device));
         sampleProvidersToGenerate.add(addGenericSpo2Sample(schema, user, device));
@@ -302,9 +308,14 @@ public class GBDaoGenerator {
 
         final long start = System.currentTimeMillis();
 
-        final Template sampleProviderTemplate = loadSampleProviderTemplate();
+        final Template timeSampleProviderTemplate = loadTemplate("gadgetbridge/time-sample-provider.ftl");
         for (Entity entity : sampleProvidersToGenerate) {
-            generateSampleProvider(sampleProviderTemplate, entity);
+            generateSampleProvider(timeSampleProviderTemplate, entity);
+        }
+
+        final Template batterySampleProviderTemplate = loadTemplate("gadgetbridge/battery-sample-provider.ftl");
+        for (Entity entity : batterySampleProvidersToGenerate) {
+            generateSampleProvider(batterySampleProviderTemplate, entity);
         }
 
         long time = System.currentTimeMillis() - start;
@@ -1772,6 +1783,54 @@ public class GBDaoGenerator {
         return batteryLevel;
     }
 
+    private static Entity addBatteryVoltageSample(Schema schema, Entity device) {
+        Entity batteryVoltage = addEntity(schema, "BatteryVoltageSample");
+        batteryVoltage.setSuperclass("AbstractBatterySample");
+        batteryVoltage.implementsSerializable();
+        batteryVoltage.addLongProperty("timestamp").notNull().primaryKey().codeBeforeGetterAndSetter(OVERRIDE);
+        Property deviceId = batteryVoltage.addLongProperty("deviceId").primaryKey().notNull().codeBeforeGetterAndSetter(OVERRIDE).getProperty();
+        batteryVoltage.addToOne(device, deviceId);
+        batteryVoltage.addIntProperty("batteryIndex").notNull().primaryKey().codeBeforeGetterAndSetter(OVERRIDE);
+        batteryVoltage.addFloatProperty("voltage").notNull();
+        return batteryVoltage;
+    }
+
+    private static Entity addBatteryCurrentSample(Schema schema, Entity device) {
+        Entity batteryCurrent = addEntity(schema, "BatteryCurrentSample");
+        batteryCurrent.setSuperclass("AbstractBatterySample");
+        batteryCurrent.implementsSerializable();
+        batteryCurrent.addLongProperty("timestamp").notNull().primaryKey().codeBeforeGetterAndSetter(OVERRIDE);
+        Property deviceId = batteryCurrent.addLongProperty("deviceId").primaryKey().notNull().codeBeforeGetterAndSetter(OVERRIDE).getProperty();
+        batteryCurrent.addToOne(device, deviceId);
+        batteryCurrent.addIntProperty("batteryIndex").notNull().primaryKey().codeBeforeGetterAndSetter(OVERRIDE);
+        batteryCurrent.addFloatProperty("current").notNull();
+        return batteryCurrent;
+    }
+
+    private static Entity addBatteryPowerSample(Schema schema, Entity device) {
+        Entity batteryPower = addEntity(schema, "BatteryPowerSample");
+        batteryPower.setSuperclass("AbstractBatterySample");
+        batteryPower.implementsSerializable();
+        batteryPower.addLongProperty("timestamp").notNull().primaryKey().codeBeforeGetterAndSetter(OVERRIDE);
+        Property deviceId = batteryPower.addLongProperty("deviceId").primaryKey().notNull().codeBeforeGetterAndSetter(OVERRIDE).getProperty();
+        batteryPower.addToOne(device, deviceId);
+        batteryPower.addIntProperty("batteryIndex").notNull().primaryKey().codeBeforeGetterAndSetter(OVERRIDE);
+        batteryPower.addFloatProperty("power").notNull();
+        return batteryPower;
+    }
+
+    private static Entity addBatteryTemperatureSample(Schema schema, Entity device) {
+        Entity batteryTemperature = addEntity(schema, "BatteryTemperatureSample");
+        batteryTemperature.setSuperclass("AbstractBatterySample");
+        batteryTemperature.implementsSerializable();
+        batteryTemperature.addLongProperty("timestamp").notNull().primaryKey().codeBeforeGetterAndSetter(OVERRIDE);
+        Property deviceId = batteryTemperature.addLongProperty("deviceId").primaryKey().notNull().codeBeforeGetterAndSetter(OVERRIDE).getProperty();
+        batteryTemperature.addToOne(device, deviceId);
+        batteryTemperature.addIntProperty("batteryIndex").notNull().primaryKey().codeBeforeGetterAndSetter(OVERRIDE);
+        batteryTemperature.addFloatProperty(SAMPLE_TEMPERATURE).notNull();
+        return batteryTemperature;
+    }
+
     private static Entity addFitProActivitySample(Schema schema, Entity user, Entity device) {
         Entity activitySample = addEntity(schema, "FitProActivitySample");
         activitySample.implementsSerializable();
@@ -2512,10 +2571,10 @@ public class GBDaoGenerator {
         return sample;
     }
 
-    private static Template loadSampleProviderTemplate() throws IOException {
+    private static Template loadTemplate(final String name) throws IOException {
         final Configuration config = new Configuration(Configuration.VERSION_2_3_23);
         config.setClassForTemplateLoading(GBDaoGenerator.class, "/");
-        return config.getTemplate("gadgetbridge/time-sample-provider.ftl");
+        return config.getTemplate(name);
     }
 
     private static void generateSampleProvider(final Template template, final Entity entity) throws Exception {

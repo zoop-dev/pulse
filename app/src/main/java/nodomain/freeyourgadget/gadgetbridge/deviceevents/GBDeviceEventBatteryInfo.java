@@ -43,10 +43,11 @@ import nodomain.freeyourgadget.gadgetbridge.R;
 import nodomain.freeyourgadget.gadgetbridge.activities.BatteryInfoActivity;
 import nodomain.freeyourgadget.gadgetbridge.database.DBAccess;
 import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
-import nodomain.freeyourgadget.gadgetbridge.database.DBHelper;
+import nodomain.freeyourgadget.gadgetbridge.devices.BatteryLevelProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.BatteryVoltageSampleProvider;
 import nodomain.freeyourgadget.gadgetbridge.entities.BatteryLevel;
+import nodomain.freeyourgadget.gadgetbridge.entities.BatteryVoltageSample;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
-import nodomain.freeyourgadget.gadgetbridge.entities.Device;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryConfig;
 import nodomain.freeyourgadget.gadgetbridge.model.BatteryState;
@@ -285,14 +286,23 @@ public class GBDeviceEventBatteryInfo extends GBDeviceEvent {
         @Override
         protected void doInBackground(final DBHandler handler) {
             final DaoSession daoSession = handler.getDaoSession();
-            final Device device = DBHelper.getDevice(gbDevice, daoSession);
-            final int ts = (int) (System.currentTimeMillis() / 1000);
+            final long tsMillis = System.currentTimeMillis();
+
+            final BatteryLevelProvider batteryLevelProvider = new BatteryLevelProvider(gbDevice, daoSession);
             final BatteryLevel batteryLevel = new BatteryLevel();
-            batteryLevel.setTimestamp(ts);
+            batteryLevel.setTimestamp((int) (tsMillis / 1000L));
             batteryLevel.setBatteryIndex(deviceEvent.batteryIndex);
-            batteryLevel.setDevice(device);
             batteryLevel.setLevel(deviceEvent.level);
-            handler.getDaoSession().getBatteryLevelDao().insert(batteryLevel);
+            batteryLevelProvider.persistSamples(batteryLevel, getContext());
+
+            if (deviceEvent.voltage >= 0) {
+                final BatteryVoltageSampleProvider batteryVoltageSampleProvider = new BatteryVoltageSampleProvider(gbDevice, daoSession);
+                final BatteryVoltageSample voltageSample = new BatteryVoltageSample();
+                voltageSample.setTimestamp(tsMillis);
+                voltageSample.setBatteryIndex(deviceEvent.batteryIndex);
+                voltageSample.setVoltage(deviceEvent.voltage);
+                batteryVoltageSampleProvider.persistSamples(voltageSample, getContext());
+            }
         }
     }
 }
