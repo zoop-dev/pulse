@@ -43,7 +43,7 @@ public enum BatteryMetric {
     LEVEL(R.string.battery_level, ActivitySummaryEntries.UNIT_PERCENTAGE, R.color.chart_battery_level, 0f, R.drawable.ic_battery),
     VOLTAGE(R.string.xiaomi_scooter_voltage, ActivitySummaryEntries.UNIT_VOLT, R.color.chart_battery_voltage, 0.5f, R.drawable.ic_bolt),
     CURRENT(R.string.electrical_current, ActivitySummaryEntries.UNIT_AMPERE, R.color.chart_battery_current, 0.2f, R.drawable.ic_power_input),
-    POWER(R.string.xiaomi_scooter_power, ActivitySummaryEntries.UNIT_WATT, R.color.chart_battery_power, 2f, R.drawable.ic_power_settings_new),
+    POWER(R.string.xiaomi_scooter_power, ActivitySummaryEntries.UNIT_WATT, R.color.chart_battery_power, 2f, R.drawable.ic_electric_meter),
     TEMPERATURE(R.string.menuitem_temperature, ActivitySummaryEntries.UNIT_CELSIUS, R.color.chart_battery_temperature, 5f, R.drawable.ic_thermometer),
     ;
 
