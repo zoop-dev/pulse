@@ -101,10 +101,50 @@ public abstract class AbstractBatterySampleProvider<T extends AbstractBatterySam
         final Property deviceProperty = getDeviceIdentifierSampleProperty();
         qb.where(deviceProperty.eq(dbDevice.getId()), timestampProperty.ge(timestampFrom))
                 .where(timestampProperty.le(timestampTo))
-                .where(batteryIndexProperty.eq(batteryIndex));
+                .where(batteryIndexProperty.eq(batteryIndex))
+                .orderAsc(timestampProperty);
         final List<T> samples = qb.build().list();
         getSampleDao().detachAll();
         return samples;
+    }
+
+    /**
+     * The most recently recorded sample for the given battery index, regardless of any time
+     * range, or {@code null} if none was ever recorded.
+     */
+    @Nullable
+    public T getLatestSample(final int batteryIndex) {
+        final Device dbDevice = DBHelper.findDevice(getDevice(), getSession());
+        if (dbDevice == null) {
+            return null;
+        }
+
+        final QueryBuilder<T> qb = getSampleDao().queryBuilder();
+        qb.where(getDeviceIdentifierSampleProperty().eq(dbDevice.getId()))
+                .where(getBatteryIndexSampleProperty().eq(batteryIndex))
+                .orderDesc(getTimestampSampleProperty())
+                .limit(1);
+        final List<T> samples = qb.build().list();
+        getSampleDao().detachAll();
+        return samples.isEmpty() ? null : samples.get(0);
+    }
+
+    /**
+     * Whether any sample was ever recorded for the given battery index.
+     */
+    public boolean hasSamples(final int batteryIndex) {
+        final Device dbDevice = DBHelper.findDevice(getDevice(), getSession());
+        if (dbDevice == null) {
+            return false;
+        }
+
+        final QueryBuilder<T> qb = getSampleDao().queryBuilder();
+        qb.where(getDeviceIdentifierSampleProperty().eq(dbDevice.getId()))
+                .where(getBatteryIndexSampleProperty().eq(batteryIndex))
+                .limit(1);
+        final boolean hasSamples = !qb.build().list().isEmpty();
+        getSampleDao().detachAll();
+        return hasSamples;
     }
 
     @Override

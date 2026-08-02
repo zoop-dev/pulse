@@ -116,6 +116,12 @@
     <color name="chart_cns_toxicity" type="color">#FF4040</color>
     <color name="chart_n2_load" type="color">#FF8840</color>
 
+    <color name="chart_battery_level" type="color">#60bd6d</color>
+    <color name="chart_battery_voltage" type="color">#3F84E5</color>
+    <color name="chart_battery_current" type="color">#00796B</color>
+    <color name="chart_battery_power" type="color">#6A0DAD</color>
+    <color name="chart_battery_temperature" type="color">#ff8f00</color>
+
     <attr name="row_separator" format="color" />
     <color name="alternate_row_background_light">#FFEDEDED</color>
     <color name="alternate_row_background_dark">#545254</color>

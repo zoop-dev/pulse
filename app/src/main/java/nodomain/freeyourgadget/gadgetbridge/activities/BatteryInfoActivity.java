@@ -89,8 +89,6 @@ public class BatteryInfoActivity extends AbstractGBActivity {
 
         timeTo = (int) (System.currentTimeMillis() / 1000);
 
-        batteryInfoChartFragment.setDateAndGetData(gbDevice, batteryIndex, timeFrom, timeTo);
-
         TextView battery_status_device_name_text = findViewById(R.id.battery_status_device_name);
         battery_status_battery_voltage = findViewById(R.id.battery_status_battery_voltage);
         TextView battery_status_extra_name = findViewById(R.id.battery_status_extra_name);

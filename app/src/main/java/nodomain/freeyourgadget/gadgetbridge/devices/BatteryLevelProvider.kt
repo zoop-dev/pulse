@@ -22,6 +22,7 @@ import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.R
 import nodomain.freeyourgadget.gadgetbridge.database.DBHelper
 import nodomain.freeyourgadget.gadgetbridge.entities.BatteryLevel
+import nodomain.freeyourgadget.gadgetbridge.entities.BatteryLevelDao
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.util.GB
@@ -30,6 +31,59 @@ import org.slf4j.LoggerFactory
 
 class BatteryLevelProvider(val device: GBDevice, val session: DaoSession) :
     PersistenceProvider<BatteryLevel> {
+
+    /**
+     * Returns the battery level samples for the given battery index and time range, ordered
+     * by ascending timestamp. The time range is given in Unix epoch milliseconds, even though
+     * [BatteryLevel.timestamp] is stored in seconds.
+     */
+    fun getAllSamples(batteryIndex: Int,
+                      timestampFromMillis: Long,
+                      timestampToMillis: Long): List<BatteryLevel> {
+        val dbDevice = DBHelper.findDevice(device, session) ?: return emptyList()
+
+        val qb = session.batteryLevelDao.queryBuilder()
+        qb.where(BatteryLevelDao.Properties.DeviceId.eq(dbDevice.id))
+            .where(BatteryLevelDao.Properties.BatteryIndex.eq(batteryIndex))
+            .where(BatteryLevelDao.Properties.Timestamp.ge((timestampFromMillis / 1000L).toInt()))
+            .where(BatteryLevelDao.Properties.Timestamp.le((timestampToMillis / 1000L).toInt()))
+            .orderAsc(BatteryLevelDao.Properties.Timestamp)
+        val samples = qb.build().list()
+        session.batteryLevelDao.detachAll()
+        return samples
+    }
+
+    /**
+     * The most recently recorded battery level sample for the given battery index, regardless
+     * of any time range, or null if none was ever recorded.
+     */
+    fun getLatestSample(batteryIndex: Int): BatteryLevel? {
+        val dbDevice = DBHelper.findDevice(device, session) ?: return null
+
+        val qb = session.batteryLevelDao.queryBuilder()
+        qb.where(BatteryLevelDao.Properties.DeviceId.eq(dbDevice.id))
+            .where(BatteryLevelDao.Properties.BatteryIndex.eq(batteryIndex))
+            .orderDesc(BatteryLevelDao.Properties.Timestamp)
+            .limit(1)
+        val samples = qb.build().list()
+        session.batteryLevelDao.detachAll()
+        return samples.firstOrNull()
+    }
+
+    /**
+     * Whether any battery level sample was ever recorded for the given battery index.
+     */
+    fun hasSamples(batteryIndex: Int): Boolean {
+        val dbDevice = DBHelper.findDevice(device, session) ?: return false
+
+        val qb = session.batteryLevelDao.queryBuilder()
+        qb.where(BatteryLevelDao.Properties.DeviceId.eq(dbDevice.id))
+            .where(BatteryLevelDao.Properties.BatteryIndex.eq(batteryIndex))
+            .limit(1)
+        val hasSamples = !qb.build().list().isEmpty()
+        session.batteryLevelDao.detachAll()
+        return hasSamples
+    }
 
     override fun persistSamples(
         samples: List<BatteryLevel>, context: Context?
