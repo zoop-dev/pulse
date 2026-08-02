@@ -51,6 +51,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -62,6 +63,9 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
@@ -71,6 +75,7 @@ import nodomain.freeyourgadget.gadgetbridge.database.DBHandler;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEvent;
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventAppInfo;
 import nodomain.freeyourgadget.gadgetbridge.devices.PendingFileProvider;
+import nodomain.freeyourgadget.gadgetbridge.devices.SleepAsAndroidFeature;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminFitFileInstallHandler;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminGpxRouteInstallHandler;
@@ -79,6 +84,7 @@ import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminPrgFileInstallH
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminCapability;
 import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession;
 import nodomain.freeyourgadget.gadgetbridge.externalevents.gps.GBLocationService;
+import nodomain.freeyourgadget.gadgetbridge.externalevents.sleepasandroid.SleepAsAndroidAction;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceApp;
 import nodomain.freeyourgadget.gadgetbridge.model.Alarm;
@@ -97,6 +103,7 @@ import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiFindMyWatch;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiInstalledAppsService;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiSettingsService;
 import nodomain.freeyourgadget.gadgetbridge.proto.garmin.GdiSmartProto;
+import nodomain.freeyourgadget.gadgetbridge.service.SleepAsAndroidSender;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.AbstractBTLESingleDeviceSupport;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.communicator.ICommunicator;
@@ -161,6 +168,9 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
     private boolean mFirstConnect = false;
     private boolean isBusyFetching;
 
+    private SleepAsAndroidSender sleepAsAndroidSender;
+    private ScheduledExecutorService saaAlarmScheduler;
+
     private GBProgressNotification transferNotification;
 
     final Map<UUID, GdiInstalledAppsService.InstalledAppsService.InstalledApp> installedApps = new HashMap<>();
@@ -209,6 +219,14 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         this.mediaManager = new MediaManager(context);
         this.protocolBufferHandler.setContext(gbDevice, btAdapter, context);
         this.transferNotification = new GBProgressNotification(context, GB.NOTIFICATION_CHANNEL_ID_TRANSFER);
+        if (gbDevice.getDeviceCoordinator().supportsSleepAsAndroid(gbDevice)) {
+            this.sleepAsAndroidSender = new SleepAsAndroidSender(gbDevice);
+        }
+    }
+
+    @Override
+    public SleepAsAndroidSender getSleepAsAndroidSender() {
+        return sleepAsAndroidSender;
     }
 
     @Override
@@ -219,6 +237,10 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             // mid-sync leaves the progress notification pinned indefinitely.
             transferNotification.finish();
             isBusyFetching = false;
+            if (sleepAsAndroidSender != null) {
+                sleepAsAndroidSender.stopTracking();
+            }
+            stopSleepAsAndroidSchedulers();
             if (communicator != null) {
                 communicator.dispose();
             }
@@ -633,7 +655,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
             final boolean isSystemApp = !installedApp.hasFileName();
             final GBDeviceApp.Type type = switch (installedApp.getType()) {
                 case WATCH_FACE -> isSystemApp ? GBDeviceApp.Type.WATCHFACE_SYSTEM : GBDeviceApp.Type.WATCHFACE;
-                case DATA_FIELD, ACTIVITY -> isSystemApp ? GBDeviceApp.Type.UNKNOWN /* otherwise too many appear */: GBDeviceApp.Type.APP_ACTIVITYTRACKER;
+                case DATA_FIELD, ACTIVITY -> isSystemApp ? GBDeviceApp.Type.UNKNOWN /* otherwise too many appear */ : GBDeviceApp.Type.APP_ACTIVITYTRACKER;
                 case AUDIO_CONTENT_PROVIDER -> isSystemApp ? GBDeviceApp.Type.APP_SYSTEM : GBDeviceApp.Type.APP_GENERIC;
                 case WATCH_APP -> isSystemApp ? GBDeviceApp.Type.APP_SYSTEM : GBDeviceApp.Type.APP_GENERIC;
                 default -> GBDeviceApp.Type.UNKNOWN;
@@ -670,7 +692,9 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         sendWeatherConditions(weatherSpec);
     }
 
-    /** Wrap and send a watch-bound Smart RPC. */
+    /**
+     * Wrap and send a watch-bound Smart RPC.
+     */
     void sendProtobufRequest(final String taskName, final GdiSmartProto.Smart payload) {
         sendOutgoingMessage(taskName, protocolBufferHandler.prepareProtobufRequest(payload));
     }
@@ -692,7 +716,7 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         if (message == null)
             return;
         byte[] ack = message.getAckBytestream();
-        if (ack != null  && LOG.isDebugEnabled())
+        if (ack != null && LOG.isDebugEnabled())
             LOG.debug("OUTGOING ACK {}: {}", message, GB.hexdump(ack));
         if (communicator == null) {
             LOG.error("ack communicator is null");
@@ -1038,6 +1062,123 @@ public class GarminSupport extends AbstractBTLESingleDeviceSupport implements IC
         }
         sendProtobufRequest("find device",
                 GdiSmartProto.Smart.newBuilder().setFindMyWatchService(a).build());
+    }
+
+    @Override
+    public void onSleepAsAndroidAction(final String action, final Bundle extras) {
+        if (sleepAsAndroidSender == null) {
+            LOG.warn("SaA sender not initialized, dropping {}", action);
+            return;
+        }
+        if (!gbDevice.isInitialized()) {
+            LOG.warn("Device not initialized, dropping SaA action {}", action);
+            return;
+        }
+        try {
+            sleepAsAndroidSender.validateAction(action);
+        } catch (final UnsupportedOperationException e) {
+            return;
+        }
+
+        switch (action) {
+            case SleepAsAndroidAction.CHECK_CONNECTED:
+                sleepAsAndroidSender.confirmConnected();
+                break;
+            case SleepAsAndroidAction.START_TRACKING:
+                toggleSleepAsAndroidRealtimeData(true);
+                sleepAsAndroidSender.startTracking();
+                break;
+            case SleepAsAndroidAction.STOP_TRACKING:
+                toggleSleepAsAndroidRealtimeData(false);
+                sleepAsAndroidSender.stopTracking();
+                break;
+            case SleepAsAndroidAction.SET_PAUSE: {
+                final long pauseTimestamp = extras.getLong("TIMESTAMP");
+                final long delay = pauseTimestamp > 0 ? pauseTimestamp - System.currentTimeMillis() : 0;
+                sleepAsAndroidSender.pauseTracking(delay);
+                break;
+            }
+            case SleepAsAndroidAction.SET_SUSPENDED: {
+                final boolean suspended = extras.getBoolean("SUSPENDED", false);
+                sleepAsAndroidSender.pauseTracking(suspended);
+                break;
+            }
+            case SleepAsAndroidAction.SET_BATCH_SIZE:
+                sleepAsAndroidSender.setBatchSize(extras.getLong("SIZE", 12L));
+                break;
+            case SleepAsAndroidAction.HINT:
+                LOG.debug("Ignoring SaA hint for repeat = {}", extras.getInt("REPEAT", 1));
+                break;
+            case SleepAsAndroidAction.SHOW_NOTIFICATION: {
+                final NotificationSpec spec = new NotificationSpec();
+                spec.title = extras.getString("TITLE");
+                spec.body = extras.getString("BODY");
+                onNotification(spec);
+                break;
+            }
+            case SleepAsAndroidAction.UPDATE_ALARM:
+                // Most Garmin devices do not support alarms, so we do not schedule anything on the
+                // watch - the alarm is triggered by START_ALARM, using find device to vibrate.
+                LOG.debug("Ignoring SaA alarm update for {}", new Date(extras.getLong("TIMESTAMP")));
+                break;
+            case SleepAsAndroidAction.START_ALARM:
+                scheduleSleepAsAndroidAlarmVibration(extras.getInt("DELAY", 60000));
+                break;
+            case SleepAsAndroidAction.STOP_ALARM:
+                cancelSleepAsAndroidAlarmVibration();
+                break;
+            default:
+                LOG.warn("Received unsupported SaA action: {}", action);
+                break;
+        }
+    }
+
+    /**
+     * Enables or disables the realtime data streams that Sleep as Android consumes, for the
+     * features that are supported and enabled.
+     */
+    private void toggleSleepAsAndroidRealtimeData(final boolean enable) {
+        if (sleepAsAndroidSender.hasFeature(SleepAsAndroidFeature.ACCELEROMETER)
+                && sleepAsAndroidSender.isFeatureEnabled(SleepAsAndroidFeature.ACCELEROMETER)) {
+            communicator.onEnableRealtimeAccelerometer(enable);
+        }
+        if (sleepAsAndroidSender.hasFeature(SleepAsAndroidFeature.HEART_RATE)
+                && sleepAsAndroidSender.isFeatureEnabled(SleepAsAndroidFeature.HEART_RATE)) {
+            communicator.onEnableRealtimeHeartRateMeasurement(enable);
+        }
+        if (sleepAsAndroidSender.hasFeature(SleepAsAndroidFeature.SPO2)
+                && sleepAsAndroidSender.isFeatureEnabled(SleepAsAndroidFeature.SPO2)) {
+            communicator.onEnableRealtimeSpo2(enable);
+        }
+        if (sleepAsAndroidSender.hasFeature(SleepAsAndroidFeature.RR_INTERVALS)
+                && sleepAsAndroidSender.isFeatureEnabled(SleepAsAndroidFeature.RR_INTERVALS)) {
+            communicator.onEnableRealtimeRrIntervals(enable);
+        }
+    }
+
+    private void scheduleSleepAsAndroidAlarmVibration(final int delayMs) {
+        cancelSleepAsAndroidAlarmVibration();
+        if (delayMs == -1) {
+            return;
+        }
+        saaAlarmScheduler = Executors.newSingleThreadScheduledExecutor();
+        saaAlarmScheduler.schedule(
+                () -> onFindDevice(true),
+                Math.max(0, delayMs),
+                TimeUnit.MILLISECONDS
+        );
+    }
+
+    private void cancelSleepAsAndroidAlarmVibration() {
+        stopSleepAsAndroidSchedulers();
+        onFindDevice(false);
+    }
+
+    private void stopSleepAsAndroidSchedulers() {
+        if (saaAlarmScheduler != null) {
+            saaAlarmScheduler.shutdownNow();
+            saaAlarmScheduler = null;
+        }
     }
 
     @Override

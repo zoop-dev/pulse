@@ -3,6 +3,7 @@ package nodomain.freeyourgadget.gadgetbridge.devices;
 
 public enum SleepAsAndroidFeature {
     HEART_RATE,
+    RR_INTERVALS,
     ALARMS,
     NOTIFICATIONS,
     ACCELEROMETER,

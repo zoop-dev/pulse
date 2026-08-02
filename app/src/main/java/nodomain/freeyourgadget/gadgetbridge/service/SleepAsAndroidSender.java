@@ -103,6 +103,9 @@ public class SleepAsAndroidSender {
                 case HEART_RATE:
                     enabled = GBApplication.getPrefs().getBoolean("pref_key_sleepasandroid_feat_hr", false);
                     break;
+                case RR_INTERVALS:
+                    enabled = GBApplication.getPrefs().getBoolean("pref_key_sleepasandroid_feat_rr_intervals", false);
+                    break;
                 case SPO2:
                     enabled = GBApplication.getPrefs().getBoolean("pref_key_sleepasandroid_feat_spo2", false);
                     break;
@@ -507,7 +510,7 @@ public class SleepAsAndroidSender {
         }
 
         // RR Intervals
-        if (extraDataRR != null && (hasFeature(SleepAsAndroidFeature.HEART_RATE) && isFeatureEnabled(SleepAsAndroidFeature.HEART_RATE))) {
+        if (extraDataRR != null && (hasFeature(SleepAsAndroidFeature.RR_INTERVALS) && isFeatureEnabled(SleepAsAndroidFeature.RR_INTERVALS))) {
             intent.putExtra(EXTRA_DATA_RR, convertToFloatArray(extraDataRR));
         }
 
@@ -572,7 +575,7 @@ public class SleepAsAndroidSender {
             intent.putExtra(EXTRA_DATA_SDNN, sdnn);
         }
 
-        if (extraDataRR != null && (hasFeature(SleepAsAndroidFeature.HEART_RATE) && isFeatureEnabled(SleepAsAndroidFeature.HEART_RATE))) {
+        if (extraDataRR != null && (hasFeature(SleepAsAndroidFeature.RR_INTERVALS) && isFeatureEnabled(SleepAsAndroidFeature.RR_INTERVALS))) {
             intent.putExtra(EXTRA_DATA_RR, extraDataRR);
         }
 

@@ -3,9 +3,12 @@ package nodomain.freeyourgadget.gadgetbridge.devices.garmin.watches;
 import androidx.annotation.NonNull;
 
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import nodomain.freeyourgadget.gadgetbridge.R;
+import nodomain.freeyourgadget.gadgetbridge.devices.SleepAsAndroidFeature;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminCoordinator;
 import nodomain.freeyourgadget.gadgetbridge.devices.garmin.GarminCapability;
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
@@ -190,6 +193,30 @@ public abstract class GarminWatchCoordinator extends GarminCoordinator {
     @Override
     public boolean supportsFindDevice(@NonNull GBDevice device) {
         return true;
+    }
+
+    @Override
+    public boolean supportsSleepAsAndroid(@NonNull final GBDevice device) {
+        return true;
+    }
+
+    @Override
+    public Set<SleepAsAndroidFeature> getSleepAsAndroidFeatures(@NonNull final GBDevice device) {
+        // Alarms are triggered by vibrating the watch with find device, since most devices do
+        // not support alarms
+        final EnumSet<SleepAsAndroidFeature> features = EnumSet.of(
+                SleepAsAndroidFeature.ACCELEROMETER,
+                SleepAsAndroidFeature.HEART_RATE,
+                SleepAsAndroidFeature.ALARMS,
+                SleepAsAndroidFeature.NOTIFICATIONS
+        );
+        if (supportsHrvMeasurement(device)) {
+            features.add(SleepAsAndroidFeature.RR_INTERVALS);
+        }
+        if (supportsSpo2(device)) {
+            features.add(SleepAsAndroidFeature.SPO2);
+        }
+        return features;
     }
 
     @Override

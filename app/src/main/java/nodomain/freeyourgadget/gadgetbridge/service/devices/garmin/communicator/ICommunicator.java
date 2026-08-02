@@ -26,6 +26,10 @@ public interface ICommunicator {
 
     void onEnableRealtimeAccelerometer(final boolean enable);
 
+    void onEnableRealtimeSpo2(final boolean enable);
+
+    void onEnableRealtimeRrIntervals(final boolean enable);
+
     interface Callback {
         void onMessage(byte[] message);
     }

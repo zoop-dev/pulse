@@ -36,6 +36,7 @@ import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivityKind;
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySample;
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceService;
+import nodomain.freeyourgadget.gadgetbridge.service.SleepAsAndroidSender;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.BLETypeConversions;
 import nodomain.freeyourgadget.gadgetbridge.service.btle.TransactionBuilder;
 import nodomain.freeyourgadget.gadgetbridge.service.devices.garmin.GarminSupport;
@@ -257,6 +258,16 @@ public class CommunicatorV2 implements ICommunicator {
         toggleService(Service.REALTIME_ACCELEROMETER, enable);
     }
 
+    @Override
+    public void onEnableRealtimeSpo2(final boolean enable) {
+        toggleService(Service.REALTIME_SPO2, enable);
+    }
+
+    @Override
+    public void onEnableRealtimeRrIntervals(final boolean enable) {
+        toggleService(Service.REALTIME_HRV, enable);
+    }
+
     private boolean toggleService(final Service service, final boolean enable) {
         final int currentHandle = Objects.requireNonNull(handleByService.getOrDefault(service, 0));
         if (enable && currentHandle == 0) {
@@ -269,6 +280,8 @@ public class CommunicatorV2 implements ICommunicator {
                     .write(characteristicSend, closeService(service, currentHandle))
                     .queue();
             return true;
+        } else {
+            LOG.debug("Not toggling {}, it is already {}", service, enable ? "enabled" : "disabled");
         }
 
         return false;
@@ -435,6 +448,11 @@ public class CommunicatorV2 implements ICommunicator {
             if (hr > 0) {
                 broadcastRealtimeActivity(hr, -1);
 
+                final SleepAsAndroidSender sleepAsAndroidSender = mSupport.getSleepAsAndroidSender();
+                if (sleepAsAndroidSender != null) {
+                    sleepAsAndroidSender.onHrChanged(hr, 0);
+                }
+
                 if (realtimeHrOneShot && handleByService.containsKey(Service.REALTIME_HR)) {
                     onEnableRealtimeHeartRateMeasurement(false);
                 }
@@ -473,7 +491,7 @@ public class CommunicatorV2 implements ICommunicator {
      * device frame, i.e. the watch reads z = -1g while laying face up - the opposite sign of the
      * Android accelerometer convention.
      */
-    private static class RealtimeAccelerometerCallback implements ServiceCallback {
+    private class RealtimeAccelerometerCallback implements ServiceCallback {
         private static final int ACCEL_SAMPLES_OFFSET = 2;
         private static final float ACCEL_SCALE_FACTOR = 256f;
         private static final float ACCEL_GRAVITY = -9.81f;
@@ -499,12 +517,18 @@ public class CommunicatorV2 implements ICommunicator {
                 return;
             }
 
+            final SleepAsAndroidSender sleepAsAndroidSender = mSupport.getSleepAsAndroidSender();
+
             for (int i = 0; i < numSamples; i++) {
                 final float x = accelSample(value, i * 3);
                 final float y = accelSample(value, i * 3 + 1);
                 final float z = accelSample(value, i * 3 + 2);
 
                 LOG.debug("Got realtime accelerometer at {}: x={} y={} z={}", timestamp, x, y, z);
+
+                if (sleepAsAndroidSender != null) {
+                    sleepAsAndroidSender.onAccelChanged(x, y, z);
+                }
             }
         }
 
@@ -521,13 +545,28 @@ public class CommunicatorV2 implements ICommunicator {
         }
     }
 
-    private static class RealtimeSpo2Callback implements ServiceCallback {
+    private class RealtimeSpo2Callback implements ServiceCallback {
         @Override
         public void onMessage(final byte[] value) {
             final int spo2 = value[0]; // -1 when unknown, and the ts is not valid in that case
             final int garminTs = BLETypeConversions.toUint32(value, 1);
 
             LOG.debug("Got realtime SpO2 at {}: {}", new Date(GarminTimeUtils.garminTimestampToJavaMillis(garminTs)), spo2);
+
+            if (spo2 <= 0) {
+                return;
+            }
+
+            final SleepAsAndroidSender sleepAsAndroidSender = mSupport.getSleepAsAndroidSender();
+            if (sleepAsAndroidSender != null) {
+                sleepAsAndroidSender.sendExtra(
+                        null,
+                        null,
+                        (float) spo2,
+                        null,
+                        GarminTimeUtils.garminTimestampToJavaMillis(garminTs)
+                );
+            }
         }
     }
 
@@ -540,12 +579,23 @@ public class CommunicatorV2 implements ICommunicator {
         }
     }
 
-    private static class RealtimeHrvCallback implements ServiceCallback {
+    private class RealtimeHrvCallback implements ServiceCallback {
         @Override
         public void onMessage(final byte[] value) {
             final int rr = BLETypeConversions.toUint16(value, 0);
             final int unk = BLETypeConversions.toUint32(value, 2);
             LOG.debug("Got realtime HRV: rr={}, unk={}", rr, unk);
+
+            final SleepAsAndroidSender sleepAsAndroidSender = mSupport.getSleepAsAndroidSender();
+            if (sleepAsAndroidSender != null) {
+                sleepAsAndroidSender.sendExtra(
+                        null,
+                        (float) rr,
+                        null,
+                        null,
+                        System.currentTimeMillis()
+                );
+            }
         }
     }
 
