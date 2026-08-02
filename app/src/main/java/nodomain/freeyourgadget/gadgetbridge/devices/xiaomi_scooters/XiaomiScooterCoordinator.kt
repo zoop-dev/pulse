@@ -9,9 +9,13 @@ import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.compon
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.dsl.deviceSettings
 import nodomain.freeyourgadget.gadgetbridge.devices.AbstractBLEDeviceCoordinator
 import nodomain.freeyourgadget.gadgetbridge.devices.DeviceCoordinator
+import nodomain.freeyourgadget.gadgetbridge.devices.GenericTemperatureSampleProvider
+import nodomain.freeyourgadget.gadgetbridge.devices.TimeSampleProvider
+import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDeviceCandidate
 import nodomain.freeyourgadget.gadgetbridge.model.DeviceType
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample
 import nodomain.freeyourgadget.gadgetbridge.service.DeviceSupport
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi_scooters.XiaomiScooterEnergyRecovery
 import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi_scooters.XiaomiScooterSupport
@@ -79,6 +83,21 @@ abstract class XiaomiScooterCoordinator : AbstractBLEDeviceCoordinator() {
 
     override fun supportsRecordedActivities(device: GBDevice): Boolean {
         return true
+    }
+
+    override fun supportsTemperatureMeasurement(device: GBDevice): Boolean {
+        return true
+    }
+
+    override fun supportsContinuousTemperature(device: GBDevice): Boolean {
+        return true
+    }
+
+    override fun getTemperatureSampleProvider(
+        device: GBDevice,
+        session: DaoSession
+    ): TimeSampleProvider<out TemperatureSample?> {
+        return GenericTemperatureSampleProvider(device, session)
     }
 
     override fun getDeviceSettings(device: GBDevice): DeviceSettingsSpec = deviceSettings {

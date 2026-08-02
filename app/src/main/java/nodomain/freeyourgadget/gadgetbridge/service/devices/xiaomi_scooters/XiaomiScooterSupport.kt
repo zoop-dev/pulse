@@ -435,6 +435,7 @@ class XiaomiScooterSupport : AbstractBTLESingleDeviceSupport(LOG) {
                 if (hasPreferences) {
                     evaluateGBDeviceEvent(event)
                 }
+                persistTelemetrySamples(message.entries)
             }
 
             XiaomiScooterProtocol.OPCODE_SET_ACK -> {
@@ -547,6 +548,38 @@ class XiaomiScooterSupport : AbstractBTLESingleDeviceSupport(LOG) {
         }
 
         return false
+    }
+
+    /**
+     * Persists the measurements in [entries] as samples, so they can be charted over time.
+     *
+     * A separate pass from the display-string decoding in [handlePropertyEntry], so that every
+     * reading in one message shares a single database session and a single timestamp -- which
+     * keeps the resulting series aligned with each other.
+     */
+    private fun persistTelemetrySamples(entries: List<XiaomiScooterProtocol.DecodedEntry>) {
+        val timestamp = System.currentTimeMillis()
+
+        val pending = entries.mapNotNull { entry ->
+            val sample = XiaomiScooterProperties.TELEMETRY_BY_CODE[entry.code]?.sample
+                ?: return@mapNotNull null
+            val value = entry.value?.let(sample.value) ?: return@mapNotNull null
+            sample.sink to value
+        }
+
+        if (pending.isEmpty()) {
+            return
+        }
+
+        try {
+            GBApplication.acquireDB().use { db ->
+                for ((sink, value) in pending) {
+                    sink.persist(gbDevice, db.daoSession, context, timestamp, value)
+                }
+            }
+        } catch (e: Exception) {
+            LOG.error("Failed to persist telemetry samples", e)
+        }
     }
 
     // =======================================================================

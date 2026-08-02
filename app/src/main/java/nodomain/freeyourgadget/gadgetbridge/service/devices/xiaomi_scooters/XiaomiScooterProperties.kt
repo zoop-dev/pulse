@@ -1,6 +1,24 @@
 package nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi_scooters
 
+import android.content.Context
 import nodomain.freeyourgadget.gadgetbridge.activities.devicesettings.DeviceSettingsPreferenceConst
+import nodomain.freeyourgadget.gadgetbridge.devices.BatteryCurrentSampleProvider
+import nodomain.freeyourgadget.gadgetbridge.devices.BatteryPowerSampleProvider
+import nodomain.freeyourgadget.gadgetbridge.devices.BatteryTemperatureSampleProvider
+import nodomain.freeyourgadget.gadgetbridge.devices.BatteryVoltageSampleProvider
+import nodomain.freeyourgadget.gadgetbridge.devices.GenericTemperatureSampleProvider
+import nodomain.freeyourgadget.gadgetbridge.entities.BatteryCurrentSample
+import nodomain.freeyourgadget.gadgetbridge.entities.BatteryPowerSample
+import nodomain.freeyourgadget.gadgetbridge.entities.BatteryTemperatureSample
+import nodomain.freeyourgadget.gadgetbridge.entities.BatteryVoltageSample
+import nodomain.freeyourgadget.gadgetbridge.entities.DaoSession
+import nodomain.freeyourgadget.gadgetbridge.entities.GenericTemperatureSample
+import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
+import nodomain.freeyourgadget.gadgetbridge.model.TemperatureSample
+import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi_scooters.XiaomiScooterProperties.RIDE_HISTORY_CODES
+import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi_scooters.XiaomiScooterProperties.TIRE_PRESSURE_ENCODERS
+import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi_scooters.XiaomiScooterProperties.decodeTirePressureMaintenance
+import nodomain.freeyourgadget.gadgetbridge.service.devices.xiaomi_scooters.XiaomiScooterProperties.numeric
 import nodomain.freeyourgadget.gadgetbridge.util.Prefs
 
 /**
@@ -256,42 +274,132 @@ object XiaomiScooterProperties {
         val code: Int,
         val prefKey: String,
         val decode: (XiaomiScooterProtocol.RawValue) -> Any?,
+        /**
+         * Set for telemetry that is a measurement rather than an identifier, so that it also gets
+         * persisted as a sample and can be charted over time. Null for the rest (serials, firmware
+         * versions, manufacturing dates).
+         */
+        val sample: TelemetrySample? = null,
+    )
+
+    /**
+     * The numeric side of a [TelemetryProperty]: the same wire value decoded to a plain number,
+     * plus the table it gets persisted into. Built by [numeric], which derives it from the very
+     * same decode function that produces [TelemetryProperty.decode]'s display string.
+     */
+    class TelemetrySample(
+        val value: (XiaomiScooterProtocol.RawValue) -> Float?,
+        val sink: SampleSink,
+    )
+
+    /** Writes one decoded telemetry reading to the database. */
+    fun interface SampleSink {
+        /** [timestamp] is in milliseconds since the epoch. */
+        fun persist(device: GBDevice, session: DaoSession, context: Context?, timestamp: Long, value: Float)
+    }
+
+    /** A [TelemetryProperty] for a measurement: decoded once, then both formatted and persisted. */
+    private fun numeric(
+        code: Int,
+        prefKey: String,
+        value: (XiaomiScooterProtocol.RawValue) -> Float?,
+        format: (Float) -> String,
+        sink: SampleSink,
+    ) = TelemetryProperty(
+        code = code,
+        prefKey = prefKey,
+        decode = { raw -> value(raw)?.let(format) },
+        sample = TelemetrySample(value, sink),
     )
 
     /** Read-only telemetry pushed to a read-only settings field. */
     val TELEMETRY: List<TelemetryProperty> = listOf(
-        TelemetryProperty(CODE_VOLTAGE, DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_VOLTAGE) {
-            // TODO persist and chart
-            it.asF32()?.let { raw -> "%.2f V".format(raw / 100f) }
-        },
-        TelemetryProperty(CODE_CURRENT, DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_CURRENT) {
-            // TODO persist and chart
-            it.asF32()?.let { raw -> "%.2f A".format(raw / 100f) }
-        },
-        TelemetryProperty(CODE_POWER, DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_POWER) {
-            // TODO persist and chart
-            it.asF32()?.let { raw -> "%.2f W".format(raw / 100f) }
-        },
-        TelemetryProperty(CODE_BATTERY_TEMP, DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_BATTERY_TEMP) {
-            // TODO persist and chart
-            it.asI8()?.let { raw -> "$raw °C" }
-        },
-        TelemetryProperty(CODE_SCOOTER_TEMP, DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_SCOOTER_TEMP) {
-            // TODO persist and chart
-            it.asI8()?.let { raw -> "$raw °C" }
-        },
-        TelemetryProperty(CODE_BATTERY_CYCLES, DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_BATTERY_CYCLES) {
-            it.asU8()?.toString()
-        },
-        TelemetryProperty(CODE_BATTERY_MFG_DATE, DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_BATTERY_MFG_DATE) {
-            it.asString()
-        },
-        TelemetryProperty(CODE_BATTERY_SERIAL, DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_BATTERY_SERIAL) {
-            it.asString()
-        },
-        TelemetryProperty(CODE_BMS_FW_VERSION, DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_BMS_FW_VERSION) {
-            it.asString()
-        },
+        numeric(
+            code = CODE_VOLTAGE,
+            prefKey = DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_VOLTAGE,
+            value = { it.asF32()?.div(100f) },
+            format = { "%.2f V".format(it) },
+            sink = { device, session, context, timestamp, value ->
+                val sample = BatteryVoltageSample()
+                sample.timestamp = timestamp
+                sample.batteryIndex = 0 // single battery
+                sample.voltage = value
+                BatteryVoltageSampleProvider(device, session).persistSamples(sample, context)
+            }
+        ),
+        numeric(
+            code = CODE_CURRENT,
+            prefKey = DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_CURRENT,
+            value = { it.asF32()?.div(100f) },
+            format = { "%.2f A".format(it) },
+            sink = { device, session, context, timestamp, value ->
+                val sample = BatteryCurrentSample()
+                sample.timestamp = timestamp
+                sample.batteryIndex = 0 // single battery
+                sample.current = value
+                BatteryCurrentSampleProvider(device, session).persistSamples(sample, context)
+            }
+        ),
+        numeric(
+            code = CODE_POWER,
+            prefKey = DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_POWER,
+            value = { it.asF32()?.div(100f) },
+            format = { "%.2f W".format(it) },
+            sink = { device, session, context, timestamp, value ->
+                val sample = BatteryPowerSample()
+                sample.timestamp = timestamp
+                sample.batteryIndex = 0 // single battery
+                sample.power = value
+                BatteryPowerSampleProvider(device, session).persistSamples(sample, context)
+            }
+        ),
+        numeric(
+            code = CODE_BATTERY_TEMP,
+            prefKey = DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_BATTERY_TEMP,
+            value = { it.asI8()?.toFloat() },
+            format = { "%.0f °C".format(it) },
+            sink = { device, session, context, timestamp, value ->
+                val sample = BatteryTemperatureSample()
+                sample.timestamp = timestamp
+                sample.batteryIndex = 0 // single battery
+                sample.temperature = value
+                BatteryTemperatureSampleProvider(device, session).persistSamples(sample, context)
+            }
+        ),
+        numeric(
+            code = CODE_SCOOTER_TEMP,
+            prefKey = DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_SCOOTER_TEMP,
+            value = { it.asI8()?.toFloat() },
+            format = { "%.0f °C".format(it) },
+            sink = { device, session, context, timestamp, value ->
+                val sample = GenericTemperatureSample()
+                sample.timestamp = timestamp
+                sample.temperature = value
+                sample.temperatureType = TemperatureSample.TYPE_UNKNOWN
+                sample.temperatureLocation = TemperatureSample.LOCATION_UNKNOWN
+                GenericTemperatureSampleProvider(device, session).persistSamples(sample, context)
+            },
+        ),
+        TelemetryProperty(
+            code = CODE_BATTERY_CYCLES,
+            prefKey = DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_BATTERY_CYCLES,
+            decode = { it.asU8()?.toString() },
+        ),
+        TelemetryProperty(
+            code = CODE_BATTERY_MFG_DATE,
+            prefKey = DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_BATTERY_MFG_DATE,
+            decode = { it.asString() },
+        ),
+        TelemetryProperty(
+            code = CODE_BATTERY_SERIAL,
+            prefKey = DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_BATTERY_SERIAL,
+            decode = { it.asString() },
+        ),
+        TelemetryProperty(
+            code = CODE_BMS_FW_VERSION,
+            prefKey = DeviceSettingsPreferenceConst.PREF_XIAOMI_SCOOTER_BMS_FW_VERSION,
+            decode = { it.asString() },
+        ),
     )
 
     val TELEMETRY_BY_CODE: Map<Int, TelemetryProperty> = TELEMETRY.associateBy { it.code }
