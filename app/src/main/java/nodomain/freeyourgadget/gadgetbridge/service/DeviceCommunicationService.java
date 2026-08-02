@@ -62,6 +62,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -161,79 +162,40 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         }
     }
 
+    private enum Feature {
+        WEATHER,
+        DATA_FETCHING,
+        CALENDAR,
+        MUSIC_INFO,
+        NAVIGATION,
+        SLEEP_AS_ANDROID,
+    }
+
     private static class FeatureSet {
-        private boolean supportsWeather = false;
-        private boolean supportsDataFetching = false;
-        private boolean supportsCalendarEvents = false;
-        private boolean supportsMusicInfo = false;
-        private boolean supportsNavigation = false;
+        private final Set<Feature> features = EnumSet.noneOf(Feature.class);
 
-        private boolean supportsSleepAsAndroid = false;
-
-        public boolean supportsWeather() {
-            return supportsWeather;
+        public boolean supports(final Feature feature) {
+            return features.contains(feature);
         }
 
-        public void setSupportsWeather(boolean supportsWeather) {
-            this.supportsWeather = supportsWeather;
-        }
-
-        public boolean supportsDataFetching() {
-            return supportsDataFetching;
-        }
-
-        public void setSupportsDataFetching(boolean supportsDataFetching) {
-            this.supportsDataFetching = supportsDataFetching;
-        }
-
-        public boolean supportsCalendarEvents() {
-            return supportsCalendarEvents;
-        }
-
-        public void setSupportsCalendarEvents(boolean supportsCalendarEvents) {
-            this.supportsCalendarEvents = supportsCalendarEvents;
-        }
-
-        public boolean supportsMusicInfo() {
-            return supportsMusicInfo;
-        }
-
-        public void setSupportsMusicInfo(boolean supportsMusicInfo) {
-            this.supportsMusicInfo = supportsMusicInfo;
-        }
-
-        public boolean supportsNavigation() {
-            return supportsNavigation;
-        }
-
-        public void setSupportsNavigation(boolean supportsNavigation) {
-            this.supportsNavigation = supportsNavigation;
-        }
-
-        public boolean supportsSleepAsAndroid() { return supportsSleepAsAndroid; }
-
-        public void setSupportsSleepAsAndroid(boolean supportsSleepAsAndroid) {
-            this.supportsSleepAsAndroid = supportsSleepAsAndroid;
-        }
-
-        public void logicalOr(DeviceCoordinator operand, final GBDevice device){
+        public void logicalOr(final DeviceCoordinator operand, final GBDevice device){
             if (operand.supportsCalendarEvents(device)) {
-                setSupportsCalendarEvents(true);
+                features.add(Feature.CALENDAR);
             }
             if (operand.supportsWeather(device)) {
-                setSupportsWeather(true);
+                features.add(Feature.WEATHER);
             }
             if (operand.supportsDataFetching(device)) {
-                setSupportsDataFetching(true);
+                features.add(Feature.DATA_FETCHING);
             }
             if (operand.supportsMusicInfo(device)) {
-                setSupportsMusicInfo(true);
+                features.add(Feature.MUSIC_INFO);
             }
             if (operand.supportsNavigation(device)) {
-                setSupportsNavigation(true);
+                features.add(Feature.NAVIGATION);
             }
             if (operand.supportsSleepAsAndroid(device)) {
-                setSupportsSleepAsAndroid(true);
+                features.add(Feature.SLEEP_AS_ANDROID);
             }
         }
     }
@@ -1248,7 +1210,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 deviceSupport.onSetGpsLocation(location);
                 break;
             case ACTION_SLEEP_AS_ANDROID:
-                if(device.getDeviceCoordinator().supportsSleepAsAndroid(device) && GBApplication.getPrefs().getString("sleepasandroid_device", new String()).equals(device.getAddress()))
+                if(device.getDeviceCoordinator().supportsSleepAsAndroid(device) && GBApplication.getPrefs().getString("sleepasandroid_device", "").equals(device.getAddress()))
                 {
                     final String sleepAsAndroidAction = intentCopy.getStringExtra(EXTRA_SLEEP_AS_ANDROID_ACTION);
                     deviceSupport.onSleepAsAndroidAction(sleepAsAndroidAction, intentCopy.getExtras());
@@ -1409,7 +1371,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
         mReceiversEnabled = enable;
         mCurrentFeatureSet = features;
 
-        if (enable && initialized && features.supportsCalendarEvents()) {
+        if (enable && initialized && features.supports(Feature.CALENDAR)) {
             for (GBDevice deviceWithCalendar : devicesWithCalendar) {
                 if (!deviceHasCalendarReceiverRegistered(deviceWithCalendar)) {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) == PackageManager.PERMISSION_GRANTED) {
@@ -1443,7 +1405,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 mPebbleReceiver = new PebbleReceiver();
                 ContextCompat.registerReceiver(this, mPebbleReceiver, new IntentFilter("com.getpebble.action.SEND_NOTIFICATION"), ContextCompat.RECEIVER_EXPORTED);
             }
-            if (mMusicPlaybackReceiver == null && features.supportsMusicInfo()) {
+            if (mMusicPlaybackReceiver == null && features.supports(Feature.MUSIC_INFO)) {
                 mMusicPlaybackReceiver = new MusicPlaybackReceiver();
                 IntentFilter filter = new IntentFilter();
                 for (String action : mMusicActions) {
@@ -1451,7 +1413,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 }
                 ContextCompat.registerReceiver(this, mMusicPlaybackReceiver, filter, ContextCompat.RECEIVER_EXPORTED);
             }
-            if (mVolumeChangeReceiver ==  null && features.supportsMusicInfo()) {
+            if (mVolumeChangeReceiver ==  null && features.supports(Feature.MUSIC_INFO)) {
                 mVolumeChangeReceiver = new VolumeChangeReceiver();
                 mVolumeChangeReceiver.registerReceiver(this);
             }
@@ -1496,11 +1458,11 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 LocalBroadcastManager.getInstance(this).registerReceiver(locationService, locationService.buildFilter());
             }
 
-            if (mOsmandAidlHelper == null && features.supportsNavigation()) {
+            if (mOsmandAidlHelper == null && features.supports(Feature.NAVIGATION)) {
                 mOsmandAidlHelper = new OsmandEventReceiver(this.getApplication());
             }
 
-            if (features.supportsNavigation() && getPrefs().getBoolean(GBPrefs.NAVIGATION_APP_COMAPS, false)) {
+            if (features.supports(Feature.NAVIGATION) && getPrefs().getBoolean(GBPrefs.NAVIGATION_APP_COMAPS, false)) {
                 for (Pair<Uri, CoMapsNavigationReceiver> pair : CoMapsNavigationReceiverFactory.createCoMapsNavigationReceiversForApplication(this.getApplication())) {
                     getContentResolver().registerContentObserver(pair.first, false, pair.second);
                     mCoMapsNavigationReceivers.add(pair.second);
@@ -1508,7 +1470,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             }
 
             // Weather receivers
-            if (features.supportsWeather()) {
+            if (features.supports(Feature.WEATHER)) {
                 if (GBApplication.isRunningOreoOrLater()) {
                     if (mLineageOsWeatherReceiver == null) {
                         mLineageOsWeatherReceiver = new LineageOsWeatherReceiver();
@@ -1534,15 +1496,14 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 }
             }
 
-            if (features.supportsSleepAsAndroid())
-            {
+            if (features.supports(Feature.SLEEP_AS_ANDROID)) {
                 if (mSleepAsAndroidReceiver == null) {
                     mSleepAsAndroidReceiver = new SleepAsAndroidReceiver();
-                    ContextCompat.registerReceiver(this, mSleepAsAndroidReceiver, new IntentFilter(), ContextCompat.RECEIVER_EXPORTED);
+                    ContextCompat.registerReceiver(this, mSleepAsAndroidReceiver, mSleepAsAndroidReceiver.getIntentFilter(), ContextCompat.RECEIVER_EXPORTED);
                 }
             }
 
-            if (features.supportsDataFetching() && mGBAutoFetchReceiver == null) {
+            if (features.supports(Feature.DATA_FETCHING) && mGBAutoFetchReceiver == null) {
                 mGBAutoFetchReceiver = new GBAutoFetchReceiver();
                 ContextCompat.registerReceiver(this, mGBAutoFetchReceiver, new IntentFilter("android.intent.action.USER_PRESENT"), ContextCompat.RECEIVER_EXPORTED);
             }
@@ -1674,6 +1635,15 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
             }
         }
 
+        if (mKeyMissingReceiver != null) {
+            try {
+                LOG.debug("Unregistering missing receiver");
+                unregisterReceiver(mKeyMissingReceiver);
+            } catch (final Exception e) {
+                LOG.error("Failed to unregister broadcast receiver", e);
+            }
+        }
+
         if (mHrvCacheInvalidationReceiver != null) {
             mHrvCacheInvalidationReceiver.unregisterReceiver();
             mHrvCacheInvalidationReceiver = null;
@@ -1703,7 +1673,7 @@ public class DeviceCommunicationService extends Service implements SharedPrefere
                 LOG.info("allowBluetoothIntentApi changed to {}", allowBluetoothIntentApi);
             }
             case GBPrefs.NAVIGATION_APP_COMAPS -> {
-                if (mReceiversEnabled && mCurrentFeatureSet != null && mCurrentFeatureSet.supportsNavigation()) {
+                if (mReceiversEnabled && mCurrentFeatureSet != null && mCurrentFeatureSet.supports(Feature.NAVIGATION)) {
                     boolean enable = sharedPreferences.getBoolean(GBPrefs.NAVIGATION_APP_COMAPS, false);
                     LOG.debug("Actioning CoMaps preference change to {}", enable);
                     if (enable) {
