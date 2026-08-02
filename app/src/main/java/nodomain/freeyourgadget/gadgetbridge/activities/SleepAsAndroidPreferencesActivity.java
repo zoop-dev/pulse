@@ -27,8 +27,10 @@ import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import nodomain.freeyourgadget.gadgetbridge.GBApplication;
 import nodomain.freeyourgadget.gadgetbridge.R;
@@ -143,7 +145,11 @@ public class SleepAsAndroidPreferencesActivity extends AbstractSettingsActivityV
     }
 
     private static void loadDevicesList(ListPreference sleepAsAndroidDevices) {
-        List<GBDevice> devices = GBApplication.app().getDeviceManager().getDevices();
+        List<GBDevice> devices = GBApplication.app().getDeviceManager().getDevices()
+                .stream()
+                .sorted(Comparator.comparing(GBDevice::getAliasOrName))
+                .collect(Collectors.toList());
+
         List<String> deviceMACs = new ArrayList<>();
         List<String> deviceNames = new ArrayList<>();
         for (GBDevice dev : devices) {

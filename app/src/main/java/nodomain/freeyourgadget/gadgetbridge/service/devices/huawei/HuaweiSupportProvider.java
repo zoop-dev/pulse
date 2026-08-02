@@ -2984,7 +2984,7 @@ public class HuaweiSupportProvider {
 
                         LOG.debug("Parsing PDR file");
                         HuaweiPdrParser.PdrPoint[] points = HuaweiPdrParser.parseHuaweiPdr(fileRequest.getData());
-                        LOG.info("Points: {}", points);
+                        LOG.info("Points: {}", points.length);
                         //TODO: postprocess and combine with Gps data
                     }
 
