@@ -363,11 +363,19 @@ public abstract class AbstractBTLESingleDeviceSupport extends AbstractBTLEDevice
         }
         TransactionBuilder builder = createTransactionBuilder("Initializing device");
 
+        initializeDevice(builder);
+
+        // The BLE Intent API subscriptions run AFTER the device-specific init.
+        // A failed GATT action aborts the remaining transaction (see
+        // BtLEQueue.checkWaitingCharacteristic), and the device support sets
+        // State.INITIALIZED inside initializeDevice(); with the API
+        // subscriptions first, one failed CCCD write left the device stuck in
+        // INITIALIZING forever ("connecting" in the UI while the watch shows
+        // the link as up). In this order a failed subscription costs only that
+        // characteristic's notifications, never the whole connection.
         if(bleApi != null) {
             bleApi.initializeDevice(builder);
         }
-
-        initializeDevice(builder);
 
         if (getDevice().getDeviceCoordinator().supportsConnectionPriority()) {
             final boolean lowPower = getDevicePrefs().getConnectionPriorityLowPower();

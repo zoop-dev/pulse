@@ -156,6 +156,15 @@ public class BleIntentApi {
     public void initializeDevice(TransactionBuilder builder) {
         if(intentApiEnabledNotifications) {
             for (BluetoothGattCharacteristic characteristic : characteristics.values()) {
+                // Only characteristics that can actually notify: subscribing a
+                // write-only characteristic (easily picked up by a wildcard or
+                // an over-broad filter) adds a GATT action that can only fail,
+                // and a failed action aborts the rest of the transaction.
+                final int properties = characteristic.getProperties();
+                if ((properties & (BluetoothGattCharacteristic.PROPERTY_NOTIFY
+                        | BluetoothGattCharacteristic.PROPERTY_INDICATE)) == 0) {
+                    continue;
+                }
                 if (intentApiCharacteristicFilter.isEmpty()) {
                     builder.notify(characteristic, true);
                     logger.info("Subscribed to {}", characteristic.getUuid());
