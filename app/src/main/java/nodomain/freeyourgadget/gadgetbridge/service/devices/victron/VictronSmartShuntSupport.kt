@@ -2,9 +2,14 @@ package nodomain.freeyourgadget.gadgetbridge.service.devices.victron
 
 import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothGattCharacteristic
+import nodomain.freeyourgadget.gadgetbridge.GBApplication
 import nodomain.freeyourgadget.gadgetbridge.activities.workouts.WorkoutValueFormatter
 import nodomain.freeyourgadget.gadgetbridge.deviceevents.GBDeviceEventBatteryInfo
+import nodomain.freeyourgadget.gadgetbridge.devices.BatteryCurrentSampleProvider
+import nodomain.freeyourgadget.gadgetbridge.devices.BatteryPowerSampleProvider
 import nodomain.freeyourgadget.gadgetbridge.devices.victron.VictronSmartShuntCoordinator
+import nodomain.freeyourgadget.gadgetbridge.entities.BatteryCurrentSample
+import nodomain.freeyourgadget.gadgetbridge.entities.BatteryPowerSample
 import nodomain.freeyourgadget.gadgetbridge.impl.GBDevice
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_AMPERE
 import nodomain.freeyourgadget.gadgetbridge.model.ActivitySummaryEntries.UNIT_AMPERE_HOUR
@@ -106,6 +111,19 @@ class VictronSmartShuntSupport : AbstractBTLESingleDeviceSupport(LOG) {
                 } else {
                     LOG.debug("Power: {} W", raw)
                     device.setExtraInfo(VictronSmartShuntCoordinator.EXTRA_POWER, valueFormatter.formatValue(raw, UNIT_WATT))
+
+                    try {
+                        GBApplication.acquireDB().use { db ->
+                            val batteryPowerSampleProvider = BatteryPowerSampleProvider(gbDevice, db.daoSession)
+                            val sample = BatteryPowerSample()
+                            sample.timestamp = System.currentTimeMillis()
+                            sample.batteryIndex = 0
+                            sample.power = raw.toFloat()
+                            batteryPowerSampleProvider.persistSamples(sample, context)
+                        }
+                    } catch (e: Exception) {
+                        LOG.error("Error persisting power sample", e)
+                    }
                 }
                 device.sendDeviceUpdateIntent(context)
                 return true
@@ -121,6 +139,7 @@ class VictronSmartShuntSupport : AbstractBTLESingleDeviceSupport(LOG) {
                     val volts = raw * 0.01
                     LOG.debug("Voltage: {} V", volts)
                     batteryEvent.voltage = volts.toFloat()
+                    // Persisted to the database by the event
                 }
                 device.sendDeviceUpdateIntent(context)
                 return true
@@ -133,9 +152,22 @@ class VictronSmartShuntSupport : AbstractBTLESingleDeviceSupport(LOG) {
                     LOG.debug("Current: N/A")
                     device.setExtraInfo(VictronSmartShuntCoordinator.EXTRA_CURRENT, "")
                 } else {
-                    val current = raw * 0.001
+                    val current = raw * 0.001f
                     LOG.debug("Current: {} A", current)
                     device.setExtraInfo(VictronSmartShuntCoordinator.EXTRA_CURRENT, valueFormatter.formatValue(current, UNIT_AMPERE))
+
+                    try {
+                        GBApplication.acquireDB().use { db ->
+                            val batteryCurrentSampleProvider = BatteryCurrentSampleProvider(gbDevice, db.daoSession)
+                            val sample = BatteryCurrentSample()
+                            sample.timestamp = System.currentTimeMillis()
+                            sample.batteryIndex = 0
+                            sample.current = current
+                            batteryCurrentSampleProvider.persistSamples(sample, context)
+                        }
+                    } catch (e: Exception) {
+                        LOG.error("Error persisting power sample", e)
+                    }
                 }
                 device.sendDeviceUpdateIntent(context)
                 return true
